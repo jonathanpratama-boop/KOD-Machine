@@ -8,8 +8,10 @@ the result with random entries on the same sessions. Results are append-only and
 **The detector rule is not in this repo yet.** The request read "Implement this rule
 exactly: [paste your detector rule]" and the rule was never pasted. Nothing was guessed:
 `idxsig/rules/user_rule.py` is an empty slot and `run --rule USER_RULE` refuses to start.
-The only committed run is `PLACEBO_COINFLIP`, a price-blind coin flip that checks the
-harness itself.
+The only committed runs are `PLACEBO_COINFLIP`, a price-blind coin flip that checks the
+harness itself: `20261007T182601Z` under the first harness (2019-07 window, one baseline)
+and `20261007T190358Z` after the review fixes (2021-01 window, matched baseline, rights
+issues excluded, exhaustive lookahead). The first is kept as it was; runs are never edited.
 
 ## Commands
 
