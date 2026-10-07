@@ -3,11 +3,29 @@
   "calibration_status": "NOT_STARTED",
   "entry_permission": false,
   "counts": {
-    "cases": 4,
-    "prospective_open": 1,
+    "cases": 3,
+    "prospective_open": 0,
     "prospective_closed": 0,
     "retrospective": 2,
-    "simulated_excluded": 1
+    "simulated_excluded": 1,
+    "scan_entries": 0,
+    "scan_flagged": 0,
+    "scan_flagged_opened": 0,
+    "scan_flagged_not_opened": 0,
+    "scan_closed": 0,
+    "scan_overdue_unclosed": 0
   },
-  "detector_table": []
+  "detector_table": [],
+  "scan_log": {
+    "counts": {
+      "scan_entries": 0,
+      "scan_flagged": 0,
+      "scan_flagged_opened": 0,
+      "scan_flagged_not_opened": 0,
+      "scan_closed": 0,
+      "scan_overdue_unclosed": 0
+    },
+    "scans": [],
+    "lift": []
+  }
 }

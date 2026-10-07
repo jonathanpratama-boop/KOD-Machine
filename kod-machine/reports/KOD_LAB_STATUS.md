@@ -9,25 +9,32 @@ Promotion floor: 30 closed prospective cases with complete coverage.
 
 ## Counts
 
-- Cases: 4
-- Prospective open: 1
+- Cases: 3
+- Prospective open: 0
 - Prospective closed (scored): 0
 - Retrospective (hypothesis only): 2
 - Simulated (excluded): 1
+- Scanned names logged: 0 (flagged 0: opened 0, not opened 0)
+- Scanned names closed: 0; past window and still unclosed: 0
 
 ## Detector table (prospective closed only)
 
-| Detector | Evaluated | Signals | Signal then repriced up | Insufficient | Status |
-|---|---:|---:|---:|---:|---|
-| — | 0 | 0 | 0 | 0 | UNVALIDATED |
+Hit rate when the detector fired, when it was evaluated and did not fire, and the base
+rate over both. Lift = signal hit rate / base rate. No no-signal cases means no lift.
+
+| Detector | Hit = | Signal n | Signal hit rate | No-signal n | No-signal hit rate | Base rate | Lift | Insufficient | Status |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---|
+| — | — | 0 | — | 0 | — | — | — | 0 | UNVALIDATED |
+
+## Scan log (every scanned name, flagged or not, opened or not)
+
+No scans logged.
 
 ## Case cards
 
 ### PROSPECTIVE
 
-- `KOD-P-TEMPLATE-001` TEMPLATE WATCH → OPEN [EMPTY]
-  - Hypothesis: Replace this card before any real name. A prospective case must be opened before the outcome window, with facts frozen and a critic loss path.
-  - Signals: COVERAGE_INCOMPLETE
+None.
 
 ### RETROSPECTIVE
 
