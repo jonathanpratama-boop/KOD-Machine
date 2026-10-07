@@ -1,0 +1,61 @@
+{
+  "call_type": "SIMULATED",
+  "card_hash_version": "KOD-CARD-v1",
+  "case_id": "KOD-S-PIPELINE-001",
+  "critic": {
+    "invalidation": "Inclusion in a calibration claim.",
+    "loss_path": "It is simulated.",
+    "missing_evidence": "Reality."
+  },
+  "decision_cutoff": "2026-01-01T00:00:00Z",
+  "disposition": "REJECT",
+  "doctrine_sha": "246deb4a63c8168622e86cccecf04101801f2e1bf4d8c765396f3e277c294f0e",
+  "information_sets": {
+    "T-24H": {
+      "cutoff": "2025-12-31T00:00:00Z",
+      "facts": {
+        "dated_catalyst_known": true,
+        "mechanism_in_primary_docs": false,
+        "narrative_only": true,
+        "price_already_repriced": false,
+        "price_quiet_vs_own_range": true,
+        "primary_document_public": false,
+        "volume_creep_before_story": false
+      },
+      "reconstruction_status": "SIMULATED"
+    },
+    "T-30D": {
+      "cutoff": "2025-12-02T00:00:00Z",
+      "facts": {
+        "dated_catalyst_known": true,
+        "mechanism_in_primary_docs": false,
+        "narrative_only": true,
+        "price_already_repriced": false,
+        "price_quiet_vs_own_range": true,
+        "primary_document_public": false,
+        "volume_creep_before_story": false
+      },
+      "reconstruction_status": "SIMULATED"
+    },
+    "T-72H": {
+      "cutoff": "2025-12-29T00:00:00Z",
+      "facts": {
+        "dated_catalyst_known": true,
+        "mechanism_in_primary_docs": false,
+        "narrative_only": true,
+        "price_already_repriced": false,
+        "price_quiet_vs_own_range": true,
+        "primary_document_public": false,
+        "volume_creep_before_story": false
+      },
+      "reconstruction_status": "SIMULATED"
+    }
+  },
+  "outcome_window": null,
+  "reconstruction_status": "SIMULATED",
+  "scan_entry_id": null,
+  "story_hypothesis": "Pipeline fixture. Must never enter the prospective or retrospective scientific tally.",
+  "symbol": "SIM",
+  "universe_id": "PIPELINE-TEST",
+  "venue": "SIM"
+}
