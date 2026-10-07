@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# KOD scratch databases (the ledger itself is kod-machine/var/kod.db and is committed)
+kod-machine/var/*.db
+!kod-machine/var/kod.db
+
+# IDX price data: large, rebuilt from sources. Provenance manifests under
+# idx-signals/data/manifests/ are committed instead.
+idx-signals/data/raw/
+idx-signals/data/panel/

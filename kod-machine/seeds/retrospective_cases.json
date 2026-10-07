@@ -1,0 +1,204 @@
+{
+  "description": "Seed cards. Retrospective rows are partial public reconstructions, not complete archives. Simulated rows exist to prove the scorer excludes them. None of these is a trade.",
+  "cases": [
+    {
+      "case_id": "KOD-R-NVDA-20230524",
+      "symbol": "NVDA",
+      "venue": "NASDAQ",
+      "call_type": "RETROSPECTIVE",
+      "decision_cutoff": "2023-05-24T20:00:00Z",
+      "universe_id": "SEED-PARTIAL-2026-10-08",
+      "reconstruction_status": "PARTIAL_PUBLIC",
+      "story_hypothesis": "A dated earnings print was the scheduled information event. The lab question is whether anything in the prior 30 days, other than the known date, was a weak tell. This card does not reconstruct the full information set.",
+      "disposition": "INVESTIGATE",
+      "notes": "Retrospective illustration. Direction of the subsequent repricing is public record. Magnitude is not verified here and is stored as null.",
+      "critic": {
+        "loss_path": "The scheduled print disappoints or the data-center commentary is already in the price, so the event does not change enterprise value.",
+        "missing_evidence": "Full sell-side revision tape, options skew, and primary-document set at T-30D are not in this seed.",
+        "invalidation": "Guidance and data-center demand commentary do not change the prior path, or the move is explained by index beta alone."
+      },
+      "information_sets": {
+        "T-30D": {
+          "cutoff": "2023-04-24T20:00:00Z",
+          "reconstruction_status": "PARTIAL_PUBLIC",
+          "facts": {
+            "dated_catalyst_known": true,
+            "catalyst": "scheduled earnings date",
+            "primary_document_public": false,
+            "price_already_repriced": null,
+            "volume_creep_before_story": null,
+            "price_quiet_vs_own_range": null,
+            "narrative_only": false,
+            "mechanism_in_primary_docs": null
+          }
+        },
+        "T-72H": {
+          "cutoff": "2023-05-21T20:00:00Z",
+          "reconstruction_status": "PARTIAL_PUBLIC",
+          "facts": {
+            "dated_catalyst_known": true,
+            "catalyst": "scheduled earnings date",
+            "primary_document_public": false,
+            "price_already_repriced": null,
+            "volume_creep_before_story": null,
+            "price_quiet_vs_own_range": null,
+            "narrative_only": false,
+            "mechanism_in_primary_docs": null
+          }
+        },
+        "T-24H": {
+          "cutoff": "2023-05-23T20:00:00Z",
+          "reconstruction_status": "PARTIAL_PUBLIC",
+          "facts": {
+            "dated_catalyst_known": true,
+            "catalyst": "scheduled earnings date, print not yet released",
+            "primary_document_public": false,
+            "price_already_repriced": null,
+            "volume_creep_before_story": null,
+            "price_quiet_vs_own_range": null,
+            "narrative_only": false,
+            "mechanism_in_primary_docs": null
+          }
+        }
+      },
+      "outcome": {
+        "window_label": "subsequent earnings reaction, direction only",
+        "window_return_pct": null,
+        "outcome_label": "REPRICED_UP",
+        "source": "public earnings-reaction narrative; magnitude intentionally unverified in seed",
+        "notes": "Not a price series. Not eligible for calibration because call_type is RETROSPECTIVE."
+      }
+    },
+    {
+      "case_id": "KOD-R-SMCI-202408",
+      "symbol": "SMCI",
+      "venue": "NASDAQ",
+      "call_type": "RETROSPECTIVE",
+      "decision_cutoff": "2024-08-27T20:00:00Z",
+      "universe_id": "SEED-PARTIAL-2026-10-08",
+      "reconstruction_status": "PARTIAL_PUBLIC",
+      "story_hypothesis": "Failure case, not a winner study. After a long AI-server repricing, a delayed filing became the information that mattered. The lab question is whether the prior bullish narrative still had a mechanism in primary documents at the cutoff.",
+      "disposition": "WATCH",
+      "notes": "Critic path is the point of this card. Disposition is WATCH, not a short call and not entry permission.",
+      "critic": {
+        "loss_path": "Filing delay or accounting concern is dismissed as administrative and the narrative multiple holds.",
+        "missing_evidence": "Point-in-time short interest, borrow, and the full 10-K/10-Q diff at T-72H are not in this seed.",
+        "invalidation": "Filing is submitted without a material restatement and guidance is reaffirmed."
+      },
+      "information_sets": {
+        "T-30D": {
+          "cutoff": "2024-07-28T20:00:00Z",
+          "reconstruction_status": "PARTIAL_PUBLIC",
+          "facts": {
+            "dated_catalyst_known": null,
+            "catalyst": null,
+            "primary_document_public": null,
+            "price_already_repriced": true,
+            "volume_creep_before_story": null,
+            "price_quiet_vs_own_range": false,
+            "narrative_only": true,
+            "mechanism_in_primary_docs": null
+          }
+        },
+        "T-72H": {
+          "cutoff": "2024-08-24T20:00:00Z",
+          "reconstruction_status": "PARTIAL_PUBLIC",
+          "facts": {
+            "dated_catalyst_known": true,
+            "catalyst": "expected filing window",
+            "primary_document_public": false,
+            "price_already_repriced": true,
+            "volume_creep_before_story": null,
+            "price_quiet_vs_own_range": false,
+            "narrative_only": true,
+            "mechanism_in_primary_docs": false
+          }
+        },
+        "T-24H": {
+          "cutoff": "2024-08-26T20:00:00Z",
+          "reconstruction_status": "PARTIAL_PUBLIC",
+          "facts": {
+            "dated_catalyst_known": true,
+            "catalyst": "filing delay reported",
+            "primary_document_public": false,
+            "price_already_repriced": true,
+            "volume_creep_before_story": null,
+            "price_quiet_vs_own_range": false,
+            "narrative_only": true,
+            "mechanism_in_primary_docs": false
+          }
+        }
+      },
+      "outcome": {
+        "window_label": "filing-delay reaction, direction only",
+        "window_return_pct": null,
+        "outcome_label": "REPRICED_DOWN",
+        "source": "public filing-delay narrative; magnitude intentionally unverified in seed",
+        "notes": "Retrospective failure card. Excluded from calibration."
+      }
+    },
+    {
+      "case_id": "KOD-P-TEMPLATE-001",
+      "symbol": "TEMPLATE",
+      "venue": "UNIVERSE",
+      "call_type": "PROSPECTIVE",
+      "decision_cutoff": "2026-10-08T00:00:00Z",
+      "universe_id": "USER-NEXT",
+      "reconstruction_status": "EMPTY",
+      "story_hypothesis": "Replace this card before any real name. A prospective case must be opened before the outcome window, with facts frozen and a critic loss path.",
+      "disposition": "WATCH",
+      "notes": "Open on purpose. Closing it with a real outcome is the first calibration row. Do not backfill.",
+      "critic": {
+        "loss_path": "Template only. No mechanism, so the base case is that nothing here is tradable.",
+        "missing_evidence": "Symbol, venue, primary documents, volume baseline, and universe membership.",
+        "invalidation": "Any attempt to treat this row as a signal."
+      },
+      "information_sets": {
+        "T-30D": {"cutoff": "2026-09-08T00:00:00Z", "reconstruction_status": "EMPTY", "facts": {}},
+        "T-72H": {"cutoff": "2026-10-05T00:00:00Z", "reconstruction_status": "EMPTY", "facts": {}},
+        "T-24H": {"cutoff": "2026-10-07T00:00:00Z", "reconstruction_status": "EMPTY", "facts": {}}
+      }
+    },
+    {
+      "case_id": "KOD-S-PIPELINE-001",
+      "symbol": "SIM",
+      "venue": "SIM",
+      "call_type": "SIMULATED",
+      "decision_cutoff": "2026-01-01T00:00:00Z",
+      "universe_id": "PIPELINE-TEST",
+      "reconstruction_status": "SIMULATED",
+      "story_hypothesis": "Pipeline fixture. Must never enter the prospective or retrospective scientific tally.",
+      "disposition": "REJECT",
+      "notes": "Excluded by call_type.",
+      "critic": {
+        "loss_path": "It is simulated.",
+        "missing_evidence": "Reality.",
+        "invalidation": "Inclusion in a calibration claim."
+      },
+      "information_sets": {
+        "T-30D": {
+          "cutoff": "2025-12-02T00:00:00Z",
+          "reconstruction_status": "SIMULATED",
+          "facts": {"dated_catalyst_known": true, "narrative_only": true, "mechanism_in_primary_docs": false, "primary_document_public": false, "price_already_repriced": false, "volume_creep_before_story": false, "price_quiet_vs_own_range": true}
+        },
+        "T-72H": {
+          "cutoff": "2025-12-29T00:00:00Z",
+          "reconstruction_status": "SIMULATED",
+          "facts": {"dated_catalyst_known": true, "narrative_only": true, "mechanism_in_primary_docs": false, "primary_document_public": false, "price_already_repriced": false, "volume_creep_before_story": false, "price_quiet_vs_own_range": true}
+        },
+        "T-24H": {
+          "cutoff": "2025-12-31T00:00:00Z",
+          "reconstruction_status": "SIMULATED",
+          "facts": {"dated_catalyst_known": true, "narrative_only": true, "mechanism_in_primary_docs": false, "primary_document_public": false, "price_already_repriced": false, "volume_creep_before_story": false, "price_quiet_vs_own_range": true}
+        }
+      },
+      "outcome": {
+        "window_label": "fixture",
+        "window_return_pct": 40.0,
+        "outcome_label": "REPRICED_UP",
+        "source": "simulated",
+        "notes": "Must be excluded."
+      }
+    }
+  ]
+}
