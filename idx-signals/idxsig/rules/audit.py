@@ -20,14 +20,21 @@ from __future__ import annotations
 import ast
 import inspect
 
-ALLOWED_MODULES = frozenset({
-    "__future__", "numpy", "pandas", "math", "zlib", "hashlib", "typing", "dataclasses", "itertools",
-    "operator", "statistics", "enum", "idxsig.market",
-})
+ALLOWED_MODULES = frozenset({"__future__", "numpy", "pandas", "math", "zlib", "hashlib", "itertools", "statistics",
+                             "idxsig.market"})
+# `import a.b` binds `a`: for a dotted module only the `from a.b import name` form is allowed.
+DOTTED_FROM_ONLY = frozenset({"idxsig.market"})
 ALLOWED_RELATIVE = frozenset({"Rule", "RuleNotProvided"})  # from . import Rule (idxsig.rules)
 FORBIDDEN_NAMES = frozenset({
     "open", "eval", "exec", "compile", "__import__", "globals", "locals", "vars", "getattr", "setattr", "delattr",
-    "input", "breakpoint", "memoryview", "__builtins__", "help", "exit", "quit",
+    "input", "breakpoint", "memoryview", "__builtins__", "help", "exit", "quit", "attrgetter", "methodcaller",
+})
+# Attribute names that lead to modules or machinery a rule has no use for. numpy and pandas
+# re-export some of these (e.g. a module's own `sys`), so they are refused as attributes too.
+FORBIDDEN_ATTRS = FORBIDDEN_NAMES | frozenset({
+    "sys", "os", "io", "builtins", "modules", "importlib", "subprocess", "gc", "inspect", "ctypes", "pathlib",
+    "shutil", "socket", "urllib", "pickle", "marshal", "rules", "sandbox", "backtest", "panel", "provenance",
+    "corporate_actions", "execution", "controls", "paper", "e1", "results", "sources", "eval", "query",
 })
 FRAME_ATTRS = frozenset({"f_back", "f_locals", "f_globals", "f_builtins", "f_code", "tb_frame", "tb_next",
                          "gi_frame", "cr_frame", "ag_frame", "gi_code"})
@@ -77,6 +84,8 @@ def audit_source(source: str, where: str = "rule") -> list[str]:
                     sys_aliases.add(alias.asname or "sys")
                 elif alias.name not in ALLOWED_MODULES:
                     bad(node, f"import of {alias.name} is not allowed in a rule")
+                elif alias.name in DOTTED_FROM_ONLY:
+                    bad(node, f"`import {alias.name}` binds its parent package; use `from {alias.name} import ...`")
         elif isinstance(node, ast.ImportFrom):
             if node.level:
                 if node.level != 1 or node.module or any(a.name not in ALLOWED_RELATIVE for a in node.names):
@@ -94,6 +103,8 @@ def audit_source(source: str, where: str = "rule") -> list[str]:
                 bad(node, f"dunder attribute .{node.attr} is not allowed in a rule")
             elif node.attr.startswith("_"):
                 bad(node, f"private attribute .{node.attr} is not allowed in a rule")
+            elif node.attr in FORBIDDEN_ATTRS and not _sys_modules_name(node, parents):
+                bad(node, f".{node.attr} is not allowed in a rule")
             elif node.attr in FRAME_ATTRS or node.attr in ("base", "ctypes", "data", "__array_interface__"):
                 bad(node, f"frame attribute .{node.attr} is not allowed in a rule")
             elif node.attr in IO_ATTRS or node.attr.startswith(IO_PREFIXES):

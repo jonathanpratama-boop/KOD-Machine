@@ -17,7 +17,7 @@ from __future__ import annotations
 import json
 
 from . import evidence as ev
-from .anchor import GitAnchor, anchor_line
+from .anchor import REGISTRY_FILES, GitAnchor, anchor_line
 from .detectors import RULE_VERSION, evaluate
 from .hashing import canonical, parse_ts, sha256_bytes, sha256_obj, sha256_text
 from .ledger import (
@@ -76,6 +76,23 @@ def _rebuild_case_sha(ledger: Ledger, case: dict) -> str | None:
                                   case.get("card_hash_version"), frozen_evaluations(evals)))
 
 
+def _rebuild_scan_sha(ledger: Ledger, scan: dict) -> tuple[str | None, dict]:
+    """Rebuild a scan's hash from its stored entry and evaluation rows. None when the stored
+    entry count disagrees with the rows (an entry inserted or removed)."""
+    version = scan.get("scan_hash_version")
+    entry_shas = {}
+    for row in ledger.rows("SELECT * FROM scan_entries WHERE scan_id = ?", (scan["scan_id"],)):
+        evals = ledger.rows("SELECT * FROM scan_evaluations WHERE entry_id = ?", (row["entry_id"],))
+        body = freeze_scan_entry(scan["scan_id"], {
+            "symbol": row["symbol"], "venue": row["venue"], "flagged": bool(row["flagged"]),
+            "reconstruction_status": row["reconstruction_status"], "facts": json.loads(row["facts_json"]),
+        }, frozen_evaluations(evals), version)
+        entry_shas[row["entry_id"]] = sha256_obj(body)
+    if len(entry_shas) != scan["n_entries"]:
+        return None, entry_shas
+    return sha256_obj(freeze_scan(scan, entry_shas, version)), entry_shas
+
+
 def calibration_eligibility(ledger: Ledger, anchor: GitAnchor | None, client) -> dict:
     """{case_id: {"status", "reason", "remote"}} for every PROSPECTIVE case, and the same for scans
     under key ("SCAN", scan_id)."""
@@ -105,8 +122,14 @@ def calibration_eligibility(ledger: Ledger, anchor: GitAnchor | None, client) ->
     for scan in ledger.rows("SELECT * FROM scan_runs"):
         scan = dict(scan)
         strict = scan.get("scan_hash_version") == "KOD-SCAN-v3"
-        out[("SCAN", scan["scan_id"])] = judge("SCAN", scan["scan_id"], scan["scan_sha"], strict,
-                                               scan["outcome_window_start"])
+        sha = scan["scan_sha"]
+        if strict:
+            sha, _ = _rebuild_scan_sha(ledger, scan)
+            if sha != scan["scan_sha"]:
+                out[("SCAN", scan["scan_id"])] = {"status": ANCHOR_FAILED, "remote": None,
+                                                  "reason": "stored rows no longer hash to the scan"}
+                continue
+        out[("SCAN", scan["scan_id"])] = judge("SCAN", scan["scan_id"], sha, strict, scan["outcome_window_start"])
     return out
 
 
@@ -378,6 +401,21 @@ def verify(ledger: Ledger, anchor: GitAnchor | None, timestamper=None, client=No
 
     for (kind, record_id) in anchors:
         fail(f"{kind.lower()} {record_id}", "anchors row has no ledger record")
+
+    # The other direction: every call anchored in git must still be in the ledger. Without this a
+    # losing case could be deleted from the database (rows and triggers) and simply vanish.
+    if anchor is not None:
+        present = {("CASE", r["case_id"]): r["card_sha"] for r in ledger.rows("SELECT case_id, card_sha FROM cases")}
+        present.update({("SCAN", r["scan_id"]): r["scan_sha"] for r in ledger.rows("SELECT scan_id, scan_sha FROM scan_runs")})
+        for kind, name in REGISTRY_FILES.items():
+            for rec in anchor.committed_records("HEAD", anchor.rel(anchor.registry_dir / name)):
+                if rec.get("kind") != kind:
+                    continue
+                key = (kind, rec.get("record_id"))
+                if key not in present:
+                    fail(f"{kind.lower()} {rec.get('record_id')}", f"anchored in git ({name}) but missing from the ledger")
+                elif present[key] != rec.get("sha256"):
+                    fail(f"{kind.lower()} {rec.get('record_id')}", f"ledger hash differs from the one anchored in {name}")
 
     return {
         "ok": not any(f["level"] == "FAIL" for f in findings),

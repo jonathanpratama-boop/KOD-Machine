@@ -50,6 +50,8 @@ def main(argv=None) -> int:
                        help="registry (default): scale shares only through verified splits / stock dividends; "
                             "exclude, value_preserving: earlier modes, for reproducing older runs")
     p_run.add_argument("--ca-registry", help="corporate-action registry manifest (default: latest)")
+    p_run.add_argument("--controls-version", choices=("v2", "v1"), default="v2",
+                       help="matched-control features (v1 reproduces runs before hardening v2)")
     p_run.add_argument("--lookahead-cuts", type=int,
                        help="sample N prefixes instead of the exhaustive check (faster, not a proof)")
     p_run.add_argument("--panel", help="panel manifest (default: latest)")
@@ -144,7 +146,7 @@ def main(argv=None) -> int:
             entry_lag=args.entry_lag, notional=args.notional, max_participation=args.max_participation,
             fee_buy=args.fee_buy, fee_sell=args.fee_sell, overlap=args.overlap, random_draws=args.draws,
             seed=args.seed, data_end_exit=args.data_end_exit, ca_mode=args.ca_mode,
-            lookahead_cuts=args.lookahead_cuts,
+            lookahead_cuts=args.lookahead_cuts, controls_version=args.controls_version,
         )
         registry = None
         if args.ca_mode == "registry":

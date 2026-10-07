@@ -5,6 +5,7 @@ construction (rules.causal_signals), the full-window diagnostic, the source audi
 (rules/audit.py) and the run-time sandbox (rules/sandbox.py)."""
 
 import unittest
+from pathlib import Path
 
 import numpy as np
 
@@ -232,6 +233,57 @@ class RuntimeSandbox(unittest.TestCase):
         """Guards against: the sandbox breaking the harness's own file access after a rule ran."""
         causal_signals(module_rule("OK", CAUSAL_BREAKOUT), market())
         self.assertTrue((PKG_ROOT / "data" / "corporate_actions" / "manual.csv").read_text())
+
+
+class ReviewPR1(unittest.TestCase):
+    """Regressions for the review of PR #1."""
+
+    def test_view_holds_nothing_past_its_session(self):
+        """Closes: a prefix view keeping a reference to the full arrays (`_src`), reachable through
+        string-based attribute access, which let a rule read tomorrow's close."""
+        src = CausalSource(market(ipo={3: 40}))
+        view = src.view(30)
+        for name in type(view).__slots__:
+            value = getattr(view, name)
+            if isinstance(value, np.ndarray) and value.ndim == 2:
+                self.assertEqual(value.shape, (src.rows_at(30), 31), name)
+                self.assertIsNone(value.base, name)
+        self.assertFalse(hasattr(view, "_src"))
+
+    def test_string_attribute_routes_are_refused(self):
+        """Closes: operator.attrgetter / dataclasses.sys.modules["builtins"].getattr reaching private
+        state, and `import idxsig.market` binding the whole idxsig package (and so the sandbox)."""
+        for body, pattern in (
+            ("import operator\ndef compute(m):\n    return operator.attrgetter('x')(m)\n", "operator"),
+            ("import dataclasses\ndef compute(m):\n    return dataclasses.sys.modules\n", "dataclasses"),
+            ("import idxsig.market\ndef compute(m):\n    return m.close\n", "binds its parent package"),
+            ("import numpy as np\ndef compute(m):\n    return np.sys\n", r"\.sys is not allowed"),
+        ):
+            problems = " ".join(audit_source(body))
+            self.assertRegex(problems, pattern)
+
+    def test_switching_the_sandbox_off_is_detected(self):
+        """Closes: a rule turning the sandbox's active flag off to read a data file unseen."""
+        rule = module_rule("OFF", f"""
+            def compute(m):
+                from idxsig.rules import sandbox
+                sandbox._STATE["active"] = False
+                open({str(PKG_ROOT / 'data' / 'corporate_actions' / 'manual.csv')!r}).read()
+                return np.where(m.tradeable, 0.0, np.nan)
+        """)
+        with self.assertRaisesRegex(LookaheadError, "state was changed"):
+            causal_signals(rule, market(), audit=False)
+
+    def test_import_system_bytecode_cache_is_not_a_violation(self):
+        """Closes: lazy imports inside compute (np.char, DataFrame.to_string) failing as lookahead
+        because the import system writes __pycache__ files."""
+        from idxsig.rules import sandbox
+
+        cache = Path(sandbox._PKG) / "__pycache__" / "probe.cpython-313.pyc"
+        data = PKG_ROOT / "data" / "corporate_actions" / "probe.csv"
+        self.assertTrue(sandbox._bytecode_cache(cache))
+        self.assertFalse(sandbox._bytecode_cache(data))
+        self.assertFalse(sandbox._path_allowed("/usr2/not-python/x.csv"))
 
 
 if __name__ == "__main__":

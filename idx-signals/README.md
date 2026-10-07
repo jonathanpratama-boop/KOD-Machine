@@ -37,7 +37,7 @@ python3 -m idxsig verify-data              # re-hash raw files, panels and regis
 python3 -m idxsig rules                    # list rules + source-audit result; USER_RULE shows PENDING
 python3 -m idxsig run --rule PLACEBO_COINFLIP
 python3 -m idxsig verify-runs              # no past run edited or removed
-python3 -m unittest                        # 81 tests, synthetic data only
+python3 -m unittest                        # 85 tests, synthetic data only
 ```
 
 ## 1. Dataset
@@ -122,6 +122,13 @@ registry or share factors, which are built from later sources. Three more layers
 - **Full-window diagnostic:** one extra call on the whole window; any difference from the
   prefix-built signals (a rule that changes with more data, depends on the number of names
   that will exist, or keeps state) is a `LookaheadError`.
+
+Limits: the audit and the sandbox run in the same Python process as the rule, so they are
+not a security boundary. They stop accidental and naive leaks and refuse the obvious routes
+around them (the external review of PR #1 found two, both closed: a reference from the view
+to the full arrays, and string-based attribute access through allowed modules); a rule written
+to defeat them could still do so, so a rule's source is reviewed before its run is trusted.
+Recorded signals stay causal regardless, because each view holds copies of sessions 0..d only.
 
 `tests/test_lookahead.py` throws adversarial rules at this: future returns, whole-history
 normalisation, a rule that behaves only when truncated, a rule keyed on the future count of

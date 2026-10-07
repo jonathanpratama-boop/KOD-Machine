@@ -216,7 +216,7 @@ python3 -m kod --db var/kod.db init
 python3 -m kod --db var/kod.db seed      # anchors each seed open in git
 python3 -m kod --db var/kod.db report
 python3 -m kod --db var/kod.db verify
-python3 -m unittest                      # 92 tests
+python3 -m unittest                      # 95 tests
 ```
 
 Seed status after a clean run: calibration NOT_STARTED. That is the correct

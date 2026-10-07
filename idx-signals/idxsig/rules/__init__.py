@@ -94,29 +94,24 @@ class LookaheadError(RuntimeError):
 class RuleView:
     """Read-only exchange data for sessions 0..last and the first `rows` names in listing order.
 
-    Each field is copied on first access (no .base leads back to later sessions) and frozen."""
+    Every field is copied when the view is built, so nothing reachable from a view, by any
+    route, extends past session `last` or covers a name not yet listed."""
 
-    __slots__ = ("_src", "_rows", "_last", "_cache", "tickers", "dates")
+    __slots__ = ("tickers", "dates", "shape", *RULE_FIELDS)
 
     def __init__(self, src: dict, tickers: np.ndarray, dates: np.ndarray, rows: int, last: int):
-        self._src, self._rows, self._last, self._cache = src, rows, last, {}
         self.tickers = _frozen(tickers[:rows])
         self.dates = _frozen(dates[: last + 1])
-
-    @property
-    def shape(self) -> tuple[int, int]:
-        return (self._rows, self._last + 1)
+        self.shape = (rows, last + 1)
+        for name in RULE_FIELDS:
+            setattr(self, name, _frozen(src[name][:rows, : last + 1]))
 
     def __getattr__(self, name):
-        if name in RULE_FIELDS:
-            if name not in self._cache:
-                self._cache[name] = _frozen(self._src[name][: self._rows, : self._last + 1])
-            return self._cache[name]
         raise AttributeError(f"RuleView has no {name!r}; a rule sees only {', '.join(RULE_FIELDS)}, tickers, dates")
 
 
 def _frozen(a: np.ndarray) -> np.ndarray:
-    out = np.array(a, copy=True)
+    out = np.array(a, copy=True, order="C")
     out.flags.writeable = False
     return out
 
