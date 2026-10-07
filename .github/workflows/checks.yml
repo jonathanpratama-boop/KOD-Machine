@@ -1,0 +1,31 @@
+name: checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r idx-signals/requirements.txt
+      - name: No past run, manifest, card or registry line was edited (whole history)
+        run: python3 tools/check_append_only.py --all
+      - name: KOD tests
+        working-directory: kod-machine
+        run: python3 -m unittest
+      - name: KOD verify (rebuild every card hash, check git anchors)
+        working-directory: kod-machine
+        run: python3 -m kod verify
+      - name: IDX harness tests
+        working-directory: idx-signals
+        run: python3 -m unittest
+      - name: IDX runs match their recorded hashes
+        working-directory: idx-signals
+        run: python3 -m idxsig verify-runs

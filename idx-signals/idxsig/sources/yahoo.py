@@ -1,0 +1,130 @@
+"""Yahoo Finance chart API, one raw JSON file per IDX ticker (`<TICKER>.JK`).
+
+Coverage: names Yahoo still lists. Yahoo drops delisted IDX tickers (they return
+"No data found, symbol may be delisted"), so this source alone is survivor-only. Every
+request is logged, including the not-found ones, so the gap is visible in the manifest.
+
+Prices in the response are split-adjusted (not dividend-adjusted). The panel builder
+undoes the split adjustment so lots, ticks and auto-rejection limits apply to the prices
+that actually traded.
+"""
+
+from __future__ import annotations
+
+import json
+import time
+import urllib.error
+import urllib.request
+from datetime import datetime, timezone
+from pathlib import Path
+
+from ..provenance import RAW, rel, sha256_bytes, utc_stamp, write_manifest
+
+CHART = (
+    "https://query1.finance.yahoo.com/v8/finance/chart/{symbol}"
+    "?period1={p1}&period2={p2}&interval=1d&events=div%2Csplits&includeAdjustedClose=true"
+)
+SOURCE = "yahoo_chart_v8"
+TERMS = "Yahoo Finance data; personal and research use under Yahoo's terms of service"
+HEADERS = {"User-Agent": "Mozilla/5.0 (idx-signals research harness)", "Accept": "application/json"}
+
+
+def _summary(payload: dict) -> dict:
+    chart = payload.get("chart") or {}
+    if chart.get("error"):
+        return {"error": chart["error"].get("description") or str(chart["error"])}
+    result = (chart.get("result") or [None])[0] or {}
+    stamps = result.get("timestamp") or []
+    events = result.get("events") or {}
+    day = lambda s: datetime.fromtimestamp(s, timezone.utc).date().isoformat()  # noqa: E731
+    return {
+        "rows": len(stamps),
+        "first_date": day(stamps[0]) if stamps else None,
+        "last_date": day(stamps[-1]) if stamps else None,
+        "splits": len(events.get("splits") or {}),
+        "dividends": len(events.get("dividends") or {}),
+        "currency": (result.get("meta") or {}).get("currency"),
+        "exchange": (result.get("meta") or {}).get("exchangeName"),
+    }
+
+
+def fetch_one(ticker: str, p2: int, retries: int = 6, pause: float = 2.0) -> tuple[int, bytes, str]:
+    url = CHART.format(symbol=f"{ticker}.JK", p1=0, p2=p2)
+    for attempt in range(retries):
+        req = urllib.request.Request(url, headers=HEADERS)
+        try:
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                return resp.status, resp.read(), url
+        except urllib.error.HTTPError as exc:
+            body = exc.read()
+            if exc.code == 404:
+                return 404, body, url
+            if exc.code not in (429, 500, 502, 503, 504) or attempt == retries - 1:
+                return exc.code, body, url
+        except (urllib.error.URLError, TimeoutError, ConnectionError) as exc:
+            if attempt == retries - 1:
+                return 0, str(exc).encode(), url
+        time.sleep(pause * 2 ** attempt)
+    return 0, b"", url
+
+
+def fetch(tickers: list[str], out_dir: Path | None = None, sleep: float = 0.35, log=print,
+          finalize: bool = True) -> Path | None:
+    """Fetch every ticker, resumable. Writes the manifest when `finalize`; returns its path."""
+    started = datetime.now(timezone.utc)
+    out_dir = out_dir or RAW / "yahoo" / started.strftime("%Y%m%d")
+    out_dir.mkdir(parents=True, exist_ok=True)
+    progress = out_dir / "_progress.jsonl"
+    done = {}
+    if progress.exists():
+        for line in progress.read_text(encoding="utf-8").splitlines():
+            rec = json.loads(line)
+            if rec["http_status"] in (200, 404):
+                done[rec["ticker"]] = rec
+    p2 = int(started.timestamp())
+    with progress.open("a", encoding="utf-8") as prog:
+        for i, ticker in enumerate(sorted(set(tickers))):
+            if ticker in done:
+                continue
+            status, body, url = fetch_one(ticker, p2)
+            stamp = utc_stamp()
+            suffix = ".JK.json" if status == 200 else ".JK.error.json"
+            path = out_dir / f"{ticker}{suffix}"
+            path.write_bytes(body)
+            try:
+                summary = _summary(json.loads(body))
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                summary = {"error": "response was not JSON"}
+            rec = {
+                "ticker": ticker,
+                "path": rel(path),
+                "source": SOURCE,
+                "source_url": url,
+                "downloaded_at": stamp,
+                "http_status": status,
+                "bytes": len(body),
+                "sha256": sha256_bytes(body),
+                "terms": TERMS,
+                **summary,
+            }
+            prog.write(json.dumps(rec, sort_keys=True) + "\n")
+            prog.flush()
+            done[ticker] = rec
+            if i % 50 == 0:
+                log(f"yahoo {i + 1}/{len(tickers)} {ticker} {status}")
+            time.sleep(sleep)
+    if not finalize:
+        return None
+    records = [done[t] for t in sorted(done) if t in set(tickers)]
+    header = {
+        "source": SOURCE,
+        "description": "Yahoo Finance v8 chart, daily bars, full history, split events and dividends",
+        "started_at": min((r["downloaded_at"] for r in records), default=utc_stamp(started)),
+        "finished_at": utc_stamp(),
+        "raw_dir": rel(out_dir),
+        "requested": len(set(tickers)),
+        "ok": sum(1 for r in records if r["http_status"] == 200 and r.get("rows")),
+        "not_found": sum(1 for r in records if r["http_status"] == 404),
+        "failed": sum(1 for r in records if r["http_status"] not in (200, 404)),
+    }
+    return write_manifest(f"yahoo-{started.strftime('%Y%m%dT%H%M%SZ')}.jsonl", header, records)
