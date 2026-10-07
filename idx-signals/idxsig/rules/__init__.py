@@ -55,10 +55,10 @@ class Rule:
 
 
 def registry() -> dict:
-    from . import placebo, user_rule
+    from . import moonshot_e1, placebo, user_rule
 
     out = {}
-    for module in (user_rule, placebo):
+    for module in (user_rule, placebo, moonshot_e1):
         rule = module.rule()
         if rule is not None:
             out[rule.rule_id] = rule

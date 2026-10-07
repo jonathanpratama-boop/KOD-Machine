@@ -48,8 +48,8 @@ def _summary(payload: dict) -> dict:
     }
 
 
-def fetch_one(ticker: str, p2: int, retries: int = 6, pause: float = 2.0) -> tuple[int, bytes, str]:
-    url = CHART.format(symbol=f"{ticker}.JK", p1=0, p2=p2)
+def fetch_one(ticker: str, p2: int, retries: int = 6, pause: float = 2.0, p1: int = 0) -> tuple[int, bytes, str]:
+    url = CHART.format(symbol=f"{ticker}.JK", p1=p1, p2=p2)
     for attempt in range(retries):
         req = urllib.request.Request(url, headers=HEADERS)
         try:
@@ -69,10 +69,16 @@ def fetch_one(ticker: str, p2: int, retries: int = 6, pause: float = 2.0) -> tup
 
 
 def fetch(tickers: list[str], out_dir: Path | None = None, sleep: float = 0.35, log=print,
-          finalize: bool = True) -> Path | None:
-    """Fetch every ticker, resumable. Writes the manifest when `finalize`; returns its path."""
+          finalize: bool = True, days: int | None = None, prefix: str = "yahoo") -> Path | None:
+    """Fetch every ticker, resumable. Writes the manifest when `finalize`; returns its path.
+
+    days: only the last `days` calendar days (live scans), written under a different
+    manifest prefix so the panel builder never takes a short pull for full history."""
     started = datetime.now(timezone.utc)
-    out_dir = out_dir or RAW / "yahoo" / started.strftime("%Y%m%d")
+    if days is not None and prefix == "yahoo":
+        raise ValueError("a partial pull needs its own manifest prefix")
+    p1 = 0 if days is None else int(started.timestamp()) - days * 86400
+    out_dir = out_dir or RAW / prefix / started.strftime("%Y%m%dT%H%M%SZ")
     out_dir.mkdir(parents=True, exist_ok=True)
     progress = out_dir / "_progress.jsonl"
     done = {}
@@ -86,7 +92,7 @@ def fetch(tickers: list[str], out_dir: Path | None = None, sleep: float = 0.35, 
         for i, ticker in enumerate(sorted(set(tickers))):
             if ticker in done:
                 continue
-            status, body, url = fetch_one(ticker, p2)
+            status, body, url = fetch_one(ticker, p2, p1=p1)
             stamp = utc_stamp()
             suffix = ".JK.json" if status == 200 else ".JK.error.json"
             path = out_dir / f"{ticker}{suffix}"
@@ -118,7 +124,8 @@ def fetch(tickers: list[str], out_dir: Path | None = None, sleep: float = 0.35, 
     records = [done[t] for t in sorted(done) if t in set(tickers)]
     header = {
         "source": SOURCE,
-        "description": "Yahoo Finance v8 chart, daily bars, full history, split events and dividends",
+        "description": "Yahoo Finance v8 chart, daily bars, " + ("full history" if days is None else f"last {days} days")
+                       + ", split events and dividends",
         "started_at": min((r["downloaded_at"] for r in records), default=utc_stamp(started)),
         "finished_at": utc_stamp(),
         "raw_dir": rel(out_dir),
@@ -127,4 +134,4 @@ def fetch(tickers: list[str], out_dir: Path | None = None, sleep: float = 0.35, 
         "not_found": sum(1 for r in records if r["http_status"] == 404),
         "failed": sum(1 for r in records if r["http_status"] not in (200, 404)),
     }
-    return write_manifest(f"yahoo-{started.strftime('%Y%m%dT%H%M%SZ')}.jsonl", header, records)
+    return write_manifest(f"{prefix}-{started.strftime('%Y%m%dT%H%M%SZ')}.jsonl", header, records)

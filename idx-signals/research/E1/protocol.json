@@ -1,0 +1,89 @@
+{
+  "protocol_id": "KOD-IDX-E1-v1",
+  "frozen_before_analysis": true,
+  "question": "On the IDX, which information available at the close of a session distinguishes names that reprice +30% / +50% / +100% within the next five sessions from similar names on the same session?",
+  "data": {
+    "panel_manifest": "panel-20261007T225823Z.json",
+    "panel_format": "panel-v2",
+    "tier": "TIER_1 only (2021-01-22 .. 2025-02-21): exchange data, survivorship-complete"
+  },
+  "event": {
+    "price_series": "reference-chain level: cumulative product of close/previous on every present session, with previous = IDX reference price (IDX resets it on corporate-action ex-dates, so splits and rights issues do not create price jumps)",
+    "decision_cutoff": "close of session t (all inputs through that close)",
+    "forward_return": "R5max(t) = max over k = 1..5 of level(t+k) / level(t) - 1, market sessions, closes only; sessions where the name is absent are skipped; no forward close at all = ineligible",
+    "thresholds": [0.30, 0.50, 1.00],
+    "labels": "E30 = R5max >= 0.30, E50 = R5max >= 0.50, E100 = R5max >= 1.00",
+    "episode": "an episode at threshold X starts on an eligible ticker-day t with R5max(t) >= X when no session t-5..t-1 of that name had R5max >= X; its peak is the session of the maximum close within t+1..t+5",
+    "secondary_measures": "R5 close-to-close return at t+5; executable entry = close of t+1 when traded and not locked at ARA; capturable return = max close t+2..t+5 / close t+1 - 1"
+  },
+  "universe": {
+    "unit": "ticker-day",
+    "eligible_if": [
+      "session t lies in a research period and t+5 lies in the same period (5-session embargo at each boundary)",
+      "the name traded on t (volume > 0, close > 0, IDX reference > 0)",
+      "the name has at least 20 present sessions before t in the panel",
+      "the name has at least one present session in t+1..t+5"
+    ],
+    "non_winners_included": true,
+    "price_floor": "none; every price band is kept and reported separately"
+  },
+  "periods": {
+    "discovery": ["2021-01-22", "2022-12-30"],
+    "validation": ["2023-01-02", "2023-12-29"],
+    "holdout": ["2024-01-02", "2025-02-21"],
+    "holdout_rule": "sealed: no label, base rate, signal statistic or detector result is computed on holdout sessions until a detector has been frozen and validated; then exactly one pre-registered holdout evaluation"
+  },
+  "first_100": "the first 100 E30 episodes of the discovery period in chronological order, ties broken by ticker; no other selection",
+  "matched_controls": {
+    "id": "E1-MATCH-v1",
+    "per_event": 5,
+    "pool": "eligible ticker-days on the same session t with R5max < 0.30, other names only",
+    "match_on": "price band (<= Rp200 / <= Rp5,000 / above), liquidity quintile (20-session median traded value), market-cap quintile (close x IDX listed shares); all computed through the close of t",
+    "relaxation": "if fewer than 5 names share all three buckets: drop market cap, then liquidity, then price band; level recorded",
+    "not_matched_on_purpose": "volatility, momentum, drawdown and the day's own behaviour, because those are candidate signals",
+    "sampling": "without replacement, numpy default_rng(seed = 20261008 + episode index)"
+  },
+  "weak_signals": {
+    "id": "E1-SIGNALS-v1",
+    "all_at_close_of_t": true,
+    "continuous": ["ret1", "rel1", "ret5", "ret20", "volr", "valr", "freqr", "rngr", "cpos", "vol20", "dd60", "turn", "up5", "zero20", "age", "logval20", "logmcap"],
+    "binary": ["ara", "brk60", "ign"],
+    "definitions": {
+      "ret1": "close/previous - 1",
+      "rel1": "ret1 minus the median ret1 of all names traded that session",
+      "ret5": "5-session reference-chain return through t",
+      "ret20": "20-session reference-chain return through t",
+      "volr": "volume / median volume of traded sessions in t-20..t-1 (>= 10 needed)",
+      "valr": "traded value / median traded value of t-20..t-1",
+      "freqr": "number of trades / median of t-20..t-1 (mirror field; not available live from Yahoo)",
+      "rngr": "(high - low)/previous divided by its median over t-20..t-1",
+      "cpos": "(close - low)/(high - low); one-price bar: 1 if up, 0 if down, 0.5 if flat",
+      "vol20": "std of daily log returns over t-19..t",
+      "dd60": "level / max level over t-59..t - 1",
+      "turn": "volume / IDX listed shares",
+      "up5": "number of up closes in t-4..t",
+      "zero20": "present but untraded sessions in t-20..t-1",
+      "age": "sessions since the name's first panel session (censored at 2019-07-29)",
+      "logval20": "log10 of the 20-session median traded value",
+      "logmcap": "log10 of close x listed shares",
+      "ara": "close locked at the ARA limit",
+      "brk60": "level above the max of t-60..t-1",
+      "ign": "ASTRA IGNITION v1 thresholds on daily bars (ret1 >= 3%, rel1 >= 1.5 pp, volr >= 3); an analogue, not the 5-minute v1 detector"
+    },
+    "statistics": "per signal: median in events and in controls; AUC = P(event value > control value) + 0.5 P(tie) over event-control pairs within each matched set; 95% interval by bootstrap over events (1000 resamples, seed 20261008); binary: rate in events vs controls"
+  },
+  "detector": {
+    "family": "idxsig/rules/moonshot_e1.py FAMILY (F1..F10), fixed before analysis",
+    "selection_on_discovery_only": "for each rule: n = flagged eligible ticker-days, p = share with E30, base = E30 rate of all eligible ticker-days; admissible if n >= 200 and the Wilson 95% lower bound of p exceeds base; select the admissible rule with the highest lift p/base, ties by larger n; if none is admissible, D1 = NONE",
+    "freeze": "the selected name is written into moonshot_e1.SELECTED and committed before any validation statistic is computed",
+    "validation_metrics": [
+      "precision at E30/E50/E100 vs base rate (lift)",
+      "precision vs matched random controls: for every flag, a same-session eligible name from the same price-band/liquidity/market-cap bucket (relaxed as above), 200 draws; one-sided p = share of draws at or above the detector",
+      "recall: share of validation episodes flagged on a session of the episode while R5max >= threshold still held (before the repricing), with lead time to the peak",
+      "false alerts: flags without E30",
+      "executability: share of flags with an executable entry at the close of t+1; capturable return",
+      "trading: the idxsig harness (lots, fees, ARA/ARB, corporate-action registry) over the validation window against its matched and same-session random baselines"
+    ]
+  },
+  "claims": "This is historical research. No result here is prospective performance, and a 100-event pilot does not establish predictive power."
+}

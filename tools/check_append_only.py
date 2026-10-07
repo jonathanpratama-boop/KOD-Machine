@@ -5,6 +5,8 @@ Frozen directories: a file, once committed, may never be modified, deleted or re
   idx-signals/results/runs/      one directory per backtest run
   idx-signals/data/manifests/    provenance of every downloaded data file
   idx-signals/data/corporate_actions/ca_registry-*  corporate-action registries, one file per build
+  idx-signals/research/          experiment protocols and their results, one directory per stage
+  idx-signals/paper/scans/, idx-signals/paper/timestamps/   frozen scan snapshots and their tokens
   kod-machine/registry/cards/    frozen KOD cards, one per open
   kod-machine/registry/scans/    frozen KOD scans
   kod-machine/registry/evidence/ archived evidence bytes and metadata (v1)
@@ -15,6 +17,7 @@ Frozen directories: a file, once committed, may never be modified, deleted or re
 Append-only logs: the new content must start with the old content, byte for byte.
   idx-signals/results/RUNS.jsonl
   idx-signals/data/corporate_actions/manual.csv   primary-source entries (correct by adding a row)
+  idx-signals/paper/ledger.jsonl  prospective paper scans, decisions and outcomes
   kod-machine/registry/opens.jsonl
   kod-machine/registry/scans.jsonl
   kod-machine/registry/receipts.jsonl
@@ -35,6 +38,9 @@ FROZEN_DIRS = (
     "idx-signals/results/runs/",
     "idx-signals/data/manifests/",
     "idx-signals/data/corporate_actions/ca_registry-",
+    "idx-signals/research/",
+    "idx-signals/paper/scans/",
+    "idx-signals/paper/timestamps/",
     "kod-machine/registry/cards/",
     "kod-machine/registry/scans/",
     "kod-machine/registry/evidence/",
@@ -45,6 +51,7 @@ FROZEN_DIRS = (
 APPEND_ONLY = (
     "idx-signals/results/RUNS.jsonl",
     "idx-signals/data/corporate_actions/manual.csv",
+    "idx-signals/paper/ledger.jsonl",
     "kod-machine/registry/opens.jsonl",
     "kod-machine/registry/scans.jsonl",
     "kod-machine/registry/receipts.jsonl",

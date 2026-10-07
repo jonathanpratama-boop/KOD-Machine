@@ -58,6 +58,16 @@ def main(argv=None) -> int:
     p_run.add_argument("--allow-dirty", action="store_true", help="record a run from uncommitted code (flagged)")
     p_run.add_argument("--no-commit", action="store_true", help="write the run but do not git-commit it")
     sub.add_parser("verify-runs", help="check that no past run was edited or removed")
+    sub.add_parser("e1-discovery", help="experiment E1, discovery period (writes research/E1/discovery/)")
+    p_ps = sub.add_parser("paper-scan", help="prospective paper scan of the session that last closed (no orders)")
+    p_ps.add_argument("--manifest", help="a yahoo_recent manifest (default: pull now)")
+    p_ps.add_argument("--commit", action="store_true", help="commit the records and push (GitHub receipt)")
+    p_sc = sub.add_parser("paper-score", help="score paper decisions whose window has ended")
+    p_sc.add_argument("--manifest", help="a yahoo_recent manifest (default: pull now)")
+    p_sc.add_argument("--commit", action="store_true")
+    sub.add_parser("paper-verify", help="check the paper ledger's hash chain and timestamp tokens")
+    p_v = sub.add_parser("e1-validation", help="experiment E1, validation of the frozen detector")
+    p_v.add_argument("--rule", required=True, help="must equal rules/moonshot_e1.SELECTED, committed")
     args = parser.parse_args(argv)
 
     if args.cmd == "fetch-idx-mirror":
@@ -165,6 +175,65 @@ def main(argv=None) -> int:
             print(f"error: {exc}", file=sys.stderr)
             return 2
         print((run_dir / "REPORT.md").read_text(encoding="utf-8"))
+    elif args.cmd in ("e1-discovery", "e1-validation"):
+        from . import e1
+        from .panel import load
+        from .rules import moonshot_e1
+        from .results import code_state
+
+        df, meta, manifest = load()
+        proto, _ = e1.protocol()
+        if manifest.name != proto["data"]["panel_manifest"]:
+            print(f"error: E1 is registered on {proto['data']['panel_manifest']}, not {manifest.name}", file=sys.stderr)
+            return 2
+        if code_state()["dirty"]:
+            print("error: commit idxsig/ first so the results name the code that produced them", file=sys.stderr)
+            return 2
+        study = e1.Study(df, meta)
+        if args.cmd == "e1-discovery":
+            print(json.dumps(e1.run_discovery(study, e1.E1_DIR / "discovery"), indent=2))
+        else:
+            if moonshot_e1.SELECTED != args.rule:
+                print(f"error: {args.rule} is not the frozen detector (moonshot_e1.SELECTED = "
+                      f"{moonshot_e1.SELECTED})", file=sys.stderr)
+                return 2
+            print(json.dumps(e1.run_validation(study, args.rule, e1.E1_DIR / "validation"), indent=2, default=str))
+    elif args.cmd in ("paper-scan", "paper-score"):
+        import os
+
+        from . import paper
+
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "kod-machine"))
+        from kod.timestamp import RFC3161Timestamper
+
+        manifest = Path(args.manifest) if args.manifest else None
+        if manifest is None:
+            from .sources import yahoo
+
+            manifest = yahoo.fetch(paper.active_tickers(), days=paper.HISTORY_DAYS, prefix="yahoo_recent")
+        stamper = RFC3161Timestamper()
+        trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "")
+        if args.cmd == "paper-scan":
+            out = paper.scan(manifest, validation=paper.validation_evidence())
+            written = paper.record_scan(out, stamper)
+            print(json.dumps({k: out["scan"][k] for k in ("scan_id", "session", "result", "candidates_ranked")}, indent=2))
+            for dcs in out["decisions"]:
+                print(f"  #{dcs['rank']} {dcs['instrument']['ticker']}: {dcs['decision']} ({dcs['reason']})")
+            message = f"paper scan {out['scan']['scan_id']}: {out['scan']['result']}"
+        else:
+            written, outcomes = paper.score_pending(manifest, stamper)
+            print(f"scored {len(outcomes)} decision(s)")
+            message = f"paper score: {len(outcomes)} outcome(s)"
+        if args.commit and written:
+            print(paper.commit_and_push([*written, manifest], message, trailer))
+    elif args.cmd == "paper-verify":
+        from . import paper
+
+        problems = paper.verify_all()
+        print("paper-verify: " + ("OK" if not problems else f"{len(problems)} problems"))
+        for p_ in problems:
+            print(f"  {p_}")
+        return 1 if problems else 0
     elif args.cmd == "verify-runs":
         from .results import verify_runs
 
