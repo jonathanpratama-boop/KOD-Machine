@@ -14,7 +14,13 @@ possible. Per trade:
   - Shares may not exceed `max_participation` of that session's volume. Too big -> skip.
   - Exit needs a trade and the close not locked at the lower limit (ARB); otherwise the
     sale rolls to the next session where it is possible.
-  - Splits and other reference-price resets scale the shares held, so value is preserved.
+  - Splits and reverse splits (an integer reference reset, e.g. BBCA 1:5) scale the shares
+    held. Any other reference reset (rights issue, bonus shares, stock dividend) cannot be
+    priced from the bars: a rights holder gets rights, not free shares, and what they are
+    worth depends on terms the data lacks. With ca_mode="exclude" (default) a trade held
+    across such a reset is EXCLUDED_CORP_ACTION and not scored, for the rule and the random
+    baseline alike; ca_mode="value_preserving" instead scales shares by the reset (the
+    rights valued at theoretical ex-rights and reinvested), the earlier behaviour.
     Cash dividends are not added back (returns are price returns, slightly conservative).
   - A name that stops trading before the exit (delisting, or the data ends) is sold at its
     last traded close, status EXIT_DATA_END, or at zero with data_end_exit="zero".
@@ -35,6 +41,7 @@ STATUS = (
     "EXITED",               # scored
     "EXIT_DATA_END",        # scored: name stopped trading before the exit
     "INCOMPLETE",           # not scored: holding period runs past the data
+    "EXCLUDED_CORP_ACTION",  # not scored: held across a rights issue / bonus / non-split reset
     "SKIP_NO_ENTRY_SESSION",
     "SKIP_NOT_TRADED",
     "SKIP_ARA_LOCK",
@@ -42,6 +49,7 @@ STATUS = (
     "SKIP_LIQUIDITY",
 )
 SCORED = (0, 1)
+FIRST_SKIP = STATUS.index("SKIP_NO_ENTRY_SESSION")  # statuses from here on never entered
 BIG = np.iinfo(np.int64).max // 4
 
 
@@ -53,6 +61,7 @@ class ExecConfig:
     max_participation: float = 0.10
     fees: Fees = field(default_factory=Fees)
     data_end_exit: str = "last_close"  # or "zero"
+    ca_mode: str = "exclude"  # or "value_preserving"
 
 
 def _snap_ratio(r: np.ndarray) -> np.ndarray:
@@ -71,7 +80,7 @@ class Market:
     """Dense (ticker x session) arrays. Column d only depends on data up to session d."""
 
     FIELDS = ("close", "prev", "high", "low", "volume", "value", "present", "tradeable",
-              "lock_up", "lock_down", "ca_ratio", "share_factor")
+              "lock_up", "lock_down", "ca_ratio", "is_split", "share_factor", "split_factor", "other_ca_count")
 
     def __init__(self, tickers, dates, **arrays):
         self.tickers = np.asarray(tickers)
@@ -121,10 +130,15 @@ class Market:
         raw = last_close / ref
         reset = present & np.isfinite(raw) & (np.abs(1 / raw - 1) > 0.005)
         ca_ratio = np.where(reset, _snap_ratio(np.where(reset, raw, 1.0)), 1.0)
-        share_factor = np.cumprod(ca_ratio, axis=1)
+        whole = np.abs(ca_ratio - np.round(ca_ratio)) < 1e-6
+        whole_inverse = np.abs(1 / ca_ratio - np.round(1 / ca_ratio)) < 1e-6
+        is_split = reset & (((ca_ratio >= 2) & whole) | ((ca_ratio <= 0.5) & whole_inverse))
         return cls(tickers, dates, close=close, prev=prev, high=high, low=low, volume=volume, value=value,
                    present=present, tradeable=tradeable, lock_up=lock_up, lock_down=lock_down,
-                   ca_ratio=ca_ratio, share_factor=share_factor)
+                   ca_ratio=ca_ratio, is_split=is_split,
+                   share_factor=np.cumprod(ca_ratio, axis=1),
+                   split_factor=np.cumprod(np.where(is_split, ca_ratio, 1.0), axis=1),
+                   other_ca_count=np.cumsum(reset & ~is_split, axis=1))
 
     def window(self, start=None, end=None) -> "Market":
         lo = 0 if start is None else int(np.searchsorted(self.dates, np.datetime64(start, "D"), side="left"))
@@ -132,9 +146,8 @@ class Market:
         return self.slice(lo, hi)
 
     def slice(self, lo: int, hi: int) -> "Market":
+        # Cumulative fields are only ever used as ratios or differences, so a slice keeps them valid.
         arrays = {name: getattr(self, name)[:, lo:hi] for name in self.FIELDS}
-        if lo:
-            arrays["share_factor"] = np.cumprod(arrays["ca_ratio"], axis=1)
         return Market(self.tickers, self.dates[lo:hi], **arrays)
 
     def truncate(self, last: int) -> "Market":
@@ -192,12 +205,21 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     status[data_end] = STATUS.index("EXIT_DATA_END")
     status[open_ & ~incomplete & ~data_end] = STATUS.index("EXITED")
 
+    held = np.isin(status, SCORED)
+    x = np.where(held, exit_idx, e)
+    if cfg.ca_mode == "exclude":
+        crossed = m.other_ca_count[tick_idx, x] - m.other_ca_count[tick_idx, e] > 0
+        status[held & crossed] = STATUS.index("EXCLUDED_CORP_ACTION")
+        factor_array = m.split_factor
+    elif cfg.ca_mode == "value_preserving":
+        factor_array = m.share_factor
+    else:
+        raise ValueError(f"unknown ca_mode {cfg.ca_mode!r}")
     scored = np.isin(status, SCORED)
-    x = np.where(scored, exit_idx, e)
     exit_price = np.where(scored, np.nan_to_num(m.close[tick_idx, x]), np.nan)
     if cfg.data_end_exit == "zero":
         exit_price = np.where(status == STATUS.index("EXIT_DATA_END"), 0.0, exit_price)
-    factor = m.share_factor[tick_idx, x] / m.share_factor[tick_idx, e]
+    factor = factor_array[tick_idx, x] / factor_array[tick_idx, e]
     exit_shares = shares * factor
     buy_value = shares * entry_price
     cost = buy_value * (1 + cfg.fees.buy)
@@ -208,11 +230,11 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     return {
         "ticker_idx": tick_idx,
         "signal_idx": sig_idx,
-        "entry_idx": np.where(status >= 3, -1, e),
-        "exit_idx": np.where(scored, x, -1),
+        "entry_idx": np.where(status >= FIRST_SKIP, -1, e),
+        "exit_idx": np.where(held, x, -1),  # excluded trades were still held until here
         "status": status,
-        "entry_price": np.where(status >= 3, np.nan, entry_price),
-        "shares": np.where(status >= 3, 0, shares),
+        "entry_price": np.where(status >= FIRST_SKIP, np.nan, entry_price),
+        "shares": np.where(status >= FIRST_SKIP, 0, shares),
         "exit_price": exit_price,
         "share_factor": np.where(scored, factor, np.nan),
         "rolled_sessions": np.where(scored & (status == 0), x - target, 0),

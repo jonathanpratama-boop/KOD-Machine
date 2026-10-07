@@ -32,8 +32,10 @@ class BacktestTests(unittest.TestCase):
         self.assertEqual(s["universe"]["tickers_in_window"], 40)
         self.assertEqual(s["universe"]["tickers_ending_inside_window"], 1)
         self.assertEqual(s["signals"]["total"], len(out["trades"]))
-        self.assertEqual(len(out["draws"]), 50)
-        self.assertTrue(all(c["identical"] for c in s["lookahead_checks"]))
+        self.assertEqual(len(out["draws"]), 100)  # 50 matched + 50 same-session
+        self.assertEqual(sorted(out["draws"]["baseline"].unique()), ["random", "random_matched"])
+        self.assertEqual(s["lookahead_check"]["mode"], "exhaustive")
+        self.assertEqual(s["lookahead_check"]["sessions_checked"], s["universe"]["sessions"])
         self.assertIn("PLACEBO", " ".join(s["warnings"]))
 
     def test_runs_are_deterministic(self):

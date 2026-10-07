@@ -23,15 +23,15 @@ python3 -m idxsig verify-data              # re-hash every raw file and the pane
 python3 -m idxsig rules                    # list rules; USER_RULE shows PENDING
 python3 -m idxsig run --rule PLACEBO_COINFLIP
 python3 -m idxsig verify-runs              # no past run edited or removed
-python3 -m unittest                        # 34 tests, synthetic data only
+python3 -m unittest                        # 44 tests, synthetic data only
 ```
 
 ## 1. Dataset
 
 | Segment | Source | Sessions | Survivorship |
 |---|---|---|---|
-| 2019-07-29 .. 2025-02-21 | IDX daily stock summary via the [wildangunawan/Dataset-Saham-IDX](https://github.com/wildangunawan/Dataset-Saham-IDX) mirror, pinned to commit `bc0ac771` | 1,355 | Names delisted after the mirror started (~2021-01) keep their history (FINN, TURI and RMBA end early). Names delisted between 2019-07 and ~2021-01 are absent. |
-| 2025-02-24 .. 2026-10-06 | Yahoo Finance v8 chart API (`<TICKER>.JK`), split adjustment undone | 382 | Survivor-only. Yahoo drops delisted names: 59 mirror names it no longer lists (delisted, merged or renamed after 2025-02-21, e.g. SRIL, WSKT, FREN, MAMI) stop at 2025-02-21, as does FISH (see QA). |
+| 2019-07-29 .. 2025-02-21 | IDX daily stock summary via the [wildangunawan/Dataset-Saham-IDX](https://github.com/wildangunawan/Dataset-Saham-IDX) mirror, pinned to commit `bc0ac771` | 1,355 | The mirror's first ticker snapshot was taken 2021-01-22 (upstream commit `ca98f653`), holding the names listed that day with history back to 2019-07-29. Names delisted before 2021-01-22 are absent; names delisted after it keep their history (FINN, TURI and RMBA end early). **Backtests start 2021-01-22 by default** for this reason. |
+| 2025-02-24 .. 2026-10-06 | Yahoo Finance v8 chart API (`<TICKER>.JK`), split adjustment undone | 382 | Survivor-only. 59 mirror names return not-found from Yahoo and stop at 2025-02-21, as does FISH (see QA). Not-found is not the same as delisted: MAMI, MYRX, NIPS and five others were force-delisted on 2025-07-21, but WSKT is still listed and has been suspended since May 2023. |
 
 Built panel: 1,425,830 rows, 983 tickers, 1,737 sessions. Prices are as traded (integer
 rupiah), not adjusted, because lots, ticks and auto-rejection limits apply to traded prices.
@@ -74,8 +74,11 @@ each row with its source URL and retrieval date).
 signal / not evaluable). The rule hash covers the text and the module source, so any edit
 is a new rule version and a new run.
 
-Every run re-computes the rule on data truncated at three cut points and refuses to record
-results if any past signal changes, so a rule that reads ahead cannot produce a run.
+Every run recomputes the rule on every prefix of the data (sessions 0..d, for every d) and
+refuses to record results unless each recorded signal at d equals the rule's output from
+data up to d. That is a proof, not a sample: every signal in a run is exactly what the rule
+computes from what was known at that close. The placebo panel takes about 9 seconds.
+`--lookahead-cuts N` samples N prefixes instead, and the report says it is not a proof.
 
 ## 3. Execution over the full universe
 
@@ -106,23 +109,44 @@ evaluable, including names that later stop trading. Execution, per signal:
   The data has no daily board membership, so the 10% limit of the acceleration and special
   monitoring boards ([FCA](https://market.bisnis.com/read/20240315/7/1749731/bei-terapkan-papan-pemantauan-khusus-full-call-auction-25-maret))
   is applied when the bar is one-price or priced under Rp50.
-- **Corporate actions:** a reference-price reset scales the shares held (BBCA's 1:5 split
-  on 2021-10-13 is a 5x share factor). Cash dividends are not added back.
+- **Corporate actions:** splits and reverse splits (an integer reference reset, e.g. BBCA's
+  1:5 split on 2021-10-13) scale the shares held. Any other reset (rights issue, bonus
+  shares, stock dividend) is not a split: a rights holder receives rights, not free shares,
+  and their value depends on terms the price data does not have. A trade held across one
+  is `EXCLUDED_CORP_ACTION` and not scored, for the rule and both baselines alike.
+  `--ca-mode value_preserving` scales shares instead (rights valued at the theoretical
+  ex-rights price and reinvested). Cash dividends are not added back.
 - **Delisting:** a name that stops trading while held is sold at its last traded close
   (`EXIT_DATA_END`), or at zero with `--data-end-exit zero`. Counted in every report.
 - **Overlap:** a new signal in a name already held is skipped and logged.
 
-The default window ends 2025-02-21, the last session of the better-covered segment. A
-window past it is allowed and the report warns that the rest is survivor-only.
+The default window is 2021-01-22 .. 2025-02-21, where the universe includes the names
+that later delisted. An earlier start or a later end is allowed, and the report warns that
+the extra sessions are survivor-biased.
 
-## 4. Random baseline
+## 4. Random baselines
 
-For each attempted signal, each of 200 draws picks a random name on the same session from
-the names where the rule was evaluable, and runs it through the same execution and
-holding period. Each draw is a portfolio with the rule's size and dates. The report gives
-signal count, hit rate (net return > 0) and average net return for the rule and the
-random distribution (mean, 95% range), the difference, the rule's percentile among draws
-and a one-sided p-value, with a breakdown by year.
+For each attempted signal, each of 200 draws picks a replacement name on the same session
+from the names where the rule was evaluable, and runs it through the same execution and
+holding period. Each draw is a portfolio with the rule's size and dates. Two baselines:
+
+- **Matched (primary).** The replacement comes from names in the same buckets as the
+  signalled name that session: price band (<= Rp200, <= Rp5,000, above), quintile of
+  20-session median traded value, tercile of 20-session volatility, tercile of 20-session
+  return. All computed from data up to that session. When fewer than 5 other names share
+  all four, momentum is dropped, then volatility, then liquidity; the report counts which
+  level was used. The signalled name is never its own control.
+- **Same-session.** Any evaluable name. Controls for market timing only.
+
+Why both: a rule that keeps picking illiquid Rp100 names will beat same-session random
+whenever those names do well, with no information in the signal. The test suite builds
+such a market: picking cheap names returns +1.40% against +0.60% same-session (p = 0.005)
+and +1.46% matched (p = 0.58). Not matched on, because the data lacks it: market cap and
+free float, sector history, daily board membership.
+
+The report gives signal count, hit rate (net return > 0) and average net return for the
+rule and each baseline's distribution (mean, 95% range), the difference, the rule's
+percentile among draws and a one-sided p-value, with a breakdown by year.
 
 ## Results are append-only
 

@@ -23,6 +23,11 @@ from ..provenance import RAW, rel, sha256_file, utc_stamp, write_manifest
 
 REPO_URL = "https://github.com/wildangunawan/Dataset-Saham-IDX"
 PINNED_COMMIT = "bc0ac7712ce5e46f1067349e13ab9f338883c6c4"
+# The mirror's first ticker snapshot (upstream commit ca98f6539, 2021-01-22) held the names
+# listed that day, each with history back to 2019-07-29. A name that delisted before it was
+# never captured; from it on, delisted names keep their files. So the universe is
+# survivorship-complete only from this date, and backtests start here by default.
+FIRST_SNAPSHOT = "2021-01-22"
 SOURCE = "idx_mirror"
 LICENSE = (
     "Mirror: CC BY-NC 4.0 (wildangunawan/Dataset-Saham-IDX). Underlying data: PT Bursa Efek "

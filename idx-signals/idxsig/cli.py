@@ -44,6 +44,10 @@ def main(argv=None) -> int:
     p_run.add_argument("--draws", type=int, default=200)
     p_run.add_argument("--seed", type=int, default=20261007)
     p_run.add_argument("--data-end-exit", choices=("last_close", "zero"), default="last_close")
+    p_run.add_argument("--ca-mode", choices=("exclude", "value_preserving"), default="exclude",
+                       help="trades held across a rights issue / non-split corporate action")
+    p_run.add_argument("--lookahead-cuts", type=int,
+                       help="sample N prefixes instead of the exhaustive check (faster, not a proof)")
     p_run.add_argument("--panel", help="panel manifest (default: latest)")
     p_run.add_argument("--allow-dirty", action="store_true", help="record a run from uncommitted code (flagged)")
     p_run.add_argument("--no-commit", action="store_true", help="write the run but do not git-commit it")
@@ -106,7 +110,8 @@ def main(argv=None) -> int:
             rule_id=args.rule, start=args.start, end=args.end, holding_days=args.holding_days,
             entry_lag=args.entry_lag, notional=args.notional, max_participation=args.max_participation,
             fee_buy=args.fee_buy, fee_sell=args.fee_sell, overlap=args.overlap, random_draws=args.draws,
-            seed=args.seed, data_end_exit=args.data_end_exit,
+            seed=args.seed, data_end_exit=args.data_end_exit, ca_mode=args.ca_mode,
+            lookahead_cuts=args.lookahead_cuts,
         )
         output = run(cfg, df, meta)
         try:

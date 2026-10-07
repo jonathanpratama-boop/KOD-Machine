@@ -68,10 +68,26 @@ def _rate(x) -> str:
     return "—" if x is None else f"{100 * x:.1f}%"
 
 
+def _vs(label: str, base: dict | None) -> str:
+    if not base:
+        return f"{label}: no comparison."
+    return (f"{label}: {_pct(base.get('difference'))} (rule at percentile "
+            f"{base.get('percentile_of_observed', float('nan')):.1f} of draws, one-sided p = "
+            f"{base.get('p_value_one_sided', float('nan')):.3f}).")
+
+
+def _dist_cell(base: dict, fmt) -> str:
+    if not base:
+        return "—"
+    return (f"{fmt(base.get('random_mean'))} (95% of draws {fmt(base.get('random_p2_5'))} .. "
+            f"{fmt(base.get('random_p97_5'))})")
+
+
 def render_report(run_id: str, summary: dict) -> str:
-    r, rnd, sig = summary["rule_trades"], summary["random"], summary["signals"]
+    r, sig = summary["rule_trades"], summary["signals"]
+    mt, rnd = summary["random_matched"], summary["random"]
     u, rule = summary["universe"], summary["rule"]
-    avg, hit = rnd["avg_net_return"] or {}, rnd["hit_rate"] or {}
+    look = summary["lookahead_check"]
     lines = [
         f"# Run {run_id}",
         "",
@@ -86,40 +102,49 @@ def render_report(run_id: str, summary: dict) -> str:
         "",
         "## Result",
         "",
-        "| | Rule | Random (same sessions, same execution) |",
-        "|---|---:|---:|",
-        f"| Signals | {sig['total']} (rate {_rate(sig['signal_rate'])} of evaluable ticker-sessions) | — |",
-        f"| Attempted (after overlap skip) | {sig['attempted']} | {rnd['draws']} draws × {sig['attempted']} |",
-        f"| Filled | {r['filled']} ({_rate(r['fill_rate'])}) | {_rate(rnd['pooled']['fill_rate'])} |",
-        f"| Scored trades | {r['scored']} | {rnd['pooled']['scored']} |",
-        f"| Hit rate (net return > 0) | {_rate(r['hit_rate'])} | {_rate(hit.get('random_mean'))} "
-        f"(95% of draws {_rate(hit.get('random_p2_5'))} .. {_rate(hit.get('random_p97_5'))}) |",
-        f"| Average net return | {_pct(r['avg_net_return'])} | {_pct(avg.get('random_mean'))} "
-        f"(95% of draws {_pct(avg.get('random_p2_5'))} .. {_pct(avg.get('random_p97_5'))}) |",
-        f"| Median net return | {_pct(r['median_net_return'])} | {_pct(rnd['pooled']['median_net_return'])} |",
+        "| | Rule | Matched random (primary) | Same-session random |",
+        "|---|---:|---:|---:|",
+        f"| Signals | {sig['total']} (rate {_rate(sig['signal_rate'])} of evaluable ticker-sessions) | — | — |",
+        f"| Attempted (after overlap skip) | {sig['attempted']} | {mt['draws']} draws × {sig['attempted']} | "
+        f"{rnd['draws']} draws × {sig['attempted']} |",
+        f"| Filled | {r['filled']} ({_rate(r['fill_rate'])}) | {_rate(mt['pooled']['fill_rate'])} | "
+        f"{_rate(rnd['pooled']['fill_rate'])} |",
+        f"| Scored trades | {r['scored']} | {mt['pooled']['scored']} | {rnd['pooled']['scored']} |",
+        f"| Hit rate (net return > 0) | {_rate(r['hit_rate'])} | {_dist_cell(mt['hit_rate'], _rate)} | "
+        f"{_dist_cell(rnd['hit_rate'], _rate)} |",
+        f"| Average net return | {_pct(r['avg_net_return'])} | {_dist_cell(mt['avg_net_return'], _pct)} | "
+        f"{_dist_cell(rnd['avg_net_return'], _pct)} |",
+        f"| Median net return | {_pct(r['median_net_return'])} | {_pct(mt['pooled']['median_net_return'])} | "
+        f"{_pct(rnd['pooled']['median_net_return'])} |",
         "",
-        f"Average return vs random: {_pct(avg.get('difference'))} "
-        f"(rule at percentile {avg.get('percentile_of_observed', float('nan')):.1f} of draws, "
-        f"one-sided p = {avg.get('p_value_one_sided', float('nan')):.3f}).",
-        f"Hit rate vs random: {_pct(hit.get('difference'))} "
-        f"(percentile {hit.get('percentile_of_observed', float('nan')):.1f}, "
-        f"one-sided p = {hit.get('p_value_one_sided', float('nan')):.3f}).",
+        _vs("Average return vs matched random", mt["avg_net_return"]),
+        _vs("Hit rate vs matched random", mt["hit_rate"]),
+        _vs("Average return vs same-session random", rnd["avg_net_return"]),
+        _vs("Hit rate vs same-session random", rnd["hit_rate"]),
+        "",
+        "Matched controls found at: " + ", ".join(f"{k} {v}" for k, v in mt.get("match_level_used", {}).items()),
         "",
         "Status counts (rule): " + ", ".join(f"{k} {v}" for k, v in r["status_counts"].items()),
         "",
-        "Status counts (random, pooled): " + ", ".join(f"{k} {v}" for k, v in rnd["pooled"]["status_counts"].items()),
+        "Status counts (matched random, pooled): "
+        + ", ".join(f"{k} {v}" for k, v in mt["pooled"]["status_counts"].items()),
         "",
         "## By signal year",
         "",
-        "| Year | Attempts | Scored | Hit rate | Avg net | Random hit rate | Random avg net |",
-        "|---|---:|---:|---:|---:|---:|---:|",
+        "| Year | Attempts | Scored | Hit rate | Avg net | Matched hit rate | Matched avg net | Same-session avg net |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for y in summary["by_year"]:
         lines.append(
             f"| {y['year']} | {y['attempts']} | {y['scored']} | {_rate(y['hit_rate'])} | {_pct(y['avg_net_return'])} | "
-            f"{_rate(y.get('random_hit_rate'))} | {_pct(y.get('random_avg_net_return'))} |"
+            f"{_rate(y.get('random_matched_hit_rate'))} | {_pct(y.get('random_matched_avg_net_return'))} | "
+            f"{_pct(y.get('random_avg_net_return'))} |"
         )
     c = summary["config"]
+    if look["mode"] == "exhaustive":
+        look_text = f"exhaustive: the rule was recomputed on all {look['sessions_checked']} prefixes; 0 signals changed"
+    else:
+        look_text = "sampled at " + ", ".join(look["truncated_after"]) + " (not a proof)"
     lines += [
         "",
         "## Execution",
@@ -128,10 +153,9 @@ def render_report(run_id: str, summary: dict) -> str:
         f"- 100-share lots, notional Rp {c['notional']:,.0f} per trade, at most {c['max_participation']:.0%} of session volume",
         f"- Fees: buy {c['fee_buy']:.2%}, sell {c['fee_sell']:.2%}",
         f"- {summary['execution']['auto_rejection']}",
+        f"- Corporate actions: {summary['execution']['corporate_actions']}",
         f"- Overlap: {c['overlap']}; names that stop trading exit at {c['data_end_exit']}",
-        f"- Lookahead check: " + ", ".join(
-            f"truncated after {x['truncated_after']}: {'identical' if x['identical'] else 'DIFFERENT'}"
-            for x in summary["lookahead_checks"]),
+        f"- Lookahead check: {look_text}",
         "",
         "## Warnings",
         "",
@@ -174,7 +198,9 @@ def write_run(output: dict, *, allow_dirty: bool = False, commit: bool = True, r
     files["random_draws.csv"] = _write_exclusive(run_dir / "random_draws.csv",
                                                  output["draws"].to_csv(index=False, float_format="%.10g").encode())
     files["REPORT.md"] = _write_exclusive(run_dir / "REPORT.md", render_report(run_id, summary).encode())
-    r, avg = summary["rule_trades"], (summary["random"]["avg_net_return"] or {})
+    r = summary["rule_trades"]
+    avg = summary["random"]["avg_net_return"] or {}
+    matched = summary["random_matched"]["avg_net_return"] or {}
     line = {
         "run_id": run_id,
         "created_at": created,
@@ -191,6 +217,8 @@ def write_run(output: dict, *, allow_dirty: bool = False, commit: bool = True, r
         "scored": r["scored"],
         "hit_rate": r["hit_rate"],
         "avg_net_return": r["avg_net_return"],
+        "matched_random_avg_net_return": matched.get("random_mean"),
+        "p_value_avg_return_vs_matched": matched.get("p_value_one_sided"),
         "random_avg_net_return": avg.get("random_mean"),
         "p_value_avg_return": avg.get("p_value_one_sided"),
         "dir": rel(run_dir) if not root else str(run_dir),
@@ -203,7 +231,7 @@ def write_run(output: dict, *, allow_dirty: bool = False, commit: bool = True, r
         message = (
             f"idxsig run {run_id}\n\n{rule['rule_id']} {rule['version']}: {summary['signals']['total']} signals, "
             f"{r['scored']} scored, hit rate {_rate(r['hit_rate'])}, avg net {_pct(r['avg_net_return'])} "
-            f"vs random {_pct(avg.get('random_mean'))}"
+            f"vs matched random {_pct(matched.get('random_mean'))}, same-session random {_pct(avg.get('random_mean'))}"
         )
         if trailer:
             message += "\n\n" + trailer
