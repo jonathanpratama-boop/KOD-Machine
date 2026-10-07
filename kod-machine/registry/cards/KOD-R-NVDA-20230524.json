@@ -1,0 +1,64 @@
+{
+  "call_type": "RETROSPECTIVE",
+  "card_hash_version": "KOD-CARD-v1",
+  "case_id": "KOD-R-NVDA-20230524",
+  "critic": {
+    "invalidation": "Guidance and data-center demand commentary do not change the prior path, or the move is explained by index beta alone.",
+    "loss_path": "The scheduled print disappoints or the data-center commentary is already in the price, so the event does not change enterprise value.",
+    "missing_evidence": "Full sell-side revision tape, options skew, and primary-document set at T-30D are not in this seed."
+  },
+  "decision_cutoff": "2023-05-24T20:00:00Z",
+  "disposition": "INVESTIGATE",
+  "doctrine_sha": "246deb4a63c8168622e86cccecf04101801f2e1bf4d8c765396f3e277c294f0e",
+  "information_sets": {
+    "T-24H": {
+      "cutoff": "2023-05-23T20:00:00Z",
+      "facts": {
+        "catalyst": "scheduled earnings date, print not yet released",
+        "dated_catalyst_known": true,
+        "mechanism_in_primary_docs": null,
+        "narrative_only": false,
+        "price_already_repriced": null,
+        "price_quiet_vs_own_range": null,
+        "primary_document_public": false,
+        "volume_creep_before_story": null
+      },
+      "reconstruction_status": "PARTIAL_PUBLIC"
+    },
+    "T-30D": {
+      "cutoff": "2023-04-24T20:00:00Z",
+      "facts": {
+        "catalyst": "scheduled earnings date",
+        "dated_catalyst_known": true,
+        "mechanism_in_primary_docs": null,
+        "narrative_only": false,
+        "price_already_repriced": null,
+        "price_quiet_vs_own_range": null,
+        "primary_document_public": false,
+        "volume_creep_before_story": null
+      },
+      "reconstruction_status": "PARTIAL_PUBLIC"
+    },
+    "T-72H": {
+      "cutoff": "2023-05-21T20:00:00Z",
+      "facts": {
+        "catalyst": "scheduled earnings date",
+        "dated_catalyst_known": true,
+        "mechanism_in_primary_docs": null,
+        "narrative_only": false,
+        "price_already_repriced": null,
+        "price_quiet_vs_own_range": null,
+        "primary_document_public": false,
+        "volume_creep_before_story": null
+      },
+      "reconstruction_status": "PARTIAL_PUBLIC"
+    }
+  },
+  "outcome_window": null,
+  "reconstruction_status": "PARTIAL_PUBLIC",
+  "scan_entry_id": null,
+  "story_hypothesis": "A dated earnings print was the scheduled information event. The lab question is whether anything in the prior 30 days, other than the known date, was a weak tell. This card does not reconstruct the full information set.",
+  "symbol": "NVDA",
+  "universe_id": "SEED-PARTIAL-2026-10-08",
+  "venue": "NASDAQ"
+}
