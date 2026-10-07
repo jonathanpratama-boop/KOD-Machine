@@ -1,13 +1,21 @@
-"""Calibration. Prospective closed cases only. Retrospective never validates a detector."""
+"""Calibration. Prospective closed cases only. Retrospective never validates a detector.
+
+Every detector is scored on both sides: the hit rate when it fired, the hit rate when it
+was evaluated and did not fire, and the base rate over both. Lift is the signal hit rate
+divided by the base rate. A detector with no no-signal cases has no base rate and no lift.
+"""
 
 from __future__ import annotations
 
 import json
 from collections import defaultdict
 
+from .detectors import HIT_LABEL
+from .hashing import parse_ts
 from .ledger import Ledger
 
 PROMOTION_MIN = 30
+UNSCORED = {"UNKNOWN", "CENSORED"}
 
 
 def build_report(ledger: Ledger) -> dict:
@@ -29,9 +37,18 @@ def build_report(ledger: Ledger) -> dict:
 
     prospective_closed = [
         c for c in buckets["PROSPECTIVE"]
-        if c["outcome"] and c["outcome"]["outcome_label"] not in {"UNKNOWN", "CENSORED"}
+        if c["outcome"] and c["outcome"]["outcome_label"] not in UNSCORED
     ]
-    detector_table = _detector_table(prospective_closed)
+    observations = [
+        (ev["detector"], ev["status"], case["outcome"]["outcome_label"], HIT_LABEL.get(ev["detector"], "REPRICED_UP"))
+        for case in prospective_closed
+        for ev in case["evaluations"]
+    ]
+    detector_table = [
+        {**row, "status": "UNVALIDATED", "promotable": False}
+        for row in lift_table(observations)
+    ]
+    scan_log = _scan_log(ledger, cases)
     return {
         "doctrine_sha": ledger.doctrine_sha,
         "calibration_status": "NOT_STARTED" if len(prospective_closed) < PROMOTION_MIN else "SAMPLE_ONLY",
@@ -42,41 +59,141 @@ def build_report(ledger: Ledger) -> dict:
             "prospective_closed": len(prospective_closed),
             "retrospective": len(buckets["RETROSPECTIVE"]),
             "simulated_excluded": len(buckets["SIMULATED"]),
+            **scan_log["counts"],
         },
         "detector_table": detector_table,
+        "scan_log": scan_log,
         "cases": buckets,
         "entry_permission": False,
     }
 
 
-def _detector_table(closed: list[dict]) -> list[dict]:
-    stats = defaultdict(lambda: {"evaluated": 0, "signal": 0, "signal_and_up": 0, "insufficient": 0})
-    for case in closed:
-        up = case["outcome"]["outcome_label"] == "REPRICED_UP"
-        for ev in case["evaluations"]:
-            slot = stats[ev["detector"]]
-            if ev["status"] == "INSUFFICIENT_DATA":
-                slot["insufficient"] += 1
-                continue
-            if ev["status"] not in {"SIGNAL", "NO_SIGNAL"}:
-                continue
-            slot["evaluated"] += 1
-            if ev["status"] == "SIGNAL":
-                slot["signal"] += 1
-                if up:
-                    slot["signal_and_up"] += 1
+def lift_table(observations) -> list[dict]:
+    """observations: (name, status, outcome_label, hit_label). Returns one row per name."""
+    stats = defaultdict(lambda: {"signal": [0, 0], "no_signal": [0, 0], "insufficient": 0, "unscored": 0, "hit_label": None})
+    for name, status, outcome_label, hit_label in observations:
+        slot = stats[name]
+        slot["hit_label"] = hit_label
+        if status in {"INSUFFICIENT_DATA", "UNAVAILABLE"}:
+            slot["insufficient"] += 1
+            continue
+        if outcome_label in UNSCORED:
+            slot["unscored"] += 1
+            continue
+        side = slot["signal"] if status == "SIGNAL" else slot["no_signal"]
+        side[0] += 1
+        side[1] += int(outcome_label == hit_label)
     rows = []
     for name, slot in sorted(stats.items()):
+        sig_n, sig_hits = slot["signal"]
+        no_n, no_hits = slot["no_signal"]
+        base_n = sig_n + no_n
+        base_rate = (sig_hits + no_hits) / base_n if base_n else None
+        sig_rate = sig_hits / sig_n if sig_n else None
+        no_rate = no_hits / no_n if no_n else None
+        lift = None
+        if sig_rate is not None and no_n and base_rate:
+            lift = sig_rate / base_rate
         rows.append({
             "detector": name,
-            "evaluated": slot["evaluated"],
-            "signals": slot["signal"],
-            "signal_then_repriced_up": slot["signal_and_up"],
+            "hit_label": slot["hit_label"],
+            "evaluated": base_n,
+            "signals": sig_n,
+            "signal_hits": sig_hits,
+            "signal_hit_rate": sig_rate,
+            "no_signal": no_n,
+            "no_signal_hits": no_hits,
+            "no_signal_hit_rate": no_rate,
+            "base_rate": base_rate,
+            "lift": lift,
             "insufficient_data": slot["insufficient"],
-            "status": "UNVALIDATED",
-            "promotable": False,
+            "unscored_outcomes": slot["unscored"],
         })
     return rows
+
+
+def _scan_log(ledger: Ledger, cases: list[dict]) -> dict:
+    now = ledger.now()
+    opened = {c["scan_entry_id"] for c in cases if c.get("scan_entry_id")}
+    runs = [dict(r) for r in ledger.rows("SELECT * FROM scan_runs ORDER BY scanned_at, scan_id")]
+    entries = [dict(r) for r in ledger.rows("SELECT * FROM scan_entries")]
+    outcomes = {r["entry_id"]: dict(r) for r in ledger.rows("SELECT * FROM scan_outcomes")}
+    evals = defaultdict(list)
+    for ev in ledger.rows("SELECT * FROM scan_evaluations"):
+        evals[ev["entry_id"]].append(dict(ev))
+    by_scan = defaultdict(list)
+    for entry in entries:
+        by_scan[entry["scan_id"]].append(entry)
+
+    summaries, observations = [], []
+    totals = defaultdict(int)
+    for run in runs:
+        rows = by_scan[run["scan_id"]]
+        window_over = now >= parse_ts(run["outcome_window_end"])
+        flagged = [e for e in rows if e["flagged"]]
+        closed = [e for e in rows if e["entry_id"] in outcomes]
+        summary = {
+            "scan_id": run["scan_id"],
+            "scanner": run["scanner"],
+            "scanned_at": run["scanned_at"],
+            "outcome_window_end": run["outcome_window_end"],
+            "hit_label": run["hit_label"],
+            "entries": len(rows),
+            "flagged": len(flagged),
+            "flagged_opened": sum(1 for e in flagged if e["entry_id"] in opened),
+            "flagged_not_opened": sum(1 for e in flagged if e["entry_id"] not in opened),
+            "closed": len(closed),
+            "overdue_unclosed": (len(rows) - len(closed)) if window_over else 0,
+        }
+        summaries.append(summary)
+        for key in ("entries", "flagged", "flagged_opened", "flagged_not_opened", "closed", "overdue_unclosed"):
+            totals[key] += summary[key]
+        for entry in closed:
+            label = outcomes[entry["entry_id"]]["outcome_label"]
+            observations.append((
+                f"FLAG:{run['scanner']}",
+                "SIGNAL" if entry["flagged"] else "NO_SIGNAL",
+                label,
+                run["hit_label"],
+            ))
+            for ev in evals[entry["entry_id"]]:
+                observations.append((ev["detector"], ev["status"], label, HIT_LABEL.get(ev["detector"], "REPRICED_UP")))
+    return {
+        "counts": {f"scan_{k}": totals[k] for k in (
+            "entries", "flagged", "flagged_opened", "flagged_not_opened", "closed", "overdue_unclosed"
+        )},
+        "scans": summaries,
+        "lift": lift_table(observations),
+    }
+
+
+def _pct(x) -> str:
+    return "—" if x is None else f"{100 * x:.1f}%"
+
+
+def _lift(x) -> str:
+    return "—" if x is None else f"{x:.2f}×"
+
+
+def _lift_lines(rows: list[dict], with_status: bool) -> list[str]:
+    header = "| Detector | Hit = | Signal n | Signal hit rate | No-signal n | No-signal hit rate | Base rate | Lift | Insufficient |"
+    rule = "|---|---|---:|---:|---:|---:|---:|---:|---:|"
+    if with_status:
+        header += " Status |"
+        rule += "---|"
+    lines = [header, rule]
+    if not rows:
+        lines.append("| — | — | 0 | — | 0 | — | — | — | 0 |" + (" UNVALIDATED |" if with_status else ""))
+    for row in rows:
+        line = (
+            f"| {row['detector']} | {row['hit_label']} | {row['signals']} | {_pct(row['signal_hit_rate'])} | "
+            f"{row['no_signal']} | {_pct(row['no_signal_hit_rate'])} | {_pct(row['base_rate'])} | "
+            f"{_lift(row['lift'])} | {row['insufficient_data']} |"
+        )
+        if with_status:
+            line += f" {row['status']} |"
+        lines.append(line)
+    return lines
 
 
 def render_markdown(report: dict) -> str:
@@ -98,19 +215,35 @@ def render_markdown(report: dict) -> str:
         f"- Prospective closed (scored): {c['prospective_closed']}",
         f"- Retrospective (hypothesis only): {c['retrospective']}",
         f"- Simulated (excluded): {c['simulated_excluded']}",
+        f"- Scanned names logged: {c['scan_entries']} "
+        f"(flagged {c['scan_flagged']}: opened {c['scan_flagged_opened']}, not opened {c['scan_flagged_not_opened']})",
+        f"- Scanned names closed: {c['scan_closed']}; past window and still unclosed: {c['scan_overdue_unclosed']}",
         "",
         "## Detector table (prospective closed only)",
         "",
-        "| Detector | Evaluated | Signals | Signal then repriced up | Insufficient | Status |",
-        "|---|---:|---:|---:|---:|---|",
+        "Hit rate when the detector fired, when it was evaluated and did not fire, and the base",
+        "rate over both. Lift = signal hit rate / base rate. No no-signal cases means no lift.",
+        "",
+        *_lift_lines(report["detector_table"], with_status=True),
+        "",
+        "## Scan log (every scanned name, flagged or not, opened or not)",
+        "",
     ]
-    if not report["detector_table"]:
-        lines.append("| — | 0 | 0 | 0 | 0 | UNVALIDATED |")
-    for row in report["detector_table"]:
-        lines.append(
-            f"| {row['detector']} | {row['evaluated']} | {row['signals']} | "
-            f"{row['signal_then_repriced_up']} | {row['insufficient_data']} | {row['status']} |"
-        )
+    scans = report["scan_log"]["scans"]
+    if not scans:
+        lines.append("No scans logged.")
+    else:
+        lines.extend([
+            "| Scan | Scanner | Entries | Flagged | Flagged opened | Flagged not opened | Closed | Overdue unclosed |",
+            "|---|---|---:|---:|---:|---:|---:|---:|",
+        ])
+        for s in scans:
+            lines.append(
+                f"| `{s['scan_id']}` | {s['scanner']} | {s['entries']} | {s['flagged']} | {s['flagged_opened']} | "
+                f"{s['flagged_not_opened']} | {s['closed']} | {s['overdue_unclosed']} |"
+            )
+        lines.extend(["", "Lift over the scan base rate (closed scan entries):", ""])
+        lines.extend(_lift_lines(report["scan_log"]["lift"], with_status=False))
     lines.extend(["", "## Case cards", ""])
     for kind in ("PROSPECTIVE", "RETROSPECTIVE", "SIMULATED"):
         lines.append(f"### {kind}")
@@ -151,5 +284,6 @@ def render_json(report: dict) -> str:
         "entry_permission": False,
         "counts": report["counts"],
         "detector_table": report["detector_table"],
+        "scan_log": report["scan_log"],
     }
     return json.dumps(slim, indent=2)

@@ -3,9 +3,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from datetime import timedelta
+
 from kod.cli import load_seed, open_and_evaluate
 from kod.ledger import Ledger, LedgerError
 from kod.score import build_report
+from tests.support import T0, Lab, prospective_card
 
 ROOT = Path(__file__).resolve().parents[1]
 SEED = ROOT / "seeds" / "retrospective_cases.json"
@@ -18,6 +21,7 @@ class LedgerTests(unittest.TestCase):
         self.ledger = Ledger(self.db)
 
     def tearDown(self):
+        self.ledger.conn.close()
         self.tmp.cleanup()
 
     def test_seed_and_calibration_excludes_hindsight(self):
@@ -25,7 +29,7 @@ class LedgerTests(unittest.TestCase):
         report = build_report(self.ledger)
         self.assertEqual(report["counts"]["retrospective"], 2)
         self.assertEqual(report["counts"]["simulated_excluded"], 1)
-        self.assertEqual(report["counts"]["prospective_open"], 1)
+        self.assertEqual(report["counts"]["prospective_open"], 0)
         self.assertEqual(report["counts"]["prospective_closed"], 0)
         self.assertEqual(report["calibration_status"], "NOT_STARTED")
         self.assertEqual(report["detector_table"], [])
@@ -49,18 +53,20 @@ class LedgerTests(unittest.TestCase):
             open_and_evaluate(self.ledger, card)
 
     def test_entry_eligible_refused(self):
-        card = json.loads(SEED.read_text())["cases"][2]
-        card["case_id"] = "KOD-P-ILLEGAL"
+        card = json.loads(SEED.read_text())["cases"][1]
+        card["case_id"] = "KOD-R-ILLEGAL"
         card["disposition"] = "ENTRY_ELIGIBLE"
         with self.assertRaises(LedgerError):
             open_and_evaluate(self.ledger, card)
 
     def test_prospective_close_checks_hash(self):
-        card = json.loads(SEED.read_text())["cases"][2]
-        card["case_id"] = "KOD-P-HASH"
-        open_and_evaluate(self.ledger, card)
+        lab = Lab()
+        self.addCleanup(lab.cleanup)
+        card = prospective_card("KOD-P-HASH", T0, T0 + timedelta(hours=1), T0 + timedelta(days=5))
+        open_and_evaluate(lab.ledger, card)
+        lab.clock.advance(days=6)
         with self.assertRaises(LedgerError):
-            self.ledger.close_case(
+            lab.ledger.close_case(
                 "KOD-P-HASH",
                 {
                     "window_label": "5d",

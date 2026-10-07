@@ -1,5 +1,5 @@
 {
-  "description": "Seed cards. Retrospective rows are partial public reconstructions, not complete archives. Simulated rows exist to prove the scorer excludes them. None of these is a trade.",
+  "description": "Seed cards. Retrospective rows are partial public reconstructions, not complete archives. Simulated rows exist to prove the scorer excludes them. None of these is a trade. The prospective template lives in prospective_template.json and is never seeded: a prospective card can only be opened within 1 hour of its own decision cutoff.",
   "cases": [
     {
       "case_id": "KOD-R-NVDA-20230524",
@@ -135,28 +135,6 @@
         "outcome_label": "REPRICED_DOWN",
         "source": "public filing-delay narrative; magnitude intentionally unverified in seed",
         "notes": "Retrospective failure card. Excluded from calibration."
-      }
-    },
-    {
-      "case_id": "KOD-P-TEMPLATE-001",
-      "symbol": "TEMPLATE",
-      "venue": "UNIVERSE",
-      "call_type": "PROSPECTIVE",
-      "decision_cutoff": "2026-10-08T00:00:00Z",
-      "universe_id": "USER-NEXT",
-      "reconstruction_status": "EMPTY",
-      "story_hypothesis": "Replace this card before any real name. A prospective case must be opened before the outcome window, with facts frozen and a critic loss path.",
-      "disposition": "WATCH",
-      "notes": "Open on purpose. Closing it with a real outcome is the first calibration row. Do not backfill.",
-      "critic": {
-        "loss_path": "Template only. No mechanism, so the base case is that nothing here is tradable.",
-        "missing_evidence": "Symbol, venue, primary documents, volume baseline, and universe membership.",
-        "invalidation": "Any attempt to treat this row as a signal."
-      },
-      "information_sets": {
-        "T-30D": {"cutoff": "2026-09-08T00:00:00Z", "reconstruction_status": "EMPTY", "facts": {}},
-        "T-72H": {"cutoff": "2026-10-05T00:00:00Z", "reconstruction_status": "EMPTY", "facts": {}},
-        "T-24H": {"cutoff": "2026-10-07T00:00:00Z", "reconstruction_status": "EMPTY", "facts": {}}
       }
     },
     {

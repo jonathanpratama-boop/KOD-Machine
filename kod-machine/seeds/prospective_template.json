@@ -1,0 +1,28 @@
+{
+  "_comment": "Copy this file for a real forward test. Every REPLACE value must be filled before `open`. decision_cutoff must be within 1 hour of the moment you run `open`, before outcome_window.start, and every information-set cutoff must be at or before it. `open` refuses anything else. This file is never seeded.",
+  "case_id": "KOD-P-REPLACE-SYMBOL-YYYYMMDDHHMM",
+  "symbol": "REPLACE",
+  "venue": "REPLACE",
+  "call_type": "PROSPECTIVE",
+  "decision_cutoff": "REPLACE e.g. 2026-10-08T01:00:00Z",
+  "outcome_window": {
+    "start": "REPLACE e.g. 2026-10-08T02:00:00Z (must be after decision_cutoff and after the open)",
+    "end": "REPLACE e.g. 2026-10-15T09:00:00Z (close is refused before this)"
+  },
+  "universe_id": "REPLACE",
+  "reconstruction_status": "REPLACE",
+  "story_hypothesis": "REPLACE with the mechanism, in one paragraph, as known at the cutoff.",
+  "disposition": "WATCH",
+  "notes": "",
+  "scan_entry_id": null,
+  "critic": {
+    "loss_path": "REPLACE: how this call loses.",
+    "missing_evidence": "REPLACE: what is not in the information sets.",
+    "invalidation": "REPLACE: the pre-committed observation that kills the call."
+  },
+  "information_sets": {
+    "T-30D": {"cutoff": "REPLACE decision_cutoff minus 30 days", "reconstruction_status": "REPLACE", "facts": {}},
+    "T-72H": {"cutoff": "REPLACE decision_cutoff minus 72 hours", "reconstruction_status": "REPLACE", "facts": {}},
+    "T-24H": {"cutoff": "REPLACE decision_cutoff minus 24 hours", "reconstruction_status": "REPLACE", "facts": {}}
+  }
+}

@@ -16,6 +16,12 @@ DETECTORS = (
     "COVERAGE_INCOMPLETE",
 )
 
+# What counts as a hit when the scorer computes hit rates and lift. Fixed before any
+# prospective outcome exists. NARRATIVE_WITHOUT_MECHANISM is the failure detector, so
+# its hit is a down repricing. Changing a hit label is a rule change: new RULE_VERSION.
+HIT_LABEL = {name: "REPRICED_UP" for name in DETECTORS}
+HIT_LABEL["NARRATIVE_WITHOUT_MECHANISM"] = "REPRICED_DOWN"
+
 
 def evaluate(information_sets: dict) -> list[dict]:
     """Evaluate detectors on the T-24H set. Earlier horizons are context, not a second vote."""
