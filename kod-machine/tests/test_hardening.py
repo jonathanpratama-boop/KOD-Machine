@@ -20,7 +20,7 @@ from kod.hashing import fmt_ts
 from kod.ledger import Ledger, LedgerError
 from kod.score import build_report, render_markdown
 from kod.verify import verify
-from tests.support import T0, Lab, prospective_card
+from tests.support import T0, Clock, Lab, prospective_card
 
 ROOT = Path(__file__).resolve().parents[1]
 SEED = ROOT / "seeds" / "retrospective_cases.json"
@@ -40,7 +40,11 @@ class LabTest(unittest.TestCase):
              start_offset=timedelta(hours=1), length=timedelta(days=5), **kw):
         cutoff = self.clock() + cutoff_offset
         start = self.clock() + start_offset
+        kw.setdefault("evidence", [self.lab.evidence_id])
         return prospective_card(case_id, cutoff, start, start + length, **kw)
+
+    def verify(self):
+        return verify(self.ledger, self.lab.anchor, self.lab.timestamper)
 
     def case_rows(self):
         return self.ledger.rows("SELECT case_id FROM cases")
@@ -87,6 +91,14 @@ class Rule1ProspectiveOpenTiming(LabTest):
         card["information_sets"]["T-24H"]["cutoff"] = fmt_ts(self.clock() + timedelta(minutes=5))
         with self.assertRaisesRegex(LedgerError, "T-24H cutoff"):
             open_and_evaluate(self.ledger, card)
+
+    def test_no_timestamp_authority_refuses_and_rolls_back(self):
+        self.lab.timestamper.down = True
+        with self.assertRaisesRegex(LedgerError, "no external timestamp"):
+            open_and_evaluate(self.ledger, self.card())
+        self.assertEqual(self.case_rows(), [])
+        self.assertEqual(self.registry_lines(), [])
+        self.assertEqual(self.lab.git("status", "--porcelain"), "")
 
     def test_timezone_is_required(self):
         card = self.card()
@@ -160,7 +172,7 @@ class Rule3VerifyAndGitAnchor(LabTest):
         self.assertEqual(self.lab.git("status", "--porcelain"), "")
 
     def test_clean_ledger_verifies(self):
-        result = verify(self.ledger, self.lab.anchor)
+        result = self.verify()
         self.assertTrue(result["ok"], result["findings"])
         self.assertEqual(result["stats"]["cases"], 4)
         self.assertEqual(result["stats"]["anchors_verified"], 4)
@@ -179,13 +191,13 @@ class Rule3VerifyAndGitAnchor(LabTest):
 
     def test_edited_case_row_fails_verify(self):
         self._tamper("UPDATE cases SET story_hypothesis = 'rewritten after the outcome' WHERE case_id = 'KOD-P-T-1'")
-        result = verify(self.ledger, self.lab.anchor)
+        result = self.verify()
         self.assertFalse(result["ok"])
         self.assertTrue(any("KOD-P-T-1" in f["subject"] and "hash to" in f["message"] for f in result["findings"]))
 
     def test_edited_information_set_fails_verify(self):
         self._tamper("UPDATE information_sets SET payload_json = '{}' WHERE set_id = 'KOD-P-T-1:T-24H'")
-        self.assertFalse(verify(self.ledger, self.lab.anchor)["ok"])
+        self.assertFalse(self.verify()["ok"])
 
     def test_rewritten_hash_everywhere_in_the_db_still_fails_against_git(self):
         conn = sqlite3.connect(self.ledger.path)
@@ -193,16 +205,17 @@ class Rule3VerifyAndGitAnchor(LabTest):
         conn.close()
         self._tamper("UPDATE cases SET disposition = 'REJECT' WHERE case_id = 'KOD-P-T-1'")
         # Recompute the forged hash and write it into every DB copy.
-        from kod.ledger import freeze_card
+        from kod.ledger import freeze_card, frozen_evaluations
         from kod.hashing import sha256_obj
         row = dict(self.ledger.rows("SELECT * FROM cases WHERE case_id = 'KOD-P-T-1'")[0])
         sets = {r["horizon"]: json.loads(r["payload_json"]) for r in self.ledger.rows(
             "SELECT * FROM information_sets WHERE case_id = 'KOD-P-T-1'")}
         critic = dict(self.ledger.rows("SELECT * FROM critic_notes WHERE case_id = 'KOD-P-T-1'")[0])
-        forged = sha256_obj(freeze_card(row, sets, critic, row["card_hash_version"]))
+        evals = frozen_evaluations(self.ledger.rows("SELECT * FROM detector_evaluations WHERE case_id = 'KOD-P-T-1'"))
+        forged = sha256_obj(freeze_card(row, sets, critic, row["card_hash_version"], evals))
         self._tamper("UPDATE cases SET card_sha = ? WHERE case_id = 'KOD-P-T-1'", (forged,))
         self._tamper("UPDATE anchors SET anchored_sha = ? WHERE record_id = 'KOD-P-T-1'", (forged,))
-        result = verify(self.ledger, self.lab.anchor)
+        result = self.verify()
         self.assertFalse(result["ok"])
         self.assertTrue(any("does not contain this hash" in f["message"] for f in result["findings"]))
 
@@ -211,26 +224,47 @@ class Rule3VerifyAndGitAnchor(LabTest):
         kept = [line for line in path.read_text().splitlines() if "KOD-P-T-1" not in line]
         path.write_text("\n".join(kept) + "\n")
         self.lab.git("commit", "-q", "-am", "drop a line")
-        result = verify(self.ledger, self.lab.anchor)
+        result = self.verify()
         self.assertFalse(result["ok"])
         self.assertTrue(any("removed" in f["message"] for f in result["findings"]))
 
-    def test_anchor_committed_after_window_start_fails_verify(self):
+    def test_backdated_open_is_caught_by_external_timestamp(self):
+        # Ace's attack: the ledger clock and the git commit date both say "before the window",
+        # but the card is really created after the outcome. The authority's clock says so.
+        real_time = Clock(self.clock() + timedelta(days=2))
+        self.lab.timestamper.clock = real_time
+        open_and_evaluate(self.ledger, self.card(case_id="KOD-P-LATE"))
+        commit_date = self.lab.git("log", "-1", "--format=%cI").strip()
+        self.assertTrue(commit_date.startswith("2026-10-07"))  # the git date looks fine
+        result = self.verify()
+        self.assertFalse(result["ok"])
+        messages = [f["message"] for f in result["findings"] if f["subject"] == "case KOD-P-LATE"]
+        self.assertTrue(any("not before its outcome window start" in m for m in messages), messages)
+        self.assertTrue(any("from its decision cutoff" in m for m in messages), messages)
+
+    def test_git_date_is_not_trusted_either_way(self):
         late = fmt_ts(self.clock() + timedelta(days=2))
         self.lab.anchor.extra_env = lambda: {"GIT_AUTHOR_DATE": late, "GIT_COMMITTER_DATE": late}
-        open_and_evaluate(self.ledger, self.card(case_id="KOD-P-LATE"))
-        result = verify(self.ledger, self.lab.anchor)
-        self.assertFalse(result["ok"])
+        open_and_evaluate(self.ledger, self.card(case_id="KOD-P-GITDATE"))
+        result = self.verify()
+        self.assertTrue(result["ok"], result["findings"])
         self.assertTrue(any(
-            f["subject"] == "case KOD-P-LATE" and "not before the outcome window start" in f["message"]
-            for f in result["findings"]
+            f["subject"] == "case KOD-P-GITDATE" and "git commit date" in f["message"] for f in result["findings"]
         ))
+
+    def test_tampered_timestamp_token_fails_verify(self):
+        token = next((self.lab.registry / "timestamps" / "case").glob("KOD-P-T-1.*.tsr"))
+        token.write_bytes(token.read_bytes().replace(b'"time"', b'"tine"'))
+        self.lab.git("commit", "-q", "-am", "tamper token")
+        result = self.verify()
+        self.assertTrue(result["ok"])  # the anchor commit still holds the original token
+        self.assertEqual(result["stats"]["anchors_externally_timestamped"], 4)
 
     def test_anchor_failure_rolls_back_the_open(self):
         with tempfile.TemporaryDirectory() as outside:
             ledger = Ledger(Path(outside) / "kod.db", anchor=GitAnchor(Path(outside) / "registry"), clock=self.clock)
             with self.assertRaisesRegex(LedgerError, "git anchor failed"):
-                open_and_evaluate(ledger, self.card(case_id="KOD-P-T-2"))
+                open_and_evaluate(ledger, self.card(case_id="KOD-P-T-2", facts={}, evidence=None))
             self.assertEqual(ledger.rows("SELECT * FROM cases"), [])
             ledger.conn.close()
 
@@ -347,7 +381,7 @@ class Rule4ScanLogAndLift(LabTest):
         self.assertAlmostEqual(cat["base_rate"], 4 / 9)
         self.assertAlmostEqual(cat["lift"], 0.5 / (4 / 9))
         self.assertIn("FLAG:ASTRA", render_markdown(build_report(self.ledger)))
-        self.assertTrue(verify(self.ledger, self.lab.anchor)["ok"])
+        self.assertTrue(self.verify()["ok"])
 
     def test_prospective_detector_table_has_no_signal_side(self):
         start = self.clock() + timedelta(hours=1)

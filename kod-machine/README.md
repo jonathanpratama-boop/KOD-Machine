@@ -26,31 +26,86 @@ version is aborted by SQLite triggers.
 - Promoting a detector before 30 closed prospective cases
 - Rewriting a call after the outcome
 - A PROSPECTIVE open whose `decision_cutoff` is more than 1 hour from the actual open
-  time, is not before `outcome_window.start`, or arrives after the window started. Every
-  information-set cutoff must be at or before the decision cutoff. Timestamps need a timezone.
-- A PROSPECTIVE open with no `outcome_window`, or with no git anchor configured
+  time, is not before `outcome_window.start`, or arrives after the window started.
+  Timestamps need a timezone.
+- Any open whose T-30D, T-72H or T-24H cutoff is not exactly 30 days, 72 hours or 24 hours
+  before the decision cutoff
+- A PROSPECTIVE fact (any non-null value, true or false) that does not cite archived
+  evidence, and any card that cites evidence published after that information set's cutoff
+- A PROSPECTIVE open or scan when no external timestamp authority answers, or with no git
+  anchor configured
+- A detector evaluation written after the open (a database trigger refuses it; the
+  evaluations are part of the card hash)
 - A close without the `card_sha` printed at open, with a different hash, or before
   `outcome_window.end` (any call type that carries a window)
 - A scan log entry outside the same timing rules, and a scan close without its `scan_sha`
 
-## Hash anchoring and `verify`
+## Evidence: what was knowable, not what someone says was knowable
+
+A fact in an information set is an assertion until it cites evidence. `kod evidence`
+archives the document itself and its provenance:
+
+```sh
+python3 -m kod evidence filing.pdf \
+  --url https://www.idx.co.id/... --publisher "IDX disclosure system" \
+  --published-at 2026-10-01T09:12:00+07:00 --published-basis "IDX disclosure system timestamp" \
+  --retrieved-at 2026-10-07T08:30:00Z \
+  --archive-url https://web.archive.org/web/... --archived-at 2026-10-07T08:31:00Z --grade A
+```
+
+It prints the evidence id, which is the SHA-256 of the bytes. The bytes and a frozen
+metadata file are committed to `registry/evidence/`. Grades: A primary source with an
+authoritative publication timestamp (exchange disclosure, regulator filing); B reputable
+secondary source with an explicit timestamp; C time supported only by an archive capture or
+server metadata; D the operator's assertion. The report shows, per case, how many known
+facts cite evidence and the weakest grade cited.
+
+A card cites evidence per fact, per information set:
+
+```json
+"T-24H": {"cutoff": "...", "facts": {"dated_catalyst_known": true},
+          "evidence": {"dated_catalyst_known": ["<evidence id>"]}}
+```
+
+For PROSPECTIVE cards every non-null fact must cite at least one evidence object, false as
+much as true (an absence is shown by a capture of the source without the item). Null means
+UNKNOWN and cites nothing. Any card, of any type, is refused if it cites evidence whose
+`published_at` is after that set's cutoff. Because the card hash covers the evidence ids,
+and the ids are content hashes, the external timestamp on the card also proves those exact
+documents were in hand at the open.
+
+What this cannot prove: that `published_at` is true. That is the source's own claim, which
+is why the basis and grade are recorded and an archive capture is worth adding.
+
+## Hash anchoring, external timestamps, and `verify`
 
 Every open appends `{kind, record_id, sha256, opened_at, decision_cutoff, window}` to
-`registry/opens.jsonl`, writes the frozen card to `registry/cards/<case_id>.json`, and
-commits exactly those two paths (`kod anchor case <id> <sha>`). If the commit fails, the
-open is rolled back. Scans do the same in `registry/scans.jsonl` and `registry/scans/`.
+`registry/opens.jsonl`, writes the frozen card (detector evaluations included) to
+`registry/cards/<case_id>.json`, and commits those paths (`kod anchor case <id> <sha>`).
+Scans do the same in `registry/scans.jsonl` and `registry/scans/`.
 
-A local commit date comes from the local clock and can be set by anyone with the repo.
-The timestamp a third party can rely on is the push, so use `--push` on `open` and `scan`,
-or push right after. `verify` reports anchors that are still local only.
+The git commit date is not evidence of time: it comes from the committer's clock, and a
+backdated commit pushed later still shows its backdated date. So before the commit, the
+exact registry line is sent as a SHA-256 digest to two independent RFC 3161 timestamp
+authorities (freetsa.org and Sectigo). Their signed tokens are committed with the line under
+`registry/timestamps/`, and verified offline against the certificates pinned in `tsa/`. A
+PROSPECTIVE open or a scan is refused, and rolled back, if neither authority answers.
 
-`verify` trusts no stored hash. It rebuilds every card hash from the case, information
-set and critic rows, every scan hash from the entry rows, and checks each against the
-stored hash, the outcome's copy, the anchors row and the line in the anchor commit. It
-also checks that the anchor commit is in HEAD's history, that the registry line is still
-in HEAD, that the anchor commit predates the outcome window, that prospective opens and
-closes kept their timing, and that the schema, migrations and doctrine were not edited
-after adoption. Exit code 1 on any failure.
+`verify` trusts no stored hash and no local clock. It rebuilds every card hash from the
+case, information set, critic and detector-evaluation rows, every scan hash from the entry
+and evaluation rows, and every evidence id from the archived bytes, and checks each against
+the stored hash, the outcome's copy, the anchors row and the line in the anchor commit. For
+time it uses the tokens: a prospective card fails unless a token verifies, dated within 1
+hour of its decision cutoff and before its outcome window starts. It also checks that the
+anchor commit is in HEAD's history and its line still in HEAD, the exact horizon offsets,
+that every cited evidence was published by its cutoff and recorded before the open, that a
+detector's frozen status still matches its code for the same rule version (an in-place rule
+edit fails), and that the schema, migrations and doctrine were not edited after adoption.
+A git commit date that disagrees with the tokens is reported. Exit code 1 on any failure.
+
+Protect the branch on GitHub (Settings → Branches: block force pushes and deletions) so
+the registry's history cannot be rewritten; the tokens prove when each line existed, branch
+protection keeps the line from being quietly dropped.
 
 ## Scan log: every name, flagged or not
 
@@ -74,7 +129,7 @@ python3 -m kod --db var/kod.db init
 python3 -m kod --db var/kod.db seed      # anchors each seed open in git
 python3 -m kod --db var/kod.db report
 python3 -m kod --db var/kod.db verify
-python3 -m unittest                      # 37 tests
+python3 -m unittest                      # 62 tests
 ```
 
 Seed status after a clean run: calibration NOT_STARTED. That is the correct
@@ -85,9 +140,12 @@ cutoff, so the open gate refuses it.
 
 ## Open a real prospective case
 
-Copy `seeds/prospective_template.json`. Fill every REPLACE value with facts that were
-public at each cutoff, set `decision_cutoff` to the freeze time (within 1 hour of when
-you will run `open`), and pre-register `outcome_window.start` and `.end`. Then:
+Archive each source document with `kod evidence` first. Then copy
+`seeds/prospective_template.json`, fill every REPLACE value with facts that were public at
+each cutoff and the evidence ids that show it, set `decision_cutoff` to the freeze time
+(within 1 hour of when you will run `open`), set the three information-set cutoffs to
+exactly 30 days, 72 hours and 24 hours before it, and pre-register `outcome_window.start`
+and `.end`. Then:
 
 ```sh
 python3 -m kod --db var/kod.db --push open path/to/card.json

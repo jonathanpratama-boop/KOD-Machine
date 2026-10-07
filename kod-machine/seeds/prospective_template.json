@@ -1,5 +1,5 @@
 {
-  "_comment": "Copy this file for a real forward test. Every REPLACE value must be filled before `open`. decision_cutoff must be within 1 hour of the moment you run `open`, before outcome_window.start, and every information-set cutoff must be at or before it. `open` refuses anything else. This file is never seeded.",
+  "_comment": "Copy this file for a real forward test. Every REPLACE value must be filled before `open`. decision_cutoff must be within 1 hour of the moment you run `open` and before outcome_window.start. Each information-set cutoff must be exactly decision_cutoff minus 30 days / 72 hours / 24 hours. Every fact that is not null must cite evidence ids (from `kod evidence`) published at or before that set's cutoff; a null fact is UNKNOWN and cites nothing. `open` needs a timestamp authority to answer. This file is never seeded.",
   "case_id": "KOD-P-REPLACE-SYMBOL-YYYYMMDDHHMM",
   "symbol": "REPLACE",
   "venue": "REPLACE",
@@ -21,8 +21,12 @@
     "invalidation": "REPLACE: the pre-committed observation that kills the call."
   },
   "information_sets": {
-    "T-30D": {"cutoff": "REPLACE decision_cutoff minus 30 days", "reconstruction_status": "REPLACE", "facts": {}},
-    "T-72H": {"cutoff": "REPLACE decision_cutoff minus 72 hours", "reconstruction_status": "REPLACE", "facts": {}},
-    "T-24H": {"cutoff": "REPLACE decision_cutoff minus 24 hours", "reconstruction_status": "REPLACE", "facts": {}}
+    "T-30D": {"cutoff": "REPLACE decision_cutoff minus 30 days", "reconstruction_status": "REPLACE",
+              "facts": {"dated_catalyst_known": null}, "evidence": {}},
+    "T-72H": {"cutoff": "REPLACE decision_cutoff minus 72 hours", "reconstruction_status": "REPLACE",
+              "facts": {"dated_catalyst_known": null}, "evidence": {}},
+    "T-24H": {"cutoff": "REPLACE decision_cutoff minus 24 hours", "reconstruction_status": "REPLACE",
+              "facts": {"dated_catalyst_known": "REPLACE true/false/null"},
+              "evidence": {"dated_catalyst_known": ["REPLACE evidence id printed by `kod evidence`"]}}
   }
 }

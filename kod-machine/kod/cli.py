@@ -9,9 +9,9 @@ import sys
 from pathlib import Path
 
 from .anchor import GitAnchor
-from .detectors import evaluate
 from .ledger import Ledger, LedgerError
 from .score import build_report, render_json, render_markdown
+from .timestamp import RFC3161Timestamper
 from .verify import render as render_verify
 from .verify import verify
 
@@ -41,10 +41,25 @@ def main(argv=None) -> int:
     p_scan_close = sub.add_parser("scan-close", help="append outcomes for a logged scan")
     p_scan_close.add_argument("outcomes_file")
     sub.add_parser("report")
+    p_ev = sub.add_parser("evidence", help="archive a document's bytes and provenance; prints its evidence id")
+    p_ev.add_argument("file")
+    p_ev.add_argument("--url", required=True, help="where the document was published")
+    p_ev.add_argument("--publisher", required=True)
+    p_ev.add_argument("--title", default="")
+    p_ev.add_argument("--published-at", required=True, help="publication time stated by the source (with timezone)")
+    p_ev.add_argument("--published-basis", required=True,
+                      help="where that time comes from, e.g. 'IDX disclosure system timestamp'")
+    p_ev.add_argument("--retrieved-at", required=True, help="when you downloaded the bytes (with timezone)")
+    p_ev.add_argument("--archive-url", help="independent archive capture, e.g. a web.archive.org snapshot")
+    p_ev.add_argument("--archived-at", help="that capture's time (with timezone)")
+    p_ev.add_argument("--grade", required=True, choices=list("ABCD"),
+                      help="A primary+authoritative time, B reputable+explicit time, C archive time only, D assertion")
     sub.add_parser("verify", help="recompute every hash from the stored rows and check git anchors")
     sub.add_parser("check-immutable")
     args = parser.parse_args(argv)
-    anchor = GitAnchor(Path(args.registry), push=args.push, trailer=os.environ.get("KOD_ANCHOR_TRAILER", ""))
+    timestamper = RFC3161Timestamper()
+    anchor = GitAnchor(Path(args.registry), push=args.push, trailer=os.environ.get("KOD_ANCHOR_TRAILER", ""),
+                       timestamper=timestamper)
     ledger = Ledger(Path(args.db), anchor=anchor)
     try:
         if args.cmd == "init":
@@ -78,8 +93,16 @@ def main(argv=None) -> int:
             (out / "KOD_LAB_STATUS.md").write_text(render_markdown(report), encoding="utf-8")
             (out / "calibration.json").write_text(render_json(report), encoding="utf-8")
             print(render_markdown(report))
+        elif args.cmd == "evidence":
+            evidence_id = ledger.add_evidence(Path(args.file), {
+                "source_url": args.url, "publisher": args.publisher, "title": args.title,
+                "published_at": args.published_at, "published_at_basis": args.published_basis,
+                "retrieved_at": args.retrieved_at, "archive_url": args.archive_url,
+                "archived_at": args.archived_at, "grade": args.grade,
+            })
+            print(evidence_id)
         elif args.cmd == "verify":
-            result = verify(ledger, anchor)
+            result = verify(ledger, anchor, timestamper)
             print(render_verify(result))
             return 0 if result["ok"] else 1
         elif args.cmd == "check-immutable":
@@ -95,7 +118,11 @@ def _print_receipt(ledger: Ledger) -> None:
     receipt = ledger.last_receipt
     if receipt is None:
         return
-    print(f"anchored in git {receipt.commit} at {receipt.committed_at} ({receipt.registry_path})")
+    print(f"anchored in git {receipt.commit} ({receipt.registry_path})")
+    for stamp in receipt.timestamps:
+        print(f"externally timestamped by {stamp['authority']} at {stamp['time']}")
+    for error in receipt.timestamp_errors:
+        print(f"warning: timestamp authority failed: {error}", file=sys.stderr)
     if receipt.pushed:
         print("anchor pushed")
     elif receipt.push_error:
@@ -105,16 +132,8 @@ def _print_receipt(ledger: Ledger) -> None:
 
 
 def open_and_evaluate(ledger: Ledger, card: dict) -> str:
-    digest = ledger.open_case(card)
-    for result in evaluate(card["information_sets"]):
-        ledger.record_evaluation(
-            card["case_id"],
-            result["detector"],
-            result["rule_version"],
-            result["status"],
-            result["features"],
-        )
-    return digest
+    """Open a card. Detector evaluations are computed and frozen inside open_case."""
+    return ledger.open_case(card)
 
 
 def load_seed(ledger: Ledger, path: Path) -> int:

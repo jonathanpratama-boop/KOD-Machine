@@ -12,7 +12,7 @@ from collections import defaultdict
 
 from .detectors import HIT_LABEL
 from .hashing import parse_ts
-from .ledger import Ledger
+from .ledger import CARD_HASH_VERSION, HORIZONS, Ledger
 
 PROMOTION_MIN = 30
 UNSCORED = {"UNKNOWN", "CENSORED"}
@@ -29,16 +29,24 @@ def build_report(ledger: Ledger) -> dict:
     for ev in evals:
         by_case[ev["case_id"]].append(ev)
 
+    grades = {r["evidence_id"]: r["grade"] for r in ledger.rows("SELECT evidence_id, grade FROM evidence")}
+    sets = defaultdict(dict)
+    for row in ledger.rows("SELECT case_id, horizon, payload_json FROM information_sets"):
+        sets[row["case_id"]][row["horizon"]] = json.loads(row["payload_json"])
+
     buckets = {"PROSPECTIVE": [], "RETROSPECTIVE": [], "SIMULATED": []}
     for case in cases:
         case["outcome"] = outcomes.get(case["case_id"])
         case["evaluations"] = by_case.get(case["case_id"], [])
+        case["evidence"] = _evidence_coverage(sets[case["case_id"]], grades)
         buckets[case["call_type"]].append(case)
 
-    prospective_closed = [
+    closed = [
         c for c in buckets["PROSPECTIVE"]
         if c["outcome"] and c["outcome"]["outcome_label"] not in UNSCORED
     ]
+    # Only cards whose detector evaluations were frozen into the hash at open can be scored.
+    prospective_closed = [c for c in closed if c.get("card_hash_version") == CARD_HASH_VERSION]
     observations = [
         (ev["detector"], ev["status"], case["outcome"]["outcome_label"], HIT_LABEL.get(ev["detector"], "REPRICED_UP"))
         for case in prospective_closed
@@ -57,6 +65,7 @@ def build_report(ledger: Ledger) -> dict:
             "cases": len(cases),
             "prospective_open": sum(1 for c in buckets["PROSPECTIVE"] if not c["outcome"]),
             "prospective_closed": len(prospective_closed),
+            "prospective_closed_unfrozen_excluded": len(closed) - len(prospective_closed),
             "retrospective": len(buckets["RETROSPECTIVE"]),
             "simulated_excluded": len(buckets["SIMULATED"]),
             **scan_log["counts"],
@@ -66,6 +75,23 @@ def build_report(ledger: Ledger) -> dict:
         "cases": buckets,
         "entry_permission": False,
     }
+
+
+def _evidence_coverage(sets: dict, grades: dict) -> dict:
+    known = cited = 0
+    cited_grades = []
+    for horizon in HORIZONS:
+        payload = sets.get(horizon) or {}
+        evidence = payload.get("evidence") or {}
+        for fact, value in (payload.get("facts") or {}).items():
+            if value is None:
+                continue
+            known += 1
+            ids = evidence.get(fact) or []
+            if ids:
+                cited += 1
+                cited_grades += [grades.get(i, "?") for i in ids]
+    return {"known_facts": known, "cited_facts": cited, "weakest_grade": max(cited_grades) if cited_grades else None}
 
 
 def lift_table(observations) -> list[dict]:
@@ -213,6 +239,7 @@ def render_markdown(report: dict) -> str:
         f"- Cases: {c['cases']}",
         f"- Prospective open: {c['prospective_open']}",
         f"- Prospective closed (scored): {c['prospective_closed']}",
+        f"- Prospective closed but unscored (evaluations not frozen at open): {c['prospective_closed_unfrozen_excluded']}",
         f"- Retrospective (hypothesis only): {c['retrospective']}",
         f"- Simulated (excluded): {c['simulated_excluded']}",
         f"- Scanned names logged: {c['scan_entries']} "
@@ -263,6 +290,11 @@ def render_markdown(report: dict) -> str:
                 f"[{case['reconstruction_status']}]"
             )
             lines.append(f"  - Hypothesis: {case['story_hypothesis']}")
+            ev = case["evidence"]
+            lines.append(
+                f"  - Evidence: {ev['cited_facts']} of {ev['known_facts']} known facts cite archived evidence"
+                + (f"; weakest grade {ev['weakest_grade']}" if ev["weakest_grade"] else "")
+            )
             fired = [e["detector"] for e in case["evaluations"] if e["status"] == "SIGNAL"]
             if fired:
                 lines.append(f"  - Signals: {', '.join(fired)}")

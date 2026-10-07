@@ -6,6 +6,9 @@ Frozen directories: a file, once committed, may never be modified, deleted or re
   idx-signals/data/manifests/    provenance of every downloaded data file
   kod-machine/registry/cards/    frozen KOD cards, one per open
   kod-machine/registry/scans/    frozen KOD scans
+  kod-machine/registry/evidence/ archived evidence bytes and metadata
+  kod-machine/registry/timestamps/  RFC 3161 tokens
+  kod-machine/tsa/               pinned timestamp-authority certificates
 
 Append-only logs: the new content must start with the old content, byte for byte.
   idx-signals/results/RUNS.jsonl
@@ -29,6 +32,9 @@ FROZEN_DIRS = (
     "idx-signals/data/manifests/",
     "kod-machine/registry/cards/",
     "kod-machine/registry/scans/",
+    "kod-machine/registry/evidence/",
+    "kod-machine/registry/timestamps/",
+    "kod-machine/tsa/",
 )
 APPEND_ONLY = (
     "idx-signals/results/RUNS.jsonl",
