@@ -143,8 +143,13 @@ def render_report(run_id: str, summary: dict) -> str:
     c = summary["config"]
     if look["mode"] == "exhaustive":
         look_text = f"exhaustive: the rule was recomputed on all {look['sessions_checked']} prefixes; 0 signals changed"
+    elif look["mode"].startswith("prefix-first"):
+        look_text = (f"{look['mode']}: causal by construction. Each signal is column d of a call given only sessions "
+                     f"0..d and the names listed by d ({look['prefix_calls']} calls); source audit "
+                     f"{look['source_audit']}; {look['sandbox']}; a full-window call matched every prefix-built signal")
     else:
         look_text = "sampled at " + ", ".join(look["truncated_after"]) + " (not a proof)"
+    lines += _quality_lines(summary)
     lines += [
         "",
         "## Execution",
@@ -163,6 +168,40 @@ def render_report(run_id: str, summary: dict) -> str:
     lines += [f"- {w}" for w in summary["warnings"]] or ["- none"]
     lines.append("")
     return "\n".join(lines)
+
+
+def _quality_lines(summary: dict) -> list[str]:
+    out = []
+    dq = summary.get("data_quality")
+    if dq:
+        out += ["", "## Data quality", "",
+                "Sessions by tier: " + ", ".join(f"{k} {v}" for k, v in dq["sessions_by_tier"].items())
+                + f" (panel format {dq['panel_format']})", ""]
+        out += [f"- {t['tier']} {t['from']} .. {t['to']}: {t['source']}, survivorship {t['survivorship']}, "
+                f"corporate actions from {t['corporate_actions']}" for t in dq["tiers"]]
+        out += ["", "Known limitations:", ""] + [f"- {x}" for x in dq["known_limitations"]]
+    ca = summary.get("corporate_action_model")
+    if ca and ca.get("mode") == "registry":
+        counts = ca.get("resets_in_window") or {}
+        out += ["", "## Corporate actions", "",
+                f"Registry `{ca.get('registry_manifest')}` ({ca.get('registry_version')}), file SHA-256 "
+                f"`{ca.get('registry_sha256')}`.",
+                f"Reference resets in the window: {counts.get('resets', 0)}; share-scaled (verified split / reverse "
+                f"split / stock dividend) {counts.get('share_scaled', 0)}; verified rights issues "
+                f"{counts.get('rights_issue', 0)}; unresolved {counts.get('unresolved', 0)} (of which missing from the "
+                f"registry {counts.get('missing_from_registry', 0)})."]
+    controls = (summary.get("random_matched") or {}).get("controls")
+    if controls:
+        out += ["", "## Matched controls", "",
+                f"Controls {controls['version']}; full match (every feature) for "
+                f"{_rate(controls['full_match_share'])} of attempts; pool minimum {controls['min_pool']}.", "",
+                "| Priority | Feature | Known for signalled name | Matched on | Availability |", "|---:|---|---:|---:|---|"]
+        for name, f in controls["features"].items():
+            out.append(f"| {f['priority']} | {name}: {f['description']} | {_rate(f['known_share'])} | "
+                       f"{_rate(f['matched_share'])} | {f['availability']} |")
+        out += ["", "Not matched on (no point-in-time data): "
+                + "; ".join(f"{k}: {v}" for k, v in controls["not_available"].items())]
+    return out
 
 
 def _write_exclusive(path: Path, data: bytes) -> str:

@@ -14,13 +14,15 @@ possible. Per trade:
   - Shares may not exceed `max_participation` of that session's volume. Too big -> skip.
   - Exit needs a trade and the close not locked at the lower limit (ARB); otherwise the
     sale rolls to the next session where it is possible.
-  - Splits and reverse splits (an integer reference reset, e.g. BBCA 1:5) scale the shares
-    held. Any other reference reset (rights issue, bonus shares, stock dividend) cannot be
-    priced from the bars: a rights holder gets rights, not free shares, and what they are
-    worth depends on terms the data lacks. With ca_mode="exclude" (default) a trade held
-    across such a reset is EXCLUDED_CORP_ACTION and not scored, for the rule and the random
-    baseline alike; ca_mode="value_preserving" instead scales shares by the reset (the
-    rights valued at theoretical ex-rights and reinvested), the earlier behaviour.
+  - Corporate actions (ca_mode="registry", what runs use): shares held are scaled only
+    through resets the corporate-action registry (corporate_actions.py) verifies as a split,
+    reverse split or stock dividend. A trade held across a verified rights issue is
+    CORP_ACTION_RIGHTS_ISSUE, across any other reset CORP_ACTION_UNRESOLVED; neither is
+    scored, for the rule and the random baselines alike. A rights holder gets rights, not
+    free shares, and what they are worth depends on terms the bars lack.
+    Earlier modes, kept so older runs stay reproducible: ca_mode="exclude" scales every
+    integer reset as a split and excludes the rest (EXCLUDED_CORP_ACTION);
+    ca_mode="value_preserving" scales shares by every reset.
     Cash dividends are not added back (returns are price returns, slightly conservative).
   - A name that stops trading before the exit (delisting, or the data ends) is sold at its
     last traded close, status EXIT_DATA_END, or at zero with data_end_exit="zero".
@@ -41,7 +43,9 @@ STATUS = (
     "EXITED",               # scored
     "EXIT_DATA_END",        # scored: name stopped trading before the exit
     "INCOMPLETE",           # not scored: holding period runs past the data
-    "EXCLUDED_CORP_ACTION",  # not scored: held across a rights issue / bonus / non-split reset
+    "EXCLUDED_CORP_ACTION",  # not scored (ca_mode="exclude"): held across a non-integer reset
+    "CORP_ACTION_RIGHTS_ISSUE",  # not scored (ca_mode="registry"): held across a verified rights issue
+    "CORP_ACTION_UNRESOLVED",    # not scored (ca_mode="registry"): held across a reset the registry cannot verify
     "SKIP_NO_ENTRY_SESSION",
     "SKIP_NOT_TRADED",
     "SKIP_ARA_LOCK",
@@ -61,7 +65,7 @@ class ExecConfig:
     max_participation: float = 0.10
     fees: Fees = field(default_factory=Fees)
     data_end_exit: str = "last_close"  # or "zero"
-    ca_mode: str = "exclude"  # or "value_preserving"
+    ca_mode: str = "exclude"  # "registry" (needs Market.with_registry), "exclude", "value_preserving"
 
 
 def _snap_ratio(r: np.ndarray) -> np.ndarray:
@@ -80,13 +84,20 @@ class Market:
     """Dense (ticker x session) arrays. Column d only depends on data up to session d."""
 
     FIELDS = ("close", "prev", "high", "low", "volume", "value", "present", "tradeable",
-              "lock_up", "lock_down", "ca_ratio", "is_split", "share_factor", "split_factor", "other_ca_count")
+              "lock_up", "lock_down", "ca_ratio", "is_split", "share_factor", "split_factor", "other_ca_count",
+              "listed_shares")
+    # Set by with_registry(); built from information that postdates the session (later
+    # downloads, primary documents), so never shown to a rule (see rules.RuleView).
+    REGISTRY_FIELDS = ("reg_factor", "reg_rights", "reg_unresolved")
 
     def __init__(self, tickers, dates, **arrays):
         self.tickers = np.asarray(tickers)
         self.dates = np.asarray(dates, dtype="datetime64[D]")
         for name in self.FIELDS:
             setattr(self, name, arrays[name])
+        for name in self.REGISTRY_FIELDS:
+            setattr(self, name, arrays.get(name))
+        self.registry_counts = arrays.get("registry_counts")
 
     @property
     def shape(self):
@@ -107,12 +118,13 @@ class Market:
 
         close, prev, high, low = dense("close"), dense("previous"), dense("high"), dense("low")
         volume, value = dense("volume"), dense("value")
+        listed = dense("listed_shares") if "listed_shares" in df else np.full(shape, np.nan)
         present = np.zeros(shape, dtype=bool)
         present[ti, di] = True
-        return cls.build(tickers, dates, close, prev, high, low, volume, value, present)
+        return cls.build(tickers, dates, close, prev, high, low, volume, value, present, listed)
 
     @classmethod
-    def build(cls, tickers, dates, close, prev, high, low, volume, value, present) -> "Market":
+    def build(cls, tickers, dates, close, prev, high, low, volume, value, present, listed_shares=None) -> "Market":
         tradeable = present & (np.nan_to_num(volume) > 0) & (np.nan_to_num(close) > 0)
         day_grid = np.broadcast_to(np.asarray(dates, dtype="datetime64[D]"), close.shape)
         ref = np.where(np.isfinite(prev) & (prev > 0), prev, np.nan)
@@ -138,17 +150,33 @@ class Market:
                    ca_ratio=ca_ratio, is_split=is_split,
                    share_factor=np.cumprod(ca_ratio, axis=1),
                    split_factor=np.cumprod(np.where(is_split, ca_ratio, 1.0), axis=1),
-                   other_ca_count=np.cumsum(reset & ~is_split, axis=1))
+                   other_ca_count=np.cumsum(reset & ~is_split, axis=1),
+                   listed_shares=np.full(close.shape, np.nan) if listed_shares is None else listed_shares)
 
-    def window(self, start=None, end=None) -> "Market":
+    def with_registry(self, registry) -> "Market":
+        """A copy with share scaling from a corporate-action registry (ca_mode="registry")."""
+        from .corporate_actions import scaling_arrays
+
+        factor, rights, unresolved, counts = scaling_arrays(self, registry)
+        arrays = {name: getattr(self, name) for name in self.FIELDS}
+        return Market(self.tickers, self.dates, **arrays, reg_factor=factor, reg_rights=rights,
+                      reg_unresolved=unresolved, registry_counts=counts)
+
+    def bounds(self, start=None, end=None) -> tuple[int, int]:
         lo = 0 if start is None else int(np.searchsorted(self.dates, np.datetime64(start, "D"), side="left"))
         hi = len(self.dates) if end is None else int(np.searchsorted(self.dates, np.datetime64(end, "D"), side="right"))
-        return self.slice(lo, hi)
+        return lo, hi
+
+    def window(self, start=None, end=None) -> "Market":
+        return self.slice(*self.bounds(start, end))
 
     def slice(self, lo: int, hi: int) -> "Market":
         # Cumulative fields are only ever used as ratios or differences, so a slice keeps them valid.
         arrays = {name: getattr(self, name)[:, lo:hi] for name in self.FIELDS}
-        return Market(self.tickers, self.dates[lo:hi], **arrays)
+        for name in self.REGISTRY_FIELDS:
+            if getattr(self, name) is not None:
+                arrays[name] = getattr(self, name)[:, lo:hi]
+        return Market(self.tickers, self.dates[lo:hi], **arrays, registry_counts=self.registry_counts)
 
     def truncate(self, last: int) -> "Market":
         """Sessions 0..last only. Used to prove a rule never reads ahead."""
@@ -207,7 +235,16 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
 
     held = np.isin(status, SCORED)
     x = np.where(held, exit_idx, e)
-    if cfg.ca_mode == "exclude":
+    if cfg.ca_mode == "registry":
+        if m.reg_factor is None:
+            raise ValueError("ca_mode='registry' needs a market with a corporate-action registry attached "
+                             "(Market.with_registry)")
+        unresolved = m.reg_unresolved[tick_idx, x] - m.reg_unresolved[tick_idx, e] > 0
+        rights = m.reg_rights[tick_idx, x] - m.reg_rights[tick_idx, e] > 0
+        status[held & unresolved] = STATUS.index("CORP_ACTION_UNRESOLVED")
+        status[held & rights & ~unresolved] = STATUS.index("CORP_ACTION_RIGHTS_ISSUE")
+        factor_array = m.reg_factor
+    elif cfg.ca_mode == "exclude":
         crossed = m.other_ca_count[tick_idx, x] - m.other_ca_count[tick_idx, e] > 0
         status[held & crossed] = STATUS.index("EXCLUDED_CORP_ACTION")
         factor_array = m.split_factor

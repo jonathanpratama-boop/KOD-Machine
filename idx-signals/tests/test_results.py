@@ -5,9 +5,10 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from idxsig.backtest import RunConfig, run
+from idxsig.backtest import RunConfig
 from idxsig.results import verify_runs, write_run
 from tests.support import random_walk_panel
+from tests.support import run_synthetic as run
 
 REPO = Path(__file__).resolve().parents[2]
 GUARD = REPO / "tools" / "check_append_only.py"
@@ -110,6 +111,29 @@ class AppendOnlyGuardTests(unittest.TestCase):
     def test_deleting_a_run_fails(self):
         self.git("rm", "-q", "-r", "idx-signals/results/runs/r1")
         self.assertEqual(self.guard("--staged").returncode, 1)
+
+    def test_corporate_action_registry_is_frozen_and_manual_file_append_only(self):
+        """Guards against: re-classifying past corporate actions in place (which would silently change
+        every run that used the registry), or rewriting a primary-source entry instead of adding one."""
+        ca = self.repo / "idx-signals" / "data" / "corporate_actions"
+        ca.mkdir(parents=True)
+        (ca / "ca_registry-1.csv").write_text("ticker,action_type\nAAAA,UNKNOWN\n")
+        (ca / "manual.csv").write_text("ticker,effective_date\nAAAA,2024-01-02\n")
+        self.git("add", "-A")
+        self.git("commit", "-q", "-m", "registry")
+        (ca / "ca_registry-1.csv").write_text("ticker,action_type\nAAAA,STOCK_SPLIT\n")
+        self.git("add", "-A")
+        self.assertIn("frozen record", self.guard("--staged").stderr)
+        self.git("checkout", "--", ".")
+        self.git("reset", "-q")
+        (ca / "ca_registry-1.csv").write_text("ticker,action_type\nAAAA,UNKNOWN\n")
+        (ca / "manual.csv").write_text("ticker,effective_date\nAAAA,2024-01-03\n")
+        self.git("add", "-A")
+        self.assertIn("rewrites earlier lines", self.guard("--staged").stderr)
+        with (ca / "manual.csv").open("w") as fh:
+            fh.write("ticker,effective_date\nAAAA,2024-01-02\nAAAA,2024-01-03\n")
+        self.git("add", "-A")
+        self.assertEqual(self.guard("--staged").returncode, 0)
 
 
 if __name__ == "__main__":

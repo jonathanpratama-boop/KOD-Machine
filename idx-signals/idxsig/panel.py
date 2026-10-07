@@ -5,7 +5,12 @@ sessions come from Yahoo with the split adjustment undone. Every input file is c
 against its manifest hash before use. The panel file is written deterministically
 (gzip mtime 0, integer columns), so its SHA-256 identifies the exact data a run used.
 
-Coverage eras (also written into the panel manifest):
+Panel format v2 adds IDX's daily share counts (`listed_shares`, `tradable_shares`) in the
+mirror era; Yahoo carries none, so they are empty after the boundary. They feed the
+corporate-action registry (a split multiplies the share count by its ratio on the day the
+reference resets) and the market-cap control. A v1 panel loads with them empty.
+
+Coverage eras (also written into the panel manifest; quality tiers in quality.py):
 
   idx_mirror  2019-07-29 .. 2025-02-21  names delisted after ~2021-01 are present up to
                                          their last session; names delisted between
@@ -23,7 +28,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from . import market
+from . import market, quality
 from .provenance import (
     MANIFESTS,
     PANEL_DIR,
@@ -36,9 +41,18 @@ from .provenance import (
     utc_stamp,
 )
 
-COLUMNS = ["date", "ticker", "source", "previous", "open", "high", "low", "close", "volume", "value", "frequency"]
-INT_COLUMNS = ["previous", "open", "high", "low", "close", "volume", "value", "frequency"]
+PANEL_FORMAT = "panel-v2"
+COLUMNS = ["date", "ticker", "source", "previous", "open", "high", "low", "close", "volume", "value", "frequency",
+           "listed_shares", "tradable_shares"]
+INT_COLUMNS = ["previous", "open", "high", "low", "close", "volume", "value", "frequency", "listed_shares",
+               "tradable_shares"]
+V2_COLUMNS = ("listed_shares", "tradable_shares")
 MIN_TRADED_PER_SESSION = 50  # a date with fewer traded names is a holiday stub, not a session
+# A date is a session only if IDX itself priced the next day off it: among names whose close
+# moved that day, at least this share must have the next reference price equal to that close.
+# (The pinned mirror has a Saturday, 2021-05-22, with ~110 tiny trades that IDX's next
+# reference ignores for every name; kept, it creates 61 false corporate actions.)
+MIN_REFERENCE_CONFIRMED = 0.5
 
 
 def load_mirror(manifest: Path) -> pd.DataFrame:
@@ -49,13 +63,16 @@ def load_mirror(manifest: Path) -> pd.DataFrame:
             continue
         df = pd.read_csv(
             PKG_ROOT / rec["path"],
-            usecols=["date", "previous", "open_price", "high", "low", "close", "volume", "value", "frequency"],
+            usecols=["date", "previous", "open_price", "high", "low", "close", "volume", "value", "frequency",
+                     "listed_shares", "tradeble_shares"],
         )
         df["ticker"] = rec["ticker"]
         frames.append(df)
     df = pd.concat(frames, ignore_index=True)
     df["date"] = pd.to_datetime(df["date"].str[:10])
-    df = df.rename(columns={"open_price": "open"})
+    df = df.rename(columns={"open_price": "open", "tradeble_shares": "tradable_shares"})
+    for col in V2_COLUMNS:
+        df[col] = df[col].where(df[col] > 0)
     traded = df["volume"] > 0
     # IDX publishes an opening price only for names with a pre-opening auction; 0 means none.
     df["open"] = df["open"].where(df["open"] > 0)
@@ -106,6 +123,8 @@ def _yahoo_frame(ticker: str, payload: dict) -> pd.DataFrame:
         df[col] = df[col].where(traded)
     df["value"] = (df["close"] * df["volume"]).where(traded, 0)
     df["frequency"] = np.nan
+    df["listed_shares"] = np.nan
+    df["tradable_shares"] = np.nan
     df["ticker"] = ticker
     df["source"] = "yahoo"
     return df[COLUMNS]
@@ -198,6 +217,17 @@ def _limit_qa(panel: pd.DataFrame) -> list[dict]:
     return rows
 
 
+def _reference_ignored_dates(mirror: pd.DataFrame) -> dict:
+    p = mirror.sort_values(["ticker", "date"])
+    nxt = p.groupby("ticker")["previous"].shift(-1)
+    prior = p.groupby("ticker")["close"].shift(1)
+    sel = (p["volume"] > 0) & nxt.notna() & prior.notna() & (p["close"] != prior)
+    share = (nxt[sel] == p.loc[sel, "close"]).groupby(p.loc[sel, "date"]).agg(["mean", "size"])
+    bad = share[share["mean"] < MIN_REFERENCE_CONFIRMED]
+    return {d.date().isoformat(): {"names_checked": int(r["size"]), "next_reference_equals_close": round(float(r["mean"]), 4)}
+            for d, r in bad.iterrows()}
+
+
 def build(mirror_manifest: Path | None = None, yahoo_manifest: Path | None = None, log=print) -> Path:
     mirror_manifest = Path(mirror_manifest or latest_manifest("idx_mirror"))
     yahoo_manifest = Path(yahoo_manifest or latest_manifest("yahoo"))
@@ -209,6 +239,8 @@ def build(mirror_manifest: Path | None = None, yahoo_manifest: Path | None = Non
     mirror = load_mirror(mirror_manifest)
     log("loading yahoo")
     yahoo = load_yahoo(yahoo_manifest)
+    ignored = _reference_ignored_dates(mirror)
+    mirror = mirror[~mirror["date"].dt.strftime("%Y-%m-%d").isin(ignored)]
     boundary = mirror["date"].max()
     qa_overlap = _overlap_qa(mirror, yahoo, boundary)
     after, stitch_dropped = _rebase_first_rows(yahoo, mirror, boundary)
@@ -235,6 +267,8 @@ def build(mirror_manifest: Path | None = None, yahoo_manifest: Path | None = Non
     yahoo_ok = {r["ticker"] for r in yahoo_records if r.get("http_status") == 200 and r.get("rows")}
     yahoo_missing = sorted({r["ticker"] for r in yahoo_records} - yahoo_ok)
     manifest = {
+        "format": PANEL_FORMAT,
+        "columns": COLUMNS,
         "panel": rel(path),
         "sha256": sha256_file(path),
         "built_at": utc_stamp(),
@@ -268,10 +302,18 @@ def build(mirror_manifest: Path | None = None, yahoo_manifest: Path | None = Non
         "yahoo_not_found_or_empty": yahoo_missing,
         "dropped_non_session_dates": [d.date().isoformat() for d in dropped_dates][:50],
         "dropped_non_session_dates_count": len(dropped_dates),
+        "dropped_dates_ignored_by_idx_reference": ignored,
         "qa_overlap_idx_vs_yahoo": qa_overlap,
         "yahoo_segment_dropped_stitch_mismatch": stitch_dropped,
         "qa_limit_violations": _limit_qa(panel),
         "market_regimes": market.regime_labels(),
+        "quality_tiers": quality.tiers(panel["date"].min().date().isoformat(), boundary.date().isoformat(),
+                                       end.date().isoformat()),
+        "share_counts": {
+            "rows_with_listed_shares": int(panel["listed_shares"].notna().sum()),
+            "note": "IDX listed_shares / tradeble_shares, mirror era only. tradable_shares is NOT free float: "
+                    "it equals listed_shares for most names, including ones with a known controlling holder.",
+        },
     }
     mpath = MANIFESTS / f"panel-{stamp}.json"
     with mpath.open("x", encoding="utf-8") as fh:
@@ -289,4 +331,8 @@ def load(panel_manifest: Path | None = None) -> tuple[pd.DataFrame, dict, Path]:
     if sha256_file(path) != meta["sha256"]:
         raise RuntimeError(f"{meta['panel']} does not match the hash in {panel_manifest.name}")
     df = pd.read_csv(path, dtype={c: "Int64" for c in INT_COLUMNS}, parse_dates=["date"])
+    for col in V2_COLUMNS:  # a v1 panel has no share counts
+        if col not in df:
+            df[col] = pd.array([pd.NA] * len(df), dtype="Int64")
+    meta.setdefault("format", "panel-v1")
     return df, meta, panel_manifest

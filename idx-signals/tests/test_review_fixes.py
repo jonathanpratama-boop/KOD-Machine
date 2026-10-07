@@ -1,42 +1,30 @@
 """IDX harness fixes for the external review (Ace).
 
 #5 a rights issue is not a split: only integer splits scale shares; trades held across any
-   other reference reset are excluded (or valued explicitly with ca_mode=value_preserving)
+   other reference reset are excluded (or valued explicitly with ca_mode=value_preserving).
+   These are now the legacy modes; the default registry mode is tested in
+   test_corporate_actions.py.
 #6 a matched random baseline (price band, liquidity, volatility, momentum) so exposure to a
    kind of name is not mistaken for a signal
 #7 the default window starts where the universe is survivorship-complete
-#8 the lookahead check recomputes the rule on every prefix, not three
+#8 the lookahead check recomputes the rule on every prefix, not three (now prefix-first:
+   test_lookahead.py)
 """
 
-import sys
 import unittest
-from unittest import mock
 
 import numpy as np
 import pandas as pd
 
 from idxsig import controls, rules
-from idxsig.backtest import LookaheadError, RunConfig, run
+from idxsig.backtest import LookaheadError, RunConfig
 from idxsig.execution import STATUS, ExecConfig, execute
 from idxsig.sources.idx_mirror import FIRST_SNAPSHOT
+from tests.rulekit import module_rule, with_rule
 from tests.support import flat_market, random_walk_panel, rebuild
+from tests.support import run_synthetic as run
 
 FLAT_NET = (1 - 0.0025) / (1 + 0.0015) - 1
-
-
-def make_rule(rule_id, compute, holding=5):
-    return rules.Rule(rule_id, "test", f"test rule {rule_id}", holding, compute, sys.modules[__name__])
-
-
-def with_rule(rule):
-    real = rules.registry
-
-    def patched():
-        out = real()
-        out[rule.rule_id] = rule
-        return out
-
-    return mock.patch.object(rules, "registry", patched)
 
 
 def one(m, **cfg):
@@ -135,13 +123,14 @@ class Ace6MatchedControls(unittest.TestCase):
     def test_matched_baseline_is_not_fooled_by_exposure(self):
         df, meta = exposure_panel()
 
-        def cheap_names(m):
-            out = np.zeros(m.shape)
-            out[:, ::5] = 1.0
-            out = np.where(m.close <= 200, out, 0.0)
-            return np.where(m.tradeable, out, np.nan)
-
-        with with_rule(make_rule("CHEAP", cheap_names)):
+        cheap_names = module_rule("CHEAP", """
+            def compute(m):
+                out = np.zeros(m.shape)
+                out[:, ::5] = 1.0
+                out = np.where(m.close <= 200, out, 0.0)
+                return np.where(m.tradeable, out, np.nan)
+        """)
+        with with_rule(cheap_names):
             s = run(RunConfig("CHEAP", random_draws=200), df, meta)["summary"]
         same, matched = s["random"]["avg_net_return"], s["random_matched"]["avg_net_return"]
         # Against all names, picking cheap ones looks like an edge...
@@ -149,7 +138,7 @@ class Ace6MatchedControls(unittest.TestCase):
         # ...against names of the same kind it is not.
         self.assertGreater(matched["p_value_one_sided"], 0.05)
         self.assertLess(abs(matched["difference"]), abs(same["difference"]) / 4)
-        self.assertIn("price_band+liquidity+volatility+momentum", s["random_matched"]["match_level_used"])
+        self.assertTrue(any(k.startswith("price_band+liquidity") for k in s["random_matched"]["match_level_used"]))
 
 
 class Ace7SurvivorshipSafeDefault(unittest.TestCase):
@@ -166,18 +155,19 @@ class Ace8ExhaustiveLookahead(unittest.TestCase):
     def test_sparse_leak_is_caught_only_by_the_exhaustive_check(self):
         df, meta = random_walk_panel(n_tickers=10, n_sessions=120)
 
-        def leaks_once(m):
-            out = np.zeros(m.shape)
-            k = 17  # one session, far from the sampled cut points
-            if m.shape[1] > k + 1:
-                out[:, k] = (m.close[:, k + 1] > m.close[:, k]).astype(float)
-            return np.where(m.tradeable, out, np.nan)
-
-        with with_rule(make_rule("LEAK", leaks_once)):
+        leaks_once = module_rule("LEAK", """
+            def compute(m):
+                out = np.zeros(m.shape)
+                k = 17  # one session, far from the sampled cut points
+                if m.shape[1] > k + 1:
+                    out[:, k] = (m.close[:, k + 1] > m.close[:, k]).astype(float)
+                return np.where(m.tradeable, out, np.nan)
+        """)
+        with with_rule(leaks_once):
             sampled = run(RunConfig("LEAK", random_draws=5, lookahead_cuts=3), df, meta)["summary"]
             self.assertEqual(sampled["lookahead_check"]["mode"], "sampled")
-            self.assertTrue(any("not proven causal" in w for w in sampled["warnings"]))
-            with self.assertRaisesRegex(LookaheadError, "reads data from after that close"):
+            self.assertTrue(any("not causal by construction" in w for w in sampled["warnings"]))
+            with self.assertRaisesRegex(LookaheadError, "reads data from after the close"):
                 run(RunConfig("LEAK", random_draws=5), df, meta)
 
 

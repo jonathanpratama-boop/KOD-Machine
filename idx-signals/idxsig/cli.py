@@ -29,6 +29,8 @@ def main(argv=None) -> int:
     p_y.add_argument("--out", help="raw directory (resumes if it exists)")
     sub.add_parser("build-panel", help="merge sources into the canonical panel")
     sub.add_parser("verify-data", help="re-hash every raw file and the panel against their manifests")
+    p_ca = sub.add_parser("build-ca-registry", help="classify every reference reset in the panel (new registry file)")
+    p_ca.add_argument("--panel", help="panel manifest (default: latest)")
     sub.add_parser("rules", help="list rules and their state")
     p_run = sub.add_parser("run", help="run a rule over the full universe vs random entries")
     p_run.add_argument("--rule", required=True)
@@ -44,8 +46,10 @@ def main(argv=None) -> int:
     p_run.add_argument("--draws", type=int, default=200)
     p_run.add_argument("--seed", type=int, default=20261007)
     p_run.add_argument("--data-end-exit", choices=("last_close", "zero"), default="last_close")
-    p_run.add_argument("--ca-mode", choices=("exclude", "value_preserving"), default="exclude",
-                       help="trades held across a rights issue / non-split corporate action")
+    p_run.add_argument("--ca-mode", choices=("registry", "exclude", "value_preserving"), default="registry",
+                       help="registry (default): scale shares only through verified splits / stock dividends; "
+                            "exclude, value_preserving: earlier modes, for reproducing older runs")
+    p_run.add_argument("--ca-registry", help="corporate-action registry manifest (default: latest)")
     p_run.add_argument("--lookahead-cuts", type=int,
                        help="sample N prefixes instead of the exhaustive check (faster, not a proof)")
     p_run.add_argument("--panel", help="panel manifest (default: latest)")
@@ -84,12 +88,38 @@ def main(argv=None) -> int:
             except (FileNotFoundError, RuntimeError) as exc:
                 print(f"{manifest.name}: {exc}")
                 bad += 1
+        for manifest in sorted(MANIFESTS.glob("ca_registry-*.json")):
+            from . import corporate_actions
+
+            try:
+                corporate_actions.load(manifest)
+                print(f"{manifest.name}: OK")
+            except (FileNotFoundError, RuntimeError) as exc:
+                print(f"{manifest.name}: {exc}")
+                bad += 1
         return 1 if bad else 0
+    elif args.cmd == "build-ca-registry":
+        from . import corporate_actions
+        from .execution import Market
+        from .panel import load
+
+        df, meta, manifest = load(Path(args.panel) if args.panel else None)
+        reg, summary = corporate_actions.build(Market.from_panel(df), meta)
+        summary["inputs"]["panel_manifest"] = manifest.name
+        path = corporate_actions.write(reg, summary)
+        print(json.dumps({k: summary[k] for k in ("rows", "by_status", "by_type", "share_scaled")}, indent=2))
+        print(path)
     elif args.cmd == "rules":
         from . import rules
 
+        from .rules.audit import audit_module
+
         for rule_id, rule in sorted(rules.registry().items()):
-            print(f"{rule_id} {rule.version} {rule.kind} hold={rule.holding_days} sha={rule.sha256[:12]}")
+            problems = audit_module(rule.module)
+            print(f"{rule_id} {rule.version} {rule.kind} hold={rule.holding_days} sha={rule.sha256[:12]} "
+                  f"source-audit={'passed' if not problems else f'FAILED ({len(problems)})'}")
+            for problem in problems:
+                print(f"  {problem}")
         for rule_id in rules.pending():
             print(f"{rule_id} PENDING: rule text not supplied")
     elif args.cmd == "run":
@@ -113,7 +143,17 @@ def main(argv=None) -> int:
             seed=args.seed, data_end_exit=args.data_end_exit, ca_mode=args.ca_mode,
             lookahead_cuts=args.lookahead_cuts,
         )
-        output = run(cfg, df, meta)
+        registry = None
+        if args.ca_mode == "registry":
+            from . import corporate_actions
+
+            try:
+                registry = corporate_actions.load(Path(args.ca_registry) if args.ca_registry else None,
+                                                  panel_sha256=meta["sha256"])
+            except (FileNotFoundError, corporate_actions.RegistryMismatch) as exc:
+                print(f"error: {exc}", file=sys.stderr)
+                return 2
+        output = run(cfg, df, meta, ca_registry=registry)
         try:
             run_dir = write_run(output, allow_dirty=args.allow_dirty, commit=not args.no_commit)
         except DirtyTreeError as exc:

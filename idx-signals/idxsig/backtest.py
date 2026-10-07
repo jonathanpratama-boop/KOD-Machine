@@ -7,17 +7,25 @@ Two random baselines, each run through the identical execution model and holding
 For every attempted signal, `random_draws` replacement entries are drawn on the same
 session from the names where the rule was evaluable:
 
-  matched       from names in the same price band, liquidity, volatility and momentum
-                buckets as the signalled name (controls.py), so exposure to illiquid or
-                volatile names is not mistaken for a signal. This is the primary comparison.
+  matched       from names in the same price band, liquidity, market-cap, volatility,
+                momentum, drawdown and listing-age buckets as the signalled name
+                (controls.py, v2), so exposure to illiquid or volatile names is not mistaken
+                for a signal. This is the primary comparison.
   same-session  from all of them, uniformly. Controls for market timing only.
 
 Each draw is a portfolio of the rule's size and dates. The rule's average return and hit
 rate are placed in each distribution of draws.
 
-No lookahead: by default the rule is recomputed on every prefix of the data (sessions
-0..d for every d) and its signal at d must equal the full run's signal at d. That makes
-every recorded signal exactly what the rule computes from data available at that close.
+No lookahead, by construction (rules.causal_signals): the signal recorded at session d is
+column d of a call that received only sessions 0..d and the names listed by d, through a
+read-only view without the corporate-action registry, under a source audit and a run-time
+sandbox. A full-window call that disagrees with the prefix-built signals fails the run.
+
+Corporate actions: ca_mode="registry" (default) scales shares only through resets the
+registry verifies; the registry must have been built from this exact panel.
+
+Data quality: every run reports how many of its sessions are TIER_1/2/3 (quality.py) and
+the known limitations of the data, and warns when the window leaves TIER_1.
 """
 
 from __future__ import annotations
@@ -27,15 +35,13 @@ from dataclasses import asdict, dataclass
 import numpy as np
 import pandas as pd
 
-from . import controls
+from . import controls, quality
 from . import rules as rule_registry
+from .corporate_actions import REGISTRY_VERSION, RegistryMismatch
 from .execution import FIRST_SKIP, SCORED, STATUS, ExecConfig, Market, execute
 from .market import Fees
+from .rules import LookaheadError
 from .sources.idx_mirror import FIRST_SNAPSHOT
-
-
-class LookaheadError(RuntimeError):
-    pass
 
 
 @dataclass(frozen=True)
@@ -53,31 +59,37 @@ class RunConfig:
     random_draws: int = 200
     seed: int = 20261007
     data_end_exit: str = "last_close"
-    ca_mode: str = "exclude"
-    lookahead_cuts: int | None = None  # None: every session (exhaustive); N: N sampled prefixes
+    ca_mode: str = "registry"  # "exclude" / "value_preserving": earlier modes, to reproduce older runs
+    lookahead_cuts: int | None = None  # None: prefix-first, causal by construction; N: legacy sampled check
+    controls_version: str = "v2"
 
 
 def _equal_with_nan(a: np.ndarray, b: np.ndarray) -> bool:
     return bool(np.array_equal(np.isnan(a), np.isnan(b)) and np.array_equal(np.nan_to_num(a), np.nan_to_num(b)))
 
 
-def lookahead_check(rule, m: Market, full: np.ndarray, cuts: int | None) -> dict:
-    n_sessions = m.shape[1]
+def signals(rule, m: Market, cuts: int | None) -> tuple[np.ndarray, dict]:
+    """Prefix-first causal signals, or (cuts=N, legacy) a full-window call checked at N prefixes."""
     if cuts is None:
-        for d in range(n_sessions):
-            part = rule_registry.signal_array(rule, m.truncate(d))[:, d]
-            if not _equal_with_nan(full[:, d], part):
-                raise LookaheadError(f"{rule.rule_id}: the signal at {m.dates[d]} differs when later sessions are "
-                                     f"removed, so it reads data from after that close")
-        return {"mode": "exhaustive", "sessions_checked": n_sessions, "mismatches": 0}
+        return rule_registry.causal_signals(rule, m)
+    from .rules.audit import require_clean
+
+    require_clean(rule)
+    src = rule_registry.CausalSource(m)
+    n_sessions = m.shape[1]
+    full = np.full(m.shape, np.nan)
+    k_end = src.rows_at(n_sessions - 1)
+    full[:k_end] = rule_registry._call(rule, src.view(n_sessions - 1))
     checked = []
     for frac in np.linspace(0.3, 0.9, cuts) if cuts else []:
         cut = int(frac * (n_sessions - 1))
-        if not _equal_with_nan(full[:, : cut + 1], rule_registry.signal_array(rule, m.truncate(cut))):
+        k = src.rows_at(cut)
+        if not _equal_with_nan(full[:k, : cut + 1], rule_registry._call(rule, src.view(cut))):
             raise LookaheadError(f"{rule.rule_id} changes past signals when sessions after {m.dates[cut]} are "
                                  f"removed: it reads ahead")
         checked.append(str(m.dates[cut]))
-    return {"mode": "sampled", "truncated_after": checked, "mismatches": 0}
+    return src.unorder(full), {"mode": "sampled", "truncated_after": checked, "mismatches": 0,
+                               "source_audit": "passed"}
 
 
 def _summary_stats(net: np.ndarray, status: np.ndarray) -> dict:
@@ -136,7 +148,9 @@ def _baseline(m: Market, r_tick: np.ndarray, a_sig: np.ndarray, exec_cfg: ExecCo
     return summary, frame, out
 
 
-def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict) -> dict:
+def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: tuple | None = None) -> dict:
+    """ca_registry: (registry DataFrame, registry manifest) from corporate_actions.load, required
+    when cfg.ca_mode == "registry"."""
     rule = rule_registry.get(cfg.rule_id)
     holding = cfg.holding_days or rule.holding_days
     exec_cfg = ExecConfig(
@@ -150,9 +164,26 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict) -> dict:
     )
     start = cfg.start or FIRST_SNAPSHOT
     end = cfg.end or panel_meta["source_boundary"]
-    m = Market.from_panel(panel_df).window(start, end)
-    sig = rule_registry.signal_array(rule, m)
-    lookahead = lookahead_check(rule, m, sig, cfg.lookahead_cuts)
+    full_market = Market.from_panel(panel_df)
+    lo, hi = full_market.bounds(start, end)
+    ca_info = {"mode": cfg.ca_mode}
+    if cfg.ca_mode == "registry":
+        if ca_registry is None:
+            raise RegistryMismatch("ca_mode='registry' needs a corporate-action registry built from this panel "
+                                   "(python -m idxsig build-ca-registry)")
+        reg_df, reg_meta = ca_registry
+        if reg_meta["inputs"]["panel_sha256"] != panel_meta["sha256"]:
+            raise RegistryMismatch(f"registry {reg_meta.get('_manifest')} was built for panel "
+                                   f"{reg_meta['inputs']['panel_sha256'][:12]}, not {panel_meta['sha256'][:12]}")
+        full_market = full_market.with_registry(reg_df)
+        ca_info.update({"registry_version": reg_meta.get("registry_version", REGISTRY_VERSION),
+                        "registry_manifest": reg_meta.get("_manifest"),
+                        "registry_manifest_sha256": reg_meta.get("_manifest_sha256"),
+                        "registry_sha256": reg_meta["sha256"], "registry_by_status": reg_meta.get("by_status")})
+    m = full_market.slice(lo, hi)
+    if cfg.ca_mode == "registry":
+        ca_info["resets_in_window"] = m.with_registry(reg_df).registry_counts
+    sig, lookahead = signals(rule, m, cfg.lookahead_cuts)
     evaluable = np.isfinite(sig)
     tick_idx, sig_idx = np.nonzero(sig == 1)  # row-major: by ticker, then session
 
@@ -179,14 +210,17 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict) -> dict:
     for s in np.unique(a_sig):
         cols = np.flatnonzero(a_sig == s)
         same_tick[:, cols] = rng.choice(np.flatnonzero(evaluable[:, s]), size=(draws, len(cols)), replace=True)
+    # Features from the whole panel, then windowed: each uses only data at or before its session,
+    # and rolling windows are warm at the window's first session.
+    feats = {k: v[:, lo:hi] for k, v in controls.features(full_market, cfg.controls_version).items()}
     matched_tick, level_used = controls.matched_draws(
-        evaluable, controls.features(m), a_tick, a_sig, draws, np.random.default_rng(cfg.seed + 1)
+        evaluable, feats, a_tick, a_sig, draws, np.random.default_rng(cfg.seed + 1), cfg.controls_version
     )
     baselines, frames, raw = {}, [], {}
     for key, ticks, method in (
-        ("random_matched", matched_tick, "same session, same price band / liquidity quintile / volatility tercile / "
-                                         "momentum tercile as the signalled name (relaxed when fewer than "
-                                         f"{controls.MIN_POOL} names match), same execution"),
+        ("random_matched", matched_tick, "same session, same " + " / ".join(controls.VERSIONS[cfg.controls_version])
+                                         + " buckets as the signalled name (relaxed from the last feature when "
+                                         f"fewer than {controls.MIN_POOL} names match), same execution"),
         ("random", same_tick, "same session, uniform over names where the rule was evaluable, same execution"),
     ):
         if len(a_sig):
@@ -195,10 +229,11 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict) -> dict:
         else:
             baselines[key] = {"draws": draws, "method": method, "pooled": _summary_stats(np.array([]), np.array([], dtype=np.int64)),
                               "avg_net_return": None, "hit_rate": None}
-    names = controls.level_names()
+    names = controls.level_names(cfg.controls_version)
     baselines["random_matched"]["match_level_used"] = {
         names[i]: int((level_used == i).sum()) for i in range(len(names)) if (level_used == i).any()
     }
+    baselines["random_matched"]["controls"] = controls.coverage(feats, a_tick, a_sig, level_used, cfg.controls_version)
     draws_df = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
 
     by_year = []
@@ -233,12 +268,20 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict) -> dict:
     if data_end:
         warnings.append(f"{data_end} trades exited at a last traded close because the name stopped trading "
                         f"(data_end_exit={cfg.data_end_exit})")
-    excluded = rule_stats["status_counts"].get("EXCLUDED_CORP_ACTION", 0)
+    excluded = sum(rule_stats["status_counts"].get(k, 0) for k in
+                   ("EXCLUDED_CORP_ACTION", "CORP_ACTION_UNRESOLVED", "CORP_ACTION_RIGHTS_ISSUE"))
     if excluded:
-        warnings.append(f"{excluded} trades were held across a rights issue or other non-split corporate action "
+        warnings.append(f"{excluded} trades were held across a corporate action the model does not share-scale "
                         f"and are not scored (ca_mode={cfg.ca_mode}); the baselines apply the same rule")
-    if lookahead["mode"] != "exhaustive":
-        warnings.append("lookahead check was sampled, not exhaustive; the signals are not proven causal")
+    if cfg.ca_mode != "registry":
+        warnings.append(f"ca_mode={cfg.ca_mode} is an earlier corporate-action model, kept to reproduce older runs: "
+                        f"it treats every integer reset as a split")
+    if lookahead["mode"] != rule_registry.CAUSAL_MODE:
+        warnings.append("lookahead check was sampled, not prefix-first: the signals are not causal by construction")
+    tiers = quality.window_composition(m.dates, panel_meta["source_boundary"])
+    for tier, n in tiers["sessions_by_tier"].items():
+        if tier != "TIER_1":
+            warnings.append(f"{n} sessions are {tier} data (see data_quality); results there are weaker than TIER_1")
     if rule.kind == "PLACEBO":
         warnings.append("PLACEBO rule: harness self-check, not a trading rule; any lift here is a harness bias")
 
@@ -268,10 +311,22 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict) -> dict:
             "auto_rejection": "entry refused when the entry close is locked at ARA; exit rolls while locked at ARB "
                               "or untraded; regular-board schedule by date, plus 10% special-board limits on "
                               "one-price or sub-Rp50 bars",
-            "corporate_actions": "splits and reverse splits scale shares; a trade held across any other reference "
-                                 "reset (rights issue, bonus, stock dividend) is "
-                                 + ("excluded" if cfg.ca_mode == "exclude" else "valued as if rights were reinvested"),
+            "corporate_actions": {
+                "registry": "shares scaled only through registry-verified splits, reverse splits and stock "
+                            "dividends; trades held across a verified rights issue or any unverified reset are "
+                            "not scored (CORP_ACTION_RIGHTS_ISSUE / CORP_ACTION_UNRESOLVED)",
+                "exclude": "legacy: every integer reset scaled as a split; other resets excluded",
+                "value_preserving": "legacy: shares scaled by every reset (rights valued as reinvested)",
+            }[cfg.ca_mode],
         },
+        "corporate_action_model": ca_info,
+        "harness": {"signals": lookahead["mode"], "rule_view_fields": list(rule_registry.RULE_FIELDS),
+                    "controls": cfg.controls_version, "ca_mode": cfg.ca_mode},
+        "data_quality": {**tiers, "tiers": quality.tiers(panel_meta.get("first_session", str(m.dates[0])),
+                                                         panel_meta["source_boundary"],
+                                                         panel_meta.get("last_session", str(m.dates[-1]))),
+                         "panel_format": panel_meta.get("format", "panel-v1"),
+                         "known_limitations": list(quality.KNOWN_LIMITATIONS)},
         "panel": {"manifest_sha256": panel_meta.get("_manifest_sha256"), "panel_sha256": panel_meta["sha256"],
                   "panel": panel_meta["panel"], "source_boundary": panel_meta["source_boundary"]},
         "universe": {
