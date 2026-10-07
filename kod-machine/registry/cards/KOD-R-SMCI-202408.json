@@ -1,0 +1,64 @@
+{
+  "call_type": "RETROSPECTIVE",
+  "card_hash_version": "KOD-CARD-v1",
+  "case_id": "KOD-R-SMCI-202408",
+  "critic": {
+    "invalidation": "Filing is submitted without a material restatement and guidance is reaffirmed.",
+    "loss_path": "Filing delay or accounting concern is dismissed as administrative and the narrative multiple holds.",
+    "missing_evidence": "Point-in-time short interest, borrow, and the full 10-K/10-Q diff at T-72H are not in this seed."
+  },
+  "decision_cutoff": "2024-08-27T20:00:00Z",
+  "disposition": "WATCH",
+  "doctrine_sha": "246deb4a63c8168622e86cccecf04101801f2e1bf4d8c765396f3e277c294f0e",
+  "information_sets": {
+    "T-24H": {
+      "cutoff": "2024-08-26T20:00:00Z",
+      "facts": {
+        "catalyst": "filing delay reported",
+        "dated_catalyst_known": true,
+        "mechanism_in_primary_docs": false,
+        "narrative_only": true,
+        "price_already_repriced": true,
+        "price_quiet_vs_own_range": false,
+        "primary_document_public": false,
+        "volume_creep_before_story": null
+      },
+      "reconstruction_status": "PARTIAL_PUBLIC"
+    },
+    "T-30D": {
+      "cutoff": "2024-07-28T20:00:00Z",
+      "facts": {
+        "catalyst": null,
+        "dated_catalyst_known": null,
+        "mechanism_in_primary_docs": null,
+        "narrative_only": true,
+        "price_already_repriced": true,
+        "price_quiet_vs_own_range": false,
+        "primary_document_public": null,
+        "volume_creep_before_story": null
+      },
+      "reconstruction_status": "PARTIAL_PUBLIC"
+    },
+    "T-72H": {
+      "cutoff": "2024-08-24T20:00:00Z",
+      "facts": {
+        "catalyst": "expected filing window",
+        "dated_catalyst_known": true,
+        "mechanism_in_primary_docs": false,
+        "narrative_only": true,
+        "price_already_repriced": true,
+        "price_quiet_vs_own_range": false,
+        "primary_document_public": false,
+        "volume_creep_before_story": null
+      },
+      "reconstruction_status": "PARTIAL_PUBLIC"
+    }
+  },
+  "outcome_window": null,
+  "reconstruction_status": "PARTIAL_PUBLIC",
+  "scan_entry_id": null,
+  "story_hypothesis": "Failure case, not a winner study. After a long AI-server repricing, a delayed filing became the information that mattered. The lab question is whether the prior bullish narrative still had a mechanism in primary documents at the cutoff.",
+  "symbol": "SMCI",
+  "universe_id": "SEED-PARTIAL-2026-10-08",
+  "venue": "NASDAQ"
+}
