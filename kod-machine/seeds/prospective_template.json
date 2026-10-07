@@ -1,9 +1,10 @@
 {
-  "_comment": "Copy this file for a real forward test. Every REPLACE value must be filled before `open`. decision_cutoff must be within 1 hour of the moment you run `open` and before outcome_window.start. Each information-set cutoff must be exactly decision_cutoff minus 30 days / 72 hours / 24 hours. Every fact that is not null must cite evidence ids (from `kod evidence`) published at or before that set's cutoff; a null fact is UNKNOWN and cites nothing. `open` needs a timestamp authority to answer. This file is never seeded.",
+  "_comment": "Copy this file for a real forward test. Every REPLACE value must be filled before `open`. decision_cutoff must be within 1 hour of the moment you run `open` and before outcome_window.start. Each information-set cutoff must be exactly decision_cutoff minus 30 days / 72 hours / 24 hours. Every fact that is not null must cite KOD-EVIDENCE-v2 ids (from `kod evidence`) published at or before that set's cutoff, none graded D; a null fact is UNKNOWN and cites nothing. `open` needs a timestamp authority to answer and pushes the anchor commit; run `kod receipt fetch` afterwards. Only a case whose exact anchor commit reached GitHub before outcome_window.start counts. This file is never seeded.",
   "case_id": "KOD-P-REPLACE-SYMBOL-YYYYMMDDHHMM",
   "symbol": "REPLACE",
   "venue": "REPLACE",
   "call_type": "PROSPECTIVE",
+  "integrity_level": "STRICT-v3",
   "decision_cutoff": "REPLACE e.g. 2026-10-08T01:00:00Z",
   "outcome_window": {
     "start": "REPLACE e.g. 2026-10-08T02:00:00Z (must be after decision_cutoff and after the open)",

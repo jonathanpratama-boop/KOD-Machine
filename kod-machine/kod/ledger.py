@@ -1,31 +1,42 @@
-"""Append-only SQLite ledger. Updates and deletes are aborted by triggers."""
+"""Append-only SQLite ledger. Updates and deletes are aborted by triggers.
+
+Hash recipes are versioned and never changed in place. New records use KOD-CARD-v3 and
+KOD-SCAN-v3; records made under earlier recipes keep verifying under their own recipe:
+
+  card v0  original package               card v1  + window, critic, case id, scan link
+  card v2  + frozen detector evaluations  card v3  + integrity level, detector code hash,
+                                                     citations to v2 evidence objects
+  scan v1  entries                        scan v2  + frozen evaluations
+  scan v3  + detector code hash
+"""
 
 from __future__ import annotations
 
 import json
-import mimetypes
 import re
 import sqlite3
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
+from . import evidence as ev
 from .anchor import AnchorError, AnchorReceipt, GitAnchor
 from .detectors import RULE_VERSION, evaluate
-from .hashing import fmt_ts, parse_ts, sha256_bytes, sha256_obj, sha256_text, utc_now_dt
+from .hashing import canonical, fmt_ts, parse_ts, sha256_bytes, sha256_obj, sha256_text, utc_now_dt
 
 SCHEMA = Path(__file__).with_name("schema.sql").read_text(encoding="utf-8")
 MIGRATIONS_DIR = Path(__file__).with_name("migrations")
+DETECTORS_PATH = Path(__file__).with_name("detectors.py")
 ROOT = Path(__file__).resolve().parents[1]
 DOCTRINE_PATH = ROOT / "doctrine" / "KOD_DOCTRINE_v0.md"
 DOCTRINE_VERSION = "KOD-DOCTRINE-v0"
 
 HORIZONS = ("T-30D", "T-72H", "T-24H")
-# Each information set's cutoff is exactly this far before the decision cutoff.
+# Each information set's cutoff is exactly this far before the decision cutoff. Tolerance: none.
 HORIZON_OFFSETS = {"T-30D": timedelta(days=30), "T-72H": timedelta(hours=72), "T-24H": timedelta(hours=24)}
-# v2 freezes the detector evaluations into the card. v1 cards (before migration 3) did not.
-CARD_HASH_VERSION = "KOD-CARD-v2"
-CARD_HASH_VERSIONS = (None, "KOD-CARD-v1", CARD_HASH_VERSION)
-SCAN_HASH_VERSION = "KOD-SCAN-v2"
+CARD_HASH_VERSION = "KOD-CARD-v3"
+CARD_HASH_VERSIONS = (None, "KOD-CARD-v1", "KOD-CARD-v2", CARD_HASH_VERSION)
+SCAN_HASH_VERSION = "KOD-SCAN-v3"
+SCAN_HASH_VERSIONS = (None, "KOD-SCAN-v2", SCAN_HASH_VERSION)
 # A prospective decision cutoff must sit within this distance of the moment the card is opened.
 OPEN_TOLERANCE = timedelta(hours=1)
 APPEND_ONLY_TABLES = (
@@ -41,9 +52,12 @@ APPEND_ONLY_TABLES = (
     "scan_evaluations",
     "scan_outcomes",
     "evidence",
+    "evidence_objects",
+    "remote_timestamp_receipts",
+    "detector_versions",
 )
 HIT_LABELS = ("REPRICED_UP", "REPRICED_DOWN")
-# Evidence grades. Recorded on every evidence object and shown in the report.
+# v1 evidence grades (records made before migration 4). New evidence uses kod/evidence.py.
 EVIDENCE_GRADES = {
     "A": "primary source with an authoritative publication timestamp (exchange disclosure, regulator filing)",
     "B": "reputable secondary source with an explicit publication timestamp (wire service, major outlet)",
@@ -54,6 +68,11 @@ EVIDENCE_GRADES = {
 
 class LedgerError(RuntimeError):
     pass
+
+
+def detector_source_sha() -> str:
+    """SHA-256 of the detector source. A rule version is bound to exactly one value."""
+    return sha256_bytes(DETECTORS_PATH.read_bytes())
 
 
 def frozen_evaluations(rows) -> list[dict]:
@@ -112,8 +131,12 @@ def freeze_card(case: dict, information_sets: dict, critic: dict | None, version
         },
         "information_sets": {h: information_sets[h] for h in HORIZONS},
     }
-    if version == CARD_HASH_VERSION:
+    if version in ("KOD-CARD-v2", CARD_HASH_VERSION):
         frozen["detector_evaluations"] = frozen_evaluations(evaluations or [])
+    if version == CARD_HASH_VERSION:
+        frozen["integrity_level"] = case["integrity_level"]
+        frozen["detector"] = {"rule_version": case["detector_rule_version"],
+                              "code_sha256": case["detector_code_sha256"]}
     return frozen
 
 
@@ -126,13 +149,13 @@ def freeze_scan_entry(scan_id: str, entry: dict, evaluations: list[dict] | None,
         "reconstruction_status": entry["reconstruction_status"],
         "facts": entry["facts"],
     }
-    if version == SCAN_HASH_VERSION:
+    if version in ("KOD-SCAN-v2", SCAN_HASH_VERSION):
         body["detector_evaluations"] = frozen_evaluations(evaluations or [])
     return body
 
 
 def freeze_scan(header: dict, entry_shas: dict, version: str | None) -> dict:
-    return {
+    frozen = {
         "scan_hash_version": version or "KOD-SCAN-v1",
         "scan_id": header["scan_id"],
         "scanner": header["scanner"],
@@ -143,6 +166,9 @@ def freeze_scan(header: dict, entry_shas: dict, version: str | None) -> dict:
         "rule_version": header["rule_version"],
         "entries": dict(sorted(entry_shas.items())),
     }
+    if version == SCAN_HASH_VERSION:
+        frozen["detector_code_sha256"] = header["detector_code_sha256"]
+    return frozen
 
 
 def check_horizon_offsets(decision_cutoff: str, horizons: dict) -> list[str]:
@@ -192,8 +218,7 @@ def check_prospective_timing(now: datetime, decision_cutoff: str, window: dict |
 
 
 def evidence_problems(horizons: dict, evidence_rows: dict, require_all: bool) -> list[str]:
-    """Rule for facts. Every cited evidence object must exist and have been published by the
-    horizon cutoff. With require_all, every known (non-null) fact must cite one."""
+    """Citation rule for v2 cards and v1 evidence (records made before migration 4)."""
     problems = []
     for horizon in HORIZONS:
         payload = horizons.get(horizon) or {}
@@ -244,6 +269,7 @@ class Ledger:
         self.conn.execute("PRAGMA temp_store=MEMORY")
         self._migrate()
         self.adopt_doctrine()
+        self.adopt_detector_version()
 
     def now(self) -> datetime:
         return self.clock().astimezone(timezone.utc).replace(microsecond=0)
@@ -293,86 +319,108 @@ class Ledger:
     def doctrine_sha(self) -> str:
         return self.adopt_doctrine()
 
-    def evidence_rows(self) -> dict:
-        return {r["evidence_id"]: dict(r) for r in self.rows("SELECT * FROM evidence")}
+    # -- detector versions --------------------------------------------------
+
+    def adopt_detector_version(self) -> None:
+        """Bind the current RULE_VERSION to the current detector source, the first time it is seen."""
+        if not self.rows("SELECT 1 FROM detector_versions WHERE rule_version = ?", (RULE_VERSION,)):
+            self.conn.execute(
+                "INSERT INTO detector_versions(rule_version, code_sha256, source_path, adopted_at) VALUES (?, ?, ?, ?)",
+                (RULE_VERSION, detector_source_sha(), "kod/detectors.py", fmt_ts(self.now())),
+            )
+            self.conn.commit()
+
+    def require_detector_unchanged(self, what: str) -> str:
+        row = self.rows("SELECT code_sha256 FROM detector_versions WHERE rule_version = ?", (RULE_VERSION,))[0]
+        current = detector_source_sha()
+        if current != row["code_sha256"]:
+            raise LedgerError(
+                f"{what} refused: kod/detectors.py changed but RULE_VERSION is still {RULE_VERSION} (bound to "
+                f"{row['code_sha256'][:12]}, source is now {current[:12]}); a changed detector is a new rule version"
+            )
+        return current
 
     # -- evidence -----------------------------------------------------------
 
-    def add_evidence(self, path: Path, meta: dict) -> str:
-        """Archive a document's bytes with its provenance. Returns the evidence id (content SHA-256).
+    def evidence_rows(self) -> dict:
+        """v1 evidence (records made before migration 4)."""
+        return {r["evidence_id"]: dict(r) for r in self.rows("SELECT * FROM evidence")}
 
-        The bytes and a frozen metadata file are committed to the git registry, so the
-        document itself, not a description of it, is what a card's hash points to."""
+    def evidence_objects(self) -> dict:
+        """v2 evidence: frozen object plus recorded_at, keyed by evidence id."""
+        return {
+            r["evidence_id"]: {**json.loads(r["object_json"]), "recorded_at": r["recorded_at"],
+                               "git_commit": r["git_commit"], "metadata_path": r["metadata_path"]}
+            for r in self.rows("SELECT * FROM evidence_objects")
+        }
+
+    def add_evidence(self, meta: dict, path: Path | None = None) -> str:
+        """Record an evidence object (KOD-EVIDENCE-v2). Returns its id.
+
+        The archived bytes (when the contents are available and may be kept) and the frozen
+        object are committed to the git registry. EXTERNAL_TIMESTAMP_RECEIPT methods stamp
+        the content hash now, so they only work for documents captured before the cutoff."""
         if self.anchor is None:
             raise LedgerError("evidence refused: no git registry is configured for this ledger")
-        data = Path(path).read_bytes()
-        if not data:
+        data = Path(path).read_bytes() if path else None
+        if data is not None and not data:
             raise LedgerError("evidence refused: the file is empty")
-        evidence_id = sha256_bytes(data)
-        for key in ("source_url", "publisher", "published_at", "published_at_basis", "retrieved_at", "grade"):
-            if not str(meta.get(key) or "").strip():
-                raise LedgerError(f"evidence refused: {key} is required")
-        grade = str(meta["grade"]).upper()
-        if grade not in EVIDENCE_GRADES:
-            raise LedgerError(f"evidence refused: grade must be one of {sorted(EVIDENCE_GRADES)}")
+        content_sha = sha256_bytes(data) if data else None
+        evidence_dir = self.anchor.registry_dir / "evidence-v2"
+        stored = None
+        if data:
+            suffix = Path(path).suffix.lower()
+            if not re.fullmatch(r"\.[a-z0-9]{1,8}", suffix or "."):
+                suffix = ".bin"
+            stored = evidence_dir / f"{content_sha}{suffix}"
         now = self.now()
+        stamps, tokens = [], {}
+        wants_stamp = "EXTERNAL_TIMESTAMP_RECEIPT" in (str(meta.get("existence_method", "")).upper(),
+                                                      str(meta.get("content_method", "")).upper())
+        if wants_stamp and data:
+            if self.anchor.timestamper is None:
+                raise LedgerError("evidence refused: EXTERNAL_TIMESTAMP_RECEIPT needs a timestamp authority")
+            for stamp in self.anchor.timestamper.stamp(content_sha.encode("ascii")):
+                stamps.append({"authority": stamp.authority, "time": fmt_ts(stamp.time)})
+                tokens[stamp.authority] = stamp.token
         try:
-            published = parse_ts(meta["published_at"])
-            retrieved = parse_ts(meta["retrieved_at"])
-            archived = parse_ts(meta["archived_at"]) if meta.get("archived_at") else None
-        except ValueError as exc:
-            raise LedgerError(f"evidence refused: {exc}") from exc
-        if retrieved > now:
-            raise LedgerError("evidence refused: retrieved_at is in the future")
-        if published > retrieved:
-            raise LedgerError("evidence refused: published_at is after retrieved_at")
-        if archived and archived > now:
-            raise LedgerError("evidence refused: archived_at is in the future")
-        if meta.get("archived_at") and not meta.get("archive_url"):
-            raise LedgerError("evidence refused: archived_at needs the archive_url it came from")
-        existing = self.rows("SELECT evidence_id FROM evidence WHERE evidence_id = ?", (evidence_id,))
-        if existing:
-            raise LedgerError(f"evidence {evidence_id} is already recorded; cite it by id")
-        suffix = Path(path).suffix.lower()
-        if not re.fullmatch(r"\.[a-z0-9]{1,8}", suffix or "."):
-            suffix = ".bin"
-        media_type = meta.get("media_type") or mimetypes.guess_type(f"x{suffix}")[0] or "application/octet-stream"
-        evidence_dir = self.anchor.registry_dir / "evidence"
-        stored = evidence_dir / f"{evidence_id}{suffix}"
-        meta_path = evidence_dir / f"{evidence_id}.json"
-        frozen = {
-            "evidence_id": evidence_id,
-            "source_url": meta["source_url"],
-            "publisher": meta["publisher"],
-            "title": meta.get("title", ""),
-            "published_at": fmt_ts(published),
-            "published_at_basis": meta["published_at_basis"],
-            "retrieved_at": fmt_ts(retrieved),
-            "archive_url": meta.get("archive_url"),
-            "archived_at": fmt_ts(archived) if archived else None,
-            "grade": grade,
-            "media_type": media_type,
-            "bytes": len(data),
-            "stored_path": self.anchor.rel(stored),
-            "recorded_at": fmt_ts(now),
-        }
-        evidence_sha = sha256_obj(frozen)
-        meta_bytes = (json.dumps(frozen, sort_keys=True, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
-        try:
-            commit = self.anchor.store_files(
-                {stored: data, meta_path: meta_bytes}, f"kod evidence {evidence_id} {meta['source_url']}"
+            obj = ev.build_object(
+                meta, now, content_sha,
+                self.anchor.rel(stored) if stored else None,
+                stamps, self.evidence_objects(),
             )
+        except ev.EvidenceError as exc:
+            raise LedgerError(f"evidence refused: {exc}") from exc
+        evidence_id = ev.evidence_id(obj)
+        if self.rows("SELECT 1 FROM evidence_objects WHERE evidence_id = ?", (evidence_id,)):
+            raise LedgerError(f"evidence object {evidence_id} is already recorded; cite it by id")
+        meta_path = evidence_dir / f"{evidence_id}.json"
+        files = {meta_path: (json.dumps({"evidence_id": evidence_id, **obj}, sort_keys=True, indent=2,
+                                        ensure_ascii=False) + "\n").encode("utf-8")}
+        if stored and not stored.exists():
+            files[stored] = data
+        for authority, token in tokens.items():
+            token_path = evidence_dir / f"{content_sha}.{authority}.tsr"
+            if not token_path.exists():
+                files[token_path] = token
+        try:
+            commit = self.anchor.store_files(files, f"kod evidence {evidence_id} grade {obj['evidence_grade']}")
             self.conn.execute(
                 """
-                INSERT INTO evidence(evidence_id, source_url, publisher, title, published_at, published_at_basis,
-                  retrieved_at, archive_url, archived_at, grade, media_type, bytes, stored_path, metadata_path,
-                  evidence_sha, git_commit, recorded_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO evidence_objects(evidence_id, evidence_hash_version, object_json, source_url, source_type,
+                  publisher, document_type, event_time, publication_time, retrieval_time, archive_time, as_of_cutoff,
+                  content_sha256, archived_copy, evidence_grade, grade_ceiling, existence_verified, content_verified,
+                  metadata_path, timestamps_json, git_commit, recorded_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
-                (evidence_id, frozen["source_url"], frozen["publisher"], frozen["title"], frozen["published_at"],
-                 frozen["published_at_basis"], frozen["retrieved_at"], frozen["archive_url"], frozen["archived_at"],
-                 grade, media_type, len(data), frozen["stored_path"], self.anchor.rel(meta_path), evidence_sha,
-                 commit, frozen["recorded_at"]),
+                (evidence_id, obj["evidence_hash_version"], canonical(obj), obj["source_url"], obj["source_type"],
+                 obj["publisher"], obj["document_type"], obj["event_time"], obj["publication_time"],
+                 obj["retrieval_time"], obj["archive_time"], obj["as_of_cutoff"], obj["content_sha256"],
+                 obj["archived_copy"], obj["evidence_grade"], obj["grade_ceiling"], int(obj["existence_verified"]),
+                 int(obj["content_verified"]), self.anchor.rel(meta_path),
+                 json.dumps([{**s, "path": self.anchor.rel(evidence_dir / f"{content_sha}.{s['authority']}.tsr")}
+                             for s in stamps], sort_keys=True),
+                 commit, fmt_ts(now)),
             )
         except AnchorError as exc:
             self.conn.rollback()
@@ -386,22 +434,31 @@ class Ledger:
     # -- cases --------------------------------------------------------------
 
     def open_case(self, card: dict) -> str:
-        """Open a case and freeze its detector evaluations in the same transaction and hash."""
+        """Open a KOD-CARD-v3 case. Detector evaluations are computed from the information
+        sets alone and frozen into the card hash in the same transaction."""
         self._require_disposition(card)
         if card["disposition"] == "INVESTIGATE" and not card.get("critic"):
             raise LedgerError("INVESTIGATE refused: critic loss path is required")
         if card["disposition"] == "INVESTIGATE":
             self._require_critic(card["critic"])
+        prospective = card["call_type"] == "PROSPECTIVE"
+        integrity = card.get("integrity_level") or (ev.STRICT if prospective else ev.PARTIAL)
+        if integrity not in ev.INTEGRITY_LEVELS:
+            raise LedgerError(f"integrity_level must be one of {ev.INTEGRITY_LEVELS}")
+        if prospective and integrity != ev.STRICT:
+            raise LedgerError(f"prospective open refused: a prospective card must be {ev.STRICT}")
         horizons = card.get("information_sets") or {}
         for horizon in HORIZONS:
             if horizon not in horizons:
                 raise LedgerError(f"missing information set {horizon}")
+        extra = sorted(set(horizons) - set(HORIZONS))
+        if extra:
+            raise LedgerError(f"open refused: information sets must be exactly {HORIZONS}; unexpected {extra}")
         offset_problems = check_horizon_offsets(card["decision_cutoff"], horizons)
         if offset_problems:
             raise LedgerError("open refused: " + "; ".join(offset_problems))
         now = self.now()
         window = card.get("outcome_window") or None
-        prospective = card["call_type"] == "PROSPECTIVE"
         if prospective:
             if self.anchor is None:
                 raise LedgerError("prospective open refused: no git anchor is configured for this ledger")
@@ -412,9 +469,10 @@ class Ledger:
                     raise LedgerError("outcome window end is not after its start")
             except (KeyError, ValueError) as exc:
                 raise LedgerError(f"bad outcome_window: {exc}") from exc
-        problems = evidence_problems(horizons, self.evidence_rows(), require_all=prospective)
+        problems = ev.citation_problems({h: horizons[h] for h in HORIZONS}, self.evidence_objects(), integrity, now)
         if problems:
             raise LedgerError("open refused: " + "; ".join(problems))
+        code_sha = self.require_detector_unchanged("open")
         scan_entry_id = card.get("scan_entry_id")
         if scan_entry_id and not self.rows("SELECT 1 FROM scan_entries WHERE entry_id = ?", (scan_entry_id,)):
             raise LedgerError(f"unknown scan entry {scan_entry_id}")
@@ -434,9 +492,13 @@ class Ledger:
             "reconstruction_status": card["reconstruction_status"],
             "doctrine_sha": doctrine_sha,
             "scan_entry_id": scan_entry_id,
+            "integrity_level": integrity,
+            "detector_rule_version": RULE_VERSION,
+            "detector_code_sha256": code_sha,
         }
         critic = card.get("critic") or None
-        evaluations = evaluate(horizons)
+        # Only the information sets reach the detectors; an outcome, if the card carries one, never does.
+        evaluations = evaluate({h: horizons[h] for h in HORIZONS})
         frozen = freeze_card(stored, horizons, critic, CARD_HASH_VERSION, evaluations)
         card_sha = sha256_obj(frozen)
         opened_at = fmt_ts(now)
@@ -448,27 +510,16 @@ class Ledger:
                   case_id, opened_at, symbol, venue, call_type, doctrine_sha,
                   decision_cutoff, story_hypothesis, disposition, card_sha,
                   universe_id, reconstruction_status, notes,
-                  outcome_window_start, outcome_window_end, scan_entry_id, card_hash_version
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                  outcome_window_start, outcome_window_end, scan_entry_id, card_hash_version,
+                  integrity_level, detector_code_sha256, detector_rule_version
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
-                    case_id,
-                    opened_at,
-                    stored["symbol"],
-                    stored["venue"],
-                    stored["call_type"],
-                    doctrine_sha,
-                    stored["decision_cutoff"],
-                    stored["story_hypothesis"],
-                    stored["disposition"],
-                    card_sha,
-                    stored["universe_id"],
-                    stored["reconstruction_status"],
-                    card.get("notes", ""),
-                    stored["outcome_window_start"],
-                    stored["outcome_window_end"],
-                    scan_entry_id,
-                    CARD_HASH_VERSION,
+                    case_id, opened_at, stored["symbol"], stored["venue"], stored["call_type"], doctrine_sha,
+                    stored["decision_cutoff"], stored["story_hypothesis"], stored["disposition"], card_sha,
+                    stored["universe_id"], stored["reconstruction_status"], card.get("notes", ""),
+                    stored["outcome_window_start"], stored["outcome_window_end"], scan_entry_id, CARD_HASH_VERSION,
+                    integrity, code_sha, RULE_VERSION,
                 ),
             )
             for horizon in HORIZONS:
@@ -478,15 +529,8 @@ class Ledger:
                     INSERT INTO information_sets(set_id, case_id, horizon, cutoff, payload_json, set_sha, recorded_at)
                     VALUES (?, ?, ?, ?, ?, ?, ?)
                     """,
-                    (
-                        f"{case_id}:{horizon}",
-                        case_id,
-                        horizon,
-                        payload.get("cutoff", ""),
-                        json.dumps(payload, sort_keys=True),
-                        sha256_obj(payload),
-                        opened_at,
-                    ),
+                    (f"{case_id}:{horizon}", case_id, horizon, payload.get("cutoff", ""),
+                     json.dumps(payload, sort_keys=True), sha256_obj(payload), opened_at),
                 )
             for result in evaluations:
                 self.conn.execute(
@@ -503,14 +547,8 @@ class Ledger:
                     INSERT INTO critic_notes(note_id, case_id, loss_path, missing_evidence, invalidation, recorded_at)
                     VALUES (?, ?, ?, ?, ?, ?)
                     """,
-                    (
-                        f"{case_id}:critic",
-                        case_id,
-                        critic["loss_path"],
-                        critic["missing_evidence"],
-                        critic["invalidation"],
-                        opened_at,
-                    ),
+                    (f"{case_id}:critic", case_id, critic["loss_path"], critic["missing_evidence"],
+                     critic["invalidation"], opened_at),
                 )
             if self.anchor is not None:
                 line = {
@@ -520,6 +558,7 @@ class Ledger:
                     "outcome_window_start": stored["outcome_window_start"],
                     "outcome_window_end": stored["outcome_window_end"],
                     "doctrine_sha": doctrine_sha,
+                    "integrity_level": integrity,
                 }
                 self._anchor("CASE", case_id, card_sha, line, frozen, require_timestamp=prospective)
         except sqlite3.IntegrityError as exc:
@@ -562,15 +601,9 @@ class Ledger:
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
-                f"{case_id}:outcome",
-                case_id,
-                fmt_ts(now),
-                outcome["window_label"],
-                outcome.get("window_return_pct"),
-                outcome["outcome_label"],
-                outcome["source"],
-                row["card_sha"],
-                outcome.get("notes", ""),
+                f"{case_id}:outcome", case_id, fmt_ts(now), outcome["window_label"],
+                outcome.get("window_return_pct"), outcome["outcome_label"], outcome["source"],
+                row["card_sha"], outcome.get("notes", ""),
             ),
         )
         self.conn.commit()
@@ -591,6 +624,7 @@ class Ledger:
             raise LedgerError("scan refused: a scan with no entries has no base rate")
         now = self.now()
         start, end = check_prospective_timing(now, scan["decision_cutoff"], scan["outcome_window"], "scan log")
+        code_sha = self.require_detector_unchanged("scan")
         scan_id = scan["scan_id"]
         frozen_entries, entry_shas, entry_evals = {}, {}, {}
         for entry in entries:
@@ -618,6 +652,7 @@ class Ledger:
             "outcome_window_end": end,
             "hit_label": scan["hit_label"],
             "rule_version": RULE_VERSION,
+            "detector_code_sha256": code_sha,
         }
         frozen = freeze_scan(header, entry_shas, SCAN_HASH_VERSION)
         scan_sha = sha256_obj(frozen)
@@ -628,12 +663,12 @@ class Ledger:
                 """
                 INSERT INTO scan_runs(scan_id, scanned_at, scanner, universe_id, decision_cutoff,
                   outcome_window_start, outcome_window_end, hit_label, rule_version, n_entries, scan_sha, notes,
-                  scan_hash_version)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                  scan_hash_version, detector_code_sha256)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (scan_id, scanned_at, header["scanner"], header["universe_id"], header["decision_cutoff"],
                  start, end, header["hit_label"], RULE_VERSION, len(frozen_entries), scan_sha, scan.get("notes", ""),
-                 SCAN_HASH_VERSION),
+                 SCAN_HASH_VERSION, code_sha),
             )
             for entry_id, body in frozen_entries.items():
                 self.conn.execute(
@@ -716,6 +751,55 @@ class Ledger:
             raise
         self.conn.commit()
         return n
+
+    # -- remote timestamp receipts -----------------------------------------
+
+    def record_receipt(self, kind: str, record_id: str, run, repository: str) -> str:
+        """Append a GitHub receipt for an anchor. The receipt is a pointer to GitHub's own
+        record; `verify` re-reads that record and never trusts the copy stored here."""
+        rows = self.rows("SELECT * FROM anchors WHERE kind = ? AND record_id = ?", (kind, record_id))
+        if not rows:
+            raise LedgerError(f"no anchor for {kind.lower()} {record_id}")
+        anchor_sha = rows[0]["git_commit"]
+        if run.head_sha != anchor_sha or run.event != "push":
+            raise LedgerError(f"receipt refused: run {run.run_id} is for {run.head_sha[:12]} ({run.event}), "
+                              f"not a push of anchor commit {anchor_sha[:12]}")
+        receipt_id = f"GITHUB_ACTIONS:{kind}:{record_id}:{run.run_id}"
+        record = {
+            "receipt_id": receipt_id, "provider": "GITHUB_ACTIONS", "record_kind": kind, "record_id": record_id,
+            "anchor_sha": anchor_sha, "repository": repository, "remote_event_id": run.run_id,
+            "remote_head_sha": run.head_sha, "remote_event": run.event, "remote_created_at": fmt_ts(run.created_at),
+            "remote_url": run.html_url, "response_sha256": run.response_sha256, "fetched_at": fmt_ts(self.now()),
+            "verification_status": "FETCHED_EXACT_MATCH",
+        }
+        try:
+            self.conn.execute(
+                f"INSERT INTO remote_timestamp_receipts({', '.join(record)}) VALUES ({', '.join('?' * len(record))})",
+                tuple(record.values()),
+            )
+            if self.anchor is not None:
+                registry = self.anchor.registry_dir / "receipts.jsonl"
+                existing = registry.read_bytes() if registry.exists() else b""
+                path_bytes = existing + canonical(record).encode("utf-8") + b"\n"
+                registry.parent.mkdir(parents=True, exist_ok=True)
+                registry.write_bytes(path_bytes)
+                try:
+                    self.anchor._commit([self.anchor.rel(registry)], f"kod receipt {kind.lower()} {record_id} run {run.run_id}")
+                except Exception:
+                    registry.write_bytes(existing)
+                    raise
+        except sqlite3.IntegrityError as exc:
+            self.conn.rollback()
+            raise LedgerError(f"receipt {receipt_id} already recorded") from exc
+        except BaseException:
+            self.conn.rollback()
+            raise
+        self.conn.commit()
+        return receipt_id
+
+    def receipts_for(self, kind: str, record_id: str) -> list[dict]:
+        return [dict(r) for r in self.rows(
+            "SELECT * FROM remote_timestamp_receipts WHERE record_kind = ? AND record_id = ?", (kind, record_id))]
 
     # -- integrity ----------------------------------------------------------
 

@@ -44,7 +44,10 @@ class LabTest(unittest.TestCase):
         return prospective_card(case_id, cutoff, start, start + length, **kw)
 
     def verify(self):
-        return verify(self.ledger, self.lab.anchor, self.lab.timestamper)
+        return verify(self.ledger, self.lab.anchor, self.lab.timestamper, self.lab.github)
+
+    def report(self):
+        return build_report(self.ledger, self.lab.anchor, self.lab.github)
 
     def case_rows(self):
         return self.ledger.rows("SELECT case_id FROM cases")
@@ -316,6 +319,7 @@ class Rule4ScanLogAndLift(LabTest):
         }
         scan = scan_payload(self.clock, [entry(s, f, c) for s, (f, c, _) in self.names.items()])
         self.scan_sha = self.ledger.log_scan(scan)
+        self.lab.push_head()  # the anchor commit reaches GitHub before the window opens
         self.window_end = self.clock() + timedelta(days=5)
 
     def outcomes(self):
@@ -339,7 +343,7 @@ class Rule4ScanLogAndLift(LabTest):
     def test_opened_and_not_opened_flags_are_counted(self):
         card = self.card(case_id="KOD-P-AAAA", scan_entry_id="SCAN-T-1:AAAA")
         open_and_evaluate(self.ledger, card)
-        counts = build_report(self.ledger)["counts"]
+        counts = self.report()["counts"]
         self.assertEqual(counts["scan_flagged"], 4)
         self.assertEqual(counts["scan_flagged_opened"], 1)
         self.assertEqual(counts["scan_flagged_not_opened"], 3)
@@ -363,12 +367,12 @@ class Rule4ScanLogAndLift(LabTest):
         partial = self.outcomes()
         partial["outcomes"] = partial["outcomes"][:4]  # only the flagged names
         self.ledger.close_scan(partial)
-        self.assertEqual(build_report(self.ledger)["counts"]["scan_overdue_unclosed"], 6)
+        self.assertEqual(self.report()["counts"]["scan_overdue_unclosed"], 6)
 
     def test_signal_and_no_signal_hit_rates_and_lift(self):
         self.clock.moment = self.window_end
         self.ledger.close_scan(self.outcomes())
-        rows = {r["detector"]: r for r in build_report(self.ledger)["scan_log"]["lift"]}
+        rows = {r["detector"]: r for r in self.report()["scan_log"]["lift"]}
         flag = rows["FLAG:ASTRA"]
         self.assertEqual((flag["signals"], flag["signal_hits"]), (4, 3))
         self.assertEqual((flag["no_signal"], flag["no_signal_hits"]), (6, 1))
@@ -380,19 +384,21 @@ class Rule4ScanLogAndLift(LabTest):
         self.assertEqual(cat["insufficient_data"], 1)
         self.assertAlmostEqual(cat["base_rate"], 4 / 9)
         self.assertAlmostEqual(cat["lift"], 0.5 / (4 / 9))
-        self.assertIn("FLAG:ASTRA", render_markdown(build_report(self.ledger)))
+        self.assertIn("FLAG:ASTRA", render_markdown(self.report()))
         self.assertTrue(self.verify()["ok"])
 
     def test_prospective_detector_table_has_no_signal_side(self):
         start = self.clock() + timedelta(hours=1)
         open_and_evaluate(self.ledger, self.card(case_id="KOD-P-YES", facts={"dated_catalyst_known": True}))
+        self.lab.push_head()
         sha_yes = self.ledger.rows("SELECT card_sha FROM cases WHERE case_id = 'KOD-P-YES'")[0][0]
         open_and_evaluate(self.ledger, self.card(case_id="KOD-P-NO", facts={"dated_catalyst_known": False}))
+        self.lab.push_head()
         sha_no = self.ledger.rows("SELECT card_sha FROM cases WHERE case_id = 'KOD-P-NO'")[0][0]
         self.clock.moment = start + timedelta(days=5)
         self.ledger.close_case("KOD-P-YES", {**OUTCOME, "card_sha": sha_yes})
         self.ledger.close_case("KOD-P-NO", {**OUTCOME, "outcome_label": "NO_REPRICE", "card_sha": sha_no})
-        rows = {r["detector"]: r for r in build_report(self.ledger)["detector_table"]}
+        rows = {r["detector"]: r for r in self.report()["detector_table"]}
         cat = rows["DATED_CATALYST_KNOWN"]
         self.assertEqual(cat["signal_hit_rate"], 1.0)
         self.assertEqual(cat["no_signal_hit_rate"], 0.0)

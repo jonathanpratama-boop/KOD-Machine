@@ -6,7 +6,8 @@ Frozen directories: a file, once committed, may never be modified, deleted or re
   idx-signals/data/manifests/    provenance of every downloaded data file
   kod-machine/registry/cards/    frozen KOD cards, one per open
   kod-machine/registry/scans/    frozen KOD scans
-  kod-machine/registry/evidence/ archived evidence bytes and metadata
+  kod-machine/registry/evidence/ archived evidence bytes and metadata (v1)
+  kod-machine/registry/evidence-v2/ evidence objects v2, archived bytes, content timestamps
   kod-machine/registry/timestamps/  RFC 3161 tokens
   kod-machine/tsa/               pinned timestamp-authority certificates
 
@@ -14,6 +15,7 @@ Append-only logs: the new content must start with the old content, byte for byte
   idx-signals/results/RUNS.jsonl
   kod-machine/registry/opens.jsonl
   kod-machine/registry/scans.jsonl
+  kod-machine/registry/receipts.jsonl
 
 Usage:
   check_append_only.py --staged        pre-commit: staged index against HEAD
@@ -33,6 +35,7 @@ FROZEN_DIRS = (
     "kod-machine/registry/cards/",
     "kod-machine/registry/scans/",
     "kod-machine/registry/evidence/",
+    "kod-machine/registry/evidence-v2/",
     "kod-machine/registry/timestamps/",
     "kod-machine/tsa/",
 )
@@ -40,6 +43,7 @@ APPEND_ONLY = (
     "idx-signals/results/RUNS.jsonl",
     "kod-machine/registry/opens.jsonl",
     "kod-machine/registry/scans.jsonl",
+    "kod-machine/registry/receipts.jsonl",
 )
 EMPTY_TREE = "4b825dc642cb6eb9a060e54bf8d69288fbee4904"
 

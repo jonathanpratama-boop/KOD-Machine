@@ -12,13 +12,17 @@ from collections import defaultdict
 
 from .detectors import HIT_LABEL
 from .hashing import parse_ts
-from .ledger import CARD_HASH_VERSION, HORIZONS, Ledger
+from .ledger import HORIZONS, Ledger
+from .verify import AUTHORITATIVE, calibration_eligibility
 
 PROMOTION_MIN = 30
 UNSCORED = {"UNKNOWN", "CENSORED"}
 
 
-def build_report(ledger: Ledger) -> dict:
+def build_report(ledger: Ledger, anchor=None, client=None) -> dict:
+    """Without `anchor` and a GitHub `client` no prospective case can be proven, so none is
+    AUTHORITATIVE and calibration counts nothing. That is deliberate."""
+    eligibility = calibration_eligibility(ledger, anchor, client)
     cases = [dict(r) for r in ledger.rows("SELECT * FROM cases ORDER BY opened_at, case_id")]
     outcomes = {
         r["case_id"]: dict(r)
@@ -30,6 +34,8 @@ def build_report(ledger: Ledger) -> dict:
         by_case[ev["case_id"]].append(ev)
 
     grades = {r["evidence_id"]: r["grade"] for r in ledger.rows("SELECT evidence_id, grade FROM evidence")}
+    grades.update({r["evidence_id"]: r["evidence_grade"]
+                   for r in ledger.rows("SELECT evidence_id, evidence_grade FROM evidence_objects")})
     sets = defaultdict(dict)
     for row in ledger.rows("SELECT case_id, horizon, payload_json FROM information_sets"):
         sets[row["case_id"]][row["horizon"]] = json.loads(row["payload_json"])
@@ -41,12 +47,21 @@ def build_report(ledger: Ledger) -> dict:
         case["evidence"] = _evidence_coverage(sets[case["case_id"]], grades)
         buckets[case["call_type"]].append(case)
 
+    for case in buckets["PROSPECTIVE"]:
+        case["integrity_status"] = eligibility[case["case_id"]]["status"]
+        case["integrity_reason"] = eligibility[case["case_id"]]["reason"]
     closed = [
         c for c in buckets["PROSPECTIVE"]
         if c["outcome"] and c["outcome"]["outcome_label"] not in UNSCORED
     ]
-    # Only cards whose detector evaluations were frozen into the hash at open can be scored.
-    prospective_closed = [c for c in closed if c.get("card_hash_version") == CARD_HASH_VERSION]
+    # Only AUTHORITATIVE cases are scored: KOD-CARD-v3 STRICT, hash in its anchor commit, and
+    # GitHub's server-side receipt for that exact commit dated before the window opened.
+    prospective_closed = [c for c in closed if c["integrity_status"] == AUTHORITATIVE]
+    excluded = defaultdict(lambda: {"cases": 0, "outcomes": defaultdict(int)})
+    for c in closed:
+        if c["integrity_status"] != AUTHORITATIVE:
+            excluded[c["integrity_status"]]["cases"] += 1
+            excluded[c["integrity_status"]]["outcomes"][c["outcome"]["outcome_label"]] += 1
     observations = [
         (ev["detector"], ev["status"], case["outcome"]["outcome_label"], HIT_LABEL.get(ev["detector"], "REPRICED_UP"))
         for case in prospective_closed
@@ -56,7 +71,7 @@ def build_report(ledger: Ledger) -> dict:
         {**row, "status": "UNVALIDATED", "promotable": False}
         for row in lift_table(observations)
     ]
-    scan_log = _scan_log(ledger, cases)
+    scan_log = _scan_log(ledger, cases, eligibility)
     return {
         "doctrine_sha": ledger.doctrine_sha,
         "calibration_status": "NOT_STARTED" if len(prospective_closed) < PROMOTION_MIN else "SAMPLE_ONLY",
@@ -65,12 +80,13 @@ def build_report(ledger: Ledger) -> dict:
             "cases": len(cases),
             "prospective_open": sum(1 for c in buckets["PROSPECTIVE"] if not c["outcome"]),
             "prospective_closed": len(prospective_closed),
-            "prospective_closed_unfrozen_excluded": len(closed) - len(prospective_closed),
+            "prospective_closed_excluded": len(closed) - len(prospective_closed),
             "retrospective": len(buckets["RETROSPECTIVE"]),
             "simulated_excluded": len(buckets["SIMULATED"]),
             **scan_log["counts"],
         },
         "detector_table": detector_table,
+        "excluded_prospective": {k: {"cases": v["cases"], "outcomes": dict(v["outcomes"])} for k, v in excluded.items()},
         "scan_log": scan_log,
         "cases": buckets,
         "entry_permission": False,
@@ -138,7 +154,7 @@ def lift_table(observations) -> list[dict]:
     return rows
 
 
-def _scan_log(ledger: Ledger, cases: list[dict]) -> dict:
+def _scan_log(ledger: Ledger, cases: list[dict], eligibility: dict) -> dict:
     now = ledger.now()
     opened = {c["scan_entry_id"] for c in cases if c.get("scan_entry_id")}
     runs = [dict(r) for r in ledger.rows("SELECT * FROM scan_runs ORDER BY scanned_at, scan_id")]
@@ -170,10 +186,13 @@ def _scan_log(ledger: Ledger, cases: list[dict]) -> dict:
             "flagged_not_opened": sum(1 for e in flagged if e["entry_id"] not in opened),
             "closed": len(closed),
             "overdue_unclosed": (len(rows) - len(closed)) if window_over else 0,
+            "integrity_status": eligibility[("SCAN", run["scan_id"])]["status"],
         }
         summaries.append(summary)
         for key in ("entries", "flagged", "flagged_opened", "flagged_not_opened", "closed", "overdue_unclosed"):
             totals[key] += summary[key]
+        if summary["integrity_status"] != AUTHORITATIVE:
+            continue  # listed, but its outcomes do not enter the lift table
         for entry in closed:
             label = outcomes[entry["entry_id"]]["outcome_label"]
             observations.append((
@@ -191,6 +210,18 @@ def _scan_log(ledger: Ledger, cases: list[dict]) -> dict:
         "scans": summaries,
         "lift": lift_table(observations),
     }
+
+
+def _excluded_lines(report: dict) -> list[str]:
+    excluded = report["excluded_prospective"]
+    if not excluded:
+        return []
+    lines = ["## Closed prospective cases excluded from calibration", "",
+             "Shown with their outcomes, so a selective exclusion (e.g. deleted receipts on losing calls) is visible.", "",
+             "| Reason | Cases | Outcomes |", "|---|---:|---|"]
+    for reason, slot in sorted(excluded.items()):
+        lines.append(f"| {reason} | {slot['cases']} | " + ", ".join(f"{k} {v}" for k, v in sorted(slot["outcomes"].items())) + " |")
+    return lines + [""]
 
 
 def _pct(x) -> str:
@@ -239,14 +270,15 @@ def render_markdown(report: dict) -> str:
         f"- Cases: {c['cases']}",
         f"- Prospective open: {c['prospective_open']}",
         f"- Prospective closed (scored): {c['prospective_closed']}",
-        f"- Prospective closed but unscored (evaluations not frozen at open): {c['prospective_closed_unfrozen_excluded']}",
+        f"- Prospective closed but not AUTHORITATIVE (excluded from calibration): {c['prospective_closed_excluded']}",
         f"- Retrospective (hypothesis only): {c['retrospective']}",
         f"- Simulated (excluded): {c['simulated_excluded']}",
         f"- Scanned names logged: {c['scan_entries']} "
         f"(flagged {c['scan_flagged']}: opened {c['scan_flagged_opened']}, not opened {c['scan_flagged_not_opened']})",
         f"- Scanned names closed: {c['scan_closed']}; past window and still unclosed: {c['scan_overdue_unclosed']}",
         "",
-        "## Detector table (prospective closed only)",
+        *_excluded_lines(report),
+        "## Detector table (AUTHORITATIVE prospective closed only)",
         "",
         "Hit rate when the detector fired, when it was evaluated and did not fire, and the base",
         "rate over both. Lift = signal hit rate / base rate. No no-signal cases means no lift.",
@@ -261,15 +293,15 @@ def render_markdown(report: dict) -> str:
         lines.append("No scans logged.")
     else:
         lines.extend([
-            "| Scan | Scanner | Entries | Flagged | Flagged opened | Flagged not opened | Closed | Overdue unclosed |",
-            "|---|---|---:|---:|---:|---:|---:|---:|",
+            "| Scan | Scanner | Integrity | Entries | Flagged | Flagged opened | Flagged not opened | Closed | Overdue unclosed |",
+            "|---|---|---|---:|---:|---:|---:|---:|---:|",
         ])
         for s in scans:
             lines.append(
-                f"| `{s['scan_id']}` | {s['scanner']} | {s['entries']} | {s['flagged']} | {s['flagged_opened']} | "
+                f"| `{s['scan_id']}` | {s['scanner']} | {s['integrity_status']} | {s['entries']} | {s['flagged']} | {s['flagged_opened']} | "
                 f"{s['flagged_not_opened']} | {s['closed']} | {s['overdue_unclosed']} |"
             )
-        lines.extend(["", "Lift over the scan base rate (closed scan entries):", ""])
+        lines.extend(["", "Lift over the scan base rate (closed entries of AUTHORITATIVE scans only):", ""])
         lines.extend(_lift_lines(report["scan_log"]["lift"], with_status=False))
     lines.extend(["", "## Case cards", ""])
     for kind in ("PROSPECTIVE", "RETROSPECTIVE", "SIMULATED"):
@@ -282,12 +314,13 @@ def render_markdown(report: dict) -> str:
             continue
         for case in group:
             outcome = case["outcome"]["outcome_label"] if case["outcome"] else "OPEN"
+            integrity = f" {{{case['integrity_status']}}}" if case.get("integrity_status") else ""
             ret = ""
             if case["outcome"] and case["outcome"]["window_return_pct"] is not None:
                 ret = f", window {case['outcome']['window_return_pct']:+.1f}%"
             lines.append(
                 f"- `{case['case_id']}` {case['symbol']} {case['disposition']} → {outcome}{ret} "
-                f"[{case['reconstruction_status']}]"
+                f"[{case['reconstruction_status']}]{integrity}"
             )
             lines.append(f"  - Hypothesis: {case['story_hypothesis']}")
             ev = case["evidence"]
@@ -316,6 +349,7 @@ def render_json(report: dict) -> str:
         "entry_permission": False,
         "counts": report["counts"],
         "detector_table": report["detector_table"],
+        "excluded_prospective": report["excluded_prospective"],
         "scan_log": report["scan_log"],
     }
     return json.dumps(slim, indent=2)
