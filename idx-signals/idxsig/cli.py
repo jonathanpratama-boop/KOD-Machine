@@ -114,14 +114,17 @@ def main(argv=None) -> int:
 
         from .rules.audit import audit_module
 
+        failed = 0
         for rule_id, rule in sorted(rules.registry().items()):
             problems = audit_module(rule.module)
+            failed += bool(problems)
             print(f"{rule_id} {rule.version} {rule.kind} hold={rule.holding_days} sha={rule.sha256[:12]} "
                   f"source-audit={'passed' if not problems else f'FAILED ({len(problems)})'}")
             for problem in problems:
                 print(f"  {problem}")
         for rule_id in rules.pending():
             print(f"{rule_id} PENDING: rule text not supplied")
+        return 1 if failed else 0
     elif args.cmd == "run":
         from . import rules
         from .backtest import RunConfig, run

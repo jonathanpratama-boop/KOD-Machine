@@ -4,6 +4,10 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read
+  actions: read  # KOD reads GitHub's own workflow-run records as server-side timestamp receipts
+
 jobs:
   checks:
     runs-on: ubuntu-latest
@@ -15,17 +19,28 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r idx-signals/requirements.txt
-      - name: No past run, manifest, card or registry line was edited (whole history)
+      - name: No past run, manifest, registry, card or log line was edited (whole history)
         run: python3 tools/check_append_only.py --all
       - name: KOD tests
         working-directory: kod-machine
         run: python3 -m unittest
-      - name: KOD verify (rebuild every card hash, check git anchors)
+      - name: KOD verify (rebuild every card hash, check git anchors, TSA tokens and GitHub receipts)
         working-directory: kod-machine
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 -m kod verify
+      - name: GitHub receipt for this very commit (server-side created_at, exact head_sha)
+        if: github.event_name == 'push'
+        working-directory: kod-machine
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 -m kod receipt-selftest --sha "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID"
       - name: IDX harness tests
         working-directory: idx-signals
         run: python3 -m unittest
+      - name: IDX rules pass the causal-source audit
+        working-directory: idx-signals
+        run: python3 -m idxsig rules
       - name: IDX runs match their recorded hashes
         working-directory: idx-signals
         run: python3 -m idxsig verify-runs
