@@ -1,0 +1,207 @@
+{
+  "by_year": [
+    {
+      "attempts": 584,
+      "avg_net_return": -0.015793796560048767,
+      "hit_rate": 0.3525641025641026,
+      "random_avg_net_return": -0.010544452840626717,
+      "random_hit_rate": 0.3810699857705958,
+      "scored": 312,
+      "year": 2019
+    },
+    {
+      "attempts": 1344,
+      "avg_net_return": -0.0038387511481489654,
+      "hit_rate": 0.41214057507987223,
+      "random_avg_net_return": -0.0010692718805004192,
+      "random_hit_rate": 0.43322114432785586,
+      "scored": 626,
+      "year": 2020
+    },
+    {
+      "attempts": 1547,
+      "avg_net_return": 0.0019101258466162109,
+      "hit_rate": 0.42592592592592593,
+      "random_avg_net_return": -0.000945391065124194,
+      "random_hit_rate": 0.402996158633991,
+      "scored": 918,
+      "year": 2021
+    },
+    {
+      "attempts": 1687,
+      "avg_net_return": -0.007980966232448882,
+      "hit_rate": 0.34990791896869244,
+      "random_avg_net_return": -0.006279705436663917,
+      "random_hit_rate": 0.3895116602822489,
+      "scored": 1086,
+      "year": 2022
+    },
+    {
+      "attempts": 1845,
+      "avg_net_return": -0.009392362111508222,
+      "hit_rate": 0.4001865671641791,
+      "random_avg_net_return": -0.0065266358646334606,
+      "random_hit_rate": 0.39886983181580665,
+      "scored": 1072,
+      "year": 2023
+    },
+    {
+      "attempts": 1849,
+      "avg_net_return": -0.006366699686396985,
+      "hit_rate": 0.41718426501035194,
+      "random_avg_net_return": -0.0046144217046783734,
+      "random_hit_rate": 0.3945834586926258,
+      "scored": 966,
+      "year": 2024
+    },
+    {
+      "attempts": 279,
+      "avg_net_return": -0.008027593365806192,
+      "hit_rate": 0.39166666666666666,
+      "random_avg_net_return": -0.0029053755207282764,
+      "random_hit_rate": 0.3925141590741197,
+      "scored": 120,
+      "year": 2025
+    }
+  ],
+  "code": {
+    "commit": "b6061395b066ac2b49fd677d51a878ed16f2a101",
+    "dirty": false
+  },
+  "config": {
+    "data_end_exit": "last_close",
+    "end": "2025-02-21",
+    "entry_lag": 1,
+    "fee_buy": 0.0015,
+    "fee_sell": 0.0025,
+    "holding_days": 5,
+    "lookahead_checks": 3,
+    "max_participation": 0.1,
+    "notional": 10000000.0,
+    "overlap": "skip",
+    "random_draws": 200,
+    "rule_id": "PLACEBO_COINFLIP",
+    "seed": 20261007,
+    "start": null
+  },
+  "created_at": "2026-10-07T18:26:01Z",
+  "execution": {
+    "auto_rejection": "entry refused when the entry close is locked at ARA; exit rolls while locked at ARB or untraded; regular-board schedule by date, plus 10% special-board limits on one-price or sub-Rp50 bars",
+    "fees": {
+      "buy": 0.0015,
+      "sell": 0.0025
+    },
+    "lot_size": 100,
+    "price": "official close; signal at close of s, entry at close of s + entry_lag"
+  },
+  "lookahead_checks": [
+    {
+      "identical": true,
+      "truncated_after": "2021-03-24"
+    },
+    {
+      "identical": true,
+      "truncated_after": "2022-11-16"
+    },
+    {
+      "identical": true,
+      "truncated_after": "2024-08-02"
+    }
+  ],
+  "panel": {
+    "manifest_sha256": "d7155f98bd4567088edfe3227aca2c3de7090fdd12f9088abacc88af0ee9a086",
+    "panel": "data/panel/panel-20261007T182306Z.csv.gz",
+    "panel_sha256": "06b4ffcfa625fd15c0fbc195537fe18b945640fbe6d033887cea9e4d9e26d98b",
+    "source_boundary": "2025-02-21"
+  },
+  "random": {
+    "avg_net_return": {
+      "difference": -0.0015807747591241378,
+      "observed": -0.006162100359061827,
+      "p_value_one_sided": 0.9104477611940298,
+      "percentile_of_observed": 9.0,
+      "random_mean": -0.00458132559993769,
+      "random_p2_5": -0.006809932079168986,
+      "random_p50": -0.004738849010714328,
+      "random_p97_5": -0.0018178591600286297
+    },
+    "draws": 200,
+    "hit_rate": {
+      "difference": -0.004118464593967475,
+      "observed": 0.3956862745098039,
+      "p_value_one_sided": 0.7412935323383084,
+      "percentile_of_observed": 26.0,
+      "random_mean": 0.3998047391037714,
+      "random_p2_5": 0.38725001728896463,
+      "random_p50": 0.39980624711964274,
+      "random_p97_5": 0.4151834086504536
+    },
+    "method": "same session, uniform over names where the rule was evaluable, same execution",
+    "pooled": {
+      "attempts": 1827000,
+      "avg_net_return": -0.004581521134632167,
+      "fill_rate": 0.5667153804050356,
+      "filled": 1035389,
+      "hit_rate": 0.3998099145100207,
+      "median_net_return": -0.007978032950574088,
+      "scored": 1031115,
+      "status_counts": {
+        "EXITED": 1031106,
+        "EXIT_DATA_END": 9,
+        "INCOMPLETE": 4274,
+        "SKIP_ARA_LOCK": 19816,
+        "SKIP_LIQUIDITY": 723690,
+        "SKIP_LOT": 139,
+        "SKIP_NOT_TRADED": 45766,
+        "SKIP_NO_ENTRY_SESSION": 2200
+      },
+      "std_net_return": 0.0970512698988812
+    }
+  },
+  "rule": {
+    "holding_days": 5,
+    "kind": "PLACEBO",
+    "rule_id": "PLACEBO_COINFLIP",
+    "sha256": "b774201b08e6da68c54c7083a85d31830ca5a8342a6d0932f92a02d74fe27b68",
+    "text": "Signal on session d for ticker t when splitmix64(crc32(t) * 2^20 + days_since_epoch(d)) / 2^64 < 0.01, for every ticker that traded on session d. Hold 5 sessions. No price input.",
+    "version": "v1"
+  },
+  "rule_trades": {
+    "attempts": 9135,
+    "avg_net_return": -0.006162100359061827,
+    "fill_rate": 0.5607006020799125,
+    "filled": 5122,
+    "hit_rate": 0.3956862745098039,
+    "median_net_return": -0.007884716756405785,
+    "scored": 5100,
+    "status_counts": {
+      "EXITED": 5100,
+      "INCOMPLETE": 22,
+      "SKIP_ARA_LOCK": 107,
+      "SKIP_LIQUIDITY": 3674,
+      "SKIP_NOT_TRADED": 221,
+      "SKIP_NO_ENTRY_SESSION": 11
+    },
+    "std_net_return": 0.09343684968341193
+  },
+  "run_id": "20261007T182601Z_PLACEBO_COINFLIP_v1",
+  "signals": {
+    "attempted": 9135,
+    "signal_rate": 0.00992284929190446,
+    "skipped_overlap": 254,
+    "tickers_with_signals": 917,
+    "total": 9389
+  },
+  "universe": {
+    "evaluable_ticker_sessions": 946200,
+    "first_session": "2019-07-29",
+    "last_session": "2025-02-21",
+    "sessions": 1355,
+    "tickers_ending_inside_window": 3,
+    "tickers_ever_evaluable": 942,
+    "tickers_in_window": 958
+  },
+  "warnings": [
+    "PLACEBO rule: harness self-check, not a trading rule; any lift here is a harness bias"
+  ]
+}
