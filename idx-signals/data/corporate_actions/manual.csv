@@ -1,0 +1,10 @@
+# Primary-source corporate actions. One row per action, effective_date = the ex-date on which IDX
+# resets the reference price. source must be the URL of the issuer / IDX / KSEI announcement and
+# source_timestamp the UTC time you retrieved it; archive the document. A row here overrides the
+# automatic reading (status VERIFIED_PRIMARY). action_type: STOCK_SPLIT, REVERSE_SPLIT, RIGHTS_ISSUE,
+# STOCK_DIVIDEND, OTHER_REFERENCE_RESET, UNKNOWN. ratio: new shares per old share (split 1:5 -> 5,
+# reverse 5:1 -> 0.2); required for share-scaling types. This file is append-only (the commit guard
+# enforces it): to correct a row, add a new row for the same ticker and date; the last one wins.
+# Then run build-ca-registry: the registry is a new file, earlier registries stay as they were.
+# Empty on purpose: no primary documents have been archived yet, and none are invented.
+ticker,effective_date,action_type,ratio,source,source_timestamp,notes

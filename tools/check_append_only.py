@@ -4,16 +4,20 @@
 Frozen directories: a file, once committed, may never be modified, deleted or renamed.
   idx-signals/results/runs/      one directory per backtest run
   idx-signals/data/manifests/    provenance of every downloaded data file
+  idx-signals/data/corporate_actions/ca_registry-*  corporate-action registries, one file per build
   kod-machine/registry/cards/    frozen KOD cards, one per open
   kod-machine/registry/scans/    frozen KOD scans
-  kod-machine/registry/evidence/ archived evidence bytes and metadata
+  kod-machine/registry/evidence/ archived evidence bytes and metadata (v1)
+  kod-machine/registry/evidence-v2/ evidence objects v2, archived bytes, content timestamps
   kod-machine/registry/timestamps/  RFC 3161 tokens
   kod-machine/tsa/               pinned timestamp-authority certificates
 
 Append-only logs: the new content must start with the old content, byte for byte.
   idx-signals/results/RUNS.jsonl
+  idx-signals/data/corporate_actions/manual.csv   primary-source entries (correct by adding a row)
   kod-machine/registry/opens.jsonl
   kod-machine/registry/scans.jsonl
+  kod-machine/registry/receipts.jsonl
 
 Usage:
   check_append_only.py --staged        pre-commit: staged index against HEAD
@@ -30,16 +34,20 @@ import sys
 FROZEN_DIRS = (
     "idx-signals/results/runs/",
     "idx-signals/data/manifests/",
+    "idx-signals/data/corporate_actions/ca_registry-",
     "kod-machine/registry/cards/",
     "kod-machine/registry/scans/",
     "kod-machine/registry/evidence/",
+    "kod-machine/registry/evidence-v2/",
     "kod-machine/registry/timestamps/",
     "kod-machine/tsa/",
 )
 APPEND_ONLY = (
     "idx-signals/results/RUNS.jsonl",
+    "idx-signals/data/corporate_actions/manual.csv",
     "kod-machine/registry/opens.jsonl",
     "kod-machine/registry/scans.jsonl",
+    "kod-machine/registry/receipts.jsonl",
 )
 EMPTY_TREE = "4b825dc642cb6eb9a060e54bf8d69288fbee4904"
 

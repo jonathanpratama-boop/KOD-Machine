@@ -35,7 +35,7 @@ class Ace1EvidenceContract(LabTest):
 
     def test_evidence_published_after_the_horizon_cutoff_is_refused(self):
         late = self.lab.add_evidence("Filing.", published=self.clock() - timedelta(days=10), name="late.html")
-        with self.assertRaisesRegex(LedgerError, "after the T-30D cutoff"):
+        with self.assertRaisesRegex(LedgerError, "not published by the T-30D cutoff"):
             open_and_evaluate(self.ledger, self.card(evidence=[late]))
         card = self.card(evidence=[late])
         card["information_sets"]["T-30D"]["facts"] = {"dated_catalyst_known": None, "catalyst": None}
@@ -43,7 +43,7 @@ class Ace1EvidenceContract(LabTest):
         open_and_evaluate(self.ledger, card)  # cited only at T-72H and T-24H, where it was public
 
     def test_unknown_or_misplaced_citations_are_refused(self):
-        with self.assertRaisesRegex(LedgerError, "unknown evidence"):
+        with self.assertRaisesRegex(LedgerError, "not a recorded v2 evidence object"):
             open_and_evaluate(self.ledger, self.card(evidence=["0" * 64]))
         card = self.card(case_id="KOD-P-NULL", facts={"dated_catalyst_known": None}, evidence=None)
         card["information_sets"]["T-24H"]["evidence"] = {"dated_catalyst_known": [self.lab.evidence_id]}
@@ -54,37 +54,37 @@ class Ace1EvidenceContract(LabTest):
             open_and_evaluate(self.ledger, card)
 
     def test_evidence_object_requires_provenance(self):
+        from tests.support import evidence_meta
+
         path = Path(self.lab.tmp.name) / "x.pdf"
         path.write_bytes(b"%PDF filing")
-        base = {
-            "source_url": "https://www.idx.co.id/x.pdf", "publisher": "IDX", "published_at": "2026-10-01T02:00:00Z",
-            "published_at_basis": "disclosure timestamp", "retrieved_at": "2026-10-06T02:00:00Z", "grade": "A",
-        }
-        with self.assertRaisesRegex(LedgerError, "published_at_basis is required"):
-            self.ledger.add_evidence(path, {**base, "published_at_basis": ""})
-        with self.assertRaisesRegex(LedgerError, "published_at is after retrieved_at"):
-            self.ledger.add_evidence(path, {**base, "published_at": "2026-10-06T03:00:00Z"})
+        published = self.clock() - timedelta(days=6)
+        base = evidence_meta(published, published + timedelta(days=2), retrieval_time=fmt_ts(self.clock() - timedelta(hours=1)))
+        with self.assertRaisesRegex(LedgerError, "provenance is required"):
+            self.ledger.add_evidence({**base, "provenance": ""}, path)
+        with self.assertRaisesRegex(LedgerError, "publication_time is after retrieval_time"):
+            self.ledger.add_evidence({**base, "publication_time": fmt_ts(self.clock())}, path)
         with self.assertRaisesRegex(LedgerError, "in the future"):
-            self.ledger.add_evidence(path, {**base, "retrieved_at": "2026-10-09T00:00:00Z"})
-        with self.assertRaisesRegex(LedgerError, "grade"):
-            self.ledger.add_evidence(path, {**base, "grade": "E"})
-        evidence_id = self.ledger.add_evidence(path, base)
+            self.ledger.add_evidence({**base, "retrieval_time": "2026-10-09T00:00:00Z"}, path)
+        with self.assertRaisesRegex(LedgerError, "evidence_grade"):
+            self.ledger.add_evidence({**base, "evidence_grade": "E"}, path)
+        evidence_id = self.ledger.add_evidence(base, path)
         with self.assertRaisesRegex(LedgerError, "already recorded"):
-            self.ledger.add_evidence(path, base)
-        stored = self.lab.git("show", f"HEAD:registry/evidence/{evidence_id}.pdf")
-        self.assertEqual(stored, "%PDF filing")
-        meta = json.loads(self.lab.git("show", f"HEAD:registry/evidence/{evidence_id}.json"))
-        self.assertEqual(meta["published_at_basis"], "disclosure timestamp")
+            self.ledger.add_evidence(base, path)
+        obj = json.loads(self.lab.git("show", f"HEAD:registry/evidence-v2/{evidence_id}.json"))
+        self.assertEqual(self.lab.git("show", f"HEAD:{obj['archived_copy']}"), "%PDF filing")
+        self.assertEqual(obj["publication_time_basis"], "IDX disclosure system timestamp")
 
     def test_tampered_evidence_bytes_fail_verify(self):
         open_and_evaluate(self.ledger, self.card())
         self.assertTrue(self.verify()["ok"])
-        doc = self.lab.registry / "evidence" / f"{self.lab.evidence_id}.html"
+        obj = self.ledger.evidence_objects()[self.lab.evidence_id]
+        doc = self.lab.repo / obj["archived_copy"]
         doc.write_text("Issuer announces a different date.")
         self.lab.git("commit", "-q", "-am", "rewrite the source")
         result = self.verify()
         self.assertFalse(result["ok"])
-        self.assertTrue(any("no longer hash to the evidence id" in f["message"] for f in result["findings"]))
+        self.assertTrue(any("no longer matches content_sha256" in f["message"] for f in result["findings"]))
 
     def test_report_shows_evidence_coverage(self):
         open_and_evaluate(self.ledger, self.card())

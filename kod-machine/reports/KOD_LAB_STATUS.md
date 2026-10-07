@@ -12,13 +12,13 @@ Promotion floor: 30 closed prospective cases with complete coverage.
 - Cases: 3
 - Prospective open: 0
 - Prospective closed (scored): 0
-- Prospective closed but unscored (evaluations not frozen at open): 0
+- Prospective closed but not AUTHORITATIVE (excluded from calibration): 0
 - Retrospective (hypothesis only): 2
 - Simulated (excluded): 1
 - Scanned names logged: 0 (flagged 0: opened 0, not opened 0)
 - Scanned names closed: 0; past window and still unclosed: 0
 
-## Detector table (prospective closed only)
+## Detector table (AUTHORITATIVE prospective closed only)
 
 Hit rate when the detector fired, when it was evaluated and did not fire, and the base
 rate over both. Lift = signal hit rate / base rate. No no-signal cases means no lift.

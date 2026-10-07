@@ -1,0 +1,438 @@
+{
+  "built_at": "2026-10-07T22:58:48Z",
+  "columns": [
+    "date",
+    "ticker",
+    "source",
+    "previous",
+    "open",
+    "high",
+    "low",
+    "close",
+    "volume",
+    "value",
+    "frequency",
+    "listed_shares",
+    "tradable_shares"
+  ],
+  "dropped_dates_ignored_by_idx_reference": {
+    "2021-05-22": {
+      "names_checked": 75,
+      "next_reference_equals_close": 0.0
+    },
+    "2024-01-07": {
+      "names_checked": 1,
+      "next_reference_equals_close": 0.0
+    }
+  },
+  "dropped_non_session_dates": [
+    "2026-05-01",
+    "2026-05-14",
+    "2026-05-15",
+    "2026-05-27",
+    "2026-05-28",
+    "2026-06-01",
+    "2026-06-16",
+    "2026-08-17",
+    "2026-08-25"
+  ],
+  "dropped_non_session_dates_count": 9,
+  "eras": [
+    {
+      "from": "2019-07-29",
+      "source": "idx_mirror",
+      "survivorship": "names delisted after ~2021-01 present to their last session; names delisted 2019-07..~2021-01 absent",
+      "to": "2025-02-21"
+    },
+    {
+      "from": "2025-02-22",
+      "source": "yahoo",
+      "survivorship": "survivor-only: names delisted after the boundary stop at the boundary",
+      "to": "2026-10-06"
+    }
+  ],
+  "first_session": "2019-07-29",
+  "format": "panel-v2",
+  "inputs": {
+    "idx_mirror-20261007T180744Z.jsonl": {
+      "path": "data/manifests/idx_mirror-20261007T180744Z.jsonl",
+      "sha256": "557cab44eac9b0ad94903159e26de7213dfd958898802730773b27e675c85721"
+    },
+    "yahoo-20261007T182039Z.jsonl": {
+      "path": "data/manifests/yahoo-20261007T182039Z.jsonl",
+      "sha256": "c9fbc3efa10086c64ee9b6f2ce9e14d3b51a9fa9bae9b7376b693822e1314a6d"
+    }
+  },
+  "last_session": "2026-10-06",
+  "market_regimes": [
+    {
+      "arb_flat": null,
+      "floor": 50,
+      "label": "symmetric 35/25/20 (in force at panel start)",
+      "small_abs": false,
+      "start": "2019-07-29"
+    },
+    {
+      "arb_flat": 0.1,
+      "floor": 50,
+      "label": "COVID ARB 10%",
+      "small_abs": false,
+      "start": "2020-03-10"
+    },
+    {
+      "arb_flat": 0.07,
+      "floor": 50,
+      "label": "COVID ARB 7%",
+      "small_abs": false,
+      "start": "2020-03-13"
+    },
+    {
+      "arb_flat": 0.15,
+      "floor": 50,
+      "label": "ARB 15% (stage I)",
+      "small_abs": false,
+      "start": "2023-06-05"
+    },
+    {
+      "arb_flat": null,
+      "floor": 50,
+      "label": "symmetric 35/25/20 (stage II)",
+      "small_abs": false,
+      "start": "2023-09-04"
+    },
+    {
+      "arb_flat": 0.15,
+      "floor": 50,
+      "label": "ARB 15% (April 2025)",
+      "small_abs": false,
+      "start": "2025-04-08"
+    },
+    {
+      "arb_flat": 0.15,
+      "floor": 1,
+      "label": "ARB 15%, floor Rp1",
+      "small_abs": true,
+      "start": "2026-09-28"
+    },
+    {
+      "arb_flat": null,
+      "floor": 1,
+      "label": "symmetric 35/25/20, floor Rp1",
+      "small_abs": true,
+      "start": "2027-01-01"
+    }
+  ],
+  "mirror_tickers": 958,
+  "panel": "data/panel/panel-20261007T225823Z.csv.gz",
+  "qa_limit_violations": [
+    {
+      "above_ara": 0,
+      "below_arb": 1,
+      "other_violation_dates": [
+        "2019-09-16"
+      ],
+      "regime": "symmetric 35/25/20 (in force at panel start)",
+      "rows": 85244,
+      "start": "2019-07-29",
+      "violations_other": 1,
+      "violations_priced_below_rp50": 0
+    },
+    {
+      "above_ara": 0,
+      "below_arb": 14,
+      "other_violation_dates": [
+        "2020-03-12"
+      ],
+      "regime": "COVID ARB 10%",
+      "rows": 1603,
+      "start": "2020-03-10",
+      "violations_other": 14,
+      "violations_priced_below_rp50": 0
+    },
+    {
+      "above_ara": 0,
+      "below_arb": 2817,
+      "other_violation_dates": [
+        "2020-04-21",
+        "2020-05-04",
+        "2020-05-08",
+        "2020-06-16",
+        "2020-06-19",
+        "2020-06-22",
+        "2020-07-10",
+        "2020-07-13",
+        "2020-07-29",
+        "2020-07-30"
+      ],
+      "regime": "COVID ARB 7%",
+      "rows": 521564,
+      "start": "2020-03-13",
+      "violations_other": 584,
+      "violations_priced_below_rp50": 2233
+    },
+    {
+      "above_ara": 0,
+      "below_arb": 1386,
+      "other_violation_dates": [],
+      "regime": "ARB 15% (stage I)",
+      "rows": 46687,
+      "start": "2023-06-05",
+      "violations_other": 0,
+      "violations_priced_below_rp50": 1386
+    },
+    {
+      "above_ara": 73,
+      "below_arb": 32091,
+      "other_violation_dates": [],
+      "regime": "symmetric 35/25/20 (stage II)",
+      "rows": 310088,
+      "start": "2023-09-04",
+      "violations_other": 0,
+      "violations_priced_below_rp50": 32091
+    },
+    {
+      "above_ara": 4,
+      "below_arb": 21303,
+      "other_violation_dates": [
+        "2025-06-30",
+        "2025-09-30",
+        "2025-12-03",
+        "2025-12-15",
+        "2025-12-22",
+        "2025-12-29",
+        "2026-01-12",
+        "2026-03-05",
+        "2026-03-06",
+        "2026-04-28"
+      ],
+      "regime": "ARB 15% (April 2025)",
+      "rows": 296618,
+      "start": "2025-04-08",
+      "violations_other": 19,
+      "violations_priced_below_rp50": 21288
+    },
+    {
+      "above_ara": 0,
+      "below_arb": 2,
+      "other_violation_dates": [
+        "2026-09-28"
+      ],
+      "regime": "ARB 15%, floor Rp1",
+      "rows": 5806,
+      "start": "2026-09-28",
+      "violations_other": 2,
+      "violations_priced_below_rp50": 0
+    }
+  ],
+  "qa_overlap_idx_vs_yahoo": {
+    "close_exact_share": 0.9554,
+    "close_off_by_more_than_2pct_share": 0.0379,
+    "close_within_1_tick_share": 0.9591,
+    "rows_compared": 917945,
+    "tickers_compared": 896,
+    "volume_within_1pct_share": 0.9336
+  },
+  "quality_tiers": [
+    {
+      "corporate_actions": "exchange reference + share counts",
+      "from": "2019-07-29",
+      "share_counts": true,
+      "source": "idx_mirror",
+      "survivorship": "survivor-biased (pre-snapshot delistings absent)",
+      "tier": "TIER_2",
+      "to": "2021-01-21"
+    },
+    {
+      "corporate_actions": "exchange reference + share counts + Yahoo",
+      "from": "2021-01-22",
+      "share_counts": true,
+      "source": "idx_mirror",
+      "survivorship": "complete",
+      "tier": "TIER_1",
+      "to": "2025-02-21"
+    },
+    {
+      "corporate_actions": "Yahoo split events only (single source)",
+      "from": "2025-02-22",
+      "share_counts": false,
+      "source": "yahoo",
+      "survivorship": "survivor-only",
+      "tier": "TIER_3",
+      "to": "2026-10-06"
+    }
+  ],
+  "rows": 1425103,
+  "sessions": 1736,
+  "sha256": "9d3a0718c95f9e885c4f8310cf68bf5e75021c366c454f73389d7fae75c02877",
+  "share_counts": {
+    "note": "IDX listed_shares / tradeble_shares, mirror era only. tradable_shares is NOT free float: it equals listed_shares for most names, including ones with a known controlling holder.",
+    "rows_with_listed_shares": 1077312
+  },
+  "source_boundary": "2025-02-21",
+  "tickers": 983,
+  "tickers_ending_at_boundary": [
+    "ARMY",
+    "BTEL",
+    "CBMF",
+    "CNTB",
+    "CNTX",
+    "COWL",
+    "CPRI",
+    "DUCK",
+    "ENVY",
+    "FISH",
+    "FORZ",
+    "FREN",
+    "GAMA",
+    "GOLL",
+    "GOTOM",
+    "HDTX",
+    "HKMU",
+    "HOME",
+    "HOTL",
+    "IIKP",
+    "JKSW",
+    "JSKY",
+    "KBRI",
+    "KPAL",
+    "KPAS",
+    "KRAH",
+    "LCGP",
+    "LMAS",
+    "MABA",
+    "MAGP",
+    "MAMI",
+    "MAMIP",
+    "MASA",
+    "META",
+    "MFIN",
+    "MTRA",
+    "MYRX",
+    "MYRXP",
+    "NIPS",
+    "NUSA",
+    "OCAP",
+    "PLAS",
+    "POOL",
+    "POSA",
+    "PRAS",
+    "PURE",
+    "RIMO",
+    "SCPI",
+    "SIMA",
+    "SKYB",
+    "SMRU",
+    "SRIL",
+    "SUGI",
+    "TDPM",
+    "TECH",
+    "TRAM",
+    "TRIL",
+    "TRIO",
+    "UNIT",
+    "WSKT"
+  ],
+  "tickers_ending_before_boundary": {
+    "FINN": "2021-05-04",
+    "RMBA": "2024-01-15",
+    "TURI": "2023-04-05"
+  },
+  "tickers_listed_after_boundary": {
+    "ASPR": "2025-07-08",
+    "BACH": "2026-07-08",
+    "BLOG": "2025-07-10",
+    "CDIA": "2025-07-09",
+    "CHEK": "2025-07-10",
+    "COIN": "2025-07-09",
+    "DKHH": "2025-05-08",
+    "EMAS": "2025-09-23",
+    "EMMI": "2026-07-08",
+    "FORE": "2025-04-14",
+    "JECX": "2026-07-07",
+    "JELI": "2026-07-07",
+    "KAQI": "2025-03-10",
+    "MDLA": "2025-04-15",
+    "MERI": "2025-07-10",
+    "MINE": "2025-03-10",
+    "PJHB": "2025-11-06",
+    "PMUI": "2025-07-10",
+    "PRDL": "2026-07-09",
+    "PSAT": "2025-07-08",
+    "RANS": "2026-07-10",
+    "RLCO": "2025-12-08",
+    "SUPA": "2025-12-17",
+    "WBSA": "2026-04-10",
+    "YUPI": "2025-03-25"
+  },
+  "yahoo_not_found_or_empty": [
+    "ARMY",
+    "BTEL",
+    "CBMF",
+    "CNTB",
+    "CNTX",
+    "COWL",
+    "CPRI",
+    "DUCK",
+    "ENVY",
+    "FINN",
+    "FORZ",
+    "FREN",
+    "GAMA",
+    "GOLL",
+    "GOTOM",
+    "HDTX",
+    "HKMU",
+    "HOME",
+    "HOTL",
+    "IIKP",
+    "JKSW",
+    "JSKY",
+    "KBRI",
+    "KPAL",
+    "KPAS",
+    "KRAH",
+    "LCGP",
+    "LMAS",
+    "MABA",
+    "MAGP",
+    "MAMI",
+    "MAMIP",
+    "MASA",
+    "META",
+    "MFIN",
+    "MTRA",
+    "MYRX",
+    "MYRXP",
+    "NIPS",
+    "NUSA",
+    "OCAP",
+    "PLAS",
+    "POOL",
+    "POSA",
+    "PRAS",
+    "PURE",
+    "RIMO",
+    "RMBA",
+    "SCPI",
+    "SIMA",
+    "SKYB",
+    "SMRU",
+    "SRIL",
+    "SUGI",
+    "TDPM",
+    "TECH",
+    "TRAM",
+    "TRIL",
+    "TRIO",
+    "TURI",
+    "UNIT",
+    "WSKT"
+  ],
+  "yahoo_segment_dropped_stitch_mismatch": {
+    "FISH": {
+      "date": "2025-02-21",
+      "idx_close": 10350.0,
+      "yahoo_close": 103500.0
+    }
+  }
+}

@@ -6,7 +6,7 @@
     "cases": 3,
     "prospective_open": 0,
     "prospective_closed": 0,
-    "prospective_closed_unfrozen_excluded": 0,
+    "prospective_closed_excluded": 0,
     "retrospective": 2,
     "simulated_excluded": 1,
     "scan_entries": 0,
@@ -17,6 +17,7 @@
     "scan_overdue_unclosed": 0
   },
   "detector_table": [],
+  "excluded_prospective": {},
   "scan_log": {
     "counts": {
       "scan_entries": 0,
