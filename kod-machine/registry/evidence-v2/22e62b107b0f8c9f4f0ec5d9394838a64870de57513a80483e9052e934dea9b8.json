@@ -1,0 +1,30 @@
+{
+  "archive_time": null,
+  "archive_url": null,
+  "archived_copy": "kod-machine/registry/evidence-v2/671e9d3b81cceb30ffa9122e2d5b8d9bd7cf7c96bc90c965131baee3c88a2213.pdf",
+  "as_of_cutoff": "2025-03-11T16:00:00Z",
+  "content_sha256": "671e9d3b81cceb30ffa9122e2d5b8d9bd7cf7c96bc90c965131baee3c88a2213",
+  "content_timestamps": [],
+  "content_verified": false,
+  "corroborated_by": [],
+  "document_type": "exchange factsheet",
+  "event_time": null,
+  "evidence_grade": "D",
+  "evidence_hash_version": "KOD-EVIDENCE-v2",
+  "evidence_id": "22e62b107b0f8c9f4f0ec5d9394838a64870de57513a80483e9052e934dea9b8",
+  "existence_verified": false,
+  "grade_ceiling": "D",
+  "provenance": "downloaded from nasdaq.com",
+  "publication_time": null,
+  "publication_time_basis": null,
+  "publisher": "Nasdaq",
+  "retrieval_time": "2026-10-08T12:36:53Z",
+  "source_type": "RETROSPECTIVE",
+  "source_url": "https://www.nasdaq.com/INETNordicAuctionsFactsheet",
+  "title": "Nasdaq Nordic Auctions factsheet",
+  "verification_method": {
+    "content": "NONE",
+    "existence": "NONE"
+  },
+  "verification_notes": "Current document (copyright 2026, cites Q2 2026 statistics). Copenhagen shares: opening auction 08:45-09:00 CET, random uncross 09:00:00-09:00:05; closing auction 16:55-17:00, uncross 16:59:30-17:00. Applying it to March 2025 is an assumption."
+}
