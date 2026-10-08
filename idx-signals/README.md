@@ -38,9 +38,12 @@ python3 -m idxsig rules                    # list rules + source-audit result; U
 python3 -m idxsig run --rule PLACEBO_COINFLIP
 python3 -m idxsig verify-runs              # no past run edited or removed
 python3 -m idxsig e1-discovery             # experiment E1 stages (each writes a new research/E1/ directory)
-python3 -m idxsig paper-scan --commit      # prospective paper scan of the last session (no orders)
-python3 -m idxsig paper-score --commit     # score paper decisions whose window has ended
-python3 -m unittest                        # 95 tests, synthetic data only
+python3 -m idxsig build-global-panel --market US      # US / crypto panels (a new file each time)
+python3 -m idxsig e2-discovery --market US            # experiment E2 stages per market
+python3 -m idxsig run --market US --rule MOONSHOT_E2_US_D1 --start 2023-01-01 --end 2023-12-31
+python3 -m idxsig paper-scan --market IDX --commit    # prospective paper scan of the last session (no orders)
+python3 -m idxsig paper-score --market IDX --commit   # score paper decisions whose window has ended
+python3 -m unittest                        # 115 tests, synthetic data only
 ```
 
 ## 1. Dataset
@@ -244,9 +247,22 @@ random names (p = 0.005), but it catches only 10% of episodes, 82% of its flags 
 alerts, and buying at the next close loses (-4.06% vs -0.53% for matched random entries) because
 the continuations that run cannot be filled. Holdout 2024-01-02 .. 2025-02-21 untouched.
 
+## 5b. Experiment E2: US equities and crypto ([research/E2](research/E2/REPORT.md))
+
+E1's design on two markets without price limits (`research/E2/protocol.json`, frozen before
+analysis): US common stocks from the Nasdaq Trader listing (Yahoo, split-adjusted,
+survivor-only) and Binance spot USDT pairs including delisted ones, 2020-07 .. 2023, with
+market profiles for lots, costs and entry at the next open (`idxsig/profiles.py`). Base rate
+of +30% in 5 sessions: US 1.1-1.3%, crypto 5.6% (2020-22) and 2.4% (2023). Prior volatility
+is again the clearest pre-event signal (US AUC 0.78, crypto 0.56). G2_RET30 (a +30% day),
+selected on discovery in both markets, validated for detection (US 5.4x, crypto 4.6x matched
+random, p = 0.005) and failed for execution in both: buying the next open and holding 5
+sessions averaged -3.65% (US) and -1.90% (crypto) per trade vs -0.60% and +1.42% for matched
+random entries. Holdout 2024 onward untouched.
+
 ## 6. Prospective paper ledger ([paper/](paper/README.md))
 
-`python -m idxsig paper-scan --commit` after each IDX session: every scan is recorded,
+`python -m idxsig paper-scan --market <IDX|US|CRYPTO> --commit` after each session: every scan is recorded,
 including `NO SIGNAL` days; every candidate gets a terminal decision with a full plan or the
 reason it is not a trade; `paper-score` scores discovery and decision separately once the
 window ends. Hash-chained, RFC 3161-stamped, pushed. No orders exist anywhere in this code.

@@ -5,7 +5,7 @@ Two research tools. Neither grants entry permission.
 | Directory | What it is |
 |---|---|
 | [`kod-machine/`](kod-machine/README.md) | KOD forensic lab: freezes what was knowable before a move, hashes the call, anchors the hash in git, and refuses to rewrite it after the outcome. Stdlib only. |
-| [`idx-signals/`](idx-signals/README.md) | IDX signal test harness: daily price panel for the whole IDX universe with per-file provenance and quality tiers, a corporate-action registry, an execution model with lots, fees and auto-rejection limits, causal-by-construction rule evaluation, matched and same-session random baselines, and an append-only results log. |
+| [`idx-signals/`](idx-signals/README.md) | Signal test harness for IDX, US equities and crypto: daily price panels with per-file provenance and quality tiers, an IDX corporate-action registry, an execution model per market (lots, fees and cost tiers, IDX auto-rejection limits), causal-by-construction rule evaluation, matched and same-session random baselines, an append-only results log, and a prospective paper ledger. |
 
 ## Status
 
@@ -19,8 +19,14 @@ Two research tools. Neither grants entry permission.
   five-session repricings, the first 100 events with matched controls, 20 pre-event signals,
   and detector D1 (ARA close) validated for detection (9.3x matched random) but not for
   execution (the next-close entry loses). Holdout untouched.
-- Prospective paper ledger (`idx-signals/paper/`): first scan 2026-10-07, 4 candidates, all
-  decided (3 PASS, 1 NOT EXECUTABLE), to be scored after 2026-10-15. No real orders.
+- Experiment E2 (historical, `idx-signals/research/E2/REPORT.md`): the same design on US
+  equities (survivor-only) and Binance crypto. Detector G2_RET30 (a +30% day) validated for
+  detection in both (5.4x and 4.6x matched random) and failed for execution in both (buying
+  the next open loses: US -3.65% vs -0.60%, crypto -1.90% vs +1.42%). Holdout untouched.
+- Prospective paper ledger (`idx-signals/paper/`), daily routines in all three markets: IDX
+  since session 2026-10-07 (4 candidates: 3 PASS, 1 NOT EXECUTABLE), crypto and US since
+  2026-10-07 (see the ledger). Every candidate so far is PASS or NOT EXECUTABLE because no
+  executable plan has passed validation. No real orders.
 - KOD calibration: NOT_STARTED, 0 prospective cases. Doctrine `246deb4a…`. A prospective case
   counts toward calibration only at integrity AUTHORITATIVE: its card hash is in the exact
   anchor commit, GitHub's own workflow-run record for that commit predates the outcome
