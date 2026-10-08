@@ -1,0 +1,51 @@
+{
+  "accepted_statuses": [
+    "VERIFIED",
+    "SHARES_CONFIRMED"
+  ],
+  "built_at": "2026-10-08T11:46:01Z",
+  "effective_after": "2023-01-03",
+  "events_in_scope": 1594,
+  "raw_manifest": "yahoo_us-20261008T001812Z.jsonl",
+  "raw_manifest_sha256": "01ca82808463f964c06db680803581546d34d85105ed21e27377c3da686e951c",
+  "schedule": "data/corporate_actions/us_splits-shares-20261008T114309Z.csv",
+  "schedule_sha256": "78413d6771281508220a1ad589c16fb8e445daf8a913bd1177258fcd31f780e5",
+  "share_count_corroboration": {
+    "candidates": 971,
+    "confirmed": 343,
+    "offline": false,
+    "offline_cache_misses": 0,
+    "rule": {
+      "margin": 0.5,
+      "max_bracket_days": 400,
+      "q_high": 2.0,
+      "q_low": 0.8
+    },
+    "sec_manifest": "sec_share_counts-20261008T114309Z.jsonl",
+    "version": "sec-shares-v1",
+    "window_end": "2023-12-29"
+  },
+  "status_counts": {
+    "MENTION_ONLY": 579,
+    "NOT_A_SPLIT": 136,
+    "NO_CIK": 1,
+    "NO_EVIDENCE": 25,
+    "RATIO_CONFIRMED": 271,
+    "SHARES_CONFIRMED": 343,
+    "VERIFIED": 239
+  },
+  "text_schedule": {
+    "manifest": "us_splits-reaudit-20261008T112522Z.json",
+    "sha256": "3b38829abbf44a8b5a585528b7d84ceeb41f196d276a95d3759a2bc3342e66c7",
+    "status_counts": {
+      "MENTION_ONLY": 780,
+      "NOT_A_SPLIT": 136,
+      "NO_CIK": 1,
+      "NO_EVIDENCE": 27,
+      "RATIO_CONFIRMED": 411,
+      "VERIFIED": 239
+    }
+  },
+  "universe_end": "2023-12-29",
+  "version": "us-actions-v2"
+}
