@@ -398,8 +398,10 @@ class S0LegacyRecordsStillVerify(unittest.TestCase):
             db = Path(tmp) / "kod.db"
             shutil.copy(KOD_ROOT / "var" / "kod.db", db)
             ledger = Ledger(db, anchor=GitAnchor(KOD_ROOT / "registry"))
-            versions = {r[0] for r in ledger.rows("SELECT card_hash_version FROM cases")}
-            self.assertEqual(versions, {"KOD-CARD-v1"})
+            seeds = dict(ledger.rows("SELECT case_id, card_hash_version FROM cases WHERE case_id IN "
+                                     "('KOD-R-NVDA-20230524', 'KOD-R-SMCI-202408', 'KOD-S-PIPELINE-001')"))
+            self.assertEqual(seeds, {"KOD-R-NVDA-20230524": "KOD-CARD-v1", "KOD-R-SMCI-202408": "KOD-CARD-v1",
+                                     "KOD-S-PIPELINE-001": "KOD-CARD-v1"})
             result = verify(ledger, ledger.anchor, None, None)
             ledger.conn.close()
             self.assertTrue(result["ok"], [f for f in result["findings"] if f["level"] == "FAIL"])
