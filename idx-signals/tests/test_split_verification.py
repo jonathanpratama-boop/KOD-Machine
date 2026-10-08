@@ -54,6 +54,18 @@ class Verification(unittest.TestCase):
         out = ua.judge("A 1-for-10 reverse stock split is effective on May 8, 2026.", 1, 10, date(2026, 5, 8))
         self.assertTrue(out["date_ok"])
 
+    def test_trading_session_takes_precedence_over_evening_legal_date(self):
+        text = ('The Company will effect a 1-for-100 reverse stock split effective at 5:00 p.m. '
+                'Eastern Time on October 7, 2026. The common stock will begin trading on a '
+                'split-adjusted basis on Thursday, October 8, 2026.')
+        self.assertEqual(self.verify(text)['status'], 'VERIFIED')
+        self.assertFalse(ua.judge(text, 1, 100, date(2026, 10, 7))['date_ok'])
+        self.assertFalse(ua.judge(text.split(' The common')[0], 1, 100, date(2026, 10, 7))['date_ok'])
+
+    def test_morning_effective_time_stays_with_its_date(self):
+        text = 'The 1-for-100 reverse stock split becomes effective at 9:00 a.m. Eastern Time on October 8, 2026.'
+        self.assertEqual(self.verify(text)['status'], 'VERIFIED')
+
     def test_undated_ratio_is_diagnostic_only(self):
         out = self.verify('We completed a 1-for-100 reverse stock split.')
         self.assertEqual(out['status'], 'RATIO_CONFIRMED')

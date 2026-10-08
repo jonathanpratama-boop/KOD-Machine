@@ -205,14 +205,20 @@ def split_statements(text: str) -> list[str]:
     Sentence-local matching sacrifices recall to avoid stitching a proposal, a historical
     ratio, and an unrelated date together. Long/table-like passages need manual review.
     """
-    sentences = re.split(r"(?<=[.!?;])\s+", text)
+    # Do not cut a date off at "5:00 p.m. Eastern Time on ..." or a company suffix.
+    protected = re.sub(r"\b(?:a\.m\.|p\.m\.|U\.S\.|Inc\.|Corp\.|Co\.|Ltd\.|"
+                       r"Jan\.|Feb\.|Mar\.|Apr\.|Jun\.|Jul\.|Aug\.|Sep\.|Sept\.|Oct\.|Nov\.|Dec\.)",
+                       lambda m: m.group().replace(".", "\u2024"), text, flags=re.I)
+    sentences = [s.replace("\u2024", ".") for s in re.split(r"(?<=[.!?;])\s+", protected)]
     out = []
     for i, sentence in enumerate(sentences):
         if not SPLIT_WORDS.search(sentence) or not ratios_in(sentence):
             continue
         context = sentence
-        if i + 1 < len(sentences) and CONTINUATION.search(sentences[i + 1]):
-            context += " " + sentences[i + 1]
+        for following in sentences[i + 1:i + 3]:
+            if not CONTINUATION.search(following):
+                break
+            context += " " + following
         if len(context) > 1600 or AMBIGUOUS.search(context) or not IMPLEMENTED.search(context):
             continue
         if len(ratios_in(context)) != 1:
@@ -224,10 +230,21 @@ def split_statements(text: str) -> list[str]:
 def _effective_date_in(text: str, effective: date) -> bool:
     # Require the date next to implementation/trading language, not a filing/meeting date.
     day = "(?:" + "|".join(re.escape(s) for s in date_strings(effective)) + ")"
-    effective_on = r"\beffective\s+(?:(?:at\s+(?:the\s+)?(?:open|opening)(?:\s+of\s+(?:trading|business))?\s+)?(?:on|as of|from)\s+)?"
-    trading_on = r"\b(?:began|commenced|will begin|will commence) trading[^.!?;]{0,100}?\bon\s+"
-    return bool(re.search("(?:" + effective_on + "|" + trading_on + ")" + day,
-                          text, re.I))
+    weekday = r"(?:(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday),?\s+)?"
+    clock = (r"(?:at\s+(?:(?:the\s+)?(?:open|opening)(?:\s+of\s+(?:trading|business))?|"
+             r"\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?)(?:\s+(?:Eastern|New York|ET|EST|EDT)"
+             r"(?:\s+(?:Standard|Daylight))?(?:\s+Time)?)?)\s+)?")
+    effective_on = r"\beffective\s+" + clock + r"(?:(?:on|as of|from)\s+)?" + weekday
+    trading = r"\b(?:began|commenced|will begin|will commence) trading"
+    trading_on = trading + r"[^!?;]{0,140}?\bon\s+" + weekday
+    # A trading-start sentence resolves an after-close legal date to the first new-units
+    # session. If its date cannot be parsed, leave the event unverified.
+    if re.search(trading, text, re.I):
+        return bool(re.search(trading_on + day, text, re.I))
+    # An explicitly after-close event alone cannot establish the first trading session.
+    if re.search(r"\b(?:after (?:the )?(?:market )?close|p\.?m\.?)\b", text, re.I):
+        return False
+    return bool(re.search(effective_on + day, text, re.I))
 
 
 def judge(text: str, numerator: float, denominator: float, effective: date) -> dict:
