@@ -40,7 +40,8 @@ Fill model (US open entries):
      (volume > 0, close > 0) and the shares are at most max_participation of that session's
      FINAL volume. Both are known only after the close: an ex-post capacity filter.
   B  FILL-B-v1, decision-time capacity: shares at most max_participation of the median
-     as-traded volume of the 20 sessions up to and including the signal session (known when
+     as-traded volume of the 20 sessions up to and including the signal session (listed days
+     without trades count as zero; known when
      the decision is made); entry needs an opening price on the entry session and a bar with
      volume > 0 (the daily bar cannot show that the first print was at 09:30; labelled).
 """
@@ -278,7 +279,7 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     if cfg.fill_model == "A":
         capacity = np.nan_to_num(m.volume[tick_idx, e]) / f_entry
     else:
-        vol_traded = np.where(m.tradeable, np.nan_to_num(m.volume) / uf, np.nan)
+        vol_traded = np.where(m.present, np.nan_to_num(m.volume) / uf, np.nan)  # a listed day without trades counts as 0
         lo = np.maximum(sig_idx - 19, 0)
         capacity = np.array([np.nanmedian(vol_traded[n, a: s + 1]) if np.isfinite(vol_traded[n, a: s + 1]).any()
                              else 0.0 for n, a, s in zip(tick_idx, lo, np.minimum(sig_idx, n_sessions - 1))])

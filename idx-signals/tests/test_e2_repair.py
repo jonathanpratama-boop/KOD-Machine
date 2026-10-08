@@ -123,6 +123,15 @@ class FillModels(unittest.TestCase):
         out = execute(m, np.array([0]), np.array([20]), cfg(units="as_traded", fill_model="B"))
         self.assertEqual(STATUS[out["status"][0]], "SKIP_LIQUIDITY")
 
+    def test_model_b_counts_listed_days_without_trades_as_zero(self):
+        """Guards against: capacity read from the few days a thin name happened to trade."""
+        df = bars(n_sessions=30)
+        days = df["date"].unique()
+        df.loc[df["date"].isin(days[1:20:2]) | df["date"].isin(days[2:19:4]), ["volume", "value"]] = [0.0, 0.0]
+        m = Market.from_panel(df, price_limits=False).with_units(np.ones((1, 30)))
+        out = execute(m, np.array([0]), np.array([20]), cfg(units="as_traded", fill_model="B"))
+        self.assertEqual(STATUS[out["status"][0]], "SKIP_LIQUIDITY")  # median of 20 sessions is 0
+
     def test_model_b_requires_as_traded_open_entries(self):
         m = Market.from_panel(bars(), price_limits=False)
         with self.assertRaises(ValueError):
