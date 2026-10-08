@@ -1,0 +1,24 @@
+{
+  "code": {
+    "commit": "a155cf0cb64ea04360684de26ad78f8ddc30d4c4",
+    "dirty": false
+  },
+  "computed_at": "2026-10-08T00:53:00+00:00",
+  "eligible_ticker_days": 221468,
+  "episodes": {
+    "E100": 284,
+    "E30": 3333,
+    "E50": 1322
+  },
+  "first100_span": [
+    "2020-07-01",
+    "2020-08-10"
+  ],
+  "holdout": "sealed: the study market ends at the last validation session",
+  "market": "CRYPTO",
+  "panel_sha256": "3dc12749c7cce635a68ef4f152ec21c3b3d24eb6b02665c799aa24e513963d7d",
+  "protocol_id": "KOD-GLOBAL-E2-v1",
+  "protocol_sha256": "c48f3dd80cf99498610c0f977328dbd1c7c6099a9e13a7d5d161e07e21d860a5",
+  "selected_detector": "G2_RET30",
+  "stage": "discovery"
+}

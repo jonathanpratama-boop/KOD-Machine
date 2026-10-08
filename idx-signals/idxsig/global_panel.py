@@ -183,7 +183,9 @@ def load(manifest: Path) -> tuple[pd.DataFrame, dict]:
     path = PKG_ROOT / meta["panel"]
     if sha256_file(path) != meta["sha256"]:
         raise RuntimeError(f"{meta['panel']} does not match the hash in {Path(manifest).name}")
-    df = pd.read_csv(path, parse_dates=["date"])
+    # Tickers are literal strings: pandas would read the Nasdaq symbol "NA" (and "NAN", "NULL") as missing.
+    df = pd.read_csv(path, parse_dates=["date"], dtype={"ticker": str, "source": str}, keep_default_na=False,
+                     na_values=[""])
     meta["_manifest"] = Path(manifest).name
     meta["_manifest_sha256"] = sha256_file(manifest)
     return df, meta

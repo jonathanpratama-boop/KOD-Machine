@@ -65,6 +65,21 @@ class GlobalPanel(unittest.TestCase):
                            "close": [10, 10, 50, 10, 10] + [10, 10, 50, 50, 50]})
         self.assertEqual(_spikes(df).tolist(), [False, False, True, False, False] + [False] * 5)
 
+    def test_tickers_that_look_like_missing_values_survive_a_round_trip(self):
+        """Guards against: the Nasdaq symbol NA (and NAN, NULL) being read back as a missing ticker."""
+        import tempfile
+        from pathlib import Path
+
+        df = pd.DataFrame({"date": ["2024-01-02"] * 3, "ticker": ["NA", "NULL", "AAPL"], "source": "yahoo",
+                           "close": [1.0, 2.0, None]})
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "p.csv.gz"
+            df.to_csv(path, index=False, compression={"method": "gzip", "mtime": 0})
+            back = pd.read_csv(path, parse_dates=["date"], dtype={"ticker": str, "source": str},
+                               keep_default_na=False, na_values=[""])
+        self.assertEqual(back["ticker"].tolist(), ["NA", "NULL", "AAPL"])
+        self.assertTrue(np.isnan(back["close"].iloc[2]))
+
     def test_family_g_is_audit_clean_and_fixed(self):
         """Guards against: an E2 detector module that could read the future, or a family edited after analysis."""
         self.assertEqual(audit_module(moonshot_g), [])
