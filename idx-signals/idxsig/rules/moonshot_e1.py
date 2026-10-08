@@ -18,7 +18,7 @@ import numpy as np
 import pandas as pd
 
 RULE_ID = "MOONSHOT_E1_D1"
-VERSION = "v1"
+VERSION = "v1.1"  # v1.1: no crash on windows shorter than a lookback; flags identical where v1 ran
 HOLDING_DAYS = 5
 SELECTED = "F1_ARA"  # frozen 2026-10-08 from research/E1/discovery/detector_selection.csv
 FAMILY = (
@@ -45,7 +45,7 @@ def _roll(a, window, min_periods, how, shift):
     frame = pd.DataFrame(a.T).rolling(window, min_periods=min_periods)
     out = _stat(frame, how).to_numpy().T
     if shift:
-        out = np.concatenate([np.full((out.shape[0], shift), np.nan), out[:, :-shift]], axis=1)
+        out = _lag(out, shift)
     return out
 
 
@@ -60,7 +60,10 @@ def _stat(frame, how):
 
 
 def _lag(a, k):
-    return np.concatenate([np.full((a.shape[0], k), np.nan), a[:, :-k]], axis=1)
+    out = np.full(a.shape, np.nan)
+    if k < a.shape[1]:
+        out[:, k:] = a[:, :-k]
+    return out
 
 
 def features(close, prev, high, low, volume, present, tradeable, lock_up):

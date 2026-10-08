@@ -107,5 +107,17 @@ class E1Mechanics(unittest.TestCase):
             e1.run_discovery(self.study, out)
 
 
+class DetectorShortWindows(unittest.TestCase):
+    def test_features_handle_windows_shorter_than_their_lookbacks(self):
+        """Guards against: the harness's first prefix calls (1..60 sessions) crashing the detector (v1 bug)."""
+        from idxsig.rules import moonshot_e1 as family
+
+        for cols in (1, 2, 5, 19, 61):
+            a = np.ones((3, cols))
+            f = family.features(a * 100, a * 100, a * 101, a * 99, a * 1e6, a > 0, a > 0, a < 0)
+            for name, arr in f.items():
+                self.assertEqual(arr.shape, (3, cols), name)
+
+
 if __name__ == "__main__":
     unittest.main()
