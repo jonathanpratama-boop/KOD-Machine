@@ -9,11 +9,11 @@ Promotion floor: 30 closed prospective cases with complete coverage.
 
 ## Counts
 
-- Cases: 3
+- Cases: 4
 - Prospective open: 0
 - Prospective closed (scored): 0
 - Prospective closed but not AUTHORITATIVE (excluded from calibration): 0
-- Retrospective (hypothesis only): 2
+- Retrospective (hypothesis only): 3
 - Simulated (excluded): 1
 - Scanned names logged: 0 (flagged 0: opened 0, not opened 0)
 - Scanned names closed: 0; past window and still unclosed: 0
@@ -47,6 +47,10 @@ None.
   - Hypothesis: Failure case, not a winner study. After a long AI-server repricing, a delayed filing became the information that mattered. The lab question is whether the prior bullish narrative still had a mechanism in primary documents at the cutoff.
   - Evidence: 0 of 17 known facts cite archived evidence
   - Signals: DATED_CATALYST_KNOWN, NARRATIVE_WITHOUT_MECHANISM, COVERAGE_INCOMPLETE
+- `KOD-R-ZEAL-20250312` ZEAL WATCH → REPRICED_UP, window +37.9% [PARTIAL_PUBLIC]
+  - Hypothesis: Since mid-2024 Zealand had said it would partner its obesity candidates for co-development and commercialization, and in February 2025 the CEO described the petrelintide process as on track. A large-pharma co-development deal with material upfront cash would reprice the asset; its timing was not public.
+  - Evidence: 24 of 24 known facts cite archived evidence; weakest grade D
+  - Signals: COVERAGE_INCOMPLETE
 
 ### SIMULATED
 

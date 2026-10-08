@@ -274,6 +274,17 @@ python3 -m kod --db var/kod.db scan-close outcomes.json   # {"scan_id", "scan_sh
 Include every name the scanner evaluated, not only the flagged ones. Without the
 unflagged names there is no base rate and no lift.
 
+## Case studies (`research/`)
+
+Discovery-only studies of single events, frozen stage by stage (protocol first, RFC 3161
+stamped) and append-only under `tools/check_append_only.py`. They reuse the evidence
+registry, cards and detectors above, change none of them, and never count toward calibration.
+
+- `research/ZEALAND_PILOT_v1/`: Zealand Pharma–Roche petrelintide agreement, released
+  2025-03-12 07:00 CET on Nasdaq Copenhagen before the open (+37.9% on the session).
+  19 evidence objects, card `KOD-R-ZEAL-20250312` (KOD-DET-v0: no substantive signal).
+  Conclusion: NO_ACTIONABLE_EDGE_ESTABLISHED (`05_findings/FINDINGS.md`).
+
 ## Doctrine
 
 `doctrine/KOD_DOCTRINE_v0.md` is hashed into every case. Edit it and the hash

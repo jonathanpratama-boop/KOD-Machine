@@ -1,0 +1,80 @@
+{
+  "protocol_id": "ZEALAND_PILOT_v1",
+  "status": "DISCOVERY_ONLY",
+  "conclusion": "NO_ACTIONABLE_EDGE_ESTABLISHED",
+  "frozen_hypothesis": null,
+  "event": {
+    "disclosure_id": 1348334,
+    "release_utc": "2025-03-12T06:00:00Z",
+    "listing": "Nasdaq Copenhagen ZEAL DK0060257814 DKK",
+    "decision_cutoff": "2025-03-11T16:00:00Z"
+  },
+  "kod_card": {
+    "case_id": "KOD-R-ZEAL-20250312",
+    "card_sha": "ca0b25a539a74a50f71e64e5a3f68dfc9a1a53f0508e5600e6caa2ee658b673e",
+    "call_type": "RETROSPECTIVE",
+    "integrity_level": "PARTIAL",
+    "rule_version": "KOD-DET-v0",
+    "substantive_detector_signals": 0,
+    "coverage_incomplete": "SIGNAL",
+    "outcome": {
+      "label": "REPRICED_UP",
+      "window_return_pct": 37.89
+    }
+  },
+  "evidence_objects": 19,
+  "gap": {
+    "close_to_open": 0.43207859550210337,
+    "open_to_close": -0.037142857142857144,
+    "close_to_close": 0.37888710481202525,
+    "share_of_close_to_close_move_before_first_execution": 1.1403887596450866
+  },
+  "key_entries_net_base": {
+    "E1_PRE_T30D@+5": -0.2106,
+    "E1_PRE_T30D@+20": -0.4319,
+    "E2_PRE_T24H@+5": 0.1138,
+    "E2_PRE_T24H@+20": -0.1985,
+    "E3_PRE_CUTOFF@+5": 0.1564,
+    "E3_PRE_CUTOFF@+20": -0.1678,
+    "E4_EVENT_OPEN@+5": -0.1925,
+    "E4_EVENT_OPEN@+20": -0.4189,
+    "E5_EVENT_CLOSE@+5": -0.1614,
+    "E5_EVENT_CLOSE@+20": -0.3965,
+    "E6_NEXT_OPEN@+5": -0.1626,
+    "E6_NEXT_OPEN@+20": -0.3974
+  },
+  "criteria": [
+    {
+      "id": "H-A pending partnering, documents only",
+      "C1_ex_ante": true,
+      "C2_general": true,
+      "C3_feasible": false,
+      "C4_falsifiable": true,
+      "passes_all": false
+    },
+    {
+      "id": "H-B pending partnering plus a high-volume drawdown",
+      "C1_ex_ante": false,
+      "C2_general": null,
+      "C3_feasible": true,
+      "C4_falsifiable": null,
+      "passes_all": false
+    },
+    {
+      "id": "H-C post-release drift",
+      "C1_ex_ante": true,
+      "C2_general": true,
+      "C3_feasible": false,
+      "C4_falsifiable": true,
+      "passes_all": false
+    }
+  ],
+  "untested_observation": "H-B (undated pending partnering plus a high-volume drawdown at T-24H) was profitable at +5 sessions from E2/E3 but fails C1 (grade D price evidence; threshold chosen after seeing the path). Not frozen; testing it needs a new protocol.",
+  "unchanged": [
+    "kod/detectors.py KOD-DET-v0",
+    "doctrine KOD_DOCTRINE_v0",
+    "ASTRA",
+    "PAPER-POLICY-v3"
+  ],
+  "orders": "none"
+}
