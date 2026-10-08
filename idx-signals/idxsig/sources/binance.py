@@ -65,10 +65,13 @@ def _symbol(sym: str, st: str, base: str, t0: int, out_dir: Path, sleep: float) 
 
 
 def fetch(start: str = "2020-01-01", quote: str = "USDT", sleep: float = 0.1, log=print, workers: int = 6,
-          out_dir: Path | None = None) -> Path:
-    """Resumable: symbols already recorded in out_dir/_progress.jsonl are not fetched again."""
+          out_dir: Path | None = None, only_trading: bool = False, prefix: str = "binance") -> Path:
+    """Resumable: symbols already recorded in out_dir/_progress.jsonl are not fetched again.
+
+    only_trading: skip pairs not currently TRADING (live scans, which cannot buy a halted pair);
+    written under a different manifest prefix so a panel build never takes a short pull."""
     started = datetime.now(timezone.utc)
-    out_dir = out_dir or RAW / "binance" / started.strftime("%Y%m%dT%H%M%SZ")
+    out_dir = out_dir or RAW / prefix / started.strftime("%Y%m%dT%H%M%SZ")
     out_dir.mkdir(parents=True, exist_ok=True)
     info_path = out_dir / "exchangeInfo.json"
     if not info_path.exists():
@@ -76,7 +79,8 @@ def fetch(start: str = "2020-01-01", quote: str = "USDT", sleep: float = 0.1, lo
         info_path.write_bytes(body)
     body = info_path.read_bytes()
     info = json.loads(body)
-    pairs = sorted((s["symbol"], s["status"], s["baseAsset"]) for s in info["symbols"] if s["quoteAsset"] == quote)
+    pairs = sorted((s["symbol"], s["status"], s["baseAsset"]) for s in info["symbols"] if s["quoteAsset"] == quote
+                   and (not only_trading or s["status"] == "TRADING"))
     t0 = int(datetime.fromisoformat(start).replace(tzinfo=timezone.utc).timestamp() * 1000)
     progress = out_dir / "_progress.jsonl"
     done = {}
@@ -104,6 +108,6 @@ def fetch(start: str = "2020-01-01", quote: str = "USDT", sleep: float = 0.1, lo
     records += [done[p[0]] for p in pairs if p[0] in done]
     header = {"source": "binance_spot_klines_1d", "quote": quote, "start": start, "started_at": utc_stamp(started),
               "finished_at": utc_stamp(), "pairs": len(pairs), "fetched": len(records) - 1,
-              "trading": sum(1 for p in pairs if p[1] == "TRADING"),
+              "trading": sum(1 for p in pairs if p[1] == "TRADING"), "only_trading": only_trading,
               "delisted_or_halted": sum(1 for p in pairs if p[1] != "TRADING"), "raw_dir": rel(out_dir)}
-    return write_manifest(f"binance-{started.strftime('%Y%m%dT%H%M%SZ')}.jsonl", header, records)
+    return write_manifest(f"{prefix}-{started.strftime('%Y%m%dT%H%M%SZ')}.jsonl", header, records)

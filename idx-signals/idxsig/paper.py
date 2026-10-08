@@ -42,11 +42,14 @@ PAPER = PKG_ROOT / "paper"
 LEDGER = PAPER / "ledger.jsonl"
 SCANS = PAPER / "scans"
 TOKENS = PAPER / "timestamps"
-POLICY_ID = "PAPER-POLICY-v2"
+POLICY_ID = "PAPER-POLICY-v3"
 # v1 (first scan, 2026-10-08): invalidation = max(signal-day low, close x 0.85). On a one-price
 #    ARA bar the low equals the close, so the stop sat at the entry price (GTBO, 2026-10-07).
 # v2: invalidation at least 5% below the close (and at most 15%); max planned loss states that a
 #    gap through the stop (up to the ARB limit) is not covered.
+# v3: v2's rules extended to US equities (entry at the next open) and crypto (entry at the live
+#    quote taken at decision time), with per-market hypothetical accounts and the E2 cost tiers.
+#    IDX decisions are unchanged in substance.
 HISTORY_DAYS = 200
 MIN_HISTORY = 20
 BENCHMARKS = ("F2_IGNITION_D", "F1_ARA")  # logged every scan, never decided on
@@ -57,6 +60,8 @@ class Policy:
     """Frozen decision policy. A change is a new POLICY_ID; old decisions keep theirs."""
 
     equity_idr: float = 100_000_000.0       # hypothetical account; the real budget is unknown
+    equity_usd: float = 10_000.0            # US hypothetical account
+    equity_usdt: float = 10_000.0           # crypto hypothetical account
     risk_fractions: tuple = (0.005, 0.01)   # scenarios: 0.5% and 1% of equity at risk per trade
     max_position_fraction: float = 0.20     # at most 20% of equity in one name
     max_adv_participation: float = 0.10     # at most 10% of the 20-session median traded value
@@ -95,9 +100,35 @@ def policy_sha() -> str:
     return hashlib.sha256(_canonical(policy_record()).encode()).hexdigest()
 
 
-def detector_identity() -> dict:
-    return {"rule_id": family.RULE_ID, "version": family.VERSION, "selected": family.SELECTED,
-            "module_sha256": sha256_file(Path(family.__file__)), "benchmarks": list(BENCHMARKS)}
+def _detector(market: str = "IDX") -> dict:
+    """The frozen decision detector and the benchmark rules logged beside it, per market."""
+    if market == "IDX":
+        return {"module": family, "selected": family.SELECTED, "rule_id": family.RULE_ID, "version": family.VERSION,
+                "args": ("close", "prev", "high", "low", "volume", "present", "tradeable", "lock_up"),
+                "benchmarks": BENCHMARKS, "evidence": "E1 validation, 2023"}
+    from .rules import moonshot_g
+
+    return {"module": moonshot_g, "selected": moonshot_g.selected(market), "rule_id": f"MOONSHOT_E2_{market}_D1",
+            "version": moonshot_g.VERSION, "args": moonshot_g.FEATURE_ARGS,
+            "benchmarks": ("G5_IGNITION_D", "G1_RET20_CLOSEHIGH"), "evidence": f"E2 {market} validation, 2023"}
+
+
+def detector_identity(market: str = "IDX") -> dict:
+    det = _detector(market)
+    return {"rule_id": det["rule_id"], "version": det["version"], "selected": det["selected"],
+            "module_sha256": sha256_file(Path(det["module"].__file__)), "benchmarks": list(det["benchmarks"])}
+
+
+def _equity(market: str) -> float:
+    return {"IDX": POLICY.equity_idr, "US": POLICY.equity_usd, "CRYPTO": POLICY.equity_usdt}[market]
+
+
+def _tick(price: float, market: str) -> float:
+    if market == "IDX":
+        return float(mkt.tick_size(np.array([price]))[0])
+    if market == "US":
+        return 0.01 if price >= 1 else 0.0001
+    return 10.0 ** (math.floor(math.log10(price)) - 4) if price > 0 else 1e-8
 
 
 def ledger_lines(path: Path = LEDGER) -> list[dict]:
@@ -142,24 +173,34 @@ def append(records: list[dict], path: Path = LEDGER, timestamper=None) -> list[d
 
 
 # ---------------------------------------------------------------------------------- data
-def load_recent(manifest: Path) -> tuple[pd.DataFrame, dict]:
-    from .panel import _yahoo_frame
-
+def load_recent(manifest: Path, market: str = "IDX") -> tuple[pd.DataFrame, dict]:
     header, records = read_manifest(manifest)
-    frames, status = [], {}
-    for r in records:
-        status[r["ticker"]] = r["http_status"]
-        if r["http_status"] != 200 or not r.get("rows"):
-            continue
-        payload = json.loads((PKG_ROOT / r["path"]).read_text(encoding="utf-8"))
-        frames.append(_yahoo_frame(r["ticker"], payload))
-    df = pd.concat(frames, ignore_index=True)
-    df = df[df["close"] > 0]
+    if market == "IDX":
+        from .panel import _yahoo_frame
+
+        frames, status = [], {}
+        for r in records:
+            status[r["ticker"]] = r["http_status"]
+            if r["http_status"] != 200 or not r.get("rows"):
+                continue
+            payload = json.loads((PKG_ROOT / r["path"]).read_text(encoding="utf-8"))
+            frames.append(_yahoo_frame(r["ticker"], payload))
+        df = pd.concat(frames, ignore_index=True)
+        df = df[df["close"] > 0]
+    else:
+        from . import global_panel
+
+        raw, _ = global_panel.load_us(manifest) if market == "US" else global_panel.load_crypto(manifest)
+        df, _ = global_panel._finish(raw)
+        key = "ticker" if market == "US" else "symbol"
+        status = {r[key]: r["http_status"] for r in records if key in r and not str(r[key]).startswith("_")}
     return df, {"manifest": manifest.name, "manifest_sha256": sha256_file(manifest), "header": header,
                 "http_status": status}
 
 
-def _market(df: pd.DataFrame) -> Market:
+def _market(df: pd.DataFrame, market: str = "IDX") -> Market:
+    if market != "IDX":  # global_panel._finish already dropped non-session dates
+        return Market.from_panel(df, price_limits=False)
     # Sessions: dates on which at least 50 names traded (holiday stubs dropped, as in the panel).
     traded = df[df["volume"] > 0].groupby("date")["ticker"].nunique()
     df = df[df["date"].isin(traded[traded >= 50].index)]
@@ -167,167 +208,243 @@ def _market(df: pd.DataFrame) -> Market:
 
 
 # ---------------------------------------------------------------------------------- scan
-def scan(manifest: Path, now: datetime | None = None, validation: dict | None = None) -> dict:
+def scan(manifest: Path, now: datetime | None = None, validation: dict | None = None, market: str = "IDX",
+         quotes=None) -> dict:
     """Evaluate the session that last closed. Returns {"scan": record, "decisions": [...], "features": DataFrame}."""
-    df, data = load_recent(manifest)
-    return scan_frame(df, data, now, validation)
+    df, data = load_recent(manifest, market)
+    return scan_frame(df, data, now, validation, market, quotes)
 
 
-def scan_frame(df: pd.DataFrame, data: dict, now: datetime | None = None, validation: dict | None = None) -> dict:
-    if family.SELECTED is None:
-        raise RuntimeError("no frozen detector (moonshot_e1.SELECTED is None)")
+def scan_frame(df: pd.DataFrame, data: dict, now: datetime | None = None, validation: dict | None = None,
+               market: str = "IDX", quotes=None) -> dict:
+    """quotes: crypto only, a callable (tickers -> {ticker: (price, time)}) for live prices at decision time."""
+    det = _detector(market)
+    sel, module = det["selected"], det["module"]
+    if sel is None:
+        raise RuntimeError(f"no frozen detector for {market}")
     now = now or datetime.now(timezone.utc)
-    m = _market(df)
+    m = _market(df, market)
     d = m.shape[1] - 1
     session = str(m.dates[d])
     view = CausalSource(m).view(d)
-    f = family.features(view.close, view.prev, view.high, view.low, view.volume, view.present, view.tradeable,
-                        view.lock_up)
-    flags = family.family_flags(f)
+    f = module.features(*[getattr(view, a) for a in det["args"]])
+    flags = module.family_flags(f)
     tick = view.tickers
     history = np.cumsum(view.present, axis=1)[:, d]
     fresh = view.present[:, d]
     eligible = view.tradeable[:, d] & (history > MIN_HISTORY)
     value = np.where(view.tradeable, view.value, np.nan)
     adv = pd.DataFrame(value[:, max(0, d - 19): d + 1].T).median().to_numpy()
+    zeros = np.zeros(len(tick), dtype=bool)
     feats = pd.DataFrame({
         "ticker": tick, "session": session, "fresh": fresh, "eligible": eligible,
         "close": view.close[:, d], "previous": view.prev[:, d], "high": view.high[:, d], "low": view.low[:, d],
-        "volume": view.volume[:, d], "adv20_value": adv,
+        "open": view.open[:, d], "volume": view.volume[:, d], "adv20_value": adv,
         **{k: f[k][:, d] for k in ("ret1", "rel1", "ret5", "ret20", "volr", "cpos", "dd60")},
-        "ara": f["ara"][:, d], "brk60": f["brk60"][:, d],
-        **{name: flags[name][:, d] & eligible for name, _ in family.FAMILY},
+        "ara": f["ara"][:, d] if "ara" in f else zeros, "brk60": f["brk60"][:, d],
+        **({"gap": f["gap"][:, d]} if "gap" in f else {}),
+        **{name: flags[name][:, d] & eligible for name, _ in module.FAMILY},
     }).sort_values("ticker").reset_index(drop=True)
-    chosen = feats[feats[family.SELECTED]].sort_values(["volr", "ticker"], ascending=[False, True])
+    chosen = feats[feats[sel]].sort_values(["volr", "ticker"], ascending=[False, True])
     requested = len(data["http_status"])
     ok = sum(1 for s in data["http_status"].values() if s == 200)
-    scan_id = f"SCAN-{session}-{family.SELECTED}"
+    scan_id = f"SCAN-{session}-{sel}" if market == "IDX" else f"SCAN-{market}-{session}-{sel}"
+    cutoff = {"IDX": f"close of IDX session {session} (bars fetched after the close)",
+              "US": f"close of US session {session} (bars fetched after the close)",
+              "CRYPTO": f"end of UTC day {session} (bars fetched after 00:00 UTC)"}[market]
     record = {
-        "type": "SCAN", "scan_id": scan_id, "session": session, "discovered_at": utc_stamp(now),
-        "cutoff": f"close of IDX session {session} (bars fetched after the close)",
-        "detector": detector_identity(), "policy": {"policy_id": POLICY_ID, "sha256": policy_sha()},
-        "data": {"source": "yahoo_chart_v8", "manifest": data["manifest"], "manifest_sha256": data["manifest_sha256"],
+        "type": "SCAN", "market": market, "scan_id": scan_id, "session": session, "discovered_at": utc_stamp(now),
+        "cutoff": cutoff, "detector": detector_identity(market),
+        "policy": {"policy_id": POLICY_ID, "sha256": policy_sha()},
+        "data": {"source": "binance_spot_klines_1d" if market == "CRYPTO" else "yahoo_chart_v8",
+                 "manifest": data["manifest"], "manifest_sha256": data["manifest_sha256"],
                  "requested": requested, "http_ok": ok, "fresh_for_session": int(fresh.sum()),
                  "eligible": int(eligible.sum()), "not_scanned": requested - int(fresh.sum())},
-        "flags": {name: sorted(feats.loc[feats[name], "ticker"].tolist()) for name in (family.SELECTED, *BENCHMARKS)},
+        "flags": {name: sorted(feats.loc[feats[name], "ticker"].tolist()) for name in (sel, *det["benchmarks"])},
         "candidates_ranked": chosen["ticker"].tolist(),
         "ranking": "volume ratio (volr), descending; ties by ticker",
         "result": "NO SIGNAL" if chosen.empty else f"{len(chosen)} CANDIDATE(S)",
         "validation_evidence": validation,
     }
-    decisions = [decide(row, rank + 1, scan_id, session, now, validation) for rank, row in
-                 enumerate(chosen.itertuples(index=False))]
+    live = quotes(chosen["ticker"].tolist()) if (quotes and market == "CRYPTO" and not chosen.empty) else {}
+    decisions = [decide(row, rank + 1, scan_id, session, now, validation, market, live.get(row.ticker))
+                 for rank, row in enumerate(chosen.itertuples(index=False))]
     primary = next((x for x in decisions if x["decision"] == "BUY ON TRIGGER"), None)
     for x in decisions:
         x["primary"] = x is primary
     return {"scan": record, "decisions": decisions, "features": feats, "market": m}
 
 
-def _next_session(day: str) -> str:
-    """Next weekday. IDX holidays are not modelled: if it is a holiday, the expiry moves to the
-    next session that actually trades, and the outcome record says so."""
+def _next_session(day: str, market: str = "IDX") -> str:
+    """Next weekday (IDX, US) or next day (crypto). Exchange holidays are not modelled: if it is
+    one, the trigger moves to the next session that actually trades, and the outcome says so."""
+    if market == "CRYPTO":
+        return str(np.datetime64(day, "D") + 1)
     return str(np.busday_offset(np.datetime64(day, "D"), 1, roll="forward"))
 
 
-def decide(row, rank: int, scan_id: str, session: str, now: datetime, validation: dict | None) -> dict:
+def decide(row, rank: int, scan_id: str, session: str, now: datetime, validation: dict | None,
+           market: str = "IDX", quote=None) -> dict:
+    from .profiles import PROFILES
+
     p = POLICY
+    prof = PROFILES[market]
+    det = _detector(market)
+    sel = det["selected"]
+    cur = prof.currency.lower()
+    sym = {"IDX": "Rp", "US": "$", "CRYPTO": ""}[market]
+    lot = prof.lot_size
     close, low = float(row.close), float(row.low)
-    tick = float(mkt.tick_size(np.array([close]))[0])
+    quote_price = float(quote[0]) if quote else None
+    tick = _tick(close, market)
     chase = math.floor(close * (1 + p.chase_limit) / tick) * tick
     stop = min(max(low, close * (1 - p.max_stop_distance)), close * (1 - p.min_stop_distance))
     stop = math.floor(stop / tick) * tick
-    entry_ref = close  # sizing reference; the paper fill is the next session's close
-    per_share_risk = entry_ref - stop + entry_ref * (p.fee_buy + p.fee_sell)
+    entry_ref = quote_price if (market == "CRYPTO" and quote_price) else close
+    if market == "IDX":
+        fee_in, fee_out = p.fee_buy, p.fee_sell
+    else:
+        tier = float(prof.per_side_cost(np.array([entry_ref]))[0])
+        fee_in, fee_out = prof.fee_buy + tier, prof.fee_sell + tier
+    per_share_risk = entry_ref - stop + entry_ref * (fee_in + fee_out)
     adv = float(row.adv20_value) if np.isfinite(row.adv20_value) else 0.0
-    cap_value = min(p.max_position_fraction * p.equity_idr, p.max_adv_participation * adv)
+    equity = _equity(market)
+    cap_value = min(p.max_position_fraction * equity, p.max_adv_participation * adv)
     scenarios = []
     for r in p.risk_fractions:
-        budget = r * p.equity_idr
-        shares = math.floor(min(budget / per_share_risk, cap_value / entry_ref) / mkt.LOT_SIZE) * mkt.LOT_SIZE \
-            if per_share_risk > 0 else 0
-        scenarios.append({"risk_fraction": r, "risk_budget_idr": budget, "shares": int(shares),
-                          "lots": int(shares // mkt.LOT_SIZE), "position_idr": shares * entry_ref,
-                          "max_planned_loss_idr": round(shares * per_share_risk)})
+        budget = r * equity
+        units = (budget / per_share_risk if per_share_risk > 0 else 0)
+        units = min(units, cap_value / entry_ref)
+        shares = math.floor(units / lot) * lot if market != "CRYPTO" else math.floor(units * 1e6) / 1e6
+        scenarios.append({"risk_fraction": r, f"risk_budget_{cur}": budget, "shares": shares,
+                          "lots": int(shares // lot) if market != "CRYPTO" else None,
+                          f"position_{cur}": shares * entry_ref,
+                          f"max_planned_loss_{cur}": round(shares * per_share_risk) if market == "IDX"
+                          else round(shares * per_share_risk, 2)})
     reasons = []
     if not scenarios[-1]["shares"]:
-        reasons.append(f"no whole lot fits: risk/lot Rp{per_share_risk * mkt.LOT_SIZE:,.0f}, position cap "
-                       f"Rp{cap_value:,.0f} (10% of 20-session median value Rp{adv:,.0f})")
-    if close < 50:
+        unit = "whole lot" if market == "IDX" else ("share" if market == "US" else "position")
+        reasons.append(f"no {unit} fits: risk/{'lot' if market == 'IDX' else 'unit'} {sym}{per_share_risk * lot:,.4g}, "
+                       f"position cap {sym}{cap_value:,.0f} (10% of 20-session median value {sym}{adv:,.0f})")
+    if market == "IDX" and close < 50:
         reasons.append("priced below Rp50: special-board / full-call-auction rules, outside the modelled market")
+    if market == "CRYPTO" and quote_price is None:
+        reasons.append("no live quote could be taken at decision time, so there is no verified price to act on")
+    if market == "CRYPTO" and quote_price is not None and quote_price > chase:
+        reasons.append(f"the live quote {quote_price:g} is already above the chase limit {chase:g}")
     detected = bool(validation and validation.get("p_one_sided_vs_matched") is not None
                     and validation["p_one_sided_vs_matched"] < p.min_validated_lift_p
                     and (validation.get("lift_vs_matched_random") or 0) > 1)
     trading = (validation or {}).get("trading") or {}
     tradeable_edge = bool(trading.get("p_one_sided") is not None and trading["p_one_sided"] < p.min_validated_lift_p)
+    entry_words = {"IDX": "buy at the next close", "US": "buy at the next open",
+                   "CRYPTO": "buy at the next day's open"}[market]
     if reasons:
         decision, why = "NOT EXECUTABLE", "; ".join(reasons)
     elif not detected:
         decision, why = "PASS", ("the detector's validation did not beat matched random controls at p < "
                                  f"{p.min_validated_lift_p}; no edge to underwrite a paper position")
     elif not tradeable_edge:
-        decision, why = "PASS", (
-            "detection is validated (E30 precision {:.1%} vs {:.1%} for matched names), but the executable plan "
-            "(buy at the next close, hold {} sessions) did not beat matched random entries in validation: average "
-            "net {} vs {} (run {}). Fills come mostly when the continuation fails; the names still locked at ARA "
-            "cannot be bought.").format(
-                validation.get("precision") or 0, (validation.get("precision") or 0) / (validation.get("lift_vs_matched_random") or 1),
-                p.horizon_sessions,
-                "n/a" if trading.get("avg_net_return") is None else f"{trading['avg_net_return']:+.2%}",
-                "n/a" if trading.get("matched_random_avg_net_return") is None else f"{trading['matched_random_avg_net_return']:+.2%}",
-                trading.get("run_id", "none"))
+        why = ("detection is validated (E30 precision {:.1%} vs {:.1%} for matched names), but the executable plan "
+               "({}, hold {} sessions) did not beat matched random entries in validation: average net {} vs {} "
+               "(run {}).").format(
+                   validation.get("precision") or 0,
+                   (validation.get("precision") or 0) / (validation.get("lift_vs_matched_random") or 1),
+                   entry_words, p.horizon_sessions,
+                   "n/a" if trading.get("avg_net_return") is None else f"{trading['avg_net_return']:+.2%}",
+                   "n/a" if trading.get("matched_random_avg_net_return") is None
+                   else f"{trading['matched_random_avg_net_return']:+.2%}",
+                   trading.get("run_id", "none"))
+        why += (" Fills come mostly when the continuation fails; the names still locked at ARA cannot be bought."
+                if market == "IDX" else " Most flagged names fade after the spike (median 5-session return about "
+                                        "-10% in validation) while a minority runs much further.")
+        decision = "PASS"
     else:
         decision, why = "BUY ON TRIGGER", "validated detector, executable size within the risk budget"
-    expiry = _next_session(session)
+    nxt = _next_session(session, market)
     precision = (validation or {}).get("precision")
+    if market == "IDX":
+        instrument = {"ticker": row.ticker, "yahoo_symbol": f"{row.ticker}.JK", "venue": prof.venue,
+                      "currency": "IDR", "lot_size": lot}
+        verified = {"close": close, "session": session, "source": "Yahoo daily bar (official close)",
+                    "note": "last completed session; no live quote was taken"}
+        trigger = (f"paper buy at the official close of {nxt} if that close is <= Rp{chase:g} (chase limit) "
+                   f"and > Rp{stop:g}, the name traded, and the close is not locked at ARA")
+        expiry = f"close of {nxt}; unfilled by then = expired"
+        change = ["the next session opens locked at ARA (no sellers): unfillable",
+                  "a suspension or UMA notice from IDX before the entry close",
+                  "news of a rights issue or dilutive placement"]
+    elif market == "US":
+        instrument = {"ticker": row.ticker, "yahoo_symbol": row.ticker, "venue": prof.venue, "currency": "USD",
+                      "lot_size": lot}
+        verified = {"close": close, "session": session, "source": "Yahoo daily bar (consolidated close)",
+                    "note": "last completed session; no live quote was taken (decision made after the close)"}
+        trigger = (f"paper buy at the official opening print of {nxt} if it is <= ${chase:g} (chase limit) and "
+                   f"> ${stop:g}")
+        expiry = f"open of {nxt}; outside the band at the open = expired"
+        change = ["a trading halt or delisting notice before the open",
+                  "an offering, ATM or reverse-split announcement (dilution)",
+                  "a pre-market price already beyond the chase limit"]
+    else:
+        instrument = {"ticker": row.ticker, "pair": f"{row.ticker}USDT", "venue": prof.venue, "currency": "USDT",
+                      "lot_size": "fractional"}
+        verified = {"close": close, "session": session, "source": "Binance daily kline (UTC close)",
+                    "quote": quote_price, "quote_time": quote[1] if quote else None,
+                    "quote_source": "Binance spot ticker price at decision time"}
+        trigger = (f"paper buy at the decision-time quote {quote_price:g} USDT (verified live price)"
+                   if quote_price else "no live quote: not executable")
+        expiry = "the decision-time quote only; no later fill"
+        change = ["a delisting or monitoring-tag announcement by Binance", "an exploit, unlock or depeg headline",
+                  "the quote moving above the chase limit before execution"]
     return {
-        "type": "DECISION", "decision_id": f"{scan_id}-{row.ticker}", "scan_id": scan_id, "rank": rank,
-        "instrument": {"ticker": row.ticker, "yahoo_symbol": f"{row.ticker}.JK", "venue": "IDX (Indonesia Stock Exchange)",
-                       "currency": "IDR", "lot_size": mkt.LOT_SIZE},
+        "type": "DECISION", "market": market, "decision_id": f"{scan_id}-{row.ticker}", "scan_id": scan_id,
+        "rank": rank, "instrument": instrument,
         "discovered_at": utc_stamp(now), "decided_at": utc_stamp(now), "signal_session": session,
-        "verified_price": {"close": close, "session": session, "source": "Yahoo daily bar (official close)",
-                           "note": "last completed session; no live quote was taken"},
+        "verified_price": verified,
         "evidence": {k: (None if (isinstance(v, float) and math.isnan(v)) else v) for k, v in {
             "ret1": float(row.ret1), "rel1": float(row.rel1), "ret5": float(row.ret5), "ret20": float(row.ret20),
             "volr": float(row.volr), "cpos": float(row.cpos), "dd60": float(row.dd60), "ara": bool(row.ara),
             "previous": float(row.previous), "high": float(row.high), "low": low, "volume": float(row.volume),
             "adv20_value": adv}.items()},
-        "thesis": (f"{family.SELECTED} fired at the close of {session}: "
-                   + dict(family.FAMILY)[family.SELECTED] + ". Historically (E1 validation, 2023) such flags were "
-                   "followed by a +30% repricing within 5 sessions more often than matched names."),
+        "thesis": (f"{sel} fired at the close of {session}: " + dict(det["module"].FAMILY)[sel]
+                   + f". Historically ({det['evidence']}) such flags were followed by a +30% repricing within 5 "
+                   "sessions more often than matched names."),
         "prediction": {"statement": f"max close over the next {p.horizon_sessions} sessions >= 1.30 x {close:g}",
                        "falsified_if": f"no close in the next {p.horizon_sessions} sessions reaches {close * 1.3:g}",
                        "historical_frequency": precision,
                        "note": "an empirical frequency from the validation period, not a calibrated probability"},
         "decision": decision, "reason": why,
         "plan": {
-            "entry_trigger": f"paper buy at the official close of {expiry} if that close is <= Rp{chase:g} (chase limit) "
-                             f"and > Rp{stop:g}, the name traded, and the close is not locked at ARA",
-            "max_chase_price": chase, "invalidation": stop,
+            "entry_trigger": trigger, "max_chase_price": chase, "invalidation": stop,
             "invalidation_rule": "exit at the first close at or below the invalidation level",
-            "gap_risk": "max planned loss assumes the exit fills at the invalidation level; a gap or an ARB "
-                        "lock can make the loss larger, up to 15% per session while locked",
-            "exit": f"close of the {p.horizon_sessions}th session after entry, or invalidation; a sale rolls while "
-                    f"locked at ARB",
+            "gap_risk": "max planned loss assumes the exit fills at the invalidation level; a gap through it makes "
+                        "the loss larger" + (", up to 15% per session while locked at ARB" if market == "IDX" else ""),
+            "exit": f"close of the {p.horizon_sessions}th session after entry, or invalidation"
+                    + ("; a sale rolls while locked at ARB" if market == "IDX" else ""),
             "sizing_formula": ("shares = floor(min(R x equity / (entry - stop + entry x fees), min(20% x equity, "
-                               "10% x 20-session median value) / entry) / 100) x 100"),
-            "scenarios": scenarios, "equity_assumption_idr": p.equity_idr,
+                               "10% x 20-session median value) / entry) / 100) x 100" if market == "IDX" else
+                               "units = min(R x equity / (entry - stop + entry x costs), min(20% x equity, 10% x "
+                               "20-session median value) / entry)" + (", whole shares" if market == "US" else
+                                                                      ", to 1e-6 units")),
+            "costs_per_side": [fee_in, fee_out], "scenarios": scenarios, f"equity_assumption_{cur}": equity,
             "equity_note": "hypothetical; the real risk budget is unknown, so sizes are labelled scenarios",
-            "horizon_sessions": p.horizon_sessions, "expiry": f"close of {expiry}; unfilled by then = expired",
-            "liquidity": {"adv20_value_idr": adv, "position_cap_idr": cap_value},
+            "horizon_sessions": p.horizon_sessions, "expiry": expiry,
+            "liquidity": {f"adv20_value_{cur}": adv, f"position_cap_{cur}": cap_value},
             "catalyst": "none identified: a tape-only detector (no news or filing was read)",
-            "would_change_decision": ["the next session opens locked at ARA (no sellers): unfillable",
-                                      "a suspension or UMA notice from IDX before the entry close",
-                                      "news of a rights issue or dilutive placement"],
+            "would_change_decision": change,
         } if decision != "NOT EXECUTABLE" else {"reason": why, "horizon_sessions": p.horizon_sessions},
         "policy": {"policy_id": POLICY_ID, "sha256": policy_sha()},
-        "detector": detector_identity(),
+        "detector": detector_identity(market),
     }
 
 
 # ---------------------------------------------------------------------------------- score
 def score(decision: dict, m: Market) -> dict | None:
     """Score one decision on bars that now cover its window, or None if the window is still open."""
+    from .profiles import PROFILES
+
     p = POLICY
+    market = decision.get("market", "IDX")
     tickers = list(m.tickers)
     t = decision["instrument"]["ticker"]
     if t not in tickers:
@@ -348,16 +465,26 @@ def score(decision: dict, m: Market) -> dict | None:
     discovery = {"r5max": r5max, **{f"E{int(x * 100)}": r5max >= x for x in (0.3, 0.5, 1.0)},
                  "peak_session": str(m.dates[d + 1 + int(np.nanargmax(fwd))])}
     e = d + 1
-    entry_close = float(close[e])
     plan = decision.get("plan", {})
-    fillable = bool(m.tradeable[n, e] and not m.lock_up[n, e])
-    in_band = "max_chase_price" in plan and plan["invalidation"] < entry_close <= plan["max_chase_price"]
+    if market == "IDX":
+        entry_price, first = float(close[e]), e + 1
+        fillable = bool(m.tradeable[n, e] and not m.lock_up[n, e])
+        fee_in, fee_out = p.fee_buy, p.fee_sell
+    else:
+        prof = PROFILES[market]
+        entry_price = (decision["verified_price"].get("quote") if market == "CRYPTO" else None) or float(m.open[n, e])
+        first = e
+        fillable = bool(np.isfinite(entry_price) and entry_price > 0)
+        tier = float(prof.per_side_cost(np.array([entry_price]))[0]) if fillable else 0.0
+        fee_in, fee_out = prof.fee_buy + tier, prof.fee_sell + tier
+    in_band = "max_chase_price" in plan and plan["invalidation"] < entry_price <= plan["max_chase_price"]
     stop = plan.get("invalidation")
     exit_idx, exit_reason = None, None
     path = []
     if fillable and in_band:
-        for k in range(e + 1, min(e + 1 + p.horizon_sessions, len(dates))):
-            path.append(float(level[k] / level[e] - 1))
+        for k in range(first, min(e + 1 + p.horizon_sessions, len(dates))):
+            rel_k = float(level[k] / level[e] - 1) if market == "IDX" else float(close[k] / entry_price - 1)
+            path.append(rel_k)
             sellable = m.tradeable[n, k] and not m.lock_down[n, k]
             if sellable and close[k] <= stop:
                 exit_idx, exit_reason = k, "invalidation"
@@ -368,17 +495,20 @@ def score(decision: dict, m: Market) -> dict | None:
             return None  # still held (or rolling on an ARB lock)
     trade = None
     if exit_idx is not None:
-        gross = float(level[exit_idx] / level[e] - 1)
-        net = (1 + gross) * (1 - p.fee_sell) / (1 + p.fee_buy) - 1
-        trade = {"entry_session": str(m.dates[e]), "entry_close": entry_close, "exit_session": str(m.dates[exit_idx]),
-                 "exit_reason": exit_reason, "net_return": net, "mfe": max(path), "mae": min(path)}
+        gross = float(level[exit_idx] / level[e] - 1) if market == "IDX" else float(close[exit_idx] / entry_price - 1)
+        net = (1 + gross) * (1 - fee_out) / (1 + fee_in) - 1
+        trade = {"entry_session": str(m.dates[e]), "entry_price": float(entry_price),
+                 **({"entry_close": float(entry_price)} if market == "IDX" else {}),
+                 "entry_basis": {"IDX": "close", "US": "open", "CRYPTO": "decision-time quote"}[market],
+                 "exit_session": str(m.dates[exit_idx]), "exit_reason": exit_reason, "net_return": net,
+                 "mfe": max(path), "mae": min(path)}
     executed = decision["decision"] == "BUY ON TRIGGER" and trade is not None
     would_have = trade["net_return"] if trade else None
     if decision["decision"] == "BUY ON TRIGGER":
         verdict = ("NOT FILLED" if trade is None else ("PROFIT" if trade["net_return"] > 0 else "LOSS"))
     else:
         verdict = ("CORRECT REJECTION" if would_have is None or would_have <= 0 else "MISSED GAIN (rejected, plan would have profited)")
-    return {"type": "OUTCOME", "decision_id": decision["decision_id"], "scored_at": utc_stamp(),
+    return {"type": "OUTCOME", "market": market, "decision_id": decision["decision_id"], "scored_at": utc_stamp(),
             "discovery": discovery, "execution": {"fillable_at_trigger": fillable, "within_chase_band": bool(in_band),
                                                     "paper_trade": trade, "executed": executed},
             "decision_verdict": verdict}
@@ -400,39 +530,69 @@ def commit_and_push(paths: list[Path], message: str, trailer: str = "") -> str:
 
 
 # ---------------------------------------------------------------------------------- glue
-def active_tickers() -> list[str]:
-    """Names in the latest recorded scan (works from a fresh clone), plus the panel's active
-    names when the panel is present, plus listings from data/universe/extra_tickers.csv."""
+def active_tickers(market: str = "IDX") -> list[str]:
+    """IDX: names in the latest recorded scan (works from a fresh clone), plus the panel's active
+    names when the panel is present, plus data/universe/extra_tickers.csv. US: the latest US scan,
+    else the latest US panel's active names. Crypto is taken live from Binance at fetch time."""
     import csv
 
     tickers: set[str] = set()
-    scans = sorted(SCANS.glob("*/features.csv")) if SCANS.exists() else []
+    prefix = "SCAN-2" if market == "IDX" else f"SCAN-{market}-"
+    scans = sorted(SCANS.glob(f"{prefix}*/features.csv")) if SCANS.exists() else []
     if scans:
-        tickers |= set(pd.read_csv(scans[-1], usecols=["ticker"])["ticker"].astype(str))
-    try:
-        from .panel import load
+        tickers |= set(pd.read_csv(scans[-1], usecols=["ticker"], dtype={"ticker": str}, keep_default_na=False)["ticker"])
+    if market == "IDX":
+        try:
+            from .panel import load
 
-        df, _, _ = load()
+            df, _, _ = load()
+            last = df.groupby("ticker")["date"].max()
+            tickers |= set(last[last == df["date"].max()].index)
+        except (FileNotFoundError, RuntimeError):
+            pass
+        with (PKG_ROOT / "data" / "universe" / "extra_tickers.csv").open(newline="", encoding="utf-8") as fh:
+            tickers |= {r["ticker"].strip().upper() for r in csv.DictReader(fh) if r["ticker"].strip()}
+    elif market == "US" and not tickers:
+        from . import global_panel
+
+        df, _ = global_panel.load(global_panel.latest("US"))
         last = df.groupby("ticker")["date"].max()
         tickers |= set(last[last == df["date"].max()].index)
-    except (FileNotFoundError, RuntimeError):
-        pass
-    with (PKG_ROOT / "data" / "universe" / "extra_tickers.csv").open(newline="", encoding="utf-8") as fh:
-        tickers |= {r["ticker"].strip().upper() for r in csv.DictReader(fh) if r["ticker"].strip()}
     return sorted(tickers)
 
 
+def binance_quotes(tickers: list[str]) -> dict:
+    """Live spot prices for <TICKER>USDT, with the time they were taken."""
+    import urllib.request
+    from urllib.parse import quote as quote_url
+
+    out = {}
+    for t in tickers:
+        url = f"https://data-api.binance.vision/api/v3/ticker/price?symbol={quote_url(t)}USDT"
+        try:
+            with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"}),
+                                        timeout=20) as resp:
+                out[t] = (float(json.loads(resp.read())["price"]), utc_stamp())
+        except Exception:  # noqa: BLE001 - recorded as a missing quote, decided NOT EXECUTABLE
+            continue
+    return out
+
+
 VALIDATION_WINDOW = ("2023-01-02", "2023-12-29")
+VALIDATION_WINDOWS = {"IDX": VALIDATION_WINDOW, "US": ("2023-01-01", "2023-12-31"),
+                      "CRYPTO": ("2023-01-01", "2023-12-31")}
 
 
-def validation_evidence() -> dict | None:
-    """Detection (E1 validation, E30) and trading (idxsig harness over the validation window)
-    evidence for the frozen detector."""
-    path = PKG_ROOT / "research" / "E1" / "validation" / "result.json"
+def validation_evidence(market: str = "IDX") -> dict | None:
+    """Detection (E1/E2 validation, E30) and trading (idxsig harness over the validation window)
+    evidence for the market's frozen detector."""
+    det = _detector(market)
+    path = (PKG_ROOT / "research" / "E1" / "validation" / "result.json" if market == "IDX"
+            else PKG_ROOT / "research" / "E2" / market / "validation" / "result.json")
     if not path.exists():
         return None
     res = json.loads(path.read_text(encoding="utf-8"))
-    if res.get("rule") != family.SELECTED:
+    if res.get("rule") != det["selected"]:
         return None
     out = {"source": rel(path), "source_sha256": sha256_file(path), "rule": res["rule"],
            **{k: res["E30"].get(k) for k in ("precision", "precision_lo95", "precision_hi95", "base_rate",
@@ -441,24 +601,25 @@ def validation_evidence() -> dict | None:
     index = PKG_ROOT / "results" / "RUNS.jsonl"
     for line in index.read_text(encoding="utf-8").splitlines() if index.exists() else []:
         run = json.loads(line)
-        if family.RULE_ID not in run.get("dir", ""):
+        if det["rule_id"] not in run.get("dir", ""):
             continue
         summary = json.loads((PKG_ROOT / run["dir"] / "summary.json").read_text(encoding="utf-8"))
         cfg = summary["config"]
-        if (cfg["start"], cfg["end"]) != VALIDATION_WINDOW or "Selected: " + family.SELECTED not in summary["rule"]["text"]:
+        if (cfg["start"], cfg["end"]) != VALIDATION_WINDOWS[market] or "Selected: " + det["selected"] not in summary["rule"]["text"]:
             continue
-        m = summary["random_matched"]["avg_net_return"] or {}
+        mr = summary["random_matched"]["avg_net_return"] or {}
         trading = {"run_id": summary["run_id"], "scored_trades": summary["rule_trades"]["scored"],
-                   "fill_rate": summary["rule_trades"]["fill_rate"], "avg_net_return": m.get("observed"),
-                   "matched_random_avg_net_return": m.get("random_mean"), "p_one_sided": m.get("p_value_one_sided"),
+                   "fill_rate": summary["rule_trades"]["fill_rate"], "avg_net_return": mr.get("observed"),
+                   "matched_random_avg_net_return": mr.get("random_mean"), "p_one_sided": mr.get("p_value_one_sided"),
                    "status_counts": summary["rule_trades"]["status_counts"]}
     out["trading"] = trading
     return out
 
 
-def already_scanned(session: str) -> bool:
-    return any(r["type"] == "SCAN" and r["session"] == session and r["detector"]["selected"] == family.SELECTED
-               for r in ledger_lines())
+def already_scanned(session: str, market: str = "IDX") -> bool:
+    sel = _detector(market)["selected"]
+    return any(r["type"] == "SCAN" and r.get("market", "IDX") == market and r["session"] == session
+               and r["detector"]["selected"] == sel for r in ledger_lines())
 
 
 def record_scan(out: dict, timestamper=None) -> list[Path]:
@@ -474,14 +635,15 @@ def record_scan(out: dict, timestamper=None) -> list[Path]:
     return [feat_path, LEDGER, *[t for t in tokens if t.exists()]]
 
 
-def score_pending(manifest: Path, timestamper=None) -> tuple[list[Path], list[dict]]:
+def score_pending(manifest: Path, timestamper=None, market: str = "IDX") -> tuple[list[Path], list[dict]]:
     lines = ledger_lines()
     done = {r["decision_id"] for r in lines if r["type"] == "OUTCOME"}
-    pending = [r for r in lines if r["type"] == "DECISION" and r["decision_id"] not in done]
+    pending = [r for r in lines if r["type"] == "DECISION" and r["decision_id"] not in done
+               and r.get("market", "IDX") == market]
     if not pending:
         return [], []
-    df, data = load_recent(manifest)
-    m = _market(df)
+    df, data = load_recent(manifest, market)
+    m = _market(df, market)
     outcomes = [o for o in (score(r, m) for r in pending) if o is not None]
     for o in outcomes:
         o["data"] = {"manifest": data["manifest"], "manifest_sha256": data["manifest_sha256"]}

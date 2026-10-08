@@ -65,11 +65,13 @@ def main(argv=None) -> int:
     sub.add_parser("verify-runs", help="check that no past run was edited or removed")
     sub.add_parser("e1-discovery", help="experiment E1, discovery period (writes research/E1/discovery/)")
     p_ps = sub.add_parser("paper-scan", help="prospective paper scan of the session that last closed (no orders)")
-    p_ps.add_argument("--manifest", help="a yahoo_recent manifest (default: pull now)")
+    p_ps.add_argument("--manifest", help="a recent-bars manifest for the market (default: pull now)")
     p_ps.add_argument("--commit", action="store_true", help="commit the records and push (GitHub receipt)")
     p_sc = sub.add_parser("paper-score", help="score paper decisions whose window has ended")
-    p_sc.add_argument("--manifest", help="a yahoo_recent manifest (default: pull now)")
+    p_sc.add_argument("--manifest", help="a recent-bars manifest for the market (default: pull now)")
     p_sc.add_argument("--commit", action="store_true")
+    for p_ in (p_ps, p_sc):
+        p_.add_argument("--market", choices=("IDX", "US", "CRYPTO"), default="IDX")
     sub.add_parser("paper-verify", help="check the paper ledger's hash chain and timestamp tokens")
     for name, helptext in (("e2-discovery", "experiment E2 discovery for one market"),
                            ("e2-validation", "experiment E2 validation of a market's frozen detector")):
@@ -250,17 +252,32 @@ def main(argv=None) -> int:
         sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "kod-machine"))
         from kod.timestamp import RFC3161Timestamper
 
+        mk = args.market
         manifest = Path(args.manifest) if args.manifest else None
+        extra = []
         if manifest is None:
-            from .sources import yahoo
+            from datetime import date, timedelta
 
-            manifest = yahoo.fetch(paper.active_tickers(), days=paper.HISTORY_DAYS, prefix="yahoo_recent")
+            from .provenance import MANIFESTS
+            from .sources import binance, us_universe, yahoo
+
+            if mk == "IDX":
+                manifest = yahoo.fetch(paper.active_tickers(), days=paper.HISTORY_DAYS, prefix="yahoo_recent")
+            elif mk == "US":
+                tickers, universe = us_universe.fetch()
+                extra.append(MANIFESTS / universe)
+                manifest = yahoo.fetch(tickers, days=paper.HISTORY_DAYS, prefix="yahoo_us_recent", suffix="",
+                                       sleep=0.1, workers=6)
+            else:
+                start = (date.today() - timedelta(days=paper.HISTORY_DAYS)).isoformat()
+                manifest = binance.fetch(start=start, only_trading=True, prefix="binance_recent")
         stamper = RFC3161Timestamper()
         trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "")
         if args.cmd == "paper-scan":
-            out = paper.scan(manifest, validation=paper.validation_evidence())
-            if paper.already_scanned(out["scan"]["session"]):
-                print(f"session {out['scan']['session']} is already scanned (no new IDX session since: holiday or "
+            out = paper.scan(manifest, validation=paper.validation_evidence(mk), market=mk,
+                             quotes=paper.binance_quotes if mk == "CRYPTO" else None)
+            if paper.already_scanned(out["scan"]["session"], mk):
+                print(f"{mk} session {out['scan']['session']} is already scanned (no new session since: holiday or "
                       f"data not yet updated); nothing recorded")
                 return 0
             written = paper.record_scan(out, stamper)
@@ -269,11 +286,11 @@ def main(argv=None) -> int:
                 print(f"  #{dcs['rank']} {dcs['instrument']['ticker']}: {dcs['decision']} ({dcs['reason']})")
             message = f"paper scan {out['scan']['scan_id']}: {out['scan']['result']}"
         else:
-            written, outcomes = paper.score_pending(manifest, stamper)
+            written, outcomes = paper.score_pending(manifest, stamper, market=mk)
             print(f"scored {len(outcomes)} decision(s)")
             message = f"paper score: {len(outcomes)} outcome(s)"
         if args.commit and written:
-            print(paper.commit_and_push([*written, manifest], message, trailer))
+            print(paper.commit_and_push([*written, manifest, *extra], message, trailer))
     elif args.cmd == "paper-verify":
         from . import paper
 
