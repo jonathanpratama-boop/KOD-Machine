@@ -1,0 +1,30 @@
+{
+  "archive_time": null,
+  "archive_url": null,
+  "archived_copy": "kod-machine/registry/evidence-v2/bfe7fec8d325a8db4f5189df46a059599651c310666623b789c9f2d7ea7ca816.html",
+  "as_of_cutoff": "2025-03-10T16:00:00Z",
+  "content_sha256": "bfe7fec8d325a8db4f5189df46a059599651c310666623b789c9f2d7ea7ca816",
+  "content_timestamps": [],
+  "content_verified": false,
+  "corroborated_by": [],
+  "document_type": "company announcement (inside information)",
+  "event_time": null,
+  "evidence_grade": "B",
+  "evidence_hash_version": "KOD-EVIDENCE-v2",
+  "evidence_id": "06443856499f20047f69f38c2a15df32964f69a26add06035cb96dad33fe03ba",
+  "existence_verified": true,
+  "grade_ceiling": "B",
+  "provenance": "retrieved from the exchange's announcement viewer; bytes in research/ZEALAND_PILOT_v1/02_evidence/raw",
+  "publication_time": "2025-03-10T10:23:57Z",
+  "publication_time_basis": "releaseTime of the Nasdaq Nordic company-announcement system (api.news.eu.nasdaq.com, pinned in 01_protocol/pin), read as UTC+1",
+  "publisher": "Novo Nordisk A/S via Nasdaq Copenhagen",
+  "retrieval_time": "2026-10-08T12:31:18Z",
+  "source_type": "PRIMARY",
+  "source_url": "https://view.news.eu.nasdaq.com/view?id=bc5db2115165a1c537054fb2c9cdc3292&lang=en&src=listed",
+  "title": "Novo Nordisk: CagriSema REDEFINE 2",
+  "verification_method": {
+    "content": "NONE",
+    "existence": "PRIMARY_SOURCE_TIMESTAMP"
+  },
+  "verification_notes": "Existence: the exchange system's own release time. Content: not verified; no archive capture dated by the cutoff could be checked (Internet Archive rate-limited from this environment). Released 2025-03-10 11:23:57 CET: 15.7% weight loss at 68 weeks if adherent (13.7% treatment policy) vs 3.1%/3.4% placebo. Amylin-class context the session before the cutoff."
+}
