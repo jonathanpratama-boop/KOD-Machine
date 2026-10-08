@@ -1,0 +1,30 @@
+{
+  "archive_time": null,
+  "archive_url": null,
+  "archived_copy": "kod-machine/registry/evidence-v2/aae439bb4216c21f875bf7f2f07a1a938d428dec918170a7f95f7a4af7ca206f.html",
+  "as_of_cutoff": "2025-03-12T06:00:00Z",
+  "content_sha256": "aae439bb4216c21f875bf7f2f07a1a938d428dec918170a7f95f7a4af7ca206f",
+  "content_timestamps": [],
+  "content_verified": false,
+  "corroborated_by": [],
+  "document_type": "company announcement (inside information)",
+  "event_time": "2025-03-12T06:00:00Z",
+  "evidence_grade": "B",
+  "evidence_hash_version": "KOD-EVIDENCE-v2",
+  "evidence_id": "49f873c048b22d4d3c5d0e71e3f150b65dd8cc7d60cb3b2118cdc86d1a540cbd",
+  "existence_verified": true,
+  "grade_ceiling": "B",
+  "provenance": "retrieved from the exchange's announcement viewer; bytes in research/ZEALAND_PILOT_v1/02_evidence/raw",
+  "publication_time": "2025-03-12T06:00:00Z",
+  "publication_time_basis": "releaseTime of the Nasdaq Nordic company-announcement system (api.news.eu.nasdaq.com, pinned in 01_protocol/pin), read as UTC+1",
+  "publisher": "Zealand Pharma A/S via Nasdaq Copenhagen",
+  "retrieval_time": "2026-10-08T12:29:24Z",
+  "source_type": "PRIMARY",
+  "source_url": "https://view.news.eu.nasdaq.com/view?id=bd544cad5c461f81b38c38cafea0b8860&lang=en&src=listed",
+  "title": "Zealand Pharma and Roche enter collaboration and license agreement for petrelintide",
+  "verification_method": {
+    "content": "NONE",
+    "existence": "PRIMARY_SOURCE_TIMESTAMP"
+  },
+  "verification_notes": "Existence: the exchange system's own release time. Content: not verified; no archive capture dated by the cutoff could be checked (Internet Archive rate-limited from this environment). The event. Upfront USD 1.65bn (1.4bn at closing), total up to USD 5.3bn, 50/50 US/EU profit share; closing expected Q2 2025. Published after the decision cutoff; never cited in an information set."
+}
