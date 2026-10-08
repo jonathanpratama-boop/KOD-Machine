@@ -1,0 +1,36 @@
+{
+  "accepted_statuses": [
+    "VERIFIED",
+    "RATIO_CONFIRMED"
+  ],
+  "built_at": "2026-10-08T09:44:40Z",
+  "effective_after": "2023-01-03",
+  "events_in_scope": 1594,
+  "first_pass": {
+    "after_days": 5,
+    "before_days": 45,
+    "max_docs": 6
+  },
+  "provider_events_outside_scope": 660,
+  "raw_manifest": "yahoo_us-20261008T001812Z.jsonl",
+  "raw_manifest_sha256": "01ca82808463f964c06db680803581546d34d85105ed21e27377c3da686e951c",
+  "schedule": "data/corporate_actions/us_splits-20261008T093909Z.csv",
+  "schedule_sha256": "5973c02d00d34c1bf3016a841aa7fb39a6e23378c595f74b8d13f50d27ef20b0",
+  "sec_manifest": "sec_split_evidence-20261008T093909Z.jsonl",
+  "second_pass": {
+    "after_days": 10,
+    "before_days": 150,
+    "max_docs": 10,
+    "recheck_of": "us_splits-20261008T091955Z.json"
+  },
+  "status_counts": {
+    "MENTION_ONLY": 117,
+    "NOT_A_SPLIT": 136,
+    "NO_CIK": 1,
+    "NO_EVIDENCE": 27,
+    "RATIO_CONFIRMED": 92,
+    "VERIFIED": 1221
+  },
+  "universe_end": "2023-12-29",
+  "version": "us-actions-v1"
+}
