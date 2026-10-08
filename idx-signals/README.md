@@ -282,3 +282,13 @@ edited:
   .githooks`) and over the whole history in CI (`.github/workflows/checks.yml`).
 
 A correction is a new run with a new id. The old one stays.
+
+### Split-verification correction (8 October 2026)
+
+The [v2 audit and reruns](research/E2/repair_v2/REVIEW.md) supersede the v1 split-evidence
+approvals above. Of 1,313 previously accepted records, 239 meet the stricter event-and-date
+rule; 1,074 are unverified, which does not establish that the splits were false. The panel
+is byte-identical, but 891 names are now excluded. Model A returns -2.23% versus -0.27%
+matched random (516 scored trades); model B returns -1.69% versus -0.30% (438 trades).
+Both remain negative on this smaller population. IDX event dates now use Jakarta time,
+and prospective scoring uses paper-score-v3. See the report for evidence and coverage limits.

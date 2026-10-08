@@ -1,0 +1,40 @@
+{
+  "built_at": "2026-10-08T11:27:41Z",
+  "evidence_scope": "all previously cited filings; no new SEC search",
+  "jump_rows": 415,
+  "jump_threshold": 1.9,
+  "quarantine_statuses": [
+    "MISSING_PROVIDER_SPLIT",
+    "PROVIDER_DATE_MISMATCH",
+    "JUMP_ON_RECORD_SESSION",
+    "NO_CIK"
+  ],
+  "quarantine_tickers": [
+    "APRE",
+    "BDRX",
+    "CENN",
+    "RETO",
+    "VIVO",
+    "XHG",
+    "XRTX"
+  ],
+  "raw_manifest": "yahoo_us-20261008T001812Z.jsonl",
+  "raw_manifest_sha256": "01ca82808463f964c06db680803581546d34d85105ed21e27377c3da686e951c",
+  "rejudged_from": {
+    "manifest": "us_splits-coverage-20261008T094836Z.json",
+    "sha256": "984864e29c6fc641ba8bf64b94143fec79be2d6d5d1192b8f1063ce334bb990e"
+  },
+  "rows": "data/corporate_actions/us_splits-coverage-reaudit-20261008T112522Z.csv",
+  "rows_sha256": "c1109ce5ef82db38d694d3707f1227e2fdd45ccd632e2efe6905b245c4ed6d57",
+  "sec_manifest": "sec_split_coverage-20261008T094836Z.jsonl",
+  "status_counts": {
+    "JUMP_ON_RECORD_SESSION": 7,
+    "NO_SPLIT_EVIDENCE": 399,
+    "SPLIT_FILING_NEARBY": 9
+  },
+  "version": "us-actions-v2",
+  "window": [
+    "2023-01-03",
+    "2023-12-29"
+  ]
+}

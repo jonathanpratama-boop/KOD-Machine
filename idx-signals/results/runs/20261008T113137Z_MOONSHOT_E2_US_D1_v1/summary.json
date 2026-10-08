@@ -1,0 +1,397 @@
+{
+  "by_year": [
+    {
+      "attempts": 612,
+      "avg_net_return": -0.02226404668039876,
+      "hit_rate": 0.41472868217054265,
+      "random_avg_net_return": 0.0016823411853271971,
+      "random_hit_rate": 0.4867651797633844,
+      "random_matched_avg_net_return": -0.0026842133218015793,
+      "random_matched_hit_rate": 0.4493112770339856,
+      "scored": 516,
+      "year": 2023
+    }
+  ],
+  "code": {
+    "commit": "d97cc1db0d884b07ebb58a37f118a0dc93daca80",
+    "dirty": false
+  },
+  "config": {
+    "ca_mode": "adjusted",
+    "controls_version": "v2",
+    "data_end_exit": "last_close",
+    "end": "2023-12-31",
+    "entry_lag": 1,
+    "fee_buy": 0.0,
+    "fee_sell": 2.78e-05,
+    "fill_model": "A",
+    "holding_days": 5,
+    "lookahead_cuts": null,
+    "market": "US",
+    "max_participation": 0.1,
+    "notional": 5000.0,
+    "overlap": "skip",
+    "quarantine": "unit_schedule",
+    "random_draws": 200,
+    "rule_id": "MOONSHOT_E2_US_D1",
+    "seed": 20261007,
+    "start": "2023-01-01",
+    "units": "as_traded"
+  },
+  "corporate_action_model": {
+    "mode": "adjusted"
+  },
+  "created_at": "2026-10-08T11:31:37Z",
+  "data_quality": {
+    "known_limitations": [
+      "survivor-only: the universe is the Nasdaq Trader listing snapshot of 2026-10-08; names delisted earlier are absent",
+      "prices are split-adjusted by the source, not dividend-adjusted; unit_factor restores as-traded levels from the provider's split records (convention checked against FMP and SEC: research/E2/repair)",
+      "daily bars only: no intraday path, no halts (US LULD) or order-book depth",
+      "costs are assumed per price tier (profiles.py), not measured spreads"
+    ],
+    "lowest_tier": "US_SURVIVOR",
+    "panel_format": "panel-global-v2-units",
+    "sessions_by_tier": {
+      "US_SURVIVOR": 250
+    },
+    "tiers": [
+      {
+        "corporate_actions": "split-adjusted by the source; as-traded units via unit_factor",
+        "from": "2020-01-02",
+        "source": "yahoo",
+        "survivorship": "survivor-only: the universe is the Nasdaq Trader listing snapshot of 2026-10-08; names delisted earlier are absent",
+        "tier": "US_SURVIVOR",
+        "to": "2023-12-29"
+      }
+    ]
+  },
+  "execution": {
+    "auto_rejection": "none (no daily price limits)",
+    "corporate_actions": "source prices are split-adjusted; no reference resets are expected or scaled",
+    "cost_tiers": [
+      [
+        1,
+        0.015
+      ],
+      [
+        5,
+        0.005
+      ],
+      [
+        20,
+        0.0015
+      ],
+      [
+        Infinity,
+        0.0005
+      ]
+    ],
+    "fees": {
+      "buy": 0.0,
+      "sell": 2.78e-05
+    },
+    "lot_size": 1,
+    "price": "signal at close of s, entry at the open of s + entry_lag, exit at a close"
+  },
+  "harness": {
+    "ca_mode": "adjusted",
+    "controls": "v2",
+    "rule_view_fields": [
+      "close",
+      "prev",
+      "high",
+      "low",
+      "volume",
+      "value",
+      "present",
+      "tradeable",
+      "lock_up",
+      "lock_down",
+      "listed_shares",
+      "open"
+    ],
+    "signals": "prefix-first-v1"
+  },
+  "lookahead_check": {
+    "full_window_mismatches": 0,
+    "mode": "prefix-first-v1",
+    "prefix_calls": 250,
+    "sandbox": "file, network, process, frame and heap access blocked during compute",
+    "sessions": 250,
+    "source_audit": "passed"
+  },
+  "market": {
+    "cost_assumption": "costs assumed: per side 1.5% under $1, 0.5% $1-5, 0.15% $5-20, 0.05% above, plus the SEC fee on sales",
+    "currency": "USD",
+    "entry": "open",
+    "lot_size": 1,
+    "price_limits": false,
+    "profile": "US",
+    "venue": "US exchanges (Nasdaq / NYSE / NYSE American / Cboe)"
+  },
+  "panel": {
+    "manifest_sha256": "f24571641f1a2561bb88062cb32332d71323f4c499fde544d43a2a97a0f0232c",
+    "panel": "data/panel/panel_us_repair-20261008T112818Z.csv.gz",
+    "panel_sha256": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b",
+    "source_boundary": "2023-12-29"
+  },
+  "random": {
+    "avg_net_return": {
+      "difference": -0.023943299544349362,
+      "observed": -0.02226404668039876,
+      "p_value_one_sided": 1.0,
+      "percentile_of_observed": 0.0,
+      "random_mean": 0.0016792528639506016,
+      "random_p2_5": -0.00525477484066864,
+      "random_p50": 0.0011448402491794861,
+      "random_p97_5": 0.010962010429559374
+    },
+    "draws": 200,
+    "hit_rate": {
+      "difference": -0.07203968121733473,
+      "observed": 0.41472868217054265,
+      "p_value_one_sided": 1.0,
+      "percentile_of_observed": 0.0,
+      "random_mean": 0.4867683633878774,
+      "random_p2_5": 0.44657401235464156,
+      "random_p50": 0.48811684296719643,
+      "random_p97_5": 0.520902870326344
+    },
+    "method": "same session, uniform over names where the rule was evaluable, same execution",
+    "pooled": {
+      "attempts": 122400,
+      "avg_net_return": 0.0016823411853271971,
+      "fill_rate": 0.9197630718954248,
+      "filled": 112579,
+      "hit_rate": 0.4867651797633844,
+      "median_net_return": -0.0013461486908674658,
+      "scored": 108615,
+      "status_counts": {
+        "EXITED": 108615,
+        "INCOMPLETE": 3964,
+        "SKIP_LIQUIDITY": 8767,
+        "SKIP_LOT": 24,
+        "SKIP_NOT_TRADED": 630,
+        "SKIP_NO_ENTRY_SESSION": 400
+      },
+      "std_net_return": 0.1137663633974344
+    }
+  },
+  "random_matched": {
+    "avg_net_return": {
+      "difference": -0.019581297572269053,
+      "observed": -0.02226404668039876,
+      "p_value_one_sided": 1.0,
+      "percentile_of_observed": 0.0,
+      "random_mean": -0.002682749108129708,
+      "random_p2_5": -0.014048530527635545,
+      "random_p50": -0.003233486728442086,
+      "random_p97_5": 0.010926813594249154
+    },
+    "controls": {
+      "features": {
+        "drawdown": {
+          "availability": "every tier",
+          "description": "tercile of close / 60-session high close - 1",
+          "known_share": 0.9624183006535948,
+          "matched_share": 0.8186274509803921,
+          "priority": 6
+        },
+        "liquidity": {
+          "availability": "every tier",
+          "description": "quintile of 20-session median traded value",
+          "known_share": 0.9787581699346405,
+          "matched_share": 0.9836601307189542,
+          "priority": 2
+        },
+        "listing_age": {
+          "availability": "every tier",
+          "description": "sessions since first panel session: <60 / <250 / older or censored at the panel start",
+          "known_share": 1.0,
+          "matched_share": 0.7581699346405228,
+          "priority": 7
+        },
+        "market_cap": {
+          "availability": "TIER_1, TIER_2 (no share counts after the mirror ends)",
+          "description": "quintile of close x IDX listed shares",
+          "known_share": 0.0,
+          "matched_share": 0.9836601307189542,
+          "priority": 3
+        },
+        "momentum": {
+          "availability": "every tier",
+          "description": "tercile of 20-session cumulative log return",
+          "known_share": 0.9787581699346405,
+          "matched_share": 0.9575163398692811,
+          "priority": 5
+        },
+        "price_band": {
+          "availability": "every tier",
+          "description": "close in <$1 / $1-5 / $5-20 / >$20",
+          "known_share": 1.0,
+          "matched_share": 1.0,
+          "priority": 1
+        },
+        "volatility": {
+          "availability": "every tier",
+          "description": "tercile of 20-session std of daily log returns",
+          "known_share": 0.9787581699346405,
+          "matched_share": 0.9836601307189542,
+          "priority": 4
+        }
+      },
+      "full_match_share": 0.7581699346405228,
+      "min_pool": 5,
+      "not_available": {
+        "board": "listing board known only as of the 2025-02 snapshot; not point-in-time, so not used",
+        "free_float": "IDX tradeble_shares equals listed_shares for most names; it is not free float, so not used",
+        "sector": "only a 2025-02 snapshot (List Emiten/Sectors); not point-in-time, so not used"
+      },
+      "version": "v2"
+    },
+    "draws": 200,
+    "hit_rate": {
+      "difference": -0.03459201809949275,
+      "observed": 0.41472868217054265,
+      "p_value_one_sided": 0.9701492537313433,
+      "percentile_of_observed": 3.0,
+      "random_mean": 0.4493207002700354,
+      "random_p2_5": 0.41414091865712105,
+      "random_p50": 0.45042872080864416,
+      "random_p97_5": 0.48515263644773354
+    },
+    "match_level_used": {
+      "price_band": 10,
+      "price_band+liquidity+market_cap+volatility": 16,
+      "price_band+liquidity+market_cap+volatility+momentum": 85,
+      "price_band+liquidity+market_cap+volatility+momentum+drawdown": 37,
+      "price_band+liquidity+market_cap+volatility+momentum+drawdown+listing_age": 464
+    },
+    "method": "same session, same price_band / liquidity / market_cap / volatility / momentum / drawdown / listing_age buckets as the signalled name (relaxed from the last feature when fewer than 5 names match), same execution",
+    "pooled": {
+      "attempts": 122400,
+      "avg_net_return": -0.0026842133218015793,
+      "fill_rate": 0.7915767973856209,
+      "filled": 96889,
+      "hit_rate": 0.4493112770339856,
+      "median_net_return": -0.011924835210898377,
+      "scored": 93216,
+      "status_counts": {
+        "EXITED": 93216,
+        "INCOMPLETE": 3673,
+        "SKIP_LIQUIDITY": 24590,
+        "SKIP_LOT": 1,
+        "SKIP_NOT_TRADED": 520,
+        "SKIP_NO_ENTRY_SESSION": 400
+      },
+      "std_net_return": 0.1507771741124497
+    }
+  },
+  "repair": {
+    "fill_model": {
+      "model": "A",
+      "note": "A (original): entry needs the entry session to have traded and shares <= 10% of that session's FINAL volume, both known only after the close: an ex-post capacity filter, not proof of an opening fill"
+    },
+    "preprocessing": "causal-close-v2",
+    "qa_sensitivity": {
+      "flag": "qa_reverting_spike (a close > 3x the prior close reverting below a third the next session, or the mirror; known one session later, never a decision input)",
+      "flagged_cells_in_window": 9,
+      "random": {
+        "avg_net_return": 0.0016823411853271971,
+        "hit_rate": 0.4867651797633844,
+        "scored": 108615,
+        "trades_touching_flag": 0
+      },
+      "random_matched": {
+        "avg_net_return": -0.0026842133218015793,
+        "hit_rate": 0.4493112770339856,
+        "scored": 93216,
+        "trades_touching_flag": 0
+      },
+      "rule": {
+        "avg_net_return": -0.02226404668039876,
+        "hit_rate": 0.41472868217054265,
+        "scored": 516,
+        "trades_touching_flag": 0
+      }
+    },
+    "quarantine": {
+      "mode": "unit_schedule",
+      "reasons": {
+        "JUMP_ON_RECORD_SESSION": 7,
+        "MENTION_ONLY": 550,
+        "NOT_A_SPLIT": 100,
+        "NO_CIK": 1,
+        "NO_EVIDENCE": 27,
+        "RATIO_CONFIRMED": 314
+      },
+      "tickers_excluded": 891
+    },
+    "units": {
+      "mode": "as_traded",
+      "note": "returns from split-adjusted prices; sizing, cost tiers (entry and exit, each at its own session) and the price band at the price as traded that session",
+      "schedule": {
+        "accepted_statuses": [
+          "VERIFIED"
+        ],
+        "effective_after": "2023-01-03",
+        "manifest": "us_splits-reaudit-20261008T112522Z.json",
+        "status_counts": {
+          "MENTION_ONLY": 780,
+          "NOT_A_SPLIT": 136,
+          "NO_CIK": 1,
+          "NO_EVIDENCE": 27,
+          "RATIO_CONFIRMED": 411,
+          "VERIFIED": 239
+        },
+        "version": "us-actions-v2"
+      }
+    }
+  },
+  "rule": {
+    "holding_days": 5,
+    "kind": "DETECTOR",
+    "rule_id": "MOONSHOT_E2_US_D1",
+    "sha256": "c21126d8ba9db77b06c186401220850b36c4e1b539d77d4f9da4dcc571e6753f",
+    "text": "Experiment E2 detector: the single rule from FAMILY selected on the market's discovery period defined in research/E2/protocol.json, by the rule pre-registered there. Signal at the close of session d when that rule holds; hold 5 sessions. Market: US. Selected: G2_RET30.",
+    "version": "v1"
+  },
+  "rule_trades": {
+    "attempts": 612,
+    "avg_net_return": -0.02226404668039876,
+    "fill_rate": 0.8709150326797386,
+    "filled": 533,
+    "hit_rate": 0.41472868217054265,
+    "median_net_return": -0.042651116274471546,
+    "scored": 516,
+    "status_counts": {
+      "EXITED": 516,
+      "INCOMPLETE": 17,
+      "SKIP_LIQUIDITY": 59,
+      "SKIP_NOT_TRADED": 18,
+      "SKIP_NO_ENTRY_SESSION": 2
+    },
+    "std_net_return": 0.30126578799056136
+  },
+  "run_id": "20261008T113137Z_MOONSHOT_E2_US_D1_v1",
+  "signals": {
+    "attempted": 612,
+    "signal_rate": 0.000701818562946857,
+    "skipped_overlap": 71,
+    "tickers_with_signals": 409,
+    "total": 683
+  },
+  "universe": {
+    "evaluable_ticker_sessions": 973186,
+    "first_session": "2023-01-03",
+    "last_session": "2023-12-29",
+    "sessions": 250,
+    "tickers_ending_inside_window": 0,
+    "tickers_ever_evaluable": 3987,
+    "tickers_in_window": 4878
+  },
+  "warnings": [
+    "US: survivor-only: the universe is the Nasdaq Trader listing snapshot of 2026-10-08; names delisted earlier are absent",
+    "costs assumed: per side 1.5% under $1, 0.5% $1-5, 0.15% $5-20, 0.05% above, plus the SEC fee on sales"
+  ]
+}

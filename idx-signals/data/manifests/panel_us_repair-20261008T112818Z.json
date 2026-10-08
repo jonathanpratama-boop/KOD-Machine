@@ -1,0 +1,2873 @@
+{
+  "built_at": "2026-10-08T11:29:35Z",
+  "default_start": "2020-05-01",
+  "first_session": "2020-01-02",
+  "format": "panel-global-v2-units",
+  "inputs": {
+    "us_splits-reaudit-20261008T112522Z.json": {
+      "path": "data/corporate_actions/us_splits-reaudit-20261008T112522Z.json",
+      "sha256": "3b38829abbf44a8b5a585528b7d84ceeb41f196d276a95d3759a2bc3342e66c7"
+    },
+    "yahoo_us-20261008T001812Z.jsonl": {
+      "path": "data/manifests/yahoo_us-20261008T001812Z.jsonl",
+      "sha256": "01ca82808463f964c06db680803581546d34d85105ed21e27377c3da686e951c"
+    }
+  },
+  "known_limitations": [
+    "survivor-only: the universe is the Nasdaq Trader listing snapshot of 2026-10-08; names delisted earlier are absent",
+    "prices are split-adjusted by the source, not dividend-adjusted; unit_factor restores as-traded levels from the provider's split records (convention checked against FMP and SEC: research/E2/repair)",
+    "daily bars only: no intraday path, no halts (US LULD) or order-book depth",
+    "costs are assumed per price tier (profiles.py), not measured spreads"
+  ],
+  "last_session": "2023-12-29",
+  "market": "US",
+  "panel": "data/panel/panel_us_repair-20261008T112818Z.csv.gz",
+  "preprocessing": "causal-close-v2",
+  "qa": {
+    "non_session_dates_count": 0,
+    "note": "counts only: no price examples are written to this manifest",
+    "preprocessing_version": "causal-close-v2",
+    "qa_reverting_spike_rows": 23,
+    "spike_rows_dropped": 0
+  },
+  "quality_tiers": [
+    {
+      "corporate_actions": "split-adjusted by the source; as-traded units via unit_factor",
+      "from": "2020-01-02",
+      "source": "yahoo",
+      "survivorship": "survivor-only: the universe is the Nasdaq Trader listing snapshot of 2026-10-08; names delisted earlier are absent",
+      "tier": "US_SURVIVOR",
+      "to": "2023-12-29"
+    }
+  ],
+  "read_through": "2023-12-29",
+  "rows": 4443730,
+  "sessions": 1006,
+  "sha256": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b",
+  "source_boundary": "2023-12-29",
+  "survivorship": "survivor-only: the universe is the Nasdaq Trader listing snapshot of 2026-10-08; names delisted earlier are absent",
+  "tickers": 4878,
+  "unit_coverage": {
+    "jump_threshold": 1.9,
+    "manifest": "us_splits-coverage-reaudit-20261008T112522Z.json",
+    "status_counts": {
+      "JUMP_ON_RECORD_SESSION": 7,
+      "NO_SPLIT_EVIDENCE": 399,
+      "SPLIT_FILING_NEARBY": 9
+    },
+    "window": [
+      "2023-01-03",
+      "2023-12-29"
+    ]
+  },
+  "unit_quarantine": {
+    "reason_counts": {
+      "JUMP_ON_RECORD_SESSION": 7,
+      "MENTION_ONLY": 550,
+      "NOT_A_SPLIT": 100,
+      "NO_CIK": 1,
+      "NO_EVIDENCE": 27,
+      "RATIO_CONFIRMED": 314
+    },
+    "rule": "a name with any provider split record effective after 2023-01-03 that SEC filings do not corroborate (status not in ['VERIFIED']), or a jump inside the window that SEC filings tie to a split the provider did not record (statuses ['MISSING_PROVIDER_SPLIT', 'PROVIDER_DATE_MISMATCH', 'JUMP_ON_RECORD_SESSION', 'NO_CIK'])",
+    "tickers": {
+      "AAON": [
+        "MENTION_ONLY"
+      ],
+      "ABTC": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "ABVC": [
+        "MENTION_ONLY"
+      ],
+      "ACB": [
+        "MENTION_ONLY"
+      ],
+      "ACET": [
+        "RATIO_CONFIRMED"
+      ],
+      "ACFN": [
+        "MENTION_ONLY"
+      ],
+      "ACON": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "ACXP": [
+        "MENTION_ONLY"
+      ],
+      "ADAM": [
+        "MENTION_ONLY"
+      ],
+      "ADIL": [
+        "RATIO_CONFIRMED"
+      ],
+      "ADV": [
+        "RATIO_CONFIRMED"
+      ],
+      "ADXN": [
+        "MENTION_ONLY"
+      ],
+      "AEC": [
+        "MENTION_ONLY"
+      ],
+      "AEHL": [
+        "MENTION_ONLY"
+      ],
+      "AEMD": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "AEON": [
+        "MENTION_ONLY"
+      ],
+      "AERT": [
+        "MENTION_ONLY"
+      ],
+      "AEVA": [
+        "RATIO_CONFIRMED"
+      ],
+      "AFCG": [
+        "NOT_A_SPLIT"
+      ],
+      "AGEN": [
+        "MENTION_ONLY",
+        "NOT_A_SPLIT"
+      ],
+      "AGIG": [
+        "MENTION_ONLY"
+      ],
+      "AGL": [
+        "RATIO_CONFIRMED"
+      ],
+      "AGMH": [
+        "MENTION_ONLY"
+      ],
+      "AGPU": [
+        "RATIO_CONFIRMED"
+      ],
+      "AHT": [
+        "RATIO_CONFIRMED"
+      ],
+      "AIFA": [
+        "RATIO_CONFIRMED"
+      ],
+      "AIFF": [
+        "MENTION_ONLY"
+      ],
+      "AIFU": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "AIIO": [
+        "RATIO_CONFIRMED"
+      ],
+      "AIM": [
+        "MENTION_ONLY",
+        "NOT_A_SPLIT"
+      ],
+      "AIMD": [
+        "MENTION_ONLY"
+      ],
+      "AIOS": [
+        "MENTION_ONLY"
+      ],
+      "AIXI": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "AKA": [
+        "MENTION_ONLY"
+      ],
+      "AKAN": [
+        "NOT_A_SPLIT",
+        "RATIO_CONFIRMED"
+      ],
+      "AKTX": [
+        "MENTION_ONLY"
+      ],
+      "ALGS": [
+        "RATIO_CONFIRMED"
+      ],
+      "ALIT": [
+        "MENTION_ONLY"
+      ],
+      "ALLR": [
+        "RATIO_CONFIRMED"
+      ],
+      "ALM": [
+        "MENTION_ONLY"
+      ],
+      "ALOY": [
+        "MENTION_ONLY"
+      ],
+      "ALP": [
+        "MENTION_ONLY"
+      ],
+      "ALZN": [
+        "RATIO_CONFIRMED"
+      ],
+      "AMBO": [
+        "MENTION_ONLY"
+      ],
+      "AMC": [
+        "RATIO_CONFIRMED"
+      ],
+      "AMCR": [
+        "MENTION_ONLY"
+      ],
+      "AMOD": [
+        "MENTION_ONLY"
+      ],
+      "AMRN": [
+        "MENTION_ONLY"
+      ],
+      "AMST": [
+        "MENTION_ONLY"
+      ],
+      "AMTD": [
+        "RATIO_CONFIRMED"
+      ],
+      "AMWL": [
+        "RATIO_CONFIRMED"
+      ],
+      "ANAB": [
+        "MENTION_ONLY"
+      ],
+      "ANET": [
+        "MENTION_ONLY"
+      ],
+      "ANGH": [
+        "RATIO_CONFIRMED"
+      ],
+      "ANGI": [
+        "RATIO_CONFIRMED"
+      ],
+      "APG": [
+        "RATIO_CONFIRMED"
+      ],
+      "APH": [
+        "RATIO_CONFIRMED"
+      ],
+      "APLM": [
+        "MENTION_ONLY"
+      ],
+      "APRE": [
+        "JUMP_ON_RECORD_SESSION",
+        "RATIO_CONFIRMED"
+      ],
+      "APVO": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "AQB": [
+        "RATIO_CONFIRMED"
+      ],
+      "AQMS": [
+        "MENTION_ONLY"
+      ],
+      "ARBB": [
+        "MENTION_ONLY"
+      ],
+      "ARBK": [
+        "MENTION_ONLY"
+      ],
+      "ARMK": [
+        "NOT_A_SPLIT"
+      ],
+      "ARQQ": [
+        "MENTION_ONLY"
+      ],
+      "ARR": [
+        "RATIO_CONFIRMED"
+      ],
+      "ARTL": [
+        "MENTION_ONLY"
+      ],
+      "ASBP": [
+        "MENTION_ONLY"
+      ],
+      "ASMB": [
+        "RATIO_CONFIRMED"
+      ],
+      "ASPS": [
+        "MENTION_ONLY"
+      ],
+      "ASST": [
+        "MENTION_ONLY"
+      ],
+      "ASTI": [
+        "RATIO_CONFIRMED"
+      ],
+      "ATCH": [
+        "MENTION_ONLY"
+      ],
+      "ATER": [
+        "MENTION_ONLY"
+      ],
+      "ATHE": [
+        "MENTION_ONLY"
+      ],
+      "ATOS": [
+        "MENTION_ONLY"
+      ],
+      "ATPC": [
+        "MENTION_ONLY"
+      ],
+      "ATRA": [
+        "MENTION_ONLY"
+      ],
+      "ATRO": [
+        "NOT_A_SPLIT"
+      ],
+      "ATXG": [
+        "MENTION_ONLY"
+      ],
+      "AUC": [
+        "MENTION_ONLY"
+      ],
+      "AUID": [
+        "MENTION_ONLY"
+      ],
+      "AURE": [
+        "MENTION_ONLY"
+      ],
+      "AUUD": [
+        "MENTION_ONLY",
+        "NOT_A_SPLIT",
+        "RATIO_CONFIRMED"
+      ],
+      "AVGO": [
+        "MENTION_ONLY"
+      ],
+      "AVTX": [
+        "RATIO_CONFIRMED"
+      ],
+      "AVX": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "AWP": [
+        "NO_EVIDENCE"
+      ],
+      "AZ": [
+        "MENTION_ONLY"
+      ],
+      "AZIO": [
+        "MENTION_ONLY"
+      ],
+      "AZN": [
+        "MENTION_ONLY"
+      ],
+      "AZTR": [
+        "MENTION_ONLY"
+      ],
+      "BANL": [
+        "MENTION_ONLY"
+      ],
+      "BAOS": [
+        "MENTION_ONLY"
+      ],
+      "BBGI": [
+        "MENTION_ONLY"
+      ],
+      "BBLG": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "BBSI": [
+        "MENTION_ONLY"
+      ],
+      "BCHT": [
+        "RATIO_CONFIRMED"
+      ],
+      "BCTX": [
+        "MENTION_ONLY"
+      ],
+      "BDRX": [
+        "JUMP_ON_RECORD_SESSION",
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "BDX": [
+        "NOT_A_SPLIT"
+      ],
+      "BENF": [
+        "MENTION_ONLY"
+      ],
+      "BESS": [
+        "MENTION_ONLY"
+      ],
+      "BETR": [
+        "MENTION_ONLY"
+      ],
+      "BFRI": [
+        "RATIO_CONFIRMED"
+      ],
+      "BGDE": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "BGLC": [
+        "MENTION_ONLY"
+      ],
+      "BGM": [
+        "MENTION_ONLY"
+      ],
+      "BGMS": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "BIAF": [
+        "MENTION_ONLY"
+      ],
+      "BIRD": [
+        "MENTION_ONLY"
+      ],
+      "BIT": [
+        "NOT_A_SPLIT"
+      ],
+      "BJDX": [
+        "MENTION_ONLY"
+      ],
+      "BKKT": [
+        "RATIO_CONFIRMED"
+      ],
+      "BKNG": [
+        "MENTION_ONLY"
+      ],
+      "BKSY": [
+        "RATIO_CONFIRMED"
+      ],
+      "BKT": [
+        "NOT_A_SPLIT"
+      ],
+      "BKTI": [
+        "RATIO_CONFIRMED"
+      ],
+      "BKYI": [
+        "RATIO_CONFIRMED"
+      ],
+      "BLNE": [
+        "MENTION_ONLY"
+      ],
+      "BLRX": [
+        "MENTION_ONLY"
+      ],
+      "BMRA": [
+        "MENTION_ONLY"
+      ],
+      "BN": [
+        "MENTION_ONLY"
+      ],
+      "BNC": [
+        "MENTION_ONLY"
+      ],
+      "BNED": [
+        "RATIO_CONFIRMED"
+      ],
+      "BNGO": [
+        "MENTION_ONLY"
+      ],
+      "BNKK": [
+        "MENTION_ONLY"
+      ],
+      "BNR": [
+        "RATIO_CONFIRMED"
+      ],
+      "BNT": [
+        "RATIO_CONFIRMED"
+      ],
+      "BODI": [
+        "RATIO_CONFIRMED"
+      ],
+      "BOLT": [
+        "RATIO_CONFIRMED"
+      ],
+      "BON": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "BOXL": [
+        "RATIO_CONFIRMED"
+      ],
+      "BQ": [
+        "MENTION_ONLY"
+      ],
+      "BRCC": [
+        "RATIO_CONFIRMED"
+      ],
+      "BRNX": [
+        "MENTION_ONLY"
+      ],
+      "BRTX": [
+        "MENTION_ONLY"
+      ],
+      "BTCT": [
+        "MENTION_ONLY"
+      ],
+      "BTLN": [
+        "MENTION_ONLY"
+      ],
+      "BURU": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "BWA": [
+        "NOT_A_SPLIT"
+      ],
+      "BWAY": [
+        "MENTION_ONLY"
+      ],
+      "BYND": [
+        "MENTION_ONLY"
+      ],
+      "CALC": [
+        "MENTION_ONLY"
+      ],
+      "CANF": [
+        "MENTION_ONLY"
+      ],
+      "CANG": [
+        "MENTION_ONLY"
+      ],
+      "CATX": [
+        "RATIO_CONFIRMED"
+      ],
+      "CBIO": [
+        "MENTION_ONLY"
+      ],
+      "CBSH": [
+        "NOT_A_SPLIT"
+      ],
+      "CBUS": [
+        "RATIO_CONFIRMED"
+      ],
+      "CCM": [
+        "MENTION_ONLY"
+      ],
+      "CD": [
+        "MENTION_ONLY"
+      ],
+      "CDIO": [
+        "RATIO_CONFIRMED"
+      ],
+      "CDLX": [
+        "MENTION_ONLY"
+      ],
+      "CDT": [
+        "MENTION_ONLY"
+      ],
+      "CELH": [
+        "MENTION_ONLY"
+      ],
+      "CELU": [
+        "MENTION_ONLY"
+      ],
+      "CELZ": [
+        "RATIO_CONFIRMED"
+      ],
+      "CENN": [
+        "JUMP_ON_RECORD_SESSION",
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "CENT": [
+        "NOT_A_SPLIT"
+      ],
+      "CENTA": [
+        "NO_EVIDENCE"
+      ],
+      "CETX": [
+        "MENTION_ONLY"
+      ],
+      "CETY": [
+        "MENTION_ONLY"
+      ],
+      "CGC": [
+        "MENTION_ONLY"
+      ],
+      "CHAI": [
+        "MENTION_ONLY"
+      ],
+      "CHDN": [
+        "MENTION_ONLY"
+      ],
+      "CHGA": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "CHNR": [
+        "MENTION_ONLY"
+      ],
+      "CHPT": [
+        "MENTION_ONLY"
+      ],
+      "CHRN": [
+        "RATIO_CONFIRMED"
+      ],
+      "CHSN": [
+        "MENTION_ONLY"
+      ],
+      "CIG": [
+        "NO_EVIDENCE"
+      ],
+      "CIM": [
+        "RATIO_CONFIRMED"
+      ],
+      "CING": [
+        "MENTION_ONLY"
+      ],
+      "CIRC": [
+        "MENTION_ONLY"
+      ],
+      "CISO": [
+        "RATIO_CONFIRMED"
+      ],
+      "CISS": [
+        "MENTION_ONLY"
+      ],
+      "CLBK": [
+        "MENTION_ONLY"
+      ],
+      "CLDI": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "CLGN": [
+        "MENTION_ONLY"
+      ],
+      "CLMB": [
+        "MENTION_ONLY"
+      ],
+      "CLNN": [
+        "RATIO_CONFIRMED"
+      ],
+      "CMCSA": [
+        "NOT_A_SPLIT"
+      ],
+      "CMCT": [
+        "MENTION_ONLY",
+        "NOT_A_SPLIT"
+      ],
+      "CMG": [
+        "MENTION_ONLY"
+      ],
+      "CMMB": [
+        "MENTION_ONLY"
+      ],
+      "CMND": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "CNET": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "CNEY": [
+        "MENTION_ONLY"
+      ],
+      "CNF": [
+        "MENTION_ONLY"
+      ],
+      "CNQ": [
+        "MENTION_ONLY"
+      ],
+      "CNSP": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "CNTN": [
+        "RATIO_CONFIRMED"
+      ],
+      "CNVS": [
+        "MENTION_ONLY"
+      ],
+      "CODX": [
+        "MENTION_ONLY"
+      ],
+      "COKE": [
+        "MENTION_ONLY"
+      ],
+      "COO": [
+        "RATIO_CONFIRMED"
+      ],
+      "COOK": [
+        "MENTION_ONLY"
+      ],
+      "CPOP": [
+        "MENTION_ONLY"
+      ],
+      "CPRT": [
+        "MENTION_ONLY"
+      ],
+      "CRESY": [
+        "NOT_A_SPLIT"
+      ],
+      "CRIS": [
+        "RATIO_CONFIRMED"
+      ],
+      "CRVL": [
+        "MENTION_ONLY"
+      ],
+      "CRVO": [
+        "MENTION_ONLY"
+      ],
+      "CRWD": [
+        "RATIO_CONFIRMED"
+      ],
+      "CSPI": [
+        "MENTION_ONLY"
+      ],
+      "CTAS": [
+        "MENTION_ONLY"
+      ],
+      "CTEV": [
+        "RATIO_CONFIRMED"
+      ],
+      "CTNT": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "CTSO": [
+        "MENTION_ONLY"
+      ],
+      "CTXR": [
+        "RATIO_CONFIRMED"
+      ],
+      "CUE": [
+        "RATIO_CONFIRMED"
+      ],
+      "CVLG": [
+        "RATIO_CONFIRMED"
+      ],
+      "CVM": [
+        "RATIO_CONFIRMED"
+      ],
+      "CVNA": [
+        "MENTION_ONLY"
+      ],
+      "CXT": [
+        "NOT_A_SPLIT"
+      ],
+      "CYN": [
+        "MENTION_ONLY"
+      ],
+      "CYPH": [
+        "MENTION_ONLY"
+      ],
+      "CZFS": [
+        "NOT_A_SPLIT"
+      ],
+      "DARE": [
+        "MENTION_ONLY"
+      ],
+      "DAVE": [
+        "RATIO_CONFIRMED"
+      ],
+      "DBGI": [
+        "MENTION_ONLY"
+      ],
+      "DBVT": [
+        "MENTION_ONLY"
+      ],
+      "DCOY": [
+        "RATIO_CONFIRMED"
+      ],
+      "DCX": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "DD": [
+        "NOT_A_SPLIT",
+        "RATIO_CONFIRMED"
+      ],
+      "DDC": [
+        "MENTION_ONLY"
+      ],
+      "DEA": [
+        "MENTION_ONLY"
+      ],
+      "DECK": [
+        "MENTION_ONLY"
+      ],
+      "DFDV": [
+        "MENTION_ONLY"
+      ],
+      "DFLI": [
+        "RATIO_CONFIRMED"
+      ],
+      "DFNS": [
+        "MENTION_ONLY"
+      ],
+      "DFSC": [
+        "MENTION_ONLY"
+      ],
+      "DHR": [
+        "NOT_A_SPLIT"
+      ],
+      "DHY": [
+        "NO_EVIDENCE"
+      ],
+      "DIT": [
+        "MENTION_ONLY"
+      ],
+      "DMRA": [
+        "RATIO_CONFIRMED"
+      ],
+      "DNA": [
+        "MENTION_ONLY"
+      ],
+      "DOGZ": [
+        "MENTION_ONLY"
+      ],
+      "DOUG": [
+        "NOT_A_SPLIT"
+      ],
+      "DOYU": [
+        "MENTION_ONLY"
+      ],
+      "DPRO": [
+        "MENTION_ONLY"
+      ],
+      "DPU": [
+        "MENTION_ONLY"
+      ],
+      "DRIO": [
+        "MENTION_ONLY"
+      ],
+      "DRK": [
+        "RATIO_CONFIRMED"
+      ],
+      "DRMA": [
+        "MENTION_ONLY"
+      ],
+      "DRUG": [
+        "MENTION_ONLY"
+      ],
+      "DSGR": [
+        "MENTION_ONLY"
+      ],
+      "DSS": [
+        "MENTION_ONLY",
+        "NOT_A_SPLIT"
+      ],
+      "DSY": [
+        "MENTION_ONLY"
+      ],
+      "DTIL": [
+        "RATIO_CONFIRMED"
+      ],
+      "DTSS": [
+        "NO_EVIDENCE"
+      ],
+      "DUO": [
+        "MENTION_ONLY"
+      ],
+      "DVLT": [
+        "MENTION_ONLY"
+      ],
+      "DWTX": [
+        "MENTION_ONLY"
+      ],
+      "ECOR": [
+        "RATIO_CONFIRMED"
+      ],
+      "EDBL": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "EDSA": [
+        "MENTION_ONLY"
+      ],
+      "EDVA": [
+        "MENTION_ONLY"
+      ],
+      "EEIQ": [
+        "RATIO_CONFIRMED"
+      ],
+      "EFOI": [
+        "MENTION_ONLY"
+      ],
+      "EJH": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "ELAB": [
+        "MENTION_ONLY",
+        "NOT_A_SPLIT",
+        "RATIO_CONFIRMED"
+      ],
+      "ELBM": [
+        "MENTION_ONLY"
+      ],
+      "ELE": [
+        "NO_EVIDENCE"
+      ],
+      "ELPW": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "ELTX": [
+        "MENTION_ONLY"
+      ],
+      "ELVA": [
+        "MENTION_ONLY"
+      ],
+      "EMPD": [
+        "MENTION_ONLY"
+      ],
+      "ENSC": [
+        "RATIO_CONFIRMED"
+      ],
+      "ENVB": [
+        "RATIO_CONFIRMED"
+      ],
+      "EOCN": [
+        "MENTION_ONLY"
+      ],
+      "EPOW": [
+        "MENTION_ONLY"
+      ],
+      "ERNA": [
+        "MENTION_ONLY"
+      ],
+      "ESYN": [
+        "RATIO_CONFIRMED"
+      ],
+      "ETR": [
+        "RATIO_CONFIRMED"
+      ],
+      "EUDA": [
+        "MENTION_ONLY"
+      ],
+      "EVAX": [
+        "MENTION_ONLY"
+      ],
+      "EVGN": [
+        "RATIO_CONFIRMED"
+      ],
+      "EVTL": [
+        "RATIO_CONFIRMED"
+      ],
+      "EXLS": [
+        "MENTION_ONLY"
+      ],
+      "EZRA": [
+        "MENTION_ONLY"
+      ],
+      "FABC": [
+        "RATIO_CONFIRMED"
+      ],
+      "FAMI": [
+        "MENTION_ONLY"
+      ],
+      "FAST": [
+        "RATIO_CONFIRMED"
+      ],
+      "FAX": [
+        "NO_EVIDENCE"
+      ],
+      "FBIO": [
+        "MENTION_ONLY"
+      ],
+      "FBYD": [
+        "MENTION_ONLY"
+      ],
+      "FCEL": [
+        "RATIO_CONFIRMED"
+      ],
+      "FCUV": [
+        "MENTION_ONLY",
+        "NO_EVIDENCE"
+      ],
+      "FDX": [
+        "NOT_A_SPLIT"
+      ],
+      "FEAM": [
+        "MENTION_ONLY"
+      ],
+      "FFAI": [
+        "MENTION_ONLY"
+      ],
+      "FFR": [
+        "MENTION_ONLY"
+      ],
+      "FGC": [
+        "RATIO_CONFIRMED"
+      ],
+      "FGI": [
+        "MENTION_ONLY"
+      ],
+      "FIRY": [
+        "MENTION_ONLY"
+      ],
+      "FLEX": [
+        "NOT_A_SPLIT"
+      ],
+      "FLG": [
+        "RATIO_CONFIRMED"
+      ],
+      "FLNT": [
+        "RATIO_CONFIRMED"
+      ],
+      "FNF": [
+        "NOT_A_SPLIT"
+      ],
+      "FNGD": [
+        "RATIO_CONFIRMED"
+      ],
+      "FNRN": [
+        "NOT_A_SPLIT"
+      ],
+      "FOA": [
+        "RATIO_CONFIRMED"
+      ],
+      "FRGT": [
+        "MENTION_ONLY"
+      ],
+      "FRMM": [
+        "RATIO_CONFIRMED"
+      ],
+      "FRPH": [
+        "RATIO_CONFIRMED"
+      ],
+      "FRSX": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "FTCI": [
+        "RATIO_CONFIRMED"
+      ],
+      "FTFT": [
+        "MENTION_ONLY"
+      ],
+      "FTH": [
+        "MENTION_ONLY"
+      ],
+      "FTK": [
+        "RATIO_CONFIRMED"
+      ],
+      "FTLF": [
+        "MENTION_ONLY"
+      ],
+      "FTV": [
+        "NOT_A_SPLIT"
+      ],
+      "FUBO": [
+        "RATIO_CONFIRMED"
+      ],
+      "FVCB": [
+        "RATIO_CONFIRMED"
+      ],
+      "FWONA": [
+        "NOT_A_SPLIT"
+      ],
+      "FWONK": [
+        "NOT_A_SPLIT"
+      ],
+      "FXHO": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "GAB": [
+        "NOT_A_SPLIT"
+      ],
+      "GAME": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "GCBC": [
+        "MENTION_ONLY"
+      ],
+      "GCTK": [
+        "RATIO_CONFIRMED"
+      ],
+      "GDC": [
+        "MENTION_ONLY"
+      ],
+      "GDEV": [
+        "MENTION_ONLY"
+      ],
+      "GDHG": [
+        "MENTION_ONLY"
+      ],
+      "GE": [
+        "NOT_A_SPLIT"
+      ],
+      "GFAI": [
+        "RATIO_CONFIRMED"
+      ],
+      "GGB": [
+        "MENTION_ONLY",
+        "NOT_A_SPLIT"
+      ],
+      "GIBO": [
+        "MENTION_ONLY"
+      ],
+      "GIPR": [
+        "MENTION_ONLY"
+      ],
+      "GLAD": [
+        "RATIO_CONFIRMED"
+      ],
+      "GMEX": [
+        "MENTION_ONLY"
+      ],
+      "GMM": [
+        "MENTION_ONLY"
+      ],
+      "GNLN": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "GNPX": [
+        "MENTION_ONLY"
+      ],
+      "GORO": [
+        "MENTION_ONLY"
+      ],
+      "GOSS": [
+        "MENTION_ONLY"
+      ],
+      "GOVX": [
+        "MENTION_ONLY"
+      ],
+      "GP": [
+        "MENTION_ONLY"
+      ],
+      "GPGI": [
+        "NOT_A_SPLIT"
+      ],
+      "GPMT": [
+        "RATIO_CONFIRMED"
+      ],
+      "GPUS": [
+        "NOT_A_SPLIT",
+        "RATIO_CONFIRMED"
+      ],
+      "GRDX": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "GRI": [
+        "MENTION_ONLY"
+      ],
+      "GRML": [
+        "MENTION_ONLY"
+      ],
+      "GROV": [
+        "MENTION_ONLY"
+      ],
+      "GRRR": [
+        "RATIO_CONFIRMED"
+      ],
+      "GSIW": [
+        "MENTION_ONLY"
+      ],
+      "GSUN": [
+        "MENTION_ONLY"
+      ],
+      "GTBP": [
+        "RATIO_CONFIRMED"
+      ],
+      "GTE": [
+        "RATIO_CONFIRMED"
+      ],
+      "GVH": [
+        "MENTION_ONLY"
+      ],
+      "GXAI": [
+        "RATIO_CONFIRMED"
+      ],
+      "GYRE": [
+        "MENTION_ONLY"
+      ],
+      "HBIO": [
+        "MENTION_ONLY"
+      ],
+      "HCWB": [
+        "MENTION_ONLY"
+      ],
+      "HDB": [
+        "NO_EVIDENCE"
+      ],
+      "HELP": [
+        "MENTION_ONLY"
+      ],
+      "HERZ": [
+        "MENTION_ONLY"
+      ],
+      "HHH": [
+        "NOT_A_SPLIT"
+      ],
+      "HIND": [
+        "RATIO_CONFIRMED"
+      ],
+      "HKIT": [
+        "RATIO_CONFIRMED"
+      ],
+      "HLSQ": [
+        "RATIO_CONFIRMED"
+      ],
+      "HOLO": [
+        "RATIO_CONFIRMED"
+      ],
+      "HON": [
+        "NOT_A_SPLIT"
+      ],
+      "HPP": [
+        "MENTION_ONLY"
+      ],
+      "HSCS": [
+        "RATIO_CONFIRMED"
+      ],
+      "HSDT": [
+        "RATIO_CONFIRMED"
+      ],
+      "HTCO": [
+        "MENTION_ONLY"
+      ],
+      "HTCR": [
+        "MENTION_ONLY"
+      ],
+      "HTOO": [
+        "MENTION_ONLY"
+      ],
+      "HUBC": [
+        "MENTION_ONLY"
+      ],
+      "HUBG": [
+        "RATIO_CONFIRMED"
+      ],
+      "HUIZ": [
+        "MENTION_ONLY"
+      ],
+      "HURA": [
+        "MENTION_ONLY"
+      ],
+      "HUT": [
+        "MENTION_ONLY"
+      ],
+      "HWBK": [
+        "NOT_A_SPLIT"
+      ],
+      "HYFM": [
+        "RATIO_CONFIRMED"
+      ],
+      "HYMC": [
+        "RATIO_CONFIRMED"
+      ],
+      "HYPD": [
+        "RATIO_CONFIRMED"
+      ],
+      "IAF": [
+        "NO_EVIDENCE"
+      ],
+      "IBIO": [
+        "MENTION_ONLY"
+      ],
+      "IBKR": [
+        "MENTION_ONLY"
+      ],
+      "ICCM": [
+        "MENTION_ONLY"
+      ],
+      "ICU": [
+        "MENTION_ONLY"
+      ],
+      "IDAI": [
+        "MENTION_ONLY"
+      ],
+      "IESC": [
+        "MENTION_ONLY"
+      ],
+      "IFBD": [
+        "MENTION_ONLY"
+      ],
+      "IGR": [
+        "MENTION_ONLY"
+      ],
+      "ILAG": [
+        "MENTION_ONLY"
+      ],
+      "ILMN": [
+        "NOT_A_SPLIT"
+      ],
+      "IMA": [
+        "RATIO_CONFIRMED"
+      ],
+      "IMCC": [
+        "MENTION_ONLY"
+      ],
+      "IMDX": [
+        "MENTION_ONLY"
+      ],
+      "IMMP": [
+        "MENTION_ONLY"
+      ],
+      "IMNN": [
+        "NOT_A_SPLIT"
+      ],
+      "IMPP": [
+        "RATIO_CONFIRMED"
+      ],
+      "IMTE": [
+        "RATIO_CONFIRMED"
+      ],
+      "INAB": [
+        "MENTION_ONLY"
+      ],
+      "INBS": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "INCR": [
+        "MENTION_ONLY"
+      ],
+      "INHD": [
+        "RATIO_CONFIRMED"
+      ],
+      "INKT": [
+        "MENTION_ONLY"
+      ],
+      "INM": [
+        "MENTION_ONLY"
+      ],
+      "INO": [
+        "RATIO_CONFIRMED"
+      ],
+      "INTS": [
+        "MENTION_ONLY"
+      ],
+      "INTZ": [
+        "MENTION_ONLY"
+      ],
+      "INUV": [
+        "MENTION_ONLY"
+      ],
+      "IPDN": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "IPW": [
+        "RATIO_CONFIRMED"
+      ],
+      "IQST": [
+        "MENTION_ONLY",
+        "NOT_A_SPLIT"
+      ],
+      "IRS": [
+        "NOT_A_SPLIT"
+      ],
+      "ISOU": [
+        "NO_EVIDENCE"
+      ],
+      "IVDA": [
+        "MENTION_ONLY"
+      ],
+      "IVF": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "IX": [
+        "MENTION_ONLY"
+      ],
+      "IXHL": [
+        "MENTION_ONLY"
+      ],
+      "IZEA": [
+        "RATIO_CONFIRMED"
+      ],
+      "IZM": [
+        "MENTION_ONLY"
+      ],
+      "J": [
+        "NOT_A_SPLIT"
+      ],
+      "JAGX": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "JBIO": [
+        "MENTION_ONLY"
+      ],
+      "JCSE": [
+        "RATIO_CONFIRMED"
+      ],
+      "JEF": [
+        "NOT_A_SPLIT"
+      ],
+      "JFU": [
+        "MENTION_ONLY"
+      ],
+      "JG": [
+        "RATIO_CONFIRMED"
+      ],
+      "JRI": [
+        "NOT_A_SPLIT"
+      ],
+      "JTAI": [
+        "MENTION_ONLY",
+        "NOT_A_SPLIT"
+      ],
+      "JWEL": [
+        "MENTION_ONLY"
+      ],
+      "JXG": [
+        "MENTION_ONLY"
+      ],
+      "JYD": [
+        "MENTION_ONLY"
+      ],
+      "JZ": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "JZXN": [
+        "MENTION_ONLY"
+      ],
+      "KG": [
+        "MENTION_ONLY"
+      ],
+      "KITT": [
+        "MENTION_ONLY"
+      ],
+      "KLAC": [
+        "MENTION_ONLY"
+      ],
+      "KLRS": [
+        "MENTION_ONLY"
+      ],
+      "KPLT": [
+        "RATIO_CONFIRMED"
+      ],
+      "KPRX": [
+        "RATIO_CONFIRMED"
+      ],
+      "KPTI": [
+        "RATIO_CONFIRMED"
+      ],
+      "KRKR": [
+        "MENTION_ONLY"
+      ],
+      "KRRO": [
+        "RATIO_CONFIRMED"
+      ],
+      "KRSA": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "KSCP": [
+        "MENTION_ONLY"
+      ],
+      "KTTA": [
+        "RATIO_CONFIRMED"
+      ],
+      "KULR": [
+        "MENTION_ONLY"
+      ],
+      "KUST": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "KXIN": [
+        "MENTION_ONLY"
+      ],
+      "KYNB": [
+        "RATIO_CONFIRMED"
+      ],
+      "KZIA": [
+        "MENTION_ONLY"
+      ],
+      "LAR": [
+        "NOT_A_SPLIT"
+      ],
+      "LARK": [
+        "NOT_A_SPLIT"
+      ],
+      "LBTYA": [
+        "NOT_A_SPLIT"
+      ],
+      "LBTYK": [
+        "NOT_A_SPLIT"
+      ],
+      "LCID": [
+        "MENTION_ONLY"
+      ],
+      "LEN": [
+        "NOT_A_SPLIT"
+      ],
+      "LENZ": [
+        "MENTION_ONLY"
+      ],
+      "LEXX": [
+        "MENTION_ONLY"
+      ],
+      "LFT": [
+        "MENTION_ONLY"
+      ],
+      "LFWD": [
+        "MENTION_ONLY"
+      ],
+      "LGHL": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "LGVN": [
+        "MENTION_ONLY"
+      ],
+      "LH": [
+        "NOT_A_SPLIT"
+      ],
+      "LILA": [
+        "NOT_A_SPLIT"
+      ],
+      "LILAK": [
+        "NOT_A_SPLIT"
+      ],
+      "LINK": [
+        "MENTION_ONLY",
+        "NO_EVIDENCE"
+      ],
+      "LITB": [
+        "MENTION_ONLY"
+      ],
+      "LITS": [
+        "MENTION_ONLY"
+      ],
+      "LNAI": [
+        "RATIO_CONFIRMED"
+      ],
+      "LNZA": [
+        "RATIO_CONFIRMED"
+      ],
+      "LOCL": [
+        "RATIO_CONFIRMED"
+      ],
+      "LONA": [
+        "MENTION_ONLY"
+      ],
+      "LPCN": [
+        "MENTION_ONLY"
+      ],
+      "LRCX": [
+        "MENTION_ONLY"
+      ],
+      "LRHC": [
+        "RATIO_CONFIRMED"
+      ],
+      "LSBK": [
+        "NOT_A_SPLIT"
+      ],
+      "LU": [
+        "MENTION_ONLY"
+      ],
+      "LUCY": [
+        "RATIO_CONFIRMED"
+      ],
+      "LVLU": [
+        "RATIO_CONFIRMED"
+      ],
+      "LVO": [
+        "MENTION_ONLY"
+      ],
+      "LXEH": [
+        "MENTION_ONLY"
+      ],
+      "LXP": [
+        "RATIO_CONFIRMED"
+      ],
+      "LYEL": [
+        "MENTION_ONLY"
+      ],
+      "MAAS": [
+        "MENTION_ONLY"
+      ],
+      "MAKO": [
+        "NO_EVIDENCE"
+      ],
+      "MBAI": [
+        "RATIO_CONFIRMED"
+      ],
+      "MBBC": [
+        "NOT_A_SPLIT"
+      ],
+      "MBIO": [
+        "MENTION_ONLY"
+      ],
+      "MBRX": [
+        "MENTION_ONLY"
+      ],
+      "MCRB": [
+        "MENTION_ONLY"
+      ],
+      "MDRR": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "MDU": [
+        "NOT_A_SPLIT"
+      ],
+      "MESO": [
+        "MENTION_ONLY"
+      ],
+      "METC": [
+        "NOT_A_SPLIT"
+      ],
+      "METCB": [
+        "NOT_A_SPLIT"
+      ],
+      "MI": [
+        "MENTION_ONLY"
+      ],
+      "MIDD": [
+        "NOT_A_SPLIT"
+      ],
+      "MIND": [
+        "MENTION_ONLY"
+      ],
+      "MKDW": [
+        "NO_EVIDENCE"
+      ],
+      "MKTW": [
+        "RATIO_CONFIRMED"
+      ],
+      "MLEC": [
+        "MENTION_ONLY"
+      ],
+      "MLGO": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "MLI": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "MMM": [
+        "NOT_A_SPLIT"
+      ],
+      "MNST": [
+        "RATIO_CONFIRMED"
+      ],
+      "MNTS": [
+        "NOT_A_SPLIT",
+        "RATIO_CONFIRMED"
+      ],
+      "MOBX": [
+        "RATIO_CONFIRMED"
+      ],
+      "MOVE": [
+        "NOT_A_SPLIT"
+      ],
+      "MQ": [
+        "MENTION_ONLY"
+      ],
+      "MRBK": [
+        "RATIO_CONFIRMED"
+      ],
+      "MRDN": [
+        "MENTION_ONLY"
+      ],
+      "MRKR": [
+        "MENTION_ONLY"
+      ],
+      "MSLE": [
+        "MENTION_ONLY"
+      ],
+      "MSTR": [
+        "RATIO_CONFIRMED"
+      ],
+      "MTC": [
+        "MENTION_ONLY"
+      ],
+      "MTH": [
+        "NO_EVIDENCE"
+      ],
+      "MTNB": [
+        "MENTION_ONLY"
+      ],
+      "MTVA": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "MVIS": [
+        "MENTION_ONLY"
+      ],
+      "MWG": [
+        "MENTION_ONLY"
+      ],
+      "MYND": [
+        "MENTION_ONLY"
+      ],
+      "MYPS": [
+        "RATIO_CONFIRMED"
+      ],
+      "MYSE": [
+        "MENTION_ONLY"
+      ],
+      "NA": [
+        "MENTION_ONLY"
+      ],
+      "NAAS": [
+        "MENTION_ONLY"
+      ],
+      "NCEL": [
+        "MENTION_ONLY"
+      ],
+      "NCMI": [
+        "MENTION_ONLY"
+      ],
+      "NCNA": [
+        "RATIO_CONFIRMED"
+      ],
+      "NCPL": [
+        "RATIO_CONFIRMED"
+      ],
+      "NCTY": [
+        "MENTION_ONLY"
+      ],
+      "NCV": [
+        "NO_EVIDENCE"
+      ],
+      "NCZ": [
+        "NO_EVIDENCE"
+      ],
+      "NDRA": [
+        "MENTION_ONLY"
+      ],
+      "NEGG": [
+        "MENTION_ONLY"
+      ],
+      "NEUP": [
+        "MENTION_ONLY"
+      ],
+      "NEXM": [
+        "MENTION_ONLY"
+      ],
+      "NEXR": [
+        "MENTION_ONLY"
+      ],
+      "NFE": [
+        "RATIO_CONFIRMED"
+      ],
+      "NFLX": [
+        "RATIO_CONFIRMED"
+      ],
+      "NGNE": [
+        "RATIO_CONFIRMED"
+      ],
+      "NIKI": [
+        "MENTION_ONLY"
+      ],
+      "NIVF": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "NIXX": [
+        "RATIO_CONFIRMED"
+      ],
+      "NKTR": [
+        "RATIO_CONFIRMED"
+      ],
+      "NMAD": [
+        "MENTION_ONLY"
+      ],
+      "NMTC": [
+        "RATIO_CONFIRMED"
+      ],
+      "NOW": [
+        "MENTION_ONLY"
+      ],
+      "NRIM": [
+        "MENTION_ONLY"
+      ],
+      "NRO": [
+        "NOT_A_SPLIT"
+      ],
+      "NRSN": [
+        "MENTION_ONLY"
+      ],
+      "NTRP": [
+        "MENTION_ONLY"
+      ],
+      "NUTX": [
+        "MENTION_ONLY"
+      ],
+      "NUWE": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "NVDA": [
+        "RATIO_CONFIRMED"
+      ],
+      "NVNI": [
+        "MENTION_ONLY"
+      ],
+      "NVNO": [
+        "RATIO_CONFIRMED"
+      ],
+      "NVO": [
+        "MENTION_ONLY"
+      ],
+      "NVX": [
+        "MENTION_ONLY"
+      ],
+      "NWTG": [
+        "MENTION_ONLY"
+      ],
+      "NXL": [
+        "MENTION_ONLY"
+      ],
+      "NXPL": [
+        "RATIO_CONFIRMED"
+      ],
+      "NXTS": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "NXTT": [
+        "MENTION_ONLY"
+      ],
+      "NXXT": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "OBT": [
+        "MENTION_ONLY"
+      ],
+      "OCG": [
+        "MENTION_ONLY"
+      ],
+      "OCSL": [
+        "RATIO_CONFIRMED"
+      ],
+      "ODC": [
+        "MENTION_ONLY"
+      ],
+      "ODFL": [
+        "RATIO_CONFIRMED"
+      ],
+      "OESX": [
+        "RATIO_CONFIRMED"
+      ],
+      "OGC": [
+        "NO_EVIDENCE"
+      ],
+      "OGEN": [
+        "MENTION_ONLY"
+      ],
+      "OGI": [
+        "MENTION_ONLY"
+      ],
+      "OKUR": [
+        "RATIO_CONFIRMED"
+      ],
+      "OLOX": [
+        "NOT_A_SPLIT",
+        "RATIO_CONFIRMED"
+      ],
+      "OMH": [
+        "MENTION_ONLY"
+      ],
+      "ONCO": [
+        "RATIO_CONFIRMED"
+      ],
+      "ONFO": [
+        "RATIO_CONFIRMED"
+      ],
+      "ONMD": [
+        "RATIO_CONFIRMED"
+      ],
+      "OPAD": [
+        "RATIO_CONFIRMED"
+      ],
+      "OPNW": [
+        "RATIO_CONFIRMED"
+      ],
+      "ORBS": [
+        "MENTION_ONLY"
+      ],
+      "ORIO": [
+        "RATIO_CONFIRMED"
+      ],
+      "ORKA": [
+        "MENTION_ONLY"
+      ],
+      "ORLY": [
+        "MENTION_ONLY"
+      ],
+      "OTLK": [
+        "MENTION_ONLY"
+      ],
+      "OTLY": [
+        "MENTION_ONLY"
+      ],
+      "OUST": [
+        "MENTION_ONLY"
+      ],
+      "OUT": [
+        "NOT_A_SPLIT"
+      ],
+      "OXLC": [
+        "RATIO_CONFIRMED"
+      ],
+      "PALI": [
+        "RATIO_CONFIRMED"
+      ],
+      "PANW": [
+        "MENTION_ONLY"
+      ],
+      "PAPL": [
+        "MENTION_ONLY"
+      ],
+      "PARA": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "PASG": [
+        "RATIO_CONFIRMED"
+      ],
+      "PATK": [
+        "MENTION_ONLY"
+      ],
+      "PAVM": [
+        "MENTION_ONLY"
+      ],
+      "PAVS": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "PBM": [
+        "MENTION_ONLY",
+        "NOT_A_SPLIT",
+        "RATIO_CONFIRMED"
+      ],
+      "PCAR": [
+        "NO_EVIDENCE"
+      ],
+      "PCSA": [
+        "RATIO_CONFIRMED"
+      ],
+      "PDC": [
+        "MENTION_ONLY"
+      ],
+      "PDYN": [
+        "MENTION_ONLY"
+      ],
+      "PEGA": [
+        "MENTION_ONLY"
+      ],
+      "PGY": [
+        "RATIO_CONFIRMED"
+      ],
+      "PHUN": [
+        "RATIO_CONFIRMED"
+      ],
+      "PIII": [
+        "MENTION_ONLY"
+      ],
+      "PIPR": [
+        "MENTION_ONLY"
+      ],
+      "PLAG": [
+        "MENTION_ONLY"
+      ],
+      "PLUR": [
+        "MENTION_ONLY"
+      ],
+      "PMN": [
+        "RATIO_CONFIRMED"
+      ],
+      "POWL": [
+        "MENTION_ONLY"
+      ],
+      "PPBT": [
+        "MENTION_ONLY"
+      ],
+      "PPCB": [
+        "MENTION_ONLY"
+      ],
+      "PPLI": [
+        "NOT_A_SPLIT"
+      ],
+      "PRAX": [
+        "RATIO_CONFIRMED"
+      ],
+      "PRE": [
+        "MENTION_ONLY"
+      ],
+      "PRFX": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "PRHI": [
+        "RATIO_CONFIRMED"
+      ],
+      "PROP": [
+        "NOT_A_SPLIT"
+      ],
+      "PRPO": [
+        "RATIO_CONFIRMED"
+      ],
+      "PRSO": [
+        "RATIO_CONFIRMED"
+      ],
+      "PSNY": [
+        "MENTION_ONLY"
+      ],
+      "PTN": [
+        "RATIO_CONFIRMED"
+      ],
+      "PVLA": [
+        "RATIO_CONFIRMED"
+      ],
+      "PW": [
+        "RATIO_CONFIRMED"
+      ],
+      "PXLW": [
+        "RATIO_CONFIRMED"
+      ],
+      "PYPD": [
+        "MENTION_ONLY"
+      ],
+      "QCLS": [
+        "RATIO_CONFIRMED"
+      ],
+      "QH": [
+        "MENTION_ONLY"
+      ],
+      "QMCO": [
+        "RATIO_CONFIRMED"
+      ],
+      "QNCX": [
+        "MENTION_ONLY"
+      ],
+      "QNRX": [
+        "MENTION_ONLY"
+      ],
+      "QNTM": [
+        "MENTION_ONLY"
+      ],
+      "QTI": [
+        "MENTION_ONLY"
+      ],
+      "QTTB": [
+        "RATIO_CONFIRMED"
+      ],
+      "QXL": [
+        "RATIO_CONFIRMED"
+      ],
+      "QXO": [
+        "MENTION_ONLY"
+      ],
+      "RAYA": [
+        "MENTION_ONLY"
+      ],
+      "RBKB": [
+        "NOT_A_SPLIT"
+      ],
+      "RCBC": [
+        "NO_CIK"
+      ],
+      "RCON": [
+        "MENTION_ONLY"
+      ],
+      "RDGT": [
+        "RATIO_CONFIRMED"
+      ],
+      "RDHL": [
+        "MENTION_ONLY"
+      ],
+      "RDY": [
+        "MENTION_ONLY"
+      ],
+      "REAX": [
+        "MENTION_ONLY"
+      ],
+      "REBN": [
+        "MENTION_ONLY"
+      ],
+      "REED": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "RENT": [
+        "MENTION_ONLY"
+      ],
+      "RENX": [
+        "NOT_A_SPLIT"
+      ],
+      "RETO": [
+        "JUMP_ON_RECORD_SESSION",
+        "MENTION_ONLY"
+      ],
+      "REVB": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "REX": [
+        "RATIO_CONFIRMED"
+      ],
+      "REZI": [
+        "NOT_A_SPLIT"
+      ],
+      "RFL": [
+        "NOT_A_SPLIT"
+      ],
+      "RGC": [
+        "MENTION_ONLY"
+      ],
+      "RGR": [
+        "NOT_A_SPLIT"
+      ],
+      "RGS": [
+        "MENTION_ONLY"
+      ],
+      "RIGL": [
+        "MENTION_ONLY"
+      ],
+      "RIME": [
+        "MENTION_ONLY"
+      ],
+      "RIV": [
+        "NOT_A_SPLIT"
+      ],
+      "RJET": [
+        "RATIO_CONFIRMED"
+      ],
+      "RKDA": [
+        "RATIO_CONFIRMED"
+      ],
+      "RLI": [
+        "RATIO_CONFIRMED"
+      ],
+      "RLYB": [
+        "MENTION_ONLY"
+      ],
+      "RMTI": [
+        "RATIO_CONFIRMED"
+      ],
+      "RNAC": [
+        "RATIO_CONFIRMED"
+      ],
+      "RNAZ": [
+        "RATIO_CONFIRMED"
+      ],
+      "RPT": [
+        "MENTION_ONLY"
+      ],
+      "RSF": [
+        "NOT_A_SPLIT"
+      ],
+      "RTB": [
+        "MENTION_ONLY"
+      ],
+      "RUSHA": [
+        "RATIO_CONFIRMED"
+      ],
+      "RUSHB": [
+        "RATIO_CONFIRMED"
+      ],
+      "RVSN": [
+        "MENTION_ONLY"
+      ],
+      "RYAAY": [
+        "NOT_A_SPLIT"
+      ],
+      "RYM": [
+        "RATIO_CONFIRMED"
+      ],
+      "SABA": [
+        "NO_EVIDENCE"
+      ],
+      "SABS": [
+        "RATIO_CONFIRMED"
+      ],
+      "SAFE": [
+        "NOT_A_SPLIT"
+      ],
+      "SAIH": [
+        "MENTION_ONLY"
+      ],
+      "SBET": [
+        "NO_EVIDENCE",
+        "RATIO_CONFIRMED"
+      ],
+      "SBFM": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "SBS": [
+        "MENTION_ONLY"
+      ],
+      "SCCO": [
+        "NOT_A_SPLIT"
+      ],
+      "SCLX": [
+        "MENTION_ONLY",
+        "NOT_A_SPLIT"
+      ],
+      "SCNI": [
+        "MENTION_ONLY"
+      ],
+      "SCNX": [
+        "RATIO_CONFIRMED"
+      ],
+      "SCOR": [
+        "MENTION_ONLY"
+      ],
+      "SCWO": [
+        "MENTION_ONLY"
+      ],
+      "SCYX": [
+        "RATIO_CONFIRMED"
+      ],
+      "SCZM": [
+        "NO_EVIDENCE"
+      ],
+      "SDOT": [
+        "MENTION_ONLY"
+      ],
+      "SDST": [
+        "RATIO_CONFIRMED"
+      ],
+      "SEAT": [
+        "RATIO_CONFIRMED"
+      ],
+      "SEGG": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "SENS": [
+        "MENTION_ONLY"
+      ],
+      "SER": [
+        "NOT_A_SPLIT"
+      ],
+      "SEZL": [
+        "MENTION_ONLY"
+      ],
+      "SF": [
+        "RATIO_CONFIRMED"
+      ],
+      "SFBS": [
+        "MENTION_ONLY"
+      ],
+      "SFWL": [
+        "RATIO_CONFIRMED"
+      ],
+      "SGLY": [
+        "RATIO_CONFIRMED"
+      ],
+      "SGRX": [
+        "MENTION_ONLY"
+      ],
+      "SHPH": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "SIDU": [
+        "MENTION_ONLY"
+      ],
+      "SIFY": [
+        "MENTION_ONLY"
+      ],
+      "SILO": [
+        "MENTION_ONLY"
+      ],
+      "SINT": [
+        "RATIO_CONFIRMED"
+      ],
+      "SIRI": [
+        "MENTION_ONLY"
+      ],
+      "SITC": [
+        "MENTION_ONLY"
+      ],
+      "SKIL": [
+        "RATIO_CONFIRMED"
+      ],
+      "SKYA": [
+        "RATIO_CONFIRMED"
+      ],
+      "SKYE": [
+        "MENTION_ONLY"
+      ],
+      "SLE": [
+        "MENTION_ONLY"
+      ],
+      "SLGL": [
+        "MENTION_ONLY"
+      ],
+      "SLMT": [
+        "RATIO_CONFIRMED"
+      ],
+      "SLXN": [
+        "MENTION_ONLY"
+      ],
+      "SMCI": [
+        "RATIO_CONFIRMED"
+      ],
+      "SMSI": [
+        "MENTION_ONLY"
+      ],
+      "SMX": [
+        "MENTION_ONLY",
+        "NOT_A_SPLIT"
+      ],
+      "SNAL": [
+        "RATIO_CONFIRMED"
+      ],
+      "SNEX": [
+        "MENTION_ONLY"
+      ],
+      "SNFCA": [
+        "NOT_A_SPLIT"
+      ],
+      "SNOA": [
+        "RATIO_CONFIRMED"
+      ],
+      "SNTI": [
+        "RATIO_CONFIRMED"
+      ],
+      "SOAR": [
+        "MENTION_ONLY",
+        "NOT_A_SPLIT"
+      ],
+      "SOGP": [
+        "MENTION_ONLY"
+      ],
+      "SONM": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "SONY": [
+        "MENTION_ONLY"
+      ],
+      "SOS": [
+        "MENTION_ONLY"
+      ],
+      "SOWG": [
+        "MENTION_ONLY"
+      ],
+      "SPCB": [
+        "MENTION_ONLY"
+      ],
+      "SPCE": [
+        "RATIO_CONFIRMED"
+      ],
+      "SPGI": [
+        "NOT_A_SPLIT"
+      ],
+      "SPHR": [
+        "NOT_A_SPLIT"
+      ],
+      "SPIR": [
+        "MENTION_ONLY"
+      ],
+      "SPPL": [
+        "MENTION_ONLY"
+      ],
+      "SPRB": [
+        "RATIO_CONFIRMED"
+      ],
+      "SPRC": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "SPRU": [
+        "MENTION_ONLY"
+      ],
+      "SQFT": [
+        "MENTION_ONLY"
+      ],
+      "SQNS": [
+        "MENTION_ONLY"
+      ],
+      "SRE": [
+        "MENTION_ONLY"
+      ],
+      "SRXH": [
+        "MENTION_ONLY",
+        "NOT_A_SPLIT"
+      ],
+      "SRZN": [
+        "RATIO_CONFIRMED"
+      ],
+      "SSP": [
+        "NOT_A_SPLIT"
+      ],
+      "SST": [
+        "MENTION_ONLY"
+      ],
+      "STEM": [
+        "MENTION_ONLY"
+      ],
+      "STI": [
+        "RATIO_CONFIRMED"
+      ],
+      "STKE": [
+        "MENTION_ONLY"
+      ],
+      "STKH": [
+        "MENTION_ONLY"
+      ],
+      "STRO": [
+        "RATIO_CONFIRMED"
+      ],
+      "SUNE": [
+        "RATIO_CONFIRMED"
+      ],
+      "SVC": [
+        "RATIO_CONFIRMED"
+      ],
+      "SVRE": [
+        "MENTION_ONLY"
+      ],
+      "SWVL": [
+        "MENTION_ONLY"
+      ],
+      "SXTC": [
+        "MENTION_ONLY"
+      ],
+      "SXTP": [
+        "MENTION_ONLY"
+      ],
+      "SYRE": [
+        "MENTION_ONLY"
+      ],
+      "TANH": [
+        "MENTION_ONLY"
+      ],
+      "TAOP": [
+        "MENTION_ONLY"
+      ],
+      "TC": [
+        "MENTION_ONLY",
+        "NO_EVIDENCE"
+      ],
+      "TCRT": [
+        "RATIO_CONFIRMED"
+      ],
+      "TECX": [
+        "RATIO_CONFIRMED"
+      ],
+      "TGL": [
+        "MENTION_ONLY"
+      ],
+      "THCH": [
+        "RATIO_CONFIRMED"
+      ],
+      "TII": [
+        "MENTION_ONLY"
+      ],
+      "TIL": [
+        "RATIO_CONFIRMED"
+      ],
+      "TKLF": [
+        "MENTION_ONLY"
+      ],
+      "TLRY": [
+        "RATIO_CONFIRMED"
+      ],
+      "TNMG": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "TNON": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "TNXP": [
+        "NOT_A_SPLIT",
+        "RATIO_CONFIRMED"
+      ],
+      "TONX": [
+        "MENTION_ONLY"
+      ],
+      "TOON": [
+        "RATIO_CONFIRMED"
+      ],
+      "TOPS": [
+        "MENTION_ONLY"
+      ],
+      "TOUR": [
+        "MENTION_ONLY"
+      ],
+      "TOVX": [
+        "MENTION_ONLY"
+      ],
+      "TPET": [
+        "RATIO_CONFIRMED"
+      ],
+      "TPL": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "TPST": [
+        "MENTION_ONLY"
+      ],
+      "TR": [
+        "NOT_A_SPLIT"
+      ],
+      "TRAW": [
+        "RATIO_CONFIRMED"
+      ],
+      "TRI": [
+        "NOT_A_SPLIT"
+      ],
+      "TRIB": [
+        "MENTION_ONLY"
+      ],
+      "TRNR": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "TRT": [
+        "RATIO_CONFIRMED"
+      ],
+      "TRUG": [
+        "MENTION_ONLY"
+      ],
+      "TRVG": [
+        "NO_EVIDENCE"
+      ],
+      "TSCO": [
+        "MENTION_ONLY"
+      ],
+      "TTEK": [
+        "MENTION_ONLY"
+      ],
+      "TVGN": [
+        "MENTION_ONLY"
+      ],
+      "TVRD": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "UAVS": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "UCAR": [
+        "MENTION_ONLY"
+      ],
+      "UK": [
+        "MENTION_ONLY"
+      ],
+      "UL": [
+        "NOT_A_SPLIT"
+      ],
+      "UNCY": [
+        "RATIO_CONFIRMED"
+      ],
+      "UNIT": [
+        "NOT_A_SPLIT"
+      ],
+      "UONE": [
+        "MENTION_ONLY"
+      ],
+      "UONEK": [
+        "MENTION_ONLY"
+      ],
+      "UP": [
+        "RATIO_CONFIRMED"
+      ],
+      "UPC": [
+        "MENTION_ONLY"
+      ],
+      "UPLD": [
+        "RATIO_CONFIRMED"
+      ],
+      "UPXI": [
+        "MENTION_ONLY"
+      ],
+      "USAS": [
+        "MENTION_ONLY"
+      ],
+      "USBC": [
+        "MENTION_ONLY"
+      ],
+      "USLM": [
+        "RATIO_CONFIRMED"
+      ],
+      "UTF": [
+        "NOT_A_SPLIT"
+      ],
+      "UXIN": [
+        "MENTION_ONLY"
+      ],
+      "UZX": [
+        "MENTION_ONLY"
+      ],
+      "VATE": [
+        "MENTION_ONLY"
+      ],
+      "VBIO": [
+        "MENTION_ONLY"
+      ],
+      "VCIG": [
+        "MENTION_ONLY"
+      ],
+      "VEEA": [
+        "RATIO_CONFIRMED"
+      ],
+      "VEEE": [
+        "MENTION_ONLY"
+      ],
+      "VELO": [
+        "MENTION_ONLY"
+      ],
+      "VEON": [
+        "NO_EVIDENCE"
+      ],
+      "VERU": [
+        "RATIO_CONFIRMED"
+      ],
+      "VHC": [
+        "RATIO_CONFIRMED"
+      ],
+      "VIVK": [
+        "NOT_A_SPLIT",
+        "RATIO_CONFIRMED"
+      ],
+      "VIVO": [
+        "JUMP_ON_RECORD_SESSION",
+        "MENTION_ONLY"
+      ],
+      "VIVS": [
+        "RATIO_CONFIRMED"
+      ],
+      "VJET": [
+        "MENTION_ONLY"
+      ],
+      "VMAR": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "VNRX": [
+        "MENTION_ONLY"
+      ],
+      "VOR": [
+        "MENTION_ONLY"
+      ],
+      "VRAX": [
+        "MENTION_ONLY"
+      ],
+      "VRCA": [
+        "MENTION_ONLY"
+      ],
+      "VS": [
+        "MENTION_ONLY"
+      ],
+      "VSA": [
+        "MENTION_ONLY"
+      ],
+      "VSME": [
+        "MENTION_ONLY",
+        "NO_EVIDENCE"
+      ],
+      "VSTM": [
+        "MENTION_ONLY"
+      ],
+      "VTGN": [
+        "RATIO_CONFIRMED"
+      ],
+      "VTVT": [
+        "RATIO_CONFIRMED"
+      ],
+      "VVOS": [
+        "MENTION_ONLY"
+      ],
+      "VXX": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "VXZ": [
+        "MENTION_ONLY"
+      ],
+      "VYX": [
+        "NOT_A_SPLIT"
+      ],
+      "WATT": [
+        "RATIO_CONFIRMED"
+      ],
+      "WBUY": [
+        "MENTION_ONLY"
+      ],
+      "WDC": [
+        "NOT_A_SPLIT"
+      ],
+      "WGS": [
+        "MENTION_ONLY"
+      ],
+      "WHLR": [
+        "RATIO_CONFIRMED"
+      ],
+      "WIMI": [
+        "MENTION_ONLY"
+      ],
+      "WIT": [
+        "MENTION_ONLY"
+      ],
+      "WKHS": [
+        "MENTION_ONLY",
+        "NOT_A_SPLIT"
+      ],
+      "WLDS": [
+        "MENTION_ONLY"
+      ],
+      "WLFC": [
+        "MENTION_ONLY"
+      ],
+      "WMT": [
+        "MENTION_ONLY"
+      ],
+      "WNW": [
+        "MENTION_ONLY"
+      ],
+      "WOR": [
+        "NOT_A_SPLIT"
+      ],
+      "WORX": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "WPC": [
+        "NOT_A_SPLIT"
+      ],
+      "WPRT": [
+        "MENTION_ONLY"
+      ],
+      "WRB": [
+        "MENTION_ONLY"
+      ],
+      "WSM": [
+        "MENTION_ONLY"
+      ],
+      "XAIR": [
+        "MENTION_ONLY"
+      ],
+      "XBIO": [
+        "MENTION_ONLY"
+      ],
+      "XCUR": [
+        "MENTION_ONLY"
+      ],
+      "XELB": [
+        "MENTION_ONLY"
+      ],
+      "XFLT": [
+        "NO_EVIDENCE"
+      ],
+      "XHG": [
+        "JUMP_ON_RECORD_SESSION",
+        "MENTION_ONLY"
+      ],
+      "XLO": [
+        "RATIO_CONFIRMED"
+      ],
+      "XMAX": [
+        "MENTION_ONLY"
+      ],
+      "XOS": [
+        "MENTION_ONLY"
+      ],
+      "XPON": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "XRN": [
+        "MENTION_ONLY"
+      ],
+      "XRTX": [
+        "JUMP_ON_RECORD_SESSION",
+        "RATIO_CONFIRMED"
+      ],
+      "XTIA": [
+        "RATIO_CONFIRMED"
+      ],
+      "XTLB": [
+        "MENTION_ONLY"
+      ],
+      "XWEL": [
+        "RATIO_CONFIRMED"
+      ],
+      "XXII": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "YARW": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "YCBD": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "YDKG": [
+        "MENTION_ONLY"
+      ],
+      "YHC": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "YHGJ": [
+        "MENTION_ONLY"
+      ],
+      "YJ": [
+        "RATIO_CONFIRMED"
+      ],
+      "YQ": [
+        "MENTION_ONLY"
+      ],
+      "YSG": [
+        "MENTION_ONLY"
+      ],
+      "YYAI": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "ZCMD": [
+        "MENTION_ONLY"
+      ],
+      "ZEPP": [
+        "MENTION_ONLY"
+      ],
+      "ZH": [
+        "MENTION_ONLY"
+      ],
+      "ZJYL": [
+        "MENTION_ONLY"
+      ],
+      "ZNB": [
+        "MENTION_ONLY",
+        "RATIO_CONFIRMED"
+      ],
+      "ZSQR": [
+        "RATIO_CONFIRMED"
+      ],
+      "ZSTK": [
+        "RATIO_CONFIRMED"
+      ]
+    }
+  },
+  "unit_schedule": {
+    "accepted_statuses": [
+      "VERIFIED"
+    ],
+    "effective_after": "2023-01-03",
+    "manifest": "us_splits-reaudit-20261008T112522Z.json",
+    "status_counts": {
+      "MENTION_ONLY": 780,
+      "NOT_A_SPLIT": 136,
+      "NO_CIK": 1,
+      "NO_EVIDENCE": 27,
+      "RATIO_CONFIRMED": 411,
+      "VERIFIED": 239
+    },
+    "version": "us-actions-v2"
+  }
+}

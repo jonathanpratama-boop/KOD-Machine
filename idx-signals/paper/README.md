@@ -44,7 +44,7 @@ its `preprocessing`. The three scans before that field existed used: SCAN-2026-1
 time that next bar is never after the decision). Live preprocessing is pinned by name in
 `paper.PREPROCESSING`; changing it is a new policy version.
 
-Scoring (`paper-score`, scorer `paper-score-v2`): scoring bars go through the causal step (no bar
+Scoring (`paper-score`, scorer `paper-score-v3`): scoring bars go through the causal step (no bar
 is removed because of a later one). Units come from the provider's split records after the
 signal session, each corroborated by an SEC filing for US names (`us_actions`), never from a
 change in price ratios; the recorded signal close must reconcile with the scoring bars in those
@@ -55,7 +55,7 @@ The older price-ratio scaling remains only as a labelled forensic path and never
 
 A paper BUY needs validated detection AND a validated executable plan. All three detectors
 have the first and not the second (2023 validation, average net per trade vs matched random
-entries: IDX -4.06% vs -0.53%; US -3.65% vs -0.60%, -4.47% at point-in-time costs per `research/E2/ERRATA.md`; crypto -1.90% vs +1.42%), so their
+entries: IDX -4.06% vs -0.53%; US original -3.65% vs -0.60% (superseded by `research/E2/repair_v2/REVIEW.md`); crypto -1.90% vs +1.42%), so their
 candidates are PASS until a plan that survives a test exists. The plans are still recorded and
 scored, so a rejected name that runs shows up as a missed gain, not as nothing.
 
