@@ -58,3 +58,11 @@ have the first and not the second (2023 validation, average net per trade vs mat
 entries: IDX -4.06% vs -0.53%; US -3.65% vs -0.60%, -4.47% at point-in-time costs per `research/E2/ERRATA.md`; crypto -1.90% vs +1.42%), so their
 candidates are PASS until a plan that survives a test exists. The plans are still recorded and
 scored, so a rejected name that runs shows up as a missed gain, not as nothing.
+
+Scorer `paper-score-v3` uses Jakarta dates for IDX split events and New York dates for US
+events. US verification requires a definite event statement with the exact ratio and matching
+effective date (`us-actions-v2`). Proposals, ranges, inverted ratios and undated matches are
+unverified; `RATIO_CONFIRMED` is diagnostic only. New repair panels reject v1 schedules and
+coverage files; recheck their evidence first. The conservative parser can miss valid events
+with unsupported wording, which need further evidence review. Earlier outcomes and research
+artifacts retain their original versions; corrections are new records.

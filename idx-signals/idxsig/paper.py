@@ -691,8 +691,10 @@ def record_scan(out: dict, timestamper=None) -> list[Path]:
     return [feat_path, LEDGER, *[t for t in tokens if t.exists()]]
 
 
-SCORER_ID = "paper-score-v2"
-# v2 (2026-10-08, before any outcome was recorded): units from the provider's split records,
+SCORER_ID = "paper-score-v3"
+# v3 (2026-10-08, before any outcome was recorded): market-local event dates and only
+# us-actions-v2 VERIFIED event evidence accepted (ratio-only matches are diagnostic).
+# Units from the provider's split records,
 # each corroborated by an SEC filing for US names, never from a change in price ratios; the
 # recorded signal-day close must reconcile with the scoring data in those units (rtol 1e-3);
 # entry and exit cost tiers at their own sessions; scoring bars use the causal preprocessing.
@@ -727,7 +729,7 @@ def scoring_units(decision: dict, m: Market, events: pd.DataFrame, verify=None) 
         status, found = verify(ev) if verify else ("NOT_CHECKED", [])
         evidence.append({"effective_session": ev.effective_session, "ratio": ev.provider_ratio, "status": status,
                          "filings": found})
-        if status not in ("VERIFIED", "RATIO_CONFIRMED"):
+        if status != "VERIFIED":
             return None, (f"split record {ev.provider_ratio} effective {ev.effective_session} is not corroborated "
                           f"by an SEC filing ({status})"), evidence
         actions.append({"effective_session": ev.effective_session, "new_shares": ev.numerator,
@@ -781,7 +783,7 @@ def score_pending(manifest: Path, timestamper=None, market: str = "IDX", verify=
     if market in ("US", "IDX"):
         from . import us_actions
 
-        events = us_actions.yahoo_events(manifest)
+        events = us_actions.yahoo_events(manifest, market=market)
     outcomes = []
     for r in pending:
         if not _window_complete(r, m):
