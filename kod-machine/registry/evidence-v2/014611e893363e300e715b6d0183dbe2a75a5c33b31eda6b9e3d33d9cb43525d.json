@@ -1,0 +1,30 @@
+{
+  "archive_time": null,
+  "archive_url": null,
+  "archived_copy": null,
+  "as_of_cutoff": "2025-03-08T16:00:00Z",
+  "content_sha256": null,
+  "content_timestamps": [],
+  "content_verified": false,
+  "corroborated_by": [],
+  "document_type": "news article",
+  "event_time": null,
+  "evidence_grade": "C",
+  "evidence_hash_version": "KOD-EVIDENCE-v2",
+  "evidence_id": "014611e893363e300e715b6d0183dbe2a75a5c33b31eda6b9e3d33d9cb43525d",
+  "existence_verified": false,
+  "grade_ceiling": "C",
+  "provenance": "web page as served on 2026-10-08",
+  "publication_time": "2025-02-20T23:59:59Z",
+  "publication_time_basis": "date printed on the article page (20 February 2025); no time of day shown, so the end of that UTC day is used",
+  "publisher": "Pharmaceutical Technology (GlobalData)",
+  "retrieval_time": "2026-10-08T12:35:00Z",
+  "source_type": "SECONDARY",
+  "source_url": "https://www.pharmaceutical-technology.com/news/zealand-pharma-steadfastly-upholds-amylin-based-obesity-drug-strategy/",
+  "title": "Zealand Pharma steadfastly upholds amylin-based obesity drug strategy",
+  "verification_method": {
+    "content": "NONE",
+    "existence": "NONE"
+  },
+  "verification_notes": "Read through a fetch tool (direct download returned 403); bytes not held; retrieval time approximate. Reports the partner search for petrelintide 'remains ongoing', the CEO on the 20 February call saying the company is 'exactly where it wants to be in the process', and a preference for a co-development and co-commercialisation partnership with profit-sharing. No date or window."
+}
