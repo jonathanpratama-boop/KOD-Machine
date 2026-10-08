@@ -1,0 +1,16 @@
+{
+  "files": {
+    "PROTOCOL.md": "ff5d6c165071315c42e526be2f9b03d28775459f40299f4b39b0b59bb43946a5",
+    "pin/ZEAL.CO.json": "a20b3934ebc11a3f4d44e9e11d73e5636ecf3543994ce58ad5b10d6b40598b8b",
+    "pin/nasdaq_news_zealand_start0.json": "b45a971a6398fa8fa99e9019e56e38be903a5327089e6426465565b6d7bfc159",
+    "pin/nasdaq_news_zealand_start100.json": "08440d6315691042bce4af4d351b13c7258795a7ee3e938949655ac5d19e6e2a",
+    "pin/nasdaq_news_zealand_start200.json": "2facb26472980573e533df059874ee808418b4096712b91ee7969a3c9bf7af93",
+    "pin/nasdaq_news_zealand_start300.json": "ab34e0c6f55e94ab1a85df92189b864c8ee4df3c9917206021d7919fd69317d3",
+    "pin/nasdaq_news_zealand_start400.json": "ca3047196ff41adba2a2f16ace2a4194b1c182968224297d38f2912d8b0a9cc0",
+    "protocol.json": "299d9b6e0f4b29f3c5c8a1ea8367381a8f2fbbbfd5b8340ee855b9d406d63877"
+  },
+  "note": "RFC 3161 tokens in timestamps/ sign the exact bytes of this file; verify with kod.timestamp.RFC3161Timestamper().verify(authority, token, bytes)",
+  "protocol_id": "ZEALAND_PILOT_v1",
+  "stage": "01_protocol",
+  "written_at": "2026-10-08T12:28:33Z"
+}

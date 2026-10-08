@@ -1,0 +1,145 @@
+{
+  "protocol_id": "ZEALAND_PILOT_v1",
+  "frozen_at": "the time in the RFC 3161 tokens on FREEZE.json (timestamps/), which lists this file's sha256",
+  "status": "DISCOVERY_ONLY",
+  "not_validation": "A single case selected on its outcome. It is never counted as validation, never enters KOD calibration (call_type RETROSPECTIVE), never enters the paper ledger, and authorizes no order.",
+  "frozen_components_untouched": {
+    "kod_detector": {
+      "path": "kod-machine/kod/detectors.py",
+      "rule_version": "KOD-DET-v0",
+      "sha256": "0a0e0a73119cbf9d0b2322e2a81b60392040eb333355c6e88195374fe1774067"
+    },
+    "kod_doctrine": {
+      "path": "kod-machine/doctrine/KOD_DOCTRINE_v0.md",
+      "sha256": "246deb4a63c8168622e86cccecf04101801f2e1bf4d8c765396f3e277c294f0e"
+    },
+    "astra": "not read, not changed",
+    "paper_policy": "PAPER-POLICY-v3 unchanged; no paper record"
+  },
+  "selection": {
+    "rule": "largest single-session close-to-close return of the home listing in the pinned price series (2015-01-02..2026-10-08)",
+    "price_input": {
+      "path": "01_protocol/pin/ZEAL.CO.json",
+      "manifest": "idx-signals/data/manifests/yahoo_dk-20261008T121850Z.jsonl",
+      "sha256": "a20b3934ebc11a3f4d44e9e11d73e5636ecf3543994ce58ad5b10d6b40598b8b",
+      "source": "Yahoo Finance v8 chart ZEAL.CO, daily, retrieved 2026-10-08T12:18:51Z"
+    },
+    "result": [
+      {
+        "rank": 1,
+        "session": "2025-03-12",
+        "close_to_close_pct": 37.89,
+        "studied": true
+      },
+      {
+        "rank": 2,
+        "session": "2024-02-26",
+        "close_to_close_pct": 35.67,
+        "studied": false
+      },
+      {
+        "rank": 3,
+        "session": "2022-09-30",
+        "close_to_close_pct": 28.46,
+        "studied": false
+      }
+    ],
+    "bias": "Selection on outcome. Any regularity found here is a hypothesis about other events, never evidence of an edge."
+  },
+  "event": {
+    "source": "Nasdaq Nordic company announcement system (api.news.eu.nasdaq.com), market 'Main Market, Copenhagen'",
+    "disclosure_id": 1348334,
+    "category": "Inside information",
+    "headline": "Zealand Pharma and Roche enter collaboration and license agreement to co-develop and co-commercialize petrelintide as a future foundational therapy for people with overweight and obesity",
+    "message_url": "https://view.news.eu.nasdaq.com/view?id=bd544cad5c461f81b38c38cafea0b8860&lang=en&src=listed",
+    "release_time_exchange": "2025-03-12 07:00:00 CET",
+    "release_time_utc": "2025-03-12T06:00:00Z",
+    "release_time_basis": "releaseTime field of the exchange announcement system, queried with timeZone=CET; 2025-03-12 precedes the EU switch to summer time (2025-03-30), so CET = UTC+1",
+    "pin_files": [
+      "01_protocol/pin/nasdaq_news_zealand_start0.json",
+      "01_protocol/pin/nasdaq_news_zealand_start100.json",
+      "01_protocol/pin/nasdaq_news_zealand_start200.json",
+      "01_protocol/pin/nasdaq_news_zealand_start300.json",
+      "01_protocol/pin/nasdaq_news_zealand_start400.json"
+    ],
+    "event_session": "2025-03-12",
+    "previous_announcement_by_issuer": "2025-02-20 13:00:00 CET, disclosure 1344296 (AGM notice); none between that and the event in the pinned feed"
+  },
+  "listing": {
+    "issuer": "Zealand Pharma A/S",
+    "reference_listing": "Nasdaq Copenhagen, Main Market, ticker ZEAL, currency DKK (Yahoo symbol ZEAL.CO; Yahoo meta: exchange CPH, currency DKK, timezone Europe/Copenhagen)",
+    "other_lines": "The US ADS listing ended in 2022 (to be evidenced in step 2). Any US OTC line is not the reference listing and is not assumed tradable or informative.",
+    "all_prices": "home-listing official open, high, low, close and volume in DKK; no currency conversion"
+  },
+  "cutoffs": {
+    "decision_cutoff": "2025-03-11T16:00:00Z",
+    "decision_cutoff_meaning": "17:00 CET on 2025-03-11, the end of the last Copenhagen session before the release. Fixed; if the official close is shown to be earlier, the cutoff is unchanged (nothing from the issuer was released in between).",
+    "T-30D": "2025-02-09T16:00:00Z",
+    "T-72H": "2025-03-08T16:00:00Z",
+    "T-24H": "2025-03-10T16:00:00Z",
+    "information_rule": "A fact enters a set only from evidence whose publication time is at or before that set's cutoff. Later accounts are RETROSPECTIVE grade D and are labelled as such."
+  },
+  "evidence_plan": {
+    "S1": "Nasdaq Nordic announcements by Zealand Pharma A/S published by each cutoff: feed metadata, message HTML, attachments. PRIMARY; existence by PRIMARY_SOURCE_TIMESTAMP (the exchange system's release time). Bytes retrieved now and hashed; content verified only if an independent archive capture dated by the cutoff matches.",
+    "S2": "Independent archive captures (web.archive.org) dated by the cutoff, of S1 documents and the issuer's investor pages, when reachable.",
+    "S3": "Nasdaq Copenhagen announcements by Novo Nordisk A/S in 2025-02-09..2025-03-11 concerning amylin-class assets (the other Copenhagen issuer with an amylin-class programme), as dated market context.",
+    "S4": "Press and analyst reporting only through archive captures dated by the cutoff. Today's search results are leads, not evidence; a later account is RETROSPECTIVE grade D.",
+    "S5": "Copenhagen market conventions (session times, auctions, volatility guards, settlement, transfer taxes) from the exchange's and the tax authority's own documents. A document retrieved now that does not date its rule is graded and labelled accordingly; a convention not evidenced for March 2025 is stated as an assumption.",
+    "S6": "Prices: the pinned Yahoo series; cross-checked against a second source for the bars used in the entry analysis when one is reachable. Benchmark OMX Copenhagen 25 (Yahoo ^OMXC25), pulled with its own manifest.",
+    "card": "One RETROSPECTIVE KOD-CARD-v3 card, case_id KOD-R-ZEAL-20250312, integrity PARTIAL (price facts rest on a series retrieved now, which no evidence object can date), every non-null fact citing KOD-EVIDENCE-v2 objects where they exist; opened with `python3 -m kod open`, evaluated by the frozen KOD-DET-v0, closed with the event-session outcome."
+  },
+  "fact_definitions": {
+    "_status": "Operational definitions for this case's card. They define inputs only; detector logic and RULE_VERSION are unchanged. Price measures reuse E1-SIGNALS-v1 (idx-signals/research/E1/protocol.json) at the close of the last session at or before each set's cutoff.",
+    "dated_catalyst_known": "true iff a document published by the cutoff states a specific date, or a window of at most 31 days, for an expected event of the kind that occurred (a petrelintide partnership or licensing transaction). A longer window is false and is described in `catalyst`.",
+    "catalyst": "free text: the best-evidenced expected catalyst and its stated timing",
+    "primary_document_public": "true iff a PRIMARY document published by the cutoff discloses the transaction itself (the counterparty or agreed terms). Statements of intent to partner are not the transaction.",
+    "price_already_repriced": "true iff ret20 >= +30% (the E30 magnitude) at the set's last close",
+    "volume_creep_before_story": "true iff the median volume of the last 5 sessions divided by the median volume of the 20 sessions before them is >= 1.5",
+    "price_quiet_vs_own_range": "true iff the median rngr over the last 5 sessions is <= 1.0 and |ret5| <= 2 x vol20 x sqrt(5)",
+    "narrative_only": "true iff support for the expected catalyst comes only from SECONDARY or RETROSPECTIVE sources; false if a PRIMARY document states the intent",
+    "mechanism_in_primary_docs": "true iff a PRIMARY document published by the cutoff states how value would be realized (for example a stated plan to partner the asset and on what terms or timing)",
+    "reconstruction_status": "PARTIAL_PUBLIC for every set: exchange announcements are covered, newswires, broker research, options and order-book data are not"
+  },
+  "entries": {
+    "_rule": "Defined before any return is computed. Prices are home-listing official opens and closes. Pre-release entries are evaluated as what a rule would have needed to know, not as trades anyone could justify.",
+    "E1_PRE_T30D": "close of the first session at or after the T-30D cutoff (2025-02-10)",
+    "E2_PRE_T24H": "close of the session that ends at the T-24H cutoff (2025-03-10); the T-72H set maps to the same first-available close",
+    "E3_PRE_CUTOFF": "close of 2025-03-11 (the decision cutoff)",
+    "E4_EVENT_OPEN": "official open of 2025-03-12 (the opening auction, the first home-listing execution after the release)",
+    "E5_EVENT_CLOSE": "official close of 2025-03-12",
+    "E6_NEXT_OPEN": "official open of 2025-03-13",
+    "exits": "official close of the event session +0 (entries before the close only), +1, +5, +20 and +60 sessions",
+    "path": "lowest low and highest high between entry and exit, reported as path risk (descriptive, not profit)",
+    "benchmark": "OMX Copenhagen 25 over the same close-to-close or open-to-close span; excess = ZEAL net minus index gross",
+    "liquidity": "entry-session traded value (volume x close, DKK) and the share of it a reference position of DKK 1,000,000 would be"
+  },
+  "costs": {
+    "_status": "ASSUMPTIONS, not Copenhagen facts; stated so they can be replaced",
+    "base_per_side": 0.002,
+    "stress_per_side": 0.006,
+    "auction_fill": "the full reference position fills at the official auction price (not verifiable from daily bars)",
+    "transfer_tax": "none modelled; whether any applies is a step-2 evidence item",
+    "fx": "none: returns are in DKK",
+    "not_assumed": [
+      "US pre-market or after-hours trading",
+      "US 09:30 open or 16:00 close",
+      "LULD bands or US halts",
+      "US settlement or short-sale rules",
+      "an OTC line as an execution venue"
+    ]
+  },
+  "conclusion_criteria": {
+    "_rule": "Fixed now. The pilot ends with exactly one of FROZEN_HYPOTHESIS (untested, for independent testing) or NO_ACTIONABLE_EDGE_ESTABLISHED. A single case cannot establish an edge in either direction.",
+    "C1_ex_ante": "The condition is visible in an information set built only from evidence graded A, B or C published by that set's cutoff, without the outcome.",
+    "C2_general": "The condition is stated without Zealand-specific constants (no ticker, date, counterparty or deal size) and defines a population with other members, so it can be tested on events not used here.",
+    "C3_feasible": "An entry the condition would trigger exists on the home listing at a published price, with entry-session traded value at least 20 x the reference position, and its net return at the +5-session exit under base costs is positive and above the benchmark.",
+    "C4_falsifiable": "Population, trigger, entry, exit, horizon, costs, benchmark, minimum sample and success threshold are written down, and the test data exclude Zealand 2025-03.",
+    "post_release_hypotheses": "A post-release (drift) hypothesis is held to the same four criteria, with the release itself as the trigger.",
+    "otherwise": "NO_ACTIONABLE_EDGE_ESTABLISHED, naming each failed criterion."
+  },
+  "seen_before_freezing": {
+    "prices": "the three largest session returns above; bars 2025-02-25 close 719; 2025-03-11 open 507.5, close 488.80, volume 422,143; 2025-03-12 open 700.0, high 725, low 598, close 674, volume 2,633,784; closes 2025-03-13 602, 2025-03-14 585.5, 2025-03-18 558",
+    "documents": "headlines, categories and release times of the issuer's Nasdaq announcements (pinned feed); the deal's headline terms (USD 1.65bn upfront, up to USD 5.3bn in total) from Roche's 2025-03-12 media release and a press reprint, read while identifying the event; no text of any announcement or report published before the cutoff",
+    "not_computed": "no return for any entry above, no pre-event volume or range statistic, no benchmark"
+  }
+}

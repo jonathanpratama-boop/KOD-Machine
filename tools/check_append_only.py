@@ -15,6 +15,7 @@ Frozen directories: a file, once committed, may never be modified, deleted or re
   kod-machine/registry/evidence-v2/ evidence objects v2, archived bytes, content timestamps
   kod-machine/registry/timestamps/  RFC 3161 tokens
   kod-machine/tsa/               pinned timestamp-authority certificates
+  kod-machine/research/          KOD case studies: protocols, evidence and findings, one directory per stage
 
 Append-only logs: the new content must start with the old content, byte for byte.
   idx-signals/results/RUNS.jsonl
@@ -51,6 +52,7 @@ FROZEN_DIRS = (
     "kod-machine/registry/evidence-v2/",
     "kod-machine/registry/timestamps/",
     "kod-machine/tsa/",
+    "kod-machine/research/",
 )
 APPEND_ONLY = (
     "idx-signals/results/RUNS.jsonl",
