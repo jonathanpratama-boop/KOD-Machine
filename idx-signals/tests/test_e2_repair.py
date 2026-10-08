@@ -274,3 +274,53 @@ class Coverage(unittest.TestCase):
         self.assertEqual(us_actions.check_jump(dated, {"A": 1}, near, "A", "2023-03-06", 9.6, False)["status"],
                          "PROVIDER_DATE_MISMATCH")
         self.assertEqual(us_actions.check_jump(dated, {}, no_events, "A", "2023-03-06", 9.6, False)["status"], "NO_CIK")
+
+
+class ShareCounts(unittest.TestCase):
+    """sec-shares-v1: cover-page share counts corroborate post-window splits."""
+
+    def ev(self, *rows):
+        return pd.DataFrame([dict(effective_session=d, numerator=n, denominator=m, kind=k) for d, n, m, k in rows])
+
+    def pt(self, end, val, filed=None):
+        return {"end": end, "val": val, "filed": filed or end, "form": "10-Q", "accn": "x"}
+
+    def test_a_reverse_split_shows_in_the_share_count(self):
+        pts = [self.pt("2024-03-25", 745_426_859, "2024-03-28"), self.pt("2024-05-06", 49_719_375)]
+        res = us_actions.check_shares(pts, self.ev(("2024-04-10", 1, 15, "SPLIT")), "2024-04-10", "2023-12-29")
+        self.assertTrue(res["ok"])
+        self.assertAlmostEqual(res["q"], 1.0, places=2)
+
+    def test_dilution_beyond_twofold_is_not_enough(self):
+        pts = [self.pt("2024-03-31", 13_390_659), self.pt("2025-03-31", 568_021)]
+        self.assertFalse(us_actions.check_shares(pts, self.ev(("2024-11-26", 1, 75, "SPLIT")), "2024-11-26",
+                                                 "2023-12-29")["ok"])
+
+    def test_a_count_before_the_window_end_cannot_place_the_split_after_it(self):
+        """Guards against: accepting a split that might have happened inside the window."""
+        pts = [self.pt("2023-11-10", 1e8), self.pt("2024-02-10", 1e7)]
+        res = us_actions.check_shares(pts, self.ev(("2024-01-05", 1, 10, "SPLIT")), "2024-01-05", "2023-12-29")
+        self.assertFalse(res["ok"])
+
+    def test_a_count_filed_after_the_split_is_not_used_as_the_before(self):
+        """Guards against: a restated (already split-adjusted) count posing as the pre-split one."""
+        pts = [self.pt("2024-03-31", 1e7, filed="2024-05-15"), self.pt("2024-06-30", 1e7)]
+        res = us_actions.check_shares(pts, self.ev(("2024-04-15", 1, 10, "SPLIT")), "2024-04-15", "2023-12-29")
+        self.assertFalse(res["ok"])
+
+    def test_two_splits_between_counts_are_checked_together(self):
+        pts = [self.pt("2024-01-31", 1e9), self.pt("2024-12-31", 1e9 / 50 * 1.1)]
+        ev = self.ev(("2024-03-01", 1, 10, "SPLIT"), ("2024-09-01", 1, 5, "SPLIT"))
+        res = us_actions.check_shares(pts, ev, "2024-03-01", "2023-12-29")
+        self.assertTrue(res["ok"])
+        self.assertEqual(res["events_between"], ["2024-03-01", "2024-09-01"])
+
+    def test_a_price_adjustment_between_counts_blocks_it(self):
+        pts = [self.pt("2024-01-31", 1e8), self.pt("2024-06-30", 1e7)]
+        ev = self.ev(("2024-03-01", 1, 10, "SPLIT"), ("2024-04-01", 1281, 1000, "NOT_A_SPLIT"))
+        self.assertFalse(us_actions.check_shares(pts, ev, "2024-03-01", "2023-12-29")["ok"])
+
+    def test_a_small_split_needs_a_tight_match(self):
+        pts = [self.pt("2024-01-31", 1e8), self.pt("2024-06-30", 1.5e8 * 1.3)]  # 3:2 plus 30% issuance
+        self.assertFalse(us_actions.check_shares(pts, self.ev(("2024-03-01", 3, 2, "SPLIT")), "2024-03-01",
+                                                 "2023-12-29")["ok"])

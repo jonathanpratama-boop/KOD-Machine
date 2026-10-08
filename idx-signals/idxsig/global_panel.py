@@ -257,7 +257,10 @@ def build_us_repair(raw_manifest: Path, schedule_manifest: Path, end: str, cover
     panel["unit_factor"] = factor
     first_session = panel["date"].min()
     window_first = smeta["effective_after"]
-    bad = sched[~sched["status"].isin(us_actions.ACCEPTED)]
+    # A schedule may declare a wider research acceptance (share-count corroboration for records
+    # after the window); never anything outside RESEARCH_ACCEPTED.
+    accepted = tuple(set(smeta.get("accepted_statuses", us_actions.ACCEPTED)) & set(us_actions.RESEARCH_ACCEPTED))
+    bad = sched[~sched["status"].isin(accepted)]
     quarantine = {t: sorted(set(g["status"])) for t, g in bad.groupby("ticker")}
     coverage = None
     if coverage_manifest is not None:
@@ -318,12 +321,13 @@ def build_us_repair(raw_manifest: Path, schedule_manifest: Path, end: str, cover
                            "jump_threshold": coverage.get("jump_threshold"), "window": coverage.get("window")}
                           if coverage else None),
         "unit_schedule": {"manifest": Path(schedule_manifest).name, "version": smeta.get("version"),
-                          "accepted_statuses": list(us_actions.ACCEPTED), "effective_after": window_first,
+                          "accepted_statuses": sorted(accepted), "effective_after": window_first,
+                          "share_count_corroboration": smeta.get("share_count_corroboration"),
                           "status_counts": smeta.get("status_counts")},
         "unit_quarantine": {"tickers": quarantine, "reason_counts": reason_counts,
                             "rule": "a name with any provider split record effective after "
                                     f"{window_first} that SEC filings do not corroborate (status not in "
-                                    f"{list(us_actions.ACCEPTED)}), or a jump inside the window that SEC filings tie "
+                                    f"{sorted(accepted)}), or a jump inside the window that SEC filings tie "
                                     f"to a split the provider did not record (statuses {list(us_actions.COVERAGE_QUARANTINE)})"},
         "qa": {"preprocessing_version": qa.get("preprocessing_version"), "spike_rows_dropped": 0,
                "qa_reverting_spike_rows": int(panel["qa_reverting_spike"].sum()),

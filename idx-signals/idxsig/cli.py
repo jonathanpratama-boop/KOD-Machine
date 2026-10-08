@@ -48,6 +48,13 @@ def main(argv=None) -> int:
     p_rp.add_argument("--schedule", required=True, help="a us_splits-*.json manifest from us-actions")
     p_rp.add_argument("--end", required=True, help="read nothing after this date into the panel")
     p_rp.add_argument("--coverage", help="a us_splits-coverage-*.json manifest from us-coverage")
+    p_sh = sub.add_parser("us-share-check", help="corroborate post-window split records with SEC cover-page share counts")
+    p_sh.add_argument("--schedule", required=True, help="a us_splits-*.json from the current text verifier")
+    p_sh.add_argument("--raw-manifest", required=True)
+    p_sh.add_argument("--window-end", required=True)
+    p_sh.add_argument("--user-agent", default=None)
+    p_sh.add_argument("--cache-dir")
+    p_sh.add_argument("--offline", action="store_true")
     p_uc = sub.add_parser("us-coverage", help="search SEC for splits the provider did not record (large jumps)")
     p_uc.add_argument("--raw-manifest", required=True)
     p_uc.add_argument("--start", required=True)
@@ -184,6 +191,17 @@ def main(argv=None) -> int:
 
         print(global_panel.build_us_repair(Path(args.manifest), Path(args.schedule), args.end,
                                            Path(args.coverage) if args.coverage else None))
+    elif args.cmd == "us-share-check":
+        import os
+
+        from . import us_actions
+
+        agent = args.user_agent or os.environ.get("IDXSIG_SEC_USER_AGENT")
+        if not agent:
+            print("error: set --user-agent or IDXSIG_SEC_USER_AGENT (SEC requires a contact)", file=sys.stderr)
+            return 2
+        print(us_actions.build_share_corroboration(Path(args.schedule), Path(args.raw_manifest), args.window_end, agent,
+                                                   Path(args.cache_dir) if args.cache_dir else None, args.offline))
     elif args.cmd == "us-coverage":
         import os
 

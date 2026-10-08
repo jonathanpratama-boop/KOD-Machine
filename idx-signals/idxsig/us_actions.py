@@ -585,3 +585,104 @@ def build_coverage(raw_manifest: Path, user_agent: str, start: str, end: str, ca
         fh.write(json.dumps(meta, indent=2, sort_keys=True) + "\n")
     log(json.dumps(meta["status_counts"]))
     return mpath
+
+
+# ------------------------------------------------------------------------------ share counts
+# A second, independent corroboration for research panels: the shares outstanding a company
+# reports on its SEC cover pages (XBRL dei:EntityCommonStockSharesOutstanding, as filed). A real
+# 1-for-10 reverse split cuts the count about tenfold; dilution between reports only raises it.
+# Used only for records effective AFTER the research window: there the exact session does not
+# affect any in-window price unit, so proving the ratio and that the split came after the window
+# is enough. Inside the window the text rule (VERIFIED, with the date) stays the only acceptance.
+# Paper scoring does not use this. Rule fixed 2026-10-08 before running on the full set.
+SHARES_VERSION = "sec-shares-v1"
+SHARES_RULE = {"q_low": 0.8, "q_high": 2.0, "max_bracket_days": 400, "margin": 0.5}
+RESEARCH_ACCEPTED = ("VERIFIED", "SHARES_CONFIRMED")
+
+
+def share_points(client: SecClient, cik: int) -> list[dict]:
+    url = f"https://data.sec.gov/api/xbrl/companyconcept/CIK{cik:010d}/dei/EntityCommonStockSharesOutstanding.json"
+    status, body = client.get(url)
+    if status != 200:
+        return []
+    facts = json.loads(body).get("units", {}).get("shares", [])
+    return [{"end": f["end"], "val": float(f["val"]), "filed": f.get("filed", ""), "form": f.get("form"),
+             "accn": f.get("accn")} for f in facts if f.get("val")]
+
+
+def check_shares(points: list[dict], ticker_events: pd.DataFrame, effective: str, window_end: str,
+                 rule: dict = SHARES_RULE) -> dict:
+    """Whether the cover-page share counts around `effective` show the provider's split(s)."""
+    pre = [p for p in points if p["end"] < effective and p["filed"] < effective and p["end"] >= window_end]
+    post = [p for p in points if p["end"] >= effective]
+    if not pre or not post:
+        return {"ok": False, "why": "no as-filed count after the window and before the split, or none after it"}
+    a = max(pre, key=lambda p: (p["end"], p["filed"]))
+    b = min(post, key=lambda p: (p["end"], p["filed"]))
+    between = ticker_events[(ticker_events["effective_session"] > a["end"])
+                            & (ticker_events["effective_session"] <= b["end"])]
+    if (between["kind"] != "SPLIT").any():
+        return {"ok": False, "why": "a non-split price adjustment lies between the two counts"}
+    expected = float(np.prod(between["numerator"] / between["denominator"])) if len(between) else 1.0
+    days = (date.fromisoformat(b["end"]) - date.fromisoformat(a["end"])).days
+    observed = b["val"] / a["val"]
+    q = observed / expected
+    ok = (expected != 1.0 and rule["q_low"] <= q <= rule["q_high"] and days <= rule["max_bracket_days"]
+          and abs(np.log(q)) < rule["margin"] * abs(np.log(expected)))
+    return {"ok": bool(ok), "pre": a, "post": b, "events_between": between["effective_session"].tolist(),
+            "expected": expected, "observed": observed, "q": q, "bracket_days": days,
+            "why": "consistent" if ok else "count change does not match the provider ratio within the rule"}
+
+
+def build_share_corroboration(schedule_manifest: Path, raw_manifest: Path, window_end: str, user_agent: str,
+                              cache_dir: Path | None = None, offline: bool = False, log=print) -> Path:
+    """A new schedule: the text-verified schedule with SHARES_CONFIRMED added where the rule holds."""
+    smeta = json.loads(Path(schedule_manifest).read_text(encoding="utf-8"))
+    if smeta.get("version") != VERSION:
+        raise ValueError("share corroboration builds on a schedule from the current text verifier")
+    sched_path = PKG_ROOT / smeta["schedule"]
+    if hashlib.sha256(sched_path.read_bytes()).hexdigest() != smeta["schedule_sha256"]:
+        raise RuntimeError(f"{Path(schedule_manifest).name}: schedule file changed")
+    sched = pd.read_csv(sched_path, dtype={"ticker": str}, keep_default_na=False, na_values=[""])
+    events = yahoo_events(raw_manifest)
+    stamp = utc_stamp().replace("-", "").replace(":", "")
+    client = SecClient(user_agent, cache_dir or RAW / "sec" / stamp, offline=offline)
+    ciks = cik_map(client)
+    todo = sched[(sched["kind"] == "SPLIT") & (sched["status"] != "VERIFIED") & (sched["effective_session"] > window_end)]
+    sched["shares_evidence"] = ""
+    points_by = {}
+    for i, r in enumerate(todo.itertuples()):
+        cik = ciks.get(r.ticker.upper())
+        if cik is None:
+            continue
+        if cik not in points_by:
+            points_by[cik] = share_points(client, cik)
+        res = check_shares(points_by[cik], events[events["ticker"] == r.ticker], r.effective_session, window_end)
+        sched.at[r.Index, "shares_evidence"] = json.dumps(res, sort_keys=True, default=str)
+        if res["ok"]:
+            sched.at[r.Index, "status"] = "SHARES_CONFIRMED"
+        if (i + 1) % 100 == 0:
+            log(f"shares {i + 1}/{len(todo)}")
+    out_dir = PKG_ROOT / "data" / "corporate_actions"
+    csv_path = out_dir / f"us_splits-shares-{stamp}.csv"
+    with csv_path.open("x", encoding="utf-8", newline="") as fh:
+        sched.to_csv(fh, index=False, lineterminator="\n")
+    sec_manifest = write_manifest(f"sec_share_counts-{stamp}.jsonl",
+                                  {"source": "sec_edgar_xbrl", "user_agent": user_agent, "purpose": "split share counts"},
+                                  [r for r in {r["path"]: r for r in client.records}.values()])
+    meta = {**{k: smeta[k] for k in ("raw_manifest", "raw_manifest_sha256", "effective_after", "universe_end")},
+            "version": VERSION, "built_at": utc_stamp(), "schedule": rel(csv_path),
+            "schedule_sha256": hashlib.sha256(csv_path.read_bytes()).hexdigest(),
+            "text_schedule": {"manifest": Path(schedule_manifest).name, "sha256": hashlib.sha256(
+                Path(schedule_manifest).read_bytes()).hexdigest(), "status_counts": smeta.get("status_counts")},
+            "share_count_corroboration": {"version": SHARES_VERSION, "rule": SHARES_RULE, "window_end": window_end,
+                                          "sec_manifest": sec_manifest.name, "candidates": int(len(todo)),
+                                          "confirmed": int((sched["status"] == "SHARES_CONFIRMED").sum()),
+                                          "offline": offline, "offline_cache_misses": len(client.cache_misses)},
+            "events_in_scope": int(len(sched)), "status_counts": sched["status"].value_counts().to_dict(),
+            "accepted_statuses": list(RESEARCH_ACCEPTED)}
+    mpath = out_dir / f"us_splits-shares-{stamp}.json"
+    with mpath.open("x", encoding="utf-8") as fh:
+        fh.write(json.dumps(meta, indent=2, sort_keys=True) + "\n")
+    log(json.dumps(meta["share_count_corroboration"]))
+    return mpath
