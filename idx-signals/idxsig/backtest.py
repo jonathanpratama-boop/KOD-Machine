@@ -41,6 +41,7 @@ from .corporate_actions import REGISTRY_VERSION, RegistryMismatch
 from .execution import FIRST_SKIP, SCORED, STATUS, ExecConfig, Market, execute
 from .market import Fees
 from .rules import LookaheadError
+from .profiles import PROFILES
 from .sources.idx_mirror import FIRST_SNAPSHOT
 
 
@@ -62,6 +63,7 @@ class RunConfig:
     ca_mode: str = "registry"  # "exclude" / "value_preserving": earlier modes, to reproduce older runs
     lookahead_cuts: int | None = None  # None: prefix-first, causal by construction; N: legacy sampled check
     controls_version: str = "v2"
+    market: str = "IDX"  # profiles.PROFILES: IDX, US, CRYPTO
 
 
 def _equal_with_nan(a: np.ndarray, b: np.ndarray) -> bool:
@@ -153,7 +155,12 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
     when cfg.ca_mode == "registry"."""
     rule = rule_registry.get(cfg.rule_id)
     holding = cfg.holding_days or rule.holding_days
+    profile = PROFILES[cfg.market]
+    idx = profile.market == "IDX"
     exec_cfg = ExecConfig(
+        lot_size=profile.lot_size,
+        entry_price=profile.entry,
+        cost_tiers=profile.cost_tiers,
         holding_days=holding,
         entry_lag=cfg.entry_lag,
         notional=cfg.notional,
@@ -162,9 +169,9 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
         data_end_exit=cfg.data_end_exit,
         ca_mode=cfg.ca_mode,
     )
-    start = cfg.start or FIRST_SNAPSHOT
+    start = cfg.start or (FIRST_SNAPSHOT if idx else panel_meta["default_start"])
     end = cfg.end or panel_meta["source_boundary"]
-    full_market = Market.from_panel(panel_df)
+    full_market = Market.from_panel(panel_df, price_limits=profile.price_limits)
     lo, hi = full_market.bounds(start, end)
     ca_info = {"mode": cfg.ca_mode}
     if cfg.ca_mode == "registry":
@@ -212,7 +219,8 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
         same_tick[:, cols] = rng.choice(np.flatnonzero(evaluable[:, s]), size=(draws, len(cols)), replace=True)
     # Features from the whole panel, then windowed: each uses only data at or before its session,
     # and rolling windows are warm at the window's first session.
-    feats = {k: v[:, lo:hi] for k, v in controls.features(full_market, cfg.controls_version).items()}
+    feats = {k: v[:, lo:hi] for k, v in controls.features(full_market, cfg.controls_version,
+                                                          profile.band_edges).items()}
     matched_tick, level_used = controls.matched_draws(
         evaluable, feats, a_tick, a_sig, draws, np.random.default_rng(cfg.seed + 1), cfg.controls_version
     )
@@ -252,12 +260,16 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
         by_year.append(row)
 
     warnings = []
-    if np.datetime64(start, "D") < np.datetime64(FIRST_SNAPSHOT, "D"):
+    if idx and np.datetime64(start, "D") < np.datetime64(FIRST_SNAPSHOT, "D"):
         warnings.append(
             f"window starts before {FIRST_SNAPSHOT}, the mirror's first snapshot: names that delisted before "
             f"then are missing, so the universe before {FIRST_SNAPSHOT} is survivor-biased"
         )
-    if np.datetime64(end, "D") > np.datetime64(panel_meta["source_boundary"], "D"):
+    if not idx:
+        warnings.append(f"{profile.market}: {panel_meta.get('survivorship', 'survivorship not stated')}")
+        if profile.assumption_note:
+            warnings.append(profile.assumption_note)
+    if idx and np.datetime64(end, "D") > np.datetime64(panel_meta["source_boundary"], "D"):
         warnings.append(
             f"window runs past {panel_meta['source_boundary']}: after that date the panel is survivor-only "
             f"(names delisted later stop at {panel_meta['source_boundary']} and exit as EXIT_DATA_END)"
@@ -273,14 +285,15 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
     if excluded:
         warnings.append(f"{excluded} trades were held across a corporate action the model does not share-scale "
                         f"and are not scored (ca_mode={cfg.ca_mode}); the baselines apply the same rule")
-    if cfg.ca_mode != "registry":
+    if idx and cfg.ca_mode != "registry":
         warnings.append(f"ca_mode={cfg.ca_mode} is an earlier corporate-action model, kept to reproduce older runs: "
                         f"it treats every integer reset as a split")
     if lookahead["mode"] != rule_registry.CAUSAL_MODE:
         warnings.append("lookahead check was sampled, not prefix-first: the signals are not causal by construction")
-    tiers = quality.window_composition(m.dates, panel_meta["source_boundary"])
+    tiers = (quality.window_composition(m.dates, panel_meta["source_boundary"]) if idx
+             else quality.composition_from(m.dates, panel_meta["quality_tiers"]))
     for tier, n in tiers["sessions_by_tier"].items():
-        if tier != "TIER_1":
+        if idx and tier != "TIER_1":
             warnings.append(f"{n} sessions are {tier} data (see data_quality); results there are weaker than TIER_1")
     if rule.kind == "PLACEBO":
         warnings.append("PLACEBO rule: harness self-check, not a trading rule; any lift here is a harness bias")
@@ -305,18 +318,21 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
                  "sha256": rule.sha256, "holding_days": holding},
         "config": {**asdict(cfg), "start": start, "end": end, "holding_days": holding},
         "execution": {
-            "price": "official close; signal at close of s, entry at close of s + entry_lag",
-            "lot_size": 100,
+            "price": ("official close; signal at close of s, entry at close of s + entry_lag" if profile.entry == "close"
+                      else "signal at close of s, entry at the open of s + entry_lag, exit at a close"),
+            "lot_size": profile.lot_size,
+            "cost_tiers": [list(t) for t in profile.cost_tiers],
             "fees": {"buy": cfg.fee_buy, "sell": cfg.fee_sell},
-            "auto_rejection": "entry refused when the entry close is locked at ARA; exit rolls while locked at ARB "
-                              "or untraded; regular-board schedule by date, plus 10% special-board limits on "
-                              "one-price or sub-Rp50 bars",
+            "auto_rejection": ("entry refused when the entry close is locked at ARA; exit rolls while locked at ARB "
+                               "or untraded; regular-board schedule by date, plus 10% special-board limits on "
+                               "one-price or sub-Rp50 bars") if profile.price_limits else "none (no daily price limits)",
             "corporate_actions": {
                 "registry": "shares scaled only through registry-verified splits, reverse splits and stock "
                             "dividends; trades held across a verified rights issue or any unverified reset are "
                             "not scored (CORP_ACTION_RIGHTS_ISSUE / CORP_ACTION_UNRESOLVED)",
                 "exclude": "legacy: every integer reset scaled as a split; other resets excluded",
                 "value_preserving": "legacy: shares scaled by every reset (rights valued as reinvested)",
+                "adjusted": "source prices are split-adjusted; no reference resets are expected or scaled",
             }[cfg.ca_mode],
         },
         "corporate_action_model": ca_info,
@@ -324,9 +340,13 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
                     "controls": cfg.controls_version, "ca_mode": cfg.ca_mode},
         "data_quality": {**tiers, "tiers": quality.tiers(panel_meta.get("first_session", str(m.dates[0])),
                                                          panel_meta["source_boundary"],
-                                                         panel_meta.get("last_session", str(m.dates[-1]))),
+                                                         panel_meta.get("last_session", str(m.dates[-1])))
+                         if idx else panel_meta["quality_tiers"],
                          "panel_format": panel_meta.get("format", "panel-v1"),
-                         "known_limitations": list(quality.KNOWN_LIMITATIONS)},
+                         "known_limitations": list(quality.KNOWN_LIMITATIONS if idx else panel_meta["known_limitations"])},
+        "market": {"profile": profile.market, "currency": profile.currency, "lot_size": profile.lot_size,
+                   "entry": profile.entry, "price_limits": profile.price_limits, "venue": profile.venue,
+                   "cost_assumption": profile.assumption_note},
         "panel": {"manifest_sha256": panel_meta.get("_manifest_sha256"), "panel_sha256": panel_meta["sha256"],
                   "panel": panel_meta["panel"], "source_boundary": panel_meta["source_boundary"]},
         "universe": {

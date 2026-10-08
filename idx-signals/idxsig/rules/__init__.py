@@ -55,13 +55,14 @@ class Rule:
 
 
 def registry() -> dict:
-    from . import moonshot_e1, placebo, user_rule
+    from . import moonshot_e1, moonshot_g, placebo, user_rule
 
     out = {}
-    for module in (user_rule, placebo, moonshot_e1):
-        rule = module.rule()
-        if rule is not None:
-            out[rule.rule_id] = rule
+    for module in (user_rule, placebo, moonshot_e1, moonshot_g):
+        found = module.rules() if hasattr(module, "rules") else [module.rule()]
+        for rule in found:
+            if rule is not None:
+                out[rule.rule_id] = rule
     return out
 
 
@@ -83,7 +84,7 @@ def get(rule_id: str) -> Rule:
 
 
 RULE_FIELDS = ("close", "prev", "high", "low", "volume", "value", "present", "tradeable", "lock_up", "lock_down",
-               "listed_shares")
+               "listed_shares", "open")
 CAUSAL_MODE = "prefix-first-v1"
 
 

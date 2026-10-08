@@ -29,6 +29,9 @@ FORBIDDEN_NAMES = frozenset({
     "open", "eval", "exec", "compile", "__import__", "globals", "locals", "vars", "getattr", "setattr", "delattr",
     "input", "breakpoint", "memoryview", "__builtins__", "help", "exit", "quit", "attrgetter", "methodcaller",
 })
+# Price fields a rule reads from its view (`m.open` is the opening price, not the builtin; a bare
+# `open(...)` stays refused, and the sandbox blocks file access at run time either way).
+DATA_FIELDS = frozenset({"open"})
 # Attribute names that lead to modules or machinery a rule has no use for. numpy and pandas
 # re-export some of these (e.g. a module's own `sys`), so they are refused as attributes too.
 FORBIDDEN_ATTRS = FORBIDDEN_NAMES | frozenset({
@@ -103,7 +106,7 @@ def audit_source(source: str, where: str = "rule") -> list[str]:
                 bad(node, f"dunder attribute .{node.attr} is not allowed in a rule")
             elif node.attr.startswith("_"):
                 bad(node, f"private attribute .{node.attr} is not allowed in a rule")
-            elif node.attr in FORBIDDEN_ATTRS and not _sys_modules_name(node, parents):
+            elif node.attr in FORBIDDEN_ATTRS and node.attr not in DATA_FIELDS and not _sys_modules_name(node, parents):
                 bad(node, f".{node.attr} is not allowed in a rule")
             elif node.attr in FRAME_ATTRS or node.attr in ("base", "ctypes", "data", "__array_interface__"):
                 bad(node, f"frame attribute .{node.attr} is not allowed in a rule")

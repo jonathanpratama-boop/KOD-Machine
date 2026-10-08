@@ -45,8 +45,8 @@ CONTINUOUS = ("ret1", "rel1", "ret5", "ret20", "volr", "valr", "freqr", "rngr", 
 BINARY = ("ara", "brk60", "ign")
 
 
-def protocol() -> tuple[dict, str]:
-    return json.loads(PROTOCOL.read_text(encoding="utf-8")), sha256_file(PROTOCOL)
+def protocol(path: Path = PROTOCOL) -> tuple[dict, str]:
+    return json.loads(Path(path).read_text(encoding="utf-8")), sha256_file(path)
 
 
 def label(x: float) -> str:
@@ -84,13 +84,24 @@ def wilson(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
 
 
 class Study:
-    def __init__(self, panel_df: pd.DataFrame, panel_meta: dict):
-        proto, self.protocol_sha = protocol()
+    """E1 on IDX by default; E2 passes its protocol, the market profile and detector family."""
+
+    def __init__(self, panel_df: pd.DataFrame, panel_meta: dict, protocol_path: Path = PROTOCOL, profile=None,
+                 family_module=None):
+        from .profiles import IDX
+
+        proto, self.protocol_sha = protocol(protocol_path)
+        self.protocol_id = proto["protocol_id"]
+        self.profile = profile or IDX
+        self.family = family_module or family
+        self.continuous = tuple(proto["weak_signals"]["continuous"])
+        self.binary = tuple(proto["weak_signals"]["binary"])
         self.periods = {k: tuple(v) for k, v in proto["periods"].items()}
-        if panel_meta.get("format") != "panel-v2":
-            raise ValueError("E1 needs the panel-v2 (share counts)")
+        expected = "panel-v2" if self.profile.market == "IDX" else "panel-global-v1"
+        if panel_meta.get("format") != expected:
+            raise ValueError(f"{self.protocol_id} needs a {expected} panel")
         self.panel_sha = panel_meta["sha256"]
-        full = Market.from_panel(panel_df)
+        full = Market.from_panel(panel_df, price_limits=self.profile.price_limits)
         # Seal the holdout: nothing after the last validation session exists for this study.
         _, hi = full.bounds(None, self.periods["validation"][1])
         m = full.slice(0, hi)
@@ -137,14 +148,16 @@ class Study:
                 before |= _lagb(q, k)
             self.start[x] = q & ~before
         self._signals()
-        b = controls.features(m, "v2")
+        b = controls.features(m, "v2", self.profile.band_edges)
         self.buckets = {k: b[k] for k in ("price_band", "liquidity", "market_cap")}
-        self.flags = family.family_flags(self.base_feats)
+        self.flags = self.family.family_flags(self.base_feats)
 
     # ------------------------------------------------------------------ signals
     def _signals(self):
         m = self.m
-        f = family.features(m.close, m.prev, m.high, m.low, m.volume, m.present, m.tradeable, m.lock_up)
+        args = getattr(self.family, "FEATURE_ARGS",
+                       ("close", "prev", "high", "low", "volume", "present", "tradeable", "lock_up"))
+        f = self.family.features(*[getattr(m, a) for a in args])
         self.base_feats = f
         tr = m.tradeable
         with np.errstate(divide="ignore", invalid="ignore"):
@@ -169,10 +182,12 @@ class Study:
                 "age": (np.arange(m.shape[1])[None, :] - first[:, None]).astype(float),
                 "logval20": np.log10(_roll(val, 20, 10, "median")),
                 "logmcap": np.log10(m.close * m.listed_shares),
-                "ara": f["ara"].astype(float),
+                "ara": (m.lock_up & tr).astype(float),
                 "brk60": f["brk60"].astype(float),
+                "gap": f["gap"] if "gap" in f else np.where(tr & (m.prev > 0) & (m.open > 0), m.open / m.prev - 1, np.nan),
             }
-        sig["ign"] = family.family_flags(f)["F2_IGNITION_D"].astype(float)
+        flags = self.family.family_flags(f)
+        sig["ign"] = flags[next(k for k in flags if "IGNITION" in k)].astype(float)
         self.sig = sig
 
     # ------------------------------------------------------------------ helpers
@@ -183,7 +198,7 @@ class Study:
         m = self.m
         out = {
             "ticker": str(m.tickers[n]), "date": str(self.dates[d]), "period": self.period_of[d],
-            "close": float(m.close[n, d]), "price_band": BAND_NAMES[int(self.buckets["price_band"][n, d])]
+            "close": float(m.close[n, d]), "price_band": self.profile.band_names[int(self.buckets["price_band"][n, d])]
             if self.buckets["price_band"][n, d] >= 0 else "",
             "liquidity_q": int(self.buckets["liquidity"][n, d]) + 1, "market_cap_q": int(self.buckets["market_cap"][n, d]) + 1,
             "r5max": float(self.r5max[n, d]), "peak_k": int(self.peak_k[n, d]),
@@ -193,7 +208,7 @@ class Study:
         }
         for x in THRESHOLDS:
             out[label(x)] = bool(self.r5max[n, d] >= x)
-        for k in CONTINUOUS + BINARY:
+        for k in self.continuous + self.binary:
             out[k] = float(self.sig[k][n, d])
         return out
 
@@ -218,7 +233,7 @@ class Study:
         years = self.dates.astype("datetime64[Y]").astype(int) + 1970
         band = self.buckets["price_band"]
         groups = [("all", "all", np.ones(e.shape, dtype=bool))]
-        groups += [("price_band", BAND_NAMES[b], band == b) for b in range(3)]
+        groups += [("price_band", name, band == b) for b, name in enumerate(self.profile.band_names)]
         groups += [("year", str(y), np.broadcast_to((years == y)[None, :], e.shape)) for y in sorted(set(years[e.any(axis=0)]))]
         for kind, value, g in groups:
             sel = e & g
@@ -257,7 +272,7 @@ class Study:
     def signal_stats(self, events: pd.DataFrame, ctrls: pd.DataFrame, label_: str) -> pd.DataFrame:
         rng = np.random.default_rng(SEED)
         out = []
-        for k in CONTINUOUS + BINARY:
+        for k in self.continuous + self.binary:
             ev = events[k].to_numpy(float)
             scores = np.zeros(len(events))
             counts = np.zeros(len(events))
@@ -277,7 +292,7 @@ class Study:
                 boots.append(scores[b].sum() / counts[b].sum() if len(b) else np.nan)
             cv = ctrls[k].to_numpy(float)
             out.append({
-                "sample": label_, "signal": k, "kind": "binary" if k in BINARY else "continuous",
+                "sample": label_, "signal": k, "kind": "binary" if k in self.binary else "continuous",
                 "events_with_value": int(np.isfinite(ev).sum()), "controls_with_value": int(np.isfinite(cv).sum()),
                 "event_median": float(np.nanmedian(ev)) if np.isfinite(ev).any() else None,
                 "control_median": float(np.nanmedian(cv)) if np.isfinite(cv).any() else None,
@@ -293,7 +308,7 @@ class Study:
         n_all = int(e.sum())
         base = {x: (e & self.qraw[x]).sum() / n_all for x in THRESHOLDS}
         rows = []
-        for name, desc in family.FAMILY:
+        for name, desc in self.family.FAMILY:
             sel = e & self.flags[name]
             n = int(sel.sum())
             row = {"period": period, "rule": name, "description": desc, "flags": n,
@@ -412,7 +427,8 @@ def run_discovery(study: Study, out: Path) -> dict:
     write_csv(out / "detector_selection.csv", table)
     chosen = study.select(table)
     summary = {
-        "protocol_id": "KOD-IDX-E1-v1", "protocol_sha256": study.protocol_sha, "panel_sha256": study.panel_sha,
+        "protocol_id": study.protocol_id, "protocol_sha256": study.protocol_sha, "panel_sha256": study.panel_sha,
+        "market": study.profile.market,
         "stage": "discovery", "computed_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
         "eligible_ticker_days": int(study.elig["discovery"].sum()),
         "episodes": {label(x): int(len(df)) for x, df in episodes.items()},
@@ -435,7 +451,7 @@ def run_validation(study: Study, rule: str, out: Path) -> dict:
     write_csv(out / "flags.csv", study.last_flags)
     result.update({"protocol_sha256": study.protocol_sha, "panel_sha256": study.panel_sha, "stage": "validation",
                    "code": code_state(),
-                   "detector_module_sha256": sha256_file(Path(family.__file__)),
+                   "detector_module_sha256": sha256_file(Path(study.family.__file__)), "market": study.profile.market,
                    "computed_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat()})
     write_json(out / "result.json", result)
     return result

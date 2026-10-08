@@ -107,6 +107,29 @@ class E1Mechanics(unittest.TestCase):
             e1.run_discovery(self.study, out)
 
 
+class E2OnOtherMarkets(unittest.TestCase):
+    def test_study_runs_with_the_us_profile_and_family_g(self):
+        """Guards against: the E2 path (no price limits, opens, family G, global panel format) failing
+        only on real data, after the protocol is frozen."""
+        from idxsig.profiles import US
+        from idxsig.rules import moonshot_g
+
+        df, meta = jumpy_panel(n=30)
+        df["open"] = df["previous"].astype(float)
+        for col in ("frequency", "listed_shares", "tradable_shares"):
+            df[col] = np.nan
+        meta = {**meta, "format": "panel-global-v1"}
+        st = e1.Study(df, meta, protocol_path=e1.PKG_ROOT / "research" / "E2" / "protocol.json", profile=US,
+                      family_module=moonshot_g)
+        self.assertFalse(st.m.lock_up.any())
+        out = Path(tempfile.mkdtemp())
+        summary = e1.run_discovery(st, out / "disc")
+        self.assertEqual(summary["protocol_id"], "KOD-GLOBAL-E2-v1")
+        table = pd.read_csv(out / "disc" / "detector_selection.csv")
+        self.assertEqual(len(table), 11)
+        self.assertIn("gap", pd.read_csv(out / "disc" / "signal_stats.csv")["signal"].tolist())
+
+
 class DetectorShortWindows(unittest.TestCase):
     def test_features_handle_windows_shorter_than_their_lookbacks(self):
         """Guards against: the harness's first prefix calls (1..60 sessions) crashing the detector (v1 bug)."""

@@ -69,3 +69,12 @@ def window_composition(dates, boundary: str) -> dict:
         counts[t] = counts.get(t, 0) + 1
     worst = max(counts) if counts else None
     return {"sessions_by_tier": dict(sorted(counts.items())), "lowest_tier": worst}
+
+
+def composition_from(dates, tiers: list[dict]) -> dict:
+    """Sessions per tier for a non-IDX panel, from the tiers its manifest declares."""
+    counts: dict[str, int] = {}
+    for d in dates.astype(str):
+        tier = next((t["tier"] for t in tiers if t["from"] <= d <= t["to"]), "UNTIERED")
+        counts[tier] = counts.get(tier, 0) + 1
+    return {"sessions_by_tier": dict(sorted(counts.items())), "lowest_tier": max(counts) if counts else None}

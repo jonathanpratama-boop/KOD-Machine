@@ -1,0 +1,144 @@
+{
+  "built_at": "2026-10-08T00:44:06Z",
+  "default_start": "2020-05-01",
+  "first_session": "2020-01-02",
+  "format": "panel-global-v1",
+  "inputs": {
+    "yahoo_us-20261008T001812Z.jsonl": {
+      "path": "data/manifests/yahoo_us-20261008T001812Z.jsonl",
+      "sha256": "01ca82808463f964c06db680803581546d34d85105ed21e27377c3da686e951c"
+    }
+  },
+  "known_limitations": [
+    "survivor-only: the universe is the Nasdaq Trader listing snapshot of the download day; names delisted earlier are absent",
+    "prices are split-adjusted by the source, not dividend-adjusted",
+    "daily bars only: no intraday path, no halts (US LULD) or order-book depth",
+    "costs are assumed per price tier (profiles.py), not measured spreads"
+  ],
+  "last_session": "2026-10-07",
+  "market": "US",
+  "panel": "data/panel/panel_us-20261008T004105Z.csv.gz",
+  "qa": {
+    "non_session_dates_count": 0,
+    "non_session_dates_dropped": [],
+    "spike_examples": [
+      {
+        "close": 8.329999923706055,
+        "date": "2026-07-29",
+        "ticker": "AIXI"
+      },
+      {
+        "close": 7.28000020980835,
+        "date": "2026-08-04",
+        "ticker": "AIXI"
+      },
+      {
+        "close": 7.840000152587891,
+        "date": "2026-08-07",
+        "ticker": "AIXI"
+      },
+      {
+        "close": 1.0099999904632568,
+        "date": "2026-08-10",
+        "ticker": "AIXI"
+      },
+      {
+        "close": 6.9019999504089355,
+        "date": "2026-08-11",
+        "ticker": "AIXI"
+      },
+      {
+        "close": 2.200000047683716,
+        "date": "2020-06-04",
+        "ticker": "ALP"
+      },
+      {
+        "close": 9.399999618530273,
+        "date": "2026-07-29",
+        "ticker": "ALP"
+      },
+      {
+        "close": 9.699999809265137,
+        "date": "2026-08-04",
+        "ticker": "ALP"
+      },
+      {
+        "close": 9.600000381469727,
+        "date": "2026-08-07",
+        "ticker": "ALP"
+      },
+      {
+        "close": 0.19300000369548798,
+        "date": "2026-08-10",
+        "ticker": "ALP"
+      },
+      {
+        "close": 9.550000190734863,
+        "date": "2026-08-11",
+        "ticker": "ALP"
+      },
+      {
+        "close": 0.4740000069141388,
+        "date": "2023-02-13",
+        "ticker": "APRE"
+      },
+      {
+        "close": 98481.0,
+        "date": "2022-08-31",
+        "ticker": "ATXG"
+      },
+      {
+        "close": 33.133331298828125,
+        "date": "2024-07-23",
+        "ticker": "AZTR"
+      },
+      {
+        "close": 4.941999912261963,
+        "date": "2026-07-29",
+        "ticker": "BRTX"
+      },
+      {
+        "close": 4.199999809265137,
+        "date": "2026-08-04",
+        "ticker": "BRTX"
+      },
+      {
+        "close": 4.079999923706055,
+        "date": "2026-08-07",
+        "ticker": "BRTX"
+      },
+      {
+        "close": 0.20100000500679016,
+        "date": "2026-08-10",
+        "ticker": "BRTX"
+      },
+      {
+        "close": 4.199999809265137,
+        "date": "2026-08-11",
+        "ticker": "BRTX"
+      },
+      {
+        "close": 7.199999809265137,
+        "date": "2026-07-29",
+        "ticker": "BTLN"
+      }
+    ],
+    "spike_rows_dropped": 177
+  },
+  "quality_tiers": [
+    {
+      "corporate_actions": "split-adjusted by the source",
+      "from": "2020-01-02",
+      "source": "yahoo",
+      "survivorship": "survivor-only: the universe is the Nasdaq Trader listing snapshot of the download day; names delisted earlier are absent",
+      "tier": "US_SURVIVOR",
+      "to": "2026-10-07"
+    }
+  ],
+  "rows": 8085803,
+  "sessions": 1700,
+  "sha256": "e5b5267438667a136f4a4cb42c52d6bc98bc80cde6a88c02a27751a4902c9b92",
+  "source_boundary": "2026-10-07",
+  "survivorship": "survivor-only: the universe is the Nasdaq Trader listing snapshot of the download day; names delisted earlier are absent",
+  "tickers": 5705
+}

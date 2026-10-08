@@ -28,7 +28,7 @@ def flat_market(n_tickers=3, n_sessions=20, price=1000.0, volume=1_000_000.0, st
 def rebuild(tickers, dates, arrays) -> Market:
     a = arrays
     return Market.build(tickers, dates, a["close"], a["prev"], a["high"], a["low"], a["volume"], a["value"], a["present"],
-                        a.get("listed_shares"))
+                        a.get("listed_shares"), opens=a.get("open"))
 
 
 def random_walk_panel(n_tickers=40, n_sessions=160, seed=7, start="2023-01-02",

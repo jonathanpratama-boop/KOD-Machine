@@ -29,11 +29,16 @@ def main(argv=None) -> int:
     p_y.add_argument("--out", help="raw directory (resumes if it exists)")
     sub.add_parser("build-panel", help="merge sources into the canonical panel")
     sub.add_parser("verify-data", help="re-hash every raw file and the panel against their manifests")
+    p_gp = sub.add_parser("build-global-panel", help="build a US or crypto panel from a pull manifest")
+    p_gp.add_argument("--market", choices=("US", "CRYPTO"), required=True)
+    p_gp.add_argument("--manifest", required=True)
     p_ca = sub.add_parser("build-ca-registry", help="classify every reference reset in the panel (new registry file)")
     p_ca.add_argument("--panel", help="panel manifest (default: latest)")
     sub.add_parser("rules", help="list rules and their state")
     p_run = sub.add_parser("run", help="run a rule over the full universe vs random entries")
     p_run.add_argument("--rule", required=True)
+    p_run.add_argument("--market", choices=("IDX", "US", "CRYPTO"), default="IDX",
+                       help="market profile (lots, costs, price limits, entry at open or close)")
     p_run.add_argument("--start")
     p_run.add_argument("--end")
     p_run.add_argument("--holding-days", type=int)
@@ -46,7 +51,7 @@ def main(argv=None) -> int:
     p_run.add_argument("--draws", type=int, default=200)
     p_run.add_argument("--seed", type=int, default=20261007)
     p_run.add_argument("--data-end-exit", choices=("last_close", "zero"), default="last_close")
-    p_run.add_argument("--ca-mode", choices=("registry", "exclude", "value_preserving"), default="registry",
+    p_run.add_argument("--ca-mode", choices=("registry", "exclude", "value_preserving", "adjusted"), default="registry",
                        help="registry (default): scale shares only through verified splits / stock dividends; "
                             "exclude, value_preserving: earlier modes, for reproducing older runs")
     p_run.add_argument("--ca-registry", help="corporate-action registry manifest (default: latest)")
@@ -66,6 +71,10 @@ def main(argv=None) -> int:
     p_sc.add_argument("--manifest", help="a yahoo_recent manifest (default: pull now)")
     p_sc.add_argument("--commit", action="store_true")
     sub.add_parser("paper-verify", help="check the paper ledger's hash chain and timestamp tokens")
+    for name, helptext in (("e2-discovery", "experiment E2 discovery for one market"),
+                           ("e2-validation", "experiment E2 validation of a market's frozen detector")):
+        p_e2 = sub.add_parser(name, help=helptext)
+        p_e2.add_argument("--market", choices=("US", "CRYPTO"), required=True)
     p_v = sub.add_parser("e1-validation", help="experiment E1, validation of the frozen detector")
     p_v.add_argument("--rule", required=True, help="must equal rules/moonshot_e1.SELECTED, committed")
     args = parser.parse_args(argv)
@@ -110,6 +119,10 @@ def main(argv=None) -> int:
                 print(f"{manifest.name}: {exc}")
                 bad += 1
         return 1 if bad else 0
+    elif args.cmd == "build-global-panel":
+        from . import global_panel
+
+        print(global_panel.build(args.market, Path(args.manifest)))
     elif args.cmd == "build-ca-registry":
         from . import corporate_actions
         from .execution import Market
@@ -149,9 +162,17 @@ def main(argv=None) -> int:
         except rules.RuleNotProvided as exc:
             print(f"error: {exc}", file=sys.stderr)
             return 2
-        df, meta, manifest = load(Path(args.panel) if args.panel else None)
-        meta["_manifest_sha256"] = sha256_file(manifest)
-        cfg = RunConfig(
+        if args.market == "IDX":
+            df, meta, manifest = load(Path(args.panel) if args.panel else None)
+            meta["_manifest_sha256"] = sha256_file(manifest)
+        else:
+            from . import global_panel
+            from .profiles import PROFILES
+
+            df, meta = global_panel.load(Path(args.panel) if args.panel else global_panel.latest(args.market))
+            prof = PROFILES[args.market]
+            args.ca_mode, args.notional, args.fee_buy, args.fee_sell = "adjusted", prof.notional, prof.fee_buy, prof.fee_sell
+        cfg = RunConfig(market=args.market,
             rule_id=args.rule, start=args.start, end=args.end, holding_days=args.holding_days,
             entry_lag=args.entry_lag, notional=args.notional, max_participation=args.max_participation,
             fee_buy=args.fee_buy, fee_sell=args.fee_sell, overlap=args.overlap, random_draws=args.draws,
@@ -159,7 +180,7 @@ def main(argv=None) -> int:
             lookahead_cuts=args.lookahead_cuts, controls_version=args.controls_version,
         )
         registry = None
-        if args.ca_mode == "registry":
+        if args.ca_mode == "registry" and args.market == "IDX":
             from . import corporate_actions
 
             try:
@@ -198,6 +219,29 @@ def main(argv=None) -> int:
                       f"{moonshot_e1.SELECTED})", file=sys.stderr)
                 return 2
             print(json.dumps(e1.run_validation(study, args.rule, e1.E1_DIR / "validation"), indent=2, default=str))
+    elif args.cmd in ("e2-discovery", "e2-validation"):
+        from . import e1, global_panel
+        from .profiles import PROFILES
+        from .results import code_state
+        from .rules import moonshot_g
+
+        proto_path = e1.PKG_ROOT / "research" / "E2" / "protocol.json"
+        proto, _ = e1.protocol(proto_path)
+        manifest = global_panel.MANIFESTS / proto["markets"][args.market]["panel_manifest"]
+        if code_state()["dirty"]:
+            print("error: commit idxsig/ first so the results name the code that produced them", file=sys.stderr)
+            return 2
+        df, meta = global_panel.load(manifest)
+        study = e1.Study(df, meta, protocol_path=proto_path, profile=PROFILES[args.market], family_module=moonshot_g)
+        out = e1.PKG_ROOT / "research" / "E2" / args.market
+        if args.cmd == "e2-discovery":
+            print(json.dumps(e1.run_discovery(study, out / "discovery"), indent=2))
+        else:
+            rule = moonshot_g.selected(args.market)
+            if rule is None:
+                print(f"error: no frozen detector for {args.market} (moonshot_g.SELECTED)", file=sys.stderr)
+                return 2
+            print(json.dumps(e1.run_validation(study, rule, out / "validation"), indent=2, default=str))
     elif args.cmd in ("paper-scan", "paper-score"):
         import os
 

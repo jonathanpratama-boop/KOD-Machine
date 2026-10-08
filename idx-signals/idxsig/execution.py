@@ -65,6 +65,9 @@ class ExecConfig:
     max_participation: float = 0.10
     fees: Fees = field(default_factory=Fees)
     data_end_exit: str = "last_close"  # or "zero"
+    lot_size: int = LOT_SIZE
+    entry_price: str = "close"  # "close" of the entry session, or its "open" (markets with opening prices)
+    cost_tiers: tuple = ()  # extra per-side cost by entry/exit price tier (profiles.Profile.cost_tiers)
     ca_mode: str = "exclude"  # "registry" (needs Market.with_registry), "exclude", "value_preserving"
 
 
@@ -85,7 +88,7 @@ class Market:
 
     FIELDS = ("close", "prev", "high", "low", "volume", "value", "present", "tradeable",
               "lock_up", "lock_down", "ca_ratio", "is_split", "share_factor", "split_factor", "other_ca_count",
-              "listed_shares")
+              "listed_shares", "open")
     # Set by with_registry(); built from information that postdates the session (later
     # downloads, primary documents), so never shown to a rule (see rules.RuleView).
     REGISTRY_FIELDS = ("reg_factor", "reg_rights", "reg_unresolved")
@@ -104,7 +107,7 @@ class Market:
         return self.close.shape
 
     @classmethod
-    def from_panel(cls, df: pd.DataFrame) -> "Market":
+    def from_panel(cls, df: pd.DataFrame, price_limits: bool = True) -> "Market":
         tickers = np.array(sorted(df["ticker"].unique()))
         dates = np.array(sorted(df["date"].unique()), dtype="datetime64[D]")
         ti = pd.Index(tickers).get_indexer(df["ticker"])
@@ -119,12 +122,15 @@ class Market:
         close, prev, high, low = dense("close"), dense("previous"), dense("high"), dense("low")
         volume, value = dense("volume"), dense("value")
         listed = dense("listed_shares") if "listed_shares" in df else np.full(shape, np.nan)
+        opens = dense("open") if "open" in df else np.full(shape, np.nan)
         present = np.zeros(shape, dtype=bool)
         present[ti, di] = True
-        return cls.build(tickers, dates, close, prev, high, low, volume, value, present, listed)
+        return cls.build(tickers, dates, close, prev, high, low, volume, value, present, listed, opens=opens,
+                         price_limits=price_limits)
 
     @classmethod
-    def build(cls, tickers, dates, close, prev, high, low, volume, value, present, listed_shares=None) -> "Market":
+    def build(cls, tickers, dates, close, prev, high, low, volume, value, present, listed_shares=None,
+              opens=None, price_limits: bool = True) -> "Market":
         tradeable = present & (np.nan_to_num(volume) > 0) & (np.nan_to_num(close) > 0)
         day_grid = np.broadcast_to(np.asarray(dates, dtype="datetime64[D]"), close.shape)
         ref = np.where(np.isfinite(prev) & (prev > 0), prev, np.nan)
@@ -137,6 +143,9 @@ class Market:
         has_ref = np.isfinite(ref)
         lock_up = tradeable & has_ref & ((close >= ara) | (thin & (close >= sp_ara)))
         lock_down = tradeable & has_ref & (close < ref) & ((close <= arb) | (thin & (close <= sp_arb)))
+        if not price_limits:  # US / crypto: no daily auto-rejection limits
+            lock_up = np.zeros(close.shape, dtype=bool)
+            lock_down = np.zeros(close.shape, dtype=bool)
         # Reference resets (splits, rights): previous close vs today's reference price.
         last_close = pd.DataFrame(np.where(present, close, np.nan)).ffill(axis=1).shift(1, axis=1).to_numpy()
         raw = last_close / ref
@@ -151,7 +160,8 @@ class Market:
                    share_factor=np.cumprod(ca_ratio, axis=1),
                    split_factor=np.cumprod(np.where(is_split, ca_ratio, 1.0), axis=1),
                    other_ca_count=np.cumsum(reset & ~is_split, axis=1),
-                   listed_shares=np.full(close.shape, np.nan) if listed_shares is None else listed_shares)
+                   listed_shares=np.full(close.shape, np.nan) if listed_shares is None else listed_shares,
+                   open=np.full(close.shape, np.nan) if opens is None else opens)
 
     def with_registry(self, registry) -> "Market":
         """A copy with share scaling from a corporate-action registry (ca_mode="registry")."""
@@ -183,6 +193,14 @@ class Market:
         return self.slice(0, last + 1)
 
 
+def _tier_costs(price: np.ndarray, tiers: tuple) -> np.ndarray:
+    if not tiers:
+        return np.zeros(np.shape(price))
+    bounds = np.array([b for b, _ in tiers])
+    costs = np.array([c for _, c in tiers])
+    return costs[np.searchsorted(bounds, price, side="right").clip(0, len(costs) - 1)]
+
+
 def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfig) -> dict:
     """Simulate one trade per (ticker index, signal session index). Vectorized."""
     tick_idx = np.asarray(tick_idx, dtype=np.int64)
@@ -201,11 +219,17 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     status[open_ & m.lock_up[tick_idx, e]] = STATUS.index("SKIP_ARA_LOCK")
     open_ = status < 0
 
-    entry_price = np.nan_to_num(m.close[tick_idx, e])
+    if cfg.entry_price == "open":
+        opened = m.open[tick_idx, e]
+        status[open_ & ~(np.isfinite(opened) & (opened > 0))] = STATUS.index("SKIP_NOT_TRADED")
+        open_ = status < 0
+        entry_price = np.nan_to_num(opened)
+    else:
+        entry_price = np.nan_to_num(m.close[tick_idx, e])
     with np.errstate(divide="ignore", invalid="ignore"):
-        lots = np.floor(cfg.notional / (entry_price * LOT_SIZE))
+        lots = np.floor(cfg.notional / (entry_price * cfg.lot_size))
     lots = np.where(np.isfinite(lots), lots, 0)
-    shares = lots * LOT_SIZE
+    shares = lots * cfg.lot_size
     status[open_ & (shares <= 0)] = STATUS.index("SKIP_LOT")
     open_ = status < 0
     too_big = shares > cfg.max_participation * np.nan_to_num(m.volume[tick_idx, e])
@@ -244,7 +268,7 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
         status[held & unresolved] = STATUS.index("CORP_ACTION_UNRESOLVED")
         status[held & rights & ~unresolved] = STATUS.index("CORP_ACTION_RIGHTS_ISSUE")
         factor_array = m.reg_factor
-    elif cfg.ca_mode == "exclude":
+    elif cfg.ca_mode in ("exclude", "adjusted"):  # "adjusted": split-adjusted source data, no resets expected
         crossed = m.other_ca_count[tick_idx, x] - m.other_ca_count[tick_idx, e] > 0
         status[held & crossed] = STATUS.index("EXCLUDED_CORP_ACTION")
         factor_array = m.split_factor
@@ -259,8 +283,9 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     factor = factor_array[tick_idx, x] / factor_array[tick_idx, e]
     exit_shares = shares * factor
     buy_value = shares * entry_price
-    cost = buy_value * (1 + cfg.fees.buy)
-    proceeds = exit_shares * exit_price * (1 - cfg.fees.sell)
+    extra_in, extra_out = _tier_costs(entry_price, cfg.cost_tiers), _tier_costs(np.nan_to_num(exit_price), cfg.cost_tiers)
+    cost = buy_value * (1 + cfg.fees.buy + extra_in)
+    proceeds = exit_shares * exit_price * (1 - cfg.fees.sell - extra_out)
     with np.errstate(divide="ignore", invalid="ignore"):
         net = np.where(scored, proceeds / cost - 1, np.nan)
         gross = np.where(scored, exit_shares * exit_price / buy_value - 1, np.nan)

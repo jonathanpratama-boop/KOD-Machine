@@ -1,0 +1,67 @@
+{
+  "protocol_id": "KOD-GLOBAL-E2-v1",
+  "frozen_before_analysis": true,
+  "question": "In US equities and in crypto, which information available at a session's close distinguishes names that reprice +30% / +50% / +100% within the next five sessions from similar names on the same session, and can a simple detector act on it after realistic costs?",
+  "design": "E1 (research/E1/protocol.json) applied unchanged except where a market differs, listed under market_differences",
+  "markets": {
+    "US": {
+      "panel_manifest": "panel_us-20261008T004105Z.json",
+      "universe": "US-listed common stocks in the Nasdaq Trader directory on the download day (Nasdaq, NYSE, NYSE American, Cboe, IEX); ETFs, warrants, units, rights, preferreds, notes and SPACs excluded",
+      "survivorship": "survivor-only: names delisted before 2026-10-08 are absent. Base rates and episode counts are biased by it; detector-vs-matched-control comparisons share the bias on both sides",
+      "session": "US regular trading day (Yahoo daily bar)",
+      "costs": "profiles.US: per side 1.5% under $1, 0.5% $1-5, 0.15% $5-20, 0.05% above, plus SEC fee on sales; notional $5,000; entry at the next session's open"
+    },
+    "CRYPTO": {
+      "panel_manifest": "panel_crypto-20261008T003354Z.json",
+      "universe": "Binance spot USDT pairs, including delisted/halted pairs still in exchangeInfo; stablecoins, fiat and leveraged tokens excluded",
+      "survivorship": "includes 214 delisted/halted pairs; pairs Binance removed from exchangeInfo entirely are absent",
+      "session": "UTC day (00:00-24:00); the asset trades continuously",
+      "costs": "profiles.CRYPTO: 0.1% fee + 0.1% slippage per side; notional 5,000 USDT; entry at the next UTC day's open"
+    }
+  },
+  "market_differences": {
+    "price_series": "the source's split-adjusted close; previous = prior close (no exchange reference resets)",
+    "price_limits": "none: no ARA/ARB locks, so the binary signal ara is dropped",
+    "price_bands": "US: <$1, $1-5, $5-20, >$20. CRYPTO: <0.01, 0.01-1, 1-100, >100 USDT",
+    "matching": "same session, price band, liquidity quintile; market cap is unavailable (no share or supply counts) and is therefore not matched (every name falls in the same unknown bucket)",
+    "signals_unavailable": "freqr (trade counts), turn and logmcap (share counts)",
+    "signal_added": "gap = open / previous close - 1 (opening prices exist in both sources)",
+    "detector_family": "idxsig/rules/moonshot_g.py FAMILY G1..G11, fixed before analysis"
+  },
+  "event": {
+    "decision_cutoff": "close of session t",
+    "forward_return": "R5max(t) = max over k = 1..5 of close(t+k) / close(t) - 1, on the market's session calendar",
+    "thresholds": [0.30, 0.50, 1.00],
+    "episode": "as in E1: starts on an eligible day with R5max >= X and no session t-5..t-1 of that name with R5max >= X"
+  },
+  "universe": {
+    "eligible_if": [
+      "session t lies in a research period and t+5 lies in the same period",
+      "the name traded on t (volume > 0, close > 0, previous close > 0)",
+      "at least 20 present sessions before t",
+      "at least one present session in t+1..t+5"
+    ],
+    "non_winners_included": true
+  },
+  "periods": {
+    "discovery": ["2020-07-01", "2022-12-31"],
+    "validation": ["2023-01-01", "2023-12-31"],
+    "holdout": ["2024-01-01", "2026-12-31"],
+    "holdout_rule": "sealed: the study market ends at the last validation session; one pre-registered holdout evaluation only after a detector is frozen and validated"
+  },
+  "first_100": "per market, the first 100 E30 episodes of discovery in date order, ties by ticker",
+  "matched_controls": "E1-MATCH-v1 with the market's price bands; 5 per event; pool = same-session eligible non-events (R5max < 0.30) of other names",
+  "weak_signals": {
+    "id": "E2-SIGNALS-v1",
+    "continuous": ["ret1", "rel1", "ret5", "ret20", "volr", "valr", "rngr", "cpos", "vol20", "dd60", "up5", "zero20", "age", "logval20", "gap"],
+    "binary": ["brk60", "ign"],
+    "statistics": "as in E1"
+  },
+  "detector": {
+    "selection_on_discovery_only": "as in E1, per market: admissible if >= 200 flagged eligible ticker-days and the Wilson 95% lower bound of E30 precision exceeds the base rate; highest lift wins, ties by larger n; none admissible = NONE",
+    "freeze": "the selected names are written into moonshot_g.SELECTED and committed before any validation statistic is computed",
+    "validation": "as in E1, plus the idxsig harness with the market profile (entry at the next open, tiered costs) over the validation window against matched and same-session random entries"
+  },
+  "decision_policy": "a prospective paper BUY requires validated detection AND a validated executable plan (paper PAPER-POLICY-v2 logic)",
+  "claims": "Historical research only; nothing here is prospective performance. US results are survivor-only."
+}

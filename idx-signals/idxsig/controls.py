@@ -91,9 +91,10 @@ def _rolling(arr: np.ndarray, how: str, window: int) -> np.ndarray:
     return getattr(frame, how)().to_numpy().T
 
 
-def features(m, version: str = "v2") -> dict[str, np.ndarray]:
+def features(m, version: str = "v2", band_edges: tuple = (200, 5000)) -> dict[str, np.ndarray]:
+    """band_edges: upper edges of the price bands (IDX default: Rp200, Rp5,000; see profiles.py)."""
     close = np.where(m.present, m.close, np.nan)
-    band = np.select([close <= 200, close <= 5000], [0, 1], 2).astype(np.int8)
+    band = np.searchsorted(np.array(band_edges, dtype=float), np.nan_to_num(close, nan=0.0), side="left")
     band = np.where(np.isfinite(close), band, -1).astype(np.int8)
     value = np.where(m.present, np.where(m.tradeable, np.nan_to_num(m.value), 0.0), np.nan)
     with np.errstate(divide="ignore", invalid="ignore"):

@@ -12,7 +12,9 @@ that actually traded.
 from __future__ import annotations
 
 import json
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
@@ -48,8 +50,9 @@ def _summary(payload: dict) -> dict:
     }
 
 
-def fetch_one(ticker: str, p2: int, retries: int = 6, pause: float = 2.0, p1: int = 0) -> tuple[int, bytes, str]:
-    url = CHART.format(symbol=f"{ticker}.JK", p1=p1, p2=p2)
+def fetch_one(ticker: str, p2: int, retries: int = 6, pause: float = 2.0, p1: int = 0,
+              suffix: str = ".JK") -> tuple[int, bytes, str]:
+    url = CHART.format(symbol=f"{ticker}{suffix}", p1=p1, p2=p2)
     for attempt in range(retries):
         req = urllib.request.Request(url, headers=HEADERS)
         try:
@@ -69,15 +72,18 @@ def fetch_one(ticker: str, p2: int, retries: int = 6, pause: float = 2.0, p1: in
 
 
 def fetch(tickers: list[str], out_dir: Path | None = None, sleep: float = 0.35, log=print,
-          finalize: bool = True, days: int | None = None, prefix: str = "yahoo") -> Path | None:
+          finalize: bool = True, days: int | None = None, prefix: str = "yahoo", suffix: str = ".JK",
+          start: str | None = None, workers: int = 1) -> Path | None:
     """Fetch every ticker, resumable. Writes the manifest when `finalize`; returns its path.
 
     days: only the last `days` calendar days (live scans), written under a different
     manifest prefix so the panel builder never takes a short pull for full history."""
     started = datetime.now(timezone.utc)
-    if days is not None and prefix == "yahoo":
-        raise ValueError("a partial pull needs its own manifest prefix")
+    if (days is not None or start is not None or suffix != ".JK") and prefix == "yahoo":
+        raise ValueError("a partial or non-IDX pull needs its own manifest prefix")
     p1 = 0 if days is None else int(started.timestamp()) - days * 86400
+    if start is not None:
+        p1 = int(datetime.fromisoformat(start).replace(tzinfo=timezone.utc).timestamp())
     out_dir = out_dir or RAW / prefix / started.strftime("%Y%m%dT%H%M%SZ")
     out_dir.mkdir(parents=True, exist_ok=True)
     progress = out_dir / "_progress.jsonl"
@@ -88,44 +94,44 @@ def fetch(tickers: list[str], out_dir: Path | None = None, sleep: float = 0.35, 
             if rec["http_status"] in (200, 404):
                 done[rec["ticker"]] = rec
     p2 = int(started.timestamp())
-    with progress.open("a", encoding="utf-8") as prog:
-        for i, ticker in enumerate(sorted(set(tickers))):
-            if ticker in done:
-                continue
-            status, body, url = fetch_one(ticker, p2, p1=p1)
-            stamp = utc_stamp()
-            suffix = ".JK.json" if status == 200 else ".JK.error.json"
-            path = out_dir / f"{ticker}{suffix}"
-            path.write_bytes(body)
-            try:
-                summary = _summary(json.loads(body))
-            except (json.JSONDecodeError, UnicodeDecodeError):
-                summary = {"error": "response was not JSON"}
-            rec = {
-                "ticker": ticker,
-                "path": rel(path),
-                "source": SOURCE,
-                "source_url": url,
-                "downloaded_at": stamp,
-                "http_status": status,
-                "bytes": len(body),
-                "sha256": sha256_bytes(body),
-                "terms": TERMS,
-                **summary,
-            }
+    lock = threading.Lock()
+
+    def one(ticker):
+        status, body, url = fetch_one(ticker, p2, p1=p1, suffix=suffix)
+        stamp = utc_stamp()
+        ext = f"{suffix}.json" if status == 200 else f"{suffix}.error.json"
+        path = out_dir / f"{ticker}{ext}"
+        path.write_bytes(body)
+        try:
+            summary = _summary(json.loads(body))
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            summary = {"error": "response was not JSON"}
+        rec = {"ticker": ticker, "path": rel(path), "source": SOURCE, "source_url": url, "downloaded_at": stamp,
+               "http_status": status, "bytes": len(body), "sha256": sha256_bytes(body), "terms": TERMS, **summary}
+        with lock:
             prog.write(json.dumps(rec, sort_keys=True) + "\n")
             prog.flush()
             done[ticker] = rec
-            if i % 50 == 0:
-                log(f"yahoo {i + 1}/{len(tickers)} {ticker} {status}")
-            time.sleep(sleep)
+            if len(done) % 100 == 0:
+                log(f"yahoo {len(done)}/{len(set(tickers))} {ticker} {status}")
+        time.sleep(sleep)
+
+    todo = [t for t in sorted(set(tickers)) if t not in done]
+    with progress.open("a", encoding="utf-8") as prog:
+        if workers <= 1:
+            for t in todo:
+                one(t)
+        else:
+            with ThreadPoolExecutor(max_workers=workers) as pool:
+                list(pool.map(one, todo))
     if not finalize:
         return None
     records = [done[t] for t in sorted(done) if t in set(tickers)]
     header = {
         "source": SOURCE,
-        "description": "Yahoo Finance v8 chart, daily bars, " + ("full history" if days is None else f"last {days} days")
-                       + ", split events and dividends",
+        "description": "Yahoo Finance v8 chart, daily bars, " + (
+            f"from {start}" if start else "full history" if days is None else f"last {days} days")
+                       + ", split events and dividends" + (f", symbols suffixed {suffix!r}" if suffix else ", US symbols"),
         "started_at": min((r["downloaded_at"] for r in records), default=utc_stamp(started)),
         "finished_at": utc_stamp(),
         "raw_dir": rel(out_dir),
