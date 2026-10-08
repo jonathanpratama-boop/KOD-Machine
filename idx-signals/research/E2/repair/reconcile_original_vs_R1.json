@@ -1,0 +1,135 @@
+{
+  "original": {
+    "attempted": 1496,
+    "avg_net_return": -0.03649897835912017,
+    "evaluable_ticker_sessions": 1177993,
+    "hit_rate": 0.362147406733394,
+    "matched_pooled_status_counts": {
+      "EXITED": 201254,
+      "INCOMPLETE": 9006,
+      "SKIP_LIQUIDITY": 71953,
+      "SKIP_LOT": 12061,
+      "SKIP_NOT_TRADED": 3126,
+      "SKIP_NO_ENTRY_SESSION": 1800
+    },
+    "matched_random_avg_net_return": -0.005960705604771843,
+    "matched_random_p2_5": -0.017413855173727292,
+    "matched_random_p97_5": 0.0069902345705929,
+    "median_net_return": -0.07741930822559007,
+    "p_one_sided_vs_matched": 1.0,
+    "scored": 1099,
+    "signals": 1676,
+    "skipped_overlap": 180,
+    "status_counts": {
+      "EXITED": 1099,
+      "INCOMPLETE": 49,
+      "SKIP_LIQUIDITY": 132,
+      "SKIP_LOT": 154,
+      "SKIP_NOT_TRADED": 53,
+      "SKIP_NO_ENTRY_SESSION": 9
+    },
+    "tickers_ever_evaluable": 4875
+  },
+  "original_only": {
+    "by_reason": {
+      "legacy preprocessing had deleted the bar before, so its previous close differed": 1,
+      "name quarantined in the repaired run (split records not corroborated)": 214
+    },
+    "count": 215,
+    "examples": {
+      "legacy preprocessing had deleted the bar before, so its previous close differed": [
+        "GDC 2023-05-02"
+      ],
+      "name quarantined in the repaired run (split records not corroborated)": [
+        "ACON 2023-02-06",
+        "ACON 2023-04-24",
+        "ACON 2023-05-30",
+        "ACON 2023-10-25",
+        "AEC 2023-08-08",
+        "AEC 2023-08-11",
+        "AIFF 2023-02-07",
+        "AIFF 2023-03-03"
+      ]
+    }
+  },
+  "original_run": "20261008T060443Z_MOONSHOT_E2_US_D1_v1",
+  "repair_panel": "panel_us_repair-20261008T095321Z.json",
+  "repaired": {
+    "attempted": 1286,
+    "avg_net_return": -0.048541947506780224,
+    "evaluable_ticker_sessions": 1127465,
+    "hit_rate": 0.3525641025641026,
+    "matched_pooled_status_counts": {
+      "EXITED": 183254,
+      "INCOMPLETE": 9048,
+      "SKIP_LIQUIDITY": 61742,
+      "SKIP_NOT_TRADED": 1956,
+      "SKIP_NO_ENTRY_SESSION": 1200
+    },
+    "matched_random_avg_net_return": -0.011290246743689565,
+    "matched_random_p2_5": -0.020952052529601747,
+    "matched_random_p97_5": -0.00014779832788601043,
+    "median_net_return": -0.0847701929179408,
+    "p_one_sided_vs_matched": 1.0,
+    "scored": 1092,
+    "signals": 1468,
+    "skipped_overlap": 182,
+    "status_counts": {
+      "EXITED": 1092,
+      "INCOMPLETE": 48,
+      "SKIP_LIQUIDITY": 98,
+      "SKIP_NOT_TRADED": 42,
+      "SKIP_NO_ENTRY_SESSION": 6
+    },
+    "tickers_ever_evaluable": 4647
+  },
+  "repaired_only": {
+    "by_reason": {
+      "legacy preprocessing had deleted the bar before, so its previous close differed": 3,
+      "legacy preprocessing had deleted this bar (later reversal); the causal panel keeps it": 4
+    },
+    "count": 7,
+    "examples": {
+      "legacy preprocessing had deleted the bar before, so its previous close differed": [
+        "MDXH 2023-11-28",
+        "QXL 2023-04-17",
+        "SSM 2023-08-31"
+      ],
+      "legacy preprocessing had deleted this bar (later reversal); the causal panel keeps it": [
+        "GDC 2023-05-01",
+        "MLGO 2023-12-06",
+        "RNAZ 2023-09-25",
+        "SSM 2023-10-18"
+      ]
+    }
+  },
+  "repaired_run": "20261008T100026Z_MOONSHOT_E2_US_D1_v1",
+  "signals_in_both": 1461,
+  "status_transitions_for_signals_in_both": [
+    {
+      "n": 96,
+      "original": "SKIP_LOT",
+      "repaired": "EXITED"
+    },
+    {
+      "n": 19,
+      "original": "SKIP_LOT",
+      "repaired": "SKIP_OVERLAP"
+    },
+    {
+      "n": 2,
+      "original": "SKIP_LOT",
+      "repaired": "INCOMPLETE"
+    },
+    {
+      "n": 2,
+      "original": "SKIP_LOT",
+      "repaired": "SKIP_LIQUIDITY"
+    },
+    {
+      "n": 1,
+      "original": "SKIP_NOT_TRADED",
+      "repaired": "SKIP_LIQUIDITY"
+    }
+  ]
+}

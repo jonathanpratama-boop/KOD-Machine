@@ -1,0 +1,249 @@
+test_overlapping_signals_are_skipped_while_held (test_backtest.BacktestTests.test_overlapping_signals_are_skipped_while_held) ... ok
+test_placebo_runs_over_the_full_universe (test_backtest.BacktestTests.test_placebo_runs_over_the_full_universe) ... ok
+test_real_edge_beats_random_and_noise_does_not (test_backtest.BacktestTests.test_real_edge_beats_random_and_noise_does_not) ... ok
+test_rule_that_reads_ahead_is_refused (test_backtest.BacktestTests.test_rule_that_reads_ahead_is_refused) ... ok
+test_runs_are_deterministic (test_backtest.BacktestTests.test_runs_are_deterministic) ... ok
+test_user_rule_is_pending_not_guessed (test_backtest.BacktestTests.test_user_rule_is_pending_not_guessed) ... ok
+test_future_reversal_cannot_rewrite_prefix (test_causal_panel.CausalPanel.test_future_reversal_cannot_rewrite_prefix) ... ok
+test_large_moves_preserved_without_future_qa_in_features (test_causal_panel.CausalPanel.test_large_moves_preserved_without_future_qa_in_features) ... ok
+test_legacy_explicit_only (test_causal_panel.CausalPanel.test_legacy_explicit_only) ... ok
+test_controls_v1_reproduces_older_runs (test_controls_quality.ControlFeatures.test_controls_v1_reproduces_older_runs)
+Guards against: losing the ability to re-run the configuration older runs used. ... ok
+test_every_feature_uses_only_past_data (test_controls_quality.ControlFeatures.test_every_feature_uses_only_past_data)
+Guards against: a control feature (market cap, drawdown, listing age ...) computed with ... ok
+test_listing_age_counts_from_first_session_and_censors_the_start (test_controls_quality.ControlFeatures.test_listing_age_counts_from_first_session_and_censors_the_start)
+Guards against: treating names present at the data's start as new listings, or ... ok
+test_market_cap_is_unknown_without_share_counts_and_reported (test_controls_quality.ControlFeatures.test_market_cap_is_unknown_without_share_counts_and_reported)
+Guards against: inventing market cap where the data has no share counts (Yahoo era) ... ok
+test_same_session_baseline_is_kept_beside_matched (test_controls_quality.ControlFeatures.test_same_session_baseline_is_kept_beside_matched)
+Guards against: replacing the plain same-session baseline instead of adding to it. ... ok
+test_unavailable_features_are_declared_not_invented (test_controls_quality.ControlFeatures.test_unavailable_features_are_declared_not_invented)
+Guards against: matching on sector, board or free float from a present-day snapshot. ... ok
+test_default_window_is_tier_1_only (test_controls_quality.QualityTiers.test_default_window_is_tier_1_only)
+Guards against: the default run silently mixing in survivor-biased or Yahoo-era sessions. ... ok
+test_extended_window_states_its_tiers (test_controls_quality.QualityTiers.test_extended_window_states_its_tiers)
+Guards against: an extended window whose weaker segments are not labelled. ... ok
+test_tier_boundaries (test_controls_quality.QualityTiers.test_tier_boundaries)
+Guards against: an off-by-one at the first snapshot or the source boundary. ... ok
+test_integer_reset_without_share_change_is_unknown (test_corporate_actions.NonScalingActions.test_integer_reset_without_share_change_is_unknown)
+Guards against: the old rule that every integer reset is a split. A 2x reset whose share ... ok
+test_registry_mode_refuses_a_market_without_a_registry (test_corporate_actions.NonScalingActions.test_registry_mode_refuses_a_market_without_a_registry)
+Guards against: running the default mode with no registry and silently scaling nothing. ... ok
+test_reset_missing_from_the_registry_is_unresolved (test_corporate_actions.NonScalingActions.test_reset_missing_from_the_registry_is_unresolved)
+Guards against: a registry built from other data silently treating an unexplained reset as no event. ... ok
+test_rights_issue_is_not_a_free_split (test_corporate_actions.NonScalingActions.test_rights_issue_is_not_a_free_split)
+Guards against: a rights issue (reference 1200 -> 1000, new shares paid for and listed ... ok
+test_single_source_reset_after_the_mirror_is_not_applied (test_corporate_actions.NonScalingActions.test_single_source_reset_after_the_mirror_is_not_applied)
+Guards against: Yahoo-era resets (derived from Yahoo's own split events) treated as verified. ... ok
+test_yahoo_event_without_a_reset_is_not_applied (test_corporate_actions.NonScalingActions.test_yahoo_event_without_a_reset_is_not_applied)
+Guards against: scaling shares on a Yahoo split the exchange prices do not show. ... ok
+test_committed_manual_file_has_no_invented_entries (test_corporate_actions.RegistryFiles.test_committed_manual_file_has_no_invented_entries)
+Guards against: primary-source rows added without archived documents. ... ok
+test_manual_entries_need_a_primary_source (test_corporate_actions.RegistryFiles.test_manual_entries_need_a_primary_source)
+Guards against: a manual override with no URL or time, or an invented action type. ... ok
+test_registry_for_another_panel_is_refused (test_corporate_actions.RegistryFiles.test_registry_for_another_panel_is_refused)
+Guards against: running with a registry whose resets were read from different prices. ... ok
+test_date_the_exchange_reference_ignores_is_not_a_session (test_corporate_actions.SessionCalendar.test_date_the_exchange_reference_ignores_is_not_a_session)
+Guards against: a stub date (the mirror's Saturday 2021-05-22) whose closes IDX's next ... ok
+test_declared_ratio_is_applied_not_the_snapped_reset (test_corporate_actions.ShareScalingActions.test_declared_ratio_is_applied_not_the_snapped_reset)
+Guards against: a 511:500 stock dividend scaled by a nearby simple fraction (up to 1% off). ... ok
+test_lagged_register_update_needs_a_second_source (test_corporate_actions.ShareScalingActions.test_lagged_register_update_needs_a_second_source)
+Guards against: a late share-count change of the right size (e.g. warrants, a placement) ... ok
+test_reverse_split_preserves_value (test_corporate_actions.ShareScalingActions.test_reverse_split_preserves_value)
+Guards against: a 5:1 consolidation read as a 400% gain. ... ok
+test_split_preserves_value (test_corporate_actions.ShareScalingActions.test_split_preserves_value)
+Guards against: a verified 1:2 split read as a 50% loss, or scaled by a wrong ratio. ... ok
+test_features_handle_windows_shorter_than_their_lookbacks (test_e1.DetectorShortWindows.test_features_handle_windows_shorter_than_their_lookbacks)
+Guards against: the harness's first prefix calls (1..60 sessions) crashing the detector (v1 bug). ... ok
+test_controls_are_same_session_non_events_of_other_names (test_e1.E1Mechanics.test_controls_are_same_session_non_events_of_other_names)
+Guards against: controls drawn from another day, from winners, or from the event's own ticker. ... ok
+test_episode_starts_are_the_first_qualifying_day (test_e1.E1Mechanics.test_episode_starts_are_the_first_qualifying_day)
+Guards against: counting one repricing as several events, or starting it after it began. ... ok
+test_forward_window_never_crosses_a_period_boundary (test_e1.E1Mechanics.test_forward_window_never_crosses_a_period_boundary)
+Guards against: discovery labels using validation-period prices. ... ok
+test_holdout_is_sealed (test_e1.E1Mechanics.test_holdout_is_sealed)
+Guards against: holdout labels being formed at all (the study's market ends at validation's end). ... ok
+test_labels_use_only_later_closes (test_e1.E1Mechanics.test_labels_use_only_later_closes)
+Guards against: an off-by-one that puts the decision day's own move into the label. ... ok
+test_selection_follows_the_preregistered_rule (test_e1.E1Mechanics.test_selection_follows_the_preregistered_rule)
+Guards against: picking a detector on anything but discovery lift with the admissibility floor. ... ok
+test_stage_outputs_are_never_overwritten (test_e1.E1Mechanics.test_stage_outputs_are_never_overwritten)
+Guards against: re-running a stage over its earlier results. ... ok
+test_study_runs_with_the_us_profile_and_family_g (test_e1.E2OnOtherMarkets.test_study_runs_with_the_us_profile_and_family_g)
+Guards against: the E2 path (no price limits, opens, family G, global panel format) failing ... ok
+test_as_traded_needs_factors_and_valid_ones (test_e2_repair.AsTradedUnits.test_as_traded_needs_factors_and_valid_ones) ... ok
+test_exit_is_costed_in_its_own_session_units (test_e2_repair.AsTradedUnits.test_exit_is_costed_in_its_own_session_units)
+Guards against: one tier for both sides when a split falls inside the holding window. ... ok
+test_later_reverse_split_restores_the_traded_tier_and_share_count (test_e2_repair.AsTradedUnits.test_later_reverse_split_restores_the_traded_tier_and_share_count)
+Guards against: a $0.30 stock that later reverse-split 1:10 being costed as a $3 stock. ... ok
+test_panel_units_keep_the_original_contract (test_e2_repair.AsTradedUnits.test_panel_units_keep_the_original_contract)
+Guards against: the repair changing what an original-contract run computes. ... ok
+test_price_band_uses_the_traded_price (test_e2_repair.AsTradedUnits.test_price_band_uses_the_traded_price) ... ok
+test_rule_view_cannot_see_unit_factor (test_e2_repair.AsTradedUnits.test_rule_view_cannot_see_unit_factor)
+Guards against: a detector reading factors built from later corporate actions. ... ok
+test_skip_lot_from_rescaled_prices_disappears (test_e2_repair.AsTradedUnits.test_skip_lot_from_rescaled_prices_disappears)
+Guards against: a share that cost $0.60 counted as unaffordable because later reverse ... ok
+test_an_unrecorded_split_is_caught_only_with_filing_evidence (test_e2_repair.Coverage.test_an_unrecorded_split_is_caught_only_with_filing_evidence)
+Guards against: a fake +900% day from a split the provider never adjusted for, and ... ok
+test_jump_rows_are_found_and_marked (test_e2_repair.Coverage.test_jump_rows_are_found_and_marked) ... ok
+test_model_a_depends_on_the_entry_sessions_final_volume (test_e2_repair.FillModels.test_model_a_depends_on_the_entry_sessions_final_volume)
+Reproduces Hermes's finding: same opening, different end-of-day volume, different fill. ... ok
+test_model_b_counts_listed_days_without_trades_as_zero (test_e2_repair.FillModels.test_model_b_counts_listed_days_without_trades_as_zero)
+Guards against: capacity read from the few days a thin name happened to trade. ... ok
+test_model_b_decides_from_volume_known_at_the_decision (test_e2_repair.FillModels.test_model_b_decides_from_volume_known_at_the_decision)
+Guards against: an opening fill accepted or refused by volume printed after the open. ... ok
+test_model_b_refuses_when_recent_volume_is_too_thin (test_e2_repair.FillModels.test_model_b_refuses_when_recent_volume_is_too_thin) ... ok
+test_model_b_requires_as_traded_open_entries (test_e2_repair.FillModels.test_model_b_requires_as_traded_open_entries) ... ok
+test_quarantine_removes_names_from_both_sides (test_e2_repair.RepairRun.test_quarantine_removes_names_from_both_sides)
+Guards against: excluding a name from the detector but still drawing it as a control. ... ok
+test_effective_session_is_already_in_new_units (test_e2_repair.SplitEvidence.test_effective_session_is_already_in_new_units)
+Guards against: an off-by-one at the split boundary (Yahoo stamps 09:30 on the new-units session). ... ok
+test_filing_must_state_the_same_ratio (test_e2_repair.SplitEvidence.test_filing_must_state_the_same_ratio)
+Guards against: corroborating a 1:10 provider record with a filing about a 1:20 split. ... ok
+test_one_for_one_is_not_a_ratio (test_e2_repair.SplitEvidence.test_one_for_one_is_not_a_ratio)
+Guards against: a prospectus' 'one-for-one' exchange read as a split (coverage v1 bug). ... ok
+test_phrasings (test_e2_repair.SplitEvidence.test_phrasings) ... ok
+test_price_adjustments_are_not_called_splits (test_e2_repair.SplitEvidence.test_price_adjustments_are_not_called_splits) ... ok
+test_reversed_wording_needs_reverse_words (test_e2_repair.SplitEvidence.test_reversed_wording_needs_reverse_words)
+'10-for-1 reverse split' is a common misstatement of 1-for-10; accept it only with ... ok
+test_delisted_before_exit_exits_at_last_close_or_zero (test_execution.ExecutionTests.test_delisted_before_exit_exits_at_last_close_or_zero) ... ok
+test_entry_locked_at_ara_is_refused (test_execution.ExecutionTests.test_entry_locked_at_ara_is_refused) ... ok
+test_exit_locked_at_arb_rolls_forward (test_execution.ExecutionTests.test_exit_locked_at_arb_rolls_forward) ... ok
+test_flat_trade_pays_both_fees_and_uses_whole_lots (test_execution.ExecutionTests.test_flat_trade_pays_both_fees_and_uses_whole_lots) ... ok
+test_holding_past_the_data_is_incomplete (test_execution.ExecutionTests.test_holding_past_the_data_is_incomplete) ... ok
+test_lot_too_expensive_is_skipped (test_execution.ExecutionTests.test_lot_too_expensive_is_skipped) ... ok
+test_one_price_bar_at_special_board_limit_is_a_lock (test_execution.ExecutionTests.test_one_price_bar_at_special_board_limit_is_a_lock) ... ok
+test_participation_cap (test_execution.ExecutionTests.test_participation_cap) ... ok
+test_split_scales_shares (test_execution.ExecutionTests.test_split_scales_shares) ... ok
+test_suspended_entry_is_skipped_and_suspended_exit_rolls (test_execution.ExecutionTests.test_suspended_entry_is_skipped_and_suspended_exit_rolls) ... ok
+test_global_normalisation_is_refused (test_lookahead.PrefixFirst.test_global_normalisation_is_refused)
+Guards against: z-scoring each name with its whole-history mean and std (uses future prices). ... ok
+test_names_listed_later_are_invisible (test_lookahead.PrefixFirst.test_names_listed_later_are_invisible)
+Guards against: a rule that depends on how many names will exist (future IPOs), which the old ... ok
+test_recorded_signal_is_what_the_prefix_call_returned (test_lookahead.PrefixFirst.test_recorded_signal_is_what_the_prefix_call_returned)
+Guards against: recording full-window signals and only spot-checking them afterwards. ... ok
+test_truncation_aware_rule_cannot_leak (test_lookahead.PrefixFirst.test_truncation_aware_rule_cannot_leak)
+Guards against: a rule that behaves causally whenever it is handed a shortened window ... ok
+test_import_system_bytecode_cache_is_not_a_violation (test_lookahead.ReviewPR1.test_import_system_bytecode_cache_is_not_a_violation)
+Closes: lazy imports inside compute (np.char, DataFrame.to_string) failing as lookahead ... ok
+test_string_attribute_routes_are_refused (test_lookahead.ReviewPR1.test_string_attribute_routes_are_refused)
+Closes: operator.attrgetter / dataclasses.sys.modules["builtins"].getattr reaching private ... ok
+test_switching_the_sandbox_off_is_detected (test_lookahead.ReviewPR1.test_switching_the_sandbox_off_is_detected)
+Closes: a rule turning the sandbox's active flag off to read a data file unseen. ... ok
+test_view_holds_nothing_past_its_session (test_lookahead.ReviewPR1.test_view_holds_nothing_past_its_session)
+Closes: a prefix view keeping a reference to the full arrays (`_src`), reachable through ... ok
+test_file_reads_are_blocked_even_if_swallowed (test_lookahead.RuntimeSandbox.test_file_reads_are_blocked_even_if_swallowed)
+Guards against: reading data files during compute, including a rule that catches the error. ... ok
+test_frame_and_heap_walks_are_blocked (test_lookahead.RuntimeSandbox.test_frame_and_heap_walks_are_blocked)
+Guards against: sys._getframe, traceback frames and gc.get_objects reaching the full market. ... ok
+test_guard_is_inert_outside_rules (test_lookahead.RuntimeSandbox.test_guard_is_inert_outside_rules)
+Guards against: the sandbox breaking the harness's own file access after a rule ran. ... ok
+test_view_is_read_only_and_has_no_registry (test_lookahead.RuntimeSandbox.test_view_is_read_only_and_has_no_registry)
+Guards against: a rule writing into the arrays execution uses, reading the corporate-action ... ok
+test_data_held_in_closures_or_import_time_state_is_refused (test_lookahead.SourceAudit.test_data_held_in_closures_or_import_time_state_is_refused)
+Guards against: data loaded at import time, or a closure built by a factory, carrying the future. ... ok
+test_frame_walking_is_refused (test_lookahead.SourceAudit.test_frame_walking_is_refused)
+Guards against: reaching the caller's full arrays through the call stack. ... ok
+test_reading_files_is_refused (test_lookahead.SourceAudit.test_reading_files_is_refused)
+Guards against: a rule that loads the panel itself and reads tomorrow's close. ... ok
+test_stateful_cache_is_refused (test_lookahead.SourceAudit.test_stateful_cache_is_refused)
+Guards against: a module-level cache filled by one call and read by another. ... ok
+test_the_audit_is_not_vacuous (test_lookahead.SourceAudit.test_the_audit_is_not_vacuous)
+Guards against: an audit so strict that it rejects real rules (then it would be switched off). ... ok
+test_april_2025_and_september_2026 (test_market.AutoRejectionScheduleTests.test_april_2025_and_september_2026) ... ok
+test_band_edges (test_market.AutoRejectionScheduleTests.test_band_edges) ... ok
+test_covid_asymmetric (test_market.AutoRejectionScheduleTests.test_covid_asymmetric) ... ok
+test_dates_before_schedule_are_refused (test_market.AutoRejectionScheduleTests.test_dates_before_schedule_are_refused) ... ok
+test_floor_rp50_until_september_2026 (test_market.AutoRejectionScheduleTests.test_floor_rp50_until_september_2026) ... ok
+test_normalisation_stages (test_market.AutoRejectionScheduleTests.test_normalisation_stages) ... ok
+test_special_board (test_market.AutoRejectionScheduleTests.test_special_board) ... ok
+test_symmetric_before_covid (test_market.AutoRejectionScheduleTests.test_symmetric_before_covid) ... ok
+test_rounding_to_tick (test_market.TickTests.test_rounding_to_tick) ... ok
+test_tick_bands (test_market.TickTests.test_tick_bands) ... ok
+test_family_g_is_audit_clean_and_fixed (test_markets.GlobalPanel.test_family_g_is_audit_clean_and_fixed)
+Guards against: an E2 detector module that could read the future, or a family edited after analysis. ... ok
+test_one_day_spike_that_reverts_is_dropped_but_a_real_jump_is_kept (test_markets.GlobalPanel.test_one_day_spike_that_reverts_is_dropped_but_a_real_jump_is_kept)
+Guards against: a bad print (x5 for one day) becoming a fake moonshot, while a jump that holds ... ok
+test_tickers_that_look_like_missing_values_survive_a_round_trip (test_markets.GlobalPanel.test_tickers_that_look_like_missing_values_survive_a_round_trip)
+Guards against: the Nasdaq symbol NA (and NAN, NULL) being read back as a missing ticker. ... ok
+test_idx_profile_reproduces_the_original_constants (test_markets.Profiles.test_idx_profile_reproduces_the_original_constants)
+Guards against: the market refactor changing IDX lots, fees, bands or entry. ... ok
+test_markets_without_price_limits_have_no_locks (test_markets.Profiles.test_markets_without_price_limits_have_no_locks)
+Guards against: IDX auto-rejection limits applied to US or crypto bars (a +40% day 'locked'). ... ok
+test_next_open_entry_and_single_share_lots (test_markets.Profiles.test_next_open_entry_and_single_share_lots)
+Guards against: US/crypto trades entered at the next close (missing the open), or rounded to ... ok
+test_report_names_the_markets_own_price_bands (test_markets.Profiles.test_report_names_the_markets_own_price_bands)
+Guards against: a US or crypto run report describing its price bands in rupiah (the ... ok
+test_us_cost_tiers_charge_cheap_names_more (test_markets.Profiles.test_us_cost_tiers_charge_cheap_names_more)
+Guards against: a $0.50 stock traded as if it cost what a $50 stock costs to trade. ... ok
+test_every_candidate_reaches_a_terminal_decision (test_paper.PaperScan.test_every_candidate_reaches_a_terminal_decision)
+Guards against: candidates left undecided, BUY without validated evidence, and plans missing ... ok
+test_ledger_chain_detects_any_edit (test_paper.PaperScan.test_ledger_chain_detects_any_edit)
+Guards against: a decision rewritten after the outcome is known. ... ok
+test_no_signal_day_is_still_a_record (test_paper.PaperScan.test_no_signal_day_is_still_a_record)
+Guards against: quiet days leaving no trace, so the scan history looks better than it was. ... ok
+test_one_price_limit_bar_does_not_put_the_stop_at_the_entry (test_paper.PaperScan.test_one_price_limit_bar_does_not_put_the_stop_at_the_entry)
+Guards against (policy v1 defect, GTBO 2026-10-07): a one-price ARA bar's low equals its close, ... ok
+test_scoring_separates_discovery_from_the_decision (test_paper.PaperScan.test_scoring_separates_discovery_from_the_decision)
+Guards against: a rejected name that then ran being scored as a good call (or vice versa). ... ok
+test_untradeable_candidate_is_not_executable_with_the_reason (test_paper.PaperScan.test_untradeable_candidate_is_not_executable_with_the_reason)
+Guards against: a plan for a name where no lot fits the liquidity or risk caps. ... ok
+test_e2_evidence_is_found_and_blocks_a_buy (test_paper_markets.CommittedEvidence.test_e2_evidence_is_found_and_blocks_a_buy)
+The decision gate must read the committed E2 validation and its harness run; if either is ... ok
+test_live_quote_is_the_verified_price_and_the_entry (test_paper_markets.CryptoPaper.test_live_quote_is_the_verified_price_and_the_entry) ... ok
+test_no_live_quote_means_not_executable (test_paper_markets.CryptoPaper.test_no_live_quote_means_not_executable) ... ok
+test_quote_above_the_chase_limit_is_not_chased (test_paper_markets.CryptoPaper.test_quote_above_the_chase_limit_is_not_chased) ... ok
+test_us_features_are_gzipped_reproducibly_and_hashed (test_paper_markets.FrozenFeatures.test_us_features_are_gzipped_reproducibly_and_hashed)
+Guards against: a frozen feature file whose bytes change with the write time (gzip ... ok
+test_live_inputs_keep_the_legacy_step_and_say_so (test_paper_markets.PinnedPreprocessing.test_live_inputs_keep_the_legacy_step_and_say_so)
+Guards against: the research panel's causal-close-v2 silently changing what a live ... ok
+test_a_reverse_split_inside_the_window_does_not_change_the_outcome (test_paper_markets.USPaper.test_a_reverse_split_inside_the_window_does_not_change_the_outcome)
+Guards against: the source rescaling a name's whole history after a reverse split, so ... ok
+test_failed_trading_validation_gives_pass_with_a_full_plan (test_paper_markets.USPaper.test_failed_trading_validation_gives_pass_with_a_full_plan) ... ok
+test_no_signal_session_is_recorded_under_the_us_scan_id (test_paper_markets.USPaper.test_no_signal_session_is_recorded_under_the_us_scan_id) ... ok
+test_us_outcome_enters_at_the_next_open_not_the_close (test_paper_markets.USPaper.test_us_outcome_enters_at_the_next_open_not_the_close) ... ok
+test_us_sizing_stays_inside_the_risk_budget_in_whole_shares (test_paper_markets.USPaper.test_us_sizing_stays_inside_the_risk_budget_in_whole_shares) ... ok
+test_rescore_appends_a_revision_linked_to_the_earlier_outcome (test_paper_scorer_v2.Revisions.test_rescore_appends_a_revision_linked_to_the_earlier_outcome)
+Guards against: a corrected outcome overwriting, or floating free of, the original. ... ok
+test_corroborated_split_inside_the_window_leaves_the_outcome_unchanged (test_paper_scorer_v2.ScorerV2.test_corroborated_split_inside_the_window_leaves_the_outcome_unchanged)
+Guards against: a reverse split between signal and exit changing stop, chase or costs. ... ok
+test_crypto_is_unadjusted (test_paper_scorer_v2.ScorerV2.test_crypto_is_unadjusted) ... ok
+test_idx_split_without_an_independent_source_is_unscorable (test_paper_scorer_v2.ScorerV2.test_idx_split_without_an_independent_source_is_unscorable) ... ok
+test_no_split_scores_with_v2 (test_paper_scorer_v2.ScorerV2.test_no_split_scores_with_v2) ... ok
+test_rescaled_history_without_a_record_does_not_reconcile (test_paper_scorer_v2.ScorerV2.test_rescaled_history_without_a_record_does_not_reconcile)
+Guards against: inferring a split from a changed price ratio (the legacy scorer did). ... ok
+test_uncorroborated_split_is_unscorable_with_the_reason (test_paper_scorer_v2.ScorerV2.test_uncorroborated_split_is_unscorable_with_the_reason) ... ok
+test_duplicate_or_future_schedule_rejected (test_price_units.PriceUnits.test_duplicate_or_future_schedule_rejected) ... ok
+test_fail_closed (test_price_units.PriceUnits.test_fail_closed) ... ok
+test_forward_multiple_and_no_action (test_price_units.PriceUnits.test_forward_multiple_and_no_action) ... ok
+test_reverse_split_and_boundary (test_price_units.PriceUnits.test_reverse_split_and_boundary) ... ok
+test_unknown_volume_convention_rejected (test_price_units.PriceUnits.test_unknown_volume_convention_rejected) ... ok
+test_appending_passes (test_results.AppendOnlyGuardTests.test_appending_passes) ... ok
+test_corporate_action_registry_is_frozen_and_manual_file_append_only (test_results.AppendOnlyGuardTests.test_corporate_action_registry_is_frozen_and_manual_file_append_only)
+Guards against: re-classifying past corporate actions in place (which would silently change ... ok
+test_deleting_a_run_fails (test_results.AppendOnlyGuardTests.test_deleting_a_run_fails) ... ok
+test_editing_a_past_run_fails (test_results.AppendOnlyGuardTests.test_editing_a_past_run_fails) ... ok
+test_rewriting_the_index_fails_in_history_check (test_results.AppendOnlyGuardTests.test_rewriting_the_index_fails_in_history_check) ... ok
+test_edited_or_deleted_run_files_fail_verify (test_results.RunStoreTests.test_edited_or_deleted_run_files_fail_verify) ... ok
+test_existing_run_directory_is_never_reused (test_results.RunStoreTests.test_existing_run_directory_is_never_reused) ... ok
+test_run_is_written_once_hashed_and_read_only (test_results.RunStoreTests.test_run_is_written_once_hashed_and_read_only) ... ok
+test_unindexed_run_directory_fails_verify (test_results.RunStoreTests.test_unindexed_run_directory_fails_verify) ... ok
+test_reset_before_entry_does_not_exclude (test_review_fixes.Ace5RightsIssueIsNotASplit.test_reset_before_entry_does_not_exclude) ... ok
+test_reverse_split_scales_shares (test_review_fixes.Ace5RightsIssueIsNotASplit.test_reverse_split_scales_shares) ... ok
+test_rights_issue_reset_is_excluded_not_scaled (test_review_fixes.Ace5RightsIssueIsNotASplit.test_rights_issue_reset_is_excluded_not_scaled) ... ok
+test_split_scales_shares (test_review_fixes.Ace5RightsIssueIsNotASplit.test_split_scales_shares) ... ok
+test_value_preserving_mode_is_explicit (test_review_fixes.Ace5RightsIssueIsNotASplit.test_value_preserving_mode_is_explicit) ... ok
+test_controls_never_include_the_signalled_name (test_review_fixes.Ace6MatchedControls.test_controls_never_include_the_signalled_name) ... ok
+test_features_are_causal (test_review_fixes.Ace6MatchedControls.test_features_are_causal) ... ok
+test_matched_baseline_is_not_fooled_by_exposure (test_review_fixes.Ace6MatchedControls.test_matched_baseline_is_not_fooled_by_exposure) ... ok
+test_default_start_is_first_snapshot_and_earlier_start_warns (test_review_fixes.Ace7SurvivorshipSafeDefault.test_default_start_is_first_snapshot_and_earlier_start_warns) ... ok
+test_sparse_leak_is_caught_only_by_the_exhaustive_check (test_review_fixes.Ace8ExhaustiveLookahead.test_sparse_leak_is_caught_only_by_the_exhaustive_check) ... ok
+test_action_after_window_changes_units_not_economic_return (test_verified_paper_units.VerifiedPaperUnits.test_action_after_window_changes_units_not_economic_return) ... ok
+test_exit_uses_its_own_cost_tier (test_verified_paper_units.VerifiedPaperUnits.test_exit_uses_its_own_cost_tier) ... ok
+test_split_between_signal_entry_uses_entry_units (test_verified_paper_units.VerifiedPaperUnits.test_split_between_signal_entry_uses_entry_units) ... ok
+test_unreconciled_or_unknown_metadata_rejected (test_verified_paper_units.VerifiedPaperUnits.test_unreconciled_or_unknown_metadata_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 159 tests in 12.072s
+
+OK

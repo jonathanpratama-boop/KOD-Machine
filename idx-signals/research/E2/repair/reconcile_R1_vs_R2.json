@@ -1,0 +1,117 @@
+{
+  "original": {
+    "attempted": 1286,
+    "avg_net_return": -0.048541947506780224,
+    "evaluable_ticker_sessions": 1127465,
+    "hit_rate": 0.3525641025641026,
+    "matched_pooled_status_counts": {
+      "EXITED": 183254,
+      "INCOMPLETE": 9048,
+      "SKIP_LIQUIDITY": 61742,
+      "SKIP_NOT_TRADED": 1956,
+      "SKIP_NO_ENTRY_SESSION": 1200
+    },
+    "matched_random_avg_net_return": -0.011290246743689565,
+    "matched_random_p2_5": -0.020952052529601747,
+    "matched_random_p97_5": -0.00014779832788601043,
+    "median_net_return": -0.0847701929179408,
+    "p_one_sided_vs_matched": 1.0,
+    "scored": 1092,
+    "signals": 1468,
+    "skipped_overlap": 182,
+    "status_counts": {
+      "EXITED": 1092,
+      "INCOMPLETE": 48,
+      "SKIP_LIQUIDITY": 98,
+      "SKIP_NOT_TRADED": 42,
+      "SKIP_NO_ENTRY_SESSION": 6
+    },
+    "tickers_ever_evaluable": 4647
+  },
+  "original_only": {
+    "by_reason": {},
+    "count": 0,
+    "examples": {}
+  },
+  "original_run": "20261008T100026Z_MOONSHOT_E2_US_D1_v1",
+  "repair_panel": "panel_us_repair-20261008T095321Z.json",
+  "repaired": {
+    "attempted": 1324,
+    "avg_net_return": -0.04414637852280997,
+    "evaluable_ticker_sessions": 1127465,
+    "hit_rate": 0.3625,
+    "matched_pooled_status_counts": {
+      "EXITED": 182319,
+      "INCOMPLETE": 8294,
+      "SKIP_LIQUIDITY": 70663,
+      "SKIP_LOT": 1,
+      "SKIP_NOT_TRADED": 2123,
+      "SKIP_NO_ENTRY_SESSION": 1400
+    },
+    "matched_random_avg_net_return": -0.012129757156791902,
+    "matched_random_p2_5": -0.02240519607488633,
+    "matched_random_p97_5": -0.0022426605815067556,
+    "median_net_return": -0.08039857140279749,
+    "p_one_sided_vs_matched": 1.0,
+    "scored": 880,
+    "signals": 1468,
+    "skipped_overlap": 144,
+    "status_counts": {
+      "EXITED": 880,
+      "INCOMPLETE": 36,
+      "SKIP_LIQUIDITY": 359,
+      "SKIP_NOT_TRADED": 42,
+      "SKIP_NO_ENTRY_SESSION": 7
+    },
+    "tickers_ever_evaluable": 4647
+  },
+  "repaired_only": {
+    "by_reason": {},
+    "count": 0,
+    "examples": {}
+  },
+  "repaired_run": "20261008T101132Z_MOONSHOT_E2_US_D1_v1",
+  "signals_in_both": 1468,
+  "status_transitions_for_signals_in_both": [
+    {
+      "n": 224,
+      "original": "EXITED",
+      "repaired": "SKIP_LIQUIDITY"
+    },
+    {
+      "n": 27,
+      "original": "SKIP_OVERLAP",
+      "repaired": "SKIP_LIQUIDITY"
+    },
+    {
+      "n": 13,
+      "original": "INCOMPLETE",
+      "repaired": "SKIP_LIQUIDITY"
+    },
+    {
+      "n": 11,
+      "original": "SKIP_OVERLAP",
+      "repaired": "EXITED"
+    },
+    {
+      "n": 3,
+      "original": "SKIP_LIQUIDITY",
+      "repaired": "EXITED"
+    },
+    {
+      "n": 2,
+      "original": "EXITED",
+      "repaired": "SKIP_OVERLAP"
+    },
+    {
+      "n": 1,
+      "original": "SKIP_OVERLAP",
+      "repaired": "SKIP_NO_ENTRY_SESSION"
+    },
+    {
+      "n": 1,
+      "original": "SKIP_OVERLAP",
+      "repaired": "INCOMPLETE"
+    }
+  ]
+}

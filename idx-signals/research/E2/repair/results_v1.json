@@ -1,0 +1,400 @@
+{
+  "definitions": {
+    "matched random": "mean over 200 draws of each draw's average net return; each draw takes, per attempt, a same-session name with the same control buckets (seed 20261008)",
+    "rule avg": "mean net return over scored attempts (EXITED / EXIT_DATA_END)",
+    "same-session random": "mean over 200 draws, uniform over evaluable names that session (seed 20261007)"
+  },
+  "ex_post_volume_dependence": {
+    "R1_fills_refused_by_fill_model_B": 224,
+    "fills_in_both_A_and_B": 866,
+    "source": "reconcile_R1_vs_R2.json and the two trades files",
+    "their_avg_net": -0.0432,
+    "their_avg_net_in_R1": -0.0703,
+    "their_median_net_in_R1": -0.1089
+  },
+  "runs": [
+    {
+      "code": {
+        "commit": "826ec76da52b3c1d65abaac5f7502afb16772d63",
+        "dirty": false
+      },
+      "config": {
+        "fill_model": "A",
+        "quarantine": "none",
+        "units": "panel"
+      },
+      "denominators": {
+        "attempted": 1496,
+        "evaluable_ticker_sessions": 1177993,
+        "filled": 1148,
+        "scored": 1099,
+        "signals": 1676,
+        "skipped_overlap": 180,
+        "status_counts": {
+          "EXITED": 1099,
+          "INCOMPLETE": 49,
+          "SKIP_LIQUIDITY": 132,
+          "SKIP_LOT": 154,
+          "SKIP_NOT_TRADED": 53,
+          "SKIP_NO_ENTRY_SESSION": 9
+        },
+        "tickers_ever_evaluable": 4875
+      },
+      "fixed": {
+        "controls_version": "v2",
+        "end": "2023-12-31",
+        "entry_lag": 1,
+        "fee_buy": 0.0,
+        "fee_sell": 2.78e-05,
+        "holding_days": 5,
+        "max_participation": 0.1,
+        "notional": 5000.0,
+        "overlap": "skip",
+        "random_draws": 200,
+        "rule_id": "MOONSHOT_E2_US_D1",
+        "seed": 20261007,
+        "start": "2023-01-01"
+      },
+      "key": "original",
+      "matched_random": {
+        "avg_net_return_mean_of_draws": -0.005960705604771843,
+        "match_level_used": {
+          "price_band": 27,
+          "price_band+liquidity+market_cap": 2,
+          "price_band+liquidity+market_cap+volatility": 11,
+          "price_band+liquidity+market_cap+volatility+momentum": 116,
+          "price_band+liquidity+market_cap+volatility+momentum+drawdown": 116,
+          "price_band+liquidity+market_cap+volatility+momentum+drawdown+listing_age": 1224
+        },
+        "p2_5": -0.017413855173727292,
+        "p97_5": 0.0069902345705929,
+        "p_one_sided_rule_better": 1.0,
+        "pooled_status_counts": {
+          "EXITED": 201254,
+          "INCOMPLETE": 9006,
+          "SKIP_LIQUIDITY": 71953,
+          "SKIP_LOT": 12061,
+          "SKIP_NOT_TRADED": 3126,
+          "SKIP_NO_ENTRY_SESSION": 1800
+        }
+      },
+      "panel_sha256": "e5b5267438667a136f4a4cb42c52d6bc98bc80cde6a88c02a27751a4902c9b92",
+      "rule": {
+        "avg_net_return": -0.03649897835912017,
+        "hit_rate": 0.362147406733394,
+        "median_net_return": -0.07741930822559007,
+        "std_net_return": 0.34552777497388765
+      },
+      "rule_minus_matched": -0.03053827275434833,
+      "run": "results/runs/20261008T060443Z_MOONSHOT_E2_US_D1_v1",
+      "same_session_random_avg_net_return": 0.0015662658871853975,
+      "what": "original contract on the original panel (legacy preprocessing, rescaled price levels, fill model A)"
+    },
+    {
+      "code": {
+        "commit": "45457276ddd48846dd7d9694e90a20cdfdeea813",
+        "dirty": false
+      },
+      "config": {
+        "fill_model": "A",
+        "quarantine": "none",
+        "units": "panel"
+      },
+      "denominators": {
+        "attempted": 1503,
+        "evaluable_ticker_sessions": 1177999,
+        "filled": 1150,
+        "scored": 1101,
+        "signals": 1683,
+        "skipped_overlap": 180,
+        "status_counts": {
+          "EXITED": 1101,
+          "INCOMPLETE": 49,
+          "SKIP_LIQUIDITY": 135,
+          "SKIP_LOT": 156,
+          "SKIP_NOT_TRADED": 53,
+          "SKIP_NO_ENTRY_SESSION": 9
+        },
+        "tickers_ever_evaluable": 4875
+      },
+      "fixed": {
+        "controls_version": "v2",
+        "end": "2023-12-31",
+        "entry_lag": 1,
+        "fee_buy": 0.0,
+        "fee_sell": 2.78e-05,
+        "holding_days": 5,
+        "max_participation": 0.1,
+        "notional": 5000.0,
+        "overlap": "skip",
+        "random_draws": 200,
+        "rule_id": "MOONSHOT_E2_US_D1",
+        "seed": 20261007,
+        "start": "2023-01-01"
+      },
+      "key": "R1c",
+      "matched_random": {
+        "avg_net_return_mean_of_draws": -0.006240183330584914,
+        "match_level_used": {
+          "price_band": 18,
+          "price_band+liquidity+market_cap": 2,
+          "price_band+liquidity+market_cap+volatility": 11,
+          "price_band+liquidity+market_cap+volatility+momentum": 101,
+          "price_band+liquidity+market_cap+volatility+momentum+drawdown": 115,
+          "price_band+liquidity+market_cap+volatility+momentum+drawdown+listing_age": 1256
+        },
+        "p2_5": -0.01681409128551186,
+        "p97_5": 0.00638483779523565,
+        "p_one_sided_rule_better": 1.0,
+        "pooled_status_counts": {
+          "EXITED": 201406,
+          "INCOMPLETE": 8971,
+          "SKIP_LIQUIDITY": 72943,
+          "SKIP_LOT": 12184,
+          "SKIP_NOT_TRADED": 3296,
+          "SKIP_NO_ENTRY_SESSION": 1800
+        }
+      },
+      "panel_sha256": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b",
+      "rule": {
+        "avg_net_return": -0.037454463928968985,
+        "hit_rate": 0.3614895549500454,
+        "median_net_return": -0.07768108800030071,
+        "std_net_return": 0.34598100450230385
+      },
+      "rule_minus_matched": -0.031214280598384072,
+      "run": "results/runs/20261008T100745Z_MOONSHOT_E2_US_D1_v1",
+      "same_session_random_avg_net_return": 0.0010567712912926386,
+      "what": "repair panel (causal preprocessing), original units and fill model, no quarantine: preprocessing alone"
+    },
+    {
+      "code": {
+        "commit": "a4b258d887abe7f49b1fea902fb42063b7b8715a",
+        "dirty": false
+      },
+      "config": {
+        "fill_model": "A",
+        "quarantine": "none",
+        "units": "as_traded"
+      },
+      "denominators": {
+        "attempted": 1479,
+        "evaluable_ticker_sessions": 1177999,
+        "filled": 1279,
+        "scored": 1228,
+        "signals": 1683,
+        "skipped_overlap": 204,
+        "status_counts": {
+          "EXITED": 1228,
+          "INCOMPLETE": 51,
+          "SKIP_LIQUIDITY": 138,
+          "SKIP_NOT_TRADED": 53,
+          "SKIP_NO_ENTRY_SESSION": 9
+        },
+        "tickers_ever_evaluable": 4875
+      },
+      "fixed": {
+        "controls_version": "v2",
+        "end": "2023-12-31",
+        "entry_lag": 1,
+        "fee_buy": 0.0,
+        "fee_sell": 2.78e-05,
+        "holding_days": 5,
+        "max_participation": 0.1,
+        "notional": 5000.0,
+        "overlap": "skip",
+        "random_draws": 200,
+        "rule_id": "MOONSHOT_E2_US_D1",
+        "seed": 20261007,
+        "start": "2023-01-01"
+      },
+      "key": "R1b",
+      "matched_random": {
+        "avg_net_return_mean_of_draws": -0.013170596149431535,
+        "match_level_used": {
+          "price_band": 19,
+          "price_band+liquidity+market_cap": 3,
+          "price_band+liquidity+market_cap+volatility": 21,
+          "price_band+liquidity+market_cap+volatility+momentum": 117,
+          "price_band+liquidity+market_cap+volatility+momentum+drawdown": 95,
+          "price_band+liquidity+market_cap+volatility+momentum+drawdown+listing_age": 1224
+        },
+        "p2_5": -0.02236830864654746,
+        "p97_5": -0.0034522756240887562,
+        "p_one_sided_rule_better": 1.0,
+        "pooled_status_counts": {
+          "EXITED": 205487,
+          "INCOMPLETE": 9420,
+          "SKIP_LIQUIDITY": 76213,
+          "SKIP_LOT": 2,
+          "SKIP_NOT_TRADED": 2878,
+          "SKIP_NO_ENTRY_SESSION": 1800
+        }
+      },
+      "panel_sha256": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b",
+      "rule": {
+        "avg_net_return": -0.052729950172397955,
+        "hit_rate": 0.34201954397394135,
+        "median_net_return": -0.09377311540363187,
+        "std_net_return": 0.3538168997814117
+      },
+      "rule_minus_matched": -0.03955935402296642,
+      "run": "results/runs/20261008T100411Z_MOONSHOT_E2_US_D1_v1",
+      "same_session_random_avg_net_return": -0.0006388261343884757,
+      "what": "+ as-traded units for sizing, entry/exit cost tiers and price band; no quarantine (provider split records accepted)"
+    },
+    {
+      "code": {
+        "commit": "836e035b2d0ef403439170b356d44d7ebe821201",
+        "dirty": false
+      },
+      "config": {
+        "fill_model": "A",
+        "quarantine": "unit_schedule",
+        "units": "as_traded"
+      },
+      "denominators": {
+        "attempted": 1286,
+        "evaluable_ticker_sessions": 1127465,
+        "filled": 1140,
+        "scored": 1092,
+        "signals": 1468,
+        "skipped_overlap": 182,
+        "status_counts": {
+          "EXITED": 1092,
+          "INCOMPLETE": 48,
+          "SKIP_LIQUIDITY": 98,
+          "SKIP_NOT_TRADED": 42,
+          "SKIP_NO_ENTRY_SESSION": 6
+        },
+        "tickers_ever_evaluable": 4647
+      },
+      "fixed": {
+        "controls_version": "v2",
+        "end": "2023-12-31",
+        "entry_lag": 1,
+        "fee_buy": 0.0,
+        "fee_sell": 2.78e-05,
+        "holding_days": 5,
+        "max_participation": 0.1,
+        "notional": 5000.0,
+        "overlap": "skip",
+        "random_draws": 200,
+        "rule_id": "MOONSHOT_E2_US_D1",
+        "seed": 20261007,
+        "start": "2023-01-01"
+      },
+      "key": "R1",
+      "matched_random": {
+        "avg_net_return_mean_of_draws": -0.011290246743689565,
+        "match_level_used": {
+          "price_band": 19,
+          "price_band+liquidity+market_cap": 2,
+          "price_band+liquidity+market_cap+volatility": 19,
+          "price_band+liquidity+market_cap+volatility+momentum": 117,
+          "price_band+liquidity+market_cap+volatility+momentum+drawdown": 84,
+          "price_band+liquidity+market_cap+volatility+momentum+drawdown+listing_age": 1045
+        },
+        "p2_5": -0.020952052529601747,
+        "p97_5": -0.00014779832788601043,
+        "p_one_sided_rule_better": 1.0,
+        "pooled_status_counts": {
+          "EXITED": 183254,
+          "INCOMPLETE": 9048,
+          "SKIP_LIQUIDITY": 61742,
+          "SKIP_NOT_TRADED": 1956,
+          "SKIP_NO_ENTRY_SESSION": 1200
+        }
+      },
+      "panel_sha256": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b",
+      "rule": {
+        "avg_net_return": -0.048541947506780224,
+        "hit_rate": 0.3525641025641026,
+        "median_net_return": -0.0847701929179408,
+        "std_net_return": 0.3326485676109063
+      },
+      "rule_minus_matched": -0.03725170076309066,
+      "run": "results/runs/20261008T100026Z_MOONSHOT_E2_US_D1_v1",
+      "same_session_random_avg_net_return": -0.0008041321778064464,
+      "what": "+ quarantine of names without corroborated split records or with coverage flags: PRIMARY mechanical repair (fill model A, ex post)"
+    },
+    {
+      "code": {
+        "commit": "a6fc21a08b783eef4e4f71316afe316c2afb8dcc",
+        "dirty": false
+      },
+      "config": {
+        "fill_model": "B",
+        "quarantine": "unit_schedule",
+        "units": "as_traded"
+      },
+      "denominators": {
+        "attempted": 1324,
+        "evaluable_ticker_sessions": 1127465,
+        "filled": 916,
+        "scored": 880,
+        "signals": 1468,
+        "skipped_overlap": 144,
+        "status_counts": {
+          "EXITED": 880,
+          "INCOMPLETE": 36,
+          "SKIP_LIQUIDITY": 359,
+          "SKIP_NOT_TRADED": 42,
+          "SKIP_NO_ENTRY_SESSION": 7
+        },
+        "tickers_ever_evaluable": 4647
+      },
+      "fixed": {
+        "controls_version": "v2",
+        "end": "2023-12-31",
+        "entry_lag": 1,
+        "fee_buy": 0.0,
+        "fee_sell": 2.78e-05,
+        "holding_days": 5,
+        "max_participation": 0.1,
+        "notional": 5000.0,
+        "overlap": "skip",
+        "random_draws": 200,
+        "rule_id": "MOONSHOT_E2_US_D1",
+        "seed": 20261007,
+        "start": "2023-01-01"
+      },
+      "key": "R2",
+      "matched_random": {
+        "avg_net_return_mean_of_draws": -0.012129757156791902,
+        "match_level_used": {
+          "price_band": 19,
+          "price_band+liquidity+market_cap": 3,
+          "price_band+liquidity+market_cap+volatility": 20,
+          "price_band+liquidity+market_cap+volatility+momentum": 118,
+          "price_band+liquidity+market_cap+volatility+momentum+drawdown": 88,
+          "price_band+liquidity+market_cap+volatility+momentum+drawdown+listing_age": 1076
+        },
+        "p2_5": -0.02240519607488633,
+        "p97_5": -0.0022426605815067556,
+        "p_one_sided_rule_better": 1.0,
+        "pooled_status_counts": {
+          "EXITED": 182319,
+          "INCOMPLETE": 8294,
+          "SKIP_LIQUIDITY": 70663,
+          "SKIP_LOT": 1,
+          "SKIP_NOT_TRADED": 2123,
+          "SKIP_NO_ENTRY_SESSION": 1400
+        }
+      },
+      "panel_sha256": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b",
+      "rule": {
+        "avg_net_return": -0.04414637852280997,
+        "hit_rate": 0.3625,
+        "median_net_return": -0.08039857140279749,
+        "std_net_return": 0.340541736410073
+      },
+      "rule_minus_matched": -0.032016621366018065,
+      "run": "results/runs/20261008T101132Z_MOONSHOT_E2_US_D1_v1",
+      "same_session_random_avg_net_return": -0.0010105693665310943,
+      "what": "R1 with fill model B (decision-time capacity): execution-model sensitivity, not a replacement"
+    }
+  ],
+  "scope": "E2-US 2023 validation window only; detector MOONSHOT_E2_US_D1 v1 (G2_RET30) unchanged",
+  "version": "e2-us-repair-results-v1"
+}
