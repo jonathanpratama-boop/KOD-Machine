@@ -1,0 +1,3 @@
+[lfs]
+	# Archived original inputs are fetched on purpose only: see idx-signals/data/archive/README.md
+	fetchexclude = idx-signals/data/archive/**

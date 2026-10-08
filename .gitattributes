@@ -1,0 +1,2 @@
+idx-signals/data/archive/**/*.tar.xz filter=lfs diff=lfs merge=lfs -text
+idx-signals/data/archive/**/*.csv.gz filter=lfs diff=lfs merge=lfs -text
