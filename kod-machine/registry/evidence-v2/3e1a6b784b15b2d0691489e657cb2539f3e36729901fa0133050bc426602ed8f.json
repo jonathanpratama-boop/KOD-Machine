@@ -1,0 +1,30 @@
+{
+  "archive_time": null,
+  "archive_url": null,
+  "archived_copy": null,
+  "as_of_cutoff": "2025-02-09T16:00:00Z",
+  "content_sha256": null,
+  "content_timestamps": [],
+  "content_verified": false,
+  "corroborated_by": [],
+  "document_type": "news article",
+  "event_time": null,
+  "evidence_grade": "C",
+  "evidence_hash_version": "KOD-EVIDENCE-v2",
+  "evidence_id": "3e1a6b784b15b2d0691489e657cb2539f3e36729901fa0133050bc426602ed8f",
+  "existence_verified": false,
+  "grade_ceiling": "C",
+  "provenance": "web page as served on 2026-10-08",
+  "publication_time": "2024-08-20T09:02:00Z",
+  "publication_time_basis": "time printed on the article page ('Aug 20, 2024, 05:02 AM'; the text gives 0902 GMT)",
+  "publisher": "Investing.com",
+  "retrieval_time": "2026-10-08T12:35:00Z",
+  "source_type": "SECONDARY",
+  "source_url": "https://www.investing.com/news/stock-market-news/zealand-pharma-rebound-after-prior-session-losses-3578702",
+  "title": "Zealand Pharma rebound after prior session losses",
+  "verification_method": {
+    "content": "NONE",
+    "existence": "NONE"
+  },
+  "verification_notes": "Read through a fetch tool (direct download returned 403); bytes not held; retrieval time approximate. States the previous session's fall followed 'comments by the company's CEO ... about seeking a large pharmaceutical partner for the company's weight loss drug'. No timing."
+}
