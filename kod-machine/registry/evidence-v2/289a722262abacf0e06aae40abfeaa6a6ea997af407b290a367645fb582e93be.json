@@ -1,0 +1,30 @@
+{
+  "archive_time": null,
+  "archive_url": null,
+  "archived_copy": "kod-machine/registry/evidence-v2/093c1f5d431cc7521e3d294bf9e5b520cefb2052a00fdef2c591e34d138a66a7.pdf",
+  "as_of_cutoff": "2025-03-11T16:00:00Z",
+  "content_sha256": "093c1f5d431cc7521e3d294bf9e5b520cefb2052a00fdef2c591e34d138a66a7",
+  "content_timestamps": [],
+  "content_verified": false,
+  "corroborated_by": [],
+  "document_type": "adopted act",
+  "event_time": "1999-10-01T00:00:00Z",
+  "evidence_grade": "B",
+  "evidence_hash_version": "KOD-EVIDENCE-v2",
+  "evidence_id": "289a722262abacf0e06aae40abfeaa6a6ea997af407b290a367645fb582e93be",
+  "existence_verified": true,
+  "grade_ceiling": "B",
+  "provenance": "downloaded from folketingstidende.dk",
+  "publication_time": "1998-12-16T00:00:00Z",
+  "publication_time_basis": "date of Lov nr. 909 af 16. december 1998, printed in the official Folketingstidende record (adopted at third reading 15 December 1998)",
+  "publisher": "Folketinget (Danish Parliament)",
+  "retrieval_time": "2026-10-08T12:37:55Z",
+  "source_type": "PRIMARY",
+  "source_url": "https://www.folketingstidende.dk/samling/19981/lovforslag/L33/19981_L33_som_vedtaget.pdf",
+  "title": "Lov om ophævelse af lov om afgift ved overdragelse af aktier m.v. (L 33, 1998-99)",
+  "verification_method": {
+    "content": "NONE",
+    "existence": "PRIMARY_SOURCE_TIMESTAMP"
+  },
+  "verification_notes": "Repeals the share transfer duty (aktieafgiftsloven) for transfers from 1 October 1999. That no transfer duty was reintroduced by March 2025 is not shown by this document and is an assumption."
+}
