@@ -1,0 +1,30 @@
+{
+  "archive_time": null,
+  "archive_url": null,
+  "archived_copy": "kod-machine/registry/evidence-v2/5617de4bf322568428a42ad972af296dabf19bdab618a0286c4a69dd2cc9ca74.pdf",
+  "as_of_cutoff": "2025-02-09T16:00:00Z",
+  "content_sha256": "5617de4bf322568428a42ad972af296dabf19bdab618a0286c4a69dd2cc9ca74",
+  "content_timestamps": [],
+  "content_verified": false,
+  "corroborated_by": [],
+  "document_type": "PDMR notification (MAR art. 19)",
+  "event_time": null,
+  "evidence_grade": "B",
+  "evidence_hash_version": "KOD-EVIDENCE-v2",
+  "evidence_id": "ea57b15f6f575af3a417139ae9f60097757aa567d4f12eeb6b2ec207e9b4fe92",
+  "existence_verified": true,
+  "grade_ceiling": "B",
+  "provenance": "retrieved from the exchange's announcement viewer; bytes in research/ZEALAND_PILOT_v1/02_evidence/raw",
+  "publication_time": "2024-11-11T16:00:00Z",
+  "publication_time_basis": "releaseTime of the Nasdaq Nordic company-announcement system (api.news.eu.nasdaq.com, pinned in 01_protocol/pin), read as UTC+1",
+  "publisher": "Zealand Pharma A/S via Nasdaq Copenhagen",
+  "retrieval_time": "2026-10-08T12:39:29Z",
+  "source_type": "PRIMARY",
+  "source_url": "https://attachment.news.eu.nasdaq.com/ab6f2ce2bbe538c358464d06a50b72341",
+  "title": "PDMR notification: Anneline Nansen, sale of 1,500 shares",
+  "verification_method": {
+    "content": "NONE",
+    "existence": "PRIMARY_SOURCE_TIMESTAMP"
+  },
+  "verification_notes": "Existence: the exchange system's own release time. Content: not verified; no archive capture dated by the cutoff could be checked (Internet Archive rate-limited from this environment). Board member (employee elected) sold 1,000 at DKK 850 and 500 at DKK 847 on 2024-11-08 (DKK 1,273,500)."
+}
