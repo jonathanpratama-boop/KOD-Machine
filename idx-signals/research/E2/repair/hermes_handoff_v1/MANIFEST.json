@@ -1,0 +1,18 @@
+{
+  "repo/idx-signals/idxsig/global_panel.py": "df208f2c3265c1a43c6f603dd95e3bf766df5178016b66bbc1d7a8044eda48b9",
+  "repo/idx-signals/idxsig/paper.py": "5d5430e8ccbbe9b6487c744fbd592360ff5a6b1ca1d7a15a9ca2f043164870b7",
+  "repo/idx-signals/idxsig/price_units.py": "b3753d4b3e009f62f107498fde660a69395fce515d26dc61408836871fec4ee0",
+  "repo/idx-signals/tests/test_causal_panel.py": "76ea8d647a42e6a29d424958c93caaf78a66313758629de0656e1dd5697e3e44",
+  "repo/idx-signals/tests/test_price_units.py": "a721af1f09369c48433b69d3256ac6dae90ad2aa57e9d21c943937f223a52c1f",
+  "repo/idx-signals/tests/test_verified_paper_units.py": "67eab0856dd8c99b168a121077b33ba081c21b0c5a5d0c752a2ca7204380e842",
+  "audit/INDEPENDENT_SOURCE_AUDIT.md": "cf337781d064b6edc354810890043886464748aa42b4450af63845d2025539b7",
+  "audit/US_DATA_REPAIR_PROTOCOL_v1.md": "4717ca950421cc3591c4e61e4070129b16e649425db504a04a3a1ee0fd4560b1",
+  "audit/REPAIR_CHECKPOINT_v2.md": "a16daa80d46a42ff12fefb14081ca75e39a90dca03996e071bb98ea6a4977f9b",
+  "audit/REPAIR_CHECKPOINT_v2.json": "0b35e613360465cc75cfe6ec502093441704f57d4eb6f30df76a2b9950c4add3",
+  "audit/PAPER_UNITS_REPAIR_TEST_RESULT_v1.json": "202ea54cc32601c5f76b9558e991900d013bdebbced9dd290b4313b823087e1d",
+  "audit/CAUSAL_PANEL_REPAIR_TEST_RESULT.json": "25ca720c2a902e0bfbbd54633ec511b181e4df6fd103db08f759a50fc124192f",
+  "audit/ORIGINAL_INPUT_PRESENCE_v1.json": "90c3eb1c53129bd9286215f74f9663154f213418b4f6f0fb71ef1b387d80e672",
+  "audit/reproduce_open_volume.py": "46204c49e4a9a1223fc6e15c17cfc7344468d9b84cb8a59f1cff3764a3b5d807",
+  "audit/reproduce_source_findings.py": "3abb9abf27b9c3b5c033fb41f7f622c042e97eb35fa04dbf91ccb40749d146dd",
+  "audit/STATUS.md": "e4417d54a750ab37c8188d57f43bb2ee39ff14f1e3836105e99dddcd2079d43e"
+}

@@ -439,7 +439,7 @@ def decide(row, rank: int, scan_id: str, session: str, now: datetime, validation
 
 
 # ---------------------------------------------------------------------------------- score
-def score(decision: dict, m: Market) -> dict | None:
+def score(decision: dict, m: Market, *, price_units: dict | None = None) -> dict | None:
     """Score one decision on bars that now cover its window, or None if the window is still open."""
     from .profiles import PROFILES
 
@@ -471,6 +471,19 @@ def score(decision: dict, m: Market) -> dict | None:
     # by the ratio of the signal-day close now to the close recorded then.
     recorded = float(decision["verified_price"].get("close") or 0)
     scale = float(close[d] / recorded) if recorded > 0 and np.isfinite(close[d]) and close[d] > 0 else 1.0
+    unit_factor = None
+    if price_units is not None:
+        from .price_units import split_conversion_factor
+        if market != "US" or price_units.get("convention") != "SPLIT_ONLY":
+            raise ValueError("Verified scoring requires US split-only price convention")
+        def unit_factor(k):
+            return split_conversion_factor(str(dates[k]), price_units["actions"],
+                                           price_units["adjustment_reference"],
+                                           coverage_complete=price_units.get("coverage_complete", False))
+        signal_factor = unit_factor(d)
+        if not np.isfinite(recorded) or recorded <= 0 or not np.isclose(close[d] * signal_factor, recorded, rtol=1e-6, atol=1e-8):
+            raise ValueError("Recorded signal price does not reconcile to verified split schedule")
+        scale = 1.0 / signal_factor
     if market == "IDX":
         entry_price, first = float(close[e]), e + 1
         fillable = bool(m.tradeable[n, e] and not m.lock_up[n, e])
@@ -482,7 +495,8 @@ def score(decision: dict, m: Market) -> dict | None:
         first = e
         fillable = bool(np.isfinite(entry_price) and entry_price > 0)
         # cost tier at the price actually paid (decision-day units), not the rescaled one
-        tier = float(prof.per_side_cost(np.array([entry_price / scale]))[0]) if fillable else 0.0
+        cost_price = entry_price * unit_factor(e) if unit_factor else entry_price / scale
+        tier = float(prof.per_side_cost(np.array([cost_price]))[0]) if fillable else 0.0
         fee_in, fee_out = prof.fee_buy + tier, prof.fee_sell + tier
     in_band = ("max_chase_price" in plan
                and plan["invalidation"] * scale < entry_price <= plan["max_chase_price"] * scale)
@@ -504,12 +518,19 @@ def score(decision: dict, m: Market) -> dict | None:
     trade = None
     if exit_idx is not None:
         gross = float(level[exit_idx] / level[e] - 1) if market == "IDX" else float(close[exit_idx] / entry_price - 1)
+        if unit_factor:
+            exit_as_traded = float(close[exit_idx]) * unit_factor(exit_idx)
+            fee_out = prof.fee_sell + float(prof.per_side_cost(np.array([exit_as_traded]))[0])
         net = (1 + gross) * (1 - fee_out) / (1 + fee_in) - 1
         trade = {"entry_session": str(m.dates[e]), "entry_price": float(entry_price),
                  **({"entry_close": float(entry_price)} if market == "IDX" else {}),
                  "entry_basis": {"IDX": "close", "US": "open", "CRYPTO": "decision-time quote"}[market],
                  "exit_session": str(m.dates[exit_idx]), "exit_reason": exit_reason, "net_return": net,
                  "mfe": max(path), "mae": min(path)}
+        if unit_factor:
+            trade.update(entry_price_as_traded=entry_price * unit_factor(e),
+                         exit_price_as_traded=exit_as_traded,
+                         entry_cost_rate=fee_in, exit_cost_rate=fee_out)
     executed = decision["decision"] == "BUY ON TRIGGER" and trade is not None
     would_have = trade["net_return"] if trade else None
     if decision["decision"] == "BUY ON TRIGGER":
@@ -519,6 +540,7 @@ def score(decision: dict, m: Market) -> dict | None:
     return {"type": "OUTCOME", "market": market, "decision_id": decision["decision_id"], "scored_at": utc_stamp(),
             "discovery": discovery, "execution": {"fillable_at_trigger": fillable, "within_chase_band": bool(in_band),
                                                     "paper_trade": trade, "executed": executed},
+            "scoring_version": "verified-us-units-v1" if unit_factor else "legacy-signal-scale-v1",
             "decision_verdict": verdict, "price_scale": scale,
             **({"price_scale_note": "the source rescaled this name's history since the decision (split or "
                                     "adjustment); plan prices were multiplied by price_scale"}

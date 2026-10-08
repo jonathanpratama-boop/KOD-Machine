@@ -1,0 +1,16 @@
+{
+  "version": "repair-checkpoint-v2",
+  "base_commit": "1420ee68ac1da2f063bfaf96a1bd374701f23a05",
+  "files": {
+    "KOD-Machine-hermes-us-data-repair-v1/idx-signals/idxsig/paper.py": "5d5430e8ccbbe9b6487c744fbd592360ff5a6b1ca1d7a15a9ca2f043164870b7",
+    "KOD-Machine-hermes-us-data-repair-v1/idx-signals/idxsig/global_panel.py": "df208f2c3265c1a43c6f603dd95e3bf766df5178016b66bbc1d7a8044eda48b9",
+    "KOD-Machine-hermes-us-data-repair-v1/idx-signals/idxsig/price_units.py": "b3753d4b3e009f62f107498fde660a69395fce515d26dc61408836871fec4ee0",
+    "KOD-Machine-hermes-us-data-repair-v1/idx-signals/tests/test_verified_paper_units.py": "67eab0856dd8c99b168a121077b33ba081c21b0c5a5d0c752a2ca7204380e842",
+    "KOD-Machine-hermes-us-data-repair-v1/idx-signals/tests/test_causal_panel.py": "76ea8d647a42e6a29d424958c93caaf78a66313758629de0656e1dd5697e3e44",
+    "KOD-Machine-hermes-us-data-repair-v1/idx-signals/tests/test_price_units.py": "a721af1f09369c48433b69d3256ac6dae90ad2aa57e9d21c943937f223a52c1f",
+    "reproduce_open_volume.py": "46204c49e4a9a1223fc6e15c17cfc7344468d9b84cb8a59f1cff3764a3b5d807",
+    "ORIGINAL_INPUT_PRESENCE_v1.json": "90c3eb1c53129bd9286215f74f9663154f213418b4f6f0fb71ef1b387d80e672",
+    "PAPER_UNITS_REPAIR_TEST_RESULT_v1.json": "202ea54cc32601c5f76b9558e991900d013bdebbced9dd290b4313b823087e1d"
+  },
+  "status": "LOCAL_CANDIDATE_NOT_DEPLOYED"
+}

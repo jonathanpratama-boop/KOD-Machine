@@ -7,9 +7,8 @@ quality tiers; nothing is overwritten.
 
 QA, recorded in the manifest:
   - rows without a positive close are dropped;
-  - a one-day spike that fully reverts (close more than 3x the prior close and the next close
-    back below a third of it, or the mirror image) is a bad print and is dropped, because a
-    fake +200% day would otherwise become a "moonshot";
+  - large moves are preserved: a later reversal is not contemporaneous proof of a bad print;
+  - old future-informed deletion remains available only as _finish_legacy_v1 for forensic reproduction;
   - crypto: the current UTC day (still forming) is dropped; stablecoins, fiat pairs and
     leveraged tokens are excluded from the universe.
 """
@@ -28,7 +27,7 @@ from .provenance import MANIFESTS, PANEL_DIR, PKG_ROOT, check_files, read_manife
 
 COLUMNS = ["date", "ticker", "source", "previous", "open", "high", "low", "close", "volume", "value", "frequency",
            "listed_shares", "tradable_shares"]
-FORMAT = "panel-global-v1"
+FORMAT = "panel-global-v2"
 STABLE = {"USDC", "BUSD", "TUSD", "USDP", "PAX", "DAI", "FDUSD", "USDD", "UST", "USTC", "SUSD", "PYUSD", "AEUR",
           "EUR", "GBP", "AUD", "TRY", "BRL", "RUB", "UAH", "NGN", "ZAR", "BIDR", "IDRT", "BVND", "USDS", "USDSB",
           "EURI", "XUSD", "USD1", "BFUSD", "USDE"}
@@ -45,7 +44,7 @@ def _spikes(df: pd.DataFrame) -> pd.Series:
     return (up | down).fillna(False)
 
 
-def _finish(df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
+def _finish_legacy_v1(df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     df = df[df["close"] > 0].sort_values(["ticker", "date"]).reset_index(drop=True)
     spikes = _spikes(df)
     dropped = df.loc[spikes, ["ticker", "date", "close"]]
@@ -63,6 +62,30 @@ def _finish(df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
           "spike_examples": [{"ticker": r.ticker, "date": str(r.date.date()), "close": float(r.close)}
                              for r in dropped.head(20).itertuples()],
           "non_session_dates_dropped": [str(d.date()) for d in stubs][:50], "non_session_dates_count": len(stubs)}
+    return df[COLUMNS], qa
+
+
+def _finish(df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
+    """Causal close-time preprocessing; never remove a row using future returns.
+
+    This repairs temporal preprocessing only. Provider vintages, price units,
+    universe selection and the close-time coverage heuristic remain separate
+    validity requirements. Legacy v1 is explicit forensic reproduction only.
+    """
+    df = df[df["close"] > 0].sort_values(["ticker", "date"]).reset_index(drop=True)
+    df["previous"] = df.groupby("ticker")["close"].shift(1)
+    traded_value = df["quote_volume"] if "quote_volume" in df else df["close"] * df["volume"]
+    df["value"] = traded_value.where(df["volume"] > 0, 0.0)
+    for col in ("frequency", "listed_shares", "tradable_shares"):
+        df[col] = np.nan
+    traded = df[df["volume"] > 0].groupby("date")["ticker"].nunique()
+    sessions = traded[traded >= MIN_TRADED].index
+    stubs = sorted(set(df["date"]) - set(sessions))
+    df = df[df["date"].isin(sessions)].reset_index(drop=True)
+    qa = {"preprocessing_version": "causal-close-v2", "spike_rows_dropped": 0,
+          "large_move_policy": "preserve; reversion is not proof of a bad print",
+          "non_session_dates_dropped": [str(d.date()) for d in stubs][:50],
+          "non_session_dates_count": len(stubs)}
     return df[COLUMNS], qa
 
 

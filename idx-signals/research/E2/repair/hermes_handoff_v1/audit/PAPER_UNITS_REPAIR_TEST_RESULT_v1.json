@@ -1,0 +1,12 @@
+{
+  "opening_volume": {
+    "output": "{\n  \"fixture\": \"synthetic-2020\",\n  \"same_open_price\": 10.0,\n  \"low_final_volume_status\": \"SKIP_LIQUIDITY\",\n  \"high_final_volume_status\": \"EXITED\",\n  \"conclusion\": \"Opening fill classification depends on end-of-day volume; ex-post capacity filter, not causal opening execution.\"\n}",
+    "exit_code": 0,
+    "error": null
+  },
+  "tests": {
+    "output": "----------------------------------------------------------------------\nRan 130 tests in 6.712s\n\nOK",
+    "exit_code": 0,
+    "error": null
+  }
+}
