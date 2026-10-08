@@ -44,6 +44,11 @@ Fill model (US open entries):
      without trades count as zero; known when
      the decision is made); entry needs an opening price on the entry session and a bar with
      volume > 0 (the daily bar cannot show that the first print was at 09:30; labelled).
+     Known defect, kept so runs made with it reproduce: each past session's volume is put into
+     THAT session's share units, so a split inside the 20 sessions (or between the signal and
+     the entry) mixes units with the entry-session share count it is compared to.
+  B2 FILL-B-v2, the same rule with every past session's volume put into the ENTRY session's share
+     units (adjusted volume / unit_factor at entry) before the median. Use this for new runs.
 """
 
 from __future__ import annotations
@@ -87,7 +92,8 @@ class ExecConfig:
     cost_tiers: tuple = ()  # extra per-side cost by entry/exit price tier (profiles.Profile.cost_tiers)
     ca_mode: str = "exclude"  # "registry" (needs Market.with_registry), "exclude", "value_preserving"
     units: str = "panel"  # "panel" (original) or "as_traded" (needs Market.unit_factor)
-    fill_model: str = "A"  # "A" (original, ex-post entry-session volume) or "B" (decision-time capacity)
+    fill_model: str = "A"  # "A" (ex-post entry-session volume), "B" (FILL-B-v1, decision-time capacity,
+    #                        mixed units; reproduction only) or "B2" (FILL-B-v2, entry-session units)
 
 
 def _snap_ratio(r: np.ndarray) -> np.ndarray:
@@ -222,6 +228,24 @@ class Market:
         return self.slice(0, last + 1)
 
 
+def decision_capacity(volume, present, uf, tick_idx, sig_idx, entry_idx, window: int = 20) -> np.ndarray:
+    """FILL-B-v2 capacity in ENTRY-session shares: the median over the `window` sessions up to and
+    including the signal session of adjusted volume / unit_factor at the entry session (a listed
+    session without trades counts as 0; sessions before listing are ignored). Known at decision
+    time: the entry-session factor comes from split records effective by the entry session."""
+    out = np.zeros(len(tick_idx))
+    n_sessions = volume.shape[1]
+    for i, (n, s, e) in enumerate(zip(tick_idx, sig_idx, entry_idx)):
+        s = min(int(s), n_sessions - 1)
+        a = max(s - window + 1, 0)
+        listed = present[n, a: s + 1]
+        if not listed.any():
+            continue
+        vol = np.nan_to_num(volume[n, a: s + 1])[listed] / uf[n, min(int(e), n_sessions - 1)]
+        out[i] = float(np.median(vol))
+    return out
+
+
 def _tier_costs(price: np.ndarray, tiers: tuple) -> np.ndarray:
     if not tiers:
         return np.zeros(np.shape(price))
@@ -242,9 +266,9 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     e = np.minimum(entry, n_sessions - 1)
     open_ = status < 0
 
-    if cfg.units not in ("panel", "as_traded") or cfg.fill_model not in ("A", "B"):
+    if cfg.units not in ("panel", "as_traded") or cfg.fill_model not in ("A", "B", "B2"):
         raise ValueError(f"unknown units {cfg.units!r} or fill model {cfg.fill_model!r}")
-    if cfg.fill_model == "B" and (cfg.entry_price != "open" or cfg.units != "as_traded"):
+    if cfg.fill_model in ("B", "B2") and (cfg.entry_price != "open" or cfg.units != "as_traded"):
         raise ValueError("fill model B is defined for open entries in as-traded units")
     uf = None
     if cfg.units == "as_traded":
@@ -278,11 +302,13 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     open_ = status < 0
     if cfg.fill_model == "A":
         capacity = np.nan_to_num(m.volume[tick_idx, e]) / f_entry
-    else:
+    elif cfg.fill_model == "B":  # FILL-B-v1: each session in its own units (reproduction only)
         vol_traded = np.where(m.present, np.nan_to_num(m.volume) / uf, np.nan)  # a listed day without trades counts as 0
         lo = np.maximum(sig_idx - 19, 0)
         capacity = np.array([np.nanmedian(vol_traded[n, a: s + 1]) if np.isfinite(vol_traded[n, a: s + 1]).any()
                              else 0.0 for n, a, s in zip(tick_idx, lo, np.minimum(sig_idx, n_sessions - 1))])
+    else:  # FILL-B-v2: every session's volume in the entry session's share units
+        capacity = decision_capacity(m.volume, m.present, uf, tick_idx, sig_idx, e)
     too_big = shares_traded > cfg.max_participation * np.nan_to_num(capacity)
     status[open_ & too_big] = STATUS.index("SKIP_LIQUIDITY")
     open_ = status < 0

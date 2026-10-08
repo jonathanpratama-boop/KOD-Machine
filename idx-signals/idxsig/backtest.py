@@ -65,7 +65,7 @@ class RunConfig:
     controls_version: str = "v2"
     market: str = "IDX"  # profiles.PROFILES: IDX, US, CRYPTO
     units: str = "panel"  # "as_traded": price levels in the units traded that session (panel unit_factor)
-    fill_model: str = "A"  # "A": original (entry-session final volume); "B": decision-time capacity
+    fill_model: str = "A"  # "A": original (entry-session final volume); "B": FILL-B-v1; "B2": FILL-B-v2
     quarantine: str = "none"  # "unit_schedule": leave out names the panel lists as lacking a verified schedule
 
 
@@ -370,12 +370,15 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
                                     f"{cfg.max_participation:.0%} of that session's FINAL volume, both known only "
                                     "after the close: an ex-post capacity filter, not proof of an opening fill")
                            if cfg.fill_model == "A" else
-                           ("B (FILL-B-v1): shares <= "
-                            f"{cfg.max_participation:.0%} of the median as-traded volume of the 20 sessions up to "
+                           (f"{'B (FILL-B-v1, mixed share units: reproduction only)' if cfg.fill_model == 'B' else 'B2 (FILL-B-v2, entry-session share units)'}: shares <= "
+                            f"{cfg.max_participation:.0%} of the median volume of the 20 sessions up to "
                             "the signal session (known at the decision); entry needs an opening price and a bar "
                             "with volume on the entry session (daily bars cannot prove the print was at 09:30)")},
             "quarantine": {"mode": cfg.quarantine, "tickers_excluded": len(quarantined),
-                           "reasons": panel_meta.get("unit_quarantine", {}).get("reason_counts")},
+                           "reasons": panel_meta.get("unit_quarantine", {}).get("reason_counts"),
+                           **({"outcome_dependent_exclusion": "names are excluded by corporate-action records dated "
+                               "after the signals they remove; compare with the run without quarantine"}
+                              if quarantined else {})},
             "preprocessing": panel_meta.get("preprocessing"),
         }}
         if qa_flag is not None:

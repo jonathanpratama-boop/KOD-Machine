@@ -686,3 +686,67 @@ def build_share_corroboration(schedule_manifest: Path, raw_manifest: Path, windo
         fh.write(json.dumps(meta, indent=2, sort_keys=True) + "\n")
     log(json.dumps(meta["share_count_corroboration"]))
     return mpath
+
+
+# ------------------------------------------------------------- schedule reconciliation (v2)
+RECONCILE_VERSION = "ca-reconcile-v1"
+# Statuses a provider event gets when no single, matching verification record exists. None of
+# them is ever accepted: a missing record is unresolved, not silently fine.
+UNRESOLVED = ("UNRESOLVED_NO_RECORD", "UNRESOLVED_DUPLICATE_RECORD", "UNRESOLVED_PAYLOAD_MISMATCH",
+              "UNRESOLVED_SHARES_OUTSIDE_WINDOW")
+KEY = ["ticker", "effective_session", "numerator", "denominator"]
+
+
+def sha256_path(path: Path) -> str:
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def check_bound_inputs(raw_manifest: Path, smeta: dict, coverage: dict | None = None) -> None:
+    """The schedule (and coverage) must have been built from exactly these input bytes: the raw
+    manifest by sha256 (a name alone can be reused), the schedule and coverage rows by sha256."""
+    raw_sha = sha256_path(raw_manifest)
+    if smeta.get("raw_manifest") != Path(raw_manifest).name or smeta.get("raw_manifest_sha256") != raw_sha:
+        raise RuntimeError("split schedule was built from a different raw manifest (name or sha256 differs)")
+    if sha256_path(PKG_ROOT / smeta["schedule"]) != smeta.get("schedule_sha256"):
+        raise RuntimeError("split schedule rows differ from the sha256 its manifest records")
+    if coverage is not None:
+        if coverage.get("raw_manifest") != Path(raw_manifest).name or coverage.get("raw_manifest_sha256") != raw_sha:
+            raise RuntimeError("split coverage was built from a different raw manifest (name or sha256 differs)")
+        if sha256_path(PKG_ROOT / coverage["rows"]) != coverage.get("rows_sha256"):
+            raise RuntimeError("split coverage rows differ from the sha256 their manifest records")
+
+
+def reconcile_schedule(events: pd.DataFrame, sched: pd.DataFrame, effective_after: str, tickers,
+                       accepted: tuple, read_through: str, share_window_end: str | None = None) -> pd.DataFrame:
+    """One row per provider split event that can change the units of a panel row: every event of a
+    panel name effective after `effective_after`. Each needs exactly one verification record with
+    the same key and the same payload hash; otherwise it gets an UNRESOLVED_* status. A
+    SHARES_CONFIRMED record counts only for an event after the share-count window
+    (`share_window_end`), and only when the panel reads no further than that window."""
+    tickers = set(tickers)
+    ev = events[(events["ticker"].isin(tickers)) & (events["effective_session"] > effective_after)].copy()
+    sched = sched.copy()
+    for col in ("numerator", "denominator"):
+        sched[col] = sched[col].astype(float)
+        ev[col] = ev[col].astype(float)
+    counts = sched.groupby(KEY).size().rename("n_records").reset_index()
+    first = sched.drop_duplicates(KEY)[KEY + ["status", "payload_sha256"]].rename(
+        columns={"payload_sha256": "record_payload_sha256", "status": "record_status"})
+    out = ev.merge(counts, on=KEY, how="left").merge(first, on=KEY, how="left")
+    out["n_records"] = out["n_records"].fillna(0).astype(int)
+    status = out["record_status"].astype(object).copy()
+    status[out["n_records"] == 0] = "UNRESOLVED_NO_RECORD"
+    status[out["n_records"] > 1] = "UNRESOLVED_DUPLICATE_RECORD"
+    mismatch = (out["n_records"] == 1) & (out["record_payload_sha256"] != out["payload_sha256"])
+    status[mismatch] = "UNRESOLVED_PAYLOAD_MISMATCH"
+    if "SHARES_CONFIRMED" in accepted:
+        if share_window_end is None:
+            raise ValueError("SHARES_CONFIRMED is accepted but the schedule declares no share-count window")
+        if read_through > share_window_end:
+            raise ValueError(f"share-count corroboration is permitted for panels reading through {share_window_end} "
+                             f"at most; this panel reads through {read_through}")
+        outside = (status == "SHARES_CONFIRMED") & (out["effective_session"] <= share_window_end)
+        status[outside] = "UNRESOLVED_SHARES_OUTSIDE_WINDOW"
+    out["status"] = status
+    out["accepted"] = out["status"].isin([a for a in accepted if a not in UNRESOLVED])
+    return out.sort_values(KEY).reset_index(drop=True)
