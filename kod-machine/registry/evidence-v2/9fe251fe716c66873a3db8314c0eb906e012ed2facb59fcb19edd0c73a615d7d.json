@@ -1,0 +1,30 @@
+{
+  "archive_time": null,
+  "archive_url": null,
+  "archived_copy": "kod-machine/registry/evidence-v2/1129be4f0907f6f23f01f1bde3a5530cfaf61a8deb5be3f7895bd7be98c3115c.html",
+  "as_of_cutoff": "2025-03-08T16:00:00Z",
+  "content_sha256": "1129be4f0907f6f23f01f1bde3a5530cfaf61a8deb5be3f7895bd7be98c3115c",
+  "content_timestamps": [],
+  "content_verified": false,
+  "corroborated_by": [],
+  "document_type": "annual financial report announcement",
+  "event_time": null,
+  "evidence_grade": "B",
+  "evidence_hash_version": "KOD-EVIDENCE-v2",
+  "evidence_id": "9fe251fe716c66873a3db8314c0eb906e012ed2facb59fcb19edd0c73a615d7d",
+  "existence_verified": true,
+  "grade_ceiling": "B",
+  "provenance": "retrieved from the exchange's announcement viewer; bytes in research/ZEALAND_PILOT_v1/02_evidence/raw",
+  "publication_time": "2025-02-20T06:00:00Z",
+  "publication_time_basis": "releaseTime of the Nasdaq Nordic company-announcement system (api.news.eu.nasdaq.com, pinned in 01_protocol/pin), read as UTC+1",
+  "publisher": "Zealand Pharma A/S via Nasdaq Copenhagen",
+  "retrieval_time": "2026-10-08T12:29:18Z",
+  "source_type": "PRIMARY",
+  "source_url": "https://view.news.eu.nasdaq.com/view?id=b0a0e25eb02fc1dd47bfd823308212d21&lang=en&src=listed",
+  "title": "Zealand Pharma Announces Financial Results for the Full Year 2024",
+  "verification_method": {
+    "content": "NONE",
+    "existence": "PRIMARY_SOURCE_TIMESTAMP"
+  },
+  "verification_notes": "Existence: the exchange system's own release time. Content: not verified; no archive capture dated by the cutoff could be checked (Internet Archive rate-limited from this environment). Quotes: 'significantly accelerate its investments in the company's wholly-owned obesity programs, which in 2025 will include three large Phase 2b trials'; 2025 guidance for 'Revenue anticipated from existing and new license and partnership agreements': 'No guidance'. No petrelintide partnering statement or timing."
+}
