@@ -1,0 +1,18 @@
+{
+  "byte_identical": true,
+  "code_commit": "d8d2e25 (repair machinery, all options at their defaults)",
+  "command": "python3 -W ignore -m idxsig run --market US --rule MOONSHOT_E2_US_D1 --start 2023-01-01 --end 2023-12-31 --no-commit",
+  "files": {
+    "random_draws.csv": {
+      "original": "82c15f86a5ed1aaf8b9f2e5c1c4a533b010ac980c666d58d957c330760c743b0",
+      "with_repair_code": "82c15f86a5ed1aaf8b9f2e5c1c4a533b010ac980c666d58d957c330760c743b0"
+    },
+    "trades.csv.gz": {
+      "original": "cef44660bdacfdac18a715281efe28450a4a382b6f01ee3b8634aaf1f30d9e14",
+      "with_repair_code": "cef44660bdacfdac18a715281efe28450a4a382b6f01ee3b8634aaf1f30d9e14"
+    }
+  },
+  "meaning": "the repair options change nothing unless switched on: units=panel, fill_model=A, quarantine=none reproduce the original run",
+  "panel": "data/panel/panel_us-20261008T004105Z.csv.gz (original)",
+  "version": "e2-us-contract-check-v1"
+}

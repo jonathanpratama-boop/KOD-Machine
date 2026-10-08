@@ -36,7 +36,22 @@ GTBO's stop at its entry price on a one-price ARA bar. `PAPER-POLICY-v3` extends
 (hypothetical $10,000 account, E2 cost tiers) and crypto (10,000 USDT, 0.1% fee + 0.1%
 slippage per side, no quote = NOT EXECUTABLE). Decisions keep the policy they were made under.
 
-Scoring puts a plan into the source's current units before comparing prices: if a name split after the decision, every price in its history is rescaled, so the plan's levels are multiplied by (signal-day close now / close recorded then), shown as `price_scale` in the OUTCOME, and costs are charged at the price actually paid.
+Versions behind every call. Each SCAN and DECISION names its detector (rule id, version, module
+SHA-256), policy (id and SHA-256), data manifest (and its SHA-256) and, from 2026-10-08 09:30 UTC,
+its `preprocessing`. The three scans before that field existed used: SCAN-2026-10-07-F1_ARA
+`idx-yahoo-recent-v1`; SCAN-CRYPTO-2026-10-07-G2_RET30 and SCAN-US-2026-10-07-G2_RET30
+`global-close-legacy-v1` (the legacy step that drops a bar reverting the next session; at decision
+time that next bar is never after the decision). Live preprocessing is pinned by name in
+`paper.PREPROCESSING`; changing it is a new policy version.
+
+Scoring (`paper-score`, scorer `paper-score-v2`): scoring bars go through the causal step (no bar
+is removed because of a later one). Units come from the provider's split records after the
+signal session, each corroborated by an SEC filing for US names (`us_actions`), never from a
+change in price ratios; the recorded signal close must reconcile with the scoring bars in those
+units. When that cannot be established (an uncorroborated split, an IDX split, an unexplained
+rescaling) the OUTCOME is recorded `UNSCORABLE` with the reason. A corrected outcome is a new
+OUTCOME with `revises` = the earlier one's `record_hash` (`paper-score --rescore ID --reason ...`).
+The older price-ratio scaling remains only as a labelled forensic path and never records.
 
 A paper BUY needs validated detection AND a validated executable plan. All three detectors
 have the first and not the second (2023 validation, average net per trade vs matched random

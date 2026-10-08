@@ -1,0 +1,167 @@
+{
+  "cases": [
+    {
+      "payload": "data/raw/yahoo_us/20261008T001213Z/AMZN.json",
+      "payload_sha256": "b5b77d1e5d61d2e2a20b70f47b06cd1074a3140560a5409a64a75ab8c3f435d5",
+      "provider_split_records": [
+        {
+          "date": 1654522200,
+          "denominator": 1.0,
+          "numerator": 20.0,
+          "splitRatio": "20:1"
+        }
+      ],
+      "sessions": [
+        {
+          "close_rel_diff": -1.247142544791302e-08,
+          "independent_as_traded": {
+            "close": 2447,
+            "open": 2484,
+            "volume": 4880200
+          },
+          "session": "2022-06-03",
+          "unit_factor": 20.0,
+          "volume_rel_diff": 0.0,
+          "yahoo": {
+            "close": 122.3499984741211,
+            "open": 124.19999694824219,
+            "volume": 97604000
+          },
+          "yahoo_close_x_factor": 2446.999969482422,
+          "yahoo_open_x_factor": 2483.9999389648438,
+          "yahoo_volume_div_factor": 4880200.0
+        },
+        {
+          "close_rel_diff": 7.336544038949455e-09,
+          "independent_as_traded": {
+            "close": 124.79,
+            "open": 125.25,
+            "volume": 135269000
+          },
+          "session": "2022-06-06",
+          "unit_factor": 1.0,
+          "volume_rel_diff": 0.0,
+          "yahoo": {
+            "close": 124.79000091552734,
+            "open": 125.25,
+            "volume": 135269000
+          },
+          "yahoo_close_x_factor": 124.79000091552734,
+          "yahoo_open_x_factor": 125.25,
+          "yahoo_volume_div_factor": 135269000.0
+        }
+      ],
+      "ticker": "AMZN"
+    },
+    {
+      "payload": "data/raw/yahoo_us/20261008T001213Z/GE.json",
+      "payload_sha256": "07f74ce1a763cf8623bd9767df68611ea6d468f6400e150be60937615b0b9b4b",
+      "provider_split_records": [
+        {
+          "date": 1627911000,
+          "denominator": 8.0,
+          "numerator": 1.0,
+          "splitRatio": "1:8"
+        },
+        {
+          "date": 1672842600,
+          "denominator": 1000.0,
+          "numerator": 1281.0,
+          "splitRatio": "1281:1000"
+        },
+        {
+          "date": 1712064600,
+          "denominator": 1000.0,
+          "numerator": 1253.0,
+          "splitRatio": "1253:1000"
+        }
+      ],
+      "sessions": [
+        {
+          "close_rel_diff": 0.0007621587259738494,
+          "independent_as_traded": {
+            "close": 13.12,
+            "open": 13.14,
+            "volume": 68642148
+          },
+          "session": "2021-07-28",
+          "unit_factor": 0.20063662499999996,
+          "volume_rel_diff": -0.0010758618053929858,
+          "yahoo": {
+            "close": 65.44168853759766,
+            "open": 65.54137420654297,
+            "volume": 13757312
+          },
+          "yahoo_close_x_factor": 13.129999522484777,
+          "yahoo_open_x_factor": 13.150000118662831,
+          "yahoo_volume_div_factor": 68568298.53472666
+        },
+        {
+          "close_rel_diff": 0.0007728191519444927,
+          "independent_as_traded": {
+            "close": 12.94,
+            "open": 13.15,
+            "volume": 60127471
+          },
+          "session": "2021-07-30",
+          "unit_factor": 0.20063662499999996,
+          "volume_rel_diff": -0.00107726259319052,
+          "yahoo": {
+            "close": 64.54454803466797,
+            "open": 65.59121704101562,
+            "volume": 12050777
+          },
+          "yahoo_close_x_factor": 12.950000279826162,
+          "yahoo_open_x_factor": 13.160000416751858,
+          "yahoo_volume_div_factor": 60062697.92466855
+        },
+        {
+          "close_rel_diff": 0.001094621684897712,
+          "independent_as_traded": {
+            "close": 100.49,
+            "open": 104.36,
+            "volume": 24912322
+          },
+          "session": "2021-08-02",
+          "unit_factor": 1.6050929999999997,
+          "volume_rel_diff": -0.0010766522479113139,
+          "yahoo": {
+            "close": 62.67549514770508,
+            "open": 65.09280395507812,
+            "volume": 39943542
+          },
+          "yahoo_close_x_factor": 100.59999853311537,
+          "yahoo_open_x_factor": 104.4800039786682,
+          "yahoo_volume_div_factor": 24885500.09251801
+        }
+      ],
+      "ticker": "GE"
+    }
+  ],
+  "conclusions": [
+    "quote open/high/low/close are split-adjusted to the pull date: as-traded price = Yahoo price x F(t), F(t) = product of numerator/denominator over split records effective on a later session",
+    "volume is adjusted by the same factors: as-traded volume = Yahoo volume / F(t); so close x volume is traded value in as-traded dollars",
+    "a split record is stamped 09:30 America/New_York on the first session in new units (all 2,254 records in the pull carry 09:30)",
+    "Yahoo also lists non-split price adjustments as split records (GE 1281:1000 on 2023-01-04 = GE HealthCare spin-off, 1253:1000 on 2024-04-02 = GE Vernova); applying them reproduces GE's as-traded 2021 price within 0.1%, but they are not share splits and are treated as unverifiable (NOT_A_SPLIT)",
+    "adjclose is additionally dividend-adjusted and is not used"
+  ],
+  "established_at": "2026-10-08",
+  "independent_source": "Financial Modeling Prep, endpoint historical-price-eod-non-split-adjusted (as-traded OHLCV); the plan refused small caps (SNDL), so small-cap splits are corroborated by SEC filings instead",
+  "question": "How do Yahoo chart-v8 quote arrays and volume relate to prices and volume as traded, and on which session does a split record take effect?",
+  "sec_cases": [
+    {
+      "filing": "6-K EX-99.1, accession 0000947871-22-000800, filed 2022-07-25",
+      "finding": "VERIFIED (ratio and session)",
+      "provider": "1:10 at 2022-07-26 09:30 America/New_York",
+      "states": "one post-consolidation Common Share for every 10 pre-consolidation Common Shares; trading on a post-consolidation basis beginning at the open of markets on July 26, 2022",
+      "ticker": "SNDL"
+    },
+    {
+      "filing": "8-K filed 2022-05-27",
+      "finding": "VERIFIED (ratio and session) by us_actions.verify_event",
+      "provider": "20:1 at 2022-06-06 09:30 America/New_York",
+      "ticker": "AMZN"
+    }
+  ],
+  "version": "provider-conventions-v1"
+}

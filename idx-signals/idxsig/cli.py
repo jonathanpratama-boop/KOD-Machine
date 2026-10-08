@@ -41,6 +41,7 @@ def main(argv=None) -> int:
                       help="SEC asks for a contact in the User-Agent (default: $IDXSIG_SEC_USER_AGENT)")
     p_ua.add_argument("--cache-dir", help="reuse a cache of SEC responses (data/raw/sec/<stamp>)")
     p_ua.add_argument("--offline", action="store_true", help="answer only from --cache-dir")
+    p_ua.add_argument("--recheck", help="an earlier us_splits-*.json: re-search only its unaccepted split rows, wider")
     p_rp = sub.add_parser("build-us-repair-panel", help="E2-US repair panel: causal preprocessing, as-traded "
                                                          "unit factors, retrospective QA flags")
     p_rp.add_argument("--manifest", required=True, help="the original yahoo_us raw manifest")
@@ -176,7 +177,8 @@ def main(argv=None) -> int:
             print("error: set --user-agent or IDXSIG_SEC_USER_AGENT (SEC requires a contact)", file=sys.stderr)
             return 2
         print(us_actions.build_schedule(Path(args.raw_manifest), agent, args.effective_after, args.universe_end,
-                                        Path(args.cache_dir) if args.cache_dir else None, args.offline))
+                                        Path(args.cache_dir) if args.cache_dir else None, args.offline,
+                                        recheck=Path(args.recheck) if args.recheck else None))
     elif args.cmd == "build-us-repair-panel":
         from . import global_panel
 

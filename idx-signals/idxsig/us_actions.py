@@ -128,13 +128,17 @@ RATIO_PATTERNS = (
     # one new share for every ten shares / 1 post-consolidation share for every 10 pre-consolidation shares
     (re.compile(NUM + r"\s+(?:\S+\s+){0,4}?shares?\s+(?:of\s+\w+\s+stock\s+)?for\s+(?:each|every)\s+" + NUM, re.I),
      False),
+    # ADS ratio change: from one ADS representing X shares to one ADS representing Y shares (new:old = X:Y)
+    (re.compile(r"ADSs?\s+(?:\S+\s+){0,3}?represent(?:ing|s)?\s+" + NUM + r"\s+(?:\S+\s+){0,8}?(?:to|into)\s+"
+                r"(?:\S+\s+){0,4}?ADSs?\s+(?:\S+\s+){0,3}?represent(?:ing|s)?\s+" + NUM, re.I), False),
     # every ten shares ... combined/converted/reclassified into one share (old ... into new)
     (re.compile(r"(?:each|every)\s+" + NUM + r"\s+(?:\S+\s+){0,6}?(?:shares?|ADSs?)\s+(?:\S+\s+){0,14}?into\s+"
                 + NUM, re.I), True),
 )
 SPLIT_WORDS = re.compile(r"reverse\s+(?:stock\s+)?split|share\s+consolidation|stock\s+split|forward\s+split|"
+                         r"ADS\s+ratio|ratio\s+of\s+(?:the\s+)?ADSs?|"
                          r"reverse\s+share\s+split|consolidation\s+of\s+(?:the\s+)?(?:issued|outstanding|common)", re.I)
-REVERSE_WORDS = re.compile(r"reverse|consolidat", re.I)
+REVERSE_WORDS = re.compile(r"reverse|consolidat|ADS\s+ratio|ratio\s+of\s+(?:the\s+)?ADSs?", re.I)
 
 
 def _normalise_numbers(text: str) -> str:
@@ -259,7 +263,7 @@ def cik_map(client: SecClient) -> dict[str, int]:
 
 
 QUERY = '"reverse stock split" OR "reverse split" OR "share consolidation" OR "stock split" OR "forward split" ' \
-        'OR "reverse share split" OR "split-adjusted"'
+        'OR "reverse share split" OR "split-adjusted" OR "ADS ratio" OR "ratio of the ADSs"'
 
 
 def search(client: SecClient, cik: int, start: date, end: date) -> list[dict]:
@@ -288,14 +292,15 @@ def _priority(hit: dict) -> tuple:
 
 
 def verify_event(client: SecClient, ciks: dict, ticker: str, effective: str, numerator: float, denominator: float,
-                 kind: str, max_docs: int = 6) -> dict:
+                 kind: str, max_docs: int = 6, before_days: int = 45, after_days: int = 5) -> dict:
     if kind != "SPLIT":
         return {"status": "NOT_A_SPLIT", "evidence": []}
     cik = ciks.get(ticker.upper())
     if cik is None:
         return {"status": "NO_CIK", "evidence": []}
     eff = date.fromisoformat(effective)
-    hits = sorted(search(client, cik, eff - timedelta(days=45), eff + timedelta(days=5)), key=_priority)
+    hits = sorted(search(client, cik, eff - timedelta(days=before_days), eff + timedelta(days=after_days)),
+                  key=_priority)
     evidence, best = [], "NO_EVIDENCE"
     rank = {s: i for i, s in enumerate(STATUSES)}
     for hit in hits[:max_docs]:
@@ -316,7 +321,8 @@ def verify_event(client: SecClient, ciks: dict, ticker: str, effective: str, num
     return {"status": best, "cik": cik, "filings_searched": len(hits), "evidence": evidence}
 
 
-def verify_schedule(events: pd.DataFrame, client: SecClient, log=print, workers: int = 4) -> pd.DataFrame:
+def verify_schedule(events: pd.DataFrame, client: SecClient, log=print, workers: int = 4, max_docs: int = 6,
+                    before_days: int = 45, after_days: int = 5) -> pd.DataFrame:
     """Results come back in the input order whatever the thread count."""
     from concurrent.futures import ThreadPoolExecutor
 
@@ -324,8 +330,11 @@ def verify_schedule(events: pd.DataFrame, client: SecClient, log=print, workers:
     rows = list(events.itertuples(index=False))
 
     def one(ev):
-        res = verify_event(client, ciks, ev.ticker, ev.effective_session, ev.numerator, ev.denominator, ev.kind)
-        return {**ev._asdict(), "status": res["status"], "cik": res.get("cik"),
+        res = verify_event(client, ciks, ev.ticker, ev.effective_session, ev.numerator, ev.denominator, ev.kind,
+                           max_docs, before_days, after_days)
+        row = {k: v for k, v in ev._asdict().items() if k not in ("status", "cik", "filings_searched", "evidence",
+                                                                  "pass")}
+        return {**row, "status": res["status"], "cik": res.get("cik"),
                 "filings_searched": res.get("filings_searched", 0),
                 "evidence": json.dumps(res["evidence"], sort_keys=True)}
 
@@ -338,19 +347,34 @@ def verify_schedule(events: pd.DataFrame, client: SecClient, log=print, workers:
     return pd.DataFrame(out)
 
 
-def build_schedule(raw_manifest: Path, user_agent: str, effective_after: str, universe_end: str,
-                   cache_dir: Path | None = None, offline: bool = False, log=print) -> Path:
-    """Provider events for names that traded on or before `universe_end`, effective after
-    `effective_after`, each checked against SEC filings. Writes a CSV and a manifest."""
-    from .global_panel import load_us  # noqa: F401  (documented dependency: same payloads)
+SECOND_PASS = {"max_docs": 10, "before_days": 150, "after_days": 10}
 
+
+def build_schedule(raw_manifest: Path, user_agent: str, effective_after: str, universe_end: str,
+                   cache_dir: Path | None = None, offline: bool = False, log=print,
+                   recheck: Path | None = None) -> Path:
+    """Provider events for names that traded on or before `universe_end`, effective after
+    `effective_after`, each checked against SEC filings. Writes a CSV and a manifest.
+    recheck: an earlier schedule manifest; its accepted rows are kept as they are and only the
+    rest are searched again with a wider window (SECOND_PASS), the pass recorded per row."""
     events = yahoo_events(raw_manifest)
     _, records = read_manifest(raw_manifest)
     listed = {r["ticker"] for r in records if r.get("first_date") and r["first_date"] <= universe_end}
     scope = events[(events["effective_session"] > effective_after) & events["ticker"].isin(listed)]
     stamp = utc_stamp().replace("-", "").replace(":", "")
     client = SecClient(user_agent, cache_dir or RAW / "sec" / stamp, offline=offline)
-    checked = verify_schedule(scope.reset_index(drop=True), client, log)
+    if recheck is None:
+        checked = verify_schedule(scope.reset_index(drop=True), client, log).assign(**{"pass": 1})
+    else:
+        prev_meta = json.loads(Path(recheck).read_text(encoding="utf-8"))
+        prev = pd.read_csv(PKG_ROOT / prev_meta["schedule"], dtype={"ticker": str}, keep_default_na=False, na_values=[""])
+        if hashlib.sha256((PKG_ROOT / prev_meta["schedule"]).read_bytes()).hexdigest() != prev_meta["schedule_sha256"]:
+            raise RuntimeError(f"{Path(recheck).name}: schedule file changed")
+        keep = prev[prev["status"].isin(ACCEPTED) | (prev["kind"] != "SPLIT")].assign(**{"pass": 1})
+        redo = prev[~prev.index.isin(keep.index)]
+        again = verify_schedule(redo.reset_index(drop=True), client, log, **SECOND_PASS).assign(**{"pass": 2})
+        checked = pd.concat([keep, again], ignore_index=True).sort_values(["ticker", "effective_session"])
+        checked = checked.reset_index(drop=True)
     out_dir = PKG_ROOT / "data" / "corporate_actions"
     out_dir.mkdir(parents=True, exist_ok=True)
     csv_path = out_dir / f"us_splits-{stamp}.csv"
@@ -365,7 +389,9 @@ def build_schedule(raw_manifest: Path, user_agent: str, effective_after: str, un
             "schedule": rel(csv_path), "schedule_sha256": hashlib.sha256(csv_path.read_bytes()).hexdigest(),
             "events_in_scope": int(len(checked)), "status_counts": checked["status"].value_counts().to_dict(),
             "accepted_statuses": list(ACCEPTED),
-            "provider_events_outside_scope": int(len(events) - len(scope))}
+            "provider_events_outside_scope": int(len(events) - len(scope)),
+            "first_pass": {"max_docs": 6, "before_days": 45, "after_days": 5},
+            "second_pass": ({**SECOND_PASS, "recheck_of": Path(recheck).name} if recheck else None)}
     mpath = out_dir / f"us_splits-{stamp}.json"
     with mpath.open("x", encoding="utf-8") as fh:
         fh.write(json.dumps(meta, indent=2, sort_keys=True) + "\n")

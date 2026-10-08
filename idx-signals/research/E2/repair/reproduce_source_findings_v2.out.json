@@ -1,0 +1,33 @@
+{
+  "synthetic_only": true,
+  "preprocessing": {
+    "legacy_v1": {
+      "row_present_at_cutoff": true,
+      "row_present_after_next_bar": false,
+      "prefix_invariant": false
+    },
+    "causal_v2": {
+      "row_present_at_cutoff": true,
+      "row_present_after_next_bar": true,
+      "prefix_invariant": true
+    }
+  },
+  "paper_units": {
+    "split_2_for_1_between_signal_and_entry": true,
+    "net_with_entry_session_units": -0.0030232651023465174,
+    "legacy_signal_scale_v1": -0.0010272863568214774,
+    "legacy_matches": false,
+    "verified_units": -0.0030232651023465174,
+    "verified_matches": true
+  },
+  "opening_volume": {
+    "A": {
+      "entry_day_final_volume_1000": "SKIP_LIQUIDITY",
+      "entry_day_final_volume_100000": "EXITED"
+    },
+    "B": {
+      "entry_day_final_volume_1000": "EXITED",
+      "entry_day_final_volume_100000": "EXITED"
+    }
+  }
+}
