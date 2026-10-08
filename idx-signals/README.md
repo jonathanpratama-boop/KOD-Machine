@@ -37,7 +37,10 @@ python3 -m idxsig verify-data              # re-hash raw files, panels and regis
 python3 -m idxsig rules                    # list rules + source-audit result; USER_RULE shows PENDING
 python3 -m idxsig run --rule PLACEBO_COINFLIP
 python3 -m idxsig verify-runs              # no past run edited or removed
-python3 -m unittest                        # 85 tests, synthetic data only
+python3 -m idxsig e1-discovery             # experiment E1 stages (each writes a new research/E1/ directory)
+python3 -m idxsig paper-scan --commit      # prospective paper scan of the last session (no orders)
+python3 -m idxsig paper-score --commit     # score paper decisions whose window has ended
+python3 -m unittest                        # 95 tests, synthetic data only
 ```
 
 ## 1. Dataset
@@ -228,6 +231,25 @@ here, and not invented: sector (only a 2025-02 snapshot), listing board (same), 
 The report gives signal count, hit rate (net return > 0) and average net return for the
 rule and each baseline's distribution (mean, 95% range), the difference, the rule's
 percentile among draws and a one-sided p-value, with a breakdown by year.
+
+## 5. Experiment E1: five-session repricings ([research/E1](research/E1/REPORT.md))
+
+Protocol frozen and pushed before any statistic was computed (`research/E1/protocol.json`).
+Base rate of a +30% repricing within 5 sessions: 1.9% of eligible ticker-days in 2021-22,
+1.2% in 2023 (+100%: 0.10% and 0.03%). The first 100 +30% episodes, matched controls and 20
+pre-event signals: on the day before a repricing starts, only prior volatility separates
+winners from similar names (AUC 0.68). Detector D1 = F1_ARA (close locked at ARA), chosen on
+discovery by a pre-registered rule, validated on 2023: 9.3x the +30% hit rate of matched
+random names (p = 0.005), but it catches only 10% of episodes, 82% of its flags are false
+alerts, and buying at the next close loses (-4.06% vs -0.53% for matched random entries) because
+the continuations that run cannot be filled. Holdout 2024-01-02 .. 2025-02-21 untouched.
+
+## 6. Prospective paper ledger ([paper/](paper/README.md))
+
+`python -m idxsig paper-scan --commit` after each IDX session: every scan is recorded,
+including `NO SIGNAL` days; every candidate gets a terminal decision with a full plan or the
+reason it is not a trade; `paper-score` scores discovery and decision separately once the
+window ends. Hash-chained, RFC 3161-stamped, pushed. No orders exist anywhere in this code.
 
 ## Results are append-only
 

@@ -42,7 +42,11 @@ PAPER = PKG_ROOT / "paper"
 LEDGER = PAPER / "ledger.jsonl"
 SCANS = PAPER / "scans"
 TOKENS = PAPER / "timestamps"
-POLICY_ID = "PAPER-POLICY-v1"
+POLICY_ID = "PAPER-POLICY-v2"
+# v1 (first scan, 2026-10-08): invalidation = max(signal-day low, close x 0.85). On a one-price
+#    ARA bar the low equals the close, so the stop sat at the entry price (GTBO, 2026-10-07).
+# v2: invalidation at least 5% below the close (and at most 15%); max planned loss states that a
+#    gap through the stop (up to the ARB limit) is not covered.
 HISTORY_DAYS = 200
 MIN_HISTORY = 20
 BENCHMARKS = ("F2_IGNITION_D", "F1_ARA")  # logged every scan, never decided on
@@ -58,6 +62,7 @@ class Policy:
     max_adv_participation: float = 0.10     # at most 10% of the 20-session median traded value
     chase_limit: float = 0.10               # no fill above signal close x 1.10
     max_stop_distance: float = 0.15         # invalidation no further than 15% below entry (IDX ARB)
+    min_stop_distance: float = 0.05         # and no nearer than 5% (a one-price bar's low is its close)
     fee_buy: float = 0.0015
     fee_sell: float = 0.0025
     horizon_sessions: int = 5
@@ -229,7 +234,7 @@ def decide(row, rank: int, scan_id: str, session: str, now: datetime, validation
     close, low = float(row.close), float(row.low)
     tick = float(mkt.tick_size(np.array([close]))[0])
     chase = math.floor(close * (1 + p.chase_limit) / tick) * tick
-    stop = max(low, close * (1 - p.max_stop_distance))
+    stop = min(max(low, close * (1 - p.max_stop_distance)), close * (1 - p.min_stop_distance))
     stop = math.floor(stop / tick) * tick
     entry_ref = close  # sizing reference; the paper fill is the next session's close
     per_share_risk = entry_ref - stop + entry_ref * (p.fee_buy + p.fee_sell)
@@ -299,6 +304,8 @@ def decide(row, rank: int, scan_id: str, session: str, now: datetime, validation
                              f"and > Rp{stop:g}, the name traded, and the close is not locked at ARA",
             "max_chase_price": chase, "invalidation": stop,
             "invalidation_rule": "exit at the first close at or below the invalidation level",
+            "gap_risk": "max planned loss assumes the exit fills at the invalidation level; a gap or an ARB "
+                        "lock can make the loss larger, up to 15% per session while locked",
             "exit": f"close of the {p.horizon_sessions}th session after entry, or invalidation; a sale rolls while "
                     f"locked at ARB",
             "sizing_formula": ("shares = floor(min(R x equity / (entry - stop + entry x fees), min(20% x equity, "
@@ -394,13 +401,22 @@ def commit_and_push(paths: list[Path], message: str, trailer: str = "") -> str:
 
 # ---------------------------------------------------------------------------------- glue
 def active_tickers() -> list[str]:
+    """Names in the latest recorded scan (works from a fresh clone), plus the panel's active
+    names when the panel is present, plus listings from data/universe/extra_tickers.csv."""
     import csv
 
-    from .panel import load
+    tickers: set[str] = set()
+    scans = sorted(SCANS.glob("*/features.csv")) if SCANS.exists() else []
+    if scans:
+        tickers |= set(pd.read_csv(scans[-1], usecols=["ticker"])["ticker"].astype(str))
+    try:
+        from .panel import load
 
-    df, _, _ = load()
-    last = df.groupby("ticker")["date"].max()
-    tickers = set(last[last == df["date"].max()].index)
+        df, _, _ = load()
+        last = df.groupby("ticker")["date"].max()
+        tickers |= set(last[last == df["date"].max()].index)
+    except (FileNotFoundError, RuntimeError):
+        pass
     with (PKG_ROOT / "data" / "universe" / "extra_tickers.csv").open(newline="", encoding="utf-8") as fh:
         tickers |= {r["ticker"].strip().upper() for r in csv.DictReader(fh) if r["ticker"].strip()}
     return sorted(tickers)
@@ -438,6 +454,11 @@ def validation_evidence() -> dict | None:
                    "status_counts": summary["rule_trades"]["status_counts"]}
     out["trading"] = trading
     return out
+
+
+def already_scanned(session: str) -> bool:
+    return any(r["type"] == "SCAN" and r["session"] == session and r["detector"]["selected"] == family.SELECTED
+               for r in ledger_lines())
 
 
 def record_scan(out: dict, timestamper=None) -> list[Path]:

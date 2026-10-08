@@ -83,6 +83,20 @@ class PaperScan(unittest.TestCase):
             self.assertEqual(sc["shares"] % 100, 0)
         self.assertIn("falsified_if", d["prediction"])
 
+    def test_one_price_limit_bar_does_not_put_the_stop_at_the_entry(self):
+        """Guards against (policy v1 defect, GTBO 2026-10-07): a one-price ARA bar's low equals its close,
+        which put the invalidation at the entry price and understated the planned loss."""
+        df = frame(spike=(7, 79))
+        last = df["date"].max()
+        sel = (df["ticker"] == "T007") & (df["date"] == last)
+        df.loc[sel, "low"] = df.loc[sel, "close"]
+        df.loc[sel, "high"] = df.loc[sel, "close"]
+        d = paper.scan_frame(df, DATA, validation=VALIDATED)["decisions"][0]
+        close = d["verified_price"]["close"]
+        self.assertLessEqual(d["plan"]["invalidation"], close * 0.95)
+        self.assertGreaterEqual(d["plan"]["invalidation"], close * 0.85 - 5)
+        self.assertIn("gap_risk", d["plan"])
+
     def test_untradeable_candidate_is_not_executable_with_the_reason(self):
         """Guards against: a plan for a name where no lot fits the liquidity or risk caps."""
         d = paper.scan_frame(frame(spike=(7, 79), price=200_000, adv_volume=300), DATA, validation=VALIDATED)["decisions"][0]

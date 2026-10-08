@@ -215,6 +215,10 @@ def main(argv=None) -> int:
         trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "")
         if args.cmd == "paper-scan":
             out = paper.scan(manifest, validation=paper.validation_evidence())
+            if paper.already_scanned(out["scan"]["session"]):
+                print(f"session {out['scan']['session']} is already scanned (no new IDX session since: holiday or "
+                      f"data not yet updated); nothing recorded")
+                return 0
             written = paper.record_scan(out, stamper)
             print(json.dumps({k: out["scan"][k] for k in ("scan_id", "session", "result", "candidates_ranked")}, indent=2))
             for dcs in out["decisions"]:

@@ -15,6 +15,12 @@ Two research tools. Neither grants entry permission.
   three placebo runs that check the harness (first harness, after the external review's
   fixes, after hardening v2); all are indistinguishable from random entries, as a price-blind
   rule should be.
+- Experiment E1 (historical, `idx-signals/research/E1/REPORT.md`): base rates of +30/50/100%
+  five-session repricings, the first 100 events with matched controls, 20 pre-event signals,
+  and detector D1 (ARA close) validated for detection (9.3x matched random) but not for
+  execution (the next-close entry loses). Holdout untouched.
+- Prospective paper ledger (`idx-signals/paper/`): first scan 2026-10-07, 4 candidates, all
+  decided (3 PASS, 1 NOT EXECUTABLE), to be scored after 2026-10-15. No real orders.
 - KOD calibration: NOT_STARTED, 0 prospective cases. Doctrine `246deb4a…`. A prospective case
   counts toward calibration only at integrity AUTHORITATIVE: its card hash is in the exact
   anchor commit, GitHub's own workflow-run record for that commit predates the outcome
