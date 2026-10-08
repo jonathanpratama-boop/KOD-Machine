@@ -1,0 +1,17 @@
+{
+  "source_url": "https://attachment.news.eu.nasdaq.com/aaa4132c758e5f6e7b9c48407cb835faa",
+  "source_type": "PRIMARY",
+  "publisher": "Zealand Pharma A/S via Nasdaq Copenhagen",
+  "document_type": "PDMR notification (MAR art. 19)",
+  "title": "PDMR notification: Frederik Barfoed Beck, inheritance of 1,090 shares",
+  "event_time": null,
+  "publication_time": "2025-01-13T16:00:00Z",
+  "publication_time_basis": "releaseTime of the Nasdaq Nordic company-announcement system (api.news.eu.nasdaq.com, pinned in 01_protocol/pin), read as UTC+1",
+  "retrieval_time": "2026-10-08T12:30:13Z",
+  "as_of_cutoff": "2025-02-09T16:00:00Z",
+  "evidence_grade": "B",
+  "existence_method": "PRIMARY_SOURCE_TIMESTAMP",
+  "content_method": "NONE",
+  "verification_notes": "Existence: the exchange system's own release time. Content: not verified; no archive capture dated by the cutoff could be checked (Internet Archive rate-limited from this environment). Not a market trade (price DKK 0, outside a trading venue). The last PDMR notification before the event.",
+  "provenance": "retrieved from the exchange's announcement viewer; bytes in research/ZEALAND_PILOT_v1/02_evidence/raw"
+}

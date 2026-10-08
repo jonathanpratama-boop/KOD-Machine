@@ -1,0 +1,135 @@
+[
+  {
+    "key": "P01_offering_2024-06-25",
+    "declaration": "declarations/P01_offering_2024-06-25.json",
+    "file": "raw/nasdaq_zeal_1303357.html",
+    "evidence_id": "ee5d0ea9f85a5249654c0f8aac0d15ac055afaf9f419d63d7ac48bc4c4d2d8bc",
+    "error": null
+  },
+  {
+    "key": "P02_h1_2024",
+    "declaration": "declarations/P02_h1_2024.json",
+    "file": "raw/nasdaq_zeal_1310818.html",
+    "evidence_id": "f81849d44ec1e082d7351957dd9298e1cb69e7a81dc380c84b1f65ef93fcb15d",
+    "error": null
+  },
+  {
+    "key": "P03_9m_2024",
+    "declaration": "declarations/P03_9m_2024.json",
+    "file": "raw/nasdaq_zeal_1326289.html",
+    "evidence_id": "91149b0a3edbdbefc5e2354265bf5327b616b40ac3191585775424326883bcc5",
+    "error": null
+  },
+  {
+    "key": "P04_pdmr_sale_2024-11",
+    "declaration": "declarations/P04_pdmr_sale_2024-11.json",
+    "file": "raw/nasdaq_zeal_1327123_attachment.pdf",
+    "evidence_id": "ea57b15f6f575af3a417139ae9f60097757aa567d4f12eeb6b2ec207e9b4fe92",
+    "error": null
+  },
+  {
+    "key": "P05_glepaglutide_crl",
+    "declaration": "declarations/P05_glepaglutide_crl.json",
+    "file": "raw/nasdaq_zeal_1334667.html",
+    "evidence_id": "7dc251e479694a19c1a44af4fb3d869b98c8e0219ff23006fc29f4e98716006d",
+    "error": null
+  },
+  {
+    "key": "P06_pdmr_purchase_2024-12",
+    "declaration": "declarations/P06_pdmr_purchase_2024-12.json",
+    "file": "raw/nasdaq_zeal_1335333_attachment.pdf",
+    "evidence_id": "869e56218a9a694b4270da2a6a438ffcb608a0b073491052c127f5da95921260",
+    "error": null
+  },
+  {
+    "key": "P07_pdmr_inheritance_2025-01",
+    "declaration": "declarations/P07_pdmr_inheritance_2025-01.json",
+    "file": "raw/nasdaq_zeal_1337157_attachment.pdf",
+    "evidence_id": "1037b8a36070c041679d5f380f92b9740ac4d73f8bf9615c58587472e93129fa",
+    "error": null
+  },
+  {
+    "key": "P08_fy_2024",
+    "declaration": "declarations/P08_fy_2024.json",
+    "file": "raw/nasdaq_zeal_1344139.html",
+    "evidence_id": "9fe251fe716c66873a3db8314c0eb906e012ed2facb59fcb19edd0c73a615d7d",
+    "error": null
+  },
+  {
+    "key": "P09_annual_report_2024",
+    "declaration": "declarations/P09_annual_report_2024.json",
+    "file": null,
+    "evidence_id": "a5bee86bd2718c7d79623939227a740a40087a8b6f726de05ac93f8159f1dc0c",
+    "error": null
+  },
+  {
+    "key": "P10_ads_delisting_2022",
+    "declaration": "declarations/P10_ads_delisting_2022.json",
+    "file": "raw/nasdaq_zeal_1174635.html",
+    "evidence_id": "3ccb4298fc107518a1c23000519a3383234df6f7aac461d2a0b64b7b4919a9e4",
+    "error": null
+  },
+  {
+    "key": "N01_redefine1",
+    "declaration": "declarations/N01_redefine1.json",
+    "file": "raw/nasdaq_novo_1334781.html",
+    "evidence_id": "f3afe75ecb0984b0b4032f407a78e90d657f0509cae741bab5b5de2089e5dedd",
+    "error": null
+  },
+  {
+    "key": "N02_amycretin",
+    "declaration": "declarations/N02_amycretin.json",
+    "file": "raw/nasdaq_novo_1338827.html",
+    "evidence_id": "66acd56dabc70bf617273d22c22738ef2c001c94997267400be55d0f22fbf8a2",
+    "error": null
+  },
+  {
+    "key": "N03_redefine2",
+    "declaration": "declarations/N03_redefine2.json",
+    "file": "raw/nasdaq_novo_1347896.html",
+    "evidence_id": "06443856499f20047f69f38c2a15df32964f69a26add06035cb96dad33fe03ba",
+    "error": null
+  },
+  {
+    "key": "E00_event",
+    "declaration": "declarations/E00_event.json",
+    "file": "raw/nasdaq_zeal_1348334.html",
+    "evidence_id": "49f873c048b22d4d3c5d0e71e3f150b65dd8cc7d60cb3b2118cdc86d1a540cbd",
+    "error": null
+  },
+  {
+    "key": "S01_investing_2024-08-20",
+    "declaration": "declarations/S01_investing_2024-08-20.json",
+    "file": null,
+    "evidence_id": "3e1a6b784b15b2d0691489e657cb2539f3e36729901fa0133050bc426602ed8f",
+    "error": null
+  },
+  {
+    "key": "S02_pharmtech_2025-02-20",
+    "declaration": "declarations/S02_pharmtech_2025-02-20.json",
+    "file": null,
+    "evidence_id": "014611e893363e300e715b6d0183dbe2a75a5c33b31eda6b9e3d33d9cb43525d",
+    "error": null
+  },
+  {
+    "key": "M01_auctions_factsheet",
+    "declaration": "declarations/M01_auctions_factsheet.json",
+    "file": "raw/nasdaq_nordic_auctions_factsheet_2026.pdf",
+    "evidence_id": "22e62b107b0f8c9f4f0ec5d9394838a64870de57513a80483e9052e934dea9b8",
+    "error": null
+  },
+  {
+    "key": "M02_dk_share_duty_repeal",
+    "declaration": "declarations/M02_dk_share_duty_repeal.json",
+    "file": "raw/folketingstidende_1998_L33_vedtaget.pdf",
+    "evidence_id": "289a722262abacf0e06aae40abfeaa6a6ea997af407b290a367645fb582e93be",
+    "error": null
+  },
+  {
+    "key": "D01_price_series",
+    "declaration": "declarations/D01_price_series.json",
+    "file": null,
+    "evidence_id": "1ddb4dad544fa0a359fea504bbba575fbea48b183d8bd38d2d4c10f7095ae801",
+    "error": null
+  }
+]

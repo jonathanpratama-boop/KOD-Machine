@@ -1,0 +1,17 @@
+{
+  "source_url": "https://attachment.news.eu.nasdaq.com/af642383121b65f0815c298c200818cc6",
+  "source_type": "PRIMARY",
+  "publisher": "Zealand Pharma A/S via Nasdaq Copenhagen",
+  "document_type": "annual report 2024 (attachment to announcement 1344139)",
+  "title": "Zealand Pharma 2024 Annual Report",
+  "event_time": null,
+  "publication_time": "2025-02-20T06:00:00Z",
+  "publication_time_basis": "releaseTime of the Nasdaq Nordic company-announcement system (api.news.eu.nasdaq.com, pinned in 01_protocol/pin), read as UTC+1 of the announcement it is attached to",
+  "retrieval_time": "2026-10-08T12:30:11Z",
+  "as_of_cutoff": "2025-03-08T16:00:00Z",
+  "evidence_grade": "B",
+  "existence_method": "PRIMARY_SOURCE_TIMESTAMP",
+  "content_method": "NONE",
+  "verification_notes": "Existence: the exchange system's own release time. Content: not verified; no archive capture dated by the cutoff could be checked (Internet Archive rate-limited from this environment). Bytes not archived here (17 MB); sha256 6925a1efaf1bc119be3c7a6b6f028304f17436846f7fbe711f25013dca31c344. Quotes: 'Zealand's strategy is to pursue global co-development and commercialization partnerships that complement and extend our capabilities'; 'we continue our efforts to initiate new strategic partnerships for co-development and commercialization' (in the rare-disease paragraph). Of 31 petrelintide mentions none is near a partnering statement or timing.",
+  "provenance": "retrieved from the exchange attachment URL; text extract in 02_evidence/raw/annual_report_2024.txt"
+}

@@ -1,0 +1,17 @@
+{
+  "source_url": "https://attachment.news.eu.nasdaq.com/aed3130631ececc975a093ce5b83e021c",
+  "source_type": "PRIMARY",
+  "publisher": "Zealand Pharma A/S via Nasdaq Copenhagen",
+  "document_type": "PDMR notification (MAR art. 19)",
+  "title": "PDMR notification: Leonard Kruimer, purchase of 300 shares",
+  "event_time": null,
+  "publication_time": "2024-12-25T16:40:00Z",
+  "publication_time_basis": "releaseTime of the Nasdaq Nordic company-announcement system (api.news.eu.nasdaq.com, pinned in 01_protocol/pin), read as UTC+1",
+  "retrieval_time": "2026-10-08T12:39:31Z",
+  "as_of_cutoff": "2025-02-09T16:00:00Z",
+  "evidence_grade": "B",
+  "existence_method": "PRIMARY_SOURCE_TIMESTAMP",
+  "content_method": "NONE",
+  "verification_notes": "Existence: the exchange system's own release time. Content: not verified; no archive capture dated by the cutoff could be checked (Internet Archive rate-limited from this environment). Board member bought 300 shares at DKK 720 on 2024-12-20 on Nasdaq Copenhagen (DKK 216,000). Form is a scanned image, read visually.",
+  "provenance": "retrieved from the exchange's announcement viewer; bytes in research/ZEALAND_PILOT_v1/02_evidence/raw"
+}

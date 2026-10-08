@@ -1,0 +1,211 @@
+{
+  "case_id": "KOD-R-ZEAL-20250312",
+  "symbol": "ZEAL",
+  "venue": "NASDAQ_COPENHAGEN",
+  "call_type": "RETROSPECTIVE",
+  "integrity_level": "PARTIAL",
+  "decision_cutoff": "2025-03-11T16:00:00Z",
+  "outcome_window": {
+    "start": "2025-03-12T06:00:00Z",
+    "end": "2025-03-12T16:00:00Z"
+  },
+  "universe_id": "ZEALAND_PILOT_v1-SINGLE-EVENT-SELECTED-ON-OUTCOME",
+  "reconstruction_status": "PARTIAL_PUBLIC",
+  "story_hypothesis": "Since mid-2024 Zealand had said it would partner its obesity candidates for co-development and commercialization, and in February 2025 the CEO described the petrelintide process as on track. A large-pharma co-development deal with material upfront cash would reprice the asset; its timing was not public.",
+  "disposition": "WATCH",
+  "notes": "ZEALAND_PILOT_v1, discovery only. Event chosen as the largest session return of the home listing (selection on outcome). Not validation; RETROSPECTIVE, so excluded from calibration. Price facts rest on a vendor series retrieved in 2026 (grade D); document facts on exchange announcements dated by the exchange system (grade B, contents unverified). Protocol: research/ZEALAND_PILOT_v1/01_protocol.",
+  "critic": {
+    "loss_path": "The partnering process had no date: a deal could slip for quarters or land on terms below expectations, while the amylin class was being re-rated down around Novo Nordisk's CagriSema readouts. In the 20 sessions to T-24H the price fell 29% on about twice normal volume.",
+    "missing_evidence": "No dated archive capture of press, broker or conference commentary; no order-book, options or short-interest data; nothing on the negotiation's status beyond the CEO's 20 February remark; no document's contents verified against a contemporaneous capture.",
+    "invalidation": "No petrelintide partnership announced by 2025-09-11 (six months after the cutoff), or an announcement after which the home-listing close is below the cutoff close of DKK 488.80."
+  },
+  "information_sets": {
+    "T-30D": {
+      "cutoff": "2025-02-09T16:00:00Z",
+      "reconstruction_status": "PARTIAL_PUBLIC",
+      "facts": {
+        "dated_catalyst_known": false,
+        "catalyst": "Partnering of the obesity candidates (petrelintide the lead): intent stated in primary documents (June and August 2024); press reported the CEO seeking a large pharma partner (August 2024). No date or window stated anywhere.",
+        "primary_document_public": false,
+        "price_already_repriced": false,
+        "volume_creep_before_story": false,
+        "price_quiet_vs_own_range": true,
+        "narrative_only": false,
+        "mechanism_in_primary_docs": true
+      },
+      "evidence": {
+        "dated_catalyst_known": [
+          "ee5d0ea9f85a5249654c0f8aac0d15ac055afaf9f419d63d7ac48bc4c4d2d8bc",
+          "f81849d44ec1e082d7351957dd9298e1cb69e7a81dc380c84b1f65ef93fcb15d",
+          "91149b0a3edbdbefc5e2354265bf5327b616b40ac3191585775424326883bcc5",
+          "3e1a6b784b15b2d0691489e657cb2539f3e36729901fa0133050bc426602ed8f"
+        ],
+        "catalyst": [
+          "ee5d0ea9f85a5249654c0f8aac0d15ac055afaf9f419d63d7ac48bc4c4d2d8bc",
+          "f81849d44ec1e082d7351957dd9298e1cb69e7a81dc380c84b1f65ef93fcb15d",
+          "91149b0a3edbdbefc5e2354265bf5327b616b40ac3191585775424326883bcc5",
+          "3e1a6b784b15b2d0691489e657cb2539f3e36729901fa0133050bc426602ed8f"
+        ],
+        "primary_document_public": [
+          "91149b0a3edbdbefc5e2354265bf5327b616b40ac3191585775424326883bcc5"
+        ],
+        "price_already_repriced": [
+          "1ddb4dad544fa0a359fea504bbba575fbea48b183d8bd38d2d4c10f7095ae801"
+        ],
+        "volume_creep_before_story": [
+          "1ddb4dad544fa0a359fea504bbba575fbea48b183d8bd38d2d4c10f7095ae801"
+        ],
+        "price_quiet_vs_own_range": [
+          "1ddb4dad544fa0a359fea504bbba575fbea48b183d8bd38d2d4c10f7095ae801"
+        ],
+        "narrative_only": [
+          "ee5d0ea9f85a5249654c0f8aac0d15ac055afaf9f419d63d7ac48bc4c4d2d8bc",
+          "f81849d44ec1e082d7351957dd9298e1cb69e7a81dc380c84b1f65ef93fcb15d"
+        ],
+        "mechanism_in_primary_docs": [
+          "ee5d0ea9f85a5249654c0f8aac0d15ac055afaf9f419d63d7ac48bc4c4d2d8bc",
+          "f81849d44ec1e082d7351957dd9298e1cb69e7a81dc380c84b1f65ef93fcb15d"
+        ]
+      },
+      "fact_grades": {
+        "dated_catalyst_known": "B",
+        "primary_document_public": "B",
+        "narrative_only": "B",
+        "mechanism_in_primary_docs": "B",
+        "price_already_repriced": "D",
+        "volume_creep_before_story": "D",
+        "price_quiet_vs_own_range": "D"
+      }
+    },
+    "T-72H": {
+      "cutoff": "2025-03-08T16:00:00Z",
+      "reconstruction_status": "PARTIAL_PUBLIC",
+      "facts": {
+        "dated_catalyst_known": false,
+        "catalyst": "Partnering of the obesity candidates (petrelintide the lead): intent stated in primary documents (June and August 2024); press reported the CEO seeking a large pharma partner (August 2024). No date or window stated anywhere. FY2024 (20 Feb 2025): investment in 'wholly-owned obesity programs', no guidance for partnership revenue; press the same day: partner search 'remains ongoing', CEO 'exactly where it wants to be in the process', co-development with profit-sharing preferred. Still no date or window.",
+        "primary_document_public": false,
+        "price_already_repriced": false,
+        "volume_creep_before_story": true,
+        "price_quiet_vs_own_range": false,
+        "narrative_only": false,
+        "mechanism_in_primary_docs": true
+      },
+      "evidence": {
+        "dated_catalyst_known": [
+          "ee5d0ea9f85a5249654c0f8aac0d15ac055afaf9f419d63d7ac48bc4c4d2d8bc",
+          "f81849d44ec1e082d7351957dd9298e1cb69e7a81dc380c84b1f65ef93fcb15d",
+          "9fe251fe716c66873a3db8314c0eb906e012ed2facb59fcb19edd0c73a615d7d",
+          "a5bee86bd2718c7d79623939227a740a40087a8b6f726de05ac93f8159f1dc0c",
+          "3e1a6b784b15b2d0691489e657cb2539f3e36729901fa0133050bc426602ed8f",
+          "014611e893363e300e715b6d0183dbe2a75a5c33b31eda6b9e3d33d9cb43525d"
+        ],
+        "catalyst": [
+          "ee5d0ea9f85a5249654c0f8aac0d15ac055afaf9f419d63d7ac48bc4c4d2d8bc",
+          "f81849d44ec1e082d7351957dd9298e1cb69e7a81dc380c84b1f65ef93fcb15d",
+          "9fe251fe716c66873a3db8314c0eb906e012ed2facb59fcb19edd0c73a615d7d",
+          "a5bee86bd2718c7d79623939227a740a40087a8b6f726de05ac93f8159f1dc0c",
+          "3e1a6b784b15b2d0691489e657cb2539f3e36729901fa0133050bc426602ed8f",
+          "014611e893363e300e715b6d0183dbe2a75a5c33b31eda6b9e3d33d9cb43525d"
+        ],
+        "primary_document_public": [
+          "9fe251fe716c66873a3db8314c0eb906e012ed2facb59fcb19edd0c73a615d7d",
+          "a5bee86bd2718c7d79623939227a740a40087a8b6f726de05ac93f8159f1dc0c"
+        ],
+        "price_already_repriced": [
+          "1ddb4dad544fa0a359fea504bbba575fbea48b183d8bd38d2d4c10f7095ae801"
+        ],
+        "volume_creep_before_story": [
+          "1ddb4dad544fa0a359fea504bbba575fbea48b183d8bd38d2d4c10f7095ae801"
+        ],
+        "price_quiet_vs_own_range": [
+          "1ddb4dad544fa0a359fea504bbba575fbea48b183d8bd38d2d4c10f7095ae801"
+        ],
+        "narrative_only": [
+          "ee5d0ea9f85a5249654c0f8aac0d15ac055afaf9f419d63d7ac48bc4c4d2d8bc",
+          "f81849d44ec1e082d7351957dd9298e1cb69e7a81dc380c84b1f65ef93fcb15d",
+          "a5bee86bd2718c7d79623939227a740a40087a8b6f726de05ac93f8159f1dc0c"
+        ],
+        "mechanism_in_primary_docs": [
+          "ee5d0ea9f85a5249654c0f8aac0d15ac055afaf9f419d63d7ac48bc4c4d2d8bc",
+          "f81849d44ec1e082d7351957dd9298e1cb69e7a81dc380c84b1f65ef93fcb15d",
+          "a5bee86bd2718c7d79623939227a740a40087a8b6f726de05ac93f8159f1dc0c"
+        ]
+      },
+      "fact_grades": {
+        "dated_catalyst_known": "B",
+        "primary_document_public": "B",
+        "narrative_only": "B",
+        "mechanism_in_primary_docs": "B",
+        "price_already_repriced": "D",
+        "volume_creep_before_story": "D",
+        "price_quiet_vs_own_range": "D"
+      }
+    },
+    "T-24H": {
+      "cutoff": "2025-03-10T16:00:00Z",
+      "reconstruction_status": "PARTIAL_PUBLIC",
+      "facts": {
+        "dated_catalyst_known": false,
+        "catalyst": "Partnering of the obesity candidates (petrelintide the lead): intent stated in primary documents (June and August 2024); press reported the CEO seeking a large pharma partner (August 2024). No date or window stated anywhere. FY2024 (20 Feb 2025): investment in 'wholly-owned obesity programs', no guidance for partnership revenue; press the same day: partner search 'remains ongoing', CEO 'exactly where it wants to be in the process', co-development with profit-sharing preferred. Still no date or window. Novo Nordisk's CagriSema REDEFINE 2 readout (10 Mar 2025, amylin class) is dated context, not a Zealand catalyst.",
+        "primary_document_public": false,
+        "price_already_repriced": false,
+        "volume_creep_before_story": true,
+        "price_quiet_vs_own_range": false,
+        "narrative_only": false,
+        "mechanism_in_primary_docs": true
+      },
+      "evidence": {
+        "dated_catalyst_known": [
+          "ee5d0ea9f85a5249654c0f8aac0d15ac055afaf9f419d63d7ac48bc4c4d2d8bc",
+          "f81849d44ec1e082d7351957dd9298e1cb69e7a81dc380c84b1f65ef93fcb15d",
+          "9fe251fe716c66873a3db8314c0eb906e012ed2facb59fcb19edd0c73a615d7d",
+          "a5bee86bd2718c7d79623939227a740a40087a8b6f726de05ac93f8159f1dc0c",
+          "3e1a6b784b15b2d0691489e657cb2539f3e36729901fa0133050bc426602ed8f",
+          "014611e893363e300e715b6d0183dbe2a75a5c33b31eda6b9e3d33d9cb43525d",
+          "06443856499f20047f69f38c2a15df32964f69a26add06035cb96dad33fe03ba"
+        ],
+        "catalyst": [
+          "ee5d0ea9f85a5249654c0f8aac0d15ac055afaf9f419d63d7ac48bc4c4d2d8bc",
+          "f81849d44ec1e082d7351957dd9298e1cb69e7a81dc380c84b1f65ef93fcb15d",
+          "9fe251fe716c66873a3db8314c0eb906e012ed2facb59fcb19edd0c73a615d7d",
+          "a5bee86bd2718c7d79623939227a740a40087a8b6f726de05ac93f8159f1dc0c",
+          "3e1a6b784b15b2d0691489e657cb2539f3e36729901fa0133050bc426602ed8f",
+          "014611e893363e300e715b6d0183dbe2a75a5c33b31eda6b9e3d33d9cb43525d",
+          "06443856499f20047f69f38c2a15df32964f69a26add06035cb96dad33fe03ba"
+        ],
+        "primary_document_public": [
+          "9fe251fe716c66873a3db8314c0eb906e012ed2facb59fcb19edd0c73a615d7d",
+          "a5bee86bd2718c7d79623939227a740a40087a8b6f726de05ac93f8159f1dc0c"
+        ],
+        "price_already_repriced": [
+          "1ddb4dad544fa0a359fea504bbba575fbea48b183d8bd38d2d4c10f7095ae801"
+        ],
+        "volume_creep_before_story": [
+          "1ddb4dad544fa0a359fea504bbba575fbea48b183d8bd38d2d4c10f7095ae801"
+        ],
+        "price_quiet_vs_own_range": [
+          "1ddb4dad544fa0a359fea504bbba575fbea48b183d8bd38d2d4c10f7095ae801"
+        ],
+        "narrative_only": [
+          "ee5d0ea9f85a5249654c0f8aac0d15ac055afaf9f419d63d7ac48bc4c4d2d8bc",
+          "f81849d44ec1e082d7351957dd9298e1cb69e7a81dc380c84b1f65ef93fcb15d",
+          "a5bee86bd2718c7d79623939227a740a40087a8b6f726de05ac93f8159f1dc0c"
+        ],
+        "mechanism_in_primary_docs": [
+          "ee5d0ea9f85a5249654c0f8aac0d15ac055afaf9f419d63d7ac48bc4c4d2d8bc",
+          "f81849d44ec1e082d7351957dd9298e1cb69e7a81dc380c84b1f65ef93fcb15d",
+          "a5bee86bd2718c7d79623939227a740a40087a8b6f726de05ac93f8159f1dc0c"
+        ]
+      },
+      "fact_grades": {
+        "dated_catalyst_known": "B",
+        "primary_document_public": "B",
+        "narrative_only": "B",
+        "mechanism_in_primary_docs": "B",
+        "price_already_repriced": "D",
+        "volume_creep_before_story": "D",
+        "price_quiet_vs_own_range": "D"
+      }
+    }
+  }
+}

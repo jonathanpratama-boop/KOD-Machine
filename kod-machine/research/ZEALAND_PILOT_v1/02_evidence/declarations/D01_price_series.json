@@ -1,0 +1,17 @@
+{
+  "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/ZEAL.CO?period1=1420070400&period2=1791461930&interval=1d&events=div%2Csplits&includeAdjustedClose=true",
+  "source_type": "RETROSPECTIVE",
+  "publisher": "Yahoo Finance",
+  "document_type": "daily price series",
+  "title": "ZEAL.CO daily bars 2015-01-02..2026-10-08",
+  "event_time": null,
+  "publication_time": null,
+  "publication_time_basis": null,
+  "retrieval_time": "2026-10-08T12:18:51Z",
+  "as_of_cutoff": "2025-03-11T16:00:00Z",
+  "evidence_grade": "D",
+  "existence_method": "NONE",
+  "content_method": "NONE",
+  "verification_notes": "A vendor series retrieved in 2026; it cannot show what the tape displayed in 2025. Bytes committed at research/ZEALAND_PILOT_v1/01_protocol/pin/ZEAL.CO.json, sha256 a20b3934ebc11a3f4d44e9e11d73e5636ecf3543994ce58ad5b10d6b40598b8b (manifest yahoo_dk-20261008T121850Z).",
+  "provenance": "idxsig yahoo fetcher"
+}

@@ -1,0 +1,79 @@
+{
+  "source": "01_protocol/pin/ZEAL.CO.json",
+  "sha256": "a20b3934ebc11a3f4d44e9e11d73e5636ecf3543994ce58ad5b10d6b40598b8b",
+  "definitions": "Measures reuse E1-SIGNALS-v1 (idx-signals/research/E1/protocol.json), computed at the close of the\nlast Copenhagen session at or before each information set's cutoff, from the pinned series only:",
+  "sets": {
+    "T-30D": {
+      "cutoff": "2025-02-09T16:00:00Z",
+      "session": "2025-02-07",
+      "close": 728.5,
+      "ret5": -0.009517335146159045,
+      "ret20": -0.008843537414966018,
+      "vol20": 0.03006037667598391,
+      "median_rngr_5": 0.8279691764557522,
+      "volume_ratio_5_vs_20": 0.936024386975747,
+      "median_volume_5": 139711,
+      "median_volume_prior_20": 149260.0,
+      "quiet_band_abs_ret5": 0.1344340913534984,
+      "facts": {
+        "price_already_repriced": false,
+        "volume_creep_before_story": false,
+        "price_quiet_vs_own_range": true
+      }
+    },
+    "T-72H": {
+      "cutoff": "2025-03-08T16:00:00Z",
+      "session": "2025-03-07",
+      "close": 533.5,
+      "ret5": -0.19532428355957765,
+      "ret20": -0.2676733013040494,
+      "vol20": 0.03266368078943819,
+      "median_rngr_5": 1.6901362877414485,
+      "volume_ratio_5_vs_20": 2.319168199668987,
+      "median_volume_5": 402160,
+      "median_volume_prior_20": 173407.0,
+      "quiet_band_abs_ret5": 0.1460764212810756,
+      "facts": {
+        "price_already_repriced": false,
+        "volume_creep_before_story": true,
+        "price_quiet_vs_own_range": false
+      }
+    },
+    "T-24H": {
+      "cutoff": "2025-03-10T16:00:00Z",
+      "session": "2025-03-10",
+      "close": 507.5,
+      "ret5": -0.16803278688524592,
+      "ret20": -0.2912011173184358,
+      "vol20": 0.03355865528022623,
+      "median_rngr_5": 1.521977202527211,
+      "volume_ratio_5_vs_20": 2.069166064805513,
+      "median_volume_5": 381039,
+      "median_volume_prior_20": 184151.0,
+      "quiet_band_abs_ret5": 0.15007886888013622,
+      "facts": {
+        "price_already_repriced": false,
+        "volume_creep_before_story": true,
+        "price_quiet_vs_own_range": false
+      }
+    },
+    "DECISION": {
+      "cutoff": "2025-03-11T16:00:00Z",
+      "session": "2025-03-11",
+      "close": 488.79998779296875,
+      "ret5": -0.13715800919158205,
+      "ret20": -0.3206393498360407,
+      "vol20": 0.033429595447505865,
+      "median_rngr_5": 1.336389325854693,
+      "volume_ratio_5_vs_20": 2.0610628803245437,
+      "median_volume_5": 381039,
+      "median_volume_prior_20": 184875.0,
+      "quiet_band_abs_ret5": 0.14950169576188124,
+      "facts": {
+        "price_already_repriced": false,
+        "volume_creep_before_story": true,
+        "price_quiet_vs_own_range": false
+      }
+    }
+  }
+}

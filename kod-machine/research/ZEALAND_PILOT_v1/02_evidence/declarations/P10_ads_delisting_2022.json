@@ -1,0 +1,17 @@
+{
+  "source_url": "https://view.news.eu.nasdaq.com/view?id=ba32e89f358f36c719f76ab8592dacff0&lang=en&src=listed",
+  "source_type": "PRIMARY",
+  "publisher": "Zealand Pharma A/S via Nasdaq Copenhagen",
+  "document_type": "company announcement (inside information)",
+  "title": "Zealand Pharma Announces Voluntary Delisting of ADSs from the Nasdaq Global Select Market",
+  "event_time": null,
+  "publication_time": "2022-08-08T21:05:00Z",
+  "publication_time_basis": "releaseTime of the Nasdaq Nordic company-announcement system (api.news.eu.nasdaq.com, pinned in 01_protocol/pin), read as UTC+1",
+  "retrieval_time": "2026-10-08T12:38:42Z",
+  "as_of_cutoff": "2025-03-11T16:00:00Z",
+  "evidence_grade": "B",
+  "existence_method": "PRIMARY_SOURCE_TIMESTAMP",
+  "content_method": "NONE",
+  "verification_notes": "Existence: the exchange system's own release time. Content: not verified; no archive capture dated by the cutoff could be checked (Internet Archive rate-limited from this environment). Trading consolidated on Nasdaq Copenhagen (ZEAL, DKK); ADS delisting expected effective by end of Q3 2022.",
+  "provenance": "retrieved from the exchange's announcement viewer; bytes in research/ZEALAND_PILOT_v1/02_evidence/raw"
+}

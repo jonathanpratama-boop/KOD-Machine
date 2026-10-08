@@ -1,0 +1,17 @@
+{
+  "source_url": "https://attachment.news.eu.nasdaq.com/ab6f2ce2bbe538c358464d06a50b72341",
+  "source_type": "PRIMARY",
+  "publisher": "Zealand Pharma A/S via Nasdaq Copenhagen",
+  "document_type": "PDMR notification (MAR art. 19)",
+  "title": "PDMR notification: Anneline Nansen, sale of 1,500 shares",
+  "event_time": null,
+  "publication_time": "2024-11-11T16:00:00Z",
+  "publication_time_basis": "releaseTime of the Nasdaq Nordic company-announcement system (api.news.eu.nasdaq.com, pinned in 01_protocol/pin), read as UTC+1",
+  "retrieval_time": "2026-10-08T12:39:29Z",
+  "as_of_cutoff": "2025-02-09T16:00:00Z",
+  "evidence_grade": "B",
+  "existence_method": "PRIMARY_SOURCE_TIMESTAMP",
+  "content_method": "NONE",
+  "verification_notes": "Existence: the exchange system's own release time. Content: not verified; no archive capture dated by the cutoff could be checked (Internet Archive rate-limited from this environment). Board member (employee elected) sold 1,000 at DKK 850 and 500 at DKK 847 on 2024-11-08 (DKK 1,273,500).",
+  "provenance": "retrieved from the exchange's announcement viewer; bytes in research/ZEALAND_PILOT_v1/02_evidence/raw"
+}
