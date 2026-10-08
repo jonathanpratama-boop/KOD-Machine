@@ -1,0 +1,89 @@
+{
+  "E100": {
+    "base_rate": 0.0013692264285595738,
+    "hits": 8,
+    "lift_vs_base": 19.60642668293675,
+    "lift_vs_matched_random": 11.188811188811188,
+    "matched_random_mean": 0.0023993288590604027,
+    "matched_random_p2_5": 0.0,
+    "matched_random_p97_5": 0.006795302013422838,
+    "p_one_sided_vs_matched": 0.004975124378109453,
+    "precision": 0.026845637583892617,
+    "precision_hi95": 0.05207072798162045,
+    "precision_lo95": 0.013664412568919967,
+    "recall": {
+      "caught_before_repricing": 3,
+      "episodes": 48,
+      "flagged_on_episode_start": 0,
+      "median_lead_sessions_to_peak": 2.0,
+      "recall": 0.0625
+    }
+  },
+  "E30": {
+    "base_rate": 0.024073490116674687,
+    "hits": 55,
+    "lift_vs_base": 7.666680547554767,
+    "lift_vs_matched_random": 4.637436762225969,
+    "matched_random_mean": 0.039798657718120814,
+    "matched_random_p2_5": 0.020134228187919462,
+    "matched_random_p97_5": 0.0571308724832215,
+    "p_one_sided_vs_matched": 0.004975124378109453,
+    "precision": 0.18456375838926176,
+    "precision_hi95": 0.2325279113930783,
+    "precision_lo95": 0.14462884897394865,
+    "recall": {
+      "caught_before_repricing": 1,
+      "episodes": 730,
+      "flagged_on_episode_start": 1,
+      "median_lead_sessions_to_peak": 3.0,
+      "recall": 0.0013698630136986301
+    }
+  },
+  "E50": {
+    "base_rate": 0.008912419298624135,
+    "hits": 27,
+    "lift_vs_base": 10.166041768212665,
+    "lift_vs_matched_random": 6.315789473684211,
+    "matched_random_mean": 0.014345637583892616,
+    "matched_random_p2_5": 0.003355704697986577,
+    "matched_random_p97_5": 0.026845637583892617,
+    "p_one_sided_vs_matched": 0.004975124378109453,
+    "precision": 0.09060402684563758,
+    "precision_hi95": 0.12861397879031594,
+    "precision_lo95": 0.06301500806901689,
+    "recall": {
+      "caught_before_repricing": 6,
+      "episodes": 275,
+      "flagged_on_episode_start": 0,
+      "median_lead_sessions_to_peak": 1.5,
+      "recall": 0.02181818181818182
+    }
+  },
+  "capturable_ge_30_share_of_executable": 0.12751677852348994,
+  "capturable_median": 0.013007578777351814,
+  "code": {
+    "commit": "e5a1be22422f28846696aba6eb55a2de18f2ceca",
+    "dirty": false
+  },
+  "computed_at": "2026-10-08T00:55:47+00:00",
+  "detector_module_sha256": "b050c4d37d9104309b32e70a7e81682ee3029da3a6a0654dae6ac41414abb794",
+  "eligible_ticker_days": 120506,
+  "executable_share": 1.0,
+  "false_alerts_no_E30": 243,
+  "flags": 298,
+  "market": "CRYPTO",
+  "matched_random_capturable_median": 0.027168732125833817,
+  "matched_random_r5_median": 0.0010222335803729,
+  "matched_random_relaxed_steps": {
+    "0": 290,
+    "2": 8
+  },
+  "panel_sha256": "3dc12749c7cce635a68ef4f152ec21c3b3d24eb6b02665c799aa24e513963d7d",
+  "period": "validation",
+  "protocol_sha256": "c48f3dd80cf99498610c0f977328dbd1c7c6099a9e13a7d5d161e07e21d860a5",
+  "r5_median": -0.1152339248674813,
+  "rule": "G2_RET30",
+  "sessions": 360,
+  "sessions_with_flag": 174,
+  "stage": "validation"
+}

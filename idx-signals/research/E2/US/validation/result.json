@@ -1,0 +1,89 @@
+{
+  "E100": {
+    "base_rate": 0.0010711474743332911,
+    "hits": 51,
+    "lift_vs_base": 30.11542788373492,
+    "lift_vs_matched_random": 11.630558722919043,
+    "matched_random_mean": 0.002773561037318153,
+    "matched_random_p2_5": 0.0006166982922201142,
+    "matched_random_p97_5": 0.005708412397216955,
+    "p_one_sided_vs_matched": 0.004975124378109453,
+    "precision": 0.03225806451612903,
+    "precision_hi95": 0.04216428576834687,
+    "precision_lo95": 0.024619423089371147,
+    "recall": {
+      "caught_before_repricing": 28,
+      "episodes": 351,
+      "flagged_on_episode_start": 0,
+      "median_lead_sessions_to_peak": 2.0,
+      "recall": 0.07977207977207977
+    }
+  },
+  "E30": {
+    "base_rate": 0.012594887334050328,
+    "hits": 243,
+    "lift_vs_base": 12.203379488579591,
+    "lift_vs_matched_random": 5.421686746987951,
+    "matched_random_mean": 0.028349146110056928,
+    "matched_random_p2_5": 0.02084123972169513,
+    "matched_random_p97_5": 0.036701454775458574,
+    "p_one_sided_vs_matched": 0.004975124378109453,
+    "precision": 0.15370018975332067,
+    "precision_hi95": 0.17231614666433576,
+    "precision_lo95": 0.1367630698327577,
+    "recall": {
+      "caught_before_repricing": 36,
+      "episodes": 4100,
+      "flagged_on_episode_start": 0,
+      "median_lead_sessions_to_peak": 1.0,
+      "recall": 0.00878048780487805
+    }
+  },
+  "E50": {
+    "base_rate": 0.004261134113223676,
+    "hits": 132,
+    "lift_vs_base": 19.59371821728593,
+    "lift_vs_matched_random": 7.864164432529046,
+    "matched_random_mean": 0.010616698292220112,
+    "matched_random_p2_5": 0.0056925996204933585,
+    "matched_random_p97_5": 0.016461100569259965,
+    "p_one_sided_vs_matched": 0.004975124378109453,
+    "precision": 0.08349146110056926,
+    "precision_hi95": 0.09815765908200685,
+    "precision_lo95": 0.0708444670610727,
+    "recall": {
+      "caught_before_repricing": 41,
+      "episodes": 1459,
+      "flagged_on_episode_start": 1,
+      "median_lead_sessions_to_peak": 2.0,
+      "recall": 0.02810143934201508
+    }
+  },
+  "capturable_ge_30_share_of_executable": 0.12745098039215685,
+  "capturable_median": 0.02638542684540579,
+  "code": {
+    "commit": "e5a1be22422f28846696aba6eb55a2de18f2ceca",
+    "dirty": false
+  },
+  "computed_at": "2026-10-08T00:56:40+00:00",
+  "detector_module_sha256": "b050c4d37d9104309b32e70a7e81682ee3029da3a6a0654dae6ac41414abb794",
+  "eligible_ticker_days": 1151102,
+  "executable_share": 0.967741935483871,
+  "false_alerts_no_E30": 1338,
+  "flags": 1581,
+  "market": "US",
+  "matched_random_capturable_median": 0.015643428816125682,
+  "matched_random_r5_median": -0.0019268263757554749,
+  "matched_random_relaxed_steps": {
+    "0": 1568,
+    "2": 13
+  },
+  "panel_sha256": "e5b5267438667a136f4a4cb42c52d6bc98bc80cde6a88c02a27751a4902c9b92",
+  "period": "validation",
+  "protocol_sha256": "c48f3dd80cf99498610c0f977328dbd1c7c6099a9e13a7d5d161e07e21d860a5",
+  "r5_median": -0.10295181940001874,
+  "rule": "G2_RET30",
+  "sessions": 245,
+  "sessions_with_flag": 244,
+  "stage": "validation"
+}
