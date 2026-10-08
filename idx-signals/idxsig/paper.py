@@ -179,7 +179,9 @@ def append(records: list[dict], path: Path = LEDGER, timestamper=None) -> list[d
 
 
 # ---------------------------------------------------------------------------------- data
-def load_recent(manifest: Path, market: str = "IDX") -> tuple[pd.DataFrame, dict]:
+def load_recent(manifest: Path, market: str = "IDX", purpose: str = "decision") -> tuple[pd.DataFrame, dict]:
+    """purpose="decision": the pinned live preprocessing (PREPROCESSING). purpose="scoring": US and
+    crypto bars through the causal step, so a later bar can never delete the signal-day bar."""
     header, records = read_manifest(manifest)
     if market == "IDX":
         from .panel import _yahoo_frame
@@ -197,7 +199,7 @@ def load_recent(manifest: Path, market: str = "IDX") -> tuple[pd.DataFrame, dict
         from . import global_panel
 
         raw, _ = global_panel.load_us(manifest) if market == "US" else global_panel.load_crypto(manifest)
-        df, _ = global_panel._finish_legacy_v1(raw)
+        df, _ = (global_panel._finish_legacy_v1(raw) if purpose == "decision" else global_panel._finish(raw))
         key = "ticker" if market == "US" else "symbol"
         status = {r[key]: r["http_status"] for r in records if key in r and not str(r[key]).startswith("_")}
     return df, {"manifest": manifest.name, "manifest_sha256": sha256_file(manifest), "header": header,
@@ -480,14 +482,17 @@ def score(decision: dict, m: Market, *, price_units: dict | None = None) -> dict
     unit_factor = None
     if price_units is not None:
         from .price_units import split_conversion_factor
-        if market != "US" or price_units.get("convention") != "SPLIT_ONLY":
-            raise ValueError("Verified scoring requires US split-only price convention")
+        convention = price_units.get("convention")
+        if not ((market in ("US", "IDX") and convention == "SPLIT_ONLY")
+                or (market == "CRYPTO" and convention == "UNADJUSTED" and not price_units.get("actions"))):
+            raise ValueError("Verified scoring needs split-only units (US, IDX) or unadjusted units (crypto)")
         def unit_factor(k):
             return split_conversion_factor(str(dates[k]), price_units["actions"],
                                            price_units["adjustment_reference"],
                                            coverage_complete=price_units.get("coverage_complete", False))
         signal_factor = unit_factor(d)
-        if not np.isfinite(recorded) or recorded <= 0 or not np.isclose(close[d] * signal_factor, recorded, rtol=1e-6, atol=1e-8):
+        if not np.isfinite(recorded) or recorded <= 0 or not np.isclose(close[d] * signal_factor, recorded,
+                                                                         rtol=price_units.get("rtol", 1e-6), atol=1e-8):
             raise ValueError("Recorded signal price does not reconcile to verified split schedule")
         scale = 1.0 / signal_factor
     if market == "IDX":
@@ -524,7 +529,7 @@ def score(decision: dict, m: Market, *, price_units: dict | None = None) -> dict
     trade = None
     if exit_idx is not None:
         gross = float(level[exit_idx] / level[e] - 1) if market == "IDX" else float(close[exit_idx] / entry_price - 1)
-        if unit_factor:
+        if unit_factor and market != "IDX":  # IDX fees are flat: no tier to re-price
             exit_as_traded = float(close[exit_idx]) * unit_factor(exit_idx)
             fee_out = prof.fee_sell + float(prof.per_side_cost(np.array([exit_as_traded]))[0])
         net = (1 + gross) * (1 - fee_out) / (1 + fee_in) - 1
@@ -533,7 +538,7 @@ def score(decision: dict, m: Market, *, price_units: dict | None = None) -> dict
                  "entry_basis": {"IDX": "close", "US": "open", "CRYPTO": "decision-time quote"}[market],
                  "exit_session": str(m.dates[exit_idx]), "exit_reason": exit_reason, "net_return": net,
                  "mfe": max(path), "mae": min(path)}
-        if unit_factor:
+        if unit_factor and market != "IDX":
             trade.update(entry_price_as_traded=entry_price * unit_factor(e),
                          exit_price_as_traded=exit_as_traded,
                          entry_cost_rate=fee_in, exit_cost_rate=fee_out)
@@ -546,7 +551,9 @@ def score(decision: dict, m: Market, *, price_units: dict | None = None) -> dict
     return {"type": "OUTCOME", "market": market, "decision_id": decision["decision_id"], "scored_at": utc_stamp(),
             "discovery": discovery, "execution": {"fillable_at_trigger": fillable, "within_chase_band": bool(in_band),
                                                     "paper_trade": trade, "executed": executed},
-            "scoring_version": "verified-us-units-v1" if unit_factor else "legacy-signal-scale-v1",
+            "scoring_version": (("verified-us-units-v1" if market == "US" else "verified-units-v1") if unit_factor
+                                else "legacy-signal-scale-v1 (forensic only: infers units from a price ratio; "
+                                     "never used to record)"),
             "decision_verdict": verdict, "price_scale": scale,
             **({"price_scale_note": "the source rescaled this name's history since the decision (split or "
                                     "adjustment); plan prices were multiplied by price_scale"}
@@ -684,16 +691,100 @@ def record_scan(out: dict, timestamper=None) -> list[Path]:
     return [feat_path, LEDGER, *[t for t in tokens if t.exists()]]
 
 
-def score_pending(manifest: Path, timestamper=None, market: str = "IDX") -> tuple[list[Path], list[dict]]:
+SCORER_ID = "paper-score-v2"
+# v2 (2026-10-08, before any outcome was recorded): units from the provider's split records,
+# each corroborated by an SEC filing for US names, never from a change in price ratios; the
+# recorded signal-day close must reconcile with the scoring data in those units (rtol 1e-3);
+# entry and exit cost tiers at their own sessions; scoring bars use the causal preprocessing.
+# A decision whose units cannot be established is recorded UNSCORABLE with the reason.
+SCORING_PREPROCESSING = {"IDX": "idx-yahoo-recent-v1", "US": "causal-close-v2", "CRYPTO": "causal-close-v2"}
+RECONCILE_RTOL = 1e-3
+
+
+def _window_complete(decision: dict, m: Market) -> bool:
+    tickers, dates = list(m.tickers), m.dates.astype(str)
+    if decision["instrument"]["ticker"] not in tickers or decision["signal_session"] not in dates:
+        return False
+    d = int(np.flatnonzero(dates == decision["signal_session"])[0])
+    return d + 1 + POLICY.horizon_sessions < len(dates)
+
+
+def scoring_units(decision: dict, m: Market, events: pd.DataFrame, verify=None) -> tuple[dict | None, str | None, list]:
+    """(price_units for score(), reason it cannot be scored, evidence). `events`: the provider's
+    split records for this name in the scoring pull; `verify(event) -> status, evidence` checks
+    one against SEC (US). Units come from records, never from a change in price ratios."""
+    market = decision.get("market", "IDX")
+    last = str(m.dates[-1])
+    if market == "CRYPTO":
+        return {"convention": "UNADJUSTED", "actions": [], "adjustment_reference": last, "coverage_complete": True,
+                "rtol": RECONCILE_RTOL}, None, []
+    after = events[events["effective_session"] > decision["signal_session"]] if len(events) else events
+    evidence, actions = [], []
+    for ev in after.itertuples(index=False):
+        if market != "US":
+            return None, (f"provider records a {ev.provider_ratio} split effective {ev.effective_session} and there is "
+                          f"no independent {market} corporate-action source to corroborate it"), evidence
+        status, found = verify(ev) if verify else ("NOT_CHECKED", [])
+        evidence.append({"effective_session": ev.effective_session, "ratio": ev.provider_ratio, "status": status,
+                         "filings": found})
+        if status not in ("VERIFIED", "RATIO_CONFIRMED"):
+            return None, (f"split record {ev.provider_ratio} effective {ev.effective_session} is not corroborated "
+                          f"by an SEC filing ({status})"), evidence
+        actions.append({"effective_session": ev.effective_session, "new_shares": ev.numerator,
+                        "old_shares": ev.denominator})
+    return {"convention": "SPLIT_ONLY", "actions": actions, "adjustment_reference": last, "coverage_complete": True,
+            "rtol": RECONCILE_RTOL}, None, evidence
+
+
+def score_pending(manifest: Path, timestamper=None, market: str = "IDX", verify=None,
+                  rescore: dict | None = None) -> tuple[list[Path], list[dict]]:
+    """Score every decision of `market` whose window has ended and that has no outcome yet.
+    rescore {decision_id: reason}: score these again and append the result as a revision that
+    links the latest earlier outcome (records are never edited)."""
     lines = ledger_lines()
-    done = {r["decision_id"] for r in lines if r["type"] == "OUTCOME"}
-    pending = [r for r in lines if r["type"] == "DECISION" and r["decision_id"] not in done
-               and r.get("market", "IDX") == market]
+    latest = {}
+    for r in lines:
+        if r["type"] == "OUTCOME":
+            latest[r["decision_id"]] = r
+    rescore = rescore or {}
+    pending = [r for r in lines if r["type"] == "DECISION" and r.get("market", "IDX") == market
+               and (r["decision_id"] not in latest or r["decision_id"] in rescore)]
     if not pending:
         return [], []
-    df, data = load_recent(manifest, market)
+    df, data = load_recent(manifest, market, purpose="scoring")
     m = _market(df, market)
-    outcomes = [o for o in (score(r, m) for r in pending) if o is not None]
+    events = pd.DataFrame()
+    if market in ("US", "IDX"):
+        from . import us_actions
+
+        events = us_actions.yahoo_events(manifest)
+    outcomes = []
+    for r in pending:
+        if not _window_complete(r, m):
+            continue
+        ticker_events = events[events["ticker"] == r["instrument"]["ticker"]] if len(events) else events
+        units, reason, evidence = scoring_units(r, m, ticker_events, verify)
+        out = None
+        if units is not None:
+            try:
+                out = score(r, m, price_units=units)
+            except ValueError as exc:  # recorded close does not reconcile in these units
+                reason = f"{exc} (rtol {RECONCILE_RTOL})"
+        if out is None and reason is None:
+            continue
+        if out is None:
+            out = {"type": "OUTCOME", "market": market, "decision_id": r["decision_id"], "scored_at": utc_stamp(),
+                   "status": "UNSCORABLE", "reason": reason}
+        else:
+            out["status"] = "SCORED"
+            out.pop("price_scale_note", None)
+        out.update(scorer=SCORER_ID, preprocessing=SCORING_PREPROCESSING[market],
+                   units={"actions": (units or {}).get("actions", []), "evidence": evidence,
+                          "convention": (units or {}).get("convention")})
+        if r["decision_id"] in latest:
+            out["revises"] = latest[r["decision_id"]]["record_hash"]
+            out["revision_reason"] = rescore[r["decision_id"]]
+        outcomes.append(out)
     for o in outcomes:
         o["data"] = {"manifest": data["manifest"], "manifest_sha256": data["manifest_sha256"]}
     if not outcomes:

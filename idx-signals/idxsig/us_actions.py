@@ -55,6 +55,9 @@ from .provenance import RAW, PKG_ROOT, read_manifest, rel, sha256_bytes, utc_sta
 VERSION = "us-actions-v1"
 NEW_YORK = ZoneInfo("America/New_York")
 ACCEPTED = ("VERIFIED", "RATIO_CONFIRMED")
+# SEC asks automated clients to declare a contact. This placeholder is what the research runs
+# used; set IDXSIG_SEC_USER_AGENT to a real contact for routine use.
+DEFAULT_USER_AGENT = "KOD research harness research@example.org"
 STATUSES = ("VERIFIED", "RATIO_CONFIRMED", "MENTION_ONLY", "NO_EVIDENCE", "NO_CIK", "NOT_A_SPLIT")
 
 

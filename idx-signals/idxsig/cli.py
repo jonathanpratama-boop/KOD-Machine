@@ -94,6 +94,9 @@ def main(argv=None) -> int:
     p_sc = sub.add_parser("paper-score", help="score paper decisions whose window has ended")
     p_sc.add_argument("--manifest", help="a recent-bars manifest for the market (default: pull now)")
     p_sc.add_argument("--commit", action="store_true")
+    p_sc.add_argument("--rescore", action="append", default=[], metavar="DECISION_ID",
+                      help="score again and append as a revision linked to the earlier outcome (needs --reason)")
+    p_sc.add_argument("--reason", help="why the earlier outcome is revised")
     for p_ in (p_ps, p_sc):
         p_.add_argument("--market", choices=("IDX", "US", "CRYPTO"), default="IDX")
     sub.add_parser("paper-verify", help="check the paper ledger's hash chain and timestamp tokens")
@@ -336,9 +339,31 @@ def main(argv=None) -> int:
                 print(f"  #{dcs['rank']} {dcs['instrument']['ticker']}: {dcs['decision']} ({dcs['reason']})")
             message = f"paper scan {out['scan']['scan_id']}: {out['scan']['result']}"
         else:
-            written, outcomes = paper.score_pending(manifest, stamper, market=mk)
-            print(f"scored {len(outcomes)} decision(s)")
-            message = f"paper score: {len(outcomes)} outcome(s)"
+            if args.rescore and not args.reason:
+                print("error: --rescore needs --reason", file=sys.stderr)
+                return 2
+            verify = None
+            if mk == "US":
+                from . import us_actions
+                from .provenance import RAW, utc_stamp as _stamp
+
+                client = us_actions.SecClient(os.environ.get("IDXSIG_SEC_USER_AGENT", us_actions.DEFAULT_USER_AGENT),
+                                              RAW / "sec" / _stamp().replace("-", "").replace(":", ""))
+                ciks = {}
+
+                def verify(ev):
+                    if not ciks:
+                        ciks.update(us_actions.cik_map(client))
+                    res = us_actions.verify_event(client, ciks, ev.ticker, ev.effective_session, ev.numerator,
+                                                  ev.denominator, ev.kind)
+                    return res["status"], res["evidence"]
+            written, outcomes = paper.score_pending(manifest, stamper, market=mk, verify=verify,
+                                                    rescore={d: args.reason for d in args.rescore})
+            n_bad = sum(o.get("status") == "UNSCORABLE" for o in outcomes)
+            print(f"scored {len(outcomes) - n_bad} decision(s), {n_bad} unscorable")
+            for o in outcomes:
+                print(f"  {o['decision_id']}: {o.get('status')} {o.get('decision_verdict') or o.get('reason')}")
+            message = f"paper score {mk}: {len(outcomes)} outcome(s), {n_bad} unscorable"
         if args.commit and written:
             print(paper.commit_and_push([*written, manifest, *extra], message, trailer))
     elif args.cmd == "paper-verify":
