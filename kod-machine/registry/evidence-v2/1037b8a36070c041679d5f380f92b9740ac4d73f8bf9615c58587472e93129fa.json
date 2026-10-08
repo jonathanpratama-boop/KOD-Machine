@@ -1,0 +1,30 @@
+{
+  "archive_time": null,
+  "archive_url": null,
+  "archived_copy": "kod-machine/registry/evidence-v2/0a368449032ee8b3861b24d67907d555df8f8dd56e28d4811e288d26f17cc341.pdf",
+  "as_of_cutoff": "2025-02-09T16:00:00Z",
+  "content_sha256": "0a368449032ee8b3861b24d67907d555df8f8dd56e28d4811e288d26f17cc341",
+  "content_timestamps": [],
+  "content_verified": false,
+  "corroborated_by": [],
+  "document_type": "PDMR notification (MAR art. 19)",
+  "event_time": null,
+  "evidence_grade": "B",
+  "evidence_hash_version": "KOD-EVIDENCE-v2",
+  "evidence_id": "1037b8a36070c041679d5f380f92b9740ac4d73f8bf9615c58587472e93129fa",
+  "existence_verified": true,
+  "grade_ceiling": "B",
+  "provenance": "retrieved from the exchange's announcement viewer; bytes in research/ZEALAND_PILOT_v1/02_evidence/raw",
+  "publication_time": "2025-01-13T16:00:00Z",
+  "publication_time_basis": "releaseTime of the Nasdaq Nordic company-announcement system (api.news.eu.nasdaq.com, pinned in 01_protocol/pin), read as UTC+1",
+  "publisher": "Zealand Pharma A/S via Nasdaq Copenhagen",
+  "retrieval_time": "2026-10-08T12:30:13Z",
+  "source_type": "PRIMARY",
+  "source_url": "https://attachment.news.eu.nasdaq.com/aaa4132c758e5f6e7b9c48407cb835faa",
+  "title": "PDMR notification: Frederik Barfoed Beck, inheritance of 1,090 shares",
+  "verification_method": {
+    "content": "NONE",
+    "existence": "PRIMARY_SOURCE_TIMESTAMP"
+  },
+  "verification_notes": "Existence: the exchange system's own release time. Content: not verified; no archive capture dated by the cutoff could be checked (Internet Archive rate-limited from this environment). Not a market trade (price DKK 0, outside a trading venue). The last PDMR notification before the event."
+}
