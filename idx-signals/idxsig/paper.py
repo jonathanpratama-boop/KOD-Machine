@@ -538,7 +538,7 @@ def active_tickers(market: str = "IDX") -> list[str]:
 
     tickers: set[str] = set()
     prefix = "SCAN-2" if market == "IDX" else f"SCAN-{market}-"
-    scans = sorted(SCANS.glob(f"{prefix}*/features.csv")) if SCANS.exists() else []
+    scans = sorted(SCANS.glob(f"{prefix}*/features.csv*")) if SCANS.exists() else []
     if scans:
         tickers |= set(pd.read_csv(scans[-1], usecols=["ticker"], dtype={"ticker": str}, keep_default_na=False)["ticker"])
     if market == "IDX":
@@ -625,9 +625,19 @@ def already_scanned(session: str, market: str = "IDX") -> bool:
 def record_scan(out: dict, timestamper=None) -> list[Path]:
     scan_dir = SCANS / out["scan"]["scan_id"]
     scan_dir.mkdir(parents=True, exist_ok=False)
-    feat_path = scan_dir / "features.csv"
-    with feat_path.open("x", encoding="utf-8", newline="") as fh:
-        out["features"].to_csv(fh, index=False, float_format="%.6g", lineterminator="\n")
+    if out["scan"].get("market", "IDX") == "IDX":
+        feat_path = scan_dir / "features.csv"
+        with feat_path.open("x", encoding="utf-8", newline="") as fh:
+            out["features"].to_csv(fh, index=False, float_format="%.6g", lineterminator="\n")
+    else:  # thousands of names a day: gzip (fixed mtime, so the bytes depend only on the content)
+        import gzip
+        import io
+
+        feat_path = scan_dir / "features.csv.gz"
+        text = io.StringIO()
+        out["features"].to_csv(text, index=False, float_format="%.6g", lineterminator="\n")
+        with feat_path.open("xb") as fh, gzip.GzipFile(fileobj=fh, mode="wb", mtime=0) as gz:
+            gz.write(text.getvalue().encode("utf-8"))
     out["scan"]["features_file"] = rel(feat_path)
     out["scan"]["features_sha256"] = sha256_file(feat_path)
     stored = append([out["scan"], *out["decisions"]], timestamper=timestamper)

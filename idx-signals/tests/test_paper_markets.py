@@ -119,6 +119,35 @@ class CryptoPaper(unittest.TestCase):
         self.assertIn("above the chase limit", d["reason"])
 
 
+class FrozenFeatures(unittest.TestCase):
+    def test_us_features_are_gzipped_reproducibly_and_hashed(self):
+        """Guards against: a frozen feature file whose bytes change with the write time (gzip
+        stores one by default), so the same inputs could not be shown to hash the same."""
+        import gzip
+        import tempfile
+        from pathlib import Path
+        from unittest import mock
+
+        warnings.simplefilter("ignore")
+        out = paper.scan_frame(gframe(spike=(7, 79)), DATA, validation=DETECTION_ONLY, market="US")
+        original = paper.append
+        digests = []
+        for run in range(2):
+            with tempfile.TemporaryDirectory() as tmp, \
+                    mock.patch.object(paper, "SCANS", Path(tmp) / "scans"), \
+                    mock.patch.object(paper, "rel", str), \
+                    mock.patch.object(paper, "append", lambda recs, timestamper=None, _t=tmp:
+                                      original(recs, path=Path(_t) / "ledger.jsonl")):
+                rec = {**out, "scan": dict(out["scan"])}
+                paths = paper.record_scan(rec)
+                self.assertTrue(str(paths[0]).endswith("features.csv.gz"))
+                self.assertEqual(paper.sha256_file(paths[0]), rec["scan"]["features_sha256"])
+                with gzip.open(paths[0], "rt", encoding="utf-8") as fh:
+                    self.assertEqual(len(pd.read_csv(fh)), 60)
+                digests.append(rec["scan"]["features_sha256"])
+        self.assertEqual(digests[0], digests[1])
+
+
 class CommittedEvidence(unittest.TestCase):
     def test_e2_evidence_is_found_and_blocks_a_buy(self):
         """The decision gate must read the committed E2 validation and its harness run; if either is
