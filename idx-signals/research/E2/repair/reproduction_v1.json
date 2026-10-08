@@ -1,0 +1,40 @@
+{
+  "code_commit": "826ec76da52b3c1d65abaac5f7502afb16772d63",
+  "environment": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "python": "3.13.16"
+  },
+  "panel_rebuild": {
+    "command": "python3 -W ignore -m idxsig build-global-panel --market US --manifest data/manifests/yahoo_us-20261008T001812Z.jsonl",
+    "content_identical": true,
+    "note": "file hashes differ only because gzip embeds the output file name (which carries the build time); the decompressed CSV is byte-identical",
+    "original_content_sha256": "8714fa1f98b5882a77a9095573775301f285ebef269c6108a9375ce8d52df988",
+    "original_file_sha256": "e5b5267438667a136f4a4cb42c52d6bc98bc80cde6a88c02a27751a4902c9b92",
+    "rebuilt_content_sha256": "8714fa1f98b5882a77a9095573775301f285ebef269c6108a9375ce8d52df988",
+    "rebuilt_file_sha256": "9c90e25ece5a3e92ff962a7649ab0be914c96c88f6cd6805d5441b76deb699a3"
+  },
+  "performed_at": "2026-10-08T09:17Z..09:25Z",
+  "run": {
+    "byte_identical": true,
+    "command": "python3 -W ignore -m idxsig run --market US --rule MOONSHOT_E2_US_D1 --start 2023-01-01 --end 2023-12-31 --no-commit",
+    "files": {
+      "random_draws.csv": {
+        "original": "82c15f86a5ed1aaf8b9f2e5c1c4a533b010ac980c666d58d957c330760c743b0",
+        "reproduced": "82c15f86a5ed1aaf8b9f2e5c1c4a533b010ac980c666d58d957c330760c743b0"
+      },
+      "trades.csv.gz": {
+        "original": "cef44660bdacfdac18a715281efe28450a4a382b6f01ee3b8634aaf1f30d9e14",
+        "reproduced": "cef44660bdacfdac18a715281efe28450a4a382b6f01ee3b8634aaf1f30d9e14"
+      }
+    },
+    "matched_random_avg_net_return": -0.005960705604771843,
+    "matched_random_definition": "mean over 200 draws of each draw's average net return over its scored trades",
+    "original_run": "results/runs/20261008T060443Z_MOONSHOT_E2_US_D1_v1",
+    "panel": "data/panel/panel_us-20261008T004105Z.csv.gz",
+    "rule_avg_net_return": -0.03649897835912017,
+    "rule_definition": "average net return over the 1,099 scored (EXITED) attempts",
+    "summary_identical_except_run_id_created_at_code": true
+  },
+  "version": "e2-us-reproduction-v1"
+}

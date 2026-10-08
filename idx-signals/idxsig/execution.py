@@ -27,6 +27,22 @@ possible. Per trade:
   - A name that stops trading before the exit (delisting, or the data ends) is sold at its
     last traded close, status EXIT_DATA_END, or at zero with data_end_exit="zero".
   - Buy fee and sell fee are charged on traded value.
+
+Price units (units="as_traded", for split-adjusted sources such as the US panel): returns use
+the adjusted prices, which are consistent through splits; everything that depends on the
+price LEVEL uses the price as traded that session, adjusted x Market.unit_factor: whole-share
+sizing, the cost tier at entry and the cost tier at exit (each at its own session), and the
+participation cap (as-traded shares = adjusted volume / unit_factor). units="panel" is the
+original behaviour, kept so earlier runs reproduce.
+
+Fill model (US open entries):
+  A  the original: the opening fill is accepted only if the entry session traded
+     (volume > 0, close > 0) and the shares are at most max_participation of that session's
+     FINAL volume. Both are known only after the close: an ex-post capacity filter.
+  B  FILL-B-v1, decision-time capacity: shares at most max_participation of the median
+     as-traded volume of the 20 sessions up to and including the signal session (known when
+     the decision is made); entry needs an opening price on the entry session and a bar with
+     volume > 0 (the daily bar cannot show that the first print was at 09:30; labelled).
 """
 
 from __future__ import annotations
@@ -69,6 +85,8 @@ class ExecConfig:
     entry_price: str = "close"  # "close" of the entry session, or its "open" (markets with opening prices)
     cost_tiers: tuple = ()  # extra per-side cost by entry/exit price tier (profiles.Profile.cost_tiers)
     ca_mode: str = "exclude"  # "registry" (needs Market.with_registry), "exclude", "value_preserving"
+    units: str = "panel"  # "panel" (original) or "as_traded" (needs Market.unit_factor)
+    fill_model: str = "A"  # "A" (original, ex-post entry-session volume) or "B" (decision-time capacity)
 
 
 def _snap_ratio(r: np.ndarray) -> np.ndarray:
@@ -91,7 +109,7 @@ class Market:
               "listed_shares", "open")
     # Set by with_registry(); built from information that postdates the session (later
     # downloads, primary documents), so never shown to a rule (see rules.RuleView).
-    REGISTRY_FIELDS = ("reg_factor", "reg_rights", "reg_unresolved")
+    REGISTRY_FIELDS = ("reg_factor", "reg_rights", "reg_unresolved", "unit_factor")
 
     def __init__(self, tickers, dates, **arrays):
         self.tickers = np.asarray(tickers)
@@ -170,7 +188,17 @@ class Market:
         factor, rights, unresolved, counts = scaling_arrays(self, registry)
         arrays = {name: getattr(self, name) for name in self.FIELDS}
         return Market(self.tickers, self.dates, **arrays, reg_factor=factor, reg_rights=rights,
-                      reg_unresolved=unresolved, registry_counts=counts)
+                      reg_unresolved=unresolved, unit_factor=self.unit_factor, registry_counts=counts)
+
+    def with_units(self, unit_factor: np.ndarray) -> "Market":
+        """A copy carrying adjusted -> as-traded price factors (us_actions.unit_factors). Built from
+        corporate actions after the session, so never shown to a rule (see rules.RuleView)."""
+        if unit_factor.shape != self.shape or not np.all(np.isfinite(unit_factor) & (unit_factor > 0)):
+            raise ValueError("unit_factor must be finite, positive and shaped like the market")
+        arrays = {name: getattr(self, name) for name in self.FIELDS}
+        extra = {name: getattr(self, name) for name in self.REGISTRY_FIELDS if name != "unit_factor"}
+        return Market(self.tickers, self.dates, **arrays, **extra, unit_factor=unit_factor,
+                      registry_counts=self.registry_counts)
 
     def bounds(self, start=None, end=None) -> tuple[int, int]:
         lo = 0 if start is None else int(np.searchsorted(self.dates, np.datetime64(start, "D"), side="left"))
@@ -213,7 +241,19 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     e = np.minimum(entry, n_sessions - 1)
     open_ = status < 0
 
-    traded = m.tradeable[tick_idx, e]
+    if cfg.units not in ("panel", "as_traded") or cfg.fill_model not in ("A", "B"):
+        raise ValueError(f"unknown units {cfg.units!r} or fill model {cfg.fill_model!r}")
+    if cfg.fill_model == "B" and (cfg.entry_price != "open" or cfg.units != "as_traded"):
+        raise ValueError("fill model B is defined for open entries in as-traded units")
+    uf = None
+    if cfg.units == "as_traded":
+        if m.unit_factor is None:
+            raise ValueError("units='as_traded' needs Market.with_units(...)")
+        uf = m.unit_factor
+    if cfg.fill_model == "A":
+        traded = m.tradeable[tick_idx, e]
+    else:  # a bar with volume on the entry session (proxy for an opening print; labelled)
+        traded = m.present[tick_idx, e] & (np.nan_to_num(m.volume[tick_idx, e]) > 0)
     status[open_ & ~traded] = STATUS.index("SKIP_NOT_TRADED")
     open_ = status < 0
     status[open_ & m.lock_up[tick_idx, e]] = STATUS.index("SKIP_ARA_LOCK")
@@ -226,13 +266,23 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
         entry_price = np.nan_to_num(opened)
     else:
         entry_price = np.nan_to_num(m.close[tick_idx, e])
+    f_entry = uf[tick_idx, e] if uf is not None else np.ones(n_trades)
+    traded_entry = entry_price * f_entry  # the price paid, in that session's units
     with np.errstate(divide="ignore", invalid="ignore"):
-        lots = np.floor(cfg.notional / (entry_price * cfg.lot_size))
+        lots = np.floor(cfg.notional / (traded_entry * cfg.lot_size))
     lots = np.where(np.isfinite(lots), lots, 0)
-    shares = lots * cfg.lot_size
-    status[open_ & (shares <= 0)] = STATUS.index("SKIP_LOT")
+    shares_traded = lots * cfg.lot_size
+    shares = shares_traded * f_entry  # the same holding in adjusted shares (adjusted price = traded / F)
+    status[open_ & (shares_traded <= 0)] = STATUS.index("SKIP_LOT")
     open_ = status < 0
-    too_big = shares > cfg.max_participation * np.nan_to_num(m.volume[tick_idx, e])
+    if cfg.fill_model == "A":
+        capacity = np.nan_to_num(m.volume[tick_idx, e]) / f_entry
+    else:
+        vol_traded = np.where(m.tradeable, np.nan_to_num(m.volume) / uf, np.nan)
+        lo = np.maximum(sig_idx - 19, 0)
+        capacity = np.array([np.nanmedian(vol_traded[n, a: s + 1]) if np.isfinite(vol_traded[n, a: s + 1]).any()
+                             else 0.0 for n, a, s in zip(tick_idx, lo, np.minimum(sig_idx, n_sessions - 1))])
+    too_big = shares_traded > cfg.max_participation * np.nan_to_num(capacity)
     status[open_ & too_big] = STATUS.index("SKIP_LIQUIDITY")
     open_ = status < 0
 
@@ -283,7 +333,9 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     factor = factor_array[tick_idx, x] / factor_array[tick_idx, e]
     exit_shares = shares * factor
     buy_value = shares * entry_price
-    extra_in, extra_out = _tier_costs(entry_price, cfg.cost_tiers), _tier_costs(np.nan_to_num(exit_price), cfg.cost_tiers)
+    f_exit = uf[tick_idx, x] if uf is not None else np.ones(n_trades)
+    traded_exit = np.nan_to_num(exit_price) * f_exit  # the sale price, in the exit session's units
+    extra_in, extra_out = _tier_costs(traded_entry, cfg.cost_tiers), _tier_costs(traded_exit, cfg.cost_tiers)
     cost = buy_value * (1 + cfg.fees.buy + extra_in)
     proceeds = exit_shares * exit_price * (1 - cfg.fees.sell - extra_out)
     with np.errstate(divide="ignore", invalid="ignore"):
@@ -297,6 +349,9 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
         "status": status,
         "entry_price": np.where(status >= FIRST_SKIP, np.nan, entry_price),
         "shares": np.where(status >= FIRST_SKIP, 0, shares),
+        **({"entry_price_as_traded": np.where(status >= FIRST_SKIP, np.nan, traded_entry),
+            "exit_price_as_traded": np.where(scored, traded_exit, np.nan),
+            "shares_as_traded": np.where(status >= FIRST_SKIP, 0, shares_traded)} if uf is not None else {}),
         "exit_price": exit_price,
         "share_factor": np.where(scored, factor, np.nan),
         "rolled_sessions": np.where(scored & (status == 0), x - target, 0),

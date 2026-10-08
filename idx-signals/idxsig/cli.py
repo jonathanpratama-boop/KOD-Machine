@@ -33,6 +33,19 @@ def main(argv=None) -> int:
     p_fu.add_argument("--start", default="2020-01-01")
     p_fb = sub.add_parser("fetch-binance", help="Binance spot daily klines for every USDT pair (delisted included)")
     p_fb.add_argument("--start", default="2020-01-01")
+    p_ua = sub.add_parser("us-actions", help="US split schedule from a Yahoo pull, each event checked against SEC")
+    p_ua.add_argument("--raw-manifest", required=True)
+    p_ua.add_argument("--effective-after", required=True, help="events effective on a later session (ISO date)")
+    p_ua.add_argument("--universe-end", required=True, help="names whose first bar is on or before this date")
+    p_ua.add_argument("--user-agent", default=None,
+                      help="SEC asks for a contact in the User-Agent (default: $IDXSIG_SEC_USER_AGENT)")
+    p_ua.add_argument("--cache-dir", help="reuse a cache of SEC responses (data/raw/sec/<stamp>)")
+    p_ua.add_argument("--offline", action="store_true", help="answer only from --cache-dir")
+    p_rp = sub.add_parser("build-us-repair-panel", help="E2-US repair panel: causal preprocessing, as-traded "
+                                                         "unit factors, retrospective QA flags")
+    p_rp.add_argument("--manifest", required=True, help="the original yahoo_us raw manifest")
+    p_rp.add_argument("--schedule", required=True, help="a us_splits-*.json manifest from us-actions")
+    p_rp.add_argument("--end", required=True, help="read nothing after this date into the panel")
     p_gp = sub.add_parser("build-global-panel", help="build a US or crypto panel from a pull manifest")
     p_gp.add_argument("--market", choices=("US", "CRYPTO"), required=True)
     p_gp.add_argument("--manifest", required=True)
@@ -66,6 +79,13 @@ def main(argv=None) -> int:
     p_run.add_argument("--panel", help="panel manifest (default: latest)")
     p_run.add_argument("--allow-dirty", action="store_true", help="record a run from uncommitted code (flagged)")
     p_run.add_argument("--no-commit", action="store_true", help="write the run but do not git-commit it")
+    p_run.add_argument("--units", choices=("panel", "as_traded"), default="panel",
+                       help="as_traded: sizing, cost tiers and price bands at the price traded that session "
+                            "(needs a repair panel with unit_factor)")
+    p_run.add_argument("--fill-model", choices=("A", "B"), default="A",
+                       help="A: original (entry-session final volume, ex post); B: decision-time capacity")
+    p_run.add_argument("--quarantine", choices=("none", "unit_schedule"), default="none",
+                       help="unit_schedule: leave out names whose split records SEC does not corroborate")
     sub.add_parser("verify-runs", help="check that no past run was edited or removed")
     sub.add_parser("e1-discovery", help="experiment E1, discovery period (writes research/E1/discovery/)")
     p_ps = sub.add_parser("paper-scan", help="prospective paper scan of the session that last closed (no orders)")
@@ -135,6 +155,21 @@ def main(argv=None) -> int:
         from .sources import binance
 
         print(binance.fetch(start=args.start))
+    elif args.cmd == "us-actions":
+        import os
+
+        from . import us_actions
+
+        agent = args.user_agent or os.environ.get("IDXSIG_SEC_USER_AGENT")
+        if not agent:
+            print("error: set --user-agent or IDXSIG_SEC_USER_AGENT (SEC requires a contact)", file=sys.stderr)
+            return 2
+        print(us_actions.build_schedule(Path(args.raw_manifest), agent, args.effective_after, args.universe_end,
+                                        Path(args.cache_dir) if args.cache_dir else None, args.offline))
+    elif args.cmd == "build-us-repair-panel":
+        from . import global_panel
+
+        print(global_panel.build_us_repair(Path(args.manifest), Path(args.schedule), args.end))
     elif args.cmd == "build-global-panel":
         from . import global_panel
 
@@ -194,6 +229,7 @@ def main(argv=None) -> int:
             fee_buy=args.fee_buy, fee_sell=args.fee_sell, overlap=args.overlap, random_draws=args.draws,
             seed=args.seed, data_end_exit=args.data_end_exit, ca_mode=args.ca_mode,
             lookahead_cuts=args.lookahead_cuts, controls_version=args.controls_version,
+            units=args.units, fill_model=args.fill_model, quarantine=args.quarantine,
         )
         registry = None
         if args.ca_mode == "registry" and args.market == "IDX":

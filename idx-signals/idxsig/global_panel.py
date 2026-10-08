@@ -212,3 +212,107 @@ def load(manifest: Path) -> tuple[pd.DataFrame, dict]:
     meta["_manifest"] = Path(manifest).name
     meta["_manifest_sha256"] = sha256_file(manifest)
     return df, meta
+
+
+REPAIR_FORMAT = "panel-global-v2-units"
+
+
+def build_us_repair(raw_manifest: Path, schedule_manifest: Path, end: str, log=print) -> Path:
+    """E2-US repair panel (research/E2/repair): the original Yahoo payloads, causal preprocessing
+    (_finish: no row is removed because of a later bar), nothing after `end` read into the panel,
+    and three measurement columns no rule can see:
+
+      unit_factor          adjusted -> as-traded price factor (us_actions.unit_factors) from the
+                           provider's split records; later records restore earlier units only
+      qa_reverting_spike   the legacy bad-print test (reverts the next session), kept as a flag
+                           known one session later, never used to delete or as a decision input
+    The manifest lists names whose split records effective after the window's first session
+    lack SEC corroboration (unit_quarantine); a run decides whether to leave them out.
+    """
+    from . import us_actions
+
+    problems = check_files(raw_manifest)
+    if problems:
+        raise RuntimeError(f"{raw_manifest.name}: {len(problems)} files differ from the manifest, e.g. {problems[:3]}")
+    smeta = json.loads(Path(schedule_manifest).read_text(encoding="utf-8"))
+    sched_path = PKG_ROOT / smeta["schedule"]
+    if sha256_file(sched_path) != smeta["schedule_sha256"] or smeta["raw_manifest"] != raw_manifest.name:
+        raise RuntimeError(f"{Path(schedule_manifest).name} does not match its schedule file or this raw manifest")
+    sched = pd.read_csv(sched_path, dtype={"ticker": str}, keep_default_na=False, na_values=[""])
+
+    raw, _ = load_us(raw_manifest)
+    raw = raw[raw["date"] <= pd.Timestamp(end)]
+    panel, qa = _finish(raw)
+    panel["qa_reverting_spike"] = _spikes(panel).to_numpy()
+
+    events = us_actions.yahoo_events(raw_manifest)
+    factor = np.ones(len(panel))
+    for ticker, rows in panel.groupby("ticker").indices.items():
+        ev = events[events["ticker"] == ticker]
+        if len(ev):
+            factor[rows] = us_actions.unit_factors(panel["date"].to_numpy()[rows].astype("datetime64[D]"), ev)
+    panel["unit_factor"] = factor
+    first_session = panel["date"].min()
+    window_first = smeta["effective_after"]
+    bad = sched[~sched["status"].isin(us_actions.ACCEPTED)]
+    quarantine = {t: sorted(set(g["status"])) for t, g in bad.groupby("ticker")}
+    in_panel = set(panel["ticker"])
+    quarantine = {t: v for t, v in quarantine.items() if t in in_panel}
+    reason_counts = {}
+    for statuses in quarantine.values():
+        for s_ in statuses:
+            reason_counts[s_] = reason_counts.get(s_, 0) + 1
+
+    PANEL_DIR.mkdir(parents=True, exist_ok=True)
+    stamp = utc_stamp().replace("-", "").replace(":", "")
+    path = PANEL_DIR / f"panel_us_repair-{stamp}.csv.gz"
+    out = panel.copy()
+    out["date"] = out["date"].dt.strftime("%Y-%m-%d")
+    out["qa_reverting_spike"] = out["qa_reverting_spike"].astype(int)
+    import gzip
+    import io
+
+    text = io.StringIO()
+    out.to_csv(text, index=False, float_format="%.10g", lineterminator="\n")
+    with path.open("xb") as fh, gzip.GzipFile(filename="", fileobj=fh, mode="wb", mtime=0) as gz:
+        gz.write(text.getvalue().encode("utf-8"))  # no file name or time in the header: content-addressed
+    last = panel["date"].max().date().isoformat()
+    survivorship = ("survivor-only: the universe is the Nasdaq Trader listing snapshot of 2026-10-08; names "
+                    "delisted earlier are absent")
+    meta = {
+        "format": REPAIR_FORMAT, "market": "US", "panel": rel(path), "sha256": sha256_file(path),
+        "built_at": utc_stamp(), "preprocessing": qa.get("preprocessing_version"),
+        "inputs": {raw_manifest.name: {"sha256": sha256_file(raw_manifest), "path": rel(raw_manifest)},
+                   Path(schedule_manifest).name: {"sha256": sha256_file(Path(schedule_manifest)),
+                                                  "path": rel(Path(schedule_manifest))}},
+        "rows": int(len(panel)), "tickers": int(panel["ticker"].nunique()), "sessions": int(panel["date"].nunique()),
+        "first_session": first_session.date().isoformat(), "last_session": last, "source_boundary": last,
+        "read_through": end, "default_start": (first_session + timedelta(days=120)).date().isoformat(),
+        "survivorship": survivorship,
+        "quality_tiers": [{"tier": "US_SURVIVOR", "from": first_session.date().isoformat(), "to": last,
+                           "source": "yahoo", "survivorship": survivorship,
+                           "corporate_actions": "split-adjusted by the source; as-traded units via unit_factor"}],
+        "known_limitations": [
+            survivorship,
+            "prices are split-adjusted by the source, not dividend-adjusted; unit_factor restores as-traded levels "
+            "from the provider's split records (convention checked against FMP and SEC: research/E2/repair)",
+            "daily bars only: no intraday path, no halts (US LULD) or order-book depth",
+            "costs are assumed per price tier (profiles.py), not measured spreads",
+        ],
+        "unit_schedule": {"manifest": Path(schedule_manifest).name, "version": smeta.get("version"),
+                          "accepted_statuses": list(us_actions.ACCEPTED), "effective_after": window_first,
+                          "status_counts": smeta.get("status_counts")},
+        "unit_quarantine": {"tickers": quarantine, "reason_counts": reason_counts,
+                            "rule": "a name with any provider split record effective after "
+                                    f"{window_first} that SEC filings do not corroborate (status not in "
+                                    f"{list(us_actions.ACCEPTED)})"},
+        "qa": {"preprocessing_version": qa.get("preprocessing_version"), "spike_rows_dropped": 0,
+               "qa_reverting_spike_rows": int(panel["qa_reverting_spike"].sum()),
+               "non_session_dates_count": qa.get("non_session_dates_count"),
+               "note": "counts only: no price examples are written to this manifest"},
+    }
+    mpath = MANIFESTS / f"panel_us_repair-{stamp}.json"
+    with mpath.open("x", encoding="utf-8") as fh:
+        fh.write(json.dumps(meta, indent=2, sort_keys=True) + "\n")
+    log(f"US repair panel {rel(path)} rows {meta['rows']} tickers {meta['tickers']} quarantined {len(quarantine)}")
+    return mpath

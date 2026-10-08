@@ -5,6 +5,7 @@ Frozen directories: a file, once committed, may never be modified, deleted or re
   idx-signals/results/runs/      one directory per backtest run
   idx-signals/data/manifests/    provenance of every downloaded data file
   idx-signals/data/corporate_actions/ca_registry-*  corporate-action registries, one file per build
+  idx-signals/data/corporate_actions/us_splits-*    US split schedules with SEC evidence, one per build
   idx-signals/research/          experiment protocols and their results, one directory per stage
   idx-signals/paper/scans/, idx-signals/paper/timestamps/   frozen scan snapshots and their tokens
   kod-machine/registry/cards/    frozen KOD cards, one per open
@@ -38,6 +39,7 @@ FROZEN_DIRS = (
     "idx-signals/results/runs/",
     "idx-signals/data/manifests/",
     "idx-signals/data/corporate_actions/ca_registry-",
+    "idx-signals/data/corporate_actions/us_splits-",
     "idx-signals/research/",
     "idx-signals/paper/scans/",
     "idx-signals/paper/timestamps/",

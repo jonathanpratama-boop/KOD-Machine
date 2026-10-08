@@ -2,6 +2,7 @@
 check against the committed E2 evidence. Each test names the failure it guards against."""
 
 import unittest
+from pathlib import Path
 import warnings
 
 import numpy as np
@@ -169,6 +170,27 @@ class FrozenFeatures(unittest.TestCase):
                     self.assertEqual(len(pd.read_csv(fh)), 60)
                 digests.append(rec["scan"]["features_sha256"])
         self.assertEqual(digests[0], digests[1])
+
+
+class PinnedPreprocessing(unittest.TestCase):
+    def test_live_inputs_keep_the_legacy_step_and_say_so(self):
+        """Guards against: the research panel's causal-close-v2 silently changing what a live
+        detector sees (a change of live inputs must be a new policy version)."""
+        from unittest import mock
+
+        from idxsig import global_panel
+
+        warnings.simplefilter("ignore")
+        out = paper.scan_frame(gframe(spike=(7, 79)), DATA, validation=DETECTION_ONLY, market="US")
+        self.assertEqual(out["scan"]["preprocessing"], "global-close-legacy-v1")
+        self.assertEqual(out["decisions"][0]["preprocessing"], "global-close-legacy-v1")
+        with mock.patch.object(global_panel, "load_us", return_value=(gframe(), {})), \
+                mock.patch.object(global_panel, "_finish_legacy_v1", wraps=global_panel._finish_legacy_v1) as legacy, \
+                mock.patch.object(global_panel, "_finish", side_effect=AssertionError("v2 used live")), \
+                mock.patch.object(paper, "read_manifest", return_value=({}, [])), \
+                mock.patch.object(paper, "sha256_file", return_value="0" * 64):
+            paper.load_recent(Path("x.jsonl"), "US")
+        legacy.assert_called_once()
 
 
 class CommittedEvidence(unittest.TestCase):

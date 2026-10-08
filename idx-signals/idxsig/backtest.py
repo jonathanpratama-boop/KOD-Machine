@@ -64,6 +64,9 @@ class RunConfig:
     lookahead_cuts: int | None = None  # None: prefix-first, causal by construction; N: legacy sampled check
     controls_version: str = "v2"
     market: str = "IDX"  # profiles.PROFILES: IDX, US, CRYPTO
+    units: str = "panel"  # "as_traded": price levels in the units traded that session (panel unit_factor)
+    fill_model: str = "A"  # "A": original (entry-session final volume); "B": decision-time capacity
+    quarantine: str = "none"  # "unit_schedule": leave out names the panel lists as lacking a verified schedule
 
 
 def _equal_with_nan(a: np.ndarray, b: np.ndarray) -> bool:
@@ -150,6 +153,28 @@ def _baseline(m: Market, r_tick: np.ndarray, a_sig: np.ndarray, exec_cfg: ExecCo
     return summary, frame, out
 
 
+def _dense(m: Market, df: pd.DataFrame, col: str, fill) -> np.ndarray:
+    out = np.full(m.shape, fill, dtype=np.asarray(fill).dtype if not isinstance(fill, float) else float)
+    ti = pd.Index(m.tickers).get_indexer(df["ticker"])
+    di = pd.Index(m.dates).get_indexer(df["date"].to_numpy().astype("datetime64[D]"))
+    ok = (ti >= 0) & (di >= 0)
+    out[ti[ok], di[ok]] = df[col].to_numpy()[ok]
+    return out
+
+
+def _qa_sensitivity(flag: np.ndarray, out: dict, keep: np.ndarray | None = None) -> dict:
+    """Stats without trades whose entry or exit session is flagged by retrospective QA."""
+    entry, exit_, tick = out["entry_idx"], out["exit_idx"], out["ticker_idx"]
+    hit = np.zeros(len(tick), dtype=bool)
+    for idx_arr in (entry, exit_):
+        ok = idx_arr >= 0
+        hit[ok] |= flag[tick[ok], idx_arr[ok]]
+    sel = np.ones(len(tick), dtype=bool) if keep is None else keep
+    return {"trades_touching_flag": int((hit & sel & np.isin(out["status"], SCORED)).sum()),
+            **{k: v for k, v in _summary_stats(out["net_return"][sel & ~hit], out["status"][sel & ~hit]).items()
+               if k in ("scored", "avg_net_return", "hit_rate")}}
+
+
 def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: tuple | None = None) -> dict:
     """ca_registry: (registry DataFrame, registry manifest) from corporate_actions.load, required
     when cfg.ca_mode == "registry"."""
@@ -168,10 +193,18 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
         fees=Fees(cfg.fee_buy, cfg.fee_sell),
         data_end_exit=cfg.data_end_exit,
         ca_mode=cfg.ca_mode,
+        units=cfg.units,
+        fill_model=cfg.fill_model,
     )
     start = cfg.start or (FIRST_SNAPSHOT if idx else panel_meta["default_start"])
     end = cfg.end or panel_meta["source_boundary"]
     full_market = Market.from_panel(panel_df, price_limits=profile.price_limits)
+    if "unit_factor" in panel_df:
+        full_market = full_market.with_units(_dense(full_market, panel_df, "unit_factor", 1.0))
+    elif cfg.units == "as_traded":
+        raise ValueError("units='as_traded' needs a panel with a unit_factor column (build-us-repair-panel)")
+    qa_flag = (_dense(full_market, panel_df, "qa_reverting_spike", False).astype(bool)
+               if "qa_reverting_spike" in panel_df else None)
     lo, hi = full_market.bounds(start, end)
     ca_info = {"mode": cfg.ca_mode}
     if cfg.ca_mode == "registry":
@@ -191,6 +224,14 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
     if cfg.ca_mode == "registry":
         ca_info["resets_in_window"] = m.with_registry(reg_df).registry_counts
     sig, lookahead = signals(rule, m, cfg.lookahead_cuts)
+    quarantined = []
+    if cfg.quarantine == "unit_schedule":
+        quarantined = sorted(panel_meta.get("unit_quarantine", {}).get("tickers", {}))
+        if "unit_quarantine" not in panel_meta:
+            raise ValueError("quarantine='unit_schedule' needs a panel built with a split schedule")
+        sig[np.isin(m.tickers, quarantined), :] = np.nan  # no signals, not a control: both sides alike
+    elif cfg.quarantine != "none":
+        raise ValueError(f"unknown quarantine {cfg.quarantine!r}")
     evaluable = np.isfinite(sig)
     tick_idx, sig_idx = np.nonzero(sig == 1)  # row-major: by ticker, then session
 
@@ -220,7 +261,8 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
     # Features from the whole panel, then windowed: each uses only data at or before its session,
     # and rolling windows are warm at the window's first session.
     feats = {k: v[:, lo:hi] for k, v in controls.features(full_market, cfg.controls_version,
-                                                          profile.band_edges).items()}
+                                                          profile.band_edges,
+                                                          as_traded=cfg.units == "as_traded").items()}
     matched_tick, level_used = controls.matched_draws(
         evaluable, feats, a_tick, a_sig, draws, np.random.default_rng(cfg.seed + 1), cfg.controls_version
     )
@@ -313,7 +355,39 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
         "rolled_sessions": trades["rolled_sessions"],
         "gross_return": trades["gross_return"],
         "net_return": trades["net_return"],
+        **({k: trades[k] for k in ("entry_price_as_traded", "exit_price_as_traded", "shares_as_traded")}
+           if "entry_price_as_traded" in trades else {}),
     })
+    repair = {}
+    if cfg.units != "panel" or cfg.fill_model != "A" or cfg.quarantine != "none" or qa_flag is not None:
+        repair = {"repair": {
+            "units": {"mode": cfg.units, "schedule": panel_meta.get("unit_schedule"),
+                      "note": "returns from split-adjusted prices; sizing, cost tiers (entry and exit, each at "
+                              "its own session) and the price band at the price as traded that session"
+                      if cfg.units == "as_traded" else "original: price levels as rescaled by later splits"},
+            "fill_model": {"model": cfg.fill_model,
+                           "note": ("A (original): entry needs the entry session to have traded and shares <= "
+                                    f"{cfg.max_participation:.0%} of that session's FINAL volume, both known only "
+                                    "after the close: an ex-post capacity filter, not proof of an opening fill")
+                           if cfg.fill_model == "A" else
+                           ("B (FILL-B-v1): shares <= "
+                            f"{cfg.max_participation:.0%} of the median as-traded volume of the 20 sessions up to "
+                            "the signal session (known at the decision); entry needs an opening price and a bar "
+                            "with volume on the entry session (daily bars cannot prove the print was at 09:30)")},
+            "quarantine": {"mode": cfg.quarantine, "tickers_excluded": len(quarantined),
+                           "reasons": panel_meta.get("unit_quarantine", {}).get("reason_counts")},
+            "preprocessing": panel_meta.get("preprocessing"),
+        }}
+        if qa_flag is not None:
+            flag = qa_flag[:, lo:hi]
+            repair["repair"]["qa_sensitivity"] = {
+                "flag": "qa_reverting_spike (a close > 3x the prior close reverting below a third the next "
+                        "session, or the mirror; known one session later, never a decision input)",
+                "flagged_cells_in_window": int(flag.sum()),
+                "rule": _qa_sensitivity(flag, {k: trades[k] for k in ("entry_idx", "exit_idx", "ticker_idx",
+                                                                      "status", "net_return")}, attempt),
+                **{key: _qa_sensitivity(flag, out) for key, out in raw.items()},
+            }
     summary = {
         "rule": {"rule_id": rule.rule_id, "version": rule.version, "kind": rule.kind, "text": rule.text,
                  "sha256": rule.sha256, "holding_days": holding},
@@ -368,6 +442,7 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
         },
         "rule_trades": rule_stats,
         **baselines,
+        **repair,
         "by_year": by_year,
         "lookahead_check": lookahead,
         "warnings": warnings,

@@ -50,6 +50,12 @@ POLICY_ID = "PAPER-POLICY-v3"
 # v3: v2's rules extended to US equities (entry at the next open) and crypto (entry at the live
 #    quote taken at decision time), with per-market hypothetical accounts and the E2 cost tiers.
 #    IDX decisions are unchanged in substance.
+# Preprocessing of the bars a live decision is made from. The global (US / crypto) legacy step
+# deletes a bar that reverts the next session; at decision time that next bar is already known
+# (it is never after the decision), so live decisions stay causal. It is pinned by name here so
+# that the research panel's causal-close-v2 (global_panel._finish) cannot change live inputs
+# silently; a switch would be a new policy version.
+PREPROCESSING = {"IDX": "idx-yahoo-recent-v1", "US": "global-close-legacy-v1", "CRYPTO": "global-close-legacy-v1"}
 HISTORY_DAYS = 200
 MIN_HISTORY = 20
 BENCHMARKS = ("F2_IGNITION_D", "F1_ARA")  # logged every scan, never decided on
@@ -191,7 +197,7 @@ def load_recent(manifest: Path, market: str = "IDX") -> tuple[pd.DataFrame, dict
         from . import global_panel
 
         raw, _ = global_panel.load_us(manifest) if market == "US" else global_panel.load_crypto(manifest)
-        df, _ = global_panel._finish(raw)
+        df, _ = global_panel._finish_legacy_v1(raw)
         key = "ticker" if market == "US" else "symbol"
         status = {r[key]: r["http_status"] for r in records if key in r and not str(r[key]).startswith("_")}
     return df, {"manifest": manifest.name, "manifest_sha256": sha256_file(manifest), "header": header,
@@ -255,7 +261,7 @@ def scan_frame(df: pd.DataFrame, data: dict, now: datetime | None = None, valida
     record = {
         "type": "SCAN", "market": market, "scan_id": scan_id, "session": session, "discovered_at": utc_stamp(now),
         "cutoff": cutoff, "detector": detector_identity(market),
-        "policy": {"policy_id": POLICY_ID, "sha256": policy_sha()},
+        "policy": {"policy_id": POLICY_ID, "sha256": policy_sha()}, "preprocessing": PREPROCESSING[market],
         "data": {"source": "binance_spot_klines_1d" if market == "CRYPTO" else "yahoo_chart_v8",
                  "manifest": data["manifest"], "manifest_sha256": data["manifest_sha256"],
                  "requested": requested, "http_ok": ok, "fresh_for_session": int(fresh.sum()),
@@ -433,7 +439,7 @@ def decide(row, rank: int, scan_id: str, session: str, now: datetime, validation
             "catalyst": "none identified: a tape-only detector (no news or filing was read)",
             "would_change_decision": change,
         } if decision != "NOT EXECUTABLE" else {"reason": why, "horizon_sessions": p.horizon_sessions},
-        "policy": {"policy_id": POLICY_ID, "sha256": policy_sha()},
+        "policy": {"policy_id": POLICY_ID, "sha256": policy_sha()}, "preprocessing": PREPROCESSING[market],
         "detector": detector_identity(market),
     }
 

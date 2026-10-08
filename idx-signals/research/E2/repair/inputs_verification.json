@@ -1,0 +1,73 @@
+{
+  "panel": {
+    "bytes": 200358031,
+    "exists": true,
+    "manifest": "panel_us-20261008T004105Z.json",
+    "manifest_sha256": "2941b80e4080436fae5f31ad32f65edb3a7c6ea633d8bd3773b535de7455678a",
+    "matches_manifest": true,
+    "matches_run_record": true,
+    "path": "data/panel/panel_us-20261008T004105Z.csv.gz",
+    "recorded_sha256": "e5b5267438667a136f4a4cb42c52d6bc98bc80cde6a88c02a27751a4902c9b92",
+    "rows": 8085803,
+    "sessions": 1700,
+    "sha256": "e5b5267438667a136f4a4cb42c52d6bc98bc80cde6a88c02a27751a4902c9b92",
+    "tickers": 5705
+  },
+  "problems": 0,
+  "raw": {
+    "hash_mismatch": [],
+    "hashed_records": 5705,
+    "header_n_files": 5705,
+    "http_status_counts": {
+      "200": 5705
+    },
+    "manifest": "yahoo_us-20261008T001812Z.jsonl",
+    "manifest_sha256": "01ca82808463f964c06db680803581546d34d85105ed21e27377c3da686e951c",
+    "matches_panel_input_hash": true,
+    "missing": [],
+    "records": 5705,
+    "size_mismatch": [],
+    "verified": 5705
+  },
+  "run": {
+    "code_commit": "826ec76da52b3c1d65abaac5f7502afb16772d63",
+    "files": {
+      "REPORT.md": {
+        "actual": "8de90ff1faade1f1652c98ec4316800e9d23e2f423a6eb6cb18b0922e461f717",
+        "ok": true,
+        "recorded": "8de90ff1faade1f1652c98ec4316800e9d23e2f423a6eb6cb18b0922e461f717"
+      },
+      "random_draws.csv": {
+        "actual": "82c15f86a5ed1aaf8b9f2e5c1c4a533b010ac980c666d58d957c330760c743b0",
+        "ok": true,
+        "recorded": "82c15f86a5ed1aaf8b9f2e5c1c4a533b010ac980c666d58d957c330760c743b0"
+      },
+      "summary.json": {
+        "actual": "ce3e31642888ad6cb6f839b9e6f14cdca3dbdce8bd827dda6353e48215973766",
+        "ok": true,
+        "recorded": "ce3e31642888ad6cb6f839b9e6f14cdca3dbdce8bd827dda6353e48215973766"
+      },
+      "trades.csv.gz": {
+        "actual": "cef44660bdacfdac18a715281efe28450a4a382b6f01ee3b8634aaf1f30d9e14",
+        "ok": true,
+        "recorded": "cef44660bdacfdac18a715281efe28450a4a382b6f01ee3b8634aaf1f30d9e14"
+      }
+    },
+    "run_id": "20261008T060443Z_MOONSHOT_E2_US_D1_v1"
+  },
+  "universe": {
+    "hash_mismatch": [],
+    "hashed_records": 2,
+    "header_n_files": 2,
+    "http_status_counts": {
+      "n/a": 2
+    },
+    "manifest": "us_universe-20261008T001213Z.jsonl",
+    "manifest_sha256": "6da22b72e9b62ed4d6aacebd31368c42ffb8510d121d733ce0dec0eba40ad718",
+    "missing": [],
+    "records": 2,
+    "size_mismatch": [],
+    "verified": 2
+  },
+  "verdict": "ALL ORIGINAL INPUTS PRESENT AND MATCHING"
+}
