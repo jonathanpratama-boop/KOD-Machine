@@ -466,19 +466,27 @@ def score(decision: dict, m: Market) -> dict | None:
                  "peak_session": str(m.dates[d + 1 + int(np.nanargmax(fwd))])}
     e = d + 1
     plan = decision.get("plan", {})
+    # The plan's prices are in the units of the decision day. If the name split (or reverse
+    # split) since, the source has rescaled its whole history: put the plan into today's units
+    # by the ratio of the signal-day close now to the close recorded then.
+    recorded = float(decision["verified_price"].get("close") or 0)
+    scale = float(close[d] / recorded) if recorded > 0 and np.isfinite(close[d]) and close[d] > 0 else 1.0
     if market == "IDX":
         entry_price, first = float(close[e]), e + 1
         fillable = bool(m.tradeable[n, e] and not m.lock_up[n, e])
         fee_in, fee_out = p.fee_buy, p.fee_sell
     else:
         prof = PROFILES[market]
-        entry_price = (decision["verified_price"].get("quote") if market == "CRYPTO" else None) or float(m.open[n, e])
+        quote = decision["verified_price"].get("quote") if market == "CRYPTO" else None
+        entry_price = quote * scale if quote else float(m.open[n, e])
         first = e
         fillable = bool(np.isfinite(entry_price) and entry_price > 0)
-        tier = float(prof.per_side_cost(np.array([entry_price]))[0]) if fillable else 0.0
+        # cost tier at the price actually paid (decision-day units), not the rescaled one
+        tier = float(prof.per_side_cost(np.array([entry_price / scale]))[0]) if fillable else 0.0
         fee_in, fee_out = prof.fee_buy + tier, prof.fee_sell + tier
-    in_band = "max_chase_price" in plan and plan["invalidation"] < entry_price <= plan["max_chase_price"]
-    stop = plan.get("invalidation")
+    in_band = ("max_chase_price" in plan
+               and plan["invalidation"] * scale < entry_price <= plan["max_chase_price"] * scale)
+    stop = plan["invalidation"] * scale if "invalidation" in plan else None
     exit_idx, exit_reason = None, None
     path = []
     if fillable and in_band:
@@ -511,7 +519,10 @@ def score(decision: dict, m: Market) -> dict | None:
     return {"type": "OUTCOME", "market": market, "decision_id": decision["decision_id"], "scored_at": utc_stamp(),
             "discovery": discovery, "execution": {"fillable_at_trigger": fillable, "within_chase_band": bool(in_band),
                                                     "paper_trade": trade, "executed": executed},
-            "decision_verdict": verdict}
+            "decision_verdict": verdict, "price_scale": scale,
+            **({"price_scale_note": "the source rescaled this name's history since the decision (split or "
+                                    "adjustment); plan prices were multiplied by price_scale"}
+               if abs(scale - 1) > 0.01 else {})}
 
 
 def commit_and_push(paths: list[Path], message: str, trailer: str = "") -> str:

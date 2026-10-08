@@ -258,7 +258,7 @@ is again the clearest pre-event signal (US AUC 0.78, crypto 0.56). G2_RET30 (a +
 selected on discovery in both markets, validated for detection (US 5.4x, crypto 4.6x matched
 random, p = 0.005) and failed for execution in both: buying the next open and holding 5
 sessions averaged -3.65% (US) and -1.90% (crypto) per trade vs -0.60% and +1.42% for matched
-random entries. Holdout 2024 onward untouched.
+random entries. US price levels are not point-in-time (Yahoo rescales history at later reverse splits): with costs at the price actually traded the US average is -4.47%; see [ERRATA](research/E2/ERRATA.md) and the [audit brief](research/E2/AUDIT_BRIEF.md). Holdout 2024 onward untouched.
 
 ## 6. Prospective paper ledger ([paper/](paper/README.md))
 

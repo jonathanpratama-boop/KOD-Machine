@@ -1,0 +1,44 @@
+{
+  "attempts": 1676,
+  "attempts_with_later_reverse_split": 1011,
+  "avg_net_as_run": -0.036498978359382483,
+  "avg_net_as_run_later_reverse_split": -0.06460900745869613,
+  "avg_net_as_run_no_later_reverse_split": -0.0033135273393594387,
+  "avg_net_point_in_time_costs": -0.04465041140251716,
+  "manifest": "yahoo_us-20261008T001812Z.jsonl",
+  "note": "2023 validation data, looked at after the fact. A later reverse split is not known at the signal date, so it cannot be used as a filter; the matched random baseline was not re-costed.",
+  "raw_files_not_matching_manifest": 0,
+  "run": "20261008T060443Z_MOONSHOT_E2_US_D1_v1",
+  "scored": 1099,
+  "scored_cost_tier_changes_at_actual_price": 582,
+  "status_by_later_reverse_split": {
+    "EXITED": {
+      "False": 504,
+      "True": 595
+    },
+    "INCOMPLETE": {
+      "False": 20,
+      "True": 29
+    },
+    "SKIP_LIQUIDITY": {
+      "False": 53,
+      "True": 79
+    },
+    "SKIP_LOT": {
+      "False": 0,
+      "True": 154
+    },
+    "SKIP_NOT_TRADED": {
+      "False": 17,
+      "True": 36
+    },
+    "SKIP_NO_ENTRY_SESSION": {
+      "False": 2,
+      "True": 7
+    },
+    "SKIP_OVERLAP": {
+      "False": 69,
+      "True": 111
+    }
+  }
+}

@@ -241,7 +241,8 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
     baselines["random_matched"]["match_level_used"] = {
         names[i]: int((level_used == i).sum()) for i in range(len(names)) if (level_used == i).any()
     }
-    baselines["random_matched"]["controls"] = controls.coverage(feats, a_tick, a_sig, level_used, cfg.controls_version)
+    baselines["random_matched"]["controls"] = controls.coverage(feats, a_tick, a_sig, level_used, cfg.controls_version,
+                                                                 None if idx else profile.band_names)
     draws_df = pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
 
     by_year = []

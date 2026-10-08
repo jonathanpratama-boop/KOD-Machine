@@ -167,8 +167,9 @@ def level_names(version: str = "v2") -> list[str]:
 
 
 def coverage(feats: dict[str, np.ndarray], a_tick: np.ndarray, a_sig: np.ndarray, level_used: np.ndarray,
-             version: str = "v2") -> dict:
-    """How often each feature was known for the signalled name, and how often it was matched on."""
+             version: str = "v2", band_names: tuple | None = None) -> dict:
+    """How often each feature was known for the signalled name, and how often it was matched on.
+    band_names: the market's price bands (profiles.py), which replace the IDX wording in the report."""
     names = VERSIONS[version]
     lv = levels(version)
     out = {}
@@ -176,7 +177,8 @@ def coverage(feats: dict[str, np.ndarray], a_tick: np.ndarray, a_sig: np.ndarray
         known = feats[name][a_tick, a_sig] >= 0 if len(a_tick) else np.array([], dtype=bool)
         matched = np.array([name in lv[k] for k in level_used], dtype=bool) if len(level_used) else known
         f = FEATURES[name]
-        out[name] = {"description": f.description, "availability": f.availability, "priority": i + 1,
+        description = ("close in " + " / ".join(band_names)) if (name == "price_band" and band_names) else f.description
+        out[name] = {"description": description, "availability": f.availability, "priority": i + 1,
                      "known_share": float(known.mean()) if len(known) else None,
                      "matched_share": float(matched.mean()) if len(matched) else None}
     full = float((level_used == 0).mean()) if len(level_used) else None

@@ -29,6 +29,10 @@ def main(argv=None) -> int:
     p_y.add_argument("--out", help="raw directory (resumes if it exists)")
     sub.add_parser("build-panel", help="merge sources into the canonical panel")
     sub.add_parser("verify-data", help="re-hash every raw file and the panel against their manifests")
+    p_fu = sub.add_parser("fetch-us", help="Nasdaq Trader listing + Yahoo daily bars for every US common stock")
+    p_fu.add_argument("--start", default="2020-01-01")
+    p_fb = sub.add_parser("fetch-binance", help="Binance spot daily klines for every USDT pair (delisted included)")
+    p_fb.add_argument("--start", default="2020-01-01")
     p_gp = sub.add_parser("build-global-panel", help="build a US or crypto panel from a pull manifest")
     p_gp.add_argument("--market", choices=("US", "CRYPTO"), required=True)
     p_gp.add_argument("--manifest", required=True)
@@ -121,6 +125,16 @@ def main(argv=None) -> int:
                 print(f"{manifest.name}: {exc}")
                 bad += 1
         return 1 if bad else 0
+    elif args.cmd == "fetch-us":
+        from .sources import us_universe, yahoo
+
+        tickers, universe = us_universe.fetch()
+        print(universe)
+        print(yahoo.fetch(tickers, prefix="yahoo_us", suffix="", start=args.start, sleep=0.1, workers=6))
+    elif args.cmd == "fetch-binance":
+        from .sources import binance
+
+        print(binance.fetch(start=args.start))
     elif args.cmd == "build-global-panel":
         from . import global_panel
 

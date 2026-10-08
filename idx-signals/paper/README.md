@@ -36,8 +36,10 @@ GTBO's stop at its entry price on a one-price ARA bar. `PAPER-POLICY-v3` extends
 (hypothetical $10,000 account, E2 cost tiers) and crypto (10,000 USDT, 0.1% fee + 0.1%
 slippage per side, no quote = NOT EXECUTABLE). Decisions keep the policy they were made under.
 
+Scoring puts a plan into the source's current units before comparing prices: if a name split after the decision, every price in its history is rescaled, so the plan's levels are multiplied by (signal-day close now / close recorded then), shown as `price_scale` in the OUTCOME, and costs are charged at the price actually paid.
+
 A paper BUY needs validated detection AND a validated executable plan. All three detectors
 have the first and not the second (2023 validation, average net per trade vs matched random
-entries: IDX -4.06% vs -0.53%; US -3.65% vs -0.60%; crypto -1.90% vs +1.42%), so their
+entries: IDX -4.06% vs -0.53%; US -3.65% vs -0.60%, -4.47% at point-in-time costs per `research/E2/ERRATA.md`; crypto -1.90% vs +1.42%), so their
 candidates are PASS until a plan that survives a test exists. The plans are still recorded and
 scored, so a rejected name that runs shows up as a missed gain, not as nothing.

@@ -14,6 +14,18 @@ from tests.support import flat_market, rebuild
 
 
 class Profiles(unittest.TestCase):
+    def test_report_names_the_markets_own_price_bands(self):
+        """Guards against: a US or crypto run report describing its price bands in rupiah (the
+        2026-10-08 E2 runs did, though they matched on the right dollar / USDT edges)."""
+        from idxsig import controls
+
+        m = rebuild(*flat_market(n_tickers=6, n_sessions=30))
+        feats = controls.features(m, "v2", US.band_edges)
+        cov = controls.coverage(feats, np.array([0]), np.array([25]), np.array([0]), "v2", US.band_names)
+        self.assertEqual(cov["features"]["price_band"]["description"], "close in <$1 / $1-5 / $5-20 / >$20")
+        idx = controls.coverage(feats, np.array([0]), np.array([25]), np.array([0]), "v2")
+        self.assertIn("Rp200", idx["features"]["price_band"]["description"])
+
     def test_idx_profile_reproduces_the_original_constants(self):
         """Guards against: the market refactor changing IDX lots, fees, bands or entry."""
         self.assertEqual((IDX.lot_size, IDX.fee_buy, IDX.fee_sell, IDX.entry, IDX.price_limits),

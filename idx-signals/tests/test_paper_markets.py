@@ -88,6 +88,29 @@ class USPaper(unittest.TestCase):
         self.assertEqual(out["decision_verdict"], "PROFIT")
 
 
+    def test_a_reverse_split_inside_the_window_does_not_change_the_outcome(self):
+        """Guards against: the source rescaling a name's whole history after a reverse split, so
+        the plan's stop and chase prices (decision-day units) are compared with prices 10x larger."""
+        base = gframe(spike=(7, 70))
+        dec = paper.scan_frame(base[base["date"] <= base["date"].unique()[70]], DATA, validation=VALIDATED,
+                               market="US")["decisions"][0]
+        ran = gframe(spike=(7, 70), tail=-0.03, gap=0.01)
+        split = ran.copy()
+        rows = split["ticker"] == "T007"
+        for col in ("previous", "open", "high", "low", "close"):
+            split.loc[rows, col] = split.loc[rows, col] * 10  # 1-for-10, applied to all history
+        split.loc[rows, "volume"] = split.loc[rows, "volume"] / 10
+        plain = paper.score(dec, paper._market(ran, "US"))
+        scaled = paper.score(dec, paper._market(split, "US"))
+        self.assertAlmostEqual(scaled["price_scale"], 10.0)
+        self.assertIn("price_scale_note", scaled)
+        self.assertEqual(scaled["decision_verdict"], plain["decision_verdict"])
+        self.assertEqual(scaled["execution"]["paper_trade"]["exit_reason"],
+                         plain["execution"]["paper_trade"]["exit_reason"])
+        self.assertAlmostEqual(scaled["execution"]["paper_trade"]["net_return"],
+                               plain["execution"]["paper_trade"]["net_return"], places=9)
+
+
 class CryptoPaper(unittest.TestCase):
     def setUp(self):
         warnings.simplefilter("ignore")
