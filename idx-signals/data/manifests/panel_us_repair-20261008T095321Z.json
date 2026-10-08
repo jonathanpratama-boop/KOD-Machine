@@ -1,0 +1,791 @@
+{
+  "built_at": "2026-10-08T09:55:15Z",
+  "default_start": "2020-05-01",
+  "first_session": "2020-01-02",
+  "format": "panel-global-v2-units",
+  "inputs": {
+    "us_splits-20261008T093909Z.json": {
+      "path": "data/corporate_actions/us_splits-20261008T093909Z.json",
+      "sha256": "b19e7535489ea044cb7f8a5f6b81137661f3b122597b08623597eb4022094d47"
+    },
+    "yahoo_us-20261008T001812Z.jsonl": {
+      "path": "data/manifests/yahoo_us-20261008T001812Z.jsonl",
+      "sha256": "01ca82808463f964c06db680803581546d34d85105ed21e27377c3da686e951c"
+    }
+  },
+  "known_limitations": [
+    "survivor-only: the universe is the Nasdaq Trader listing snapshot of 2026-10-08; names delisted earlier are absent",
+    "prices are split-adjusted by the source, not dividend-adjusted; unit_factor restores as-traded levels from the provider's split records (convention checked against FMP and SEC: research/E2/repair)",
+    "daily bars only: no intraday path, no halts (US LULD) or order-book depth",
+    "costs are assumed per price tier (profiles.py), not measured spreads"
+  ],
+  "last_session": "2023-12-29",
+  "market": "US",
+  "panel": "data/panel/panel_us_repair-20261008T095321Z.csv.gz",
+  "preprocessing": "causal-close-v2",
+  "qa": {
+    "non_session_dates_count": 0,
+    "note": "counts only: no price examples are written to this manifest",
+    "preprocessing_version": "causal-close-v2",
+    "qa_reverting_spike_rows": 23,
+    "spike_rows_dropped": 0
+  },
+  "quality_tiers": [
+    {
+      "corporate_actions": "split-adjusted by the source; as-traded units via unit_factor",
+      "from": "2020-01-02",
+      "source": "yahoo",
+      "survivorship": "survivor-only: the universe is the Nasdaq Trader listing snapshot of 2026-10-08; names delisted earlier are absent",
+      "tier": "US_SURVIVOR",
+      "to": "2023-12-29"
+    }
+  ],
+  "read_through": "2023-12-29",
+  "rows": 4443730,
+  "sessions": 1006,
+  "sha256": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b",
+  "source_boundary": "2023-12-29",
+  "survivorship": "survivor-only: the universe is the Nasdaq Trader listing snapshot of 2026-10-08; names delisted earlier are absent",
+  "tickers": 4878,
+  "unit_coverage": {
+    "jump_threshold": 1.9,
+    "manifest": "us_splits-coverage-20261008T094836Z.json",
+    "status_counts": {
+      "JUMP_ON_RECORD_SESSION": 7,
+      "MISSING_PROVIDER_SPLIT": 6,
+      "NO_SPLIT_EVIDENCE": 375,
+      "PROVIDER_DATE_MISMATCH": 4,
+      "SPLIT_FILING_NEARBY": 23
+    },
+    "window": [
+      "2023-01-03",
+      "2023-12-29"
+    ]
+  },
+  "unit_quarantine": {
+    "reason_counts": {
+      "JUMP_ON_RECORD_SESSION": 7,
+      "MENTION_ONLY": 94,
+      "MISSING_PROVIDER_SPLIT": 6,
+      "NOT_A_SPLIT": 100,
+      "NO_CIK": 1,
+      "NO_EVIDENCE": 27,
+      "PROVIDER_DATE_MISMATCH": 4
+    },
+    "rule": "a name with any provider split record effective after 2023-01-03 that SEC filings do not corroborate (status not in ['VERIFIED', 'RATIO_CONFIRMED']), or a jump inside the window that SEC filings tie to a split the provider did not record (statuses ['MISSING_PROVIDER_SPLIT', 'PROVIDER_DATE_MISMATCH', 'JUMP_ON_RECORD_SESSION', 'NO_CIK'])",
+    "tickers": {
+      "ACON": [
+        "MENTION_ONLY"
+      ],
+      "AEC": [
+        "MENTION_ONLY"
+      ],
+      "AEHL": [
+        "MENTION_ONLY"
+      ],
+      "AFCG": [
+        "NOT_A_SPLIT"
+      ],
+      "AGEN": [
+        "NOT_A_SPLIT"
+      ],
+      "AIFF": [
+        "MENTION_ONLY"
+      ],
+      "AIM": [
+        "NOT_A_SPLIT"
+      ],
+      "AKAN": [
+        "NOT_A_SPLIT"
+      ],
+      "AKTX": [
+        "MENTION_ONLY"
+      ],
+      "ALM": [
+        "MENTION_ONLY"
+      ],
+      "ALOY": [
+        "PROVIDER_DATE_MISMATCH"
+      ],
+      "ANAB": [
+        "MENTION_ONLY"
+      ],
+      "APLM": [
+        "MENTION_ONLY"
+      ],
+      "APRE": [
+        "JUMP_ON_RECORD_SESSION",
+        "PROVIDER_DATE_MISMATCH"
+      ],
+      "ARBK": [
+        "MENTION_ONLY"
+      ],
+      "ARMK": [
+        "NOT_A_SPLIT"
+      ],
+      "ATER": [
+        "MENTION_ONLY"
+      ],
+      "ATOS": [
+        "MENTION_ONLY"
+      ],
+      "ATRO": [
+        "NOT_A_SPLIT"
+      ],
+      "AUC": [
+        "MENTION_ONLY"
+      ],
+      "AUUD": [
+        "MENTION_ONLY",
+        "NOT_A_SPLIT"
+      ],
+      "AWP": [
+        "NO_EVIDENCE"
+      ],
+      "AZ": [
+        "MENTION_ONLY"
+      ],
+      "AZN": [
+        "MENTION_ONLY"
+      ],
+      "AZTR": [
+        "MENTION_ONLY"
+      ],
+      "BDRX": [
+        "JUMP_ON_RECORD_SESSION",
+        "MENTION_ONLY"
+      ],
+      "BDX": [
+        "NOT_A_SPLIT"
+      ],
+      "BGM": [
+        "MENTION_ONLY"
+      ],
+      "BIT": [
+        "NOT_A_SPLIT"
+      ],
+      "BKT": [
+        "NOT_A_SPLIT"
+      ],
+      "BQ": [
+        "MENTION_ONLY"
+      ],
+      "BURU": [
+        "MENTION_ONLY"
+      ],
+      "BWA": [
+        "NOT_A_SPLIT"
+      ],
+      "CANG": [
+        "MENTION_ONLY"
+      ],
+      "CBSH": [
+        "NOT_A_SPLIT"
+      ],
+      "CD": [
+        "MENTION_ONLY"
+      ],
+      "CENN": [
+        "JUMP_ON_RECORD_SESSION"
+      ],
+      "CENT": [
+        "NOT_A_SPLIT"
+      ],
+      "CENTA": [
+        "NO_EVIDENCE"
+      ],
+      "CETX": [
+        "MENTION_ONLY"
+      ],
+      "CHAI": [
+        "MENTION_ONLY"
+      ],
+      "CHNR": [
+        "MENTION_ONLY"
+      ],
+      "CIG": [
+        "NO_EVIDENCE"
+      ],
+      "CISS": [
+        "MENTION_ONLY"
+      ],
+      "CLBK": [
+        "MENTION_ONLY"
+      ],
+      "CLLS": [
+        "MISSING_PROVIDER_SPLIT"
+      ],
+      "CMCSA": [
+        "NOT_A_SPLIT"
+      ],
+      "CMCT": [
+        "NOT_A_SPLIT"
+      ],
+      "CRESY": [
+        "NOT_A_SPLIT"
+      ],
+      "CRVO": [
+        "MENTION_ONLY"
+      ],
+      "CXT": [
+        "NOT_A_SPLIT"
+      ],
+      "CZFS": [
+        "NOT_A_SPLIT"
+      ],
+      "DCX": [
+        "MENTION_ONLY"
+      ],
+      "DD": [
+        "NOT_A_SPLIT"
+      ],
+      "DEA": [
+        "MENTION_ONLY"
+      ],
+      "DEC": [
+        "MISSING_PROVIDER_SPLIT"
+      ],
+      "DFNS": [
+        "MENTION_ONLY"
+      ],
+      "DHR": [
+        "NOT_A_SPLIT"
+      ],
+      "DHY": [
+        "NO_EVIDENCE"
+      ],
+      "DIT": [
+        "MENTION_ONLY"
+      ],
+      "DOUG": [
+        "NOT_A_SPLIT"
+      ],
+      "DRUG": [
+        "MENTION_ONLY"
+      ],
+      "DSS": [
+        "NOT_A_SPLIT"
+      ],
+      "DTSS": [
+        "NO_EVIDENCE"
+      ],
+      "ELAB": [
+        "NOT_A_SPLIT"
+      ],
+      "ELE": [
+        "NO_EVIDENCE"
+      ],
+      "ELPW": [
+        "MENTION_ONLY"
+      ],
+      "FAX": [
+        "NO_EVIDENCE"
+      ],
+      "FBYD": [
+        "MENTION_ONLY"
+      ],
+      "FCUV": [
+        "MENTION_ONLY",
+        "NO_EVIDENCE"
+      ],
+      "FDX": [
+        "NOT_A_SPLIT"
+      ],
+      "FLEX": [
+        "NOT_A_SPLIT"
+      ],
+      "FNF": [
+        "NOT_A_SPLIT"
+      ],
+      "FNRN": [
+        "NOT_A_SPLIT"
+      ],
+      "FRSX": [
+        "MENTION_ONLY"
+      ],
+      "FTV": [
+        "NOT_A_SPLIT"
+      ],
+      "FWONA": [
+        "NOT_A_SPLIT"
+      ],
+      "FWONK": [
+        "NOT_A_SPLIT"
+      ],
+      "GAB": [
+        "NOT_A_SPLIT"
+      ],
+      "GDHG": [
+        "MENTION_ONLY"
+      ],
+      "GE": [
+        "NOT_A_SPLIT"
+      ],
+      "GGB": [
+        "MENTION_ONLY",
+        "NOT_A_SPLIT"
+      ],
+      "GNPX": [
+        "MENTION_ONLY"
+      ],
+      "GPGI": [
+        "NOT_A_SPLIT"
+      ],
+      "GPUS": [
+        "NOT_A_SPLIT"
+      ],
+      "HDB": [
+        "NO_EVIDENCE"
+      ],
+      "HERZ": [
+        "MENTION_ONLY"
+      ],
+      "HHH": [
+        "NOT_A_SPLIT"
+      ],
+      "HON": [
+        "NOT_A_SPLIT"
+      ],
+      "HUBC": [
+        "MENTION_ONLY"
+      ],
+      "HUT": [
+        "MENTION_ONLY"
+      ],
+      "HWBK": [
+        "NOT_A_SPLIT"
+      ],
+      "IAF": [
+        "NO_EVIDENCE"
+      ],
+      "ILMN": [
+        "NOT_A_SPLIT"
+      ],
+      "IMCC": [
+        "MENTION_ONLY"
+      ],
+      "IMNN": [
+        "NOT_A_SPLIT"
+      ],
+      "IQST": [
+        "NOT_A_SPLIT"
+      ],
+      "IRS": [
+        "NOT_A_SPLIT"
+      ],
+      "ISOU": [
+        "NO_EVIDENCE"
+      ],
+      "ITRG": [
+        "MISSING_PROVIDER_SPLIT"
+      ],
+      "J": [
+        "NOT_A_SPLIT"
+      ],
+      "JEF": [
+        "NOT_A_SPLIT"
+      ],
+      "JRI": [
+        "NOT_A_SPLIT"
+      ],
+      "JTAI": [
+        "NOT_A_SPLIT"
+      ],
+      "JZ": [
+        "MENTION_ONLY"
+      ],
+      "KG": [
+        "MENTION_ONLY"
+      ],
+      "KXIN": [
+        "MENTION_ONLY"
+      ],
+      "LAR": [
+        "NOT_A_SPLIT"
+      ],
+      "LARK": [
+        "NOT_A_SPLIT"
+      ],
+      "LBTYA": [
+        "NOT_A_SPLIT"
+      ],
+      "LBTYK": [
+        "NOT_A_SPLIT"
+      ],
+      "LEN": [
+        "NOT_A_SPLIT"
+      ],
+      "LFWD": [
+        "MENTION_ONLY"
+      ],
+      "LGHL": [
+        "MENTION_ONLY"
+      ],
+      "LH": [
+        "NOT_A_SPLIT"
+      ],
+      "LILA": [
+        "NOT_A_SPLIT"
+      ],
+      "LILAK": [
+        "NOT_A_SPLIT"
+      ],
+      "LINK": [
+        "MENTION_ONLY",
+        "NO_EVIDENCE"
+      ],
+      "LSBK": [
+        "NOT_A_SPLIT"
+      ],
+      "MAKO": [
+        "NO_EVIDENCE"
+      ],
+      "MBBC": [
+        "NOT_A_SPLIT"
+      ],
+      "MDRR": [
+        "MENTION_ONLY"
+      ],
+      "MDU": [
+        "NOT_A_SPLIT"
+      ],
+      "MESO": [
+        "MENTION_ONLY"
+      ],
+      "METC": [
+        "NOT_A_SPLIT"
+      ],
+      "METCB": [
+        "NOT_A_SPLIT"
+      ],
+      "MIDD": [
+        "NOT_A_SPLIT"
+      ],
+      "MKDW": [
+        "NO_EVIDENCE"
+      ],
+      "MLEC": [
+        "MENTION_ONLY"
+      ],
+      "MMM": [
+        "NOT_A_SPLIT"
+      ],
+      "MNTS": [
+        "NOT_A_SPLIT"
+      ],
+      "MOVE": [
+        "NOT_A_SPLIT"
+      ],
+      "MSGM": [
+        "MISSING_PROVIDER_SPLIT"
+      ],
+      "MTH": [
+        "NO_EVIDENCE"
+      ],
+      "NCV": [
+        "NO_EVIDENCE"
+      ],
+      "NCZ": [
+        "NO_EVIDENCE"
+      ],
+      "NIVF": [
+        "MENTION_ONLY"
+      ],
+      "NRO": [
+        "NOT_A_SPLIT"
+      ],
+      "NUWE": [
+        "MENTION_ONLY"
+      ],
+      "NXXT": [
+        "MENTION_ONLY"
+      ],
+      "NYC": [
+        "MISSING_PROVIDER_SPLIT"
+      ],
+      "OCG": [
+        "MENTION_ONLY"
+      ],
+      "OGC": [
+        "NO_EVIDENCE"
+      ],
+      "OLOX": [
+        "NOT_A_SPLIT"
+      ],
+      "OTLY": [
+        "MENTION_ONLY"
+      ],
+      "OUT": [
+        "NOT_A_SPLIT"
+      ],
+      "PAVS": [
+        "MENTION_ONLY"
+      ],
+      "PBM": [
+        "MENTION_ONLY",
+        "NOT_A_SPLIT"
+      ],
+      "PCAR": [
+        "NO_EVIDENCE"
+      ],
+      "PPCB": [
+        "MENTION_ONLY"
+      ],
+      "PPLI": [
+        "NOT_A_SPLIT"
+      ],
+      "PRFX": [
+        "PROVIDER_DATE_MISMATCH"
+      ],
+      "PROP": [
+        "NOT_A_SPLIT"
+      ],
+      "PSNY": [
+        "MENTION_ONLY"
+      ],
+      "QNRX": [
+        "MENTION_ONLY"
+      ],
+      "QTI": [
+        "MENTION_ONLY"
+      ],
+      "RBKB": [
+        "NOT_A_SPLIT"
+      ],
+      "RCBC": [
+        "NO_CIK"
+      ],
+      "RENX": [
+        "NOT_A_SPLIT"
+      ],
+      "RETO": [
+        "JUMP_ON_RECORD_SESSION",
+        "MENTION_ONLY"
+      ],
+      "REZI": [
+        "NOT_A_SPLIT"
+      ],
+      "RFL": [
+        "NOT_A_SPLIT"
+      ],
+      "RGR": [
+        "NOT_A_SPLIT"
+      ],
+      "RIV": [
+        "NOT_A_SPLIT"
+      ],
+      "RSF": [
+        "NOT_A_SPLIT"
+      ],
+      "RYAAY": [
+        "NOT_A_SPLIT"
+      ],
+      "SABA": [
+        "NO_EVIDENCE"
+      ],
+      "SAFE": [
+        "NOT_A_SPLIT"
+      ],
+      "SBET": [
+        "NO_EVIDENCE"
+      ],
+      "SBS": [
+        "MENTION_ONLY"
+      ],
+      "SCCO": [
+        "NOT_A_SPLIT"
+      ],
+      "SCLX": [
+        "NOT_A_SPLIT"
+      ],
+      "SCZM": [
+        "NO_EVIDENCE"
+      ],
+      "SEGG": [
+        "PROVIDER_DATE_MISMATCH"
+      ],
+      "SER": [
+        "NOT_A_SPLIT"
+      ],
+      "SHPH": [
+        "MENTION_ONLY"
+      ],
+      "SIRI": [
+        "MENTION_ONLY"
+      ],
+      "SLE": [
+        "MENTION_ONLY"
+      ],
+      "SMX": [
+        "MENTION_ONLY",
+        "NOT_A_SPLIT"
+      ],
+      "SNFCA": [
+        "NOT_A_SPLIT"
+      ],
+      "SOAR": [
+        "NOT_A_SPLIT"
+      ],
+      "SONY": [
+        "MENTION_ONLY"
+      ],
+      "SOS": [
+        "MENTION_ONLY"
+      ],
+      "SPGI": [
+        "NOT_A_SPLIT"
+      ],
+      "SPHR": [
+        "NOT_A_SPLIT"
+      ],
+      "SQNS": [
+        "MENTION_ONLY"
+      ],
+      "SRXH": [
+        "MENTION_ONLY",
+        "NOT_A_SPLIT"
+      ],
+      "SSP": [
+        "NOT_A_SPLIT"
+      ],
+      "STKE": [
+        "MENTION_ONLY"
+      ],
+      "SXTC": [
+        "MENTION_ONLY"
+      ],
+      "SXTP": [
+        "MENTION_ONLY"
+      ],
+      "TC": [
+        "NO_EVIDENCE"
+      ],
+      "TII": [
+        "MENTION_ONLY"
+      ],
+      "TKLF": [
+        "MENTION_ONLY"
+      ],
+      "TNXP": [
+        "NOT_A_SPLIT"
+      ],
+      "TR": [
+        "NOT_A_SPLIT"
+      ],
+      "TRI": [
+        "NOT_A_SPLIT"
+      ],
+      "TRUG": [
+        "MENTION_ONLY"
+      ],
+      "TRVG": [
+        "NO_EVIDENCE"
+      ],
+      "TSHA": [
+        "MISSING_PROVIDER_SPLIT"
+      ],
+      "UK": [
+        "MENTION_ONLY"
+      ],
+      "UL": [
+        "NOT_A_SPLIT"
+      ],
+      "UNIT": [
+        "NOT_A_SPLIT"
+      ],
+      "UPC": [
+        "MENTION_ONLY"
+      ],
+      "USAS": [
+        "MENTION_ONLY"
+      ],
+      "UTF": [
+        "NOT_A_SPLIT"
+      ],
+      "UZX": [
+        "MENTION_ONLY"
+      ],
+      "VEON": [
+        "NO_EVIDENCE"
+      ],
+      "VIVK": [
+        "NOT_A_SPLIT"
+      ],
+      "VIVO": [
+        "JUMP_ON_RECORD_SESSION"
+      ],
+      "VSA": [
+        "MENTION_ONLY"
+      ],
+      "VSME": [
+        "MENTION_ONLY",
+        "NO_EVIDENCE"
+      ],
+      "VXX": [
+        "MENTION_ONLY"
+      ],
+      "VXZ": [
+        "MENTION_ONLY"
+      ],
+      "VYX": [
+        "NOT_A_SPLIT"
+      ],
+      "WDC": [
+        "NOT_A_SPLIT"
+      ],
+      "WIT": [
+        "MENTION_ONLY"
+      ],
+      "WKHS": [
+        "NOT_A_SPLIT"
+      ],
+      "WNW": [
+        "MENTION_ONLY"
+      ],
+      "WOR": [
+        "NOT_A_SPLIT"
+      ],
+      "WPC": [
+        "NOT_A_SPLIT"
+      ],
+      "WRB": [
+        "MENTION_ONLY"
+      ],
+      "XFLT": [
+        "NO_EVIDENCE"
+      ],
+      "XHG": [
+        "JUMP_ON_RECORD_SESSION"
+      ],
+      "XRTX": [
+        "JUMP_ON_RECORD_SESSION"
+      ],
+      "YHC": [
+        "MENTION_ONLY"
+      ],
+      "ZCMD": [
+        "MENTION_ONLY"
+      ],
+      "ZNB": [
+        "MENTION_ONLY"
+      ]
+    }
+  },
+  "unit_schedule": {
+    "accepted_statuses": [
+      "VERIFIED",
+      "RATIO_CONFIRMED"
+    ],
+    "effective_after": "2023-01-03",
+    "manifest": "us_splits-20261008T093909Z.json",
+    "status_counts": {
+      "MENTION_ONLY": 117,
+      "NOT_A_SPLIT": 136,
+      "NO_CIK": 1,
+      "NO_EVIDENCE": 27,
+      "RATIO_CONFIRMED": 92,
+      "VERIFIED": 1221
+    },
+    "version": "us-actions-v1"
+  }
+}
