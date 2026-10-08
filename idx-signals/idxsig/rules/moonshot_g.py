@@ -15,7 +15,7 @@ import pandas as pd
 
 VERSION = "v1"
 HOLDING_DAYS = 5
-SELECTED = (("US", None), ("CRYPTO", None))
+SELECTED = (("US", "G2_RET30"), ("CRYPTO", "G2_RET30"))  # frozen 2026-10-08 from research/E2/*/discovery
 FEATURE_ARGS = ("close", "prev", "high", "low", "volume", "present", "tradeable", "open")
 FAMILY = (
     ("G1_RET20_CLOSEHIGH", "day return >= +20% and close in the top 20% of the day's range"),
