@@ -1,0 +1,40 @@
+{
+  "accepted_statuses": [
+    "VERIFIED"
+  ],
+  "built_at": "2026-10-08T11:27:30Z",
+  "effective_after": "2023-01-03",
+  "events_in_scope": 1594,
+  "evidence_scope": "all previously cited filings; no new SEC search",
+  "first_pass": {
+    "after_days": 5,
+    "before_days": 45,
+    "max_docs": 6
+  },
+  "provider_events_outside_scope": 660,
+  "raw_manifest": "yahoo_us-20261008T001812Z.jsonl",
+  "raw_manifest_sha256": "01ca82808463f964c06db680803581546d34d85105ed21e27377c3da686e951c",
+  "rejudged_from": {
+    "manifest": "us_splits-20261008T093909Z.json",
+    "sha256": "b19e7535489ea044cb7f8a5f6b81137661f3b122597b08623597eb4022094d47"
+  },
+  "schedule": "data/corporate_actions/us_splits-reaudit-20261008T112522Z.csv",
+  "schedule_sha256": "8fb620469b77d6bf6a65eddcbf7ac45b7adf78c96b6f2bd7f500dc8ddfa9896f",
+  "sec_manifest": "sec_split_evidence-20261008T093909Z.jsonl",
+  "second_pass": {
+    "after_days": 10,
+    "before_days": 150,
+    "max_docs": 10,
+    "recheck_of": "us_splits-20261008T091955Z.json"
+  },
+  "status_counts": {
+    "MENTION_ONLY": 780,
+    "NOT_A_SPLIT": 136,
+    "NO_CIK": 1,
+    "NO_EVIDENCE": 27,
+    "RATIO_CONFIRMED": 411,
+    "VERIFIED": 239
+  },
+  "universe_end": "2023-12-29",
+  "version": "us-actions-v2"
+}

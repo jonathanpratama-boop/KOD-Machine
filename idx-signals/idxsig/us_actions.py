@@ -15,11 +15,11 @@ never as information available at t.
 
 A provider record is not proof. Each event is checked against SEC EDGAR full-text search: a
 filing by the same company within [effective - 45 days, effective + 5 days] that states the
-same ratio (and, where it does, the same effective date). Nothing here infers a split from a
+same exact ratio and effective date in a definite event statement. Nothing here infers a split from a
 change in price ratios. Statuses:
 
   VERIFIED            a filing states the ratio and the effective session date
-  RATIO_CONFIRMED     a filing states the ratio; the date is the provider's
+  RATIO_CONFIRMED     definite ratio statement without a matching effective date; NOT accepted
   MENTION_ONLY        a filing in the window mentions a split or consolidation, ratio not found
   NO_EVIDENCE         no matching filing found
   NO_CIK              the ticker is not in SEC's current ticker map
@@ -52,9 +52,9 @@ import pandas as pd
 
 from .provenance import RAW, PKG_ROOT, read_manifest, rel, sha256_bytes, utc_stamp, write_manifest
 
-VERSION = "us-actions-v1"
+VERSION = "us-actions-v2"
 NEW_YORK = ZoneInfo("America/New_York")
-ACCEPTED = ("VERIFIED", "RATIO_CONFIRMED")
+ACCEPTED = ("VERIFIED",)
 # SEC asks automated clients to declare a contact. This placeholder is what the research runs
 # used; set IDXSIG_SEC_USER_AGENT to a real contact for routine use.
 DEFAULT_USER_AGENT = "KOD research harness research@example.org"
@@ -80,8 +80,9 @@ def classify_ratio(numerator: float, denominator: float) -> str:
     return "SPLIT" if (min(n, d) == 1 or max(n, d) <= 20) else "NOT_A_SPLIT"
 
 
-def yahoo_events(raw_manifest: Path) -> pd.DataFrame:
+def yahoo_events(raw_manifest: Path, market: str = "US") -> pd.DataFrame:
     """Every split record in a Yahoo pull, with the payload it came from."""
+    zone = {"US": NEW_YORK, "IDX": ZoneInfo("Asia/Jakarta")}[market]
     _, records = read_manifest(raw_manifest)
     rows = []
     for rec in records:
@@ -90,7 +91,7 @@ def yahoo_events(raw_manifest: Path) -> pd.DataFrame:
         payload = json.loads((PKG_ROOT / rec["path"]).read_text(encoding="utf-8"))["chart"]["result"][0]
         for ev in ((payload.get("events") or {}).get("splits") or {}).values():
             stamp = int(ev["date"])
-            local = datetime.fromtimestamp(stamp, timezone.utc).astimezone(NEW_YORK)
+            local = datetime.fromtimestamp(stamp, timezone.utc).astimezone(zone)
             rows.append({"ticker": rec["ticker"], "effective_session": local.date().isoformat(),
                          "local_time": local.strftime("%H:%M"), "numerator": float(ev["numerator"]),
                          "denominator": float(ev["denominator"]), "provider_ratio": ev.get("splitRatio"),
@@ -183,19 +184,93 @@ def date_strings(day: date) -> list[str]:
             f"{day.month:02d}/{day.day:02d}/{day.year}"]
 
 
+# Deliberately conservative: unsupported wording needs review, never an inferred approval.
+# A whole filing may mention several historical/proposed splits and unrelated dates.
+AMBIGUOUS = re.compile(
+    r"\b(?:propos\w*|rang\w*|between|up to|may(?!\s+\d)|might|could|if|unless|subject to|"
+    r"not|never|no longer|cancel\w*|abandon\w*|rescind\w*|postpon\w*|"
+    r"authoriz\w*|discretion|hypothetical|illustrat\w*|would)\b", re.I)
+IMPLEMENTED = re.compile(
+    r"\b(?:effective(?:\s+(?:at|on|as of|from))?|effected|implemented|completed|"
+    r"consummated|began trading|commenced trading|will begin trading|"
+    r"will commence trading)\b", re.I)
+CONTINUATION = re.compile(
+    r"^(?:the (?:company['’]s )?(?:common stock|shares|stock|reverse (?:stock )?split|"
+    r"stock split|split)|trading|it)\b", re.I)
+
+
+def split_statements(text: str) -> list[str]:
+    """Single event statements, optionally followed by a directly related trading sentence.
+
+    Sentence-local matching sacrifices recall to avoid stitching a proposal, a historical
+    ratio, and an unrelated date together. Long/table-like passages need manual review.
+    """
+    # Do not cut a date off at "5:00 p.m. Eastern Time on ..." or a company suffix.
+    protected = re.sub(r"\b(?:a\.m\.|p\.m\.|U\.S\.|Inc\.|Corp\.|Co\.|Ltd\.|"
+                       r"Jan\.|Feb\.|Mar\.|Apr\.|Jun\.|Jul\.|Aug\.|Sep\.|Sept\.|Oct\.|Nov\.|Dec\.)",
+                       lambda m: m.group().replace(".", "\u2024"), text, flags=re.I)
+    sentences = [s.replace("\u2024", ".") for s in re.split(r"(?<=[.!?;])\s+", protected)]
+    out = []
+    for i, sentence in enumerate(sentences):
+        if not SPLIT_WORDS.search(sentence) or not ratios_in(sentence):
+            continue
+        context = sentence
+        for following in sentences[i + 1:i + 3]:
+            if not CONTINUATION.search(following):
+                break
+            context += " " + following
+        if len(context) > 1600 or AMBIGUOUS.search(context) or not IMPLEMENTED.search(context):
+            continue
+        if len(ratios_in(context)) != 1:
+            continue
+        out.append(context)
+    return out
+
+
+def _effective_date_in(text: str, effective: date) -> bool:
+    # Require the date next to implementation/trading language, not a filing/meeting date.
+    day = "(?:" + "|".join(re.escape(s) for s in date_strings(effective)) + ")"
+    weekday = r"(?:(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday),?\s+)?"
+    clock = (r"(?:at\s+(?:(?:the\s+)?(?:open|opening)(?:\s+of\s+(?:trading|business))?|"
+             r"\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?)(?:\s+(?:Eastern|New York|ET|EST|EDT)"
+             r"(?:\s+(?:Standard|Daylight))?(?:\s+Time)?)?)\s+)?")
+    effective_on = r"\beffective\s+" + clock + r"(?:(?:on|as of|from)\s+)?" + weekday
+    trading = r"\b(?:began|commenced|will begin|will commence) trading"
+    trading_on = trading + r"[^!?;]{0,140}?\bon\s+" + weekday
+    # A trading-start sentence resolves an after-close legal date to the first new-units
+    # session. If its date cannot be parsed, leave the event unverified.
+    if re.search(trading, text, re.I):
+        return bool(re.search(trading_on + day, text, re.I))
+    # An explicitly after-close event alone cannot establish the first trading session.
+    if re.search(r"\b(?:after (?:the )?(?:market )?close|p\.?m\.?)\b", text, re.I):
+        return False
+    return bool(re.search(effective_on + day, text, re.I))
+
+
 def judge(text: str, numerator: float, denominator: float, effective: date) -> dict:
-    """What one filing says about one provider event."""
+    """Confirm only an exact, unambiguous event; retain the matched excerpt for audit.
+
+    RATIO_CONFIRMED is diagnostic only. Acceptance requires the effective date in the
+    same event statement. Never invert a written ratio to agree with the provider.
+    """
     n, d = int(numerator), int(denominator)
+    if n <= 0 or d <= 0 or n != numerator or d != denominator:
+        raise ValueError("split ratio must contain positive integers")
     g = gcd(n, d)
     want = (n // g, d // g)
     pairs = ratios_in(text)
-    reverse = want[0] < want[1]
-    direction_ok = bool(REVERSE_WORDS.search(text)) if reverse else True
-    ratio_ok = want in pairs or ((want[1], want[0]) in pairs and direction_ok and bool(SPLIT_WORDS.search(text)))
-    lowered = text.lower()
-    date_ok = any(s.lower() in lowered for s in date_strings(effective))
-    return {"mentions_split": bool(SPLIT_WORDS.search(text)), "ratio_ok": bool(ratio_ok and direction_ok),
-            "date_ok": bool(date_ok), "pairs_found": sorted(pairs)[:12]}
+    statements = []
+    for statement in split_statements(text) if want in pairs else []:
+        if ratios_in(statement) != {want}:
+            continue
+        reverse_words = bool(REVERSE_WORDS.search(statement))
+        if (want[0] < want[1]) != reverse_words:
+            continue
+        statements.append(statement)
+    dated = [s for s in statements if _effective_date_in(s, effective)]
+    return {"mentions_split": bool(SPLIT_WORDS.search(text)), "ratio_ok": bool(statements),
+            "date_ok": bool(dated), "pairs_found": sorted(pairs)[:12],
+            "matched_statements": (dated or statements)[:3], "verifier_version": VERSION}
 
 
 @dataclass
@@ -206,6 +281,7 @@ class SecClient:
     out_dir: Path
     min_interval: float = 0.21
     offline: bool = False
+    cache_misses: set[str] = field(default_factory=set)
     _last: float = 0.0
     records: list = field(default_factory=list)
     _lock: threading.Lock = field(default_factory=threading.Lock, repr=False)
@@ -231,6 +307,8 @@ class SecClient:
             self._record({**info, "path": _rel(path), "sha256": sha256_bytes(body), "cached": True})
             return info["http_status"], body
         if self.offline:
+            with self._lock:
+                self.cache_misses.add(url)
             return 0, b""
         status, body = 0, b""
         for attempt in range(5):
@@ -313,7 +391,8 @@ def verify_event(client: SecClient, ciks: dict, ticker: str, effective: str, num
         if found is None:
             continue
         evidence.append({**{k: hit[k] for k in ("accession", "form", "file_date", "url")}, "finding": found,
-                         "ratio_ok": v["ratio_ok"], "date_ok": v["date_ok"]})
+                         "ratio_ok": v["ratio_ok"], "date_ok": v["date_ok"],
+                         "matched_statements": v["matched_statements"], "verifier_version": VERSION})
         if rank[found] < rank[best]:
             best = found
         if best == "VERIFIED":
@@ -355,8 +434,8 @@ def build_schedule(raw_manifest: Path, user_agent: str, effective_after: str, un
                    recheck: Path | None = None) -> Path:
     """Provider events for names that traded on or before `universe_end`, effective after
     `effective_after`, each checked against SEC filings. Writes a CSV and a manifest.
-    recheck: an earlier schedule manifest; its accepted rows are kept as they are and only the
-    rest are searched again with a wider window (SECOND_PASS), the pass recorded per row."""
+    recheck: an earlier schedule manifest; only approvals from this verifier version are kept; all older split
+    rows are searched again with a wider window (SECOND_PASS), the pass recorded per row."""
     events = yahoo_events(raw_manifest)
     _, records = read_manifest(raw_manifest)
     listed = {r["ticker"] for r in records if r.get("first_date") and r["first_date"] <= universe_end}
@@ -370,7 +449,12 @@ def build_schedule(raw_manifest: Path, user_agent: str, effective_after: str, un
         prev = pd.read_csv(PKG_ROOT / prev_meta["schedule"], dtype={"ticker": str}, keep_default_na=False, na_values=[""])
         if hashlib.sha256((PKG_ROOT / prev_meta["schedule"]).read_bytes()).hexdigest() != prev_meta["schedule_sha256"]:
             raise RuntimeError(f"{Path(recheck).name}: schedule file changed")
-        keep = prev[prev["status"].isin(ACCEPTED) | (prev["kind"] != "SPLIT")].assign(**{"pass": 1})
+        if (prev_meta["raw_manifest_sha256"] != hashlib.sha256(raw_manifest.read_bytes()).hexdigest()
+                or prev_meta["effective_after"] != effective_after or prev_meta["universe_end"] != universe_end):
+            raise ValueError("recheck must use the same input manifest and scope")
+        # An older parser's approvals must never survive an upgrade without re-evaluation.
+        reusable = prev["status"].isin(ACCEPTED) if prev_meta.get("version") == VERSION else False
+        keep = prev[reusable | (prev["kind"] != "SPLIT")].assign(**{"pass": 1})
         redo = prev[~prev.index.isin(keep.index)]
         again = verify_schedule(redo.reset_index(drop=True), client, log, **SECOND_PASS).assign(**{"pass": 2})
         checked = pd.concat([keep, again], ignore_index=True).sort_values(["ticker", "effective_session"])
@@ -387,6 +471,7 @@ def build_schedule(raw_manifest: Path, user_agent: str, effective_after: str, un
             "raw_manifest_sha256": hashlib.sha256(raw_manifest.read_bytes()).hexdigest(),
             "sec_manifest": sec_manifest.name, "effective_after": effective_after, "universe_end": universe_end,
             "schedule": rel(csv_path), "schedule_sha256": hashlib.sha256(csv_path.read_bytes()).hexdigest(),
+            "offline": offline, "offline_cache_misses": len(client.cache_misses),
             "events_in_scope": int(len(checked)), "status_counts": checked["status"].value_counts().to_dict(),
             "accepted_statuses": list(ACCEPTED),
             "provider_events_outside_scope": int(len(events) - len(scope)),
@@ -438,18 +523,22 @@ def check_jump(client: SecClient, ciks: dict, events: pd.DataFrame, ticker: str,
         text = text_of(body)
         if not SPLIT_WORDS.search(text):
             continue
-        consistent = [p for p in ratios_in(text) if abs(np.log(ratio) - np.log(p[1] / p[0])) < np.log(2)]
+        judged = [(p, judge(text, *p, day)) for p in ratios_in(text)
+                  if abs(np.log(ratio) - np.log(p[1] / p[0])) < np.log(2)]
+        consistent = [p for p, v in judged if v["ratio_ok"]]
         if not consistent:
             continue
-        dated = any(s.lower() in text.lower() for s in date_strings(day))
+        dated = any(v["date_ok"] for _, v in judged)
         found = "MISSING_PROVIDER_SPLIT" if dated else "SPLIT_FILING_NEARBY"
         evidence.append({**{k: hit[k] for k in ("accession", "form", "file_date", "url")}, "finding": found,
-                         "pairs": consistent[:4]})
+                         "pairs": consistent[:4], "verifier_version": VERSION,
+                         "matched_statements": [excerpt for _, v in judged
+                                                for excerpt in v["matched_statements"]][:3]})
         if found == "MISSING_PROVIDER_SPLIT":
             best = found
             break
         best = found
-    if best != "NO_SPLIT_EVIDENCE" and len(near):
+    if best == "MISSING_PROVIDER_SPLIT" and len(near):
         best = "PROVIDER_DATE_MISMATCH"  # a provider record within 10 days, yet the jump is unadjusted
     return {"status": best, "cik": cik, "filings_searched": len(hits), "evidence": evidence}
 
@@ -486,6 +575,7 @@ def build_coverage(raw_manifest: Path, user_agent: str, start: str, end: str, ca
     quarantine = sorted(set(checked.loc[checked["status"].isin(COVERAGE_QUARANTINE), "ticker"])) if len(checked) else []
     meta = {"version": VERSION, "built_at": utc_stamp(), "raw_manifest": raw_manifest.name,
             "raw_manifest_sha256": hashlib.sha256(raw_manifest.read_bytes()).hexdigest(), "window": [start, end],
+            "offline": offline, "offline_cache_misses": len(client.cache_misses),
             "jump_threshold": JUMP, "rows": rel(csv_path), "rows_sha256": hashlib.sha256(csv_path.read_bytes()).hexdigest(),
             "sec_manifest": sec_manifest.name, "jump_rows": int(len(checked)),
             "status_counts": checked["status"].value_counts().to_dict() if len(checked) else {},

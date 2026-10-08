@@ -236,6 +236,8 @@ def build_us_repair(raw_manifest: Path, schedule_manifest: Path, end: str, cover
     if problems:
         raise RuntimeError(f"{raw_manifest.name}: {len(problems)} files differ from the manifest, e.g. {problems[:3]}")
     smeta = json.loads(Path(schedule_manifest).read_text(encoding="utf-8"))
+    if smeta.get("version") != us_actions.VERSION:
+        raise ValueError("split schedule uses an older verifier; recheck it with us-actions first")
     sched_path = PKG_ROOT / smeta["schedule"]
     if sha256_file(sched_path) != smeta["schedule_sha256"] or smeta["raw_manifest"] != raw_manifest.name:
         raise RuntimeError(f"{Path(schedule_manifest).name} does not match its schedule file or this raw manifest")
@@ -260,6 +262,8 @@ def build_us_repair(raw_manifest: Path, schedule_manifest: Path, end: str, cover
     coverage = None
     if coverage_manifest is not None:
         coverage = json.loads(Path(coverage_manifest).read_text(encoding="utf-8"))
+        if coverage.get("version") != us_actions.VERSION:
+            raise ValueError("split coverage uses an older verifier; rerun us-coverage first")
         rows_path = PKG_ROOT / coverage["rows"]
         if sha256_file(rows_path) != coverage["rows_sha256"] or coverage["raw_manifest"] != raw_manifest.name:
             raise RuntimeError(f"{Path(coverage_manifest).name} does not match its rows file or this raw manifest")

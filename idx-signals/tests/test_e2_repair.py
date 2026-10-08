@@ -176,10 +176,10 @@ class SplitEvidence(unittest.TestCase):
         """Guards against: a prospectus' 'one-for-one' exchange read as a split (coverage v1 bug)."""
         self.assertEqual(us_actions.ratios_in("exchanged on a one-for-one basis"), set())
 
-    def test_reversed_wording_needs_reverse_words(self):
-        """'10-for-1 reverse split' is a common misstatement of 1-for-10; accept it only with
-        reverse/consolidation wording, never for a forward split record."""
-        self.assertTrue(us_actions.judge("a 10-for-1 reverse stock split", 1, 10, date(2023, 1, 3))["ratio_ok"])
+    def test_reversed_wording_is_ambiguous(self):
+        """'10-for-1 reverse split' is a common misstatement of 1-for-10; leave it unverified;
+        the parser must never invert a written ratio to agree with the provider."""
+        self.assertFalse(us_actions.judge("a 10-for-1 reverse stock split", 1, 10, date(2023, 1, 3))["ratio_ok"])
         self.assertFalse(us_actions.judge("a 10-for-1 stock split", 1, 10, date(2023, 1, 3))["ratio_ok"])
 
 
