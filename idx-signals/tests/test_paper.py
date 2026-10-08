@@ -13,7 +13,10 @@ import pandas as pd
 from idxsig import paper
 from idxsig.rules import moonshot_e1 as family
 
-VALIDATED = {"precision": 0.08, "lift_vs_matched_random": 3.0, "p_one_sided_vs_matched": 0.005}
+VALIDATED = {"precision": 0.08, "lift_vs_matched_random": 3.0, "p_one_sided_vs_matched": 0.005,
+             "trading": {"p_one_sided": 0.01, "avg_net_return": 0.02, "matched_random_avg_net_return": 0.0, "run_id": "t"}}
+DETECTION_ONLY = {**VALIDATED, "trading": {"p_one_sided": 1.0, "avg_net_return": -0.04,
+                                           "matched_random_avg_net_return": -0.005, "run_id": "t"}}
 
 
 def frame(n=60, s=80, spike=None, price=1000, adv_volume=2_000_000, tail=None):
@@ -64,6 +67,9 @@ class PaperScan(unittest.TestCase):
         df = frame(spike=(7, 79))
         unvalidated = paper.scan_frame(df, DATA)["decisions"]
         self.assertEqual([d["decision"] for d in unvalidated], ["PASS"])
+        passed = paper.scan_frame(df, DATA, validation=DETECTION_ONLY)["decisions"][0]
+        self.assertEqual(passed["decision"], "PASS")
+        self.assertIn("executable plan", passed["reason"])  # detection alone never buys
         d = paper.scan_frame(df, DATA, validation=VALIDATED)["decisions"][0]
         self.assertEqual(d["decision"], "BUY ON TRIGGER")
         self.assertTrue(d["primary"])

@@ -61,7 +61,8 @@ class Policy:
     fee_buy: float = 0.0015
     fee_sell: float = 0.0025
     horizon_sessions: int = 5
-    min_validated_lift_p: float = 0.05      # paper BUY only if validation beat matched random at this level
+    min_validated_lift_p: float = 0.05      # paper BUY needs detection AND the executable plan to beat matched
+                                            # random in validation at this level (one-sided)
 
 
 POLICY = Policy()
@@ -248,14 +249,27 @@ def decide(row, rank: int, scan_id: str, session: str, now: datetime, validation
                        f"Rp{cap_value:,.0f} (10% of 20-session median value Rp{adv:,.0f})")
     if close < 50:
         reasons.append("priced below Rp50: special-board / full-call-auction rules, outside the modelled market")
-    validated = bool(validation and validation.get("p_one_sided_vs_matched") is not None
-                     and validation["p_one_sided_vs_matched"] < p.min_validated_lift_p
-                     and (validation.get("lift_vs_matched_random") or 0) > 1)
+    detected = bool(validation and validation.get("p_one_sided_vs_matched") is not None
+                    and validation["p_one_sided_vs_matched"] < p.min_validated_lift_p
+                    and (validation.get("lift_vs_matched_random") or 0) > 1)
+    trading = (validation or {}).get("trading") or {}
+    tradeable_edge = bool(trading.get("p_one_sided") is not None and trading["p_one_sided"] < p.min_validated_lift_p)
     if reasons:
         decision, why = "NOT EXECUTABLE", "; ".join(reasons)
-    elif not validated:
+    elif not detected:
         decision, why = "PASS", ("the detector's validation did not beat matched random controls at p < "
                                  f"{p.min_validated_lift_p}; no edge to underwrite a paper position")
+    elif not tradeable_edge:
+        decision, why = "PASS", (
+            "detection is validated (E30 precision {:.1%} vs {:.1%} for matched names), but the executable plan "
+            "(buy at the next close, hold {} sessions) did not beat matched random entries in validation: average "
+            "net {} vs {} (run {}). Fills come mostly when the continuation fails; the names still locked at ARA "
+            "cannot be bought.").format(
+                validation.get("precision") or 0, (validation.get("precision") or 0) / (validation.get("lift_vs_matched_random") or 1),
+                p.horizon_sessions,
+                "n/a" if trading.get("avg_net_return") is None else f"{trading['avg_net_return']:+.2%}",
+                "n/a" if trading.get("matched_random_avg_net_return") is None else f"{trading['matched_random_avg_net_return']:+.2%}",
+                trading.get("run_id", "none"))
     else:
         decision, why = "BUY ON TRIGGER", "validated detector, executable size within the risk budget"
     expiry = _next_session(session)
@@ -392,17 +406,38 @@ def active_tickers() -> list[str]:
     return sorted(tickers)
 
 
+VALIDATION_WINDOW = ("2023-01-02", "2023-12-29")
+
+
 def validation_evidence() -> dict | None:
-    """The E30 block of the frozen detector's validation result, if it exists and matches."""
+    """Detection (E1 validation, E30) and trading (idxsig harness over the validation window)
+    evidence for the frozen detector."""
     path = PKG_ROOT / "research" / "E1" / "validation" / "result.json"
     if not path.exists():
         return None
     res = json.loads(path.read_text(encoding="utf-8"))
     if res.get("rule") != family.SELECTED:
         return None
-    return {"source": rel(path), "source_sha256": sha256_file(path), "rule": res["rule"],
-            **{k: res["E30"].get(k) for k in ("precision", "precision_lo95", "precision_hi95", "base_rate",
-                                               "lift_vs_base", "lift_vs_matched_random", "p_one_sided_vs_matched")}}
+    out = {"source": rel(path), "source_sha256": sha256_file(path), "rule": res["rule"],
+           **{k: res["E30"].get(k) for k in ("precision", "precision_lo95", "precision_hi95", "base_rate",
+                                              "lift_vs_base", "lift_vs_matched_random", "p_one_sided_vs_matched")}}
+    trading = None
+    index = PKG_ROOT / "results" / "RUNS.jsonl"
+    for line in index.read_text(encoding="utf-8").splitlines() if index.exists() else []:
+        run = json.loads(line)
+        if family.RULE_ID not in run.get("dir", ""):
+            continue
+        summary = json.loads((PKG_ROOT / run["dir"] / "summary.json").read_text(encoding="utf-8"))
+        cfg = summary["config"]
+        if (cfg["start"], cfg["end"]) != VALIDATION_WINDOW or "Selected: " + family.SELECTED not in summary["rule"]["text"]:
+            continue
+        m = summary["random_matched"]["avg_net_return"] or {}
+        trading = {"run_id": summary["run_id"], "scored_trades": summary["rule_trades"]["scored"],
+                   "fill_rate": summary["rule_trades"]["fill_rate"], "avg_net_return": m.get("observed"),
+                   "matched_random_avg_net_return": m.get("random_mean"), "p_one_sided": m.get("p_value_one_sided"),
+                   "status_counts": summary["rule_trades"]["status_counts"]}
+    out["trading"] = trading
+    return out
 
 
 def record_scan(out: dict, timestamper=None) -> list[Path]:
