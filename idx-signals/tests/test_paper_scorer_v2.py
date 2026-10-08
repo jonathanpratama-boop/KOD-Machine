@@ -97,6 +97,20 @@ class ScorerV2(unittest.TestCase):
         self.assertIsNone(reason)
 
 
+class Due(unittest.TestCase):
+    def test_nothing_is_due_before_entry_plus_horizon(self):
+        """Guards against: a daily 5,700-name pull (and a stray manifest) when no window can have ended."""
+        dec = {"type": "DECISION", "market": "US", "decision_id": "D1", "signal_session": "2026-10-07"}
+        with mock.patch.object(paper, "ledger_lines", return_value=[dec]):
+            self.assertEqual(paper.due("US", "2026-10-08"), [])
+            self.assertEqual(paper.due("US", "2026-10-14"), [])      # exit session not yet traded
+            self.assertEqual(paper.due("US", "2026-10-15"), ["D1"])  # entry Oct 8 + 5 sessions = Oct 15
+        crypto = {**dec, "market": "CRYPTO", "decision_id": "C1"}
+        with mock.patch.object(paper, "ledger_lines", return_value=[crypto]):
+            self.assertEqual(paper.due("CRYPTO", "2026-10-13"), [])
+            self.assertEqual(paper.due("CRYPTO", "2026-10-14"), ["C1"])
+
+
 class Revisions(unittest.TestCase):
     def test_rescore_appends_a_revision_linked_to_the_earlier_outcome(self):
         """Guards against: a corrected outcome overwriting, or floating free of, the original."""

@@ -330,6 +330,12 @@ def main(argv=None) -> int:
         mk = args.market
         manifest = Path(args.manifest) if args.manifest else None
         extra = []
+        if args.cmd == "paper-score" and manifest is None:
+            due = paper.due(mk, rescore={d: "" for d in args.rescore})
+            if not due:
+                print(f"no {mk} decision can have completed its window yet; nothing pulled, nothing recorded")
+                return 0
+            print(f"{len(due)} {mk} decision(s) due: pulling bars")
         if manifest is None:
             from datetime import date, timedelta
 

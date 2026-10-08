@@ -736,6 +736,30 @@ def scoring_units(decision: dict, m: Market, events: pd.DataFrame, verify=None) 
             "rtol": RECONCILE_RTOL}, None, evidence
 
 
+def due(market: str, today: str | None = None, rescore: dict | None = None) -> list[str]:
+    """Decisions of `market` without an outcome (or asked to be rescored) whose window can have
+    ended by `today`: entry the session after the signal, then the horizon. Lets paper-score skip
+    a data pull when nothing can be scored yet."""
+    today = np.datetime64(today or datetime.now(timezone.utc).date().isoformat(), "D")
+    rescore = rescore or {}
+    done = {r["decision_id"] for r in ledger_lines() if r["type"] == "OUTCOME"}
+    # exit = signal + 1 (entry) + horizon sessions. IDX/US routines run after that session's close,
+    # so it is complete on its own date; crypto's run at 00:23 UTC sees only the day before.
+    need = 1 + POLICY.horizon_sessions + (1 if market == "CRYPTO" else 0)
+    out = []
+    for r in ledger_lines():
+        if r["type"] != "DECISION" or r.get("market", "IDX") != market:
+            continue
+        if r["decision_id"] in done and r["decision_id"] not in rescore:
+            continue
+        sig = np.datetime64(r["signal_session"], "D")
+        elapsed = (int((today - sig).astype(int)) if market == "CRYPTO"
+                   else int(np.busday_count(sig, today)))
+        if elapsed >= need:
+            out.append(r["decision_id"])
+    return out
+
+
 def score_pending(manifest: Path, timestamper=None, market: str = "IDX", verify=None,
                   rescore: dict | None = None) -> tuple[list[Path], list[dict]]:
     """Score every decision of `market` whose window has ended and that has no outcome yet.
