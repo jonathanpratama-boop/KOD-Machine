@@ -217,7 +217,8 @@ def load(manifest: Path) -> tuple[pd.DataFrame, dict]:
 REPAIR_FORMAT = "panel-global-v2-units"
 
 
-def build_us_repair(raw_manifest: Path, schedule_manifest: Path, end: str, log=print) -> Path:
+def build_us_repair(raw_manifest: Path, schedule_manifest: Path, end: str, coverage_manifest: Path | None = None,
+                    log=print) -> Path:
     """E2-US repair panel (research/E2/repair): the original Yahoo payloads, causal preprocessing
     (_finish: no row is removed because of a later bar), nothing after `end` read into the panel,
     and three measurement columns no rule can see:
@@ -256,6 +257,16 @@ def build_us_repair(raw_manifest: Path, schedule_manifest: Path, end: str, log=p
     window_first = smeta["effective_after"]
     bad = sched[~sched["status"].isin(us_actions.ACCEPTED)]
     quarantine = {t: sorted(set(g["status"])) for t, g in bad.groupby("ticker")}
+    coverage = None
+    if coverage_manifest is not None:
+        coverage = json.loads(Path(coverage_manifest).read_text(encoding="utf-8"))
+        rows_path = PKG_ROOT / coverage["rows"]
+        if sha256_file(rows_path) != coverage["rows_sha256"] or coverage["raw_manifest"] != raw_manifest.name:
+            raise RuntimeError(f"{Path(coverage_manifest).name} does not match its rows file or this raw manifest")
+        jumps = pd.read_csv(rows_path, dtype={"ticker": str}, keep_default_na=False, na_values=[""])
+        flagged = jumps[jumps["status"].isin(us_actions.COVERAGE_QUARANTINE)]
+        for t, g in flagged.groupby("ticker"):
+            quarantine[t] = sorted(set(quarantine.get(t, [])) | set(g["status"]))
     in_panel = set(panel["ticker"])
     quarantine = {t: v for t, v in quarantine.items() if t in in_panel}
     reason_counts = {}
@@ -299,13 +310,17 @@ def build_us_repair(raw_manifest: Path, schedule_manifest: Path, end: str, log=p
             "daily bars only: no intraday path, no halts (US LULD) or order-book depth",
             "costs are assumed per price tier (profiles.py), not measured spreads",
         ],
+        "unit_coverage": ({"manifest": Path(coverage_manifest).name, "status_counts": coverage.get("status_counts"),
+                           "jump_threshold": coverage.get("jump_threshold"), "window": coverage.get("window")}
+                          if coverage else None),
         "unit_schedule": {"manifest": Path(schedule_manifest).name, "version": smeta.get("version"),
                           "accepted_statuses": list(us_actions.ACCEPTED), "effective_after": window_first,
                           "status_counts": smeta.get("status_counts")},
         "unit_quarantine": {"tickers": quarantine, "reason_counts": reason_counts,
                             "rule": "a name with any provider split record effective after "
                                     f"{window_first} that SEC filings do not corroborate (status not in "
-                                    f"{list(us_actions.ACCEPTED)})"},
+                                    f"{list(us_actions.ACCEPTED)}), or a jump inside the window that SEC filings tie "
+                                    f"to a split the provider did not record (statuses {list(us_actions.COVERAGE_QUARANTINE)})"},
         "qa": {"preprocessing_version": qa.get("preprocessing_version"), "spike_rows_dropped": 0,
                "qa_reverting_spike_rows": int(panel["qa_reverting_spike"].sum()),
                "non_session_dates_count": qa.get("non_session_dates_count"),

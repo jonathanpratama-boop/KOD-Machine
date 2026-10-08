@@ -215,3 +215,49 @@ class RepairRun(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class FakeSec:
+    """Serves EDGAR search and documents from a dict; nothing leaves the machine."""
+
+    def __init__(self, docs):
+        self.docs = docs
+
+    def get(self, url):
+        import json as _json
+
+        if url.startswith("https://efts.sec.gov"):
+            hits = [{"_id": f"0000000000-23-00000{i}:{name}", "_source": {"form": "8-K", "file_date": "2023-03-01",
+                                                                           "file_type": "8-K"}}
+                    for i, name in enumerate(self.docs)]
+            return 200, _json.dumps({"hits": {"hits": hits}}).encode()
+        name = url.rsplit("/", 1)[-1]
+        return 200, self.docs[name].encode()
+
+
+class Coverage(unittest.TestCase):
+    def test_jump_rows_are_found_and_marked(self):
+        panel = pd.DataFrame({"ticker": ["A", "A", "B", "C"], "date": pd.to_datetime(["2023-03-06"] * 4),
+                              "close": [10.0, 10.0, 1.0, 10.5], "previous": [1.0, 1.0, 2.5, 10.0]}).iloc[[0, 2, 3]]
+        ev = pd.DataFrame([{"ticker": "B", "effective_session": "2023-03-06"}])
+        rows = us_actions.jump_rows(panel, ev, "2023-01-03", "2023-12-29")
+        self.assertEqual(rows["ticker"].tolist(), ["A", "B"])  # C moved 5%: not a jump
+        self.assertEqual(rows["on_record_session"].tolist(), [False, True])
+
+    def test_an_unrecorded_split_is_caught_only_with_filing_evidence(self):
+        """Guards against: a fake +900% day from a split the provider never adjusted for, and
+        against calling a genuine move a split without a filing that says so."""
+        no_events = pd.DataFrame(columns=["ticker", "effective_session"])
+        dated = FakeSec({"a.htm": "a 1-for-10 reverse stock split effective at the open on March 6, 2023"})
+        res = us_actions.check_jump(dated, {"A": 1}, no_events, "A", "2023-03-06", 9.6, False)
+        self.assertEqual(res["status"], "MISSING_PROVIDER_SPLIT")
+        silent = FakeSec({"a.htm": "the company announced a partnership"})
+        self.assertEqual(us_actions.check_jump(silent, {"A": 1}, no_events, "A", "2023-03-06", 9.6, False)["status"],
+                         "NO_SPLIT_EVIDENCE")
+        wrong = FakeSec({"a.htm": "a 1-for-2 reverse stock split effective March 6, 2023"})  # x2, not x9.6
+        self.assertEqual(us_actions.check_jump(wrong, {"A": 1}, no_events, "A", "2023-03-06", 9.6, False)["status"],
+                         "NO_SPLIT_EVIDENCE")
+        near = pd.DataFrame([{"ticker": "A", "effective_session": "2023-03-08"}])
+        self.assertEqual(us_actions.check_jump(dated, {"A": 1}, near, "A", "2023-03-06", 9.6, False)["status"],
+                         "PROVIDER_DATE_MISMATCH")
+        self.assertEqual(us_actions.check_jump(dated, {}, no_events, "A", "2023-03-06", 9.6, False)["status"], "NO_CIK")

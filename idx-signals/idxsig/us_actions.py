@@ -371,3 +371,99 @@ def build_schedule(raw_manifest: Path, user_agent: str, effective_after: str, un
         fh.write(json.dumps(meta, indent=2, sort_keys=True) + "\n")
     log(json.dumps(meta["status_counts"]))
     return mpath
+
+
+# ------------------------------------------------------------------------------ coverage
+JUMP = 1.9  # a close/previous ratio this far from 1 is what a 1:2 reverse or 2:1 split would leave
+COVERAGE_QUARANTINE = ("MISSING_PROVIDER_SPLIT", "PROVIDER_DATE_MISMATCH", "SPLIT_FILING_NEARBY",
+                       "JUMP_ON_RECORD_SESSION", "NO_CIK")
+
+
+def jump_rows(panel: pd.DataFrame, events: pd.DataFrame, start: str, end: str) -> pd.DataFrame:
+    """Sessions in [start, end] where the adjusted close moved by JUMP or more: where an unrecorded
+    split would show. The move only triggers a search; it is never taken as proof of a split."""
+    w = panel[(panel["date"] >= pd.Timestamp(start)) & (panel["date"] <= pd.Timestamp(end))]
+    r = w["close"] / w["previous"]
+    rows = w.loc[(r >= JUMP) | (r <= 1 / JUMP), ["ticker", "date"]].assign(ratio=r)
+    rows["date"] = rows["date"].dt.date.astype(str)
+    recorded = set(zip(events["ticker"], events["effective_session"]))
+    rows["on_record_session"] = [(t, d) in recorded for t, d in zip(rows["ticker"], rows["date"])]
+    return rows.reset_index(drop=True)
+
+
+def check_jump(client: SecClient, ciks: dict, events: pd.DataFrame, ticker: str, session: str, ratio: float,
+               on_record_session: bool, max_docs: int = 6) -> dict:
+    if on_record_session:
+        return {"status": "JUMP_ON_RECORD_SESSION", "evidence": []}
+    cik = ciks.get(ticker.upper())
+    if cik is None:
+        return {"status": "NO_CIK", "evidence": []}
+    day = date.fromisoformat(session)
+    near = events[(events["ticker"] == ticker)
+                  & (pd.to_datetime(events["effective_session"]).sub(pd.Timestamp(day)).abs() <= pd.Timedelta(days=10))]
+    hits = sorted(search(client, cik, day - timedelta(days=45), day + timedelta(days=5)), key=_priority)
+    best, evidence = "NO_SPLIT_EVIDENCE", []
+    for hit in hits[:max_docs]:
+        status, body = client.get(hit["url"])
+        if status != 200:
+            continue
+        text = text_of(body)
+        if not SPLIT_WORDS.search(text):
+            continue
+        consistent = [p for p in ratios_in(text) if abs(np.log(ratio) - np.log(p[1] / p[0])) < np.log(2)]
+        if not consistent:
+            continue
+        dated = any(s.lower() in text.lower() for s in date_strings(day))
+        found = "MISSING_PROVIDER_SPLIT" if dated else "SPLIT_FILING_NEARBY"
+        evidence.append({**{k: hit[k] for k in ("accession", "form", "file_date", "url")}, "finding": found,
+                         "pairs": consistent[:4]})
+        if found == "MISSING_PROVIDER_SPLIT":
+            best = found
+            break
+        best = found
+    if best != "NO_SPLIT_EVIDENCE" and len(near):
+        best = "PROVIDER_DATE_MISMATCH"  # a provider record within 10 days, yet the jump is unadjusted
+    return {"status": best, "cik": cik, "filings_searched": len(hits), "evidence": evidence}
+
+
+def build_coverage(raw_manifest: Path, user_agent: str, start: str, end: str, cache_dir: Path | None = None,
+                   offline: bool = False, workers: int = 4, log=print) -> Path:
+    from concurrent.futures import ThreadPoolExecutor
+
+    from . import global_panel
+
+    raw, _ = global_panel.load_us(raw_manifest)
+    raw = raw[raw["date"] <= pd.Timestamp(end)]
+    panel, _ = global_panel._finish(raw)
+    events = yahoo_events(raw_manifest)
+    rows = jump_rows(panel, events, start, end)
+    stamp = utc_stamp().replace("-", "").replace(":", "")
+    client = SecClient(user_agent, cache_dir or RAW / "sec" / stamp, offline=offline)
+    ciks = cik_map(client)
+
+    def one(r):
+        res = check_jump(client, ciks, events, r.ticker, r.date, r.ratio, r.on_record_session)
+        return {**r._asdict(), "status": res["status"], "cik": res.get("cik"),
+                "filings_searched": res.get("filings_searched", 0), "evidence": json.dumps(res["evidence"], sort_keys=True)}
+
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        checked = pd.DataFrame(list(pool.map(one, list(rows.itertuples(index=False)))))
+    out_dir = PKG_ROOT / "data" / "corporate_actions"
+    csv_path = out_dir / f"us_splits-coverage-{stamp}.csv"
+    with csv_path.open("x", encoding="utf-8", newline="") as fh:
+        checked.to_csv(fh, index=False, lineterminator="\n")
+    sec_manifest = write_manifest(f"sec_split_coverage-{stamp}.jsonl",
+                                  {"source": "sec_edgar", "user_agent": user_agent, "purpose": "unrecorded split search"},
+                                  [r for r in {r["path"]: r for r in client.records}.values()])
+    quarantine = sorted(set(checked.loc[checked["status"].isin(COVERAGE_QUARANTINE), "ticker"])) if len(checked) else []
+    meta = {"version": VERSION, "built_at": utc_stamp(), "raw_manifest": raw_manifest.name,
+            "raw_manifest_sha256": hashlib.sha256(raw_manifest.read_bytes()).hexdigest(), "window": [start, end],
+            "jump_threshold": JUMP, "rows": rel(csv_path), "rows_sha256": hashlib.sha256(csv_path.read_bytes()).hexdigest(),
+            "sec_manifest": sec_manifest.name, "jump_rows": int(len(checked)),
+            "status_counts": checked["status"].value_counts().to_dict() if len(checked) else {},
+            "quarantine_statuses": list(COVERAGE_QUARANTINE), "quarantine_tickers": quarantine}
+    mpath = out_dir / f"us_splits-coverage-{stamp}.json"
+    with mpath.open("x", encoding="utf-8") as fh:
+        fh.write(json.dumps(meta, indent=2, sort_keys=True) + "\n")
+    log(json.dumps(meta["status_counts"]))
+    return mpath

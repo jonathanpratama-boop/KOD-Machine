@@ -46,6 +46,14 @@ def main(argv=None) -> int:
     p_rp.add_argument("--manifest", required=True, help="the original yahoo_us raw manifest")
     p_rp.add_argument("--schedule", required=True, help="a us_splits-*.json manifest from us-actions")
     p_rp.add_argument("--end", required=True, help="read nothing after this date into the panel")
+    p_rp.add_argument("--coverage", help="a us_splits-coverage-*.json manifest from us-coverage")
+    p_uc = sub.add_parser("us-coverage", help="search SEC for splits the provider did not record (large jumps)")
+    p_uc.add_argument("--raw-manifest", required=True)
+    p_uc.add_argument("--start", required=True)
+    p_uc.add_argument("--end", required=True)
+    p_uc.add_argument("--user-agent", default=None)
+    p_uc.add_argument("--cache-dir")
+    p_uc.add_argument("--offline", action="store_true")
     p_gp = sub.add_parser("build-global-panel", help="build a US or crypto panel from a pull manifest")
     p_gp.add_argument("--market", choices=("US", "CRYPTO"), required=True)
     p_gp.add_argument("--manifest", required=True)
@@ -172,7 +180,19 @@ def main(argv=None) -> int:
     elif args.cmd == "build-us-repair-panel":
         from . import global_panel
 
-        print(global_panel.build_us_repair(Path(args.manifest), Path(args.schedule), args.end))
+        print(global_panel.build_us_repair(Path(args.manifest), Path(args.schedule), args.end,
+                                           Path(args.coverage) if args.coverage else None))
+    elif args.cmd == "us-coverage":
+        import os
+
+        from . import us_actions
+
+        agent = args.user_agent or os.environ.get("IDXSIG_SEC_USER_AGENT")
+        if not agent:
+            print("error: set --user-agent or IDXSIG_SEC_USER_AGENT (SEC requires a contact)", file=sys.stderr)
+            return 2
+        print(us_actions.build_coverage(Path(args.raw_manifest), agent, args.start, args.end,
+                                        Path(args.cache_dir) if args.cache_dir else None, args.offline))
     elif args.cmd == "build-global-panel":
         from . import global_panel
 
