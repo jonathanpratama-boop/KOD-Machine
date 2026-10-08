@@ -1,0 +1,23 @@
+{
+  "code": {
+    "commit": "1f997f741355c381e47ea146dcb9abc9a7d89f4d",
+    "dirty": false
+  },
+  "computed_at": "2026-10-07T23:59:56+00:00",
+  "eligible_ticker_days": 323324,
+  "episodes": {
+    "E100": 114,
+    "E30": 1511,
+    "E50": 577
+  },
+  "first100_span": [
+    "2021-01-22",
+    "2021-02-24"
+  ],
+  "holdout": "sealed: the study market ends at the last validation session",
+  "panel_sha256": "9d3a0718c95f9e885c4f8310cf68bf5e75021c366c454f73389d7fae75c02877",
+  "protocol_id": "KOD-IDX-E1-v1",
+  "protocol_sha256": "763feb40c69e54f19c598eb43ac71efb589477ad8670645b09dede3d6d6e9404",
+  "selected_detector": "F1_ARA",
+  "stage": "discovery"
+}

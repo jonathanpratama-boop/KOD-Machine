@@ -20,7 +20,7 @@ import pandas as pd
 RULE_ID = "MOONSHOT_E1_D1"
 VERSION = "v1"
 HOLDING_DAYS = 5
-SELECTED = None
+SELECTED = "F1_ARA"  # frozen 2026-10-08 from research/E1/discovery/detector_selection.csv
 FAMILY = (
     ("F1_ARA", "close locked at the upper auto-rejection limit (ARA)"),
     ("F2_IGNITION_D", "ASTRA IGNITION v1 thresholds on daily bars: day return >= +3%, >= +1.5 pp above the "
