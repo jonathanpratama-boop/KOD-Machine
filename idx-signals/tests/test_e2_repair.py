@@ -172,6 +172,10 @@ class SplitEvidence(unittest.TestCase):
             with self.subTest(text=text):
                 self.assertIn(pair, us_actions.ratios_in(text))
 
+    def test_one_for_one_is_not_a_ratio(self):
+        """Guards against: a prospectus' 'one-for-one' exchange read as a split (coverage v1 bug)."""
+        self.assertEqual(us_actions.ratios_in("exchanged on a one-for-one basis"), set())
+
     def test_reversed_wording_needs_reverse_words(self):
         """'10-for-1 reverse split' is a common misstatement of 1-for-10; accept it only with
         reverse/consolidation wording, never for a forward split record."""

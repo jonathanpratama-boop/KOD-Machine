@@ -167,8 +167,8 @@ def ratios_in(text: str) -> set[tuple[int, int]]:
                 continue
             if old_first:
                 a, b = b, a
-            if a <= 0 or b <= 0 or a != int(a) or b != int(b) or max(a, b) > 100_000:
-                continue
+            if a <= 0 or b <= 0 or a != int(a) or b != int(b) or max(a, b) > 100_000 or a == b:
+                continue  # "1-for-1" (e.g. a prospectus' share-for-share exchange) is not a split ratio
             g = gcd(int(a), int(b))
             out.add((int(a) // g, int(b) // g))
     return out
@@ -401,8 +401,10 @@ def build_schedule(raw_manifest: Path, user_agent: str, effective_after: str, un
 
 # ------------------------------------------------------------------------------ coverage
 JUMP = 1.9  # a close/previous ratio this far from 1 is what a 1:2 reverse or 2:1 split would leave
-COVERAGE_QUARANTINE = ("MISSING_PROVIDER_SPLIT", "PROVIDER_DATE_MISMATCH", "SPLIT_FILING_NEARBY",
-                       "JUMP_ON_RECORD_SESSION", "NO_CIK")
+# SPLIT_FILING_NEARBY (a consistent split filing in the window whose effective date is not the
+# jump session) is reported, not quarantined: inspection of coverage v1 showed it mostly matches
+# a split weeks before an unrelated jump. Decided before any repaired run.
+COVERAGE_QUARANTINE = ("MISSING_PROVIDER_SPLIT", "PROVIDER_DATE_MISMATCH", "JUMP_ON_RECORD_SESSION", "NO_CIK")
 
 
 def jump_rows(panel: pd.DataFrame, events: pd.DataFrame, start: str, end: str) -> pd.DataFrame:

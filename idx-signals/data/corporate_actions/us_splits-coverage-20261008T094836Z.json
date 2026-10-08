@@ -1,0 +1,46 @@
+{
+  "built_at": "2026-10-08T09:51:58Z",
+  "jump_rows": 415,
+  "jump_threshold": 1.9,
+  "quarantine_statuses": [
+    "MISSING_PROVIDER_SPLIT",
+    "PROVIDER_DATE_MISMATCH",
+    "JUMP_ON_RECORD_SESSION",
+    "NO_CIK"
+  ],
+  "quarantine_tickers": [
+    "ALOY",
+    "APRE",
+    "BDRX",
+    "CENN",
+    "CLLS",
+    "DEC",
+    "ITRG",
+    "MSGM",
+    "NYC",
+    "PRFX",
+    "RETO",
+    "SEGG",
+    "TSHA",
+    "VIVO",
+    "XHG",
+    "XRTX"
+  ],
+  "raw_manifest": "yahoo_us-20261008T001812Z.jsonl",
+  "raw_manifest_sha256": "01ca82808463f964c06db680803581546d34d85105ed21e27377c3da686e951c",
+  "rows": "data/corporate_actions/us_splits-coverage-20261008T094836Z.csv",
+  "rows_sha256": "43fa3c0328433222cae5f6e4717f7b2a4be80935e0b3f29468542b61fb1bd174",
+  "sec_manifest": "sec_split_coverage-20261008T094836Z.jsonl",
+  "status_counts": {
+    "JUMP_ON_RECORD_SESSION": 7,
+    "MISSING_PROVIDER_SPLIT": 6,
+    "NO_SPLIT_EVIDENCE": 375,
+    "PROVIDER_DATE_MISMATCH": 4,
+    "SPLIT_FILING_NEARBY": 23
+  },
+  "version": "us-actions-v1",
+  "window": [
+    "2023-01-03",
+    "2023-12-29"
+  ]
+}
