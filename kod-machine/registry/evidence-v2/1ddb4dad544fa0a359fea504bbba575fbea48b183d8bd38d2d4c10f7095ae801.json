@@ -1,0 +1,30 @@
+{
+  "archive_time": null,
+  "archive_url": null,
+  "archived_copy": null,
+  "as_of_cutoff": "2025-03-11T16:00:00Z",
+  "content_sha256": null,
+  "content_timestamps": [],
+  "content_verified": false,
+  "corroborated_by": [],
+  "document_type": "daily price series",
+  "event_time": null,
+  "evidence_grade": "D",
+  "evidence_hash_version": "KOD-EVIDENCE-v2",
+  "evidence_id": "1ddb4dad544fa0a359fea504bbba575fbea48b183d8bd38d2d4c10f7095ae801",
+  "existence_verified": false,
+  "grade_ceiling": "D",
+  "provenance": "idxsig yahoo fetcher",
+  "publication_time": null,
+  "publication_time_basis": null,
+  "publisher": "Yahoo Finance",
+  "retrieval_time": "2026-10-08T12:18:51Z",
+  "source_type": "RETROSPECTIVE",
+  "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/ZEAL.CO?period1=1420070400&period2=1791461930&interval=1d&events=div%2Csplits&includeAdjustedClose=true",
+  "title": "ZEAL.CO daily bars 2015-01-02..2026-10-08",
+  "verification_method": {
+    "content": "NONE",
+    "existence": "NONE"
+  },
+  "verification_notes": "A vendor series retrieved in 2026; it cannot show what the tape displayed in 2025. Bytes committed at research/ZEALAND_PILOT_v1/01_protocol/pin/ZEAL.CO.json, sha256 a20b3934ebc11a3f4d44e9e11d73e5636ecf3543994ce58ad5b10d6b40598b8b (manifest yahoo_dk-20261008T121850Z)."
+}
