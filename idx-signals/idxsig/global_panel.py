@@ -214,7 +214,12 @@ def load(manifest: Path) -> tuple[pd.DataFrame, dict]:
     return df, meta
 
 
-REPAIR_FORMAT = "panel-global-v2-units"
+REPAIR_FORMAT = "panel-global-v3-reconciled"
+# v2 (panels built before 2026-10-09) checked the schedule by file hash and raw-manifest NAME and
+# looked only at the statuses of the records present. v3 binds every input by sha256, requires
+# exactly one matching verification record per relevant provider event (a missing one is
+# UNRESOLVED_NO_RECORD), enforces the share-count research window, and labels the quarantine as
+# outcome-dependent. Earlier panel manifests keep their format and remain reproducible.
 
 
 def build_us_repair(raw_manifest: Path, schedule_manifest: Path, end: str, coverage_manifest: Path | None = None,
@@ -238,9 +243,13 @@ def build_us_repair(raw_manifest: Path, schedule_manifest: Path, end: str, cover
     smeta = json.loads(Path(schedule_manifest).read_text(encoding="utf-8"))
     if smeta.get("version") != us_actions.VERSION:
         raise ValueError("split schedule uses an older verifier; recheck it with us-actions first")
+    coverage = None
+    if coverage_manifest is not None:
+        coverage = json.loads(Path(coverage_manifest).read_text(encoding="utf-8"))
+        if coverage.get("version") != us_actions.VERSION:
+            raise ValueError("split coverage uses an older verifier; rerun us-coverage first")
+    us_actions.check_bound_inputs(raw_manifest, smeta, coverage)
     sched_path = PKG_ROOT / smeta["schedule"]
-    if sha256_file(sched_path) != smeta["schedule_sha256"] or smeta["raw_manifest"] != raw_manifest.name:
-        raise RuntimeError(f"{Path(schedule_manifest).name} does not match its schedule file or this raw manifest")
     sched = pd.read_csv(sched_path, dtype={"ticker": str}, keep_default_na=False, na_values=[""])
 
     raw, _ = load_us(raw_manifest)
@@ -259,21 +268,19 @@ def build_us_repair(raw_manifest: Path, schedule_manifest: Path, end: str, cover
     window_first = smeta["effective_after"]
     # A schedule may declare a wider research acceptance (share-count corroboration for records
     # after the window); never anything outside RESEARCH_ACCEPTED.
-    accepted = tuple(set(smeta.get("accepted_statuses", us_actions.ACCEPTED)) & set(us_actions.RESEARCH_ACCEPTED))
-    bad = sched[~sched["status"].isin(accepted)]
+    accepted = tuple(sorted(set(smeta.get("accepted_statuses", us_actions.ACCEPTED)) & set(us_actions.RESEARCH_ACCEPTED)))
+    share_window = (smeta.get("share_count_corroboration") or {}).get("window_end")
+    recon = us_actions.reconcile_schedule(events, sched, window_first, set(panel["ticker"]), accepted, end,
+                                          share_window)
+    bad = recon[~recon["accepted"]]
     quarantine = {t: sorted(set(g["status"])) for t, g in bad.groupby("ticker")}
-    coverage = None
-    if coverage_manifest is not None:
-        coverage = json.loads(Path(coverage_manifest).read_text(encoding="utf-8"))
-        if coverage.get("version") != us_actions.VERSION:
-            raise ValueError("split coverage uses an older verifier; rerun us-coverage first")
-        rows_path = PKG_ROOT / coverage["rows"]
-        if sha256_file(rows_path) != coverage["rows_sha256"] or coverage["raw_manifest"] != raw_manifest.name:
-            raise RuntimeError(f"{Path(coverage_manifest).name} does not match its rows file or this raw manifest")
-        jumps = pd.read_csv(rows_path, dtype={"ticker": str}, keep_default_na=False, na_values=[""])
+    trigger = {t: str(g["effective_session"].min()) for t, g in bad.groupby("ticker")}
+    if coverage is not None:
+        jumps = pd.read_csv(PKG_ROOT / coverage["rows"], dtype={"ticker": str}, keep_default_na=False, na_values=[""])
         flagged = jumps[jumps["status"].isin(us_actions.COVERAGE_QUARANTINE)]
         for t, g in flagged.groupby("ticker"):
             quarantine[t] = sorted(set(quarantine.get(t, [])) | set(g["status"]))
+            trigger[t] = min(trigger.get(t, "9999"), str(g["date"].min()))
     in_panel = set(panel["ticker"])
     quarantine = {t: v for t, v in quarantine.items() if t in in_panel}
     reason_counts = {}
@@ -302,7 +309,17 @@ def build_us_repair(raw_manifest: Path, schedule_manifest: Path, end: str, cover
         "built_at": utc_stamp(), "preprocessing": qa.get("preprocessing_version"),
         "inputs": {raw_manifest.name: {"sha256": sha256_file(raw_manifest), "path": rel(raw_manifest)},
                    Path(schedule_manifest).name: {"sha256": sha256_file(Path(schedule_manifest)),
-                                                  "path": rel(Path(schedule_manifest))}},
+                                                  "path": rel(Path(schedule_manifest)),
+                                                  "rows_sha256": smeta["schedule_sha256"]},
+                   **({Path(coverage_manifest).name: {"sha256": sha256_file(Path(coverage_manifest)),
+                                                      "path": rel(Path(coverage_manifest)),
+                                                      "rows_sha256": coverage["rows_sha256"]}} if coverage else {})},
+        "reconciliation": {"version": us_actions.RECONCILE_VERSION, "events_relevant": int(len(recon)),
+                           "status_counts": recon["status"].value_counts().to_dict(),
+                           "share_count_window_end": share_window,
+                           "rule": "every provider split event of a panel name effective after "
+                                   f"{window_first} needs exactly one verification record with the same key and "
+                                   "payload sha256; otherwise UNRESOLVED_* and the name is quarantined"},
         "rows": int(len(panel)), "tickers": int(panel["ticker"].nunique()), "sessions": int(panel["date"].nunique()),
         "first_session": first_session.date().isoformat(), "last_session": last, "source_boundary": last,
         "read_through": end, "default_start": (first_session + timedelta(days=120)).date().isoformat(),
@@ -325,6 +342,14 @@ def build_us_repair(raw_manifest: Path, schedule_manifest: Path, end: str, cover
                           "share_count_corroboration": smeta.get("share_count_corroboration"),
                           "status_counts": smeta.get("status_counts")},
         "unit_quarantine": {"tickers": quarantine, "reason_counts": reason_counts,
+                            "outcome_dependent": {
+                                "flag": True,
+                                "first_trigger_session": {t: trigger[t] for t in sorted(quarantine)},
+                                "triggered_after_read_through": sorted(t for t in quarantine if trigger[t] > end),
+                                "note": "exclusion is decided by corporate-action records dated after the signals "
+                                        "it removes (often after the research window); excluded names were worse "
+                                        "on average (research/E2/repair_v3/SELECTION_NOTE.md). Report runs with and "
+                                        "without the quarantine, never the quarantined run alone."},
                             "rule": "a name with any provider split record effective after "
                                     f"{window_first} that SEC filings do not corroborate (status not in "
                                     f"{sorted(accepted)}), or a jump inside the window that SEC filings tie "
