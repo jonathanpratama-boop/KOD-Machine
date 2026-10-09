@@ -1,0 +1,41 @@
+test_insufficient_capital_for_one_share (tests.test_contract.Capital.test_insufficient_capital_for_one_share)
+Guards against: an order the account cannot pay for. The first position takes almost all ... ok
+test_simultaneous_signals_share_cash_by_priority_without_leverage (tests.test_contract.Capital.test_simultaneous_signals_share_cash_by_priority_without_leverage)
+Guards against: spending the same cash twice, or an order order that depends on input order. ... ok
+test_excessive_entry_gap_is_not_filled_and_cash_is_released (tests.test_contract.EntryRejections.test_excessive_entry_gap_is_not_filled_and_cash_is_released)
+Guards against: chasing a gap. Signal $100, stop $95, open $110: the stop would be 13.6% away. ... ok
+test_open_at_or_below_the_stop_fills_and_stops_out_at_that_open (tests.test_contract.EntryRejections.test_open_at_or_below_the_stop_fills_and_stops_out_at_that_open)
+Guards against: assuming an order can be cancelled on information inside the auction. The ... ok
+test_risk_distance_is_measured_at_the_permitted_entry_and_the_stop_never_moves (tests.test_contract.EntryRejections.test_risk_distance_is_measured_at_the_permitted_entry_and_the_stop_never_moves)
+Guards against: measuring the 5% from the signal close, or widening/raising the stop to make ... ok
+test_entry_session_volume_bounds_the_fill (tests.test_contract.Liquidity.test_entry_session_volume_bounds_the_fill)
+Guards against (Hermes): 10,000 shares scored as filled when the whole entry session ... ok
+test_legacy_fill_c_still_reproduces_hermes_case (tests.test_contract.Liquidity.test_legacy_fill_c_still_reproduces_hermes_case)
+Documents, does not fix: FILL-C-v1 (kept for reproduction) sizes from the 20 sessions before ... ok
+test_no_trade_on_the_entry_session (tests.test_contract.Liquidity.test_no_trade_on_the_entry_session)
+Guards against: filling on a session with no opening print. ... ok
+test_thin_history_gives_no_plan (tests.test_contract.Liquidity.test_thin_history_gives_no_plan)
+Guards against: planning a position the name's traded value cannot carry. ... ok
+test_planned_risk_account_risk_and_gap_loss_are_separate (tests.test_contract.Risk.test_planned_risk_account_risk_and_gap_loss_are_separate)
+Guards against: reporting a gap loss as if the 5% stop had capped it. ... ok
+test_contract_version_is_bound_to_the_state (tests.test_contract.SameContractBothWays.test_contract_version_is_bound_to_the_state)
+Guards against: continuing a saved account under changed rules. ... ok
+test_forward_scoring_equals_replay_on_identical_inputs (tests.test_contract.SameContractBothWays.test_forward_scoring_equals_replay_on_identical_inputs)
+Guards against: forward paper scoring and replay drifting apart. Forward sees only the data ... ok
+test_research_window_is_enforced (tests.test_contract.SameContractBothWays.test_research_window_is_enforced)
+Guards against: evidence drawn from sessions outside the permitted research dates. ... ok
+test_a_failed_scan_still_lets_held_positions_exit (tests.test_contract.Scans.test_a_failed_scan_still_lets_held_positions_exit)
+Guards against: a failed scan freezing stops that the broker would have executed. ... ok
+test_no_signal_and_failed_scan_are_different_records (tests.test_contract.Scans.test_no_signal_and_failed_scan_are_different_records)
+Guards against: a scan that could not run being read as 'nothing to buy'. ... ok
+test_stale_data_fails_the_scan_and_touches_nothing (tests.test_contract.Scans.test_stale_data_fails_the_scan_and_touches_nothing)
+Guards against: trading yesterday's bars as if they were today's. ... ok
+test_split_between_decision_and_execution (tests.test_contract.Units.test_split_between_decision_and_execution)
+Guards against: a 1:2 split at the entry open filling at the old limit or for the old share ... ok
+test_entry_at_next_open_time_exit_and_balance (tests.test_contract.ValidTrade.test_entry_at_next_open_time_exit_and_balance)
+Guards against: a fill at the already-observed signal close, a wrong holding period, and a ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.089s
+
+OK
