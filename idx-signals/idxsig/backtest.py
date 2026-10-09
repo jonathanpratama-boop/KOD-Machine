@@ -65,7 +65,7 @@ class RunConfig:
     controls_version: str = "v2"
     market: str = "IDX"  # profiles.PROFILES: IDX, US, CRYPTO
     units: str = "panel"  # "as_traded": price levels in the units traded that session (panel unit_factor)
-    fill_model: str = "A"  # "A": original (entry-session final volume); "B": decision-time capacity
+    fill_model: str = "A"  # "A": original (entry-session final volume); "B": decision-time capacity (open); "C": FILL-C-v1 (close)
     quarantine: str = "none"  # "unit_schedule": leave out names the panel lists as lacking a verified schedule
 
 
@@ -370,6 +370,12 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
                                     f"{cfg.max_participation:.0%} of that session's FINAL volume, both known only "
                                     "after the close: an ex-post capacity filter, not proof of an opening fill")
                            if cfg.fill_model == "A" else
+                           ("C (FILL-C-v1): closing-auction entry; shares <= "
+                            f"{cfg.max_participation:.0%} of the median volume of the 20 sessions up to the signal "
+                            "session, in entry-session shares through registry-verified splits (known at the "
+                            "decision); an unverified reset in the window -> SKIP_CAPACITY_UNKNOWN; the entry "
+                            "session must still trade and not lock at ARA")
+                           if cfg.fill_model == "C" else
                            ("B (FILL-B-v1): shares <= "
                             f"{cfg.max_participation:.0%} of the median as-traded volume of the 20 sessions up to "
                             "the signal session (known at the decision); entry needs an opening price and a bar "

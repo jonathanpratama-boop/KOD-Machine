@@ -1,0 +1,13 @@
+{
+  "evidence_run": "20261008T000401Z_MOONSHOT_E1_D1_v1.1",
+  "trades_csv_identical": true,
+  "summary_sections_equal": {
+    "rule_trades": true,
+    "random": true,
+    "random_matched": true,
+    "signals": true,
+    "universe": true,
+    "by_year": true
+  },
+  "reproduced": true
+}

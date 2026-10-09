@@ -98,8 +98,9 @@ def main(argv=None) -> int:
     p_run.add_argument("--units", choices=("panel", "as_traded"), default="panel",
                        help="as_traded: sizing, cost tiers and price bands at the price traded that session "
                             "(needs a repair panel with unit_factor)")
-    p_run.add_argument("--fill-model", choices=("A", "B"), default="A",
-                       help="A: original (entry-session final volume, ex post); B: decision-time capacity")
+    p_run.add_argument("--fill-model", choices=("A", "B", "C"), default="A",
+                       help="A: original (entry-session final volume, ex post); B: decision-time capacity "
+                            "(open entries); C: FILL-C-v1, decision-time capacity for closing-auction entries")
     p_run.add_argument("--quarantine", choices=("none", "unit_schedule"), default="none",
                        help="unit_schedule: leave out names whose split records SEC does not corroborate")
     sub.add_parser("verify-runs", help="check that no past run was edited or removed")

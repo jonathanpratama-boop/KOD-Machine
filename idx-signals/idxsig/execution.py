@@ -44,6 +44,15 @@ Fill model (US open entries):
      without trades count as zero; known when
      the decision is made); entry needs an opening price on the entry session and a bar with
      volume > 0 (the daily bar cannot show that the first print was at 09:30; labelled).
+
+Fill model (IDX closing-auction entries):
+  C  FILL-C-v1 (research/IDX_CAUSAL_CAPACITY_v1/PROTOCOL.md): shares at most max_participation of
+     the median volume of the 20 sessions up to and including the signal session (a listed
+     session without trades counts as 0), each session's volume put into entry-session shares
+     through the registry's verified share scaling (volume[j] x reg_factor[e] / reg_factor[j]).
+     An unverified reset after the window's first session and by the entry session leaves the
+     units unknown: SKIP_CAPACITY_UNKNOWN. The entry session must still have traded and not be
+     locked at ARA (fill conditions of the auction, as in A). Needs ca_mode="registry".
 """
 
 from __future__ import annotations
@@ -68,6 +77,7 @@ STATUS = (
     "SKIP_ARA_LOCK",
     "SKIP_LOT",
     "SKIP_LIQUIDITY",
+    "SKIP_CAPACITY_UNKNOWN",  # fill model C: an unverified reset makes the window's share units unknown
 )
 SCORED = (0, 1)
 FIRST_SKIP = STATUS.index("SKIP_NO_ENTRY_SESSION")  # statuses from here on never entered
@@ -87,7 +97,8 @@ class ExecConfig:
     cost_tiers: tuple = ()  # extra per-side cost by entry/exit price tier (profiles.Profile.cost_tiers)
     ca_mode: str = "exclude"  # "registry" (needs Market.with_registry), "exclude", "value_preserving"
     units: str = "panel"  # "panel" (original) or "as_traded" (needs Market.unit_factor)
-    fill_model: str = "A"  # "A" (original, ex-post entry-session volume) or "B" (decision-time capacity)
+    fill_model: str = "A"  # "A" (original, ex-post entry-session volume), "B" (decision-time capacity,
+    #                        open entries) or "C" (FILL-C-v1, decision-time capacity, close entries)
 
 
 def _snap_ratio(r: np.ndarray) -> np.ndarray:
@@ -222,6 +233,31 @@ class Market:
         return self.slice(0, last + 1)
 
 
+def close_capacity(volume, present, reg_factor, reg_unresolved, tick_idx, sig_idx, entry_idx,
+                   window: int = 20) -> tuple[np.ndarray, np.ndarray]:
+    """FILL-C-v1 capacity in ENTRY-session shares and a mask of attempts whose units are unknown.
+
+    The median over the `window` sessions up to and including the signal session of
+    volume[j] x reg_factor[e] / reg_factor[j] (a listed session without trades counts as 0,
+    sessions before listing are ignored; nothing listed -> 0). Unknown: the registry cannot
+    verify a reset in sessions (a, e], so the window's units relative to the entry are unknown."""
+    n_sessions = volume.shape[1]
+    out = np.zeros(len(tick_idx))
+    unknown = np.zeros(len(tick_idx), dtype=bool)
+    for i, (n, s, e) in enumerate(zip(tick_idx, sig_idx, entry_idx)):
+        s, e = min(int(s), n_sessions - 1), min(int(e), n_sessions - 1)
+        a = max(s - window + 1, 0)
+        if reg_unresolved[n, e] - reg_unresolved[n, a] > 0:
+            unknown[i] = True
+            continue
+        listed = present[n, a: s + 1]
+        if not listed.any():
+            continue
+        to_entry = reg_factor[n, e] / reg_factor[n, a: s + 1]
+        out[i] = float(np.median((np.nan_to_num(volume[n, a: s + 1]) * to_entry)[listed]))
+    return out, unknown
+
+
 def _tier_costs(price: np.ndarray, tiers: tuple) -> np.ndarray:
     if not tiers:
         return np.zeros(np.shape(price))
@@ -242,16 +278,19 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     e = np.minimum(entry, n_sessions - 1)
     open_ = status < 0
 
-    if cfg.units not in ("panel", "as_traded") or cfg.fill_model not in ("A", "B"):
+    if cfg.units not in ("panel", "as_traded") or cfg.fill_model not in ("A", "B", "C"):
         raise ValueError(f"unknown units {cfg.units!r} or fill model {cfg.fill_model!r}")
     if cfg.fill_model == "B" and (cfg.entry_price != "open" or cfg.units != "as_traded"):
         raise ValueError("fill model B is defined for open entries in as-traded units")
+    if cfg.fill_model == "C" and (cfg.entry_price != "close" or cfg.units != "panel" or cfg.ca_mode != "registry"
+                                  or m.reg_factor is None):
+        raise ValueError("fill model C is defined for close entries in panel units with a corporate-action registry")
     uf = None
     if cfg.units == "as_traded":
         if m.unit_factor is None:
             raise ValueError("units='as_traded' needs Market.with_units(...)")
         uf = m.unit_factor
-    if cfg.fill_model == "A":
+    if cfg.fill_model in ("A", "C"):
         traded = m.tradeable[tick_idx, e]
     else:  # a bar with volume on the entry session (proxy for an opening print; labelled)
         traded = m.present[tick_idx, e] & (np.nan_to_num(m.volume[tick_idx, e]) > 0)
@@ -278,6 +317,10 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     open_ = status < 0
     if cfg.fill_model == "A":
         capacity = np.nan_to_num(m.volume[tick_idx, e]) / f_entry
+    elif cfg.fill_model == "C":
+        capacity, unknown = close_capacity(m.volume, m.present, m.reg_factor, m.reg_unresolved, tick_idx, sig_idx, e)
+        status[open_ & unknown] = STATUS.index("SKIP_CAPACITY_UNKNOWN")
+        open_ = status < 0
     else:
         vol_traded = np.where(m.present, np.nan_to_num(m.volume) / uf, np.nan)  # a listed day without trades counts as 0
         lo = np.maximum(sig_idx - 19, 0)
