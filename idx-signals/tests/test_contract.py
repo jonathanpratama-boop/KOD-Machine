@@ -55,8 +55,9 @@ class ValidTrade(unittest.TestCase):
         self.assertEqual((t["outcome"], t["entry_session"], t["entry_price"]), ("FILLED", str(m.dates[21]), 99.0))
         self.assertEqual((t["exit_reason"], t["exit_session"], t["sessions_held"]),
                          ("TIME_EXIT_AT_CLOSE", str(m.dates[25]), 5))
-        # Size: risk 1% of $10,000 at the permitted entry 100 (stop 95), capital 20% -> 20 shares.
-        rps = 5 + 100 * (cost_rate(100, "buy") + cost_rate(100, "sell"))
+        # Size: risk 1% of $10,000 at the permitted entry 100 (stop 95; exit cost at the stop's tier).
+        rps = 100 * (1 + cost_rate(100, "buy")) - 95 * (1 - cost_rate(95, "sell"))
+        self.assertAlmostEqual(C.risk_per_share(100.0, 95.0), rps)
         self.assertEqual(t["shares_filled"], int(min(100 / rps, 2000 / 100)))
         debit = t["shares_filled"] * 99 * (1 + cost_rate(99, "buy"))
         proceeds = t["shares_filled"] * 104 * (1 - cost_rate(104, "sell"))
@@ -270,3 +271,108 @@ class SameContractBothWays(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+# -- Ace's review of 21eb6aa: each test reproduces a reported failure -------------------------------------
+
+def permuted(m, order):
+    """The same market with its rows in another order (a later download sorted differently)."""
+    arrays = {f: getattr(m, f)[order] for f in Market.FIELDS}
+    return Market(m.tickers[order], m.dates, **arrays, unit_factor=m.unit_factor[order])
+
+
+def readjusted_for_split(m, at, ratio=2.0):
+    """A later download after a ratio:1 split effective at session `at`: as-traded prices from `at` on
+    are divided by `ratio`, and the provider re-adjusts the whole history to the new basis."""
+    t, d = m.tickers, m.dates
+    arrays = {f: getattr(m, f).copy() for f in Market.FIELDS}
+    for f in ("close", "prev", "high", "low", "open"):
+        arrays[f][0] = arrays[f][0] / ratio            # every session, adjusted to the post-split basis
+    arrays["volume"][0] = arrays["volume"][0] * ratio
+    uf = m.unit_factor.copy()
+    uf[0, :at] = uf[0, :at] * ratio                    # as traded = adjusted x F: unchanged before the split
+    return Market(t, d, **arrays, unit_factor=uf)
+
+
+class AceReview(unittest.TestCase):
+    def test_saved_orders_follow_the_ticker_not_the_row(self):
+        """P1 (Ace): state kept row numbers, so a download with another row order filled the $100
+        stock's order at the other stock's $50 prices."""
+        def edit(a):
+            for k in ("close", "prev", "open"):
+                a[k][1] = 50.0
+            a["high"][1], a["low"][1] = 50.5, 49.5
+        m = market(n_tickers=2, edit=edit)
+        state, _ = C.forward_step(None, m.truncate(20), [(0, 95.0)], str(m.dates[20]))
+        m2 = permuted(m, np.array([1, 0]))
+        state, _ = C.forward_step(state, m2.truncate(21), [], str(m.dates[21]))
+        [p] = state["positions"]
+        self.assertEqual((p["ticker"], p["entry_price"]), ("T000", 100.0))
+
+    def test_a_rolling_window_download_is_not_already_processed(self):
+        """P1 (Ace): a download whose window starts later shifts every index; the next session was
+        reported as already processed."""
+        m = market()
+        state, _ = C.forward_step(None, m.truncate(20), [(0, 95.0)], str(m.dates[20]))
+        state, scan = C.forward_step(state, m.slice(5, 22), [], str(m.dates[21]))
+        self.assertEqual(scan["status"], "NO_SIGNAL")
+        self.assertEqual(len(state["positions"]), 1)
+
+    def test_a_split_readjusted_download_keeps_the_holding(self):
+        """P1 (Ace): after a 2-for-1 split the provider re-adjusts history. The holding must double
+        and the stop halve; no false stop, no artificial loss."""
+        m = market()
+        state = None
+        for k in range(20, 23):
+            state, _ = C.forward_step(state, m.truncate(k), [(0, 95.0)] if k == 20 else [], str(m.dates[k]))
+        [p] = state["positions"]
+        filled = p["shares_filled"]
+        m2 = readjusted_for_split(m, at=23)
+        for k in range(23, 26):
+            state, _ = C.forward_step(state, m2.truncate(k), [], str(m.dates[k]))
+        t = [c for c in state["closed"] if c["ticker"] == "T000" and "exit_reason" in c][0]
+        self.assertEqual((t["exit_reason"], t["exit_session"]), ("TIME_EXIT_AT_CLOSE", str(m.dates[25])))
+        self.assertEqual((t["shares_at_exit"], t["exit_price"]), (2 * filled, 50.0))
+        round_trip = filled * 100 * (cost_rate(100, "buy")) + 2 * filled * 50 * cost_rate(50, "sell")
+        self.assertAlmostEqual(-t["net_pnl_usd"], round_trip, places=6)
+
+    def test_planned_risk_covers_the_exit_cost_tier_at_the_stop(self):
+        """P2 (Ace): $5 entry, $4.75 stop. The exit cost was estimated at the entry price's tier, so
+        an ordinary stop (no gap, no slippage) lost $106.08 against a $100 budget."""
+        def edit(a):
+            for k in ("close", "prev", "open"):
+                a[k][0] = 5.0
+            a["high"][0], a["low"][0] = 5.05, 4.95
+            a["low"][0, 23] = 4.70
+        acc = run(market(edit=edit), {20: [(0, 4.75)]})
+        [t] = closed(acc)
+        self.assertEqual(t["exit_reason"], "STOP")
+        self.assertLessEqual(-t["net_pnl_usd"], t["planned_risk_usd"] + 1e-9)
+        self.assertLessEqual(-t["net_pnl_usd"], 100.0 + 1e-9)
+
+    def test_no_exit_on_a_session_without_trades(self):
+        """P2 (Ace): a zero-volume session with stale prices filled the scheduled exit."""
+        def edit(a):
+            a["volume"][0, 25] = 0.0       # the planned exit session: listed, carried prices, no trades
+            a["low"][0, 25] = 90.0         # a stale low below the stop must not trigger it either
+        acc = run(market(edit=edit), {20: [(0, 95.0)]})
+        [t] = closed(acc)
+        self.assertEqual((t["exit_reason"], t["exit_session"]), ("TIME_EXIT_ROLLED", str(acc_dates()[26])))
+
+
+def acc_dates():
+    return market().dates
+
+
+class DemoWindow(unittest.TestCase):
+    def test_demo_window_ends_on_the_declared_session(self):
+        """P2 (Ace): the demo sliced one session past its declared end (bounds() is already exclusive)."""
+        import importlib.util
+        from pathlib import Path
+        spec = importlib.util.spec_from_file_location(
+            "exec_us_v2_demo", Path(__file__).resolve().parents[1] / "research" / "EXEC_US_v2_1" / "demo.py")
+        demo = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(demo)
+        m = market(n_sessions=30)
+        w = demo.window(m, str(m.dates[3]), str(m.dates[20]))
+        self.assertEqual((str(w.dates[0]), str(w.dates[-1]), w.shape[1]), (str(m.dates[3]), str(m.dates[20]), 18))
