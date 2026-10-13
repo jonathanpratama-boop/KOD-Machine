@@ -26,13 +26,25 @@ RULE_ID = "MOONSHOT_E4_D1"
 VERSION = "v1"
 SIDE = "short"
 CANDIDATES = ("G2_RET30", "G1_RET20_CLOSEHIGH", "G10_RET15_CLOSEHIGH", "G7_MOMENTUM5_30")
+# v2 (research/E4/v2): the same four under one pre-specified regime condition, BTC's close below its
+# 50-session average at the signal close (known at the decision; BTC must be in the panel).
+REGIME_CANDIDATES = ("G2_RET30_BEAR", "G1_RET20_CLOSEHIGH_BEAR", "G10_RET15_CLOSEHIGH_BEAR", "G7_MOMENTUM5_30_BEAR")
+REGIME_TICKER = "BTC"
+REGIME_WINDOW = 50
 SELECTED = None  # frozen after discovery: (detector, entry_rule, entry_window, exit_rule, holding_days)
+SELECTED_PROTOCOL = None  # the protocol version that selected it, e.g. "KOD-GLOBAL-E4-v2"
 FEATURE_ARGS = ("close", "prev", "high", "low", "volume", "present", "tradeable", "open")
 FAMILY = (
     ("G2_RET30", "day return >= +30%"),
     ("G1_RET20_CLOSEHIGH", "day return >= +20% and close in the top 20% of the day's range"),
     ("G10_RET15_CLOSEHIGH", "day return >= +15% and close in the top 10% of the day's range"),
     ("G7_MOMENTUM5_30", "5-session return >= +30%"),
+    ("G2_RET30_BEAR", "day return >= +30%, BTC close below its 50-session average"),
+    ("G1_RET20_CLOSEHIGH_BEAR", "day return >= +20% and close in the top 20% of the day's range, BTC below its "
+                               "50-session average"),
+    ("G10_RET15_CLOSEHIGH_BEAR", "day return >= +15% and close in the top 10% of the day's range, BTC below its "
+                                "50-session average"),
+    ("G7_MOMENTUM5_30_BEAR", "5-session return >= +30%, BTC close below its 50-session average"),
 )
 RULE_TEXT = (
     "Experiment E4 (the fade): one of the E2 family's already-ran detectors G2_RET30, G1_RET20_CLOSEHIGH, "
@@ -98,10 +110,29 @@ def family_flags(f):
     }
 
 
+def bear_regime(tickers, close):
+    """Per session: BTC's close below its 50-session mean (sessions <= d only). All False without BTC
+    or before 50 sessions of it: the condition cannot be evaluated, so no signal."""
+    where = np.flatnonzero(tickers == REGIME_TICKER)
+    if len(where) == 0:
+        return np.zeros(close.shape[1], dtype=bool)
+    btc = close[where[0]]
+    mean = pd.Series(btc).rolling(REGIME_WINDOW, min_periods=REGIME_WINDOW).mean().to_numpy()
+    return np.isfinite(mean) & (btc < mean)
+
+
+def all_flags(m, f):
+    flags = family_flags(f)
+    bear = bear_regime(m.tickers, m.close)[None, :]
+    for name in list(flags):
+        flags[name + "_BEAR"] = flags[name] & bear
+    return flags
+
+
 def _compute_for(name):
     def compute(m):
         f = features(m.close, m.prev, m.high, m.low, m.volume, m.present, m.tradeable, m.open)
-        return np.where(m.tradeable, family_flags(f)[name].astype(float), np.nan)
+        return np.where(m.tradeable, all_flags(m, f)[name].astype(float), np.nan)
 
     return compute
 
@@ -122,12 +153,12 @@ def rules():
 
     out = [Rule(candidate_rule_id(name), VERSION, RULE_TEXT + " Candidate: " + name + " (no plan: the harness "
                 "run names the side and plan).", 5, _compute_for(name), sys.modules[__name__])
-           for name in CANDIDATES]
+           for name in CANDIDATES + REGIME_CANDIDATES]
     if SELECTED is not None:
-        out.append(Rule(RULE_ID, VERSION, RULE_TEXT + " Selected: " + SELECTED[0] + "; side short; plan: entry "
-                        + SELECTED[1] + " within " + str(SELECTED[2]) + " session(s), exit " + SELECTED[3]
-                        + ", hold " + str(SELECTED[4]) + ".", SELECTED[4], _compute_for(SELECTED[0]),
-                        sys.modules[__name__], plan=selected_plan()))
+        out.append(Rule(RULE_ID, VERSION, RULE_TEXT + " Selected under " + str(SELECTED_PROTOCOL) + ": "
+                        + SELECTED[0] + "; side short; plan: entry " + SELECTED[1] + " within " + str(SELECTED[2])
+                        + " session(s), exit " + SELECTED[3] + ", hold " + str(SELECTED[4]) + ".", SELECTED[4],
+                        _compute_for(SELECTED[0]), sys.modules[__name__], plan=selected_plan()))
     return out
 
 

@@ -121,6 +121,56 @@ class SelectionTests(unittest.TestCase):
         self.assertIsNone(e4.tail_stats(trades.iloc[5:])["worst_net_return"])
 
 
+class V2Tests(unittest.TestCase):
+    PROTO2 = json.loads((ROOT / "research" / "E4" / "v2" / "protocol.json").read_text(encoding="utf-8"))
+
+    def test_v2_protocol_is_v1_plus_the_declared_changes(self):
+        p2 = self.PROTO2
+        self.assertEqual(p2["protocol_id"], "KOD-GLOBAL-E4-v2")
+        for k in ("discovery", "validation", "holdout"):
+            self.assertEqual(p2["periods"][k], PROTO["periods"][k])
+        self.assertEqual(p2["plans"]["entries"], PROTO["plans"]["entries"])
+        self.assertEqual(p2["harness"]["liquidation"], 1.0)
+        self.assertEqual(p2["harness"]["jump_ratio"], 10.0)
+        self.assertEqual(tuple(p2["detectors"]["candidates"]), moonshot_e4.CANDIDATES + moonshot_e4.REGIME_CANDIDATES)
+        self.assertNotIn("max_p1_loss", p2["selection"])
+        self.assertEqual(p2["markets"]["CRYPTO"]["panel_manifest"], PROTO["markets"]["CRYPTO"]["panel_manifest"])
+        self.assertEqual(e4.protocol(version="v2")[0]["protocol_id"], "KOD-GLOBAL-E4-v2")
+        self.assertEqual(e4.market_dir("CRYPTO", "v2"), ROOT / "research" / "E4" / "v2" / "CRYPTO")
+        cfg = e4.harness_config(p2, "CRYPTO", "E4_CAND_G2_RET30_BEAR", "discovery",
+                                {"entry_rule": "fixed", "entry_window": 1, "exit_rule": "fixed", "holding_days": 1},
+                                side="short")
+        self.assertEqual((cfg.liquidation, cfg.jump_ratio), (1.0, 10.0))
+        self.assertIsNone(e4.harness_config(PROTO, "CRYPTO", "E4_CAND_G2_RET30", "discovery").liquidation)
+
+    def test_v2_tail_criteria(self):
+        r = row(p5_net_return=-0.3, share_liquidated=0.01)
+        self.assertEqual(e4.admissibility(r, self.PROTO2, YEARS), [])
+        self.assertTrue(any("5th" in x for x in e4.admissibility(row(p5_net_return=-0.6, share_liquidated=0.0), self.PROTO2, YEARS)))
+        self.assertTrue(any("liquidated" in x for x in e4.admissibility(row(p5_net_return=-0.1, share_liquidated=0.03), self.PROTO2, YEARS)))
+        self.assertTrue(e4.admissibility(row(p5_net_return=None), self.PROTO2, YEARS))  # unknown tail: not admitted
+
+    def test_bear_regime_reads_btc_only_and_is_causal(self):
+        df, _ = random_walk_panel(n_tickers=12, n_sessions=130, seed=3)
+        df["open"] = df["previous"]
+        df.loc[df["ticker"] == "S000", "ticker"] = "BTC"
+        m = Market.from_panel(df, price_limits=False)
+        bear = moonshot_e4.bear_regime(m.tickers, m.close)
+        btc = m.close[list(m.tickers).index("BTC")]
+        mean = pd.Series(btc).rolling(50, min_periods=50).mean().to_numpy()
+        np.testing.assert_array_equal(bear, np.isfinite(mean) & (btc < mean))
+        self.assertFalse(bear[:49].any())
+        without = moonshot_e4.bear_regime(np.array(["ETH", "SOL"]), m.close[:2])
+        self.assertFalse(without.any())
+        reg = rules.registry()
+        for name in moonshot_e4.REGIME_CANDIDATES:
+            self.assertIn(moonshot_e4.candidate_rule_id(name), reg)
+        flags = moonshot_e4.all_flags(m, moonshot_e4.features(m.close, m.prev, m.high, m.low, m.volume, m.present,
+                                                              m.tradeable, m.open))
+        np.testing.assert_array_equal(flags["G2_RET30_BEAR"], flags["G2_RET30"] & bear[None, :])
+        self.assertEqual(audit_module(moonshot_e4), [])
+
+
 class HoldoutTests(unittest.TestCase):
     def test_global_holdout_is_refused_for_us_and_crypto_detectors(self):
         from idxsig.backtest import GLOBAL_HOLDOUT, HoldoutSealed, RunConfig, run

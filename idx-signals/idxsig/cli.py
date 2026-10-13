@@ -139,6 +139,7 @@ def main(argv=None) -> int:
                            ("e4-validation", "experiment E4 validation: the frozen pair on 2023, as a recorded run")):
         p_e4 = sub.add_parser(name, help=helptext)
         p_e4.add_argument("--market", choices=("CRYPTO", "US"), default="CRYPTO")
+        p_e4.add_argument("--protocol", choices=("v1", "v2"), default="v1", help="research/E4 protocol version")
         if name == "e4-discovery":
             p_e4.add_argument("--accept-deviation", action="store_true",
                               help="proceed although the precondition run did not reproduce identically (recorded)")
@@ -383,7 +384,7 @@ def main(argv=None) -> int:
         from .provenance import MANIFESTS
         from .results import code_state
 
-        proto, proto_sha = e4.protocol()
+        proto, proto_sha = e4.protocol(version=args.protocol)
         if code_state()["dirty"]:
             print("error: commit idxsig/ first so the results name the code that produced them", file=sys.stderr)
             return 2
@@ -397,7 +398,7 @@ def main(argv=None) -> int:
             print(f"error: {exc}", file=sys.stderr)
             return 2
         stage = args.cmd.split("-", 1)[1]
-        out = e4.market_dir(mk) / stage
+        out = e4.market_dir(mk, args.protocol) / stage
         try:
             if stage == "reproduce":
                 result = e4.run_reproduce(df, meta, out, proto, proto_sha, mk)

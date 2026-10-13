@@ -37,14 +37,23 @@ from .rules import moonshot_e4
 E4_DIR = PKG_ROOT / "research" / "E4"
 PROTOCOL = E4_DIR / "protocol.json"
 PLAN_KEYS = ("entry_rule", "entry_window", "exit_rule", "holding_days")
+VERSIONS = ("v1", "v2")
 
 
-def protocol(path: Path = PROTOCOL) -> tuple[dict, str]:
+def version_dir(version: str = "v1") -> Path:
+    """v1 lives in research/E4/, later versions in research/E4/<version>/ (the commit guard freezes both)."""
+    if version not in VERSIONS:
+        raise ValueError(f"unknown E4 protocol version {version!r}")
+    return E4_DIR if version == "v1" else E4_DIR / version
+
+
+def protocol(path: Path | None = None, version: str = "v1") -> tuple[dict, str]:
+    path = path or version_dir(version) / "protocol.json"
     return json.loads(path.read_text(encoding="utf-8")), sha256_file(path)
 
 
-def market_dir(market: str) -> Path:
-    return E4_DIR / market
+def market_dir(market: str, version: str = "v1") -> Path:
+    return version_dir(version) / market
 
 
 def harness_config(proto: dict, market: str, rule_id: str, period: str, plan: dict | None = None,
@@ -65,6 +74,7 @@ def harness_config(proto: dict, market: str, rule_id: str, period: str, plan: di
         fee_buy=mk["fee_buy"], fee_sell=mk["fee_sell"], overlap=h["overlap"], random_draws=h["random_draws"],
         seed=h["seed"], data_end_exit=h["data_end_exit"], ca_mode=h["ca_mode"], lookahead_cuts=None,
         controls_version=h["controls_version"], units="panel", fill_model=h["fill_model"],
+        liquidation=h.get("liquidation"), jump_ratio=h.get("jump_ratio"),
     )
 
 
@@ -85,17 +95,34 @@ def tail_stats(trades: pd.DataFrame) -> dict:
     return out
 
 
+def tail_criteria(row: dict, s: dict) -> list[str]:
+    """The tail rules a protocol's selection/validation block names: v1's 1st percentile, v2's 5th
+    percentile and liquidation share. Whichever keys are present apply."""
+    out = []
+    if "max_p1_loss" in s:
+        p1 = row.get("p1_net_return")
+        if p1 is None or not p1 >= s["max_p1_loss"]:
+            out.append(f"1st percentile of trade returns {p1} below {s['max_p1_loss']} (tail not bounded)")
+    if "max_p5_loss" in s:
+        p5 = row.get("p5_net_return")
+        if p5 is None or not p5 >= s["max_p5_loss"]:
+            out.append(f"5th percentile of trade returns {p5} below {s['max_p5_loss']} (tail not bounded)")
+    if "max_share_liquidated" in s:
+        share = row.get("share_liquidated")
+        if share is None or not share <= s["max_share_liquidated"]:
+            out.append(f"liquidated share {share} above {s['max_share_liquidated']}")
+    return out
+
+
 def admissibility(row: dict, proto: dict, years: list[int]) -> list[str]:
     """E3's rule (scored, positive, beats matched random, positive in every year) plus E4's: a hit rate
-    above min_hit_rate, and a bounded tail (the 1st percentile of trade returns above max_p1_loss)."""
+    above min_hit_rate, and the protocol's tail criteria."""
     s = proto["selection"]
     out = base_admissibility(row, proto, years)
     hit = row.get("hit_rate")
     if hit is None or not hit >= s["min_hit_rate"]:
         out.append(f"hit rate {hit} below {s['min_hit_rate']}")
-    p1 = row.get("p1_net_return")
-    if p1 is None or not p1 >= s["max_p1_loss"]:
-        out.append(f"1st percentile of trade returns {p1} below {s['max_p1_loss']} (tail not bounded)")
+    out.extend(tail_criteria(row, s))
     return out
 
 
@@ -151,7 +178,8 @@ def run_reproduce(df, meta, out: Path, proto: dict, proto_sha: str, market: str,
 
 def run_discovery(df, meta, out: Path, proto: dict, proto_sha: str, market: str, log=print,
                   accept_deviation: bool = False) -> dict:
-    repro_path = market_dir(market) / "reproduce" / "result.json"
+    named = proto["markets"][market].get("precondition_result")
+    repro_path = PKG_ROOT / named if named else out.parent / "reproduce" / "result.json"
     if not repro_path.exists():
         raise RuntimeError(f"the precondition has not been run for {market} (e4-reproduce)")
     repro = json.loads(repro_path.read_text(encoding="utf-8"))
@@ -205,7 +233,10 @@ def run_discovery(df, meta, out: Path, proto: dict, proto_sha: str, market: str,
 def run_validation(df, meta, out: Path, proto: dict, proto_sha: str, market: str, log=print) -> dict:
     if moonshot_e4.SELECTED is None:
         raise RuntimeError("no frozen (detector, plan): run discovery and write SELECTED first")
-    disc = json.loads((market_dir(market) / "discovery" / "summary.json").read_text(encoding="utf-8"))
+    if moonshot_e4.SELECTED_PROTOCOL != proto["protocol_id"]:
+        raise RuntimeError(f"moonshot_e4.SELECTED was frozen under {moonshot_e4.SELECTED_PROTOCOL}, not "
+                           f"{proto['protocol_id']}")
+    disc = json.loads((out.parent / "discovery" / "summary.json").read_text(encoding="utf-8"))
     if list(moonshot_e4.SELECTED) != list(disc["selected_tuple"] or []):
         raise RuntimeError(f"moonshot_e4.SELECTED {moonshot_e4.SELECTED} is not the pair discovery selected "
                            f"({disc['selected_tuple']})")
@@ -222,7 +253,7 @@ def run_validation(df, meta, out: Path, proto: dict, proto_sha: str, market: str
               and row["p_one_sided_vs_matched"] is not None
               and row["p_one_sided_vs_matched"] < v["max_p_one_sided_vs_matched"]
               and row["hit_rate"] is not None and row["hit_rate"] >= v["min_hit_rate"]
-              and row["p1_net_return"] is not None and row["p1_net_return"] >= v["max_p1_loss"])
+              and not tail_criteria(row, v))
     result = {**_stamp(proto_sha, proto, market, "validation", meta), "selected": list(moonshot_e4.SELECTED),
               "side": moonshot_e4.SIDE, "run_id": summary["run_id"], "run_dir": rel(run_dir),
               "plan_text": summary["execution"]["plan_text"], "short_side": summary["execution"].get("short_side"),
