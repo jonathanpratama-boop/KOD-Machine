@@ -41,8 +41,8 @@ from collections import Counter
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from pathlib import Path
 
-VERSION = "3.0.0"
-SELF_SHA256 = "e55c5d614f5378abf254f55e18540899835c0b4944737c58a211e3a772b880e5"
+VERSION = "3.0.1"
+SELF_SHA256 = "ab056162ffcb24e1990f667662f68d6e2e1a5fe5c1bb2081095bc307701763db"
 
 # ----------------------------------------------------------------------------- time
 
@@ -628,6 +628,8 @@ def freshness(res, now):
         rows = res[src]
         newest = max(rows) if rows else None
         flag = "OK" if newest and newest >= exp else ("STALE" if newest else "EMPTY")
+        if newest and newest > exp:
+            flag = f"OK (row {newest} is the session in progress — partial, intraday; resolutions ignore it)"
         extra = f"; page 'last updated' {res['sa_updated']}" if src == "sa" and res.get("sa_updated") else ""
         out.append(f"{name}: newest row {newest or '—'} (expected {exp}) {flag}{extra}")
     return out
@@ -1587,7 +1589,7 @@ def kod_us(date, hint=None):
         except json.JSONDecodeError:
             continue
         rid = r.get("decision_id") or r.get("scan_id") or ""
-        if r.get("market") == "US" and f"SCAN-US-{date}" in rid:
+        if r.get("market") == "US" and f"SCAN-US-{date}" in rid and (r.get("instrument") or {}).get("ticker"):
             rows.append(r)
     return rows, f"{repo} · {note}"
 
@@ -1661,6 +1663,8 @@ def cmd_bars(a):
         for d in dates[: a.n]:
             cx, sa = res["cx"].get(d), res["sa"].get(d)
             st = compare_bars(cx, sa)
+            if session_close_utc(d) > now:
+                st += ", INTRADAY partial"
             if st == "AGREE":
                 print(f"   {d}  {bar_str(cx)}  [both]")
             else:
@@ -2443,4 +2447,11 @@ def main(argv=None):
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except BrokenPipeError:          # output piped into head/tail
+        try:
+            sys.stdout = open(os.devnull, "w")
+        except OSError:
+            pass
+        sys.exit(0)
