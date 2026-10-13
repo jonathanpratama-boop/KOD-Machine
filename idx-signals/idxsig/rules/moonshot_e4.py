@@ -31,8 +31,11 @@ CANDIDATES = ("G2_RET30", "G1_RET20_CLOSEHIGH", "G10_RET15_CLOSEHIGH", "G7_MOMEN
 REGIME_CANDIDATES = ("G2_RET30_BEAR", "G1_RET20_CLOSEHIGH_BEAR", "G10_RET15_CLOSEHIGH_BEAR", "G7_MOMENTUM5_30_BEAR")
 REGIME_TICKER = "BTC"
 REGIME_WINDOW = 50
-SELECTED = None  # frozen after discovery: (detector, entry_rule, entry_window, exit_rule, holding_days)
-SELECTED_PROTOCOL = None  # the protocol version that selected it, e.g. "KOD-GLOBAL-E4-v2"
+# Frozen 2026-10-13 from research/E4/v2/CRYPTO/discovery (31 of 288 admissible; the highest average net
+# return): short G2_RET30 in the bear regime, entered at the first open above the signal close within
+# three sessions, covered at the first up close, else at the close of the second session after entry.
+SELECTED = ("G2_RET30_BEAR", "pullback", 3, "first_up", 2)
+SELECTED_PROTOCOL = "KOD-GLOBAL-E4-v2"
 FEATURE_ARGS = ("close", "prev", "high", "low", "volume", "present", "tradeable", "open")
 FAMILY = (
     ("G2_RET30", "day return >= +30%"),
