@@ -1,0 +1,400 @@
+{
+  "by_year": [
+    {
+      "attempts": 1267,
+      "avg_net_return": 0.012772169693069584,
+      "hit_rate": 0.3946731234866828,
+      "random_avg_net_return": -0.0007728339922372452,
+      "random_hit_rate": 0.4016338012929752,
+      "random_matched_avg_net_return": 0.002546217448856964,
+      "random_matched_hit_rate": 0.4005124908322091,
+      "scored": 413,
+      "year": 2021
+    },
+    {
+      "attempts": 564,
+      "avg_net_return": -0.01562547673312454,
+      "hit_rate": 0.34309623430962344,
+      "random_avg_net_return": -0.006689815992044247,
+      "random_hit_rate": 0.38095713145593435,
+      "random_matched_avg_net_return": 0.00025265243915510043,
+      "random_matched_hit_rate": 0.4061835106382979,
+      "scored": 239,
+      "year": 2022
+    }
+  ],
+  "config": {
+    "ca_mode": "registry",
+    "controls_version": "v2",
+    "data_end_exit": "last_close",
+    "end": "2022-12-30",
+    "entry_lag": 1,
+    "entry_rule": "fixed",
+    "entry_window": 1,
+    "exit_rule": "fixed",
+    "fee_buy": 0.0015,
+    "fee_sell": 0.0025,
+    "fill_model": "C",
+    "holding_days": 5,
+    "holdout_final": false,
+    "lookahead_cuts": null,
+    "market": "IDX",
+    "max_participation": 0.1,
+    "notional": 10000000.0,
+    "overlap": "skip",
+    "quarantine": "none",
+    "random_draws": 200,
+    "rule_id": "E3_CAND_F1_ARA",
+    "seed": 20261007,
+    "start": "2021-01-22",
+    "units": "panel"
+  },
+  "corporate_action_model": {
+    "mode": "registry",
+    "registry_by_status": {
+      "NO_PRICE_RESET": 8,
+      "UNRESOLVED": 99,
+      "UNVERIFIED_SINGLE_SOURCE": 20,
+      "VERIFIED_CORROBORATED": 89
+    },
+    "registry_manifest": "ca_registry-20261013T194256Z.json",
+    "registry_manifest_sha256": "9223b64b94a69debf0ab736163186be023c312d0f5cd3645c7ab2d18dbfcb9de",
+    "registry_sha256": "33f81beb6ff59ba36dc1f73d74fa7fdb353b7d7ad64cce8a960617436ed64eb8",
+    "registry_version": "ca-registry-v1",
+    "resets_in_window": {
+      "missing_from_registry": 0,
+      "registry_rows_without_reset": 0,
+      "resets": 93,
+      "rights_issue": 0,
+      "share_scaled": 29,
+      "unresolved": 64
+    }
+  },
+  "data_quality": {
+    "known_limitations": [
+      "TIER_2 sessions (before 2021-01-22) miss names that delisted before then: survivor-biased.",
+      "TIER_3 sessions (after the mirror ends) are survivor-only Yahoo data; corporate actions there are single-source and trades held across them are excluded.",
+      "Prices are daily closes; there is no intraday path, so a stop or limit inside the session is not modelled.",
+      "Cash dividends are not added back: returns are price returns.",
+      "Sector, board membership and free float are not available point-in-time; controls do not match on them.",
+      "Trades held across a reference reset that is not a verified split, reverse split or stock dividend are excluded from scoring (rule and baselines alike), so names with rights issues are under-represented.",
+      "Suspensions longer than the data are exited at the last traded close (EXIT_DATA_END), not marked to zero, unless data_end_exit='zero'."
+    ],
+    "lowest_tier": "TIER_1",
+    "panel_format": "panel-v2",
+    "sessions_by_tier": {
+      "TIER_1": 479
+    },
+    "tiers": [
+      {
+        "corporate_actions": "exchange reference + share counts",
+        "from": "2019-07-29",
+        "share_counts": true,
+        "source": "idx_mirror",
+        "survivorship": "survivor-biased (pre-snapshot delistings absent)",
+        "tier": "TIER_2",
+        "to": "2021-01-21"
+      },
+      {
+        "corporate_actions": "exchange reference + share counts + Yahoo",
+        "from": "2021-01-22",
+        "share_counts": true,
+        "source": "idx_mirror",
+        "survivorship": "complete",
+        "tier": "TIER_1",
+        "to": "2025-02-21"
+      },
+      {
+        "corporate_actions": "Yahoo split events only (single source)",
+        "from": "2025-02-22",
+        "share_counts": false,
+        "source": "yahoo",
+        "survivorship": "survivor-only",
+        "tier": "TIER_3",
+        "to": "2026-10-13"
+      }
+    ]
+  },
+  "execution": {
+    "auto_rejection": "entry refused when the entry close is locked at ARA; exit rolls while locked at ARB or untraded; regular-board schedule by date, plus 10% special-board limits on one-price or sub-Rp50 bars",
+    "corporate_actions": "shares scaled only through registry-verified splits, reverse splits and stock dividends; trades held across a verified rights issue or any unverified reset are not scored (CORP_ACTION_RIGHTS_ISSUE / CORP_ACTION_UNRESOLVED)",
+    "cost_tiers": [],
+    "fees": {
+      "buy": 0.0015,
+      "sell": 0.0025
+    },
+    "lot_size": 100,
+    "plan": {
+      "entry_rule": "fixed",
+      "entry_window": 1,
+      "exit_rule": "fixed",
+      "holding_days": 5
+    },
+    "plan_text": "buy at the close of session s + 1; sell at the close of the 5th session after entry; a sale rolls to the next session where it is possible while locked at ARB or untraded",
+    "price": "official close; signal at close of s, entry at close of s + entry_lag"
+  },
+  "harness": {
+    "ca_mode": "registry",
+    "controls": "v2",
+    "rule_view_fields": [
+      "close",
+      "prev",
+      "high",
+      "low",
+      "volume",
+      "value",
+      "present",
+      "tradeable",
+      "lock_up",
+      "lock_down",
+      "listed_shares",
+      "open"
+    ],
+    "signals": "prefix-first-v1"
+  },
+  "lookahead_check": {
+    "full_window_mismatches": 0,
+    "mode": "prefix-first-v1",
+    "prefix_calls": 479,
+    "sandbox": "file, network, process, frame and heap access blocked during compute",
+    "sessions": 479,
+    "source_audit": "passed"
+  },
+  "market": {
+    "cost_assumption": "",
+    "currency": "IDR",
+    "entry": "close",
+    "lot_size": 100,
+    "price_limits": true,
+    "profile": "IDX",
+    "venue": "IDX (Indonesia Stock Exchange)"
+  },
+  "panel": {
+    "manifest_sha256": null,
+    "panel": "data/panel/panel-20261013T194245Z.csv.gz",
+    "panel_sha256": "a924921afccb1fe0c2fa4bfe94db1a17af714358b4dd238118f56bce428ce509",
+    "source_boundary": "2025-02-21"
+  },
+  "random": {
+    "avg_net_return": {
+      "difference": 0.005034599577118043,
+      "observed": 0.002362602981627261,
+      "p_value_one_sided": 0.04975124378109453,
+      "percentile_of_observed": 95.5,
+      "random_mean": -0.002671996595490783,
+      "random_p2_5": -0.008322941762739091,
+      "random_p50": -0.0028036113295761955,
+      "random_p97_5": 0.003094281195897153
+    },
+    "draws": 200,
+    "hit_rate": {
+      "difference": -0.019247502265686445,
+      "observed": 0.37576687116564417,
+      "p_value_one_sided": 0.9104477611940298,
+      "percentile_of_observed": 9.0,
+      "random_mean": 0.3950143734313306,
+      "random_p2_5": 0.3660414391718184,
+      "random_p50": 0.39565124286913467,
+      "random_p97_5": 0.42258886823277564
+    },
+    "method": "same session, uniform over names where the rule was evaluable, same execution",
+    "pooled": {
+      "attempts": 366200,
+      "avg_net_return": -0.0026769578982491406,
+      "fill_rate": 0.6030939377389405,
+      "filled": 220853,
+      "hit_rate": 0.3949799123112766,
+      "median_net_return": -0.009154661789699037,
+      "scored": 218044,
+      "status_counts": {
+        "CORP_ACTION_UNRESOLVED": 302,
+        "EXITED": 218044,
+        "INCOMPLETE": 2507,
+        "SKIP_ARA_LOCK": 2709,
+        "SKIP_CAPACITY_UNKNOWN": 1386,
+        "SKIP_LIQUIDITY": 134292,
+        "SKIP_NOT_TRADED": 6560,
+        "SKIP_NO_ENTRY_SESSION": 400
+      },
+      "std_net_return": 0.0982174601270765
+    }
+  },
+  "random_matched": {
+    "avg_net_return": {
+      "difference": 0.0006311224946693467,
+      "observed": 0.002362602981627261,
+      "p_value_one_sided": 0.4427860696517413,
+      "percentile_of_observed": 56.00000000000001,
+      "random_mean": 0.0017314804869579142,
+      "random_p2_5": -0.004946044820192735,
+      "random_p50": 0.0014858311829103275,
+      "random_p97_5": 0.009197890641857677
+    },
+    "controls": {
+      "features": {
+        "drawdown": {
+          "availability": "every tier",
+          "description": "tercile of close / 60-session high close - 1",
+          "known_share": 0.8656471873293282,
+          "matched_share": 0.04423812124522119,
+          "priority": 6
+        },
+        "liquidity": {
+          "availability": "every tier",
+          "description": "quintile of 20-session median traded value",
+          "known_share": 0.8836701256144184,
+          "matched_share": 0.8847624249044238,
+          "priority": 2
+        },
+        "listing_age": {
+          "availability": "every tier",
+          "description": "sessions since first panel session: <60 / <250 / older or censored at the panel start",
+          "known_share": 1.0,
+          "matched_share": 0.03276897870016385,
+          "priority": 7
+        },
+        "market_cap": {
+          "availability": "TIER_1, TIER_2 (no share counts after the mirror ends)",
+          "description": "quintile of close x IDX listed shares",
+          "known_share": 1.0,
+          "matched_share": 0.7935554341889678,
+          "priority": 3
+        },
+        "momentum": {
+          "availability": "every tier",
+          "description": "tercile of 20-session cumulative log return",
+          "known_share": 0.8836701256144184,
+          "matched_share": 0.2566903331512835,
+          "priority": 5
+        },
+        "price_band": {
+          "availability": "every tier",
+          "description": "close <= Rp200 / <= Rp5,000 / above",
+          "known_share": 1.0,
+          "matched_share": 1.0,
+          "priority": 1
+        },
+        "volatility": {
+          "availability": "every tier",
+          "description": "tercile of 20-session std of daily log returns",
+          "known_share": 0.8836701256144184,
+          "matched_share": 0.5603495357728018,
+          "priority": 4
+        }
+      },
+      "full_match_share": 0.03276897870016385,
+      "min_pool": 5,
+      "not_available": {
+        "board": "listing board known only as of the 2025-02 snapshot; not point-in-time, so not used",
+        "free_float": "IDX tradeble_shares equals listed_shares for most names; it is not free float, so not used",
+        "sector": "only a 2025-02 snapshot (List Emiten/Sectors); not point-in-time, so not used"
+      },
+      "version": "v2"
+    },
+    "draws": 200,
+    "hit_rate": {
+      "difference": -0.02672508281937891,
+      "observed": 0.37576687116564417,
+      "p_value_one_sided": 0.945273631840796,
+      "percentile_of_observed": 5.5,
+      "random_mean": 0.4024919539850231,
+      "random_p2_5": 0.3727973541695166,
+      "random_p50": 0.40222917373541767,
+      "random_p97_5": 0.4346918190315644
+    },
+    "match_level_used": {
+      "price_band": 211,
+      "price_band+liquidity": 167,
+      "price_band+liquidity+market_cap": 427,
+      "price_band+liquidity+market_cap+volatility": 556,
+      "price_band+liquidity+market_cap+volatility+momentum": 389,
+      "price_band+liquidity+market_cap+volatility+momentum+drawdown": 21,
+      "price_band+liquidity+market_cap+volatility+momentum+drawdown+listing_age": 60
+    },
+    "method": "same session, same price_band / liquidity / market_cap / volatility / momentum / drawdown / listing_age buckets as the signalled name (relaxed from the last feature when fewer than 5 names match), same execution",
+    "pooled": {
+      "attempts": 366200,
+      "avg_net_return": 0.0017374245872461638,
+      "fill_rate": 0.4716794101583834,
+      "filled": 172729,
+      "hit_rate": 0.4025122947696672,
+      "median_net_return": -0.010769559945795537,
+      "scored": 170601,
+      "status_counts": {
+        "CORP_ACTION_UNRESOLVED": 271,
+        "EXITED": 170601,
+        "INCOMPLETE": 1857,
+        "SKIP_ARA_LOCK": 6596,
+        "SKIP_CAPACITY_UNKNOWN": 2628,
+        "SKIP_LIQUIDITY": 174507,
+        "SKIP_NOT_TRADED": 9340,
+        "SKIP_NO_ENTRY_SESSION": 400
+      },
+      "std_net_return": 0.12662955190140857
+    }
+  },
+  "repair": {
+    "fill_model": {
+      "model": "C",
+      "note": "C (FILL-C-v1): closing-auction entry; shares <= 10% of the median volume of the 20 sessions up to the signal session, in entry-session shares through registry-verified splits (known at the decision); an unverified reset in the window -> SKIP_CAPACITY_UNKNOWN; the entry session must still trade and not lock at ARA"
+    },
+    "preprocessing": null,
+    "quarantine": {
+      "mode": "none",
+      "reasons": null,
+      "tickers_excluded": 0
+    },
+    "units": {
+      "mode": "panel",
+      "note": "original: price levels as rescaled by later splits",
+      "schedule": null
+    }
+  },
+  "rule": {
+    "holding_days": 5,
+    "kind": "DETECTOR",
+    "rule_id": "E3_CAND_F1_ARA",
+    "sha256": "41f2ee3256fc028666369fc5b5344b5c9054d359e35817bd2a2d76a53cec0904",
+    "text": "Experiment E3: one of the ARA detectors F1_ARA, F7_ARA_VOL3, F8_ARA_EARLY (E1 family, research/E1/PROTOCOL.md) with one execution plan from the family in research/E3/protocol.json, the pair selected on the discovery period by the rule pre-registered there. Signal at the close of session d when the detector holds; entry and exit as the plan says. Candidate: F1_ARA (original plan).",
+    "version": "v1"
+  },
+  "rule_trades": {
+    "attempts": 1831,
+    "avg_net_return": 0.002362602981627261,
+    "fill_rate": 0.3626433642818132,
+    "filled": 664,
+    "hit_rate": 0.37576687116564417,
+    "median_net_return": -0.04622800590842835,
+    "scored": 652,
+    "status_counts": {
+      "CORP_ACTION_UNRESOLVED": 5,
+      "EXITED": 652,
+      "INCOMPLETE": 7,
+      "SKIP_ARA_LOCK": 529,
+      "SKIP_CAPACITY_UNKNOWN": 8,
+      "SKIP_LIQUIDITY": 553,
+      "SKIP_NOT_TRADED": 75,
+      "SKIP_NO_ENTRY_SESSION": 2
+    },
+    "std_net_return": 0.24228091239585056
+  },
+  "signals": {
+    "attempted": 1831,
+    "signal_rate": 0.00583004462915873,
+    "skipped_overlap": 88,
+    "tickers_with_signals": 441,
+    "total": 1919
+  },
+  "universe": {
+    "evaluable_ticker_sessions": 329157,
+    "first_session": "2021-01-22",
+    "last_session": "2022-12-30",
+    "sessions": 479,
+    "tickers_ending_inside_window": 1,
+    "tickers_ever_evaluable": 792,
+    "tickers_in_window": 827
+  },
+  "warnings": [
+    "5 trades were held across a corporate action the model does not share-scale and are not scored (ca_mode=registry); the baselines apply the same rule"
+  ]
+}
