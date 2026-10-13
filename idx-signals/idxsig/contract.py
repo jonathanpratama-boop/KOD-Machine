@@ -17,7 +17,7 @@ Saved state never depends on how a download is laid out:
 v2 (commit 21eb6aa) stored row and column numbers and adjusted-basis quantities, sized with the
 exit cost at the entry price's tier, and let exits fill on sessions without trades; v2.1 fixes all
 four (research/EXEC_US_v2_1/README.md). Legacy execution is untouched: EXEC-US-v1 (exec_us.py,
-PAPER-POLICY-v4) and the backtest fill models A, B, B2 and C (execution.py).
+PAPER-POLICY-v5) and the backtest fill models A, B, B2 and C (execution.py).
 
 Units: the panel is split-adjusted, and as-traded = adjusted x unit_factor F (verified split
 schedule). Every price and share count in a record is AS TRADED in the session named next to it.

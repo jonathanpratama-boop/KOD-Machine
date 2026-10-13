@@ -1,6 +1,6 @@
 """EXEC-US-v1: the one execution model for US daily-bar strategies.
 
-Historical replay (`replay`) and paper scoring (`paper.score` for PAPER-POLICY-v4 decisions) both
+Historical replay (`replay`) and paper scoring (`paper.score` for PAPER-POLICY-v5 decisions) both
 call `make_plan` and `execute` below, so the same bars give the same entry, rejection, exit and net
 result in both. A change to any rule here is a new EXEC_VERSION; records keep the version they
 were made under.
@@ -228,6 +228,6 @@ def replay(m, signals, invalidation_of, spec: ExecSpec = SPEC) -> list[dict]:
 
 
 def signal_low_invalidation(m, n, s) -> float:
-    """PAPER-POLICY-v4 / MOONSHOT_E2_US_D1 invalidation: the signal session's low, as traded."""
+    """PAPER-POLICY-v5 / MOONSHOT_E2_US_D1 invalidation: the signal session's low, as traded."""
     uf = m.unit_factor[n, s] if m.unit_factor is not None else 1.0
     return float(m.low[n, s] * uf)

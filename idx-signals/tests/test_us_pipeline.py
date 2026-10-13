@@ -152,15 +152,15 @@ class FivePercentRule(unittest.TestCase):
         self.assertEqual(res["status"], "FILLED")
         self.assertLessEqual(res["stop_distance_at_entry"], 0.05)
 
-    def test_policy_v3_allowed_wider_stops_v4_does_not(self):
+    def test_policy_v3_allowed_wider_stops_v5_does_not(self):
         warnings.simplefilter("ignore")
         df = gframe(spike=(7, 79))
         v3 = paper.scan_frame(df, DATA, market="US", policy=paper.POLICY_ID_V3)["decisions"][0]
-        v4 = paper.scan_frame(df, DATA, market="US")["decisions"][0]
+        v5 = paper.scan_frame(df, DATA, market="US")["decisions"][0]
         close = v3["verified_price"]["close"]
         self.assertLessEqual(v3["plan"]["invalidation"], close * 0.95)  # v3: 5-15% below the signal close
-        self.assertEqual(v4["policy"]["policy_id"], "PAPER-POLICY-v4")
-        p = v4["plan"]
+        self.assertEqual(v5["policy"]["policy_id"], "PAPER-POLICY-v5")
+        p = v5["plan"]
         self.assertLessEqual((p["max_entry"] - p["invalidation"]) / p["max_entry"], 0.05 + 1e-9)
 
 

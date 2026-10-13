@@ -58,6 +58,11 @@ Fill model (IDX closing-auction entries):
      An unverified reset after the window's first session and by the entry session leaves the
      units unknown: SKIP_CAPACITY_UNKNOWN. The entry session must still have traded and not be
      locked at ARA (fill conditions of the auction, as in A). Needs ca_mode="registry".
+
+Execution plans (ENTRY_RULES / EXIT_RULES below; research/E3): a conditional entry waits for a
+condition on a completed close within an entry window after the signal, a conditional exit
+closes the position early on a condition. The defaults ("fixed" / "fixed") are the original
+model, so every earlier run reproduces unchanged.
 """
 
 from __future__ import annotations
@@ -83,8 +88,24 @@ STATUS = (
     "SKIP_LOT",
     "SKIP_LIQUIDITY",
     "SKIP_CAPACITY_UNKNOWN",  # fill model C: an unverified reset makes the window's share units unknown
+    "SKIP_NO_TRIGGER",        # conditional entry: no session in the entry window met the entry condition
 )
 SCORED = (0, 1)
+# Execution plans (research/E3): how a signal becomes an entry and how the position is closed.
+#   entry "fixed":    the close of s + entry_lag (the original model)
+#   entry "confirm":  the first close in s+1..s+entry_window that is above the signal close on the
+#                     reference chain, traded and not locked at ARA (the move is holding, and there are sellers)
+#   entry "pullback": the first such close BELOW the signal close (a dip after the signal)
+#   entry "unlock":   the first traded close in s+1..s+entry_window not locked at ARA (wait for sellers)
+#   exit "fixed":     the close of entry + holding_days (the original model)
+#   exit "stop_ref":  the first close in entry+1..entry+holding_days-1 at or below the signal session's
+#                     reference price (IDX `previous`: the level before the signal day), else the fixed exit
+#   exit "first_down": the first close in that range below its own reference price (a down day), else fixed
+# A conditional exit that lands on a session where a sale is impossible rolls forward like the fixed one.
+# Levels are compared on the reference chain (cumulative close/previous), so a corporate-action reset
+# inside the window is not read as a move.
+ENTRY_RULES = ("fixed", "confirm", "pullback", "unlock")
+EXIT_RULES = ("fixed", "stop_ref", "first_down")
 FIRST_SKIP = STATUS.index("SKIP_NO_ENTRY_SESSION")  # statuses from here on never entered
 BIG = np.iinfo(np.int64).max // 4
 
@@ -105,6 +126,14 @@ class ExecConfig:
     fill_model: str = "A"  # "A" (ex-post entry-session volume), "B" (FILL-B-v1, decision-time capacity,
     #                        mixed units; reproduction only), "B2" (FILL-B-v2, entry-session units) or
     #                        "C" (FILL-C-v1, decision-time capacity, IDX close entries)
+    entry_rule: str = "fixed"  # ENTRY_RULES; anything but "fixed" needs entry_price="close"
+    entry_window: int = 1  # sessions after the signal in which a conditional entry may trigger
+    exit_rule: str = "fixed"  # EXIT_RULES; anything but "fixed" needs entry_price="close"
+
+    @property
+    def plan(self) -> dict:
+        return {"entry_rule": self.entry_rule, "entry_window": self.entry_window if self.entry_rule != "fixed"
+                else self.entry_lag, "exit_rule": self.exit_rule, "holding_days": self.holding_days}
 
 
 def _snap_ratio(r: np.ndarray) -> np.ndarray:
@@ -282,6 +311,63 @@ def close_capacity(volume, present, reg_factor, reg_unresolved, tick_idx, sig_id
     return out, unknown
 
 
+def reference_level(m: Market) -> np.ndarray:
+    """Cumulative close/previous on present sessions (IDX's reference chain): a split or rights
+    reset changes `previous`, not the chain, so levels are comparable across it. NaN when absent."""
+    with np.errstate(divide="ignore", invalid="ignore"):
+        logret = np.where(m.present & (m.prev > 0) & (m.close > 0), np.log(m.close / m.prev), 0.0)
+    return np.where(m.present, np.exp(np.cumsum(logret, axis=1)), np.nan)
+
+
+def conditional_entry(m: Market, level: np.ndarray, tick_idx: np.ndarray, sig_idx: np.ndarray, rule: str,
+                      window: int) -> np.ndarray:
+    """Entry session per trade for a conditional entry rule, or -1 when nothing in the window triggers.
+    Every condition reads sessions s+1..s+window only, each of them a completed close."""
+    n_sessions = m.shape[1]
+    out = np.full(len(tick_idx), -1, dtype=np.int64)
+    ref = level[tick_idx, np.minimum(sig_idx, n_sessions - 1)]
+    for k in range(1, window + 1):
+        c = sig_idx + k
+        pending = (out < 0) & (c < n_sessions)
+        cc = np.minimum(c, n_sessions - 1)
+        fill = m.tradeable[tick_idx, cc] & ~m.lock_up[tick_idx, cc]
+        if rule == "confirm":
+            cond = fill & (level[tick_idx, cc] > ref)
+        elif rule == "pullback":
+            cond = fill & (level[tick_idx, cc] < ref)
+        elif rule == "unlock":
+            cond = fill
+        else:
+            raise ValueError(f"unknown entry rule {rule!r}")
+        hit = pending & cond
+        out[hit] = cc[hit]
+    return out
+
+
+def conditional_exit(m: Market, level: np.ndarray, tick_idx: np.ndarray, sig_idx: np.ndarray, entry: np.ndarray,
+                     holding: int, rule: str) -> np.ndarray:
+    """Session on which a conditional exit triggers (entry+1 .. entry+holding-1), or -1: the fixed exit."""
+    n_sessions = m.shape[1]
+    out = np.full(len(tick_idx), -1, dtype=np.int64)
+    s = np.minimum(sig_idx, n_sessions - 1)
+    if rule == "stop_ref":
+        with np.errstate(divide="ignore", invalid="ignore"):
+            stop = level[tick_idx, s] * m.prev[tick_idx, s] / m.close[tick_idx, s]
+    elif rule != "first_down":
+        raise ValueError(f"unknown exit rule {rule!r}")
+    for k in range(1, holding):
+        x = entry + k
+        pending = (out < 0) & (x < n_sessions)
+        xx = np.minimum(x, n_sessions - 1)
+        if rule == "stop_ref":
+            cond = m.present[tick_idx, xx] & (level[tick_idx, xx] <= stop)
+        else:
+            cond = m.tradeable[tick_idx, xx] & (m.close[tick_idx, xx] < m.prev[tick_idx, xx])
+        hit = pending & cond
+        out[hit] = xx[hit]
+    return out
+
+
 def _tier_costs(price: np.ndarray, tiers: tuple) -> np.ndarray:
     if not tiers:
         return np.zeros(np.shape(price))
@@ -297,9 +383,23 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     n_trades = len(tick_idx)
     n_sessions = m.shape[1]
     status = np.full(n_trades, -1, dtype=np.int64)
-    entry = sig_idx + cfg.entry_lag
-    status[entry >= n_sessions] = STATUS.index("SKIP_NO_ENTRY_SESSION")
-    e = np.minimum(entry, n_sessions - 1)
+    if cfg.entry_rule not in ENTRY_RULES or cfg.exit_rule not in EXIT_RULES:
+        raise ValueError(f"unknown entry rule {cfg.entry_rule!r} or exit rule {cfg.exit_rule!r}")
+    conditional = cfg.entry_rule != "fixed" or cfg.exit_rule != "fixed"
+    if conditional and cfg.entry_price != "close":
+        raise ValueError("conditional entries and exits are defined for closing-auction entries")
+    if cfg.entry_rule != "fixed" and cfg.entry_window < 1:
+        raise ValueError("a conditional entry needs an entry window of at least one session")
+    level = reference_level(m) if conditional else None
+    if cfg.entry_rule == "fixed":
+        entry = sig_idx + cfg.entry_lag
+        status[entry >= n_sessions] = STATUS.index("SKIP_NO_ENTRY_SESSION")
+        e = np.minimum(entry, n_sessions - 1)
+    else:
+        status[sig_idx + 1 >= n_sessions] = STATUS.index("SKIP_NO_ENTRY_SESSION")
+        triggered = conditional_entry(m, level, tick_idx, sig_idx, cfg.entry_rule, cfg.entry_window)
+        status[(status < 0) & (triggered < 0)] = STATUS.index("SKIP_NO_TRIGGER")
+        e = np.where(triggered >= 0, triggered, np.minimum(sig_idx + 1, n_sessions - 1))
     open_ = status < 0
 
     if cfg.units not in ("panel", "as_traded") or cfg.fill_model not in ("A", "B", "B2", "C"):
@@ -366,6 +466,9 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     last_traded = traded_idx.max(axis=1)
 
     target = e + cfg.holding_days
+    if cfg.exit_rule != "fixed":
+        trigger = conditional_exit(m, level, tick_idx, sig_idx, e, cfg.holding_days, cfg.exit_rule)
+        target = np.where(trigger >= 0, trigger, target)
     within = target < n_sessions
     found = np.where(within, next_sellable[tick_idx, np.minimum(target, n_sessions - 1)], BIG)
     gone = last_present[tick_idx] < n_sessions - 1  # the name left the data before its end

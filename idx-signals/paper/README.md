@@ -34,9 +34,16 @@ Policy versions (`idxsig/paper.py`): `PAPER-POLICY-v1` decided the first IDX sca
 (2026-10-07). `PAPER-POLICY-v2` keeps every stop at least 5% below the close, because v1 put
 GTBO's stop at its entry price on a one-price ARA bar. `PAPER-POLICY-v3` extends v2 to US
 (hypothetical $10,000 account, E2 cost tiers) and crypto (10,000 USDT, 0.1% fee + 0.1%
-slippage per side, no quote = NOT EXECUTABLE). Decisions keep the policy they were made under.
+slippage per side, no quote = NOT EXECUTABLE). `PAPER-POLICY-v4` (2026-10-13) adds the E3 rule
+for IDX: when `research/E3` has frozen and validated a (detector, plan) pair, IDX scans run that
+detector (`MOONSHOT_E3_D1`) and each decision carries the plan the harness validated (its own
+trigger and the sessions it may trigger on, its exit, its holding period, no chase limit), and is
+scored by the harness's execution model so the outcome is what the validation run would have
+recorded. No pair has been validated (E3 discovery admitted none), so v4 decides exactly as v3
+did. Decisions keep the policy they were made under.
 
-`PAPER-POLICY-v4` (2026-10-09, prospective: decisions already recorded keep their policy) applies
+`PAPER-POLICY-v5` (drafted 2026-10-09 in PR #3 as "v4" and renamed when PR #6's v4 reached the
+base branch first; prospective: decisions already recorded keep their policy) applies
 Jonathan's risk constraint in every market. The invalidation is defined first (the signal session's
 low, floored to the tick). The highest permitted entry follows from it (stop / 0.95, never above the
 signal close x 1.10), so the stop is at most 5% below any accepted fill. Size, costs and caps are
@@ -46,7 +53,9 @@ most $100, and an open of $110 is rejected. US plans and outcomes run through `i
 (EXEC-US-v1, scorer `paper-score-v4`), the same code as the historical replay: entry at the next
 open, a resting stop (filled at the stop, or at the open on a gap through it), a market-on-close
 time exit placed in advance, and costs at each fill's as-traded price. IDX and crypto keep the v3
-entry and close-based exit scoring inside the v4 band (a known limitation). Approval is
+entry and close-based exit scoring inside the v5 band (a known limitation). v5 does not use
+v4's E3 rule: while a validated E3 pair exists, the IDX scan fails instead of deciding, because
+v5 does not define how a plan without a chase limit meets the 5% stop rule. Approval is
 `APPROVAL-v2`. Each market's evidence is pinned to one run and its config sha256
 (`paper.APPROVAL_PINS`), so appending a run cannot change it. The pinned run must have tested the
 execution the plans use. It must also beat matched entries at p < 0.05 with a positive average
