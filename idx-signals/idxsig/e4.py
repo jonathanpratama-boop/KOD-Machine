@@ -179,7 +179,9 @@ def run_reproduce(df, meta, out: Path, proto: dict, proto_sha: str, market: str,
 def run_discovery(df, meta, out: Path, proto: dict, proto_sha: str, market: str, log=print,
                   accept_deviation: bool = False) -> dict:
     named = proto["markets"][market].get("precondition_result")
-    repro_path = PKG_ROOT / named if named else out.parent / "reproduce" / "result.json"
+    repro_path = out.parent / "reproduce" / "result.json"
+    if named:  # the protocol names it relative to the package or to the repository root
+        repro_path = next((p for p in (PKG_ROOT / named, PKG_ROOT.parent / named) if p.exists()), PKG_ROOT / named)
     if not repro_path.exists():
         raise RuntimeError(f"the precondition has not been run for {market} (e4-reproduce)")
     repro = json.loads(repro_path.read_text(encoding="utf-8"))
