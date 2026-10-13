@@ -84,6 +84,8 @@ STATUS = (
     "SKIP_LIQUIDITY",
     "SKIP_CAPACITY_UNKNOWN",  # fill model C: an unverified reset makes the window's share units unknown
     "SKIP_NO_TRIGGER",        # conditional entry: no session in the entry window met the entry condition
+    "EXCLUDED_DATA_JUMP",     # not scored: held across a session whose close/reference ratio is beyond
+    #                           jump_ratio (a redenomination or a bad print, not a trade); both sides alike
 )
 SCORED = (0, 1)
 # Execution plans (research/E3): how a signal becomes an entry and how the position is closed.
@@ -134,6 +136,14 @@ class ExecConfig:
     exit_rule: str = "fixed"  # EXIT_RULES; LONG_EXITS for side "long", SHORT_EXITS for side "short"
     side: str = "long"  # SIDES; "short" needs open entries and a market without auto-rejection limits
     carry_per_session: float = 0.0  # short side: borrow or funding charged per session held, on the entry notional
+    # Short side, optional: an isolated-margin position is liquidated when the price has risen by this
+    # fraction of the entry (checked on each session's high from the entry session on); the loss is then
+    # this fraction of the sold notional plus fees and carry. None: losses are unbounded (research/E4 v1).
+    liquidation: float | None = None
+    # Optional, both sides: a session whose close/reference ratio exceeds jump_ratio or falls below
+    # 1/jump_ratio inside (entry, exit] is a redenomination or a bad print, not a trade; the trade is
+    # EXCLUDED_DATA_JUMP, for the rule and the random baselines alike. None: no such check.
+    jump_ratio: float | None = None
 
     @property
     def plan(self) -> dict:
@@ -516,10 +526,34 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
         factor_array = m.share_factor
     else:
         raise ValueError(f"unknown ca_mode {cfg.ca_mode!r}")
+    if cfg.jump_ratio is not None:
+        if cfg.jump_ratio <= 1:
+            raise ValueError("jump_ratio must be greater than 1")
+        with np.errstate(divide="ignore", invalid="ignore"):
+            ratio = np.where(m.present & (m.prev > 0), m.close / m.prev, 1.0)
+        jump = np.cumsum((ratio > cfg.jump_ratio) | (ratio < 1 / cfg.jump_ratio), axis=1)
+        held = np.isin(status, SCORED)
+        crossed = jump[tick_idx, x] - jump[tick_idx, e] > 0
+        status[held & crossed] = STATUS.index("EXCLUDED_DATA_JUMP")
     scored = np.isin(status, SCORED)
+    liquidated = np.zeros(n_trades, dtype=bool)
+    if cfg.side == "short" and cfg.liquidation is not None:
+        if cfg.liquidation <= 0:
+            raise ValueError("liquidation must be a positive fraction of the entry price")
+        trigger_level = entry_price * (1 + cfg.liquidation)
+        span = int(np.max(np.where(scored, x - e, 0))) if n_trades else 0
+        liq_idx = np.full(n_trades, -1, dtype=np.int64)
+        for off in range(0, span + 1):
+            k = np.minimum(e + off, n_sessions - 1)
+            hit = scored & (liq_idx < 0) & (e + off <= x) & (np.nan_to_num(m.high[tick_idx, k]) >= trigger_level)
+            liq_idx[hit] = k[hit]
+        liquidated = liq_idx >= 0
+        x = np.where(liquidated, liq_idx, x)
     exit_price = np.where(scored, np.nan_to_num(m.close[tick_idx, x]), np.nan)
     if cfg.data_end_exit == "zero":
         exit_price = np.where(status == STATUS.index("EXIT_DATA_END"), 0.0, exit_price)
+    if liquidated.any():
+        exit_price = np.where(liquidated, entry_price * (1 + cfg.liquidation), exit_price)
     factor = factor_array[tick_idx, x] / factor_array[tick_idx, e]
     exit_shares = shares * factor
     buy_value = shares * entry_price
@@ -553,7 +587,8 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
             "shares_as_traded": np.where(status >= FIRST_SKIP, 0, shares_traded)} if uf is not None else {}),
         "exit_price": exit_price,
         "share_factor": np.where(scored, factor, np.nan),
-        "rolled_sessions": np.where(scored & (status == 0), x - target, 0),
+        "rolled_sessions": np.where(scored & (status == 0) & ~liquidated, x - target, 0),
+        "liquidated": liquidated,
         "gross_return": gross,
         "net_return": net,
     }

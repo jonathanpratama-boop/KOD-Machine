@@ -73,6 +73,8 @@ class RunConfig:
     entry_window: int | None = None
     exit_rule: str | None = None
     side: str | None = None  # "long" / "short" (execution.SIDES); None: the rule's plan, else long
+    liquidation: float | None = None  # short side: isolated-margin liquidation at this fraction above the entry
+    jump_ratio: float | None = None  # trades held across a close/reference ratio beyond this are not scored
     holdout_final: bool = False  # the one pre-registered holdout evaluation (see HOLDOUT)
 
 
@@ -279,6 +281,8 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
         ca_mode=cfg.ca_mode,
         units=cfg.units,
         fill_model=cfg.fill_model,
+        liquidation=cfg.liquidation,
+        jump_ratio=cfg.jump_ratio,
         **plan,
     )
     start = cfg.start or (FIRST_SNAPSHOT if idx else panel_meta["default_start"])
@@ -348,6 +352,8 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
     attempt = ~overlap_skipped
     a_tick, a_sig = tick_idx[attempt], sig_idx[attempt]
     rule_stats = _summary_stats(trades["net_return"][attempt], trades["status"][attempt])
+    if exec_cfg.side == "short" and exec_cfg.liquidation is not None:
+        rule_stats["liquidated"] = int(trades["liquidated"][attempt].sum())
 
     draws = cfg.random_draws
     rng = np.random.default_rng(cfg.seed)
@@ -450,6 +456,7 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
         "exit_price": trades["exit_price"],
         "share_factor": trades["share_factor"],
         "rolled_sessions": trades["rolled_sessions"],
+        **({"liquidated": trades["liquidated"]} if exec_cfg.side == "short" else {}),
         "gross_return": trades["gross_return"],
         "net_return": trades["net_return"],
         **({k: trades[k] for k in ("entry_price_as_traded", "exit_price_as_traded", "shares_as_traded")}
@@ -500,8 +507,19 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
                       else "signal at close of s, entry at the open of s + entry_lag, exit at a close"),
             "plan": exec_cfg.plan,
             "plan_text": plan_text(exec_cfg.plan, profile.entry),
-            **({"short_side": {"carry_per_session": exec_cfg.carry_per_session, "note": profile.short_note}}
+            **({"short_side": {"carry_per_session": exec_cfg.carry_per_session, "note": profile.short_note,
+                               "liquidation": exec_cfg.liquidation,
+                               "liquidation_note": ("isolated margin: liquidated at the first session whose high "
+                                                    f"is {exec_cfg.liquidation:.0%} above the entry, losing that "
+                                                    "fraction of the sold notional plus fees and carry"
+                                                    if exec_cfg.liquidation is not None else
+                                                    "none: losses are unbounded")}}
                if exec_cfg.side == "short" else {}),
+            **({"jump_ratio": {"ratio": exec_cfg.jump_ratio,
+                               "note": "a session whose close/reference ratio is beyond this inside (entry, exit] "
+                                       "is a redenomination or a bad print, not a trade; such trades are "
+                                       "EXCLUDED_DATA_JUMP for the rule and the baselines alike"}}
+               if exec_cfg.jump_ratio is not None else {}),
             "lot_size": profile.lot_size,
             "cost_tiers": [list(t) for t in profile.cost_tiers],
             "fees": {"buy": cfg.fee_buy, "sell": cfg.fee_sell},

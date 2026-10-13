@@ -76,9 +76,13 @@ def tail_stats(trades: pd.DataFrame) -> dict:
         return {"worst_net_return": None, "p1_net_return": None, "p5_net_return": None, "mean_worst_10": None,
                 "share_below_minus_20pct": None}
     s = np.sort(net)
-    return {"worst_net_return": float(s[0]), "p1_net_return": float(np.percentile(s, 1)),
-            "p5_net_return": float(np.percentile(s, 5)), "mean_worst_10": float(s[:10].mean()),
-            "share_below_minus_20pct": float((s < -0.20).mean())}
+    out = {"worst_net_return": float(s[0]), "p1_net_return": float(np.percentile(s, 1)),
+           "p5_net_return": float(np.percentile(s, 5)), "mean_worst_10": float(s[:10].mean()),
+           "share_below_minus_20pct": float((s < -0.20).mean())}
+    if "liquidated" in trades:
+        scored = trades["status"].isin(("EXITED", "EXIT_DATA_END"))
+        out["share_liquidated"] = float(trades.loc[scored, "liquidated"].astype(bool).mean()) if scored.any() else None
+    return out
 
 
 def admissibility(row: dict, proto: dict, years: list[int]) -> list[str]:

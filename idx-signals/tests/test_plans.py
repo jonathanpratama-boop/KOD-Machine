@@ -267,6 +267,39 @@ class ShortSideTests(unittest.TestCase):
             execute(rebuild(t, d, a), np.array([0]), np.array([1]),
                     ExecConfig(holding_days=3, side="short", entry_price="open"))
 
+    def test_liquidation_caps_the_loss_at_the_first_high_beyond_the_trigger(self):
+        t, d, a = open_market()
+        set_bar(a, 0, 5, close=19.0, high=20.5)  # the session's high crosses 2x the entry (10)
+        set_bar(a, 0, 8, close=30.0)
+        r = short(build_open(t, d, a), holding=5, liquidation=1.0)
+        self.assertTrue(r["liquidated"])
+        self.assertEqual((r["entry_idx"], r["exit_idx"]), (3, 5))
+        self.assertEqual(r["exit_price"], 20.0)
+        self.assertAlmostEqual(r["net_return"], (1 - 0.002) - 2.0 * (1 + 0.002) - 2 * 0.0005)
+        self.assertEqual(r["rolled_sessions"], 0)
+        free = short(build_open(t, d, a), holding=5)  # no cap: the loss runs to the close of session 8
+        self.assertFalse(free["liquidated"])
+        self.assertLess(free["net_return"], -2.0)
+        below = open_market()
+        set_bar(below[2], 0, 5, close=19.0, high=19.9)
+        self.assertFalse(short(build_open(*below), holding=5, liquidation=1.0)["liquidated"])
+        with self.assertRaises(ValueError):
+            short(build_open(*open_market()), liquidation=0.0)
+
+    def test_a_redenomination_sized_jump_is_not_a_trade(self):
+        t, d, a = open_market()
+        set_bar(a, 0, 5, close=120.0)  # x12 in a session: a redenomination, not a move
+        r = short(build_open(t, d, a), holding=5, jump_ratio=10.0)
+        self.assertEqual(STATUS[r["status"]], "EXCLUDED_DATA_JUMP")
+        self.assertTrue(np.isnan(r["net_return"]))
+        real = open_market()
+        set_bar(real[2], 0, 5, close=30.0)  # x3: a real squeeze, scored
+        self.assertEqual(STATUS[short(build_open(*real), holding=5, jump_ratio=10.0)["status"]], "EXITED")
+        long_ = execute(build_open(t, d, a), np.array([0]), np.array([2]),
+                        ExecConfig(holding_days=5, jump_ratio=10.0, **CRYPTO_COSTS))
+        self.assertEqual(STATUS[long_["status"][0]], "EXCLUDED_DATA_JUMP")
+        self.assertEqual(STATUS[-1], "EXCLUDED_DATA_JUMP")  # appended, never inserted
+
     def test_split_scales_the_shares_owed(self):
         t, d, a = open_market(price=5000.0)
         a["prev"][0, 5] = 1000.0  # 1:5 split effective session 5
