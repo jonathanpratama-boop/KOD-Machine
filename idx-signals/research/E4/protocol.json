@@ -1,0 +1,116 @@
+{
+  "protocol_id": "KOD-GLOBAL-E4-v1",
+  "frozen_before_analysis": true,
+  "question": "E2 validated G2_RET30 (a +30% day) for detection in US equities and crypto and found that buying the next open loses (-3.65% US, -1.90% crypto net per trade vs -0.60% and +1.42% for matched random entries, 2023); the median five-session move after a flag was about -10% against 0% for matched names, and the long hit rate 31-36%. Does the SHORT side of the E2 family's already-ran detectors, under a pre-specified execution plan with a squeeze stop, earn a positive average net return after fees, slippage and carry, beat matched random shorts executed under the same plan, win more often than it loses, keep its tail bounded, and do so in every discovery year?",
+  "builds_on": {
+    "E2": "research/E2/protocol.json (KOD-GLOBAL-E2-v1): markets, periods, event definition, matched controls, harness profiles",
+    "E3": "research/E3/protocol.json (KOD-IDX-E3-v1): the execution-plan family and the selection design, here mirrored to the short side",
+    "D1": "MOONSHOT_E2_CRYPTO_D1 / MOONSHOT_E2_US_D1 = G2_RET30; the recorded long runs are this protocol's precondition"
+  },
+  "side": "short",
+  "side_note": "sell at the entry, buy back at the exit; a split multiplies the shares owed; carry (funding or borrow) charged per session held on the sold notional; the harness's short side (idxsig/execution.py side='short') is defined for open-entry markets without auto-rejection limits, so IDX is out of scope",
+  "markets": {
+    "CRYPTO": {
+      "panel_manifest": "panel_crypto-20261013T205803Z.json",
+      "universe": "Binance spot USDT pairs including delisted/halted pairs still in exchangeInfo (survivorship-complete for pairs Binance still describes); stablecoins, fiat and leveraged tokens excluded; rebuilt 2026-10-13 from the same source as E2's panel",
+      "instrument_note": "the short is a perpetual-futures short at the spot reference price (profiles.CRYPTO.short_note): funding 0.05% per UTC day paid by the short as a conservative stand-in, 0.1% fee + 0.1% slippage per side; perpetuals may not exist for every pair and liquidation is not modelled",
+      "notional": 5000.0,
+      "fee_buy": 0.001,
+      "fee_sell": 0.001,
+      "precondition_runs": ["results/runs/20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1"],
+      "status": "run first"
+    },
+    "US": {
+      "panel_manifest": "PENDING_REPAIR_PANEL",
+      "universe": "as E2-US repair (research/E2/repair): the archived original Yahoo payloads with causal preprocessing and as-traded units; survivor-only",
+      "instrument_note": "a stock borrow at 0.3% per session (about 75% a year, a hard-to-borrow rate, as names that just spiked usually are), locate assumed available, not point-in-time (profiles.US.short_note); the SEC fee on the opening sale",
+      "notional": 5000.0,
+      "fee_buy": 0.0,
+      "fee_sell": 0.0000278,
+      "precondition_runs": ["results/runs/20261008T115656Z_MOONSHOT_E2_US_D1_v1"],
+      "status": "second market: run under this protocol once the repair panel is rebuilt from the archived inputs; the manifest name is written in then, before any US statistic"
+    }
+  },
+  "detectors": {
+    "candidates": ["G2_RET30", "G1_RET20_CLOSEHIGH", "G10_RET15_CLOSEHIGH", "G7_MOMENTUM5_30"],
+    "source": "idxsig/rules/moonshot_e4.py: the four already-ran members of the E2 family (G2 = D1; G1 and G10 are big up days closing near their high; G7 a five-session +30%), feature and flag code copied verbatim from idxsig/rules/moonshot_g.py (tests/test_e4.py checks the copy flags exactly as the original)",
+    "why_these": "E2 showed that a big up day marks names with a fat right tail whose median path is down over the next week; the fade is the other side of that finding. No rule outside the E2 family is admitted",
+    "harness_rule_ids": "E4_CAND_<name> while SELECTED is None (the candidate rules carry no plan: the run names the side and plan); MOONSHOT_E4_D1 after the freeze, with side short in its plan"
+  },
+  "plans": {
+    "entries": [["fixed", 1], ["confirm", 3], ["pullback", 3]],
+    "exits": ["fixed", "stop_high", "first_up"],
+    "holding_days": [1, 2, 3, 5],
+    "count": 36,
+    "count_note": "with holding_days 1 every exit rule coincides with the fixed exit, so 6 of the 36 rows per detector duplicate the three hold-1 fixed rows; 36 x 4 = 144 runs per market, the distinct plans 30 x 4 = 120",
+    "definitions": {
+      "fixed entry": "sell short at the open of session s+1",
+      "confirm": "sell short at the first open in s+1..s+3 that is below the signal close (the fade has begun); no such open = no trade (SKIP_NO_TRIGGER)",
+      "pullback": "sell short at the first open in s+1..s+3 that is above the signal close (into a bounce); none = no trade",
+      "fixed exit": "buy back at the close of the holding_days-th session after entry",
+      "stop_high": "buy back at the first close in entry+1..entry+holding_days-1 at or above the signal session's high (the squeeze stop), else the fixed exit",
+      "first_up": "buy back at the first close in that range above its own reference price (an up day), else the fixed exit",
+      "all": "conditions on the reference chain; a name that stops trading before the exit is bought back at its last traded close (data_end_exit last_close), as E2's longs were sold"
+    },
+    "implementation": "idxsig/execution.py SHORT_EXITS, conditional_entry(price='open', side='short'), tests/test_plans.py ShortSideTests"
+  },
+  "harness": {
+    "max_participation": 0.10,
+    "overlap": "skip",
+    "ca_mode": "adjusted",
+    "fill_model": "A",
+    "fill_model_note": "as E2's recorded runs: the entry needs the entry session to have traded and shares at most 10% of its final volume (an ex-post capacity filter, labelled as such in every run)",
+    "random_draws": 200,
+    "seed": 20261007,
+    "controls_version": "v2",
+    "data_end_exit": "last_close",
+    "lookahead": "prefix-first (rules.causal_signals)",
+    "baselines": "matched random shorts (primary: same session, same v2 buckets, same plan and side) and same-session random shorts, 200 draws each"
+  },
+  "periods": {
+    "discovery": ["2020-07-01", "2022-12-31"],
+    "validation": ["2023-01-01", "2023-12-31"],
+    "holdout": ["2024-01-01", "2099-12-31"],
+    "holdout_rule": "sealed and not used by E4: the harness refuses any US or crypto detector run whose window touches 2024-01-01 or later (backtest.GLOBAL_HOLDOUT) unless --holdout-final is given, which E4 never gives; the study windows end at 2023-12-31",
+    "years_note": "discovery years 2020 (from July), 2021 (the crypto bull market: random shorts lose), 2022 (the bear market): a plan that only paid in 2022 is not admitted"
+  },
+  "selection": {
+    "on": "discovery only, per market",
+    "unit": "one harness run per (detector, plan): 4 x 36 = 144 runs, every one reported in <market>/discovery/plans.csv",
+    "admissible_if": [
+      "scored trades >= min_scored",
+      "average net return > 0 (after fees, slippage and carry)",
+      "average net return above the matched-random-short distribution with one-sided p < max_p_one_sided_vs_matched (200 draws: the floor is 0.005)",
+      "average net return > 0 in every discovery calendar year with at least min_scored_per_year scored trades",
+      "hit rate (net return > 0) >= min_hit_rate",
+      "the 1st percentile of trade net returns >= max_p1_loss (a short whose worst 1% lose more than half the notional is not admitted: the tail the hit rate hides)"
+    ],
+    "min_scored": 200,
+    "max_p_one_sided_vs_matched": 0.05,
+    "min_scored_per_year": 50,
+    "min_hit_rate": 0.5,
+    "max_p1_loss": -0.5,
+    "select": "the admissible pair with the highest average net return; ties by more scored trades, then grid order; none admissible = no pair (SELECTED stays None, MOONSHOT_E4_D1 is never created, no paper policy change)",
+    "reference_plan": {"detector": "G2_RET30", "entry_rule": "fixed", "entry_window": 1, "exit_rule": "fixed", "holding_days": 5},
+    "reference_note": "D1's E2 plan mirrored to the short side (next open, hold 5), reported beside the grid",
+    "freeze": "the selected (detector, entry_rule, entry_window, exit_rule, holding_days) is written into idxsig/rules/moonshot_e4.SELECTED and committed before any validation statistic; MOONSHOT_E4_D1 carries the plan with side short, so its rule hash covers both"
+  },
+  "validation": {
+    "on": "validation only, one run per market, as a recorded harness run (results/runs/, RUNS.jsonl) of MOONSHOT_E4_D1",
+    "pass_if": [
+      "scored trades >= min_scored",
+      "average net return > 0",
+      "average net return above the matched-random-short distribution with one-sided p < max_p_one_sided_vs_matched",
+      "hit rate >= min_hit_rate",
+      "1st percentile of trade net returns >= max_p1_loss"
+    ],
+    "min_scored": 100,
+    "max_p_one_sided_vs_matched": 0.05,
+    "min_hit_rate": 0.5,
+    "max_p1_loss": -0.5,
+    "reported_not_judged": ["median net return", "fill rate and status counts", "same-session random baseline", "worst trade, 5th percentile, mean of the ten worst", "2023 is one year: no per-year check is possible"],
+    "consequence_if_passed": "a new paper policy version may underwrite paper SHORT ON TRIGGER decisions for MOONSHOT_E4_D1 candidates in that market, with the plan's own trigger, cover and carry, each decision scored prospectively; no real orders; the holdout stays reserved for one final test after prospective evidence exists",
+    "consequence_if_failed": "no paper policy change; this plan family is exhausted for these detectors in that market"
+  },
+  "claims": "Historical research. 144 runs per market were searched on discovery and validation is the one confirmatory test; a pass there is one year under assumed costs, assumed carry and daily-bar fills, with perpetual-futures availability and liquidation (crypto) or borrow availability (US) not modelled. Nothing here is prospective performance, nothing here grants entry permission, and nothing here is a promise of reliability: a high hit rate with an unbounded tail is a losing strategy, which is why the tail is a criterion."
+}

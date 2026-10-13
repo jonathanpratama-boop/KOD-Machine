@@ -99,8 +99,17 @@ SCORED = (0, 1)
 # A conditional exit that lands on a session where a sale is impossible rolls forward like the fixed one.
 # Levels are compared on the reference chain (cumulative close/previous), so a corporate-action reset
 # inside the window is not read as a move.
+# Open-entry markets (US, crypto; research/E4): a conditional entry's condition is the OPEN of the
+# candidate session against the signal close (the entry happens at that open); "unlock" has no meaning.
+# Side "short" (open entries only, no auto-rejection limits): sell at the entry, buy back at the exit;
+# "confirm" is then the first open BELOW the signal close and "pullback" the first open above it; the
+# exits are "stop_high" (first close at or above the signal session's high) and "first_up" (first
+# close above its own reference); carry_per_session (borrow or funding) is charged per session held.
 ENTRY_RULES = ("fixed", "confirm", "pullback", "unlock")
-EXIT_RULES = ("fixed", "stop_ref", "first_down")
+EXIT_RULES = ("fixed", "stop_ref", "first_down", "stop_high", "first_up")
+SIDES = ("long", "short")
+LONG_EXITS = ("fixed", "stop_ref", "first_down")
+SHORT_EXITS = ("fixed", "stop_high", "first_up")
 FIRST_SKIP = STATUS.index("SKIP_NO_ENTRY_SESSION")  # statuses from here on never entered
 BIG = np.iinfo(np.int64).max // 4
 
@@ -120,14 +129,17 @@ class ExecConfig:
     units: str = "panel"  # "panel" (original) or "as_traded" (needs Market.unit_factor)
     fill_model: str = "A"  # "A" (original, ex-post entry-session volume), "B" (decision-time capacity,
     #                        open entries) or "C" (FILL-C-v1, decision-time capacity, close entries)
-    entry_rule: str = "fixed"  # ENTRY_RULES; anything but "fixed" needs entry_price="close"
+    entry_rule: str = "fixed"  # ENTRY_RULES; a conditional entry reads closes (close entries) or opens (open entries)
     entry_window: int = 1  # sessions after the signal in which a conditional entry may trigger
-    exit_rule: str = "fixed"  # EXIT_RULES; anything but "fixed" needs entry_price="close"
+    exit_rule: str = "fixed"  # EXIT_RULES; LONG_EXITS for side "long", SHORT_EXITS for side "short"
+    side: str = "long"  # SIDES; "short" needs open entries and a market without auto-rejection limits
+    carry_per_session: float = 0.0  # short side: borrow or funding charged per session held, on the entry notional
 
     @property
     def plan(self) -> dict:
         return {"entry_rule": self.entry_rule, "entry_window": self.entry_window if self.entry_rule != "fixed"
-                else self.entry_lag, "exit_rule": self.exit_rule, "holding_days": self.holding_days}
+                else self.entry_lag, "exit_rule": self.exit_rule, "holding_days": self.holding_days,
+                "side": self.side}
 
 
 def _snap_ratio(r: np.ndarray) -> np.ndarray:
@@ -296,21 +308,35 @@ def reference_level(m: Market) -> np.ndarray:
 
 
 def conditional_entry(m: Market, level: np.ndarray, tick_idx: np.ndarray, sig_idx: np.ndarray, rule: str,
-                      window: int) -> np.ndarray:
+                      window: int, price: str = "close", side: str = "long") -> np.ndarray:
     """Entry session per trade for a conditional entry rule, or -1 when nothing in the window triggers.
-    Every condition reads sessions s+1..s+window only, each of them a completed close."""
+    Every condition reads sessions s+1..s+window only: a completed close (close entries) or the open
+    the entry would happen at (open entries), against the signal close on the reference chain.
+    "confirm" is the first price beyond the signal close in the trade's direction (above for a long,
+    below for a short); "pullback" the first price against it; "unlock" the first unlocked traded close."""
     n_sessions = m.shape[1]
     out = np.full(len(tick_idx), -1, dtype=np.int64)
     ref = level[tick_idx, np.minimum(sig_idx, n_sessions - 1)]
+    direction = 1.0 if side == "long" else -1.0
+    if rule == "unlock" and price != "close":
+        raise ValueError("entry rule 'unlock' is defined for closing-auction entries under auto-rejection limits")
+    with np.errstate(divide="ignore", invalid="ignore"):
+        open_level = level * m.open / m.close if price == "open" else level
     for k in range(1, window + 1):
         c = sig_idx + k
         pending = (out < 0) & (c < n_sessions)
         cc = np.minimum(c, n_sessions - 1)
-        fill = m.tradeable[tick_idx, cc] & ~m.lock_up[tick_idx, cc]
+        if price == "close":
+            fill = m.tradeable[tick_idx, cc] & ~m.lock_up[tick_idx, cc]
+        else:
+            fill = (m.present[tick_idx, cc] & (np.nan_to_num(m.volume[tick_idx, cc]) > 0)
+                    & np.isfinite(m.open[tick_idx, cc]) & (np.nan_to_num(m.open[tick_idx, cc]) > 0))
+        cand = open_level[tick_idx, cc]
+        rel = (cand - ref) * direction
         if rule == "confirm":
-            cond = fill & (level[tick_idx, cc] > ref)
+            cond = fill & (rel > 0)
         elif rule == "pullback":
-            cond = fill & (level[tick_idx, cc] < ref)
+            cond = fill & (rel < 0)
         elif rule == "unlock":
             cond = fill
         else:
@@ -321,24 +347,33 @@ def conditional_entry(m: Market, level: np.ndarray, tick_idx: np.ndarray, sig_id
 
 
 def conditional_exit(m: Market, level: np.ndarray, tick_idx: np.ndarray, sig_idx: np.ndarray, entry: np.ndarray,
-                     holding: int, rule: str) -> np.ndarray:
-    """Session on which a conditional exit triggers (entry+1 .. entry+holding-1), or -1: the fixed exit."""
+                     holding: int, rule: str, side: str = "long") -> np.ndarray:
+    """Session on which a conditional exit triggers (entry+1 .. entry+holding-1), or -1: the fixed exit.
+    Long: stop_ref (close at or below the signal session's reference price), first_down (a down close).
+    Short: stop_high (close at or above the signal session's high), first_up (an up close)."""
     n_sessions = m.shape[1]
     out = np.full(len(tick_idx), -1, dtype=np.int64)
     s = np.minimum(sig_idx, n_sessions - 1)
-    if rule == "stop_ref":
-        with np.errstate(divide="ignore", invalid="ignore"):
+    allowed = LONG_EXITS if side == "long" else SHORT_EXITS
+    if rule not in allowed or rule == "fixed":
+        raise ValueError(f"exit rule {rule!r} is not defined for side {side!r}")
+    with np.errstate(divide="ignore", invalid="ignore"):
+        if rule == "stop_ref":
             stop = level[tick_idx, s] * m.prev[tick_idx, s] / m.close[tick_idx, s]
-    elif rule != "first_down":
-        raise ValueError(f"unknown exit rule {rule!r}")
+        elif rule == "stop_high":
+            stop = level[tick_idx, s] * m.high[tick_idx, s] / m.close[tick_idx, s]
     for k in range(1, holding):
         x = entry + k
         pending = (out < 0) & (x < n_sessions)
         xx = np.minimum(x, n_sessions - 1)
         if rule == "stop_ref":
             cond = m.present[tick_idx, xx] & (level[tick_idx, xx] <= stop)
-        else:
+        elif rule == "stop_high":
+            cond = m.present[tick_idx, xx] & (level[tick_idx, xx] >= stop)
+        elif rule == "first_down":
             cond = m.tradeable[tick_idx, xx] & (m.close[tick_idx, xx] < m.prev[tick_idx, xx])
+        else:  # first_up
+            cond = m.tradeable[tick_idx, xx] & (m.close[tick_idx, xx] > m.prev[tick_idx, xx])
         hit = pending & cond
         out[hit] = xx[hit]
     return out
@@ -359,11 +394,18 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     n_trades = len(tick_idx)
     n_sessions = m.shape[1]
     status = np.full(n_trades, -1, dtype=np.int64)
-    if cfg.entry_rule not in ENTRY_RULES or cfg.exit_rule not in EXIT_RULES:
-        raise ValueError(f"unknown entry rule {cfg.entry_rule!r} or exit rule {cfg.exit_rule!r}")
+    if cfg.entry_rule not in ENTRY_RULES or cfg.exit_rule not in EXIT_RULES or cfg.side not in SIDES:
+        raise ValueError(f"unknown entry rule {cfg.entry_rule!r}, exit rule {cfg.exit_rule!r} or side {cfg.side!r}")
+    if cfg.exit_rule not in (LONG_EXITS if cfg.side == "long" else SHORT_EXITS):
+        raise ValueError(f"exit rule {cfg.exit_rule!r} is not defined for side {cfg.side!r}")
+    if cfg.side == "short":
+        if cfg.entry_price != "open" or cfg.fill_model == "C":
+            raise ValueError("the short side is defined for open entries (US, crypto profiles)")
+        if m.lock_up.any() or m.lock_down.any():
+            raise ValueError("the short side is not modelled under auto-rejection limits")
     conditional = cfg.entry_rule != "fixed" or cfg.exit_rule != "fixed"
-    if conditional and cfg.entry_price != "close":
-        raise ValueError("conditional entries and exits are defined for closing-auction entries")
+    if cfg.entry_rule == "unlock" and cfg.entry_price != "close":
+        raise ValueError("entry rule 'unlock' is defined for closing-auction entries")
     if cfg.entry_rule != "fixed" and cfg.entry_window < 1:
         raise ValueError("a conditional entry needs an entry window of at least one session")
     level = reference_level(m) if conditional else None
@@ -373,7 +415,8 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
         e = np.minimum(entry, n_sessions - 1)
     else:
         status[sig_idx + 1 >= n_sessions] = STATUS.index("SKIP_NO_ENTRY_SESSION")
-        triggered = conditional_entry(m, level, tick_idx, sig_idx, cfg.entry_rule, cfg.entry_window)
+        triggered = conditional_entry(m, level, tick_idx, sig_idx, cfg.entry_rule, cfg.entry_window,
+                                      cfg.entry_price, cfg.side)
         status[(status < 0) & (triggered < 0)] = STATUS.index("SKIP_NO_TRIGGER")
         e = np.where(triggered >= 0, triggered, np.minimum(sig_idx + 1, n_sessions - 1))
     open_ = status < 0
@@ -441,7 +484,7 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
 
     target = e + cfg.holding_days
     if cfg.exit_rule != "fixed":
-        trigger = conditional_exit(m, level, tick_idx, sig_idx, e, cfg.holding_days, cfg.exit_rule)
+        trigger = conditional_exit(m, level, tick_idx, sig_idx, e, cfg.holding_days, cfg.exit_rule, cfg.side)
         target = np.where(trigger >= 0, trigger, target)
     within = target < n_sessions
     found = np.where(within, next_sellable[tick_idx, np.minimum(target, n_sessions - 1)], BIG)
@@ -483,11 +526,20 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     f_exit = uf[tick_idx, x] if uf is not None else np.ones(n_trades)
     traded_exit = np.nan_to_num(exit_price) * f_exit  # the sale price, in the exit session's units
     extra_in, extra_out = _tier_costs(traded_entry, cfg.cost_tiers), _tier_costs(traded_exit, cfg.cost_tiers)
-    cost = buy_value * (1 + cfg.fees.buy + extra_in)
-    proceeds = exit_shares * exit_price * (1 - cfg.fees.sell - extra_out)
     with np.errstate(divide="ignore", invalid="ignore"):
-        net = np.where(scored, proceeds / cost - 1, np.nan)
-        gross = np.where(scored, exit_shares * exit_price / buy_value - 1, np.nan)
+        if cfg.side == "long":
+            cost = buy_value * (1 + cfg.fees.buy + extra_in)
+            proceeds = exit_shares * exit_price * (1 - cfg.fees.sell - extra_out)
+            net = np.where(scored, proceeds / cost - 1, np.nan)
+            gross = np.where(scored, exit_shares * exit_price / buy_value - 1, np.nan)
+        else:
+            # Sold at the entry (sale fee), bought back at the exit (purchase fee); a split multiplies the
+            # shares owed; carry on the sold notional for every session held. Net on the sold notional.
+            sold = buy_value * (1 - cfg.fees.sell - extra_in)
+            cover = exit_shares * exit_price * (1 + cfg.fees.buy + extra_out)
+            carry = buy_value * cfg.carry_per_session * np.maximum(x - e, 0)
+            net = np.where(scored, (sold - cover - carry) / buy_value, np.nan)
+            gross = np.where(scored, 1 - exit_shares * exit_price / buy_value, np.nan)
     return {
         "ticker_idx": tick_idx,
         "signal_idx": sig_idx,

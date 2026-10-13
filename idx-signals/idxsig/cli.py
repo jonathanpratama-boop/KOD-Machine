@@ -106,6 +106,9 @@ def main(argv=None) -> int:
     p_run.add_argument("--entry-window", type=int, help="sessions after the signal a conditional entry may trigger")
     p_run.add_argument("--exit-rule", choices=("fixed", "stop_ref", "first_down"),
                        help="execution plan exit (default: the rule's frozen plan, else fixed)")
+    p_run.add_argument("--side", choices=("long", "short"),
+                       help="execution plan side (default: the rule's frozen plan, else long); short needs an "
+                            "open-entry market profile (US, CRYPTO)")
     p_run.add_argument("--holdout-final", action="store_true",
                        help="the one pre-registered IDX holdout evaluation (otherwise the holdout is refused)")
     p_run.add_argument("--quarantine", choices=("none", "unit_schedule"), default="none",
@@ -131,6 +134,14 @@ def main(argv=None) -> int:
         if name == "e3-discovery":
             p_e3.add_argument("--accept-deviation", action="store_true",
                               help="proceed although a precondition run did not reproduce identically (recorded)")
+    for name, helptext in (("e4-reproduce", "experiment E4 precondition: re-run the recorded E2 trading run on E4's data"),
+                           ("e4-discovery", "experiment E4 discovery: every (detector, plan) pair, short side"),
+                           ("e4-validation", "experiment E4 validation: the frozen pair on 2023, as a recorded run")):
+        p_e4 = sub.add_parser(name, help=helptext)
+        p_e4.add_argument("--market", choices=("CRYPTO", "US"), default="CRYPTO")
+        if name == "e4-discovery":
+            p_e4.add_argument("--accept-deviation", action="store_true",
+                              help="proceed although the precondition run did not reproduce identically (recorded)")
     for name, helptext in (("e2-discovery", "experiment E2 discovery for one market"),
                            ("e2-validation", "experiment E2 validation of a market's frozen detector")):
         p_e2 = sub.add_parser(name, help=helptext)
@@ -288,7 +299,7 @@ def main(argv=None) -> int:
             seed=args.seed, data_end_exit=args.data_end_exit, ca_mode=args.ca_mode,
             lookahead_cuts=args.lookahead_cuts, controls_version=args.controls_version,
             units=args.units, fill_model=args.fill_model, quarantine=args.quarantine,
-            entry_rule=args.entry_rule, entry_window=args.entry_window, exit_rule=args.exit_rule,
+            entry_rule=args.entry_rule, entry_window=args.entry_window, exit_rule=args.exit_rule, side=args.side,
             holdout_final=args.holdout_final,
         )
         registry = None
@@ -364,6 +375,37 @@ def main(argv=None) -> int:
             else:
                 result = e3.run_validation(df, meta, registry, e3.E3_DIR / "validation", proto, proto_sha)
         except (RuntimeError, FileExistsError) as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
+        print(json.dumps(result, indent=2, default=str))
+    elif args.cmd in ("e4-reproduce", "e4-discovery", "e4-validation"):
+        from . import e4, global_panel
+        from .provenance import MANIFESTS
+        from .results import code_state
+
+        proto, proto_sha = e4.protocol()
+        if code_state()["dirty"]:
+            print("error: commit idxsig/ first so the results name the code that produced them", file=sys.stderr)
+            return 2
+        mk = args.market
+        if mk not in proto["markets"] or "PENDING" in proto["markets"][mk]["panel_manifest"]:
+            print(f"error: research/E4/protocol.json does not name a panel manifest for {mk}", file=sys.stderr)
+            return 2
+        try:
+            df, meta = global_panel.load(MANIFESTS / proto["markets"][mk]["panel_manifest"])
+        except (FileNotFoundError, RuntimeError) as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
+        stage = args.cmd.split("-", 1)[1]
+        out = e4.market_dir(mk) / stage
+        try:
+            if stage == "reproduce":
+                result = e4.run_reproduce(df, meta, out, proto, proto_sha, mk)
+            elif stage == "discovery":
+                result = e4.run_discovery(df, meta, out, proto, proto_sha, mk, accept_deviation=args.accept_deviation)
+            else:
+                result = e4.run_validation(df, meta, out, proto, proto_sha, mk)
+        except (RuntimeError, FileExistsError, ValueError) as exc:
             print(f"error: {exc}", file=sys.stderr)
             return 2
         print(json.dumps(result, indent=2, default=str))
