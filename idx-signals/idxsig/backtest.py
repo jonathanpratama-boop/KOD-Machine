@@ -38,7 +38,7 @@ import pandas as pd
 from . import controls, quality
 from . import rules as rule_registry
 from .corporate_actions import REGISTRY_VERSION, RegistryMismatch
-from .execution import FIRST_SKIP, SCORED, STATUS, ExecConfig, Market, execute
+from .execution import NEVER_ENTERED, SCORED, STATUS, ExecConfig, Market, execute
 from .market import Fees
 from .rules import LookaheadError
 from .profiles import PROFILES
@@ -178,7 +178,7 @@ def signals(rule, m: Market, cuts: int | None) -> tuple[np.ndarray, dict]:
 def _summary_stats(net: np.ndarray, status: np.ndarray) -> dict:
     scored = np.isin(status, SCORED)
     vals = net[scored]
-    entered = status < FIRST_SKIP
+    entered = ~np.isin(status, NEVER_ENTERED)
     return {
         "attempts": int(len(status)),
         "filled": int(entered.sum()),

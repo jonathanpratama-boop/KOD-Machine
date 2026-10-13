@@ -110,7 +110,11 @@ class Scope(unittest.TestCase):
     def test_status_appended_so_old_codes_keep_their_meaning(self):
         """Guards against: renumbering the statuses recorded runs were written with."""
         self.assertEqual(STATUS[10:12], ("SKIP_LIQUIDITY", "SKIP_CAPACITY_UNKNOWN"))
-        self.assertEqual(STATUS[12:], ("SKIP_NO_TRIGGER",))  # E3 plans: appended, never inserted
+        self.assertEqual(STATUS[12:], ("SKIP_NO_TRIGGER", "EXCLUDED_DATA_JUMP"))  # E3/E4: appended, never inserted
+        from idxsig.execution import NEVER_ENTERED
+
+        self.assertNotIn(STATUS.index("EXCLUDED_DATA_JUMP"), NEVER_ENTERED)  # entered, held, not scored
+        self.assertIn(STATUS.index("SKIP_NO_TRIGGER"), NEVER_ENTERED)
         self.assertEqual(STATUS.index("SKIP_NO_ENTRY_SESSION"), 6)
 
 

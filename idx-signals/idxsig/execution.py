@@ -88,6 +88,9 @@ STATUS = (
     #                           jump_ratio (a redenomination or a bad print, not a trade); both sides alike
 )
 SCORED = (0, 1)
+# Statuses of attempts that never entered (every SKIP_*). FIRST_SKIP below is the original boundary;
+# EXCLUDED_DATA_JUMP was appended after it (statuses are never renumbered) although it is a held trade.
+NEVER_ENTERED = tuple(i for i, s in enumerate(STATUS) if s.startswith("SKIP_"))
 # Execution plans (research/E3): how a signal becomes an entry and how the position is closed.
 #   entry "fixed":    the close of s + entry_lag (the original model)
 #   entry "confirm":  the first close in s+1..s+entry_window that is above the signal close on the
@@ -574,17 +577,18 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
             carry = buy_value * cfg.carry_per_session * np.maximum(x - e, 0)
             net = np.where(scored, (sold - cover - carry) / buy_value, np.nan)
             gross = np.where(scored, 1 - exit_shares * exit_price / buy_value, np.nan)
+    never_entered = np.isin(status, NEVER_ENTERED)
     return {
         "ticker_idx": tick_idx,
         "signal_idx": sig_idx,
-        "entry_idx": np.where(status >= FIRST_SKIP, -1, e),
+        "entry_idx": np.where(never_entered, -1, e),
         "exit_idx": np.where(held, x, -1),  # excluded trades were still held until here
         "status": status,
-        "entry_price": np.where(status >= FIRST_SKIP, np.nan, entry_price),
-        "shares": np.where(status >= FIRST_SKIP, 0, shares),
-        **({"entry_price_as_traded": np.where(status >= FIRST_SKIP, np.nan, traded_entry),
+        "entry_price": np.where(never_entered, np.nan, entry_price),
+        "shares": np.where(never_entered, 0, shares),
+        **({"entry_price_as_traded": np.where(never_entered, np.nan, traded_entry),
             "exit_price_as_traded": np.where(scored, traded_exit, np.nan),
-            "shares_as_traded": np.where(status >= FIRST_SKIP, 0, shares_traded)} if uf is not None else {}),
+            "shares_as_traded": np.where(never_entered, 0, shares_traded)} if uf is not None else {}),
         "exit_price": exit_price,
         "share_factor": np.where(scored, factor, np.nan),
         "rolled_sessions": np.where(scored & (status == 0) & ~liquidated, x - target, 0),
