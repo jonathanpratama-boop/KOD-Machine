@@ -34,7 +34,13 @@ Policy versions (`idxsig/paper.py`): `PAPER-POLICY-v1` decided the first IDX sca
 (2026-10-07). `PAPER-POLICY-v2` keeps every stop at least 5% below the close, because v1 put
 GTBO's stop at its entry price on a one-price ARA bar. `PAPER-POLICY-v3` extends v2 to US
 (hypothetical $10,000 account, E2 cost tiers) and crypto (10,000 USDT, 0.1% fee + 0.1%
-slippage per side, no quote = NOT EXECUTABLE). Decisions keep the policy they were made under.
+slippage per side, no quote = NOT EXECUTABLE). `PAPER-POLICY-v4` (2026-10-13) adds the E3 rule
+for IDX: when `research/E3` has frozen and validated a (detector, plan) pair, IDX scans run that
+detector (`MOONSHOT_E3_D1`) and each decision carries the plan the harness validated (its own
+trigger and the sessions it may trigger on, its exit, its holding period, no chase limit), and is
+scored by the harness's execution model so the outcome is what the validation run would have
+recorded. No pair has been validated (E3 discovery admitted none), so v4 decides exactly as v3
+did. Decisions keep the policy they were made under.
 
 Versions behind every call. Each SCAN and DECISION names its detector (rule id, version, module
 SHA-256), policy (id and SHA-256), data manifest (and its SHA-256) and, from 2026-10-08 09:30 UTC,
