@@ -85,15 +85,20 @@ class CandidateRuleTests(unittest.TestCase):
             np.testing.assert_array_equal(ours[name], theirs[name])
 
     def test_frozen_plan_carries_the_short_side(self):
-        self.assertIsNone(moonshot_e4.selected_plan())
+        """The pair frozen from v2 discovery (2026-10-13), as the record of what validation tested."""
+        self.assertEqual(moonshot_e4.SELECTED, ("G2_RET30_BEAR", "pullback", 3, "first_up", 2))
+        self.assertEqual(moonshot_e4.SELECTED_PROTOCOL, "KOD-GLOBAL-E4-v2")
+        self.assertEqual(moonshot_e4.selected_plan(), {"entry_rule": "pullback", "entry_window": 3,
+                                                       "exit_rule": "first_up", "side": "short"})
+        found = {r.rule_id: r for r in moonshot_e4.rules()}
+        self.assertEqual(found["MOONSHOT_E4_D1"].plan["side"], "short")
+        self.assertEqual(found["MOONSHOT_E4_D1"].holding_days, 2)
+        self.assertIn("Selected under KOD-GLOBAL-E4-v2", found["MOONSHOT_E4_D1"].text)
         saved = moonshot_e4.SELECTED
         try:
-            moonshot_e4.SELECTED = ("G2_RET30", "confirm", 3, "stop_high", 3)
-            self.assertEqual(moonshot_e4.selected_plan(), {"entry_rule": "confirm", "entry_window": 3,
-                                                           "exit_rule": "stop_high", "side": "short"})
-            found = {r.rule_id: r for r in moonshot_e4.rules()}
-            self.assertEqual(found["MOONSHOT_E4_D1"].plan["side"], "short")
-            self.assertEqual(found["MOONSHOT_E4_D1"].holding_days, 3)
+            moonshot_e4.SELECTED = None
+            self.assertIsNone(moonshot_e4.selected_plan())
+            self.assertNotIn("MOONSHOT_E4_D1", {r.rule_id for r in moonshot_e4.rules()})
         finally:
             moonshot_e4.SELECTED = saved
 

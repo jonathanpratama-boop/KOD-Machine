@@ -107,11 +107,11 @@ ENTRY_TEXT = {
     "unlock": "buy at the first traded close in s+1..s+{w} that is not locked at ARA",
 }
 EXIT_TEXT = {
-    "fixed": "sell at the close of the {h}th session after entry",
+    "fixed": "sell at the close of the {h} session after entry",
     "stop_ref": "sell at the first close at or below the signal session's reference price, else at the close of "
-                "the {h}th session after entry",
+                "the {h} session after entry",
     "first_down": "sell at the first close below its own reference price (a down day), else at the close of the "
-                  "{h}th session after entry",
+                  "{h} session after entry",
 }
 OPEN_ENTRY_TEXT = {  # open-entry markets: the condition is the open the entry happens at
     "long": {"fixed": "buy at the open of session s + {w}",
@@ -124,26 +124,32 @@ OPEN_ENTRY_TEXT = {  # open-entry markets: the condition is the open the entry h
                           "bounce)"},
 }
 SHORT_EXIT_TEXT = {
-    "fixed": "buy back at the close of the {h}th session after entry",
+    "fixed": "buy back at the close of the {h} session after entry",
     "stop_high": "buy back at the first close at or above the signal session's high, else at the close of the "
-                 "{h}th session after entry",
+                 "{h} session after entry",
     "first_up": "buy back at the first close above its own reference price (an up day), else at the close of "
-                "the {h}th session after entry",
+                "the {h} session after entry",
 }
+
+
+def _ordinal(n: int) -> str:
+    n = int(n)
+    suffix = "th" if 10 <= n % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    return f"{n}{suffix}"
 
 
 def plan_text(plan: dict, entry_price: str = "close") -> str:
     """One sentence a decision record can carry: the plan as executed, in exchange terms."""
     side = plan.get("side", "long")
+    h = _ordinal(plan["holding_days"])
     if side == "short":
         return (OPEN_ENTRY_TEXT["short"][plan["entry_rule"]].format(w=plan["entry_window"]) + "; "
-                + SHORT_EXIT_TEXT[plan["exit_rule"]].format(h=plan["holding_days"])
-                + "; carry charged per session held")
+                + SHORT_EXIT_TEXT[plan["exit_rule"]].format(h=h) + "; carry charged per session held")
     if entry_price == "open":
         entry = OPEN_ENTRY_TEXT["long"][plan["entry_rule"]].format(w=plan["entry_window"])
-        return entry + "; " + EXIT_TEXT[plan["exit_rule"]].format(h=plan["holding_days"])
+        return entry + "; " + EXIT_TEXT[plan["exit_rule"]].format(h=h)
     return (ENTRY_TEXT[plan["entry_rule"]].format(w=plan["entry_window"]) + "; "
-            + EXIT_TEXT[plan["exit_rule"]].format(h=plan["holding_days"])
+            + EXIT_TEXT[plan["exit_rule"]].format(h=h)
             + "; a sale rolls to the next session where it is possible while locked at ARB or untraded")
 
 
