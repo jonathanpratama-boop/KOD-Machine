@@ -248,6 +248,21 @@ def run_discovery(df, meta, registry, out: Path, proto: dict, proto_sha: str, lo
     return summary
 
 
+def detection_evidence(df, meta, detector: str) -> dict:
+    """E1's validation detection metrics (precision, lift vs base and matched random, one-sided p,
+    recall) for an E1-family detector, from E1's own study code on E1's protocol. The paper policy's
+    `detected` gate reads them for the E3 detector; they are reported, not an E3 pass criterion."""
+    from . import e1
+
+    study = e1.Study(df, meta)
+    result = study.evaluate(detector, "validation")
+    result.update({"stage": "validation-detection", "panel_sha256": meta["sha256"], "computed_at": _now(),
+                   "detector_module_sha256": sha256_file(Path(e1.family.__file__)),
+                   "note": "E1 metrics (KOD-IDX-E1-v1, e1.Study.evaluate) on the validation period for the E3 "
+                           "detector; for the paper policy's detection gate; not an E3 pass criterion"})
+    return result
+
+
 def run_validation(df, meta, registry, out: Path, proto: dict, proto_sha: str, log=print) -> dict:
     if moonshot_e3.SELECTED is None:
         raise RuntimeError("no frozen (detector, plan): run discovery and write SELECTED first")
@@ -263,6 +278,8 @@ def run_validation(df, meta, registry, out: Path, proto: dict, proto_sha: str, l
     det, entry_rule, window, exit_rule, hold = moonshot_e3.SELECTED
     plan = {"entry_rule": entry_rule, "entry_window": window, "exit_rule": exit_rule, "holding_days": hold}
     row = plan_row(summary, det, plan, years_of(proto["periods"]["validation"]))
+    log(f"detection evidence for {det} (E1 metrics, validation)")
+    write_json(out / "detection.json", detection_evidence(df, meta, det))
     v = proto["validation"]
     passed = (row["scored"] >= v["min_scored"] and row["avg_net_return"] is not None and row["avg_net_return"] > 0
               and row["p_one_sided_vs_matched"] is not None
