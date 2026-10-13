@@ -41,8 +41,8 @@ from collections import Counter
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 from pathlib import Path
 
-VERSION = "3.0.1"
-SELF_SHA256 = "ab056162ffcb24e1990f667662f68d6e2e1a5fe5c1bb2081095bc307701763db"
+VERSION = "3.0.2"
+SELF_SHA256 = "930989b533daad01757300fd48dde4d51c7d338387a0f2293136fe6487905cd9"
 
 # ----------------------------------------------------------------------------- time
 
@@ -946,6 +946,26 @@ def move_to_s14(lines, run, what, old):
 
 
 IS_DPTR = re.compile(r"^- D-\d{3} → D-\d{3}: moved")
+DPTR_RANGE = re.compile(r"^- D-(\d{3}) → D-(\d{3}): moved verbatim to `([^`]+)`")
+
+
+def decision_check(recs, ledger_lines):
+    """Registered DECISION records vs the live ledger → (missing, archived).
+    A record whose exact line is gone but whose ID lies in a '- D-aaa → D-bbb: moved verbatim to `doc`'
+    pointer range was moved by an archive; anything else missing is a mismatch."""
+    led = set(ledger_lines)
+    arch = {}
+    for ln in ledger_lines:
+        m = DPTR_RANGE.match(ln)
+        if m:
+            for k in range(int(m.group(1)), int(m.group(2)) + 1):
+                arch[f"D-{k:03d}"] = m.group(3)
+    missing, archived = [], []
+    for r in recs:
+        if r["kind"] != "DECISION" or r["payload"]["text"] in led:
+            continue
+        (archived if r["id"] in arch else missing).append(r["id"])
+    return missing, archived
 
 
 def parse_patch(text):
@@ -1752,10 +1772,15 @@ def cmd_reg(a):
         kinds = Counter(r["kind"] for r in recs)
         print(f"register OK · {n} records · head {h} · " + ", ".join(f"{k} {v}" for k, v in sorted(kinds.items())))
         if a.ledger:
-            led = set(read_lines(a.ledger))
-            bad = [r["id"] for r in recs if r["kind"] == "DECISION" and r["payload"]["text"] not in led]
-            print("ledger decision text: " + ("all registered decision records match the ledger verbatim" if not bad else
-                                              "MISMATCH or archived (check the weekly archive): " + ", ".join(bad)))
+            missing, archived = decision_check(recs, read_lines(a.ledger))
+            live = sum(1 for r in recs if r["kind"] == "DECISION") - len(missing) - len(archived)
+            note = (f"; {len(archived)} archived per the ledger's pointer lines ({archived[0]} → {archived[-1]})"
+                    if archived else "")
+            if missing:
+                print("ledger decision text: MISMATCH — registered decision line(s) not in the ledger and not "
+                      "covered by an archive pointer: " + ", ".join(missing) + note)
+            else:
+                print(f"ledger decision text: OK — {live} registered decision record(s) match the ledger verbatim" + note)
         return 0
     if a.action == "add":
         payload = json.loads(Path(a.payload_file).read_text()) if a.payload_file else json.loads(a.payload or "{}")
@@ -2243,6 +2268,11 @@ def cmd_selftest(a):
         fails.append("reg-tamper")
     except RegError:
         pass
+    # registered decision lines vs the live ledger, including lines moved by a weekly archive
+    recs_d = [{"kind": "DECISION", "id": f"D-0{n}", "payload": {"text": f"- D-0{n} · t{n}"}} for n in (20, 21, 22)]
+    ptr_d = "- D-020 → D-021: moved verbatim to `moonshot/ledger-archive-2026-10-17.md` (§11 there) on 2026-10-17 09:05 WIB."
+    _check("reg-decision-archived", decision_check(recs_d, [ptr_d, "- D-022 · t22"]) == ([], ["D-020", "D-021"]), fails)
+    _check("reg-decision-missing", decision_check(recs_d, ["- D-022 · t22"]) == (["D-020", "D-021"], []), fails)
     tmp.unlink()
     # ledger patch + guard
     led = ["# L", "", "Created: x · Last updated: old", "", "## 5. Candidates", "", "| C-001 | A | s |",
