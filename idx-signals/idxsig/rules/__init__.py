@@ -47,6 +47,9 @@ class Rule:
     compute: Callable
     module: ModuleType
     kind: str = "DETECTOR"  # or "PLACEBO" (harness self-check, not a trading rule)
+    # A frozen execution plan (execution.ENTRY_RULES / EXIT_RULES: entry_rule, entry_window, exit_rule),
+    # or None for the original model. It lives in the module source, so the rule hash covers it.
+    plan: dict | None = None
 
     @property
     def sha256(self) -> str:

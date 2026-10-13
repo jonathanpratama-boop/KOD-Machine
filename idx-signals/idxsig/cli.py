@@ -101,6 +101,13 @@ def main(argv=None) -> int:
     p_run.add_argument("--fill-model", choices=("A", "B", "C"), default="A",
                        help="A: original (entry-session final volume, ex post); B: decision-time capacity "
                             "(open entries); C: FILL-C-v1, decision-time capacity for closing-auction entries")
+    p_run.add_argument("--entry-rule", choices=("fixed", "confirm", "pullback", "unlock"),
+                       help="execution plan entry (default: the rule's frozen plan, else fixed)")
+    p_run.add_argument("--entry-window", type=int, help="sessions after the signal a conditional entry may trigger")
+    p_run.add_argument("--exit-rule", choices=("fixed", "stop_ref", "first_down"),
+                       help="execution plan exit (default: the rule's frozen plan, else fixed)")
+    p_run.add_argument("--holdout-final", action="store_true",
+                       help="the one pre-registered IDX holdout evaluation (otherwise the holdout is refused)")
     p_run.add_argument("--quarantine", choices=("none", "unit_schedule"), default="none",
                        help="unit_schedule: leave out names whose split records SEC does not corroborate")
     sub.add_parser("verify-runs", help="check that no past run was edited or removed")
@@ -247,7 +254,7 @@ def main(argv=None) -> int:
         return 1 if failed else 0
     elif args.cmd == "run":
         from . import rules
-        from .backtest import RunConfig, run
+        from .backtest import HoldoutSealed, RunConfig, run
         from .panel import load
         from .provenance import sha256_file
         from .results import DirtyTreeError, write_run
@@ -274,6 +281,8 @@ def main(argv=None) -> int:
             seed=args.seed, data_end_exit=args.data_end_exit, ca_mode=args.ca_mode,
             lookahead_cuts=args.lookahead_cuts, controls_version=args.controls_version,
             units=args.units, fill_model=args.fill_model, quarantine=args.quarantine,
+            entry_rule=args.entry_rule, entry_window=args.entry_window, exit_rule=args.exit_rule,
+            holdout_final=args.holdout_final,
         )
         registry = None
         if args.ca_mode == "registry" and args.market == "IDX":
@@ -285,7 +294,11 @@ def main(argv=None) -> int:
             except (FileNotFoundError, corporate_actions.RegistryMismatch) as exc:
                 print(f"error: {exc}", file=sys.stderr)
                 return 2
-        output = run(cfg, df, meta, ca_registry=registry)
+        try:
+            output = run(cfg, df, meta, ca_registry=registry)
+        except HoldoutSealed as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
         try:
             run_dir = write_run(output, allow_dirty=args.allow_dirty, commit=not args.no_commit)
         except DirtyTreeError as exc:
