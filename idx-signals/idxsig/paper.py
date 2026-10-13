@@ -16,6 +16,16 @@ closed, and appends to paper/ledger.jsonl:
 Each line carries the hash of the previous line (a chain) and is stamped by two RFC 3161
 authorities; the commit that adds it is pushed so GitHub's own workflow-run record dates it.
 Nothing is ever rewritten: corrections are new lines.
+
+PAPER-POLICY-v4 (IDX): when research/E3 has frozen and validated a (detector, plan) pair
+(rules/moonshot_e3.SELECTED and research/E3/validation/result.json with passed = true), the
+IDX scan runs that detector (MOONSHOT_E3_D1) and every decision carries that plan: its own
+entry trigger (fixed, confirm, pullback or unlock), exit (fixed, stop at the signal session's
+reference price, or first down close), holding period, no chase limit, and sizing from the
+plan's stop or, without one, from one session locked at the lower limit. Such a decision is
+scored by the harness's own execution model (execution.execute), so the prospective outcome is
+what the validation run would have recorded for the same bars. Without a validated pair the IDX
+policy is v3's: D1 and the next-close plan, which PASS until a plan beats matched random.
 """
 
 from __future__ import annotations
@@ -42,7 +52,9 @@ PAPER = PKG_ROOT / "paper"
 LEDGER = PAPER / "ledger.jsonl"
 SCANS = PAPER / "scans"
 TOKENS = PAPER / "timestamps"
-POLICY_ID = "PAPER-POLICY-v3"
+POLICY_ID = "PAPER-POLICY-v4"
+E3_DIR = PKG_ROOT / "research" / "E3"
+E1_ARGS = ("close", "prev", "high", "low", "volume", "present", "tradeable", "lock_up")
 # v1 (first scan, 2026-10-08): invalidation = max(signal-day low, close x 0.85). On a one-price
 #    ARA bar the low equals the close, so the stop sat at the entry price (GTBO, 2026-10-07).
 # v2: invalidation at least 5% below the close (and at most 15%); max planned loss states that a
@@ -79,6 +91,9 @@ class Policy:
     horizon_sessions: int = 5
     min_validated_lift_p: float = 0.05      # paper BUY needs detection AND the executable plan to beat matched
                                             # random in validation at this level (one-sided)
+    # v4: a validated E3 (detector, plan) pair decides IDX candidates with its own plan (see the module
+    # docstring); the plan is scored by the harness's execution model. Without one, D1 and the v3 plan.
+    e3_plan_rule: str = "IDX: validated E3 pair decides with its plan, scored by execution.execute; else v3"
 
 
 POLICY = Policy()
@@ -106,12 +121,40 @@ def policy_sha() -> str:
     return hashlib.sha256(_canonical(policy_record()).encode()).hexdigest()
 
 
+def e3_plan() -> dict | None:
+    """The frozen, validated E3 (detector, plan) pair (research/E3), or None: nothing frozen yet, or
+    validation did not pass. Then IDX decisions use D1 and the v3 plan."""
+    from .rules import moonshot_e3
+
+    path = E3_DIR / "validation" / "result.json"
+    if moonshot_e3.SELECTED is None or not path.exists():
+        return None
+    res = json.loads(path.read_text(encoding="utf-8"))
+    if list(res.get("selected") or []) != list(moonshot_e3.SELECTED) or not res.get("passed"):
+        return None
+    det, entry_rule, window, exit_rule, hold = moonshot_e3.SELECTED
+    return {"detector": det,
+            "plan": {"entry_rule": entry_rule, "entry_window": int(window), "exit_rule": exit_rule,
+                     "holding_days": int(hold)},
+            "plan_text": res["plan_text"], "run_id": res["run_id"], "protocol_id": res["protocol_id"],
+            "result": rel(path), "result_sha256": sha256_file(path),
+            "detection_path": E3_DIR / "validation" / "detection.json"}
+
+
 def _detector(market: str = "IDX") -> dict:
     """The frozen decision detector and the benchmark rules logged beside it, per market."""
     if market == "IDX":
+        e3 = e3_plan()
+        if e3 is not None:
+            from .rules import moonshot_e3
+
+            return {"module": moonshot_e3, "selected": e3["detector"], "rule_id": moonshot_e3.RULE_ID,
+                    "version": moonshot_e3.VERSION, "args": E1_ARGS,
+                    "benchmarks": tuple(c for c in moonshot_e3.CANDIDATES if c != e3["detector"]),
+                    "evidence": "E3 validation, 2023 (research/E3): the plan through the harness, and E1's "
+                                "detection metrics for the detector", "e3": e3}
         return {"module": family, "selected": family.SELECTED, "rule_id": family.RULE_ID, "version": family.VERSION,
-                "args": ("close", "prev", "high", "low", "volume", "present", "tradeable", "lock_up"),
-                "benchmarks": BENCHMARKS, "evidence": "E1 validation, 2023"}
+                "args": E1_ARGS, "benchmarks": BENCHMARKS, "evidence": "E1 validation, 2023"}
     from .rules import moonshot_g
 
     return {"module": moonshot_g, "selected": moonshot_g.selected(market), "rule_id": f"MOONSHOT_E2_{market}_D1",
@@ -291,6 +334,60 @@ def _next_session(day: str, market: str = "IDX") -> str:
     return str(np.busday_offset(np.datetime64(day, "D"), 1, roll="forward"))
 
 
+def _next_sessions(day: str, k: int, market: str = "IDX") -> list[str]:
+    out, cur = [], day
+    for _ in range(int(k)):
+        cur = _next_session(cur, market)
+        out.append(cur)
+    return out
+
+
+def _plan_trigger(xp: dict, sessions: list[str], close: float) -> str:
+    """The plan's entry in exchange terms, naming the sessions it may trigger on."""
+    names = ", ".join(sessions)
+    tail = "the name traded, and the close is not locked at ARA"
+    if xp["entry_rule"] == "fixed":
+        return f"paper buy at the official close of {sessions[0]} if {tail}"
+    if xp["entry_rule"] == "confirm":
+        return (f"paper buy at the official close of the first session among {names} whose close is above "
+                f"Rp{close:g} (the signal close; on the reference chain if a corporate action intervenes), {tail}; "
+                "no such session = no trade")
+    if xp["entry_rule"] == "pullback":
+        return (f"paper buy at the official close of the first session among {names} whose close is below "
+                f"Rp{close:g} (the signal close; on the reference chain if a corporate action intervenes), {tail}; "
+                "no such session = no trade")
+    return f"paper buy at the official close of the first session among {names} on which {tail}; none = no trade"
+
+
+def _plan_invalidation_rule(xp: dict) -> str:
+    if xp["exit_rule"] == "stop_ref":
+        return ("exit at the first close at or below the invalidation level (the signal session's reference "
+                "price), else at the horizon")
+    if xp["exit_rule"] == "first_down":
+        return "no price stop: exit at the first close below its own reference price (a down day), else at the horizon"
+    return "no price stop: exit at the horizon"
+
+
+def _plan_exit_text(xp: dict, stop) -> str:
+    base = f"close of the {xp['holding_days']}th session after entry"
+    if xp["exit_rule"] == "stop_ref":
+        level = f"Rp{stop:g}" if stop else "the signal session's reference price"
+        return f"first close at or below {level} (the signal session's reference price), else the {base}; a sale rolls while locked at ARB"
+    if xp["exit_rule"] == "first_down":
+        return f"first close below its own reference price (a down day), else the {base}; a sale rolls while locked at ARB"
+    return f"{base}; a sale rolls while locked at ARB"
+
+
+def _span(decision: dict) -> int:
+    """Sessions from the signal to the last session a scoring needs: the plan's entry window plus its
+    holding period, and never less than the discovery horizon (entry the next session, then 5)."""
+    xp = (decision.get("plan") or {}).get("execution_plan")
+    span = 1 + POLICY.horizon_sessions
+    if xp:
+        span = max(span, int(xp["entry_window"]) + int(xp["holding_days"]))
+    return span
+
+
 def decide(row, rank: int, scan_id: str, session: str, now: datetime, validation: dict | None,
            market: str = "IDX", quote=None) -> dict:
     from .profiles import PROFILES
@@ -305,16 +402,26 @@ def decide(row, rank: int, scan_id: str, session: str, now: datetime, validation
     close, low = float(row.close), float(row.low)
     quote_price = float(quote[0]) if quote else None
     tick = _tick(close, market)
+    e3 = det.get("e3")  # IDX under a validated E3 pair: the plan is the one the harness validated
+    xp = e3["plan"] if e3 else None
+    horizon = xp["holding_days"] if xp else p.horizon_sessions
     chase = math.floor(close * (1 + p.chase_limit) / tick) * tick
     stop = min(max(low, close * (1 - p.max_stop_distance)), close * (1 - p.min_stop_distance))
     stop = math.floor(stop / tick) * tick
+    sizing_stop = stop
+    if xp is not None:
+        chase = None  # no chase limit: a conditional entry is the plan's own filter, as validated
+        previous = float(row.previous)
+        stop = (math.floor(previous / tick) * tick if xp["exit_rule"] == "stop_ref" and previous > 0 else None)
+        # sizing: the plan's stop when it has one, else one session locked at the lower limit (ARB)
+        sizing_stop = stop if stop is not None else math.floor(close * (1 - p.max_stop_distance) / tick) * tick
     entry_ref = quote_price if (market == "CRYPTO" and quote_price) else close
     if market == "IDX":
         fee_in, fee_out = p.fee_buy, p.fee_sell
     else:
         tier = float(prof.per_side_cost(np.array([entry_ref]))[0])
         fee_in, fee_out = prof.fee_buy + tier, prof.fee_sell + tier
-    per_share_risk = entry_ref - stop + entry_ref * (fee_in + fee_out)
+    per_share_risk = entry_ref - sizing_stop + entry_ref * (fee_in + fee_out)
     adv = float(row.adv20_value) if np.isfinite(row.adv20_value) else 0.0
     equity = _equity(market)
     cap_value = min(p.max_position_fraction * equity, p.max_adv_participation * adv)
@@ -347,6 +454,8 @@ def decide(row, rank: int, scan_id: str, session: str, now: datetime, validation
     tradeable_edge = bool(trading.get("p_one_sided") is not None and trading["p_one_sided"] < p.min_validated_lift_p)
     entry_words = {"IDX": "buy at the next close", "US": "buy at the next open",
                    "CRYPTO": "buy at the next day's open"}[market]
+    if xp is not None:
+        entry_words = "the E3 plan: " + e3["plan_text"]
     if reasons:
         decision, why = "NOT EXECUTABLE", "; ".join(reasons)
     elif not detected:
@@ -358,27 +467,38 @@ def decide(row, rank: int, scan_id: str, session: str, now: datetime, validation
                "(run {}).").format(
                    validation.get("precision") or 0,
                    (validation.get("precision") or 0) / (validation.get("lift_vs_matched_random") or 1),
-                   entry_words, p.horizon_sessions,
+                   entry_words, horizon,
                    "n/a" if trading.get("avg_net_return") is None else f"{trading['avg_net_return']:+.2%}",
                    "n/a" if trading.get("matched_random_avg_net_return") is None
                    else f"{trading['matched_random_avg_net_return']:+.2%}",
                    trading.get("run_id", "none"))
         why += (" Fills come mostly when the continuation fails; the names still locked at ARA cannot be bought."
-                if market == "IDX" else " Most flagged names fade after the spike (median 5-session return about "
-                                        "-10% in validation) while a minority runs much further.")
+                if market == "IDX" and xp is None else "" if market == "IDX" else
+                " Most flagged names fade after the spike (median 5-session return about -10% in validation) "
+                "while a minority runs much further.")
         decision = "PASS"
+    elif xp is not None:
+        decision, why = "BUY ON TRIGGER", (f"validated detector and execution plan (E3, run {trading.get('run_id')}), "
+                                           "executable size within the risk budget")
     else:
         decision, why = "BUY ON TRIGGER", "validated detector, executable size within the risk budget"
     nxt = _next_session(session, market)
     precision = (validation or {}).get("precision")
+    entry_sessions = None
     if market == "IDX":
         instrument = {"ticker": row.ticker, "yahoo_symbol": f"{row.ticker}.JK", "venue": prof.venue,
                       "currency": "IDR", "lot_size": lot}
         verified = {"close": close, "session": session, "source": "Yahoo daily bar (official close)",
                     "note": "last completed session; no live quote was taken"}
-        trigger = (f"paper buy at the official close of {nxt} if that close is <= Rp{chase:g} (chase limit) "
-                   f"and > Rp{stop:g}, the name traded, and the close is not locked at ARA")
-        expiry = f"close of {nxt}; unfilled by then = expired"
+        if xp is None:
+            trigger = (f"paper buy at the official close of {nxt} if that close is <= Rp{chase:g} (chase limit) "
+                       f"and > Rp{stop:g}, the name traded, and the close is not locked at ARA")
+            expiry = f"close of {nxt}; unfilled by then = expired"
+        else:
+            entry_sessions = _next_sessions(session, xp["entry_window"], market)
+            trigger = _plan_trigger(xp, entry_sessions, close)
+            expiry = (f"close of {entry_sessions[0]}; unfilled by then = expired" if xp["entry_rule"] == "fixed"
+                      else f"close of {entry_sessions[-1]}; no trigger by then = expired")
         change = ["the next session opens locked at ARA (no sellers): unfillable",
                   "a suspension or UMA notice from IDX before the entry close",
                   "news of a rights issue or dilutive placement"]
@@ -424,11 +544,24 @@ def decide(row, rank: int, scan_id: str, session: str, now: datetime, validation
         "decision": decision, "reason": why,
         "plan": {
             "entry_trigger": trigger, "max_chase_price": chase, "invalidation": stop,
-            "invalidation_rule": "exit at the first close at or below the invalidation level",
-            "gap_risk": "max planned loss assumes the exit fills at the invalidation level; a gap through it makes "
-                        "the loss larger" + (", up to 15% per session while locked at ARB" if market == "IDX" else ""),
-            "exit": f"close of the {p.horizon_sessions}th session after entry, or invalidation"
-                    + ("; a sale rolls while locked at ARB" if market == "IDX" else ""),
+            "invalidation_rule": (_plan_invalidation_rule(xp) if xp is not None
+                                  else "exit at the first close at or below the invalidation level"),
+            "gap_risk": ("the plan has no price stop: the max planned loss is a sizing assumption (one session "
+                         "locked at ARB, 15% below the entry); consecutive locked sessions make the loss larger"
+                         if xp is not None and stop is None else
+                         "max planned loss assumes the exit fills at the invalidation level; a gap through it makes "
+                         "the loss larger" + (", up to 15% per session while locked at ARB" if market == "IDX" else "")),
+            "exit": (_plan_exit_text(xp, stop) if xp is not None else
+                     f"close of the {p.horizon_sessions}th session after entry, or invalidation"
+                     + ("; a sale rolls while locked at ARB" if market == "IDX" else "")),
+            **({"execution_plan": xp, "plan_text": e3["plan_text"], "entry_sessions": entry_sessions,
+                "validated_run_id": e3["run_id"], "sizing_stop": sizing_stop,
+                "sizing_note": ("risk per share from the plan's stop, the signal session's reference price"
+                                if stop is not None else
+                                "the plan has no price stop: risk per share for sizing assumes one session locked "
+                                "at the lower limit (15% below the entry); the exit is by the plan's rule"),
+                "chase_note": "no chase limit: the validated plan has none; a conditional entry is its own filter"}
+               if xp is not None else {}),
             "sizing_formula": ("shares = floor(min(R x equity / (entry - stop + entry x fees), min(20% x equity, "
                                "10% x 20-session median value) / entry) / 100) x 100" if market == "IDX" else
                                "units = min(R x equity / (entry - stop + entry x costs), min(20% x equity, 10% x "
@@ -436,17 +569,75 @@ def decide(row, rank: int, scan_id: str, session: str, now: datetime, validation
                                                                       ", to 1e-6 units")),
             "costs_per_side": [fee_in, fee_out], "scenarios": scenarios, f"equity_assumption_{cur}": equity,
             "equity_note": "hypothetical; the real risk budget is unknown, so sizes are labelled scenarios",
-            "horizon_sessions": p.horizon_sessions, "expiry": expiry,
+            "horizon_sessions": horizon, "expiry": expiry,
             "liquidity": {f"adv20_value_{cur}": adv, f"position_cap_{cur}": cap_value},
             "catalyst": "none identified: a tape-only detector (no news or filing was read)",
             "would_change_decision": change,
-        } if decision != "NOT EXECUTABLE" else {"reason": why, "horizon_sessions": p.horizon_sessions},
+        } if decision != "NOT EXECUTABLE" else {"reason": why, "horizon_sessions": horizon,
+                                                **({"execution_plan": xp} if xp is not None else {})},
         "policy": {"policy_id": POLICY_ID, "sha256": policy_sha()}, "preprocessing": PREPROCESSING[market],
         "detector": detector_identity(market),
     }
 
 
 # ---------------------------------------------------------------------------------- score
+def _score_plan(decision: dict, m: Market, n: int, d: int, level: np.ndarray, discovery: dict, xp: dict,
+                scale: float, verified_units: bool) -> dict | None:
+    """An IDX decision made under a validated E3 plan, scored by the harness's own execution model
+    (execution.execute) for this one name and signal, sizing never binding: the paper outcome is what
+    the validation run would have recorded for the same bars. None while the trade is still open."""
+    from .execution import FIRST_SKIP, STATUS, ExecConfig, execute
+
+    p = POLICY
+    cfg = ExecConfig(holding_days=int(xp["holding_days"]), entry_rule=xp["entry_rule"],
+                     entry_window=int(xp["entry_window"]), exit_rule=xp["exit_rule"], notional=1e15,
+                     max_participation=float("inf"), fees=mkt.Fees(p.fee_buy, p.fee_sell), ca_mode="exclude")
+    out = execute(m, np.array([n]), np.array([d]), cfg)
+    code = int(out["status"][0])
+    status = STATUS[code]
+    if status == "INCOMPLETE":
+        return None  # still held, or rolling on an ARB lock
+    e, x = int(out["entry_idx"][0]), int(out["exit_idx"][0])
+    trade = None
+    if status in ("EXITED", "EXIT_DATA_END"):
+        path = [float(level[k] / level[e] - 1) for k in range(e + 1, x + 1)]
+        target = e + int(xp["holding_days"])
+        rolled = int(out["rolled_sessions"][0])  # sessions between the exit the rule asked for and the sale
+        asked = x - rolled
+        if status == "EXIT_DATA_END":
+            reason = "the name stopped trading: sold at its last traded close"
+        elif xp["exit_rule"] != "fixed" and asked < target:
+            reason = xp["exit_rule"]
+        else:
+            reason = "horizon"
+        if rolled > 0:
+            reason += f" (rolled {rolled} session(s) while locked at ARB or untraded)"
+        trade = {"entry_session": str(m.dates[e]), "entry_price": float(out["entry_price"][0]),
+                 "entry_close": float(out["entry_price"][0]), "entry_basis": "close", "entry_lag_sessions": e - d,
+                 "exit_session": str(m.dates[x]), "exit_reason": reason,
+                 "net_return": float(out["net_return"][0]), "gross_return": float(out["gross_return"][0]),
+                 "mfe": max(path) if path else 0.0, "mae": min(path) if path else 0.0}
+    executed = decision["decision"] == "BUY ON TRIGGER" and trade is not None
+    would_have = trade["net_return"] if trade else None
+    if decision["decision"] == "BUY ON TRIGGER":
+        verdict = "NOT FILLED" if trade is None else ("PROFIT" if trade["net_return"] > 0 else "LOSS")
+    else:
+        verdict = ("CORRECT REJECTION" if would_have is None or would_have <= 0
+                   else "MISSED GAIN (rejected, plan would have profited)")
+    return {"type": "OUTCOME", "market": "IDX", "decision_id": decision["decision_id"], "scored_at": utc_stamp(),
+            "discovery": discovery,
+            "execution": {"plan": xp, "harness_status": status, "fillable_at_trigger": code < FIRST_SKIP,
+                          "paper_trade": trade, "executed": executed,
+                          **({"not_traded_because": status} if trade is None else {})},
+            "scoring_version": ("verified-units-v1" if verified_units else
+                                "legacy-signal-scale-v1 (forensic only: infers units from a price ratio; never "
+                                "used to record)") + "+plan-harness-v1",
+            "decision_verdict": verdict, "price_scale": scale,
+            **({"price_scale_note": "the source rescaled this name's history since the decision (split or "
+                                    "adjustment); the harness model compares levels on the reference chain"}
+               if abs(scale - 1) > 0.01 else {})}
+
+
 def score(decision: dict, m: Market, *, price_units: dict | None = None) -> dict | None:
     """Score one decision on bars that now cover its window, or None if the window is still open."""
     from .profiles import PROFILES
@@ -462,7 +653,7 @@ def score(decision: dict, m: Market, *, price_units: dict | None = None) -> dict
     if decision["signal_session"] not in dates:
         return None
     d = int(np.flatnonzero(dates == decision["signal_session"])[0])
-    if d + 1 + p.horizon_sessions >= len(dates):
+    if d + _span(decision) >= len(dates):
         return None
     close = m.close[n]
     with np.errstate(divide="ignore", invalid="ignore"):
@@ -495,6 +686,9 @@ def score(decision: dict, m: Market, *, price_units: dict | None = None) -> dict
                                                                          rtol=price_units.get("rtol", 1e-6), atol=1e-8):
             raise ValueError("Recorded signal price does not reconcile to verified split schedule")
         scale = 1.0 / signal_factor
+    xp = plan.get("execution_plan")
+    if market == "IDX" and xp:
+        return _score_plan(decision, m, n, d, level, discovery, xp, scale, unit_factor is not None)
     if market == "IDX":
         entry_price, first = float(close[e]), e + 1
         fillable = bool(m.tradeable[n, e] and not m.lock_up[n, e])
@@ -633,8 +827,11 @@ def validation_evidence(market: str = "IDX") -> dict | None:
     """Detection (E1/E2 validation, E30) and trading (idxsig harness over the validation window)
     evidence for the market's frozen detector."""
     det = _detector(market)
+    e3 = det.get("e3")
     path = (PKG_ROOT / "research" / "E1" / "validation" / "result.json" if market == "IDX"
             else PKG_ROOT / "research" / "E2" / market / "validation" / "result.json")
+    if e3 is not None:
+        path = e3["detection_path"]
     if not path.exists():
         return None
     res = json.loads(path.read_text(encoding="utf-8"))
@@ -643,6 +840,8 @@ def validation_evidence(market: str = "IDX") -> dict | None:
     out = {"source": rel(path), "source_sha256": sha256_file(path), "rule": res["rule"],
            **{k: res["E30"].get(k) for k in ("precision", "precision_lo95", "precision_hi95", "base_rate",
                                               "lift_vs_base", "lift_vs_matched_random", "p_one_sided_vs_matched")}}
+    if e3 is not None:
+        out["e3"] = {k: e3[k] for k in ("protocol_id", "plan", "plan_text", "run_id", "result", "result_sha256")}
     trading = None
     index = PKG_ROOT / "results" / "RUNS.jsonl"
     for line in index.read_text(encoding="utf-8").splitlines() if index.exists() else []:
@@ -657,7 +856,8 @@ def validation_evidence(market: str = "IDX") -> dict | None:
         trading = {"run_id": summary["run_id"], "scored_trades": summary["rule_trades"]["scored"],
                    "fill_rate": summary["rule_trades"]["fill_rate"], "avg_net_return": mr.get("observed"),
                    "matched_random_avg_net_return": mr.get("random_mean"), "p_one_sided": mr.get("p_value_one_sided"),
-                   "status_counts": summary["rule_trades"]["status_counts"]}
+                   "status_counts": summary["rule_trades"]["status_counts"],
+                   "plan": summary["execution"].get("plan"), "plan_text": summary["execution"].get("plan_text")}
     out["trading"] = trading
     return out
 
@@ -708,7 +908,7 @@ def _window_complete(decision: dict, m: Market) -> bool:
     if decision["instrument"]["ticker"] not in tickers or decision["signal_session"] not in dates:
         return False
     d = int(np.flatnonzero(dates == decision["signal_session"])[0])
-    return d + 1 + POLICY.horizon_sessions < len(dates)
+    return d + _span(decision) < len(dates)
 
 
 def scoring_units(decision: dict, m: Market, events: pd.DataFrame, verify=None) -> tuple[dict | None, str | None, list]:
@@ -747,13 +947,13 @@ def due(market: str, today: str | None = None, rescore: dict | None = None) -> l
     done = {r["decision_id"] for r in ledger_lines() if r["type"] == "OUTCOME"}
     # exit = signal + 1 (entry) + horizon sessions. IDX/US routines run after that session's close,
     # so it is complete on its own date; crypto's run at 00:23 UTC sees only the day before.
-    need = 1 + POLICY.horizon_sessions + (1 if market == "CRYPTO" else 0)
     out = []
     for r in ledger_lines():
         if r["type"] != "DECISION" or r.get("market", "IDX") != market:
             continue
         if r["decision_id"] in done and r["decision_id"] not in rescore:
             continue
+        need = _span(r) + (1 if market == "CRYPTO" else 0)
         sig = np.datetime64(r["signal_session"], "D")
         elapsed = (int((today - sig).astype(int)) if market == "CRYPTO"
                    else int(np.busday_count(sig, today)))
