@@ -124,6 +124,13 @@ def main(argv=None) -> int:
     for p_ in (p_ps, p_sc):
         p_.add_argument("--market", choices=("IDX", "US", "CRYPTO"), default="IDX")
     sub.add_parser("paper-verify", help="check the paper ledger's hash chain and timestamp tokens")
+    for name, helptext in (("e3-reproduce", "experiment E3 precondition: re-run the recorded E1 trading runs on E3's data"),
+                           ("e3-discovery", "experiment E3 discovery: every (detector, plan) pair through the harness"),
+                           ("e3-validation", "experiment E3 validation: the frozen pair on 2023, as a recorded run")):
+        p_e3 = sub.add_parser(name, help=helptext)
+        if name == "e3-discovery":
+            p_e3.add_argument("--accept-deviation", action="store_true",
+                              help="proceed although a precondition run did not reproduce identically (recorded)")
     for name, helptext in (("e2-discovery", "experiment E2 discovery for one market"),
                            ("e2-validation", "experiment E2 validation of a market's frozen detector")):
         p_e2 = sub.add_parser(name, help=helptext)
@@ -328,6 +335,38 @@ def main(argv=None) -> int:
                       f"{moonshot_e1.SELECTED})", file=sys.stderr)
                 return 2
             print(json.dumps(e1.run_validation(study, args.rule, e1.E1_DIR / "validation"), indent=2, default=str))
+    elif args.cmd in ("e3-reproduce", "e3-discovery", "e3-validation"):
+        from . import corporate_actions, e3
+        from .panel import load
+        from .provenance import MANIFESTS
+        from .results import code_state
+
+        proto, proto_sha = e3.protocol()
+        if code_state()["dirty"]:
+            print("error: commit idxsig/ first so the results name the code that produced them", file=sys.stderr)
+            return 2
+        if "PENDING" in proto["data"]["panel_manifest"] or "PENDING" in proto["data"]["registry_manifest"]:
+            print("error: research/E3/protocol.json does not name its panel and registry manifests yet", file=sys.stderr)
+            return 2
+        try:
+            df, meta, _ = load(MANIFESTS / proto["data"]["panel_manifest"])
+            registry = corporate_actions.load(MANIFESTS / proto["data"]["registry_manifest"], panel_sha256=meta["sha256"])
+        except (FileNotFoundError, RuntimeError) as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
+        stage = args.cmd.split("-", 1)[1]
+        try:
+            if stage == "reproduce":
+                result = e3.run_reproduce(df, meta, registry, e3.E3_DIR / "reproduce", proto, proto_sha)
+            elif stage == "discovery":
+                result = e3.run_discovery(df, meta, registry, e3.E3_DIR / "discovery", proto, proto_sha,
+                                          accept_deviation=args.accept_deviation)
+            else:
+                result = e3.run_validation(df, meta, registry, e3.E3_DIR / "validation", proto, proto_sha)
+        except (RuntimeError, FileExistsError) as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
+        print(json.dumps(result, indent=2, default=str))
     elif args.cmd in ("e2-discovery", "e2-validation"):
         from . import e1, global_panel
         from .profiles import PROFILES

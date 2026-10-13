@@ -1,0 +1,59 @@
+{
+  "action_types": [
+    "STOCK_SPLIT",
+    "REVERSE_SPLIT",
+    "RIGHTS_ISSUE",
+    "STOCK_DIVIDEND",
+    "OTHER_REFERENCE_RESET",
+    "UNKNOWN"
+  ],
+  "built_at": "2026-10-13T19:42:56Z",
+  "by_status": {
+    "NO_PRICE_RESET": 8,
+    "UNRESOLVED": 99,
+    "UNVERIFIED_SINGLE_SOURCE": 20,
+    "VERIFIED_CORROBORATED": 89
+  },
+  "by_type": {
+    "OTHER_REFERENCE_RESET": 96,
+    "REVERSE_SPLIT": 4,
+    "STOCK_DIVIDEND": 18,
+    "STOCK_SPLIT": 86,
+    "UNKNOWN": 12
+  },
+  "inputs": {
+    "idx_mirror_manifest": "idx_mirror-20261013T192142Z.jsonl",
+    "manual": "data/corporate_actions/manual.csv",
+    "manual_sha256": "9cba7a8cf9b5b376d28a4334ad83568e959c20474a4416632a4cbb2bd758b0f1",
+    "panel": "data/panel/panel-20261013T194245Z.csv.gz",
+    "panel_format": "panel-v2",
+    "panel_manifest": "panel-20261013T194245Z.json",
+    "panel_sha256": "a924921afccb1fe0c2fa4bfe94db1a17af714358b4dd238118f56bce428ce509",
+    "yahoo_manifest": "yahoo-20261013T192850Z.jsonl",
+    "yahoo_manifest_sha256": "7a1e7b43fd2999e2ecb2655aa66060eb1bad48d91cecb1e70929e6671265ad48"
+  },
+  "manual_entries": 0,
+  "registry": "data/corporate_actions/ca_registry-20261013T194256Z.csv",
+  "registry_version": "ca-registry-v1",
+  "rows": 216,
+  "sha256": "33f81beb6ff59ba36dc1f73d74fa7fdb353b7d7ad64cce8a960617436ed64eb8",
+  "share_scaled": 89,
+  "share_scaling": {
+    "applied_for": [
+      "STOCK_SPLIT",
+      "REVERSE_SPLIT",
+      "STOCK_DIVIDEND"
+    ],
+    "only_if": [
+      "VERIFIED_PRIMARY",
+      "VERIFIED_CORROBORATED"
+    ]
+  },
+  "statuses": [
+    "VERIFIED_PRIMARY",
+    "VERIFIED_CORROBORATED",
+    "UNVERIFIED_SINGLE_SOURCE",
+    "NO_PRICE_RESET",
+    "UNRESOLVED"
+  ]
+}

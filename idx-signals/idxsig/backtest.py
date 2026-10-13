@@ -222,9 +222,12 @@ def _qa_sensitivity(flag: np.ndarray, out: dict, keep: np.ndarray | None = None)
                if k in ("scored", "avg_net_return", "hit_rate")}}
 
 
-def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: tuple | None = None) -> dict:
+def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: tuple | None = None,
+        signal_cache: dict | None = None) -> dict:
     """ca_registry: (registry DataFrame, registry manifest) from corporate_actions.load, required
-    when cfg.ca_mode == "registry"."""
+    when cfg.ca_mode == "registry". signal_cache: a dict a caller keeps across runs of the same rule
+    on the same window and panel (research/E3 runs one detector under many plans); the causal
+    signals are computed once per (rule hash, window, panel hash) and reused unchanged."""
     rule = rule_registry.get(cfg.rule_id)
     holding = cfg.holding_days or rule.holding_days
     profile = PROFILES[cfg.market]
@@ -276,7 +279,14 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
     m = full_market.slice(lo, hi)
     if cfg.ca_mode == "registry":
         ca_info["resets_in_window"] = m.with_registry(reg_df).registry_counts
-    sig, lookahead = signals(rule, m, cfg.lookahead_cuts)
+    cache_key = (rule.sha256, start, end, panel_meta["sha256"], cfg.lookahead_cuts)
+    if signal_cache is not None and cache_key in signal_cache:
+        sig, lookahead = signal_cache[cache_key]
+        sig = sig.copy()
+    else:
+        sig, lookahead = signals(rule, m, cfg.lookahead_cuts)
+        if signal_cache is not None:
+            signal_cache[cache_key] = (sig.copy(), lookahead)
     quarantined = []
     if cfg.quarantine == "unit_schedule":
         quarantined = sorted(panel_meta.get("unit_quarantine", {}).get("tickers", {}))
