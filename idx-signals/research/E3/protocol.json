@@ -1,0 +1,101 @@
+{
+  "protocol_id": "KOD-IDX-E3-v1",
+  "frozen_before_analysis": true,
+  "question": "E1 validated F1_ARA (a close locked at the IDX upper auto-rejection limit) for detection and failed it for execution under the one plan the harness had: buy the next close, hold five sessions (-4.06% net per trade vs -0.53% for matched random entries, 2023). Is there a pre-specified execution plan under which the signals of the E1 family's ARA detectors, traded through the same harness, earn a positive average net return and beat matched random entries executed under the same plan?",
+  "builds_on": {
+    "E1": "research/E1/protocol.json (KOD-IDX-E1-v1): periods, event definition, matched controls, harness",
+    "D1": "MOONSHOT_E1_D1 v1.1 = F1_ARA; detection 9.3x matched random (p = 0.005); execution -4.06% vs -0.53% (results/runs/20261008T000401Z_MOONSHOT_E1_D1_v1.1)"
+  },
+  "data": {
+    "panel_manifest": "panel-20261013T194245Z.json",
+    "registry_manifest": "ca_registry-20261013T194256Z.json",
+    "panel_format": "panel-v2",
+    "tier": "TIER_1 only (2021-01-22 .. 2025-02-21): exchange data, survivorship-complete; the panel is rebuilt from the pinned mirror commit bc0ac771, so its research-period rows are the rows E1 used",
+    "note": "the manifest names are filled in when the rebuild finishes and before any E3 statistic is computed; the precondition below checks that the rebuilt data reproduces the recorded runs"
+  },
+  "precondition": {
+    "rule": "before any E3 statistic, the recorded E1 trading runs below are re-run on E3's panel and registry with their original configuration (idxsig e3-reproduce). REPRODUCED = identical signals, scored count, status counts, average net return and matched-random mean. If any deviates, discovery runs only with --accept-deviation, and both sides stay on record in research/E3/reproduce/result.json and discovery/summary.json",
+    "runs": [
+      "results/runs/20261008T000401Z_MOONSHOT_E1_D1_v1.1",
+      "results/runs/20261009T050040Z_MOONSHOT_E1_D1_v1.1"
+    ]
+  },
+  "detectors": {
+    "candidates": ["F1_ARA", "F7_ARA_VOL3", "F8_ARA_EARLY"],
+    "source": "idxsig/rules/moonshot_e3.py: the three ARA members of the E1 family (F1, F7, F8), feature and flag code copied verbatim from idxsig/rules/moonshot_e1.py (a rule module imports nothing from the package; tests/test_e3.py checks the copy flags exactly as the original)",
+    "why_these": "F1_ARA is D1. F7 and F8 are the E1 family's ARA rules with a volume and an earliness condition; E1 found D1's fills come when the continuation fails, so the family is searched for an earlier or stronger ARA signal as well as for a better plan. No rule outside the E1 family is admitted",
+    "harness_rule_ids": "E3_CAND_<name> while SELECTED is None; MOONSHOT_E3_D1 after the freeze"
+  },
+  "plans": {
+    "entries": [["fixed", 1], ["confirm", 3], ["pullback", 3], ["unlock", 3]],
+    "exits": ["fixed", "stop_ref", "first_down"],
+    "holding_days": [2, 3, 5],
+    "count": 36,
+    "definitions": {
+      "fixed entry": "buy at the close of session s+1 (the original model)",
+      "confirm": "buy at the first close in s+1..s+3 that is above the signal close on the reference chain, traded and not locked at ARA (the move is holding and there are sellers); no such close = no trade (SKIP_NO_TRIGGER)",
+      "pullback": "buy at the first close in s+1..s+3 that is below the signal close on the reference chain, traded and not locked at ARA (a dip after the signal); no such close = no trade",
+      "unlock": "buy at the first traded close in s+1..s+3 that is not locked at ARA (wait for sellers); none = no trade",
+      "fixed exit": "sell at the close of the holding_days-th session after entry (the original model)",
+      "stop_ref": "sell at the first close in entry+1..entry+holding_days-1 at or below the signal session's reference price (IDX `previous`: the level before the signal day), else the fixed exit",
+      "first_down": "sell at the first close in that range below its own reference price (a down day), else the fixed exit",
+      "all": "a sale that lands on a session locked at ARB or untraded rolls to the next session where it is possible, as in the original model; levels are compared on the reference chain so a corporate-action reset is never read as a move; holding_days 1 is excluded because every exit rule then coincides with the fixed exit"
+    },
+    "implementation": "idxsig/execution.py ENTRY_RULES / EXIT_RULES, tests/test_plans.py; defaults reproduce every earlier run"
+  },
+  "harness": {
+    "market": "IDX",
+    "notional_idr": 10000000,
+    "max_participation": 0.10,
+    "fee_buy": 0.0015,
+    "fee_sell": 0.0025,
+    "overlap": "skip",
+    "ca_mode": "registry",
+    "units": "panel",
+    "fill_model": "C",
+    "fill_model_note": "FILL-C-v1 (research/IDX_CAUSAL_CAPACITY_v1): decision-time capacity from the 20 sessions up to the signal, in entry-session shares through registry-verified splits; an unverified reset in the window = SKIP_CAPACITY_UNKNOWN. Chosen over the original ex-post model A because the capacity is known when the decision is made",
+    "random_draws": 200,
+    "seed": 20261007,
+    "controls_version": "v2",
+    "data_end_exit": "last_close",
+    "lookahead": "prefix-first (rules.causal_signals); the signal at d is what the detector returned from data through d only",
+    "baselines": "matched random (primary: same session, same v2 buckets, same plan) and same-session random, 200 draws each, exactly as the harness computes them for every run"
+  },
+  "periods": {
+    "discovery": ["2021-01-22", "2022-12-30"],
+    "validation": ["2023-01-02", "2023-12-29"],
+    "holdout": ["2024-01-02", "2025-02-21"],
+    "holdout_rule": "sealed and not used by E3: the harness refuses any detector run whose window touches it (backtest.HOLDOUT) unless --holdout-final is given, which E3 never gives; trades whose window runs past a period's end are INCOMPLETE and not scored (the embargo)"
+  },
+  "selection": {
+    "on": "discovery only",
+    "unit": "one harness run per (detector, plan): 3 x 36 = 108 runs, every one reported in discovery/plans.csv so the size of the search is visible",
+    "admissible_if": [
+      "scored trades >= min_scored",
+      "average net return > 0 (after fees, in the harness's units)",
+      "average net return above the matched-random distribution with one-sided p < max_p_one_sided_vs_matched (200 draws: the floor is 0.005)",
+      "average net return > 0 in every discovery calendar year with at least min_scored_per_year scored trades (a plan that only worked in one year is not admitted)"
+    ],
+    "min_scored": 200,
+    "max_p_one_sided_vs_matched": 0.05,
+    "min_scored_per_year": 50,
+    "select": "the admissible pair with the highest average net return; ties by more scored trades, then grid order; none admissible = no pair (SELECTED stays None, MOONSHOT_E3_D1 is never created, the paper policy keeps PASS)",
+    "reference_plan": {"detector": "F1_ARA", "entry_rule": "fixed", "entry_window": 1, "exit_rule": "fixed", "holding_days": 5},
+    "reference_note": "D1's original plan under fill model C, reported beside the grid so the gain of any selected plan is measured against what E1 found",
+    "freeze": "the selected (detector, entry_rule, entry_window, exit_rule, holding_days) is written into idxsig/rules/moonshot_e3.SELECTED and committed before any validation statistic is computed; MOONSHOT_E3_D1 is the frozen pair and carries the plan (rules.Rule.plan), so its rule hash covers both"
+  },
+  "validation": {
+    "on": "validation only, one run, as a recorded harness run (results/runs/, RUNS.jsonl) of MOONSHOT_E3_D1",
+    "pass_if": [
+      "scored trades >= min_scored",
+      "average net return > 0",
+      "average net return above the matched-random distribution with one-sided p < max_p_one_sided_vs_matched"
+    ],
+    "min_scored": 100,
+    "max_p_one_sided_vs_matched": 0.05,
+    "reported_not_judged": ["hit rate", "median net return", "fill rate and status counts", "same-session random baseline", "2023 is one year: no per-year check is possible"],
+    "consequence_if_passed": "PAPER-POLICY-v4 may underwrite a paper BUY ON TRIGGER for MOONSHOT_E3_D1 candidates, with the plan's own entry trigger and exit; every such decision is scored prospectively by paper-score; real orders remain outside this lab",
+    "consequence_if_failed": "the paper policy keeps PASS; this plan family is exhausted for these detectors; a new family needs a new protocol and the holdout stays sealed"
+  },
+  "claims": "Historical research. 108 plans were searched on discovery; validation is the one confirmatory test, and a pass there is one year of one market under assumed costs and daily-bar fills. Nothing here is prospective performance, nothing here grants entry permission, and the holdout remains reserved for one final test after prospective evidence exists."
+}

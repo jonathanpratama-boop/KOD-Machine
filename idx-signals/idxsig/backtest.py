@@ -67,6 +67,53 @@ class RunConfig:
     units: str = "panel"  # "as_traded": price levels in the units traded that session (panel unit_factor)
     fill_model: str = "A"  # "A": original (entry-session final volume); "B": decision-time capacity (open); "C": FILL-C-v1 (close)
     quarantine: str = "none"  # "unit_schedule": leave out names the panel lists as lacking a verified schedule
+    # Execution plan (execution.ENTRY_RULES / EXIT_RULES). None: the rule's own frozen plan if it carries
+    # one (rules.Rule.plan), else the original model ("fixed" / entry_lag / "fixed").
+    entry_rule: str | None = None
+    entry_window: int | None = None
+    exit_rule: str | None = None
+    holdout_final: bool = False  # the one pre-registered holdout evaluation (see HOLDOUT)
+
+
+# The IDX holdout sealed by research/E1/protocol.json. A DETECTOR run whose window touches it is
+# refused unless holdout_final is set: that is the single final test, and it is on record as such.
+HOLDOUT = ("2024-01-02", "2025-02-21")
+
+
+class HoldoutSealed(RuntimeError):
+    pass
+
+
+def resolve_plan(cfg: RunConfig, rule) -> dict:
+    """The plan a run executes: explicit config first, then the rule's frozen plan, then the original."""
+    frozen = dict(getattr(rule, "plan", None) or {})
+    return {"entry_rule": cfg.entry_rule or frozen.get("entry_rule", "fixed"),
+            "entry_window": cfg.entry_window or frozen.get("entry_window", 1),
+            "exit_rule": cfg.exit_rule or frozen.get("exit_rule", "fixed")}
+
+
+ENTRY_TEXT = {
+    "fixed": "buy at the close of session s + {w}",
+    "confirm": "buy at the first close in s+1..s+{w} that is above the signal close (reference chain), traded "
+               "and not locked at ARA",
+    "pullback": "buy at the first close in s+1..s+{w} that is below the signal close (reference chain), traded "
+                "and not locked at ARA",
+    "unlock": "buy at the first traded close in s+1..s+{w} that is not locked at ARA",
+}
+EXIT_TEXT = {
+    "fixed": "sell at the close of the {h}th session after entry",
+    "stop_ref": "sell at the first close at or below the signal session's reference price, else at the close of "
+                "the {h}th session after entry",
+    "first_down": "sell at the first close below its own reference price (a down day), else at the close of the "
+                  "{h}th session after entry",
+}
+
+
+def plan_text(plan: dict) -> str:
+    """One sentence a decision record can carry: the plan as executed, in exchange terms."""
+    return (ENTRY_TEXT[plan["entry_rule"]].format(w=plan["entry_window"]) + "; "
+            + EXIT_TEXT[plan["exit_rule"]].format(h=plan["holding_days"])
+            + "; a sale rolls to the next session where it is possible while locked at ARB or untraded")
 
 
 def _equal_with_nan(a: np.ndarray, b: np.ndarray) -> bool:
@@ -175,13 +222,17 @@ def _qa_sensitivity(flag: np.ndarray, out: dict, keep: np.ndarray | None = None)
                if k in ("scored", "avg_net_return", "hit_rate")}}
 
 
-def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: tuple | None = None) -> dict:
+def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: tuple | None = None,
+        signal_cache: dict | None = None) -> dict:
     """ca_registry: (registry DataFrame, registry manifest) from corporate_actions.load, required
-    when cfg.ca_mode == "registry"."""
+    when cfg.ca_mode == "registry". signal_cache: a dict a caller keeps across runs of the same rule
+    on the same window and panel (research/E3 runs one detector under many plans); the causal
+    signals are computed once per (rule hash, window, panel hash) and reused unchanged."""
     rule = rule_registry.get(cfg.rule_id)
     holding = cfg.holding_days or rule.holding_days
     profile = PROFILES[cfg.market]
     idx = profile.market == "IDX"
+    plan = resolve_plan(cfg, rule)
     exec_cfg = ExecConfig(
         lot_size=profile.lot_size,
         entry_price=profile.entry,
@@ -195,9 +246,14 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
         ca_mode=cfg.ca_mode,
         units=cfg.units,
         fill_model=cfg.fill_model,
+        **plan,
     )
     start = cfg.start or (FIRST_SNAPSHOT if idx else panel_meta["default_start"])
     end = cfg.end or panel_meta["source_boundary"]
+    if idx and rule.kind == "DETECTOR" and not cfg.holdout_final and end >= HOLDOUT[0] and start <= HOLDOUT[1]:
+        raise HoldoutSealed(f"window {start}..{end} touches the sealed IDX holdout {HOLDOUT[0]}..{HOLDOUT[1]} "
+                            "(research/E1/protocol.json); a detector runs there once, as the pre-registered "
+                            "final test, with holdout_final=True (--holdout-final)")
     full_market = Market.from_panel(panel_df, price_limits=profile.price_limits)
     if "unit_factor" in panel_df:
         full_market = full_market.with_units(_dense(full_market, panel_df, "unit_factor", 1.0))
@@ -223,7 +279,14 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
     m = full_market.slice(lo, hi)
     if cfg.ca_mode == "registry":
         ca_info["resets_in_window"] = m.with_registry(reg_df).registry_counts
-    sig, lookahead = signals(rule, m, cfg.lookahead_cuts)
+    cache_key = (rule.sha256, start, end, panel_meta["sha256"], cfg.lookahead_cuts)
+    if signal_cache is not None and cache_key in signal_cache:
+        sig, lookahead = signal_cache[cache_key]
+        sig = sig.copy()
+    else:
+        sig, lookahead = signals(rule, m, cfg.lookahead_cuts)
+        if signal_cache is not None:
+            signal_cache[cache_key] = (sig.copy(), lookahead)
     quarantined = []
     if cfg.quarantine == "unit_schedule":
         quarantined = sorted(panel_meta.get("unit_quarantine", {}).get("tickers", {}))
@@ -397,10 +460,12 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
     summary = {
         "rule": {"rule_id": rule.rule_id, "version": rule.version, "kind": rule.kind, "text": rule.text,
                  "sha256": rule.sha256, "holding_days": holding},
-        "config": {**asdict(cfg), "start": start, "end": end, "holding_days": holding},
+        "config": {**asdict(cfg), "start": start, "end": end, "holding_days": holding, **plan},
         "execution": {
             "price": ("official close; signal at close of s, entry at close of s + entry_lag" if profile.entry == "close"
                       else "signal at close of s, entry at the open of s + entry_lag, exit at a close"),
+            "plan": exec_cfg.plan,
+            "plan_text": plan_text(exec_cfg.plan),
             "lot_size": profile.lot_size,
             "cost_tiers": [list(t) for t in profile.cost_tiers],
             "fees": {"buy": cfg.fee_buy, "sell": cfg.fee_sell},

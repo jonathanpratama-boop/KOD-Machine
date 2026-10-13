@@ -1,0 +1,62 @@
+{
+  "admissible": 0,
+  "code": {
+    "commit": "50cedfe4616f9d48709e6c3baae8fd9cfaab1b72",
+    "dirty": false
+  },
+  "computed_at": "2026-10-13T20:05:56+00:00",
+  "detector_module_sha256": "9317ea860e3e91c5d4a2b3afbd212013cb9e5da5eeecf95d964fcdf833f31698",
+  "detectors": [
+    "F1_ARA",
+    "F7_ARA_VOL3",
+    "F8_ARA_EARLY"
+  ],
+  "freeze": "no admissible plan: SELECTED stays None, MOONSHOT_E3_D1 is not created, the paper policy keeps PASS",
+  "holdout": "sealed: the harness refuses any detector window that touches it",
+  "panel_sha256": "a924921afccb1fe0c2fa4bfe94db1a17af714358b4dd238118f56bce428ce509",
+  "plans_per_detector": 36,
+  "precondition": {
+    "accepted_deviation": true,
+    "status": "DEVIATES"
+  },
+  "protocol_id": "KOD-IDX-E3-v1",
+  "protocol_sha256": "580d11df2af909277fc18b05cbcb00ef6ee1f267ec9ff97177816ec180dc949d",
+  "reference_plan": {
+    "attempted": 1831,
+    "avg_net_return": 0.002362602981627261,
+    "avg_net_return_2021": 0.012772169693069584,
+    "avg_net_return_2022": -0.01562547673312454,
+    "detector": "F1_ARA",
+    "entry_rule": "fixed",
+    "entry_window": 1,
+    "exit_rule": "fixed",
+    "fill_rate": 0.3626433642818132,
+    "filled": 664,
+    "hit_rate": 0.37576687116564417,
+    "holding_days": 5,
+    "matched_random_avg_net_return": 0.0017314804869579142,
+    "matched_random_p2_5": -0.004946044820192735,
+    "matched_random_p97_5": 0.009197890641857677,
+    "median_net_return": -0.04622800590842835,
+    "p_one_sided_vs_matched": 0.4427860696517413,
+    "p_one_sided_vs_same_session": 0.04975124378109453,
+    "plan_id": "F1_ARA|fixed1|fixed|h5",
+    "rule_sha256": "41f2ee3256fc028666369fc5b5344b5c9054d359e35817bd2a2d76a53cec0904",
+    "same_session_random_avg_net_return": -0.002671996595490783,
+    "scored": 652,
+    "scored_2021": 413,
+    "scored_2022": 239,
+    "signals": 1919,
+    "status_counts": "{\"CORP_ACTION_UNRESOLVED\": 5, \"EXITED\": 652, \"INCOMPLETE\": 7, \"SKIP_ARA_LOCK\": 529, \"SKIP_CAPACITY_UNKNOWN\": 8, \"SKIP_LIQUIDITY\": 553, \"SKIP_NOT_TRADED\": 75, \"SKIP_NO_ENTRY_SESSION\": 2}"
+  },
+  "registry_sha256": "33f81beb6ff59ba36dc1f73d74fa7fdb353b7d7ad64cce8a960617436ed64eb8",
+  "runs": 108,
+  "runtime": {
+    "numpy": "2.5.4",
+    "pandas": "3.0.6",
+    "python": "3.15.0"
+  },
+  "selected": null,
+  "selected_tuple": null,
+  "stage": "discovery"
+}

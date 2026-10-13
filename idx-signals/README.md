@@ -41,9 +41,12 @@ python3 -m idxsig e1-discovery             # experiment E1 stages (each writes a
 python3 -m idxsig build-global-panel --market US      # US / crypto panels (a new file each time)
 python3 -m idxsig e2-discovery --market US            # experiment E2 stages per market
 python3 -m idxsig run --market US --rule MOONSHOT_E2_US_D1 --start 2023-01-01 --end 2023-12-31
+python3 -m idxsig run --rule E3_CAND_F7_ARA_VOL3 --start 2021-01-22 --end 2022-12-30 --fill-model C \
+    --entry-rule confirm --entry-window 3 --exit-rule stop_ref   # an execution plan (research/E3)
+python3 -m idxsig e3-reproduce                        # experiment E3 precondition, then e3-discovery, e3-validation
 python3 -m idxsig paper-scan --market IDX --commit    # prospective paper scan of the last session (no orders)
 python3 -m idxsig paper-score --market IDX --commit   # score paper decisions whose window has ended
-python3 -m unittest                        # 115 tests, synthetic data only
+python3 -m unittest                        # 222 tests, synthetic data only
 ```
 
 ## 1. Dataset
@@ -151,6 +154,14 @@ evaluable, including names that later stop trading. Execution, per signal:
 - Signal from data through the close of session s; buy at the close of s+1. Closes, not
   opens: IDX only reports an opening price for names with a pre-opening auction (~7% of
   rows), so an open-based model would drop most of the universe.
+- **Execution plans** (`--entry-rule`, `--entry-window`, `--exit-rule`; `research/E3`): a
+  conditional entry waits for a close that confirms the move, dips below the signal close, or is
+  the first not locked at ARA, within a window of sessions; a conditional exit sells at the first
+  close at or below the signal session's reference price, or at the first down close, else at the
+  horizon. Levels are compared on the reference chain, so a corporate-action reset is not a move.
+  The default is the model above, and every earlier run reproduces unchanged. A detector run whose
+  window touches the sealed holdout (2024-01-02 .. 2025-02-21) is refused unless `--holdout-final`
+  names it as the one pre-registered final test.
 - **Lots:** whole 100-share lots, `floor(Rp 10,000,000 / (price x 100))`. No lot: skipped.
   At most 10% of the session's volume.
 - **Fees:** 0.15% buy, 0.25% sell (commission, levy, VAT, 0.1% final tax on sales). Flags.
@@ -259,6 +270,20 @@ selected on discovery in both markets, validated for detection (US 5.4x, crypto 
 random, p = 0.005) and failed for execution in both: buying the next open and holding 5
 sessions averaged -3.65% (US) and -1.90% (crypto) per trade vs -0.60% and +1.42% for matched
 random entries. US price levels are not point-in-time (Yahoo rescales history at later reverse splits): with costs at the price actually traded the US average is -4.47%; see [ERRATA](research/E2/ERRATA.md) and the [audit brief](research/E2/AUDIT_BRIEF.md). Holdout 2024 onward untouched. **Repair (2026-10-08, [research/E2/repair/HANDOFF.md](research/E2/repair/HANDOFF.md)):** the original run reproduces byte for byte from archived inputs; with causal preprocessing, as-traded price units and SEC-corroborated split schedules the US result is −4.85% vs −1.13% for matched random entries (fill model A, ex post) and −4.41% vs −1.21% with decision-time capacity (fill model B). The erratum's −4.47% re-costing is superseded.
+
+## 5c. Experiment E3: execution plans for the ARA detectors ([research/E3](research/E3/REPORT.md))
+
+E1 found that D1 detects repricings but cannot be traded by buying the next close. E3
+(`research/E3/protocol.json`, frozen before analysis) searched a fixed family of 36 execution
+plans (entry at the next close, on confirmation, on a pullback, or at the first unlocked close
+within three sessions; exit at the horizon, at the signal session's reference price, or on the
+first down close; hold 2, 3 or 5 sessions) for the three ARA detectors of the E1 family: 108
+harness runs on discovery 2021-22, fill model C, matched random baselines under the same plan.
+**Admissible pairs: none.** 18 had a positive average net return, 3 beat matched random at
+p < 0.05, and all 108 lost money in 2022, so the pre-registered per-year condition admitted
+nothing; no pair was frozen, validation was not run, and the holdout is untouched. The best pair
+(F8_ARA_EARLY, confirmation entry, hold 5: +1.49% vs +0.56% for matched random, p = 0.14) earned
+its average in 2021 alone. The paper policy therefore keeps PASS.
 
 ## 6. Prospective paper ledger ([paper/](paper/README.md))
 

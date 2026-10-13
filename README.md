@@ -23,6 +23,12 @@ Two research tools. Neither grants entry permission.
   equities (survivor-only) and Binance crypto. Detector G2_RET30 (a +30% day) validated for
   detection in both (5.4x and 4.6x matched random) and failed for execution in both (buying
   the next open loses: US -3.65% vs -0.60%, crypto -1.90% vs +1.42%). Holdout untouched.
+- Experiment E3 (historical, `idx-signals/research/E3/REPORT.md`): 36 pre-registered execution
+  plans x 3 ARA detectors on IDX discovery 2021-22, 108 harness runs. None admissible: all 108
+  lost money in 2022, and the three that beat matched random did so in 2021 alone. No plan
+  frozen, no validation run, holdout untouched. The harness now has conditional entries and
+  exits (`--entry-rule`, `--exit-rule`) and refuses detector runs that touch the holdout; paper
+  policy v4 would carry a validated plan into IDX decisions and is dormant.
 - Prospective paper ledger (`idx-signals/paper/`), daily routines in all three markets: IDX
   since session 2026-10-07 (4 candidates: 3 PASS, 1 NOT EXECUTABLE), crypto and US since
   2026-10-07 (see the ledger). Every candidate so far is PASS or NOT EXECUTABLE because no

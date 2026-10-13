@@ -101,6 +101,13 @@ def main(argv=None) -> int:
     p_run.add_argument("--fill-model", choices=("A", "B", "C"), default="A",
                        help="A: original (entry-session final volume, ex post); B: decision-time capacity "
                             "(open entries); C: FILL-C-v1, decision-time capacity for closing-auction entries")
+    p_run.add_argument("--entry-rule", choices=("fixed", "confirm", "pullback", "unlock"),
+                       help="execution plan entry (default: the rule's frozen plan, else fixed)")
+    p_run.add_argument("--entry-window", type=int, help="sessions after the signal a conditional entry may trigger")
+    p_run.add_argument("--exit-rule", choices=("fixed", "stop_ref", "first_down"),
+                       help="execution plan exit (default: the rule's frozen plan, else fixed)")
+    p_run.add_argument("--holdout-final", action="store_true",
+                       help="the one pre-registered IDX holdout evaluation (otherwise the holdout is refused)")
     p_run.add_argument("--quarantine", choices=("none", "unit_schedule"), default="none",
                        help="unit_schedule: leave out names whose split records SEC does not corroborate")
     sub.add_parser("verify-runs", help="check that no past run was edited or removed")
@@ -117,6 +124,13 @@ def main(argv=None) -> int:
     for p_ in (p_ps, p_sc):
         p_.add_argument("--market", choices=("IDX", "US", "CRYPTO"), default="IDX")
     sub.add_parser("paper-verify", help="check the paper ledger's hash chain and timestamp tokens")
+    for name, helptext in (("e3-reproduce", "experiment E3 precondition: re-run the recorded E1 trading runs on E3's data"),
+                           ("e3-discovery", "experiment E3 discovery: every (detector, plan) pair through the harness"),
+                           ("e3-validation", "experiment E3 validation: the frozen pair on 2023, as a recorded run")):
+        p_e3 = sub.add_parser(name, help=helptext)
+        if name == "e3-discovery":
+            p_e3.add_argument("--accept-deviation", action="store_true",
+                              help="proceed although a precondition run did not reproduce identically (recorded)")
     for name, helptext in (("e2-discovery", "experiment E2 discovery for one market"),
                            ("e2-validation", "experiment E2 validation of a market's frozen detector")):
         p_e2 = sub.add_parser(name, help=helptext)
@@ -247,7 +261,7 @@ def main(argv=None) -> int:
         return 1 if failed else 0
     elif args.cmd == "run":
         from . import rules
-        from .backtest import RunConfig, run
+        from .backtest import HoldoutSealed, RunConfig, run
         from .panel import load
         from .provenance import sha256_file
         from .results import DirtyTreeError, write_run
@@ -274,6 +288,8 @@ def main(argv=None) -> int:
             seed=args.seed, data_end_exit=args.data_end_exit, ca_mode=args.ca_mode,
             lookahead_cuts=args.lookahead_cuts, controls_version=args.controls_version,
             units=args.units, fill_model=args.fill_model, quarantine=args.quarantine,
+            entry_rule=args.entry_rule, entry_window=args.entry_window, exit_rule=args.exit_rule,
+            holdout_final=args.holdout_final,
         )
         registry = None
         if args.ca_mode == "registry" and args.market == "IDX":
@@ -285,7 +301,11 @@ def main(argv=None) -> int:
             except (FileNotFoundError, corporate_actions.RegistryMismatch) as exc:
                 print(f"error: {exc}", file=sys.stderr)
                 return 2
-        output = run(cfg, df, meta, ca_registry=registry)
+        try:
+            output = run(cfg, df, meta, ca_registry=registry)
+        except HoldoutSealed as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
         try:
             run_dir = write_run(output, allow_dirty=args.allow_dirty, commit=not args.no_commit)
         except DirtyTreeError as exc:
@@ -315,6 +335,38 @@ def main(argv=None) -> int:
                       f"{moonshot_e1.SELECTED})", file=sys.stderr)
                 return 2
             print(json.dumps(e1.run_validation(study, args.rule, e1.E1_DIR / "validation"), indent=2, default=str))
+    elif args.cmd in ("e3-reproduce", "e3-discovery", "e3-validation"):
+        from . import corporate_actions, e3
+        from .panel import load
+        from .provenance import MANIFESTS
+        from .results import code_state
+
+        proto, proto_sha = e3.protocol()
+        if code_state()["dirty"]:
+            print("error: commit idxsig/ first so the results name the code that produced them", file=sys.stderr)
+            return 2
+        if "PENDING" in proto["data"]["panel_manifest"] or "PENDING" in proto["data"]["registry_manifest"]:
+            print("error: research/E3/protocol.json does not name its panel and registry manifests yet", file=sys.stderr)
+            return 2
+        try:
+            df, meta, _ = load(MANIFESTS / proto["data"]["panel_manifest"])
+            registry = corporate_actions.load(MANIFESTS / proto["data"]["registry_manifest"], panel_sha256=meta["sha256"])
+        except (FileNotFoundError, RuntimeError) as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
+        stage = args.cmd.split("-", 1)[1]
+        try:
+            if stage == "reproduce":
+                result = e3.run_reproduce(df, meta, registry, e3.E3_DIR / "reproduce", proto, proto_sha)
+            elif stage == "discovery":
+                result = e3.run_discovery(df, meta, registry, e3.E3_DIR / "discovery", proto, proto_sha,
+                                          accept_deviation=args.accept_deviation)
+            else:
+                result = e3.run_validation(df, meta, registry, e3.E3_DIR / "validation", proto, proto_sha)
+        except (RuntimeError, FileExistsError) as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
+        print(json.dumps(result, indent=2, default=str))
     elif args.cmd in ("e2-discovery", "e2-validation"):
         from . import e1, global_panel
         from .profiles import PROFILES
