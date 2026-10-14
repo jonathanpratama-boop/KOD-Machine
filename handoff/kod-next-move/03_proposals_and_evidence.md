@@ -51,6 +51,18 @@ Fixes demanded before any freeze:
 
 Net reading of the Refute phase: none of the top three is dead, none can be frozen as written. Common demands: use the repaired/as-traded US panel; exclude data jumps; cluster the statistics by name/session; declare 2023 consumed; separate the information verdict from the executability verdict; land PR #7 (or port its `jump_ratio`/`NEVER_ENTERED`/holdout-guard code) first.
 
+## Recommendation (synthesis, 2026-10-14 07:23 UTC; full text `synthesis/RECOMMENDATION.md`, draft protocol `synthesis/E5_CEILING_protocol_draft.json`)
+
+**Run #4 E5-CEILING (KOD-GLOBAL-E5-v1) as the single next experiment**, restructured into a fill-independent *information* stage and an *execution* stage, with #1's pre-spike features and the KOD VOLUME_CREEP population row grafted in, and the paired-excess statistic grafted from #5/#2.
+
+Why: the decisive fact (verified by all three refuters from `trades.csv.gz`) is that the **gross** mean is already negative in every recorded run (IDX −3.67% gross / −4.06% net; crypto −1.51% / −1.90%; US −3.19% / −3.65%; US fill-B −0.10% / −0.97%), so execution work cannot rescue the frozen flags. The only pre-event separator ever measured (vol20, AUC 0.68 / 0.78 / 0.56) is symmetric. Nothing has tested whether any daily-bar feature combination carries *direction*. E5 tests exactly that; by the lab's own prior the likely outcome is a null, and the null is the valuable result (closes tape-only detector building on information grounds, redirects to information timing = E7).
+
+Protocol in brief: 6 L2-logistic fits (3 markets × labels U/D), Arm A = logit_U, Arm B = logit_U − logit_D, top-0.5% threshold fixed on discovery, debounced flags; primaries P1 = IDX Arm A, P2 = CRYPTO Arm B (Bonferroni α 0.025); Stage 0 reproduce pinned runs; Stage 1 information gate on paired gross excess with session-cluster bootstrap; Stage 2 execution gate (`e3.admissibility` + paired net excess + sensitivities + exit-capacity ≤10% subset); freeze literals; one 2023 validation run per admissible arm, claim level PROVISIONAL; a pass licenses only a prospective paper policy (no BUY until ≥100 prospective scored decisions show positive paired excess). US demoted to diagnostic (survivor-only); IDX Arm B diagnostic (ARB 7% regime). Refuter demands incorporated: paired/clustered test, controls v3 with volatility quintile, repaired US panel in as-traded units, crypto `jump_ratio = 10`, present-mask before ranking, WARMUP 60, information/execution split, cost text corrected. Not fixed and declared: 2023 once-seen; US survivorship; bounded learner; IDX auction spread (one-tick sensitivity only); crypto legacy panel's two future-informed deletions.
+
+Prerequisites in order: merge PR #7 (owner) → additive harness commits (controls v3, backtest matched-mean columns, e1.py as-traded band/format/IGNITION guard, profiles CRYPTO_CLOSE, rules registry) → IDX panel rebuild from the on-disk mirror (no network; fallback pre-registered) → freeze `research/E5/protocol.json` → Stage 0 → 1 → 2 → freeze → validation. PR #5 optional; PR #3 last and non-blocking. Parallel track: an E5 prospective sidecar after the freeze; an owner-authorised SEC probe (network) to de-risk E7; no KPF-v1 unless the A1 row's lift CI excludes 1.
+
+Effort estimate from the synthesis: 40–48 engineer-hours; runtime under a day (US fill-B runs are the slow ones, tens of minutes each).
+
 ## Evidence the readers established (`outputs/Understand/`)
 
 - `read_experiments`: numeric record of every experiment and which validation year each family consumed.

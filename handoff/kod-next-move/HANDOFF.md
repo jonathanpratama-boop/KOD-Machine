@@ -1,7 +1,7 @@
 # HANDOFF — kod-next-move (resumable checkpoint)
 
 **Status line (update at every phase boundary):**
-Phase 1 workflow `wf_1f360293-1fd` RUNNING — Understand ✅ (6/6) · Propose ✅ (6/6) · Judge ✅ (3/3) · Refute ✅ (9/9; `outputs/Refute/`, digest in `03_proposals_and_evidence.md`) · Synthesize ⏳ started 2026-10-14 07:18 UTC (`outputs/Synthesize/synthesize.md` when done). Last sync of outputs: see `outputs/` mtimes. Phase 2 (implementation) NOT started. Nothing pushed by this task.
+Phase 1 workflow `wf_1f360293-1fd` **COMPLETE** 2026-10-14 07:23 UTC — 25 agents, 0 errors, 5.84M subagent tokens, 2h20m. All outputs in `outputs/`; the recommendation is `synthesis/RECOMMENDATION.md` with the draft protocol `synthesis/E5_CEILING_protocol_draft.json`; the whole workflow return value is `workflow/wf_1f360293-1fd.result.json`. **Recommended next move: E5-CEILING (KOD-GLOBAL-E5-v1)**, proposal #4 amended per the refuters (see `03_proposals_and_evidence.md` §Recommendation). Phase 2 (implementation): being set up on a separate worktree/branch `claude/e5-ceiling` (local; not pushed without the owner's say-so). Checkpoint commits are pushed to the base branch.
 
 **Where:** `/home/user/KOD-Machine`, branch `claude/idx-signals-test-repo-ds0jw7` at `e635e22`. This directory is untracked (deliberately uncommitted; see `05_next_steps.md` §4).
 

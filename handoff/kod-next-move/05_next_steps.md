@@ -12,20 +12,13 @@ If the container was reclaimed, the journal path in `sync_outputs.py` will not e
 `outputs/` directory already holds everything that had finished at the last sync, and the
 workflow must be re-run from `workflow/kod-next-move.js` (see §2).
 
-## 1. Finish Phase 1
+## 1. Phase 1 — DONE (2026-10-14 07:23 UTC)
 
-The workflow `wf_1f360293-1fd` is still running at checkpoint time (Refute phase on #1 new-family,
-then #2 structure, then Synthesize). When it completes:
-1. `python3 handoff/kod-next-move/scripts/sync_outputs.py` → `outputs/Refute/*` (9 files) and `outputs/Synthesize/synthesize.md`.
-2. Read `outputs/Synthesize/synthesize.md`. It ends with a fenced JSON block (`recommended_index`, `protocol_id_suggestion`, `prerequisites`, `parallel_track`, `implementation_steps`).
-3. Check that the synthesis actually incorporated the refuters' fixes for #4 (`03_proposals_and_evidence.md` items 1–8). If it recommends #4 without the split verdict / paired cluster-bootstrap test / repaired US panel, do not freeze that protocol as written.
-4. Update `HANDOFF.md` "Phase status" and append the recommendation summary to `03_proposals_and_evidence.md`.
-
-If the workflow died: in a Claude Code session with the Workflow tool,
-`Workflow({scriptPath: "<live script path from 02_session_log.md>", resumeFromRunId: "wf_1f360293-1fd"})`
-replays cached agents and runs only the missing ones. Without that tool, re-run the agents by
-hand from the prompts in `workflow/kod-next-move.js`; completed outputs in `outputs/` are the
-cached inputs the later prompts expect (MAP_TEXT = the six `Understand` summaries+facts+constraints+gaps; PROPOSALS_TEXT = the six `Propose` outputs).
+All 25 outputs are in `outputs/`; the recommendation is `synthesis/RECOMMENDATION.md` and the
+draft protocol `synthesis/E5_CEILING_protocol_draft.json`. The synthesis was checked against the
+refuters' demands (`03_proposals_and_evidence.md` §Recommendation lists what was and was not
+incorporated). Nothing further is needed from the workflow; `workflow/wf_1f360293-1fd.result.json`
+holds the complete return value if the journal is ever lost.
 
 ## 2. Phase 2 (implementation) — only after the owner has seen the recommendation
 

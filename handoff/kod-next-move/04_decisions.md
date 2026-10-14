@@ -17,8 +17,15 @@
 2. **Push the PR #3 merge (`0ce21f0`, v5 naming)?** Needs the owner's permission to push to `claude/us-pipeline-v1`; Ace must re-review the merge result. If PR #7 merges first, this merge must be redone onto the new base (expect conflicts again in `execution.py`/`cli.py`).
 3. **Accept the v5 name and the `e3_rule` refusal semantics?** Alternative: fold the US 5% rule into base v4 as a v5 that also carries the E3 rule.
 4. **Push `claude/us-breakout-v1`?** Local only; the bundle preserves it.
-5. **Which Phase-2 experiment to run** — pending the synthesis; the judges favour #4 (ceiling/kill test) then #1 (pre-spike family); Judge 2 wants #3 (KOD feed) as a parallel infrastructure track. The owner said "execute now", which authorises implementation on a new branch but not a push of that branch or a PR without asking.
-6. **Reuse of 2023 as validation** for a new family: every proposal declares 2023 as once-seen; the owner should confirm this is acceptable (the alternative is prospective-only validation, which takes months).
+5. **Which Phase-2 experiment to run** — the synthesis recommends #4 E5-CEILING (amended). The session is proceeding with it on a local branch because the owner said "execute now"; the owner can still redirect. Not pushed, no PR, until authorised.
+6. **Reuse of 2023 as validation** for a new family: every proposal declares 2023 as once-seen; the protocol labels any 2023 pass PROVISIONAL. The owner should confirm this is acceptable (the alternative is prospective-only validation, which takes months).
+7. **Six owner decisions named by the synthesis (§6):** (a) merge PR #7; (b) authorise branch `claude/e5-ceiling` and its push; (c) accept that a 2023 pass is provisional and the holdout stays sealed; (d) authorise the IDX panel rebuild (no network — proceeding) and the SEC submissions probe (network — NOT proceeding without a go); (e) whether E6 (delayed-entry grid) runs in parallel (default: no); (f) confirm KPF-v1 waits for the A1 row (default: yes).
+
+## Working assumption for Phase 2 (made by the session, reversible)
+
+- PR #7 is **merged locally into the e5 worktree branch** (not on GitHub) so that `jump_ratio`, `GLOBAL_HOLDOUT`, `NEVER_ENTERED` and `e4.py` are available. If the owner declines PR #7, the E5 branch must drop that merge and port only the needed pieces.
+- The E5 branch is local-only; nothing is pushed and no PR is opened until the owner authorises it.
+- No network pulls (no SEC probe, no mirror clone); the IDX panel is rebuilt only from files on disk, else the pre-registered fallback panel is used.
 
 ## Open — technical, to be settled before a freeze
 
