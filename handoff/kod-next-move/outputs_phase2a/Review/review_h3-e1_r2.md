@@ -1,0 +1,74 @@
+# review:h3-e1:r2 (Review; agent a30c83b057b16a213)
+
+## verdict
+fix_required
+## findings
+#### severity
+serious
+#### file
+idx-signals/idxsig/e1.py
+#### line
+509
+#### claim
+run_discovery and run_validation write summary.json / result.json without recording the new Study options (pool_version, pool_units, panel_format, pool_keys), so an E5 result directory produced with the v3 pool or as-traded bands does not self-describe which detection pool its controls were matched on; the only trace is the presence of volatility_q / close_as_traded columns in the CSVs.
+#### evidence
+summary dict at e1.py:509-519 and result.update at 532-535 contain protocol_id, protocol_sha256, panel_sha256, market, stage, code, computed_at only; neither references study.pool_version, study.pool_units or study.panel_format. The harness pattern the task says to imitate records its configuration (e3.py:174/190 and e4.py:154/170 read and write recorded["config"]), and the E5 draft's matched_controls section requires v2 and v3 results to be distinguishable ("v2 reported for comparability"). Confirmed by reading the branch file whole; git diff ae2cbee shows no change to either function.
+#### fix
+In run_discovery and run_validation add an additive block, emitted only when any option is non-default so E1/E2 re-runs keep their current key set, e.g. opts = {"panel_format": study.panel_format, "pool_units": study.pool_units, "pool_version": study.pool_version, "pool_keys": list(study.pool_keys)}; if (study.pool_units, study.pool_version) != ("panel", "v1"): summary["study_options"] = opts (same for result). Add a test asserting the key is absent on the default path and present with the right values under pool_version="v3" / pool_units="as_traded" (write to a tempdir).
+#### severity
+minor
+#### file
+idx-signals/idxsig/e1.py
+#### line
+216
+#### claim
+_declared_panel_format raises AttributeError rather than the documented ValueError when protocol["markets"] or protocol["data"] is present but not a dict (list or string); only the per-market entry is isinstance-guarded.
+#### evidence
+Probe run in the worktree: _declared_panel_format({'markets': ['IDX']}, None) -> AttributeError 'list' object has no attribute 'get'; ({'markets': 'IDX'}) -> AttributeError; ({'data': 'panel-v2'}) -> AttributeError. Dict-shaped entries resolve correctly ({'IDX': None} and {'IDX': {'panel_format': None}} -> panel-v2; real E1/E2 protocols -> panel-v2, panel-global-v1, panel-global-v1).
+#### fix
+Guard both containers: markets = proto.get("markets"); market = markets.get(self.profile.market) if isinstance(markets, dict) else None; data = proto.get("data"); global_ = data.get("panel_format") if isinstance(data, dict) else None. Optionally raise ValueError naming the malformed key.
+#### severity
+minor
+#### file
+idx-signals/idxsig/e1.py
+#### line
+147
+#### claim
+The builder's claim that one frozen E5 protocol can now serve all three markets holds only if the frozen file also carries E2-shaped top-level periods and weak_signals; the E5 draft (reference material) has neither, so it is not loadable by e1.Study independent of the markets-block shape. The builder's needs_other_file note covers only the markets entries.
+#### evidence
+e1.py:145-147 reads proto["weak_signals"]["continuous"], proto["weak_signals"]["binary"] and {k: tuple(v) for k, v in proto["periods"].items()}. Probe of /home/user/KOD-Machine/handoff/kod-next-move/synthesis/E5_CEILING_protocol_draft.json: 'weak_signals' in draft -> False (KeyError on load); draft periods['discovery'] is a dict keyed by market (tuple(dict) would yield ('IDX','US','CRYPTO'), not dates). E2's protocol has single top-level periods lists and a weak_signals block with continuous/binary.
+#### fix
+No change to e1.py required. Extend the needs_other_file note for the Phase 2b owner: research/E5/protocol.json must carry top-level periods as {"discovery": [start, end], "validation": [start, end]} (a single 2020-07-01 start is clipped to the IDX panel's first session by Market.bounds, so one block can serve all markets) and a weak_signals block with continuous/binary lists, in addition to dict-shaped markets entries with panel_format.
+#### severity
+minor
+#### file
+idx-signals/tests/test_e1_study_opts.py
+#### line
+59
+#### claim
+protocol_with() creates a fresh tempfile.mkdtemp() directory per call and never removes it, so every test run leaks roughly two dozen temp directories.
+#### evidence
+protocol_with is called in 20+ places across DefaultsUnchanged, PanelFormatFromProtocol, PerMarketPanelFormat and AsTradedPool; Path(tempfile.mkdtemp()) at line 59 has no matching cleanup or TemporaryDirectory context.
+#### fix
+Create one tempfile.TemporaryDirectory() per class in setUpClass (registered with cls.addClassCleanup(tmp.cleanup)) and have protocol_with write uniquely named files into it, or use unittest's addCleanup in each test.
+## test_rerun_tail
+=== python3 -m unittest (from /tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/e5-h3-e1/idx-signals) ===
+----------------------------------------------------------------------
+Ran 266 tests in 57.227s
+
+OK
+=== python3 -m idxsig rules ===
+E4_CAND_G7_MOMENTUM5_30 v1 DETECTOR hold=5 sha=0378c8b43d27 source-audit=passed
+E4_CAND_G7_MOMENTUM5_30_BEAR v1 DETECTOR hold=5 sha=816abcb4a2a2 source-audit=passed
+MOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed
+MOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed
+MOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed
+MOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed
+PLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed
+USER_RULE PENDING: rule text not supplied
+=== python3 -m idxsig verify-runs ===
+verify-runs: OK
+=== python3 tools/check_append_only.py --all (from worktree root) ===
+append-only: OK
+
+Reviewer verification notes (no defect): git diff ae2cbee touches only idx-signals/idxsig/e1.py and idx-signals/tests/test_e1_study_opts.py; nothing under research/, results/, paper/, kod-machine/var or kod-machine/research; both commits carry the required trailers. Defaults: resolver on the real E1/E2 protocols returns panel-v2 (IDX) and panel-global-v1 (US, CRYPTO), the prior hard-coded expectations; _pool arithmetic is identical for the 3-key v1 pool; row() adds close_as_traded / volatility_q only under opt-in; the unconditional with_units attach when a unit_factor column exists mirrors backtest.run:302-305 and the test proves buckets/episodes equal with and without the column. Look-ahead: the volatility quintile is ranked per session after masking by present, from vol20 (sessions <= t); unit_factor is never passed to family.features (FEATURE_ARGS of moonshot_g / moonshot_e4 exclude it); buckets are formed on the market sealed at validation end. Callers: cli.py e1/e2 paths and e3.py call Study with unchanged positional/keyword signatures; E2's markets entries are dicts without panel_format so they fall through to legacy. Tests: the precedence test (line 198) would fail if the global key won; PerMarket tests fail with the resolver stubbed to legacy. Untracked .githooks/post-* and pre-push in the worktree are git-lfs install artefacts (mtime 07:30, before the first commit) and are not part of the diff.
