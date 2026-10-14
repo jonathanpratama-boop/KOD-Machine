@@ -33,8 +33,23 @@ Objections that must be fixed before any freeze (all three refuters converge):
 8. Minor: `Study._signals` `age`/`zero20` are not NaN before listing (prefix-safety detail); pinned IDX panel `panel-20261013T194245Z` is not on disk (needs `idxsig build-panel` from the mirror manifest; fallback `panel-20261007T225823Z`).
 Verified claims (not refuted): gross-vs-net decomposition (IDX −3.67%/−4.06%, crypto −1.51%/−1.90%, US −3.19%/−3.65%, US fill-B −0.10%/−0.97%); vol20 matched-set AUCs 0.679/0.780/0.556 are in the recorded `signal_stats.csv`.
 
-### #1 new-family (E5 PRE-SPIKE TAPE) — in progress (look-ahead and statistical refuters running; execution refuter queued)
-### #2 structure (E5-PATH) — queued
+### #1 new-family (E5 PRE-SPIKE TAPE) — 3 of 3 done: look-ahead NOT refuted (serious), statistical REFUTED (serious), execution NOT refuted (serious)
+Fixes demanded before any freeze:
+1. **"2023 is out-of-sample for this family" is overstated.** `research/E1/validation/episodes_E30.csv` (569 rows), `E2/US/validation/episodes_E30.csv` (4,100) and `E2/CRYPTO/validation/episodes_E30.csv` (730) already list every 2023 +30% episode with ret5, ret20, volr, rngr, vol20, dd60, zero20, up5 at the decision close — i.e. the complete 2023 positive class with E5's own inputs. Re-label 2023 a consumed period ("post-discovery check") and declare those files in the leakage statement.
+2. **A1 is a conjunction of negatively associated conditions.** Spearman(volr, rngr) = 0.57 / 0.50 / 0.74 (IDX/US/crypto) in the recorded control sets, so P(rngr ≤ 1 | volr ≥ 1.5) is only 22% / 17–22% / 8%: the creep-and-quiet flag will be rare; pre-screen with a one-pass weak-signal Study on discovery before any harness run.
+3. **Detection-gate inference is anti-conservative for state detectors** (`e1.Study.detector_table` treats every flagged ticker-day as independent; creep/contraction flags persist for many sessions). Cluster by name/episode.
+4. **Detection-stage matched pool matches price band / liquidity / market cap only** (`e1.py:215-227`), not volatility — A3/C1 (hivol) pass detection on vol20 alone (AUC 0.68/0.78). On US the band is the provider-adjusted band (no `unit_factor` at detection stage): attach as-traded units in `e1.Study` when the panel carries them.
+5. **Multiplicity without correction**: 8 detectors × 3 holds × 3 markets = 72 pairs selected by max average net, then p < 0.05 once per market.
+6. **IDX execution realism**: no closing-auction spread/impact term in the IDX cost model (first-order for a quiet-tape family); B1/B2 re-base members are structurally confined to the ≤Rp200 band under the ARA bands; the capacity gate removes the population the thesis is about, so a negative IDX result would be ambiguous. Minor: IDX reference resets (123 in TIER_1, 41 with ratio ≥ 2) produce spurious creep flags for up to 25 sessions; the crypto panel is legacy v1 with a future-informed spike deletion (LUNA 2022-05-13); A1's `not_repriced` makes it a stricter subset of the KOD detector, not the detector itself.
+
+### #2 structure (E5-PATH) — 3 of 3 done: look-ahead NOT refuted (serious), statistical REFUTED (serious), execution REFUTED (serious)
+1. **Redenomination artefacts decide the crypto grid as written.** The proposal declined a jump exclusion; the panel carries same-ticker unit changes (COCOS 2021-01-23 +129,440%, DREP 2021-04-02 +10,558%, LUNA …). Calendar enumeration shows 13 of 15 crypto cells hold at least one G2_RET30 trade across an upward swap; E4's report already hit exactly this (`research/E4/REPORT.md` L35-36). Fix: `jump_ratio = 10` on every cell incl. the reference row (requires PR #7's `EXCLUDED_DATA_JUMP` code), plus a tail-robustness condition (admissible with its largest trade removed; report medians).
+2. **"Highest mean" selection across holds to 20 sessions in crypto 2021 is winner's-curse-prone**; the falsifier's inference is invalid (relative hypothesis, absolute per-year positivity rule).
+3. **Matched controls are matched at the signal session**, not at the delayed entry; momentum tercile is broad.
+4. **US arm (`units='panel'`) re-introduces the outcome-correlated SKIP_LOT asymmetry ERRATA documents** (rule 10.4% vs controls 4.1% in the reproduce target `20261008T100745Z`), and 52.8% of scored trades sit in a different adjusted-vs-as-traded price band (first matching priority). US universe is the 2026 survivor snapshot. The +1.5%/side stress addresses only the cost tier.
+5. Minor: crypto cost text (0.3%/side) does not match the recorded E2 config (0.2%/side); the crypto panel is legacy v1. Crypto "open" = prior close holds in practice (median |open/prev−1| = 0.041%).
+
+Net reading of the Refute phase: none of the top three is dead, none can be frozen as written. Common demands: use the repaired/as-traded US panel; exclude data jumps; cluster the statistics by name/session; declare 2023 consumed; separate the information verdict from the executability verdict; land PR #7 (or port its `jump_ratio`/`NEVER_ENTERED`/holdout-guard code) first.
 
 ## Evidence the readers established (`outputs/Understand/`)
 

@@ -1,7 +1,7 @@
 # HANDOFF — kod-next-move (resumable checkpoint)
 
 **Status line (update at every phase boundary):**
-Phase 1 workflow `wf_1f360293-1fd` RUNNING — Understand ✅ (6/6) · Propose ✅ (6/6) · Judge ✅ (3/3) · Refute ⏳ (4/9 done: all three on #4 skeptic, look-ahead on #1 new-family; `outputs/Refute/`) · Synthesize ⏸ not started. Last sync of outputs: see `outputs/` mtimes. Phase 2 (implementation) NOT started. Nothing pushed by this task.
+Phase 1 workflow `wf_1f360293-1fd` RUNNING — Understand ✅ (6/6) · Propose ✅ (6/6) · Judge ✅ (3/3) · Refute ✅ (9/9; `outputs/Refute/`, digest in `03_proposals_and_evidence.md`) · Synthesize ⏳ started 2026-10-14 07:18 UTC (`outputs/Synthesize/synthesize.md` when done). Last sync of outputs: see `outputs/` mtimes. Phase 2 (implementation) NOT started. Nothing pushed by this task.
 
 **Where:** `/home/user/KOD-Machine`, branch `claude/idx-signals-test-repo-ds0jw7` at `e635e22`. This directory is untracked (deliberately uncommitted; see `05_next_steps.md` §4).
 
