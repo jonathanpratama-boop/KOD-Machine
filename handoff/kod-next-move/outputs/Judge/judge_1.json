@@ -1,0 +1,90 @@
+{
+ "agentId": "a2e8e7c5de0341762",
+ "label": "judge:1",
+ "phase": "Judge",
+ "result": {
+  "scores": [
+   {
+    "index": 0,
+    "novelty": 9,
+    "feasibility_now": 3,
+    "falsifiability": 7,
+    "data_readiness": 3,
+    "directive_compliance": 8,
+    "information_value": 7,
+    "total": 37,
+    "rationale": "Only proposal with an orthogonal information source (EDGAR acceptance times) and a tested RULE_FIELDS extension path; but nothing can run now (needs ~6,000 EDGAR pulls under a real User-Agent, a 50-filing timezone calibration, and a causal-contract change), and the primary contrast is mis-specified: I1 requires an 8-K accepted before 15:45 ET on the spike day while most press-release-driven 8-Ks are accepted after the close or within 4 business days, so I2 'undocumented' is contaminated with documented moves and the pre-registered null is close to uninformative. Verified: data.sec.gov reachable (591 cached 200s), placeholder UA at us_actions.py:60, no submissions on disk.",
+    "fatal_flaw": "Not fatal, but the Track A arms test 'early-filed vs not-yet-filed', not 'documented vs undocumented' (8-K lag of hours to 4 business days; leak table is reported but not used); add a pre-registered arm keyed to acceptance by the t+1 cutoff with entry at open t+2, or the primary falsifier cannot close the document question. Also a 2026 ticker->CIK snapshot applied to 2020-23 tickers mis-joins reused tickers."
+   },
+   {
+    "index": 1,
+    "novelty": 8,
+    "feasibility_now": 7,
+    "falsifiability": 8,
+    "data_readiness": 8,
+    "directive_compliance": 8,
+    "information_value": 7,
+    "total": 46,
+    "rationale": "First family that fires without a same-day move; A1 is the KOD VOLUME_CREEP_PRICE_QUIET definition frozen 2026-10-08 (verified in protocol.json and price_facts.py), so the lab gets the population base rate the doctrine demands; all three panels on disk (IDX csv needs build-panel from the on-disk mirror, fallback exists); harness changes are small (e1.py format check/IGNITION guard, new rule module, driver). Verified IDX high/low 89%, zero-volume 11%. Prior is against (E1/E2 single-day volr AUC 0.50) but multi-session creep, re-base and contraction were never computed.",
+    "fatal_flaw": "None fatal. Multiplicity is the main risk: 8 detectors x 3 holds x 3 markets = 72 correlated pairs at p<0.05 plus a detection gate; the per-year rule and single validation are the only guards, so a lone admissible pair at p~0.03 must be read as weak. B1/B2 and C-members will likely fall under 200 flags on IDX/crypto; A3/C1's hivol condition is redundant under volatility-matched controls."
+   },
+   {
+    "index": 2,
+    "novelty": 5,
+    "feasibility_now": 9,
+    "falsifiability": 8,
+    "data_readiness": 9,
+    "directive_compliance": 7,
+    "information_value": 5,
+    "total": 43,
+    "rationale": "Cheapest and cleanest: RunConfig.entry_lag and holding_days already exist (backtest.py:54, cli.py:78) and run() passes entry_lag into ExecConfig, so the 30 cells need a driver only, not the resolve_plan edit the proposal plans; both panels and the reproduce runs (100745Z config verified: fill A, units panel, quarantine none, 1,101 scored, -3.745% vs -0.624%) are on disk; crypto open=prev close verified (median gap 0.040%). But it is a plan search on a frozen detector's flags over windows where its outcomes were seen (E3 pattern, declared), and the answer is strongly predicted negative by E2's lag-1 numbers and the MAX/lottery literature.",
+    "fatal_flaw": "None. Expected information is low: 14 correlated cells on the same flags; a 'pass' would require post-spike names to beat other top-momentum-tercile controls after t+5, which nothing in the repo or the literature suggests; the useful output is the descriptive path map, which is non-decision by design."
+   },
+   {
+    "index": 3,
+    "novelty": 6,
+    "feasibility_now": 3,
+    "falsifiability": 6,
+    "data_readiness": 6,
+    "directive_compliance": 9,
+    "information_value": 4,
+    "total": 34,
+    "rationale": "Prospective, holdout-free and policy-neutral (best compliance), and the paper-scan features files do carry the needed fields (verified for US/IDX/CRYPTO). But it spends 48h of build plus months of unattended operation outside the repo (no scheduler, GitHub token, two TSAs must answer at the slot, SEC egress for US units) to collect a few hundred signal entries per market for the same detector that #1 can test on ~1.4M historical ticker-days from disk this week; the cases are PARTIAL_PUBLIC so they cannot count toward doctrine promotion; and the T-24H design computes facts through d-1 against close(d), structurally blind to the 1-session lead E2 found.",
+    "fatal_flaw": "Cost/information mismatch plus ledger design: committing var/kod.db with ~2,400 entries/day (3-4 MB/day of sqlite in git, ~200 MB over the pilot) is not sustainable at the stated universe sizes, and the scientific readout R1 is at least 2.5 months away for a hypothesis answerable historically now."
+   },
+   {
+    "index": 4,
+    "novelty": 9,
+    "feasibility_now": 7,
+    "falsifiability": 9,
+    "data_readiness": 6,
+    "directive_compliance": 8,
+    "information_value": 9,
+    "total": 48,
+    "rationale": "The one proposal that changes the information set rather than the plan: a pre-registered multivariate ranker over the already-registered E1/E2 weak signals, a directional (U minus D) arm, the first D30 measurement, and a closed-form break-even precision. Its central factual premise is exact: on scored rows gross/net are IDX -3.67/-4.06, crypto -1.51/-1.90, US 060443Z -3.19/-3.65, US 115656Z -0.10/-0.97, so the failures are gross and no cost rerun can flip signs. Cheapest kill (Arm B fails in-sample => no 2023 touched); no harness change; coefficients frozen as literals so the rule hash covers the model.",
+    "fatal_flaw": "Not fatal, but fix before freeze: the primary US fit and validation run use panel_us-20261008T004105Z, the unrepaired Yahoo panel the lab's own ERRATA documented as non-causal in price levels and mis-costed (60% of flags in later reverse-splitters); the repair panel should be primary, not the sensitivity. Also a rank-logistic with squares is a weak learner, so a null is 'not findable by this learner', as the proposal admits."
+   },
+   {
+    "index": 5,
+    "novelty": 5,
+    "feasibility_now": 7,
+    "falsifiability": 8,
+    "data_readiness": 9,
+    "directive_compliance": 5,
+    "information_value": 6,
+    "total": 40,
+    "rationale": "Well-engineered: session-level regime shared by every control by construction, within-year interaction gate, Bonferroni alpha, claim levels, regime-variable budget; design-time counts reproduce exactly when re-run (crypto HOT 1,052/COLD 443; IDX 929/990; IDX 2021 HOT share 0.54). But it is a conditional re-read of the frozen detectors on exactly the windows where their outcomes were seen (in-sample discovery and consumed 2023), with a regime definition written after the 2021-vs-2022 signs and E4's bear-only admissibility were known; E3's REPORT already named the idea, and E4 v2 showed this second-design-pass pattern failing. A positive I is not actionable without prospective confirmation. Minor error: crypto 2023 SKIP_OVERLAP is 42, not ~6.",
+    "fatal_flaw": "Closest of the six to 're-tuning a frozen detector on seen data': the gate is parameter-light but its motivation and its 2023 test both come from outcomes already on record; the within-year gate mitigates, it does not cure. Also needs a backtest.run change (two trades.csv columns) committed before any run."
+   }
+  ],
+  "ranking": [
+   4,
+   1,
+   2,
+   5,
+   0,
+   3
+  ],
+  "notes": "Judge 1 (quant/backtest-failure lens). All scores are from reading the proposals against the repo at HEAD (branch claude/idx-signals-test-repo-ds0jw7) plus origin/claude/e4-fade-short-side and origin/codex/e3-us-retention-protocol-v1; nothing was modified, no harness run or network pull was started; the only computations were read-only pandas checks on recorded trades.csv.gz/summary.json files and a re-run of proposal 5's scratchpad counting script on discovery windows (no outcomes). No proposal reads the holdout and none re-tunes a frozen threshold, so none scores 0 on compliance; #5 is the nearest to the line (regime gate on frozen detectors, tested on consumed windows), #2 and #0 Track A are plan/stratification searches on frozen flags over consumed windows (declared, E3 pattern). Verified facts that change weight: (1) #4's gross-vs-net numbers are exact on scored rows, which is the strongest argument in the whole set that another plan/cost rerun cannot help and that the information set is the remaining degree of freedom; (2) #2's harness claim is over-stated in its favour: RunConfig.entry_lag and holding_days already exist, so it is a driver-only experiment (~30 runs) and could run in parallel with anything; (3) #5's HOT/COLD counts reproduce exactly; (4) #0 cannot start now (no 8-K data on disk, placeholder User-Agent, needs ~6,000 EDGAR requests); (5) #3's infrastructure cost is far out of proportion to the information it can return in 3 months, and the committed-sqlite growth makes the design unsustainable at the stated universe sizes. Recommended next move if the owner wants execution now: freeze and run #4 first (cheapest decisive kill; swap the repair panel to primary for US before the freeze), run #2 in parallel since it needs no harness change, then #1 as the first pre-move family. Hold #0 until the arm definition is fixed (document by the t+1 cutoff, entry open t+2) and the SEC pull is authorised; treat #5 as a declared second look that should only run after #4 says whether any daily-bar direction exists; defer #3 until #1 gives A1 a historical lift row, then decide if prospective cases are worth the operational cost. Unknowns I could not verify: the 8-K doc share among G2 flags, the submissions endpoint's acceptanceDateTime timezone convention, and whether the IDX panel-20261013T194245Z rebuild from the on-disk mirror reproduces its manifest sha."
+ }
+}

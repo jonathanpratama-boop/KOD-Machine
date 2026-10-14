@@ -1,0 +1,55 @@
+# Exact next steps for whoever continues
+
+## 0. Re-orient (5 minutes)
+
+```sh
+cd /home/user/KOD-Machine && git status --short && git log --oneline -3
+cat handoff/kod-next-move/HANDOFF.md
+python3 handoff/kod-next-move/scripts/sync_outputs.py        # refresh outputs/ from the journal
+ls handoff/kod-next-move/outputs/*/                            # see which agents have finished
+```
+If the container was reclaimed, the journal path in `sync_outputs.py` will not exist; the
+`outputs/` directory already holds everything that had finished at the last sync, and the
+workflow must be re-run from `workflow/kod-next-move.js` (see §2).
+
+## 1. Finish Phase 1
+
+The workflow `wf_1f360293-1fd` is still running at checkpoint time (Refute phase on #1 new-family,
+then #2 structure, then Synthesize). When it completes:
+1. `python3 handoff/kod-next-move/scripts/sync_outputs.py` → `outputs/Refute/*` (9 files) and `outputs/Synthesize/synthesize.md`.
+2. Read `outputs/Synthesize/synthesize.md`. It ends with a fenced JSON block (`recommended_index`, `protocol_id_suggestion`, `prerequisites`, `parallel_track`, `implementation_steps`).
+3. Check that the synthesis actually incorporated the refuters' fixes for #4 (`03_proposals_and_evidence.md` items 1–8). If it recommends #4 without the split verdict / paired cluster-bootstrap test / repaired US panel, do not freeze that protocol as written.
+4. Update `HANDOFF.md` "Phase status" and append the recommendation summary to `03_proposals_and_evidence.md`.
+
+If the workflow died: in a Claude Code session with the Workflow tool,
+`Workflow({scriptPath: "<live script path from 02_session_log.md>", resumeFromRunId: "wf_1f360293-1fd"})`
+replays cached agents and runs only the missing ones. Without that tool, re-run the agents by
+hand from the prompts in `workflow/kod-next-move.js`; completed outputs in `outputs/` are the
+cached inputs the later prompts expect (MAP_TEXT = the six `Understand` summaries+facts+constraints+gaps; PROPOSALS_TEXT = the six `Propose` outputs).
+
+## 2. Phase 2 (implementation) — only after the owner has seen the recommendation
+
+Owner inputs needed first (see `04_decisions.md`): merge PR #7 or not; push the PR #3 merge or not;
+accept 2023 reuse; name of the new branch to push (default `claude/e5-<slug>`).
+
+Then, on a new branch from the base (`git checkout -b claude/e5-<slug> origin/claude/idx-signals-test-repo-ds0jw7`):
+1. Write `idx-signals/research/E5/PROTOCOL.md` + `protocol.json` from the synthesis draft; commit with its sha; **before any number**. Follow the E3/E4 pattern (`research/E3/protocol.json`, `idxsig/e3.py`, and on PR #7 `idxsig/e4.py`): precondition reproduce → discovery → freeze SELECTED → validation (one run, recorded via `results.write_run`).
+2. Every US/crypto `RunConfig` must set `end` explicitly (HEAD has no code holdout guard for US/crypto; PR #7 adds `backtest.GLOBAL_HOLDOUT`). Never load 2024+.
+3. Rules go in `idx-signals/idxsig/rules/moonshot_e5.py`, registered in `rules/__init__.py`, passing `rules/audit.py` and the prefix-first lookahead check (`python3 -m idxsig rules`).
+4. Tests synthetic only (`tests/test_e5.py`), run `python3 -m unittest` in `idx-signals/` (expect ≥273 on the PR #3 merge base, ≥222 on base) and in `kod-machine/` (96).
+5. `python3 -m idxsig verify-runs`, `python3 ../tools/check_append_only.py --all` must stay OK; `write_run` refuses a dirty tree, so commit before each run.
+6. Report the result including a null; never describe discovery numbers as performance.
+
+## 3. Pending non-experiment items
+
+- **PR #3 merge** (`0ce21f0`): to restore it anywhere, `git bundle verify bundles/pr3-merge-0ce21f0.bundle && git fetch bundles/pr3-merge-0ce21f0.bundle claude/pr3-merge-v5-local:claude/pr3-merge-v5-local` (prerequisite commits `bd352b2` and `e952482` must be present, i.e. fetch origin first). Human-readable: `bundles/pr3-merge-resolution.patch`. Push only with the owner's permission; if PR #7 lands first, redo the merge onto the new base.
+- **Breakout branch**: `git fetch bundles/us-breakout-v1.bundle claude/us-breakout-v1:claude/us-breakout-v1` (prerequisite = merge-base with `origin/claude/us-pipeline-v1`, present after `git fetch origin`). Not pushed; owner's call.
+- **Daily routines** will fire into this session; run them exactly as their prompt says (`02_session_log.md` has the last three runs as examples) and never start one while another paper-scan is running.
+- **G3 provenance** (Hermes steps 1–3): wait for the owner's audit report from `scripts/g3_provenance_audit.sh`, then write the execution timeline; do not reschedule anything.
+- **PR #3 review**: a GitHub event from Ace wakes this session; address review comments on the merge commit, not on `bd352b2`.
+
+## 4. Things another agent must not do
+
+- Do not commit `handoff/` to the base branch or push it without the owner's say-so (it is untracked on purpose; the base branch is the live paper-ledger branch).
+- Do not `git worktree remove` the scratch worktrees before the bundles are confirmed restorable somewhere durable.
+- Do not run any harness run that reads 2024+ rows, re-tune a frozen detector, or describe discovery statistics as performance.

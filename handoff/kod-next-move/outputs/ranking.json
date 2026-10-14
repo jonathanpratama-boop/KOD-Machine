@@ -1,0 +1,83 @@
+{
+ "note": "mean of the three judge totals (0-60 scale); top 3 go to the Refute phase",
+ "ranking": [
+  {
+   "index": 4,
+   "angle": "skeptic",
+   "title": "E5-CEILING (KOD-GLOBAL-E5-v1): pre-registered T-0 predictability ceiling for the +30%/5-session event from daily bars, with a directional (up-minus-down) ranker as the kill test",
+   "judge_totals": [
+    48,
+    47,
+    46
+   ],
+   "mean": 47.0,
+   "effort_hours": 30,
+   "data_available_now": true
+  },
+  {
+   "index": 1,
+   "angle": "new-family",
+   "title": "E5 PRE-SPIKE TAPE (KOD-GLOBAL-E5-v1): accumulation, re-base and contraction detectors that fire WITHOUT a big up day, in IDX, US and crypto, with the KOD VOLUME_CREEP_PRICE_QUIET definition as the frozen reference member",
+   "judge_totals": [
+    46,
+    44,
+    47
+   ],
+   "mean": 45.67,
+   "effort_hours": 30,
+   "data_available_now": true
+  },
+  {
+   "index": 2,
+   "angle": "structure",
+   "title": "E5-PATH: delayed-entry long after the fade. A pre-registered entry-timing x horizon grid on the frozen G2_RET30 flag (crypto primary, US secondary) with matched controls under each plan",
+   "judge_totals": [
+    43,
+    39,
+    48
+   ],
+   "mean": 43.33,
+   "effort_hours": 14,
+   "data_available_now": true
+  },
+  {
+   "index": 5,
+   "angle": "regime",
+   "title": "E5 (KOD-GLOBAL-E5-v1): own-event spike-breadth regime as a pre-registered partition of the frozen long detectors (F1_ARA, G2_RET30) under their recorded plan, in IDX, US and crypto",
+   "judge_totals": [
+    40,
+    37,
+    42
+   ],
+   "mean": 39.67,
+   "effort_hours": 24,
+   "data_available_now": true
+  },
+  {
+   "index": 0,
+   "angle": "information",
+   "title": "E5_US_INFO_v1 (KOD-US-E5-v1): 8-K information timing - documented vs undocumented +30% days, and filing-type triggers as detectors",
+   "judge_totals": [
+    37,
+    35,
+    36
+   ],
+   "mean": 36.0,
+   "effort_hours": 44,
+   "data_available_now": false
+  },
+  {
+   "index": 3,
+   "angle": "kod-feed",
+   "title": "KPF-v1: daily tape-fed prospective KOD pipeline (whole-universe scan + STRICT signal/control cases) in IDX, US and crypto",
+   "judge_totals": [
+    34,
+    36,
+    37
+   ],
+   "mean": 35.67,
+   "effort_hours": 48,
+   "data_available_now": true
+  }
+ ]
+}
