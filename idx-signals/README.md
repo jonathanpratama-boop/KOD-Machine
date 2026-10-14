@@ -44,9 +44,12 @@ python3 -m idxsig run --market US --rule MOONSHOT_E2_US_D1 --start 2023-01-01 --
 python3 -m idxsig run --rule E3_CAND_F7_ARA_VOL3 --start 2021-01-22 --end 2022-12-30 --fill-model C \
     --entry-rule confirm --entry-window 3 --exit-rule stop_ref   # an execution plan (research/E3)
 python3 -m idxsig e3-reproduce                        # experiment E3 precondition, then e3-discovery, e3-validation
+python3 -m idxsig run --market CRYPTO --rule E4_CAND_G2_RET30 --side short --start 2020-07-01 --end 2022-12-31 \
+    --entry-rule pullback --entry-window 3 --exit-rule first_up --holding-days 2   # a short-side plan (research/E4)
+python3 -m idxsig e4-reproduce --market CRYPTO --protocol v2   # experiment E4 stages: e4-discovery, e4-validation
 python3 -m idxsig paper-scan --market IDX --commit    # prospective paper scan of the last session (no orders)
 python3 -m idxsig paper-score --market IDX --commit   # score paper decisions whose window has ended
-python3 -m unittest                        # 222 tests, synthetic data only
+python3 -m unittest                        # 244 tests, synthetic data only
 ```
 
 ## 1. Dataset
@@ -284,6 +287,25 @@ p < 0.05, and all 108 lost money in 2022, so the pre-registered per-year conditi
 nothing; no pair was frozen, validation was not run, and the holdout is untouched. The best pair
 (F8_ARA_EARLY, confirmation entry, hold 5: +1.49% vs +0.56% for matched random, p = 0.14) earned
 its average in 2021 alone. The paper policy therefore keeps PASS.
+
+## 5d. Experiment E4: the fade, on the short side ([research/E4](research/E4/REPORT.md), [v2](research/E4/v2/REPORT.md))
+
+The other side of E2's finding: after a +30% day the median five-session move is about -10%, so
+a short wins about two trades in three. The harness gained a short side (`--side short`: sell at
+the open, buy back at a close, a split multiplies the shares owed, carry per session held, mirrored
+exits `stop_high` and `first_up`, conditional entries read at the open) and, for v2, an
+isolated-margin liquidation at +100% and the exclusion of redenomination-sized jumps as
+non-trades. Crypto only so far (Binance USDT pairs including delisted ones; the US repair panel
+is the named second market). **v1** (`research/E4/protocol.json`): 144 short-side runs, none
+admissible: 102 of 144 win more than half their trades, 143 of 144 made money in 2022 and 0 of
+144 in 2021, and every plan's worst 1% lost more than the whole position. **v2**
+(`research/E4/v2/`, designed on the v1 discovery table, declared as such): with liquidation, the
+jump rule and one regime condition (BTC below its 50-session mean), 31 of 288 pairs were
+admissible on discovery, all in the bear regime; the selected pair (short G2_RET30_BEAR into the
+first open above the signal close, cover at the first up close, else after two sessions: 407
+trades, hit rate 70%, +5.8% per trade, 2% liquidated) **failed its single validation test** on
+2023: 34 trades, hit rate 68%, median +9%, average -1.5%, three liquidations. The win rate is
+real and the losses are not small. No paper policy change; the holdout is untouched.
 
 ## 6. Prospective paper ledger ([paper/](paper/README.md))
 

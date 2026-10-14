@@ -586,7 +586,7 @@ def _score_plan(decision: dict, m: Market, n: int, d: int, level: np.ndarray, di
     """An IDX decision made under a validated E3 plan, scored by the harness's own execution model
     (execution.execute) for this one name and signal, sizing never binding: the paper outcome is what
     the validation run would have recorded for the same bars. None while the trade is still open."""
-    from .execution import FIRST_SKIP, STATUS, ExecConfig, execute
+    from .execution import NEVER_ENTERED, STATUS, ExecConfig, execute
 
     p = POLICY
     cfg = ExecConfig(holding_days=int(xp["holding_days"]), entry_rule=xp["entry_rule"],
@@ -626,7 +626,7 @@ def _score_plan(decision: dict, m: Market, n: int, d: int, level: np.ndarray, di
                    else "MISSED GAIN (rejected, plan would have profited)")
     return {"type": "OUTCOME", "market": "IDX", "decision_id": decision["decision_id"], "scored_at": utc_stamp(),
             "discovery": discovery,
-            "execution": {"plan": xp, "harness_status": status, "fillable_at_trigger": code < FIRST_SKIP,
+            "execution": {"plan": xp, "harness_status": status, "fillable_at_trigger": code not in NEVER_ENTERED,
                           "paper_trade": trade, "executed": executed,
                           **({"not_traded_because": status} if trade is None else {})},
             "scoring_version": ("verified-units-v1" if verified_units else

@@ -1,0 +1,373 @@
+{
+  "by_year": [
+    {
+      "attempts": 124,
+      "avg_net_return": -0.01514432429681439,
+      "hit_rate": 0.6949152542372882,
+      "random_avg_net_return": -0.014408644326430365,
+      "random_hit_rate": 0.529716612511825,
+      "random_matched_avg_net_return": -0.013351773642262187,
+      "random_matched_hit_rate": 0.5486384514435696,
+      "scored": 118,
+      "year": 2020
+    },
+    {
+      "attempts": 793,
+      "avg_net_return": -0.04242082078346265,
+      "hit_rate": 0.6027918781725888,
+      "random_avg_net_return": -0.06133870573536402,
+      "random_hit_rate": 0.46848062745896946,
+      "random_matched_avg_net_return": -0.06288470396175251,
+      "random_matched_hit_rate": 0.477491103202847,
+      "scored": 788,
+      "year": 2021
+    },
+    {
+      "attempts": 406,
+      "avg_net_return": 0.03728474036926325,
+      "hit_rate": 0.7146401985111662,
+      "random_avg_net_return": -0.012933596233710312,
+      "random_hit_rate": 0.5007851054284432,
+      "random_matched_avg_net_return": -0.013446076215571413,
+      "random_matched_hit_rate": 0.5025551120892238,
+      "scored": 403,
+      "year": 2022
+    }
+  ],
+  "config": {
+    "ca_mode": "adjusted",
+    "carry_per_session": 0.0005,
+    "controls_version": "v2",
+    "data_end_exit": "last_close",
+    "end": "2022-12-31",
+    "entry_lag": 1,
+    "entry_rule": "fixed",
+    "entry_window": 1,
+    "exit_rule": "fixed",
+    "fee_buy": 0.001,
+    "fee_sell": 0.001,
+    "fill_model": "A",
+    "holding_days": 5,
+    "holdout_final": false,
+    "jump_ratio": 10.0,
+    "liquidation": 1.0,
+    "lookahead_cuts": null,
+    "market": "CRYPTO",
+    "max_participation": 0.1,
+    "notional": 5000.0,
+    "overlap": "skip",
+    "quarantine": "none",
+    "random_draws": 200,
+    "rule_id": "E4_CAND_G2_RET30",
+    "seed": 20261007,
+    "side": "short",
+    "start": "2020-07-01",
+    "units": "panel"
+  },
+  "corporate_action_model": {
+    "mode": "adjusted"
+  },
+  "data_quality": {
+    "known_limitations": [
+      "Binance USDT pairs including delisted ones still described by exchangeInfo (190 delisted/halted bases); pairs Binance dropped from exchangeInfo entirely are absent",
+      "prices are split-adjusted by the source, not dividend-adjusted",
+      "daily bars only: no intraday path, no halts (US LULD) or order-book depth",
+      "costs are assumed per price tier (profiles.py), not measured spreads",
+      "sessions are UTC days; the asset trades 24/7"
+    ],
+    "lowest_tier": "CRYPTO_BINANCE",
+    "panel_format": "panel-global-v2",
+    "sessions_by_tier": {
+      "CRYPTO_BINANCE": 914
+    },
+    "tiers": [
+      {
+        "corporate_actions": "split-adjusted by the source",
+        "from": "2020-01-01",
+        "source": "binance",
+        "survivorship": "Binance USDT pairs including delisted ones still described by exchangeInfo (190 delisted/halted bases); pairs Binance dropped from exchangeInfo entirely are absent",
+        "tier": "CRYPTO_BINANCE",
+        "to": "2026-10-12"
+      }
+    ]
+  },
+  "execution": {
+    "auto_rejection": "none (no daily price limits)",
+    "corporate_actions": "source prices are split-adjusted; no reference resets are expected or scaled",
+    "cost_tiers": [
+      [
+        Infinity,
+        0.001
+      ]
+    ],
+    "fees": {
+      "buy": 0.001,
+      "sell": 0.001
+    },
+    "jump_ratio": {
+      "note": "a session whose close/reference ratio is beyond this inside (entry, exit] is a redenomination or a bad print, not a trade; such trades are EXCLUDED_DATA_JUMP for the rule and the baselines alike",
+      "ratio": 10.0
+    },
+    "lot_size": 1,
+    "plan": {
+      "entry_rule": "fixed",
+      "entry_window": 1,
+      "exit_rule": "fixed",
+      "holding_days": 5,
+      "side": "short"
+    },
+    "plan_text": "sell short at the open of session s + 1; buy back at the close of the 5th session after entry; carry charged per session held",
+    "price": "signal at close of s, entry at the open of s + entry_lag, exit at a close",
+    "short_side": {
+      "carry_per_session": 0.0005,
+      "liquidation": 1.0,
+      "liquidation_note": "isolated margin: liquidated at the first session whose high is 100% above the entry, losing that fraction of the sold notional plus fees and carry",
+      "note": "short side assumed: a perpetual-futures short at the spot reference price, funding 0.05% per UTC day paid by the short (a conservative stand-in: after a pump longs usually pay), 0.1% fee + 0.1% slippage per side; perpetuals may not exist for every pair, and liquidation risk is not modelled"
+    }
+  },
+  "harness": {
+    "ca_mode": "adjusted",
+    "controls": "v2",
+    "rule_view_fields": [
+      "close",
+      "prev",
+      "high",
+      "low",
+      "volume",
+      "value",
+      "present",
+      "tradeable",
+      "lock_up",
+      "lock_down",
+      "listed_shares",
+      "open"
+    ],
+    "signals": "prefix-first-v1"
+  },
+  "lookahead_check": {
+    "full_window_mismatches": 0,
+    "mode": "prefix-first-v1",
+    "prefix_calls": 914,
+    "sandbox": "file, network, process, frame and heap access blocked during compute",
+    "sessions": 914,
+    "source_audit": "passed"
+  },
+  "market": {
+    "cost_assumption": "costs assumed: 0.1% taker fee + 0.1% slippage per side; sessions are UTC days",
+    "currency": "USDT",
+    "entry": "open",
+    "lot_size": 1,
+    "price_limits": false,
+    "profile": "CRYPTO",
+    "venue": "Binance spot (reference prices; USDT pairs)"
+  },
+  "panel": {
+    "manifest_sha256": "0561616199fad9c436e598c8c0bc863c24f624abed8d26bcd3b87e69a9f90c3e",
+    "panel": "data/panel/panel_crypto-20261013T205803Z.csv.gz",
+    "panel_sha256": "1fec989bc929268f290d73ae60e4216f37de866ec30e00fba645b665dc2b6e14",
+    "source_boundary": "2026-10-12"
+  },
+  "random": {
+    "avg_net_return": {
+      "difference": 0.026707554174180408,
+      "observed": -0.015423137261710905,
+      "p_value_one_sided": 0.004975124378109453,
+      "percentile_of_observed": 100.0,
+      "random_mean": -0.042130691435891314,
+      "random_p2_5": -0.05294070847482047,
+      "random_p50": -0.042070285967886145,
+      "random_p97_5": -0.032269491579093174
+    },
+    "draws": 200,
+    "hit_rate": {
+      "difference": 0.1614517430280249,
+      "observed": 0.6455309396485867,
+      "p_value_one_sided": 0.004975124378109453,
+      "percentile_of_observed": 100.0,
+      "random_mean": 0.48407919662056176,
+      "random_p2_5": 0.4627736345368586,
+      "random_p50": 0.4835249042145594,
+      "random_p97_5": 0.5042018414098616
+    },
+    "method": "same session, uniform over names where the rule was evaluable, same execution",
+    "pooled": {
+      "attempts": 264600,
+      "avg_net_return": -0.04213167995560939,
+      "fill_rate": 0.9904913076341648,
+      "filled": 262084,
+      "hit_rate": 0.484078964970283,
+      "median_net_return": -0.005262962962962639,
+      "scored": 261635,
+      "status_counts": {
+        "EXCLUDED_DATA_JUMP": 55,
+        "EXITED": 261490,
+        "EXIT_DATA_END": 145,
+        "INCOMPLETE": 394,
+        "SKIP_LIQUIDITY": 211,
+        "SKIP_LOT": 2257,
+        "SKIP_NOT_TRADED": 48
+      },
+      "std_net_return": 0.23074713789771253
+    }
+  },
+  "random_matched": {
+    "avg_net_return": {
+      "difference": 0.02768916459371639,
+      "observed": -0.015423137261710905,
+      "p_value_one_sided": 0.004975124378109453,
+      "percentile_of_observed": 100.0,
+      "random_mean": -0.0431123018554273,
+      "random_p2_5": -0.05429076098847476,
+      "random_p50": -0.04322186920720922,
+      "random_p97_5": -0.03250298713969268
+    },
+    "controls": {
+      "features": {
+        "drawdown": {
+          "availability": "every tier",
+          "description": "tercile of close / 60-session high close - 1",
+          "known_share": 0.854119425547997,
+          "matched_share": 0.0854119425547997,
+          "priority": 6
+        },
+        "liquidity": {
+          "availability": "every tier",
+          "description": "quintile of 20-session median traded value",
+          "known_share": 0.9297052154195011,
+          "matched_share": 0.8835978835978836,
+          "priority": 2
+        },
+        "listing_age": {
+          "availability": "every tier",
+          "description": "sessions since first panel session: <60 / <250 / older or censored at the panel start",
+          "known_share": 1.0,
+          "matched_share": 0.05139833711262283,
+          "priority": 7
+        },
+        "market_cap": {
+          "availability": "TIER_1, TIER_2 (no share counts after the mirror ends)",
+          "description": "quintile of close x IDX listed shares",
+          "known_share": 0.0,
+          "matched_share": 0.8835978835978836,
+          "priority": 3
+        },
+        "momentum": {
+          "availability": "every tier",
+          "description": "tercile of 20-session cumulative log return",
+          "known_share": 0.9297052154195011,
+          "matched_share": 0.30687830687830686,
+          "priority": 5
+        },
+        "price_band": {
+          "availability": "every tier",
+          "description": "close in <0.01 / 0.01-1 / 1-100 / >100",
+          "known_share": 1.0,
+          "matched_share": 0.9931972789115646,
+          "priority": 1
+        },
+        "volatility": {
+          "availability": "every tier",
+          "description": "tercile of 20-session std of daily log returns",
+          "known_share": 0.9297052154195011,
+          "matched_share": 0.6303854875283447,
+          "priority": 4
+        }
+      },
+      "full_match_share": 0.05139833711262283,
+      "min_pool": 5,
+      "not_available": {
+        "board": "listing board known only as of the 2025-02 snapshot; not point-in-time, so not used",
+        "free_float": "IDX tradeble_shares equals listed_shares for most names; it is not free float, so not used",
+        "sector": "only a 2025-02 snapshot (List Emiten/Sectors); not point-in-time, so not used"
+      },
+      "version": "v2"
+    },
+    "draws": 200,
+    "hit_rate": {
+      "difference": 0.1537374705024417,
+      "observed": 0.6455309396485867,
+      "p_value_one_sided": 0.004975124378109453,
+      "percentile_of_observed": 100.0,
+      "random_mean": 0.49179346914614497,
+      "random_p2_5": 0.4715248091603053,
+      "random_p50": 0.49179695005851837,
+      "random_p97_5": 0.5098832059552433
+    },
+    "match_level_used": {
+      "price_band": 145,
+      "price_band+liquidity+market_cap": 335,
+      "price_band+liquidity+market_cap+volatility": 428,
+      "price_band+liquidity+market_cap+volatility+momentum": 293,
+      "price_band+liquidity+market_cap+volatility+momentum+drawdown": 45,
+      "price_band+liquidity+market_cap+volatility+momentum+drawdown+listing_age": 68,
+      "same session only": 9
+    },
+    "method": "same session, same price_band / liquidity / market_cap / volatility / momentum / drawdown / listing_age buckets as the signalled name (relaxed from the last feature when fewer than 5 names match), same execution",
+    "pooled": {
+      "attempts": 264600,
+      "avg_net_return": -0.04311130611587116,
+      "fill_rate": 0.9926266061980348,
+      "filled": 262649,
+      "hit_rate": 0.49179733837838663,
+      "median_net_return": -0.0031572143452877717,
+      "scored": 262171,
+      "status_counts": {
+        "EXCLUDED_DATA_JUMP": 121,
+        "EXITED": 261713,
+        "EXIT_DATA_END": 458,
+        "INCOMPLETE": 357,
+        "SKIP_LIQUIDITY": 117,
+        "SKIP_LOT": 1817,
+        "SKIP_NOT_TRADED": 17
+      },
+      "std_net_return": 0.24729048564503459
+    }
+  },
+  "rule": {
+    "holding_days": 5,
+    "kind": "DETECTOR",
+    "rule_id": "E4_CAND_G2_RET30",
+    "sha256": "074b798fbdf343512d04ee8cb1df5970618acdfe75b1f91f904e6c53283bef71",
+    "text": "Experiment E4 (the fade): one of the E2 family's already-ran detectors G2_RET30, G1_RET20_CLOSEHIGH, G10_RET15_CLOSEHIGH, G7_MOMENTUM5_30 (research/E2/protocol.json) traded on the SHORT side with one execution plan from the family in research/E4/protocol.json, the pair selected on the discovery period by the rule pre-registered there. Signal at the close of session d when the detector holds; the short entry and its cover as the plan says. Candidate: G2_RET30 (no plan: the harness run names the side and plan).",
+    "version": "v1"
+  },
+  "rule_trades": {
+    "attempts": 1323,
+    "avg_net_return": -0.015423137261710905,
+    "fill_rate": 0.9916855631141346,
+    "filled": 1312,
+    "hit_rate": 0.6455309396485867,
+    "liquidated": 105,
+    "median_net_return": 0.08563179396092374,
+    "scored": 1309,
+    "status_counts": {
+      "EXCLUDED_DATA_JUMP": 1,
+      "EXITED": 1306,
+      "EXIT_DATA_END": 3,
+      "INCOMPLETE": 2,
+      "SKIP_LOT": 11
+    },
+    "std_net_return": 0.36031669053418164
+  },
+  "signals": {
+    "attempted": 1323,
+    "signal_rate": 0.006560499212301265,
+    "skipped_overlap": 172,
+    "tickers_with_signals": 314,
+    "total": 1495
+  },
+  "universe": {
+    "evaluable_ticker_sessions": 227879,
+    "first_session": "2020-07-01",
+    "last_session": "2022-12-31",
+    "sessions": 914,
+    "tickers_ending_inside_window": 35,
+    "tickers_ever_evaluable": 349,
+    "tickers_in_window": 349
+  },
+  "warnings": [
+    "CRYPTO: Binance USDT pairs including delisted ones still described by exchangeInfo (190 delisted/halted bases); pairs Binance dropped from exchangeInfo entirely are absent",
+    "costs assumed: 0.1% taker fee + 0.1% slippage per side; sessions are UTC days",
+    "3 trades exited at a last traded close because the name stopped trading (data_end_exit=last_close)"
+  ]
+}
