@@ -90,3 +90,4 @@ Not pushed. GitHub still has PR #3 at `bd352b2`.
 - Checks on `1b7c091` (E5 worktree): `python3 -m unittest` **311 OK**; `idxsig rules` source audit passed; `verify-runs` OK; `check_append_only --all` OK.
 - Reviews of h3-e1, h4-profiles, r-rules resumed at 09:35 UTC (`resumeFromRunId wf_a885f29d-0ec`); any fix they demand lands on the `e5/*` branch and is merged again.
 - Still to do from `06_phase2_integration_todo.md` (cross-file, no builder owned them): `cli.py` `--controls-version` choices += "v3"; `run --market` choices += "CRYPTO_CLOSE" with panel loading via `PROFILES[market].market`.
+- 09:40 UTC: `cli.py` integration edits committed on `claude/e5-ceiling` as `eea274e` (`--controls-version v3`; `--market CRYPTO_CLOSE`; panel loaded via `PROFILES[market].market`). 311 tests OK; rules / verify-runs / append-only OK. E5 branch head: `eea274e`.
