@@ -17,3 +17,9 @@
 - `e5.py` (clone of e4.harness_config/market_dir): key the protocol `markets` block and the output dir by the RunConfig market name, but map `PROFILES[market].market` → panel. Protocol needs a "CRYPTO_CLOSE" markets entry pointing at the CRYPTO panel/precondition.
 - Fill-model constraint: with entry "close", `execution.py` refuses fill B (open-only) and refuses C unless units=panel & ca_mode=registry; crypto runs use ca_mode "adjusted" → CRYPTO_CLOSE sensitivity must use fill A (the protocol draft says A; keep it).
 - Never pass CRYPTO_CLOSE into the paper path (`paper.py` literal {IDX,US,CRYPTO} dicts would KeyError); it is a research sensitivity only.
+
+## from build:h3-e1 (commit 9307ee8 on e5/h3-e1)
+- `e1.Study(..., pool_units="panel"|"as_traded", pool_version="v1"|"v3")`; `PANEL_FORMATS = ("panel-v2","panel-global-v1","panel-global-v2-units")`; protocol `data.panel_format` is honoured when present. v3 pool keys = (price_band, liquidity, volatility, market_cap) — volatility ahead of market_cap, so relaxation drops market_cap first. `unit_factor` is attached to `Study.m` whenever the panel has it (nothing reads it by default; outputs hashed identical). 17 tests.
+- `e5.py` must construct `e1.Study` with `pool_units="as_traded", pool_version="v3"` and a protocol whose `data.panel_format` = `panel-global-v2-units` for the US repair panel. `cli.py` ~341/~426 build Study without the new keywords (E1 path; leave).
+- "panel-global-v2" (E4's crypto panel format) is NOT in PANEL_FORMATS; E5 crypto uses `panel_crypto-20261008T003354Z` (panel-global-v1), so fine — add the format only if a v2 crypto panel is ever used.
+- Families without IGNITION get `sig['ign']` = NaN (no error); an E5 protocol should omit 'ign' from weak_signals.binary.
