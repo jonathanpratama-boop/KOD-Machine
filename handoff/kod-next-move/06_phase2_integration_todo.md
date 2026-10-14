@@ -10,3 +10,10 @@
 - `e5.py` must call `backtest.paired_excess(output['trades'])` after each `backtest.run` and record the dict in plans.csv / result.json; the Stage-2 gate reads `p_one_sided` from it.
 - Cluster key compares `signal_date` as strings (exact for harness frames); consumers select the new columns by name, not position (they are last in every configuration).
 - Optional further column (count of scored draws per signal) not added; decide at protocol freeze.
+
+## from build:h4-profiles (commit 963a57d on e5/h4-profiles)
+- `profiles.CRYPTO_CLOSE` = CRYPTO with entry="close"; `PROFILES["CRYPTO_CLOSE"]`; `.market` stays "CRYPTO". 6 tests; 250 tests OK.
+- `cli.py:73` `run --market` choices need "CRYPTO_CLOSE"; `cli.py:293` must load the panel via `global_panel.latest(PROFILES[args.market].market)` (no CRYPTO_CLOSE panel exists). Do NOT touch the e4-* choices (`cli.py:141`); the e5-* subcommands get their own list.
+- `e5.py` (clone of e4.harness_config/market_dir): key the protocol `markets` block and the output dir by the RunConfig market name, but map `PROFILES[market].market` → panel. Protocol needs a "CRYPTO_CLOSE" markets entry pointing at the CRYPTO panel/precondition.
+- Fill-model constraint: with entry "close", `execution.py` refuses fill B (open-only) and refuses C unless units=panel & ca_mode=registry; crypto runs use ca_mode "adjusted" → CRYPTO_CLOSE sensitivity must use fill A (the protocol draft says A; keep it).
+- Never pass CRYPTO_CLOSE into the paper path (`paper.py` literal {IDX,US,CRYPTO} dicts would KeyError); it is a research sensitivity only.
