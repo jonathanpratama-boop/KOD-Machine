@@ -147,6 +147,10 @@ class ExecConfig:
     # 1/jump_ratio inside (entry, exit] is a redenomination or a bad print, not a trade; the trade is
     # EXCLUDED_DATA_JUMP, for the rule and the random baselines alike. None: no such check.
     jump_ratio: float | None = None
+    # Optional (research/E5 sensitivity): one exchange tick per side (market.tick_size at the price paid and at
+    # the price received) added to the per-side costs, for the rule and the random baselines alike: the
+    # closing-auction spread the flat fee model otherwise lacks. Default off: every recorded run is unchanged.
+    tick_cost: bool = False
 
     @property
     def plan(self) -> dict:
@@ -563,6 +567,10 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     f_exit = uf[tick_idx, x] if uf is not None else np.ones(n_trades)
     traded_exit = np.nan_to_num(exit_price) * f_exit  # the sale price, in the exit session's units
     extra_in, extra_out = _tier_costs(traded_entry, cfg.cost_tiers), _tier_costs(traded_exit, cfg.cost_tiers)
+    if cfg.tick_cost:  # one tick per side at the traded prices (zero where no price was paid or received)
+        with np.errstate(divide="ignore", invalid="ignore"):
+            extra_in = extra_in + np.where(traded_entry > 0, market.tick_size(traded_entry) / traded_entry, 0.0)
+            extra_out = extra_out + np.where(traded_exit > 0, market.tick_size(traded_exit) / traded_exit, 0.0)
     with np.errstate(divide="ignore", invalid="ignore"):
         if cfg.side == "long":
             cost = buy_value * (1 + cfg.fees.buy + extra_in)

@@ -82,6 +82,7 @@ class RunConfig:
     liquidation: float | None = None  # short side: isolated-margin liquidation at this fraction above the entry
     jump_ratio: float | None = None  # trades held across a close/reference ratio beyond this are not scored
     holdout_final: bool = False  # the one pre-registered holdout evaluation (see HOLDOUT)
+    tick_cost: bool = False  # one tick per side added to the costs, rule and baselines alike (research/E5 sensitivity)
 
 
 # The IDX holdout sealed by research/E1/protocol.json. A DETECTOR run whose window touches it is
@@ -352,8 +353,12 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
         fill_model=cfg.fill_model,
         liquidation=cfg.liquidation,
         jump_ratio=cfg.jump_ratio,
+        tick_cost=cfg.tick_cost,
         **plan,
     )
+    if cfg.tick_cost and not idx:
+        raise ValueError("tick_cost is defined for IDX only: market.tick_size is the IDX tick table (research/E5 "
+                         "closing-auction spread sensitivity)")
     start = cfg.start or (FIRST_SNAPSHOT if idx else panel_meta["default_start"])
     end = cfg.end or panel_meta["source_boundary"]
     sealed = HOLDOUT if idx else GLOBAL_HOLDOUT
@@ -592,6 +597,11 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
                                        "is a redenomination or a bad print, not a trade; such trades are "
                                        "EXCLUDED_DATA_JUMP for the rule and the baselines alike"}}
                if exec_cfg.jump_ratio is not None else {}),
+            **({"tick_cost": {"enabled": True,
+                              "note": "one exchange tick per side (market.tick_size at the price paid and at the "
+                                      "price received) added to the per-side costs, rule and baselines alike "
+                                      "(research/E5 closing-auction spread sensitivity)"}}
+               if exec_cfg.tick_cost else {}),
             "lot_size": profile.lot_size,
             "cost_tiers": [list(t) for t in profile.cost_tiers],
             "fees": {"buy": cfg.fee_buy, "sell": cfg.fee_sell},

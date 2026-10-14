@@ -145,6 +145,17 @@ def main(argv=None) -> int:
         if name == "e4-discovery":
             p_e4.add_argument("--accept-deviation", action="store_true",
                               help="proceed although the precondition run did not reproduce identically (recorded)")
+    for name, helptext in (("e5-reproduce", "experiment E5 precondition: re-run the market's recorded run on E5's panel"),
+                           ("e5-discovery", "experiment E5 discovery: stage 1 (information) then stage 2 (execution)"),
+                           ("e5-freeze", "experiment E5 freeze: write discovery/model.json into moonshot_e5.py literals"),
+                           ("e5-validation", "experiment E5 validation: the frozen arms on 2023, as recorded runs")):
+        p_e5 = sub.add_parser(name, help=helptext)
+        p_e5.add_argument("--market", choices=("IDX", "US", "CRYPTO"), required=True,
+                          help="CRYPTO_CLOSE is reached as a sensitivity inside CRYPTO, never as a market here")
+        if name == "e5-discovery":
+            p_e5.add_argument("--accept-deviation", action="store_true",
+                              help="proceed although the precondition run deviates beyond the accepted tolerance "
+                                   "(both sides on record)")
     for name, helptext in (("e2-discovery", "experiment E2 discovery for one market"),
                            ("e2-validation", "experiment E2 validation of a market's frozen detector")):
         p_e2 = sub.add_parser(name, help=helptext)
@@ -410,6 +421,51 @@ def main(argv=None) -> int:
             else:
                 result = e4.run_validation(df, meta, out, proto, proto_sha, mk)
         except (RuntimeError, FileExistsError, ValueError) as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
+        print(json.dumps(result, indent=2, default=str))
+    elif args.cmd in ("e5-reproduce", "e5-discovery", "e5-freeze", "e5-validation"):
+        from . import e5
+        from .provenance import MANIFESTS
+        from .results import code_state
+
+        proto, proto_sha = e5.protocol()
+        if code_state()["dirty"]:
+            print("error: commit idxsig/ first so the results name the code that produced them", file=sys.stderr)
+            return 2
+        mk = args.market
+        stage = args.cmd.split("-", 1)[1]
+        out = e5.stage_dir(mk, stage)
+        try:
+            if stage == "freeze":
+                result = e5.run_freeze(out, proto, proto_sha, mk)
+            else:
+                spec = proto["markets"][mk]
+                if "PENDING" in spec["panel_manifest"]:
+                    print(f"error: research/E5/protocol.json does not name a panel manifest for {mk}", file=sys.stderr)
+                    return 2
+                registry = None
+                if mk == "IDX":
+                    from . import corporate_actions
+                    from .panel import load
+                    from .provenance import sha256_file
+
+                    df, meta, manifest = load(MANIFESTS / spec["panel_manifest"])
+                    meta["_manifest"] = manifest.name
+                    meta["_manifest_sha256"] = sha256_file(manifest)
+                    registry = corporate_actions.load(MANIFESTS / spec["registry_manifest"], panel_sha256=meta["sha256"])
+                else:
+                    from . import global_panel
+
+                    df, meta = global_panel.load(MANIFESTS / spec["panel_manifest"])
+                if stage == "reproduce":
+                    result = e5.run_reproduce(df, meta, registry, out, proto, proto_sha, mk)
+                elif stage == "discovery":
+                    result = e5.run_discovery(df, meta, registry, out, proto, proto_sha, mk,
+                                              accept_deviation=args.accept_deviation)
+                else:
+                    result = e5.run_validation(df, meta, registry, out, proto, proto_sha, mk)
+        except (RuntimeError, FileExistsError, FileNotFoundError, ValueError, KeyError) as exc:
             print(f"error: {exc}", file=sys.stderr)
             return 2
         print(json.dumps(result, indent=2, default=str))
