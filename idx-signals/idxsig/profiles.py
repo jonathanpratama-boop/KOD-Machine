@@ -8,7 +8,7 @@ more. They are labelled assumptions in every run.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 import numpy as np
 
@@ -66,4 +66,11 @@ CRYPTO = Profile("CRYPTO", "USDT", 1, False, (0.01, 1, 100), ("<0.01", "0.01-1",
                             "0.05% per UTC day paid by the short (a conservative stand-in: after a pump longs "
                             "usually pay), 0.1% fee + 0.1% slippage per side; perpetuals may not exist for "
                             "every pair, and liquidation risk is not modelled")
+# Research/E5 sensitivity: CRYPTO with the entry at the close of t+1 instead of its open. A daily crypto
+# "open" is the prior close printed at 00:00 UTC, a zero-latency fill no live order gets; entering at the
+# next close is the latency-pessimistic bound. Every other field (costs, bands, carry, notes) is CRYPTO's.
+# Not a market: it runs on the CRYPTO panel and under the CRYPTO holdout, and is reached only by the
+# registry key CRYPTO_CLOSE (its .market stays "CRYPTO").
+CRYPTO_CLOSE = replace(CRYPTO, entry="close")
 PROFILES = {p.market: p for p in (IDX, US, CRYPTO)}
+PROFILES["CRYPTO_CLOSE"] = CRYPTO_CLOSE
