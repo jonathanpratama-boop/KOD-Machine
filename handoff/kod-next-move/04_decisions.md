@@ -13,7 +13,7 @@
 
 ## Open — owner's call (do not decide for the owner)
 
-0. **After the E5 null (2026-10-14):** (a) push `claude/e5-ceiling` and open a PR so the frozen protocol and the null are on GitHub; (b) authorise the SEC reachability probe (network) that the next protocol, information timing on EDGAR 8-K acceptance, is pre-registered to need; (c) confirm the pre-registered consequence stands: no tape-only detector building, no KOD tape feed.
+0. **After the E5 null (2026-10-14):** (a) DONE — `claude/e5-ceiling` pushed, draft PR #8 open (owner authorised 16:20 UTC; no merge); (b) authorise the SEC reachability probe (network) that the next protocol, information timing on EDGAR 8-K acceptance, is pre-registered to need; (c) confirm the pre-registered consequence stands: no tape-only detector building, no KOD tape feed.
 
 1. **Merge PR #7 (E4)?** Green, mergeable. If yes, it lands before any E5 work that clones `e4.py` / needs the US-crypto holdout guard.
 2. **Push the PR #3 merge (`0ce21f0`, v5 naming)?** Needs the owner's permission to push to `claude/us-pipeline-v1`; Ace must re-review the merge result. If PR #7 merges first, this merge must be redone onto the new base (expect conflicts again in `execution.py`/`cli.py`).
