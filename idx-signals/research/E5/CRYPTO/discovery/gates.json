@@ -1,0 +1,33 @@
+{
+  "a1": {
+    "lift_ci95_excludes_1": false,
+    "passed": false,
+    "reasons": [
+      "lift vs matched 0.9970089730807579 below 2.0",
+      "p vs matched 0.5422885572139303 not below 0.05"
+    ]
+  },
+  "freeze": "no admissible arm on CRYPTO: nothing to validate; the ranker may still be frozen for the prospective sidecar (e5-freeze sets no SELECTED entry)",
+  "market": "CRYPTO",
+  "selected_arm": null,
+  "stage1": {
+    "A": {
+      "judged": true,
+      "passed": false,
+      "reasons": [
+        "paired plan-window excess -0.022774707916154074 not positive",
+        "cluster-bootstrap p 0.9411058894110589 not below 0.025",
+        "mean excess in 2021 not positive (422 flags)",
+        "mean excess in 2022 not positive (132 flags)"
+      ]
+    },
+    "B": {
+      "judged": true,
+      "passed": false,
+      "reasons": [
+        "cluster-bootstrap p 0.4410558944105589 not below 0.025"
+      ]
+    }
+  },
+  "stage2": {}
+}

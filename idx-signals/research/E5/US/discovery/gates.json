@@ -1,0 +1,37 @@
+{
+  "a1": {
+    "lift_ci95_excludes_1": false,
+    "passed": false,
+    "reasons": [
+      "lift vs matched 0.9717688144637376 below 2.0",
+      "p vs matched 0.7711442786069652 not below 0.05"
+    ]
+  },
+  "freeze": "no admissible arm on US: nothing to validate; the ranker may still be frozen for the prospective sidecar (e5-freeze sets no SELECTED entry)",
+  "market": "US",
+  "selected_arm": null,
+  "stage1": {
+    "A": {
+      "judged": true,
+      "passed": false,
+      "reasons": [
+        "paired plan-window excess -0.022750499697123214 not positive",
+        "cluster-bootstrap p 0.9964003599640036 not below 0.025",
+        "mean excess in 2020 not positive (1076 flags)",
+        "mean excess in 2022 not positive (1365 flags)"
+      ]
+    },
+    "B": {
+      "judged": true,
+      "passed": false,
+      "reasons": [
+        "paired plan-window excess -0.01890323011313044 not positive",
+        "cluster-bootstrap p 0.9959004099590041 not below 0.025",
+        "mean excess in 2020 not positive (1055 flags)",
+        "mean excess in 2021 not positive (2755 flags)",
+        "mean excess in 2022 not positive (3907 flags)"
+      ]
+    }
+  },
+  "stage2": {}
+}
