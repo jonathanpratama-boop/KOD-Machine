@@ -197,6 +197,16 @@ class Market:
         lb = arrays.get("listed_before")
         self.listed_before = (np.zeros(len(self.tickers), dtype=np.int64) if lb is None
                               else np.asarray(lb, dtype=np.int64).copy())
+        # Names whose listing history before the data start is unknown: present at the data's first session
+        # with no history given before it, so their listing age is only a lower bound (left-censored: declared,
+        # not invented). Derived when the market is built, then carried through slice()/window() beside
+        # listed_before, so a window never turns an unknown history into a known one. Read only by matched
+        # controls v4 (controls._listing_age_v4); no rule sees it.
+        lc = arrays.get("listing_censored")
+        if lc is None:
+            lc = (self.present[:, 0] & (self.listed_before == 0) if self.present.shape[1]
+                  else np.zeros(len(self.tickers), dtype=bool))
+        self.listing_censored = np.asarray(lc, dtype=bool).copy()
 
     @property
     def shape(self):
@@ -271,7 +281,7 @@ class Market:
         arrays = {name: getattr(self, name) for name in self.FIELDS}
         return Market(self.tickers, self.dates, **arrays, reg_factor=factor, reg_rights=rights,
                       reg_unresolved=unresolved, unit_factor=self.unit_factor, registry_counts=counts,
-                      listed_before=self.listed_before)
+                      listed_before=self.listed_before, listing_censored=self.listing_censored)
 
     def with_units(self, unit_factor: np.ndarray) -> "Market":
         """A copy carrying adjusted -> as-traded price factors (us_actions.unit_factors). Built from
@@ -281,7 +291,8 @@ class Market:
         arrays = {name: getattr(self, name) for name in self.FIELDS}
         extra = {name: getattr(self, name) for name in self.REGISTRY_FIELDS if name != "unit_factor"}
         return Market(self.tickers, self.dates, **arrays, **extra, unit_factor=unit_factor,
-                      registry_counts=self.registry_counts, listed_before=self.listed_before)
+                      registry_counts=self.registry_counts, listed_before=self.listed_before,
+                      listing_censored=self.listing_censored)
 
     def bounds(self, start=None, end=None) -> tuple[int, int]:
         lo = 0 if start is None else int(np.searchsorted(self.dates, np.datetime64(start, "D"), side="left"))
@@ -304,7 +315,7 @@ class Market:
         first_eff = np.where(self.listed_before > 0, -self.listed_before, first)
         listed_before = np.where(ever | (self.listed_before > 0), np.maximum(0, lo - first_eff), 0).astype(np.int64)
         return Market(self.tickers, self.dates[lo:hi], **arrays, registry_counts=self.registry_counts,
-                      listed_before=listed_before)
+                      listed_before=listed_before, listing_censored=self.listing_censored)
 
     def truncate(self, last: int) -> "Market":
         """Sessions 0..last only. Used to prove a rule never reads ahead."""

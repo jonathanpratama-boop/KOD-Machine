@@ -89,9 +89,10 @@ def main(argv=None) -> int:
                        help="registry (default): scale shares only through verified splits / stock dividends; "
                             "exclude, value_preserving: earlier modes, for reproducing older runs")
     p_run.add_argument("--ca-registry", help="corporate-action registry manifest (default: latest)")
-    p_run.add_argument("--controls-version", choices=("v2", "v1", "v3"), default="v2",
+    p_run.add_argument("--controls-version", choices=("v2", "v1", "v3", "v4"), default="v2",
                        help="matched-control features (v1 reproduces runs before hardening v2; v3 adds a volatility "
-                            "quintile ahead of market_cap, E5)")
+                            "quintile ahead of market_cap, E5; v4 is v3 with a window-invariant listing age, for "
+                            "future protocols: no recorded run uses it)")
     p_run.add_argument("--lookahead-cuts", type=int,
                        help="sample N prefixes instead of the exhaustive check (faster, not a proof)")
     p_run.add_argument("--panel", help="panel manifest (default: latest)")
@@ -152,9 +153,10 @@ def main(argv=None) -> int:
         p_e5 = sub.add_parser(name, help=helptext)
         p_e5.add_argument("--market", choices=("IDX", "US", "CRYPTO"), required=True,
                           help="CRYPTO_CLOSE is reached as a sensitivity inside CRYPTO, never as a market here")
-        p_e5.add_argument("--protocol", choices=("v1", "v1.1"), default="v1",
-                          help="research/E5/protocol.json (v1, frozen) or research/E5/v1.1/protocol.json (the audit "
-                               "addendum); stage outputs go under the protocol's directory")
+        p_e5.add_argument("--protocol", choices=("v1", "v1.1"), required=True,
+                          help="research/E5/v1.1/protocol.json (v1.1, the audit addendum: what this code implements) "
+                               "or research/E5/protocol.json (v1: refused here, it names the commit that runs it); "
+                               "stage outputs go under the protocol's directory")
         if name == "e5-discovery":
             p_e5.add_argument("--accept-deviation", action="store_true",
                               help="proceed although the precondition run deviates beyond the accepted tolerance "
@@ -432,8 +434,14 @@ def main(argv=None) -> int:
         from .provenance import MANIFESTS
         from .results import code_state
 
-        e5.use_protocol(e5.E5_DIR / "protocol.json" if args.protocol == "v1" else e5.E5_DIR / args.protocol / "protocol.json")
-        proto, proto_sha = e5.protocol()
+        proto_path = e5.E5_DIR / "protocol.json" if args.protocol == "v1" else e5.E5_DIR / args.protocol / "protocol.json"
+        proto, proto_sha = e5.protocol(proto_path)
+        try:
+            e5.check_implementation(proto, proto_path)  # refuses v1 here: a v1 label on v1.1 code (PR #8 review)
+        except (RuntimeError, KeyError) as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
+        e5.use_protocol(proto_path)
         if code_state()["dirty"]:
             print("error: commit idxsig/ first so the results name the code that produced them", file=sys.stderr)
             return 2

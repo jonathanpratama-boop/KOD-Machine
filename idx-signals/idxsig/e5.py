@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import ast
 import contextlib
+import copy
 import importlib.util
 import itertools
 import json
@@ -64,7 +65,8 @@ PROTOCOL_KEYS = (
     ("protocol_id", "all"), ("frozen_before_analysis", "all"), ("search_size", "all"), ("claims", "all"),
     ("harness.warmup_sessions", "all"), ("periods.discovery", "e1.Study"), ("periods.validation", "e1.Study"),
     ("weak_signals.continuous", "e1.Study"), ("weak_signals.binary", "e1.Study"),
-    ("features.order", "discovery"),
+    ("features.order", "discovery, cli (check_implementation)"),
+    ("features.feature_args", "cli (check_implementation, after the spec errata)"),
     ("markets.<M>.panel_format", "all"), ("markets.<M>.panel_manifest", "cli"), ("markets.<M>.panel_sha256", "cli"),
     ("markets.IDX.registry_manifest", "cli"), ("markets.<M>.precondition_runs", "reproduce"),
     ("markets.<M>.periods.discovery", "all"), ("markets.<M>.periods.validation", "all"),
@@ -138,6 +140,63 @@ def use_protocol(path: Path) -> Path:
 
 def version_dir() -> Path:
     return PROTOCOL.parent
+
+
+# --------------------------------------------------------------------------- protocol vs implementation
+# The protocol this code implements. The v1 protocol (research/E5/protocol.json) was run by the code of
+# commits 30a442f..d0ce9ba (idxsig/ is identical across them; the v1 outputs name f101023 and 06c2dda; the
+# v1.1 outputs name 5d7be0c, whose idxsig/ is 53447ca's). Commit 53447ca
+# corrected two v1 definitions in place (audit findings A and B, research/E5/v1.1/ADDENDUM.md), so a v1 run
+# on this code would compute v1.1 numbers under the v1 label. A protocol this code does not implement is
+# refused, naming the commit that does (PR #8 review, 2026-10-15).
+IMPLEMENTS = "KOD-GLOBAL-E5-v1.1"
+IMPLEMENTED_BY = {"KOD-GLOBAL-E5-v1": "d0ce9ba"}
+SPEC_ERRATA = "spec_errata.json"
+
+
+def effective_protocol(proto: dict, protocol_path: Path) -> dict:
+    """The protocol with its specification errata applied (spec_errata.json beside the protocol file, if any).
+    A frozen protocol is hash-pinned, so an error in it is corrected by a new file next to it, never by an
+    edit. Each erratum names a dotted path, the value as frozen and the effective value; an erratum whose
+    as-frozen value is not the protocol's is refused, so errata cannot drift onto another protocol."""
+    path = Path(protocol_path).parent / SPEC_ERRATA
+    if not path.exists():
+        return proto
+    errata = json.loads(path.read_text(encoding="utf-8"))
+    if errata.get("protocol_id") != proto.get("protocol_id"):
+        raise RuntimeError(f"{_rel(path)} corrects {errata.get('protocol_id')!r}, not {proto.get('protocol_id')!r}")
+    out = copy.deepcopy(proto)
+    for erratum in errata["errata"]:
+        *parents, leaf = erratum["path"].split(".")
+        node = get(out, ".".join(parents)) if parents else out
+        if node.get(leaf) != erratum["as_frozen"]:
+            raise RuntimeError(f"{_rel(path)} erratum {erratum['id']}: {erratum['path']} as frozen is not "
+                               f"{erratum['as_frozen']!r}")
+        node[leaf] = erratum["effective"]
+    return out
+
+
+def check_implementation(proto: dict, protocol_path: Path) -> dict:
+    """Refuse a protocol this code does not implement, and one whose effective specification (after its
+    errata) disagrees with the module: features.feature_args with moonshot_e5.FEATURE_ARGS, features.order
+    with moonshot_e5.FEATURE_ORDER. Returns the effective protocol. The CLI calls it before any stage."""
+    pid = proto.get("protocol_id")
+    if pid != IMPLEMENTS:
+        if pid in IMPLEMENTED_BY:
+            raise RuntimeError(
+                f"{pid} is not implemented by this code: commit 53447ca corrected two of its definitions (audit "
+                f"findings A and B, research/E5/v1.1/ADDENDUM.md), so a run here would compute {IMPLEMENTS} "
+                f"numbers under the {pid} label. Reproduce it from its own code: git checkout {IMPLEMENTED_BY[pid]} "
+                f"(the e5-* commands there take no --protocol). This code runs --protocol v1.1.")
+        raise RuntimeError(f"unknown E5 protocol {pid!r}; this code implements {IMPLEMENTS}")
+    eff = effective_protocol(proto, protocol_path)
+    args = tuple(get(eff, "features.feature_args"))
+    if args != moonshot_e5.FEATURE_ARGS:
+        raise RuntimeError(f"protocol features.feature_args {args} (after {SPEC_ERRATA}) is not "
+                           f"moonshot_e5.FEATURE_ARGS {moonshot_e5.FEATURE_ARGS}")
+    if tuple(get(eff, "features.order")) != moonshot_e5.FEATURE_ORDER:
+        raise RuntimeError("protocol features.order is not moonshot_e5.FEATURE_ORDER")
+    return eff
 
 
 def _rel(path: Path) -> str:

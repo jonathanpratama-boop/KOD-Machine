@@ -37,6 +37,17 @@ exactly as v2 is. v2 is unchanged byte for byte; every recorded run is v2 or v1.
   v3 priority: price_band, liquidity (quintile), volatility (quintile), market_cap (quintile,
                mirror era only), momentum (tercile), drawdown (tercile), listing_age
 
+Controls v4 (PR #8 review, 2026-10-15; for future protocols, used by no recorded run) is v3 with one
+definition changed. v1-v3 count listing_age from the first session of the market they are given and
+bucket every name present at that session as older, so a market cut to a window (e5.build_study)
+calls a name listed ten sessions before the window "older" and the bucket depends on where the window
+starts (disclosed in research/E5/v1.1/protocol.json, addendum.disclosed_not_fixed). v4 counts sessions
+since the first LISTED session with the history the market carries from before its first session
+(Market.listed_before, as rules/moonshot_e5 counts age since v1.1), and a name whose history starts at
+the data's first session (Market.listing_censored) has only a lower bound: older once that bound
+reaches 250 sessions, unknown (its own bucket) before. Any window of a market then gets the same
+buckets as the market itself. v1-v3 are unchanged, so every recorded run reproduces.
+
 Not matched on, because no point-in-time history exists in this data (NOT invented):
   sector       only a 2025-02 snapshot of IDX-IC sectors; using it would apply today's
                classification to the past and silently drop names delisted before it
@@ -85,6 +96,7 @@ VERSIONS = {
     "v1": ("price_band", "liquidity", "volatility", "momentum"),
     "v2": ("price_band", "liquidity", "market_cap", "volatility", "momentum", "drawdown", "listing_age"),
     "v3": ("price_band", "liquidity", "volatility", "market_cap", "momentum", "drawdown", "listing_age"),
+    "v4": ("price_band", "liquidity", "volatility", "market_cap", "momentum", "drawdown", "listing_age"),
 }
 # Per-version feature definitions that differ from FEATURES (the v1/v2 table, left as it is so
 # the recorded runs' reports reproduce). Bucket counts stay below 7: _codes packs them base 8.
@@ -92,6 +104,12 @@ FEATURE_OVERRIDES = {
     "v3": {
         "volatility": Feature("volatility", 5, "quintile of 20-session std of daily log returns", "every tier"),
     },
+}
+FEATURE_OVERRIDES["v4"] = {
+    "volatility": FEATURE_OVERRIDES["v3"]["volatility"],
+    "listing_age": Feature("listing_age", 3, "sessions since the first listed session, the same in any window: "
+                           "<60 / <250 / older; unknown while a history that starts at the data's first session "
+                           "is shorter than 250", "every tier"),
 }
 
 
@@ -121,7 +139,8 @@ def features(m, version: str = "v2", band_edges: tuple = (200, 5000), as_traded:
     """band_edges: upper edges of the price bands (IDX default: Rp200, Rp5,000; see profiles.py).
     as_traded: band on the price as traded that session (Market.unit_factor), not the price
     rescaled by later splits. Return-based features and traded value are unit-free.
-    version: which bucket definitions apply (v3: volatility as a quintile); v1/v2 are unchanged."""
+    version: which bucket definitions apply (v3: volatility as a quintile; v4: v3 with the window-invariant
+    listing age); v1/v2 are unchanged."""
     vol_buckets = feature("volatility", version).buckets
     close = np.where(m.present, m.close, np.nan)
     level = close * m.unit_factor if as_traded else close
@@ -157,7 +176,23 @@ def features(m, version: str = "v2", band_edges: tuple = (200, 5000), as_traded:
         "drawdown": _bucket(drawdown, 3),
         "listing_age": np.where(m.present, age_bucket, -1).astype(np.int8),
     })
+    if version == "v4":
+        out["listing_age"] = _listing_age_v4(m)
     return out
+
+
+def _listing_age_v4(m) -> np.ndarray:
+    """Controls v4 listing_age (module docstring): sessions since the first listed session, counted with the
+    listing history carried from before the market's first session (Market.listed_before), so a window gets
+    the buckets of the whole market. A name whose history starts at the data's first session
+    (Market.listing_censored) has a lower bound only: older from 250 sessions, unknown (-1) before."""
+    n_sessions = m.shape[1]
+    first = np.where(m.present.any(axis=1), m.present.argmax(axis=1), n_sessions)
+    first_eff = np.where(m.listed_before > 0, -m.listed_before, first)
+    age = np.arange(n_sessions)[None, :] - first_eff[:, None]
+    bucket = np.select([age >= 250, age >= 60], [2, 1], 0)
+    bucket = np.where(m.listing_censored[:, None] & (age < 250), -1, bucket)
+    return np.where(m.present, bucket, -1).astype(np.int8)
 
 
 def _codes(feats: dict[str, np.ndarray], version: str) -> list[np.ndarray]:

@@ -1,0 +1,19 @@
+{
+  "protocol_id": "KOD-GLOBAL-E5-v1.1",
+  "protocol_file": "research/E5/v1.1/protocol.json",
+  "protocol_sha256": "61968b8c8bc11927f94d8ec7b60dc8d235b5f085532aa2176fb975d92cd65be5",
+  "recorded": "2026-10-15",
+  "kind": "specification errata. The protocol file is frozen and hash-pinned, so an error in it is corrected by this file, never by an edit; this file is itself a frozen record (tools/check_append_only.py), so a later correction is a new file. idxsig.e5.check_implementation applies each entry and refuses any E5 stage whose effective specification differs from the code.",
+  "errata": [
+    {
+      "id": "S1",
+      "path": "features.feature_args",
+      "as_frozen": ["close", "prev", "high", "low", "volume", "value", "present", "tradeable", "lock_up", "open"],
+      "effective": ["close", "prev", "high", "low", "volume", "value", "present", "tradeable", "lock_up", "open", "listed_before"],
+      "what": "The v1.1 freeze (5d7be0c) redefined features.age_definition to count age from listed_before (finding B) but left the raw-input list at v1's ten entries. The code it froze, 53447ca, takes eleven: moonshot_e5.FEATURE_ARGS ends with listed_before, and the rule refuses to run without it.",
+      "numbers_affected": "None. The v1.1 outputs (99f3c5f) were computed by that code with all eleven inputs; this entry corrects the specification to what was run.",
+      "unchanged": "features.order (the 41 model columns) and every other key. The 'feature list' that addendum.unchanged calls identical to v1 is features.order.",
+      "found_by": "independent review of PR #8 (2026-10-15), confirmed against the code"
+    }
+  ]
+}

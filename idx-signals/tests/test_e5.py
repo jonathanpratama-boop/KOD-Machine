@@ -1049,27 +1049,123 @@ class TickCostTests(unittest.TestCase):
 
 # --------------------------------------------------------------------------------------------- cli
 class CliTests(unittest.TestCase):
+    def setUp(self):
+        self.addCleanup(e5.use_protocol, e5.PROTOCOL)  # the CLI points the module at the protocol it runs
+
     def test_subcommands_parse_and_refuse_a_dirty_tree(self):
         for cmd in ("e5-reproduce", "e5-discovery", "e5-freeze", "e5-validation"):
             with mock.patch("idxsig.results.code_state", return_value={"commit": "abc", "dirty": True}):
                 with mock.patch("sys.stderr") as err:
-                    self.assertEqual(cli.main([cmd, "--market", "IDX"]), 2)
+                    self.assertEqual(cli.main([cmd, "--market", "IDX", "--protocol", "v1.1"]), 2)
             self.assertIn("commit idxsig/ first", "".join(str(c) for c in err.write.call_args_list))
         with mock.patch("sys.stderr"):
             with self.assertRaises(SystemExit):
-                cli.main(["e5-discovery", "--market", "CRYPTO_CLOSE"])
+                cli.main(["e5-discovery", "--market", "CRYPTO_CLOSE", "--protocol", "v1.1"])
             with self.assertRaises(SystemExit):
-                cli.main(["e5-freeze"])  # --market is required
+                cli.main(["e5-freeze", "--protocol", "v1.1"])  # --market is required
+            with self.assertRaises(SystemExit):
+                cli.main(["e5-discovery", "--market", "IDX"])  # --protocol is required: no silent default
         with mock.patch("idxsig.results.code_state", return_value={"commit": "abc", "dirty": False}):
             with mock.patch("idxsig.e5.run_freeze", side_effect=RuntimeError("nothing to freeze")) as rf:
                 with mock.patch("sys.stderr"):
-                    self.assertEqual(cli.main(["e5-freeze", "--market", "US"]), 2)
+                    self.assertEqual(cli.main(["e5-freeze", "--market", "US", "--protocol", "v1.1"]), 2)
             self.assertEqual(rf.call_args[0][3], "US")
             self.assertEqual(rf.call_args[0][0], e5.stage_dir("US", "freeze"))
+            self.assertEqual(rf.call_args[0][0], e5.E5_DIR / "v1.1" / "US" / "freeze")
+
+    def test_protocol_v1_is_refused_before_any_panel_is_read(self):
+        """PR #8 review (2026-10-15): `--protocol v1` on the corrected code computed v1.1 numbers under the v1
+        label. It now stops before the tree check, the panel load or any stage, and names the v1 commit."""
+        with mock.patch("idxsig.results.code_state", return_value={"commit": "abc", "dirty": False}), \
+                mock.patch("idxsig.panel.load") as load, mock.patch("idxsig.global_panel.load") as gload, \
+                mock.patch("idxsig.e5.run_reproduce") as rr, mock.patch("idxsig.e5.run_discovery") as rd, \
+                mock.patch("idxsig.e5.run_freeze") as rf, mock.patch("idxsig.e5.run_validation") as rv:
+            for cmd in ("e5-reproduce", "e5-discovery", "e5-freeze", "e5-validation"):
+                for mk in e5.MARKETS:
+                    with mock.patch("sys.stderr") as err:
+                        self.assertEqual(cli.main([cmd, "--market", mk, "--protocol", "v1"]), 2)
+                    message = "".join(str(c) for c in err.write.call_args_list)
+                    self.assertIn("git checkout d0ce9ba", message)
+                    self.assertIn("--protocol v1.1", message)
+        for called in (load, gload, rr, rd, rf, rv):
+            called.assert_not_called()
 
 
-if __name__ == "__main__":
-    unittest.main()
+class ImplementationCheckTests(unittest.TestCase):
+    """PR #8 review (2026-10-15): this code implements protocol v1.1 only (53447ca changed two v1 definitions in
+    place), and the v1.1 protocol listed ten raw feature inputs where moonshot_e5.FEATURE_ARGS takes eleven
+    (listed_before). The frozen protocol is corrected by research/E5/v1.1/spec_errata.json, never edited."""
+
+    V1 = e5.E5_DIR / "protocol.json"
+    V11 = e5.E5_DIR / "v1.1" / "protocol.json"
+    V1_SHA = "53b2ec815a0cc0922298d77968842140db7445afd3de2a08837aefdbfec413ad"
+    V11_SHA = "61968b8c8bc11927f94d8ec7b60dc8d235b5f085532aa2176fb975d92cd65be5"
+
+    def test_v1_1_is_the_protocol_this_code_implements(self):
+        proto, sha = e5.protocol(self.V11)
+        self.assertEqual(sha, self.V11_SHA)
+        self.assertEqual(proto["protocol_id"], e5.IMPLEMENTS)
+        eff = e5.check_implementation(proto, self.V11)
+        self.assertEqual(tuple(eff["features"]["feature_args"]), moonshot_e5.FEATURE_ARGS)
+        self.assertEqual(len(proto["features"]["feature_args"]), 10)  # the frozen file is read, never changed
+
+    def test_v1_and_unknown_protocols_are_refused(self):
+        proto, sha = e5.protocol(self.V1)
+        self.assertEqual(sha, self.V1_SHA)
+        with self.assertRaisesRegex(RuntimeError, "git checkout d0ce9ba"):
+            e5.check_implementation(proto, self.V1)
+        with self.assertRaisesRegex(RuntimeError, "unknown E5 protocol"):
+            e5.check_implementation({**proto, "protocol_id": "KOD-GLOBAL-E5-v9"}, self.V1)
+
+    def test_the_recorded_outputs_name_the_code_each_protocol_points_to(self):
+        """v1's outputs were computed by f101023 / 06c2dda (idxsig/ identical to d0ce9ba, which the refusal
+        names); v1.1's by 5d7be0c (idxsig/ identical to 53447ca)."""
+        for mk in e5.MARKETS:
+            for stage, name, commits in (("reproduce", "result.json", ("f101023",)),
+                                         ("discovery", "summary.json", ("06c2dda",))):
+                rec = json.loads((e5.E5_DIR / mk / stage / name).read_text(encoding="utf-8"))
+                self.assertEqual(rec["protocol_sha256"], self.V1_SHA)
+                self.assertIn(rec["code"]["commit"][:7], commits)
+                rec = json.loads((e5.E5_DIR / "v1.1" / mk / stage / name).read_text(encoding="utf-8"))
+                self.assertEqual(rec["protocol_sha256"], self.V11_SHA)
+                self.assertEqual(rec["code"]["commit"][:7], "5d7be0c")
+
+    def test_erratum_s1_is_the_only_correction_and_it_matches_the_code(self):
+        proto, sha = e5.protocol(self.V11)
+        v1, _ = e5.protocol(self.V1)
+        errata = json.loads((self.V11.parent / e5.SPEC_ERRATA).read_text(encoding="utf-8"))
+        self.assertEqual((errata["protocol_id"], errata["protocol_sha256"]), (proto["protocol_id"], sha))
+        (s1,) = errata["errata"]
+        self.assertEqual(s1["path"], "features.feature_args")
+        self.assertEqual(s1["as_frozen"], proto["features"]["feature_args"])
+        self.assertEqual(s1["as_frozen"], v1["features"]["feature_args"])  # v1.1 never touched the list
+        self.assertEqual(s1["effective"], s1["as_frozen"] + ["listed_before"])
+        self.assertEqual(proto["features"]["order"], list(moonshot_e5.FEATURE_ORDER))  # the 41 columns: unchanged
+        eff = e5.effective_protocol(proto, self.V11)
+        self.assertEqual(tuple(eff["features"]["feature_args"]), moonshot_e5.FEATURE_ARGS)
+        eff["features"]["feature_args"] = proto["features"]["feature_args"]
+        self.assertEqual(eff, proto)  # nothing else differs
+
+    def test_a_disagreement_is_refused(self):
+        proto, _ = e5.protocol(self.V11)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "protocol.json"  # no errata beside it: the frozen ten disagree with the code
+            with self.assertRaisesRegex(RuntimeError, "FEATURE_ARGS"):
+                e5.check_implementation(proto, path)
+            errata = Path(tmp) / e5.SPEC_ERRATA
+            errata.write_text(json.dumps({"protocol_id": proto["protocol_id"], "errata": [
+                {"id": "X", "path": "features.feature_args", "as_frozen": ["close"], "effective": []}]}))
+            with self.assertRaisesRegex(RuntimeError, "as frozen"):
+                e5.check_implementation(proto, path)
+            errata.write_text(json.dumps({"protocol_id": "KOD-GLOBAL-E5-v1", "errata": []}))
+            with self.assertRaisesRegex(RuntimeError, "corrects"):
+                e5.check_implementation(proto, path)
+        with mock.patch.object(moonshot_e5, "FEATURE_ARGS", moonshot_e5.FEATURE_ARGS + ("extra",)):
+            with self.assertRaisesRegex(RuntimeError, "FEATURE_ARGS"):
+                e5.check_implementation(proto, self.V11)
+        with mock.patch.object(moonshot_e5, "FEATURE_ORDER", moonshot_e5.FEATURE_ORDER[:-1]):
+            with self.assertRaisesRegex(RuntimeError, "FEATURE_ORDER"):
+                e5.check_implementation(proto, self.V11)
 
 
 class PlanWindowEligibilityTests(unittest.TestCase):
@@ -1106,3 +1202,7 @@ class PlanWindowEligibilityTests(unittest.TestCase):
         again = json.loads((out / "stage1.json").read_text(encoding="utf-8"))
         self.assertEqual(again, stage1)
         self.assertEqual(json.loads((out / "model.json").read_text(encoding="utf-8"))["coef_U"], found["model"]["coef_U"])
+
+
+if __name__ == "__main__":
+    unittest.main()

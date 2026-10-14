@@ -477,9 +477,6 @@ class FlagTests(unittest.TestCase):
             self.assertEqual(list(np.flatnonzero(later[0] == 1.0)), [68])
 
 
-if __name__ == "__main__":
-    unittest.main()
-
 
 class ListingAgeTests(unittest.TestCase):
     """Audit finding B (2026-10-14, research/E5/v1.1): age was counted from the window's first column, so a
@@ -537,3 +534,7 @@ class ListingAgeTests(unittest.TestCase):
         args[-1] = None
         with self.assertRaises(ValueError):
             moonshot_e5.features(*args)
+
+
+if __name__ == "__main__":
+    unittest.main()
