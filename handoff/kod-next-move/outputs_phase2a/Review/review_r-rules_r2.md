@@ -1,0 +1,62 @@
+# review:r-rules:r2 (Review; agent ab186c8170278982e)
+
+## verdict
+accept
+## findings
+#### severity
+minor
+#### file
+idx-signals/idxsig/rules/moonshot_e5.py
+#### line
+64
+#### claim
+WARMUP is now 65, which contradicts the read-only protocol draft's 'WARMUP = 60 literal ... every harness window starts 60 sessions before the period start' (E5_CEILING_protocol_draft.json family.features_ranked.warmup); nothing in the repo reads the literal yet (idxsig/e5.py does not exist; e3.py/e4.py and backtest.run have no lead-in logic, backtest.run slices the panel to [start, end] and computes signals on that slice), so the deviation is harmless today but must be reconciled when research/E5/protocol.json is frozen and e5.py is written.
+#### evidence
+python3 -I json walk of the draft prints '.family.features_ranked.warmup : WARMUP = 60 literal: compute() returns NaN for the first 60 sessions of its view; every harness window starts 60 sessions before the period start'. grep -rn WARMUP idxsig/ outside moonshot_e5.py: no hits. The builder's reasoning is sound: with a 60-session lead-in the first five period sessions could never carry a flag because debounce needs five KNOWN (post-feature-warm-up) sessions behind it; my probe confirms flags are False before column 65 and identical on the common range for slices starting at 0/10/20/33.
+#### fix
+No change to this file. The e5.py owner reads moonshot_e5.WARMUP (65) for the lead-in, and the protocol freeze states FEATURE_WARMUP = 60 (features) and WARMUP = 65 (compute lead-in). Already listed by the builder under needs_other_file.
+#### severity
+minor
+#### file
+idx-signals/idxsig/rules/moonshot_e5.py
+#### line
+295
+#### claim
+known = isfinite(score) treats a name's sessions before its listing (and present-but-untraded sessions) as KNOWN out-of-set, because every FEATURE_ORDER column is finite from column 60 on (NaN ranks fill 0.5, binaries 0), so a name can carry a flag on its very first listed/tradeable session. This is prefix-safe and window-invariant, not a look-ahead, but it is a design choice the protocol freeze should state ('>= 5 sessions outside the top 0.5%' is satisfied vacuously by unlisted sessions).
+#### evidence
+Probe on open_panel(30x220, seed 13, ipo={7: 90}, delist={9: 150}) with frozen_us_a(1.9): arm score for name 7 is finite on columns 60..89 before it is listed (state False there), its first flag lands at full column 92; flags on columns >= 65 are identical for slices starting at 0, 10, 20 and 33; causal_signals full_window_mismatches = 0 for every slice; no flags for name 9 after its delisting (tradeable mask).
+#### fix
+Optional, not required for acceptance: if the protocol wants only listed sessions to count, pass known = isfinite(score) & present (or & tradeable) in flags()/family_flags(); the existing tests would still pass. Otherwise state the vacuous-history rule in the protocol text.
+## test_rerun_tail
+=== python3 -m unittest (from <worktree>/idx-signals) ===
+----------------------------------------------------------------------
+Ran 263 tests in 52.439s
+
+OK
+=== python3 -m idxsig rules (tail) ===
+E5_CAND_A0_CREEP_QUIET v1 DETECTOR hold=5 sha=7891dfc8453d source-audit=passed
+E5_CAND_A1_CREEP_QUIET_NR v1 DETECTOR hold=5 sha=9ca7799abdb0 source-audit=passed
+E5_CAND_CRYPTO_A v1 DETECTOR hold=5 sha=6359f0d2761a source-audit=passed
+E5_CAND_CRYPTO_B v1 DETECTOR hold=5 sha=36cd72129fd2 source-audit=passed
+E5_CAND_IDX_A v1 DETECTOR hold=5 sha=b8d3cb7ede37 source-audit=passed
+E5_CAND_IDX_B v1 DETECTOR hold=5 sha=1019d2741cd0 source-audit=passed
+E5_CAND_US_A v1 DETECTOR hold=5 sha=ea160a78ec57 source-audit=passed
+E5_CAND_US_B v1 DETECTOR hold=5 sha=40469717f2ef source-audit=passed
+MOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed
+MOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed
+MOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed
+MOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed
+PLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed
+USER_RULE PENDING: rule text not supplied
+=== python3 -m idxsig verify-runs ===
+verify-runs: OK
+=== python3 tools/check_append_only.py --all (from <worktree>) ===
+append-only: OK
+=== independent regression proof (scratchpad copy of idxsig/ + tests/, old d8bf6b4 debounce/flags bodies spliced in, WARMUP kept at 65; worktree untouched) ===
+FAIL: test_debounce_flags_the_first_session_above_after_five_known_below — AssertionError: Lists differ: [np.int64(5), np.int64(11)] != [11]
+FAIL: test_flags_are_window_invariant_from_the_lead_in — AssertionError: np.True_ is not false : US_A
+FAIL: test_frozen_arm_is_causal_and_debounced — AssertionError: np.True_ is not false
+Ran 7 tests in 18.135s
+FAILED (failures=3)
+=== scope check ===
+git diff ae2cbee --stat: rules/__init__.py (+1 module in the registry, from d8bf6b4), rules/moonshot_e5.py, tests/test_e5_rules.py only; HEAD 8b94372 touches only moonshot_e5.py and test_e5_rules.py; no research/results/paper/var file in the diff; pre-existing rule shas unchanged (E1 648a06e1079f, E2 US c21126d8ba9d, E2 CRYPTO d8218f2e9c9b, E4 f5585be5d967, PLACEBO b774201b08e6); worktree has four untracked .githooks/* files that are not part of any commit.

@@ -20,7 +20,9 @@ refuters' demands (`03_proposals_and_evidence.md` §Recommendation lists what wa
 incorporated). Nothing further is needed from the workflow; `workflow/wf_1f360293-1fd.result.json`
 holds the complete return value if the journal is ever lost.
 
-## 2. Phase 2 (implementation) — only after the owner has seen the recommendation
+## 2. Phase 2 (implementation) — IN PROGRESS (the owner said "execute now"; local branch only)
+
+State: Phase 2a done and merged (`claude/e5-ceiling` `be99fec`, worktree `scratchpad/e5`); Phase 2b workflow `wf_c9b7db07-d56` running in worktree `scratchpad/e5-s-study` (branch `e5/s-study`). When it finishes: sync outputs to `outputs_phase2b/`, read the review verdicts, merge `e5/s-study` into `claude/e5-ceiling`, run the four checks, then (orchestrator, not an agent) freeze `research/E5/protocol.json` in its own commit and record the sha, then Stage 0 reproduce → Stage 1 information gate → Stage 2 execution, one recorded run each, reporting a null honestly. The steps below are the original plan and still apply.
 
 Owner inputs needed first (see `04_decisions.md`): merge PR #7 or not; push the PR #3 merge or not;
 accept 2023 reuse; name of the new branch to push (default `claude/e5-<slug>`).
@@ -43,6 +45,6 @@ Then, on a new branch from the base (`git checkout -b claude/e5-<slug> origin/cl
 
 ## 4. Things another agent must not do
 
-- Do not commit `handoff/` to the base branch or push it without the owner's say-so (it is untracked on purpose; the base branch is the live paper-ledger branch).
+- `handoff/` IS committed and pushed on the base branch (the owner's stop hook asked for it); keep every sync a small commit. Never push `claude/e5-ceiling` or `e5/*`, or open a PR, without the owner's say-so.
 - Do not `git worktree remove` the scratch worktrees before the bundles are confirmed restorable somewhere durable.
 - Do not run any harness run that reads 2024+ rows, re-tune a frozen detector, or describe discovery statistics as performance.
