@@ -1,0 +1,3180 @@
+diff --git a/idx-signals/idxsig/backtest.py b/idx-signals/idxsig/backtest.py
+index 2fd5e5f..a6f12ca 100644
+--- a/idx-signals/idxsig/backtest.py
++++ b/idx-signals/idxsig/backtest.py
+@@ -82,6 +82,7 @@ class RunConfig:
+     liquidation: float | None = None  # short side: isolated-margin liquidation at this fraction above the entry
+     jump_ratio: float | None = None  # trades held across a close/reference ratio beyond this are not scored
+     holdout_final: bool = False  # the one pre-registered holdout evaluation (see HOLDOUT)
++    tick_cost: bool = False  # one tick per side added to the costs, rule and baselines alike (research/E5 sensitivity)
+ 
+ 
+ # The IDX holdout sealed by research/E1/protocol.json. A DETECTOR run whose window touches it is
+@@ -352,6 +353,7 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
+         fill_model=cfg.fill_model,
+         liquidation=cfg.liquidation,
+         jump_ratio=cfg.jump_ratio,
++        tick_cost=cfg.tick_cost,
+         **plan,
+     )
+     start = cfg.start or (FIRST_SNAPSHOT if idx else panel_meta["default_start"])
+@@ -592,6 +594,11 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
+                                        "is a redenomination or a bad print, not a trade; such trades are "
+                                        "EXCLUDED_DATA_JUMP for the rule and the baselines alike"}}
+                if exec_cfg.jump_ratio is not None else {}),
++            **({"tick_cost": {"enabled": True,
++                              "note": "one exchange tick per side (market.tick_size at the price paid and at the "
++                                      "price received) added to the per-side costs, rule and baselines alike "
++                                      "(research/E5 closing-auction spread sensitivity)"}}
++               if exec_cfg.tick_cost else {}),
+             "lot_size": profile.lot_size,
+             "cost_tiers": [list(t) for t in profile.cost_tiers],
+             "fees": {"buy": cfg.fee_buy, "sell": cfg.fee_sell},
+diff --git a/idx-signals/idxsig/cli.py b/idx-signals/idxsig/cli.py
+index b1edf9c..d04dc7c 100644
+--- a/idx-signals/idxsig/cli.py
++++ b/idx-signals/idxsig/cli.py
+@@ -145,6 +145,17 @@ def main(argv=None) -> int:
+         if name == "e4-discovery":
+             p_e4.add_argument("--accept-deviation", action="store_true",
+                               help="proceed although the precondition run did not reproduce identically (recorded)")
++    for name, helptext in (("e5-reproduce", "experiment E5 precondition: re-run the market's recorded run on E5's panel"),
++                           ("e5-discovery", "experiment E5 discovery: stage 1 (information) then stage 2 (execution)"),
++                           ("e5-freeze", "experiment E5 freeze: write discovery/model.json into moonshot_e5.py literals"),
++                           ("e5-validation", "experiment E5 validation: the frozen arms on 2023, as recorded runs")):
++        p_e5 = sub.add_parser(name, help=helptext)
++        p_e5.add_argument("--market", choices=("IDX", "US", "CRYPTO"), required=True,
++                          help="CRYPTO_CLOSE is reached as a sensitivity inside CRYPTO, never as a market here")
++        if name == "e5-discovery":
++            p_e5.add_argument("--accept-deviation", action="store_true",
++                              help="proceed although the precondition run deviates beyond the accepted tolerance "
++                                   "(both sides on record)")
+     for name, helptext in (("e2-discovery", "experiment E2 discovery for one market"),
+                            ("e2-validation", "experiment E2 validation of a market's frozen detector")):
+         p_e2 = sub.add_parser(name, help=helptext)
+@@ -413,6 +424,51 @@ def main(argv=None) -> int:
+             print(f"error: {exc}", file=sys.stderr)
+             return 2
+         print(json.dumps(result, indent=2, default=str))
++    elif args.cmd in ("e5-reproduce", "e5-discovery", "e5-freeze", "e5-validation"):
++        from . import e5
++        from .provenance import MANIFESTS
++        from .results import code_state
++
++        proto, proto_sha = e5.protocol()
++        if code_state()["dirty"]:
++            print("error: commit idxsig/ first so the results name the code that produced them", file=sys.stderr)
++            return 2
++        mk = args.market
++        stage = args.cmd.split("-", 1)[1]
++        out = e5.stage_dir(mk, stage)
++        try:
++            if stage == "freeze":
++                result = e5.run_freeze(out, proto, proto_sha, mk)
++            else:
++                spec = proto["markets"][mk]
++                if "PENDING" in spec["panel_manifest"]:
++                    print(f"error: research/E5/protocol.json does not name a panel manifest for {mk}", file=sys.stderr)
++                    return 2
++                registry = None
++                if mk == "IDX":
++                    from . import corporate_actions
++                    from .panel import load
++                    from .provenance import sha256_file
++
++                    df, meta, manifest = load(MANIFESTS / spec["panel_manifest"])
++                    meta["_manifest"] = manifest.name
++                    meta["_manifest_sha256"] = sha256_file(manifest)
++                    registry = corporate_actions.load(MANIFESTS / spec["registry_manifest"], panel_sha256=meta["sha256"])
++                else:
++                    from . import global_panel
++
++                    df, meta = global_panel.load(MANIFESTS / spec["panel_manifest"])
++                if stage == "reproduce":
++                    result = e5.run_reproduce(df, meta, registry, out, proto, proto_sha, mk)
++                elif stage == "discovery":
++                    result = e5.run_discovery(df, meta, registry, out, proto, proto_sha, mk,
++                                              accept_deviation=args.accept_deviation)
++                else:
++                    result = e5.run_validation(df, meta, registry, out, proto, proto_sha, mk)
++        except (RuntimeError, FileExistsError, FileNotFoundError, ValueError, KeyError) as exc:
++            print(f"error: {exc}", file=sys.stderr)
++            return 2
++        print(json.dumps(result, indent=2, default=str))
+     elif args.cmd in ("e2-discovery", "e2-validation"):
+         from . import e1, global_panel
+         from .profiles import PROFILES
+diff --git a/idx-signals/idxsig/e5.py b/idx-signals/idxsig/e5.py
+new file mode 100644
+index 0000000..a849fac
+--- /dev/null
++++ b/idx-signals/idxsig/e5.py
+@@ -0,0 +1,1390 @@
++"""Experiment E5 (research/E5/protocol.json, KOD-GLOBAL-E5-v1, E5-CEILING): the daily-bar predictability ceiling.
++
++Does any pre-registered combination of daily-bar features carry direction for sessions t+1..t+5
++beyond matched controls, or is the lab's validated detection variance detection? Per market one
++ranker per arm (A = logit_U, B = logit_U - logit_D), two L2 logistic fits on discovery over the 41
++feature columns of rules/moonshot_e5.FEATURE_ORDER, a threshold fixed once at the discovery 99.5th
++percentile, debounced flags. Stages, each a new directory under research/E5/<MARKET>/ (frozen by
++the commit guard):
++
++  reproduce   the market's precondition run re-run from its recorded config on the pinned panel
++  discovery   stage 1 (information, fill-independent) then stage 2 (execution: harness runs under
++              the market plan for the arms that passed the stage-1 gate) in one command
++  freeze      discovery/model.json copied into the module's literal tables, SELECTED set (stage 3)
++  validation  the validation period only, recorded harness runs per admissible arm (stage 4)
++
++Every parameter is read from the protocol (PROTOCOL_KEYS lists what and where); nothing numeric is
++fixed here. The holdout is never loaded: assert_within_validation refuses any window end past the
++market's validation end before a RunConfig or Study is built, and the harness refuses it again.
++"""
++
++from __future__ import annotations
++
++import ast
++import contextlib
++import importlib.util
++import json
++import textwrap
++from pathlib import Path
++
++import numpy as np
++import pandas as pd
++
++from . import e1, e3
++from .backtest import GLOBAL_HOLDOUT, HOLDOUT, HoldoutSealed, RunConfig, paired_excess, run
++from .e1 import wilson
++from .e3 import _now, _runtime, plan_row, recorded_run, write_csv, write_json
++from .execution import Market, reference_level
++from .market import REGIMES, regime_index
++from .profiles import PROFILES
++from .provenance import PKG_ROOT, rel, sha256_file
++from .results import code_state, write_run
++from .rules import moonshot_e5
++
++E5_DIR = PKG_ROOT / "research" / "E5"
++PROTOCOL = E5_DIR / "protocol.json"
++MODULE_PATH = Path(moonshot_e5.__file__)
++STAGES = ("reproduce", "discovery", "freeze", "validation")
++MARKETS = ("IDX", "US", "CRYPTO")
++ARMS = ("A", "B")
++DETECTORS = ("A0_CREEP_QUIET", "A1_CREEP_QUIET_NR")
++LITERAL_TABLES = ("COEF_U", "COEF_D", "INTERCEPT_U", "INTERCEPT_D", "THRESHOLD_A", "THRESHOLD_B")
++MODEL_KEYS = {"COEF_U": "coef_U", "COEF_D": "coef_D", "INTERCEPT_U": "intercept_U", "INTERCEPT_D": "intercept_D",
++              "THRESHOLD_A": "threshold_A", "THRESHOLD_B": "threshold_B"}
++SCORED_STATUS = ("EXITED", "EXIT_DATA_END")
++PLAN_KEYS = e3.PLAN_KEYS
++# Every protocol.json key this module reads, as a dotted path (<M> = a market of MARKETS), and the stage
++# that reads it. tests/test_e5.py checks each one resolves in the draft protocol.
++PROTOCOL_KEYS = (
++    ("protocol_id", "all"), ("frozen_before_analysis", "all"), ("search_size", "all"), ("claims", "all"),
++    ("harness.warmup_sessions", "all"), ("periods.discovery", "e1.Study"), ("periods.validation", "e1.Study"),
++    ("weak_signals.continuous", "e1.Study"), ("weak_signals.binary", "e1.Study"),
++    ("features.order", "discovery"),
++    ("markets.<M>.panel_format", "all"), ("markets.<M>.panel_manifest", "cli"), ("markets.<M>.panel_sha256", "cli"),
++    ("markets.IDX.registry_manifest", "cli"), ("markets.<M>.precondition_runs", "reproduce"),
++    ("markets.<M>.periods.discovery", "all"), ("markets.<M>.periods.validation", "all"),
++    ("markets.<M>.pool_units", "discovery, validation"), ("markets.<M>.discovery_years", "discovery"),
++    ("markets.<M>.primary_arm", "discovery"),
++    ("matched_controls.detection_stage.pool_version", "discovery, validation"),
++    ("matched_controls.detection_stage.draws", "discovery, validation"),
++    ("matched_controls.detection_stage.seed", "discovery, validation"),
++    ("matched_controls.paired_statistic.resamples", "discovery, validation"),
++    ("matched_controls.paired_statistic.seed", "discovery, validation"),
++    ("matched_controls.paired_statistic.cluster", "discovery, validation"),
++    ("labels.horizon", "discovery, validation"), ("labels.threshold", "discovery, validation"),
++    ("labels.unit_reset_censoring.markets", "discovery, validation"),
++    ("labels.unit_reset_censoring.ratio", "discovery, validation"),
++    ("labels.unit_reset_censoring.sessions_before", "discovery, validation"),
++    ("learner.iterations", "discovery"), ("learner.lambda_per_row", "discovery"),
++    ("learner.negative_subsample", "discovery"), ("learner.negative_weight", "discovery"), ("learner.seed", "discovery"),
++    ("learner.threshold_percentile", "discovery"),
++    ("plans.<M>.primary", "discovery, validation"), ("plans.<M>.sensitivities", "discovery, validation"),
++    ("harness.entry_lag", "discovery, validation"), ("harness.random_draws", "discovery, validation"),
++    ("harness.seed", "discovery, validation"), ("harness.overlap", "discovery, validation"),
++    ("harness.data_end_exit", "discovery, validation"), ("harness.controls_version", "discovery, validation"),
++    ("harness.controls_version_reported", "discovery, validation"), ("harness.lookahead_cuts", "discovery, validation"),
++    ("selection.min_scored", "discovery (e3.admissibility)"),
++    ("selection.max_p_one_sided_vs_matched", "discovery (e3.admissibility)"),
++    ("selection.min_scored_per_year", "discovery (e3.admissibility)"),
++    ("stages.0_reproduce.rule_side_fields", "reproduce"),
++    ("stages.0_reproduce.accepted_deviation.field", "reproduce"),
++    ("stages.0_reproduce.accepted_deviation.abs_tolerance", "reproduce"),
++    ("stages.1_information.gate_to_stage_2.min_flags", "discovery"),
++    ("stages.1_information.gate_to_stage_2.alpha", "discovery"),
++    ("stages.1_information.gate_to_stage_2.min_flags_per_year", "discovery"),
++    ("stages.1_information.primaries", "discovery"),
++    ("stages.1_information.a1_gate.min_lift", "discovery"), ("stages.1_information.a1_gate.max_p", "discovery"),
++    ("stages.1_information.pre_move_split_ret1", "discovery"),
++    ("stages.1_information.univariate.controls_per_event", "discovery"),
++    ("stages.1_information.univariate.controls_seed", "discovery"),
++    ("stages.1_information.univariate.auc_bootstrap", "discovery"),
++    ("stages.1_information.univariate.auc_seed", "discovery"),
++    ("stages.1_information.univariate.top_share", "discovery"),
++    ("stages.2_execution.alpha_paired_net", "discovery"), ("stages.2_execution.exit_participation_max", "discovery"),
++    ("validation.min_scored.<M>", "validation"), ("validation.alpha_paired_net", "validation"),
++    ("validation.max_p_one_sided_vs_matched", "validation"), ("validation.claim_level", "validation"),
++)
++
++
++# ---------------------------------------------------------------------------------------------- protocol
++def protocol(path: Path | None = None) -> tuple[dict, str]:
++    path = path or PROTOCOL
++    return json.loads(Path(path).read_text(encoding="utf-8")), sha256_file(path)
++
++
++def get(proto: dict, path: str):
++    """The value at a dotted path of the protocol; KeyError names the missing key."""
++    node = proto
++    for key in path.split("."):
++        if not isinstance(node, dict) or key not in node:
++            raise KeyError(f"protocol has no {path!r} (missing {key!r})")
++        node = node[key]
++    return node
++
++
++def version_dir() -> Path:
++    return E5_DIR
++
++
++def _rel(path: Path) -> str:
++    """rel() for paths inside the package, the absolute path otherwise (tests, temp dirs)."""
++    path = Path(path)
++    return rel(path) if path.resolve().is_relative_to(PKG_ROOT) else str(path)
++
++
++def market_dir(market: str) -> Path:
++    if market not in MARKETS:
++        raise ValueError(f"unknown E5 market {market!r}; CRYPTO_CLOSE is a sensitivity inside CRYPTO")
++    return version_dir() / market
++
++
++def stage_dir(market: str, stage: str) -> Path:
++    if stage not in STAGES:
++        raise ValueError(f"unknown E5 stage {stage!r}")
++    return market_dir(market) / stage
++
++
++def spec_market(market: str) -> str:
++    """The protocol markets entry a RunConfig market reads: CRYPTO_CLOSE shares CRYPTO's."""
++    return PROFILES[market].market
++
++
++def assert_within_validation(proto: dict, market: str, end) -> None:
++    """Refuse any window end past the market's validation end or inside the sealed holdout, before a
++    RunConfig or Study is built. `end` is an ISO date (string or datetime64)."""
++    mk = spec_market(market)
++    v_end = get(proto, f"markets.{mk}.periods.validation")[1]
++    sealed = HOLDOUT if mk == "IDX" else GLOBAL_HOLDOUT
++    end = str(np.datetime64(end, "D"))
++    if end > v_end or end >= sealed[0]:
++        raise HoldoutSealed(f"window end {end} is past the {mk} validation end {v_end} (holdout {sealed[0]}.."
++                            f"{sealed[1]} is sealed; E5 never loads it)")
++
++
++def sessions_of(panel_df: pd.DataFrame) -> np.ndarray:
++    return np.array(sorted(panel_df["date"].unique()), dtype="datetime64[D]")
++
++
++def window_for(proto: dict, market: str, sessions: np.ndarray, period: str) -> dict:
++    """The study/harness window of `period` for `market`: WARMUP sessions before the period's first
++    session (clipped to the panel's first session, the shortfall recorded) up to the period's end."""
++    mk = spec_market(market)
++    start, end = get(proto, f"markets.{mk}.periods.{period}")
++    warm = int(get(proto, "harness.warmup_sessions"))
++    if warm != moonshot_e5.WARMUP:
++        raise ValueError(f"protocol warm-up {warm} differs from moonshot_e5.WARMUP {moonshot_e5.WARMUP}")
++    assert_within_validation(proto, market, end)
++    first = int(np.searchsorted(sessions, np.datetime64(start, "D"), side="left"))
++    last = int(np.searchsorted(sessions, np.datetime64(end, "D"), side="right")) - 1
++    if first >= len(sessions) or last < first:
++        raise ValueError(f"the panel has no sessions in the {mk} {period} period {start}..{end}")
++    lo = max(0, first - warm)
++    return {"period": period, "period_start": start, "period_end": end, "start": str(sessions[lo]), "end": end,
++            "first_period_session": str(sessions[first]), "last_period_session": str(sessions[last]),
++            "lead_in_sessions": int(first - lo), "warmup_sessions": warm,
++            "lead_in_short": bool(first - lo < warm)}
++
++
++def build_study(proto: dict, market: str, panel_df: pd.DataFrame, meta: dict, protocol_path: Path | None = None,
++                period: str = "discovery") -> e1.Study:
++    """e1.Study on the panel sliced to the market's window of `period` (its warm-up start .. the
++    market's validation end, where the study seals itself), with the protocol's detection pool and the
++    market's declared panel format passed explicitly."""
++    mk = spec_market(market)
++    sessions = sessions_of(panel_df)
++    window = window_for(proto, market, sessions, period)
++    v_end = get(proto, f"markets.{mk}.periods.validation")[1]
++    assert_within_validation(proto, market, v_end)
++    dates = panel_df["date"].to_numpy().astype("datetime64[D]")
++    keep = (dates >= np.datetime64(window["start"], "D")) & (dates <= np.datetime64(v_end, "D"))
++    df = panel_df.loc[keep].reset_index(drop=True)
++    study = e1.Study(df, meta, protocol_path=protocol_path or PROTOCOL, profile=PROFILES[mk],
++                     family_module=moonshot_e5, pool_units=get(proto, f"markets.{mk}.pool_units"),
++                     pool_version=get(proto, "matched_controls.detection_stage.pool_version"),
++                     panel_format=get(proto, f"markets.{mk}.panel_format"))
++    study.e5_window = window
++    return study
++
++
++# ------------------------------------------------------------------------------------------------ labels
++def _lead(a: np.ndarray, k: int) -> np.ndarray:
++    return e1._lead(a, k)
++
++
++def labels(study: e1.Study, proto: dict, market: str) -> dict:
++    """U, the raw D inputs and the censoring masks on the study market. U = r5max >= threshold - 1 as
++    e1.Study; r5min = min level(t+1..t+H)/level(t) - 1; a unit reset (crypto) censors the labels of
++    the sessions_before sessions up to it and the plan-window return of any flag whose window t+1..t+H+1
++    contains it. Float arrays: 1/0 where labelled, NaN elsewhere."""
++    mk = spec_market(market)
++    H = int(get(proto, "labels.horizon"))
++    x = float(get(proto, "labels.threshold"))
++    m, L = study.m, study.level
++    ahead = np.stack([_lead(L, k) for k in range(1, H + 1)])
++    with np.errstate(divide="ignore", invalid="ignore"):
++        ratios = ahead / L[None] - 1
++    fin = np.isfinite(ratios)
++    has_fwd = fin.any(axis=0)
++    r5min = np.where(has_fwd, np.nanmin(np.where(fin, ratios, np.inf), axis=0), np.nan)
++    r5max = np.where(has_fwd, np.nanmax(np.where(fin, ratios, -np.inf), axis=0), np.nan)
++    cens = get(proto, "labels.unit_reset_censoring")
++    reset = np.zeros(m.shape, dtype=bool)
++    resets = []
++    if mk in cens["markets"]:
++        R = float(cens["ratio"])
++        with np.errstate(divide="ignore", invalid="ignore"):
++            ratio = np.where(m.present & (m.prev > 0), m.close / m.prev, 1.0)
++        reset = m.present & ((ratio >= R) | (ratio <= 1 / R))
++        resets = [{"ticker": str(m.tickers[n]), "date": str(m.dates[d]), "ratio": float(ratio[n, d])}
++                  for n, d in zip(*np.nonzero(reset))]
++    before = int(cens["sessions_before"])
++    censor_label = np.zeros(m.shape, dtype=bool)
++    for k in range(0, before + 1):
++        censor_label |= _lead(reset.astype(float), k) == 1.0
++    censor_plan = np.zeros(m.shape, dtype=bool)
++    for k in range(1, H + 2):
++        censor_plan |= _lead(reset.astype(float), k) == 1.0
++    labelled = has_fwd & ~censor_label
++    u = np.where(labelled, (np.nan_to_num(r5max, nan=-np.inf) >= x - 1).astype(float), np.nan)
++    return {"U": u, "r5min": np.where(labelled, r5min, np.nan), "labelled": labelled, "censor_plan": censor_plan,
++            "unit_resets": resets, "horizon": H, "threshold": x}
++
++
++def d_label(lab: dict, market: str, evaluable: np.ndarray, proto: dict) -> tuple[np.ndarray, dict]:
++    """D: min level ratio <= 1/threshold off IDX; on IDX rate-matched so P(D) = P(U) over the evaluable
++    discovery ticker-days (the k-th smallest r5min, k = the U positives there), fixed once."""
++    r5min, u = lab["r5min"], lab["U"]
++    x = float(lab["threshold"])
++    sel = evaluable & np.isfinite(u) & np.isfinite(r5min)
++    if spec_market(market) == "IDX":
++        k = int(np.nansum(u[sel]))
++        vals = np.sort(r5min[sel])
++        thr = float(vals[k - 1]) if k > 0 else -np.inf
++        rule = "rate-matched"
++    else:
++        thr = 1.0 / x - 1.0
++        rule = "fixed"
++    d = np.where(np.isfinite(r5min), (np.nan_to_num(r5min, nan=np.inf) <= thr).astype(float), np.nan)
++    n = int(sel.sum())
++    info = {"rule": rule, "threshold_min_ratio_minus_1": thr if np.isfinite(thr) else None,
++            "evaluable_ticker_days": n,
++            "P_U": float(np.nansum(u[sel]) / n) if n else None, "P_D": float(np.nansum(d[sel]) / n) if n else None}
++    return d, info
++
++
++def known_features(f: dict) -> np.ndarray:
++    out = np.ones(f[moonshot_e5.FEATURE_ORDER[0]].shape, dtype=bool)
++    for k in moonshot_e5.FEATURE_ORDER:
++        out &= np.isfinite(f[k])
++    return out
++
++
++def evaluable_mask(study: e1.Study, proto: dict, market: str, period: str, lab: dict) -> np.ndarray:
++    """e1.Study.elig and the market's own period (t and t+H inside it), the debounce lead-in (column >=
++    WARMUP of the study window), the label present and every feature column known."""
++    mk = spec_market(market)
++    start, end = get(proto, f"markets.{mk}.periods.{period}")
++    H = int(lab["horizon"])
++    dates = study.dates
++    n_s = len(dates)
++    in_period = (dates >= np.datetime64(start, "D")) & (dates <= np.datetime64(end, "D"))
++    fwd_ok = np.zeros(n_s, dtype=bool)
++    fwd_ok[: n_s - H] = dates[H:] <= np.datetime64(end, "D")
++    lead_ok = np.arange(n_s) >= moonshot_e5.WARMUP
++    cols = in_period & fwd_ok & lead_ok
++    return study.elig[period] & cols[None, :] & lab["labelled"] & known_features(study.base_feats)
++
++
++def constant_columns(f: dict, mask: np.ndarray) -> dict:
++    """Per feature column, whether it is constant over the masked cells (its single value then)."""
++    out = {}
++    for k in moonshot_e5.FEATURE_ORDER:
++        v = f[k][mask]
++        if not len(v):
++            out[k] = {"constant": None, "value": None}
++            continue
++        lo, hi = float(np.min(v)), float(np.max(v))
++        out[k] = {"constant": bool(lo == hi), "value": lo if lo == hi else None}
++    return out
++
++
++# ------------------------------------------------------------------------------------------------ learner
++def design(f: dict, n_idx: np.ndarray, d_idx: np.ndarray) -> np.ndarray:
++    return np.column_stack([f[k][n_idx, d_idx] for k in moonshot_e5.FEATURE_ORDER])
++
++
++def fit_logistic(X: np.ndarray, y: np.ndarray, w: np.ndarray, lam: float, iterations: int) -> dict:
++    """L2 logistic regression by IRLS (Newton) from beta = 0, a fixed number of iterations, the ridge on
++    the coefficients only; the linear predictor is clipped to [-30, 30] before the sigmoid. numpy only."""
++    X = np.asarray(X, dtype=float)
++    y = np.asarray(y, dtype=float)
++    w = np.asarray(w, dtype=float)
++    if X.ndim != 2 or len(y) != len(X) or len(w) != len(X):
++        raise ValueError("X, y and w must have one row per observation")
++    if not (y == 1).any() or not (y == 0).any():
++        raise ValueError("the fit needs both classes")
++    n, p = X.shape
++    Xa = np.hstack([np.ones((n, 1)), X])
++    pen = float(lam) * np.eye(p + 1)
++    pen[0, 0] = 0.0
++    beta = np.zeros(p + 1)
++    step = np.zeros(p + 1)
++    for _ in range(int(iterations)):
++        eta = np.clip(Xa @ beta, -30, 30)
++        mu = 1.0 / (1.0 + np.exp(-eta))
++        grad = Xa.T @ (w * (y - mu)) - pen @ beta
++        H = (Xa * (w * mu * (1 - mu))[:, None]).T @ Xa + pen
++        step = np.linalg.solve(H, grad)
++        beta = beta + step
++    eta = np.clip(Xa @ beta, -30, 30)
++    mu = 1.0 / (1.0 + np.exp(-eta))
++    with np.errstate(divide="ignore", invalid="ignore"):
++        ll = w * (y * np.log(mu) + (1 - y) * np.log(1 - mu))
++    return {"intercept": float(beta[0]), "coef": [float(b) for b in beta[1:]], "iterations": int(iterations),
++            "lambda": float(lam), "deviance": float(-2 * np.nansum(ll)), "max_abs_step_last": float(np.abs(step).max()),
++            "converged": bool(np.abs(step).max() < 1e-8)}
++
++
++def fit_label(f: dict, n_idx: np.ndarray, d_idx: np.ndarray, y: np.ndarray, learner: dict, name: str) -> dict:
++    """One label's fit on the rows (n_idx, d_idx): all positives plus a seeded subsample of the negatives,
++    floor(negative_subsample x negatives) drawn without replacement in row order, weighted."""
++    y = np.asarray(y, dtype=float)
++    pos, neg = np.flatnonzero(y == 1), np.flatnonzero(y == 0)
++    if not len(pos) or not len(neg):
++        raise ValueError(f"label {name}: {len(pos)} positives and {len(neg)} negatives; the fit needs both classes")
++    rng = np.random.default_rng(int(learner["seed"]))
++    n_sample = int(np.floor(len(neg) * float(learner["negative_subsample"])))
++    chosen = np.sort(rng.choice(neg, size=n_sample, replace=False)) if n_sample else neg[:0]
++    rows = np.sort(np.concatenate([pos, chosen]))
++    weights = np.where(y[rows] == 1, 1.0, float(learner["negative_weight"]))
++    lam = float(learner["lambda_per_row"]) * len(rows)
++    fit = fit_logistic(design(f, n_idx[rows], d_idx[rows]), y[rows], weights, lam, int(learner["iterations"]))
++    fit.update({"label": name, "n_rows_used": int(len(rows)), "n_positives": int(len(pos)),
++                "n_negatives": int(len(neg)), "n_negatives_sampled": int(n_sample),
++                "negative_weight": float(learner["negative_weight"]), "seed": int(learner["seed"]),
++                "feature_order": list(moonshot_e5.FEATURE_ORDER)})
++    return fit
++
++
++def arm_scores(f: dict, model: dict) -> dict:
++    s_u = moonshot_e5.score(f, model["coef_U"], model["intercept_U"])
++    s_d = moonshot_e5.score(f, model["coef_D"], model["intercept_D"])
++    return {"A": s_u, "B": s_u - s_d}
++
++
++def threshold(score: np.ndarray, evaluable: np.ndarray, percentile: float) -> float:
++    v = score[evaluable]
++    v = v[np.isfinite(v)]
++    if not len(v):
++        raise ValueError("no evaluable ticker-day to fix a threshold on")
++    return float(np.percentile(v, float(percentile)))
++
++
++def harness_mask(flags: np.ndarray, m: Market) -> np.ndarray:
++    """Flags as the harness signals them: tradeable sessions from column WARMUP on."""
++    out = np.asarray(flags, dtype=bool) & m.tradeable
++    out[:, : moonshot_e5.WARMUP] = False
++    return out
++
++
++def arm_flags(score: np.ndarray, thr: float, m: Market) -> np.ndarray:
++    return harness_mask(moonshot_e5.flags(score, thr), m)
++
++
++def detector_flags(f: dict, m: Market) -> dict:
++    known = np.isfinite(f["quiet"])
++    return {name: harness_mask(moonshot_e5.debounce(state, known), m)
++            for name, state in moonshot_e5.detector_states(f).items()}
++
++
++def e1_threshold_key(study: e1.Study, ratio: float) -> float:
++    """The e1.Study THRESHOLDS key (a return, 0.30) for a level ratio (1.30)."""
++    want = ratio - 1.0
++    key = min(study.start, key=lambda k: abs(k - want))
++    if abs(key - want) > 1e-9:
++        raise ValueError(f"e1.Study has no event threshold for a {ratio} level ratio (has {sorted(study.start)})")
++    return key
++
++
++def auc(score: np.ndarray, y: np.ndarray) -> float | None:
++    """P(score of a positive > score of a negative) + 0.5 P(tie), rank-based (average ties)."""
++    ok = np.isfinite(score) & np.isfinite(y)
++    s, t = score[ok], y[ok]
++    n_pos, n_neg = int((t == 1).sum()), int((t == 0).sum())
++    if not n_pos or not n_neg:
++        return None
++    ranks = pd.Series(s).rank(method="average").to_numpy()
++    return float((ranks[t == 1].sum() - n_pos * (n_pos + 1) / 2) / (n_pos * n_neg))
++
++
++# ----------------------------------------------------------------------------------------- plan window
++def plan_window_return(m: Market, entry_price: str, holding: int) -> np.ndarray:
++    """The fill-independent return on the reference chain of a flag at column t: entry level at the close
++    of t+1 (entry_price "close") or at level(t+1) x open(t+1)/close(t+1) ("open"), exit level at the close
++    of session t+1+holding; NaN where either is missing."""
++    L = reference_level(m)
++    entry = _lead(L, 1)
++    if entry_price == "open":
++        with np.errstate(divide="ignore", invalid="ignore"):
++            opens = np.where(np.nan_to_num(m.open) > 0, m.open, np.nan)
++            entry = entry * _lead(opens, 1) / _lead(m.close, 1)
++    exit_ = _lead(L, 1 + int(holding))
++    with np.errstate(divide="ignore", invalid="ignore"):
++        r = exit_ / entry - 1
++    return np.where(np.isfinite(r), r, np.nan)
++
++
++# ------------------------------------------------------------------------------- detection controls
++def flag_cells(mask: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
++    """Flag cells in (session, ticker-index) order."""
++    n_idx, d_idx = np.nonzero(mask)
++    order = np.lexsort((n_idx, d_idx))
++    return n_idx[order], d_idx[order]
++
++
++def detection_draws(study: e1.Study, n_idx: np.ndarray, d_idx: np.ndarray, evaluable: np.ndarray, draws: int,
++                    seed: int) -> tuple[np.ndarray, np.ndarray]:
++    """Matched controls per flag: e1.Study._pool (the protocol's pool keys, relaxed from the last to
++    N_CONTROLS), `draws` draws with replacement from one generator in flag order; (draws, k) and the
++    relaxation level per flag. A flag whose pool is empty draws itself (reported by level -1)."""
++    out = np.empty((int(draws), len(n_idx)), dtype=np.int64)
++    level = np.empty(len(n_idx), dtype=np.int64)
++    rng = np.random.default_rng(int(seed))
++    for j, (n, d) in enumerate(zip(n_idx, d_idx)):
++        pool, lv = study._pool(int(n), int(d), evaluable)
++        if not len(pool):
++            pool, lv = np.array([n]), -1
++        level[j] = lv
++        out[:, j] = rng.choice(pool, size=int(draws), replace=True)
++    return out, level
++
++
++def _cluster_index(keys: np.ndarray) -> tuple[np.ndarray, int]:
++    _, inv = np.unique(np.asarray(keys).astype(str), return_inverse=True)
++    return inv, (int(inv.max()) + 1 if len(inv) else 0)
++
++
++def ratio_bootstrap(num: np.ndarray, den: np.ndarray, clusters: np.ndarray, resamples: int, seed: int) -> dict:
++    """Cluster bootstrap of sum(num)/sum(den) over clusters (sessions): the 95% interval. Resamples in
++    fixed chunks of 1000 so the stream does not depend on memory."""
++    ok = np.isfinite(num) & np.isfinite(den)
++    num, den = num[ok], den[ok]
++    inv, k = _cluster_index(np.asarray(clusters)[ok])
++    if k == 0:
++        return {"ratio": None, "ci95": None, "n_clusters": 0}
++    s_num, s_den = np.bincount(inv, weights=num, minlength=k), np.bincount(inv, weights=den, minlength=k)
++    point = float(s_num.sum() / s_den.sum()) if s_den.sum() else None
++    rng = np.random.default_rng(int(seed))
++    vals = np.empty(int(resamples))
++    chunk = 1000
++    with np.errstate(divide="ignore", invalid="ignore"):
++        for i in range(0, int(resamples), chunk):
++            idx = rng.integers(0, k, size=(min(chunk, int(resamples) - i), k))
++            vals[i:i + len(idx)] = s_num[idx].sum(axis=1) / s_den[idx].sum(axis=1)
++    fin = vals[np.isfinite(vals)]
++    ci = [float(np.percentile(fin, 2.5)), float(np.percentile(fin, 97.5))] if len(fin) else None
++    return {"ratio": point, "ci95": ci, "n_clusters": int(k), "resamples_finite": int(len(fin))}
++
++
++def _label_stats(hit: np.ndarray, ctrl: np.ndarray, base: float, sessions: np.ndarray, resamples: int,
++                 seed: int) -> dict:
++    """Precision of the flags with Wilson bounds, lift vs base, the matched-control draw distribution
++    (e1.evaluate's convention: portfolio means of the draws, one-sided p) and a session-cluster CI of the
++    lift vs matched (ratio of flag hits to control-mean hits)."""
++    n = int(len(hit))
++    k = int(np.nansum(hit))
++    lo, hi = wilson(k, n)
++    precision = k / n if n else None
++    port = ctrl.mean(axis=1) if n else np.array([np.nan])  # (draws,): mean hit rate of each control portfolio
++    matched = float(np.nanmean(port)) if n else None
++    lift = ratio_bootstrap(hit, ctrl.mean(axis=0), sessions, resamples, seed) if n else {"ratio": None, "ci95": None}
++    return {"flags": n, "hits": k, "precision": precision, "precision_lo95": None if n == 0 else float(lo),
++            "precision_hi95": None if n == 0 else float(hi), "base_rate": float(base),
++            "lift_vs_base": (precision / base) if n and base else None,
++            "matched_random_mean": matched,
++            "matched_random_p2_5": float(np.nanpercentile(port, 2.5)) if n else None,
++            "matched_random_p97_5": float(np.nanpercentile(port, 97.5)) if n else None,
++            "lift_vs_matched": (precision / matched) if n and matched else None,
++            "lift_vs_matched_ci95": lift["ci95"],
++            "p_one_sided_vs_matched": float((1 + (port >= precision).sum()) / (1 + len(port))) if n else None}
++
++
++def paired_frame(dates: np.ndarray, outcome: np.ndarray, ctrl: np.ndarray, cluster: str) -> pd.DataFrame:
++    """A trades-shaped frame for backtest.paired_excess: the flag outcome and the mean outcome of its
++    finite control draws (NaN when none is finite)."""
++    fin = np.isfinite(ctrl)
++    n_fin = fin.sum(axis=0)
++    with np.errstate(invalid="ignore", divide="ignore"):
++        mean = np.where(fin, ctrl, 0.0).sum(axis=0) / n_fin
++    return pd.DataFrame({cluster: np.asarray(dates).astype(str), "net_return": np.asarray(outcome, dtype=float),
++                         "matched_mean_net_return": np.where(n_fin > 0, mean, np.nan)})
++
++
++def flag_block(study: e1.Study, lab: dict, d_arr: np.ndarray, f: dict, r_plan: np.ndarray, n_idx: np.ndarray,
++               d_idx: np.ndarray, draws: np.ndarray, level: np.ndarray, evaluable: np.ndarray, years: list[int],
++               proto: dict, market: str) -> dict:
++    """Every Stage-1 statistic of one flag set: E30 and D30 blocks, the directional ratio, the plan-window
++    paired excess with per-year means, the pre-move split and (IDX) the split by ARB regime."""
++    ps = get(proto, "matched_controls.paired_statistic")
++    resamples, seed, cluster = int(ps["resamples"]), int(ps["seed"]), str(ps["cluster"])
++    u = lab["U"]
++    dates = study.dates[d_idx]
++    years_of_flags = study.dates.astype("datetime64[Y]").astype(int)[d_idx] + 1970
++    base_u = float(np.nanmean(u[evaluable])) if evaluable.any() else float("nan")
++    base_d = float(np.nanmean(d_arr[evaluable])) if evaluable.any() else float("nan")
++    hit_u, hit_d = u[n_idx, d_idx], d_arr[n_idx, d_idx]
++    ctrl_u, ctrl_d = u[draws, d_idx[None, :]], d_arr[draws, d_idx[None, :]]
++    rf, rc = r_plan[n_idx, d_idx], r_plan[draws, d_idx[None, :]]
++    frame = paired_frame(dates, rf, rc, cluster)
++    paired = paired_excess(frame, resamples=resamples, seed=seed, cluster=cluster)
++    excess = (frame["net_return"] - frame["matched_mean_net_return"]).to_numpy()
++    by_year = {}
++    for y in years:
++        sel = years_of_flags == y
++        ex = excess[sel]
++        ex = ex[np.isfinite(ex)]
++        by_year[str(y)] = {"flags": int(sel.sum()), "flags_with_return": int(len(ex)),
++                           "mean_excess": float(ex.mean()) if len(ex) else None,
++                           "n_clusters": int(len(np.unique(dates[sel][np.isfinite(excess[sel])])))}
++    with np.errstate(divide="ignore", invalid="ignore"):
++        matched_ratio = float(np.nansum(ctrl_u) / np.nansum(ctrl_d)) if len(n_idx) and np.nansum(ctrl_d) else None
++    out = {
++        "flags": int(len(n_idx)), "sessions_with_flag": int(len(np.unique(d_idx))),
++        "distinct_names": int(len(np.unique(n_idx))),
++        "match_level_used": {str(int(v)): int((level == v).sum()) for v in np.unique(level)} if len(level) else {},
++        "E30": _label_stats(hit_u, ctrl_u, base_u, dates, resamples, seed),
++        "D30": _label_stats(hit_d, ctrl_d, base_d, dates, resamples, seed),
++        "directional_ratio": {**ratio_bootstrap(hit_u, hit_d, dates, resamples, seed), "matched_ratio": matched_ratio},
++        "plan_window": {"flags_with_return": int(paired["n"]),
++                        "mean_return_flags": float(np.nanmean(rf)) if np.isfinite(rf).any() else None,
++                        "mean_return_matched": float(np.nanmean(rc)) if np.isfinite(rc).any() else None,
++                        "paired": paired},
++        "by_year": by_year,
++    }
++    split = float(get(proto, "stages.1_information.pre_move_split_ret1"))
++    ret1 = f["ret1"][n_idx, d_idx]
++    out["pre_move_split"] = {}
++    for name, sel in (("ret1_below", np.nan_to_num(ret1, nan=-np.inf) < split),
++                      ("ret1_at_or_above", np.nan_to_num(ret1, nan=-np.inf) >= split)):
++        sub = paired_excess(frame[sel], resamples=resamples, seed=seed, cluster=cluster) if sel.any() else None
++        out["pre_move_split"][name] = {
++            "flags": int(sel.sum()),
++            "E30": _label_stats(hit_u[sel], ctrl_u[:, sel], base_u, dates[sel], resamples, seed) if sel.any() else None,
++            "paired": sub}
++    if spec_market(market) == "IDX":
++        reg = regime_index(study.dates[d_idx]) if len(d_idx) else np.array([], dtype=int)
++        out["by_regime"] = {}
++        for r in np.unique(reg):
++            sel = reg == r
++            out["by_regime"][REGIMES[int(r)].label] = {
++                "flags": int(sel.sum()),
++                "E30_precision": float(np.nanmean(hit_u[sel])), "D30_precision": float(np.nanmean(hit_d[sel])),
++                "paired": paired_excess(frame[sel], resamples=resamples, seed=seed, cluster=cluster)}
++    return out
++
++
++def stage1_gate(block: dict, proto: dict, years: list[int]) -> dict:
++    """The gate to Stage 2: flags >= min_flags, paired plan-window excess > 0 with cluster p < alpha, mean
++    excess > 0 in every discovery year with >= min_flags_per_year flags; NOT judged when n_clusters < 2."""
++    g = get(proto, "stages.1_information.gate_to_stage_2")
++    reasons, judged = [], True
++    if block["flags"] < int(g["min_flags"]):
++        reasons.append(f"flags {block['flags']} < {g['min_flags']}")
++    paired = block["plan_window"]["paired"]
++    if paired["n_clusters"] < 2:
++        judged = False
++        reasons.append(f"not judged: {paired['n_clusters']} signal-session clusters (< 2)")
++    else:
++        if not (paired["mean_excess"] is not None and paired["mean_excess"] > 0):
++            reasons.append(f"paired plan-window excess {paired['mean_excess']} not positive")
++        if not (paired["p_one_sided"] is not None and paired["p_one_sided"] < float(g["alpha"])):
++            reasons.append(f"cluster-bootstrap p {paired['p_one_sided']} not below {g['alpha']}")
++    for y in years:
++        yr = block["by_year"].get(str(y), {})
++        if yr.get("flags", 0) >= int(g["min_flags_per_year"]) and not (yr.get("mean_excess") or 0) > 0:
++            reasons.append(f"mean excess in {y} not positive ({yr.get('flags')} flags)")
++    return {"judged": judged, "passed": bool(judged and not reasons), "reasons": reasons}
++
++
++def a1_gate(block: dict, proto: dict) -> dict:
++    g = get(proto, "stages.1_information.a1_gate")
++    e30 = block["E30"]
++    lift, p = e30.get("lift_vs_matched"), e30.get("p_one_sided_vs_matched")
++    reasons = []
++    if lift is None or not lift >= float(g["min_lift"]):
++        reasons.append(f"lift vs matched {lift} below {g['min_lift']}")
++    if p is None or not p < float(g["max_p"]):
++        reasons.append(f"p vs matched {p} not below {g['max_p']}")
++    return {"passed": not reasons, "reasons": reasons,
++            "lift_ci95_excludes_1": bool(e30["lift_vs_matched_ci95"] and e30["lift_vs_matched_ci95"][0] > 1.0)}
++
++
++# ------------------------------------------------------------------------------------- univariate table
++def univariate_table(study: e1.Study, lab: dict, f: dict, evaluable: np.ndarray, proto: dict) -> pd.DataFrame:
++    """Per ranked / binary feature on discovery: the matched-set AUC of U-episode starts against their
++    matched non-event controls (E1 signal_stats, bootstrap over events) and the feature's own debounced
++    top-share flag: E30 precision, lift vs base and vs matched controls."""
++    uv = get(proto, "stages.1_information.univariate")
++    det = get(proto, "matched_controls.detection_stage")
++    m = study.m
++    u = lab["U"]
++    key = e1_threshold_key(study, float(lab["threshold"]))
++    n_ev, d_ev = flag_cells(evaluable & study.start[key])
++    non_event = ~study.qraw[key]
++    k_ctrl = int(uv["controls_per_event"])
++    ctrl = np.full((len(n_ev), k_ctrl), -1, dtype=np.int64)
++    for i, (n, d) in enumerate(zip(n_ev, d_ev)):
++        pool, _ = study._pool(int(n), int(d), evaluable, non_event)
++        rng = np.random.default_rng(int(uv["controls_seed"]) + i)
++        chosen = rng.choice(pool, size=min(k_ctrl, len(pool)), replace=False) if len(pool) else pool
++        ctrl[i, : len(chosen)] = np.sort(chosen)
++    rng = np.random.default_rng(int(uv["auc_seed"]))
++    boot_n = int(uv["auc_bootstrap"])
++    pct = 100.0 * (1.0 - float(uv["top_share"]))
++    base = float(np.nanmean(u[evaluable])) if evaluable.any() else float("nan")
++    rows = []
++    for name in moonshot_e5.RANKED + moonshot_e5.BINARY:
++        ev = f[name][n_ev, d_ev] if len(n_ev) else np.array([])
++        cv = np.where(ctrl >= 0, f[name][np.maximum(ctrl, 0), d_ev[:, None]], np.nan) if len(n_ev) else np.empty((0, k_ctrl))
++        with np.errstate(invalid="ignore"):
++            fin = np.isfinite(cv) & np.isfinite(ev)[:, None]
++            scores = ((ev[:, None] > cv) & fin).sum(axis=1) + 0.5 * ((ev[:, None] == cv) & fin).sum(axis=1)
++            counts = fin.sum(axis=1)
++        used = np.flatnonzero(counts > 0)
++        auc_ = float(scores[used].sum() / counts[used].sum()) if len(used) else None
++        boots = np.full(boot_n, np.nan)
++        for b in range(boot_n):
++            if len(used):
++                idx = rng.choice(used, size=len(used), replace=True)
++                boots[b] = scores[idx].sum() / counts[idx].sum()
++        if name in moonshot_e5.RANKED:
++            rank = f[name + "_r"]
++            thr = threshold(rank, evaluable, pct)
++            flags = arm_flags(rank, thr, m)
++        else:
++            thr = 1.0
++            flags = harness_mask(moonshot_e5.debounce(f[name] == 1.0, np.isfinite(f[name])), m)
++        n_fl, d_fl = flag_cells(flags & evaluable)
++        draws, _ = detection_draws(study, n_fl, d_fl, evaluable, int(det["draws"]), int(det["seed"]))
++        ps = get(proto, "matched_controls.paired_statistic")
++        stats = _label_stats(u[n_fl, d_fl], u[draws, d_fl[None, :]], base, study.dates[d_fl], int(ps["resamples"]),
++                             int(ps["seed"]))
++        rows.append({"feature": name, "kind": "ranked" if name in moonshot_e5.RANKED else "binary",
++                     "events": int(len(n_ev)), "events_with_value": int(np.isfinite(ev).sum()),
++                     "controls_with_value": int(np.isfinite(cv).sum()),
++                     "event_median": float(np.nanmedian(ev)) if np.isfinite(ev).any() else None,
++                     "control_median": float(np.nanmedian(cv)) if np.isfinite(cv).any() else None,
++                     "auc": auc_, "auc_lo95": float(np.nanpercentile(boots, 2.5)) if np.isfinite(boots).any() else None,
++                     "auc_hi95": float(np.nanpercentile(boots, 97.5)) if np.isfinite(boots).any() else None,
++                     "flag_threshold": thr, "flags": stats["flags"], "E30_hits": stats["hits"],
++                     "E30_precision": stats["precision"], "E30_precision_lo95": stats["precision_lo95"],
++                     "E30_base": base, "lift_vs_base": stats["lift_vs_base"],
++                     "matched_random_mean": stats["matched_random_mean"], "lift_vs_matched": stats["lift_vs_matched"],
++                     "lift_vs_matched_lo95": (stats["lift_vs_matched_ci95"] or [None, None])[0],
++                     "lift_vs_matched_hi95": (stats["lift_vs_matched_ci95"] or [None, None])[1],
++                     "p_one_sided_vs_matched": stats["p_one_sided_vs_matched"]})
++    return pd.DataFrame(rows)
++
++
++# -------------------------------------------------------------------------------------- harness (stage 2)
++def harness_config(proto: dict, market: str, rule_id: str, start: str, end: str, overrides: dict | None = None,
++                   ) -> RunConfig:
++    """The market plan (plans.<MARKET>.primary) with `overrides` (a sensitivity) as a RunConfig on the
++    window start..end; the window end is checked against the validation end first."""
++    h = get(proto, "harness")
++    base = dict(get(proto, f"plans.{market}.primary"))
++    base.update(overrides or {})
++    run_market = base.pop("market")
++    assert_within_validation(proto, run_market, end)
++    return RunConfig(
++        rule_id=rule_id, market=run_market, start=str(start), end=str(end),
++        holding_days=int(base["holding_days"]), entry_rule=base["entry_rule"], entry_window=int(base["entry_window"]),
++        exit_rule=base["exit_rule"], entry_lag=int(h["entry_lag"]), notional=float(base["notional"]),
++        max_participation=float(base["max_participation"]), fee_buy=float(base["fee_buy"]),
++        fee_sell=float(base["fee_sell"]), overlap=h["overlap"], random_draws=int(h["random_draws"]),
++        seed=int(h["seed"]), data_end_exit=h["data_end_exit"], ca_mode=base["ca_mode"],
++        lookahead_cuts=h["lookahead_cuts"], controls_version=base.get("controls_version", h["controls_version"]),
++        units=base["units"], fill_model=base["fill_model"], quarantine=base["quarantine"],
++        jump_ratio=base["jump_ratio"], tick_cost=bool(base.get("tick_cost", False)),
++    )
++
++
++def run_specs(proto: dict, market: str) -> list[dict]:
++    """The harness runs of one arm: the primary, every pre-registered sensitivity, the v2-controls report."""
++    specs = [{"id": "primary", "overrides": {}, "judged": True}]
++    specs += [{"id": s["id"], "overrides": dict(s["overrides"]), "judged": bool(s["judged"])}
++              for s in get(proto, f"plans.{market}.sensitivities")]
++    specs.append({"id": "controls_" + get(proto, "harness.controls_version_reported"),
++                  "overrides": {"controls_version": get(proto, "harness.controls_version_reported")}, "judged": False})
++    return specs
++
++
++def _with_entry(table: tuple, market: str, value) -> tuple:
++    value = tuple(float(v) for v in value) if isinstance(value, (list, tuple)) else (None if value is None else float(value))
++    return tuple((mk, value if mk == market else v) for mk, v in table)
++
++
++@contextlib.contextmanager
++def literals_from(model: dict, market: str):
++    """The market's model.json values in the module's literal tables for the duration of the block (the
++    Stage-2 harness runs, before the freeze); restored afterwards. The module source, hence the rule
++    hash, is untouched: every row records literals_sha256 of the model file instead."""
++    saved = {k: getattr(moonshot_e5, k) for k in LITERAL_TABLES}
++    try:
++        for table, key in MODEL_KEYS.items():
++            setattr(moonshot_e5, table, _with_entry(saved[table], market, model[key]))
++        yield
++    finally:
++        for k, v in saved.items():
++            setattr(moonshot_e5, k, v)
++
++
++def exit_participation(trades: pd.DataFrame, volume: pd.Series) -> np.ndarray:
++    """Exit shares (shares x share factor, panel units) over the exit session's panel volume; NaN for
++    unscored trades or an unknown volume."""
++    scored = trades["status"].isin(SCORED_STATUS).to_numpy()
++    out = np.full(len(trades), np.nan)
++    if not scored.any():
++        return out
++    sub = trades.loc[scored]
++    idx = pd.MultiIndex.from_arrays([sub["ticker"].astype(str).to_numpy(),
++                                     pd.to_datetime(sub["exit_date"]).to_numpy().astype("datetime64[ns]")])
++    vol = volume.reindex(idx).to_numpy(dtype=float)
++    shares = sub["shares"].to_numpy(dtype=float) * sub["share_factor"].to_numpy(dtype=float)
++    with np.errstate(divide="ignore", invalid="ignore"):
++        out[scored] = np.where(vol > 0, shares / vol, np.nan)
++    return out
++
++
++def volume_series(panel_df: pd.DataFrame) -> pd.Series:
++    s = pd.Series(panel_df["volume"].to_numpy(dtype=float),
++                  index=pd.MultiIndex.from_arrays([panel_df["ticker"].astype(str).to_numpy(),
++                                                   panel_df["date"].to_numpy().astype("datetime64[ns]")]))
++    return s[~s.index.duplicated(keep="first")]
++
++
++def breakeven_precision(trades: pd.DataFrame, u_of: pd.Series) -> dict:
++    """In-flag break-even precision p* = (matched - E[net | not E30]) / (E[net | E30] - E[net | not E30])
++    over the scored trades (E30 = the U label of the signal session); descriptive."""
++    scored = trades["status"].isin(SCORED_STATUS).to_numpy()
++    sub = trades.loc[scored]
++    if not len(sub):
++        return {"scored": 0, "p_star": None}
++    idx = pd.MultiIndex.from_arrays([sub["ticker"].astype(str).to_numpy(), sub["signal_date"].astype(str).to_numpy()])
++    u = u_of.reindex(idx).to_numpy(dtype=float)
++    net = sub["net_return"].to_numpy(dtype=float)
++    matched = sub["matched_mean_net_return"].to_numpy(dtype=float)
++    ok = np.isfinite(u) & np.isfinite(net)
++    hit, miss = net[ok & (u == 1)], net[ok & (u == 0)]
++    e_hit = float(hit.mean()) if len(hit) else None
++    e_miss = float(miss.mean()) if len(miss) else None
++    mm = float(np.nanmean(matched)) if np.isfinite(matched).any() else None
++    p_star = None
++    if e_hit is not None and e_miss is not None and mm is not None and e_hit != e_miss:
++        p_star = float((mm - e_miss) / (e_hit - e_miss))
++    return {"scored": int(len(sub)), "labelled": int(ok.sum()), "E30_share": float(np.nanmean(u[ok])) if ok.any() else None,
++            "net_given_E30": e_hit, "net_given_not_E30": e_miss, "matched_mean_net": mm, "p_star": p_star}
++
++
++def u_lookup(m: Market, H: int, x: float) -> pd.Series:
++    """U per (ticker, signal date) on a harness window: max level(t+1..t+H)/level(t) >= x, NaN where no
++    forward session exists inside the window."""
++    L = reference_level(m)
++    ahead = np.stack([_lead(L, k) for k in range(1, H + 1)])
++    with np.errstate(divide="ignore", invalid="ignore"):
++        ratios = ahead / L[None]
++    fin = np.isfinite(ratios)
++    has = fin.any(axis=0)
++    rmax = np.where(has, np.nanmax(np.where(fin, ratios, -np.inf), axis=0), np.nan)
++    u = np.where(has, (rmax >= x).astype(float), np.nan)
++    n_idx, d_idx = np.nonzero(has)
++    return pd.Series(u[n_idx, d_idx], index=pd.MultiIndex.from_arrays([m.tickers[n_idx].astype(str),
++                                                                        m.dates[d_idx].astype(str)]))
++
++
++def subset_row(trades: pd.DataFrame, keep: np.ndarray, years: list[int], proto: dict) -> dict:
++    """The exit-capacity subset of a run's scored trades as an admissibility row: scored, average net,
++    per-year averages and the paired net statistic (which stands in for the harness p on a subset)."""
++    ps = get(proto, "matched_controls.paired_statistic")
++    sub = trades.loc[keep & trades["status"].isin(SCORED_STATUS).to_numpy()]
++    net = sub["net_return"].to_numpy(dtype=float)
++    paired = paired_excess(sub, resamples=int(ps["resamples"]), seed=int(ps["seed"]), cluster=str(ps["cluster"]))
++    row = {"scored": int(len(sub)), "avg_net_return": float(net.mean()) if len(net) else None,
++           "p_one_sided_vs_matched": paired["p_one_sided"], "paired_net_n_clusters": paired["n_clusters"],
++           "paired_net_mean_excess": paired["mean_excess"]}
++    yrs = pd.to_datetime(sub["signal_date"]).dt.year.to_numpy() if len(sub) else np.array([], dtype=int)
++    for y in years:
++        sel = yrs == y
++        row[f"scored_{y}"] = int(sel.sum())
++        row[f"avg_net_return_{y}"] = float(net[sel].mean()) if sel.any() else None
++    return row
++
++
++def harness_row(summary: dict, trades: pd.DataFrame, arm: str, spec: dict, plan: dict, years: list[int],
++                proto: dict, volume: pd.Series | None, u_of: pd.Series | None, literals_sha: str | None) -> dict:
++    """One plans.csv row: e3.plan_row of the harness summary plus the run's settings, the paired net
++    statistic, the exit-capacity subset and the break-even bound."""
++    ps = get(proto, "matched_controls.paired_statistic")
++    row = plan_row(summary, arm, plan, years)
++    cfg = summary["config"]
++    row.update({"arm": arm, "run": spec["id"], "judged": bool(spec["judged"]), "market_profile": cfg["market"],
++                "fill_model": cfg.get("fill_model"), "units": cfg.get("units"), "quarantine": cfg.get("quarantine"),
++                "controls_version": cfg["controls_version"], "fee_buy": cfg["fee_buy"], "fee_sell": cfg["fee_sell"],
++                "max_participation": cfg["max_participation"], "tick_cost": cfg.get("tick_cost", False),
++                "jump_ratio": cfg.get("jump_ratio"), "lookahead_mode": summary["lookahead_check"]["mode"],
++                "window_start": summary["config"]["start"], "window_end": summary["config"]["end"],
++                "literals_sha256": literals_sha})
++    scored = trades["status"].isin(SCORED_STATUS).to_numpy()
++    gross = trades.loc[scored, "gross_return"].to_numpy(dtype=float)
++    row["avg_gross_return"] = float(gross.mean()) if len(gross) else None
++    matched = row.get("matched_random_avg_net_return")
++    row["rule_minus_matched"] = (row["avg_net_return"] - matched) if (row["avg_net_return"] is not None
++                                                                     and matched is not None) else None
++    paired = paired_excess(trades, resamples=int(ps["resamples"]), seed=int(ps["seed"]), cluster=str(ps["cluster"]))
++    for k in ("n", "n_clusters", "mean_excess", "p_one_sided"):
++        row[f"paired_net_{k}"] = paired[k]
++    row["paired_net_ci95_lo"], row["paired_net_ci95_hi"] = paired["ci95"] or (None, None)
++    if volume is not None:
++        part = exit_participation(trades, volume)
++        cap = float(get(proto, "stages.2_execution.exit_participation_max"))
++        keep = np.nan_to_num(part, nan=np.inf) <= cap
++        row["exit_participation_median"] = float(np.nanmedian(part)) if np.isfinite(part).any() else None
++        row["exit_participation_share_above"] = float((np.nan_to_num(part, nan=-1) > cap).mean()) if scored.any() else None
++        for k, v in subset_row(trades, keep, years, proto).items():
++            row[f"exit_subset_{k}"] = v
++    if u_of is not None:
++        row.update({f"breakeven_{k}": v for k, v in breakeven_precision(trades, u_of).items()})
++    return row
++
++
++def admissibility_stage2(primary: dict, sensitivities: list[dict], proto: dict, years: list[int]) -> dict:
++    """Stage-2 admissibility: e3.admissibility verbatim on the primary row, the paired net excess (p <
++    alpha_paired_net, not judged under 2 clusters), every judged sensitivity's rule-minus-matched > 0, and
++    the same rule on the exit-capacity subset (prefixed exit_subset_ fields of the primary row)."""
++    s2 = get(proto, "stages.2_execution")
++    alpha = float(s2["alpha_paired_net"])
++    sel = get(proto, "selection")
++    reasons = list(e3.admissibility(primary, proto, years))
++    judged = True
++    if (primary.get("paired_net_n_clusters") or 0) < 2:
++        judged = False
++        reasons.append(f"not judged: {primary.get('paired_net_n_clusters')} signal-session clusters (< 2)")
++    else:
++        if not ((primary.get("paired_net_mean_excess") or 0) > 0):
++            reasons.append(f"paired net excess {primary.get('paired_net_mean_excess')} not positive")
++        p = primary.get("paired_net_p_one_sided")
++        if p is None or not p < alpha:
++            reasons.append(f"paired net p {p} not below {alpha}")
++    for s in sensitivities:
++        if not s.get("judged", True):
++            continue
++        d = s.get("rule_minus_matched")
++        if d is None or not d > 0:
++            reasons.append(f"sensitivity {s.get('run')}: rule minus matched {d} not positive")
++    if "exit_subset_scored" in primary:
++        sub = {k[len("exit_subset_"):]: v for k, v in primary.items() if k.startswith("exit_subset_")}
++        if sub["scored"] < int(sel["min_scored"]):
++            reasons.append(f"exit-capacity subset: scored {sub['scored']} < {sel['min_scored']}")
++        if sub["avg_net_return"] is None or not sub["avg_net_return"] > 0:
++            reasons.append("exit-capacity subset: average net return not positive")
++        if (sub.get("paired_net_n_clusters") or 0) < 2:
++            judged = False
++            reasons.append("exit-capacity subset: not judged (< 2 clusters)")
++        elif sub["p_one_sided_vs_matched"] is None or not sub["p_one_sided_vs_matched"] < alpha:
++            reasons.append(f"exit-capacity subset: paired net p {sub['p_one_sided_vs_matched']} not below {alpha}")
++        for y in years:
++            n, a = sub.get(f"scored_{y}", 0), sub.get(f"avg_net_return_{y}")
++            if n >= int(sel["min_scored_per_year"]) and (a is None or not a > 0):
++                reasons.append(f"exit-capacity subset: average net return in {y} not positive ({n} scored)")
++    else:
++        reasons.append("exit-capacity subset missing")
++    return {"judged": judged, "admissible": bool(judged and not reasons), "reasons": reasons}
++
++
++def select_arm(adm: dict, rows: dict, market: str, proto: dict) -> str | None:
++    """SELECTED for the market: its primary arm when admissible, else the admissible arm with the larger
++    paired net mean excess on the primary run, ties to A; None when nothing is admissible."""
++    ok = [a for a in ARMS if adm.get(a, {}).get("admissible")]
++    if not ok:
++        return None
++    primary = get(proto, f"markets.{spec_market(market)}.primary_arm")
++    if primary in ok:
++        return primary
++    ok.sort(key=lambda a: (-(rows[a].get("paired_net_mean_excess") or 0.0), ARMS.index(a)))
++    return ok[0]
++
++
++# ---------------------------------------------------------------------------------------- stage 3 freeze
++def _format_table(name: str, entries) -> list[str]:
++    lines = [f"{name} = ("]
++    for mk, val in entries:
++        if val is None:
++            lines.append(f"    ({mk!r}, None),")
++        elif isinstance(val, (list, tuple)):
++            body = ", ".join(repr(float(v)) for v in val) + ","
++            lines.append(f"    ({mk!r}, (")
++            lines += [f"        {w}" for w in textwrap.wrap(body, width=100, break_long_words=False,
++                                                            break_on_hyphens=False)]
++            lines.append("    )),")
++        else:
++            lines.append(f"    ({mk!r}, {float(val)!r}),")
++    lines.append(")")
++    return lines
++
++
++def module_literals(source: str) -> dict:
++    """The literal tables and SELECTED of a moonshot_e5 source text, with the line span of each."""
++    tree = ast.parse(source)
++    out = {}
++    for node in tree.body:
++        if isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
++            name = node.targets[0].id
++            if name in LITERAL_TABLES + ("SELECTED",):
++                out[name] = {"value": ast.literal_eval(node.value), "lineno": node.lineno, "end_lineno": node.end_lineno}
++    missing = [n for n in LITERAL_TABLES + ("SELECTED",) if n not in out]
++    if missing:
++        raise ValueError(f"module source has no literal {missing}")
++    return out
++
++
++def freeze_source(source: str, model: dict, market: str, selected_arm: str | None) -> str:
++    """The module source with the market's model.json values written into its literal tables and
++    (market, selected_arm) added to SELECTED. Refuses when any of the market's literals is already set or
++    the market is already in SELECTED."""
++    lits = module_literals(source)
++    for table in LITERAL_TABLES:
++        if dict(lits[table]["value"]).get(market) is not None:
++            raise RuntimeError(f"{table} already carries literals for {market}: the freeze refuses to overwrite them")
++    selected = lits["SELECTED"]["value"]
++    if selected is not None and any(mk == market for mk, _ in selected):
++        raise RuntimeError(f"SELECTED already names {market}")
++    lines = source.splitlines()
++    edits = []
++    for table, key in MODEL_KEYS.items():
++        entries = _with_entry(tuple(lits[table]["value"]), market, model[key])
++        edits.append((lits[table]["lineno"], lits[table]["end_lineno"], _format_table(table, entries)))
++    if selected_arm is not None:
++        new_sel = tuple(selected or ()) + ((market, selected_arm),)
++        text = "SELECTED = (" + ", ".join(f"({mk!r}, {arm!r})" for mk, arm in new_sel) + ",)"
++        edits.append((lits["SELECTED"]["lineno"], lits["SELECTED"]["end_lineno"],
++                      [text + "  # frozen after discovery: ((market, arm), ...)"]))
++    for lineno, end, new in sorted(edits, key=lambda e: -e[0]):
++        lines[lineno - 1: end] = new
++    return "\n".join(lines) + "\n"
++
++
++def check_frozen(model: dict, market: str, module=None) -> list[str]:
++    """Why the module's literals for `market` are not discovery/model.json's; empty when they are."""
++    module = module or moonshot_e5
++    out = []
++    for table, key in MODEL_KEYS.items():
++        have = dict(getattr(module, table)).get(market)
++        want = model[key]
++        if have is None:
++            out.append(f"{table}[{market}] is None")
++        elif isinstance(want, (list, tuple)):
++            if len(have) != len(want) or any(float(a) != float(b) for a, b in zip(have, want)):
++                out.append(f"{table}[{market}] differs from model.json")
++        elif float(have) != float(want):
++            out.append(f"{table}[{market}] {have} != model.json {want}")
++    return out
++
++
++def load_module_from(path: Path):
++    """A moonshot_e5 source file as a module of the idxsig.rules package (its `from . import Rule` resolves)."""
++    spec = importlib.util.spec_from_file_location("idxsig.rules._e5_frozen_check", path)
++    module = importlib.util.module_from_spec(spec)
++    spec.loader.exec_module(module)
++    return module
++
++
++# ------------------------------------------------------------------------------------------- stamps, io
++def _stamp(proto_sha: str, proto: dict, market: str, stage: str, meta: dict, registry=None) -> dict:
++    return {"protocol_id": proto["protocol_id"], "protocol_sha256": proto_sha,
++            "frozen_before_analysis": bool(proto["frozen_before_analysis"]), "market": market, "stage": stage,
++            "computed_at": _now(), "panel_sha256": meta["sha256"], "panel_manifest": meta.get("_manifest"),
++            "panel_format": meta.get("format"), "registry_sha256": registry[1]["sha256"] if registry else None,
++            "detector_module_sha256": sha256_file(MODULE_PATH), "code": code_state(), "runtime": _runtime(),
++            "search_size": proto["search_size"], "claims": proto["claims"],
++            "holdout": "sealed: never loaded; every window end is checked against the validation end before a "
++                       "Study or RunConfig exists, and the harness refuses it again"}
++
++
++def check_panel(proto: dict, market: str, meta: dict) -> None:
++    mk = spec_market(market)
++    want = get(proto, f"markets.{mk}.panel_sha256")
++    if meta["sha256"] != want:
++        raise RuntimeError(f"the loaded {mk} panel {meta['sha256'][:12]} is not the protocol's {want[:12]}")
++
++
++# ---------------------------------------------------------------------------------------- stage 0
++def _same_fact(a, b) -> bool:
++    if a is None or b is None:
++        return a is None and b is None
++    return a == b if not isinstance(a, float) else abs(a - b) < 1e-12
++
++
++def reproduce_status(want: dict, got: dict, fields: list[str], dev: dict) -> tuple[bool, str, str]:
++    """(rule side identical, matched-baseline verdict, status): the rule-side `fields` must be identical;
++    the matched baseline (dev['field']) may differ by at most dev['abs_tolerance'] (the accepted, recorded
++    deviation); status REPRODUCED only then, else DEVIATES."""
++    rule_side = all(_same_fact(want[k], got[k]) for k in fields)
++    mw, mg = want[dev["field"]], got[dev["field"]]
++    if _same_fact(mw, mg):
++        matched = "IDENTICAL"
++    elif mw is not None and mg is not None and abs(mw - mg) <= float(dev["abs_tolerance"]):
++        matched = "DEVIATES_WITHIN_ACCEPTED_TOLERANCE"
++    else:
++        matched = "DEVIATES"
++    return rule_side, matched, ("REPRODUCED" if rule_side and matched != "DEVIATES" else "DEVIATES")
++
++
++def run_reproduce(df, meta, registry, out: Path, proto: dict, proto_sha: str, market: str, log=print) -> dict:
++    """Precondition: the market's recorded run(s) re-run from their recorded config on the pinned panel.
++    REPRODUCED when the rule-side statistics are identical and the matched baseline is identical or within
++    the accepted tolerance (controls.py bcb89f0, on record); otherwise DEVIATES, both sides on record."""
++    check_panel(proto, market, meta)
++    s0 = get(proto, "stages.0_reproduce")
++    fields = list(s0["rule_side_fields"])
++    dev = s0["accepted_deviation"]
++    out.mkdir(parents=True, exist_ok=False)
++    H, x = int(get(proto, "labels.horizon")), float(get(proto, "labels.threshold"))
++    results = []
++    for run_dir in get(proto, f"markets.{market}.precondition_runs"):
++        rec = recorded_run(run_dir)
++        recorded = json.loads((PKG_ROOT / run_dir / "summary.json").read_text(encoding="utf-8"))
++        cfg_fields = {k: v for k, v in recorded["config"].items() if k in RunConfig.__dataclass_fields__}
++        cfg = RunConfig(**cfg_fields)
++        assert_within_validation(proto, cfg.market, cfg.end)
++        log(f"reproducing {run_dir}")
++        output = run(cfg, df, meta, ca_registry=registry if cfg.ca_mode == "registry" else None)
++        summary = output["summary"]
++
++        def facts(s):
++            return {"signals": s["signals"]["total"], "scored": s["rule_trades"]["scored"],
++                    "avg_net_return": s["rule_trades"]["avg_net_return"],
++                    "status_counts": s["rule_trades"]["status_counts"],
++                    "matched_random_avg_net_return": (s["random_matched"]["avg_net_return"] or {}).get("random_mean")}
++
++        want, got = facts(recorded), facts(summary)
++        rule_side, matched, status = reproduce_status(want, got, fields, dev)
++        m = Market.from_panel(df, price_limits=PROFILES[cfg.market].price_limits).window(summary["config"]["start"],
++                                                                                        summary["config"]["end"])
++        results.append({"run_dir": run_dir, "run_id": rec["run_id"], "config": cfg_fields, "recorded": want,
++                        "reproduced": got, "rule_side_identical": bool(rule_side), "matched_baseline": matched,
++                        "accepted_deviation": dev, "recorded_panel_sha256": recorded["panel"]["panel_sha256"],
++                        "recorded_rule_sha256": recorded["rule"]["sha256"], "reproduced_rule_sha256": summary["rule"]["sha256"],
++                        "lookahead": summary["lookahead_check"]["mode"],
++                        "breakeven": breakeven_precision(output["trades"], u_lookup(m, H, x)), "status": status})
++    result = {**_stamp(proto_sha, proto, market, "reproduce", meta, registry), "runs": results,
++              "status": "REPRODUCED" if all(r["status"] == "REPRODUCED" for r in results) else "DEVIATES"}
++    write_json(out / "result.json", result)
++    return result
++
++
++# ---------------------------------------------------------------------------------------- stage 1 + 2
++def _check_precondition(out: Path, meta: dict, accept_deviation: bool) -> dict:
++    repro_path = out.parent / "reproduce" / "result.json"
++    if not repro_path.exists():
++        raise RuntimeError(f"the precondition has not been run for this market (e5-reproduce): {_rel(repro_path)}")
++    repro = json.loads(repro_path.read_text(encoding="utf-8"))
++    if repro["panel_sha256"] != meta["sha256"]:
++        raise RuntimeError("the precondition ran on different data than this discovery")
++    if repro["status"] != "REPRODUCED" and not accept_deviation:
++        raise RuntimeError("the recorded run did not reproduce on this data beyond the accepted deviation; see "
++                           f"{_rel(repro_path)} and pass --accept-deviation to proceed with that on record")
++    return repro
++
++
++def run_discovery(df, meta, registry, out: Path, proto: dict, proto_sha: str, market: str, log=print,
++                  accept_deviation: bool = False, protocol_path: Path | None = None) -> dict:
++    check_panel(proto, market, meta)
++    repro = _check_precondition(out, meta, accept_deviation)
++    if list(get(proto, "features.order")) != list(moonshot_e5.FEATURE_ORDER):
++        raise RuntimeError("protocol features.order is not moonshot_e5.FEATURE_ORDER")
++    out.mkdir(parents=True, exist_ok=False)
++    mk = market
++    years = [int(y) for y in get(proto, f"markets.{mk}.discovery_years")]
++    learner = get(proto, "learner")
++    det = get(proto, "matched_controls.detection_stage")
++    log(f"{mk}: building the discovery study")
++    study = build_study(proto, mk, df, meta, protocol_path)
++    window = study.e5_window
++    m, f = study.m, study.base_feats
++    lab = labels(study, proto, mk)
++    ev = evaluable_mask(study, proto, mk, "discovery", lab)
++    const = constant_columns(f, ev)
++    n_idx, d_idx = np.nonzero(ev)
++    log(f"{mk}: {len(n_idx)} evaluable discovery ticker-days; fitting U")
++    fit_u = fit_label(f, n_idx, d_idx, lab["U"][n_idx, d_idx], learner, "U")
++    d_arr, d_info = d_label(lab, mk, ev, proto)
++    log(f"{mk}: fitting D ({d_info['rule']})")
++    fit_d = fit_label(f, n_idx, d_idx, d_arr[n_idx, d_idx], learner, "D")
++    model = {"market": mk, "protocol_id": proto["protocol_id"], "protocol_sha256": proto_sha,
++             "feature_order": list(moonshot_e5.FEATURE_ORDER),
++             "coef_U": fit_u["coef"], "intercept_U": fit_u["intercept"], "coef_D": fit_d["coef"],
++             "intercept_D": fit_d["intercept"], "fit_U": fit_u, "fit_D": fit_d, "D_label": d_info,
++             "constant_columns": const, "constant_column_names": [k for k, v in const.items() if v["constant"]],
++             "window": window, "evaluable_ticker_days": int(len(n_idx)),
++             "study_options": study.study_options(), "panel_sha256": meta["sha256"]}
++    scores = arm_scores(f, model)
++    pct = float(learner["threshold_percentile"])
++    thr = {arm: threshold(scores[arm], ev, pct) for arm in ARMS}
++    model["threshold_A"], model["threshold_B"] = thr["A"], thr["B"]
++    write_json(out / "model.json", model)
++    literals_sha = sha256_file(out / "model.json")
++    write_json(out / "thresholds.json", {"market": mk, "percentile": pct, "evaluable_ticker_days": int(len(n_idx)),
++                                         "threshold_A": thr["A"], "threshold_B": thr["B"]})
++    entry_price = PROFILES[mk].entry
++    r_plan = plan_window_return(m, entry_price, int(get(proto, "labels.horizon")))
++    r_plan = np.where(lab["censor_plan"], np.nan, r_plan)
++    primaries = {tuple(v): k for k, v in get(proto, "stages.1_information.primaries").items()}
++    stage1 = {"market": mk, "window": window, "evaluable_ticker_days": int(len(n_idx)),
++              "base_rates": {"E30": float(np.nanmean(lab["U"][ev])), "D30": float(np.nanmean(d_arr[ev]))},
++              "D_label": d_info, "unit_resets": lab["unit_resets"], "constant_columns": model["constant_column_names"],
++              "entry_price": entry_price, "arms": {}, "detectors": {}}
++    flag_rows = []
++    gates = {"market": mk, "stage1": {}, "a1": None, "stage2": {}, "selected_arm": None}
++    for arm in ARMS:
++        flags = arm_flags(scores[arm], thr[arm], m)
++        fl_n, fl_d = flag_cells(flags & ev)
++        log(f"{mk} arm {arm}: {len(fl_n)} flags on evaluable discovery ticker-days; drawing controls")
++        draws, level = detection_draws(study, fl_n, fl_d, ev, int(det["draws"]), int(det["seed"]))
++        block = flag_block(study, lab, d_arr, f, r_plan, fl_n, fl_d, draws, level, ev, years, proto, mk)
++        block.update({"threshold": thr[arm], "auc_U": auc(scores[arm][ev], lab["U"][ev]),
++                      "auc_D": auc(scores[arm][ev], d_arr[ev]),
++                      "flags_in_period_total": int((flags & (np.arange(m.shape[1]) >= moonshot_e5.WARMUP)[None, :]
++                                                    & (study.dates >= np.datetime64(window["period_start"], "D"))[None, :]
++                                                    & (study.dates <= np.datetime64(window["period_end"], "D"))[None, :]).sum()),
++                      "primary": primaries.get((mk, arm)), "gate": stage1_gate(block, proto, years)})
++        if arm == "A":
++            ci = block["E30"]["lift_vs_matched_ci95"]
++            d_lift = block["D30"]["lift_vs_matched"]
++            block["variance_detection_check"] = {
++                "D30_lift_vs_matched": d_lift, "E30_lift_ci95": ci,
++                "D30_lift_within_E30_lift_ci": bool(ci and d_lift is not None and ci[0] <= d_lift <= ci[1])}
++        stage1["arms"][arm] = block
++        gates["stage1"][arm] = block["gate"]
++        rc = r_plan[draws, fl_d[None, :]]
++        with np.errstate(invalid="ignore", divide="ignore"):
++            rc_mean = np.where(np.isfinite(rc).sum(axis=0) > 0, np.nansum(rc, axis=0) / np.isfinite(rc).sum(axis=0), np.nan)
++        for j, (n, d) in enumerate(zip(fl_n, fl_d)):
++            flag_rows.append({"arm": arm, "ticker": str(m.tickers[n]), "date": str(study.dates[d]),
++                              "score": float(scores[arm][n, d]), "U": lab["U"][n, d], "D": d_arr[n, d],
++                              "ret1": float(f["ret1"][n, d]), "plan_return": r_plan[n, d], "matched_plan_mean": rc_mean[j],
++                              "match_level": int(level[j])})
++    for name, flags in detector_flags(f, m).items():
++        fl_n, fl_d = flag_cells(flags & ev)
++        log(f"{mk} {name}: {len(fl_n)} flags; drawing controls")
++        draws, level = detection_draws(study, fl_n, fl_d, ev, int(det["draws"]), int(det["seed"]))
++        block = flag_block(study, lab, d_arr, f, r_plan, fl_n, fl_d, draws, level, ev, years, proto, mk)
++        block["gate"] = stage1_gate(block, proto, years)
++        if name == "A1_CREEP_QUIET_NR":
++            block["a1_gate"] = a1_gate(block, proto)
++            gates["a1"] = block["a1_gate"]
++        stage1["detectors"][name] = block
++        for j, (n, d) in enumerate(zip(fl_n, fl_d)):
++            flag_rows.append({"arm": name, "ticker": str(m.tickers[n]), "date": str(study.dates[d]), "score": None,
++                              "U": lab["U"][n, d], "D": d_arr[n, d], "ret1": float(f["ret1"][n, d]),
++                              "plan_return": r_plan[n, d], "matched_plan_mean": None, "match_level": int(level[j])})
++    write_json(out / "stage1.json", stage1)
++    cols = ["arm", "ticker", "date", "score", "U", "D", "ret1", "plan_return", "matched_plan_mean", "match_level"]
++    write_csv(out / "flags.csv", pd.DataFrame(flag_rows, columns=cols))
++    log(f"{mk}: univariate table")
++    write_csv(out / "univariate.csv", univariate_table(study, lab, f, ev, proto))
++    # ---- stage 2: the harness under the market plan for every arm that passed, plus A1 if gated
++    to_run = [("arm", arm) for arm in ARMS if gates["stage1"][arm]["passed"]]
++    if gates["a1"] and gates["a1"]["passed"]:
++        to_run.append(("detector", "A1_CREEP_QUIET_NR"))
++    rows, run_rows = [], {}
++    cache: dict = {}
++    volume = volume_series(df) if to_run else None
++    u_of = u_lookup(m.window(window["start"], window["end"]), int(get(proto, "labels.horizon")),
++                    float(get(proto, "labels.threshold"))) if to_run else None
++    plan = {k: get(proto, f"plans.{mk}.primary")[k] for k in PLAN_KEYS}
++    for kind, name in to_run:
++        rule_id = moonshot_e5.candidate_rule_id(f"{mk}_{name}" if kind == "arm" else name)
++        run_rows[name] = {}
++        for spec in run_specs(proto, mk):
++            cfg = harness_config(proto, mk, rule_id, window["start"], window["end"], spec["overrides"])
++            log(f"{mk} {name} {spec['id']}: harness run ({cfg.market}, fill {cfg.fill_model}, controls {cfg.controls_version})")
++            with literals_from(model, mk):
++                output = run(cfg, df, meta, ca_registry=registry if cfg.ca_mode == "registry" else None, signal_cache=cache)
++            row = harness_row(output["summary"], output["trades"], name, spec, plan, years, proto, volume, u_of,
++                              literals_sha)
++            rows.append(row)
++            run_rows[name][spec["id"]] = row
++            write_json(out / f"summary_{name}_{spec['id']}.json", output["summary"])
++        adm = admissibility_stage2(run_rows[name]["primary"],
++                                   [r for k, r in run_rows[name].items() if k != "primary"], proto, years)
++        gates["stage2"][name] = adm
++    table = pd.DataFrame(rows) if rows else pd.DataFrame(columns=["arm", "run", "judged"])  # empty: no arm passed
++    write_csv(out / "plans.csv", table)
++    adm_arms = {a: gates["stage2"][a] for a in ARMS if a in gates["stage2"]}
++    gates["selected_arm"] = select_arm(adm_arms, {a: run_rows[a]["primary"] for a in adm_arms}, mk, proto)
++    gates["freeze"] = ("run e5-freeze --market " + mk + " (copies discovery/model.json into moonshot_e5.py and sets "
++                       "SELECTED), commit, then e5-validation" if gates["selected_arm"] else
++                       "no admissible arm on " + mk + ": nothing to validate; the ranker may still be frozen for the "
++                       "prospective sidecar (e5-freeze sets no SELECTED entry)")
++    write_json(out / "gates.json", gates)
++    summary = {**_stamp(proto_sha, proto, mk, "discovery", meta, registry),
++               "precondition": {"status": repro["status"], "accepted_deviation": bool(accept_deviation)},
++               "window": window, "study_options": study.study_options(), "evaluable_ticker_days": int(len(n_idx)),
++               "fits": {"U": {k: fit_u[k] for k in ("n_rows_used", "n_positives", "n_negatives_sampled", "lambda", "deviance", "converged")},
++                        "D": {k: fit_d[k] for k in ("n_rows_used", "n_positives", "n_negatives_sampled", "lambda", "deviance", "converged")}},
++               "thresholds": thr, "constant_columns": model["constant_column_names"],
++               "stage1_gates": gates["stage1"], "a1_gate": gates["a1"], "stage2_runs": len(rows),
++               "stage2_admissibility": gates["stage2"], "selected_arm": gates["selected_arm"],
++               "primaries": get(proto, "stages.1_information.primaries"), "freeze": gates["freeze"],
++               "files": ["model.json", "thresholds.json", "stage1.json", "flags.csv", "univariate.csv", "plans.csv",
++                         "gates.json"]}
++    write_json(out / "summary.json", summary)
++    return summary
++
++
++# ---------------------------------------------------------------------------------------- stage 3
++def run_freeze(out: Path, proto: dict, proto_sha: str, market: str, module_path: Path | None = None,
++               discovery_dir: Path | None = None, log=print) -> dict:
++    """Copy discovery/model.json into the module's literal tables and SELECTED (gates.json); refuses when
++    the market's literals are already set. Writes <MARKET>/freeze/result.json; the caller commits both."""
++    module_path = Path(module_path or MODULE_PATH)
++    disc = discovery_dir or out.parent / "discovery"
++    model = json.loads((disc / "model.json").read_text(encoding="utf-8"))
++    gates = json.loads((disc / "gates.json").read_text(encoding="utf-8"))
++    if model["market"] != market or gates["market"] != market:
++        raise RuntimeError(f"{_rel(disc)} is not {market}'s discovery")
++    selected = gates.get("selected_arm")
++    source = module_path.read_text(encoding="utf-8")
++    new = freeze_source(source, model, market, selected)
++    frozen = load_module_from_text(new)
++    problems = check_frozen(model, market, frozen)
++    if problems:
++        raise RuntimeError(f"the rewritten module does not carry model.json: {problems}")
++    from .rules.audit import audit_module
++
++    audit = audit_module(frozen)
++    if audit:
++        raise RuntimeError(f"the rewritten module fails the source audit: {audit}")
++    out.mkdir(parents=True, exist_ok=False)
++    module_path.write_text(new, encoding="utf-8")
++    log(f"{market}: literals written to {module_path.name}; SELECTED {'+= ' + str((market, selected)) if selected else 'unchanged'}")
++    result = {"protocol_id": proto["protocol_id"], "protocol_sha256": proto_sha, "market": market, "stage": "freeze",
++              "computed_at": _now(), "model_sha256": sha256_file(disc / "model.json"), "selected_arm": selected,
++              "module": _rel(module_path),
++              "module_sha256_after": sha256_file(module_path), "code_before": code_state(),
++              "thresholds": {"A": model["threshold_A"], "B": model["threshold_B"]},
++              "next": "commit idxsig/rules/moonshot_e5.py and research/E5/" + market + "/freeze together, then "
++                      "e5-validation --market " + market if selected else "no SELECTED entry: no validation run"}
++    write_json(out / "result.json", result)
++    return result
++
++
++def load_module_from_text(source: str):
++    import tempfile
++
++    tmp = Path(tempfile.mkdtemp(prefix="idxsig-e5-freeze-")) / "moonshot_e5_frozen.py"
++    tmp.write_text(source, encoding="utf-8")
++    return load_module_from(tmp)
++
++
++# ---------------------------------------------------------------------------------------- stage 4
++def validation_pass(row: dict, sensitivities: list[dict], detection: dict, proto: dict, market: str) -> dict:
++    v = get(proto, "validation")
++    reasons = []
++    if row["scored"] < int(v["min_scored"][market]):
++        reasons.append(f"scored {row['scored']} < {v['min_scored'][market]}")
++    if row["avg_net_return"] is None or not row["avg_net_return"] > 0:
++        reasons.append("average net return not positive")
++    judged = True
++    if (row.get("paired_net_n_clusters") or 0) < 2:
++        judged = False
++        reasons.append("not judged: fewer than 2 signal-session clusters")
++    else:
++        if not ((row.get("paired_net_mean_excess") or 0) > 0):
++            reasons.append("paired net excess not positive")
++        if row.get("paired_net_p_one_sided") is None or not row["paired_net_p_one_sided"] < float(v["alpha_paired_net"]):
++            reasons.append(f"paired net p {row.get('paired_net_p_one_sided')} not below {v['alpha_paired_net']}")
++    p = row.get("p_one_sided_vs_matched")
++    if p is None or not p < float(v["max_p_one_sided_vs_matched"]):
++        reasons.append(f"harness p vs matched {p} not below {v['max_p_one_sided_vs_matched']}")
++    for s in sensitivities:
++        if s.get("judged", True) and not ((s.get("rule_minus_matched") or 0) > 0):
++            reasons.append(f"sensitivity {s.get('run')}: rule minus matched not positive")
++    lo, base = detection.get("precision_lo95"), detection.get("base_rate")
++    if lo is None or base is None or not lo > base:
++        reasons.append(f"detection: E30 precision Wilson lower bound {lo} not above the base rate {base}")
++    return {"judged": judged, "passed": bool(judged and not reasons), "reasons": reasons,
++            "claim_level": v["claim_level"]}
++
++
++def run_validation(df, meta, registry, out: Path, proto: dict, proto_sha: str, market: str, log=print,
++                   protocol_path: Path | None = None) -> dict:
++    check_panel(proto, market, meta)
++    disc = out.parent / "discovery"
++    model = json.loads((disc / "model.json").read_text(encoding="utf-8"))
++    gates = json.loads((disc / "gates.json").read_text(encoding="utf-8"))
++    problems = check_frozen(model, market)
++    if problems:
++        raise RuntimeError(f"moonshot_e5.py literals are not discovery/model.json: {problems} (run e5-freeze and commit)")
++    selected = gates.get("selected_arm")
++    arms = [a for a in ARMS if gates["stage2"].get(a, {}).get("admissible")]
++    if not arms or selected is None:
++        raise RuntimeError(f"no Stage-2-admissible arm on {market}: nothing to validate")
++    if moonshot_e5.SELECTED is None or (market, selected) not in [tuple(x) for x in moonshot_e5.SELECTED]:
++        raise RuntimeError(f"moonshot_e5.SELECTED {moonshot_e5.SELECTED} does not name ({market}, {selected})")
++    out.mkdir(parents=True, exist_ok=False)
++    mk = market
++    log(f"{mk}: validation study (detection)")
++    study = build_study(proto, mk, df, meta, protocol_path, period="validation")
++    window = study.e5_window
++    m, f = study.m, study.base_feats
++    lab = labels(study, proto, mk)
++    ev = evaluable_mask(study, proto, mk, "validation", lab)
++    scores = arm_scores(f, model)
++    base = float(np.nanmean(lab["U"][ev])) if ev.any() else float("nan")
++    detection = {}
++    for arm in arms:
++        flags = arm_flags(scores[arm], model[f"threshold_{arm}"], m)
++        fl_n, fl_d = flag_cells(flags & ev)
++        hit = lab["U"][fl_n, fl_d]
++        k, n = int(np.nansum(hit)), int(len(hit))
++        lo, hi = wilson(k, n)
++        detection[arm] = {"flags": n, "hits": k, "precision": k / n if n else None,
++                          "precision_lo95": float(lo) if n else None, "precision_hi95": float(hi) if n else None,
++                          "base_rate": base, "evaluable_ticker_days": int(ev.sum())}
++    years = [int(window["period_start"][:4])]
++    plan = {k: get(proto, f"plans.{mk}.primary")[k] for k in PLAN_KEYS}
++    volume = volume_series(df)
++    u_of = u_lookup(Market.from_panel(df, price_limits=PROFILES[mk].price_limits).window(window["start"], window["end"]),
++                    int(get(proto, "labels.horizon")), float(get(proto, "labels.threshold")))
++    cache: dict = {}
++    results, rows = {}, []
++    for arm in arms:
++        rule_id = moonshot_e5.selected_rule_id(mk) if arm == selected else moonshot_e5.candidate_rule_id(f"{mk}_{arm}")
++        run_rows = {}
++        for spec in run_specs(proto, mk):
++            cfg = harness_config(proto, mk, rule_id, window["start"], window["end"], spec["overrides"])
++            log(f"{mk} arm {arm} {spec['id']}: recorded harness run ({rule_id}, {cfg.market}, fill {cfg.fill_model})")
++            output = run(cfg, df, meta, ca_registry=registry if cfg.ca_mode == "registry" else None, signal_cache=cache)
++            run_dir = write_run(output)  # the trading run on record, committed
++            summary = json.loads((run_dir / "summary.json").read_text(encoding="utf-8"))
++            row = harness_row(summary, output["trades"], arm, spec, plan, years, proto, volume, u_of, None)
++            row.update({"run_id": summary["run_id"], "run_dir": rel(run_dir), "rule_id": rule_id})
++            rows.append(row)
++            run_rows[spec["id"]] = row
++        verdict = validation_pass(run_rows["primary"], [r for k, r in run_rows.items() if k != "primary"],
++                                  detection[arm], proto, mk)
++        results[arm] = {"rule_id": rule_id, "runs": run_rows, "detection": detection[arm], **verdict}
++    write_csv(out / "plans.csv", pd.DataFrame(rows))
++    result = {**_stamp(proto_sha, proto, mk, "validation", meta, registry), "window": window, "selected_arm": selected,
++              "selected": list(moonshot_e5.SELECTED), "study_options": study.study_options(), "arms": results,
++              "passed": {a: results[a]["passed"] for a in arms},
++              "claim_level": get(proto, "validation.claim_level"),
++              "consequence": ("PROVISIONAL pass: a new paper policy version may wire MOONSHOT_E5_" + mk + "_D1 "
++                              "through paper._detector; no paper BUY until >= 100 prospective scored E5 decisions "
++                              "show paired excess > 0; the holdout stays sealed"
++                              if results[selected]["passed"] else
++                              "the selected arm did not pass 2023: the family is closed on " + mk + " (no second "
++                              "design pass); the prospective sidecar is the only remaining path for this ranker")}
++    write_json(out / "result.json", result)
++    return result
+diff --git a/idx-signals/idxsig/execution.py b/idx-signals/idxsig/execution.py
+index 68cefa4..6cbad3f 100644
+--- a/idx-signals/idxsig/execution.py
++++ b/idx-signals/idxsig/execution.py
+@@ -147,6 +147,10 @@ class ExecConfig:
+     # 1/jump_ratio inside (entry, exit] is a redenomination or a bad print, not a trade; the trade is
+     # EXCLUDED_DATA_JUMP, for the rule and the random baselines alike. None: no such check.
+     jump_ratio: float | None = None
++    # Optional (research/E5 sensitivity): one exchange tick per side (market.tick_size at the price paid and at
++    # the price received) added to the per-side costs, for the rule and the random baselines alike: the
++    # closing-auction spread the flat fee model otherwise lacks. Default off: every recorded run is unchanged.
++    tick_cost: bool = False
+ 
+     @property
+     def plan(self) -> dict:
+@@ -563,6 +567,10 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
+     f_exit = uf[tick_idx, x] if uf is not None else np.ones(n_trades)
+     traded_exit = np.nan_to_num(exit_price) * f_exit  # the sale price, in the exit session's units
+     extra_in, extra_out = _tier_costs(traded_entry, cfg.cost_tiers), _tier_costs(traded_exit, cfg.cost_tiers)
++    if cfg.tick_cost:  # one tick per side at the traded prices (zero where no price was paid or received)
++        with np.errstate(divide="ignore", invalid="ignore"):
++            extra_in = extra_in + np.where(traded_entry > 0, market.tick_size(traded_entry) / traded_entry, 0.0)
++            extra_out = extra_out + np.where(traded_exit > 0, market.tick_size(traded_exit) / traded_exit, 0.0)
+     with np.errstate(divide="ignore", invalid="ignore"):
+         if cfg.side == "long":
+             cost = buy_value * (1 + cfg.fees.buy + extra_in)
+diff --git a/idx-signals/research/E5/protocol.json b/idx-signals/research/E5/protocol.json
+new file mode 100644
+index 0000000..a4b652a
+--- /dev/null
++++ b/idx-signals/research/E5/protocol.json
+@@ -0,0 +1,680 @@
++{
++  "protocol_id": "KOD-GLOBAL-E5-v1",
++  "experiment": "E5-CEILING",
++  "frozen_before_analysis": false,
++  "freeze_note": "DRAFT. The freeze is the commit of this file and PROTOCOL.md under research/E5/ (append-only) with frozen_before_analysis set to true and the freeze commit recorded in PROTOCOL.md, before any Stage-0 statistic; every stage output carries protocol_sha256 of the committed file.",
++  "question": "At the close of session t, does any pre-registered combination of daily-bar features carry tradeable DIRECTION for sessions t+1..t+5 over the full evaluable universe, beyond matched controls, or is the lab's validated detection (9.3x / 5.4x / 4.6x matched-random lift for F1_ARA / G2_RET30) variance detection that cannot be traded? Secondary: does multi-session pre-move structure (volume creep, quiet range, volatility contraction, re-base) carry +30% information before the first big day, including the KOD-DET-v0 VOLUME_CREEP_PRICE_QUIET definition as a population base-rate row?",
++  "null_hypothesis": "No daily-bar combination separates the coming +30% moves from the coming large down-moves; rankers trained on U and D select the same high-variance names; the paired plan-window excess return of their flags over matched controls is <= 0 in every market and every discovery year.",
++  "builds_on": {
++    "E1": "research/E1/protocol.json (KOD-IDX-E1-v1): the IDX event, reference chain, weak signals, e1.Study",
++    "E2": "research/E2/protocol.json (KOD-GLOBAL-E2-v1): the US and crypto markets, periods, panels",
++    "E3": "research/E3/protocol.json (KOD-IDX-E3-v1): the admissibility rule (e3.admissibility, verbatim)",
++    "E4": "research/E4/protocol.json (KOD-GLOBAL-E4-v1): the per-market stage layout (e4.py) and the holdout guard for US and crypto",
++    "D1": "the recorded trading runs of MOONSHOT_E1_D1 (IDX), MOONSHOT_E2_US_D1 and MOONSHOT_E2_CRYPTO_D1 are this protocol's precondition (Stage 0)",
++    "synthesis": "handoff/kod-next-move/synthesis/RECOMMENDATION.md and E5_CEILING_protocol_draft.json, amended by the Phase-2a review findings (handoff/kod-next-move/06_phase2_integration_todo.md)"
++  },
++  "family": {
++    "rule_module": "idxsig/rules/moonshot_e5.py",
++    "rule_ids": {
++      "candidates": "E5_CAND_<MARKET>_<ARM> and E5_CAND_A0_CREEP_QUIET / E5_CAND_A1_CREEP_QUIET_NR",
++      "selected": "MOONSHOT_E5_<MARKET>_D1"
++    },
++    "version": "v1",
++    "side": "long",
++    "holding_days": 5,
++    "candidates": [
++      "IDX_A",
++      "IDX_B",
++      "US_A",
++      "US_B",
++      "CRYPTO_A",
++      "CRYPTO_B",
++      "A0_CREEP_QUIET",
++      "A1_CREEP_QUIET_NR"
++    ],
++    "arms": {
++      "A": "score = logit_U (the E30 ranker)",
++      "B": "score = logit_U - logit_D (the directional ranker)"
++    },
++    "descriptive_detectors": {
++      "A0_CREEP_QUIET": "creep5v20 >= 1.5 AND quiet (KOD-DET-v0 VOLUME_CREEP_PRICE_QUIET, kod/detectors.py:72-86)",
++      "A1_CREEP_QUIET_NR": "A0 AND not_repriced (ret20 < 0.30)",
++      "trading_run_gate": "A1 gets one Stage-2 harness run under the market plan only if its debounced detection lift vs volatility-matched controls is >= a1_gate.min_lift with one-sided p < a1_gate.max_p on discovery; otherwise both are reported only (base rate, precision, Wilson bounds, matched lift with a session-cluster CI)"
++    },
++    "literals": "COEF_U, COEF_D, INTERCEPT_U, INTERCEPT_D, THRESHOLD_A, THRESHOLD_B per market and SELECTED are module-level literals, None until Stage 3 freezes them; the rule hash covers them; an unfrozen arm's rule refuses to compute (family_flags reports it as no flags)"
++  },
++  "features": {
++    "feature_args": [
++      "close",
++      "prev",
++      "high",
++      "low",
++      "volume",
++      "value",
++      "present",
++      "tradeable",
++      "lock_up",
++      "open"
++    ],
++    "ranked": [
++      "ret1",
++      "rel1",
++      "ret5",
++      "ret20",
++      "volr",
++      "valr",
++      "rngr",
++      "cpos",
++      "vol20",
++      "dd60",
++      "up5",
++      "zero20",
++      "age",
++      "logval20",
++      "gap",
++      "creep5v20",
++      "rngr5",
++      "vc10_60"
++    ],
++    "binary": [
++      "brk60",
++      "ara",
++      "quiet",
++      "not_repriced",
++      "rebase"
++    ],
++    "order": [
++      "ret1_r",
++      "rel1_r",
++      "ret5_r",
++      "ret20_r",
++      "volr_r",
++      "valr_r",
++      "rngr_r",
++      "cpos_r",
++      "vol20_r",
++      "dd60_r",
++      "up5_r",
++      "zero20_r",
++      "age_r",
++      "logval20_r",
++      "gap_r",
++      "creep5v20_r",
++      "rngr5_r",
++      "vc10_60_r",
++      "ret1_r2",
++      "rel1_r2",
++      "ret5_r2",
++      "ret20_r2",
++      "volr_r2",
++      "valr_r2",
++      "rngr_r2",
++      "cpos_r2",
++      "vol20_r2",
++      "dd60_r2",
++      "up5_r2",
++      "zero20_r2",
++      "age_r2",
++      "logval20_r2",
++      "gap_r2",
++      "creep5v20_r2",
++      "rngr5_r2",
++      "vc10_60_r2",
++      "brk60",
++      "ara",
++      "quiet",
++      "not_repriced",
++      "rebase"
++    ],
++    "n_columns": 41,
++    "one_order_for_all_markets": "the same 41 columns in every market: gap ranks 0.5 on IDX (no opens), ara is 0 off IDX (no price limits); constant columns are tolerated by the ridge and reported per market (constant_columns in discovery/model.json)",
++    "conventions": {
++      "rank": "per session, among names present AND tradeable at that session (the pool is masked by present before ranking, so a name listed later never changes an earlier column), percentile rank = (rank - 0.5) / n with midrank (average) ties, values in (0, 1); a NaN value ranks 0.5; the squared rank enters as its own column; binaries enter as 0/1 (moonshot_e5.rank_features)",
++      "vol20": "e1.Study._signals convention: std of daily log returns over 20 sessions (min 15), a present but untraded session counting as a zero log return",
++      "vc10_60": "vol10 / vol60 with min_periods 8 of 10 and 45 of 60 (VOL10_MIN, VOL60_MIN)",
++      "creep5v20": "median volume t-4..t over median volume t-24..t-5 over present sessions (an untraded present session is zero volume); both windows must be fully present (5 of 5, 20 of 20) else NaN",
++      "rngr5": "median rngr over t-4..t (5 of 5)",
++      "quiet": "rngr5 <= 1.0 and |ret5| <= 2 * vol20 * sqrt(5) (ZEALAND price_facts.py, same logic); 0 when any input is NaN",
++      "not_repriced": "ret20 < 0.30; 0 when ret20 is NaN",
++      "rebase": "some s0 in [t-40, t-6] was a spike, pre = level(s0-1), peak = max level(s0..t), level(t) <= pre + 0.5 (peak - pre) and min level(t-4..t) >= pre; a NaN anywhere in s0-1..t fails that s0; spike = (ret1 >= 0.30) | (lock_up & tradeable): on IDX a superset of the draft's lock_up-only definition (kept, declared); off IDX lock_up is never set",
++      "binaries_unknown": "binary features treat an undefined input as 0 (as the merged module computes them)",
++      "warmup": "FEATURE_WARMUP = 60: every feature is NaN in the first 60 columns of a view; DEBOUNCE = 5; WARMUP = FEATURE_WARMUP + DEBOUNCE = 65: compute() is NaN in the first 65 columns. Every Study and harness window starts WARMUP = 65 sessions before its period (not 60: the draft's 60 was the feature warm-up alone, which would put the debounce lead-in inside the period)",
++      "debounce": "a flag is the first session a name's state is True after DEBOUNCE trailing sessions KNOWN to be False (column s reads columns s-5..s only); a NaN score is unknown, never 'outside'; names outside the ranking pool (absent or untraded) have finite scores (ranks 0.5) and count as known-outside, so a name can flag on its first listed session (window-invariant, not look-ahead); an undefined A0/A1 fact (creep5v20 NaN) is a known False state; the same session carries the same flag wherever the window starts (tests/test_e5_rules.py FlagTests, tests/test_e5.py WindowInvariance)",
++      "definitions_source": "research/E1/protocol.json weak_signals (E1-SIGNALS-v1), research/E2/protocol.json (E2-SIGNALS-v1), kod-machine/research/ZEALAND_PILOT_v1/03_card/price_facts.py; freqr, turn and logmcap excluded (not computable live)"
++    }
++  },
++  "learner": {
++    "type": "L2 (ridge) logistic regression",
++    "solver": "numpy IRLS (Newton-Raphson), fixed 25 iterations from beta = 0, no line search, no feature standardisation (ranks and binaries are already on [0, 1]); linear predictor clipped to [-30, 30] before the sigmoid; penalty on the coefficients, not the intercept (idxsig/e5.py fit_logistic)",
++    "iterations": 25,
++    "lambda_per_row": 0.001,
++    "lambda": "lambda = lambda_per_row * n_rows_used, n_rows_used = positives + sampled negatives of that fit",
++    "sampling": "all positives (weight 1) plus a seeded 10% subsample of the negatives (weight 10), numpy default_rng(seed).choice without replacement over the negatives in (ticker, session) row-major order, one generator per fit",
++    "negative_subsample": 0.1,
++    "negative_weight": 10.0,
++    "seed": 20261015,
++    "fits": "one per (market, label): 3 markets x {U, D} = 6 fits, on the market's evaluable discovery ticker-days",
++    "threshold_percentile": 99.5,
++    "threshold": "per arm, the discovery 99.5th percentile (numpy.percentile, linear interpolation) of the arm's score over the market's evaluable discovery ticker-days (the fit universe before subsampling); fixed once, never searched",
++    "scores": {
++      "A": "logit_U",
++      "B": "logit_U - logit_D"
++    }
++  },
++  "labels": {
++    "horizon": 5,
++    "threshold": 1.3,
++    "U": "max level(t+1..t+5) / level(t) >= 1.30 on the reference chain (e1.Study.level, r5max), as E30",
++    "D_US_CRYPTO": "min level(t+1..t+5) / level(t) <= 1/1.30",
++    "D_IDX": "rate-matched: D = min level ratio - 1 <= q_thr, q_thr the k-th smallest 5-session minimum ratio over the IDX evaluable discovery ticker-days where k is the number of U positives there, so that P(D) = P(U) on discovery (ties can make P(D) marginally larger; both rates are recorded); fixed once in discovery/model.json. IDX Arm B is DIAGNOSTIC: ARB was 7% flat through all of discovery (market.REGIMES) and changes on 2023-06-05 and 2023-09-04; IDX arm statistics are also reported by ARB regime of the flag session",
++    "forward_window": "as e1.Study: a label exists when any of t+1..t+5 is present (has_fwd); eligibility requires t+5 inside the period",
++    "eligibility": "e1.Study.elig[period]: tradeable, prev > 0, >= 20 sessions of history, has_fwd, t+5 inside the (union) period; AND the market's own period start; AND every feature column known; AND column >= WARMUP of the study window (the debounce lead-in); AND the label not censored",
++    "unit_reset_censoring": {
++      "markets": [
++        "CRYPTO"
++      ],
++      "ratio": 20.0,
++      "sessions_before": 5,
++      "rule": "a session r with close/prev >= 20 or <= 1/20 (a redenomination, not a return) censors the labels of sessions r-5..r of that name (NaN; excluded from fits, thresholds and every statistic) and the Stage-1 plan-window return of any flag whose window t+1..t+6 contains r; the harness applies jump_ratio 10 (EXCLUDED_DATA_JUMP) to the same names in Stage 2 and 4",
++      "known_cases_to_verify": [
++        "COCOS 2021-01-23",
++        "DREP 2021-04-02",
++        "SUN 2021-06-18",
++        "LUNA 2022-05-31",
++        "VIDT 2022-11-09",
++        "BNX 2023-02-22",
++        "QUICK 2023-07-21",
++        "BTCST 2021-03-19"
++      ],
++      "verification": "discovery/stage1.json lists every reset the rule found in the study window (unit_resets); the list is checked against the cases above at review"
++    }
++  },
++  "markets": {
++    "IDX": {
++      "panel_format": "panel-v2",
++      "panel_manifest": "panel-20261007T225823Z.json",
++      "panel_sha256": "9d3a0718c95f9e885c4f8310cf68bf5e75021c366c454f73389d7fae75c02877",
++      "registry_manifest": "ca_registry-20261007T230210Z.json",
++      "registry_sha256": "659da375e4586deab958e22dc242d7be6966ebc226bfefe8ce7ce85eb51f1e6c",
++      "tier": "TIER_1 (2021-01-22 .. 2025-02-21): exchange data, survivorship-complete; the 65-session warm-up before 2021-01-22 falls in TIER_2 (survivor-biased) and is used for features only, never for a label, flag statistic or trade (declared)",
++      "panel_note": "E3 ran on the newer panel-20261013T194245Z (TIER_1 rows reported identical by the E3 addenda); it cannot be rebuilt on this machine (the Yahoo raw files of its pull are absent and a network pull is not allowed), so the pinned run's own panel and registry are PRIMARY and Stage 0 is a true reproduction (handoff 06_phase2_integration_todo.md, panel decision 2026-10-14)",
++      "precondition_runs": [
++        "results/runs/20261009T050040Z_MOONSHOT_E1_D1_v1.1"
++      ],
++      "status": "DECISIVE for Arm A (primary P1): survivorship-complete",
++      "primary_arm": "A",
++      "arm_B": "DIAGNOSTIC (rate-matched D label; reported by ARB regime)",
++      "pool_units": "panel",
++      "periods": {
++        "discovery": [
++          "2021-01-22",
++          "2022-12-30"
++        ],
++        "validation": [
++          "2023-01-02",
++          "2023-12-29"
++        ],
++        "holdout": [
++          "2024-01-02",
++          "2025-02-21"
++        ]
++      },
++      "discovery_years": [
++        2021,
++        2022
++      ],
++      "holdout_guard": "backtest.HOLDOUT plus e5.assert_within_validation"
++    },
++    "US": {
++      "panel_format": "panel-global-v2-units",
++      "panel_manifest": "panel_us_repair-20261008T114805Z.json",
++      "panel_sha256": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b",
++      "universe": "the E2-US repair panel (causal-close-v2 preprocessing, as-traded units, read through 2023-12-29): survivor-only",
++      "precondition_runs": [
++        "results/runs/20261008T115656Z_MOONSHOT_E2_US_D1_v1"
++      ],
++      "status": "DIAGNOSTIC (survivor-only): a US-only pass is not decision-grade",
++      "primary_arm": null,
++      "pool_units": "as_traded",
++      "units": "as_traded",
++      "quarantine": "none (repair_v3: the quarantine is outcome-correlated); unit_schedule is a sensitivity",
++      "periods": {
++        "discovery": [
++          "2020-07-01",
++          "2022-12-31"
++        ],
++        "validation": [
++          "2023-01-01",
++          "2023-12-31"
++        ],
++        "holdout": [
++          "2024-01-01",
++          "2099-12-31"
++        ]
++      },
++      "discovery_years": [
++        2020,
++        2021,
++        2022
++      ],
++      "holdout_guard": "backtest.GLOBAL_HOLDOUT plus e5.assert_within_validation"
++    },
++    "CRYPTO": {
++      "panel_format": "panel-global-v1",
++      "panel_manifest": "panel_crypto-20261008T003354Z.json",
++      "panel_sha256": "3dc12749c7cce635a68ef4f152ec21c3b3d24eb6b02665c799aa24e513963d7d",
++      "universe": "Binance spot USDT pairs including delisted/halted pairs still in exchangeInfo (the legacy v1 panel of the recorded E2 run, with its two future-informed row deletions, declared)",
++      "precondition_runs": [
++        "results/runs/20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1"
++      ],
++      "status": "DECISIVE for Arm B (primary P2): no price limits, delisted pairs present",
++      "primary_arm": "B",
++      "pool_units": "panel",
++      "jump_ratio": 10.0,
++      "periods": {
++        "discovery": [
++          "2020-07-01",
++          "2022-12-31"
++        ],
++        "validation": [
++          "2023-01-01",
++          "2023-12-31"
++        ],
++        "holdout": [
++          "2024-01-01",
++          "2099-12-31"
++        ]
++      },
++      "discovery_years": [
++        2020,
++        2021,
++        2022
++      ],
++      "holdout_guard": "backtest.GLOBAL_HOLDOUT plus e5.assert_within_validation",
++      "sensitivity_profile": "CRYPTO_CLOSE shares this panel (output keyed CRYPTO_CLOSE inside the CRYPTO stage; the panel is loaded by profiles.PROFILES[market].market)"
++    }
++  },
++  "periods": {
++    "discovery": [
++      "2020-07-01",
++      "2022-12-31"
++    ],
++    "validation": [
++      "2023-01-01",
++      "2023-12-31"
++    ],
++    "holdout": [
++      "2024-01-01",
++      "2099-12-31"
++    ],
++    "note": "the union of the per-market periods, in the E2 shape e1.Study reads; the per-market windows live under markets.<MARKET>.periods and idxsig/e5.py clips every statistic to them (and to the panel): IDX discovery 2021-01-22..2022-12-30 and validation 2023-01-02..2023-12-29, US and CRYPTO discovery 2020-07-01..2022-12-31 and validation 2023-01-01..2023-12-31",
++    "holdout_rule": "sealed and never loaded: backtest.HOLDOUT (IDX) and backtest.GLOBAL_HOLDOUT (US, crypto) refuse any detector window that touches it, and e5.assert_within_validation refuses any window end past the market's validation end before a RunConfig or Study is built",
++    "windows": "every Study and harness window starts harness.warmup_sessions (= moonshot_e5.WARMUP = 65) sessions before its period's first session (clipped to the panel start, recorded as lead_in_sessions) and ends at the period's last session; the Study window for discovery ends at the validation end (sealed there), the discovery statistics read only the discovery sessions"
++  },
++  "weak_signals": {
++    "id": "E5-SIGNALS-v1 (the E2 list, for e1.Study's row and signal tables; the E5 learner reads features.order instead)",
++    "continuous": [
++      "ret1",
++      "rel1",
++      "ret5",
++      "ret20",
++      "volr",
++      "valr",
++      "rngr",
++      "cpos",
++      "vol20",
++      "dd60",
++      "up5",
++      "zero20",
++      "age",
++      "logval20",
++      "gap"
++    ],
++    "binary": [
++      "brk60",
++      "ara"
++    ],
++    "note": "no ign member: the E5 family has no IGNITION detector (e1.Study reports it unknown)"
++  },
++  "plans": {
++    "rule": "one plan per market, the recorded one; no plan search",
++    "IDX": {
++      "primary": {
++        "market": "IDX",
++        "entry_rule": "fixed",
++        "entry_window": 1,
++        "exit_rule": "fixed",
++        "holding_days": 5,
++        "fill_model": "C",
++        "units": "panel",
++        "ca_mode": "registry",
++        "notional": 10000000.0,
++        "max_participation": 0.1,
++        "fee_buy": 0.0015,
++        "fee_sell": 0.0025,
++        "quarantine": "none",
++        "jump_ratio": null,
++        "tick_cost": false
++      },
++      "text": "next close -> 5th close after entry; FILL-C-v1 decision-time capacity; Rp10,000,000 per trade; lots of 100; at most 10% participation; registry corporate actions",
++      "sensitivities": [
++        {
++          "id": "fill_A",
++          "judged": true,
++          "overrides": {
++            "fill_model": "A"
++          },
++          "note": "the original ex-post capacity model (entry-session final volume), as E1's first recorded run"
++        },
++        {
++          "id": "one_tick_cost",
++          "judged": true,
++          "overrides": {
++            "tick_cost": true
++          },
++          "note": "one IDX tick per side (market.tick_size at the price paid / received) added to the fees, rule and controls alike (backtest.RunConfig.tick_cost, additive, default off): the closing-auction spread the cost model otherwise lacks"
++        }
++      ]
++    },
++    "US": {
++      "primary": {
++        "market": "US",
++        "entry_rule": "fixed",
++        "entry_window": 1,
++        "exit_rule": "fixed",
++        "holding_days": 5,
++        "fill_model": "B",
++        "units": "as_traded",
++        "ca_mode": "adjusted",
++        "notional": 5000.0,
++        "max_participation": 0.1,
++        "fee_buy": 0.0,
++        "fee_sell": 2.78e-05,
++        "quarantine": "none",
++        "jump_ratio": null,
++        "tick_cost": false
++      },
++      "text": "next open -> 5th close after entry; FILL-B-v1 decision-time capacity in as-traded units; $5,000 per trade; profile cost tiers per side (1.5% under $1, 0.5% $1-5, 0.15% $5-20, 0.05% above) plus the SEC fee on sales",
++      "sensitivities": [
++        {
++          "id": "fill_A_as_traded",
++          "judged": true,
++          "overrides": {
++            "fill_model": "A"
++          },
++          "note": "fill model A in as-traded units (the ex-post capacity filter)"
++        },
++        {
++          "id": "quarantine_unit_schedule",
++          "judged": true,
++          "overrides": {
++            "quarantine": "unit_schedule"
++          },
++          "note": "names whose split records SEC does not corroborate left out, rule and controls alike (the recorded E2-US run's setting; outcome-correlated per repair_v3, hence a sensitivity, not the primary)"
++        },
++        {
++          "id": "stress_1_5pct_per_side",
++          "judged": true,
++          "overrides": {
++            "fee_buy": 0.015,
++            "fee_sell": 0.0150278
++          },
++          "note": "+1.5% per side on top of the profile's fees and tiers (fee_buy 0.015, fee_sell 0.0000278 + 0.015): a bound on the uncorroborated 2020-22 cost tiers"
++        }
++      ]
++    },
++    "CRYPTO": {
++      "primary": {
++        "market": "CRYPTO",
++        "entry_rule": "fixed",
++        "entry_window": 1,
++        "exit_rule": "fixed",
++        "holding_days": 5,
++        "fill_model": "A",
++        "units": "panel",
++        "ca_mode": "adjusted",
++        "notional": 5000.0,
++        "max_participation": 0.1,
++        "fee_buy": 0.001,
++        "fee_sell": 0.001,
++        "quarantine": "none",
++        "jump_ratio": 10.0,
++        "tick_cost": false
++      },
++      "text": "next open -> 5th close after entry; fill model A (the recorded E2 config, labelled ex-post); 5,000 USDT per trade; 0.1% fee + 0.1% tier = 0.2% per side (the recorded E2 config, not 0.3%); jump_ratio 10 excludes trades held across a redenomination, rule and baselines alike",
++      "sensitivities": [
++        {
++          "id": "participation_0_05_doubled_costs",
++          "judged": true,
++          "overrides": {
++            "max_participation": 0.05,
++            "fee_buy": 0.003,
++            "fee_sell": 0.003
++          },
++          "note": "shares at most 5% of the entry session's volume and fee + tier = 0.4% per side (fee 0.003 + the profile tier 0.001), twice the recorded 0.2%"
++        },
++        {
++          "id": "entry_at_close_t1",
++          "judged": true,
++          "overrides": {
++            "market": "CRYPTO_CLOSE"
++          },
++          "note": "profiles.CRYPTO_CLOSE: entry at the close of t+1 instead of its open (a daily crypto open is the prior close printed at 00:00 UTC, a zero-latency fill no live order gets); same panel, same costs, fill model A, long only; reached only as this sensitivity, never as a top-level market"
++        }
++      ]
++    },
++    "controls_v2_report": "beside the primary run, one run per arm with controls_version v2 is reported for comparability with the recorded runs; reported, never judged"
++  },
++  "harness": {
++    "entry_lag": 1,
++    "random_draws": 200,
++    "seed": 20261007,
++    "overlap": "skip",
++    "data_end_exit": "last_close",
++    "controls_version": "v3",
++    "controls_version_reported": "v2",
++    "lookahead_cuts": 12,
++    "lookahead_note": "the ranked cross-sectional features make moonshot_e5.compute() about 12x the cost of moonshot_g.features, and rules.causal_signals recomputes it once per session (prefix-first), which would be hours of CPU per IDX run; every Stage-2 and validation harness run therefore uses backtest.signals with lookahead_cuts = 12: one full-window call checked against 12 prefixes at numpy.linspace(0.3, 0.9, 12) of the window (deterministic, no random seed involved); the run records mode 'sampled' and its warning. The proof of causality is the module's own prefix-invariance tests, named under causality_proof; Stage 0 re-runs keep their recorded setting (prefix-first)",
++    "causality_proof": [
++      "tests/test_e5_rules.py RankTests.test_ranks_are_prefix_first",
++      "tests/test_e5_rules.py FlagTests.test_frozen_arm_is_causal_and_debounced",
++      "tests/test_e5_rules.py FlagTests.test_creep_quiet_rules_are_causal_and_debounced",
++      "tests/test_e5_rules.py FlagTests.test_flags_are_window_invariant_from_the_lead_in",
++      "tests/test_e5.py WindowInvariance"
++    ],
++    "warmup_sessions": 65
++  },
++  "matched_controls": {
++    "trading_stage": {
++      "controls_version": "v3",
++      "features": "price_band, liquidity quintile, volatility QUINTILE, market_cap quintile (IDX mirror era), momentum tercile, drawdown tercile, listing_age; relaxed from the last feature to MIN_POOL 5 (controls.VERSIONS['v3'], additive; v2 unchanged for the recorded runs)",
++      "draws": 200,
++      "seed": 20261007,
++      "reported": "v2 (one extra run per arm), the same-session uniform baseline (every run)",
++      "per_trade_columns": "trades.csv.gz carries matched_mean_net_return and same_session_mean_net_return: the mean net return over the signal's SCORED control draws only (unscored draws excluded; NaN where no draw was scored or the signal was overlap-skipped); E5-era trades frames therefore have 14 columns (two additive), selected by name"
++    },
++    "detection_stage": {
++      "pool_version": "v3",
++      "pool_keys": [
++        "price_band",
++        "liquidity",
++        "volatility",
++        "market_cap"
++      ],
++      "pool_units": "per market (markets.<MARKET>.pool_units): US as_traded (bands on the price traded that session, closing the ERRATA.md wrong-band defect), IDX and CRYPTO panel",
++      "draws": 200,
++      "seed": 20261008,
++      "min_pool": 5,
++      "sampling": "e1.Study._pool per flag (relaxed from the last key to min_pool), draws with replacement in (session, ticker-index) order from one numpy default_rng(seed)"
++    },
++    "paired_statistic": {
++      "definition": "per flag (or trade), its outcome minus the mean outcome of its matched controls; the statistic is the mean excess with a session-cluster bootstrap over signal sessions (backtest.paired_excess: trades signalled on one session are resampled together)",
++      "resamples": 10000,
++      "seed": 20261015,
++      "cluster": "signal_date",
++      "p": "one-sided for mean excess > 0: (1 + resampled means <= 0) / (1 + resamples); floor about 1e-4",
++      "refuse_when": "n_clusters < 2: the gate is NOT judged (reported as not judged, never as passed)",
++      "harness_p": "the harness's draw-distribution p (rule mean placed in the distribution of control portfolio means) is reported, not judged: anti-conservative when the rule's trades are more volatile than the controls'"
++    }
++  },
++  "selection": {
++    "note": "e3.admissibility reads this block verbatim (Stage 2 and Stage 4 harness rows)",
++    "min_scored": 200,
++    "max_p_one_sided_vs_matched": 0.05,
++    "min_scored_per_year": 50
++  },
++  "stages": {
++    "0_reproduce": {
++      "what": "per market, every precondition run re-run from ITS recorded summary.json config (RunConfig fields) on the pinned panel (and registry on IDX), with the recorded lookahead setting; the rule-side statistics (signals, scored, status_counts, avg_net_return) must be identical",
++      "rule_side_fields": [
++        "signals",
++        "scored",
++        "status_counts",
++        "avg_net_return"
++      ],
++      "accepted_deviation": {
++        "field": "matched_random_avg_net_return",
++        "abs_tolerance": 0.001,
++        "cause": "controls.py commit bcb89f0 (a listed day without trades counts as zero traded value in the liquidity bucket) changed the matched draws after the IDX run was recorded: the matched baseline differs in the fourth decimal (research/E3/reproduce/result.json shows -0.004404 recorded vs -0.004400 reproduced); the only accepted deviation"
++      },
++      "status": "REPRODUCED when the rule side is identical and the matched baseline is identical or within the accepted tolerance (then matched_baseline = DEVIATES_WITHIN_ACCEPTED_TOLERANCE on record); otherwise DEVIATES, and discovery runs only with --accept-deviation, both sides on record",
++      "descriptive": "in-flag break-even precision p* of the reproduced run's trades (stages.2_execution.oracle_bound), reported"
++    },
++    "1_information": {
++      "what": "discovery, fill-independent: fit the two labels, fix the two thresholds, compute the debounced flags, and for every arm the plan-window return on the reference chain for flags and matched controls alike (entry level at the plan's entry session: close of t+1 on IDX, open of t+1 on US and CRYPTO = level(t+1) x open(t+1)/close(t+1); exit level at the close of the 5th session after entry, t+6; NaN when either level is missing; no fill, lot, lock or cost filter), AUC_U and AUC_D of the arm score over the evaluable discovery ticker-days, E30 and D30 precision with Wilson bounds, lift vs base and vs matched controls (with a session-cluster CI and the draw-distribution p), the directional ratio U/D with a cluster-bootstrap CI, the pre-move split (ret1 < 0.10 vs >= 0.10), the univariate matched-set table for every ranked and binary feature, the A0/A1 rows, the constant-column report, the IDX by-regime split",
++      "flags": "debounced flags on evaluable (labelled) in-period ticker-days, as the harness would signal them (tradeable, column >= WARMUP); in-period flags without a label are counted separately",
++      "gate_to_stage_2": {
++        "min_flags": 200,
++        "alpha": 0.025,
++        "min_flags_per_year": 50,
++        "rule": "flags >= min_flags AND paired gross (plan-window) excess mean > 0 with cluster-bootstrap one-sided p < alpha AND mean excess > 0 in every discovery calendar year with >= min_flags_per_year flags; not judged when n_clusters < 2"
++      },
++      "primaries": {
++        "P1": [
++          "IDX",
++          "A"
++        ],
++        "P2": [
++          "CRYPTO",
++          "B"
++        ]
++      },
++      "alpha_note": "0.025 = Bonferroni over the two primaries; the same gate is computed for every arm, the others being diagnostic",
++      "diagnostics": [
++        "IDX Arm B (by ARB regime)",
++        "CRYPTO Arm A",
++        "US Arm A",
++        "US Arm B",
++        "A0/A1 rows",
++        "variance-detection check: Arm A's D30 lift vs matched inside the cluster CI of its E30 lift vs matched"
++      ],
++      "a1_gate": {
++        "min_lift": 2.0,
++        "max_p": 0.05
++      },
++      "detection_controls": {
++        "draws": 200,
++        "seed": 20261008
++      },
++      "pre_move_split_ret1": 0.1,
++      "univariate": {
++        "events": "U-episode starts (e1.Study.start at 1.30) on the evaluable discovery ticker-days",
++        "controls_per_event": 5,
++        "controls_seed": 20261008,
++        "auc": "P(event value > control value) + 0.5 P(tie) within matched sets (E1 signal_stats)",
++        "auc_bootstrap": 1000,
++        "auc_seed": 20261008,
++        "top_share": 0.005,
++        "lift": "the feature's own debounced top-0.5% flag (rank at or above its discovery 99.5th percentile; binaries: the state itself), E30 precision, lift vs base and vs matched controls with the detection sampler"
++      }
++    },
++    "2_execution": {
++      "what": "discovery; only arms that passed the Stage-1 gate (plus A1 if its gate passed): backtest.run under the market plan with the market's primary fill model and controls v3, then backtest.paired_excess on the trades; every harness run (primary, each sensitivity, the v2 report run) is one row of plans.csv with the paired-excess dict flattened",
++      "admissible_iff": [
++        "e3.admissibility verbatim on the primary run (selection block: scored >= 200, average net > 0, harness p vs matched < 0.05, average net > 0 in every discovery year with >= 50 scored)",
++        "paired NET excess over matched controls > 0 with cluster-bootstrap one-sided p < alpha_paired_net (not judged when n_clusters < 2)",
++        "every judged sensitivity keeps rule average net minus matched-random average net > 0",
++        "admissibility holds on the subset of the primary run's scored trades whose exit-session participation (exit shares x share factor over the exit session's panel volume) is <= exit_participation_max: scored >= min_scored, average net > 0, paired net p < alpha_paired_net, average net > 0 in every discovery year with >= min_scored_per_year scored (the harness draw p is not re-computable on a subset; the paired p stands in for it, declared)"
++      ],
++      "alpha_paired_net": 0.025,
++      "exit_participation_max": 0.1,
++      "literals": "the arms have no frozen literals yet at this stage: the harness runs inject discovery/model.json into the module's literal tables in-process for the duration of the run (e5.literals_from), so the rule hash recorded in plans.csv is the pre-freeze module's and the coefficients used are those of model.json, whose sha256 is recorded in every row (literals_sha256); Stage 3 makes them literal and Stage 4 runs carry the frozen hash",
++      "selected_per_market": "when both arms are admissible, the market's primary arm is SELECTED (IDX A, CRYPTO B); otherwise (and on US) the admissible arm with the larger paired net mean excess, ties to A; SELECTED is what MOONSHOT_E5_<MARKET>_D1 computes; every other admissible arm is validated under its candidate rule id",
++      "oracle_bound": "in-flag break-even precision p* = (matched - E[net | flag, not E30]) / (E[net | flag, E30] - E[net | flag, not E30]) on the run's scored trades (E30 = the U label of the signal session); descriptive, never a criterion"
++    },
++    "3_freeze": {
++      "what": "e5-freeze --market copies discovery/model.json (coefficients, intercepts, thresholds) into the moonshot_e5.py literal tables for that market and adds (market, arm) to SELECTED for the selected arm (gates.json); refuses when any of the market's literals is already set or the market is already in SELECTED; writes <MARKET>/freeze/result.json; the orchestrator commits the module and the stage directory together",
++      "a0_a1_note": "freezing changes every E5 rule's hash, A0/A1's included; write_run-recorded A0/A1 runs (validation) happen only after the freeze commit, so their rule sha is the frozen one; Stage-2 discovery runs are plans.csv rows, not recorded runs"
++    },
++    "4_validation": {
++      "what": "the validation period only, after the freeze commit: e5-validation refuses unless the module's literals equal discovery/model.json exactly and SELECTED names the selected arm; one write_run-recorded harness run per Stage-2-admissible arm (MOONSHOT_E5_<MARKET>_D1 for the selected arm, E5_CAND_<MARKET>_<ARM> for any other) plus one recorded run per judged sensitivity; the detection check on the validation study",
++      "pass_iff": [
++        "scored >= min_scored[market]",
++        "average net return > 0",
++        "paired net excess > 0 with cluster-bootstrap one-sided p < alpha_paired_net",
++        "harness p vs matched < max_p_one_sided_vs_matched",
++        "every judged sensitivity keeps rule average net minus matched average net > 0 (same sign)",
++        "detection: E30 precision Wilson lower bound of the arm's validation flags > the validation E30 base rate"
++      ],
++      "min_scored": {
++        "IDX": 100,
++        "US": 200,
++        "CRYPTO": 100
++      },
++      "alpha_paired_net": 0.025,
++      "max_p_one_sided_vs_matched": 0.05,
++      "claim_level": "PROVISIONAL (2023 is once-seen): licenses a prospective paper policy only",
++      "reported_not_judged": [
++        "hit rate",
++        "median net return",
++        "status counts",
++        "same-session baseline",
++        "the v2-controls run",
++        "2023 is one year: no per-year check is possible"
++      ]
++    }
++  },
++  "admissibility": {
++    "stage_1": "stages.1_information.gate_to_stage_2",
++    "stage_2": "stages.2_execution.admissible_iff (e3.admissibility on the selection block, plus the paired, sensitivity and exit-capacity clauses)",
++    "stage_4": "stages.4_validation.pass_iff"
++  },
++  "validation": {
++    "on": "validation only, per market, recorded harness runs",
++    "min_scored": {
++      "IDX": 100,
++      "US": 200,
++      "CRYPTO": 100
++    },
++    "alpha_paired_net": 0.025,
++    "max_p_one_sided_vs_matched": 0.05,
++    "claim_level": "PROVISIONAL"
++  },
++  "consequences": {
++    "stage_1_fails_in_both_primaries": "daily-bar T-0 direction is not detectable by this learner over this feature list in the two markets where it can be measured; stop building tape-only detectors; the next protocol is information timing (EDGAR 8-K acceptance) after the SEC reachability probe; the KOD tape feed is not stood up unless the A1 row's lift CI excludes 1",
++    "stage_1_passes_stage_2_or_validation_fails": "information exists but is not executable under daily-bar plans with these costs and fills; next work is an execution contract (limit-on-open, capacity, exit liquidity), not plan search; the prospective sidecar keeps scoring the frozen ranker",
++    "validation_passes": "MOONSHOT_E5_<MARKET>_D1 stays frozen; a new POLICY_ID (PAPER-POLICY-v5) may wire it through paper._detector; NO paper BUY until >= 100 prospective scored E5 decisions show paired excess > 0 (pre-registered); the holdout stays sealed until then",
++    "A1_row_lift_ci_excludes_1": "stand up a scan-only KOD feed under a new scanner id; otherwise VOLUME_CREEP_PRICE_QUIET is closed at KOD-DET-v0 thresholds"
++  },
++  "declared_leaks": {
++    "2023_once_seen": "2023 is once-seen for the univariate siblings of E5's features: ara via E1, ret1 via E2, brk60 via US_BREAKOUT_v1; the complete 2023 positive class with ret5, ret20, volr, rngr, vol20, dd60, zero20, up5 at the decision close sits on disk in research/E1/validation/episodes_E30.csv, research/E2/US/validation/episodes_E30.csv and research/E2/CRYPTO/validation/episodes_E30.csv (and the E50/E100 siblings beside them)",
++    "consequence": "any 2023 pass is PROVISIONAL and licenses only a prospective paper policy, never the holdout",
++    "crypto_panel": "the legacy v1 crypto panel carries two future-informed row deletions (LUNA 2022-05-13 in discovery among them): declared, not rebuilt, because a rebuild would make Stage 0 DEVIATE"
++  },
++  "not_fixed_and_why": [
++    "2023 once-seen: no clean year exists in-repo; mitigated by pre-registration, Bonferroni over the two primaries, the provisional claim level and the prospective sidecar",
++    "US survivorship: no point-in-time universe on free data; US demoted to diagnostic",
++    "bounded learner: a null is 'not found by this learner over this feature list'; the management consequence (stop tape-only detector building) is a decision, not a theorem; a second learner is a new protocol",
++    "IDX closing-auction spread: a one-tick-per-side sensitivity only; a panel-v3 with mirror bid/offer depth is deferred",
++    "crypto legacy panel: two future-informed row deletions (LUNA 2022-05-13 included) declared, not rebuilt, because a causal rebuild would make the precondition DEVIATE",
++    "daily bars only: no intraday path; the crypto open is a zero-latency print, hence the close(t+1) sensitivity",
++    "serial dependence of rank-based flags: addressed by the debounce and the session-cluster bootstrap, not by a name-level cluster (distinct names are reported)"
++  ],
++  "search_size": "6 fits, 2 arms x 3 markets, 2 primaries, no threshold/lambda/feature search; stated in every output",
++  "notes": {
++    "trades_columns": "trades.csv.gz of every E5-era run carries 14 columns (the 12 recorded ones plus matched_mean_net_return and same_session_mean_net_return); recorded files are unchanged",
++    "stage_outputs": "research/E5/<MARKET>/<stage>/ (reproduce, discovery, freeze, validation), each a new directory (exist_ok=False), every file deterministic given the protocol, the panel and the seeds apart from computed_at; discovery writes model.json, thresholds.json, stage1.json, univariate.csv, flags.csv, plans.csv, gates.json, summary.json and one summary_<arm>_<run>.json per harness run",
++    "study_options": "e1.Study is built with pool_version v3, the market's pool_units and its declared panel_format (passed as the keyword too); summary.json carries study_options"
++  },
++  "claims": "Historical research on assumed costs, daily-bar fills and a survivor-only US universe; 6 fits and 2 primaries were pre-registered and nothing else was searched; nothing here is prospective performance, no probability or trade is asserted, nothing grants entry permission, and no real orders exist."
++}
+diff --git a/idx-signals/tests/test_e5.py b/idx-signals/tests/test_e5.py
+new file mode 100644
+index 0000000..515b890
+--- /dev/null
++++ b/idx-signals/tests/test_e5.py
+@@ -0,0 +1,960 @@
++"""Experiment E5 study code (idxsig/e5.py), the draft protocol and the e5-* CLI. Synthetic panels only:
++no real panel is loaded, no network, no harness run on real data, nothing reads the holdout. The draft
++protocol research/E5/protocol.json is read for its shape and values; the tests that run the study use a
++copy with synthetic panel hashes and reduced draw / resample counts (mechanics, not statistics)."""
++
++import copy
++import json
++import tempfile
++import unittest
++import warnings
++from pathlib import Path
++from unittest import mock
++
++import numpy as np
++import pandas as pd
++
++from idxsig import cli, e1, e3, e5, rules
++from idxsig.backtest import HoldoutSealed, RunConfig, paired_excess, run
++from idxsig.execution import Market
++from idxsig.market import floor_tick
++from idxsig.profiles import PROFILES
++from idxsig.rules import moonshot_e5
++from idxsig.rules.audit import audit_module
++from tests.rulekit import module_rule, with_rule
++from tests.support import flat_market, synthetic_registry
++
++ROOT = Path(__file__).resolve().parents[1]
++PROTO, PROTO_SHA = e5.protocol()
++W, WF = moonshot_e5.FEATURE_WARMUP, moonshot_e5.WARMUP
++FORMATS = {"IDX": "panel-v2", "US": "panel-global-v2-units", "CRYPTO": "panel-global-v1"}
++
++
++# ------------------------------------------------------------------------------------------- fixtures
++def e5_panel(market="IDX", n=30, start="2020-03-02", end="2023-12-29", seed=3, reset=None):
++    """A random-walk panel in the market's shape with planted +20%x3 (U) and -9%x3 (D) runs; `reset`
++    {ticker index: session index} plants a x25 unit reset (crypto) at that session."""
++    rng = np.random.default_rng(seed)
++    dates = pd.to_datetime(np.arange(np.datetime64(start, "D"), np.datetime64(end, "D") + 1, dtype="datetime64[D]"))
++    dates = dates[dates.weekday < 5]
++    idx = market == "IDX"
++    rows = []
++    for i in range(n):
++        price = float(rng.choice([150, 480, 1500] if idx else [0.5, 3.0, 12.0, 50.0]))
++        up = down = 0
++        for d in range(len(dates)):
++            prev = price
++            if up == 0 and down == 0:
++                r = rng.random()
++                if r < 0.004:
++                    up = 3
++                elif r < 0.008:
++                    down = 3
++            if up:
++                step, up = 0.20, up - 1
++            elif down:
++                step, down = -0.09, down - 1
++            else:
++                step = float(np.clip(rng.normal(0, 0.02), -0.06, 0.06))
++            if (reset or {}).get(i) == d:
++                step = 24.0
++            price = prev * (1 + step)
++            if idx:
++                price = float(min(max(floor_tick(np.array([price]))[0], 60.0), 4500.0))
++            else:
++                price = round(max(price, 0.01), 4)
++            vol = int(rng.integers(100_000, 1_000_000))
++            rows.append({"date": dates[d], "ticker": f"S{i:03d}", "source": "synthetic", "previous": prev,
++                         "open": pd.NA if idx else prev, "high": max(prev, price), "low": min(prev, price),
++                         "close": price, "volume": vol, "value": vol * price, "frequency": 100,
++                         "listed_shares": 10 ** 9 if idx else np.nan, "tradable_shares": 10 ** 9 if idx else np.nan})
++    df = pd.DataFrame(rows)
++    if idx:
++        for c in ("previous", "open", "high", "low", "close", "volume", "value", "frequency", "listed_shares",
++                  "tradable_shares"):
++            df[c] = df[c].astype("Int64")
++    else:
++        df["open"] = df["open"].astype(float)
++    if market == "US":
++        df["unit_factor"] = 1.0
++    meta = {"sha256": f"synthetic-{market}", "panel": "synthetic", "source_boundary": end, "format": FORMATS[market],
++            "default_start": start, "quality_tiers": [], "known_limitations": [], "survivorship": "synthetic",
++            "unit_quarantine": {"tickers": {}, "reason_counts": {}}, "unit_schedule": None, "preprocessing": None,
++            "first_session": str(dates[0].date()), "last_session": end}
++    return df, meta
++
++
++def test_proto(over: dict | None = None) -> dict:
++    """The draft protocol with synthetic panel hashes and reduced draw / resample counts; `over` maps
++    dotted keys to replacement values."""
++    p = copy.deepcopy(PROTO)
++    for mk in e5.MARKETS:
++        p["markets"][mk]["panel_sha256"] = f"synthetic-{mk}"
++    p["matched_controls"]["detection_stage"]["draws"] = 20
++    p["matched_controls"]["paired_statistic"]["resamples"] = 200
++    p["stages"]["1_information"]["univariate"]["auc_bootstrap"] = 20
++    p["harness"]["random_draws"] = 8
++    p["harness"]["lookahead_cuts"] = 2
++    for k, v in (over or {}).items():
++        node = p
++        keys = k.split(".")
++        for key in keys[:-1]:
++            node = node[key]
++        node[keys[-1]] = v
++    return p
++
++
++def fake_reproduce(out: Path, meta: dict, status="REPRODUCED"):
++    (out.parent / "reproduce").mkdir(parents=True, exist_ok=True)
++    e3.write_json(out.parent / "reproduce" / "result.json", {"panel_sha256": meta["sha256"], "status": status})
++
++
++def frame_from_arrays(tickers, dates, a, opens=None, idx=True):
++    rows = []
++    for i, t in enumerate(tickers):
++        for d, day in enumerate(dates):
++            rows.append({"date": pd.Timestamp(day), "ticker": str(t), "source": "synthetic", "previous": a["prev"][i, d],
++                         "open": (opens[i, d] if opens is not None else pd.NA), "high": a["high"][i, d],
++                         "low": a["low"][i, d], "close": a["close"][i, d], "volume": a["volume"][i, d],
++                         "value": a["value"][i, d], "frequency": 100, "listed_shares": 10 ** 9 if idx else np.nan,
++                         "tradable_shares": 10 ** 9 if idx else np.nan})
++    return pd.DataFrame(rows)
++
++
++class Discovered:
++    """One synthetic discovery per market, shared by the tests that need a fitted model (built lazily)."""
++    cache = {}
++
++    @classmethod
++    def get(cls, market):
++        if market not in cls.cache:
++            warnings.simplefilter("ignore")
++            df, meta = e5_panel(market, n=30, seed={"IDX": 3, "US": 4, "CRYPTO": 5}[market],
++                                reset={2: 300} if market == "CRYPTO" else None)
++            proto = test_proto()
++            out = Path(tempfile.mkdtemp(prefix="idxsig-e5-")) / market / "discovery"
++            fake_reproduce(out, meta)
++            registry = synthetic_registry(df, meta) if market == "IDX" else None
++            summary = e5.run_discovery(df, meta, registry, out, proto, "synthetic-sha", market, log=lambda *_: None)
++            cls.cache[market] = {"df": df, "meta": meta, "proto": proto, "out": out, "summary": summary,
++                                 "registry": registry,
++                                 "model": json.loads((out / "model.json").read_text(encoding="utf-8")),
++                                 "stage1": json.loads((out / "stage1.json").read_text(encoding="utf-8")),
++                                 "gates": json.loads((out / "gates.json").read_text(encoding="utf-8"))}
++        return cls.cache[market]
++
++
++# ------------------------------------------------------------------------------------------- protocol
++class ProtocolTests(unittest.TestCase):
++    def test_draft_parses_and_every_key_e5_reads_is_present(self):
++        self.assertEqual(PROTO["protocol_id"], "KOD-GLOBAL-E5-v1")
++        self.assertIs(PROTO["frozen_before_analysis"], False)  # the draft; the orchestrator sets the freeze
++        for path, _stage in e5.PROTOCOL_KEYS:
++            for mk in e5.MARKETS:
++                e5.get(PROTO, path.replace("<M>", mk))  # KeyError names a missing key
++        with self.assertRaises(KeyError):
++            e5.get(PROTO, "markets.IDX.no_such_key")
++        for key in ("question", "null_hypothesis", "builds_on", "family", "learner", "features", "labels", "markets",
++                    "plans", "harness", "periods", "matched_controls", "stages", "admissibility", "validation",
++                    "consequences", "declared_leaks", "not_fixed_and_why", "search_size", "claims"):
++            self.assertIn(key, PROTO)
++
++    def test_shape_e1_study_reads(self):
++        self.assertEqual(PROTO["periods"]["discovery"], ["2020-07-01", "2022-12-31"])
++        self.assertEqual(PROTO["periods"]["validation"], ["2023-01-01", "2023-12-31"])
++        self.assertNotIn("ign", PROTO["weak_signals"]["binary"])
++        self.assertNotIn("data", PROTO)  # no single global panel_format: each market declares its own
++        for mk, fmt in FORMATS.items():
++            self.assertEqual(PROTO["markets"][mk]["panel_format"], fmt)
++            self.assertIn(fmt, e1.PANEL_FORMATS)
++        self.assertEqual(PROTO["markets"]["IDX"]["periods"]["discovery"], ["2021-01-22", "2022-12-30"])
++        self.assertEqual(PROTO["markets"]["IDX"]["periods"]["validation"], ["2023-01-02", "2023-12-29"])
++        self.assertEqual(PROTO["markets"]["CRYPTO"]["periods"]["discovery"], ["2020-07-01", "2022-12-31"])
++        self.assertEqual(PROTO["markets"]["IDX"]["discovery_years"], [2021, 2022])
++        self.assertEqual(PROTO["markets"]["US"]["discovery_years"], [2020, 2021, 2022])
++
++    def test_fixed_values_from_the_handoff_decisions(self):
++        self.assertEqual(PROTO["harness"]["warmup_sessions"], moonshot_e5.WARMUP)
++        self.assertEqual(PROTO["harness"]["warmup_sessions"], 65)
++        self.assertEqual(list(PROTO["features"]["order"]), list(moonshot_e5.FEATURE_ORDER))
++        self.assertEqual(PROTO["features"]["n_columns"], 41)
++        mk = PROTO["markets"]
++        self.assertEqual(mk["IDX"]["panel_manifest"], "panel-20261007T225823Z.json")
++        self.assertTrue(mk["IDX"]["panel_sha256"].startswith("9d3a0718"))
++        self.assertEqual(mk["IDX"]["registry_manifest"], "ca_registry-20261007T230210Z.json")
++        self.assertEqual(mk["US"]["panel_manifest"], "panel_us_repair-20261008T114805Z.json")
++        self.assertTrue(mk["US"]["panel_sha256"].startswith("8d3b7ce4"))
++        self.assertEqual(mk["CRYPTO"]["panel_manifest"], "panel_crypto-20261008T003354Z.json")
++        self.assertTrue(mk["CRYPTO"]["panel_sha256"].startswith("3dc12749"))
++        for m in e5.MARKETS:  # the manifests are committed; their hashes are the protocol's
++            manifest = json.loads((ROOT / "data" / "manifests" / mk[m]["panel_manifest"]).read_text(encoding="utf-8"))
++            self.assertEqual(manifest["sha256"], mk[m]["panel_sha256"])
++            self.assertEqual(manifest["format"], mk[m]["panel_format"])
++            for run_dir in mk[m]["precondition_runs"]:
++                self.assertEqual(e3.recorded_run(run_dir)["panel_sha256"], mk[m]["panel_sha256"])
++        self.assertEqual(mk["IDX"]["precondition_runs"], ["results/runs/20261009T050040Z_MOONSHOT_E1_D1_v1.1"])
++        self.assertEqual(mk["US"]["precondition_runs"], ["results/runs/20261008T115656Z_MOONSHOT_E2_US_D1_v1"])
++        self.assertEqual(mk["CRYPTO"]["precondition_runs"], ["results/runs/20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1"])
++        self.assertEqual((mk["US"]["pool_units"], mk["IDX"]["pool_units"], mk["CRYPTO"]["pool_units"]),
++                         ("as_traded", "panel", "panel"))
++        self.assertEqual((mk["IDX"]["primary_arm"], mk["CRYPTO"]["primary_arm"], mk["US"]["primary_arm"]), ("A", "B", None))
++        plans = PROTO["plans"]
++        self.assertEqual((plans["IDX"]["primary"]["fill_model"], plans["US"]["primary"]["fill_model"],
++                          plans["CRYPTO"]["primary"]["fill_model"]), ("C", "B", "A"))
++        self.assertEqual(plans["CRYPTO"]["primary"]["jump_ratio"], 10.0)
++        self.assertEqual(plans["US"]["primary"]["units"], "as_traded")
++        self.assertEqual(plans["US"]["primary"]["quarantine"], "none")
++        for m in e5.MARKETS:
++            prof = PROFILES[m]
++            pr = plans[m]["primary"]
++            self.assertEqual((pr["notional"], pr["fee_buy"], pr["fee_sell"]), (prof.notional, prof.fee_buy, prof.fee_sell))
++            self.assertEqual((pr["entry_rule"], pr["exit_rule"], pr["holding_days"]), ("fixed", "fixed", 5))
++        self.assertEqual([s["id"] for s in plans["IDX"]["sensitivities"]], ["fill_A", "one_tick_cost"])
++        self.assertEqual([s["id"] for s in plans["US"]["sensitivities"]],
++                         ["fill_A_as_traded", "quarantine_unit_schedule", "stress_1_5pct_per_side"])
++        self.assertEqual([s["id"] for s in plans["CRYPTO"]["sensitivities"]],
++                         ["participation_0_05_doubled_costs", "entry_at_close_t1"])
++        self.assertEqual(plans["CRYPTO"]["sensitivities"][1]["overrides"]["market"], "CRYPTO_CLOSE")
++        h = PROTO["harness"]
++        self.assertEqual((h["random_draws"], h["seed"], h["controls_version"], h["controls_version_reported"],
++                          h["lookahead_cuts"]), (200, 20261007, "v3", "v2", 12))
++        self.assertEqual(PROTO["selection"], {"note": PROTO["selection"]["note"], "min_scored": 200,
++                                              "max_p_one_sided_vs_matched": 0.05, "min_scored_per_year": 50})
++        self.assertEqual(PROTO["validation"]["min_scored"], {"IDX": 100, "US": 200, "CRYPTO": 100})
++        self.assertEqual(PROTO["stages"]["4_validation"]["min_scored"], PROTO["validation"]["min_scored"])
++        self.assertEqual(PROTO["validation"]["claim_level"], "PROVISIONAL")
++        g = PROTO["stages"]["1_information"]["gate_to_stage_2"]
++        self.assertEqual((g["min_flags"], g["alpha"], g["min_flags_per_year"]), (200, 0.025, 50))
++        self.assertEqual(PROTO["stages"]["1_information"]["primaries"], {"P1": ["IDX", "A"], "P2": ["CRYPTO", "B"]})
++        lr = PROTO["learner"]
++        self.assertEqual((lr["iterations"], lr["lambda_per_row"], lr["negative_subsample"], lr["negative_weight"],
++                          lr["seed"], lr["threshold_percentile"]), (25, 0.001, 0.10, 10.0, 20261015, 99.5))
++        ps = PROTO["matched_controls"]["paired_statistic"]
++        self.assertEqual((ps["resamples"], ps["seed"], ps["cluster"]), (10000, 20261015, "signal_date"))
++        ds = PROTO["matched_controls"]["detection_stage"]
++        self.assertEqual((ds["pool_version"], ds["draws"], ds["seed"]), ("v3", 200, 20261008))
++        self.assertEqual(PROTO["labels"]["unit_reset_censoring"]["markets"], ["CRYPTO"])
++        self.assertEqual(len(PROTO["labels"]["unit_reset_censoring"]["known_cases_to_verify"]), 8)
++        self.assertIn("6 fits", PROTO["search_size"])
++        self.assertIn("no real orders", PROTO["claims"])
++        self.assertEqual(PROTO["stages"]["0_reproduce"]["accepted_deviation"]["abs_tolerance"], 0.001)
++
++    def test_harness_config_follows_the_protocol(self):
++        cfg = e5.harness_config(PROTO, "IDX", "E5_CAND_IDX_A", "2020-10-15", "2022-12-30")
++        self.assertEqual((cfg.market, cfg.fill_model, cfg.ca_mode, cfg.units, cfg.notional, cfg.controls_version,
++                          cfg.lookahead_cuts, cfg.holding_days, cfg.entry_rule, cfg.exit_rule, cfg.tick_cost),
++                         ("IDX", "C", "registry", "panel", 10_000_000.0, "v3", 12, 5, "fixed", "fixed", False))
++        self.assertEqual((cfg.random_draws, cfg.seed, cfg.overlap, cfg.data_end_exit), (200, 20261007, "skip", "last_close"))
++        specs = e5.run_specs(PROTO, "IDX")
++        self.assertEqual([s["id"] for s in specs], ["primary", "fill_A", "one_tick_cost", "controls_v2"])
++        tick = e5.harness_config(PROTO, "IDX", "E5_CAND_IDX_A", "2020-10-15", "2022-12-30", specs[2]["overrides"])
++        self.assertTrue(tick.tick_cost)
++        v2 = e5.harness_config(PROTO, "IDX", "E5_CAND_IDX_A", "2020-10-15", "2022-12-30", specs[3]["overrides"])
++        self.assertEqual(v2.controls_version, "v2")
++        self.assertFalse(specs[3]["judged"])
++        us = e5.harness_config(PROTO, "US", "E5_CAND_US_A", "2020-03-30", "2022-12-31")
++        self.assertEqual((us.fill_model, us.units, us.quarantine, us.notional, us.ca_mode), ("B", "as_traded", "none", 5000.0, "adjusted"))
++        stress = e5.harness_config(PROTO, "US", "E5_CAND_US_A", "2020-03-30", "2022-12-31",
++                                   e5.run_specs(PROTO, "US")[3]["overrides"])
++        self.assertAlmostEqual(stress.fee_buy, 0.015)
++        self.assertAlmostEqual(stress.fee_sell, 0.0150278)
++        cr = e5.harness_config(PROTO, "CRYPTO", "E5_CAND_CRYPTO_B", "2020-03-30", "2022-12-31")
++        self.assertEqual((cr.fill_model, cr.jump_ratio, cr.fee_buy, cr.market), ("A", 10.0, 0.001, "CRYPTO"))
++        close = e5.harness_config(PROTO, "CRYPTO", "E5_CAND_CRYPTO_B", "2020-03-30", "2022-12-31",
++                                  e5.run_specs(PROTO, "CRYPTO")[2]["overrides"])
++        self.assertEqual((close.market, close.fill_model), ("CRYPTO_CLOSE", "A"))
++        with self.assertRaises(ValueError):
++            e5.market_dir("CRYPTO_CLOSE")  # never a top-level market
++
++    def test_assert_within_validation_refuses_any_end_past_the_validation_end(self):
++        for mk, v_end in (("IDX", "2023-12-29"), ("US", "2023-12-31"), ("CRYPTO", "2023-12-31"), ("CRYPTO_CLOSE", "2023-12-31")):
++            e5.assert_within_validation(PROTO, mk, v_end)
++            e5.assert_within_validation(PROTO, mk, "2022-12-30")
++            for bad in ("2024-01-01", "2024-01-02", "2025-02-21", "2026-10-01"):
++                with self.assertRaises(HoldoutSealed):
++                    e5.assert_within_validation(PROTO, mk, bad)
++        with self.assertRaises(HoldoutSealed):
++            e5.assert_within_validation(PROTO, "IDX", "2023-12-30")  # past the IDX validation end, before 2024
++        with self.assertRaises(HoldoutSealed):
++            e5.harness_config(PROTO, "IDX", "E5_CAND_IDX_A", "2023-10-01", "2024-01-05")
++        df, meta = e5_panel("IDX", n=3, start="2023-06-01", end="2023-12-29")
++        with self.assertRaises(HoldoutSealed):
++            e5.window_for(test_proto({"markets.IDX.periods.validation": ["2023-01-02", "2024-01-05"]}), "IDX",
++                          e5.sessions_of(df), "validation")
++
++
++# ---------------------------------------------------------------------------------------- study
++class StudyLoads(unittest.TestCase):
++    def test_study_loads_the_draft_protocol_for_each_market(self):
++        """Guards against: e1.Study refusing the draft (periods / weak_signals / panel_format shape)."""
++        warnings.simplefilter("ignore")
++        for mk in e5.MARKETS:
++            df, meta = e5_panel(mk, n=8, start="2020-03-02", end="2023-12-29")
++            st = e5.build_study(test_proto(), mk, df, meta)
++            self.assertEqual(st.protocol_id, "KOD-GLOBAL-E5-v1")
++            self.assertEqual(st.protocol_sha, PROTO_SHA)
++            self.assertEqual(st.panel_format, FORMATS[mk])
++            self.assertEqual(st.pool_version, "v3")
++            self.assertEqual(st.pool_units, PROTO["markets"][mk]["pool_units"])
++            self.assertEqual(st.study_options()["pool_keys"], ["price_band", "liquidity", "volatility", "market_cap"])
++            self.assertIs(st.family, moonshot_e5)
++            self.assertTrue(np.isnan(st.sig["ign"]).all())
++            self.assertEqual(set(moonshot_e5.FEATURE_ORDER) <= set(st.base_feats), True)
++            w = st.e5_window
++            start = PROTO["markets"][mk]["periods"]["discovery"][0]
++            self.assertEqual(w["lead_in_sessions"], 65)
++            self.assertFalse(w["lead_in_short"])
++            sessions = e5.sessions_of(df)
++            first = int(np.searchsorted(sessions, np.datetime64(start, "D")))
++            self.assertEqual(w["start"], str(sessions[first - 65]))
++            self.assertEqual(str(st.dates[0]), w["start"])
++            self.assertEqual(str(st.dates[65]), w["first_period_session"])
++            self.assertLessEqual(str(st.dates[-1]), PROTO["markets"][mk]["periods"]["validation"][1])
++            with self.assertRaises(ValueError):
++                e5.build_study(test_proto(), mk, df, {**meta, "format": "panel-v1"})
++
++    def test_a_short_panel_clips_the_lead_in_and_records_it(self):
++        df, meta = e5_panel("IDX", n=3, start="2021-01-04", end="2023-12-29")
++        w = e5.window_for(test_proto(), "IDX", e5.sessions_of(df), "discovery")
++        self.assertTrue(w["lead_in_short"])
++        self.assertLess(w["lead_in_sessions"], 65)
++        self.assertEqual(w["start"], "2021-01-04")
++
++
++# ---------------------------------------------------------------------------------------- labels
++def designed_study(market="CRYPTO", n_sessions=140):
++    """Three names, flat at 100 with a designed path on row 0: +40% over t+1..t+5 after session 90 (U),
++    -30% after 110 (D); row 1 carries a x25 unit reset at 120 (crypto)."""
++    t, d, a = flat_market(n_tickers=3, n_sessions=n_sessions, price=100.0, volume=1e6, start="2020-07-01")
++    close = a["close"]
++    close[0, 92] = 115.0
++    close[0, 93:] = 140.0
++    close[0, 112] = 80.0
++    close[0, 113:] = 70.0
++    close[1, 120:] = 2500.0
++    for i in range(3):
++        a["prev"][i, 1:] = close[i, :-1]
++        a["high"][i] = np.maximum(close[i], a["prev"][i]) * 1.005
++        a["low"][i] = np.minimum(close[i], a["prev"][i]) * 0.995
++        a["value"][i] = close[i] * a["volume"][i]
++    opens = a["prev"].copy()
++    df = frame_from_arrays(t, d, a, opens=opens, idx=False)
++    df["open"] = df["open"].astype(float)
++    meta = {"sha256": f"synthetic-{market}", "panel": "synthetic", "source_boundary": str(d[-1]), "format": FORMATS[market]}
++    proto = test_proto()
++    proto["markets"][market]["periods"]["discovery"] = ["2020-07-01", str(d[-1])]
++    proto["markets"][market]["periods"]["validation"] = [str(d[-1]), str(d[-1])]
++    proto["periods"]["discovery"] = ["2020-07-01", str(d[-1])]
++    proto["periods"]["validation"] = [str(d[-1]), str(d[-1])]
++    path = Path(tempfile.mkdtemp(prefix="idxsig-e5-proto-")) / "protocol.json"
++    path.write_text(json.dumps(proto) + "\n", encoding="utf-8")
++    study = e1.Study(df, meta, protocol_path=path, profile=PROFILES[market], family_module=moonshot_e5,
++                     pool_version="v3", panel_format=FORMATS[market])
++    return study, proto, df, meta
++
++
++class LabelTests(unittest.TestCase):
++    def test_u_and_d_on_the_reference_chain(self):
++        warnings.simplefilter("ignore")
++        st, proto, _, _ = designed_study("CRYPTO")
++        lab = e5.labels(st, proto, "CRYPTO")
++        u = lab["U"]
++        self.assertEqual(u[0, 90], 1.0)  # 140/100 within t+1..t+5
++        self.assertEqual(u[0, 88], 1.0)  # 89..93 reaches 140
++        self.assertEqual(u[0, 87], 0.0)  # 88..92 reaches 115 only
++        self.assertEqual(u[0, 86], 0.0)
++        self.assertEqual(u[2, 90], 0.0)
++        d, info = e5.d_label(lab, "CRYPTO", np.isfinite(u), proto)
++        self.assertEqual(info["rule"], "fixed")
++        self.assertAlmostEqual(info["threshold_min_ratio_minus_1"], 1 / 1.30 - 1)
++        self.assertEqual(d[0, 110], 1.0)  # 70/140 = 0.5 <= 0.769
++        self.assertEqual(d[0, 108], 1.0)  # 109..113 contains 112: 80/140 = 0.571
++        self.assertEqual(d[0, 106], 0.0)  # 107..111: flat at 140
++        self.assertEqual(d[0, 100], 0.0)
++        self.assertTrue(np.isnan(u[:, -1]).all())  # no forward session
++
++    def test_u_matches_e1_study_qraw_where_labelled(self):
++        warnings.simplefilter("ignore")
++        st, proto, _, _ = designed_study("US")
++        lab = e5.labels(st, proto, "US")
++        ok = lab["labelled"]
++        np.testing.assert_array_equal(lab["U"][ok] == 1.0, st.qraw[0.30][ok])
++
++    def test_idx_rate_matched_q_gives_equal_rates(self):
++        warnings.simplefilter("ignore")
++        df, meta = e5_panel("IDX", n=20, start="2020-10-01", end="2023-12-29", seed=7)
++        proto = test_proto()
++        st = e5.build_study(proto, "IDX", df, meta)
++        lab = e5.labels(st, proto, "IDX")
++        ev = e5.evaluable_mask(st, proto, "IDX", "discovery", lab)
++        d, info = e5.d_label(lab, "IDX", ev, proto)
++        self.assertEqual(info["rule"], "rate-matched")
++        n = int(ev.sum())
++        k = int(np.nansum(lab["U"][ev]))
++        self.assertGreater(k, 0)
++        self.assertEqual(int(np.nansum(d[ev])), int((lab["r5min"][ev] <= info["threshold_min_ratio_minus_1"]).sum()))
++        self.assertGreaterEqual(int(np.nansum(d[ev])), k)  # P(D) = P(U) up to ties
++        self.assertLessEqual(int(np.nansum(d[ev])) - k, int((lab["r5min"][ev] == info["threshold_min_ratio_minus_1"]).sum()))
++        self.assertAlmostEqual(info["P_U"], k / n)
++        self.assertEqual(info["evaluable_ticker_days"], n)
++
++    def test_crypto_unit_reset_censors_labels_and_the_plan_window(self):
++        warnings.simplefilter("ignore")
++        st, proto, _, _ = designed_study("CRYPTO")
++        lab = e5.labels(st, proto, "CRYPTO")
++        self.assertEqual(lab["unit_resets"], [{"ticker": "T001", "date": str(st.dates[120]), "ratio": 25.0}])
++        self.assertTrue(np.isnan(lab["U"][1, 115:121]).all())  # r-5..r
++        self.assertFalse(np.isnan(lab["U"][1, 114]))
++        self.assertFalse(np.isnan(lab["U"][1, 121]))
++        self.assertTrue(lab["censor_plan"][1, 114:120].all())  # t+1..t+6 contains 120
++        self.assertFalse(lab["censor_plan"][1, 113])
++        self.assertFalse(lab["censor_plan"][1, 120])
++        self.assertFalse(lab["censor_plan"][0].any())
++        off = e5.labels(st, proto, "US")  # the censoring applies to the markets the protocol names only
++        self.assertEqual(off["unit_resets"], [])
++        self.assertFalse(np.isnan(off["U"][1, 118]))
++
++
++# ---------------------------------------------------------------------------------------- learner
++class LearnerTests(unittest.TestCase):
++    def test_irls_recovers_a_planted_direction_and_is_reproducible(self):
++        rng = np.random.default_rng(1)
++        n = 4000
++        X = rng.random((n, 41))
++        y = (X[:, 3] - X[:, 7] + 0.1 * rng.standard_normal(n) > 0).astype(float)  # separable-ish on two columns
++        w = np.ones(n)
++        fit = e5.fit_logistic(X, y, w, lam=1e-3 * n, iterations=25)
++        self.assertEqual(len(fit["coef"]), 41)
++        self.assertGreater(fit["coef"][3], 1.0)
++        self.assertLess(fit["coef"][7], -1.0)
++        self.assertTrue(all(abs(c) < abs(fit["coef"][3]) / 3 for i, c in enumerate(fit["coef"]) if i not in (3, 7)))
++        self.assertTrue(np.isfinite(fit["deviance"]))
++        again = e5.fit_logistic(X, y, w, lam=1e-3 * n, iterations=25)
++        self.assertEqual(fit, again)
++        X[:, 10] = 1.0  # a constant column collinear with the intercept: finite under the ridge
++        fit_c = e5.fit_logistic(X, y, w, lam=1e-3 * n, iterations=25)
++        self.assertTrue(np.isfinite(fit_c["coef"]).all())
++        with self.assertRaises(ValueError):
++            e5.fit_logistic(X, np.ones(n), w, 1.0, 5)
++
++    def test_fit_label_subsamples_negatives_under_the_seed(self):
++        rng = np.random.default_rng(2)
++        shape = (10, 300)
++        f = {k: rng.random(shape) for k in moonshot_e5.FEATURE_ORDER}
++        n_idx, d_idx = np.nonzero(np.ones(shape, dtype=bool))
++        y = (f["ret1_r"][n_idx, d_idx] > 0.97).astype(float)
++        learner = dict(PROTO["learner"])
++        a = e5.fit_label(f, n_idx, d_idx, y, learner, "U")
++        b = e5.fit_label(f, n_idx, d_idx, y, learner, "U")
++        self.assertEqual(a, b)
++        self.assertEqual(a["n_positives"], int(y.sum()))
++        self.assertEqual(a["n_negatives_sampled"], int(np.floor(0.10 * (len(y) - y.sum()))))
++        self.assertEqual(a["n_rows_used"], a["n_positives"] + a["n_negatives_sampled"])
++        self.assertAlmostEqual(a["lambda"], 1e-3 * a["n_rows_used"])
++        self.assertEqual(a["negative_weight"], 10.0)
++        self.assertGreater(a["coef"][0], 0)  # ret1_r drives the label
++        other = e5.fit_label(f, n_idx, d_idx, y, {**learner, "seed": 1}, "U")
++        self.assertNotEqual(a["coef"], other["coef"])
++        zero = {**f, "gap_r": np.zeros(shape)}
++        self.assertEqual(e5.fit_label(zero, n_idx, d_idx, y, learner, "U")["coef"][moonshot_e5.FEATURE_ORDER.index("gap_r")], 0.0)
++        self.assertEqual(e5.constant_columns(zero, np.ones(shape, dtype=bool))["gap_r"], {"constant": True, "value": 0.0})
++        self.assertFalse(e5.constant_columns(zero, np.ones(shape, dtype=bool))["ret1_r"]["constant"])
++
++
++# ------------------------------------------------------------------------------- thresholds and flags
++class ThresholdFlagTests(unittest.TestCase):
++    def test_threshold_is_the_discovery_percentile_and_flags_are_debounced(self):
++        rng = np.random.default_rng(3)
++        score = rng.standard_normal((20, 200))
++        ev = np.zeros((20, 200), dtype=bool)
++        ev[:, 80:150] = True
++        thr = e5.threshold(score, ev, 99.5)
++        self.assertEqual(thr, float(np.percentile(score[ev], 99.5)))
++        t, d, a = flat_market(n_tickers=20, n_sessions=200)
++        m = Market.build(t, d, a["close"], a["prev"], a["high"], a["low"], a["volume"], a["value"], a["present"])
++        flags = e5.arm_flags(score, thr, m)
++        expect = moonshot_e5.flags(score, thr) & m.tradeable
++        expect[:, :WF] = False
++        np.testing.assert_array_equal(flags, expect)
++        self.assertFalse(flags[:, :WF].any())
++        with self.assertRaises(ValueError):
++            e5.threshold(score, np.zeros_like(ev), 99.5)
++
++    def test_stage1_flags_equal_the_harness_signals_of_the_candidate_rule(self):
++        """Guards against: the Stage-1 flag set differing from what the harness would trade in Stage 2."""
++        warnings.simplefilter("ignore")
++        found = Discovered.get("IDX")
++        model, proto = found["model"], found["proto"]
++        st = e5.build_study(proto, "IDX", found["df"], found["meta"])
++        scores = e5.arm_scores(st.base_feats, model)
++        rule = rules.registry()["E5_CAND_IDX_A"]
++        with e5.literals_from(model, "IDX"):
++            sig = rule.compute(st.m)
++        flags = e5.arm_flags(scores["A"], model["threshold_A"], st.m)
++        np.testing.assert_array_equal(np.nan_to_num(sig, nan=0.0) == 1.0, flags)
++        self.assertTrue(np.isnan(sig[:, :WF]).all())
++        self.assertGreater(int(flags.sum()), 0)
++        self.assertIsNone(dict(moonshot_e5.COEF_U)["IDX"])  # restored after the block
++        self.assertEqual(np.nan_to_num(e5.arm_scores(st.base_feats, model)["B"], nan=0.0).shape, st.m.shape)
++
++
++# --------------------------------------------------------------------------------------- paired stage 1
++def toy_block(flags=300, mean_excess=0.01, p=0.001, clusters=50, by_year=None):
++    return {"flags": flags, "plan_window": {"paired": {"n": flags, "n_clusters": clusters, "mean_excess": mean_excess,
++                                                       "p_one_sided": p}},
++            "by_year": by_year or {"2021": {"flags": 150, "mean_excess": 0.02}, "2022": {"flags": 150, "mean_excess": 0.005}}}
++
++
++class PairedStage1Tests(unittest.TestCase):
++    def test_gate_rules_and_refusal_below_two_clusters(self):
++        years = [2021, 2022]
++        self.assertEqual(e5.stage1_gate(toy_block(), PROTO, years), {"judged": True, "passed": True, "reasons": []})
++        g = e5.stage1_gate(toy_block(clusters=1), PROTO, years)
++        self.assertFalse(g["judged"])
++        self.assertFalse(g["passed"])
++        self.assertIn("not judged", g["reasons"][0])
++        self.assertTrue(any("flags 199" in r for r in e5.stage1_gate(toy_block(flags=199), PROTO, years)["reasons"]))
++        self.assertTrue(any("not positive" in r for r in e5.stage1_gate(toy_block(mean_excess=-0.001), PROTO, years)["reasons"]))
++        self.assertTrue(any("p 0.03" in r for r in e5.stage1_gate(toy_block(p=0.03), PROTO, years)["reasons"]))
++        bad_year = toy_block(by_year={"2021": {"flags": 250, "mean_excess": 0.02}, "2022": {"flags": 50, "mean_excess": -0.01}})
++        self.assertTrue(any("2022" in r for r in e5.stage1_gate(bad_year, PROTO, years)["reasons"]))
++        few = toy_block(by_year={"2021": {"flags": 251, "mean_excess": 0.02}, "2022": {"flags": 49, "mean_excess": -0.01}})
++        self.assertTrue(e5.stage1_gate(few, PROTO, years)["passed"])  # a year under 50 flags is not judged
++
++    def test_paired_statistic_is_reproducible_under_the_seed(self):
++        warnings.simplefilter("ignore")
++        found = Discovered.get("IDX")
++        a = found["stage1"]["arms"]["A"]["plan_window"]["paired"]
++        again = json.loads((Discovered.get("IDX")["out"] / "stage1.json").read_text(encoding="utf-8"))
++        self.assertEqual(a, again["arms"]["A"]["plan_window"]["paired"])
++        self.assertEqual((a["resamples"], a["seed"], a["cluster"]), (200, 20261015, "signal_date"))
++        dates = np.array(["2021-01-04", "2021-01-04", "2021-01-05", "2021-01-06"])
++        rf = np.array([0.1, 0.2, 0.3, 0.4])
++        rc = np.array([[0.0, 0.1, 0.0, np.nan], [0.0, 0.1, 0.2, np.nan]])
++        frame = e5.paired_frame(dates, rf, rc, "signal_date")
++        np.testing.assert_allclose(frame["matched_mean_net_return"].to_numpy(), [0.0, 0.1, 0.1, np.nan])
++        r1 = paired_excess(frame, resamples=500, seed=20261015)
++        r2 = paired_excess(frame, resamples=500, seed=20261015)
++        self.assertEqual(r1, r2)
++        self.assertEqual((r1["n"], r1["n_clusters"]), (3, 2))
++        self.assertAlmostEqual(r1["mean_excess"], (0.1 + 0.1 + 0.2) / 3)
++
++    def test_ratio_bootstrap_and_a1_gate(self):
++        num = np.array([1.0, 0.0, 1.0, 1.0])
++        den = np.array([0.5, 0.5, 0.25, 0.25])
++        r = e5.ratio_bootstrap(num, den, np.array(["a", "a", "b", "c"]), 300, 1)
++        self.assertAlmostEqual(r["ratio"], 3 / 1.5)
++        self.assertEqual(r["n_clusters"], 3)
++        self.assertEqual(r, e5.ratio_bootstrap(num, den, np.array(["a", "a", "b", "c"]), 300, 1))
++        block = {"E30": {"lift_vs_matched": 2.5, "p_one_sided_vs_matched": 0.01, "lift_vs_matched_ci95": [1.2, 4.0]}}
++        self.assertEqual(e5.a1_gate(block, PROTO), {"passed": True, "reasons": [], "lift_ci95_excludes_1": True})
++        weak = {"E30": {"lift_vs_matched": 1.5, "p_one_sided_vs_matched": 0.2, "lift_vs_matched_ci95": [0.8, 2.5]}}
++        g = e5.a1_gate(weak, PROTO)
++        self.assertFalse(g["passed"])
++        self.assertEqual(len(g["reasons"]), 2)
++        self.assertFalse(g["lift_ci95_excludes_1"])
++
++
++# ----------------------------------------------------------------------------------------- plan window
++EDGE_RULE = """
++def compute(m):
++    out = np.zeros(m.shape)
++    out[0, 10:11] = 1.0
++    out[1, 12:13] = 1.0
++    out[2, 20:21] = 1.0
++    return np.where(m.tradeable, out, np.nan)
++"""
++
++
++class PlanWindowTests(unittest.TestCase):
++    def _market(self, idx=True):
++        t, d, a = flat_market(n_tickers=3, n_sessions=40, price=1000.0 if idx else 10.0, volume=5e6, start="2022-03-01")
++        rng = np.random.default_rng(5)
++        for i in range(3):
++            path = a["close"][i, 0] * np.cumprod(1 + rng.uniform(-0.03, 0.03, 40))
++            if idx:
++                path = floor_tick(path)
++            a["close"][i] = path
++            a["prev"][i, 1:] = path[:-1]
++            a["high"][i] = np.maximum(path, a["prev"][i]) * 1.01
++            a["low"][i] = np.minimum(path, a["prev"][i]) * 0.99
++            a["value"][i] = path * a["volume"][i]
++        opens = None if idx else a["prev"].copy()
++        df = frame_from_arrays(t, d, a, opens=opens, idx=idx)
++        if idx:
++            for c in ("previous", "high", "low", "close", "volume", "value", "frequency", "listed_shares", "tradable_shares"):
++                df[c] = df[c].round().astype("Int64")
++        else:
++            df["open"] = df["open"].astype(float)
++        meta = {"sha256": "synthetic", "panel": "synthetic", "source_boundary": str(d[-1]), "default_start": str(d[0]),
++                "quality_tiers": [], "known_limitations": [], "survivorship": "synthetic"}
++        return df, meta
++
++    def test_plan_window_return_equals_the_harness_gross_return(self):
++        """Fill-independent synthetic case: no lots, locks or costs bind, so the harness's gross return is
++        exactly the reference-chain plan-window return (close entry on IDX, open entry on US)."""
++        rule = module_rule("PWIN", EDGE_RULE)
++        for market, idx, entry in (("IDX", True, "close"), ("US", False, "open")):
++            df, meta = self._market(idx)
++            m = Market.from_panel(df, price_limits=idx)
++            r_plan = e5.plan_window_return(m, entry, 5)
++            with with_rule(rule):
++                if idx:
++                    out = run(RunConfig("PWIN", market="IDX", random_draws=2, fill_model="A"), df, meta,
++                              ca_registry=synthetic_registry(df, meta))
++                else:
++                    out = run(RunConfig("PWIN", market="US", ca_mode="adjusted", random_draws=2, fill_model="A",
++                                        notional=5000.0, fee_buy=0.0, fee_sell=0.0), df, meta)
++            trades = out["trades"]
++            self.assertEqual(sorted(trades["status"].unique()), ["EXITED"])
++            tick = pd.Index(m.tickers)
++            for row in trades.itertuples(index=False):
++                n, t = tick.get_loc(row.ticker), int(np.searchsorted(m.dates, np.datetime64(row.signal_date)))
++                self.assertAlmostEqual(float(row.gross_return), float(r_plan[n, t]), places=12, msg=(market, row.ticker))
++            self.assertTrue(np.isnan(r_plan[:, 34:]).all())  # t + 6 past the window
++            self.assertFalse(np.isnan(r_plan[:, :34]).any())
++
++
++# ------------------------------------------------------------------------------------------- stage 2
++def toy_row(**kw):
++    base = {"scored": 300, "avg_net_return": 0.02, "p_one_sided_vs_matched": 0.01, "matched_random_avg_net_return": 0.0,
++            "scored_2021": 150, "avg_net_return_2021": 0.03, "scored_2022": 150, "avg_net_return_2022": 0.01,
++            "paired_net_n_clusters": 40, "paired_net_mean_excess": 0.02, "paired_net_p_one_sided": 0.001,
++            "rule_minus_matched": 0.02, "run": "primary", "judged": True,
++            "exit_subset_scored": 250, "exit_subset_avg_net_return": 0.015, "exit_subset_p_one_sided_vs_matched": 0.002,
++            "exit_subset_paired_net_n_clusters": 35, "exit_subset_paired_net_mean_excess": 0.015,
++            "exit_subset_scored_2021": 120, "exit_subset_avg_net_return_2021": 0.02,
++            "exit_subset_scored_2022": 130, "exit_subset_avg_net_return_2022": 0.01}
++    base.update(kw)
++    return base
++
++
++def toy_sens(run="fill_A", diff=0.01, judged=True):
++    return {"run": run, "judged": judged, "rule_minus_matched": diff}
++
++
++class Stage2Tests(unittest.TestCase):
++    def test_admissibility_composes_e3_paired_sensitivities_and_the_exit_subset(self):
++        years = [2021, 2022]
++        ok = e5.admissibility_stage2(toy_row(), [toy_sens(), toy_sens("tick", 0.001)], PROTO, years)
++        self.assertEqual(ok, {"judged": True, "admissible": True, "reasons": []})
++        self.assertEqual(e3.admissibility(toy_row(), PROTO, years), [])
++        r = e5.admissibility_stage2(toy_row(scored=199), [toy_sens()], PROTO, years)
++        self.assertTrue(any("scored 199" in x for x in r["reasons"]))
++        r = e5.admissibility_stage2(toy_row(p_one_sided_vs_matched=0.06), [toy_sens()], PROTO, years)
++        self.assertTrue(any("p vs matched" in x for x in r["reasons"]))  # e3's harness p, verbatim
++        r = e5.admissibility_stage2(toy_row(paired_net_p_one_sided=0.03), [toy_sens()], PROTO, years)
++        self.assertTrue(any("paired net p 0.03" in x for x in r["reasons"]))
++        r = e5.admissibility_stage2(toy_row(), [toy_sens(diff=-0.001)], PROTO, years)
++        self.assertTrue(any("sensitivity fill_A" in x for x in r["reasons"]))
++        self.assertFalse(e5.admissibility_stage2(toy_row(), [toy_sens("controls_v2", -0.5, judged=False)], PROTO, years)["reasons"])
++        r = e5.admissibility_stage2(toy_row(exit_subset_avg_net_return=-0.01), [toy_sens()], PROTO, years)
++        self.assertTrue(any("exit-capacity subset: average net" in x for x in r["reasons"]))
++        r = e5.admissibility_stage2(toy_row(exit_subset_scored=150), [toy_sens()], PROTO, years)
++        self.assertTrue(any("subset: scored 150" in x for x in r["reasons"]))
++        r = e5.admissibility_stage2(toy_row(exit_subset_avg_net_return_2022=-0.01), [toy_sens()], PROTO, years)
++        self.assertTrue(any("subset: average net return in 2022" in x for x in r["reasons"]))
++        r = e5.admissibility_stage2(toy_row(paired_net_n_clusters=1), [toy_sens()], PROTO, years)
++        self.assertFalse(r["judged"])
++        self.assertFalse(r["admissible"])
++        r = e5.admissibility_stage2({k: v for k, v in toy_row().items() if not k.startswith("exit_subset_")}, [], PROTO, years)
++        self.assertIn("exit-capacity subset missing", r["reasons"])
++
++    def test_select_arm_prefers_the_primary_arm(self):
++        adm = {"A": {"admissible": True}, "B": {"admissible": True}}
++        rows = {"A": {"paired_net_mean_excess": 0.01}, "B": {"paired_net_mean_excess": 0.05}}
++        self.assertEqual(e5.select_arm(adm, rows, "IDX", PROTO), "A")
++        self.assertEqual(e5.select_arm(adm, rows, "CRYPTO", PROTO), "B")
++        self.assertEqual(e5.select_arm(adm, rows, "US", PROTO), "B")  # no primary: the larger excess
++        self.assertEqual(e5.select_arm({"A": {"admissible": False}, "B": {"admissible": True}}, rows, "IDX", PROTO), "B")
++        self.assertIsNone(e5.select_arm({"A": {"admissible": False}}, rows, "IDX", PROTO))
++
++    def test_harness_row_carries_the_paired_statistic_subset_and_bound(self):
++        warnings.simplefilter("ignore")
++        found = Discovered.get("CRYPTO")
++        df, meta, proto, model = found["df"], found["meta"], found["proto"], found["model"]
++        w = found["summary"]["window"]
++        cfg = e5.harness_config(proto, "CRYPTO", "E5_CAND_CRYPTO_A", w["start"], w["end"])
++        self.assertEqual((cfg.lookahead_cuts, cfg.random_draws, cfg.jump_ratio), (2, 8, 10.0))
++        with e5.literals_from(model, "CRYPTO"):
++            out = run(cfg, df, meta)
++        self.assertEqual(out["summary"]["lookahead_check"]["mode"], "sampled")
++        self.assertEqual(len(out["summary"]["lookahead_check"]["truncated_after"]), 2)
++        m = Market.from_panel(df, price_limits=False).window(w["start"], w["end"])
++        plan = {k: proto["plans"]["CRYPTO"]["primary"][k] for k in e5.PLAN_KEYS}
++        row = e5.harness_row(out["summary"], out["trades"], "A", {"id": "primary", "judged": True}, plan, [2020, 2021, 2022],
++                             proto, e5.volume_series(df), e5.u_lookup(m, 5, 1.30), "deadbeef")
++        self.assertEqual((row["arm"], row["run"], row["plan_id"], row["literals_sha256"]), ("A", "primary", "A|fixed1|fixed|h5", "deadbeef"))
++        self.assertEqual(row["lookahead_mode"], "sampled")
++        for k in ("paired_net_n", "paired_net_n_clusters", "paired_net_mean_excess", "paired_net_p_one_sided",
++                  "exit_subset_scored", "exit_subset_avg_net_return", "exit_subset_p_one_sided_vs_matched",
++                  "breakeven_p_star", "rule_minus_matched", "avg_gross_return", "exit_participation_median"):
++            self.assertIn(k, row)
++        self.assertEqual(row["paired_net_n"], paired_excess(out["trades"], resamples=200)["n"])
++        self.assertLessEqual(row["exit_subset_scored"], row["scored"])
++        part = e5.exit_participation(out["trades"], e5.volume_series(df))
++        scored = out["trades"]["status"].isin(e5.SCORED_STATUS).to_numpy()
++        self.assertTrue(np.isfinite(part[scored]).all())
++        self.assertTrue(np.isnan(part[~scored]).all())
++        self.assertGreater(row["scored"], 0)
++        # the exit-capacity subset re-states the row's own trades
++        keep = np.nan_to_num(part, nan=np.inf) <= proto["stages"]["2_execution"]["exit_participation_max"]
++        self.assertEqual(row["exit_subset_scored"], int((keep & scored).sum()))
++
++    def test_reproduce_status_accepts_only_the_fourth_decimal_matched_deviation(self):
++        dev = PROTO["stages"]["0_reproduce"]["accepted_deviation"]
++        fields = PROTO["stages"]["0_reproduce"]["rule_side_fields"]
++        want = {"signals": 1109, "scored": 251, "avg_net_return": -0.036355648777628986,
++                "status_counts": {"EXITED": 251, "SKIP_LOT": 3}, "matched_random_avg_net_return": -0.00440442963495353}
++        self.assertEqual(e5.reproduce_status(want, dict(want), fields, dev), (True, "IDENTICAL", "REPRODUCED"))
++        near = {**want, "matched_random_avg_net_return": -0.004400107560502186}  # the E3 record
++        self.assertEqual(e5.reproduce_status(want, near, fields, dev), (True, "DEVIATES_WITHIN_ACCEPTED_TOLERANCE", "REPRODUCED"))
++        far = {**want, "matched_random_avg_net_return": -0.0144}
++        self.assertEqual(e5.reproduce_status(want, far, fields, dev), (True, "DEVIATES", "DEVIATES"))
++        rule = {**want, "scored": 250}
++        self.assertEqual(e5.reproduce_status(want, rule, fields, dev)[2], "DEVIATES")
++        self.assertEqual(e5.reproduce_status(want, {**want, "avg_net_return": -0.0363556}, fields, dev)[2], "DEVIATES")
++        self.assertEqual(e5.reproduce_status(want, {**want, "status_counts": {"EXITED": 251}}, fields, dev)[2], "DEVIATES")
++
++
++# ---------------------------------------------------------------------------------------- freeze
++def synthetic_model(market="IDX", seed=9):
++    rng = np.random.default_rng(seed)
++    return {"market": market, "coef_U": [float(x) for x in rng.standard_normal(41)], "intercept_U": -5.25,
++            "coef_D": [float(x) for x in rng.standard_normal(41)], "intercept_D": -4.5, "threshold_A": 1.2345,
++            "threshold_B": -0.5}
++
++
++class FreezeTests(unittest.TestCase):
++    def test_freeze_writes_literals_once_and_refuses_twice(self):
++        source = e5.MODULE_PATH.read_text(encoding="utf-8")
++        model = synthetic_model("IDX")
++        new = e5.freeze_source(source, model, "IDX", "A")
++        lits = e5.module_literals(new)
++        self.assertEqual(dict(lits["COEF_U"]["value"])["IDX"], tuple(model["coef_U"]))
++        self.assertEqual(dict(lits["COEF_D"]["value"])["IDX"], tuple(model["coef_D"]))
++        self.assertEqual(dict(lits["INTERCEPT_U"]["value"])["IDX"], -5.25)
++        self.assertEqual(dict(lits["THRESHOLD_A"]["value"])["IDX"], 1.2345)
++        self.assertEqual(dict(lits["THRESHOLD_B"]["value"])["IDX"], -0.5)
++        self.assertIsNone(dict(lits["COEF_U"]["value"])["US"])
++        self.assertEqual(lits["SELECTED"]["value"], (("IDX", "A"),))
++        frozen = e5.load_module_from_text(new)
++        self.assertEqual(e5.check_frozen(model, "IDX", frozen), [])
++        self.assertEqual(audit_module(frozen), [])
++        self.assertTrue(frozen.frozen("IDX_A") and frozen.frozen("IDX_B"))
++        self.assertFalse(frozen.frozen("US_A"))
++        self.assertEqual({r.rule_id for r in frozen.rules()} - {r.rule_id for r in moonshot_e5.rules()}, {"MOONSHOT_E5_IDX_D1"})
++        with self.assertRaises(RuntimeError):
++            e5.freeze_source(new, model, "IDX", "A")  # literals already set
++        us = e5.freeze_source(new, synthetic_model("US"), "US", None)  # a second market, no SELECTED entry
++        self.assertEqual(e5.module_literals(us)["SELECTED"]["value"], (("IDX", "A"),))
++        self.assertEqual(e5.check_frozen(synthetic_model("US"), "US", e5.load_module_from_text(us)), [])
++        self.assertTrue(e5.check_frozen(synthetic_model("US", seed=1), "US", e5.load_module_from_text(us)))
++        self.assertTrue(e5.check_frozen(model, "IDX"))  # the real module is unfrozen: validation refuses
++        self.assertEqual(e5.check_frozen(model, "IDX")[0], "COEF_U[IDX] is None")
++
++    def test_run_freeze_on_a_module_copy(self):
++        tmp = Path(tempfile.mkdtemp(prefix="idxsig-e5-freeze-"))
++        module_path = tmp / "moonshot_e5_copy.py"
++        module_path.write_text(e5.MODULE_PATH.read_text(encoding="utf-8"), encoding="utf-8")
++        disc = tmp / "CRYPTO" / "discovery"
++        disc.mkdir(parents=True)
++        model = synthetic_model("CRYPTO")
++        e3.write_json(disc / "model.json", model)
++        e3.write_json(disc / "gates.json", {"market": "CRYPTO", "selected_arm": "B"})
++        out = tmp / "CRYPTO" / "freeze"
++        result = e5.run_freeze(out, PROTO, PROTO_SHA, "CRYPTO", module_path=module_path, log=lambda *_: None)
++        self.assertTrue((out / "result.json").exists())
++        self.assertEqual(result["selected_arm"], "B")
++        frozen = e5.load_module_from(module_path)
++        self.assertEqual(e5.check_frozen(model, "CRYPTO", frozen), [])
++        self.assertEqual(frozen.SELECTED, (("CRYPTO", "B"),))
++        with self.assertRaises(RuntimeError):
++            e5.run_freeze(tmp / "CRYPTO" / "freeze2", PROTO, PROTO_SHA, "CRYPTO", module_path=module_path, log=lambda *_: None)
++        self.assertFalse((tmp / "CRYPTO" / "freeze2").exists())  # refused before anything was written
++        with self.assertRaises(RuntimeError):
++            e5.run_freeze(tmp / "IDX" / "freeze", PROTO, PROTO_SHA, "IDX", module_path=module_path,
++                          discovery_dir=disc, log=lambda *_: None)  # another market's discovery
++        self.assertIsNone(moonshot_e5.SELECTED)  # the real module was never touched
++
++    def test_validation_refuses_when_literals_differ_from_model_json(self):
++        warnings.simplefilter("ignore")
++        found = Discovered.get("IDX")
++        out = found["out"].parent / "validation"
++        with self.assertRaises(RuntimeError) as ctx:
++            e5.run_validation(found["df"], found["meta"], found["registry"], out, found["proto"], "sha", "IDX",
++                              log=lambda *_: None)
++        self.assertIn("not discovery/model.json", str(ctx.exception))
++        self.assertFalse(out.exists())
++        toy = {"scored": 120, "avg_net_return": 0.01, "paired_net_n_clusters": 30, "paired_net_mean_excess": 0.01,
++               "paired_net_p_one_sided": 0.01, "p_one_sided_vs_matched": 0.02}
++        det = {"precision_lo95": 0.05, "base_rate": 0.02}
++        v = e5.validation_pass(toy, [toy_sens(diff=0.01)], det, PROTO, "IDX")
++        self.assertEqual((v["passed"], v["claim_level"]), (True, "PROVISIONAL"))
++        self.assertFalse(e5.validation_pass(toy, [toy_sens(diff=0.01)], det, PROTO, "US")["passed"])  # US needs 200
++        self.assertFalse(e5.validation_pass(toy, [toy_sens(diff=-0.01)], det, PROTO, "IDX")["passed"])
++        self.assertFalse(e5.validation_pass(toy, [], {"precision_lo95": 0.01, "base_rate": 0.02}, PROTO, "IDX")["passed"])
++        self.assertFalse(e5.validation_pass({**toy, "paired_net_n_clusters": 1}, [], det, PROTO, "IDX")["judged"])
++
++
++# ------------------------------------------------------------------------------------ window invariance
++class WindowInvariance(unittest.TestCase):
++    def test_flags_at_a_session_do_not_depend_on_where_the_window_starts(self):
++        """The module's own helpers, scored with a discovery model: the window moved by k sessions carries
++        the same flags from its lead-in on (no name lists inside the window, so age is censored alike)."""
++        warnings.simplefilter("ignore")
++        found = Discovered.get("CRYPTO")
++        model = found["model"]
++        df, meta = found["df"], found["meta"]
++        m = Market.from_panel(df, price_limits=False).window("2021-03-01", "2022-06-30")
++        f_full = moonshot_e5.features(*[getattr(m, a) for a in moonshot_e5.FEATURE_ARGS])
++        s_full = e5.arm_scores(f_full, model)
++        for k in (1, 7, 20):
++            part = m.slice(k, m.shape[1])
++            f_part = moonshot_e5.features(*[getattr(part, a) for a in moonshot_e5.FEATURE_ARGS])
++            s_part = e5.arm_scores(f_part, model)
++            for arm in e5.ARMS:
++                np.testing.assert_allclose(s_part[arm][:, W:], s_full[arm][:, k + W:], err_msg=f"{arm} k={k}")
++                full = e5.arm_flags(s_full[arm], model[f"threshold_{arm}"], m)
++                moved = e5.arm_flags(s_part[arm], model[f"threshold_{arm}"], part)
++                np.testing.assert_array_equal(moved[:, WF:], full[:, k + WF:], err_msg=f"{arm} k={k}")
++                self.assertFalse(moved[:, :WF].any())
++            full_det = e5.detector_flags(f_full, m)
++            moved_det = e5.detector_flags(f_part, part)
++            for name in e5.DETECTORS:
++                np.testing.assert_array_equal(moved_det[name][:, WF:], full_det[name][:, k + WF:], err_msg=name)
++
++
++# ---------------------------------------------------------------------------------------- discovery
++class DiscoveryEndToEnd(unittest.TestCase):
++    def test_idx_discovery_writes_every_file_and_the_gates(self):
++        warnings.simplefilter("ignore")
++        found = Discovered.get("IDX")
++        out, model, stage1, gates, summary = found["out"], found["model"], found["stage1"], found["gates"], found["summary"]
++        for name in ("model.json", "thresholds.json", "stage1.json", "univariate.csv", "flags.csv", "plans.csv",
++                     "gates.json", "summary.json"):
++            self.assertTrue((out / name).exists(), name)
++        self.assertEqual(len(model["coef_U"]), 41)
++        self.assertEqual(len(model["coef_D"]), 41)
++        self.assertEqual(model["feature_order"], list(moonshot_e5.FEATURE_ORDER))
++        self.assertEqual(model["D_label"]["rule"], "rate-matched")
++        self.assertIn("gap_r", model["constant_column_names"])  # no opens on IDX: gap ranks 0.5 everywhere
++        self.assertIn("gap_r2", model["constant_column_names"])
++        self.assertEqual(model["constant_columns"]["gap_r"], {"constant": True, "value": 0.5})
++        self.assertEqual(model["fit_U"]["seed"], 20261015)
++        self.assertEqual(model["fit_U"]["iterations"], 25)
++        thr = json.loads((out / "thresholds.json").read_text(encoding="utf-8"))
++        self.assertEqual((thr["threshold_A"], thr["threshold_B"]), (model["threshold_A"], model["threshold_B"]))
++        self.assertEqual(thr["percentile"], 99.5)
++        for arm in e5.ARMS:
++            block = stage1["arms"][arm]
++            for key in ("flags", "E30", "D30", "directional_ratio", "plan_window", "by_year", "pre_move_split",
++                        "by_regime", "auc_U", "auc_D", "gate", "threshold", "distinct_names"):
++                self.assertIn(key, block, (arm, key))
++            self.assertEqual(set(block["by_year"]), {"2021", "2022"})
++            self.assertEqual(block["gate"], gates["stage1"][arm])
++            self.assertEqual(block["E30"]["base_rate"], stage1["base_rates"]["E30"])
++            if block["flags"]:
++                self.assertTrue(0 <= block["E30"]["precision"] <= 1)
++        self.assertEqual(stage1["arms"]["A"]["primary"], "P1")
++        self.assertIsNone(stage1["arms"]["B"]["primary"])
++        self.assertIn("variance_detection_check", stage1["arms"]["A"])
++        self.assertEqual(set(stage1["detectors"]), set(e5.DETECTORS))
++        self.assertIn("a1_gate", stage1["detectors"]["A1_CREEP_QUIET_NR"])
++        self.assertEqual(stage1["unit_resets"], [])
++        self.assertEqual(stage1["entry_price"], "close")
++        uni = pd.read_csv(out / "univariate.csv")
++        self.assertEqual(list(uni["feature"]), list(moonshot_e5.RANKED + moonshot_e5.BINARY))
++        self.assertIn("auc", uni.columns)
++        self.assertIn("lift_vs_matched", uni.columns)
++        flags = pd.read_csv(out / "flags.csv")
++        self.assertEqual(set(flags["arm"]) <= set(e5.ARMS) | set(e5.DETECTORS), True)
++        self.assertEqual(len(flags[flags["arm"] == "A"]), stage1["arms"]["A"]["flags"])
++        plans = pd.read_csv(out / "plans.csv")
++        ran = [a for a in e5.ARMS if gates["stage1"][a]["passed"]]
++        if gates["a1"]["passed"]:
++            ran.append("A1_CREEP_QUIET_NR")
++        self.assertEqual(sorted(set(plans["arm"])) if len(plans) else [], sorted(ran))
++        self.assertEqual(set(gates["stage2"]), set(ran))
++        for name in ran:
++            self.assertEqual(list(plans.loc[plans["arm"] == name, "run"]), ["primary", "fill_A", "one_tick_cost", "controls_v2"])
++            self.assertTrue((out / f"summary_{name}_primary.json").exists())
++            self.assertIn("admissible", gates["stage2"][name])
++        self.assertEqual(summary["stage2_runs"], len(plans))
++        self.assertEqual(summary["precondition"], {"status": "REPRODUCED", "accepted_deviation": False})
++        self.assertEqual(summary["window"]["lead_in_sessions"], 65)
++        self.assertEqual(summary["study_options"], {"panel_format": "panel-v2", "pool_units": "panel", "pool_version": "v3",
++                                                    "pool_keys": ["price_band", "liquidity", "volatility", "market_cap"]})
++        self.assertIn("6 fits", summary["search_size"])
++        self.assertEqual(summary["selected_arm"], gates["selected_arm"])
++        self.assertIs(summary["frozen_before_analysis"], False)
++
++    def test_discovery_is_deterministic(self):
++        warnings.simplefilter("ignore")
++        found = Discovered.get("IDX")
++        out2 = Path(tempfile.mkdtemp(prefix="idxsig-e5-")) / "IDX" / "discovery"
++        fake_reproduce(out2, found["meta"])
++        e5.run_discovery(found["df"], found["meta"], found["registry"], out2, found["proto"], "synthetic-sha", "IDX",
++                         log=lambda *_: None)
++        for name in ("model.json", "thresholds.json", "stage1.json", "univariate.csv", "flags.csv", "gates.json", "plans.csv"):
++            self.assertEqual((found["out"] / name).read_bytes(), (out2 / name).read_bytes(), name)
++
++    def test_crypto_discovery_censors_the_reset_and_runs_the_close_sensitivity(self):
++        warnings.simplefilter("ignore")
++        found = Discovered.get("CRYPTO")
++        stage1, model, gates = found["stage1"], found["model"], found["gates"]
++        self.assertEqual(len(stage1["unit_resets"]), 1)
++        self.assertEqual(stage1["unit_resets"][0]["ticker"], "S002")
++        self.assertEqual(model["D_label"]["rule"], "fixed")
++        self.assertIn("ara", model["constant_column_names"])  # no price limits off IDX
++        self.assertIn("gap_r", model["constant_column_names"])  # the synthetic open is the previous close
++        self.assertEqual(stage1["entry_price"], "open")
++        self.assertNotIn("by_regime", stage1["arms"]["A"])
++        self.assertEqual(stage1["arms"]["B"]["primary"], "P2")
++        plans = pd.read_csv(found["out"] / "plans.csv")
++        for name in gates["stage2"]:
++            runs = plans[plans["arm"] == name]
++            self.assertEqual(list(runs["run"]), ["primary", "participation_0_05_doubled_costs", "entry_at_close_t1", "controls_v2"])
++            self.assertEqual(list(runs["market_profile"]), ["CRYPTO", "CRYPTO", "CRYPTO_CLOSE", "CRYPTO"])
++            self.assertEqual(list(runs["jump_ratio"]), [10.0] * 4)
++
++    def test_discovery_refuses_without_the_precondition_or_on_other_data(self):
++        warnings.simplefilter("ignore")
++        found = Discovered.get("IDX")
++        out = Path(tempfile.mkdtemp(prefix="idxsig-e5-")) / "IDX" / "discovery"
++        with self.assertRaises(RuntimeError):
++            e5.run_discovery(found["df"], found["meta"], found["registry"], out, found["proto"], "sha", "IDX", log=lambda *_: None)
++        fake_reproduce(out, {"sha256": "other"})
++        with self.assertRaises(RuntimeError):
++            e5.run_discovery(found["df"], found["meta"], found["registry"], out, found["proto"], "sha", "IDX", log=lambda *_: None)
++        fake_reproduce(out, found["meta"], status="DEVIATES")
++        with self.assertRaises(RuntimeError):
++            e5.run_discovery(found["df"], found["meta"], found["registry"], out, found["proto"], "sha", "IDX", log=lambda *_: None)
++        self.assertFalse(out.exists())
++        with self.assertRaises(RuntimeError):  # the panel is not the protocol's
++            e5.run_discovery(found["df"], {**found["meta"], "sha256": "x"}, found["registry"], out, found["proto"], "sha", "IDX",
++                             log=lambda *_: None)
++
++
++# --------------------------------------------------------------------------------------------- cli
++class CliTests(unittest.TestCase):
++    def test_subcommands_parse_and_refuse_a_dirty_tree(self):
++        for cmd in ("e5-reproduce", "e5-discovery", "e5-freeze", "e5-validation"):
++            with mock.patch("idxsig.results.code_state", return_value={"commit": "abc", "dirty": True}):
++                with mock.patch("sys.stderr") as err:
++                    self.assertEqual(cli.main([cmd, "--market", "IDX"]), 2)
++            self.assertIn("commit idxsig/ first", "".join(str(c) for c in err.write.call_args_list))
++        with self.assertRaises(SystemExit):
++            cli.main(["e5-discovery", "--market", "CRYPTO_CLOSE"])
++        with self.assertRaises(SystemExit):
++            cli.main(["e5-freeze"])  # --market is required
++        with mock.patch("idxsig.results.code_state", return_value={"commit": "abc", "dirty": False}):
++            with mock.patch("idxsig.e5.run_freeze", side_effect=RuntimeError("nothing to freeze")) as rf:
++                with mock.patch("sys.stderr"):
++                    self.assertEqual(cli.main(["e5-freeze", "--market", "US"]), 2)
++            self.assertEqual(rf.call_args[0][3], "US")
++            self.assertEqual(rf.call_args[0][0], e5.stage_dir("US", "freeze"))
++
++
++if __name__ == "__main__":
++    unittest.main()

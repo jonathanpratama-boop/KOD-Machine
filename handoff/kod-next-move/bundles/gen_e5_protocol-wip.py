@@ -1,0 +1,569 @@
+"""Writes the DRAFT research/E5/protocol.json (KOD-GLOBAL-E5-v1). Run from idx-signals/. Untracked until the freeze."""
+import json
+import sys
+from pathlib import Path
+
+sys.path.insert(0, ".")
+from idxsig.rules import moonshot_e5 as m  # noqa: E402
+
+OUT = Path("research/E5/protocol.json")
+
+IDX_SENS = [
+    {"id": "fill_A", "judged": True, "overrides": {"fill_model": "A"},
+     "note": "the original ex-post capacity model (entry-session final volume), as E1's first recorded run"},
+    {"id": "one_tick_cost", "judged": True, "overrides": {"tick_cost": True},
+     "note": "one IDX tick per side (market.tick_size at the price paid / received) added to the fees, rule and "
+             "controls alike (backtest.RunConfig.tick_cost, additive, default off): the closing-auction spread the "
+             "cost model otherwise lacks"},
+]
+US_SENS = [
+    {"id": "fill_A_as_traded", "judged": True, "overrides": {"fill_model": "A"},
+     "note": "fill model A in as-traded units (the ex-post capacity filter)"},
+    {"id": "quarantine_unit_schedule", "judged": True, "overrides": {"quarantine": "unit_schedule"},
+     "note": "names whose split records SEC does not corroborate left out, rule and controls alike (the recorded "
+             "E2-US run's setting; outcome-correlated per repair_v3, hence a sensitivity, not the primary)"},
+    {"id": "stress_1_5pct_per_side", "judged": True, "overrides": {"fee_buy": 0.015, "fee_sell": 0.0150278},
+     "note": "+1.5% per side on top of the profile's fees and tiers (fee_buy 0.015, fee_sell 0.0000278 + 0.015): a "
+             "bound on the uncorroborated 2020-22 cost tiers"},
+]
+CRYPTO_SENS = [
+    {"id": "participation_0_05_doubled_costs", "judged": True,
+     "overrides": {"max_participation": 0.05, "fee_buy": 0.003, "fee_sell": 0.003},
+     "note": "shares at most 5% of the entry session's volume and fee + tier = 0.4% per side (fee 0.003 + the "
+             "profile tier 0.001), twice the recorded 0.2%"},
+    {"id": "entry_at_close_t1", "judged": True, "overrides": {"market": "CRYPTO_CLOSE"},
+     "note": "profiles.CRYPTO_CLOSE: entry at the close of t+1 instead of its open (a daily crypto open is the prior "
+             "close printed at 00:00 UTC, a zero-latency fill no live order gets); same panel, same costs, fill "
+             "model A, long only; reached only as this sensitivity, never as a top-level market"},
+]
+
+proto = {
+    "protocol_id": "KOD-GLOBAL-E5-v1",
+    "experiment": "E5-CEILING",
+    "frozen_before_analysis": False,
+    "freeze_note": "DRAFT. The freeze is the commit of this file and PROTOCOL.md under research/E5/ (append-only) "
+                   "with frozen_before_analysis set to true and the freeze commit recorded in PROTOCOL.md, before "
+                   "any Stage-0 statistic; every stage output carries protocol_sha256 of the committed file.",
+    "question": "At the close of session t, does any pre-registered combination of daily-bar features carry "
+                "tradeable DIRECTION for sessions t+1..t+5 over the full evaluable universe, beyond matched controls, "
+                "or is the lab's validated detection (9.3x / 5.4x / 4.6x matched-random lift for F1_ARA / G2_RET30) "
+                "variance detection that cannot be traded? Secondary: does multi-session pre-move structure (volume "
+                "creep, quiet range, volatility contraction, re-base) carry +30% information before the first big "
+                "day, including the KOD-DET-v0 VOLUME_CREEP_PRICE_QUIET definition as a population base-rate row?",
+    "null_hypothesis": "No daily-bar combination separates the coming +30% moves from the coming large down-moves; "
+                       "rankers trained on U and D select the same high-variance names; the paired plan-window excess "
+                       "return of their flags over matched controls is <= 0 in every market and every discovery year.",
+    "builds_on": {
+        "E1": "research/E1/protocol.json (KOD-IDX-E1-v1): the IDX event, reference chain, weak signals, e1.Study",
+        "E2": "research/E2/protocol.json (KOD-GLOBAL-E2-v1): the US and crypto markets, periods, panels",
+        "E3": "research/E3/protocol.json (KOD-IDX-E3-v1): the admissibility rule (e3.admissibility, verbatim)",
+        "E4": "research/E4/protocol.json (KOD-GLOBAL-E4-v1): the per-market stage layout (e4.py) and the holdout "
+              "guard for US and crypto",
+        "D1": "the recorded trading runs of MOONSHOT_E1_D1 (IDX), MOONSHOT_E2_US_D1 and MOONSHOT_E2_CRYPTO_D1 are "
+              "this protocol's precondition (Stage 0)",
+        "synthesis": "handoff/kod-next-move/synthesis/RECOMMENDATION.md and E5_CEILING_protocol_draft.json, amended "
+                     "by the Phase-2a review findings (handoff/kod-next-move/06_phase2_integration_todo.md)",
+    },
+    "family": {
+        "rule_module": "idxsig/rules/moonshot_e5.py",
+        "rule_ids": {"candidates": "E5_CAND_<MARKET>_<ARM> and E5_CAND_A0_CREEP_QUIET / E5_CAND_A1_CREEP_QUIET_NR",
+                     "selected": "MOONSHOT_E5_<MARKET>_D1"},
+        "version": m.VERSION,
+        "side": m.SIDE,
+        "holding_days": m.HOLDING_DAYS,
+        "candidates": list(m.CANDIDATES),
+        "arms": {"A": "score = logit_U (the E30 ranker)", "B": "score = logit_U - logit_D (the directional ranker)"},
+        "descriptive_detectors": {
+            "A0_CREEP_QUIET": "creep5v20 >= 1.5 AND quiet (KOD-DET-v0 VOLUME_CREEP_PRICE_QUIET, kod/detectors.py:72-86)",
+            "A1_CREEP_QUIET_NR": "A0 AND not_repriced (ret20 < 0.30)",
+            "trading_run_gate": "A1 gets one Stage-2 harness run under the market plan only if its debounced "
+                                "detection lift vs volatility-matched controls is >= a1_gate.min_lift with one-sided "
+                                "p < a1_gate.max_p on discovery; otherwise both are reported only (base rate, "
+                                "precision, Wilson bounds, matched lift with a session-cluster CI)",
+        },
+        "literals": "COEF_U, COEF_D, INTERCEPT_U, INTERCEPT_D, THRESHOLD_A, THRESHOLD_B per market and SELECTED are "
+                    "module-level literals, None until Stage 3 freezes them; the rule hash covers them; an unfrozen "
+                    "arm's rule refuses to compute (family_flags reports it as no flags)",
+    },
+    "features": {
+        "feature_args": list(m.FEATURE_ARGS),
+        "ranked": list(m.RANKED),
+        "binary": list(m.BINARY),
+        "order": list(m.FEATURE_ORDER),
+        "n_columns": len(m.FEATURE_ORDER),
+        "one_order_for_all_markets": "the same 41 columns in every market: gap ranks 0.5 on IDX (no opens), ara is 0 "
+                                     "off IDX (no price limits); constant columns are tolerated by the ridge and "
+                                     "reported per market (constant_columns in discovery/model.json)",
+        "conventions": {
+            "rank": "per session, among names present AND tradeable at that session (the pool is masked by present "
+                    "before ranking, so a name listed later never changes an earlier column), percentile rank = "
+                    "(rank - 0.5) / n with midrank (average) ties, values in (0, 1); a NaN value ranks 0.5; the "
+                    "squared rank enters as its own column; binaries enter as 0/1 (moonshot_e5.rank_features)",
+            "vol20": "e1.Study._signals convention: std of daily log returns over 20 sessions (min 15), a present "
+                     "but untraded session counting as a zero log return",
+            "vc10_60": "vol10 / vol60 with min_periods 8 of 10 and 45 of 60 (VOL10_MIN, VOL60_MIN)",
+            "creep5v20": "median volume t-4..t over median volume t-24..t-5 over present sessions (an untraded present "
+                         "session is zero volume); both windows must be fully present (5 of 5, 20 of 20) else NaN",
+            "rngr5": "median rngr over t-4..t (5 of 5)",
+            "quiet": "rngr5 <= 1.0 and |ret5| <= 2 * vol20 * sqrt(5) (ZEALAND price_facts.py, same logic); 0 when any "
+                     "input is NaN",
+            "not_repriced": "ret20 < 0.30; 0 when ret20 is NaN",
+            "rebase": "some s0 in [t-40, t-6] was a spike, pre = level(s0-1), peak = max level(s0..t), level(t) <= "
+                      "pre + 0.5 (peak - pre) and min level(t-4..t) >= pre; a NaN anywhere in s0-1..t fails that s0; "
+                      "spike = (ret1 >= 0.30) | (lock_up & tradeable): on IDX a superset of the draft's lock_up-only "
+                      "definition (kept, declared); off IDX lock_up is never set",
+            "binaries_unknown": "binary features treat an undefined input as 0 (as the merged module computes them)",
+            "warmup": f"FEATURE_WARMUP = {m.FEATURE_WARMUP}: every feature is NaN in the first {m.FEATURE_WARMUP} "
+                      f"columns of a view; DEBOUNCE = {m.DEBOUNCE}; WARMUP = FEATURE_WARMUP + DEBOUNCE = {m.WARMUP}: "
+                      f"compute() is NaN in the first {m.WARMUP} columns. Every Study and harness window starts "
+                      f"WARMUP = {m.WARMUP} sessions before its period (not 60: the draft's 60 was the feature "
+                      "warm-up alone, which would put the debounce lead-in inside the period)",
+            "debounce": "a flag is the first session a name's state is True after DEBOUNCE trailing sessions KNOWN "
+                        "to be False (column s reads columns s-5..s only); a NaN score is unknown, never 'outside'; "
+                        "names outside the ranking pool (absent or untraded) have finite scores (ranks 0.5) and "
+                        "count as known-outside, so a name can flag on its first listed session (window-invariant, "
+                        "not look-ahead); an undefined A0/A1 fact (creep5v20 NaN) is a known False state; the same "
+                        "session carries the same flag wherever the window starts (tests/test_e5_rules.py "
+                        "FlagTests, tests/test_e5.py WindowInvariance)",
+            "definitions_source": "research/E1/protocol.json weak_signals (E1-SIGNALS-v1), research/E2/protocol.json "
+                                  "(E2-SIGNALS-v1), kod-machine/research/ZEALAND_PILOT_v1/03_card/price_facts.py; "
+                                  "freqr, turn and logmcap excluded (not computable live)",
+        },
+    },
+    "learner": {
+        "type": "L2 (ridge) logistic regression",
+        "solver": "numpy IRLS (Newton-Raphson), fixed 25 iterations from beta = 0, no line search, no feature "
+                  "standardisation (ranks and binaries are already on [0, 1]); linear predictor clipped to [-30, 30] "
+                  "before the sigmoid; penalty on the coefficients, not the intercept (idxsig/e5.py fit_logistic)",
+        "iterations": 25,
+        "lambda_per_row": 0.001,
+        "lambda": "lambda = lambda_per_row * n_rows_used, n_rows_used = positives + sampled negatives of that fit",
+        "sampling": "all positives (weight 1) plus a seeded 10% subsample of the negatives (weight 10), "
+                    "numpy default_rng(seed).choice without replacement over the negatives in (ticker, session) "
+                    "row-major order, one generator per fit",
+        "negative_subsample": 0.10,
+        "negative_weight": 10.0,
+        "seed": 20261015,
+        "fits": "one per (market, label): 3 markets x {U, D} = 6 fits, on the market's evaluable discovery "
+                "ticker-days",
+        "threshold_percentile": 99.5,
+        "threshold": "per arm, the discovery 99.5th percentile (numpy.percentile, linear interpolation) of the arm's "
+                     "score over the market's evaluable discovery ticker-days (the fit universe before subsampling); "
+                     "fixed once, never searched",
+        "scores": {"A": "logit_U", "B": "logit_U - logit_D"},
+    },
+    "labels": {
+        "horizon": 5,
+        "threshold": 1.30,
+        "U": "max level(t+1..t+5) / level(t) >= 1.30 on the reference chain (e1.Study.level, r5max), as E30",
+        "D_US_CRYPTO": "min level(t+1..t+5) / level(t) <= 1/1.30",
+        "D_IDX": "rate-matched: D = min level ratio - 1 <= q_thr, q_thr the k-th smallest 5-session minimum ratio "
+                 "over the IDX evaluable discovery ticker-days where k is the number of U positives there, so that "
+                 "P(D) = P(U) on discovery (ties can make P(D) marginally larger; both rates are recorded); fixed "
+                 "once in discovery/model.json. IDX Arm B is DIAGNOSTIC: ARB was 7% flat through all of discovery "
+                 "(market.REGIMES) and changes on 2023-06-05 and 2023-09-04; IDX arm statistics are also reported by "
+                 "ARB regime of the flag session",
+        "forward_window": "as e1.Study: a label exists when any of t+1..t+5 is present (has_fwd); eligibility "
+                          "requires t+5 inside the period",
+        "eligibility": "e1.Study.elig[period]: tradeable, prev > 0, >= 20 sessions of history, has_fwd, t+5 inside "
+                       "the (union) period; AND the market's own period start; AND every feature column known; AND "
+                       "column >= WARMUP of the study window (the debounce lead-in); AND the label not censored",
+        "unit_reset_censoring": {
+            "markets": ["CRYPTO"],
+            "ratio": 20.0,
+            "sessions_before": 5,
+            "rule": "a session r with close/prev >= 20 or <= 1/20 (a redenomination, not a return) censors the labels "
+                    "of sessions r-5..r of that name (NaN; excluded from fits, thresholds and every statistic) and the "
+                    "Stage-1 plan-window return of any flag whose window t+1..t+6 contains r; the harness applies "
+                    "jump_ratio 10 (EXCLUDED_DATA_JUMP) to the same names in Stage 2 and 4",
+            "known_cases_to_verify": ["COCOS 2021-01-23", "DREP 2021-04-02", "SUN 2021-06-18", "LUNA 2022-05-31",
+                                      "VIDT 2022-11-09", "BNX 2023-02-22", "QUICK 2023-07-21", "BTCST 2021-03-19"],
+            "verification": "discovery/stage1.json lists every reset the rule found in the study window "
+                            "(unit_resets); the list is checked against the cases above at review",
+        },
+    },
+    "markets": {
+        "IDX": {
+            "panel_format": "panel-v2",
+            "panel_manifest": "panel-20261007T225823Z.json",
+            "panel_sha256": "9d3a0718c95f9e885c4f8310cf68bf5e75021c366c454f73389d7fae75c02877",
+            "registry_manifest": "ca_registry-20261007T230210Z.json",
+            "registry_sha256": "659da375e4586deab958e22dc242d7be6966ebc226bfefe8ce7ce85eb51f1e6c",
+            "tier": "TIER_1 (2021-01-22 .. 2025-02-21): exchange data, survivorship-complete; the 65-session warm-up "
+                    "before 2021-01-22 falls in TIER_2 (survivor-biased) and is used for features only, never for a "
+                    "label, flag statistic or trade (declared)",
+            "panel_note": "E3 ran on the newer panel-20261013T194245Z (TIER_1 rows reported identical by the E3 "
+                          "addenda); it cannot be rebuilt on this machine (the Yahoo raw files of its pull are "
+                          "absent and a network pull is not allowed), so the pinned run's own panel and registry are "
+                          "PRIMARY and Stage 0 is a true reproduction (handoff 06_phase2_integration_todo.md, panel "
+                          "decision 2026-10-14)",
+            "precondition_runs": ["results/runs/20261009T050040Z_MOONSHOT_E1_D1_v1.1"],
+            "status": "DECISIVE for Arm A (primary P1): survivorship-complete",
+            "primary_arm": "A",
+            "arm_B": "DIAGNOSTIC (rate-matched D label; reported by ARB regime)",
+            "pool_units": "panel",
+            "periods": {"discovery": ["2021-01-22", "2022-12-30"], "validation": ["2023-01-02", "2023-12-29"],
+                        "holdout": ["2024-01-02", "2025-02-21"]},
+            "discovery_years": [2021, 2022],
+            "holdout_guard": "backtest.HOLDOUT plus e5.assert_within_validation",
+        },
+        "US": {
+            "panel_format": "panel-global-v2-units",
+            "panel_manifest": "panel_us_repair-20261008T114805Z.json",
+            "panel_sha256": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b",
+            "universe": "the E2-US repair panel (causal-close-v2 preprocessing, as-traded units, read through "
+                        "2023-12-29): survivor-only",
+            "precondition_runs": ["results/runs/20261008T115656Z_MOONSHOT_E2_US_D1_v1"],
+            "status": "DIAGNOSTIC (survivor-only): a US-only pass is not decision-grade",
+            "primary_arm": None,
+            "pool_units": "as_traded",
+            "units": "as_traded",
+            "quarantine": "none (repair_v3: the quarantine is outcome-correlated); unit_schedule is a sensitivity",
+            "periods": {"discovery": ["2020-07-01", "2022-12-31"], "validation": ["2023-01-01", "2023-12-31"],
+                        "holdout": ["2024-01-01", "2099-12-31"]},
+            "discovery_years": [2020, 2021, 2022],
+            "holdout_guard": "backtest.GLOBAL_HOLDOUT plus e5.assert_within_validation",
+        },
+        "CRYPTO": {
+            "panel_format": "panel-global-v1",
+            "panel_manifest": "panel_crypto-20261008T003354Z.json",
+            "panel_sha256": "3dc12749c7cce635a68ef4f152ec21c3b3d24eb6b02665c799aa24e513963d7d",
+            "universe": "Binance spot USDT pairs including delisted/halted pairs still in exchangeInfo (the legacy v1 "
+                        "panel of the recorded E2 run, with its two future-informed row deletions, declared)",
+            "precondition_runs": ["results/runs/20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1"],
+            "status": "DECISIVE for Arm B (primary P2): no price limits, delisted pairs present",
+            "primary_arm": "B",
+            "pool_units": "panel",
+            "jump_ratio": 10.0,
+            "periods": {"discovery": ["2020-07-01", "2022-12-31"], "validation": ["2023-01-01", "2023-12-31"],
+                        "holdout": ["2024-01-01", "2099-12-31"]},
+            "discovery_years": [2020, 2021, 2022],
+            "holdout_guard": "backtest.GLOBAL_HOLDOUT plus e5.assert_within_validation",
+            "sensitivity_profile": "CRYPTO_CLOSE shares this panel (output keyed CRYPTO_CLOSE inside the CRYPTO "
+                                   "stage; the panel is loaded by profiles.PROFILES[market].market)",
+        },
+    },
+    "periods": {
+        "discovery": ["2020-07-01", "2022-12-31"],
+        "validation": ["2023-01-01", "2023-12-31"],
+        "holdout": ["2024-01-01", "2099-12-31"],
+        "note": "the union of the per-market periods, in the E2 shape e1.Study reads; the per-market windows live "
+                "under markets.<MARKET>.periods and idxsig/e5.py clips every statistic to them (and to the panel): "
+                "IDX discovery 2021-01-22..2022-12-30 and validation 2023-01-02..2023-12-29, US and CRYPTO discovery "
+                "2020-07-01..2022-12-31 and validation 2023-01-01..2023-12-31",
+        "holdout_rule": "sealed and never loaded: backtest.HOLDOUT (IDX) and backtest.GLOBAL_HOLDOUT (US, crypto) "
+                        "refuse any detector window that touches it, and e5.assert_within_validation refuses any "
+                        "window end past the market's validation end before a RunConfig or Study is built",
+        "windows": "every Study and harness window starts harness.warmup_sessions (= moonshot_e5.WARMUP = 65) "
+                   "sessions before its period's first session (clipped "
+                   "to the panel start, recorded as lead_in_sessions) and ends at the period's last session; the "
+                   "Study window for discovery ends at the validation end (sealed there), the discovery statistics "
+                   "read only the discovery sessions",
+    },
+    "weak_signals": {
+        "id": "E5-SIGNALS-v1 (the E2 list, for e1.Study's row and signal tables; the E5 learner reads "
+              "features.order instead)",
+        "continuous": ["ret1", "rel1", "ret5", "ret20", "volr", "valr", "rngr", "cpos", "vol20", "dd60", "up5",
+                       "zero20", "age", "logval20", "gap"],
+        "binary": ["brk60", "ara"],
+        "note": "no ign member: the E5 family has no IGNITION detector (e1.Study reports it unknown)",
+    },
+    "plans": {
+        "rule": "one plan per market, the recorded one; no plan search",
+        "IDX": {
+            "primary": {"market": "IDX", "entry_rule": "fixed", "entry_window": 1, "exit_rule": "fixed",
+                        "holding_days": 5, "fill_model": "C", "units": "panel", "ca_mode": "registry",
+                        "notional": 10000000.0, "max_participation": 0.10, "fee_buy": 0.0015, "fee_sell": 0.0025,
+                        "quarantine": "none", "jump_ratio": None, "tick_cost": False},
+            "text": "next close -> 5th close after entry; FILL-C-v1 decision-time capacity; Rp10,000,000 per trade; "
+                    "lots of 100; at most 10% participation; registry corporate actions",
+            "sensitivities": IDX_SENS,
+        },
+        "US": {
+            "primary": {"market": "US", "entry_rule": "fixed", "entry_window": 1, "exit_rule": "fixed",
+                        "holding_days": 5, "fill_model": "B", "units": "as_traded", "ca_mode": "adjusted",
+                        "notional": 5000.0, "max_participation": 0.10, "fee_buy": 0.0, "fee_sell": 0.0000278,
+                        "quarantine": "none", "jump_ratio": None, "tick_cost": False},
+            "text": "next open -> 5th close after entry; FILL-B-v1 decision-time capacity in as-traded units; $5,000 "
+                    "per trade; profile cost tiers per side (1.5% under $1, 0.5% $1-5, 0.15% $5-20, 0.05% above) "
+                    "plus the SEC fee on sales",
+            "sensitivities": US_SENS,
+        },
+        "CRYPTO": {
+            "primary": {"market": "CRYPTO", "entry_rule": "fixed", "entry_window": 1, "exit_rule": "fixed",
+                        "holding_days": 5, "fill_model": "A", "units": "panel", "ca_mode": "adjusted",
+                        "notional": 5000.0, "max_participation": 0.10, "fee_buy": 0.001, "fee_sell": 0.001,
+                        "quarantine": "none", "jump_ratio": 10.0, "tick_cost": False},
+            "text": "next open -> 5th close after entry; fill model A (the recorded E2 config, labelled ex-post); "
+                    "5,000 USDT per trade; 0.1% fee + 0.1% tier = 0.2% per side (the recorded E2 config, not 0.3%); "
+                    "jump_ratio 10 excludes trades held across a redenomination, rule and baselines alike",
+            "sensitivities": CRYPTO_SENS,
+        },
+        "controls_v2_report": "beside the primary run, one run per arm with controls_version v2 is reported for "
+                              "comparability with the recorded runs; reported, never judged",
+    },
+    "harness": {
+        "entry_lag": 1,
+        "random_draws": 200,
+        "seed": 20261007,
+        "overlap": "skip",
+        "data_end_exit": "last_close",
+        "controls_version": "v3",
+        "controls_version_reported": "v2",
+        "lookahead_cuts": 12,
+        "lookahead_note": "the ranked cross-sectional features make moonshot_e5.compute() about 12x the cost of "
+                          "moonshot_g.features, and rules.causal_signals recomputes it once per session "
+                          "(prefix-first), which would be hours of CPU per IDX run; every Stage-2 and validation "
+                          "harness run therefore uses backtest.signals with lookahead_cuts = 12: one full-window "
+                          "call checked against 12 prefixes at numpy.linspace(0.3, 0.9, 12) of the window "
+                          "(deterministic, no random seed involved); the run records mode 'sampled' and its "
+                          "warning. The proof of causality is the module's own prefix-invariance tests, named "
+                          "under causality_proof; Stage 0 re-runs keep their recorded setting (prefix-first)",
+        "causality_proof": ["tests/test_e5_rules.py RankTests.test_ranks_are_prefix_first",
+                            "tests/test_e5_rules.py FlagTests.test_frozen_arm_is_causal_and_debounced",
+                            "tests/test_e5_rules.py FlagTests.test_creep_quiet_rules_are_causal_and_debounced",
+                            "tests/test_e5_rules.py FlagTests.test_flags_are_window_invariant_from_the_lead_in",
+                            "tests/test_e5.py WindowInvariance"],
+        "warmup_sessions": m.WARMUP,
+    },
+    "matched_controls": {
+        "trading_stage": {
+            "controls_version": "v3",
+            "features": "price_band, liquidity quintile, volatility QUINTILE, market_cap quintile (IDX mirror era), "
+                        "momentum tercile, drawdown tercile, listing_age; relaxed from the last feature to MIN_POOL 5 "
+                        "(controls.VERSIONS['v3'], additive; v2 unchanged for the recorded runs)",
+            "draws": 200,
+            "seed": 20261007,
+            "reported": "v2 (one extra run per arm), the same-session uniform baseline (every run)",
+            "per_trade_columns": "trades.csv.gz carries matched_mean_net_return and same_session_mean_net_return: "
+                                 "the mean net return over the signal's SCORED control draws only (unscored draws "
+                                 "excluded; NaN where no draw was scored or the signal was overlap-skipped); "
+                                 "E5-era trades frames therefore have 14 columns (two additive), selected by name",
+        },
+        "detection_stage": {
+            "pool_version": "v3",
+            "pool_keys": ["price_band", "liquidity", "volatility", "market_cap"],
+            "pool_units": "per market (markets.<MARKET>.pool_units): US as_traded (bands on the price traded that "
+                          "session, closing the ERRATA.md wrong-band defect), IDX and CRYPTO panel",
+            "draws": 200,
+            "seed": 20261008,
+            "min_pool": 5,
+            "sampling": "e1.Study._pool per flag (relaxed from the last key to min_pool), draws with replacement in "
+                        "(session, ticker-index) order from one numpy default_rng(seed)",
+        },
+        "paired_statistic": {
+            "definition": "per flag (or trade), its outcome minus the mean outcome of its matched controls; the "
+                          "statistic is the mean excess with a session-cluster bootstrap over signal sessions "
+                          "(backtest.paired_excess: trades signalled on one session are resampled together)",
+            "resamples": 10000,
+            "seed": 20261015,
+            "cluster": "signal_date",
+            "p": "one-sided for mean excess > 0: (1 + resampled means <= 0) / (1 + resamples); floor about 1e-4",
+            "refuse_when": "n_clusters < 2: the gate is NOT judged (reported as not judged, never as passed)",
+            "harness_p": "the harness's draw-distribution p (rule mean placed in the distribution of control "
+                         "portfolio means) is reported, not judged: anti-conservative when the rule's trades are "
+                         "more volatile than the controls'",
+        },
+    },
+    "selection": {
+        "note": "e3.admissibility reads this block verbatim (Stage 2 and Stage 4 harness rows)",
+        "min_scored": 200,
+        "max_p_one_sided_vs_matched": 0.05,
+        "min_scored_per_year": 50,
+    },
+    "stages": {
+        "0_reproduce": {
+            "what": "per market, every precondition run re-run from ITS recorded summary.json config (RunConfig "
+                    "fields) on the pinned panel (and registry on IDX), with the recorded lookahead setting; the "
+                    "rule-side statistics (signals, scored, status_counts, avg_net_return) must be identical",
+            "rule_side_fields": ["signals", "scored", "status_counts", "avg_net_return"],
+            "accepted_deviation": {
+                "field": "matched_random_avg_net_return",
+                "abs_tolerance": 0.001,
+                "cause": "controls.py commit bcb89f0 (a listed day without trades counts as zero traded value in the "
+                         "liquidity bucket) changed the matched draws after the IDX run was recorded: the matched "
+                         "baseline differs in the fourth decimal (research/E3/reproduce/result.json shows "
+                         "-0.004404 recorded vs -0.004400 reproduced); the only accepted deviation",
+            },
+            "status": "REPRODUCED when the rule side is identical and the matched baseline is identical or within "
+                      "the accepted tolerance (then matched_baseline = DEVIATES_WITHIN_ACCEPTED_TOLERANCE on "
+                      "record); otherwise DEVIATES, and discovery runs only with --accept-deviation, both sides on "
+                      "record",
+            "descriptive": "in-flag break-even precision p* of the reproduced run's trades (stages.2_execution."
+                           "oracle_bound), reported",
+        },
+        "1_information": {
+            "what": "discovery, fill-independent: fit the two labels, fix the two thresholds, compute the debounced "
+                    "flags, and for every arm the plan-window return on the reference chain for flags and matched "
+                    "controls alike (entry level at the plan's entry session: close of t+1 on IDX, open of t+1 on "
+                    "US and CRYPTO = level(t+1) x open(t+1)/close(t+1); exit level at the close of the 5th session "
+                    "after entry, t+6; NaN when either level is missing; no fill, lot, lock or cost filter), AUC_U "
+                    "and AUC_D of the arm score over the evaluable discovery ticker-days, E30 and D30 precision with "
+                    "Wilson bounds, lift vs base and vs matched controls (with a session-cluster CI and the "
+                    "draw-distribution p), the directional ratio U/D with a cluster-bootstrap CI, the pre-move split "
+                    "(ret1 < 0.10 vs >= 0.10), the univariate matched-set table for every ranked and binary "
+                    "feature, the A0/A1 rows, the constant-column report, the IDX by-regime split",
+            "flags": "debounced flags on evaluable (labelled) in-period ticker-days, as the harness would signal "
+                     "them (tradeable, column >= WARMUP); in-period flags without a label are counted separately",
+            "gate_to_stage_2": {"min_flags": 200, "alpha": 0.025, "min_flags_per_year": 50,
+                                "rule": "flags >= min_flags AND paired gross (plan-window) excess mean > 0 with "
+                                        "cluster-bootstrap one-sided p < alpha AND mean excess > 0 in every "
+                                        "discovery calendar year with >= min_flags_per_year flags; not judged when "
+                                        "n_clusters < 2"},
+            "primaries": {"P1": ["IDX", "A"], "P2": ["CRYPTO", "B"]},
+            "alpha_note": "0.025 = Bonferroni over the two primaries; the same gate is computed for every arm, the "
+                          "others being diagnostic",
+            "diagnostics": ["IDX Arm B (by ARB regime)", "CRYPTO Arm A", "US Arm A", "US Arm B", "A0/A1 rows",
+                            "variance-detection check: Arm A's D30 lift vs matched inside the cluster CI of its E30 "
+                            "lift vs matched"],
+            "a1_gate": {"min_lift": 2.0, "max_p": 0.05},
+            "detection_controls": {"draws": 200, "seed": 20261008},
+            "pre_move_split_ret1": 0.10,
+            "univariate": {"events": "U-episode starts (e1.Study.start at 1.30) on the evaluable discovery "
+                                     "ticker-days",
+                           "controls_per_event": 5,
+                           "controls_seed": 20261008,
+                           "auc": "P(event value > control value) + 0.5 P(tie) within matched sets (E1 signal_stats)",
+                           "auc_bootstrap": 1000,
+                           "auc_seed": 20261008,
+                           "top_share": 0.005,
+                           "lift": "the feature's own debounced top-0.5% flag (rank at or above its discovery 99.5th "
+                                   "percentile; binaries: the state itself), E30 precision, lift vs base and vs "
+                                   "matched controls with the detection sampler"},
+        },
+        "2_execution": {
+            "what": "discovery; only arms that passed the Stage-1 gate (plus A1 if its gate passed): backtest.run "
+                    "under the market plan with the market's primary fill model and controls v3, then "
+                    "backtest.paired_excess on the trades; every harness run (primary, each sensitivity, the v2 "
+                    "report run) is one row of plans.csv with the paired-excess dict flattened",
+            "admissible_iff": [
+                "e3.admissibility verbatim on the primary run (selection block: scored >= 200, average net > 0, "
+                "harness p vs matched < 0.05, average net > 0 in every discovery year with >= 50 scored)",
+                "paired NET excess over matched controls > 0 with cluster-bootstrap one-sided p < alpha_paired_net "
+                "(not judged when n_clusters < 2)",
+                "every judged sensitivity keeps rule average net minus matched-random average net > 0",
+                "admissibility holds on the subset of the primary run's scored trades whose exit-session "
+                "participation (exit shares x share factor over the exit session's panel volume) is <= "
+                "exit_participation_max: scored >= min_scored, average net > 0, paired net p < alpha_paired_net, "
+                "average net > 0 in every discovery year with >= min_scored_per_year scored (the harness draw p is "
+                "not re-computable on a subset; the paired p stands in for it, declared)",
+            ],
+            "alpha_paired_net": 0.025,
+            "exit_participation_max": 0.10,
+            "literals": "the arms have no frozen literals yet at this stage: the harness runs inject "
+                        "discovery/model.json into the module's literal tables in-process for the duration of the run "
+                        "(e5.literals_from), so the rule hash recorded in plans.csv is the pre-freeze module's and "
+                        "the coefficients used are those of model.json, whose sha256 is recorded in every row "
+                        "(literals_sha256); Stage 3 makes them literal and Stage 4 runs carry the frozen hash",
+            "selected_per_market": "when both arms are admissible, the market's primary arm is SELECTED (IDX A, "
+                                   "CRYPTO B); otherwise (and on US) the admissible arm with the larger paired net "
+                                   "mean excess, ties to A; SELECTED is what MOONSHOT_E5_<MARKET>_D1 computes; "
+                                   "every other admissible arm is validated under its candidate rule id",
+            "oracle_bound": "in-flag break-even precision p* = (matched - E[net | flag, not E30]) / (E[net | flag, "
+                            "E30] - E[net | flag, not E30]) on the run's scored trades (E30 = the U label of the "
+                            "signal session); descriptive, never a criterion",
+        },
+        "3_freeze": {
+            "what": "e5-freeze --market copies discovery/model.json (coefficients, intercepts, thresholds) into the "
+                    "moonshot_e5.py literal tables for that market and adds (market, arm) to SELECTED for the "
+                    "selected arm (gates.json); refuses when any of the market's literals is already set or the "
+                    "market is already in SELECTED; writes <MARKET>/freeze/result.json; the orchestrator commits the "
+                    "module and the stage directory together",
+            "a0_a1_note": "freezing changes every E5 rule's hash, A0/A1's included; write_run-recorded A0/A1 runs "
+                          "(validation) happen only after the freeze commit, so their rule sha is the frozen one; "
+                          "Stage-2 discovery runs are plans.csv rows, not recorded runs",
+        },
+        "4_validation": {
+            "what": "the validation period only, after the freeze commit: e5-validation refuses unless the module's "
+                    "literals equal discovery/model.json exactly and SELECTED names the selected arm; one "
+                    "write_run-recorded harness run per Stage-2-admissible arm (MOONSHOT_E5_<MARKET>_D1 for the "
+                    "selected arm, E5_CAND_<MARKET>_<ARM> for any other) plus one recorded run per judged "
+                    "sensitivity; the detection check on the validation study",
+            "pass_iff": ["scored >= min_scored[market]", "average net return > 0",
+                         "paired net excess > 0 with cluster-bootstrap one-sided p < alpha_paired_net",
+                         "harness p vs matched < max_p_one_sided_vs_matched",
+                         "every judged sensitivity keeps rule average net minus matched average net > 0 (same sign)",
+                         "detection: E30 precision Wilson lower bound of the arm's validation flags > the validation "
+                         "E30 base rate"],
+            "min_scored": {"IDX": 100, "US": 200, "CRYPTO": 100},
+            "alpha_paired_net": 0.025,
+            "max_p_one_sided_vs_matched": 0.05,
+            "claim_level": "PROVISIONAL (2023 is once-seen): licenses a prospective paper policy only",
+            "reported_not_judged": ["hit rate", "median net return", "status counts", "same-session baseline",
+                                    "the v2-controls run", "2023 is one year: no per-year check is possible"],
+        },
+    },
+    "admissibility": {
+        "stage_1": "stages.1_information.gate_to_stage_2",
+        "stage_2": "stages.2_execution.admissible_iff (e3.admissibility on the selection block, plus the paired, "
+                   "sensitivity and exit-capacity clauses)",
+        "stage_4": "stages.4_validation.pass_iff",
+    },
+    "validation": {
+        "on": "validation only, per market, recorded harness runs",
+        "min_scored": {"IDX": 100, "US": 200, "CRYPTO": 100},
+        "alpha_paired_net": 0.025,
+        "max_p_one_sided_vs_matched": 0.05,
+        "claim_level": "PROVISIONAL",
+    },
+    "consequences": {
+        "stage_1_fails_in_both_primaries": "daily-bar T-0 direction is not detectable by this learner over this "
+                                           "feature list in the two markets where it can be measured; stop building "
+                                           "tape-only detectors; the next protocol is information timing (EDGAR 8-K "
+                                           "acceptance) after the SEC reachability probe; the KOD tape feed is not "
+                                           "stood up unless the A1 row's lift CI excludes 1",
+        "stage_1_passes_stage_2_or_validation_fails": "information exists but is not executable under daily-bar "
+                                                      "plans with these costs and fills; next work is an execution "
+                                                      "contract (limit-on-open, capacity, exit liquidity), not plan "
+                                                      "search; the prospective sidecar keeps scoring the frozen ranker",
+        "validation_passes": "MOONSHOT_E5_<MARKET>_D1 stays frozen; a new POLICY_ID (PAPER-POLICY-v5) may wire it "
+                             "through paper._detector; NO paper BUY until >= 100 prospective scored E5 decisions show "
+                             "paired excess > 0 (pre-registered); the holdout stays sealed until then",
+        "A1_row_lift_ci_excludes_1": "stand up a scan-only KOD feed under a new scanner id; otherwise "
+                                     "VOLUME_CREEP_PRICE_QUIET is closed at KOD-DET-v0 thresholds",
+    },
+    "declared_leaks": {
+        "2023_once_seen": "2023 is once-seen for the univariate siblings of E5's features: ara via E1, ret1 via E2, "
+                          "brk60 via US_BREAKOUT_v1; the complete 2023 positive class with ret5, ret20, volr, rngr, "
+                          "vol20, dd60, zero20, up5 at the decision close sits on disk in "
+                          "research/E1/validation/episodes_E30.csv, research/E2/US/validation/episodes_E30.csv and "
+                          "research/E2/CRYPTO/validation/episodes_E30.csv (and the E50/E100 siblings beside them)",
+        "consequence": "any 2023 pass is PROVISIONAL and licenses only a prospective paper policy, never the holdout",
+        "crypto_panel": "the legacy v1 crypto panel carries two future-informed row deletions (LUNA 2022-05-13 in "
+                        "discovery among them): declared, not rebuilt, because a rebuild would make Stage 0 DEVIATE",
+    },
+    "not_fixed_and_why": [
+        "2023 once-seen: no clean year exists in-repo; mitigated by pre-registration, Bonferroni over the two "
+        "primaries, the provisional claim level and the prospective sidecar",
+        "US survivorship: no point-in-time universe on free data; US demoted to diagnostic",
+        "bounded learner: a null is 'not found by this learner over this feature list'; the management consequence "
+        "(stop tape-only detector building) is a decision, not a theorem; a second learner is a new protocol",
+        "IDX closing-auction spread: a one-tick-per-side sensitivity only; a panel-v3 with mirror bid/offer depth is "
+        "deferred",
+        "crypto legacy panel: two future-informed row deletions (LUNA 2022-05-13 included) declared, not rebuilt, "
+        "because a causal rebuild would make the precondition DEVIATE",
+        "daily bars only: no intraday path; the crypto open is a zero-latency print, hence the close(t+1) sensitivity",
+        "serial dependence of rank-based flags: addressed by the debounce and the session-cluster bootstrap, not by "
+        "a name-level cluster (distinct names are reported)",
+    ],
+    "search_size": "6 fits, 2 arms x 3 markets, 2 primaries, no threshold/lambda/feature search; stated in every "
+                   "output",
+    "notes": {
+        "trades_columns": "trades.csv.gz of every E5-era run carries 14 columns (the 12 recorded ones plus "
+                          "matched_mean_net_return and same_session_mean_net_return); recorded files are unchanged",
+        "stage_outputs": "research/E5/<MARKET>/<stage>/ (reproduce, discovery, freeze, validation), each a new "
+                         "directory (exist_ok=False), every file deterministic given the protocol, the panel and the "
+                         "seeds apart from computed_at; discovery writes model.json, thresholds.json, stage1.json, "
+                         "univariate.csv, flags.csv, plans.csv, gates.json, summary.json and one summary_<arm>_<run>.json "
+                         "per harness run",
+        "study_options": "e1.Study is built with pool_version v3, the market's pool_units and its declared "
+                         "panel_format (passed as the keyword too); summary.json carries study_options",
+    },
+    "claims": "Historical research on assumed costs, daily-bar fills and a survivor-only US universe; 6 fits and 2 "
+              "primaries were pre-registered and nothing else was searched; nothing here is prospective performance, "
+              "no probability or trade is asserted, nothing grants entry permission, and no real orders exist.",
+}
+
+OUT.parent.mkdir(parents=True, exist_ok=True)
+OUT.write_text(json.dumps(proto, indent=2) + "\n", encoding="utf-8")
+print("wrote", OUT, len(json.dumps(proto)), "bytes")
