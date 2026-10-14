@@ -24,6 +24,19 @@ MIN_POOL other names share every bucket, the lowest-priority feature is dropped,
 next; the level used is counted in the report, with per-feature coverage. Controls v1 (the
 first four features without market_cap) is kept to reproduce older runs.
 
+Controls v3 (E5, research/E5 protocol "matched_controls.trading_stage") exists because the only
+pre-event separator the lab has ever measured is 20-session volatility, and v2 controls it
+weakly: its tercile is coarse, and it sits BELOW market_cap in the priority, so it is the second
+feature dropped when a pool runs short. On the recorded IDX trading run, 28% of attempted
+signals were never matched on volatility under v2 at all (their match level had already
+dropped it), so a rule that simply picks high-variance names is compared with controls of
+any variance. v3 is additive and opt-in (controls_version="v3"): the same seven features, with
+volatility as a QUINTILE placed ahead of market_cap, relaxed from the last feature to MIN_POOL
+exactly as v2 is. v2 is unchanged byte for byte; every recorded run is v2 or v1.
+
+  v3 priority: price_band, liquidity (quintile), volatility (quintile), market_cap (quintile,
+               mirror era only), momentum (tercile), drawdown (tercile), listing_age
+
 Not matched on, because no point-in-time history exists in this data (NOT invented):
   sector       only a 2025-02 snapshot of IDX-IC sectors; using it would apply today's
                classification to the past and silently drop names delisted before it
@@ -71,7 +84,20 @@ UNAVAILABLE = {
 VERSIONS = {
     "v1": ("price_band", "liquidity", "volatility", "momentum"),
     "v2": ("price_band", "liquidity", "market_cap", "volatility", "momentum", "drawdown", "listing_age"),
+    "v3": ("price_band", "liquidity", "volatility", "market_cap", "momentum", "drawdown", "listing_age"),
 }
+# Per-version feature definitions that differ from FEATURES (the v1/v2 table, left as it is so
+# the recorded runs' reports reproduce). Bucket counts stay below 7: _codes packs them base 8.
+FEATURE_OVERRIDES = {
+    "v3": {
+        "volatility": Feature("volatility", 5, "quintile of 20-session std of daily log returns", "every tier"),
+    },
+}
+
+
+def feature(name: str, version: str = "v2") -> Feature:
+    """The definition of `name` under `version` (FEATURES unless the version overrides it)."""
+    return FEATURE_OVERRIDES.get(version, {}).get(name) or FEATURES[name]
 
 
 def levels(version: str = "v2") -> tuple[tuple[str, ...], ...]:
@@ -94,7 +120,9 @@ def _rolling(arr: np.ndarray, how: str, window: int) -> np.ndarray:
 def features(m, version: str = "v2", band_edges: tuple = (200, 5000), as_traded: bool = False) -> dict[str, np.ndarray]:
     """band_edges: upper edges of the price bands (IDX default: Rp200, Rp5,000; see profiles.py).
     as_traded: band on the price as traded that session (Market.unit_factor), not the price
-    rescaled by later splits. Return-based features and traded value are unit-free."""
+    rescaled by later splits. Return-based features and traded value are unit-free.
+    version: which bucket definitions apply (v3: volatility as a quintile); v1/v2 are unchanged."""
+    vol_buckets = feature("volatility", version).buckets
     close = np.where(m.present, m.close, np.nan)
     level = close * m.unit_factor if as_traded else close
     band = np.searchsorted(np.array(band_edges, dtype=float), np.nan_to_num(level, nan=0.0), side="left")
@@ -106,7 +134,7 @@ def features(m, version: str = "v2", band_edges: tuple = (200, 5000), as_traded:
     out = {
         "price_band": band,
         "liquidity": _bucket(np.where(m.present, _rolling(value, "median", LOOKBACK), np.nan), 5),
-        "volatility": _bucket(np.where(m.present, _rolling(logret, "std", LOOKBACK), np.nan), 3),
+        "volatility": _bucket(np.where(m.present, _rolling(logret, "std", LOOKBACK), np.nan), vol_buckets),
         "momentum": _bucket(np.where(m.present, _rolling(logret, "sum", LOOKBACK), np.nan), 3),
     }
     if version == "v1":
@@ -179,7 +207,7 @@ def coverage(feats: dict[str, np.ndarray], a_tick: np.ndarray, a_sig: np.ndarray
     for i, name in enumerate(names):
         known = feats[name][a_tick, a_sig] >= 0 if len(a_tick) else np.array([], dtype=bool)
         matched = np.array([name in lv[k] for k in level_used], dtype=bool) if len(level_used) else known
-        f = FEATURES[name]
+        f = feature(name, version)
         description = ("close in " + " / ".join(band_names)) if (name == "price_band" and band_names) else f.description
         out[name] = {"description": description, "availability": f.availability, "priority": i + 1,
                      "known_share": float(known.mean()) if len(known) else None,
