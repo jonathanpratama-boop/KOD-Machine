@@ -20,7 +20,9 @@ refuters' demands (`03_proposals_and_evidence.md` §Recommendation lists what wa
 incorporated). Nothing further is needed from the workflow; `workflow/wf_1f360293-1fd.result.json`
 holds the complete return value if the journal is ever lost.
 
-## 2. Phase 2 (implementation) — IN PROGRESS (the owner said "execute now"; local branch only)
+## 2. Phase 2 (implementation) — Phase 2b DONE, protocol frozen (`e1e57af`), Stage 0 running (local branch only)
+
+Budget rule from the owner (2026-10-14): no more subagent workflows unless the owner lifts it; do the remaining stages with the CLI in the E5 worktree (`scratchpad/e5`, branch `claude/e5-ceiling`): `python3 -m idxsig e5-reproduce --market M` (Stage 0, running), then `e5-discovery --market M` (Stage 1 gate → Stage 2 execution; `--accept-deviation` only with both sides on record), then `e5-freeze --market M` (writes the literals into `rules/moonshot_e5.py`; commit), then `e5-validation --market M`. Inspect each stage's JSON before the next; commit after each stage (the CLI refuses a dirty `idxsig/`). Keep every message short.
 
 State: Phase 2a done and merged (`claude/e5-ceiling` `be99fec`, worktree `scratchpad/e5`); Phase 2b workflow `wf_c9b7db07-d56` running in worktree `scratchpad/e5-s-study` (branch `e5/s-study`); if it fails again on a usage limit, save the worktree diff as a patch under `bundles/`, wait for the reset, and relaunch with `resumeFromRunId` (the brief already says to continue from the worktree's files). When it finishes: sync outputs to `outputs_phase2b/`, read the review verdicts, merge `e5/s-study` into `claude/e5-ceiling`, run the four checks, then (orchestrator, not an agent) freeze `research/E5/protocol.json` in its own commit and record the sha, then Stage 0 reproduce → Stage 1 information gate → Stage 2 execution, one recorded run each, reporting a null honestly. The steps below are the original plan and still apply.
 
