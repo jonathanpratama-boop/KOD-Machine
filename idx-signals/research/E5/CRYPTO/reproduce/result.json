@@ -1,0 +1,96 @@
+{
+  "claims": "Historical research on assumed costs, daily-bar fills and a survivor-only US universe; 6 fits and 2 primaries were pre-registered and nothing else was searched; nothing here is prospective performance, no probability or trade is asserted, nothing grants entry permission, and no real orders exist.",
+  "code": {
+    "commit": "f1010233c28606ee3cae1e63d4a5bfe7446bef62",
+    "dirty": false
+  },
+  "computed_at": "2026-10-14T15:55:10+00:00",
+  "detector_module_sha256": "530b3509392eba442ad6c7d4a565a06836dd45ca4608ed01bcf510297cdf43aa",
+  "frozen_before_analysis": true,
+  "holdout": "sealed: never loaded; every window end is checked against the validation end before a Study or RunConfig exists, and the harness refuses it again",
+  "market": "CRYPTO",
+  "panel_format": "panel-global-v1",
+  "panel_manifest": "panel_crypto-20261008T003354Z.json",
+  "panel_sha256": "3dc12749c7cce635a68ef4f152ec21c3b3d24eb6b02665c799aa24e513963d7d",
+  "protocol_id": "KOD-GLOBAL-E5-v1",
+  "protocol_sha256": "53b2ec815a0cc0922298d77968842140db7445afd3de2a08837aefdbfec413ad",
+  "registry_sha256": null,
+  "runs": [
+    {
+      "accepted_deviation": {
+        "abs_tolerance": 0.001,
+        "cause": "controls.py commit bcb89f0 (a listed day without trades counts as zero traded value in the liquidity bucket) changed the matched draws after the IDX run was recorded: the matched baseline differs in the fourth decimal (research/E3/reproduce/result.json shows -0.004404 recorded vs -0.004400 reproduced); the only accepted deviation",
+        "field": "matched_random_avg_net_return"
+      },
+      "breakeven": {
+        "E30_share": 0.17424242424242425,
+        "labelled": 264,
+        "matched_mean_net": 0.014141754408715481,
+        "net_given_E30": 0.47748148643858096,
+        "net_given_not_E30": -0.12379687182419945,
+        "p_star": 0.2294089323810832,
+        "scored": 264
+      },
+      "config": {
+        "ca_mode": "adjusted",
+        "controls_version": "v2",
+        "data_end_exit": "last_close",
+        "end": "2023-12-31",
+        "entry_lag": 1,
+        "fee_buy": 0.001,
+        "fee_sell": 0.001,
+        "holding_days": 5,
+        "lookahead_cuts": null,
+        "market": "CRYPTO",
+        "max_participation": 0.1,
+        "notional": 5000.0,
+        "overlap": "skip",
+        "random_draws": 200,
+        "rule_id": "MOONSHOT_E2_CRYPTO_D1",
+        "seed": 20261007,
+        "start": "2023-01-01"
+      },
+      "lookahead": "prefix-first-v1",
+      "matched_baseline": "IDENTICAL",
+      "recorded": {
+        "avg_net_return": -0.01902867303598771,
+        "matched_random_avg_net_return": 0.01420933434864157,
+        "scored": 264,
+        "signals": 312,
+        "status_counts": {
+          "EXITED": 263,
+          "EXIT_DATA_END": 1,
+          "INCOMPLETE": 5,
+          "SKIP_NO_ENTRY_SESSION": 1
+        }
+      },
+      "recorded_panel_sha256": "3dc12749c7cce635a68ef4f152ec21c3b3d24eb6b02665c799aa24e513963d7d",
+      "recorded_rule_sha256": "d8218f2e9c9b95169ccee01330b5e1be1b11bec85ad33b181eaa644ed1ddd89d",
+      "reproduced": {
+        "avg_net_return": -0.01902867303598771,
+        "matched_random_avg_net_return": 0.01420933434864157,
+        "scored": 264,
+        "signals": 312,
+        "status_counts": {
+          "EXITED": 263,
+          "EXIT_DATA_END": 1,
+          "INCOMPLETE": 5,
+          "SKIP_NO_ENTRY_SESSION": 1
+        }
+      },
+      "reproduced_rule_sha256": "d8218f2e9c9b95169ccee01330b5e1be1b11bec85ad33b181eaa644ed1ddd89d",
+      "rule_side_identical": true,
+      "run_dir": "results/runs/20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1",
+      "run_id": "20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1",
+      "status": "REPRODUCED"
+    }
+  ],
+  "runtime": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "python": "3.13.16"
+  },
+  "search_size": "6 fits, 2 arms x 3 markets, 2 primaries, no threshold/lambda/feature search; stated in every output",
+  "stage": "reproduce",
+  "status": "REPRODUCED"
+}
