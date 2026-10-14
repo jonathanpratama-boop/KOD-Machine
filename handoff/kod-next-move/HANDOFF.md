@@ -1,9 +1,9 @@
 # HANDOFF — kod-next-move (resumable checkpoint)
 
 **Status line (update at every phase boundary):**
-Phase 1 workflow `wf_1f360293-1fd` **COMPLETE** 2026-10-14 07:23 UTC — 25 agents, 0 errors, 5.84M subagent tokens, 2h20m. All outputs in `outputs/`; the recommendation is `synthesis/RECOMMENDATION.md` with the draft protocol `synthesis/E5_CEILING_protocol_draft.json`; the whole workflow return value is `workflow/wf_1f360293-1fd.result.json`. **Recommended next move: E5-CEILING (KOD-GLOBAL-E5-v1)**, proposal #4 amended per the refuters (see `03_proposals_and_evidence.md` §Recommendation). Phase 2 (implementation): being set up on a separate worktree/branch `claude/e5-ceiling` (local; not pushed without the owner's say-so). Checkpoint commits are pushed to the base branch.
+Phase 1 workflow `wf_1f360293-1fd` **COMPLETE** 2026-10-14 07:23 UTC — 25 agents, 0 errors, 5.84M subagent tokens, 2h20m. All outputs in `outputs/`; the recommendation is `synthesis/RECOMMENDATION.md` with the draft protocol `synthesis/E5_CEILING_protocol_draft.json`; the whole workflow return value is `workflow/wf_1f360293-1fd.result.json`. **Recommended next move: E5-CEILING (KOD-GLOBAL-E5-v1)**, proposal #4 amended per the refuters (see `03_proposals_and_evidence.md` §Recommendation). **Phase 2 (implementation) STARTED 07:35 UTC** on local branch `claude/e5-ceiling` (= base `84949d6` + PR #7 merged locally as `ae2cbee`; 244 tests OK); build workflow in progress (see `02_session_log.md` §Phase 2). Not pushed; no PR; nothing frozen yet. Checkpoint commits are pushed to the base branch.
 
-**Where:** `/home/user/KOD-Machine`, branch `claude/idx-signals-test-repo-ds0jw7` at `e635e22`. This directory is untracked (deliberately uncommitted; see `05_next_steps.md` §4).
+**Where:** `/home/user/KOD-Machine`, branch `claude/idx-signals-test-repo-ds0jw7`. This directory is committed and pushed on that branch (the owner's stop hook asked for it); every sync is a small commit. Phase-2 code lives in the worktrees listed in `02_session_log.md` §Phase 2, on local branches `claude/e5-ceiling` and `e5/*`.
 
 | Need | File |
 |---|---|

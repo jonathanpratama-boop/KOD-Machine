@@ -55,3 +55,17 @@ Not pushed. GitHub still has PR #3 at `bd352b2`.
 - Journal / per-agent transcripts: `/root/.claude/projects/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/subagents/workflows/wf_1f360293-1fd/{journal.jsonl,agent-*.jsonl}`.
 - `scripts/sync_outputs.py` copies every completed agent result into `outputs/<phase>/<label>.{json,md}`; re-run it any time.
 - Agents are read-only by instruction; no repo file was modified by the workflow. Judge 1 re-ran one scratch counting script (no outcomes); the data reader made ≤6 FMP MCP probe calls.
+
+## Phase 2 setup (2026-10-14 07:28-07:35 UTC)
+
+- Local branch `claude/e5-ceiling` created from `origin/claude/idx-signals-test-repo-ds0jw7` (`84949d6`), upstream unset so a bare push cannot reach the base branch; worktree `<scratchpad>/e5`.
+- PR #7 (`origin/claude/e4-fade-short-side` @ `2b26197`) merged into it locally as `ae2cbee` (no-ff). This is NOT a merge of PR #7 on GitHub.
+- Checks on `ae2cbee` in that worktree: `python3 -m unittest` 244 OK; `idxsig rules` source audit passed; `verify-runs` OK; `check_append_only --all` OK. `e4.py`, `rules/moonshot_e4.py`, `backtest.GLOBAL_HOLDOUT`, `RunConfig.jump_ratio`, `execution.NEVER_ENTERED` present.
+- Untracked `.githooks/{post-checkout,post-commit,post-merge,pre-push}` appear in every fresh worktree: git-lfs boilerplate written by git-lfs because the repo sets `core.hooksPath=.githooks` (the tracked hook there is `pre-commit` = append-only check on staged files). Left uncommitted.
+- Five isolated worktrees for the parallel harness changes, branches `e5/h1-controls`, `e5/h2-backtest`, `e5/h3-e1`, `e5/h4-profiles`, `e5/r-rules`, each at `ae2cbee`, at `<scratchpad>/e5-<name>`. They merge back into `claude/e5-ceiling` after the build workflow (distinct files, so no conflicts expected).
+
+## Phase 2a workflow (launched 2026-10-14 ~07:40 UTC)
+
+- `e5-build-harness`, run id `wf_a885f29d-0ec`; script copy `workflow/e5-build-harness.js`; journal `/root/.claude/projects/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/subagents/workflows/wf_a885f29d-0ec/journal.jsonl`.
+- Five builders (one per `e5/*` worktree: controls v3; backtest matched-mean columns + paired cluster-bootstrap helper; e1.Study opt-in panel format / IGNITION guard / as-traded band / v3 pool; CRYPTO_CLOSE profile; `rules/moonshot_e5.py` + registry + tests), each followed by an adversarial read-only review and up to two fix rounds. Builders commit on their own `e5/*` branch with the session trailer. Outputs are synced to `outputs_phase2a/` by `python3 scripts/sync_outputs.py <journal> outputs_phase2a`.
+- After it completes: merge the five `e5/*` branches into `claude/e5-ceiling` (distinct files), run the full checks, then Phase 2b (`e5.py` + `cli.py` + protocol freeze + IDX panel rebuild from the on-disk mirror).
