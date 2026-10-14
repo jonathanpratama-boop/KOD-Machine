@@ -83,3 +83,10 @@ Not pushed. GitHub still has PR #3 at `bd352b2`.
 - Builds: all five done and committed on their `e5/*` branches (see `06_phase2_integration_todo.md`).
 - Reviews: h1-controls r1 accept; h2-backtest r1 accept; **h3-e1, h4-profiles, r-rules reviews failed to start: "You've hit your session limit · resets 9:30am (UTC)"**. The workflow result marks them `review_failed`. Full return value: `workflow/wf_a885f29d-0ec.result.json`.
 - Plan: resume the workflow after 09:30 UTC (`resumeFromRunId: wf_a885f29d-0ec`); the five builds and two accepted reviews replay from cache, only the three missing reviews (and any fix rounds) run live.
+
+## Merge into claude/e5-ceiling (2026-10-14 09:35 UTC, before the three pending reviews; reversible)
+
+- `git merge --no-ff` of e5/h1-controls, e5/h2-backtest, e5/h3-e1, e5/h4-profiles, e5/r-rules into `claude/e5-ceiling` → head `1b7c091`; no conflicts (distinct files); 11 files, +1977/−14 vs `ae2cbee`.
+- Checks on `1b7c091` (E5 worktree): `python3 -m unittest` **311 OK**; `idxsig rules` source audit passed; `verify-runs` OK; `check_append_only --all` OK.
+- Reviews of h3-e1, h4-profiles, r-rules resumed at 09:35 UTC (`resumeFromRunId wf_a885f29d-0ec`); any fix they demand lands on the `e5/*` branch and is merged again.
+- Still to do from `06_phase2_integration_todo.md` (cross-file, no builder owned them): `cli.py` `--controls-version` choices += "v3"; `run --market` choices += "CRYPTO_CLOSE" with panel loading via `PROFILES[market].market`.
