@@ -25,12 +25,20 @@ Features (every column s uses sessions <= s only; names x sessions arrays):
     ties, among the names present and tradeable at that session; the pool is masked by `present`
     before ranking so a name listed later never changes an earlier column (prefix-first); a NaN
     value ranks 0.5; the squared rank enters too; binaries enter as 0/1.
-  * WARMUP = 60: every array features() returns, and compute(), is NaN in the first 60 columns of
-    the view. A harness window therefore starts 60 sessions before its period.
+  * FEATURE_WARMUP = 60: every array features() returns is NaN in the first 60 columns of the view
+    (the longest look-back, brk60/dd60/vol60, is only window-invariant from there).
 
 Flags: a session is flagged on the first session a name's score is >= the market's threshold
-after at least five sessions outside the set (trailing; a session with no score counts as
-outside; nothing is flagged before five sessions of history). A0/A1 are debounced the same way.
+after at least five sessions KNOWN to be outside the set (trailing: column s reads columns
+s-5..s only). A session with no score (the feature warm-up) is unknown, neither in nor out, so
+it never counts towards the five: the first flag any window can emit is at column
+FEATURE_WARMUP + DEBOUNCE, with five real out-of-set sessions behind it, and the same session
+carries the same flag whatever earlier column the window starts at. A0/A1 are debounced the
+same way (a session in the warm-up has no detector state).
+  * WARMUP = FEATURE_WARMUP + DEBOUNCE = 65: compute() is NaN in the first 65 columns of the view.
+    A harness window therefore starts WARMUP sessions before its period (read the literal; the
+    protocol draft's "60" is the feature warm-up alone, which would put the debounce's lead-in
+    inside the period).
 
 Coefficients, intercepts and thresholds are module-level literals, None until discovery freezes
 them (then validation refuses unless they equal discovery/model.json); the rule hash covers them.
@@ -51,7 +59,9 @@ RULE_ID = "MOONSHOT_E5"
 VERSION = "v1"
 SIDE = "long"
 HOLDING_DAYS = 5
-WARMUP = 60
+FEATURE_WARMUP = 60  # features() NaN in the first 60 columns of the view
+DEBOUNCE = 5  # a flag needs this many trailing sessions known to be outside the set
+WARMUP = FEATURE_WARMUP + DEBOUNCE  # compute() NaN in the first 65 columns; the harness lead-in
 MARKETS = ("IDX", "US", "CRYPTO")
 ARMS = ("A", "B")
 CANDIDATES = ("IDX_A", "IDX_B", "US_A", "US_B", "CRYPTO_A", "CRYPTO_B", "A0_CREEP_QUIET", "A1_CREEP_QUIET_NR")
@@ -76,7 +86,6 @@ INTERCEPT_D = (("IDX", None), ("US", None), ("CRYPTO", None))
 THRESHOLD_A = (("IDX", None), ("US", None), ("CRYPTO", None))
 THRESHOLD_B = (("IDX", None), ("US", None), ("CRYPTO", None))
 SELECTED = None  # frozen after validation: ((market, arm), ...), e.g. (("IDX", "A"), ("CRYPTO", "B"))
-DEBOUNCE = 5
 CREEP_MIN = 1.5
 QUIET_RNGR_MAX = 1.0
 QUIET_BAND = 2.0
@@ -141,10 +150,10 @@ def _roll(a, window, min_periods, how, shift):
     return out
 
 
-def _warm(a):
-    """A float copy with the first WARMUP columns NaN."""
+def _warm(a, n):
+    """A float copy with the first n columns NaN."""
     out = np.array(a, dtype=float)
-    out[:, :WARMUP] = np.nan
+    out[:, :n] = np.nan
     return out
 
 
@@ -233,7 +242,7 @@ def raw_features(close, prev, high, low, volume, value, present, tradeable, lock
 def rank_features(f, present, tradeable):
     """Per session, the percentile rank (rank - 0.5) / n of every RANKED feature among the names present
     and tradeable at that session (masked before ranking; NaN -> 0.5), its square, and the binaries as
-    0/1; every output NaN in the first WARMUP columns."""
+    0/1; every output NaN in the first FEATURE_WARMUP columns."""
     pool = present & tradeable
     out = {}
     with np.errstate(divide="ignore", invalid="ignore"):
@@ -242,18 +251,18 @@ def rank_features(f, present, tradeable):
             count = frame.notna().sum(axis=0).to_numpy(dtype=float)[None, :]
             r = (frame.rank(axis=0, method="average").to_numpy() - 0.5) / count
             r = np.where(np.isfinite(r), r, 0.5)
-            out[name + "_r"] = _warm(r)
-            out[name + "_r2"] = _warm(r * r)
+            out[name + "_r"] = _warm(r, FEATURE_WARMUP)
+            out[name + "_r2"] = _warm(r * r, FEATURE_WARMUP)
     for name in BINARY:
-        out[name] = _warm(f[name])
+        out[name] = _warm(f[name], FEATURE_WARMUP)
     return out
 
 
 def features(close, prev, high, low, volume, value, present, tradeable, lock_up, opens):
-    """raw_features plus rank_features in one dict; every array NaN in the first WARMUP columns."""
+    """raw_features plus rank_features in one dict; every array NaN in the first FEATURE_WARMUP columns."""
     f = raw_features(close, prev, high, low, volume, value, present, tradeable, lock_up, opens)
     f.update(rank_features(f, present, tradeable))
-    return {k: _warm(v) for k, v in f.items()}
+    return {k: _warm(v, FEATURE_WARMUP) for k, v in f.items()}
 
 
 def score(ranked, coef, intercept):
@@ -266,21 +275,27 @@ def score(ranked, coef, intercept):
     return out
 
 
-def debounce(state):
-    """True on the first session of a run of True after at least DEBOUNCE sessions of False
-    (trailing: column s reads columns s-DEBOUNCE..s only; never before DEBOUNCE sessions of history)."""
+def debounce(state, known=None):
+    """True on the first session of a run of True after at least DEBOUNCE sessions known to be False
+    (trailing: column s reads columns s-DEBOUNCE..s only; never before DEBOUNCE sessions of history).
+    `known` marks the sessions whose state is defined; an unknown session (the warm-up) is neither
+    in nor out and never counts towards the DEBOUNCE, so a window's first flag has DEBOUNCE real
+    out-of-set sessions behind it wherever the window starts. known=None: every session is known."""
     state = np.asarray(state, dtype=bool)
+    known = np.ones(state.shape, dtype=bool) if known is None else np.asarray(known, dtype=bool)
     ok = np.zeros(state.shape, dtype=bool)
     ok[:, DEBOUNCE:] = True
     for k in range(1, DEBOUNCE + 1):
-        ok &= ~_lagb(state, k)
-    return state & ok
+        ok &= _lagb(known & ~state, k)
+    return state & known & ok
 
 
 def flags(score_, threshold):
-    """Debounced entries into {score >= threshold}; a NaN score is outside the set."""
-    s = np.where(np.isfinite(score_), score_, -np.inf)
-    return debounce(s >= float(threshold))
+    """Debounced entries into {score >= threshold}; a NaN score is unknown (not outside the set)."""
+    known = np.isfinite(score_)
+    with np.errstate(invalid="ignore"):
+        state = known & (score_ >= float(threshold))
+    return debounce(state, known)
 
 
 def arm_score(f, market, arm):
@@ -313,7 +328,9 @@ def frozen(name):
 
 
 def detector_states(f):
-    """Raw (undebounced) KOD-DET-v0 states: A0 = creep and quiet; A1 = A0 and not re-priced."""
+    """Raw (undebounced) KOD-DET-v0 states: A0 = creep and quiet; A1 = A0 and not re-priced. A
+    detector fact that is undefined at a session (creep5v20 NaN) makes the state False there, as
+    kod/detectors.py reports no SIGNAL on a None fact; only the warm-up has no state at all."""
     creep = np.nan_to_num(f["creep5v20"], nan=-1.0)
     a0 = (creep >= CREEP_MIN) & (f["quiet"] == 1.0)
     return {"A0_CREEP_QUIET": a0, "A1_CREEP_QUIET_NR": a0 & (f["not_repriced"] == 1.0)}
@@ -328,8 +345,9 @@ def family_flags(f):
             name = market + "_" + arm
             s, thr = arm_score(f, market, arm), arm_threshold(market, arm)
             out[name] = np.zeros(shape, dtype=bool) if s is None or thr is None else flags(s, thr)
+    known = np.isfinite(f["quiet"])  # the detector state exists once the features are warm
     for name, state in detector_states(f).items():
-        out[name] = debounce(state)
+        out[name] = debounce(state, known)
     return out
 
 
@@ -340,7 +358,7 @@ def _compute_for(name):
                                "threshold in rules/moonshot_e5.py (discovery not done, or its literals not committed); "
                                "it computes nothing until they are frozen")
         f = features(m.close, m.prev, m.high, m.low, m.volume, m.value, m.present, m.tradeable, m.lock_up, m.open)
-        return _warm(np.where(m.tradeable, family_flags(f)[name].astype(float), np.nan))
+        return _warm(np.where(m.tradeable, family_flags(f)[name].astype(float), np.nan), WARMUP)
 
     return compute
 

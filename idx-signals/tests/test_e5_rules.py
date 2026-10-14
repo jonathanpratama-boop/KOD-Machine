@@ -19,7 +19,8 @@ from tests.support import flat_market, random_walk_panel
 
 ROOT = Path(__file__).resolve().parents[2]
 PRICE_FACTS = ROOT / "kod-machine" / "research" / "ZEALAND_PILOT_v1" / "03_card" / "price_facts.py"
-W = moonshot_e5.WARMUP
+W = moonshot_e5.FEATURE_WARMUP  # features() NaN before this column
+WF = moonshot_e5.WARMUP  # compute() NaN before this column: the first flag a window can emit
 ARM_NAMES = tuple(m + "_" + a for m in moonshot_e5.MARKETS for a in moonshot_e5.ARMS)
 
 
@@ -112,7 +113,10 @@ class ModuleTests(unittest.TestCase):
         self.assertEqual(moonshot_e5.RULE_ID, "MOONSHOT_E5")
         self.assertEqual(moonshot_e5.VERSION, "v1")
         self.assertEqual(moonshot_e5.SIDE, "long")
-        self.assertEqual(moonshot_e5.WARMUP, 60)
+        self.assertEqual(moonshot_e5.FEATURE_WARMUP, 60)
+        self.assertEqual(moonshot_e5.DEBOUNCE, 5)
+        self.assertEqual(moonshot_e5.WARMUP, 65)  # the harness lead-in: feature warm-up plus the debounce
+        self.assertEqual(moonshot_e5.WARMUP, moonshot_e5.FEATURE_WARMUP + moonshot_e5.DEBOUNCE)
         self.assertEqual(moonshot_e5.FEATURE_ARGS,
                          ("close", "prev", "high", "low", "volume", "value", "present", "tradeable", "lock_up", "open"))
         self.assertEqual(moonshot_e5.MARKETS, ("IDX", "US", "CRYPTO"))
@@ -205,7 +209,7 @@ class FeatureTests(unittest.TestCase):
         self.assertEqual(f["zero20"][3, 70], 0.0)  # sessions before the listing are not present: none untraded
         self.assertEqual(f["age"][0, 100], 100.0)
 
-    def test_warmup_masks_the_first_60_columns(self):
+    def test_warmup_masks_features_for_60_columns_and_compute_for_65(self):
         m = open_panel()
         f = feats(m)
         for k, v in f.items():
@@ -213,12 +217,17 @@ class FeatureTests(unittest.TestCase):
             self.assertTrue(np.isnan(v[:, :W]).all(), k)
         for k in ("ret1", "ret1_r", "ret1_r2", "brk60", "creep5v20", "quiet", "rebase", "vc10_60"):
             self.assertTrue(np.isfinite(f[k][:, W:]).any(), k)
+        for k in moonshot_e5.FEATURE_ORDER:
+            self.assertTrue(np.isfinite(f[k][:, W:]).all(), k)  # ranks and binaries are known from column 60 on
         reg = rules.registry()
         sig = reg["E5_CAND_A0_CREEP_QUIET"].compute(m)
-        self.assertTrue(np.isnan(sig[:, :W]).all())
-        self.assertTrue(np.isin(sig[:, W:][m.tradeable[:, W:]], (0.0, 1.0)).all())
+        self.assertTrue(np.isnan(sig[:, :WF]).all())  # the debounce needs five known sessions after the warm-up
+        self.assertTrue(np.isin(sig[:, WF:][m.tradeable[:, WF:]], (0.0, 1.0)).all())
+        self.assertTrue(np.isfinite(sig[:, WF][m.tradeable[:, WF]]).all())
         short = rules.CausalSource(m).view(30)  # a view shorter than the warm-up: NaN throughout
         self.assertTrue(np.isnan(reg["E5_CAND_A0_CREEP_QUIET"].compute(short)).all())
+        edge = rules.CausalSource(m).view(WF - 1)  # a view that ends inside the lead-in: NaN throughout too
+        self.assertTrue(np.isnan(reg["E5_CAND_A0_CREEP_QUIET"].compute(edge)).all())
 
     def test_pre_spike_block_matches_zealand_price_facts(self):
         pf = load_price_facts()
@@ -342,23 +351,65 @@ class FlagTests(unittest.TestCase):
         ranked["ret1_r"][0, W] = np.nan
         self.assertTrue(np.isnan(moonshot_e5.score(ranked, coef, 0.0)[0, W]))
 
-    def test_debounce_flags_the_first_session_above_after_five_below(self):
-        s = np.full((4, 20), 0.0)
+    def test_debounce_flags_the_first_session_above_after_five_known_below(self):
+        s = np.full((6, 20), 0.0)
         s[0, [5, 6, 12, 16]] = 1.0  # 5: five below before it; 6: the session before was above; 12: 7..11 below
         s[1, :] = 1.0  # always above: never a first entry with five sessions below
-        s[2, :5] = np.nan  # not evaluable counts as outside the top set
+        s[2, :5] = np.nan  # no score: unknown, NOT outside the set, so 5 has no known history and never flags
         s[2, 5] = 1.0
+        s[2, 11] = 1.0  # 6..10 are five known sessions below: this is the first flag the row can carry
         s[3, 2] = 1.0  # fewer than five sessions of history: no flag
+        s[4, 9] = np.nan  # a NaN inside the trailing five: 12 is not an entry after five known sessions below
+        s[4, 12] = 1.0
+        s[4, 18] = 1.0  # 13..17 known and below: flagged
+        s[5, 7] = np.nan  # a NaN session is never itself a flag, and the run 8..12 below makes 13 an entry
+        s[5, 13] = 1.0
         flags = moonshot_e5.flags(s, 1.0)
         self.assertEqual(sorted(np.flatnonzero(flags[0])), [5, 12])
         self.assertFalse(flags[1].any())
-        self.assertEqual(list(np.flatnonzero(flags[2])), [5])
+        self.assertEqual(list(np.flatnonzero(flags[2])), [11])
         self.assertFalse(flags[3].any())
+        self.assertEqual(list(np.flatnonzero(flags[4])), [18])
+        self.assertEqual(list(np.flatnonzero(flags[5])), [13])
         self.assertEqual(flags.dtype, bool)
-        state = s >= 1.0
-        np.testing.assert_array_equal(moonshot_e5.debounce(state), flags)
+        known = np.isfinite(s)
+        state = known & (np.nan_to_num(s, nan=-np.inf) >= 1.0)
+        np.testing.assert_array_equal(moonshot_e5.debounce(state, known), flags)
+        np.testing.assert_array_equal(moonshot_e5.debounce(state[:2]), flags[:2])  # known=None: every session known
         prefix = moonshot_e5.flags(s[:, :13], 1.0)  # trailing: a shorter window changes no earlier column
         np.testing.assert_array_equal(prefix, flags[:, :13])
+        # a window that starts inside a NaN stretch sees nothing that the full window does not: the
+        # first column a window can flag has five known sessions below behind it, wherever it starts
+        later = moonshot_e5.flags(s[:, 3:], 1.0)
+        np.testing.assert_array_equal(later[:, 5:], flags[:, 8:])
+        self.assertFalse(later[:, :5].any())
+
+    def test_flags_are_window_invariant_from_the_lead_in(self):
+        """The same session carries the same flag whether the window starts 0 or 20 sessions earlier: no
+        burst of every in-set name at the first evaluable column (the reviewer's probe, frozen)."""
+        m = open_panel(n_tickers=30, n_sessions=200, seed=5)
+        lo = 20
+        with patched(**frozen_us_a(threshold=1.9)):
+            f_full, f_part = feats(m), feats(m.slice(lo, m.shape[1]))
+            s_full = moonshot_e5.arm_score(f_full, "US", "A")
+            np.testing.assert_allclose(s_full[:, lo + W:], moonshot_e5.arm_score(f_part, "US", "A")[:, W:])
+            full, part = moonshot_e5.family_flags(f_full), moonshot_e5.family_flags(f_part)
+            for name in ("US_A", "A0_CREEP_QUIET", "A1_CREEP_QUIET_NR"):
+                self.assertFalse(full[name][:, :WF].any(), name)  # nothing before five known sessions
+                self.assertFalse(part[name][:, :WF].any(), name)
+                np.testing.assert_array_equal(full[name][:, lo + WF:], part[name][:, WF:], err_msg=name)
+            in_set = np.isfinite(s_full) & (np.nan_to_num(s_full, nan=-np.inf) >= 1.9)
+            self.assertGreater(int(in_set[:, W].sum()), 1)  # several names are in the set at the first scored column
+            self.assertFalse(full["US_A"][:, W].any())  # ... and none of them is a flag there (the old burst)
+            first = full["US_A"][:, WF]  # at the first flaggable column only true entries after five sessions out
+            self.assertTrue((~in_set[:, W:WF][first]).all())
+            self.assertTrue(in_set[:, WF][first].all())
+            self.assertGreater(int(full["US_A"].sum()), 0)
+            rule = rules.registry()["E5_CAND_US_A"]
+            a, b = rule.compute(m), rule.compute(m.slice(lo, m.shape[1]))
+            np.testing.assert_array_equal(a[:, lo + WF:], b[:, WF:])
+            self.assertTrue(np.isnan(a[:, :WF]).all())
+            self.assertTrue(np.isnan(b[:, :WF]).all())
 
     def test_unfrozen_arms_have_no_flags_and_their_rules_refuse_to_run(self):
         m = open_panel(n_tickers=10, n_sessions=90)
@@ -395,15 +446,16 @@ class FlagTests(unittest.TestCase):
             sig, info = rules.causal_signals(rule, m)  # prefix-first: raises LookaheadError on any difference
             self.assertEqual(info["full_window_mismatches"], 0)
             self.assertEqual(info["source_audit"], "passed")
-            np.testing.assert_array_equal(sig[:, W:], np.where(m.tradeable, flags.astype(float), np.nan)[:, W:])
-            self.assertTrue(np.isnan(sig[:, :W]).all())
+            np.testing.assert_array_equal(sig[:, WF:], np.where(m.tradeable, flags.astype(float), np.nan)[:, WF:])
+            self.assertTrue(np.isnan(sig[:, :WF]).all())
+            self.assertFalse(flags[:, :WF].any())  # the mask hides nothing: no flag exists before the lead-in
             self.assertGreater(np.nansum(sig), 0)
             with patched(THRESHOLD_B=(("IDX", None), ("US", 0.0), ("CRYPTO", None)),
                          COEF_D=lit["COEF_U"], INTERCEPT_D=lit["INTERCEPT_U"]):
                 self.assertTrue(moonshot_e5.frozen("US_B"))
                 b = moonshot_e5.arm_score(f, "US", "B")  # logit_U - logit_D, here identical fits: zero
                 np.testing.assert_allclose(b[:, W:], 0.0, atol=1e-12)
-                self.assertFalse(moonshot_e5.family_flags(f)["US_B"][:, :W].any())
+                self.assertFalse(moonshot_e5.family_flags(f)["US_B"][:, :WF].any())
 
     def test_creep_quiet_rules_are_causal_and_debounced(self):
         t, d, a = creep_quiet_market()
@@ -412,11 +464,16 @@ class FlagTests(unittest.TestCase):
         states = moonshot_e5.detector_states(feats(m))
         for name in ("A0_CREEP_QUIET", "A1_CREEP_QUIET_NR"):
             sig, _ = rules.causal_signals(reg[moonshot_e5.candidate_rule_id(name)], m)
-            expect = np.where(m.tradeable, moonshot_e5.debounce(states[name]).astype(float), np.nan)
-            expect[:, :W] = np.nan
+            known = np.isfinite(feats(m)["quiet"])
+            expect = np.where(m.tradeable, moonshot_e5.debounce(states[name], known).astype(float), np.nan)
+            expect[:, :WF] = np.nan
             np.testing.assert_array_equal(sig, expect)
             self.assertEqual(list(np.flatnonzero(sig[0] == 1.0)), [78])  # one flag per episode, at its first session
             self.assertFalse((sig[1:] == 1.0).any())
+            # the same episode, seen from a window that starts 10 sessions later: the same single flag
+            later, _ = rules.causal_signals(reg[moonshot_e5.candidate_rule_id(name)], m.slice(10, m.shape[1]))
+            np.testing.assert_array_equal(later[:, WF:], sig[:, 10 + WF:])
+            self.assertEqual(list(np.flatnonzero(later[0] == 1.0)), [68])
 
 
 if __name__ == "__main__":
