@@ -149,7 +149,7 @@ class Discovered:
 class ProtocolTests(unittest.TestCase):
     def test_draft_parses_and_every_key_e5_reads_is_present(self):
         self.assertEqual(PROTO["protocol_id"], "KOD-GLOBAL-E5-v1")
-        self.assertIs(PROTO["frozen_before_analysis"], False)  # the draft; the orchestrator sets the freeze
+        self.assertIs(PROTO["frozen_before_analysis"], True)  # frozen in commit e1e57af (research/E5/PROTOCOL.md §Freeze)
         for path, _stage in e5.PROTOCOL_KEYS:
             for mk in e5.MARKETS:
                 e5.get(PROTO, path.replace("<M>", mk))  # KeyError names a missing key
@@ -917,7 +917,7 @@ class DiscoveryEndToEnd(unittest.TestCase):
                                                     "pool_keys": ["price_band", "liquidity", "volatility", "market_cap"]})
         self.assertIn("6 fits", summary["search_size"])
         self.assertEqual(summary["selected_arm"], gates["selected_arm"])
-        self.assertIs(summary["frozen_before_analysis"], False)
+        self.assertIs(summary["frozen_before_analysis"], True)  # frozen in commit e1e57af
 
     def test_discovery_is_deterministic(self):
         warnings.simplefilter("ignore")
