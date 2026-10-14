@@ -118,7 +118,8 @@ class ModuleTests(unittest.TestCase):
         self.assertEqual(moonshot_e5.WARMUP, 65)  # the harness lead-in: feature warm-up plus the debounce
         self.assertEqual(moonshot_e5.WARMUP, moonshot_e5.FEATURE_WARMUP + moonshot_e5.DEBOUNCE)
         self.assertEqual(moonshot_e5.FEATURE_ARGS,
-                         ("close", "prev", "high", "low", "volume", "value", "present", "tradeable", "lock_up", "open"))
+                         ("close", "prev", "high", "low", "volume", "value", "present", "tradeable", "lock_up",
+                          "open", "listed_before"))  # listed_before added by the v1.1 audit addendum (finding B)
         self.assertEqual(moonshot_e5.MARKETS, ("IDX", "US", "CRYPTO"))
         self.assertEqual(moonshot_e5.ARMS, ("A", "B"))
         self.assertEqual(moonshot_e5.CANDIDATES, ARM_NAMES + ("A0_CREEP_QUIET", "A1_CREEP_QUIET_NR"))
@@ -478,3 +479,61 @@ class FlagTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ListingAgeTests(unittest.TestCase):
+    """Audit finding B (2026-10-14, research/E5/v1.1): age was counted from the window's first column, so a
+    window start past a listing changed same-date age ranks and scores beyond the warm-up; the existing
+    invariance fixture had every name listed before the window."""
+
+    def _market_with_a_listing(self, listed_at=30, n_sessions=220):
+        df, _ = random_walk_panel(n_tickers=30, n_sessions=n_sessions, seed=7)
+        df["open"] = df["previous"]
+        dates = np.array(sorted(df["date"].unique()))
+        name = sorted(df["ticker"].unique())[3]
+        df = df[~((df["ticker"] == name) & (df["date"].to_numpy() < dates[listed_at]))]
+        return Market.from_panel(df, price_limits=False), name
+
+    def test_market_carries_sessions_listed_before_through_slice(self):
+        m, name = self._market_with_a_listing(30)
+        i = list(m.tickers).index(name)
+        self.assertEqual(int(m.listed_before[i]), 0)
+        part = m.slice(45, m.shape[1])
+        self.assertEqual(int(part.listed_before[i]), 15)
+        self.assertEqual(int(part.listed_before[0]), 45)
+        again = part.slice(10, part.shape[1])
+        self.assertEqual(int(again.listed_before[i]), 25)
+        self.assertEqual(int(again.listed_before[0]), 55)
+        self.assertEqual(int(m.truncate(100).listed_before[i]), 0)
+
+    def test_age_ranks_and_scores_survive_a_window_start_after_a_listing(self):
+        m, name = self._market_with_a_listing(30)
+        i = list(m.tickers).index(name)
+        lo = 45
+        part = m.slice(lo, m.shape[1])
+        with patched(**frozen_us_a(coef_on=("age_r", "ret1_r", "volr_r"), threshold=1.9)):
+            f_full, f_part = feats(m), feats(part)
+            raw_full = moonshot_e5.raw_features(*[getattr(m, a) for a in moonshot_e5.FEATURE_ARGS])
+            raw_part = moonshot_e5.raw_features(*[getattr(part, a) for a in moonshot_e5.FEATURE_ARGS])
+            np.testing.assert_allclose(raw_full["age"][:, lo:], raw_part["age"], equal_nan=True)  # before the warm-up blank
+            self.assertEqual(raw_full["age"][i, lo], float(lo - 30))
+            self.assertTrue(np.isnan(raw_full["age"][i, 29]))
+            self.assertEqual(raw_full["age"][0, lo], float(lo))  # listed at the panel start: left-censored count
+            np.testing.assert_allclose(f_full["age_r"][:, lo + W:], f_part["age_r"][:, W:], equal_nan=True)
+            s_full, s_part = moonshot_e5.arm_score(f_full, "US", "A"), moonshot_e5.arm_score(f_part, "US", "A")
+            np.testing.assert_allclose(s_full[:, lo + W:], s_part[:, W:], equal_nan=True)
+            rule = rules.registry()["E5_CAND_US_A"]
+            a, b = rule.compute(m), rule.compute(part)
+            np.testing.assert_array_equal(a[:, lo + WF:], b[:, WF:])
+        # the defect, reproduced: age counted from the window start (no listing history) moves the ranks
+        args = [getattr(part, a) for a in moonshot_e5.FEATURE_ARGS]
+        args[-1] = np.zeros(part.shape[0], dtype=np.int64)
+        f_old = moonshot_e5.features(*args)
+        self.assertFalse(np.allclose(f_old["age_r"][:, W:], f_full["age_r"][:, lo + W:], equal_nan=True))
+
+    def test_features_refuse_an_unknown_listing_history(self):
+        m, _ = self._market_with_a_listing(30)
+        args = [getattr(m, a) for a in moonshot_e5.FEATURE_ARGS]
+        args[-1] = None
+        with self.assertRaises(ValueError):
+            moonshot_e5.features(*args)

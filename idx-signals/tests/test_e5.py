@@ -1070,3 +1070,39 @@ class CliTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class PlanWindowEligibilityTests(unittest.TestCase):
+    """Audit finding A (2026-10-14, research/E5/v1.1): a flag whose label window ended on the period's last
+    session had its plan window, exit at t+1+H, scored with the first post-period close, for the flag and its
+    matched controls alike (IDX witness: INPS, Arm A, 2022-12-23, exit 2023-01-02)."""
+
+    def test_discovery_reads_nothing_after_the_period_end(self):
+        warnings.simplefilter("ignore")
+        found = Discovered.get("IDX")
+        df, meta, proto, stage1 = found["df"], found["meta"], found["proto"], found["stage1"]
+        elig = stage1["eligibility"]
+        self.assertLess(elig["plan_window_eligible_ticker_days"], elig["label_eligible_ticker_days"])
+        self.assertEqual(elig["study_last_session"], stage1["window"]["last_period_session"])
+        self.assertEqual(stage1["window"]["study_end"], stage1["window"]["period_end"])
+        flags = pd.read_csv(found["out"] / "flags.csv")
+        late = flags[flags["date"] > elig["last_plan_eligible_session"]]
+        self.assertTrue(late["plan_return"].isna().all() and late["matched_plan_mean"].isna().all())
+        for arm in e5.ARMS:
+            block = stage1["arms"][arm]
+            self.assertEqual(block["plan_window"]["flags_with_return"],
+                             int(flags[(flags["arm"] == arm) & flags["plan_return"].notna()].shape[0]))
+        # the witness, generalised: every close after the period end changes nothing in discovery
+        end = np.datetime64(proto["markets"]["IDX"]["periods"]["discovery"][1], "D")
+        pert = df.copy()
+        after = pert["date"].to_numpy().astype("datetime64[D]") > end
+        self.assertTrue(after.any())
+        for c in ("close", "high", "low", "previous"):
+            pert.loc[after, c] = (pert.loc[after, c].astype(float) * 1.5).round().astype("Int64")
+        out = Path(tempfile.mkdtemp(prefix="idxsig-e5-pert-")) / "IDX" / "discovery"
+        fake_reproduce(out, meta)
+        e5.run_discovery(pert, meta, synthetic_registry(pert, meta), out, proto, "synthetic-sha", "IDX",
+                         log=lambda *_: None)
+        again = json.loads((out / "stage1.json").read_text(encoding="utf-8"))
+        self.assertEqual(again, stage1)
+        self.assertEqual(json.loads((out / "model.json").read_text(encoding="utf-8"))["coef_U"], found["model"]["coef_U"])

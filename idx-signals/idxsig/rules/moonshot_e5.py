@@ -13,7 +13,11 @@ Features (every column s uses sessions <= s only; names x sessions arrays):
     brk60, dd60, cpos, gap copied from rules/moonshot_g.py; valr, rngr, vol20, up5, zero20, age,
     logval20 copied from e1.Study._signals (vol20 counts a present but untraded session as a zero
     log return, as the research tables did); ara from rules/moonshot_e1.py. age and zero20 are NaN
-    before a name's first present session (e1.Study leaves them negative / zero there).
+    before a name's first present session (e1.Study leaves them negative / zero there). age counts sessions
+    since the name's FIRST LISTED session, not since the window's first column: the market passes
+    listed_before (sessions listed before the window; execution.Market carries it through slice()), so a
+    window that starts after a listing gives the same age, ranks and scores (audit finding B, v1.1); the
+    count is left-censored at the pinned panel's first session, which is declared, not invented.
   * the pre-spike block: creep5v20 = median volume t-4..t / median volume t-24..t-5 over present
     sessions (an untraded session is zero volume); rngr5 = median rngr t-4..t; vc10_60 = vol10 /
     vol60; quiet = rngr5 <= 1.0 and |ret5| <= 2 vol20 sqrt(5) (kod-machine/research/ZEALAND_PILOT_v1/
@@ -65,7 +69,8 @@ WARMUP = FEATURE_WARMUP + DEBOUNCE  # compute() NaN in the first 65 columns; the
 MARKETS = ("IDX", "US", "CRYPTO")
 ARMS = ("A", "B")
 CANDIDATES = ("IDX_A", "IDX_B", "US_A", "US_B", "CRYPTO_A", "CRYPTO_B", "A0_CREEP_QUIET", "A1_CREEP_QUIET_NR")
-FEATURE_ARGS = ("close", "prev", "high", "low", "volume", "value", "present", "tradeable", "lock_up", "open")
+FEATURE_ARGS = ("close", "prev", "high", "low", "volume", "value", "present", "tradeable", "lock_up", "open",
+                "listed_before")
 RANKED = ("ret1", "rel1", "ret5", "ret20", "volr", "valr", "rngr", "cpos", "vol20", "dd60", "up5", "zero20", "age",
           "logval20", "gap", "creep5v20", "rngr5", "vc10_60")
 BINARY = ("brk60", "ara", "quiet", "not_repriced", "rebase")
@@ -179,8 +184,16 @@ def _rebase(level, spike):
     return out
 
 
-def raw_features(close, prev, high, low, volume, value, present, tradeable, lock_up, opens):
-    """Unranked features as float arrays (names, sessions); column d uses columns <= d only."""
+def raw_features(close, prev, high, low, volume, value, present, tradeable, lock_up, opens, listed_before=None):
+    """Unranked features as float arrays (names, sessions); column d uses columns <= d only. listed_before:
+    per name, the sessions it was listed before column 0 (required: age is never counted from the window
+    start)."""
+    if listed_before is None:
+        raise ValueError("moonshot_e5 needs listed_before (sessions each name was listed before this window; "
+                         "execution.Market.listed_before): age is not counted from the window start")
+    lb = np.asarray(listed_before, dtype=float)
+    if lb.shape != (close.shape[0],) or not np.all(np.isfinite(lb)) or np.any(lb < 0):
+        raise ValueError("listed_before must be one finite non-negative count per name")
     with np.errstate(divide="ignore", invalid="ignore"):
         # --- rules/moonshot_g.features, verbatim
         ok = tradeable & (prev > 0)
@@ -213,10 +226,11 @@ def raw_features(close, prev, high, low, volume, value, present, tradeable, lock
         vol20 = _roll(slogret, 20, 15, "std", 0)
         up5 = _roll(np.where(present, (np.nan_to_num(ret1) > 0).astype(float), np.nan), 5, 5, "sum", 0)
         zero20 = _roll(untraded, 20, 20, "sum", 1)
-        age = (np.arange(present.shape[1])[None, :] - first[:, None]).astype(float)
+        cols = np.arange(present.shape[1])[None, :]
+        first_eff = np.where(lb > 0, -lb, first.astype(float))  # listed before the window: age keeps counting
+        age = np.where(cols >= first_eff[:, None], cols - first_eff[:, None], np.nan)  # NaN before the listing
         logval20 = np.log10(_roll(val, 20, 10, "median", 0))
-        listed = np.arange(present.shape[1])[None, :] >= first[:, None]  # NaN before the first present session
-        age = np.where(listed, age, np.nan)
+        listed = cols >= first[:, None]  # NaN before the first present session of this window (zero20)
         zero20 = np.where(listed, zero20, np.nan)
         ara = lock_up & tradeable
         # --- the pre-spike block (ZEALAND price_facts.py definitions)
@@ -258,9 +272,9 @@ def rank_features(f, present, tradeable):
     return out
 
 
-def features(close, prev, high, low, volume, value, present, tradeable, lock_up, opens):
+def features(close, prev, high, low, volume, value, present, tradeable, lock_up, opens, listed_before=None):
     """raw_features plus rank_features in one dict; every array NaN in the first FEATURE_WARMUP columns."""
-    f = raw_features(close, prev, high, low, volume, value, present, tradeable, lock_up, opens)
+    f = raw_features(close, prev, high, low, volume, value, present, tradeable, lock_up, opens, listed_before)
     f.update(rank_features(f, present, tradeable))
     return {k: _warm(v, FEATURE_WARMUP) for k, v in f.items()}
 
@@ -357,7 +371,8 @@ def _compute_for(name):
             raise RuntimeError(f"{candidate_rule_id(name)}: the {name} ranker has no frozen coefficients, intercept or "
                                "threshold in rules/moonshot_e5.py (discovery not done, or its literals not committed); "
                                "it computes nothing until they are frozen")
-        f = features(m.close, m.prev, m.high, m.low, m.volume, m.value, m.present, m.tradeable, m.lock_up, m.open)
+        f = features(m.close, m.prev, m.high, m.low, m.volume, m.value, m.present, m.tradeable, m.lock_up, m.open,
+                     m.listed_before)
         return _warm(np.where(m.tradeable, family_flags(f)[name].astype(float), np.nan), WARMUP)
 
     return compute

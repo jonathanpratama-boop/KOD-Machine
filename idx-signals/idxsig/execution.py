@@ -189,6 +189,14 @@ class Market:
         for name in self.REGISTRY_FIELDS:
             setattr(self, name, arrays.get(name))
         self.registry_counts = arrays.get("registry_counts")
+        # Sessions each name was listed before this market's first session, carried through slice() and
+        # window(), so a rule can count a name's age from its first listed session instead of from the
+        # window start (audit finding B, research/E5/v1.1). Zero where the name lists at or after the first
+        # session, or where the history given starts here (left-censored at the data start: declared, not
+        # invented).
+        lb = arrays.get("listed_before")
+        self.listed_before = (np.zeros(len(self.tickers), dtype=np.int64) if lb is None
+                              else np.asarray(lb, dtype=np.int64).copy())
 
     @property
     def shape(self):
@@ -213,12 +221,16 @@ class Market:
         opens = dense("open") if "open" in df else np.full(shape, np.nan)
         present = np.zeros(shape, dtype=bool)
         present[ti, di] = True
+        listed_before = None
+        if "sessions_listed_before" in df:  # per name, constant: listing history before this frame's first session
+            per = df.groupby("ticker")["sessions_listed_before"].first().reindex(tickers)
+            listed_before = per.fillna(0).to_numpy(dtype=np.int64)
         return cls.build(tickers, dates, close, prev, high, low, volume, value, present, listed, opens=opens,
-                         price_limits=price_limits)
+                         price_limits=price_limits, listed_before=listed_before)
 
     @classmethod
     def build(cls, tickers, dates, close, prev, high, low, volume, value, present, listed_shares=None,
-              opens=None, price_limits: bool = True) -> "Market":
+              opens=None, price_limits: bool = True, listed_before=None) -> "Market":
         tradeable = present & (np.nan_to_num(volume) > 0) & (np.nan_to_num(close) > 0)
         day_grid = np.broadcast_to(np.asarray(dates, dtype="datetime64[D]"), close.shape)
         ref = np.where(np.isfinite(prev) & (prev > 0), prev, np.nan)
@@ -249,7 +261,7 @@ class Market:
                    split_factor=np.cumprod(np.where(is_split, ca_ratio, 1.0), axis=1),
                    other_ca_count=np.cumsum(reset & ~is_split, axis=1),
                    listed_shares=np.full(close.shape, np.nan) if listed_shares is None else listed_shares,
-                   open=np.full(close.shape, np.nan) if opens is None else opens)
+                   open=np.full(close.shape, np.nan) if opens is None else opens, listed_before=listed_before)
 
     def with_registry(self, registry) -> "Market":
         """A copy with share scaling from a corporate-action registry (ca_mode="registry")."""
@@ -258,7 +270,8 @@ class Market:
         factor, rights, unresolved, counts = scaling_arrays(self, registry)
         arrays = {name: getattr(self, name) for name in self.FIELDS}
         return Market(self.tickers, self.dates, **arrays, reg_factor=factor, reg_rights=rights,
-                      reg_unresolved=unresolved, unit_factor=self.unit_factor, registry_counts=counts)
+                      reg_unresolved=unresolved, unit_factor=self.unit_factor, registry_counts=counts,
+                      listed_before=self.listed_before)
 
     def with_units(self, unit_factor: np.ndarray) -> "Market":
         """A copy carrying adjusted -> as-traded price factors (us_actions.unit_factors). Built from
@@ -268,7 +281,7 @@ class Market:
         arrays = {name: getattr(self, name) for name in self.FIELDS}
         extra = {name: getattr(self, name) for name in self.REGISTRY_FIELDS if name != "unit_factor"}
         return Market(self.tickers, self.dates, **arrays, **extra, unit_factor=unit_factor,
-                      registry_counts=self.registry_counts)
+                      registry_counts=self.registry_counts, listed_before=self.listed_before)
 
     def bounds(self, start=None, end=None) -> tuple[int, int]:
         lo = 0 if start is None else int(np.searchsorted(self.dates, np.datetime64(start, "D"), side="left"))
@@ -284,7 +297,14 @@ class Market:
         for name in self.REGISTRY_FIELDS:
             if getattr(self, name) is not None:
                 arrays[name] = getattr(self, name)[:, lo:hi]
-        return Market(self.tickers, self.dates[lo:hi], **arrays, registry_counts=self.registry_counts)
+        # Listing history before the new first session: what was already listed before this market's first
+        # session plus the sessions since each name's first present column that fall before `lo`.
+        ever = self.present.any(axis=1)
+        first = np.where(ever, self.present.argmax(axis=1), 0)
+        first_eff = np.where(self.listed_before > 0, -self.listed_before, first)
+        listed_before = np.where(ever | (self.listed_before > 0), np.maximum(0, lo - first_eff), 0).astype(np.int64)
+        return Market(self.tickers, self.dates[lo:hi], **arrays, registry_counts=self.registry_counts,
+                      listed_before=listed_before)
 
     def truncate(self, last: int) -> "Market":
         """Sessions 0..last only. Used to prove a rule never reads ahead."""

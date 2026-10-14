@@ -128,8 +128,16 @@ def get(proto: dict, path: str):
     return node
 
 
+def use_protocol(path: Path) -> Path:
+    """Point every stage at this protocol file; the file's directory holds the stage outputs
+    (research/E5 for v1, research/E5/<version>/ for an addendum)."""
+    global PROTOCOL
+    PROTOCOL = Path(path)
+    return PROTOCOL
+
+
 def version_dir() -> Path:
-    return E5_DIR
+    return PROTOCOL.parent
 
 
 def _rel(path: Path) -> str:
@@ -202,8 +210,21 @@ def build_study(proto: dict, market: str, panel_df: pd.DataFrame, meta: dict, pr
     v_end = get(proto, f"markets.{mk}.periods.validation")[1]
     assert_within_validation(proto, market, v_end)
     dates = panel_df["date"].to_numpy().astype("datetime64[D]")
-    keep = (dates >= np.datetime64(window["start"], "D")) & (dates <= np.datetime64(v_end, "D"))
+    # v1.1 (audit finding A): the study holds the period's sessions only, never a later row; and (finding B)
+    # each name's listing history before the window start rides along, counted on the full pinned panel
+    # (left-censored at its first session), so age does not depend on where the window starts.
+    study_end = window["end"]
+    lo = int(np.searchsorted(sessions, np.datetime64(window["start"], "D"), side="left"))
+    first_date = panel_df.groupby("ticker")["date"].min()
+    first_idx = np.searchsorted(sessions, first_date.to_numpy().astype("datetime64[D]"), side="left")
+    listed_before = pd.Series(np.maximum(0, lo - first_idx).astype(np.int64), index=first_date.index)
+    window["study_end"] = study_end
+    window["listed_before"] = {"definition": "sessions since the name's first present session in the pinned panel "
+                                             "that fall before the window start",
+                               "panel_first_session": str(sessions[0]), "left_censored_names": int((first_idx == 0).sum())}
+    keep = (dates >= np.datetime64(window["start"], "D")) & (dates <= np.datetime64(study_end, "D"))
     df = panel_df.loc[keep].reset_index(drop=True)
+    df["sessions_listed_before"] = df["ticker"].map(listed_before).astype(np.int64)
     study = e1.Study(df, meta, protocol_path=protocol_path or PROTOCOL, profile=PROFILES[mk],
                      family_module=moonshot_e5, pool_units=get(proto, f"markets.{mk}.pool_units"),
                      pool_version=get(proto, "matched_controls.detection_stage.pool_version"),
@@ -1153,13 +1174,26 @@ def run_discovery(df, meta, registry, out: Path, proto: dict, proto_sha: str, ma
     write_json(out / "thresholds.json", {"market": mk, "percentile": pct, "evaluable_ticker_days": int(len(n_idx)),
                                          "threshold_A": thr["A"], "threshold_B": thr["B"]})
     entry_price = PROFILES[mk].entry
-    r_plan = plan_window_return(m, entry_price, int(get(proto, "labels.horizon")))
+    H = int(get(proto, "labels.horizon"))
+    r_plan = plan_window_return(m, entry_price, H)
     r_plan = np.where(lab["censor_plan"], np.nan, r_plan)
+    # v1.1 (audit finding A): the plan window of a flag at t exits at t+1+H; it counts, for the flag and for
+    # its matched controls alike, only when that exit session is inside the period. Label eligibility
+    # (t and t+H inside the period, evaluable_mask) stays what it was.
+    last_idx = int(np.searchsorted(study.dates, np.datetime64(window["last_period_session"], "D"), side="right")) - 1
+    plan_ok = (np.arange(m.shape[1]) + 1 + H) <= last_idx
+    r_plan = np.where(plan_ok[None, :], r_plan, np.nan)
+    eligibility = {"label": f"t and t+{H} inside the period (evaluable_mask)",
+                   "plan_window": f"exit session t+1+{H} inside the period, flags and matched controls alike",
+                   "label_eligible_ticker_days": int(len(n_idx)),
+                   "plan_window_eligible_ticker_days": int((ev & plan_ok[None, :]).sum()),
+                   "last_plan_eligible_session": str(study.dates[last_idx - 1 - H]) if last_idx - 1 - H >= 0 else None,
+                   "study_last_session": str(study.dates[-1])}
     primaries = {tuple(v): k for k, v in get(proto, "stages.1_information.primaries").items()}
     stage1 = {"market": mk, "window": window, "evaluable_ticker_days": int(len(n_idx)),
               "base_rates": {"E30": float(np.nanmean(lab["U"][ev])), "D30": float(np.nanmean(d_arr[ev]))},
               "D_label": d_info, "unit_resets": lab["unit_resets"], "constant_columns": model["constant_column_names"],
-              "entry_price": entry_price, "arms": {}, "detectors": {}}
+              "entry_price": entry_price, "eligibility": eligibility, "arms": {}, "detectors": {}}
     flag_rows = []
     gates = {"market": mk, "stage1": {}, "a1": None, "stage2": {}, "selected_arm": None}
     for arm in ARMS:

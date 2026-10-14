@@ -152,6 +152,9 @@ def main(argv=None) -> int:
         p_e5 = sub.add_parser(name, help=helptext)
         p_e5.add_argument("--market", choices=("IDX", "US", "CRYPTO"), required=True,
                           help="CRYPTO_CLOSE is reached as a sensitivity inside CRYPTO, never as a market here")
+        p_e5.add_argument("--protocol", choices=("v1", "v1.1"), default="v1",
+                          help="research/E5/protocol.json (v1, frozen) or research/E5/v1.1/protocol.json (the audit "
+                               "addendum); stage outputs go under the protocol's directory")
         if name == "e5-discovery":
             p_e5.add_argument("--accept-deviation", action="store_true",
                               help="proceed although the precondition run deviates beyond the accepted tolerance "
@@ -429,6 +432,7 @@ def main(argv=None) -> int:
         from .provenance import MANIFESTS
         from .results import code_state
 
+        e5.use_protocol(e5.E5_DIR / "protocol.json" if args.protocol == "v1" else e5.E5_DIR / args.protocol / "protocol.json")
         proto, proto_sha = e5.protocol()
         if code_state()["dirty"]:
             print("error: commit idxsig/ first so the results name the code that produced them", file=sys.stderr)
