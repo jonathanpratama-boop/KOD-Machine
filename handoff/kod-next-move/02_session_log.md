@@ -77,3 +77,9 @@ Not pushed. GitHub still has PR #3 at `bd352b2`.
 - Task list (harness tasks #40–#46) mirrors `05_next_steps.md` §2.
 
 - 08:14 UTC: `build-panel` raised `RuntimeError: yahoo-20261013T192850Z.jsonl: 983 files differ from the manifest (missing data/raw/yahoo/20261013T192850Z/*.json)`. Resolution recorded in `06_phase2_integration_todo.md` §Panel decision: E5 pins the pinned runs' own on-disk panels; no rebuild.
+
+## Phase 2a workflow finished 2026-10-14 08:18 UTC (37.5 min, 10 agents: 7 done, 3 errored)
+
+- Builds: all five done and committed on their `e5/*` branches (see `06_phase2_integration_todo.md`).
+- Reviews: h1-controls r1 accept; h2-backtest r1 accept; **h3-e1, h4-profiles, r-rules reviews failed to start: "You've hit your session limit · resets 9:30am (UTC)"**. The workflow result marks them `review_failed`. Full return value: `workflow/wf_a885f29d-0ec.result.json`.
+- Plan: resume the workflow after 09:30 UTC (`resumeFromRunId: wf_a885f29d-0ec`); the five builds and two accepted reviews replay from cache, only the three missing reviews (and any fix rounds) run live.
