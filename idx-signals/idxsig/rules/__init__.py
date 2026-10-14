@@ -58,10 +58,10 @@ class Rule:
 
 
 def registry() -> dict:
-    from . import moonshot_e1, moonshot_e3, moonshot_e4, moonshot_g, placebo, user_rule
+    from . import moonshot_e1, moonshot_e3, moonshot_e4, moonshot_e5, moonshot_g, placebo, user_rule
 
     out = {}
-    for module in (user_rule, placebo, moonshot_e1, moonshot_g, moonshot_e3, moonshot_e4):
+    for module in (user_rule, placebo, moonshot_e1, moonshot_g, moonshot_e3, moonshot_e4, moonshot_e5):
         found = module.rules() if hasattr(module, "rules") else [module.rule()]
         for rule in found:
             if rule is not None:
