@@ -70,8 +70,9 @@ def main(argv=None) -> int:
     sub.add_parser("rules", help="list rules and their state")
     p_run = sub.add_parser("run", help="run a rule over the full universe vs random entries")
     p_run.add_argument("--rule", required=True)
-    p_run.add_argument("--market", choices=("IDX", "US", "CRYPTO"), default="IDX",
-                       help="market profile (lots, costs, price limits, entry at open or close)")
+    p_run.add_argument("--market", choices=("IDX", "US", "CRYPTO", "CRYPTO_CLOSE"), default="IDX",
+                       help="market profile (lots, costs, price limits, entry at open or close); CRYPTO_CLOSE is the "
+                            "crypto profile with entry at the close of t+1 (E5 latency-pessimistic sensitivity)")
     p_run.add_argument("--start")
     p_run.add_argument("--end")
     p_run.add_argument("--holding-days", type=int)
@@ -88,8 +89,9 @@ def main(argv=None) -> int:
                        help="registry (default): scale shares only through verified splits / stock dividends; "
                             "exclude, value_preserving: earlier modes, for reproducing older runs")
     p_run.add_argument("--ca-registry", help="corporate-action registry manifest (default: latest)")
-    p_run.add_argument("--controls-version", choices=("v2", "v1"), default="v2",
-                       help="matched-control features (v1 reproduces runs before hardening v2)")
+    p_run.add_argument("--controls-version", choices=("v2", "v1", "v3"), default="v2",
+                       help="matched-control features (v1 reproduces runs before hardening v2; v3 adds a volatility "
+                            "quintile ahead of market_cap, E5)")
     p_run.add_argument("--lookahead-cuts", type=int,
                        help="sample N prefixes instead of the exhaustive check (faster, not a proof)")
     p_run.add_argument("--panel", help="panel manifest (default: latest)")
@@ -290,8 +292,9 @@ def main(argv=None) -> int:
             from . import global_panel
             from .profiles import PROFILES
 
-            df, meta = global_panel.load(Path(args.panel) if args.panel else global_panel.latest(args.market))
             prof = PROFILES[args.market]
+            # a profile variant (CRYPTO_CLOSE) shares its market's panel: load by the profile's market, not its key
+            df, meta = global_panel.load(Path(args.panel) if args.panel else global_panel.latest(prof.market))
             args.ca_mode, args.notional, args.fee_buy, args.fee_sell = "adjusted", prof.notional, prof.fee_buy, prof.fee_sell
         cfg = RunConfig(market=args.market,
             rule_id=args.rule, start=args.start, end=args.end, holding_days=args.holding_days,
