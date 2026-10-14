@@ -1,0 +1,77 @@
+# build:h1-controls (Build; agent a069404161455df8e)
+
+## branch
+e5/h1-controls
+## commit
+c5376066435f5b2af6d97ca8368ba114bbf6622e
+## files_changed
+- idx-signals/idxsig/controls.py
+- idx-signals/tests/test_controls_v3.py
+## api_added
+- controls.VERSIONS['v3'] = ('price_band', 'liquidity', 'volatility', 'market_cap', 'momentum', 'drawdown', 'listing_age')
+- controls.FEATURE_OVERRIDES = {'v3': {'volatility': Feature('volatility', 5, 'quintile of 20-session std of daily log returns', 'every tier')}}
+- controls.feature(name: str, version: str = 'v2') -> Feature  (FEATURES[name] unless FEATURE_OVERRIDES[version] has it)
+- controls.features(m, version='v3', band_edges=..., as_traded=...) now accepted (volatility bucketed into 5); matched_draws(..., version='v3'), levels('v3'), level_names('v3'), coverage(..., version='v3') all work through the existing signatures
+- RunConfig(controls_version='v3') accepted by backtest.run unchanged; summary.json records it at harness.controls, random_matched.controls.version, random_matched.method, random_matched.match_level_used (v3 level names)
+## behaviour_summary
+Added an opt-in matched-controls version v3 to idx-signals/idxsig/controls.py: the same seven features as v2 but with volatility as a QUINTILE placed ahead of market_cap (priority: price_band, liquidity quintile, volatility quintile, market_cap quintile [mirror era only, -1 elsewhere], momentum tercile, drawdown tercile, listing_age), relaxed from the last feature to MIN_POOL=5 by the unchanged matched_draws loop. Implementation: VERSIONS['v3'] plus a per-version override table FEATURE_OVERRIDES and a feature(name, version) accessor; features() reads the volatility bucket count from feature('volatility', version) (3 for v1/v2, 5 for v3) and coverage() takes the feature definition from feature(name, version) so the v3 report says 'quintile'. FEATURES, VERSIONS['v1'], VERSIONS['v2'], MIN_POOL, _bucket, _rolling, _codes, matched_draws, levels and level_names are untouched; the default version everywhere is still 'v2'. The module docstring documents why v3 exists (volatility is the only measured pre-event separator; under v2 it is a coarse tercile ranked below market_cap and 28% of attempted signals on the recorded IDX trading run were never matched on it). No change to backtest.py was needed: it already passes cfg.controls_version into features(), matched_draws(), VERSIONS[], level_names() and coverage(), and records it at summary['harness']['controls'] and summary['random_matched']['controls']['version'] (verified by a synthetic end-to-end test). _codes packs buckets base 8, and the largest code digit is buckets+1 = 6, so the quintile fits.
+## tests_added
+- tests/test_controls_v3.py::ControlsV3Buckets::test_v3_feature_order_is_the_protocol_draft_order
+- tests/test_controls_v3.py::ControlsV3Buckets::test_v3_volatility_is_a_quintile_refining_the_v2_tercile
+- tests/test_controls_v3.py::ControlsV3Buckets::test_v3_bucket_counts_per_feature
+- tests/test_controls_v3.py::ControlsV3Buckets::test_v3_matches_v2_on_every_feature_but_volatility
+- tests/test_controls_v3.py::ControlsV3Buckets::test_v3_features_use_only_past_data
+- tests/test_controls_v3.py::ControlsV3Buckets::test_v3_coverage_reports_the_quintile_and_the_version
+- tests/test_controls_v3.py::ControlsV3Relaxation::test_relaxed_from_the_last_feature_down_to_min_pool
+- tests/test_controls_v3.py::ControlsV3Relaxation::test_v3_relaxes_volatility_after_market_cap
+- tests/test_controls_v3.py::ControlsV3Relaxation::test_run_records_v3_in_the_summary
+- tests/test_controls_v3.py::ControlsV2Unchanged::test_v1_and_v2_features_equal_the_frozen_pre_v3_copy
+- tests/test_controls_v3.py::ControlsV2Unchanged::test_v2_literals_and_report_fields_are_unchanged
+- tests/test_controls_v3.py::ControlsV2Unchanged::test_v2_draws_equal_the_frozen_copy_under_the_same_seed
+- tests/test_controls_v3.py::ControlsV2Unchanged::test_default_run_still_records_v2
+- tests/test_controls_v3.py::ControlsV3AsTraded::test_v3_price_band_uses_the_traded_price_and_the_rest_is_unit_free
+## test_output_tail
+$ cd <worktree>/idx-signals && python3 -m unittest
+..................................................................................................................................................................................................................................................................
+----------------------------------------------------------------------
+Ran 258 tests in 40.297s
+
+OK
+
+(baseline before my change, same command: "Ran 244 tests in 34.977s / OK"; the new file alone: "Ran 14 tests ... OK")
+
+$ python3 -m idxsig rules   (tail)
+E4_CAND_G7_MOMENTUM5_30 v1 DETECTOR hold=5 sha=0378c8b43d27 source-audit=passed
+E4_CAND_G7_MOMENTUM5_30_BEAR v1 DETECTOR hold=5 sha=816abcb4a2a2 source-audit=passed
+MOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed
+MOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed
+MOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed
+MOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed
+PLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed
+USER_RULE PENDING: rule text not supplied
+rules exit=0
+
+$ python3 -m idxsig verify-runs
+verify-runs: OK
+verify exit=0
+
+$ cd <worktree> && python3 tools/check_append_only.py --all
+append-only: OK
+append exit=0
+
+$ git status --short (after commit)
+?? .githooks/post-checkout
+?? .githooks/post-commit
+?? .githooks/post-merge
+?? .githooks/pre-push
+(these four untracked hook files pre-existed in the worktree and are not mine; left alone)
+## defaults_unchanged_evidence
+Three independent checks. (1) Fingerprint script (scratchpad/v2_fingerprint.py, outside the repo) run against the worktree BEFORE and AFTER the change: sha256 of every v1 and v2 feature array (name, bytes, dtype) on three synthetic markets (plain; ipo+delist+shares_until; small), sha256 of matched_draws output (tickers + level_used) under a fixed rng, sha256 of coverage() JSON for IDX and US band names, the as_traded US price_band array, level_names, and sha256 of summary['random_matched'] plus summary['harness']['controls'] from run_synthetic for controls_version v1, v2 and the default. `diff v2_before.json v2_after.json` printed nothing -> "FINGERPRINTS IDENTICAL". (2) tests/test_controls_v3.py carries a verbatim frozen copy of the pre-change features()/_bucket/_rolling (as at ae2cbee) and asserts array-and-dtype equality with the live module for v1 and v2 on three synthetic markets, with IDX and US band edges and on the as_traded path; asserts matched_draws for v2 gives identical draws and levels from live vs frozen features under the same seed; asserts VERSIONS['v1'], VERSIONS['v2'], level_names('v2'), MIN_POOL, FEATURES['volatility'] (3 buckets, 'tercile' wording) and coverage() priorities/descriptions for v2 equal their literal pre-change values, and that feature(name, 'v1'|'v2') returns the very FEATURES object; asserts RunConfig default controls_version is 'v2' and a default synthetic run records 'v2' at harness.controls and random_matched.controls.version with the v2 method text. (3) The 244 pre-existing tests pass unchanged and `python3 -m idxsig verify-runs` reports OK. The diff itself shows the only executable changes on the v1/v2 path are `vol_buckets = feature('volatility', version).buckets` (3 for v1/v2) replacing the literal 3, and `f = feature(name, version)` replacing `FEATURES[name]` in coverage (same object for v1/v2).
+## needs_other_file
+- idx-signals/idxsig/cli.py line 91: `p_run.add_argument("--controls-version", choices=("v2", "v1"), default="v2", ...)` rejects `--controls-version v3` from the command line; add "v3" to choices (default must stay "v2"). Programmatic callers (RunConfig, e3/e4-style harness_config reading protocol['harness']['controls_version']) already work with 'v3'.
+- idx-signals/idxsig/e1.py line 151: Study calls controls.features(m, "v2", ...) with a hard-coded version; the E5 draft's detection stage ('e1.Study pool extended to volatility quintile') needs the e1 owner to pass 'v3' (or add the quintile to its pool keys) there - not changed here.
+## open_concerns
+- The '28% of IDX attempts never matched on volatility under v2' figure in the module docstring is quoted from the reference RECOMMENDATION.md ('on the recorded IDX run 28% of attempts were never matched on volatility under v2'); I did not recompute it from any recorded run (no real data was loaded, per the standing rules). It is stated as the protocol draft's rationale, not as a measured result of this change.
+- The v3 relaxation ladder drops listing_age, drawdown, momentum, market_cap, then volatility; in the IDX mirror era market_cap is known, so a pool short of 5 names at level 'price_band+liquidity+volatility+market_cap' relaxes to 'price_band+liquidity+volatility' - the intended behaviour, but note that outside the mirror era (market_cap == -1 for everyone) level 3 and level 4 pools are identical, exactly as v2's levels 4 and 5 were.
+- controls.features() still returns the full v2-style dict for an unrecognised version string (pre-existing behaviour; VERSIONS[version] in matched_draws/coverage raises KeyError later). I left that untouched to keep the v2 path byte-identical.
+- Nothing in this branch runs a harness on real data; whether v3 changes any recorded conclusion is for the E5 Stage 0/1 runs to show.
