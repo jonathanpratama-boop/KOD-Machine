@@ -124,6 +124,8 @@ class Study:
                                         sources; the panel must carry a unit_factor column
       pool_version="v3"                 the detection pool also matches on the volatility quintile
                                         (POOL_VERSIONS), relaxed to N_CONTROLS like controls.MIN_POOL
+    When any option departs from the recorded path, summary.json / result.json carry a study_options
+    block (study_options()) so the result directory says which pool its controls were matched on.
     """
 
     def __init__(self, panel_df: pd.DataFrame, panel_meta: dict, protocol_path: Path = PROTOCOL, profile=None,
@@ -145,6 +147,7 @@ class Study:
         self.continuous = tuple(proto["weak_signals"]["continuous"])
         self.binary = tuple(proto["weak_signals"]["binary"])
         self.periods = {k: tuple(v) for k, v in proto["periods"].items()}
+        self.legacy_panel_format = "panel-v2" if self.profile.market == "IDX" else "panel-global-v1"
         expected = self._declared_panel_format(proto, panel_format)
         if panel_meta.get("format") != expected:
             raise ValueError(f"{self.protocol_id} needs a {expected} panel")
@@ -209,10 +212,19 @@ class Study:
             self.buckets["volatility"] = controls._bucket(np.where(m.present, self.sig["vol20"], np.nan), 5)
         self.flags = self.family.family_flags(self.base_feats)
 
+    def study_options(self) -> dict | None:
+        """The E5 options this study runs under, for the stage outputs to self-describe which detection
+        pool its controls were matched on; None on the recorded E1/E2 path (panel units, the v1 pool,
+        the legacy panel format), so E1/E2 re-runs keep their recorded key set."""
+        if (self.pool_units, self.pool_version, self.panel_format) == ("panel", "v1", self.legacy_panel_format):
+            return None
+        return {"panel_format": self.panel_format, "pool_units": self.pool_units,
+                "pool_version": self.pool_version, "pool_keys": list(self.pool_keys)}
+
     def _declared_panel_format(self, proto: dict, override: str | None) -> str:
         """The panel format this study needs: the keyword, else the protocol's entry for this market,
         else its global data.panel_format, else the legacy expectation. Any named format must be known."""
-        legacy = "panel-v2" if self.profile.market == "IDX" else "panel-global-v1"
+        legacy = self.legacy_panel_format
         market = (proto.get("markets") or {}).get(self.profile.market)
         per_market = market.get("panel_format") if isinstance(market, dict) else None
         global_ = (proto.get("data") or {}).get("panel_format")
@@ -517,6 +529,8 @@ def run_discovery(study: Study, out: Path) -> dict:
         "code": code_state(),
         "holdout": "sealed: the study market ends at the last validation session",
     }
+    if (opts := study.study_options()) is not None:  # E5 options only; absent on the recorded E1/E2 path
+        summary["study_options"] = opts
     write_json(out / "summary.json", summary)
     return summary
 
@@ -533,5 +547,7 @@ def run_validation(study: Study, rule: str, out: Path) -> dict:
                    "code": code_state(),
                    "detector_module_sha256": sha256_file(Path(study.family.__file__)), "market": study.profile.market,
                    "computed_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat()})
+    if (opts := study.study_options()) is not None:  # E5 options only; absent on the recorded E1/E2 path
+        result["study_options"] = opts
     write_json(out / "result.json", result)
     return result

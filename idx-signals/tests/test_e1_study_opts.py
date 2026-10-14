@@ -424,5 +424,73 @@ class PoolV3(unittest.TestCase):
             e1.Study(self.df, self.meta, pool_version="v2")
 
 
+class StudyOptionsRecorded(unittest.TestCase):
+    """A result directory produced under an E5 option must say so in its summary.json / result.json
+    (study_options), the way e3/e4 record their config; the recorded E1/E2 path writes no such key."""
+
+    @classmethod
+    def setUpClass(cls):
+        warnings.simplefilter("ignore")
+        cls.idx_df, cls.idx_meta = jumpy_panel()
+        cls.us_df, cls.us_meta = us_panel()
+
+    @staticmethod
+    def _stages(st):
+        """Run both stages into a tempdir (validating the family's first rule); return
+        (summary returned, summary.json, result returned, result.json)."""
+        out = Path(tempfile.mkdtemp())
+        summary = e1.run_discovery(st, out / "disc")
+        result = e1.run_validation(st, next(iter(st.flags)), out / "val")
+        on_disk = [json.loads((out / d / f).read_text(encoding="utf-8")) for d, f in
+                   (("disc", "summary.json"), ("val", "result.json"))]
+        return summary, on_disk[0], result, on_disk[1]
+
+    def test_the_default_path_writes_no_study_options_key(self):
+        """Guards against: an E1 or E2 re-run gaining a key its recorded summary.json / result.json never had."""
+        for st in (e1.Study(self.idx_df, self.idx_meta),
+                   e1.Study(self.idx_df, self.idx_meta, pool_units="panel", pool_version="v1"),
+                   us_study(*us_panel(with_units=False), protocol_with(None))):  # E2 US on its legacy panel
+            self.assertIsNone(st.study_options())
+            for doc in self._stages(st):
+                self.assertNotIn("study_options", doc)
+        # the exact recorded key set of E1's summary, so a default re-run is byte-comparable
+        summary = self._stages(e1.Study(self.idx_df, self.idx_meta))[1]
+        self.assertEqual(set(summary), {"protocol_id", "protocol_sha256", "panel_sha256", "market", "stage",
+                                        "computed_at", "eligible_ticker_days", "episodes", "first100_span",
+                                        "selected_detector", "code", "holdout"})
+
+    def test_v3_pool_is_recorded(self):
+        """Guards against: a v3-pool result directory indistinguishable from a v1 one except by a CSV column."""
+        st = e1.Study(self.idx_df, self.idx_meta, pool_version="v3")
+        want = {"panel_format": "panel-v2", "pool_units": "panel", "pool_version": "v3",
+                "pool_keys": ["price_band", "liquidity", "volatility", "market_cap"]}
+        self.assertEqual(st.study_options(), want)
+        for doc in self._stages(st):
+            self.assertEqual(doc["study_options"], want)
+
+    def test_as_traded_bands_are_recorded(self):
+        """Guards against: an as-traded-band result directory not saying which price its bands were formed on."""
+        st = us_study(self.us_df, self.us_meta, pool_units="as_traded")
+        want = {"panel_format": UNITS_FORMAT, "pool_units": "as_traded", "pool_version": "v1",
+                "pool_keys": ["price_band", "liquidity", "market_cap"]}
+        self.assertEqual(st.study_options(), want)
+        for doc in self._stages(st):
+            self.assertEqual(doc["study_options"], want)
+
+    def test_a_non_legacy_panel_format_alone_is_recorded(self):
+        """Guards against: a study on the US repair panel (panel-global-v2-units) with the default pool
+        looking, in its outputs, exactly like the recorded E2 run on panel-global-v1."""
+        st = us_study(self.us_df, self.us_meta)
+        self.assertEqual(st.legacy_panel_format, "panel-global-v1")
+        want = {"panel_format": UNITS_FORMAT, "pool_units": "panel", "pool_version": "v1",
+                "pool_keys": ["price_band", "liquidity", "market_cap"]}
+        self.assertEqual(st.study_options(), want)
+        summary, on_disk, result, result_disk = self._stages(st)
+        self.assertEqual(on_disk["study_options"], want)
+        self.assertEqual(result_disk["study_options"], want)
+        # and the IDX legacy expectation is what Study compares against on IDX
+        self.assertEqual(e1.Study(self.idx_df, self.idx_meta).legacy_panel_format, "panel-v2")
+
+
 if __name__ == "__main__":
     unittest.main()
