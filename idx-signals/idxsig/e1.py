@@ -43,8 +43,12 @@ BAND_NAMES = ("<=Rp200", "<=Rp5000", ">Rp5000")
 CONTINUOUS = ("ret1", "rel1", "ret5", "ret20", "volr", "valr", "freqr", "rngr", "cpos", "vol20", "dd60", "turn",
               "up5", "zero20", "age", "logval20", "logmcap")
 BINARY = ("ara", "brk60", "ign")
-# Panel formats a protocol may name in protocol["data"]["panel_format"]. Without that key the
-# legacy expectation applies (panel-v2 on IDX, panel-global-v1 elsewhere), as E1 and E2 ran.
+# Panel formats a study may need. Resolved in this order: the Study(panel_format=...) keyword, the
+# protocol's per-market entry protocol["markets"][<market>]["panel_format"] (one frozen protocol
+# spanning markets that need different panels, as E5 does), the global protocol["data"]["panel_format"],
+# then the legacy expectation (panel-v2 on IDX, panel-global-v1 elsewhere) as E1 and E2 ran. E1's
+# protocol names panel-v2 globally and has no markets block; E2's markets entries carry no
+# panel_format; the E5 draft's markets entries are strings: all three resolve as before.
 PANEL_FORMATS = ("panel-v2", "panel-global-v1", "panel-global-v2-units")
 # Detection-stage pool keys, in matching priority (relaxed from the last). "v1" is the recorded
 # E1/E2 pool; "v3" adds the volatility quintile ahead of market_cap, as controls v3 orders it.
@@ -107,8 +111,14 @@ class Study:
     """E1 on IDX by default; E2 passes its protocol, the market profile and detector family.
 
     Options added for E5, all opt-in (the defaults reproduce the recorded E1/E2 studies):
-      protocol["data"]["panel_format"]  the panel format the study needs (PANEL_FORMATS); absent,
-                                        the legacy expectation applies
+      panel_format=...                  the panel format the study needs (PANEL_FORMATS); overrides
+                                        whatever the protocol declares
+      protocol["markets"][<market>]["panel_format"]
+                                        the format for this study's market, when the protocol spans
+                                        markets on different panels (E5: IDX panel-v2, US
+                                        panel-global-v2-units, CRYPTO panel-global-v1)
+      protocol["data"]["panel_format"]  the format for every market of the protocol; absent, the
+                                        legacy expectation applies
       pool_units="as_traded"            price bands on the price traded that session (close x the
                                         panel's unit_factor, Market.with_units), for split-adjusted
                                         sources; the panel must carry a unit_factor column
@@ -117,7 +127,8 @@ class Study:
     """
 
     def __init__(self, panel_df: pd.DataFrame, panel_meta: dict, protocol_path: Path = PROTOCOL, profile=None,
-                 family_module=None, pool_units: str = "panel", pool_version: str = "v1"):
+                 family_module=None, pool_units: str = "panel", pool_version: str = "v1",
+                 panel_format: str | None = None):
         from .profiles import IDX
 
         if pool_units not in POOL_UNITS:
@@ -134,12 +145,7 @@ class Study:
         self.continuous = tuple(proto["weak_signals"]["continuous"])
         self.binary = tuple(proto["weak_signals"]["binary"])
         self.periods = {k: tuple(v) for k, v in proto["periods"].items()}
-        expected = "panel-v2" if self.profile.market == "IDX" else "panel-global-v1"
-        declared = (proto.get("data") or {}).get("panel_format")
-        if declared is not None:
-            if declared not in PANEL_FORMATS:
-                raise ValueError(f"{self.protocol_id} names panel format {declared!r}; known: {PANEL_FORMATS}")
-            expected = declared
+        expected = self._declared_panel_format(proto, panel_format)
         if panel_meta.get("format") != expected:
             raise ValueError(f"{self.protocol_id} needs a {expected} panel")
         self.panel_format = expected
@@ -202,6 +208,23 @@ class Study:
             # among names present at that session (as controls.features masks before ranking).
             self.buckets["volatility"] = controls._bucket(np.where(m.present, self.sig["vol20"], np.nan), 5)
         self.flags = self.family.family_flags(self.base_feats)
+
+    def _declared_panel_format(self, proto: dict, override: str | None) -> str:
+        """The panel format this study needs: the keyword, else the protocol's entry for this market,
+        else its global data.panel_format, else the legacy expectation. Any named format must be known."""
+        legacy = "panel-v2" if self.profile.market == "IDX" else "panel-global-v1"
+        market = (proto.get("markets") or {}).get(self.profile.market)
+        per_market = market.get("panel_format") if isinstance(market, dict) else None
+        global_ = (proto.get("data") or {}).get("panel_format")
+        for source, declared in (("panel_format=", override),
+                                 (f"{self.protocol_id} markets.{self.profile.market}.panel_format", per_market),
+                                 (f"{self.protocol_id} data.panel_format", global_)):
+            if declared is None:
+                continue
+            if declared not in PANEL_FORMATS:
+                raise ValueError(f"{source} names panel format {declared!r}; known: {PANEL_FORMATS}")
+            return declared
+        return legacy
 
     # ------------------------------------------------------------------ signals
     def _signals(self):

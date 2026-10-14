@@ -1,6 +1,6 @@
-"""e1.Study options added for E5 (panel_format from the protocol, the IGNITION guard, as-traded
-price bands, the v3 detection pool). Every option is opt-in; the default path is the recorded E1/E2
-path. Synthetic panels only. Each test names the failure it guards against."""
+"""e1.Study options added for E5 (panel_format from the protocol, per market or by keyword; the
+IGNITION guard; as-traded price bands; the v3 detection pool). Every option is opt-in; the default
+path is the recorded E1/E2 path. Synthetic panels only. Each test names the failure it guards against."""
 
 import json
 import tempfile
@@ -17,6 +17,7 @@ from idxsig.profiles import US
 from idxsig.rules import moonshot_g
 from tests.test_e1 import jumpy_panel
 
+E1_PROTOCOL = e1.PROTOCOL
 E2_PROTOCOL = e1.PKG_ROOT / "research" / "E2" / "protocol.json"
 UNITS_FORMAT = "panel-global-v2-units"
 SPLIT_TICKER = "S000"
@@ -45,12 +46,16 @@ def us_panel(n=30, with_units=True, split_until="2022-06-30"):
     return df, meta
 
 
-def protocol_with(panel_format, base=E2_PROTOCOL) -> Path:
+def protocol_with(panel_format, base=E2_PROTOCOL, markets=None) -> Path:
+    """A copy of `base` whose global data.panel_format is `panel_format` (None: no data block) and,
+    when `markets` is given, whose markets block is replaced by it (per-market panel_format entries)."""
     proto = json.loads(base.read_text(encoding="utf-8"))
     if panel_format is None:
         proto.pop("data", None)
     else:
         proto["data"] = {"panel_format": panel_format}
+    if markets is not None:
+        proto["markets"] = markets
     path = Path(tempfile.mkdtemp()) / "protocol.json"
     path.write_text(json.dumps(proto, indent=2) + "\n", encoding="utf-8")
     return path
@@ -145,6 +150,107 @@ class PanelFormatFromProtocol(unittest.TestCase):
         with self.assertRaises(ValueError):
             us_study(self.df, {**self.meta, "format": "panel-global-v9"}, protocol_with("panel-global-v9"))
         self.assertEqual(e1.PANEL_FORMATS, ("panel-v2", "panel-global-v1", "panel-global-v2-units"))
+
+
+class PerMarketPanelFormat(unittest.TestCase):
+    """One frozen protocol spanning markets on different panels (E5: IDX panel-v2, US
+    panel-global-v2-units, CRYPTO panel-global-v1) must build every market's study from the same
+    file, so the recorded protocol_sha256 is the frozen protocol's for each of them."""
+
+    MARKETS = {"IDX": {"panel_format": "panel-v2"}, "US": {"panel_format": UNITS_FORMAT},
+               "CRYPTO": {"panel_format": "panel-global-v1"}}
+
+    @classmethod
+    def setUpClass(cls):
+        warnings.simplefilter("ignore")
+        cls.idx_df, cls.idx_meta = jumpy_panel()
+        cls.us_df, cls.us_meta = us_panel()
+
+    def test_one_protocol_builds_the_idx_and_the_us_study(self):
+        """Guards against: the reviewer's finding (a single global data.panel_format cannot serve IDX
+        panel-v2 and US panel-global-v2-units from one protocol file)."""
+        proto = protocol_with("panel-v2", base=E1_PROTOCOL, markets=self.MARKETS)
+        idx = e1.Study(self.idx_df, self.idx_meta, protocol_path=proto)
+        us = e1.Study(self.us_df, self.us_meta, protocol_path=proto, profile=US, family_module=moonshot_g)
+        self.assertEqual(idx.panel_format, "panel-v2")
+        self.assertEqual(us.panel_format, UNITS_FORMAT)
+        self.assertEqual(idx.protocol_sha, us.protocol_sha)
+        self.assertEqual(idx.protocol_sha, e1.sha256_file(proto))
+        self.assertEqual((idx.protocol_id, us.protocol_id), ("KOD-IDX-E1-v1", "KOD-IDX-E1-v1"))
+        self.assertGreater(len(idx.detector_table("discovery")), 0)
+        self.assertGreater(len(us.detector_table("discovery")), 0)
+        # the check still bites: each market is held to its own declared format
+        with self.assertRaises(ValueError):
+            e1.Study(self.idx_df, {**self.idx_meta, "format": UNITS_FORMAT}, protocol_path=proto)
+        with self.assertRaises(ValueError):
+            e1.Study(self.us_df, {**self.us_meta, "format": "panel-global-v1"}, protocol_path=proto, profile=US,
+                     family_module=moonshot_g)
+        with self.assertRaises(ValueError):
+            e1.Study(self.us_df, {**self.us_meta, "format": "panel-v2"}, protocol_path=proto, profile=US,
+                     family_module=moonshot_g)
+
+    def test_the_market_entry_wins_over_the_global_key(self):
+        """Guards against: data.panel_format (one value for the whole protocol) overriding the entry
+        written for this study's market, or a market without an entry losing the global declaration."""
+        proto = protocol_with("panel-global-v1", markets={"US": {"panel_format": UNITS_FORMAT}})
+        self.assertEqual(us_study(self.us_df, self.us_meta, proto).panel_format, UNITS_FORMAT)
+        plain, plain_meta = us_panel(with_units=False)
+        with self.assertRaises(ValueError):  # the global panel-global-v1 does not rescue a US panel-global-v1 panel
+            us_study(plain, plain_meta, proto)
+        # a market absent from the markets block falls back to the global key
+        only_us = protocol_with("panel-v2", base=E1_PROTOCOL, markets={"US": {"panel_format": UNITS_FORMAT}})
+        self.assertEqual(e1.Study(self.idx_df, self.idx_meta, protocol_path=only_us).panel_format, "panel-v2")
+        with self.assertRaises(ValueError):
+            e1.Study(self.idx_df, {**self.idx_meta, "format": UNITS_FORMAT}, protocol_path=only_us)
+
+    def test_the_keyword_overrides_the_protocol(self):
+        """Guards against: a caller that must run a protocol on a panel the protocol never named
+        (or named differently) having to edit the frozen protocol file."""
+        bare = protocol_with(None)  # no data block, E2's markets entries carry no panel_format
+        with self.assertRaises(ValueError):
+            us_study(self.us_df, self.us_meta, bare)
+        st = us_study(self.us_df, self.us_meta, bare, panel_format=UNITS_FORMAT)
+        self.assertEqual(st.panel_format, UNITS_FORMAT)
+        self.assertEqual(st.protocol_sha, e1.sha256_file(bare))
+        global_v1 = protocol_with("panel-global-v1")
+        self.assertEqual(us_study(self.us_df, self.us_meta, global_v1, panel_format=UNITS_FORMAT).panel_format,
+                         UNITS_FORMAT)
+        with self.assertRaises(ValueError):  # the keyword is held against the panel like any declaration
+            us_study(self.us_df, self.us_meta, bare, panel_format="panel-global-v1")
+        with self.assertRaises(ValueError):
+            us_study(self.us_df, self.us_meta, bare, panel_format="panel-global-v9")
+        with self.assertRaises(ValueError):
+            e1.Study(self.idx_df, self.idx_meta, panel_format="panel-v1")
+
+    def test_draft_style_string_entries_and_entries_without_a_format_fall_through(self):
+        """Guards against: the E5 draft's markets block (plain strings per market) or E2's (dicts
+        without panel_format) being read as a declaration, which would break the recorded defaults."""
+        # The E5 draft's markets block is {market: "<description string>"}; reproduced here, not read.
+        strings = {"IDX": "TIER_1 panel; decisive for Arm A", "US": "survivor-only; DIAGNOSTIC",
+                   "CRYPTO": "decisive for Arm B"}
+        proto = protocol_with("panel-v2", base=E1_PROTOCOL, markets=strings)
+        self.assertEqual(e1.Study(self.idx_df, self.idx_meta, protocol_path=proto).panel_format, "panel-v2")
+        no_global = protocol_with(None, base=E1_PROTOCOL, markets=strings)
+        self.assertEqual(e1.Study(self.idx_df, self.idx_meta, protocol_path=no_global).panel_format, "panel-v2")
+        plain, plain_meta = us_panel(with_units=False)
+        self.assertEqual(us_study(plain, plain_meta, protocol_with(None, markets=strings)).panel_format,
+                         "panel-global-v1")
+        e2 = json.loads(E2_PROTOCOL.read_text(encoding="utf-8"))
+        self.assertNotIn("data", e2)
+        self.assertTrue(all(isinstance(v, dict) and "panel_format" not in v for v in e2["markets"].values()))
+        e1_proto, _ = e1.protocol()
+        self.assertNotIn("markets", e1_proto)
+        self.assertEqual(us_study(plain, plain_meta, E2_PROTOCOL).panel_format, "panel-global-v1")
+
+    def test_unknown_per_market_formats_are_refused(self):
+        """Guards against: a typo in markets.<market>.panel_format becoming an accepted format."""
+        proto = protocol_with("panel-v2", base=E1_PROTOCOL, markets={"IDX": {"panel_format": "panel-v3"}})
+        with self.assertRaises(ValueError):
+            e1.Study(self.idx_df, self.idx_meta, protocol_path=proto)
+        # an unknown name for another market does not touch this study
+        other = protocol_with("panel-v2", base=E1_PROTOCOL, markets={"US": {"panel_format": "panel-v3"},
+                                                                      "IDX": {"panel_format": "panel-v2"}})
+        self.assertEqual(e1.Study(self.idx_df, self.idx_meta, protocol_path=other).panel_format, "panel-v2")
 
 
 def family_without_ignition():
