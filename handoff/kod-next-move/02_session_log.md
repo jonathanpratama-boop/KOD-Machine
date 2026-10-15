@@ -144,3 +144,7 @@ Not pushed. GitHub still has PR #3 at `bd352b2`.
 - Data: data.binance.vision spot 1h klines 2020-04..2023-12, 406 coins (684 USDT symbols after stable/leveraged exclusion; 46 delisted before 2023-12 included), 12,032 files checksum-verified, 0 failures, 392 MB in `data/raw/binance_1h/` (gitignored). Nothing from 2024+.
 - Data check (same-hour only): 0 bad taker rows, 0 non-positive closes, median missing hours 0.09 %; same-hour flow vs return correlation positive in 346/346 coins (median 0.27); ~250 eligible coins/day; P1 ceiling ~10,700 coin-days.
 - Next (owner's go): implement `idxsig`-side study code for Stage 1 exactly as frozen, synthetic tests, then run discovery once.
+
+## E6 discovery run (owner: proceed + push authorised), 2026-10-15: NULL
+- Branch `claude/e6-pressure-response` PUSHED. Commits: freeze `cacda7b`, implementation + notes (written before any outcome) `973546d`, result `d8e107a`. Tests 233 OK, verify-runs OK.
+- Run once (38 s): 351 coins, 204,867 eligible coin-days, decision days 2020-07-01..2022-12-25. P1 776 flags, excess +0.37 % [−1.01, +1.93], p 0.32; P2 136 flags (< 200), +1.86 % [−2.70, +7.83], p 0.26; B0 2,431, −0.60 %; placebo 231, −0.17 %. Both gates FAIL; no Stage 2 / validation / holdout. `research/E6/discovery/RESULT.md`.
