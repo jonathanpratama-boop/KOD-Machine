@@ -148,3 +148,6 @@ Not pushed. GitHub still has PR #3 at `bd352b2`.
 ## E6 discovery run (owner: proceed + push authorised), 2026-10-15: NULL
 - Branch `claude/e6-pressure-response` PUSHED. Commits: freeze `cacda7b`, implementation + notes (written before any outcome) `973546d`, result `d8e107a`. Tests 233 OK, verify-runs OK.
 - Run once (38 s): 351 coins, 204,867 eligible coin-days, decision days 2020-07-01..2022-12-25. P1 776 flags, excess +0.37 % [−1.01, +1.93], p 0.32; P2 136 flags (< 200), +1.86 % [−2.70, +7.83], p 0.26; B0 2,431, −0.60 %; placebo 231, −0.17 %. Both gates FAIL; no Stage 2 / validation / holdout. `research/E6/discovery/RESULT.md`.
+
+## E7 feasibility (2026-10-15): GO
+- Local branch `claude/e7-feasibility`: spec `6a2ba8f` (before collection), data, counts and draft protocol in the next commit; bundled as `bundles/e7-feasibility.bundle`. 142 perps covered; S 845 events, F 5,048; SD 4.06%; capacity median ~3,600 USDT. E6 interpretation note `fa142ff` pushed on the E6 branch.
