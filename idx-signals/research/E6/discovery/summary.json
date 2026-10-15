@@ -1,0 +1,282 @@
+{
+  "stage": "discovery / Stage 1",
+  "period": [
+    "2020-07-01",
+    "2022-12-31"
+  ],
+  "decision_days": [
+    "2020-07-01",
+    "2022-12-25"
+  ],
+  "eligible_coin_days": 204867,
+  "eligible_coins_per_day_median": 233.0,
+  "exclusions": {
+    "coin_days_failing_sanity_otherwise_eligible": 0
+  },
+  "arms": {
+    "P1_pressure": {
+      "flags": 776,
+      "scored": 776,
+      "no_entry": 0,
+      "no_controls": 0,
+      "missing_end": 1,
+      "distinct_coins": 265,
+      "mean_R120": 0.012640750241858002,
+      "median_R120": -0.006645235141736594,
+      "mean_ctrl_R120": 0.00895162559725094,
+      "mean_excess": 0.0036891246446070615,
+      "E30_rate": 0.14304123711340205,
+      "E30_ctrl_rate": 0.1315463917525773,
+      "E30_lift": 1.087382445141066,
+      "barrier_shares": {
+        "LOSS": 0.6932989690721649,
+        "TIMEOUT": 0.211340206185567,
+        "WIN": 0.09536082474226804
+      },
+      "match_levels": {
+        "liquidity+volatility": 706,
+        "liquidity": 70
+      },
+      "by_year": {
+        "2020": {
+          "scored": 83,
+          "mean_excess": 0.00436460338555029
+        },
+        "2021": {
+          "scored": 251,
+          "mean_excess": 0.0037029475833585206
+        },
+        "2022": {
+          "scored": 442,
+          "mean_excess": 0.0035544316737362376
+        }
+      },
+      "vs_matched": {
+        "estimate": 0.0036891246446070585,
+        "ci95": [
+          -0.010117823799254433,
+          0.019291223441177365
+        ],
+        "p_one_sided": 0.3204679532046795,
+        "weeks": 118,
+        "resamples": 10000
+      }
+    },
+    "P2_pressure_then_breakout": {
+      "flags": 136,
+      "scored": 136,
+      "no_entry": 0,
+      "no_controls": 0,
+      "missing_end": 0,
+      "distinct_coins": 95,
+      "mean_R120": 0.04028865894141363,
+      "median_R120": -0.027079525299335327,
+      "mean_ctrl_R120": 0.021743635820259517,
+      "mean_excess": 0.018545023121154122,
+      "E30_rate": 0.2426470588235294,
+      "E30_ctrl_rate": 0.17371323529411764,
+      "E30_lift": 1.396825396825397,
+      "barrier_shares": {
+        "LOSS": 0.7205882352941176,
+        "WIN": 0.16176470588235295,
+        "TIMEOUT": 0.11764705882352941
+      },
+      "match_levels": {
+        "liquidity+volatility": 108,
+        "liquidity": 28
+      },
+      "by_year": {
+        "2020": {
+          "scored": 32,
+          "mean_excess": -0.03799705413835854
+        },
+        "2021": {
+          "scored": 68,
+          "mean_excess": 0.0583243769751254
+        },
+        "2022": {
+          "scored": 36,
+          "mean_excess": -0.006334132150113702
+        }
+      },
+      "vs_matched": {
+        "estimate": 0.01854502312115412,
+        "ci95": [
+          -0.026973600202439347,
+          0.07831721376098959
+        ],
+        "p_one_sided": 0.26377362263773624,
+        "weeks": 67,
+        "resamples": 10000
+      }
+    },
+    "B0_breakout": {
+      "flags": 2431,
+      "scored": 2431,
+      "no_entry": 0,
+      "no_controls": 0,
+      "missing_end": 3,
+      "distinct_coins": 322,
+      "mean_R120": 0.03622355129792398,
+      "median_R120": -0.01938291139240511,
+      "mean_ctrl_R120": 0.04217359008031562,
+      "mean_excess": -0.005950038782391632,
+      "E30_rate": 0.25339366515837103,
+      "E30_ctrl_rate": 0.1983792677910325,
+      "E30_lift": 1.2773192883506823,
+      "barrier_shares": {
+        "LOSS": 0.8120115178938708,
+        "WIN": 0.11682435211846977,
+        "TIMEOUT": 0.07075277663512958,
+        "UNRESOLVED": 0.00041135335252982314
+      },
+      "match_levels": {
+        "liquidity+volatility": 2029,
+        "liquidity": 402
+      },
+      "by_year": {
+        "2020": {
+          "scored": 366,
+          "mean_excess": -0.00466837075500939
+        },
+        "2021": {
+          "scored": 1428,
+          "mean_excess": 0.005447005628745771
+        },
+        "2022": {
+          "scored": 637,
+          "mean_excess": -0.03223586282811551
+        }
+      },
+      "vs_matched": {
+        "estimate": -0.00595003878239163,
+        "ci95": [
+          -0.018570064513991763,
+          0.008671037922648587
+        ],
+        "p_one_sided": 0.8013198680131987,
+        "weeks": 125,
+        "resamples": 10000
+      }
+    },
+    "PL_placebo": {
+      "flags": 231,
+      "scored": 231,
+      "no_entry": 0,
+      "no_controls": 0,
+      "missing_end": 0,
+      "distinct_coins": 154,
+      "mean_R120": -0.008955084425398788,
+      "median_R120": -0.012578616352201255,
+      "mean_ctrl_R120": -0.007237263767665674,
+      "mean_excess": -0.0017178206577331127,
+      "E30_rate": 0.12121212121212122,
+      "E30_ctrl_rate": 0.12207792207792209,
+      "E30_lift": 0.9929078014184396,
+      "barrier_shares": {
+        "LOSS": 0.7272727272727273,
+        "TIMEOUT": 0.21645021645021645,
+        "WIN": 0.05627705627705628
+      },
+      "match_levels": {
+        "liquidity+volatility": 214,
+        "liquidity": 17
+      },
+      "by_year": {
+        "2020": {
+          "scored": 20,
+          "mean_excess": -0.014211758059253076
+        },
+        "2021": {
+          "scored": 76,
+          "mean_excess": -0.018126057099669936
+        },
+        "2022": {
+          "scored": 135,
+          "mean_excess": 0.009370362435730572
+        }
+      },
+      "vs_matched": {
+        "estimate": -0.0017178206577331111,
+        "ci95": [
+          -0.02034147442338236,
+          0.017698070502679134
+        ],
+        "p_one_sided": 0.5866413358664133,
+        "weeks": 96,
+        "resamples": 10000
+      }
+    }
+  },
+  "comparisons": {
+    "P1_pressure minus PL_placebo": {
+      "estimate": 0.005406945302340172,
+      "ci95": [
+        -0.018554661947802305,
+        0.030068058685489802
+      ],
+      "p_one_sided": 0.32686731326867313,
+      "weeks": 119,
+      "resamples": 10000
+    },
+    "P1_pressure minus B0_breakout": {
+      "estimate": 0.009639163426998689,
+      "ci95": [
+        -0.01163568609914751,
+        0.03154805270622097
+      ],
+      "p_one_sided": 0.1932806719328067,
+      "weeks": 129,
+      "resamples": 10000
+    },
+    "P2_pressure_then_breakout minus PL_placebo": {
+      "estimate": 0.020262843778887228,
+      "ci95": [
+        -0.029644304678121132,
+        0.08097620797283088
+      ],
+      "p_one_sided": 0.2511748825117488,
+      "weeks": 110,
+      "resamples": 10000
+    },
+    "P2_pressure_then_breakout minus B0_breakout": {
+      "estimate": 0.02449506190354575,
+      "ci95": [
+        -0.01939989184749406,
+        0.08231957253468264
+      ],
+      "p_one_sided": 0.17578242175782421,
+      "weeks": 125,
+      "resamples": 10000
+    }
+  },
+  "gates": {
+    "P1_pressure": {
+      "passed": false,
+      "reasons": [
+        "excess vs matched 0.00369 with p 0.3205 (needs > 0, p < 0.025)",
+        "minus placebo 0.00541 with p 0.3269 (needs > 0, p < 0.05)"
+      ]
+    },
+    "P2_pressure_then_breakout": {
+      "passed": false,
+      "reasons": [
+        "flags 136 < 200",
+        "excess vs matched 0.01855 with p 0.2638 (needs > 0, p < 0.025)",
+        "mean excess in 2022 = -0.006334132150113702 (needs > 0)",
+        "minus placebo 0.02026 with p 0.2512 (needs > 0, p < 0.05)"
+      ]
+    }
+  },
+  "stage2": "runs only for an arm whose gate passed",
+  "protocol_id": "KOD-CRYPTO-E6-v1",
+  "protocol_sha256": "04bdc31781021ca79b87e1256255e1a0cff679e7fa30d2fe57786c6692bb43fd",
+  "manifest": "binance_1h-20261015T182940Z.jsonl",
+  "manifest_sha256": "2587a63ce26034e1d54670579f8843150f640407a6df0338f35537bd30d20adf",
+  "symbols_loaded": 351,
+  "last_hour_read": "2022-12-31 23:00:00+00:00",
+  "code_commit": "973546d6f4bdbee0f74da944b556c06ceed92053",
+  "started": "2026-10-15T18:49:56+00:00",
+  "finished": "2026-10-15T18:50:33+00:00",
+  "claims": "Historical research on assumed costs and modeled fills from hourly bars; no probability or trade is asserted; nothing grants entry permission; no real orders exist."
+}
