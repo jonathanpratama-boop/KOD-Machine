@@ -135,3 +135,6 @@ Not pushed. GitHub still has PR #3 at `bd352b2`.
 
 ## Daily US routine run 22:48 UTC (fired by "US paper scan (weekdays, after close)")
 - `paper-scan --market US --commit` recorded **SCAN-US-2026-10-14-G2_RET30: 10 candidates** (AMTD, YRD, TGL, TDIC, BDRX, NXGL, AEHL, NIVF, GLND, BSP), every terminal decision **PASS** under PAPER-POLICY-v4 (E3 rule: detection validated, E30 precision 15.4 % vs 2.8 % matched; the executable plan, next open hold 5, did not beat matched random entries in validation, −0.97 % vs −0.75 % net, run `20261008T115656Z_MOONSHOT_E2_US_D1_v1`); commit `d851c9e`. `paper-score --market US`: see the line below. `paper-verify` OK; `check_append_only --all` OK. Pushed.
+
+## Daily crypto routine run 2026-10-15 00:24 UTC (fired by "Crypto paper scan (daily, after UTC close)")
+- `paper-scan --market CRYPTO --commit` recorded **SCAN-CRYPTO-2026-10-14-G2_RET30: 1 candidate (WAL)**, terminal decision **PASS** under PAPER-POLICY-v4 (E3 rule: detection validated, E30 precision 18.5 % vs 4.0 % matched; the executable plan, next open hold 5, lost −1.90 % vs +1.42 % for matched entries in validation); commit `bd98ba8`. `paper-score --market CRYPTO --commit`: 1 outcome, **SCAN-CRYPTO-2026-10-08 OGN: SCORED CORRECT REJECTION**; commit `b3d06d4`. `paper-verify` OK; `check_append_only --all` OK. Pushed.
