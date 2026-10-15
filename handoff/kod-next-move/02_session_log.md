@@ -138,3 +138,9 @@ Not pushed. GitHub still has PR #3 at `bd352b2`.
 
 ## Daily crypto routine run 2026-10-15 00:24 UTC (fired by "Crypto paper scan (daily, after UTC close)")
 - `paper-scan --market CRYPTO --commit` recorded **SCAN-CRYPTO-2026-10-14-G2_RET30: 1 candidate (WAL)**, terminal decision **PASS** under PAPER-POLICY-v4 (E3 rule: detection validated, E30 precision 18.5 % vs 4.0 % matched; the executable plan, next open hold 5, lost −1.90 % vs +1.42 % for matched entries in validation); commit `bd98ba8`. `paper-score --market CRYPTO --commit`: 1 outcome, **SCAN-CRYPTO-2026-10-08 OGN: SCORED CORRECT REJECTION**; commit `b3d06d4`. `paper-verify` OK; `check_append_only --all` OK. Pushed.
+
+## E6 pressure-response (Astra's proposal), owner "Do it", 2026-10-15: protocol frozen, no outcome computed
+- Local branch `claude/e6-pressure-response` (worktree `scratchpad/e6wt`, from base `f2906a6`), commit **`cacda7b`**: `research/E6/{protocol.json (sha256 04bdc31781021ca7…), PROTOCOL.md, collect_hourly.py, data_check.py, data_check/}` + manifest `data/manifests/binance_1h-20261015T182940Z.jsonl`. Not pushed; restore with `git fetch handoff/kod-next-move/bundles/e6-pressure-response.bundle claude/e6-pressure-response:claude/e6-pressure-response`.
+- Data: data.binance.vision spot 1h klines 2020-04..2023-12, 406 coins (684 USDT symbols after stable/leveraged exclusion; 46 delisted before 2023-12 included), 12,032 files checksum-verified, 0 failures, 392 MB in `data/raw/binance_1h/` (gitignored). Nothing from 2024+.
+- Data check (same-hour only): 0 bad taker rows, 0 non-positive closes, median missing hours 0.09 %; same-hour flow vs return correlation positive in 346/346 coins (median 0.27); ~250 eligible coins/day; P1 ceiling ~10,700 coin-days.
+- Next (owner's go): implement `idxsig`-side study code for Stage 1 exactly as frozen, synthetic tests, then run discovery once.
