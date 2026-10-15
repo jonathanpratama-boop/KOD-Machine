@@ -1,0 +1,68 @@
+# build:h4-profiles (Build; agent a28ee6e2f4474f9f4)
+
+## branch
+e5/h4-profiles
+## commit
+963a57d7116b6fe21844eaa94bd6cd28c6174d5e
+## files_changed
+- idx-signals/idxsig/profiles.py
+- idx-signals/tests/test_profiles_crypto_close.py
+## api_added
+- idxsig.profiles.CRYPTO_CLOSE  (module constant: Profile, == dataclasses.replace(CRYPTO, entry="close"); .market stays "CRYPTO")
+- idxsig.profiles.PROFILES["CRYPTO_CLOSE"]  (registry key; selected with backtest.RunConfig(..., market="CRYPTO_CLOSE"))
+## behaviour_summary
+profiles.py gains CRYPTO_CLOSE = replace(CRYPTO, entry="close") and registers it as PROFILES["CRYPTO_CLOSE"] after the unchanged comprehension `{p.market: p for p in (IDX, US, CRYPTO)}`. The variant is field-for-field CRYPTO (0.1% fee + 0.1% tier per side, bands, lot 1, notional 5000, short carry 0.0005, both notes) except entry "close". Its .market field is deliberately "CRYPTO", not "CRYPTO_CLOSE": backtest.run keys the IDX/global branch, the sealed GLOBAL_HOLDOUT, the survivorship warning and summary["market"]["profile"] off profile.market, so a CRYPTO_CLOSE run is reported as profile CRYPTO / entry "close" and summary["config"]["market"] records "CRYPTO_CLOSE" (the RunConfig name) - verified by the run-level test. Nothing selects the variant unless a RunConfig names market="CRYPTO_CLOSE"; backtest.run reaches it today with no other change (PROFILES[cfg.market]). The dataclass, IDX, US and CRYPTO objects are untouched. Design note: I did not alter assumption_note/venue to label the variant, because the task specifies "differs only in entry_price"; the run label comes from config.market and market.entry in every summary.
+## tests_added
+- tests/test_profiles_crypto_close.py::CryptoCloseProfile::test_crypto_profile_is_unchanged_field_by_field  (asdict(CRYPTO) == frozen EXPECTED_CRYPTO dict copied from the pre-change source; also asserts the frozen dict covers every Profile field)
+- tests/test_profiles_crypto_close.py::CryptoCloseProfile::test_crypto_close_is_registered_and_differs_only_in_entry  (PROFILES['CRYPTO_CLOSE'] is CRYPTO_CLOSE; set of differing fields == {'entry'}; entry close vs open)
+- tests/test_profiles_crypto_close.py::CryptoCloseProfile::test_existing_registry_entries_are_untouched  (PROFILES keys == {IDX, US, CRYPTO, CRYPTO_CLOSE}; identity of IDX/US/CRYPTO entries; CRYPTO_CLOSE.market == 'CRYPTO')
+- tests/test_profiles_crypto_close.py::CryptoCloseProfile::test_costs_are_identical_one_tenth_percent_fee_plus_one_tenth_percent_tier_per_side  (fees 0.001/0.001 and per_side_cost 0.001 at six price levels for both; same cost_tiers and short carry)
+- tests/test_profiles_crypto_close.py::CryptoCloseProfile::test_variant_enters_at_the_close_of_t_plus_1_not_its_open  (execution.execute on a flat synthetic market with an 11.0 open / 10.0 close on the entry session: CRYPTO fills at 11.0 / 454 shares, CRYPTO_CLOSE at 10.0 / 500 shares; both net returns equal the 0.2%-per-side formula)
+- tests/test_profiles_crypto_close.py::CryptoCloseThroughTheHarness::test_backtest_run_uses_the_close_entry_and_the_same_sealed_holdout  (backtest.run on a synthetic random-walk panel with open != close: HoldoutSealed raised for CRYPTO_CLOSE on a window touching 2024; with end=2023-12-29 summary config.market == 'CRYPTO_CLOSE', market.profile/entry == ('CRYPTO','close'), execution.price starts 'official close', cost_assumption identical to the CRYPTO run, same signal dates, every EXITED trade's entry_price equals the panel close on its entry_date while the CRYPTO run's equals the open)
+## test_output_tail
+$ python3 -m unittest   (from <worktree>/idx-signals)
+..........................................................................................................................................................................................................................................................
+----------------------------------------------------------------------
+Ran 250 tests in 37.279s
+
+OK
+
+$ python3 -m unittest tests.test_profiles_crypto_close -v   (tail)
+test_backtest_run_uses_the_close_entry_and_the_same_sealed_holdout (tests.test_profiles_crypto_close.CryptoCloseThroughTheHarness.test_backtest_run_uses_the_close_entry_and_the_same_sealed_holdout)
+Guards against: backtest.run accepting market='CRYPTO_CLOSE' but filling at the open, reporting ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.602s
+
+OK
+
+$ python3 -m idxsig rules   (tail; grep -c "source-audit=passed" -> 16, grep -ci fail -> 0)
+E4_CAND_G7_MOMENTUM5_30_BEAR v1 DETECTOR hold=5 sha=816abcb4a2a2 source-audit=passed
+MOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed
+MOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed
+MOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed
+MOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed
+PLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed
+USER_RULE PENDING: rule text not supplied
+
+$ python3 -m idxsig verify-runs
+verify-runs: OK
+
+$ python3 tools/check_append_only.py --all   (from <worktree>)
+append-only: OK
+(the repo's post-commit hook also printed "append-only: OK" on commit 963a57d)
+## defaults_unchanged_evidence
+(1) Baseline before any edit: `python3 -m unittest` -> Ran 244 tests, OK; after: Ran 250 tests, OK (244 + 6 new, 0 failures, 0 errors). (2) The new tests were run before the code change and failed on ImportError (red), then passed after. (3) test_crypto_profile_is_unchanged_field_by_field compares dataclasses.asdict(CRYPTO) to a dict transcribed from the pre-change profiles.py source, field by field, and asserts the dict's key set equals Profile.__dataclass_fields__, so no field is left unfrozen; test_existing_registry_entries_are_untouched asserts PROFILES['IDX'] is IDX, PROFILES['US'] is US, PROFILES['CRYPTO'] is CRYPTO (identity, not just equality) and PROFILES['CRYPTO'] is not CRYPTO_CLOSE. (4) git diff --stat: only idx-signals/idxsig/profiles.py (+8/-1); the one modified pre-existing line is the dataclasses import (adds `replace`); the PROFILES comprehension line is byte-identical and the new key is assigned on a following line. The Profile dataclass, IDX, US and CRYPTO definitions are untouched. (5) backtest.run only ever reaches the variant through PROFILES[cfg.market] with cfg.market == 'CRYPTO_CLOSE'; RunConfig's default market 'IDX' and every existing key resolve to the same objects as before. (6) `python3 -m idxsig verify-runs` -> OK: no recorded run's hash or presence changed; `python3 -m idxsig rules` -> 16 source-audit=passed, 0 failures (rule sha256 values unchanged). (7) The holdout seal is unchanged: the run-level test shows HoldoutSealed still raised for CRYPTO_CLOSE on a window touching 2024.
+## needs_other_file
+- idx-signals/idxsig/cli.py:73 - `run --market choices=("IDX", "US", "CRYPTO")` needs "CRYPTO_CLOSE" added before the variant can be run from the CLI (argparse rejects it today); the help text 'entry at open or close' already covers it.
+- idx-signals/idxsig/cli.py:293 - the `run` subcommand loads the panel with `global_panel.latest(args.market)`; for CRYPTO_CLOSE this must resolve to the CRYPTO panel (e.g. `global_panel.latest(PROFILES[args.market].market)`), otherwise it looks for a non-existent CRYPTO_CLOSE panel. Line 294 `PROFILES[args.market]` already works.
+- idx-signals/idxsig/cli.py:141 - the e4-* `--market choices=("CRYPTO", "US")` list is E4's and should NOT change; an E5 subcommand cloned from it needs its own choices list including "CRYPTO_CLOSE" (and the same panel-name mapping).
+- idx-signals/idxsig/e4.py:59-67 (harness_config) and :55 (market_dir), :151/:181 (proto["markets"][market]) - the pattern an e5.py will clone keys the protocol's markets block and the output directory by the RunConfig market name; for CRYPTO_CLOSE the E5 protocol's markets block needs a "CRYPTO_CLOSE" entry whose panel_manifest / precondition_runs point at the CRYPTO panel, or the harness must map PROFILES[market].market -> panel while keeping the output dir keyed CRYPTO_CLOSE. No change to e4.py itself.
+- idx-signals/idxsig/global_panel.py:152/157 (build) - keyed by "US"/"CRYPTO" only; correct as is (no CRYPTO_CLOSE panel is ever built), but any caller passing a RunConfig market name into build/latest must pass the profile's .market ("CRYPTO").
+- idx-signals/idxsig/paper.py:70, 172, 305, 310, 400, 456, 732, 823, 902 and cli.py:128 (paper-scan/paper-score --market choices) - literal {IDX, US, CRYPTO} dicts/choices that would KeyError/reject "CRYPTO_CLOSE". No change recommended: the variant is a research sensitivity, not a live paper market; listing it here only so no one passes it to the paper path by accident.
+- idx-signals/idxsig/backtest.py:66 - comment `# profiles.PROFILES: IDX, US, CRYPTO` is now incomplete (cosmetic; no code change needed, PROFILES[cfg.market] already resolves CRYPTO_CLOSE).
+## open_concerns
+- Labelling: per the spec the variant is identical to CRYPTO except entry, so its assumption_note/venue do not mention the latency-pessimistic intent; the only in-run markers are summary.config.market == "CRYPTO_CLOSE" and summary.market.entry == "close" (summary.market.profile reads "CRYPTO"). If the E5 protocol wants the sensitivity named in the cost_assumption text, that is a one-field deviation from 'identical' to decide on explicitly.
+- Fill model: CRYPTO_CLOSE.entry == "close" makes execution.py:439 refuse fill_model "B" (open-only) and :441 refuse "C" unless units == "panel" and ca_mode == "registry" (crypto runs use ca_mode "adjusted"), so the variant runs with fill model A only, matching the protocol draft's 'A (as E2/E4 recorded runs)' for crypto; noted so no one expects B/C there.
+- Open-entry conditional plans: execution.py:415/420 tie some entry rules to entry_price (e.g. entry_rule "unlock" requires close; others may require open); a plan frozen for CRYPTO under open entry may not be valid under CRYPTO_CLOSE - the E5 harness should run resolve_plan + ExecConfig validation per profile rather than assume plan parity.
+- Untracked .githooks/post-checkout, post-commit, post-merge, pre-push exist in the worktree; they are not mine and were not committed.

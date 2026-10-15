@@ -1,0 +1,67 @@
+# fix:r-rules:r1 (Fix; agent a4bcabae21a244c40)
+
+## branch
+e5/r-rules
+## commit
+8b94372
+## files_changed
+- idx-signals/idxsig/rules/moonshot_e5.py
+- idx-signals/tests/test_e5_rules.py
+## api_added
+- moonshot_e5.FEATURE_WARMUP = 60  (features() NaN in the first 60 columns; unchanged feature semantics)
+- moonshot_e5.DEBOUNCE = 5  (moved above WARMUP; same value)
+- moonshot_e5.WARMUP = FEATURE_WARMUP + DEBOUNCE = 65  (CHANGED from 60: compute() NaN in the first 65 columns; the harness lead-in a window must start before its period)
+- moonshot_e5.debounce(state, known=None) -> bool array  (new optional `known` mask: a flag needs the trailing DEBOUNCE sessions known AND outside; known=None keeps every session known)
+- moonshot_e5.flags(score_, threshold)  (same signature; a NaN score is now unknown, never 'outside')
+- moonshot_e5._warm(a, n)  (private; now takes the column count explicitly)
+## behaviour_summary
+Fixed the serious finding at moonshot_e5.py:282. Previously flags()/debounce() treated a NaN score (the 60-column feature warm-up) as 'outside the set', so at the first evaluable column of every view every in-set name fired at once and the next sessions over-flagged; flags depended on where the window started. Now: debounce(state, known) requires each of the trailing DEBOUNCE sessions to be known (finite score / warm features) and outside; flags() passes known = isfinite(score) with state = known & (score >= thr) (NaN-safe); family_flags() passes known = isfinite(f['quiet']) for A0/A1 (a detector state exists once features are warm; an undefined fact at a warm session is a False state, as kod/detectors.py reports no SIGNAL on a None fact). Features keep their 60-column warm-up (FEATURE_WARMUP), so the first flag any window can emit is at column 65 with five real out-of-set sessions behind it; compute() masks WARMUP = 65 columns, and the docstring now says the harness window starts WARMUP (65) sessions before its period. Verified with the reviewer's probe (open_panel 30x200 seed 5, frozen_us_a(1.9)): names in set at session 80 = 9, full-window flags at 80 = 2, shifted-window (slice 20..200) flags at its column 60 = 0 and column 65 = 1 = full column 85; flags before WARMUP = 0 in both windows; flags on the common range 167 = 167 and compute() output identical on the common range. Registry entry in rules/__init__.py untouched (already additive at HEAD).
+## tests_added
+- tests/test_e5_rules.py::FlagTests::test_flags_are_window_invariant_from_the_lead_in (new: full vs slice(20) window, flags and compute() equal on the common range for US_A/A0/A1; nothing before WARMUP; several names in the set at column 60 but no flag there; every flag at column 65 is a true entry after five known out-of-set sessions)
+- tests/test_e5_rules.py::FlagTests::test_debounce_flags_the_first_session_above_after_five_known_below (rewritten from ..._five_below: NaN history gives no flag at 5 and the first flag at 11; a NaN inside the trailing five blocks the entry; a NaN session is never a flag; debounce(state, known) == flags; known=None path; a window starting inside the NaN stretch matches the full window)
+- tests/test_e5_rules.py::FeatureTests::test_warmup_masks_features_for_60_columns_and_compute_for_65 (renamed/strengthened: features NaN for 60 columns and every FEATURE_ORDER column finite from 60; compute() NaN for 65 and finite at 65; a view ending inside the lead-in is NaN throughout)
+- tests/test_e5_rules.py::ModuleTests::test_identity_and_literals (now asserts FEATURE_WARMUP == 60, DEBOUNCE == 5, WARMUP == 65 == FEATURE_WARMUP + DEBOUNCE)
+- tests/test_e5_rules.py::FlagTests::test_creep_quiet_rules_are_causal_and_debounced (strengthened: expectation uses debounce(state, known) masked at WARMUP; the same episode seen from a window starting 10 sessions later yields the same single flag)
+- tests/test_e5_rules.py::FlagTests::test_frozen_arm_is_causal_and_debounced (strengthened: compute compared from WARMUP; asserts no flag exists before WARMUP so the mask hides nothing)
+## test_output_tail
+=== python3 -m unittest (from <worktree>/idx-signals) ===
+----------------------------------------------------------------------
+Ran 263 tests in 49.276s
+
+OK
+=== python3 -m idxsig rules (tail + E5 rows) ===
+MOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed
+MOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed
+MOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed
+MOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed
+PLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed
+USER_RULE PENDING: rule text not supplied
+E5_CAND_A0_CREEP_QUIET v1 DETECTOR hold=5 sha=7891dfc8453d source-audit=passed
+E5_CAND_A1_CREEP_QUIET_NR v1 DETECTOR hold=5 sha=9ca7799abdb0 source-audit=passed
+E5_CAND_CRYPTO_A v1 DETECTOR hold=5 sha=6359f0d2761a source-audit=passed
+E5_CAND_CRYPTO_B v1 DETECTOR hold=5 sha=36cd72129fd2 source-audit=passed
+E5_CAND_IDX_A v1 DETECTOR hold=5 sha=b8d3cb7ede37 source-audit=passed
+E5_CAND_IDX_B v1 DETECTOR hold=5 sha=1019d2741cd0 source-audit=passed
+E5_CAND_US_A v1 DETECTOR hold=5 sha=ea160a78ec57 source-audit=passed
+E5_CAND_US_B v1 DETECTOR hold=5 sha=40469717f2ef source-audit=passed
+=== python3 -m idxsig verify-runs ===
+verify-runs: OK
+=== python3 tools/check_append_only.py --all (from <worktree>) ===
+append-only: OK
+=== regression proof: old debounce/flags bodies spliced into the fixed module, new tests run against it ===
+FAIL: test_debounce_flags_the_first_session_above_after_five_known_below
+AssertionError: Lists differ: [np.int64(5), np.int64(11)] != [11]
+FAIL: test_flags_are_window_invariant_from_the_lead_in
+AssertionError: np.True_ is not false : US_A
+Ran 3 tests in 7.586s
+FAILED (failures=2)
+(fixed module restored; md5 e77ca6aa4413e7140efa6196a5258c0e matches the committed file)
+## defaults_unchanged_evidence
+No recorded run uses MOONSHOT_E5 / E5_CAND_* (all arm literals are None; no results, research or paper file references the module; the rules were introduced on this branch at d8bf6b4 and never run on real data), so no recorded output can change. `python3 -m idxsig verify-runs` reports OK, i.e. every recorded run still reproduces; `tools/check_append_only.py --all` OK; the full suite (263 = 244 base + 19 E5) passes; every pre-existing rule's audit sha in `idxsig rules` is unchanged (E1 648a06e1079f, E2 US c21126d8ba9d, E2 CRYPTO d8218f2e9c9b, E4 f5585be5d967, PLACEBO b774201b08e6). Only the E5 module and its test file are in the commit (git show --stat HEAD). Feature semantics are untouched: FEATURE_WARMUP keeps the 60-column feature warm-up and the copied-feature equality tests against moonshot_g / e1.Study / ZEALAND price_facts still pass unchanged.
+## needs_other_file
+- idx-signals/idxsig/e5.py (not in this worktree; the harness owner): every discovery/validation/trading window must start moonshot_e5.WARMUP (= 65) sessions before its period, read from the module literal rather than a hard-coded 60; with a 60-session lead-in the first five period sessions can never carry a flag (the debounce's known-history requirement would fall inside the period).
+- handoff/kod-next-move/synthesis/E5_CEILING_protocol_draft.json 'warmup' entry (read-only reference; whoever freezes research/E5/protocol.json): the text 'WARMUP = 60 literal ... every harness window starts 60 sessions before the period start' should become 'FEATURE_WARMUP = 60 for the features; WARMUP = FEATURE_WARMUP + DEBOUNCE = 65 is the lead-in compute() masks and the harness window starts before its period' (IDX discovery warm-up then covers 65 sessions of TIER_2, features only, no trade).
+## open_concerns
+- Semantic choice for A0/A1 'known': a warm session where a detector fact is undefined (creep5v20 NaN for a name with fewer than 20 present sessions in the base window) is treated as a known False state (outside), mirroring kod/detectors.py which reports no SIGNAL on a None fact; only the feature warm-up is 'unknown'. If the protocol wants an undefined fact to be 'unknown' too, pass known = isfinite(f['creep5v20']) & isfinite(f['quiet']) in family_flags() (one-line change; the existing tests would still pass since the fixture names are all present from session 0).
+- Names not in the ranking pool (not present or untraded) still receive a finite score (ranks 0.5) and so count as known out-of-set sessions for the debounce, as in the reviewer's suggested fix (known = isfinite(score)); a listed name coming off a 5-session trading halt can therefore flag on its first tradeable session if its score is above threshold. This matches the protocol text ('>= 5 sessions outside the top 0.5%') and is prefix-safe; flagged here only because it is a design choice the protocol freeze may want to state.
+- WARMUP changed from 60 to 65 for compute(); the protocol draft's 'WARMUP = 60 literal' wording is now the feature warm-up only (see needs_other_file). The reviewer explicitly allowed this choice.

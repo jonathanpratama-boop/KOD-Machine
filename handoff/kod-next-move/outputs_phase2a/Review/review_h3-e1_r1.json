@@ -1,0 +1,43 @@
+{
+ "agentId": "a1edb2efd32fd40ba",
+ "label": "review:h3-e1:r1",
+ "phase": "Review",
+ "result": {
+  "verdict": "fix_required",
+  "findings": [
+   {
+    "severity": "serious",
+    "file": "idx-signals/idxsig/e1.py",
+    "line": 138,
+    "claim": "The panel-format declaration is a single global key (protocol[\"data\"][\"panel_format\"]), but the E5 protocol the caller will use is one file spanning three markets (draft keys: markets = {IDX, CRYPTO, US}) that need three different formats (IDX panel-v2, US panel-global-v2-units, CRYPTO panel-global-v1). One declaration cannot satisfy all three, so e5.py cannot construct the IDX and US studies from the same frozen protocol file.",
+    "evidence": "Probe (PYTHONPATH=. python3 review_probe.py): a copy of the E1 protocol with data.panel_format = \"panel-global-v2-units\" run on the IDX jumpy_panel (format panel-v2) raises `ValueError: KOD-IDX-E1-v1 needs a panel-global-v2-units panel`. E5_CEILING_protocol_draft.json has top-level `markets` with IDX/CRYPTO/US and no per-market `data` block; the pinned panels on disk are panel-20261013T194245Z (panel-v2), panel_us_repair-20261008T114805Z (panel-global-v2-units), panel_crypto-20261008T003354Z (panel-global-v1). The builder's own needs_other_file note ('use a protocol whose data.panel_format names panel-global-v2-units') would force per-market protocol files, so the recorded protocol_sha256 would differ per market or not be the frozen protocol's.",
+    "fix": "Additive, in e1.py only: resolve a per-market declaration first, e.g. `mk = (proto.get(\"markets\") or {}).get(self.profile.market); declared = (mk.get(\"panel_format\") if isinstance(mk, dict) else None) or (proto.get(\"data\") or {}).get(\"panel_format\")`, and/or add a `panel_format: str | None = None` keyword to Study that overrides the protocol's declaration (validated against PANEL_FORMATS). Keep the existing global-key behaviour. Add a test that one protocol declaring markets.IDX.panel_format=panel-v2 and markets.US.panel_format=panel-global-v2-units constructs both an IDX study (jumpy_panel) and a US study (us_panel) and still refuses a mismatched panel. Defaults are unaffected (E1's protocol has no markets block; E2's markets entries carry no panel_format)."
+   },
+   {
+    "severity": "minor",
+    "file": "idx-signals/idxsig/e1.py",
+    "line": 148,
+    "claim": "unit_factor is attached to the Market whenever the column exists, not only under pool_units=\"as_traded\"; Market.with_units requires every value finite and > 0, so a panel whose unit_factor column contains NaN now fails at Study construction even on the default path.",
+    "evidence": "Probe 2: us_panel with three unit_factor cells set to NaN, default pool_units, raises `ValueError: unit_factor must be finite, positive and shaped like the market`. No recorded run is affected (E1/E2 panels have no unit_factor column; the repair panels' factors are all finite, as backtest.run's with_units on them shows), and the builder disclosed it, but it is a default-path failure mode that did not exist at ae2cbee.",
+    "fix": "Attach only when pool_units == \"as_traded\" (the task wording), or keep the attach but guard it: attach when the column is present AND all finite/positive, else only raise under pool_units=\"as_traded\". Add one test: a NaN in unit_factor under defaults constructs; under as_traded raises."
+   },
+   {
+    "severity": "minor",
+    "file": "idx-signals/idxsig/e1.py",
+    "line": 48,
+    "claim": "PANEL_FORMATS omits \"panel-global-v2\", which is global_panel.FORMAT (the current non-repair global build) and the format of panel_crypto-20261013T205803Z on disk; a protocol declaring it is refused.",
+    "evidence": "Probe 4: protocol_with(\"panel-global-v2\") raises `ValueError: KOD-GLOBAL-E2-v1 names panel format 'panel-global-v2'; known: ('panel-v2', 'panel-global-v1', 'panel-global-v2-units')`. Manifest listing: panel_crypto-20261013T205803Z.json format panel-global-v2. The E5 draft pins the older crypto panel (panel-global-v1), so this bites only if E5 switches to the rebuilt crypto panel; the builder disclosed it.",
+    "fix": "Add \"panel-global-v2\" to PANEL_FORMATS (reachable only by explicit declaration, so still opt-in) and extend test_unknown_declared_formats_are_refused's tuple assertion."
+   },
+   {
+    "severity": "minor",
+    "file": "idx-signals/tests/test_e1_study_opts.py",
+    "line": 309,
+    "claim": "test_evaluate_runs_under_v3 asserts only that volatility_q appears in last_flags and relaxed steps are within 0..4; it would pass if evaluate's pooling ignored the volatility key (coverage of the key comes only from the matched_controls test via the shared _pool).",
+    "evidence": "The test body checks `assertIn(\"volatility_q\", st.last_flags.columns)` and the range of `matched_random_relaxed_steps` keys; neither depends on the draws sharing the volatility bucket.",
+    "fix": "After evaluate, recompute `_pool(n, d, elig)` for a few flagged cells with relaxed 0 and assert the pool's volatility bucket equals the flag's (or expose the draws and assert `buckets[\"volatility\"][draws, d] == buckets[\"volatility\"][n, d]` where relaxed == 0)."
+   }
+  ],
+  "test_rerun_tail": "$ cd <worktree>/idx-signals && python3 -m unittest   (tail)\n.....................................................................................................................................................................................................................................................................\n----------------------------------------------------------------------\nRan 261 tests in 50.054s\n\nOK\n\n$ python3 -m idxsig rules   (tail)\nE4_CAND_G2_RET30_BEAR v1 DETECTOR hold=5 sha=5d4665925e15 source-audit=passed\nE4_CAND_G7_MOMENTUM5_30 v1 DETECTOR hold=5 sha=0378c8b43d27 source-audit=passed\nE4_CAND_G7_MOMENTUM5_30_BEAR v1 DETECTOR hold=5 sha=816abcb4a2a2 source-audit=passed\nMOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed\nMOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed\nMOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed\nMOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed\nPLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed\nUSER_RULE PENDING: rule text not supplied\n\n$ python3 -m idxsig verify-runs\nverify-runs: OK\n\n$ cd <worktree> && python3 tools/check_append_only.py --all\nappend-only: OK\n\n$ independent defaults check: git archive ae2cbee idx-signals -> scratchpad/review_old_ae2cbee; python3 e1_hash.py <old> > review_hash_old.json; python3 e1_hash.py <worktree>/idx-signals > review_hash_new.json\n806c04c0acbbcb811be04b70111e622f72ca6b4069f989ad9edafd2f63d0cfb1  review_hash_old.json\n806c04c0acbbcb811be04b70111e622f72ca6b4069f989ad9edafd2f63d0cfb1  review_hash_new.json\nDEFAULT OUTPUTS IDENTICAL (independent run)   [30 digests, IDX + US; e.g. IDX evaluate 99bd3cd436de1eb8, IDX matched_controls 6048b35ad850029e]\n\n$ git show --stat 9307ee8: only idx-signals/idxsig/e1.py and idx-signals/tests/test_e1_study_opts.py changed; .githooks/* untracked and not in the commit; sibling e5-h1-controls (c537606) keeps controls.features(m, version, band_edges, as_traded=False) and controls._bucket, so the merge keeps this branch's calls valid."
+ }
+}

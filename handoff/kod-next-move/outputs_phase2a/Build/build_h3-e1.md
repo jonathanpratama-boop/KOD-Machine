@@ -1,0 +1,80 @@
+# build:h3-e1 (Build; agent a8d5fe00ddff61b7a)
+
+## branch
+e5/h3-e1
+## commit
+9307ee808acc72d2b2ec5ddc578ea0aa054ba9e4
+## files_changed
+- idx-signals/idxsig/e1.py
+- idx-signals/tests/test_e1_study_opts.py
+## api_added
+- e1.Study(panel_df, panel_meta, protocol_path=PROTOCOL, profile=None, family_module=None, pool_units: str = "panel", pool_version: str = "v1")
+- e1.PANEL_FORMATS = ("panel-v2", "panel-global-v1", "panel-global-v2-units")  # values protocol["data"]["panel_format"] may name
+- e1.POOL_VERSIONS = {"v1": ("price_band", "liquidity", "market_cap"), "v3": ("price_band", "liquidity", "volatility", "market_cap")}
+- e1.POOL_UNITS = ("panel", "as_traded")
+- Study.pool_units: str, Study.pool_version: str, Study.pool_keys: tuple[str, ...], Study.panel_format: str  (new instance attributes)
+- Study.buckets["volatility"]: np.int8 (ticker x session) quintile, -1 unknown  (only when pool_version="v3")
+- Study.m.unit_factor: np.ndarray | None  (attached via Market.with_units whenever the panel has a unit_factor column)
+- Study.row(n, d) extra keys: "close_as_traded" (only when pool_units="as_traded"), "volatility_q" 1..5 (only when pool_version="v3"); these propagate to episodes/matched_controls/last_flags frames
+- e1._dense(m, df, col, fill) -> np.ndarray  (module-private helper mirroring backtest._dense)
+## behaviour_summary
+All changes are opt-in; defaults reproduce the recorded E1/E2 path. (1) Panel format: Study reads protocol["data"]["panel_format"]; if present it must be in PANEL_FORMATS (else ValueError) and becomes the expected format the panel meta must match; if absent, the legacy expectation (panel-v2 on IDX, panel-global-v1 elsewhere) applies. E1's protocol already declares panel-v2 (same as legacy); E2's protocol has no data key. So an E5 protocol declaring panel-global-v2-units lets the US repair panel (panel_us_repair-20261008T114805Z, format panel-global-v2-units) pass. (2) IGNITION guard: `next(...)` now has a None default; a family without an IGNITION member gets sig["ign"] = NaN everywhere (signal_stats then reports events_with_value 0, auc NaN) instead of StopIteration/KeyError; families with IGNITION are unchanged. (3) as-traded: if the panel has a unit_factor column it is attached with Market.with_units(_dense(...)) exactly as backtest.run does (carried on the full market and the sealed slice; nothing reads it by default). With pool_units="as_traded", controls.features(..., as_traded=True) forms price_band on close x unit_factor (the fix for the wrong-band control defect), row() adds close_as_traded; "close" stays the panel close. pool_units="as_traded" without a unit_factor column raises ValueError; an unknown pool_units raises. (4) pool_version="v3": pool keys become (price_band, liquidity, volatility, market_cap) with volatility = controls._bucket(where(present, sig["vol20"], NaN), 5), i.e. the quintile of the same 20-session vol the signals report, ranked per session among present names (as controls.features masks before ranking); _pool relaxes from the last key down to session-only until >= N_CONTROLS (= controls.MIN_POOL = 5); match_relaxed_steps ranges 0..4 under v3 (0..3 under v1, unchanged); row() adds volatility_q. Unknown pool_version raises. Volatility is ordered ahead of market_cap to mirror the protocol draft's controls v3 priority ("volatility quintile ahead of market_cap"), so relaxation drops market_cap first.
+## tests_added
+- tests/test_e1_study_opts.py::DefaultsUnchanged::test_explicit_legacy_options_equal_the_bare_call
+- tests/test_e1_study_opts.py::DefaultsUnchanged::test_a_unit_factor_column_alone_changes_nothing
+- tests/test_e1_study_opts.py::DefaultsUnchanged::test_e1_protocol_declares_the_legacy_format
+- tests/test_e1_study_opts.py::PanelFormatFromProtocol::test_units_format_is_accepted_when_the_protocol_names_it
+- tests/test_e1_study_opts.py::PanelFormatFromProtocol::test_protocol_without_data_keeps_the_legacy_expectation
+- tests/test_e1_study_opts.py::PanelFormatFromProtocol::test_panel_must_match_the_declared_format
+- tests/test_e1_study_opts.py::PanelFormatFromProtocol::test_unknown_declared_formats_are_refused
+- tests/test_e1_study_opts.py::IgnitionGuard::test_a_family_without_ignition_builds_and_reports
+- tests/test_e1_study_opts.py::IgnitionGuard::test_a_family_with_ignition_is_unchanged
+- tests/test_e1_study_opts.py::AsTradedPool::test_market_carries_the_unit_factor
+- tests/test_e1_study_opts.py::AsTradedPool::test_price_band_uses_the_as_traded_close
+- tests/test_e1_study_opts.py::AsTradedPool::test_controls_match_on_the_as_traded_band
+- tests/test_e1_study_opts.py::AsTradedPool::test_as_traded_needs_a_unit_factor_column
+- tests/test_e1_study_opts.py::PoolV3::test_volatility_quintile_comes_from_the_signal_vol20
+- tests/test_e1_study_opts.py::PoolV3::test_controls_share_the_volatility_quintile_and_relax_to_min_pool
+- tests/test_e1_study_opts.py::PoolV3::test_evaluate_runs_under_v3
+- tests/test_e1_study_opts.py::PoolV3::test_unknown_pool_version_is_refused
+## test_output_tail
+$ python3 -m unittest   (from idx-signals; before the change: "Ran 244 tests ... OK")
+----------------------------------------------------------------------
+Ran 261 tests in 50.813s
+
+OK
+
+$ python3 -m idxsig rules   (tail)
+E4_CAND_G7_MOMENTUM5_30 v1 DETECTOR hold=5 sha=0378c8b43d27 source-audit=passed
+E4_CAND_G7_MOMENTUM5_30_BEAR v1 DETECTOR hold=5 sha=816abcb4a2a2 source-audit=passed
+MOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed
+MOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed
+MOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed
+MOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed
+PLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed
+USER_RULE PENDING: rule text not supplied
+
+$ python3 -m idxsig verify-runs
+verify-runs: OK
+
+$ python3 tools/check_append_only.py --all   (from the worktree root)
+append-only: OK
+
+$ python3 -m unittest tests.test_e1_study_opts
+.................
+----------------------------------------------------------------------
+Ran 17 tests in 16.518s
+
+OK
+## defaults_unchanged_evidence
+Script /tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/e1_hash.py builds e1.Study with DEFAULT arguments on two synthetic panels (tests.test_e1.jumpy_panel: IDX/E1 protocol/moonshot_e1 with rule F1_ARA; and the E2-US shape: opens, no share counts, panel-global-v1, US profile, moonshot_g, rule G2_RET30) and sha256-hashes the CSV serialisation (float_format %.6g, as write_csv) of base_rates (discovery, validation), detector_table (both periods), episodes (both periods x 3 thresholds), matched_controls, signal_stats, last_flags, the column lists, and the sort_keys JSON of evaluate(rule, "validation"). Run once at merge commit ae2cbee before editing e1.py (saved as e1_hash_before.json) and once after the change (e1_hash_after.json): `diff` is empty and both files hash to sha256 806c04c0acbbcb811be04b70111e622f72ca6b4069f989ad9edafd2f63d0cfb1 (30 output digests, IDX + US, all identical, e.g. IDX evaluate 99bd3cd436de1eb8, IDX matched_controls 6048b35ad850029e, US signal_stats 6402844ead7a97b0). The pre-existing 244 tests (incl. test_e1's E1 mechanics and E2-on-US) still pass. In-repo guards: DefaultsUnchanged.test_explicit_legacy_options_equal_the_bare_call (bare Study == Study(pool_units="panel", pool_version="v1") frame-for-frame and evaluate JSON, no new columns, match_relaxed_steps <= 3) and test_a_unit_factor_column_alone_changes_nothing (a panel with unit_factor under defaults gives identical buckets and episodes to the same panel without the column).
+## needs_other_file
+- None required for this task. Note for the E5 wiring (not changed here): cli.py constructs e1.Study at lines ~341 and ~426 without the new keywords; an E5 command (e5.py / cli.py, owned elsewhere) must pass pool_units="as_traded" and pool_version="v3" explicitly and use a protocol whose data.panel_format names panel-global-v2-units for the US repair panel.
+## open_concerns
+- Pool key order under v3 is (price_band, liquidity, volatility, market_cap): volatility was placed AHEAD of market_cap to mirror the protocol draft's controls-v3 priority (RECOMMENDATION.md: 'volatility quintile ahead of market_cap'), so relaxation drops market_cap first. The task text said 'add a volatility quintile key' without stating the position; if E5 wants it appended last instead, POOL_VERSIONS['v3'] is a one-line change and the test's relaxation-order assertion would need the same edit.
+- The volatility quintile masks vol20 by Market.present before the per-session rank (as controls.features does), so names absent that session never enter the rank population; the values for present names are exactly sig['vol20']. The spec said 'the same 20-session vol the signals use'; the present-mask is a rank-population choice, declared in the code comment and asserted by the test.
+- A unit_factor column is attached to Study.m (Market.with_units) whenever present, not only under pool_units='as_traded' (the task wording tied attaching to as_traded). This mirrors backtest.run, leaves every default output byte-identical (nothing reads unit_factor by default, proven by hashes and by test_a_unit_factor_column_alone_changes_nothing), and lets E5 read study.m.unit_factor. Note Market.with_units requires every unit_factor finite and > 0; the US repair panel is built that way (global_panel fills 1.0), but a panel with NaN unit_factor rows would raise at Study construction.
+- The crypto E5 panel (panel_crypto-20261008T003354Z) has format panel-global-v1, which is already the legacy expectation; 'panel-global-v2' (the E4 crypto format) was NOT added to PANEL_FORMATS because the task did not ask for it. Add it if E5 runs crypto on a v2 panel.
+- sig['ign'] under a family without IGNITION is all-NaN; row() still emits an 'ign' column when the protocol's weak_signals.binary lists it (E1/E2 do). An E5 protocol that lists 'ign' would get NaN statistics for it rather than an error; one that omits it never sees the key.
+- Untracked .githooks/{post-checkout,post-commit,post-merge,pre-push} were present in the worktree before this task and were left untracked and uncommitted.
+- No real panel was loaded, no network, no holdout read; no number in this work is performance.

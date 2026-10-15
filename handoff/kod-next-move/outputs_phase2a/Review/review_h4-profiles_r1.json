@@ -1,0 +1,35 @@
+{
+ "agentId": "ab3a141d65bf7c845",
+ "label": "review:h4-profiles:r1",
+ "phase": "Review",
+ "result": {
+  "verdict": "accept",
+  "findings": [
+   {
+    "severity": "minor",
+    "file": "idx-signals/idxsig/profiles.py",
+    "line": 73,
+    "claim": "CRYPTO_CLOSE cannot run a short-side plan: execution.execute refuses side='short' unless entry_price == 'open' (execution.py:414-416), so any E4-style short plan under market='CRYPTO_CLOSE' raises ValueError. Not a defect for E5 (the protocol draft fixes family.side = 'long' and crypto fill_model_primary = 'A'), but the builder's open_concerns list only the fill-model B/C refusals and omit this one.",
+    "evidence": "execution.py:414-416: `if cfg.side == \"short\": if cfg.entry_price != \"open\" or cfg.fill_model == \"C\": raise ValueError(\"the short side is defined for open entries (US, crypto profiles)\")`; E5_CEILING_protocol_draft.json family.side == \"long\".",
+    "fix": "No code change required in the owned files. Add one line to the profiles.py comment (or the E5 protocol notes) stating the variant is long-only and fill-model A, so no one plans a CRYPTO_CLOSE short sensitivity."
+   },
+   {
+    "severity": "minor",
+    "file": "idx-signals/idxsig/backtest.py",
+    "line": 66,
+    "claim": "The RunConfig.market comment `# profiles.PROFILES: IDX, US, CRYPTO` is now incomplete (cosmetic; the code path PROFILES[cfg.market] already resolves CRYPTO_CLOSE). Not an owned file; builder already reported it under needs_other_file.",
+    "evidence": "backtest.py:66 comment lists three keys; profiles.py:76 registers a fourth.",
+    "fix": "Outside this branch's ownership: update the comment when e5.py/cli.py are wired (needs_other_file)."
+   },
+   {
+    "severity": "minor",
+    "file": "idx-signals/idxsig/cli.py",
+    "line": 73,
+    "claim": "The variant is unreachable from the CLI today: `run --market` choices are (IDX, US, CRYPTO) and the panel is loaded with global_panel.latest(args.market), which would look for a CRYPTO_CLOSE panel. Correctly reported by the builder under needs_other_file; confirms the change is opt-in and nothing selects it by default.",
+    "evidence": "cli.py:73 `choices=(\"IDX\", \"US\", \"CRYPTO\")`; cli.py:293 `global_panel.latest(args.market)`; global_panel.build keyed by US/CRYPTO only.",
+    "fix": "In the E5 cli/e5.py work (other branch): add \"CRYPTO_CLOSE\" to the e5 subcommand choices and map the panel via PROFILES[market].market."
+   }
+  ],
+  "test_rerun_tail": "$ cd <worktree>/idx-signals && python3 -m unittest\n..........................................................................................................................................................................................................................................................\n----------------------------------------------------------------------\nRan 250 tests in 32.990s\n\nOK\n\n$ python3 -m idxsig rules   (tail; grep -c source-audit=passed -> 16; grep -ci fail -> 0)\nE4_CAND_G7_MOMENTUM5_30 v1 DETECTOR hold=5 sha=0378c8b43d27 source-audit=passed\nE4_CAND_G7_MOMENTUM5_30_BEAR v1 DETECTOR hold=5 sha=816abcb4a2a2 source-audit=passed\nMOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed\nMOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed\nMOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed\nMOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed\nPLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed\nUSER_RULE PENDING: rule text not supplied\n\n$ python3 -m idxsig verify-runs\nverify-runs: OK\n\n$ cd <worktree> && python3 tools/check_append_only.py --all\nappend-only: OK\n\n$ git diff ae2cbee --stat -- . ':!idx-signals/idxsig/profiles.py' ':!idx-signals/tests/test_profiles_crypto_close.py'\n(empty: only the two owned files differ from the base; .githooks/* are untracked and not committed)\n\nReview notes (no blocking or serious findings):\n(a) defaults: PROFILES comprehension line is byte-identical; the new key is assigned afterwards; no code iterates PROFILES (grep: only PROFILES[...] indexing in backtest.py:270, cli.py:294/426, paper.py:396/697, tests), so no loop, choices list or audit changes membership-dependently; IDX/US/CRYPTO objects and all cost values untouched; verify-runs OK and rule sha256 values unchanged.\n(b) look-ahead: entry 'close' with fixed entry rule reads m.close[tick, sig+entry_lag] (execution.py:464), the same path IDX already uses; conditional_entry reads sessions s+1..s+window only; no cross-sectional statistic added.\n(c) API: backtest.run resolves PROFILES[cfg.market] and keys the global branch/holdout/summary on profile.market == 'CRYPTO' -- verified by the run-level test (HoldoutSealed raised; config.market 'CRYPTO_CLOSE'; market.profile/entry ('CRYPTO','close')). Short side refused for close entries (minor finding 1); E5 is long-only, fill A.\n(d) tests: all six fail with the feature stubbed (ImportError, or entry=='open' assertions); field-by-field freeze of CRYPTO covers every dataclass field; run-level test checks per-trade entry_price against the panel close vs open.\n(e) numerics: no new arithmetic; dataclasses.replace on a frozen dataclass.\n(f) standing rules: only owned files changed; nothing under research/results/paper/var; no network; commit carries the required trailers."
+ }
+}

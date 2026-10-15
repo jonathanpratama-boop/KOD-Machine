@@ -1,0 +1,864 @@
+{
+  "summary": "Phase 2a of E5-CEILING: five parallel, isolated harness/rule builders (controls v3, backtest matched-mean columns, e1 detection-stage changes, CRYPTO_CLOSE profile, moonshot_e5 rule module), each adversarially reviewed and fixed",
+  "agentCount": 15,
+  "logs": [
+    "Build: five builders in isolated worktrees",
+    "Build: 5/5 builders returned",
+    "Done: h1-controls=accepted_r1, h2-backtest=accepted_r1, h3-e1=fixed_r2_unreviewed, h4-profiles=accepted_r1, r-rules=accepted_r2"
+  ],
+  "result": {
+    "results": [
+      {
+        "key": "h1-controls",
+        "wt": "/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/e5-h1-controls",
+        "branch": "e5/h1-controls",
+        "owns": "idx-signals/idxsig/controls.py and a new idx-signals/tests/test_controls_v3.py",
+        "spec": "Add controls.VERSIONS['v3'] = (price_band, liquidity QUINTILE, volatility QUINTILE, market_cap quintile where the market has it (IDX mirror era), momentum tercile, drawdown tercile, listing_age), relaxed from the last key to MIN_POOL (5) exactly as v2 does. Keep 'v2' byte-for-byte (its recorded runs must reproduce; verify by asserting the v2 feature/bucket outputs on a synthetic market are identical before/after your change, e.g. by comparing against a copy of the pre-change function or a frozen expected table). features()/matched_draws() must accept version='v3' through the same call path backtest.run uses (read backtest.py:320-335 to see how controls are invoked and what keys summary.json records: the controls version name must flow into the recorded summary). Document in the module docstring why v3 exists (28% of IDX attempts under v2 were never matched on volatility). Tests: v3 bucket counts, relaxation order, v2 unchanged, as_traded path still works if controls.features has it.",
+        "build": {
+          "branch": "e5/h1-controls",
+          "commit": "c5376066435f5b2af6d97ca8368ba114bbf6622e",
+          "files_changed": [
+            "idx-signals/idxsig/controls.py",
+            "idx-signals/tests/test_controls_v3.py"
+          ],
+          "api_added": [
+            "controls.VERSIONS['v3'] = ('price_band', 'liquidity', 'volatility', 'market_cap', 'momentum', 'drawdown', 'listing_age')",
+            "controls.FEATURE_OVERRIDES = {'v3': {'volatility': Feature('volatility', 5, 'quintile of 20-session std of daily log returns', 'every tier')}}",
+            "controls.feature(name: str, version: str = 'v2') -> Feature  (FEATURES[name] unless FEATURE_OVERRIDES[version] has it)",
+            "controls.features(m, version='v3', band_edges=..., as_traded=...) now accepted (volatility bucketed into 5); matched_draws(..., version='v3'), levels('v3'), level_names('v3'), coverage(..., version='v3') all work through the existing signatures",
+            "RunConfig(controls_version='v3') accepted by backtest.run unchanged; summary.json records it at harness.controls, random_matched.controls.version, random_matched.method, random_matched.match_level_used (v3 level names)"
+          ],
+          "behaviour_summary": "Added an opt-in matched-controls version v3 to idx-signals/idxsig/controls.py: the same seven features as v2 but with volatility as a QUINTILE placed ahead of market_cap (priority: price_band, liquidity quintile, volatility quintile, market_cap quintile [mirror era only, -1 elsewhere], momentum tercile, drawdown tercile, listing_age), relaxed from the last feature to MIN_POOL=5 by the unchanged matched_draws loop. Implementation: VERSIONS['v3'] plus a per-version override table FEATURE_OVERRIDES and a feature(name, version) accessor; features() reads the volatility bucket count from feature('volatility', version) (3 for v1/v2, 5 for v3) and coverage() takes the feature definition from feature(name, version) so the v3 report says 'quintile'. FEATURES, VERSIONS['v1'], VERSIONS['v2'], MIN_POOL, _bucket, _rolling, _codes, matched_draws, levels and level_names are untouched; the default version everywhere is still 'v2'. The module docstring documents why v3 exists (volatility is the only measured pre-event separator; under v2 it is a coarse tercile ranked below market_cap and 28% of attempted signals on the recorded IDX trading run were never matched on it). No change to backtest.py was needed: it already passes cfg.controls_version into features(), matched_draws(), VERSIONS[], level_names() and coverage(), and records it at summary['harness']['controls'] and summary['random_matched']['controls']['version'] (verified by a synthetic end-to-end test). _codes packs buckets base 8, and the largest code digit is buckets+1 = 6, so the quintile fits.",
+          "tests_added": [
+            "tests/test_controls_v3.py::ControlsV3Buckets::test_v3_feature_order_is_the_protocol_draft_order",
+            "tests/test_controls_v3.py::ControlsV3Buckets::test_v3_volatility_is_a_quintile_refining_the_v2_tercile",
+            "tests/test_controls_v3.py::ControlsV3Buckets::test_v3_bucket_counts_per_feature",
+            "tests/test_controls_v3.py::ControlsV3Buckets::test_v3_matches_v2_on_every_feature_but_volatility",
+            "tests/test_controls_v3.py::ControlsV3Buckets::test_v3_features_use_only_past_data",
+            "tests/test_controls_v3.py::ControlsV3Buckets::test_v3_coverage_reports_the_quintile_and_the_version",
+            "tests/test_controls_v3.py::ControlsV3Relaxation::test_relaxed_from_the_last_feature_down_to_min_pool",
+            "tests/test_controls_v3.py::ControlsV3Relaxation::test_v3_relaxes_volatility_after_market_cap",
+            "tests/test_controls_v3.py::ControlsV3Relaxation::test_run_records_v3_in_the_summary",
+            "tests/test_controls_v3.py::ControlsV2Unchanged::test_v1_and_v2_features_equal_the_frozen_pre_v3_copy",
+            "tests/test_controls_v3.py::ControlsV2Unchanged::test_v2_literals_and_report_fields_are_unchanged",
+            "tests/test_controls_v3.py::ControlsV2Unchanged::test_v2_draws_equal_the_frozen_copy_under_the_same_seed",
+            "tests/test_controls_v3.py::ControlsV2Unchanged::test_default_run_still_records_v2",
+            "tests/test_controls_v3.py::ControlsV3AsTraded::test_v3_price_band_uses_the_traded_price_and_the_rest_is_unit_free"
+          ],
+          "test_output_tail": "$ cd <worktree>/idx-signals && python3 -m unittest\n..................................................................................................................................................................................................................................................................\n----------------------------------------------------------------------\nRan 258 tests in 40.297s\n\nOK\n\n(baseline before my change, same command: \"Ran 244 tests in 34.977s / OK\"; the new file alone: \"Ran 14 tests ... OK\")\n\n$ python3 -m idxsig rules   (tail)\nE4_CAND_G7_MOMENTUM5_30 v1 DETECTOR hold=5 sha=0378c8b43d27 source-audit=passed\nE4_CAND_G7_MOMENTUM5_30_BEAR v1 DETECTOR hold=5 sha=816abcb4a2a2 source-audit=passed\nMOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed\nMOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed\nMOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed\nMOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed\nPLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed\nUSER_RULE PENDING: rule text not supplied\nrules exit=0\n\n$ python3 -m idxsig verify-runs\nverify-runs: OK\nverify exit=0\n\n$ cd <worktree> && python3 tools/check_append_only.py --all\nappend-only: OK\nappend exit=0\n\n$ git status --short (after commit)\n?? .githooks/post-checkout\n?? .githooks/post-commit\n?? .githooks/post-merge\n?? .githooks/pre-push\n(these four untracked hook files pre-existed in the worktree and are not mine; left alone)",
+          "defaults_unchanged_evidence": "Three independent checks. (1) Fingerprint script (scratchpad/v2_fingerprint.py, outside the repo) run against the worktree BEFORE and AFTER the change: sha256 of every v1 and v2 feature array (name, bytes, dtype) on three synthetic markets (plain; ipo+delist+shares_until; small), sha256 of matched_draws output (tickers + level_used) under a fixed rng, sha256 of coverage() JSON for IDX and US band names, the as_traded US price_band array, level_names, and sha256 of summary['random_matched'] plus summary['harness']['controls'] from run_synthetic for controls_version v1, v2 and the default. `diff v2_before.json v2_after.json` printed nothing -> \"FINGERPRINTS IDENTICAL\". (2) tests/test_controls_v3.py carries a verbatim frozen copy of the pre-change features()/_bucket/_rolling (as at ae2cbee) and asserts array-and-dtype equality with the live module for v1 and v2 on three synthetic markets, with IDX and US band edges and on the as_traded path; asserts matched_draws for v2 gives identical draws and levels from live vs frozen features under the same seed; asserts VERSIONS['v1'], VERSIONS['v2'], level_names('v2'), MIN_POOL, FEATURES['volatility'] (3 buckets, 'tercile' wording) and coverage() priorities/descriptions for v2 equal their literal pre-change values, and that feature(name, 'v1'|'v2') returns the very FEATURES object; asserts RunConfig default controls_version is 'v2' and a default synthetic run records 'v2' at harness.controls and random_matched.controls.version with the v2 method text. (3) The 244 pre-existing tests pass unchanged and `python3 -m idxsig verify-runs` reports OK. The diff itself shows the only executable changes on the v1/v2 path are `vol_buckets = feature('volatility', version).buckets` (3 for v1/v2) replacing the literal 3, and `f = feature(name, version)` replacing `FEATURES[name]` in coverage (same object for v1/v2).",
+          "needs_other_file": [
+            "idx-signals/idxsig/cli.py line 91: `p_run.add_argument(\"--controls-version\", choices=(\"v2\", \"v1\"), default=\"v2\", ...)` rejects `--controls-version v3` from the command line; add \"v3\" to choices (default must stay \"v2\"). Programmatic callers (RunConfig, e3/e4-style harness_config reading protocol['harness']['controls_version']) already work with 'v3'.",
+            "idx-signals/idxsig/e1.py line 151: Study calls controls.features(m, \"v2\", ...) with a hard-coded version; the E5 draft's detection stage ('e1.Study pool extended to volatility quintile') needs the e1 owner to pass 'v3' (or add the quintile to its pool keys) there - not changed here."
+          ],
+          "open_concerns": [
+            "The '28% of IDX attempts never matched on volatility under v2' figure in the module docstring is quoted from the reference RECOMMENDATION.md ('on the recorded IDX run 28% of attempts were never matched on volatility under v2'); I did not recompute it from any recorded run (no real data was loaded, per the standing rules). It is stated as the protocol draft's rationale, not as a measured result of this change.",
+            "The v3 relaxation ladder drops listing_age, drawdown, momentum, market_cap, then volatility; in the IDX mirror era market_cap is known, so a pool short of 5 names at level 'price_band+liquidity+volatility+market_cap' relaxes to 'price_band+liquidity+volatility' - the intended behaviour, but note that outside the mirror era (market_cap == -1 for everyone) level 3 and level 4 pools are identical, exactly as v2's levels 4 and 5 were.",
+            "controls.features() still returns the full v2-style dict for an unrecognised version string (pre-existing behaviour; VERSIONS[version] in matched_draws/coverage raises KeyError later). I left that untouched to keep the v2 path byte-identical.",
+            "Nothing in this branch runs a harness on real data; whether v3 changes any recorded conclusion is for the E5 Stage 0/1 runs to show."
+          ]
+        },
+        "r1": {
+          "verdict": "accept",
+          "findings": [
+            {
+              "severity": "minor",
+              "file": "idx-signals/idxsig/controls.py",
+              "line": 29,
+              "claim": "Module docstring misstates v2's relaxation order: volatility is the fourth feature dropped under v2, not 'the second'.",
+              "evidence": "VERSIONS['v2'] = (price_band, liquidity, market_cap, volatility, momentum, drawdown, listing_age) and levels() drops from the end, so the drop order is listing_age, drawdown, momentum, then volatility. test_controls_v3.py line 228-229 repeats the inaccuracy ('dropping it first, which is what v2 did'). Documentation only; no executable effect.",
+              "fix": "Reword to 'it is dropped before market_cap (fourth feature dropped, after listing_age, drawdown and momentum)' in the module docstring and in the test docstring of test_v3_relaxes_volatility_after_market_cap."
+            },
+            {
+              "severity": "minor",
+              "file": "idx-signals/idxsig/controls.py",
+              "line": 30,
+              "claim": "The '28% of attempted signals were never matched on volatility under v2' figure is asserted in the module docstring as a fact about the recorded IDX run but was not recomputed in this branch (builder acknowledges it is quoted from RECOMMENDATION.md).",
+              "evidence": "Builder's open_concerns item 1; no code or test in the diff derives it. It is a coverage share, not performance, but a source-level docstring stating a measured number that the branch cannot verify invites later misquotation.",
+              "fix": "Attribute it explicitly in the docstring ('per handoff/kod-next-move/synthesis/RECOMMENDATION.md, not recomputed here') or drop the figure and keep the qualitative rationale."
+            },
+            {
+              "severity": "minor",
+              "file": "idx-signals/idxsig/cli.py",
+              "line": 91,
+              "claim": "`--controls-version` choices are ('v2','v1'), so the `run` subcommand cannot select v3 from the command line; only programmatic callers (RunConfig, e3/e4-style harness_config) can.",
+              "evidence": "cli.py:91 `p_run.add_argument(\"--controls-version\", choices=(\"v2\", \"v1\"), default=\"v2\", ...)`. Not an owned file; builder reported it under needs_other_file. E5's own stages are to go through e5.py harness_config, so this does not block the protocol's use of v3.",
+              "fix": "In cli.py (its owner): add \"v3\" to choices, keep default \"v2\"; extend the help text."
+            }
+          ],
+          "test_rerun_tail": "$ cd <worktree>/idx-signals && python3 -m unittest\n..................................................................................................................................................................................................................................................................\n----------------------------------------------------------------------\nRan 258 tests in 41.830s\n\nOK\n\n$ python3 -m idxsig rules (tail)\nE4_CAND_G2_RET30 v1 DETECTOR hold=5 sha=362a9207a418 source-audit=passed\nE4_CAND_G2_RET30_BEAR v1 DETECTOR hold=5 sha=5d4665925e15 source-audit=passed\nE4_CAND_G7_MOMENTUM5_30 v1 DETECTOR hold=5 sha=0378c8b43d27 source-audit=passed\nE4_CAND_G7_MOMENTUM5_30_BEAR v1 DETECTOR hold=5 sha=816abcb4a2a2 source-audit=passed\nMOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed\nMOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed\nMOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed\nMOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed\nPLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed\nUSER_RULE PENDING: rule text not supplied\nrules exit=0\n\n$ python3 -m idxsig verify-runs\nverify-runs: OK\n\n$ cd <worktree> && python3 tools/check_append_only.py --all\nappend-only: OK\n\n$ git diff ae2cbee --name-only\nidx-signals/idxsig/controls.py\nidx-signals/tests/test_controls_v3.py\n\nReviewer mutation check (scratch copy of idxsig+tests outside the repo, tests.test_controls_v3 only; 14 tests each):\n  v3 volatility override set back to 3 buckets/'tercile'      -> FAILED (failures=5)\n  VERSIONS['v3'] set to v2's order                            -> FAILED (failures=4)\n  features() volatility bucket count hard-coded to 3          -> FAILED (failures=3)\n  coverage() uses FEATURES[name] instead of feature(name, v)  -> FAILED (failures=2)\nReviewer notes: rule sha (rules/__init__.py:55-57) hashes the rule body only, so the controls.py change does not move any rule sha; rules/audit.py lists 'controls' only as a forbidden attribute for rules. backtest.run already routes cfg.controls_version into features/matched_draws/VERSIONS/level_names/coverage and summary['harness']['controls'] (backtest.py:372-396, 546); e3.py:71 and e4.py:76 pass h['controls_version'] through. v3 path in features() differs from v2 only by the bucket count argument; masking by m.present precedes every cross-sectional rank, and the truncation test covers v3. _codes packs base 8 with max digit 6, within range."
+        },
+        "status": "accepted_r1"
+      },
+      {
+        "key": "h2-backtest",
+        "wt": "/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/e5-h2-backtest",
+        "branch": "e5/h2-backtest",
+        "owns": "idx-signals/idxsig/backtest.py and a new idx-signals/tests/test_backtest_paired.py",
+        "spec": "In backtest.run(), add two additive per-trade columns to the trades frame written to trades.csv.gz: matched_mean_net_return (mean net return of that signal's 200 matched control draws, NaN where no control was drawn) and same_session_mean_net_return (mean net return of the same-session uniform draws for that signal), computed from the raw draw data already produced by the run (read how _baseline / dist() / the draws are built; do not change them). summary.json keys and random_draws.csv must be unchanged (prove with a synthetic run before/after: same keys, same values). The new columns must be present even when a draw set is empty. Add a helper paired_excess(trades_df) -> dict with per-signal excess (net_return - matched_mean_net_return), and a session-cluster bootstrap one-sided p for mean excess > 0 (cluster = signal_session, resamples and seed as parameters, default 10000 and 20261015, numpy only), returning n, n_clusters, mean_excess, p_one_sided, ci95. Tests: columns exist and are correct on a synthetic market with deterministic draws; summary unchanged; paired_excess on a toy frame with known answer; bootstrap reproducible under seed.",
+        "build": {
+          "branch": "e5/h2-backtest",
+          "commit": "0d2da5d9bcfd9511f52d8e338e37b248685755c4",
+          "files_changed": [
+            "idx-signals/idxsig/backtest.py",
+            "idx-signals/tests/test_backtest_paired.py"
+          ],
+          "api_added": [
+            "trades frame column (trades.csv.gz): matched_mean_net_return  -- float, mean net return over the signal's scored matched-control draws (baseline 'random_matched'); NaN for SKIP_OVERLAP rows (no control drawn), when no signal was attempted, and when none of the draws was scored",
+            "trades frame column (trades.csv.gz): same_session_mean_net_return  -- same, over the same-session uniform draws (baseline 'random')",
+            "idxsig.backtest.per_signal_excess(trades_df: pd.DataFrame, column: str = \"matched_mean_net_return\") -> pd.Series  -- net_return minus the control mean, aligned to trades_df.index, NaN where either side is missing",
+            "idxsig.backtest.paired_excess(trades_df: pd.DataFrame, resamples: int = 10_000, seed: int = 20261015, column: str = \"matched_mean_net_return\", cluster: str = \"signal_date\") -> dict  -- keys: n, n_clusters, mean_excess, p_one_sided, ci95 ([p2.5, p97.5] of resampled means), plus cluster, column, resamples, seed; mean_excess/p_one_sided/ci95 are None when n == 0; raises ValueError when resamples < 1",
+            "idxsig.backtest._control_means(raw: dict, key: str, draws: int, attempt: np.ndarray) -> np.ndarray  -- private reducer used by run(); listed for the reviewer, not for callers"
+          ],
+          "behaviour_summary": "backtest.run() now appends two additive columns at the end of the trades frame (the one write_run stores as trades.csv.gz): matched_mean_net_return and same_session_mean_net_return. Each is reduced from the raw draw dict the run already executes (raw[\"random_matched\"] / raw[\"random\"], net_return reshaped to (draws, attempts)): the mean over the draws whose net_return is finite, i.e. the scored controls (execution.execute sets net_return to NaN for every unscored status). The value is placed at the attempted signals' positions via the existing `attempt` mask, so overlap-skipped signals (which draw no controls) are NaN; signals none of whose draws was scored are NaN; when no signal is attempted (raw is empty) the columns exist and are empty. _baseline, dist(), the same-session and matched draw generation, the by_year block, summary and draws_df are untouched. In an as_traded run the two columns come after the *_as_traded columns, still at the end. paired_excess(trades_df) computes per-signal excess = net_return - matched_mean_net_return over rows where both are finite (so only scored, attempted trades with a scored control mean enter), groups them by signal_date, and bootstraps the mean excess by resampling clusters with replacement (10,000 resamples, seed 20261015 by default, numpy default_rng, fixed 1000-resample chunks so the stream is independent of memory heuristics; mean of a resample = sum of cluster sums / sum of cluster counts). p_one_sided for mean excess > 0 is (1 + #(resampled means <= 0)) / (1 + resamples), the same +1 convention as the harness's dist(); ci95 is the 2.5/97.5 percentile of the resampled means. The module docstring describes the columns and the statistic. Nothing in summary.json reports the new statistic: it is for a caller (e5.py) to compute from output[\"trades\"] and record.",
+          "tests_added": [
+            "tests/test_backtest_paired.py::PairedColumnTests::test_columns_equal_the_control_outcome_when_every_control_is_a_clone  -- S001 is a clone of S000; a rule evaluable on {S000,S001} signalling S000 every 7th session: same-session draws come from the two clones and matched draws from S001, so both columns equal net_return exactly (np.testing.assert_array_equal incl. NaN); column order is the original 12 + the 2 new",
+            "tests/test_backtest_paired.py::PairedColumnTests::test_matched_mean_averages_the_scored_draws  -- controls.matched_draws patched to alternate tickers 3/4 over 4 draws; expected = nanmean of two independent harness runs (rules signalling tickers 3 and 4 at the same sessions, overlap='allow'); assert_allclose atol 1e-15, with both finite and NaN (INCOMPLETE at the data end) cases present",
+            "tests/test_backtest_paired.py::PairedColumnTests::test_no_control_is_drawn_for_an_overlap_skipped_signal  -- daily rule: SKIP_OVERLAP rows are NaN in both columns, EXITED rows finite",
+            "tests/test_backtest_paired.py::PairedColumnTests::test_columns_are_present_when_no_signal_is_attempted  -- a rule that never signals: empty trades frame still has the 14 columns, draws empty, paired_excess n == 0",
+            "tests/test_backtest_paired.py::PairedColumnTests::test_summary_and_draws_are_unchanged  -- new column names absent from the summary JSON; draws columns are the original 7; 20 draws x 2 baselines = 40 rows",
+            "tests/test_backtest_paired.py::PairedExcessTests::test_per_signal_excess  -- toy frame: [0.02, 0.04, 0.01, -0.01, NaN, NaN]",
+            "tests/test_backtest_paired.py::PairedExcessTests::test_toy_frame_has_the_known_answer  -- n 4, 2 clusters, mean_excess 0.015, p in (0.22, 0.28) (exact answer 0.25 from the four cluster pairs), ci95 == [0.0, 0.03]",
+            "tests/test_backtest_paired.py::PairedExcessTests::test_every_cluster_positive_gives_the_floor_p  -- p == 1/(1+999) when every cluster is positive; p == 1.0 when every excess is negative",
+            "tests/test_backtest_paired.py::PairedExcessTests::test_empty_frame  -- n 0, n_clusters 0, None statistics",
+            "tests/test_backtest_paired.py::PairedExcessTests::test_bootstrap_is_reproducible_under_the_seed  -- identical dicts for two calls with the same seed; defaults are (10000, 20261015) and equal an explicit call; resamples=0 raises ValueError",
+            "tests/test_backtest_paired.py::PairedExcessTests::test_overlap_skipped_rows_do_not_enter_the_statistic",
+            "tests/test_backtest_paired.py::PairedExcessTests::test_runs_on_a_harness_trades_frame  -- n and n_clusters agree with per_signal_excess on a real run output; 0 < p <= 1"
+          ],
+          "test_output_tail": "$ cd <worktree>/idx-signals && python3 -m unittest\n----------------------------------------------------------------------\nRan 256 tests in 33.288s\n\nOK\n\n$ python3 -m idxsig rules   (tail)\nMOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed\nMOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed\nPLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed\nUSER_RULE PENDING: rule text not supplied\n\n$ python3 -m idxsig verify-runs\nverify-runs: OK\n\n$ cd <worktree> && python3 tools/check_append_only.py --all   (run after the commit 0d2da5d)\nappend-only: OK\n\n$ git show --stat HEAD | tail -4\n idx-signals/idxsig/backtest.py            |  66 ++++++++++\n idx-signals/tests/test_backtest_paired.py | 196 ++++++++++++++++++++++++++++++\n 2 files changed, 262 insertions(+)",
+          "defaults_unchanged_evidence": "A scratch script outside the repo (/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/h2-evidence/compare_base.py) loads the base backtest.py extracted from merge commit ae2cbee (git show ae2cbee:idx-signals/idxsig/backtest.py) as a separate module and runs it and the working module on the same synthetic panels (tests.support.random_walk_panel with a delisting, synthetic registry) under three configurations: PLACEBO_COINFLIP with 25 draws; the same with a sub-window (start 2023-03-01, end 2023-06-30) and 10 draws; and a drifted name with overlap='allow'. It compares json.dumps(_jsonable(summary), sort_keys=True), the random_draws.csv text (to_csv index=False, float_format='%.10g', exactly as write_run writes it) and the trades.csv text on the original columns. Verbatim output:\nplacebo: summary identical=True (keys 16) random_draws identical=True trades identical on original 12 columns=True added=['matched_mean_net_return', 'same_session_mean_net_return'] rows=61 new-col finite=54\nplacebo-tiny-window: summary identical=True (keys 16) random_draws identical=True trades identical on original 12 columns=True added=['matched_mean_net_return', 'same_session_mean_net_return'] rows=30 new-col finite=25\nplacebo-drift: summary identical=True (keys 16) random_draws identical=True trades identical on original 12 columns=True added=['matched_mean_net_return', 'same_session_mean_net_return'] rows=61 new-col finite=59\nRESULT: OK\nIn addition: the 244 pre-existing tests pass unchanged (256 = 244 + 12); verify-runs is OK, so every recorded run's summary.json / trades.csv.gz / random_draws.csv hashes still match RUNS.jsonl (no recorded run was re-run or touched); test_summary_and_draws_are_unchanged guards the summary and draws columns going forward. No existing argument, column, key or default changed; the only behavioural addition is two appended columns and two new module-level functions.",
+          "needs_other_file": [
+            "idx-signals/idxsig/e5.py (new, owned elsewhere): should call backtest.paired_excess(output['trades']) after each backtest.run and record its dict (n, n_clusters, mean_excess, p_one_sided, ci95) in plans.csv / result.json; the protocol's 'paired NET excess cluster-bootstrap p < 0.025' gate reads p_one_sided from it. Nothing in backtest.run or summary.json reports the statistic by design (summary unchanged).",
+            "research/E5/protocol.json (frozen by its owner): if the protocol wants the per-signal count of scored control draws alongside the mean (useful to see how many of the 200 draws were skipped on illiquid names), that would be a further additive column in backtest.py; not added because the task specified exactly two columns."
+          ],
+          "open_concerns": [
+            "Definition choice: the control mean is over the draws that were scored (net_return finite); unscored draws (SKIP_*, INCOMPLETE, corporate-action exclusions) are left out of the mean rather than counted as zero. This is the only definable mean given execute() returns NaN net returns for them, and it mirrors _summary_stats; a protocol reader should know a signal whose controls were mostly skipped has a mean over fewer than 200 draws.",
+            "paired_excess uses the harness's (1 + count) / (1 + resamples) one-sided p, so the minimum p is 1/(1 + resamples) (about 1e-4 at 10,000); the draft protocol's text says 'one-sided p' without fixing the +1 convention. ci95 is the plain percentile interval of the resampled means (no bias correction).",
+            "Cluster keys are compared as strings of the signal_date column; in a harness trades frame signal_date is already an ISO string per row, so this is exact. A caller passing a frame with a datetime column gets equivalent clustering.",
+            "In an as_traded run (units='as_traded') the two columns follow the three *_as_traded columns, i.e. the frame's last two columns in every configuration; any consumer should select by name, not position (none in-repo selects by position).",
+            "The clone test asserts the summary's matched random_mean equals rule_trades.avg_net_return only to 12 places: the two are the same numbers summed in a different order (per-draw means then across draws vs across trades), a pre-existing last-ulp difference, not something this change introduced.",
+            "The untracked .githooks/* files in the worktree were there before this task and are not mine; they were not added to the commit.",
+            "Nothing here is a performance claim: all numbers in the tests and the comparison script come from synthetic random-walk panels."
+          ]
+        },
+        "r1": {
+          "verdict": "accept",
+          "findings": [
+            {
+              "severity": "minor",
+              "file": "idx-signals/idxsig/backtest.py",
+              "line": 534,
+              "claim": "The two columns are appended to the default trades frame unconditionally, so a default re-run of any recorded config now writes a trades.csv.gz whose bytes (header + 2 columns) differ from the recorded file; the one in-repo byte-level reproduction script, research/IDX_CAUSAL_CAPACITY_v1/reproduce_a.py (append-only, cannot be edited), would now report trades_csv_identical=false and exit 1 if re-run.",
+              "evidence": "reproduce_a.py:54-58 compares out['trades'].to_csv(index=False, float_format='%.10g') byte-for-byte with results/runs/20261008T000401Z_MOONSHOT_E1_D1_v1.1/trades.csv.gz, whose header is the 12 original columns (zcat | head -1). Its recorded reproduce_a.json (reproduced: true) is untouched. e3.run_reproduce / e4.run_reproduce (the Stage-0 pattern E5 clones) compare summary stats only (signals, scored, avg net, matched mean) and are unaffected; summary.json and random_draws.csv are byte-identical to ae2cbee on three synthetic configurations (compare_base.py re-run by me: RESULT OK; backtest_base.py sha d969def8... == git show ae2cbee:idx-signals/idxsig/backtest.py). The protocol draft (matched_controls.paired_statistic) explicitly asks for 'new additive trades.csv columns ... in backtest.run', so this is the specified design rather than a defect; it is recorded here because the standing rule says new behaviour is opt-in and the builder's evidence compares trades only 'on the original 12 columns'.",
+              "fix": "Either accept as specified by the protocol draft and note in research/E5/protocol.json that trades.csv.gz of E5-era runs carries 14 columns (and that reproduce_a.py's byte check is superseded by the stats-only Stage-0 check), or gate the two columns behind an opt-in RunConfig field (e.g. control_means: bool = False, set True by e5.py). Note the opt-in route adds a key to summary['config'] via asdict(cfg), which is itself an additive change to summary.json; the current design keeps summary.json byte-identical. Orchestrator's call; not blocking."
+            },
+            {
+              "severity": "minor",
+              "file": "idx-signals/idxsig/backtest.py",
+              "line": 298,
+              "claim": "paired_excess returns a non-degenerate-looking p_one_sided when n_clusters == 1 (or very few): with one cluster every resample equals the sample mean, so p is the floor 1/(1+resamples) whenever mean_excess > 0 and ci95 collapses to a point.",
+              "evidence": "Verified: frame with signal_date ['a','a','a'], net [0.1,-0.2,0.3], control 0 -> n_clusters 1, mean_excess 0.0667, p_one_sided 0.0196 (=1/51 at resamples=50), ci95 [0.0667, 0.0667]. The protocol's gates (debounced flags >= 200, scored >= 200) make this unreachable in practice, and the dict exposes n_clusters so e5.py can guard; no numeric error (counts sum is always >= 1, division safe).",
+              "fix": "Optional: in paired_excess set p_one_sided and ci95 to None when n_clusters < 2 (keep mean_excess), or have e5.py refuse to judge a gate on a result with n_clusters below a pre-registered minimum. Additive; no default changes."
+            }
+          ],
+          "test_rerun_tail": "$ cd <worktree>/idx-signals && python3 -m unittest\n................................................................................................................................................................................................................................................................\n----------------------------------------------------------------------\nRan 256 tests in 32.446s\n\nOK\n\n$ python3 -m idxsig rules   (tail)\nMOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed\nMOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed\nMOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed\nPLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed\nUSER_RULE PENDING: rule text not supplied\n\n$ python3 -m idxsig verify-runs\nverify-runs: OK\n\n$ cd <worktree> && python3 tools/check_append_only.py --all\nappend-only: OK\n\n$ git diff ae2cbee --name-only\nidx-signals/idxsig/backtest.py\nidx-signals/tests/test_backtest_paired.py\n(untracked .githooks/* pre-existing, not in the commit; HEAD 0d2da5d carries both required trailers)\n\nReviewer's independent checks:\n- compare_base.py (builder's scratch script, base file sha == ae2cbee backtest.py): placebo / placebo-tiny-window / placebo-drift all 'summary identical=True random_draws identical=True trades identical on original 12 columns=True' -> RESULT: OK\n- Stub sensitivity: with _control_means patched to return all-NaN, 3 of the 5 PairedColumnTests fail (clone, averages-the-scored-draws, overlap-skipped); the tests are not vacuous. Toy paired_excess tests pin exact values (mean 0.015, p in (0.22,0.28) vs exact 0.25, ci95 [0,0.03], floor p 1/1000).\n- paired_excess on a CSV-roundtripped frame (keep_default_na=False with and without na_values=['']) gives the same n / n_clusters / p as in memory; datetime signal_date clusters identically.\n- Look-ahead: none; the columns are reductions of draws already executed by _baseline (raw[key]['net_return'].reshape(draws, -1) matches the ravel order of execute), placed through the existing attempt mask; no new window reads, no cross-sectional statistic, no ranking.\n- Numeric: n==0 draws -> NaN via np.where guard; division under errstate; random_draws=0 already fails in _baseline at base (not a regression); empty attempt -> raw empty -> columns all NaN/empty.\n- Callers: write_run stores the frame as-is (by name); e4.tail_stats, paper.py, e3.py, cli.py select trades/summary by name, none positionally; no existing test asserts the trades column list."
+        },
+        "status": "accepted_r1"
+      },
+      {
+        "key": "h3-e1",
+        "wt": "/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/e5-h3-e1",
+        "branch": "e5/h3-e1",
+        "owns": "idx-signals/idxsig/e1.py and a new idx-signals/tests/test_e1_study_opts.py",
+        "spec": "Make e1.Study usable for E5 without changing E1's recorded behaviour. Opt-in only, all defaults as today: (1) Study accepts protocol['data']['panel_format'] in {'panel-global-v1' (default/legacy), 'panel-global-v2-units'} so the US repair panel (panel_us_repair-20261008T114805Z, format panel-global-v2-units with a unit_factor column) passes its format check at e1.py:~100; (2) guard the sig['ign'] / IGNITION lookup (~line 190) so a family module without an IGNITION member does not KeyError; (3) when the panel carries unit_factor AND the caller passes pool_units='as_traded', attach Market.with_units (see execution.py / backtest.py for how unit_factor is attached) and build the detection-stage pool with controls.features(..., as_traded=True) and the as-traded close for price_band in _pool/row; (4) when the caller passes pool_version='v3' (default 'v1' = today's price_band/liquidity/market_cap pool), add a volatility quintile key to the detection pool (define it from the same 20-session vol the signals use; relax to MIN_POOL like controls). Study's public outputs (detector_table, evaluate, signal_stats) must be byte-identical under defaults: prove it with a synthetic panel run before/after (hash the outputs). Tests for each option.",
+        "build": {
+          "branch": "e5/h3-e1",
+          "commit": "8fbd4474d03d89bb25846f7754b28d704836b102",
+          "files_changed": [
+            "idx-signals/idxsig/e1.py",
+            "idx-signals/tests/test_e1_study_opts.py"
+          ],
+          "api_added": [
+            "Study.study_options(self) -> dict | None  # {\"panel_format\": str, \"pool_units\": str, \"pool_version\": str, \"pool_keys\": list[str]} when any E5 option is on; None on the recorded E1/E2 path",
+            "Study.legacy_panel_format: str  # \"panel-v2\" on IDX, \"panel-global-v1\" elsewhere (the format the recorded E1/E2 studies expected)",
+            "summary.json key \"study_options\" (run_discovery) and result.json key \"study_options\" (run_validation), emitted only when Study.study_options() is not None"
+          ],
+          "behaviour_summary": "Round 2 fix for the serious finding at e1.py run_discovery/run_validation. Study now exposes study_options(): None when (pool_units, pool_version, panel_format) == (\"panel\", \"v1\", legacy_panel_format), otherwise {panel_format, pool_units, pool_version, pool_keys}. run_discovery adds summary[\"study_options\"] and run_validation adds result[\"study_options\"] only when that is not None, so a result directory produced with the v3 pool, as-traded bands, or a non-legacy panel format (e.g. the US repair panel panel-global-v2-units) self-describes which detection pool its controls were matched on, mirroring how e3/e4 record their config. I went slightly beyond the reviewer's suggested trigger: a non-legacy panel_format alone also triggers the block (a default-pool study on panel-global-v2-units would otherwise look identical in its outputs to the recorded E2 run on panel-global-v1). On E1 (IDX, panel-v2) and E2 (US/CRYPTO, panel-global-v1) the legacy format is what the protocol resolves to, so their key sets are unchanged. _declared_panel_format now reads self.legacy_panel_format instead of recomputing it (same value). The Study docstring notes the self-description.",
+          "tests_added": [
+            "tests/test_e1_study_opts.py::StudyOptionsRecorded::test_the_default_path_writes_no_study_options_key (IDX bare, IDX with explicit legacy keywords, E2 US on panel-global-v1: study_options() is None and the key is absent from the returned dicts and from summary.json / result.json on disk; asserts the exact recorded E1 summary key set)",
+            "tests/test_e1_study_opts.py::StudyOptionsRecorded::test_v3_pool_is_recorded (pool_version=\"v3\": block present in both stage outputs with pool_keys [price_band, liquidity, volatility, market_cap], pool_units panel, panel_format panel-v2)",
+            "tests/test_e1_study_opts.py::StudyOptionsRecorded::test_as_traded_bands_are_recorded (pool_units=\"as_traded\" on the US units panel: block present with pool_units as_traded, pool_version v1, panel_format panel-global-v2-units)",
+            "tests/test_e1_study_opts.py::StudyOptionsRecorded::test_a_non_legacy_panel_format_alone_is_recorded (US study on panel-global-v2-units with the default pool: block present; legacy_panel_format is panel-global-v1 on US and panel-v2 on IDX)"
+          ],
+          "test_output_tail": "$ python3 -m unittest   (from <worktree>/idx-signals)\n..............................................................................................................................................................................................................................................................................\n----------------------------------------------------------------------\nRan 270 tests in 68.266s\n\nOK\n\n$ python3 -m idxsig rules   (tail)\nE4_CAND_G7_MOMENTUM5_30 v1 DETECTOR hold=5 sha=0378c8b43d27 source-audit=passed\nE4_CAND_G7_MOMENTUM5_30_BEAR v1 DETECTOR hold=5 sha=816abcb4a2a2 source-audit=passed\nMOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed\nMOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed\nMOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed\nMOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed\nPLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed\nUSER_RULE PENDING: rule text not supplied\n\n$ python3 -m idxsig verify-runs\nverify-runs: OK\n\n$ python3 tools/check_append_only.py --all   (from <worktree>)\nappend-only: OK\n\nSanity check that the new tests catch the defect (e1.Study.study_options stubbed to always return None, i.e. the pre-fix behaviour, then StudyOptionsRecorded run alone):\nRan 4 tests in 10.393s\nFAILED (failures=3)\nfailures: ['test_a_non_legacy_panel_format_alone_is_recorded', 'test_as_traded_bands_are_recorded', 'test_v3_pool_is_recorded']",
+          "defaults_unchanged_evidence": "The new key is guarded by study_options() returning None whenever pool_units == \"panel\", pool_version == \"v1\" and panel_format equals the legacy expectation; E1's protocol resolves to panel-v2 on IDX and E2's to panel-global-v1 on US/CRYPTO, so every recorded E1/E2 configuration hits the None branch and summary.json / result.json keep exactly their previous key sets. test_the_default_path_writes_no_study_options_key asserts the key is absent on disk for the bare IDX study, the IDX study with explicit legacy keywords, and the E2 US study on its legacy panel, and asserts the exact 12-key recorded summary key set. The pre-existing DefaultsUnchanged class (bare call equals explicit legacy keywords across detector_table, episodes, matched_controls, signal_stats and evaluate) still passes; the full suite is 270 = 244 base + 26 in test_e1_study_opts.py, 0 failures; verify-runs OK confirms the recorded run directories still verify. No existing argument, column, key or default changed meaning; the only computational change in e1.py is that _declared_panel_format reads the same legacy string from an attribute instead of recomputing it.",
+          "needs_other_file": [],
+          "open_concerns": [
+            "Trigger is slightly wider than the reviewer's suggested (pool_units, pool_version) != (\"panel\", \"v1\"): a non-legacy panel_format alone also emits study_options. This is deliberate (a default-pool study on the US repair panel should not be indistinguishable from the recorded E2 run) and does not affect E1/E2 re-runs, whose panel formats are the legacy ones. If the orchestrator wants the narrower trigger, it is a one-line change in Study.study_options plus dropping test_a_non_legacy_panel_format_alone_is_recorded.",
+            "Untracked .githooks/post-checkout, post-commit, post-merge, pre-push were present in the worktree before this round and were left untouched and uncommitted (not mine, not owned)."
+          ]
+        },
+        "r1": {
+          "verdict": "fix_required",
+          "findings": [
+            {
+              "severity": "serious",
+              "file": "idx-signals/idxsig/e1.py",
+              "line": 138,
+              "claim": "The panel-format declaration is a single global key (protocol[\"data\"][\"panel_format\"]), but the E5 protocol the caller will use is one file spanning three markets (draft keys: markets = {IDX, CRYPTO, US}) that need three different formats (IDX panel-v2, US panel-global-v2-units, CRYPTO panel-global-v1). One declaration cannot satisfy all three, so e5.py cannot construct the IDX and US studies from the same frozen protocol file.",
+              "evidence": "Probe (PYTHONPATH=. python3 review_probe.py): a copy of the E1 protocol with data.panel_format = \"panel-global-v2-units\" run on the IDX jumpy_panel (format panel-v2) raises `ValueError: KOD-IDX-E1-v1 needs a panel-global-v2-units panel`. E5_CEILING_protocol_draft.json has top-level `markets` with IDX/CRYPTO/US and no per-market `data` block; the pinned panels on disk are panel-20261013T194245Z (panel-v2), panel_us_repair-20261008T114805Z (panel-global-v2-units), panel_crypto-20261008T003354Z (panel-global-v1). The builder's own needs_other_file note ('use a protocol whose data.panel_format names panel-global-v2-units') would force per-market protocol files, so the recorded protocol_sha256 would differ per market or not be the frozen protocol's.",
+              "fix": "Additive, in e1.py only: resolve a per-market declaration first, e.g. `mk = (proto.get(\"markets\") or {}).get(self.profile.market); declared = (mk.get(\"panel_format\") if isinstance(mk, dict) else None) or (proto.get(\"data\") or {}).get(\"panel_format\")`, and/or add a `panel_format: str | None = None` keyword to Study that overrides the protocol's declaration (validated against PANEL_FORMATS). Keep the existing global-key behaviour. Add a test that one protocol declaring markets.IDX.panel_format=panel-v2 and markets.US.panel_format=panel-global-v2-units constructs both an IDX study (jumpy_panel) and a US study (us_panel) and still refuses a mismatched panel. Defaults are unaffected (E1's protocol has no markets block; E2's markets entries carry no panel_format)."
+            },
+            {
+              "severity": "minor",
+              "file": "idx-signals/idxsig/e1.py",
+              "line": 148,
+              "claim": "unit_factor is attached to the Market whenever the column exists, not only under pool_units=\"as_traded\"; Market.with_units requires every value finite and > 0, so a panel whose unit_factor column contains NaN now fails at Study construction even on the default path.",
+              "evidence": "Probe 2: us_panel with three unit_factor cells set to NaN, default pool_units, raises `ValueError: unit_factor must be finite, positive and shaped like the market`. No recorded run is affected (E1/E2 panels have no unit_factor column; the repair panels' factors are all finite, as backtest.run's with_units on them shows), and the builder disclosed it, but it is a default-path failure mode that did not exist at ae2cbee.",
+              "fix": "Attach only when pool_units == \"as_traded\" (the task wording), or keep the attach but guard it: attach when the column is present AND all finite/positive, else only raise under pool_units=\"as_traded\". Add one test: a NaN in unit_factor under defaults constructs; under as_traded raises."
+            },
+            {
+              "severity": "minor",
+              "file": "idx-signals/idxsig/e1.py",
+              "line": 48,
+              "claim": "PANEL_FORMATS omits \"panel-global-v2\", which is global_panel.FORMAT (the current non-repair global build) and the format of panel_crypto-20261013T205803Z on disk; a protocol declaring it is refused.",
+              "evidence": "Probe 4: protocol_with(\"panel-global-v2\") raises `ValueError: KOD-GLOBAL-E2-v1 names panel format 'panel-global-v2'; known: ('panel-v2', 'panel-global-v1', 'panel-global-v2-units')`. Manifest listing: panel_crypto-20261013T205803Z.json format panel-global-v2. The E5 draft pins the older crypto panel (panel-global-v1), so this bites only if E5 switches to the rebuilt crypto panel; the builder disclosed it.",
+              "fix": "Add \"panel-global-v2\" to PANEL_FORMATS (reachable only by explicit declaration, so still opt-in) and extend test_unknown_declared_formats_are_refused's tuple assertion."
+            },
+            {
+              "severity": "minor",
+              "file": "idx-signals/tests/test_e1_study_opts.py",
+              "line": 309,
+              "claim": "test_evaluate_runs_under_v3 asserts only that volatility_q appears in last_flags and relaxed steps are within 0..4; it would pass if evaluate's pooling ignored the volatility key (coverage of the key comes only from the matched_controls test via the shared _pool).",
+              "evidence": "The test body checks `assertIn(\"volatility_q\", st.last_flags.columns)` and the range of `matched_random_relaxed_steps` keys; neither depends on the draws sharing the volatility bucket.",
+              "fix": "After evaluate, recompute `_pool(n, d, elig)` for a few flagged cells with relaxed 0 and assert the pool's volatility bucket equals the flag's (or expose the draws and assert `buckets[\"volatility\"][draws, d] == buckets[\"volatility\"][n, d]` where relaxed == 0)."
+            }
+          ],
+          "test_rerun_tail": "$ cd <worktree>/idx-signals && python3 -m unittest   (tail)\n.....................................................................................................................................................................................................................................................................\n----------------------------------------------------------------------\nRan 261 tests in 50.054s\n\nOK\n\n$ python3 -m idxsig rules   (tail)\nE4_CAND_G2_RET30_BEAR v1 DETECTOR hold=5 sha=5d4665925e15 source-audit=passed\nE4_CAND_G7_MOMENTUM5_30 v1 DETECTOR hold=5 sha=0378c8b43d27 source-audit=passed\nE4_CAND_G7_MOMENTUM5_30_BEAR v1 DETECTOR hold=5 sha=816abcb4a2a2 source-audit=passed\nMOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed\nMOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed\nMOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed\nMOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed\nPLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed\nUSER_RULE PENDING: rule text not supplied\n\n$ python3 -m idxsig verify-runs\nverify-runs: OK\n\n$ cd <worktree> && python3 tools/check_append_only.py --all\nappend-only: OK\n\n$ independent defaults check: git archive ae2cbee idx-signals -> scratchpad/review_old_ae2cbee; python3 e1_hash.py <old> > review_hash_old.json; python3 e1_hash.py <worktree>/idx-signals > review_hash_new.json\n806c04c0acbbcb811be04b70111e622f72ca6b4069f989ad9edafd2f63d0cfb1  review_hash_old.json\n806c04c0acbbcb811be04b70111e622f72ca6b4069f989ad9edafd2f63d0cfb1  review_hash_new.json\nDEFAULT OUTPUTS IDENTICAL (independent run)   [30 digests, IDX + US; e.g. IDX evaluate 99bd3cd436de1eb8, IDX matched_controls 6048b35ad850029e]\n\n$ git show --stat 9307ee8: only idx-signals/idxsig/e1.py and idx-signals/tests/test_e1_study_opts.py changed; .githooks/* untracked and not in the commit; sibling e5-h1-controls (c537606) keeps controls.features(m, version, band_edges, as_traded=False) and controls._bucket, so the merge keeps this branch's calls valid."
+        },
+        "f1": {
+          "branch": "e5/h3-e1",
+          "commit": "45d98364fc9010b4c2f42d7a5cf1d9d1f945eae6",
+          "files_changed": [
+            "idx-signals/idxsig/e1.py",
+            "idx-signals/tests/test_e1_study_opts.py"
+          ],
+          "api_added": [
+            "e1.Study(panel_df, panel_meta, protocol_path=PROTOCOL, profile=None, family_module=None, pool_units=\"panel\", pool_version=\"v1\", panel_format: str | None = None)  # new keyword; validated against e1.PANEL_FORMATS, overrides the protocol's declaration",
+            "protocol[\"markets\"][<profile.market>][\"panel_format\"]  # new optional protocol key read by e1.Study when that markets entry is a dict; takes precedence over protocol[\"data\"][\"panel_format\"]",
+            "e1.Study._declared_panel_format(proto: dict, override: str | None) -> str  # resolution order: keyword > markets.<market>.panel_format > data.panel_format > legacy (panel-v2 on IDX, panel-global-v1 elsewhere)"
+          ],
+          "behaviour_summary": "Fixes the reviewer's serious finding: one frozen E5 protocol file can now serve IDX (panel-v2), US (panel-global-v2-units) and CRYPTO (panel-global-v1) studies with a single protocol_sha256. e1.Study resolves the panel format it needs in this order: the new Study(panel_format=...) keyword; protocol[\"markets\"][<profile.market>][\"panel_format\"] when that entry is a dict carrying the key; the existing global protocol[\"data\"][\"panel_format\"]; then the legacy expectation. Every named format (keyword, per-market or global) must be in PANEL_FORMATS, and panel_meta[\"format\"] is still held to the resolved value, so a mismatched panel is still refused. Error messages name the source of the declaration (panel_format=, <id> markets.<market>.panel_format, <id> data.panel_format). No other line of Study changed; the global-key behaviour from the previous commit is kept.",
+          "tests_added": [
+            "tests/test_e1_study_opts.py::PerMarketPanelFormat::test_one_protocol_builds_the_idx_and_the_us_study (the reviewer's scenario: one protocol with markets.IDX=panel-v2 and markets.US=panel-global-v2-units builds an IDX study on jumpy_panel and a US study on us_panel with equal protocol_sha == sha256_file(protocol); mismatched panels refused for both markets)",
+            "tests/test_e1_study_opts.py::PerMarketPanelFormat::test_the_market_entry_wins_over_the_global_key (per-market beats data.panel_format; a market without an entry falls back to the global key)",
+            "tests/test_e1_study_opts.py::PerMarketPanelFormat::test_the_keyword_overrides_the_protocol (keyword accepted on a protocol with no declaration or a different one; keyword held against the panel; unknown keyword refused; keyword on the default E1 study refused when mismatched)",
+            "tests/test_e1_study_opts.py::PerMarketPanelFormat::test_draft_style_string_entries_and_entries_without_a_format_fall_through (E5-draft string entries and E2's dict entries without panel_format resolve to the legacy/global expectation; asserts E1 protocol has no markets block, E2 has no data block and no panel_format in any market entry)",
+            "tests/test_e1_study_opts.py::PerMarketPanelFormat::test_unknown_per_market_formats_are_refused (typo in markets.IDX.panel_format refused; an unknown name under another market does not affect this study)",
+            "protocol_with() helper gained a markets= parameter to write a markets block into a temp copy of E1/E2's protocol (9 new test assertions-sets across 5 test methods; file now 22 tests, up from 13)"
+          ],
+          "test_output_tail": "=== python3 -m unittest (from idx-signals) ===\n----------------------------------------------------------------------\nRan 266 tests in 61.248s\n\nOK\n=== python3 -m idxsig rules ===\nE4_CAND_G7_MOMENTUM5_30 v1 DETECTOR hold=5 sha=0378c8b43d27 source-audit=passed\nE4_CAND_G7_MOMENTUM5_30_BEAR v1 DETECTOR hold=5 sha=816abcb4a2a2 source-audit=passed\nMOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed\nMOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed\nMOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed\nMOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed\nPLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed\nUSER_RULE PENDING: rule text not supplied\n=== python3 -m idxsig verify-runs ===\nverify-runs: OK\n=== python3 tools/check_append_only.py --all (from worktree root) ===\nappend-only: OK",
+          "defaults_unchanged_evidence": "(1) The only code path touched is the panel-format resolution; the diff to e1.py is 45 changed lines (docstring/comment, one new keyword with default None, one new method, two lines in __init__ replaced by a call to it). (2) On the real protocols the resolver returns exactly the previous expectations: E1 protocol.json + IDX -> panel-v2; E2 protocol.json + US -> panel-global-v1; E2 + CRYPTO -> panel-global-v1 (printed from Study._declared_panel_format with override=None). (3) The structural facts that make the new keys inert on recorded protocols are asserted in tests: E1's protocol has no \"markets\" key; E2's protocol has no \"data\" key and every markets entry is a dict without \"panel_format\"; the E5 draft's markets entries are plain strings (reproduced in the test, which proves string entries are ignored). (4) The pre-existing DefaultsUnchanged class (bare Study == explicit legacy options on detector_table, episodes, matched_controls, signal_stats, evaluate; unit_factor column alone changes nothing; E1 protocol still refuses a panel-v1 panel) still passes. (5) verify-runs OK confirms every recorded run still re-verifies.",
+          "needs_other_file": [
+            "idx-signals/research/E5/protocol.json (when frozen by the Phase 2b owner): to use the per-market path, give each entry of its markets block a dict with a panel_format key (IDX: panel-v2, US: panel-global-v2-units, CRYPTO: panel-global-v1); the draft's string entries fall through to the legacy expectation, which would wrongly expect panel-global-v1 for the US repair panel. Alternatively e5.py can pass Study(panel_format=...) per market without touching the protocol."
+          ],
+          "open_concerns": [
+            "The reviewer's probe (E1 protocol copy with a global data.panel_format=panel-global-v2-units run on an IDX panel-v2 panel) still raises by design: a global declaration that contradicts the panel is a mismatch. The fix is the per-market entry or the keyword, both now available and tested.",
+            "The previous round's needs_other_file note ('use a protocol whose data.panel_format names panel-global-v2-units') is superseded by this change; no per-market protocol files are needed."
+          ]
+        },
+        "r2": {
+          "verdict": "fix_required",
+          "findings": [
+            {
+              "severity": "serious",
+              "file": "idx-signals/idxsig/e1.py",
+              "line": 509,
+              "claim": "run_discovery and run_validation write summary.json / result.json without recording the new Study options (pool_version, pool_units, panel_format, pool_keys), so an E5 result directory produced with the v3 pool or as-traded bands does not self-describe which detection pool its controls were matched on; the only trace is the presence of volatility_q / close_as_traded columns in the CSVs.",
+              "evidence": "summary dict at e1.py:509-519 and result.update at 532-535 contain protocol_id, protocol_sha256, panel_sha256, market, stage, code, computed_at only; neither references study.pool_version, study.pool_units or study.panel_format. The harness pattern the task says to imitate records its configuration (e3.py:174/190 and e4.py:154/170 read and write recorded[\"config\"]), and the E5 draft's matched_controls section requires v2 and v3 results to be distinguishable (\"v2 reported for comparability\"). Confirmed by reading the branch file whole; git diff ae2cbee shows no change to either function.",
+              "fix": "In run_discovery and run_validation add an additive block, emitted only when any option is non-default so E1/E2 re-runs keep their current key set, e.g. opts = {\"panel_format\": study.panel_format, \"pool_units\": study.pool_units, \"pool_version\": study.pool_version, \"pool_keys\": list(study.pool_keys)}; if (study.pool_units, study.pool_version) != (\"panel\", \"v1\"): summary[\"study_options\"] = opts (same for result). Add a test asserting the key is absent on the default path and present with the right values under pool_version=\"v3\" / pool_units=\"as_traded\" (write to a tempdir)."
+            },
+            {
+              "severity": "minor",
+              "file": "idx-signals/idxsig/e1.py",
+              "line": 216,
+              "claim": "_declared_panel_format raises AttributeError rather than the documented ValueError when protocol[\"markets\"] or protocol[\"data\"] is present but not a dict (list or string); only the per-market entry is isinstance-guarded.",
+              "evidence": "Probe run in the worktree: _declared_panel_format({'markets': ['IDX']}, None) -> AttributeError 'list' object has no attribute 'get'; ({'markets': 'IDX'}) -> AttributeError; ({'data': 'panel-v2'}) -> AttributeError. Dict-shaped entries resolve correctly ({'IDX': None} and {'IDX': {'panel_format': None}} -> panel-v2; real E1/E2 protocols -> panel-v2, panel-global-v1, panel-global-v1).",
+              "fix": "Guard both containers: markets = proto.get(\"markets\"); market = markets.get(self.profile.market) if isinstance(markets, dict) else None; data = proto.get(\"data\"); global_ = data.get(\"panel_format\") if isinstance(data, dict) else None. Optionally raise ValueError naming the malformed key."
+            },
+            {
+              "severity": "minor",
+              "file": "idx-signals/idxsig/e1.py",
+              "line": 147,
+              "claim": "The builder's claim that one frozen E5 protocol can now serve all three markets holds only if the frozen file also carries E2-shaped top-level periods and weak_signals; the E5 draft (reference material) has neither, so it is not loadable by e1.Study independent of the markets-block shape. The builder's needs_other_file note covers only the markets entries.",
+              "evidence": "e1.py:145-147 reads proto[\"weak_signals\"][\"continuous\"], proto[\"weak_signals\"][\"binary\"] and {k: tuple(v) for k, v in proto[\"periods\"].items()}. Probe of /home/user/KOD-Machine/handoff/kod-next-move/synthesis/E5_CEILING_protocol_draft.json: 'weak_signals' in draft -> False (KeyError on load); draft periods['discovery'] is a dict keyed by market (tuple(dict) would yield ('IDX','US','CRYPTO'), not dates). E2's protocol has single top-level periods lists and a weak_signals block with continuous/binary.",
+              "fix": "No change to e1.py required. Extend the needs_other_file note for the Phase 2b owner: research/E5/protocol.json must carry top-level periods as {\"discovery\": [start, end], \"validation\": [start, end]} (a single 2020-07-01 start is clipped to the IDX panel's first session by Market.bounds, so one block can serve all markets) and a weak_signals block with continuous/binary lists, in addition to dict-shaped markets entries with panel_format."
+            },
+            {
+              "severity": "minor",
+              "file": "idx-signals/tests/test_e1_study_opts.py",
+              "line": 59,
+              "claim": "protocol_with() creates a fresh tempfile.mkdtemp() directory per call and never removes it, so every test run leaks roughly two dozen temp directories.",
+              "evidence": "protocol_with is called in 20+ places across DefaultsUnchanged, PanelFormatFromProtocol, PerMarketPanelFormat and AsTradedPool; Path(tempfile.mkdtemp()) at line 59 has no matching cleanup or TemporaryDirectory context.",
+              "fix": "Create one tempfile.TemporaryDirectory() per class in setUpClass (registered with cls.addClassCleanup(tmp.cleanup)) and have protocol_with write uniquely named files into it, or use unittest's addCleanup in each test."
+            }
+          ],
+          "test_rerun_tail": "=== python3 -m unittest (from /tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/e5-h3-e1/idx-signals) ===\n----------------------------------------------------------------------\nRan 266 tests in 57.227s\n\nOK\n=== python3 -m idxsig rules ===\nE4_CAND_G7_MOMENTUM5_30 v1 DETECTOR hold=5 sha=0378c8b43d27 source-audit=passed\nE4_CAND_G7_MOMENTUM5_30_BEAR v1 DETECTOR hold=5 sha=816abcb4a2a2 source-audit=passed\nMOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed\nMOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed\nMOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed\nMOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed\nPLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed\nUSER_RULE PENDING: rule text not supplied\n=== python3 -m idxsig verify-runs ===\nverify-runs: OK\n=== python3 tools/check_append_only.py --all (from worktree root) ===\nappend-only: OK\n\nReviewer verification notes (no defect): git diff ae2cbee touches only idx-signals/idxsig/e1.py and idx-signals/tests/test_e1_study_opts.py; nothing under research/, results/, paper/, kod-machine/var or kod-machine/research; both commits carry the required trailers. Defaults: resolver on the real E1/E2 protocols returns panel-v2 (IDX) and panel-global-v1 (US, CRYPTO), the prior hard-coded expectations; _pool arithmetic is identical for the 3-key v1 pool; row() adds close_as_traded / volatility_q only under opt-in; the unconditional with_units attach when a unit_factor column exists mirrors backtest.run:302-305 and the test proves buckets/episodes equal with and without the column. Look-ahead: the volatility quintile is ranked per session after masking by present, from vol20 (sessions <= t); unit_factor is never passed to family.features (FEATURE_ARGS of moonshot_g / moonshot_e4 exclude it); buckets are formed on the market sealed at validation end. Callers: cli.py e1/e2 paths and e3.py call Study with unchanged positional/keyword signatures; E2's markets entries are dicts without panel_format so they fall through to legacy. Tests: the precedence test (line 198) would fail if the global key won; PerMarket tests fail with the resolver stubbed to legacy. Untracked .githooks/post-* and pre-push in the worktree are git-lfs install artefacts (mtime 07:30, before the first commit) and are not part of the diff."
+        },
+        "f2": {
+          "branch": "e5/h3-e1",
+          "commit": "8fbd4474d03d89bb25846f7754b28d704836b102",
+          "files_changed": [
+            "idx-signals/idxsig/e1.py",
+            "idx-signals/tests/test_e1_study_opts.py"
+          ],
+          "api_added": [
+            "Study.study_options(self) -> dict | None  # {\"panel_format\": str, \"pool_units\": str, \"pool_version\": str, \"pool_keys\": list[str]} when any E5 option is on; None on the recorded E1/E2 path",
+            "Study.legacy_panel_format: str  # \"panel-v2\" on IDX, \"panel-global-v1\" elsewhere (the format the recorded E1/E2 studies expected)",
+            "summary.json key \"study_options\" (run_discovery) and result.json key \"study_options\" (run_validation), emitted only when Study.study_options() is not None"
+          ],
+          "behaviour_summary": "Round 2 fix for the serious finding at e1.py run_discovery/run_validation. Study now exposes study_options(): None when (pool_units, pool_version, panel_format) == (\"panel\", \"v1\", legacy_panel_format), otherwise {panel_format, pool_units, pool_version, pool_keys}. run_discovery adds summary[\"study_options\"] and run_validation adds result[\"study_options\"] only when that is not None, so a result directory produced with the v3 pool, as-traded bands, or a non-legacy panel format (e.g. the US repair panel panel-global-v2-units) self-describes which detection pool its controls were matched on, mirroring how e3/e4 record their config. I went slightly beyond the reviewer's suggested trigger: a non-legacy panel_format alone also triggers the block (a default-pool study on panel-global-v2-units would otherwise look identical in its outputs to the recorded E2 run on panel-global-v1). On E1 (IDX, panel-v2) and E2 (US/CRYPTO, panel-global-v1) the legacy format is what the protocol resolves to, so their key sets are unchanged. _declared_panel_format now reads self.legacy_panel_format instead of recomputing it (same value). The Study docstring notes the self-description.",
+          "tests_added": [
+            "tests/test_e1_study_opts.py::StudyOptionsRecorded::test_the_default_path_writes_no_study_options_key (IDX bare, IDX with explicit legacy keywords, E2 US on panel-global-v1: study_options() is None and the key is absent from the returned dicts and from summary.json / result.json on disk; asserts the exact recorded E1 summary key set)",
+            "tests/test_e1_study_opts.py::StudyOptionsRecorded::test_v3_pool_is_recorded (pool_version=\"v3\": block present in both stage outputs with pool_keys [price_band, liquidity, volatility, market_cap], pool_units panel, panel_format panel-v2)",
+            "tests/test_e1_study_opts.py::StudyOptionsRecorded::test_as_traded_bands_are_recorded (pool_units=\"as_traded\" on the US units panel: block present with pool_units as_traded, pool_version v1, panel_format panel-global-v2-units)",
+            "tests/test_e1_study_opts.py::StudyOptionsRecorded::test_a_non_legacy_panel_format_alone_is_recorded (US study on panel-global-v2-units with the default pool: block present; legacy_panel_format is panel-global-v1 on US and panel-v2 on IDX)"
+          ],
+          "test_output_tail": "$ python3 -m unittest   (from <worktree>/idx-signals)\n..............................................................................................................................................................................................................................................................................\n----------------------------------------------------------------------\nRan 270 tests in 68.266s\n\nOK\n\n$ python3 -m idxsig rules   (tail)\nE4_CAND_G7_MOMENTUM5_30 v1 DETECTOR hold=5 sha=0378c8b43d27 source-audit=passed\nE4_CAND_G7_MOMENTUM5_30_BEAR v1 DETECTOR hold=5 sha=816abcb4a2a2 source-audit=passed\nMOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed\nMOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed\nMOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed\nMOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed\nPLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed\nUSER_RULE PENDING: rule text not supplied\n\n$ python3 -m idxsig verify-runs\nverify-runs: OK\n\n$ python3 tools/check_append_only.py --all   (from <worktree>)\nappend-only: OK\n\nSanity check that the new tests catch the defect (e1.Study.study_options stubbed to always return None, i.e. the pre-fix behaviour, then StudyOptionsRecorded run alone):\nRan 4 tests in 10.393s\nFAILED (failures=3)\nfailures: ['test_a_non_legacy_panel_format_alone_is_recorded', 'test_as_traded_bands_are_recorded', 'test_v3_pool_is_recorded']",
+          "defaults_unchanged_evidence": "The new key is guarded by study_options() returning None whenever pool_units == \"panel\", pool_version == \"v1\" and panel_format equals the legacy expectation; E1's protocol resolves to panel-v2 on IDX and E2's to panel-global-v1 on US/CRYPTO, so every recorded E1/E2 configuration hits the None branch and summary.json / result.json keep exactly their previous key sets. test_the_default_path_writes_no_study_options_key asserts the key is absent on disk for the bare IDX study, the IDX study with explicit legacy keywords, and the E2 US study on its legacy panel, and asserts the exact 12-key recorded summary key set. The pre-existing DefaultsUnchanged class (bare call equals explicit legacy keywords across detector_table, episodes, matched_controls, signal_stats and evaluate) still passes; the full suite is 270 = 244 base + 26 in test_e1_study_opts.py, 0 failures; verify-runs OK confirms the recorded run directories still verify. No existing argument, column, key or default changed meaning; the only computational change in e1.py is that _declared_panel_format reads the same legacy string from an attribute instead of recomputing it.",
+          "needs_other_file": [],
+          "open_concerns": [
+            "Trigger is slightly wider than the reviewer's suggested (pool_units, pool_version) != (\"panel\", \"v1\"): a non-legacy panel_format alone also emits study_options. This is deliberate (a default-pool study on the US repair panel should not be indistinguishable from the recorded E2 run) and does not affect E1/E2 re-runs, whose panel formats are the legacy ones. If the orchestrator wants the narrower trigger, it is a one-line change in Study.study_options plus dropping test_a_non_legacy_panel_format_alone_is_recorded.",
+            "Untracked .githooks/post-checkout, post-commit, post-merge, pre-push were present in the worktree before this round and were left untouched and uncommitted (not mine, not owned)."
+          ]
+        },
+        "status": "fixed_r2_unreviewed"
+      },
+      {
+        "key": "h4-profiles",
+        "wt": "/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/e5-h4-profiles",
+        "branch": "e5/h4-profiles",
+        "owns": "idx-signals/idxsig/profiles.py and a new idx-signals/tests/test_profiles_crypto_close.py",
+        "spec": "Add a CRYPTO_CLOSE profile variant: identical to PROFILES['CRYPTO'] except entry_price 'close' (entry at the close of t+1, the latency-pessimistic sensitivity). Register it under PROFILES['CRYPTO_CLOSE'] without changing 'CRYPTO'. Check every place profiles are looked up by market name (backtest.py, cli.py --market choices, paper.py, exec paths) and report in needs_other_file where a choices list would need 'CRYPTO_CLOSE' added (do NOT edit those files). Tests: CRYPTO unchanged (field-by-field equality with a frozen expected dict), CRYPTO_CLOSE differs only in entry_price, costs identical (0.1% fee + 0.1% tier per side).",
+        "build": {
+          "branch": "e5/h4-profiles",
+          "commit": "963a57d7116b6fe21844eaa94bd6cd28c6174d5e",
+          "files_changed": [
+            "idx-signals/idxsig/profiles.py",
+            "idx-signals/tests/test_profiles_crypto_close.py"
+          ],
+          "api_added": [
+            "idxsig.profiles.CRYPTO_CLOSE  (module constant: Profile, == dataclasses.replace(CRYPTO, entry=\"close\"); .market stays \"CRYPTO\")",
+            "idxsig.profiles.PROFILES[\"CRYPTO_CLOSE\"]  (registry key; selected with backtest.RunConfig(..., market=\"CRYPTO_CLOSE\"))"
+          ],
+          "behaviour_summary": "profiles.py gains CRYPTO_CLOSE = replace(CRYPTO, entry=\"close\") and registers it as PROFILES[\"CRYPTO_CLOSE\"] after the unchanged comprehension `{p.market: p for p in (IDX, US, CRYPTO)}`. The variant is field-for-field CRYPTO (0.1% fee + 0.1% tier per side, bands, lot 1, notional 5000, short carry 0.0005, both notes) except entry \"close\". Its .market field is deliberately \"CRYPTO\", not \"CRYPTO_CLOSE\": backtest.run keys the IDX/global branch, the sealed GLOBAL_HOLDOUT, the survivorship warning and summary[\"market\"][\"profile\"] off profile.market, so a CRYPTO_CLOSE run is reported as profile CRYPTO / entry \"close\" and summary[\"config\"][\"market\"] records \"CRYPTO_CLOSE\" (the RunConfig name) - verified by the run-level test. Nothing selects the variant unless a RunConfig names market=\"CRYPTO_CLOSE\"; backtest.run reaches it today with no other change (PROFILES[cfg.market]). The dataclass, IDX, US and CRYPTO objects are untouched. Design note: I did not alter assumption_note/venue to label the variant, because the task specifies \"differs only in entry_price\"; the run label comes from config.market and market.entry in every summary.",
+          "tests_added": [
+            "tests/test_profiles_crypto_close.py::CryptoCloseProfile::test_crypto_profile_is_unchanged_field_by_field  (asdict(CRYPTO) == frozen EXPECTED_CRYPTO dict copied from the pre-change source; also asserts the frozen dict covers every Profile field)",
+            "tests/test_profiles_crypto_close.py::CryptoCloseProfile::test_crypto_close_is_registered_and_differs_only_in_entry  (PROFILES['CRYPTO_CLOSE'] is CRYPTO_CLOSE; set of differing fields == {'entry'}; entry close vs open)",
+            "tests/test_profiles_crypto_close.py::CryptoCloseProfile::test_existing_registry_entries_are_untouched  (PROFILES keys == {IDX, US, CRYPTO, CRYPTO_CLOSE}; identity of IDX/US/CRYPTO entries; CRYPTO_CLOSE.market == 'CRYPTO')",
+            "tests/test_profiles_crypto_close.py::CryptoCloseProfile::test_costs_are_identical_one_tenth_percent_fee_plus_one_tenth_percent_tier_per_side  (fees 0.001/0.001 and per_side_cost 0.001 at six price levels for both; same cost_tiers and short carry)",
+            "tests/test_profiles_crypto_close.py::CryptoCloseProfile::test_variant_enters_at_the_close_of_t_plus_1_not_its_open  (execution.execute on a flat synthetic market with an 11.0 open / 10.0 close on the entry session: CRYPTO fills at 11.0 / 454 shares, CRYPTO_CLOSE at 10.0 / 500 shares; both net returns equal the 0.2%-per-side formula)",
+            "tests/test_profiles_crypto_close.py::CryptoCloseThroughTheHarness::test_backtest_run_uses_the_close_entry_and_the_same_sealed_holdout  (backtest.run on a synthetic random-walk panel with open != close: HoldoutSealed raised for CRYPTO_CLOSE on a window touching 2024; with end=2023-12-29 summary config.market == 'CRYPTO_CLOSE', market.profile/entry == ('CRYPTO','close'), execution.price starts 'official close', cost_assumption identical to the CRYPTO run, same signal dates, every EXITED trade's entry_price equals the panel close on its entry_date while the CRYPTO run's equals the open)"
+          ],
+          "test_output_tail": "$ python3 -m unittest   (from <worktree>/idx-signals)\n..........................................................................................................................................................................................................................................................\n----------------------------------------------------------------------\nRan 250 tests in 37.279s\n\nOK\n\n$ python3 -m unittest tests.test_profiles_crypto_close -v   (tail)\ntest_backtest_run_uses_the_close_entry_and_the_same_sealed_holdout (tests.test_profiles_crypto_close.CryptoCloseThroughTheHarness.test_backtest_run_uses_the_close_entry_and_the_same_sealed_holdout)\nGuards against: backtest.run accepting market='CRYPTO_CLOSE' but filling at the open, reporting ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.602s\n\nOK\n\n$ python3 -m idxsig rules   (tail; grep -c \"source-audit=passed\" -> 16, grep -ci fail -> 0)\nE4_CAND_G7_MOMENTUM5_30_BEAR v1 DETECTOR hold=5 sha=816abcb4a2a2 source-audit=passed\nMOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed\nMOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed\nMOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed\nMOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed\nPLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed\nUSER_RULE PENDING: rule text not supplied\n\n$ python3 -m idxsig verify-runs\nverify-runs: OK\n\n$ python3 tools/check_append_only.py --all   (from <worktree>)\nappend-only: OK\n(the repo's post-commit hook also printed \"append-only: OK\" on commit 963a57d)",
+          "defaults_unchanged_evidence": "(1) Baseline before any edit: `python3 -m unittest` -> Ran 244 tests, OK; after: Ran 250 tests, OK (244 + 6 new, 0 failures, 0 errors). (2) The new tests were run before the code change and failed on ImportError (red), then passed after. (3) test_crypto_profile_is_unchanged_field_by_field compares dataclasses.asdict(CRYPTO) to a dict transcribed from the pre-change profiles.py source, field by field, and asserts the dict's key set equals Profile.__dataclass_fields__, so no field is left unfrozen; test_existing_registry_entries_are_untouched asserts PROFILES['IDX'] is IDX, PROFILES['US'] is US, PROFILES['CRYPTO'] is CRYPTO (identity, not just equality) and PROFILES['CRYPTO'] is not CRYPTO_CLOSE. (4) git diff --stat: only idx-signals/idxsig/profiles.py (+8/-1); the one modified pre-existing line is the dataclasses import (adds `replace`); the PROFILES comprehension line is byte-identical and the new key is assigned on a following line. The Profile dataclass, IDX, US and CRYPTO definitions are untouched. (5) backtest.run only ever reaches the variant through PROFILES[cfg.market] with cfg.market == 'CRYPTO_CLOSE'; RunConfig's default market 'IDX' and every existing key resolve to the same objects as before. (6) `python3 -m idxsig verify-runs` -> OK: no recorded run's hash or presence changed; `python3 -m idxsig rules` -> 16 source-audit=passed, 0 failures (rule sha256 values unchanged). (7) The holdout seal is unchanged: the run-level test shows HoldoutSealed still raised for CRYPTO_CLOSE on a window touching 2024.",
+          "needs_other_file": [
+            "idx-signals/idxsig/cli.py:73 - `run --market choices=(\"IDX\", \"US\", \"CRYPTO\")` needs \"CRYPTO_CLOSE\" added before the variant can be run from the CLI (argparse rejects it today); the help text 'entry at open or close' already covers it.",
+            "idx-signals/idxsig/cli.py:293 - the `run` subcommand loads the panel with `global_panel.latest(args.market)`; for CRYPTO_CLOSE this must resolve to the CRYPTO panel (e.g. `global_panel.latest(PROFILES[args.market].market)`), otherwise it looks for a non-existent CRYPTO_CLOSE panel. Line 294 `PROFILES[args.market]` already works.",
+            "idx-signals/idxsig/cli.py:141 - the e4-* `--market choices=(\"CRYPTO\", \"US\")` list is E4's and should NOT change; an E5 subcommand cloned from it needs its own choices list including \"CRYPTO_CLOSE\" (and the same panel-name mapping).",
+            "idx-signals/idxsig/e4.py:59-67 (harness_config) and :55 (market_dir), :151/:181 (proto[\"markets\"][market]) - the pattern an e5.py will clone keys the protocol's markets block and the output directory by the RunConfig market name; for CRYPTO_CLOSE the E5 protocol's markets block needs a \"CRYPTO_CLOSE\" entry whose panel_manifest / precondition_runs point at the CRYPTO panel, or the harness must map PROFILES[market].market -> panel while keeping the output dir keyed CRYPTO_CLOSE. No change to e4.py itself.",
+            "idx-signals/idxsig/global_panel.py:152/157 (build) - keyed by \"US\"/\"CRYPTO\" only; correct as is (no CRYPTO_CLOSE panel is ever built), but any caller passing a RunConfig market name into build/latest must pass the profile's .market (\"CRYPTO\").",
+            "idx-signals/idxsig/paper.py:70, 172, 305, 310, 400, 456, 732, 823, 902 and cli.py:128 (paper-scan/paper-score --market choices) - literal {IDX, US, CRYPTO} dicts/choices that would KeyError/reject \"CRYPTO_CLOSE\". No change recommended: the variant is a research sensitivity, not a live paper market; listing it here only so no one passes it to the paper path by accident.",
+            "idx-signals/idxsig/backtest.py:66 - comment `# profiles.PROFILES: IDX, US, CRYPTO` is now incomplete (cosmetic; no code change needed, PROFILES[cfg.market] already resolves CRYPTO_CLOSE)."
+          ],
+          "open_concerns": [
+            "Labelling: per the spec the variant is identical to CRYPTO except entry, so its assumption_note/venue do not mention the latency-pessimistic intent; the only in-run markers are summary.config.market == \"CRYPTO_CLOSE\" and summary.market.entry == \"close\" (summary.market.profile reads \"CRYPTO\"). If the E5 protocol wants the sensitivity named in the cost_assumption text, that is a one-field deviation from 'identical' to decide on explicitly.",
+            "Fill model: CRYPTO_CLOSE.entry == \"close\" makes execution.py:439 refuse fill_model \"B\" (open-only) and :441 refuse \"C\" unless units == \"panel\" and ca_mode == \"registry\" (crypto runs use ca_mode \"adjusted\"), so the variant runs with fill model A only, matching the protocol draft's 'A (as E2/E4 recorded runs)' for crypto; noted so no one expects B/C there.",
+            "Open-entry conditional plans: execution.py:415/420 tie some entry rules to entry_price (e.g. entry_rule \"unlock\" requires close; others may require open); a plan frozen for CRYPTO under open entry may not be valid under CRYPTO_CLOSE - the E5 harness should run resolve_plan + ExecConfig validation per profile rather than assume plan parity.",
+            "Untracked .githooks/post-checkout, post-commit, post-merge, pre-push exist in the worktree; they are not mine and were not committed."
+          ]
+        },
+        "r1": {
+          "verdict": "accept",
+          "findings": [
+            {
+              "severity": "minor",
+              "file": "idx-signals/idxsig/profiles.py",
+              "line": 73,
+              "claim": "CRYPTO_CLOSE cannot run a short-side plan: execution.execute refuses side='short' unless entry_price == 'open' (execution.py:414-416), so any E4-style short plan under market='CRYPTO_CLOSE' raises ValueError. Not a defect for E5 (the protocol draft fixes family.side = 'long' and crypto fill_model_primary = 'A'), but the builder's open_concerns list only the fill-model B/C refusals and omit this one.",
+              "evidence": "execution.py:414-416: `if cfg.side == \"short\": if cfg.entry_price != \"open\" or cfg.fill_model == \"C\": raise ValueError(\"the short side is defined for open entries (US, crypto profiles)\")`; E5_CEILING_protocol_draft.json family.side == \"long\".",
+              "fix": "No code change required in the owned files. Add one line to the profiles.py comment (or the E5 protocol notes) stating the variant is long-only and fill-model A, so no one plans a CRYPTO_CLOSE short sensitivity."
+            },
+            {
+              "severity": "minor",
+              "file": "idx-signals/idxsig/backtest.py",
+              "line": 66,
+              "claim": "The RunConfig.market comment `# profiles.PROFILES: IDX, US, CRYPTO` is now incomplete (cosmetic; the code path PROFILES[cfg.market] already resolves CRYPTO_CLOSE). Not an owned file; builder already reported it under needs_other_file.",
+              "evidence": "backtest.py:66 comment lists three keys; profiles.py:76 registers a fourth.",
+              "fix": "Outside this branch's ownership: update the comment when e5.py/cli.py are wired (needs_other_file)."
+            },
+            {
+              "severity": "minor",
+              "file": "idx-signals/idxsig/cli.py",
+              "line": 73,
+              "claim": "The variant is unreachable from the CLI today: `run --market` choices are (IDX, US, CRYPTO) and the panel is loaded with global_panel.latest(args.market), which would look for a CRYPTO_CLOSE panel. Correctly reported by the builder under needs_other_file; confirms the change is opt-in and nothing selects it by default.",
+              "evidence": "cli.py:73 `choices=(\"IDX\", \"US\", \"CRYPTO\")`; cli.py:293 `global_panel.latest(args.market)`; global_panel.build keyed by US/CRYPTO only.",
+              "fix": "In the E5 cli/e5.py work (other branch): add \"CRYPTO_CLOSE\" to the e5 subcommand choices and map the panel via PROFILES[market].market."
+            }
+          ],
+          "test_rerun_tail": "$ cd <worktree>/idx-signals && python3 -m unittest\n..........................................................................................................................................................................................................................................................\n----------------------------------------------------------------------\nRan 250 tests in 32.990s\n\nOK\n\n$ python3 -m idxsig rules   (tail; grep -c source-audit=passed -> 16; grep -ci fail -> 0)\nE4_CAND_G7_MOMENTUM5_30 v1 DETECTOR hold=5 sha=0378c8b43d27 source-audit=passed\nE4_CAND_G7_MOMENTUM5_30_BEAR v1 DETECTOR hold=5 sha=816abcb4a2a2 source-audit=passed\nMOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed\nMOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed\nMOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed\nMOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed\nPLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed\nUSER_RULE PENDING: rule text not supplied\n\n$ python3 -m idxsig verify-runs\nverify-runs: OK\n\n$ cd <worktree> && python3 tools/check_append_only.py --all\nappend-only: OK\n\n$ git diff ae2cbee --stat -- . ':!idx-signals/idxsig/profiles.py' ':!idx-signals/tests/test_profiles_crypto_close.py'\n(empty: only the two owned files differ from the base; .githooks/* are untracked and not committed)\n\nReview notes (no blocking or serious findings):\n(a) defaults: PROFILES comprehension line is byte-identical; the new key is assigned afterwards; no code iterates PROFILES (grep: only PROFILES[...] indexing in backtest.py:270, cli.py:294/426, paper.py:396/697, tests), so no loop, choices list or audit changes membership-dependently; IDX/US/CRYPTO objects and all cost values untouched; verify-runs OK and rule sha256 values unchanged.\n(b) look-ahead: entry 'close' with fixed entry rule reads m.close[tick, sig+entry_lag] (execution.py:464), the same path IDX already uses; conditional_entry reads sessions s+1..s+window only; no cross-sectional statistic added.\n(c) API: backtest.run resolves PROFILES[cfg.market] and keys the global branch/holdout/summary on profile.market == 'CRYPTO' -- verified by the run-level test (HoldoutSealed raised; config.market 'CRYPTO_CLOSE'; market.profile/entry ('CRYPTO','close')). Short side refused for close entries (minor finding 1); E5 is long-only, fill A.\n(d) tests: all six fail with the feature stubbed (ImportError, or entry=='open' assertions); field-by-field freeze of CRYPTO covers every dataclass field; run-level test checks per-trade entry_price against the panel close vs open.\n(e) numerics: no new arithmetic; dataclasses.replace on a frozen dataclass.\n(f) standing rules: only owned files changed; nothing under research/results/paper/var; no network; commit carries the required trailers."
+        },
+        "status": "accepted_r1"
+      },
+      {
+        "key": "r-rules",
+        "wt": "/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/e5-r-rules",
+        "branch": "e5/r-rules",
+        "owns": "new idx-signals/idxsig/rules/moonshot_e5.py, the registry entry in idx-signals/idxsig/rules/__init__.py (additive only), and a new idx-signals/tests/test_e5_rules.py",
+        "spec": "Write the E5 rule module per the protocol draft section \"family\" (read it in full). Requirements: numpy/pandas only; module-level literal constants only (rules/audit.py must pass: run \"python3 -m idxsig rules\"); FEATURE_ARGS = (\"close\",\"prev\",\"high\",\"low\",\"volume\",\"value\",\"present\",\"tradeable\",\"lock_up\",\"open\") — check RULE_FIELDS in rules/__init__.py and how moonshot_g.features / moonshot_e1.features are called by paper.py and e1.py so the signature pattern matches. features(...) returns a dict of 2-D arrays (names x sessions) with: the E1/E2 weak-signal features (ret1, rel1, ret5, ret20, volr, valr, rngr, cpos, vol20, dd60, up5, zero20, age, logval20; brk60 binary; gap for US/CRYPTO when open exists; ara for IDX from lock_up) using the definitions in research/E1/protocol.json weak_signals and research/E2/protocol.json (copy the code from moonshot_g.py / moonshot_e1.py / e1.py Study._signals where it exists, do not reinvent); the pre-spike block: creep5v20 = median(volume t-4..t)/median(volume t-24..t-5) on present sessions (untraded = 0 volume), rngr5 = median(rngr t-4..t), vc10_60 = vol10/vol60; binaries quiet = (rngr5 <= 1.0) & (|ret5| <= 2*vol20*sqrt(5)) copied VERBATIM in logic from kod-machine/research/ZEALAND_PILOT_v1/03_card/price_facts.py (read /home/user/KOD-Machine/kod-machine/research/ZEALAND_PILOT_v1/03_card/price_facts.py and kod-machine/kod/detectors.py:72-86), not_repriced = ret20 < 0.30, rebase per the draft. Every window trailing; column s uses sessions <= s only; age and zero20 must be NaN (not negative/0) before a name's first present session. rank_features(f, present, tradeable) -> per-session cross-sectional percentile rank among names present & tradeable at that session, masked by present BEFORE ranking, NaN -> 0.5, plus squared ranks; binaries 0/1. WARMUP = 60: compute()/features() returns NaN for the first 60 session columns of its view. score(ranked, coef, intercept) -> logit; flags(score, threshold) with debounce: a flag only on the first session a name's score is >= threshold after >= 5 consecutive sessions below (trailing, prefix-safe). A0_CREEP_QUIET = creep5v20 >= 1.5 & quiet; A1 = A0 & not_repriced. Module literals COEF_U, COEF_D, INTERCEPT_U, INTERCEPT_D, THRESHOLD_A, THRESHOLD_B per market as EMPTY placeholders (e.g. None) plus SELECTED = None, FEATURE_ORDER tuple (the exact column order the literals refer to), RULE_ID 'MOONSHOT_E5', VERSION 'v1', CANDIDATES tuple, FAMILY list in the shape the registry/paper expect (look at moonshot_e3/e4 FAMILY and family_flags). Register in rules/__init__.py registry() additively (see lines ~55-70). Tests (synthetic market built with tests/test_contract.py market() or tests/test_e3.py helpers): audit passes; prefix-first: features at column s identical when later columns are removed (use rules.causal_signals / the LookaheadError check the way test_e3 does); WARMUP masks the first 60; rank masking; debounce; A0 equals price_facts.measures() facts on a small hand-built series (import kod-machine's price_facts via sys.path, read-only); age/zero20 NaN before listing; no flags when literals are None (candidates must raise a clear error or return all-False, state which).",
+        "build": {
+          "branch": "e5/r-rules",
+          "commit": "8b94372",
+          "files_changed": [
+            "idx-signals/idxsig/rules/moonshot_e5.py",
+            "idx-signals/tests/test_e5_rules.py"
+          ],
+          "api_added": [
+            "moonshot_e5.FEATURE_WARMUP = 60  (features() NaN in the first 60 columns; unchanged feature semantics)",
+            "moonshot_e5.DEBOUNCE = 5  (moved above WARMUP; same value)",
+            "moonshot_e5.WARMUP = FEATURE_WARMUP + DEBOUNCE = 65  (CHANGED from 60: compute() NaN in the first 65 columns; the harness lead-in a window must start before its period)",
+            "moonshot_e5.debounce(state, known=None) -> bool array  (new optional `known` mask: a flag needs the trailing DEBOUNCE sessions known AND outside; known=None keeps every session known)",
+            "moonshot_e5.flags(score_, threshold)  (same signature; a NaN score is now unknown, never 'outside')",
+            "moonshot_e5._warm(a, n)  (private; now takes the column count explicitly)"
+          ],
+          "behaviour_summary": "Fixed the serious finding at moonshot_e5.py:282. Previously flags()/debounce() treated a NaN score (the 60-column feature warm-up) as 'outside the set', so at the first evaluable column of every view every in-set name fired at once and the next sessions over-flagged; flags depended on where the window started. Now: debounce(state, known) requires each of the trailing DEBOUNCE sessions to be known (finite score / warm features) and outside; flags() passes known = isfinite(score) with state = known & (score >= thr) (NaN-safe); family_flags() passes known = isfinite(f['quiet']) for A0/A1 (a detector state exists once features are warm; an undefined fact at a warm session is a False state, as kod/detectors.py reports no SIGNAL on a None fact). Features keep their 60-column warm-up (FEATURE_WARMUP), so the first flag any window can emit is at column 65 with five real out-of-set sessions behind it; compute() masks WARMUP = 65 columns, and the docstring now says the harness window starts WARMUP (65) sessions before its period. Verified with the reviewer's probe (open_panel 30x200 seed 5, frozen_us_a(1.9)): names in set at session 80 = 9, full-window flags at 80 = 2, shifted-window (slice 20..200) flags at its column 60 = 0 and column 65 = 1 = full column 85; flags before WARMUP = 0 in both windows; flags on the common range 167 = 167 and compute() output identical on the common range. Registry entry in rules/__init__.py untouched (already additive at HEAD).",
+          "tests_added": [
+            "tests/test_e5_rules.py::FlagTests::test_flags_are_window_invariant_from_the_lead_in (new: full vs slice(20) window, flags and compute() equal on the common range for US_A/A0/A1; nothing before WARMUP; several names in the set at column 60 but no flag there; every flag at column 65 is a true entry after five known out-of-set sessions)",
+            "tests/test_e5_rules.py::FlagTests::test_debounce_flags_the_first_session_above_after_five_known_below (rewritten from ..._five_below: NaN history gives no flag at 5 and the first flag at 11; a NaN inside the trailing five blocks the entry; a NaN session is never a flag; debounce(state, known) == flags; known=None path; a window starting inside the NaN stretch matches the full window)",
+            "tests/test_e5_rules.py::FeatureTests::test_warmup_masks_features_for_60_columns_and_compute_for_65 (renamed/strengthened: features NaN for 60 columns and every FEATURE_ORDER column finite from 60; compute() NaN for 65 and finite at 65; a view ending inside the lead-in is NaN throughout)",
+            "tests/test_e5_rules.py::ModuleTests::test_identity_and_literals (now asserts FEATURE_WARMUP == 60, DEBOUNCE == 5, WARMUP == 65 == FEATURE_WARMUP + DEBOUNCE)",
+            "tests/test_e5_rules.py::FlagTests::test_creep_quiet_rules_are_causal_and_debounced (strengthened: expectation uses debounce(state, known) masked at WARMUP; the same episode seen from a window starting 10 sessions later yields the same single flag)",
+            "tests/test_e5_rules.py::FlagTests::test_frozen_arm_is_causal_and_debounced (strengthened: compute compared from WARMUP; asserts no flag exists before WARMUP so the mask hides nothing)"
+          ],
+          "test_output_tail": "=== python3 -m unittest (from <worktree>/idx-signals) ===\n----------------------------------------------------------------------\nRan 263 tests in 49.276s\n\nOK\n=== python3 -m idxsig rules (tail + E5 rows) ===\nMOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed\nMOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed\nMOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed\nMOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed\nPLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed\nUSER_RULE PENDING: rule text not supplied\nE5_CAND_A0_CREEP_QUIET v1 DETECTOR hold=5 sha=7891dfc8453d source-audit=passed\nE5_CAND_A1_CREEP_QUIET_NR v1 DETECTOR hold=5 sha=9ca7799abdb0 source-audit=passed\nE5_CAND_CRYPTO_A v1 DETECTOR hold=5 sha=6359f0d2761a source-audit=passed\nE5_CAND_CRYPTO_B v1 DETECTOR hold=5 sha=36cd72129fd2 source-audit=passed\nE5_CAND_IDX_A v1 DETECTOR hold=5 sha=b8d3cb7ede37 source-audit=passed\nE5_CAND_IDX_B v1 DETECTOR hold=5 sha=1019d2741cd0 source-audit=passed\nE5_CAND_US_A v1 DETECTOR hold=5 sha=ea160a78ec57 source-audit=passed\nE5_CAND_US_B v1 DETECTOR hold=5 sha=40469717f2ef source-audit=passed\n=== python3 -m idxsig verify-runs ===\nverify-runs: OK\n=== python3 tools/check_append_only.py --all (from <worktree>) ===\nappend-only: OK\n=== regression proof: old debounce/flags bodies spliced into the fixed module, new tests run against it ===\nFAIL: test_debounce_flags_the_first_session_above_after_five_known_below\nAssertionError: Lists differ: [np.int64(5), np.int64(11)] != [11]\nFAIL: test_flags_are_window_invariant_from_the_lead_in\nAssertionError: np.True_ is not false : US_A\nRan 3 tests in 7.586s\nFAILED (failures=2)\n(fixed module restored; md5 e77ca6aa4413e7140efa6196a5258c0e matches the committed file)",
+          "defaults_unchanged_evidence": "No recorded run uses MOONSHOT_E5 / E5_CAND_* (all arm literals are None; no results, research or paper file references the module; the rules were introduced on this branch at d8bf6b4 and never run on real data), so no recorded output can change. `python3 -m idxsig verify-runs` reports OK, i.e. every recorded run still reproduces; `tools/check_append_only.py --all` OK; the full suite (263 = 244 base + 19 E5) passes; every pre-existing rule's audit sha in `idxsig rules` is unchanged (E1 648a06e1079f, E2 US c21126d8ba9d, E2 CRYPTO d8218f2e9c9b, E4 f5585be5d967, PLACEBO b774201b08e6). Only the E5 module and its test file are in the commit (git show --stat HEAD). Feature semantics are untouched: FEATURE_WARMUP keeps the 60-column feature warm-up and the copied-feature equality tests against moonshot_g / e1.Study / ZEALAND price_facts still pass unchanged.",
+          "needs_other_file": [
+            "idx-signals/idxsig/e5.py (not in this worktree; the harness owner): every discovery/validation/trading window must start moonshot_e5.WARMUP (= 65) sessions before its period, read from the module literal rather than a hard-coded 60; with a 60-session lead-in the first five period sessions can never carry a flag (the debounce's known-history requirement would fall inside the period).",
+            "handoff/kod-next-move/synthesis/E5_CEILING_protocol_draft.json 'warmup' entry (read-only reference; whoever freezes research/E5/protocol.json): the text 'WARMUP = 60 literal ... every harness window starts 60 sessions before the period start' should become 'FEATURE_WARMUP = 60 for the features; WARMUP = FEATURE_WARMUP + DEBOUNCE = 65 is the lead-in compute() masks and the harness window starts before its period' (IDX discovery warm-up then covers 65 sessions of TIER_2, features only, no trade)."
+          ],
+          "open_concerns": [
+            "Semantic choice for A0/A1 'known': a warm session where a detector fact is undefined (creep5v20 NaN for a name with fewer than 20 present sessions in the base window) is treated as a known False state (outside), mirroring kod/detectors.py which reports no SIGNAL on a None fact; only the feature warm-up is 'unknown'. If the protocol wants an undefined fact to be 'unknown' too, pass known = isfinite(f['creep5v20']) & isfinite(f['quiet']) in family_flags() (one-line change; the existing tests would still pass since the fixture names are all present from session 0).",
+            "Names not in the ranking pool (not present or untraded) still receive a finite score (ranks 0.5) and so count as known out-of-set sessions for the debounce, as in the reviewer's suggested fix (known = isfinite(score)); a listed name coming off a 5-session trading halt can therefore flag on its first tradeable session if its score is above threshold. This matches the protocol text ('>= 5 sessions outside the top 0.5%') and is prefix-safe; flagged here only because it is a design choice the protocol freeze may want to state.",
+            "WARMUP changed from 60 to 65 for compute(); the protocol draft's 'WARMUP = 60 literal' wording is now the feature warm-up only (see needs_other_file). The reviewer explicitly allowed this choice."
+          ]
+        },
+        "r1": {
+          "verdict": "fix_required",
+          "findings": [
+            {
+              "severity": "serious",
+              "file": "idx-signals/idxsig/rules/moonshot_e5.py",
+              "line": 282,
+              "claim": "flags()/debounce() treat a session with no score (NaN, i.e. the WARMUP columns) as 'outside the set', so at the first evaluable column of every view (WARMUP = 60) every name currently in the top set fires at once, and the five sessions after that over-flag too. Flags are therefore not window-invariant: the same session gets different flags depending on where the run window starts, which defeats the protocol's reason for the 60-session lead-in ('features warm at period start') and deviates from the protocol text 'first session a name enters the top 0.5% after >= 5 sessions outside it' (a NaN session is not a session outside the set). The same applies to the debounced A0/A1 rules.",
+              "evidence": "Probe on open_panel(n_tickers=30, n_sessions=200, seed=5) with the test fixture frozen_us_a(threshold=1.9): full window flags at session 80 = 2 (names in the set at 80 = 9); the same session as column 60 of m.slice(20, 200) = 9 flags. Flags per session 60..64 of the shifted window [9, 7, 3, 5, 2] vs the same sessions in the full window [2, 1, 1, 2, 2]; total flags over the common range 193 vs 175 (+10%). tests/test_e5_rules.py::test_debounce_flags_the_first_session_above_after_five_below freezes this semantics (s[2, :5] = nan -> flag at 5). Under the protocol's harness contract (window starts 60 sessions before the period, compute NaN there) the burst lands on the first period session of every discovery/validation run and inflates stage-1 flag counts/precision there.",
+              "fix": "Make the debounce require DEBOUNCE sessions of known state: compute ranks/scores on the unmasked raw features, build state = isfinite(score) & (score >= thr), and require the trailing DEBOUNCE sessions to be finite AND outside (e.g. known = _lagb(isfinite(score), k) for k in 1..5; ok &= known & ~_lagb(state, k)); then apply _warm only to compute()'s output. Because brk60/dd60/vol60 are only window-invariant from column 60, either mask compute() for the first WARMUP + DEBOUNCE columns (and have e5.py start the window WARMUP + DEBOUNCE sessions early) or set WARMUP = 65 for the flags; update the docstring (line 32) and the test row s[2] accordingly. Any choice is fine as long as the first flag a window can emit has five real out-of-set sessions behind it and the lead-in covers it."
+            },
+            {
+              "severity": "minor",
+              "file": "idx-signals/idxsig/rules/moonshot_e5.py",
+              "line": 39,
+              "claim": "The docstring (and the builder's report) says family_flags() returning all-False for unfrozen arms lets 'a feature table or a study' be built, but e1.Study(family_module=moonshot_e5) crashes: e1.Study._signals does flags[next(k for k in flags if 'IGNITION' in k)] and no E5 candidate name contains IGNITION.",
+              "evidence": "python3: e1.Study(df, {**meta, 'format': 'panel-v2'}, family_module=moonshot_e5) on random_walk_panel(30, 160, seed=11) -> StopIteration. RECOMMENDATION.md line 112 already plans the fix in idxsig/e1.py ('guard sig[\"ign\"] when the family has no IGNITION member') and line 115 plans e5.py build_dataset 'via Study'.",
+              "fix": "needs_other_file: idx-signals/idxsig/e1.py (guard the IGNITION lookup, e.g. sig['ign'] = NaN/0 array when no member matches) must land before e5.py builds a Study on this family; until then reword the docstring at line 39 to say a feature table can be built from features()/family_flags() directly, not via e1.Study."
+            },
+            {
+              "severity": "minor",
+              "file": "idx-signals/idxsig/rules/moonshot_e5.py",
+              "line": 243,
+              "claim": "compute() is roughly 12x the cost of moonshot_g.features at panel scale, and rules.causal_signals calls it once per session, so a full-window IDX run of one E5 candidate is hours of CPU; rank_features alone spends ~6 s per call on DataFrame.rank(axis=0) over a names x sessions frame, which is 3x slower than ranking the transpose along axis=1.",
+              "evidence": "900 names x 1500 sessions synthetic: moonshot_g.features 1.76 s; e5.raw_features 11.53 s (of which _rebase 1.18 s); e5.rank_features 5.73 s; e5.features total 20.96 s. One DataFrame.rank(axis=0) on (names x sessions) 0.49 s vs rank(axis=1) on the transpose 0.16 s. A ~540-session IDX discovery window (480 + 60 lead-in) means ~540 prefix calls of average half length: on the order of 45-90 min per candidate run on IDX, more on crypto; unit tests went 33 s -> 49-53 s.",
+              "fix": "Rank on the transpose (pd.DataFrame(np.where(pool, f[name], nan).T).rank(axis=1, method='average').to_numpy().T) and compute the count from the same frame; consider hoisting the seven rolling medians through one DataFrame per source series. Semantics unchanged (same ranks), so no test needs to move; document the expected run time in e5.py so signal_cache is used across plans and sensitivities."
+            },
+            {
+              "severity": "minor",
+              "file": "idx-signals/idxsig/rules/moonshot_e5.py",
+              "line": 228,
+              "claim": "Binary features with an undefined input collapse silently to 0: not_repriced = ret20 < 0.30 is 0 (i.e. 'repriced') when ret20 is NaN (name listed < 20 sessions ago), and quiet is 0 whenever rngr5/ret5/vol20 are NaN. The logistic fit sees 'repriced'/'not quiet' for 'unknown', and A1 = A0 & not_repriced is suppressed for young names even when A0 holds; this is not stated in the docstring or the protocol's feature definitions.",
+              "evidence": "raw_features: not_repriced = ret20 < NOT_REPRICED_MAX with ret20 NaN -> False; quiet = (rngr5 <= 1.0) & (|ret5| <= 2 vol20 sqrt 5) with any NaN -> False; detector_states uses f['not_repriced'] == 1.0. No test covers the NaN-input case for the binaries.",
+              "fix": "Either document the convention (unknown -> 0) in the docstring and the protocol's binary_unranked text, or make not_repriced NaN-safe the way F8_ARA_EARLY does (np.nan_to_num(ret20, nan=9.0) < 0.30 treats unknown as repriced, explicitly) and add a one-line test for a name listed fewer than 20 sessions before t."
+            },
+            {
+              "severity": "minor",
+              "file": "idx-signals/tests/test_e5_rules.py",
+              "line": 21,
+              "claim": "The idx-signals test suite now depends on a file outside the package (kod-machine/research/ZEALAND_PILOT_v1/03_card/price_facts.py, loaded by path and exec'd); no other idx-signals test does this, so the suite breaks if idx-signals is run outside the monorepo layout.",
+              "evidence": "grep -ln 'kod-machine' idx-signals/tests/*.py -> only tests/test_e5_rules.py; PRICE_FACTS = ROOT / 'kod-machine' / 'research' / ... with ROOT = parents[2]. The file is read only (exec defines functions; main() is not called), so the append-only rule is respected.",
+              "fix": "Keep the cross-check (it is the best test in the file) but guard it with unittest.skipUnless(PRICE_FACTS.exists(), ...) and keep a pure in-file reference for the creep/quiet arithmetic so the pre-spike block stays tested without the sibling package."
+            }
+          ],
+          "test_rerun_tail": "$ cd <worktree>/idx-signals && python3 -m unittest\n......................................................................................................................................................................................................................................................................\n----------------------------------------------------------------------\nRan 262 tests in 48.779s\n\nOK\n\n$ python3 -m idxsig rules   (tail)\nE5_CAND_A0_CREEP_QUIET v1 DETECTOR hold=5 sha=710bb3f81baf source-audit=passed\nE5_CAND_A1_CREEP_QUIET_NR v1 DETECTOR hold=5 sha=9340180f3e82 source-audit=passed\nE5_CAND_CRYPTO_A v1 DETECTOR hold=5 sha=d53a52617429 source-audit=passed\nE5_CAND_CRYPTO_B v1 DETECTOR hold=5 sha=e24cb3823f24 source-audit=passed\nE5_CAND_IDX_A v1 DETECTOR hold=5 sha=1e9e6b8e0efe source-audit=passed\nE5_CAND_IDX_B v1 DETECTOR hold=5 sha=5261fa817413 source-audit=passed\nE5_CAND_US_A v1 DETECTOR hold=5 sha=3b8c33e7e965 source-audit=passed\nE5_CAND_US_B v1 DETECTOR hold=5 sha=3c1980aca606 source-audit=passed\nMOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed\nMOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed\nMOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed\nMOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed\nPLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed\nUSER_RULE PENDING: rule text not supplied\n\n$ python3 -m idxsig verify-runs\nverify-runs: OK\n\n$ cd <worktree> && python3 tools/check_append_only.py --all\nappend-only: OK\n\nReview notes (READ-ONLY, nothing edited or committed): git diff ae2cbee --stat = rules/__init__.py (+2/-2, additive registry entry), rules/moonshot_e5.py (new, 373), tests/test_e5_rules.py (new, 423); no other file touched; untracked .githooks/post-* are git-lfs hooks created at worktree setup (07:30, before the commit), not part of the change. Defaults: no existing module source, argument, column, key or threshold changed; pre-existing rule shas unchanged by construction (their module sources are untouched) and verify-runs OK. Look-ahead: every window is trailing (_roll/_lag/_lagb, _rebase peak/min5/pre, debounce), ranks are masked by present & tradeable before ranking, the cross-sectional median is the moonshot_g one, and test_ranks_are_prefix_first plus causal_signals on a frozen arm and on A0/A1 pass with 0 mismatches. API: compute(view) reads only RULE_FIELDS (open, value, lock_up included), FEATURE_ARGS works with getattr(view, a) as paper.py/e1.Study do, Rule(kind DETECTOR, plan None) resolves to the original plan in backtest.resolve_plan; audit passes. Pre-spike block equals kod-machine price_facts.measures() for every t in 60..89 on the designed episode (checked by the test; the A0 conjunction matches kod/detectors.py _volume_creep). needs_other_file: idx-signals/idxsig/e1.py (IGNITION guard, already in RECOMMENDATION.md line 112) before e5.py uses Study on this family."
+        },
+        "f1": {
+          "branch": "e5/r-rules",
+          "commit": "8b94372",
+          "files_changed": [
+            "idx-signals/idxsig/rules/moonshot_e5.py",
+            "idx-signals/tests/test_e5_rules.py"
+          ],
+          "api_added": [
+            "moonshot_e5.FEATURE_WARMUP = 60  (features() NaN in the first 60 columns; unchanged feature semantics)",
+            "moonshot_e5.DEBOUNCE = 5  (moved above WARMUP; same value)",
+            "moonshot_e5.WARMUP = FEATURE_WARMUP + DEBOUNCE = 65  (CHANGED from 60: compute() NaN in the first 65 columns; the harness lead-in a window must start before its period)",
+            "moonshot_e5.debounce(state, known=None) -> bool array  (new optional `known` mask: a flag needs the trailing DEBOUNCE sessions known AND outside; known=None keeps every session known)",
+            "moonshot_e5.flags(score_, threshold)  (same signature; a NaN score is now unknown, never 'outside')",
+            "moonshot_e5._warm(a, n)  (private; now takes the column count explicitly)"
+          ],
+          "behaviour_summary": "Fixed the serious finding at moonshot_e5.py:282. Previously flags()/debounce() treated a NaN score (the 60-column feature warm-up) as 'outside the set', so at the first evaluable column of every view every in-set name fired at once and the next sessions over-flagged; flags depended on where the window started. Now: debounce(state, known) requires each of the trailing DEBOUNCE sessions to be known (finite score / warm features) and outside; flags() passes known = isfinite(score) with state = known & (score >= thr) (NaN-safe); family_flags() passes known = isfinite(f['quiet']) for A0/A1 (a detector state exists once features are warm; an undefined fact at a warm session is a False state, as kod/detectors.py reports no SIGNAL on a None fact). Features keep their 60-column warm-up (FEATURE_WARMUP), so the first flag any window can emit is at column 65 with five real out-of-set sessions behind it; compute() masks WARMUP = 65 columns, and the docstring now says the harness window starts WARMUP (65) sessions before its period. Verified with the reviewer's probe (open_panel 30x200 seed 5, frozen_us_a(1.9)): names in set at session 80 = 9, full-window flags at 80 = 2, shifted-window (slice 20..200) flags at its column 60 = 0 and column 65 = 1 = full column 85; flags before WARMUP = 0 in both windows; flags on the common range 167 = 167 and compute() output identical on the common range. Registry entry in rules/__init__.py untouched (already additive at HEAD).",
+          "tests_added": [
+            "tests/test_e5_rules.py::FlagTests::test_flags_are_window_invariant_from_the_lead_in (new: full vs slice(20) window, flags and compute() equal on the common range for US_A/A0/A1; nothing before WARMUP; several names in the set at column 60 but no flag there; every flag at column 65 is a true entry after five known out-of-set sessions)",
+            "tests/test_e5_rules.py::FlagTests::test_debounce_flags_the_first_session_above_after_five_known_below (rewritten from ..._five_below: NaN history gives no flag at 5 and the first flag at 11; a NaN inside the trailing five blocks the entry; a NaN session is never a flag; debounce(state, known) == flags; known=None path; a window starting inside the NaN stretch matches the full window)",
+            "tests/test_e5_rules.py::FeatureTests::test_warmup_masks_features_for_60_columns_and_compute_for_65 (renamed/strengthened: features NaN for 60 columns and every FEATURE_ORDER column finite from 60; compute() NaN for 65 and finite at 65; a view ending inside the lead-in is NaN throughout)",
+            "tests/test_e5_rules.py::ModuleTests::test_identity_and_literals (now asserts FEATURE_WARMUP == 60, DEBOUNCE == 5, WARMUP == 65 == FEATURE_WARMUP + DEBOUNCE)",
+            "tests/test_e5_rules.py::FlagTests::test_creep_quiet_rules_are_causal_and_debounced (strengthened: expectation uses debounce(state, known) masked at WARMUP; the same episode seen from a window starting 10 sessions later yields the same single flag)",
+            "tests/test_e5_rules.py::FlagTests::test_frozen_arm_is_causal_and_debounced (strengthened: compute compared from WARMUP; asserts no flag exists before WARMUP so the mask hides nothing)"
+          ],
+          "test_output_tail": "=== python3 -m unittest (from <worktree>/idx-signals) ===\n----------------------------------------------------------------------\nRan 263 tests in 49.276s\n\nOK\n=== python3 -m idxsig rules (tail + E5 rows) ===\nMOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed\nMOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed\nMOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed\nMOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed\nPLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed\nUSER_RULE PENDING: rule text not supplied\nE5_CAND_A0_CREEP_QUIET v1 DETECTOR hold=5 sha=7891dfc8453d source-audit=passed\nE5_CAND_A1_CREEP_QUIET_NR v1 DETECTOR hold=5 sha=9ca7799abdb0 source-audit=passed\nE5_CAND_CRYPTO_A v1 DETECTOR hold=5 sha=6359f0d2761a source-audit=passed\nE5_CAND_CRYPTO_B v1 DETECTOR hold=5 sha=36cd72129fd2 source-audit=passed\nE5_CAND_IDX_A v1 DETECTOR hold=5 sha=b8d3cb7ede37 source-audit=passed\nE5_CAND_IDX_B v1 DETECTOR hold=5 sha=1019d2741cd0 source-audit=passed\nE5_CAND_US_A v1 DETECTOR hold=5 sha=ea160a78ec57 source-audit=passed\nE5_CAND_US_B v1 DETECTOR hold=5 sha=40469717f2ef source-audit=passed\n=== python3 -m idxsig verify-runs ===\nverify-runs: OK\n=== python3 tools/check_append_only.py --all (from <worktree>) ===\nappend-only: OK\n=== regression proof: old debounce/flags bodies spliced into the fixed module, new tests run against it ===\nFAIL: test_debounce_flags_the_first_session_above_after_five_known_below\nAssertionError: Lists differ: [np.int64(5), np.int64(11)] != [11]\nFAIL: test_flags_are_window_invariant_from_the_lead_in\nAssertionError: np.True_ is not false : US_A\nRan 3 tests in 7.586s\nFAILED (failures=2)\n(fixed module restored; md5 e77ca6aa4413e7140efa6196a5258c0e matches the committed file)",
+          "defaults_unchanged_evidence": "No recorded run uses MOONSHOT_E5 / E5_CAND_* (all arm literals are None; no results, research or paper file references the module; the rules were introduced on this branch at d8bf6b4 and never run on real data), so no recorded output can change. `python3 -m idxsig verify-runs` reports OK, i.e. every recorded run still reproduces; `tools/check_append_only.py --all` OK; the full suite (263 = 244 base + 19 E5) passes; every pre-existing rule's audit sha in `idxsig rules` is unchanged (E1 648a06e1079f, E2 US c21126d8ba9d, E2 CRYPTO d8218f2e9c9b, E4 f5585be5d967, PLACEBO b774201b08e6). Only the E5 module and its test file are in the commit (git show --stat HEAD). Feature semantics are untouched: FEATURE_WARMUP keeps the 60-column feature warm-up and the copied-feature equality tests against moonshot_g / e1.Study / ZEALAND price_facts still pass unchanged.",
+          "needs_other_file": [
+            "idx-signals/idxsig/e5.py (not in this worktree; the harness owner): every discovery/validation/trading window must start moonshot_e5.WARMUP (= 65) sessions before its period, read from the module literal rather than a hard-coded 60; with a 60-session lead-in the first five period sessions can never carry a flag (the debounce's known-history requirement would fall inside the period).",
+            "handoff/kod-next-move/synthesis/E5_CEILING_protocol_draft.json 'warmup' entry (read-only reference; whoever freezes research/E5/protocol.json): the text 'WARMUP = 60 literal ... every harness window starts 60 sessions before the period start' should become 'FEATURE_WARMUP = 60 for the features; WARMUP = FEATURE_WARMUP + DEBOUNCE = 65 is the lead-in compute() masks and the harness window starts before its period' (IDX discovery warm-up then covers 65 sessions of TIER_2, features only, no trade)."
+          ],
+          "open_concerns": [
+            "Semantic choice for A0/A1 'known': a warm session where a detector fact is undefined (creep5v20 NaN for a name with fewer than 20 present sessions in the base window) is treated as a known False state (outside), mirroring kod/detectors.py which reports no SIGNAL on a None fact; only the feature warm-up is 'unknown'. If the protocol wants an undefined fact to be 'unknown' too, pass known = isfinite(f['creep5v20']) & isfinite(f['quiet']) in family_flags() (one-line change; the existing tests would still pass since the fixture names are all present from session 0).",
+            "Names not in the ranking pool (not present or untraded) still receive a finite score (ranks 0.5) and so count as known out-of-set sessions for the debounce, as in the reviewer's suggested fix (known = isfinite(score)); a listed name coming off a 5-session trading halt can therefore flag on its first tradeable session if its score is above threshold. This matches the protocol text ('>= 5 sessions outside the top 0.5%') and is prefix-safe; flagged here only because it is a design choice the protocol freeze may want to state.",
+            "WARMUP changed from 60 to 65 for compute(); the protocol draft's 'WARMUP = 60 literal' wording is now the feature warm-up only (see needs_other_file). The reviewer explicitly allowed this choice."
+          ]
+        },
+        "r2": {
+          "verdict": "accept",
+          "findings": [
+            {
+              "severity": "minor",
+              "file": "idx-signals/idxsig/rules/moonshot_e5.py",
+              "line": 64,
+              "claim": "WARMUP is now 65, which contradicts the read-only protocol draft's 'WARMUP = 60 literal ... every harness window starts 60 sessions before the period start' (E5_CEILING_protocol_draft.json family.features_ranked.warmup); nothing in the repo reads the literal yet (idxsig/e5.py does not exist; e3.py/e4.py and backtest.run have no lead-in logic, backtest.run slices the panel to [start, end] and computes signals on that slice), so the deviation is harmless today but must be reconciled when research/E5/protocol.json is frozen and e5.py is written.",
+              "evidence": "python3 -I json walk of the draft prints '.family.features_ranked.warmup : WARMUP = 60 literal: compute() returns NaN for the first 60 sessions of its view; every harness window starts 60 sessions before the period start'. grep -rn WARMUP idxsig/ outside moonshot_e5.py: no hits. The builder's reasoning is sound: with a 60-session lead-in the first five period sessions could never carry a flag because debounce needs five KNOWN (post-feature-warm-up) sessions behind it; my probe confirms flags are False before column 65 and identical on the common range for slices starting at 0/10/20/33.",
+              "fix": "No change to this file. The e5.py owner reads moonshot_e5.WARMUP (65) for the lead-in, and the protocol freeze states FEATURE_WARMUP = 60 (features) and WARMUP = 65 (compute lead-in). Already listed by the builder under needs_other_file."
+            },
+            {
+              "severity": "minor",
+              "file": "idx-signals/idxsig/rules/moonshot_e5.py",
+              "line": 295,
+              "claim": "known = isfinite(score) treats a name's sessions before its listing (and present-but-untraded sessions) as KNOWN out-of-set, because every FEATURE_ORDER column is finite from column 60 on (NaN ranks fill 0.5, binaries 0), so a name can carry a flag on its very first listed/tradeable session. This is prefix-safe and window-invariant, not a look-ahead, but it is a design choice the protocol freeze should state ('>= 5 sessions outside the top 0.5%' is satisfied vacuously by unlisted sessions).",
+              "evidence": "Probe on open_panel(30x220, seed 13, ipo={7: 90}, delist={9: 150}) with frozen_us_a(1.9): arm score for name 7 is finite on columns 60..89 before it is listed (state False there), its first flag lands at full column 92; flags on columns >= 65 are identical for slices starting at 0, 10, 20 and 33; causal_signals full_window_mismatches = 0 for every slice; no flags for name 9 after its delisting (tradeable mask).",
+              "fix": "Optional, not required for acceptance: if the protocol wants only listed sessions to count, pass known = isfinite(score) & present (or & tradeable) in flags()/family_flags(); the existing tests would still pass. Otherwise state the vacuous-history rule in the protocol text."
+            }
+          ],
+          "test_rerun_tail": "=== python3 -m unittest (from <worktree>/idx-signals) ===\n----------------------------------------------------------------------\nRan 263 tests in 52.439s\n\nOK\n=== python3 -m idxsig rules (tail) ===\nE5_CAND_A0_CREEP_QUIET v1 DETECTOR hold=5 sha=7891dfc8453d source-audit=passed\nE5_CAND_A1_CREEP_QUIET_NR v1 DETECTOR hold=5 sha=9ca7799abdb0 source-audit=passed\nE5_CAND_CRYPTO_A v1 DETECTOR hold=5 sha=6359f0d2761a source-audit=passed\nE5_CAND_CRYPTO_B v1 DETECTOR hold=5 sha=36cd72129fd2 source-audit=passed\nE5_CAND_IDX_A v1 DETECTOR hold=5 sha=b8d3cb7ede37 source-audit=passed\nE5_CAND_IDX_B v1 DETECTOR hold=5 sha=1019d2741cd0 source-audit=passed\nE5_CAND_US_A v1 DETECTOR hold=5 sha=ea160a78ec57 source-audit=passed\nE5_CAND_US_B v1 DETECTOR hold=5 sha=40469717f2ef source-audit=passed\nMOONSHOT_E1_D1 v1.1 DETECTOR hold=5 sha=648a06e1079f source-audit=passed\nMOONSHOT_E2_CRYPTO_D1 v1 DETECTOR hold=5 sha=d8218f2e9c9b source-audit=passed\nMOONSHOT_E2_US_D1 v1 DETECTOR hold=5 sha=c21126d8ba9d source-audit=passed\nMOONSHOT_E4_D1 v1 DETECTOR hold=2 sha=f5585be5d967 source-audit=passed\nPLACEBO_COINFLIP v1 PLACEBO hold=5 sha=b774201b08e6 source-audit=passed\nUSER_RULE PENDING: rule text not supplied\n=== python3 -m idxsig verify-runs ===\nverify-runs: OK\n=== python3 tools/check_append_only.py --all (from <worktree>) ===\nappend-only: OK\n=== independent regression proof (scratchpad copy of idxsig/ + tests/, old d8bf6b4 debounce/flags bodies spliced in, WARMUP kept at 65; worktree untouched) ===\nFAIL: test_debounce_flags_the_first_session_above_after_five_known_below — AssertionError: Lists differ: [np.int64(5), np.int64(11)] != [11]\nFAIL: test_flags_are_window_invariant_from_the_lead_in — AssertionError: np.True_ is not false : US_A\nFAIL: test_frozen_arm_is_causal_and_debounced — AssertionError: np.True_ is not false\nRan 7 tests in 18.135s\nFAILED (failures=3)\n=== scope check ===\ngit diff ae2cbee --stat: rules/__init__.py (+1 module in the registry, from d8bf6b4), rules/moonshot_e5.py, tests/test_e5_rules.py only; HEAD 8b94372 touches only moonshot_e5.py and test_e5_rules.py; no research/results/paper/var file in the diff; pre-existing rule shas unchanged (E1 648a06e1079f, E2 US c21126d8ba9d, E2 CRYPTO d8218f2e9c9b, E4 f5585be5d967, PLACEBO b774201b08e6); worktree has four untracked .githooks/* files that are not part of any commit."
+        },
+        "status": "accepted_r2"
+      }
+    ],
+    "missing": []
+  },
+  "workflowProgress": [
+    {
+      "type": "workflow_phase",
+      "index": 1,
+      "title": "Build"
+    },
+    {
+      "type": "workflow_phase",
+      "index": 2,
+      "title": "Review"
+    },
+    {
+      "type": "workflow_phase",
+      "index": 3,
+      "title": "Fix"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 1,
+      "label": "build:h1-controls",
+      "phaseIndex": 1,
+      "phaseTitle": "Build",
+      "agentId": "a069404161455df8e",
+      "model": "claude-fable-5-1",
+      "state": "done",
+      "startedAt": 1791970629005,
+      "lastProgressAt": 1791970629005,
+      "cached": true,
+      "resultPreview": "{\"branch\":\"e5/h1-controls\",\"commit\":\"c5376066435f5b2af6d97ca8368ba114bbf6622e\",\"files_changed\":[\"idx-signals/idxsig/controls.py\",\"idx-signals/tests/test_controls_v3.py\"],\"api_added\":[\"controls.VERSIONS['v3'] = ('price_band', 'liquidity', 'volatility', 'market_cap', 'momentum', 'drawdown', 'listing_age')\",\"controls.FEATURE_OVERRIDES = {'v3': {'volatility': Feature('volatility', 5, 'quintile of 20-s…",
+      "promptPreview": "STANDING RULES (non-negotiable):\n- You work ONLY inside the worktree path given below, on the branch given below. Never touch /home/user/KOD-Machine or any other worktree. Never run git checkout/switch/reset/rebase/stash/push. Commit on your branch only, with \"git -c user.name=Claude -c user.email=noreply@anthropic.com commit\" and end every commit message with these two trailer lines exactly:\nCo-A…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 2,
+      "label": "build:h2-backtest",
+      "phaseIndex": 1,
+      "phaseTitle": "Build",
+      "agentId": "a7b72a3405ed4b574",
+      "model": "claude-fable-5-1",
+      "state": "done",
+      "startedAt": 1791970629006,
+      "lastProgressAt": 1791970629006,
+      "cached": true,
+      "resultPreview": "{\"branch\":\"e5/h2-backtest\",\"commit\":\"0d2da5d9bcfd9511f52d8e338e37b248685755c4\",\"files_changed\":[\"idx-signals/idxsig/backtest.py\",\"idx-signals/tests/test_backtest_paired.py\"],\"api_added\":[\"trades frame column (trades.csv.gz): matched_mean_net_return  -- float, mean net return over the signal's scored matched-control draws (baseline 'random_matched'); NaN for SKIP_OVERLAP rows (no control drawn), wh…",
+      "promptPreview": "STANDING RULES (non-negotiable):\n- You work ONLY inside the worktree path given below, on the branch given below. Never touch /home/user/KOD-Machine or any other worktree. Never run git checkout/switch/reset/rebase/stash/push. Commit on your branch only, with \"git -c user.name=Claude -c user.email=noreply@anthropic.com commit\" and end every commit message with these two trailer lines exactly:\nCo-A…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 3,
+      "label": "build:h3-e1",
+      "phaseIndex": 1,
+      "phaseTitle": "Build",
+      "agentId": "a8d5fe00ddff61b7a",
+      "model": "claude-fable-5-1",
+      "state": "done",
+      "startedAt": 1791970629006,
+      "lastProgressAt": 1791970629006,
+      "cached": true,
+      "resultPreview": "{\"branch\":\"e5/h3-e1\",\"commit\":\"9307ee808acc72d2b2ec5ddc578ea0aa054ba9e4\",\"files_changed\":[\"idx-signals/idxsig/e1.py\",\"idx-signals/tests/test_e1_study_opts.py\"],\"api_added\":[\"e1.Study(panel_df, panel_meta, protocol_path=PROTOCOL, profile=None, family_module=None, pool_units: str = \\\"panel\\\", pool_version: str = \\\"v1\\\")\",\"e1.PANEL_FORMATS = (\\\"panel-v2\\\", \\\"panel-global-v1\\\", \\\"panel-global-v2-units…",
+      "promptPreview": "STANDING RULES (non-negotiable):\n- You work ONLY inside the worktree path given below, on the branch given below. Never touch /home/user/KOD-Machine or any other worktree. Never run git checkout/switch/reset/rebase/stash/push. Commit on your branch only, with \"git -c user.name=Claude -c user.email=noreply@anthropic.com commit\" and end every commit message with these two trailer lines exactly:\nCo-A…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 4,
+      "label": "build:h4-profiles",
+      "phaseIndex": 1,
+      "phaseTitle": "Build",
+      "agentId": "a28ee6e2f4474f9f4",
+      "model": "claude-fable-5-1",
+      "state": "done",
+      "startedAt": 1791970629007,
+      "lastProgressAt": 1791970629007,
+      "cached": true,
+      "resultPreview": "{\"branch\":\"e5/h4-profiles\",\"commit\":\"963a57d7116b6fe21844eaa94bd6cd28c6174d5e\",\"files_changed\":[\"idx-signals/idxsig/profiles.py\",\"idx-signals/tests/test_profiles_crypto_close.py\"],\"api_added\":[\"idxsig.profiles.CRYPTO_CLOSE  (module constant: Profile, == dataclasses.replace(CRYPTO, entry=\\\"close\\\"); .market stays \\\"CRYPTO\\\")\",\"idxsig.profiles.PROFILES[\\\"CRYPTO_CLOSE\\\"]  (registry key; selected with…",
+      "promptPreview": "STANDING RULES (non-negotiable):\n- You work ONLY inside the worktree path given below, on the branch given below. Never touch /home/user/KOD-Machine or any other worktree. Never run git checkout/switch/reset/rebase/stash/push. Commit on your branch only, with \"git -c user.name=Claude -c user.email=noreply@anthropic.com commit\" and end every commit message with these two trailer lines exactly:\nCo-A…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 5,
+      "label": "build:r-rules",
+      "phaseIndex": 1,
+      "phaseTitle": "Build",
+      "agentId": "a820dabe88a6a1273",
+      "model": "claude-fable-5-1",
+      "state": "done",
+      "startedAt": 1791970629007,
+      "lastProgressAt": 1791970629007,
+      "cached": true,
+      "resultPreview": "{\"branch\":\"e5/r-rules\",\"commit\":\"d8bf6b4862098d019ef8712f8d274a94841dfaca\",\"files_changed\":[\"idx-signals/idxsig/rules/moonshot_e5.py (new)\",\"idx-signals/idxsig/rules/__init__.py (registry(): moonshot_e5 added to the import and the module tuple; nothing else changed)\",\"idx-signals/tests/test_e5_rules.py (new)\"],\"api_added\":[\"idxsig.rules.moonshot_e5.RULE_ID = 'MOONSHOT_E5'; VERSION = 'v1'; SIDE = '…",
+      "promptPreview": "STANDING RULES (non-negotiable):\n- You work ONLY inside the worktree path given below, on the branch given below. Never touch /home/user/KOD-Machine or any other worktree. Never run git checkout/switch/reset/rebase/stash/push. Commit on your branch only, with \"git -c user.name=Claude -c user.email=noreply@anthropic.com commit\" and end every commit message with these two trailer lines exactly:\nCo-A…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 6,
+      "label": "review:h1-controls:r1",
+      "phaseIndex": 2,
+      "phaseTitle": "Review",
+      "agentId": "a943c6cf64312277e",
+      "model": "claude-fable-5-1",
+      "state": "done",
+      "startedAt": 1791970629009,
+      "lastProgressAt": 1791970629009,
+      "cached": true,
+      "resultPreview": "{\"verdict\":\"accept\",\"findings\":[{\"severity\":\"minor\",\"file\":\"idx-signals/idxsig/controls.py\",\"line\":29,\"claim\":\"Module docstring misstates v2's relaxation order: volatility is the fourth feature dropped under v2, not 'the second'.\",\"evidence\":\"VERSIONS['v2'] = (price_band, liquidity, market_cap, volatility, momentum, drawdown, listing_age) and levels() drops from the end, so the drop order is listi…",
+      "promptPreview": "STANDING RULES (non-negotiable):\n- You work ONLY inside the worktree path given below, on the branch given below. Never touch /home/user/KOD-Machine or any other worktree. Never run git checkout/switch/reset/rebase/stash/push. You are READ-ONLY: do not edit or commit anything; you may run tests, with \"git -c user.name=Claude -c user.email=noreply@anthropic.com commit\" and end every commit message …"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 7,
+      "label": "review:h2-backtest:r1",
+      "phaseIndex": 2,
+      "phaseTitle": "Review",
+      "agentId": "a63e07114a238fb1b",
+      "model": "claude-fable-5-1",
+      "state": "done",
+      "startedAt": 1791970629010,
+      "lastProgressAt": 1791970629010,
+      "cached": true,
+      "resultPreview": "{\"verdict\":\"accept\",\"findings\":[{\"severity\":\"minor\",\"file\":\"idx-signals/idxsig/backtest.py\",\"line\":534,\"claim\":\"The two columns are appended to the default trades frame unconditionally, so a default re-run of any recorded config now writes a trades.csv.gz whose bytes (header + 2 columns) differ from the recorded file; the one in-repo byte-level reproduction script, research/IDX_CAUSAL_CAPACITY_v1/…",
+      "promptPreview": "STANDING RULES (non-negotiable):\n- You work ONLY inside the worktree path given below, on the branch given below. Never touch /home/user/KOD-Machine or any other worktree. Never run git checkout/switch/reset/rebase/stash/push. You are READ-ONLY: do not edit or commit anything; you may run tests, with \"git -c user.name=Claude -c user.email=noreply@anthropic.com commit\" and end every commit message …"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 8,
+      "label": "review:h3-e1:r1",
+      "phaseIndex": 2,
+      "phaseTitle": "Review",
+      "agentId": "a1edb2efd32fd40ba",
+      "model": "claude-fable-5-1",
+      "state": "done",
+      "startedAt": 1791970629076,
+      "queuedAt": 1791970629010,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "fix_required",
+      "promptPreview": "STANDING RULES (non-negotiable):\n- You work ONLY inside the worktree path given below, on the branch given below. Never touch /home/user/KOD-Machine or any other worktree. Never run git checkout/switch/reset/rebase/stash/push. You are READ-ONLY: do not edit or commit anything; you may run tests, with \"git -c user.name=Claude -c user.email=noreply@anthropic.com commit\" and end every commit message …",
+      "promptFramed": true,
+      "lastProgressAt": 1791970966549,
+      "tokens": 163748,
+      "toolCalls": 26,
+      "durationMs": 337471,
+      "resultPreview": "{\"verdict\":\"fix_required\",\"findings\":[{\"severity\":\"serious\",\"file\":\"idx-signals/idxsig/e1.py\",\"line\":138,\"claim\":\"The panel-format declaration is a single global key (protocol[\\\"data\\\"][\\\"panel_format\\\"]), but the E5 protocol the caller will use is one file spanning three markets (draft keys: markets = {IDX, CRYPTO, US}) that need three different formats (IDX panel-v2, US panel-global-v2-units, CR…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 9,
+      "label": "review:h4-profiles:r1",
+      "phaseIndex": 2,
+      "phaseTitle": "Review",
+      "agentId": "ab3a141d65bf7c845",
+      "model": "claude-fable-5-1",
+      "state": "done",
+      "startedAt": 1791970629077,
+      "queuedAt": 1791970629011,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "accept",
+      "promptPreview": "STANDING RULES (non-negotiable):\n- You work ONLY inside the worktree path given below, on the branch given below. Never touch /home/user/KOD-Machine or any other worktree. Never run git checkout/switch/reset/rebase/stash/push. You are READ-ONLY: do not edit or commit anything; you may run tests, with \"git -c user.name=Claude -c user.email=noreply@anthropic.com commit\" and end every commit message …",
+      "promptFramed": true,
+      "lastProgressAt": 1791970795918,
+      "tokens": 124096,
+      "toolCalls": 10,
+      "durationMs": 164735,
+      "resultPreview": "{\"verdict\":\"accept\",\"findings\":[{\"severity\":\"minor\",\"file\":\"idx-signals/idxsig/profiles.py\",\"line\":73,\"claim\":\"CRYPTO_CLOSE cannot run a short-side plan: execution.execute refuses side='short' unless entry_price == 'open' (execution.py:414-416), so any E4-style short plan under market='CRYPTO_CLOSE' raises ValueError. Not a defect for E5 (the protocol draft fixes family.side = 'long' and crypto fi…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 10,
+      "label": "review:r-rules:r1",
+      "phaseIndex": 2,
+      "phaseTitle": "Review",
+      "agentId": "a5816484999e4401a",
+      "model": "claude-fable-5-1",
+      "state": "done",
+      "startedAt": 1791970798174,
+      "queuedAt": 1791970629012,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "fix_required",
+      "promptPreview": "STANDING RULES (non-negotiable):\n- You work ONLY inside the worktree path given below, on the branch given below. Never touch /home/user/KOD-Machine or any other worktree. Never run git checkout/switch/reset/rebase/stash/push. You are READ-ONLY: do not edit or commit anything; you may run tests, with \"git -c user.name=Claude -c user.email=noreply@anthropic.com commit\" and end every commit message …",
+      "promptFramed": true,
+      "lastProgressAt": 1791971643069,
+      "tokens": 171338,
+      "toolCalls": 19,
+      "durationMs": 844893,
+      "resultPreview": "{\"verdict\":\"fix_required\",\"findings\":[{\"severity\":\"serious\",\"file\":\"idx-signals/idxsig/rules/moonshot_e5.py\",\"line\":282,\"claim\":\"flags()/debounce() treat a session with no score (NaN, i.e. the WARMUP columns) as 'outside the set', so at the first evaluable column of every view (WARMUP = 60) every name currently in the top set fires at once, and the five sessions after that over-flag too. Flags are…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 11,
+      "label": "fix:h3-e1:r1",
+      "phaseIndex": 3,
+      "phaseTitle": "Fix",
+      "agentId": "a149312f2dc7e1bf5",
+      "model": "claude-fable-5-1",
+      "state": "done",
+      "startedAt": 1791970970294,
+      "queuedAt": 1791970970243,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "e5/h3-e1",
+      "promptPreview": "STANDING RULES (non-negotiable):\n- You work ONLY inside the worktree path given below, on the branch given below. Never touch /home/user/KOD-Machine or any other worktree. Never run git checkout/switch/reset/rebase/stash/push. Commit on your branch only, with \"git -c user.name=Claude -c user.email=noreply@anthropic.com commit\" and end every commit message with these two trailer lines exactly:\nCo-A…",
+      "promptFramed": true,
+      "lastProgressAt": 1791971257043,
+      "tokens": 121443,
+      "toolCalls": 12,
+      "durationMs": 286747,
+      "resultPreview": "{\"branch\":\"e5/h3-e1\",\"commit\":\"45d98364fc9010b4c2f42d7a5cf1d9d1f945eae6\",\"files_changed\":[\"idx-signals/idxsig/e1.py\",\"idx-signals/tests/test_e1_study_opts.py\"],\"api_added\":[\"e1.Study(panel_df, panel_meta, protocol_path=PROTOCOL, profile=None, family_module=None, pool_units=\\\"panel\\\", pool_version=\\\"v1\\\", panel_format: str | None = None)  # new keyword; validated against e1.PANEL_FORMATS, overrides…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 12,
+      "label": "review:h3-e1:r2",
+      "phaseIndex": 2,
+      "phaseTitle": "Review",
+      "agentId": "a30c83b057b16a213",
+      "model": "claude-fable-5-1",
+      "state": "done",
+      "startedAt": 1791971259199,
+      "queuedAt": 1791971259189,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "fix_required",
+      "promptPreview": "STANDING RULES (non-negotiable):\n- You work ONLY inside the worktree path given below, on the branch given below. Never touch /home/user/KOD-Machine or any other worktree. Never run git checkout/switch/reset/rebase/stash/push. You are READ-ONLY: do not edit or commit anything; you may run tests, with \"git -c user.name=Claude -c user.email=noreply@anthropic.com commit\" and end every commit message …",
+      "promptFramed": true,
+      "lastProgressAt": 1791971596747,
+      "tokens": 144075,
+      "toolCalls": 18,
+      "durationMs": 337546,
+      "resultPreview": "{\"verdict\":\"fix_required\",\"findings\":[{\"severity\":\"serious\",\"file\":\"idx-signals/idxsig/e1.py\",\"line\":509,\"claim\":\"run_discovery and run_validation write summary.json / result.json without recording the new Study options (pool_version, pool_units, panel_format, pool_keys), so an E5 result directory produced with the v3 pool or as-traded bands does not self-describe which detection pool its controls…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 13,
+      "label": "fix:h3-e1:r2",
+      "phaseIndex": 3,
+      "phaseTitle": "Fix",
+      "agentId": "a174d48d16c173909",
+      "model": "claude-fable-5-1",
+      "state": "done",
+      "startedAt": 1791971599116,
+      "queuedAt": 1791971599103,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "e5/h3-e1",
+      "promptPreview": "STANDING RULES (non-negotiable):\n- You work ONLY inside the worktree path given below, on the branch given below. Never touch /home/user/KOD-Machine or any other worktree. Never run git checkout/switch/reset/rebase/stash/push. Commit on your branch only, with \"git -c user.name=Claude -c user.email=noreply@anthropic.com commit\" and end every commit message with these two trailer lines exactly:\nCo-A…",
+      "promptFramed": true,
+      "lastProgressAt": 1791971914577,
+      "tokens": 119538,
+      "toolCalls": 16,
+      "durationMs": 315460,
+      "resultPreview": "{\"branch\":\"e5/h3-e1\",\"commit\":\"8fbd4474d03d89bb25846f7754b28d704836b102\",\"files_changed\":[\"idx-signals/idxsig/e1.py\",\"idx-signals/tests/test_e1_study_opts.py\"],\"api_added\":[\"Study.study_options(self) -> dict | None  # {\\\"panel_format\\\": str, \\\"pool_units\\\": str, \\\"pool_version\\\": str, \\\"pool_keys\\\": list[str]} when any E5 option is on; None on the recorded E1/E2 path\",\"Study.legacy_panel_format: s…"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 14,
+      "label": "fix:r-rules:r1",
+      "phaseIndex": 3,
+      "phaseTitle": "Fix",
+      "agentId": "a4bcabae21a244c40",
+      "model": "claude-fable-5-1",
+      "state": "done",
+      "startedAt": 1791971645198,
+      "queuedAt": 1791971645187,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "e5/r-rules",
+      "promptPreview": "STANDING RULES (non-negotiable):\n- You work ONLY inside the worktree path given below, on the branch given below. Never touch /home/user/KOD-Machine or any other worktree. Never run git checkout/switch/reset/rebase/stash/push. Commit on your branch only, with \"git -c user.name=Claude -c user.email=noreply@anthropic.com commit\" and end every commit message with these two trailer lines exactly:\nCo-A…",
+      "promptFramed": true,
+      "lastProgressAt": 1791972133750,
+      "tokens": 149359,
+      "toolCalls": 32,
+      "durationMs": 488551,
+      "resultPreview": "{\"branch\":\"e5/r-rules\",\"commit\":\"8b94372\",\"files_changed\":[\"idx-signals/idxsig/rules/moonshot_e5.py\",\"idx-signals/tests/test_e5_rules.py\"],\"api_added\":[\"moonshot_e5.FEATURE_WARMUP = 60  (features() NaN in the first 60 columns; unchanged feature semantics)\",\"moonshot_e5.DEBOUNCE = 5  (moved above WARMUP; same value)\",\"moonshot_e5.WARMUP = FEATURE_WARMUP + DEBOUNCE = 65  (CHANGED from 60: compute() …"
+    },
+    {
+      "type": "workflow_agent",
+      "index": 15,
+      "label": "review:r-rules:r2",
+      "phaseIndex": 2,
+      "phaseTitle": "Review",
+      "agentId": "ab186c8170278982e",
+      "model": "claude-fable-5-1",
+      "state": "done",
+      "startedAt": 1791972136244,
+      "queuedAt": 1791972136234,
+      "attempt": 1,
+      "lastToolName": "StructuredOutput",
+      "lastToolSummary": "accept",
+      "promptPreview": "STANDING RULES (non-negotiable):\n- You work ONLY inside the worktree path given below, on the branch given below. Never touch /home/user/KOD-Machine or any other worktree. Never run git checkout/switch/reset/rebase/stash/push. You are READ-ONLY: do not edit or commit anything; you may run tests, with \"git -c user.name=Claude -c user.email=noreply@anthropic.com commit\" and end every commit message …",
+      "promptFramed": true,
+      "lastProgressAt": 1791972445650,
+      "tokens": 146891,
+      "toolCalls": 15,
+      "durationMs": 309404,
+      "resultPreview": "{\"verdict\":\"accept\",\"findings\":[{\"severity\":\"minor\",\"file\":\"idx-signals/idxsig/rules/moonshot_e5.py\",\"line\":64,\"claim\":\"WARMUP is now 65, which contradicts the read-only protocol draft's 'WARMUP = 60 literal ... every harness window starts 60 sessions before the period start' (E5_CEILING_protocol_draft.json family.features_ranked.warmup); nothing in the repo reads the literal yet (idxsig/e5.py doe…"
+    }
+  ],
+  "totalTokens": 1140488,
+  "totalToolCalls": 148
+}
