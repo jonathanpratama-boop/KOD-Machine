@@ -1,0 +1,566 @@
+{
+ "protocol_id": "KOD-CRYPTO-EXIT-ATR-v1-cloud",
+ "label": "exploratory comparison on previously examined E2 discovery history; E2's original daily panel used (sha256 checked), so the 'content identity unverified' caveat does not apply",
+ "started": "2026-10-16T18:04:42+00:00",
+ "code_commit": "d1f11c4fd27f476c62a3b99281bb734d3b6a5c86",
+ "e2_harness_commit": "21345b1202456b2a0a6b22a7028d338942d0f1fc",
+ "hourly_symbols_loaded": 351,
+ "baseline_reproduction": {
+  "scored_trades_checked": 250387,
+  "max_abs_diff_vs_e2_harness": 2.2737367544323206e-13,
+  "arm_A_all_scored_signals_original_costs": {
+   "n": 1244,
+   "mean": 1.0062145900993515,
+   "median": -0.097241140179337,
+   "win_rate": 0.3311897106109325,
+   "win_rate_wilson95": [
+    0.3055911287880096,
+    0.35782765169029357
+   ],
+   "avg_win": 3.4083300756356514,
+   "avg_loss": -0.1832945205267969,
+   "worst_1pct": -0.4677787629720919,
+   "worst_5": [
+    -0.6535541993580016,
+    -0.6286562382000249,
+    -0.6061393077176946,
+    -0.593802997115286,
+    -0.5537884231536925
+   ],
+   "best": 1254.8907395293445,
+   "holding_hours_mean": 1.0,
+   "holding_hours_median": 1.0
+  },
+  "note": "holding hours not meaningful in this row (set to 1)"
+ },
+ "eligibility": {
+  "stage": "eligibility only: no exit price read, no return computed",
+  "panel": {
+   "file": "data/panel/panel_crypto-20261008T003354Z.csv.gz",
+   "sha256": "3dc12749c7cce635a68ef4f152ec21c3b3d24eb6b02665c799aa24e513963d7d",
+   "rows": 773512
+  },
+  "hourly": {
+   "manifest": "binance_1h-20261015T182940Z.jsonl",
+   "manifest_sha256": "2587a63ce26034e1d54670579f8843150f640407a6df0338f35537bd30d20adf",
+   "last_hour_read": "2022-12-31 23:00:00+00:00",
+   "symbols_loaded": 351
+  },
+  "entries": {
+   "signals.csv": "c64f1916dfff560c6e012834f2a93ecbb9d64e32e9e12a296ff7f49e948eefd4",
+   "controls.csv.gz": "7c389ae0d82b4f3438f3d767ddc532f9a3324a825367f434f733eb37420442d3",
+   "entries_meta.json": "dfd65ca1a7b90a37a5c754c05e1f758248ca6fe6fbd4677c70002d403f6c8a7d"
+  },
+  "signals": {
+   "attempted": 1257,
+   "by_status": {
+    "EXITED": 1241,
+    "SKIP_LOT": 11,
+    "EXIT_DATA_END": 3,
+    "INCOMPLETE": 2
+   },
+   "scored_by_original_model": 1244,
+   "coverage_of_scored": {
+    "COMPLETE": 1150,
+    "GAPS": 91,
+    "TRUNCATED": 3
+   },
+   "excluded_by_first_reason": {
+    "ATR_WARMUP": 55,
+    "NOT_FILLED": 11,
+    "UNIT_OR_ASSET_CHANGE": 8,
+    "INCOMPLETE_BOUNDARY": 2
+   },
+   "atr_invalid_among_scored": 62,
+   "unit_change_among_scored": 8,
+   "unit_change_and_atr_invalid": 7,
+   "unresolved_unfi_among_eligible": 1,
+   "eligible": 1181,
+   "eligible_distinct_coins": 307,
+   "eligible_coverage": {
+    "COMPLETE": 1095,
+    "GAPS": 83,
+    "TRUNCATED": 3
+   },
+   "eligible_by_entry_year": {
+    "2020": 89,
+    "2021": 718,
+    "2022": 374
+   }
+  },
+  "controls": {
+   "attempted": 251400,
+   "by_status": {
+    "EXITED": 248675,
+    "SKIP_LOT": 1768,
+    "EXIT_DATA_END": 468,
+    "INCOMPLETE": 369,
+    "SKIP_LIQUIDITY": 108,
+    "SKIP_NOT_TRADED": 12
+   },
+   "scored_by_original_model": 249143,
+   "coverage_of_scored": {
+    "COMPLETE": 230669,
+    "GAPS": 17969,
+    "TRUNCATED": 505
+   },
+   "excluded_by_first_reason": {
+    "ATR_WARMUP": 3474,
+    "NOT_FILLED": 1888,
+    "INCOMPLETE_BOUNDARY": 369,
+    "UNIT_OR_ASSET_CHANGE": 214
+   },
+   "atr_invalid_among_scored": 3524,
+   "unit_change_among_scored": 214,
+   "unit_change_and_atr_invalid": 50,
+   "unresolved_unfi_among_eligible": 62,
+   "eligible": 245455,
+   "eligible_distinct_coins": 342,
+   "eligible_coverage": {
+    "COMPLETE": 227272,
+    "GAPS": 17678,
+    "TRUNCATED": 505
+   },
+   "eligible_by_entry_year": {
+    "2020": 20903,
+    "2021": 147454,
+    "2022": 77098
+   }
+  },
+  "eligible_signals_with_no_eligible_control": 0,
+  "eligible_controls_per_eligible_signal": {
+   "median": 200.0,
+   "min": 26
+  },
+  "atr_over_entry_price_eligible_signals": {
+   "p10": 0.0851556928927977,
+   "median": 0.1245655023078238,
+   "p90": 0.25974317131571323
+  },
+  "initial_stop_at_or_below_zero_eligible": {
+   "signals": 62,
+   "controls": 12809
+  }
+ },
+ "common_scored_trades": 1181,
+ "distinct_coins": 307,
+ "arm_A": {
+  "original": {
+   "n": 1181,
+   "mean": -0.000900539995344666,
+   "median": -0.09535900856706925,
+   "win_rate": 0.3353090601185436,
+   "win_rate_wilson95": [
+    0.3089563995584873,
+    0.3627296331304042
+   ],
+   "avg_win": 0.3555456933599734,
+   "avg_loss": -0.18071290739497006,
+   "worst_1pct": -0.46354182175061204,
+   "worst_5": [
+    -0.6535541993580016,
+    -0.6286562382000249,
+    -0.6061393077176946,
+    -0.593802997115286,
+    -0.5537884231536925
+   ],
+   "best": 3.811858852965229,
+   "holding_hours_mean": 143.81710414902625,
+   "holding_hours_median": 144.0
+  },
+  "primary": {
+   "n": 1181,
+   "mean": -0.002896754677959344,
+   "median": -0.09716649390950449,
+   "win_rate": 0.331922099915326,
+   "win_rate_wilson95": [
+    0.3056482408507251,
+    0.3592858336415368
+   ],
+   "avg_win": 0.3564430365116924,
+   "avg_loss": -0.1814280577785214,
+   "worst_1pct": -0.4646136726872797,
+   "worst_5": [
+    -0.6542464029089559,
+    -0.6293981882252997,
+    -0.6069262468847272,
+    -0.5946145844032911,
+    -0.554679960119641
+   ],
+   "best": 3.8022446917355612,
+   "holding_hours_mean": 143.81710414902625,
+   "holding_hours_median": 144.0
+  },
+  "stress": {
+   "n": 1181,
+   "mean": -0.004888992837302108,
+   "median": -0.09897037868352909,
+   "win_rate": 0.3310753598645216,
+   "win_rate_wilson95": [
+    0.3048214441128704,
+    0.3584246408302342
+   ],
+   "avg_win": 0.35464182216780815,
+   "avg_loss": -0.18283399114995794,
+   "worst_1pct": -0.4656833884627191,
+   "worst_5": [
+    -0.6549372275683746,
+    -0.6301386602624763,
+    -0.6077116184438573,
+    -0.5954245549835512,
+    -0.5555697211155378
+   ],
+   "best": 3.792649682221489,
+   "holding_hours_mean": 143.81710414902625,
+   "holding_hours_median": 144.0
+  }
+ },
+ "arm_B": {
+  "original": {
+   "n": 1181,
+   "mean": -0.009156126270023804,
+   "median": -0.08467099187062388,
+   "win_rate": 0.3573243014394581,
+   "win_rate_wilson95": [
+    0.33049662587185014,
+    0.38507713509513297
+   ],
+   "avg_win": 0.270185773266334,
+   "avg_loss": -0.16446875025466542,
+   "worst_1pct": -0.40417238141576267,
+   "worst_5": [
+    -0.6535541993580016,
+    -0.593802997115286,
+    -0.508700875446674,
+    -0.5046244597360878,
+    -0.47587336983821327
+   ],
+   "best": 1.7864887902576103,
+   "holding_hours_mean": 89.77138018628281,
+   "holding_hours_median": 111.0
+  },
+  "primary": {
+   "n": 1181,
+   "mean": -0.011135846175897204,
+   "median": -0.08649983201977429,
+   "win_rate": 0.3556308213378493,
+   "win_rate_wilson95": [
+    0.32883743331393017,
+    0.38336034855473816
+   ],
+   "avg_win": 0.26892313281530494,
+   "avg_loss": -0.16570190554029263,
+   "worst_1pct": -0.40536285332385447,
+   "worst_5": [
+    -0.6542464029089559,
+    -0.5946145844032911,
+    -0.5096824979629992,
+    -0.5056142269879673,
+    -0.4769205821694795
+   ],
+   "best": 1.7809213467159757,
+   "holding_hours_mean": 89.77138018628281,
+   "holding_hours_median": 111.0
+  },
+  "stress": {
+   "n": 1181,
+   "mean": -0.013111622416619685,
+   "median": -0.0883250290610581,
+   "win_rate": 0.35478408128704486,
+   "win_rate_wilson95": [
+    0.3280079760034672,
+    0.38250181631604374
+   ],
+   "avg_win": 0.26702758057015846,
+   "avg_loss": -0.16715142038441505,
+   "worst_1pct": -0.406550953773962,
+   "worst_5": [
+    -0.6549372275683746,
+    -0.5954245549835512,
+    -0.5106621650559855,
+    -0.5066020225919348,
+    -0.47796570842040476
+   ],
+   "best": 1.7753649936993239,
+   "holding_hours_mean": 89.77138018628281,
+   "holding_hours_median": 111.0
+  }
+ },
+ "arm_B_exit_reasons": {
+  "STOP": 626,
+  "NOT_STOPPED": 534,
+  "STOP_GAP": 21
+ },
+ "arm_B_stop_raises": {
+  "mean": 4.635055038103302,
+  "share_with_any_raise": 0.995766299745978
+ },
+ "initial_stop_distance": {
+  "p10": 0.25546707867803653,
+  "median": 0.373696506923215,
+  "p90": 0.779229513945767
+ },
+ "paired_improvement_primary": {
+  "mean": -0.008239091497937862,
+  "ci95": [
+   -0.029166190154767242,
+   0.01188143181704867
+  ],
+  "n": 1181,
+  "weeks": 131,
+  "resamples": 2000,
+  "median": 0.0,
+  "improved": 359,
+  "worse": 288,
+  "identical": 534
+ },
+ "abs_mean_net_B_primary": {
+  "mean": -0.011135846175897204,
+  "ci95": [
+   -0.038234478357429116,
+   0.015537006987828067
+  ],
+  "n": 1181,
+  "weeks": 131,
+  "resamples": 2000
+ },
+ "abs_mean_net_A_primary": {
+  "mean": -0.002896754677959344,
+  "ci95": [
+   -0.0421127170734708,
+   0.03603681095988231
+  ],
+  "n": 1181,
+  "weeks": 131,
+  "resamples": 2000
+ },
+ "matched_control_excess": {
+  "B_trailing_exit": {
+   "mean": -0.029984563434490574,
+   "ci95": [
+    -0.04541844190309718,
+    -0.013717484548051929
+   ],
+   "n": 1181,
+   "weeks": 131,
+   "resamples": 2000
+  },
+  "A_original_exit": {
+   "mean": -0.028574305596547868,
+   "ci95": [
+    -0.04984157804779731,
+    -0.005139478567041169
+   ],
+   "n": 1181,
+   "weeks": 131,
+   "resamples": 2000
+  },
+  "controls_scored": 245455,
+  "controls_per_signal_min": 26,
+  "control_arm_A_primary": {
+   "n": 245455,
+   "mean": 0.02560333265908545,
+   "median": -0.010419633955276897,
+   "win_rate": 0.4686317247560653,
+   "win_rate_wilson95": [
+    0.46665810079569636,
+    0.4706063305506091
+   ],
+   "avg_win": 0.19339248649704455,
+   "avg_loss": -0.12237561945721534,
+   "worst_1pct": -0.38787510026156546,
+   "worst_5": [
+    -0.6293981882252997,
+    -0.6293981882252997,
+    -0.6293981882252997,
+    -0.6293981882252997,
+    -0.6293981882252997
+   ],
+   "best": 3.8022446917355612,
+   "holding_hours_mean": 143.8752357866004,
+   "holding_hours_median": 144.0
+  },
+  "control_arm_B_primary": {
+   "n": 245455,
+   "mean": 0.019130467245076926,
+   "median": -0.010884060148322106,
+   "win_rate": 0.4685380212258866,
+   "win_rate_wilson95": [
+    0.46656442206848375,
+    0.4705126051504062
+   ],
+   "avg_win": 0.1802412406769062,
+   "avg_loss": -0.12290513642320612,
+   "worst_1pct": -0.3973083073838728,
+   "worst_5": [
+    -0.6400038394309415,
+    -0.6400038394309415,
+    -0.6400038394309415,
+    -0.6400038394309415,
+    -0.6400038394309415
+   ],
+   "best": 3.702400876365517,
+   "holding_hours_mean": 129.7555152675643,
+   "holding_hours_median": 144.0
+  },
+  "control_arm_B_exit_reasons": {
+   "NOT_STOPPED": 195346,
+   "STOP": 47562,
+   "STOP_GAP": 2547
+  }
+ },
+ "by_year": {
+  "2020": {
+   "n": 89,
+   "mean_net_A": -0.01097407387707531,
+   "mean_net_B": -0.01740393008773747,
+   "paired_mean": -0.006429856210662149,
+   "win_rate_B": 0.30337078651685395
+  },
+  "2021": {
+   "n": 718,
+   "mean_net_A": 0.03832146727589141,
+   "mean_net_B": 0.004457595646267274,
+   "paired_mean": -0.03386387162962414,
+   "win_rate_B": 0.3802228412256267
+  },
+  "2022": {
+   "n": 374,
+   "mean_net_A": -0.08010478129331637,
+   "mean_net_B": -0.03958031612284993,
+   "paired_mean": 0.04052446517046644,
+   "win_rate_B": 0.32085561497326204
+  }
+ },
+ "sensitivities": {
+  "stress_costs_0.4pct_per_side": {
+   "mean_net_A": {
+    "mean": -0.004888992837302108,
+    "ci95": [
+     -0.044026600722278944,
+     0.033966782526055055
+    ],
+    "n": 1181,
+    "weeks": 131,
+    "resamples": 2000
+   },
+   "mean_net_B": {
+    "mean": -0.013111622416619685,
+    "ci95": [
+     -0.040156110827833616,
+     0.013507937694314288
+    ],
+    "n": 1181,
+    "weeks": 131,
+    "resamples": 2000
+   },
+   "paired": {
+    "mean": -0.008222629579317577,
+    "ci95": [
+     -0.02910791534996484,
+     0.011857692407950765
+    ],
+    "n": 1181,
+    "weeks": 131,
+    "resamples": 2000
+   }
+  },
+  "original_costs_0.2pct_per_side": {
+   "mean_net_A": -0.000900539995344666,
+   "mean_net_B": -0.009156126270023804
+  },
+  "conservative_gap_fills": {
+   "mean_net_B": {
+    "mean": -0.011135846175897204,
+    "ci95": [
+     -0.038234478357429116,
+     0.015537006987828067
+    ],
+    "n": 1181,
+    "weeks": 131,
+    "resamples": 2000
+   },
+   "paired": {
+    "mean": -0.008239091497937862,
+    "ci95": [
+     -0.029166190154767242,
+     0.01188143181704867
+    ],
+    "n": 1181,
+    "weeks": 131,
+    "resamples": 2000
+   },
+   "trades_changed": 0
+  },
+  "data_end_minus_100pct": {
+   "trades_affected": 3,
+   "mean_net_A": -0.0045082292907468605,
+   "mean_net_B": -0.012747320788684721,
+   "paired": {
+    "mean": -0.008239091497937862,
+    "ci95": [
+     -0.029166190154767242,
+     0.01188143181704867
+    ],
+    "n": 1181,
+    "weeks": 131,
+    "resamples": 2000
+   }
+  },
+  "unresolved_unfi_excluded": {
+   "trades_dropped": 1,
+   "mean_net_B": -0.011405499345098434,
+   "paired": {
+    "mean": -0.008054809128348517,
+    "ci95": [
+     -0.0288366134073185,
+     0.012105663064423164
+    ],
+    "n": 1180,
+    "weeks": 131,
+    "resamples": 2000
+   }
+  }
+ },
+ "exposure": {
+  "arm_A": {
+   "max_concurrent_positions": 79,
+   "mean_concurrent_positions": 7.759868421052632,
+   "share_of_hours_with_a_position": 0.9780701754385965,
+   "max_capital_deployed_usdt": 395000.0,
+   "portfolio": {
+    "model": "each trade 5000 USDT, unlimited capital, no compounding, P&L booked at exit",
+    "total_pnl_usdt": -17105.336373349972,
+    "max_drawdown_usdt": -279094.30312939925,
+    "max_drawdown_in_trade_notionals": -55.81886062587985
+   }
+  },
+  "arm_B": {
+   "max_concurrent_positions": 76,
+   "mean_concurrent_positions": 4.84375,
+   "share_of_hours_with_a_position": 0.9125091374269005,
+   "max_capital_deployed_usdt": 380000.0,
+   "portfolio": {
+    "model": "each trade 5000 USDT, unlimited capital, no compounding, P&L booked at exit",
+    "total_pnl_usdt": -65757.17166867304,
+    "max_drawdown_usdt": -181064.0062387001,
+    "max_drawdown_in_trade_notionals": -36.21280124774002
+   }
+  }
+ },
+ "acceptance": {
+  "C1_at_least_200_common_scored_trades": true,
+  "C2_mean_net_B_positive_each_discovery_year": false,
+  "C3_lower95_mean_net_B_above_zero": false,
+  "C4_lower95_paired_improvement_above_zero": false,
+  "C5_positive_excess_over_matched_controls_same_exit": false,
+  "C6_mean_net_B_positive_under_stress": false
+ },
+ "research_positive": false,
+ "verdict": {
+  "Q1_trailing_exit_vs_original_exit": "DOES_NOT_IMPROVE",
+  "Q2_resulting_strategy_profitability": "UNPROFITABLE",
+  "overall": "NEGATIVE"
+ },
+ "finished": "2026-10-16T18:08:06+00:00"
+}
