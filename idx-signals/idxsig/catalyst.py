@@ -10,6 +10,7 @@ York time on session e. Classes, first match wins: DILUTION, DOCUMENTED, UNDOCUM
 from __future__ import annotations
 
 import json
+import re
 from datetime import datetime, time, timedelta
 from zoneinfo import ZoneInfo
 
@@ -55,11 +56,21 @@ def chunk_names(main_body: bytes, start: str, end: str) -> list[str]:
     return [f["name"] for f in files if f.get("filingFrom", "0000") <= end and f.get("filingTo", "9999") >= start]
 
 
+def header_acceptance(body: bytes) -> str | None:
+    """<ACCEPTANCE-DATETIME> (YYYYMMDDHHMMSS, New York time) from a filing's -index-headers.html page."""
+    m = re.search(rb"<ACCEPTANCE-DATETIME>\s*(\d{14})", body or b"")
+    return m.group(1).decode() if m else None
+
+
 def acceptance_ny(value: str, convention: str) -> datetime | None:
-    """EDGAR acceptanceDateTime as an aware New York datetime. convention 'ny': the clock reading is New York
-    time despite the 'Z'; 'utc': it is UTC. Fixed by research/E9's acceptance-time check."""
+    """An acceptance time as an aware New York datetime. 'header': the filing's own SGML header value
+    (YYYYMMDDHHMMSS, New York time; research/E9/FEASIBILITY_AMENDMENT_3.md). For the submissions JSON
+    acceptanceDateTime: 'ny', the clock reading is New York time despite the 'Z'; 'utc', it is UTC; 'double',
+    New York time converted to UTC twice. The JSON field mixes 'utc' and 'double' (amendment 3)."""
     if not isinstance(value, str) or not value.strip():
         return None
+    if convention == "header":
+        return datetime.strptime(value.strip()[:14], "%Y%m%d%H%M%S").replace(tzinfo=NY)
     naive = datetime.strptime(value[:19], "%Y-%m-%dT%H:%M:%S")
     utc = ZoneInfo("UTC")
     if convention == "ny":
@@ -74,8 +85,10 @@ def acceptance_ny(value: str, convention: str) -> datetime | None:
 
 def accepted(filings: pd.DataFrame, convention: str) -> pd.Series:
     """Acceptance times as UTC timestamps; a filing without one is NaT, so it is in no window (it cannot be
-    shown to be public before an open; research/E9/FEASIBILITY_AMENDMENT_2.md)."""
-    vals = [acceptance_ny(v, convention) for v in filings["acceptanceDateTime"]] if len(filings) else []
+    shown to be public before an open; research/E9/FEASIBILITY_AMENDMENT_2.md). 'header' reads the column
+    acceptanceHeader (the caller's fetched SGML values), every other convention acceptanceDateTime."""
+    col = "acceptanceHeader" if convention == "header" else "acceptanceDateTime"
+    vals = [acceptance_ny(v, convention) for v in filings[col]] if len(filings) else []
     return pd.Series(pd.to_datetime(vals, utc=True), index=filings.index, dtype="datetime64[ns, UTC]")
 
 
@@ -102,15 +115,18 @@ def is_information(form: str) -> bool:
 def classify(filings: pd.DataFrame, start: datetime, end: datetime, convention: str) -> dict:
     """Class of one signal from its issuer's filings (columns as parse_submissions) in (start, end]."""
     acc = accepted(filings, convention)
-    inside = filings[(acc > pd.Timestamp(start)) & (acc <= pd.Timestamp(end))]
-    dil = [r for r in inside.itertuples(index=False) if is_dilution(r.form, r.items)]
-    info = [r for r in inside.itertuples(index=False) if is_information(r.form)]
+    sel = (acc > pd.Timestamp(start)) & (acc <= pd.Timestamp(end))
+    inside = filings[sel]
+    when = [t.tz_convert(NY).strftime("%Y-%m-%dT%H:%M:%S") for t in acc[sel]]
+    rows = list(zip(inside["form"], inside["accessionNumber"], inside["items"], when))
+    dil = [r for r in rows if is_dilution(r[0], r[2])]
+    info = [r for r in rows if is_information(r[0])]
     cls = "DILUTION" if dil else ("DOCUMENTED" if info else "UNDOCUMENTED")
     used = dil if dil else info
     return {"class": cls, "n_filings_in_window": int(len(inside)),
-            "forms": ";".join(sorted({r.form for r in inside.itertuples(index=False)})),
-            "evidence": ";".join(f"{r.form}|{r.accessionNumber}|{r.acceptanceDateTime}|{r.items}" for r in used[:6]),
-            "items_8k": ";".join(sorted({i for r in info if r.form.upper().startswith("8-K") for i in items_of(r.items)}))}
+            "forms": ";".join(sorted({r[0] for r in rows})),
+            "evidence": ";".join(f"{f}|{a}|{t} NY|{i}" for f, a, i, t in used[:6]),
+            "items_8k": ";".join(sorted({i for r in info if r[0].upper().startswith("8-K") for i in items_of(r[2])}))}
 
 
 def later_documentation(filings: pd.DataFrame, entry_end: datetime, days: int, convention: str) -> bool:

@@ -87,6 +87,20 @@ class Classes(unittest.TestCase):
         self.assertEqual(C.accepted(f, "double").isna().tolist(), [False, True, True])
         self.assertFalse(C.later_documentation(f.iloc[1:], self.b, 4, "double"))
 
+    def test_header_times_decide_when_given(self):
+        # amendment 3: the SGML header (New York time) replaces the JSON field, whose convention varies
+        self.assertEqual(C.header_acceptance(b"<SEC-HEADER>\n<ACCEPTANCE-DATETIME>20210427161209\n"), "20210427161209")
+        self.assertIsNone(C.header_acceptance(b"<html>not found</html>"))
+        t = C.acceptance_ny("20210427161209", "header")
+        self.assertEqual((str(t), t.utcoffset().total_seconds()), ("2021-04-27 16:12:09-04:00", -4 * 3600))
+        f = filings([row("1", "2021-04-28T00:12:09.000Z", "8-K", "2.02"), row("2", "2021-04-27T20:00:00.000Z", "424B5"),
+                     row("3", "2021-04-27T20:00:00.000Z", "8-K", "8.01")])
+        f["acceptanceHeader"] = ["20210427161209", "", "20210428091600"]  # 2: no header fetched; 3: after 09:15
+        r = C.classify(f, self.a, self.b, "header")
+        self.assertEqual((r["class"], r["n_filings_in_window"], r["items_8k"]), ("DOCUMENTED", 1, "2.02"))
+        self.assertIn("2021-04-27T16:12:09 NY", r["evidence"])
+        self.assertTrue(C.later_documentation(f, self.b, 4, "header"))
+
     def test_later_documentation_is_diagnostic_only(self):
         f = filings([row("1", "2021-04-29T16:30:00.000Z", "8-K", "8.01")])
         self.assertEqual(C.classify(f, self.a, self.b, "ny")["class"], "UNDOCUMENTED")
