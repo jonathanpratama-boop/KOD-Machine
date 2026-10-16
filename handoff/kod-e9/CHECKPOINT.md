@@ -1,6 +1,8 @@
 # E9 catalyst split (US stocks, SEC filings): checkpoint (replaceable view)
 
-**IN PROGRESS.** Everything lives on `claude/idx-signals-test-repo-ds0jw7` under
+**COMPLETE: NEGATIVE.** Q1 INCONCLUSIVE (DOC minus UNDOC +1.99 points, 95% -1.83 to +6.00); Q2 UNPROFITABLE
+(DOCUMENTED -1.07% per trade, negative every year). Report: `RESULT.md` here (copy of
+`idx-signals/research/E9/results/RESULT.md`). Everything lives on `claude/idx-signals-test-repo-ds0jw7` under
 `idx-signals/research/E9/`, plus `idxsig/catalyst.py` and `tests/test_catalyst.py`,
 `tests/test_e9_runner.py` and `tests/test_e9_pipeline.py`. No real-money action of any kind.
 
@@ -16,9 +18,7 @@
 | Runner, independent verifier, freeze script, synthetic end-to-end test | done | `00bb216` |
 | Second feasibility check (`feasibility_a3.py`): **GO** (644 DOC / 1,384 UNDOC / 223 DIL entered) | done | `f241c1c` |
 | Protocol text, then `protocol.json` frozen with 25 hashes | done | `f6d6ae6`, `c93c50e` |
-| One recorded run (`run_test.py`), verification, `RESULT.md` | running | |
+| One recorded run (`run_test.py`), committed as written | done | `2f1109d` |
+| Independent verification (`verify_result.py`): VERIFIED; `RESULT.md` | done | this commit |
 
-Resume: if `research/E9/results/` exists, the run happened: commit it as it is, then run
-`python3 research/E9/verify_result.py` and write `RESULT.md`. If it does not exist, run
-`python3 research/E9/run_test.py` once (about 35 minutes), all from `idx-signals/`.
-SEC requests need `KOD_SEC_CONTACT` (the owner's address; it is never written to a file).
+Nothing pending. Owner decision open: retire G2_RET30 as a US entry (see RESULT.md).
