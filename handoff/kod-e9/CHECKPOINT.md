@@ -14,11 +14,11 @@
 | First feasibility check: **NO-GO** (the JSON acceptance time mixes UTC and double-converted New York time, 10/10) | recorded | `458d145` |
 | Amendment 3: acceptance times from each filing's SGML header | done | `85b23b0` |
 | Runner, independent verifier, freeze script, synthetic end-to-end test | done | `00bb216` |
-| Second feasibility check (`feasibility_a3.py`) | running | |
-| Freeze `protocol.json` (only after GO) | pending | |
-| One recorded run, verification, `RESULT.md` | pending | |
+| Second feasibility check (`feasibility_a3.py`): **GO** (644 DOC / 1,384 UNDOC / 223 DIL entered) | done | `f241c1c` |
+| Protocol text, then `protocol.json` frozen with 25 hashes | done | `f6d6ae6`, `c93c50e` |
+| One recorded run (`run_test.py`), verification, `RESULT.md` | running | |
 
-Resume: if `research/E9/feasibility_a3/` exists, commit it with its manifest. If its decision is GO, commit
-`PROTOCOL.md`, then run `python3 research/E9/freeze.py` and commit `protocol.json`. Then run
-`python3 research/E9/run_test.py` once, then `research/E9/verify_result.py`, all from `idx-signals/`.
+Resume: if `research/E9/results/` exists, the run happened: commit it as it is, then run
+`python3 research/E9/verify_result.py` and write `RESULT.md`. If it does not exist, run
+`python3 research/E9/run_test.py` once (about 35 minutes), all from `idx-signals/`.
 SEC requests need `KOD_SEC_CONTACT` (the owner's address; it is never written to a file).
