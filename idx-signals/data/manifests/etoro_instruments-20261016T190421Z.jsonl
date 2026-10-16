@@ -1,0 +1,2 @@
+{"manifest": "etoro_instruments-20261016T190421Z.jsonl", "source": "eToro public static instrument list", "url": "https://api.etorostatic.com/sapi/instrumentsmetadata/V1.1/instruments/bulk?bulkNumber=1&totalBulks=1", "note": "current listing only: names eToro dropped earlier are absent"}
+{"path": "data/raw/etoro/20261016T190421Z/instruments.json", "sha256": "5c90ab53a8ef8b9621105471faa2253cf387491f47f32cc6a343e44a64748d72", "bytes": 14127356, "downloaded_at": "2026-10-16T19:05:52.635350+00:00", "us_stocks": 6152}

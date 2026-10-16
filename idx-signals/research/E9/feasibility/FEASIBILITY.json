@@ -1,0 +1,314 @@
+{
+ "spec": "research/E9/FEASIBILITY_SPEC.md",
+ "amendments": [
+  "research/E9/FEASIBILITY_AMENDMENT_1.md",
+  "research/E9/FEASIBILITY_AMENDMENT_2.md"
+ ],
+ "stage": "feasibility: counts only, no forward return",
+ "filing_times": {
+  "filings_in_span": 165526,
+  "without_acceptance_time": 0
+ },
+ "sec_cache_stamp": "20261016T185931Z",
+ "check_stamp": "20261016T190421Z",
+ "mapped_share": 1.0,
+ "ciks": 1223,
+ "ciks_fetch_complete": 1223,
+ "fetch_complete_share": 1.0,
+ "ciks_missing_from_cache": [],
+ "acceptance_check": {
+  "convention": null,
+  "n": 20,
+  "matches": {
+   "ny": 0,
+   "utc": 10,
+   "double": 10
+  },
+  "rows": [
+   {
+    "cik": 1590750,
+    "accession": "0000899243-20-029702",
+    "json": "2020-10-29T21:19:34.000Z",
+    "sgml": "20201029171934",
+    "match_ny": false,
+    "match_utc": true,
+    "match_double": false
+   },
+   {
+    "cik": 1484778,
+    "accession": "0001628280-21-005704",
+    "json": "2021-03-25T23:32:55.000Z",
+    "sgml": "20210325193255",
+    "match_ny": false,
+    "match_utc": true,
+    "match_double": false
+   },
+   {
+    "cik": 1622229,
+    "accession": "0000899243-22-021645",
+    "json": "2022-06-10T01:09:20.000Z",
+    "sgml": "20220609170920",
+    "match_ny": false,
+    "match_utc": false,
+    "match_double": true
+   },
+   {
+    "cik": 1811414,
+    "accession": "0000876661-20-001097",
+    "json": "2020-11-27T20:53:23.000Z",
+    "sgml": "20201127105323",
+    "match_ny": false,
+    "match_utc": false,
+    "match_double": true
+   },
+   {
+    "cik": 1784535,
+    "accession": "0001140361-22-042845",
+    "json": "2022-11-23T16:02:28.000Z",
+    "sgml": "20221123060228",
+    "match_ny": false,
+    "match_utc": false,
+    "match_double": true
+   },
+   {
+    "cik": 1590715,
+    "accession": "0001697936-21-000001",
+    "json": "2021-02-04T20:09:21.000Z",
+    "sgml": "20210204100921",
+    "match_ny": false,
+    "match_utc": false,
+    "match_double": true
+   },
+   {
+    "cik": 771999,
+    "accession": "0001493152-22-005526",
+    "json": "2022-02-25T22:12:18.000Z",
+    "sgml": "20220225171218",
+    "match_ny": false,
+    "match_utc": true,
+    "match_double": false
+   },
+   {
+    "cik": 1720580,
+    "accession": "0000947871-20-000736",
+    "json": "2020-09-18T01:37:45.000Z",
+    "sgml": "20200917213745",
+    "match_ny": false,
+    "match_utc": true,
+    "match_double": false
+   },
+   {
+    "cik": 1819994,
+    "accession": "0000899243-21-035273",
+    "json": "2021-09-08T02:03:05.000Z",
+    "sgml": "20210907180305",
+    "match_ny": false,
+    "match_utc": false,
+    "match_double": true
+   },
+   {
+    "cik": 1828253,
+    "accession": "0001104659-21-135073",
+    "json": "2021-11-05T20:47:00.000Z",
+    "sgml": "20211105164700",
+    "match_ny": false,
+    "match_utc": true,
+    "match_double": false
+   },
+   {
+    "cik": 1811414,
+    "accession": "0001193125-20-311866",
+    "json": "2020-12-08T03:11:00.000Z",
+    "sgml": "20201207171100",
+    "match_ny": false,
+    "match_utc": false,
+    "match_double": true
+   },
+   {
+    "cik": 1534708,
+    "accession": "0001493152-20-013351",
+    "json": "2020-07-16T00:52:53.000Z",
+    "sgml": "20200715165253",
+    "match_ny": false,
+    "match_utc": false,
+    "match_double": true
+   },
+   {
+    "cik": 808439,
+    "accession": "0001178913-20-002696",
+    "json": "2020-09-24T20:05:10.000Z",
+    "sgml": "20200924160510",
+    "match_ny": false,
+    "match_utc": true,
+    "match_double": false
+   },
+   {
+    "cik": 1718939,
+    "accession": "0001104659-21-119547",
+    "json": "2021-09-27T14:37:39.000Z",
+    "sgml": "20210927063739",
+    "match_ny": false,
+    "match_utc": false,
+    "match_double": true
+   },
+   {
+    "cik": 101594,
+    "accession": "0001493152-21-002010",
+    "json": "2021-01-28T21:49:31.000Z",
+    "sgml": "20210128164931",
+    "match_ny": false,
+    "match_utc": true,
+    "match_double": false
+   },
+   {
+    "cik": 1449792,
+    "accession": "0001387131-20-008918",
+    "json": "2020-10-08T20:21:14.000Z",
+    "sgml": "20201008162114",
+    "match_ny": false,
+    "match_utc": true,
+    "match_double": false
+   },
+   {
+    "cik": 1342958,
+    "accession": "0001422224-21-000001",
+    "json": "2021-01-08T03:06:50.000Z",
+    "sgml": "20210107170650",
+    "match_ny": false,
+    "match_utc": false,
+    "match_double": true
+   },
+   {
+    "cik": 1617406,
+    "accession": "0001564590-20-053057",
+    "json": "2020-11-10T22:28:48.000Z",
+    "sgml": "20201110172848",
+    "match_ny": false,
+    "match_utc": true,
+    "match_double": false
+   },
+   {
+    "cik": 1858848,
+    "accession": "0000950170-22-024521",
+    "json": "2022-11-11T02:28:20.000Z",
+    "sgml": "20221110162820",
+    "match_ny": false,
+    "match_utc": false,
+    "match_double": true
+   },
+   {
+    "cik": 899460,
+    "accession": "0001209191-21-006886",
+    "json": "2021-02-02T23:18:35.000Z",
+    "sgml": "20210202181835",
+    "match_ny": false,
+    "match_utc": true,
+    "match_double": false
+   }
+  ]
+ },
+ "etoro": {
+  "manifest": "etoro_instruments-20261016T190421Z.jsonl",
+  "sha256": "5c90ab53a8ef8b9621105471faa2253cf387491f47f32cc6a343e44a64748d72",
+  "us_stocks_listed": 6152
+ },
+ "counts": {
+  "attempted": 3116,
+  "attempted_by_class": {
+   "DILUTION": 240,
+   "DOCUMENTED": 741,
+   "UNDOCUMENTED": 2135
+  },
+  "entered_by_class": {
+   "DILUTION": 206,
+   "DOCUMENTED": 634,
+   "UNDOCUMENTED": 1411
+  },
+  "entered_weeks_by_class": {
+   "DILUTION": 93,
+   "DOCUMENTED": 126,
+   "UNDOCUMENTED": 130
+  },
+  "entered_by_year_and_class": {
+   "2020": {
+    "DILUTION": 50,
+    "DOCUMENTED": 171,
+    "UNDOCUMENTED": 373
+   },
+   "2021": {
+    "DILUTION": 99,
+    "DOCUMENTED": 223,
+    "UNDOCUMENTED": 585
+   },
+   "2022": {
+    "DILUTION": 57,
+    "DOCUMENTED": 240,
+    "UNDOCUMENTED": 453
+   }
+  },
+  "entered_distinct_tickers_by_class": {
+   "DILUTION": 188,
+   "DOCUMENTED": 507,
+   "UNDOCUMENTED": 767
+  },
+  "documented_8k_item_families": {
+   "9.01": 371,
+   "2.02": 162,
+   "8.01": 145,
+   "7.01": 129,
+   "1.01": 60,
+   "5.02": 51,
+   "5.07": 16,
+   "3.01": 9,
+   "2.03": 8,
+   "5.03": 8,
+   "1.02": 7,
+   "2.01": 6,
+   "4.02": 4,
+   "3.03": 3,
+   "4.01": 3
+  },
+  "documented_forms": {
+   "8-K": 421,
+   "6-K": 154,
+   "10-Q": 120,
+   "4": 51,
+   "10-K": 24,
+   "SC 13D/A": 23,
+   "3": 16,
+   "425": 15,
+   "DEFA14A": 13,
+   "8-K/A": 11,
+   "S-8": 10,
+   "SC 13D": 8,
+   "SC 13G/A": 8,
+   "20-F": 6,
+   "CORRESP": 6
+  },
+  "undocumented_later_documented_4d": 330,
+  "entered_window_not_covered": 47,
+  "etoro_listed_now_share_entered": 0.9342514438027544,
+  "etoro_listed_now_entered_by_class": {
+   "DILUTION": 197,
+   "DOCUMENTED": 596,
+   "UNDOCUMENTED": 1310
+  }
+ },
+ "power": {
+  "sigma_5d_rms_from_trailing_20d_vol": 2.9473753184314493,
+  "mde_doc_minus_undoc": {
+   "rho_0.05": 0.4846222999520417,
+   "rho_0.2": 0.6869007457865005
+  }
+ },
+ "go_conditions": {
+  "mapped >= 90% of attempted": true,
+  "SEC fetch complete for >= 98% of mapped CIKs": true,
+  "acceptance-time check passes (>= 19 of 20)": false,
+  "entered DOCUMENTED >= 150": true,
+  "entered UNDOCUMENTED >= 150": true,
+  "DOCUMENTED weeks >= 50": true,
+  "UNDOCUMENTED weeks >= 50": true
+ },
+ "decision": "NO-GO"
+}
