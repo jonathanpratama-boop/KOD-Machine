@@ -61,10 +61,14 @@ def acceptance_ny(value: str, convention: str) -> datetime | None:
     if not value:
         return None
     naive = datetime.strptime(value[:19], "%Y-%m-%dT%H:%M:%S")
+    utc = ZoneInfo("UTC")
     if convention == "ny":
         return naive.replace(tzinfo=NY)
     if convention == "utc":
-        return naive.replace(tzinfo=ZoneInfo("UTC")).astimezone(NY)
+        return naive.replace(tzinfo=utc).astimezone(NY)
+    if convention == "double":  # New York time converted to UTC twice (research/E9/FEASIBILITY_AMENDMENT_1.md)
+        once = naive.replace(tzinfo=utc).astimezone(NY).replace(tzinfo=None)
+        return once.replace(tzinfo=utc).astimezone(NY)
     raise ValueError(convention)
 
 

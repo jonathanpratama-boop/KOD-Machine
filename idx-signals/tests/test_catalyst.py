@@ -40,6 +40,13 @@ class Window(unittest.TestCase):
         self.assertEqual(C.classify(f, a, b, "ny")["class"], "UNDOCUMENTED")
         self.assertRaises(ValueError, C.acceptance_ny, "2021-04-28T13:10:00.000Z", "local")
 
+    def test_double_conversion_matches_the_probed_sgml_headers(self):
+        # amendment 1: JSON = New York time converted to UTC twice (+8 h in summer, +10 h in winter)
+        for js, sgml in (("2021-04-28T00:12:09.000Z", "20210427161209"), ("2022-12-17T02:15:08.000Z", "20221216161508"),
+                         ("2021-01-30T03:24:00.000Z", "20210129172400"), ("2022-03-25T00:18:54.000Z", "20220324161854")):
+            self.assertEqual(C.acceptance_ny(js, "double").strftime("%Y%m%d%H%M%S"), sgml)
+            self.assertNotEqual(C.acceptance_ny(js, "utc").strftime("%Y%m%d%H%M%S"), sgml)
+
 
 class Classes(unittest.TestCase):
     def setUp(self):
