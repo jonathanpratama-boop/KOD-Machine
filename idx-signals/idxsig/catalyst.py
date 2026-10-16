@@ -44,8 +44,8 @@ def parse_submissions(main_body: bytes, chunk_bodies: list[bytes]) -> pd.DataFra
     parts = [filings_frame(main.get("filings", {}).get("recent", {}))]
     parts += [filings_frame(json.loads(b)) for b in chunk_bodies]
     df = pd.concat(parts, ignore_index=True).drop_duplicates("accessionNumber")
-    df["items"] = df["items"].fillna("").astype(str)
-    df["form"] = df["form"].fillna("").astype(str)
+    for c in ("items", "form", "acceptanceDateTime"):
+        df[c] = df[c].fillna("").astype(str)
     return df.reset_index(drop=True)
 
 
@@ -58,7 +58,7 @@ def chunk_names(main_body: bytes, start: str, end: str) -> list[str]:
 def acceptance_ny(value: str, convention: str) -> datetime | None:
     """EDGAR acceptanceDateTime as an aware New York datetime. convention 'ny': the clock reading is New York
     time despite the 'Z'; 'utc': it is UTC. Fixed by research/E9's acceptance-time check."""
-    if not value:
+    if not isinstance(value, str) or not value.strip():
         return None
     naive = datetime.strptime(value[:19], "%Y-%m-%dT%H:%M:%S")
     utc = ZoneInfo("UTC")
@@ -70,6 +70,13 @@ def acceptance_ny(value: str, convention: str) -> datetime | None:
         once = naive.replace(tzinfo=utc).astimezone(NY).replace(tzinfo=None)
         return once.replace(tzinfo=utc).astimezone(NY)
     raise ValueError(convention)
+
+
+def accepted(filings: pd.DataFrame, convention: str) -> pd.Series:
+    """Acceptance times as UTC timestamps; a filing without one is NaT, so it is in no window (it cannot be
+    shown to be public before an open; research/E9/FEASIBILITY_AMENDMENT_2.md)."""
+    vals = [acceptance_ny(v, convention) for v in filings["acceptanceDateTime"]] if len(filings) else []
+    return pd.Series(pd.to_datetime(vals, utc=True), index=filings.index, dtype="datetime64[ns, UTC]")
 
 
 def window(prev_session: str, entry_session: str) -> tuple[datetime, datetime]:
@@ -94,11 +101,8 @@ def is_information(form: str) -> bool:
 
 def classify(filings: pd.DataFrame, start: datetime, end: datetime, convention: str) -> dict:
     """Class of one signal from its issuer's filings (columns as parse_submissions) in (start, end]."""
-    if len(filings):
-        acc = filings["acceptanceDateTime"].map(lambda v: acceptance_ny(v, convention))
-        inside = filings[(acc > start) & (acc <= end)]
-    else:
-        inside = filings
+    acc = accepted(filings, convention)
+    inside = filings[(acc > pd.Timestamp(start)) & (acc <= pd.Timestamp(end))]
     dil = [r for r in inside.itertuples(index=False) if is_dilution(r.form, r.items)]
     info = [r for r in inside.itertuples(index=False) if is_information(r.form)]
     cls = "DILUTION" if dil else ("DOCUMENTED" if info else "UNDOCUMENTED")
@@ -112,8 +116,6 @@ def classify(filings: pd.DataFrame, start: datetime, end: datetime, convention: 
 def later_documentation(filings: pd.DataFrame, entry_end: datetime, days: int, convention: str) -> bool:
     """Diagnostic only (never a decision input): an information filing within `days` calendar days AFTER the
     entry cutoff, e.g. an 8-K that arrives after the press release."""
-    if not len(filings):
-        return False
-    acc = filings["acceptanceDateTime"].map(lambda v: acceptance_ny(v, convention))
-    late = filings[(acc > entry_end) & (acc <= entry_end + timedelta(days=days))]
+    acc = accepted(filings, convention)
+    late = filings[(acc > pd.Timestamp(entry_end)) & (acc <= pd.Timestamp(entry_end + timedelta(days=days)))]
     return any(is_information(f) for f in late["form"])

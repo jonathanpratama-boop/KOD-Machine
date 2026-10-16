@@ -79,6 +79,14 @@ class Classes(unittest.TestCase):
     def test_no_filings_at_all(self):
         self.assertEqual(C.classify(filings([]), self.a, self.b, "ny")["class"], "UNDOCUMENTED")
 
+    def test_a_filing_without_an_acceptance_time_is_in_no_window(self):
+        f = filings([row("1", "2021-04-27T08:00:00.000Z", "8-K", "8.01"), ("2", "2021-04-27", "", "424B5", "", "p.htm"),
+                     ("3", "2021-04-27", None, "424B5", "", "p.htm")])
+        r = C.classify(f, self.a, self.b, "double")
+        self.assertEqual((r["class"], r["n_filings_in_window"]), ("DOCUMENTED", 1))
+        self.assertEqual(C.accepted(f, "double").isna().tolist(), [False, True, True])
+        self.assertFalse(C.later_documentation(f.iloc[1:], self.b, 4, "double"))
+
     def test_later_documentation_is_diagnostic_only(self):
         f = filings([row("1", "2021-04-29T16:30:00.000Z", "8-K", "8.01")])
         self.assertEqual(C.classify(f, self.a, self.b, "ny")["class"], "UNDOCUMENTED")
@@ -100,9 +108,13 @@ class Parsing(unittest.TestCase):
             chunk[c].append(v)
         body = json.dumps(main).encode()
         self.assertEqual(C.chunk_names(body, "2020-06-01", "2023-01-31"), ["CIK0000000001-submissions-002.json"])
-        df = C.parse_submissions(body, [json.dumps(chunk).encode(), json.dumps(recent).encode()])
-        self.assertEqual(sorted(df.accessionNumber), ["0001-20-000009", "0001-21-000001"])  # de-duplicated
+        nulls = {"accessionNumber": ["0001-20-000010"], "filingDate": ["2020-07-02"], "acceptanceDateTime": [None],
+                 "form": ["8-K"], "items": [None], "primaryDocument": ["c.htm"]}
+        df = C.parse_submissions(body, [json.dumps(chunk).encode(), json.dumps(recent).encode(),
+                                        json.dumps(nulls).encode()])
+        self.assertEqual(sorted(df.accessionNumber), ["0001-20-000009", "0001-20-000010", "0001-21-000001"])  # de-duplicated
         self.assertEqual(df.set_index("accessionNumber").loc["0001-20-000009", "items"], "")
+        self.assertEqual(df.set_index("accessionNumber").loc["0001-20-000010", "acceptanceDateTime"], "")
 
 
 if __name__ == "__main__":
