@@ -136,3 +136,128 @@ class Signal(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def one_coin(T=100, t=10, edits=None, absent=()):
+    """Flat price 1.0 with tiny ranges; edits: {bar: (open, high, low, close)}."""
+    o = np.ones((1, T)); hi = np.full((1, T), 1.001); lo = np.full((1, T), 0.999); cl = np.ones((1, T))
+    for b, (a, bh, bl, c) in (edits or {}).items():
+        o[0, b], hi[0, b], lo[0, b], cl[0, b] = a, bh, bl, c
+    pres = np.ones((1, T), dtype=bool)
+    pres[0, list(absent)] = False
+    nan = lambda a: np.where(pres, a, np.nan)
+    return e6.Hourly(["X"], START, pres, nan(o), nan(hi), nan(lo), nan(cl), nan(np.full((1, T), 1e5)), nan(np.full((1, T), 5e4)))
+
+
+def net(px, liq=1e6):
+    s = e8.slippage(np.array([liq]))[0]
+    return px * (1 - e8.FEE - s) / (1 + e8.FEE + s) - 1
+
+
+class Plan(unittest.TestCase):
+    def run_(self, **kw):
+        return e8.window(one_coin(**kw), np.array([0]), 10, np.array([1e6]))
+
+    def test_take_profit(self):
+        w = self.run_(edits={13: (1.0, 1.25, 0.99, 1.2)})
+        self.assertEqual(w["reason"][0], "TAKE_PROFIT")
+        self.assertAlmostEqual(w["net"][0], net(1.2))
+        self.assertEqual(w["bars"][0], 3)
+        self.assertTrue(w["U20"][0])
+        self.assertFalse(w["U30"][0])
+
+    def test_stop_first_when_both_levels_are_touched(self):
+        w = self.run_(edits={14: (1.0, 1.3, 0.85, 1.0)})
+        self.assertEqual(w["reason"][0], "STOP")
+        self.assertAlmostEqual(w["net"][0], net(0.9))
+        self.assertTrue(w["U30"][0])                     # the label still sees the high
+
+    def test_gap_through_the_stop_fills_at_the_open(self):
+        w = self.run_(edits={15: (0.8, 0.82, 0.78, 0.8)})
+        self.assertEqual(w["reason"][0], "STOP_GAP")
+        self.assertAlmostEqual(w["net"][0], net(0.8))
+
+    def test_timeout_and_costs(self):
+        w = self.run_(edits={82: (1.0, 1.05, 0.99, 1.05)})
+        self.assertEqual(w["reason"][0], "TIMEOUT")
+        self.assertAlmostEqual(w["R72"][0], 0.05)
+        self.assertAlmostEqual(w["net"][0], net(1.05))
+        liquid = e8.window(one_coin(edits={82: (1.0, 1.05, 0.99, 1.05)}), np.array([0]), 10, np.array([2e7]))
+        self.assertAlmostEqual(liquid["net"][0], net(1.05, 2e7))
+        self.assertGreater(liquid["net"][0], w["net"][0])
+
+    def test_missing_end_exits_at_the_last_close(self):
+        w = self.run_(edits={79: (1.0, 1.1, 0.99, 1.1)}, absent=(80, 81, 82))
+        self.assertEqual(w["reason"][0], "TIMEOUT")
+        self.assertTrue(w["missing_end"][0])
+        self.assertAlmostEqual(w["R72"][0], 0.1)
+
+    def test_no_entry_bar(self):
+        w = self.run_(absent=(11,))
+        self.assertFalse(w["has_entry"][0])
+        self.assertEqual(w["reason"][0], "NO_ENTRY")
+        self.assertTrue(np.isnan(w["net"][0]))
+
+    def test_outcome_reads_only_the_window(self):
+        a = self.run_(edits={30: (1.0, 1.1, 0.95, 1.05)})
+        b = self.run_(edits={30: (1.0, 1.1, 0.95, 1.05), 10: (5, 9, 0.1, 0.2), 83: (0.1, 9, 0.01, 7), 5: (3, 4, 2, 3)})
+        for k in ("R72", "net", "U20", "U30", "bars"):
+            np.testing.assert_array_equal(a[k], b[k])
+
+
+class Controls(unittest.TestCase):
+    def test_linked_coins_never_serve_as_controls(self):
+        h, t1 = synth(n=40, days=110, jump_day=100)
+        f = e8.features(h)
+        _, P = e8.peer_events(h, f, period=period(h))
+        self.assertGreater(len(P), 0)
+        d1 = e8.score(h, f, P)
+
+        def bump(rows):
+            later = np.zeros_like(h.present)
+            later[list(rows), t1 + 1:] = True
+            g = lambda a: np.where(later, a * 3, a)
+            return e6.Hourly(h.symbols, h.start, h.present, g(h.open), g(h.high), g(h.low), g(h.close), h.quote, h.tb)
+
+        same = e8.score(bump([3]), f, P)            # coin 3 is in the leader's group: excluded from controls
+        np.testing.assert_allclose(d1["ctrl_R72"], same["ctrl_R72"])
+        other = e8.score(bump(range(4, 40)), f, P)  # unlinked coins are the controls
+        self.assertFalse(np.allclose(d1["ctrl_R72"], other["ctrl_R72"]))
+        self.assertTrue((d1["status"] == "SCORED").all())
+
+    def test_report_and_gates_run_end_to_end(self):
+        h, _ = synth(n=40, days=110, jump_day=100)
+        f = e8.features(h)
+        _, P = e8.peer_events(h, f, period=period(h))
+        rep = e8.report(e8.score(h, f, P))
+        g = e8.gates(rep)
+        self.assertEqual(g["decision"], "INCONCLUSIVE")   # far fewer than 300 events
+        self.assertFalse(g["gates"]["G0_sample"])
+        self.assertIn("exposure", rep["trading_plan"])
+
+
+class Gates(unittest.TestCase):
+    def rep(self, **over):
+        b = lambda est, p: {"estimate": est, "p_one_sided": p}
+        r = {"events": 400, "scored": 400, "no_entry": 0, "no_controls": 0, "distinct_weeks": 80,
+             "information": {"vs_controls": b(0.02, 0.001)}, "moonshot": {"U20_difference": b(0.05, 0.001)},
+             "trading_plan": {"mean_net_vs_zero": b(0.01, 0.01), "mean_net_minus_ctrl": 0.01, "win_rate_wilson95": [0.52, 0.6]},
+             "by_year": {"2021": {"mean_excess": 0.01}, "2022": {"mean_excess": 0.02}},
+             "without_two_busiest_weeks": {"mean_excess": 0.01}}
+        r.update(over)
+        return r
+
+    def test_pass_and_high_win_rate(self):
+        g = e8.gates(self.rep())
+        self.assertEqual(g["decision"], "PASS")
+        self.assertTrue(g["high_win_rate"])
+
+    def test_any_failed_gate_fails(self):
+        self.assertEqual(e8.gates(self.rep(by_year={"2021": {"mean_excess": 0.01}, "2022": {"mean_excess": -0.01}}))["decision"], "FAIL")
+        self.assertEqual(e8.gates(self.rep(information={"vs_controls": {"estimate": 0.02, "p_one_sided": 0.03}}))["decision"], "FAIL")
+        tp = {"mean_net_vs_zero": {"estimate": 0.01, "p_one_sided": 0.01}, "mean_net_minus_ctrl": -0.001, "win_rate_wilson95": [0.6, 0.7]}
+        self.assertEqual(e8.gates(self.rep(trading_plan=tp))["decision"], "FAIL")
+
+    def test_small_sample_is_inconclusive(self):
+        self.assertEqual(e8.gates(self.rep(scored=299))["decision"], "INCONCLUSIVE")
+        self.assertEqual(e8.gates(self.rep(no_entry=30))["decision"], "INCONCLUSIVE")
