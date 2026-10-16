@@ -1,0 +1,176 @@
+{
+ "spec": "research/E9/FEASIBILITY_SPEC.md",
+ "amendments": [
+  "research/E9/FEASIBILITY_AMENDMENT_1.md",
+  "research/E9/FEASIBILITY_AMENDMENT_2.md",
+  "research/E9/FEASIBILITY_AMENDMENT_3.md"
+ ],
+ "first_check": "research/E9/feasibility/FEASIBILITY.json (NO-GO on the JSON acceptance time; classes invalid)",
+ "stage": "feasibility: counts only, no forward return",
+ "filing_times": {
+  "filings_in_span": 165526,
+  "without_acceptance_time": 0
+ },
+ "sec_cache_stamp": "20261016T185931Z",
+ "header_stamp": "20261016T191256Z",
+ "mapped_share": 1.0,
+ "ciks": 1223,
+ "ciks_fetch_complete": 1223,
+ "fetch_complete_share": 1.0,
+ "ciks_missing_from_cache": [],
+ "headers": {
+  "needed_window": 1942,
+  "retrieved_window": 1942,
+  "needed_later_only": 1024,
+  "retrieved_later_only": 1024,
+  "coverage_window": 1.0,
+  "http_status": {
+   "200": 2966
+  }
+ },
+ "json_acceptance_defect": {
+  "headers_by_json_convention": {
+   "double": 1658,
+   "utc": 1308
+  },
+  "ciks_with_headers": 937,
+  "ciks_one_convention": 937,
+  "ciks_mixed": 0
+ },
+ "etoro": {
+  "manifest": "etoro_instruments-20261016T190421Z.jsonl",
+  "sha256": "5c90ab53a8ef8b9621105471faa2253cf387491f47f32cc6a343e44a64748d72",
+  "us_stocks_listed": 6152
+ },
+ "counts": {
+  "attempted": 3116,
+  "attempted_by_class": {
+   "DILUTION": 257,
+   "DOCUMENTED": 751,
+   "UNDOCUMENTED": 2108
+  },
+  "entered_by_class": {
+   "DILUTION": 223,
+   "DOCUMENTED": 644,
+   "UNDOCUMENTED": 1384
+  },
+  "entered_weeks_by_class": {
+   "DILUTION": 95,
+   "DOCUMENTED": 126,
+   "UNDOCUMENTED": 130
+  },
+  "entered_by_year_and_class": {
+   "2020": {
+    "DILUTION": 52,
+    "DOCUMENTED": 170,
+    "UNDOCUMENTED": 372
+   },
+   "2021": {
+    "DILUTION": 110,
+    "DOCUMENTED": 225,
+    "UNDOCUMENTED": 572
+   },
+   "2022": {
+    "DILUTION": 61,
+    "DOCUMENTED": 249,
+    "UNDOCUMENTED": 440
+   }
+  },
+  "entered_distinct_tickers_by_class": {
+   "DILUTION": 202,
+   "DOCUMENTED": 515,
+   "UNDOCUMENTED": 766
+  },
+  "documented_8k_item_families": {
+   "9.01": 376,
+   "2.02": 165,
+   "8.01": 147,
+   "7.01": 129,
+   "1.01": 64,
+   "5.02": 50,
+   "5.07": 15,
+   "3.01": 10,
+   "2.03": 9,
+   "5.03": 9,
+   "1.02": 8,
+   "2.01": 6,
+   "4.02": 4,
+   "3.03": 3,
+   "4.01": 3
+  },
+  "documented_forms": {
+   "8-K": 428,
+   "6-K": 162,
+   "10-Q": 114,
+   "10-K": 25,
+   "SC 13D/A": 24,
+   "425": 16,
+   "8-K/A": 10,
+   "SC 13D": 7,
+   "20-F": 6,
+   "10-K/A": 4,
+   "20-F/A": 1,
+   "SC TO-T": 1,
+   "PREM14A": 1,
+   "SC TO-C": 1,
+   "DEFM14A": 1
+  },
+  "dilution_forms": {
+   "8-K": 123,
+   "424B5": 49,
+   "424B3": 31,
+   "424B4": 25,
+   "EFFECT": 25,
+   "6-K": 17,
+   "10-Q": 12,
+   "425": 11,
+   "S-3": 9,
+   "8-K/A": 9,
+   "S-1/A": 9,
+   "S-1": 8,
+   "SC 13D/A": 7,
+   "S-1MEF": 6,
+   "F-1": 6
+  },
+  "undocumented_later_documented_4d": 301,
+  "entered_window_not_covered_by_class": {
+   "UNDOCUMENTED": 47
+  },
+  "etoro_listed_now_share_entered": 0.9342514438027544,
+  "etoro_listed_now_entered_by_class": {
+   "DILUTION": 213,
+   "DOCUMENTED": 604,
+   "UNDOCUMENTED": 1286
+  },
+  "entered_class_vs_first_check_invalid": {
+   "DILUTION->DILUTION": 204,
+   "DILUTION->UNDOCUMENTED": 2,
+   "DOCUMENTED->DILUTION": 5,
+   "DOCUMENTED->DOCUMENTED": 618,
+   "DOCUMENTED->UNDOCUMENTED": 11,
+   "UNDOCUMENTED->DILUTION": 14,
+   "UNDOCUMENTED->DOCUMENTED": 26,
+   "UNDOCUMENTED->UNDOCUMENTED": 1371
+  }
+ },
+ "power": {
+  "sigma_5d_rms_from_trailing_20d_vol": 2.9473753184314493,
+  "sigma_5d_median": 0.2675981081916515,
+  "mde_doc_minus_undoc": {
+   "rho_0.05": 0.48328093189265997,
+   "rho_0.05_at_median_vol": 0.043878043726171635,
+   "rho_0.2": 0.6847051107672827,
+   "rho_0.2_at_median_vol": 0.06216574834045572
+  }
+ },
+ "go_conditions": {
+  "mapped >= 90% of attempted": true,
+  "SEC fetch complete for >= 98% of mapped CIKs": true,
+  "headers retrieved for >= 98% of the needed filings": true,
+  "entered DOCUMENTED >= 150": true,
+  "entered UNDOCUMENTED >= 150": true,
+  "DOCUMENTED weeks >= 50": true,
+  "UNDOCUMENTED weeks >= 50": true
+ },
+ "decision": "GO"
+}
