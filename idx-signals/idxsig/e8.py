@@ -28,6 +28,7 @@ LINK_BARS, LINK_MIN_BARS, LINK_LAG = 720, 600, 24
 QUIET, HOLD = 72, 72
 MIN_DAYS, LIQ_MIN, BAD_DAYS, GAP_DAYS, GAP_LOOK = 60, 1_000_000.0, 37, 7, 60
 MIN_XS = 20  # coins needed for a cross-sectional median (note 3)
+ASSET_BACKED = {"PAXG", "BKRW"}  # never eligible (amendment 1): gold token, KRW stablecoin
 
 
 # ----------------------------------------------------------------------------------------------- data
@@ -47,6 +48,9 @@ def load(manifest: Path, last_hour: pd.Timestamp = LAST_HOUR) -> tuple[e6.Hourly
         base = sym[:-4]
         if not sym.endswith("USDT") or base in STABLE or LEVERAGED.search(base):
             checks["bad_symbol_names"].append(sym)
+            continue
+        if base in ASSET_BACKED:
+            checks.setdefault("asset_backed_excluded", []).append(sym)
             continue
         parts = []
         for r in sorted(rs, key=lambda r: r["month"]):
@@ -109,6 +113,7 @@ def features(h: e6.Hourly) -> dict:
     liq_h = _days_to_hours(liq, T)
     vsd = np.sqrt(pd.DataFrame(np.where(valid, r, np.nan).T).rolling(720, min_periods=600).var().to_numpy().T)
     return {"elig": elig, "r24": r24, "res24": r24 - med24[None, :], "med24": med24, "res": res,
+            "ret": np.where(valid, r, np.nan), "mkt": med_r,
             "vol24": vol24, "liq": liq_h, "vol30h": vsd, "valid": valid}
 
 
@@ -145,27 +150,34 @@ def leaders(f: dict) -> tuple[np.ndarray, np.ndarray]:
     return raw & ~_recent(raw, QUIET, include_now=False), raw
 
 
-def links(res: np.ndarray, lead: int, t: int, cand: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    """Correlation of residual returns between `lead` and every coin over bars t-743..t-24."""
+def _corr(k, s1, s2, s11, s22, s12):
+    with np.errstate(invalid="ignore", divide="ignore"):
+        return (k * s12 - s1 * s2) / np.sqrt((k * s11 - s1 ** 2) * (k * s22 - s2 ** 2))
+
+
+def links(ret: np.ndarray, mkt: np.ndarray, lead: int, t: int, cand: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    """Partial correlation, given the market return, between `lead` and every candidate's hourly log
+    returns over bars t-743..t-24 (amendment 1). ret: NaN where invalid; mkt: per-bar market median."""
     hi = t - LINK_LAG + 1
     lo = hi - LINK_BARS
-    n = res.shape[0]
+    n = ret.shape[0]
     out, nb = np.full(n, np.nan), np.zeros(n, dtype=int)
     if lo < 0:
         return out, nb
-    X = res[:, lo:hi]
-    M = np.isfinite(X)
-    a = X[lead]
-    ma = M[lead]
-    m = M & ma[None, :] & cand[:, None]
-    A = np.where(m, a[None, :], 0.0)
-    B = np.where(m, X, 0.0)
-    k = m.sum(axis=1)
-    sa, sb = A.sum(1), B.sum(1)
+    X, mk = ret[:, lo:hi], mkt[lo:hi]
+    M = np.isfinite(X) & np.isfinite(mk)[None, :]
+    msk = M & M[lead][None, :] & cand[:, None]
+    A = np.where(msk, X[lead][None, :], 0.0)
+    B = np.where(msk, X, 0.0)
+    C = np.where(msk, np.nan_to_num(mk)[None, :], 0.0)
+    k = msk.sum(axis=1).astype(float)
+    sa, sb, sc = A.sum(1), B.sum(1), C.sum(1)
+    saa, sbb, scc = (A * A).sum(1), (B * B).sum(1), (C * C).sum(1)
+    rab = _corr(k, sa, sb, saa, sbb, (A * B).sum(1))
+    rac = _corr(k, sa, sc, saa, scc, (A * C).sum(1))
+    rbc = _corr(k, sb, sc, sbb, scc, (B * C).sum(1))
     with np.errstate(invalid="ignore", divide="ignore"):
-        num = k * (A * B).sum(1) - sa * sb
-        den = np.sqrt((k * (A * A).sum(1) - sa ** 2) * (k * (B * B).sum(1) - sb ** 2))
-        c = num / den
+        c = (rab - rac * rbc) / np.sqrt((1 - rac ** 2) * (1 - rbc ** 2))
     ok = cand & (k >= LINK_MIN_BARS) & np.isfinite(c)
     out[ok] = c[ok]
     nb[:] = k
@@ -193,7 +205,7 @@ def peer_events(h: e6.Hourly, f: dict, period=PERIOD, hold: int = HOLD) -> tuple
         for L in ls:
             c = cand.copy()
             c[L] = False
-            lk, nb = links(f["res"], L, t, c)
+            lk, nb = links(f["ret"], f["mkt"], L, t, c)
             order = np.argsort(-np.nan_to_num(lk, nan=-9))
             top = [i for i in order[:TOP_K] if np.isfinite(lk[i]) and lk[i] >= LINK_MIN]
             L_rows.append({"t": t, "leader": int(L), "r24": float(f["r24"][L, t]), "res24": float(f["res24"][L, t]),

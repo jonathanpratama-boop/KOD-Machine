@@ -84,15 +84,39 @@ class Signal(unittest.TestCase):
     def test_link_window_stops_where_the_leader_move_starts(self):
         h, t1 = synth()
         f = e8.features(h)
-        res2 = f["res"].copy()
-        res2[:, t1 - 22:t1 + 1] = np.random.default_rng(9).normal(0, 1, res2[:, t1 - 22:t1 + 1].shape)
+        ret2 = f["ret"].copy()
+        ret2[:, t1 - 22:t1 + 1] = np.random.default_rng(9).normal(0, 1, ret2[:, t1 - 22:t1 + 1].shape)
         cand = np.ones(len(h.symbols), dtype=bool)
         cand[0] = False
-        a, _ = e8.links(f["res"], 0, t1, cand)
-        b, _ = e8.links(res2, 0, t1, cand)
+        a, _ = e8.links(f["ret"], f["mkt"], 0, t1, cand)
+        b, _ = e8.links(ret2, f["mkt"], 0, t1, cand)
         np.testing.assert_array_equal(a, b)
-        c, _ = e8.links(f["res"], 0, t1, cand)
-        self.assertTrue(np.isnan(c[0]))
+        self.assertTrue(np.isnan(a[0]))
+        self.assertTrue((a[[1, 2, 3]] > 0.3).all())          # same group
+        self.assertTrue((np.abs(a[4:]) < 0.15).all())         # unrelated coins
+
+    def test_low_beta_coins_are_not_linked_by_the_market(self):
+        """Amendment 1: two low-beta coins with independent news must not look linked."""
+        rng = np.random.default_rng(11)
+        n, T = 30, 24 * 120
+        mkt = rng.normal(0, 0.01, T)
+        beta = np.ones(n)
+        beta[[0, 1]] = 0.1
+        r = beta[:, None] * mkt[None, :] + rng.normal(0, 0.004, (n, T))
+        med = np.median(r, axis=0)
+        res = r - med[None, :]                                # the original median residual
+        cand = np.ones(n, dtype=bool)
+        cand[0] = False
+        t = 24 * 100
+        lk, _ = e8.links(r, med, 0, t, cand)
+        lo, hi = t - 743, t - 23
+        naive = np.corrcoef(res[0, lo:hi], res[1, lo:hi])[0, 1]
+        self.assertGreater(naive, 0.5)                        # the defect amendment 1 removes
+        self.assertLess(abs(lk[1]), 0.15)
+
+    def test_asset_backed_tokens_are_never_loaded(self):
+        self.assertIn("PAXG", e8.ASSET_BACKED)
+        self.assertIn("BKRW", e8.ASSET_BACKED)
 
     def test_eligibility_needs_history_liquidity_and_no_long_gap(self):
         h, _ = synth()
