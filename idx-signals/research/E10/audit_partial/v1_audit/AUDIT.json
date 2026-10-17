@@ -1,0 +1,947 @@
+{
+ "procedure": "research/E10/AUDIT_PROCEDURE.md",
+ "items": 60,
+ "reviewers": [
+  {
+   "reviewer": "v1_A",
+   "by_class": {
+    "RAISE": {
+     "n": 40,
+     "correct": 28,
+     "precision": 0.7,
+     "wrong_items": [
+      8,
+      12,
+      13,
+      18,
+      23,
+      25,
+      28,
+      30,
+      31,
+      32,
+      34,
+      38
+     ]
+    },
+    "CUT": {
+     "n": 20,
+     "correct": 10,
+     "precision": 0.5,
+     "wrong_items": [
+      41,
+      43,
+      46,
+      47,
+      48,
+      52,
+      54,
+      56,
+      57,
+      59
+     ]
+    }
+   },
+   "q3_numbers_rate": 0.6666666666666666,
+   "answers": [
+    {
+     "item": 1,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 2,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 3,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 4,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 5,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 6,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 7,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 8,
+     "q1_same_measure": false,
+     "q2_direction": true,
+     "q3_numbers": false,
+     "note": "ONPATTRO product-line revenue, not total; extracted old-range midpoints (should be 290 -> 302.5)"
+    },
+    {
+     "item": 9,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 10,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 11,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 12,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": false,
+     "note": "earlier is H2 face shield sales vs H1 actual; later is mask sales; not total revenue guidance"
+    },
+    {
+     "item": 13,
+     "q1_same_measure": false,
+     "q2_direction": true,
+     "q3_numbers": false,
+     "note": "extracted values are Adjusted EBITDA outlook, not net sales"
+    },
+    {
+     "item": 14,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": false,
+     "note": "earlier new guidance is ~9.5B (9500); 9300 is the old range midpoint"
+    },
+    {
+     "item": 15,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 16,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 17,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 18,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": false,
+     "note": "backlog / contract value, not revenue guidance"
+    },
+    {
+     "item": 19,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 20,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 21,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 22,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 23,
+     "q1_same_measure": false,
+     "q2_direction": true,
+     "q3_numbers": false,
+     "note": "earlier is second-half 2022 sales only, not full year"
+    },
+    {
+     "item": 24,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 25,
+     "q1_same_measure": false,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": "guidance is for 2021 (growth from $2.50B in 2020), not fiscal 2020"
+    },
+    {
+     "item": 26,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 27,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": false,
+     "note": "earlier new guidance 10-12% -> 0.11; 0.09 is old range midpoint"
+    },
+    {
+     "item": 28,
+     "q1_same_measure": false,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": "Biosecurity segment revenue, not total"
+    },
+    {
+     "item": 29,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 30,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": false,
+     "note": "earlier is acquired business LTM actual; later is COVID revenue impact, not guidance"
+    },
+    {
+     "item": 31,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": false,
+     "note": "acquired-business revenue and annualized acquisition revenue, not company guidance"
+    },
+    {
+     "item": 32,
+     "q1_same_measure": false,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": "operating cash flow, not revenue"
+    },
+    {
+     "item": 33,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 34,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": false,
+     "note": "FX impact amounts and midpoint raise increments for property revenue/EBITDA, not revenue guidance levels"
+    },
+    {
+     "item": 35,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 36,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 37,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 38,
+     "q1_same_measure": false,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": "U.S.-only revenue growth (and organic in later), not total revenue growth"
+    },
+    {
+     "item": 39,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 40,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 41,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": false,
+     "note": "payment volume and D&A adjustment, not total revenue guidance"
+    },
+    {
+     "item": 42,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 43,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": false,
+     "note": "asset sales and revenue reserve, not revenue guidance"
+    },
+    {
+     "item": 44,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": false,
+     "note": "earlier 6-8% midpoint is 0.07, not 0.08"
+    },
+    {
+     "item": 45,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 46,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": false,
+     "note": "ATM equity offering proceeds, not revenue"
+    },
+    {
+     "item": 47,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": false,
+     "note": "quarterly reported revenue growth actuals, not full-year guidance"
+    },
+    {
+     "item": 48,
+     "q1_same_measure": true,
+     "q2_direction": false,
+     "q3_numbers": false,
+     "note": "later sentence truncated ('range of $89 million'); 89 is only the lower bound, cut not established"
+    },
+    {
+     "item": 49,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 50,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 51,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 52,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": false,
+     "note": "later is a single vaccine option contract value, not total revenue guidance"
+    },
+    {
+     "item": 53,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 54,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": true,
+     "note": "later is continuing-operations net sales (post-divestiture scope) and says 'increasing'; decline is a scope change, not a cut"
+    },
+    {
+     "item": 55,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 56,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": false,
+     "note": "earlier is reported quarterly sales growth actual; later is organic growth outlook"
+    },
+    {
+     "item": 57,
+     "q1_same_measure": true,
+     "q2_direction": false,
+     "q3_numbers": false,
+     "note": "earlier new range 870-930 (mid 900); 950 is old range; later reiterates same range, so no change"
+    },
+    {
+     "item": 58,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 59,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": false,
+     "note": "later is an acquired business's trailing-twelve-month revenue, not company guidance"
+    },
+    {
+     "item": 60,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    }
+   ]
+  },
+  {
+   "reviewer": "v1_B",
+   "by_class": {
+    "RAISE": {
+     "n": 40,
+     "correct": 27,
+     "precision": 0.675,
+     "wrong_items": [
+      8,
+      12,
+      13,
+      18,
+      22,
+      23,
+      25,
+      28,
+      30,
+      31,
+      32,
+      34,
+      38
+     ]
+    },
+    "CUT": {
+     "n": 20,
+     "correct": 10,
+     "precision": 0.5,
+     "wrong_items": [
+      41,
+      43,
+      46,
+      47,
+      48,
+      52,
+      54,
+      56,
+      57,
+      59
+     ]
+    }
+   },
+   "q3_numbers_rate": 0.8833333333333333,
+   "answers": [
+    {
+     "item": 1,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 2,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 3,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 4,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 5,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 6,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 7,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 8,
+     "q1_same_measure": false,
+     "q2_direction": true,
+     "q3_numbers": false,
+     "note": "ONPATTRO product revenue, not total; midpoints wrong (280-300=290, 295-310=302.5)"
+    },
+    {
+     "item": 9,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 10,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 11,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 12,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": true,
+     "note": "H2 face shield sales vs total mask sales; different measures/periods"
+    },
+    {
+     "item": 13,
+     "q1_same_measure": false,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": "extracted numbers are Adjusted EBITDA, not net sales"
+    },
+    {
+     "item": 14,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": false,
+     "note": "earlier current guidance is ~$9.5B (9300 is the prior range midpoint)"
+    },
+    {
+     "item": 15,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 16,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 17,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 18,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": true,
+     "note": "backlog/contract values, not revenue guidance"
+    },
+    {
+     "item": 19,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 20,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 21,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 22,
+     "q1_same_measure": false,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": "product revenue guidance, not total revenue"
+    },
+    {
+     "item": 23,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": true,
+     "note": "earlier is second-half 2022 sales, not full-year"
+    },
+    {
+     "item": 24,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 25,
+     "q1_same_measure": false,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": "guidance is for the year after 2020 (growth from 2020 base), not FY2020"
+    },
+    {
+     "item": 26,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 27,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": false,
+     "note": "earlier current guidance is 10-12% (0.11); 0.09 is prior 8-10%"
+    },
+    {
+     "item": 28,
+     "q1_same_measure": false,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": "Biosecurity segment revenue, not total"
+    },
+    {
+     "item": 29,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 30,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": true,
+     "note": "acquired business LTM revenue vs COVID impact estimate"
+    },
+    {
+     "item": 31,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": true,
+     "note": "acquired business revenue vs acquired annualized revenue; not guidance"
+    },
+    {
+     "item": 32,
+     "q1_same_measure": false,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": "operating cash flow, not revenue"
+    },
+    {
+     "item": 33,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 34,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": true,
+     "note": "FX impact / midpoint raise amounts for property revenue/EBITDA, not total revenue guidance"
+    },
+    {
+     "item": 35,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 36,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 37,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 38,
+     "q1_same_measure": false,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": "U.S. (geographic) revenue growth; later is organic"
+    },
+    {
+     "item": 39,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 40,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 41,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": false,
+     "note": "payment volume and D&A figures, not revenue guidance"
+    },
+    {
+     "item": 42,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 43,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": true,
+     "note": "asset sales and revenue reserve, not revenue guidance"
+    },
+    {
+     "item": 44,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": false,
+     "note": "earlier 6-8% midpoint is 0.07, not 0.08"
+    },
+    {
+     "item": 45,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 46,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": true,
+     "note": "ATM equity proceeds, not revenue"
+    },
+    {
+     "item": 47,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": true,
+     "note": "reported quarterly revenue growth actuals, not full-year guidance"
+    },
+    {
+     "item": 48,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": false,
+     "note": "product revenue, not total; later sentence truncated, 89 is only lower bound"
+    },
+    {
+     "item": 49,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 50,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 51,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 52,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": true,
+     "note": "later is ACAM2000 product option value, not total revenue guidance"
+    },
+    {
+     "item": 53,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 54,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": true,
+     "note": "later is continuing-ops only (scope change) and text says increasing"
+    },
+    {
+     "item": 55,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 56,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": true,
+     "note": "earlier is reported actual growth; later is organic growth outlook"
+    },
+    {
+     "item": 57,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": false,
+     "note": "both state current $870-930M (no change); 950 is the superseded range; product revenues only"
+    },
+    {
+     "item": 58,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    },
+    {
+     "item": 59,
+     "q1_same_measure": false,
+     "q2_direction": false,
+     "q3_numbers": true,
+     "note": "later is acquired StonePoint trailing revenue"
+    },
+    {
+     "item": 60,
+     "q1_same_measure": true,
+     "q2_direction": true,
+     "q3_numbers": true,
+     "note": ""
+    }
+   ]
+  }
+ ],
+ "disagreements": [
+  {
+   "item": 22,
+   "v1_A": true,
+   "v1_B": false
+  }
+ ],
+ "go_precision": {
+  "RAISE": 0.675,
+  "CUT": 0.5
+ },
+ "audit_go": false
+}
