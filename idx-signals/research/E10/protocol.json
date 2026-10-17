@@ -1,0 +1,114 @@
+{
+ "protocol_id": "E10_GUIDANCE_REVISION_v1",
+ "frozen_at": "2026-10-17T09:25:02+00:00",
+ "text": "research/E10/PROTOCOL.md",
+ "stage": "discovery, run once; historical research, never prospective performance",
+ "runner": "research/E10/run_a1.py",
+ "feasibility": {
+  "dir": "research/E10/feasibility_a1",
+  "counts": {
+   "filings_listed": 36215,
+   "filings_fetched": 36215,
+   "acceptance_found_share": 1.0,
+   "releases_in_event_span": 28445,
+   "releases_in_span_with_guidance": 2220,
+   "dropped_as_mismatch_beyond_50pct": {
+    "RAISE": 31,
+    "CUT": 21
+   },
+   "events_by_class": {
+    "MAINTAIN": 488,
+    "RAISE": 449,
+    "CUT": 174
+   },
+   "events_by_class_and_year": {
+    "2020": {
+     "CUT": 20,
+     "MAINTAIN": 40,
+     "RAISE": 52
+    },
+    "2021": {
+     "CUT": 25,
+     "MAINTAIN": 162,
+     "RAISE": 220
+    },
+    "2022": {
+     "CUT": 129,
+     "MAINTAIN": 286,
+     "RAISE": 177
+    }
+   },
+   "events_by_kind": {
+    "dollar": 957,
+    "growth": 154
+   },
+   "issuers_with_events": 358,
+   "events_on_etoro_listed": {
+    "MAINTAIN": 466,
+    "RAISE": 431,
+    "CUT": 168
+   },
+   "level_change_quantiles_raise": {
+    "0.1": 0.0133,
+    "0.5": 0.0332,
+    "0.9": 0.101
+   }
+  },
+  "audit": "research/E10/audit_partial/a1_audit/AUDIT.json",
+  "audit_go_precision": {
+   "RAISE": 0.925,
+   "CUT": 0.8
+  },
+  "go": {
+   "raise_events_at_least_300": true,
+   "cut_events_at_least_100": true,
+   "acceptance_found_at_least_98pct": true,
+   "audit_raise_precision_at_least_85pct": true,
+   "audit_cut_precision_at_least_80pct": true
+  }
+ },
+ "gates": {
+  "G1": "RAISE mean excess over matched controls: 95% lower bound > 0",
+  "G2": "RAISE mean net > 0 and 1%/99%-clipped mean net > 0",
+  "G3": "RAISE mean excess > MAINTAIN mean excess",
+  "G4": "RAISE mean net with an extra 0.5% per side > 0",
+  "G5": "RAISE mean excess > 0 in each entry year",
+  "G6": "account A (USD 10,000, 10% per trade, 10 slots, USD 2 per order) ends above USD 10,000 and above its shadow account",
+  "verdict": "PASS if G1-G6 all hold, else FAIL"
+ },
+ "hashes": {
+  "idxsig/guidance.py": "f75597cf568748029b66dd5865ffc347b41225d18531d05849e7b5f3b448e57a",
+  "idxsig/guidance_v2.py": "9bac94fedce9afd2ab03d0bc141472d81f3337f793e2a17d1041aa7ae7440657",
+  "idxsig/profiles.py": "8adcfb8138e363c531bafd8e5b8462a108e0fe89363261e59481b31668d05b26",
+  "research/E10/FEASIBILITY_SPEC.md": "b752077c35dd425a7cf13fa71aa376c29ba40c3d5d74af352f4d63232bc01495",
+  "research/E10/AUDIT_PROCEDURE.md": "723ba323275eeba8d4740ca02182a238e46f007f6aef3c153ba9ad815c929854",
+  "research/E10/PROTOCOL.md": "bee589d79ecbdd4e6e421bed814607cd26e5ee461648a05eef47bfaacc3ac9cd",
+  "research/E10/filings.csv": "0ea3b193b9e21510446ff0f24b9f1bedc4ddd9b1a3da51d25f6c06f754554f46",
+  "research/E10/collect.py": "62b557b75d8daf897e729cb5872e4c8d356cb8fc4bc502585ab9b9b6353947ea",
+  "research/E10/collect_resume.py": "348c9c7e94de38054dd438e2a7fced62bedb5c27fa0ed991f161a17d4b7eebdc",
+  "research/E10/feasibility.py": "387ff35b1eeca03c140ba5374d0dac93fd425cf3ffe82b8ac408f0eb2ec5e06d",
+  "research/E10/feasibility_a1.py": "b8b23438c8aba3ef8bfe1fa8deaedf88838da9e74d51c6579a0911927c26a40b",
+  "research/E10/audit_blind.py": "d3eeef842253f48a9e65c636390548114251e09debff12c3936a14e4b79a9f94",
+  "research/E10/audit_score.py": "dd58e0d682683ba621908da880131168fc4789182a9a93fb1a83af2ecdbf1a52",
+  "research/E10/run_test.py": "ce6a74502bbbd9babe87b3db4f85f732acec43ddc24c2f1e039bb9caea2e4b0c",
+  "research/E10/run_full.py": "6f4064633aa3c1ef9a6e1a0997730613cb55ef9aa25b7599fd3f3a91f53aea67",
+  "research/E10/run_e10.py": "660d6717acd3e726faec059d059cfc8bd96301eed90bbf302fa2ada3508bbb0f",
+  "research/E10/run_a1.py": "3f2f527e81ab272e423ed2f65e9aae1719feb1d6897dc3f9ea605c40b98d541c",
+  "research/E10/verify_result.py": "70bb6d01d2061c433e1b63422b56d4729d8054a9685b85fdf575584f314b9fda",
+  "research/E10/freeze.py": "810af999491e8f50345bc2676de60712acdf144a261b6f707ef8c81c12481489",
+  "research/E10/feasibility_a1/FEASIBILITY.json": "5ea519be87ce7d4a32fdad7cc2bf671e0e0c4d293c441aa995472f2fb201820f",
+  "research/E10/feasibility_a1/events.csv.gz": "16b7f52fd1852a5739123b5d33aacedbd3c7f11bc31a74b358cc5ac21f05a94e",
+  "research/E10/feasibility_a1/releases.csv.gz": "7c4153cffdfc4cdb095f1809bc4c421fbe1920a9bb9f7198318fccb9f9c2f011",
+  "research/E10/feasibility_a1/audit_sample.csv": "df48fb2b62d73047674abf08102da4abaf21361fb70229842714de4b2c36d52a",
+  "research/E10/audit_partial/a1_audit/AUDIT.json": "3959d5c4593c2b70b1f139d22b4bfbc36077126b8f94ed215f55a90783a89b8d",
+  "data/manifests/panel_us_repair-20261008T114805Z.json": "705ca354492f45d63a2fb15e0b4db1d334c490a9ac8749d606adfc9622d94039",
+  "tests/test_guidance.py": "8af53d1ad2db9e646b21130db41c2427f67aad9385ffa33a8e8a74000a4f5f8a",
+  "tests/test_guidance_v2.py": "c8469dabd3e2cf40531c14aebb3bfd9b4a0a65c400d92860c9c772f5678d70ef",
+  "tests/test_e10_runner.py": "bc71f8ccae99df641e6c76660bb503f84702857593867c7ce36cccc188dfe458",
+  "tests/test_e10_full.py": "80051465957799decb2e4bb88b3ce635283ab82e3b06de3a4011ed0de778adec",
+  "tests/test_e10_verify.py": "7b4242b4be5985f1bc94e28df3efdfb95d0b2969aa7bbe6095f5dd026412897c",
+  "tests/test_e10_a1.py": "8f4afcec3224e8b3a4a9a35fe08ce83c8fe288c1c85c3198f402da7cb361b80b",
+  "data/panel/panel_us_repair-20261008T114805Z.csv.gz": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b",
+  "data/raw/etoro/20261016T190421Z/instruments.json": "5c90ab53a8ef8b9621105471faa2253cf387491f47f32cc6a343e44a64748d72"
+ }
+}
