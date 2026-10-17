@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from idxsig import guidance as g
 
@@ -64,6 +65,17 @@ class GuidanceTests(unittest.TestCase):
         self.assertEqual(schedule["time_exit_at_utc"],"2026-11-13T21:00:00+00:00")
         holiday=g.session_schedule("2026-11-26T12:00:00Z","2026-11-25T22:00:00Z",self.p)
         self.assertEqual(holiday["entry_session"],"2026-11-27")
+
+    def test_calendar_does_not_depend_on_hosts_default_date_range(self):
+        import exchange_calendars as xc
+        original=xc.get_calendar
+        def old_host(name,**kwargs):
+            if not kwargs:
+                return original(name,start="2020-01-01",end="2025-01-01")
+            return original(name,**kwargs)
+        with patch.object(xc,"get_calendar",old_host):
+            schedule=g.session_schedule("2026-10-17T07:20:00Z","2026-10-16T20:01:00Z",self.p)
+        self.assertEqual(schedule["entry_session"],"2026-10-19")
 
     def wait(self):
         feature={**self.feature,"fiscal_year":"2026"}

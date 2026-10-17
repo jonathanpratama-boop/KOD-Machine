@@ -140,13 +140,12 @@ def revision(prior, current, *, latest_prior_confirmed):
 def session_schedule(ready_at, source_at, policy):
     """Use exchange sessions, including holidays and DST; never infer weekdays only."""
     import exchange_calendars as xc
-    import pandas as pd
     ready, source = moment(ready_at), moment(source_at)
     if ready < source:
         raise ValueError("decision ready before source")
-    cal = xc.get_calendar("XNYS")
     start = (source - timedelta(days=1)).date().isoformat()
     end = (ready + timedelta(days=90)).date().isoformat()
+    cal = xc.get_calendar("XNYS", start=start, end=end)
     sessions = cal.sessions_in_range(start, end)
     entries = []
     source_session_count = 0
