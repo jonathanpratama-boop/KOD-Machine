@@ -77,6 +77,11 @@ class GuidanceTests(unittest.TestCase):
             schedule=g.session_schedule("2026-10-17T07:20:00Z","2026-10-16T20:01:00Z",self.p)
         self.assertEqual(schedule["entry_session"],"2026-10-19")
 
+    def test_calendar_range_can_begin_and_end_on_nontrading_days(self):
+        schedule=g.session_schedule("2026-10-19T14:00:00Z","2026-10-18T20:00:00Z",self.p)
+        self.assertEqual(schedule["entry_session"],"2026-10-20")
+        self.assertEqual(schedule["time_exit_session"],"2026-11-16")
+
     def wait(self):
         feature={**self.feature,"fiscal_year":"2026"}
         return g.decide(feature,policy=self.p,created_at="2026-10-17T07:20:00Z",source_at="2026-10-16T20:01:00Z",

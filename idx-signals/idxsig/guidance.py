@@ -146,7 +146,9 @@ def session_schedule(ready_at, source_at, policy):
     start = (source - timedelta(days=1)).date().isoformat()
     end = (ready + timedelta(days=90)).date().isoformat()
     cal = xc.get_calendar("XNYS", start=start, end=end)
-    sessions = cal.sessions_in_range(start, end)
+    # The calendar is already bounded. Its endpoints can be weekends/holidays;
+    # parsing those again as in-bounds session labels incorrectly rejects them.
+    sessions = cal.sessions
     entries = []
     source_session_count = 0
     first = None
