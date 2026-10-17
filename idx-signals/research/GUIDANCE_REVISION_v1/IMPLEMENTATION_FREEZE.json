@@ -1,0 +1,29 @@
+{
+  "protocol_id": "GUIDANCE-REVISION-v1",
+  "frozen_at_utc": "2026-10-17T07:19:29.902180+00:00",
+  "files": {
+    "FREEZE.json": "8355eb53c5dadb77048f21a5a70a971436151b8059b7f057131c94a5018b54db",
+    "PROTOCOL.md": "bf23f4ba9b9d3d1f3cf851cb2fd90e1eb122de62912e58b2ba84101280af1681",
+    "collect.py": "59a698c747091cd3bb22f9bb47b81c3799a6e591cf6062c4f451e252eea4d2c3",
+    "data/broker_reference.json": "28c23ba8b1f6c9a8dd6921c30bab1acd310418d31936a68b767b96c57fb0a921",
+    "data/inventory.json": "06ecd54b4b48af41aef2ce8e3a3292f7d4e60cbcbece444fea0d1a0ecaf1431d",
+    "data/packages.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "data/sec/1cbe40d4a8f260d9c05042e95cf58089.bin": "8da48bc65e54f44663c363a738a9ba4d07029b95067cd9cd7ba84dc64a9dbe0f",
+    "data/sec/6fbd785cf34367dc1c2c0a1eb79cf6c1.bin": "edf2e9ea80f4e2be3b4c0b2a833575c01b5be6813d39fcd7ad4d70680ae17105",
+    "data/sec/70fb4cbb316abe15dfcc53e28c9bdda6.bin": "1985356e9ed70b9c1942720076fa0f5a705e8ce5fdbb23d31405ba43588d89a8",
+    "data/sec/af9e651efd9b6b189e76d0a8fe985ea2.bin": "59ed037aef7ecf2d39a2a317886461dfbe5888f9691c46609e526ec4891792a9",
+    "data/sec/d90153593391f7e71ce4b10951c6581c.bin": "d8c938a069d2f4aaa7e4c7d31fafa9b031284cef711777cf4e8c2e33cc7cb703",
+    "data/sec/e5519ae08f1384ba5832e0ca000531e2.bin": "7a15703202c0fd04a4dfb14898d1034a6ddf067cfa2ff3484e8f8a8725701f36",
+    "data/sec/e68885c7e600e0f0d5cc4023cc024b43.bin": "b916e18eabfb2b57a39422b2b24a2e92c23051ed0760b37d693befb8c89091df",
+    "fixtures/0000002488-21-000009.txt.gz": "e31fc00b5ff889de1a7580e921e4d6a10f4b5c203495af32a5ffee53508c1519",
+    "fixtures/0000002488-21-000054.txt.gz": "d5dfbb6ff3f844d179c0e27af9685c1822e7174cf157c80f13f8673bd2830ed0",
+    "fixtures/bindings.json": "8730371e2b63d3b86d44a0a060f999625ddda4296d80e4027a91d3eb5abcdd3f",
+    "protocol.json": "e841713b4b816ed1cb66018989298588689275d2acbb6d530a9cb89d69419b32",
+    "requirements.txt": "71ed40dcdeefc13b10b3c8ac8ea2aa571a99377389f6d1208a0714dba621e527",
+    "run_first_decision.py": "59f48d3cf74695bbc45e192213ce24aabfd76478384ec4fe5ce3d2a92b2632cb"
+  },
+  "module_sha256": "fcb5cc8896f3d8c343d7c157b90c10d6c00bbde4063d012cfa56589abf2fa108",
+  "tests_sha256": "c3fcf53d2693e2cdd64665ea5bffe458bdcef4fd01b23c44acf2f63d1e5709fc",
+  "outcome_read": false,
+  "note": "Implementation frozen after synthetic checks, before current paper decisions; known historical fixture is declared."
+}

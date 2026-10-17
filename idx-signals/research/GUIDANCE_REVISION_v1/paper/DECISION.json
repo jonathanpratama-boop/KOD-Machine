@@ -1,0 +1,67 @@
+{
+  "protocol_id": "GUIDANCE-REVISION-v1",
+  "created_at_utc": "2026-10-17T07:19:29.907237+00:00",
+  "decision": "STAY_IN_CASH",
+  "reason": "No qualifying current event in the frozen seven-issuer operational cohort",
+  "cohort": 7,
+  "current_earnings_events": 0,
+  "decisions": [
+    {
+      "ticker": "AAL",
+      "action": "NO_SIGNAL",
+      "reason": "NO_CURRENT_EVENT",
+      "record_hash": "89695a5f4d582f30a57fbbf6eb13ed741bf536197a28cfd49b91c680ce6d7cbe"
+    },
+    {
+      "ticker": "MATX",
+      "action": "NO_SIGNAL",
+      "reason": "NO_CURRENT_EVENT",
+      "record_hash": "8a56d94b0caabbf65f55fb3cdead336c69b4af5a3a35c590778f5b076086bea7"
+    },
+    {
+      "ticker": "ACU",
+      "action": "NO_SIGNAL",
+      "reason": "NO_CURRENT_EVENT",
+      "record_hash": "674b554511340b002d3d81d4b287ac874524d7c83ce06cc02603a41ba05fe9d7"
+    },
+    {
+      "ticker": "ABT",
+      "action": "NO_SIGNAL",
+      "reason": "NO_CURRENT_EVENT",
+      "record_hash": "e8bf82117b04b2302c362409a7413249a070d142a1c9bc97b453b510bff88acc"
+    },
+    {
+      "ticker": "AEP",
+      "action": "NO_SIGNAL",
+      "reason": "NO_CURRENT_EVENT",
+      "record_hash": "137811f2f248e134d2f680703390092a4089a47fffab698a6bfd8de229766142"
+    },
+    {
+      "ticker": "AXP",
+      "action": "NO_SIGNAL",
+      "reason": "NO_CURRENT_EVENT",
+      "record_hash": "1fcde0bad4d8547850b9f8d789a1034c859bfb223cbc4d0412d255fac53c80fd"
+    },
+    {
+      "ticker": "AMD",
+      "action": "NO_SIGNAL",
+      "reason": "NO_CURRENT_EVENT",
+      "record_hash": "dc27716e258c4bde27e2dc18500650ea9fd9b5332ba3f5b9bad8a2bc2d270b7f"
+    }
+  ],
+  "paper_positions": 0,
+  "simulated_cash_usd": 10000,
+  "real_orders": 0,
+  "coverage_limit": "Only the seven fixed issuers, as returned by the captured SEC metadata; no claim about the whole market or feed latency.",
+  "historical_fixture": "AMD 37% to 50% growth gives +9.489% revenue-forecast level; no stock-return calculation",
+  "next_action": "For the next real earnings event in this cohort, retain source bytes, review current and latest prior guidance, then invoke the frozen decision function with actual clocks. No scheduled collector is installed.",
+  "record_hashes": [
+    "89695a5f4d582f30a57fbbf6eb13ed741bf536197a28cfd49b91c680ce6d7cbe",
+    "8a56d94b0caabbf65f55fb3cdead336c69b4af5a3a35c590778f5b076086bea7",
+    "674b554511340b002d3d81d4b287ac874524d7c83ce06cc02603a41ba05fe9d7",
+    "e8bf82117b04b2302c362409a7413249a070d142a1c9bc97b453b510bff88acc",
+    "137811f2f248e134d2f680703390092a4089a47fffab698a6bfd8de229766142",
+    "1fcde0bad4d8547850b9f8d789a1034c859bfb223cbc4d0412d255fac53c80fd",
+    "dc27716e258c4bde27e2dc18500650ea9fd9b5332ba3f5b9bad8a2bc2d270b7f"
+  ]
+}

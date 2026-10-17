@@ -1,0 +1,266 @@
+{
+  "recorded_at_utc": "2026-10-17T07:17:17.496Z",
+  "received_at_utc": null,
+  "receipt_time_note": "Original tool receipt time was not captured by wrapper; quote asOf is provider-supplied.",
+  "source": "eToro get_instruments_overview read-only connector",
+  "requested_symbols": [
+    "AAL",
+    "MATX",
+    "ACU",
+    "ABT",
+    "AEP",
+    "AXP",
+    "AMD"
+  ],
+  "response": {
+    "statusCode": 200,
+    "xRequestId": "2aa403e9-9245-4518-813f-77355f0ca9df",
+    "instruments": [
+      {
+        "market": {
+          "instrumentId": 1451,
+          "symbol": "AAL",
+          "name": "American Airlines Group Inc",
+          "logo": "https://etoro-cdn.etorostatic.com/market-avatars/aal/50x50.png",
+          "logoLarge": "https://etoro-cdn.etorostatic.com/market-avatars/aal/150x150.png"
+        },
+        "quote": {
+          "ask": 11.88,
+          "bid": 11.87,
+          "spread": 0.010000000000001563,
+          "asOf": "2026-10-16T19:59:56.3537946Z"
+        },
+        "performance": {
+          "previousClose": 11.88,
+          "dailyChangePercent": -3.338762214983715,
+          "weeklyChangePercent": -6.974921630094048,
+          "monthlyChangePercent": -11.219147344801796
+        },
+        "eligibility": {
+          "allowOpenPosition": true,
+          "minPositionExposure": 10,
+          "maxUnitsPerOrder": 78370,
+          "allowedLeveragesLong": [
+            1
+          ],
+          "allowedLeveragesShort": [],
+          "allowMitOrders": true,
+          "allowEntryOrders": true,
+          "allowTrailingStopLoss": true,
+          "requiresW8Ben": true,
+          "unitsQuantityType": "fractional"
+        }
+      },
+      {
+        "market": {
+          "instrumentId": 8996,
+          "symbol": "MATX",
+          "name": "Matson Inc.",
+          "logo": "https://etoro-cdn.etorostatic.com/market-avatars/8996/50x50.png",
+          "logoLarge": "https://etoro-cdn.etorostatic.com/market-avatars/8996/150x150.png"
+        },
+        "quote": {
+          "ask": 235.24,
+          "bid": 234.73,
+          "spread": 0.5100000000000193,
+          "asOf": "2026-10-16T19:59:55.086712Z"
+        },
+        "performance": {
+          "previousClose": 234.99,
+          "dailyChangePercent": -0.8992653888372979,
+          "weeklyChangePercent": 4.014711747241549,
+          "monthlyChangePercent": 6.870333272627939
+        },
+        "eligibility": {
+          "allowOpenPosition": true,
+          "minPositionExposure": 10,
+          "maxUnitsPerOrder": 446,
+          "allowedLeveragesLong": [
+            1
+          ],
+          "allowedLeveragesShort": [],
+          "allowMitOrders": true,
+          "allowEntryOrders": true,
+          "allowTrailingStopLoss": true,
+          "requiresW8Ben": true,
+          "unitsQuantityType": "fractional"
+        }
+      },
+      {
+        "market": {
+          "instrumentId": 1047887,
+          "symbol": "ACU",
+          "name": "Acme United Corp",
+          "logo": "https://etoro-cdn.etorostatic.com/market-avatars/defaults/50x50.png",
+          "logoLarge": "https://etoro-cdn.etorostatic.com/market-avatars/defaults/150x150.png"
+        },
+        "quote": {
+          "ask": 61.5,
+          "bid": 60.99,
+          "spread": 0.509999999999998,
+          "asOf": "2026-10-16T19:59:45.8109599Z"
+        },
+        "performance": {
+          "previousClose": 60.99,
+          "dailyChangePercent": -0.9902597402597394,
+          "weeklyChangePercent": -1.4541929229277728,
+          "monthlyChangePercent": -2.431610942249234
+        },
+        "eligibility": {
+          "allowOpenPosition": true,
+          "minPositionExposure": 10,
+          "maxUnitsPerOrder": 2147483647,
+          "allowedLeveragesLong": [
+            1
+          ],
+          "allowedLeveragesShort": [],
+          "allowMitOrders": false,
+          "allowEntryOrders": false,
+          "allowTrailingStopLoss": false,
+          "requiresW8Ben": true,
+          "unitsQuantityType": "whole"
+        }
+      },
+      {
+        "market": {
+          "instrumentId": 100594,
+          "symbol": "ABT",
+          "name": "Arcblock",
+          "logo": "https://etoro-cdn.etorostatic.com/market-avatars/100594/50x50.png",
+          "logoLarge": "https://etoro-cdn.etorostatic.com/market-avatars/100594/150x150.png"
+        },
+        "quote": {
+          "ask": 0.2989,
+          "bid": 0.2957,
+          "spread": 0.0031999999999999806,
+          "asOf": "2026-10-17T07:09:37.824495Z"
+        },
+        "performance": {
+          "previousClose": 0.2955,
+          "dailyChangePercent": 0.06768189509307393,
+          "weeklyChangePercent": 0.06768189509307393,
+          "monthlyChangePercent": -4.612903225806445
+        },
+        "eligibility": {
+          "allowOpenPosition": false,
+          "minPositionExposure": 10,
+          "maxUnitsPerOrder": 77721,
+          "allowedLeveragesLong": [
+            1
+          ],
+          "allowedLeveragesShort": [],
+          "allowMitOrders": true,
+          "allowEntryOrders": true,
+          "allowTrailingStopLoss": true,
+          "requiresW8Ben": false,
+          "unitsQuantityType": "fractional"
+        }
+      },
+      {
+        "market": {
+          "instrumentId": 1595,
+          "symbol": "AEP",
+          "name": "American Electric Power Inc",
+          "logo": "https://etoro-cdn.etorostatic.com/market-avatars/aep/50x50.png",
+          "logoLarge": "https://etoro-cdn.etorostatic.com/market-avatars/aep/150x150.png"
+        },
+        "quote": {
+          "ask": 127.21,
+          "bid": 127.19,
+          "spread": 0.01999999999999602,
+          "asOf": "2026-10-16T19:59:56.2011584Z"
+        },
+        "performance": {
+          "previousClose": 127.14,
+          "dailyChangePercent": 2.3332528763375904,
+          "weeklyChangePercent": 3.5664848139402294,
+          "monthlyChangePercent": 7.20667565745111
+        },
+        "eligibility": {
+          "allowOpenPosition": true,
+          "minPositionExposure": 10,
+          "maxUnitsPerOrder": 8143,
+          "allowedLeveragesLong": [
+            1
+          ],
+          "allowedLeveragesShort": [],
+          "allowMitOrders": true,
+          "allowEntryOrders": true,
+          "allowTrailingStopLoss": true,
+          "requiresW8Ben": true,
+          "unitsQuantityType": "fractional"
+        }
+      },
+      {
+        "market": {
+          "instrumentId": 1009,
+          "symbol": "AXP",
+          "name": "American Express CO",
+          "logo": "https://etoro-cdn.etorostatic.com/market-avatars/axp/50x50.png",
+          "logoLarge": "https://etoro-cdn.etorostatic.com/market-avatars/axp/150x150.png"
+        },
+        "quote": {
+          "ask": 313.49,
+          "bid": 313.47,
+          "spread": 0.01999999999998181,
+          "asOf": "2026-10-16T19:59:55.0047479Z"
+        },
+        "performance": {
+          "previousClose": 313.59,
+          "dailyChangePercent": -0.1274412973523998,
+          "weeklyChangePercent": 1.7198299639809234,
+          "monthlyChangePercent": 3.081223281815194
+        },
+        "eligibility": {
+          "allowOpenPosition": true,
+          "minPositionExposure": 10,
+          "maxUnitsPerOrder": 3247,
+          "allowedLeveragesLong": [
+            1
+          ],
+          "allowedLeveragesShort": [],
+          "allowMitOrders": true,
+          "allowEntryOrders": true,
+          "allowTrailingStopLoss": true,
+          "requiresW8Ben": true,
+          "unitsQuantityType": "fractional"
+        }
+      },
+      {
+        "market": {
+          "instrumentId": 1832,
+          "symbol": "AMD",
+          "name": "Advanced Micro Devices Inc",
+          "logo": "https://etoro-cdn.etorostatic.com/market-avatars/amd/50x50.png",
+          "logoLarge": "https://etoro-cdn.etorostatic.com/market-avatars/amd/150x150.png"
+        },
+        "quote": {
+          "ask": 529.09,
+          "bid": 528.95,
+          "spread": 0.13999999999998636,
+          "asOf": "2026-10-16T19:59:56.0773244Z"
+        },
+        "performance": {
+          "previousClose": 528.75,
+          "dailyChangePercent": -5.919285701581199,
+          "weeklyChangePercent": -13.015951323795424,
+          "monthlyChangePercent": -13.536354125800958
+        },
+        "eligibility": {
+          "allowOpenPosition": true,
+          "minPositionExposure": 10,
+          "maxUnitsPerOrder": 1646,
+          "allowedLeveragesLong": [
+            1
+          ],
+          "allowedLeveragesShort": [],
+          "allowMitOrders": true,
+          "allowEntryOrders": true,
+          "allowTrailingStopLoss": true,
+          "requiresW8Ben": true,
+          "unitsQuantityType": "fractional"
+        }
+      }
+    ]
+  }
+}

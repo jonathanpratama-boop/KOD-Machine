@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "checks": [
+    "protocol hashes",
+    "implementation and evidence hashes",
+    "raw SEC inventory read-back",
+    "seven issuer decisions",
+    "unique IDs",
+    "separate ledger hash chain",
+    "zero invented fills",
+    "original AMD source extraction"
+  ],
+  "decisions": 7,
+  "strategy_returns_computed": false,
+  "real_orders": 0
+}
