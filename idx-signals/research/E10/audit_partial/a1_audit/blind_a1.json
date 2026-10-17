@@ -1,0 +1,605 @@
+{
+ "units": "dollar midpoints in USD millions; growth as a fraction (0.12 = 12%)",
+ "items": [
+  {
+   "item": 1,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "\u2022 Raising financial guidance for the full year 2021 with revenue of $4.55 to $4.63 billion,",
+   "later_sentence": "\u2022 Updating financial guidance for the full year 2021 with revenue of $4,680 to $4,730 million, diluted EPS of $(0.35) to $(0.26)",
+   "extracted_earlier_midpoint": 4590.0,
+   "extracted_later_midpoint": 4705.0
+  },
+  {
+   "item": 2,
+   "fiscal_year": 2021,
+   "kind": "growth",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "Company revises revenue growth outlook for 2021 to 9-11% on COVID Delta headwinds",
+   "later_sentence": "Revenue for fiscal 2021 increased 13% to $147.8 million, compared with $130.5 million in 2020 and above the guidance range of 9-11%, driven by growth in Joint Preservation and Restoration and continued recovery from the initial COVID impact in OA Pain Management",
+   "extracted_earlier_midpoint": 0.1,
+   "extracted_later_midpoint": 0.13
+  },
+  {
+   "item": 3,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "The Company now anticipates generating $118-123 million in total revenue in 2022, compared to the previously provided guidance of $115-120 million.",
+   "later_sentence": "Raising 2022 Revenue Guidance to $130\u2013135 million from $118\u2013123 million",
+   "extracted_earlier_midpoint": 117.5,
+   "extracted_later_midpoint": 132.5
+  },
+  {
+   "item": 4,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "Currency net of pricing was a $180 million headwind, inclusive of $150 million in pricing actions. \u2022 Corteva delivered cash flow from operations of $2.1 billion for the period, reflecting operational performance both in profitability and from improvements in working capital. \u2022 Management provided full year 2021 guidance8; and expects net sales in the range of $14.4 billion to $14.6 billion.",
+   "later_sentence": "These headwinds were partially offset by the Company\u2019s ongoing execution on its productivity programs. \u2022 SG&A expense as a percentage of sales improved approximately 160 basis points. \u2022 Management increased full year 2021 net sales guidance3 to a range of $14.6 to $14.8 billion \u2013 and affirmed full year 2021 Operating EBITDA1 guidance in the range of $2.4 billion to $2.5 billion. 1.",
+   "extracted_earlier_midpoint": 14500.0,
+   "extracted_later_midpoint": 14700.0
+  },
+  {
+   "item": 5,
+   "fiscal_year": 2021,
+   "kind": "growth",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "Donaldson expects fiscal 2021 sales to increase between 5% and 8%",
+   "later_sentence": "Fiscal 2021 sales guidance increased to a range of 9% to 11% growth",
+   "extracted_earlier_midpoint": 0.065,
+   "extracted_later_midpoint": 0.1
+  },
+  {
+   "item": 6,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "EVgo is affirming its prior financial forecast for full year 2021 of $20 million in revenues, 24 gigawatt-hours of network throughput, and ($58) million in Adjusted EBITDA.",
+   "later_sentence": "\u00b7 Increasing full-year 2021 revenue guidance to $20-22 million and network throughput guidance to 24-26 GWh",
+   "extracted_earlier_midpoint": 20.0,
+   "extracted_later_midpoint": 21.0
+  },
+  {
+   "item": 7,
+   "fiscal_year": 2020,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "For fiscal year 2020, the Company now expects revenue to be in the range of $140 million to $155 million, up from the previous guidance range of $130 million to $150 million.",
+   "later_sentence": "For fiscal year 2020, the Company now expects revenue to be in the range of $145 million to $155 million, versus the previous guidance range of $140 million to $155 million.",
+   "extracted_earlier_midpoint": 147.5,
+   "extracted_later_midpoint": 150.0
+  },
+  {
+   "item": 8,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "--Introduced full year 2022 revenue outlook of $3,780 million to $3,820 million",
+   "later_sentence": "Increased full year 2022 revenue outlook to $3,935 million - $3,970 million and Adjusted EBITDA outlook to $535 million - $555 million",
+   "extracted_earlier_midpoint": 3800.0,
+   "extracted_later_midpoint": 3952.5
+  },
+  {
+   "item": 9,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "\u201cWith a strong recovery from the pandemic well underway and with continued momentum in our business in the first quarter, we are issuing full year 2021 revenue guidance of $110 million to $112 million, which is an annual growth rate of 30% to 32%.\u201d",
+   "later_sentence": "\u201cWith our strong first quarter results and continued momentum, we are raising full year 2021 revenue guidance to a new range of $118 million to $122 million, which is an annual growth rate of 39% to 44%.\u201d",
+   "extracted_earlier_midpoint": 111.0,
+   "extracted_later_midpoint": 120.0
+  },
+  {
+   "item": 10,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "- Initiates Full Year 2021 Revenue Guidance of $366 Million",
+   "later_sentence": "- Raises Full Year 2021 Revenue Guidance to $375 Million",
+   "extracted_earlier_midpoint": 366.0,
+   "extracted_later_midpoint": 375.0
+  },
+  {
+   "item": 11,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "For the year ending December 31, 2021, the Company expects revenues to be $1.990 - $2.050 billion.",
+   "later_sentence": "For the year ending December 31, 2021, the Company now expects revenues to be $2.130 - $2.180 billion, compared to prior guidance of $1.990 - $2.050 billion.",
+   "extracted_earlier_midpoint": 2020.0,
+   "extracted_later_midpoint": 2155.0
+  },
+  {
+   "item": 12,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "\u2022 Fiscal year 2021 revenue expected in the range of $5.6 billion to $5.7 billion, representing reported growth of 5% to 7% and core (1) growth of 4% to 6%.",
+   "later_sentence": "Agilent has increased its outlook and now expects revenue of $5.825 billion to $5.900 billion for fiscal year 2021.",
+   "extracted_earlier_midpoint": 5650.0,
+   "extracted_later_midpoint": 5862.5
+  },
+  {
+   "item": 13,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "The Company expects its full year 2022 sales to be in the range of $1.90 billion to $2.05 billion and full year 2022 earnings per share before restructuring expenses to be in the range from $3.50 to $3.75.",
+   "later_sentence": "\u2022 2022 FY net sales guidance is updated to $2.00 billion to $2.15 billion and 2022 FY earnings per share excluding restructuring to $4.00 to $4.20",
+   "extracted_earlier_midpoint": 1975.0,
+   "extracted_later_midpoint": 2075.0
+  },
+  {
+   "item": 14,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "Full year 2021 revenue is projected to be approximately $250 million.",
+   "later_sentence": "Full year 2021 revenue is now projected to be approximately $252 million to $256 million .",
+   "extracted_earlier_midpoint": 250.0,
+   "extracted_later_midpoint": 254.0
+  },
+  {
+   "item": 15,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "Expects overall revenue of approximately $800.0 million in 2021, representing growth of 90% year-over-year",
+   "later_sentence": "For the full year 2021, the company now expects revenue of approximately $830 million, which would represent growth of 97% year over year, versus previous guidance of $800 million.",
+   "extracted_earlier_midpoint": 800.0,
+   "extracted_later_midpoint": 830.0
+  },
+  {
+   "item": 16,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "The Company continues to expect fiscal year 2022 revenue to range between $360.0 million to $370.0 million, Adjusted EBITDA to range between $115.0 million to $120.0 million, and free cash flow 2 to range between $55.0 million and $60.0 million.",
+   "later_sentence": "The Company now expects fiscal year 2022 revenue to range between $380.0 million to $390.0 million (versus the $360.0 million to $370.0 million announced in our second quarter earnings release).",
+   "extracted_earlier_midpoint": 365.0,
+   "extracted_later_midpoint": 385.0
+  },
+  {
+   "item": 17,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "\u2022 Raises FY21 Revenue Guidance to Approximately $20.7 Billion to $20.8 Billion, up Approximately 21% to 22% Year-Over-Year",
+   "later_sentence": "Raises FY21 Revenue Guidance to Approximately $21.10 Billion to $21.11 Billion, up Approximately",
+   "extracted_earlier_midpoint": 20750.0,
+   "extracted_later_midpoint": 21105.0
+  },
+  {
+   "item": 18,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "to projected annual net sales of $150 million to $160 million in fiscal year 2022, representing growth of 15-20% over projected fiscal",
+   "later_sentence": "Company Increases FY22 Net Sales Guidance to $162 Million to $169 Million, Representing Growth of 15% to 20% Compared to Fiscal 2021 Net Sales",
+   "extracted_earlier_midpoint": 155.0,
+   "extracted_later_midpoint": 165.5
+  },
+  {
+   "item": 19,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "Agilent has increased its outlook and now expects revenue of $5.825 billion to $5.900 billion for fiscal year 2021.",
+   "later_sentence": "Agilent has increased its outlook and now expects revenue in the range of $6.15 billion to $6.21 billion for fiscal year 2021.",
+   "extracted_earlier_midpoint": 5862.5,
+   "extracted_later_midpoint": 6180.0
+  },
+  {
+   "item": 20,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "The Company continues to expect total revenue for the fiscal year ended December 31, 2022, to approximate $305 million, reflecting growth of approximately 25% compared to the full year 2021.",
+   "later_sentence": "The Company now expects total revenue for the fiscal year ended December 31, 2022, to approximate $316 million, reflecting growth of approximately 30% compared to the full year 2021.",
+   "extracted_earlier_midpoint": 305.0,
+   "extracted_later_midpoint": 316.0
+  },
+  {
+   "item": 21,
+   "fiscal_year": 2022,
+   "kind": "growth",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "For fiscal 2022, the company expects revenue growth to be in the range of 12% to 15% in local currency.",
+   "later_sentence": "-- Accenture raises its business outlook for fiscal 2022; now expects full-year revenue growth of 19% to 22% in local currency; EPS of $10.32 to $10.60; and free cash flow of $7.7 billion to $8.2 billion --",
+   "extracted_earlier_midpoint": 0.135,
+   "extracted_later_midpoint": 0.205
+  },
+  {
+   "item": 22,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "Initiates full year 2021 revenue guidance of $307 to $313 million; year-over-year growth of 47% to 50%",
+   "later_sentence": "Raises 2021 revenue guidance to a range of $332 to $338 million; YoY growth of 59% to 62%",
+   "extracted_earlier_midpoint": 310.0,
+   "extracted_later_midpoint": 335.0
+  },
+  {
+   "item": 23,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "Agilent has increased its outlook and now expects revenue in the range of $6.15 billion to $6.21 billion for fiscal year 2021.",
+   "later_sentence": "Agilent has increased its outlook and now expects revenue in the range of $6.29 billion to $6.32 billion for fiscal year 2021.",
+   "extracted_earlier_midpoint": 6180.0,
+   "extracted_later_midpoint": 6305.0
+  },
+  {
+   "item": 24,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "The Company also expects to exceed $625 million in revenue for the full year 2021.",
+   "later_sentence": "The Company also expects to exceed $640 million in revenue for the full year 2021.",
+   "extracted_earlier_midpoint": 625.0,
+   "extracted_later_midpoint": 640.0
+  },
+  {
+   "item": 25,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "Patterson added, \u201cFor the full year 2021, we are also increasing estimates and now expect revenues of approximately $4.6 to $4.7 billion and adjusted EPS of $3.00, a 55% increase over the prior year.\"",
+   "later_sentence": "Avient Corporation (NYSE: AVNT), with expected 2021 revenues of $4.75 billion, provides specialized and sustainable material solutions that transform customer challenges into opportunities, bringing new products to life for a better world.",
+   "extracted_earlier_midpoint": 4650.0,
+   "extracted_later_midpoint": 4750.0
+  },
+  {
+   "item": 26,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "The Company expects its fiscal year 2022 total revenue to be approximately $1.1 billion to approximately $1.3 billion.",
+   "later_sentence": "\u2022 Reaffirm our fiscal year 2022 total revenue guidance of $1.1 to $1.3 billion.",
+   "extracted_earlier_midpoint": 1100.0,
+   "extracted_later_midpoint": 1200.0
+  },
+  {
+   "item": 27,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "Management is reinitiating financial guidance and believes that full-year 2021 revenue will be in the range of $133 million to $136 million.",
+   "later_sentence": "Management is updating financial guidance, expecting full-year 2021 revenue will be in the range of $134.5 million to $137.5 million versus the prior range of $133.0 million to $136.0 million.",
+   "extracted_earlier_midpoint": 134.5,
+   "extracted_later_midpoint": 136.0
+  },
+  {
+   "item": 28,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "Our plans for fiscal 2021 include expected sales of approximately $385.0 million to $402.0 million, adjusted EBITDA of approximately $11.0 to $18.0 million and positive free cash flow.",
+   "later_sentence": "Raises Guidance for Fiscal 2021: Sales $490-$505 million, EPS $0.64-$0.76 per diluted share",
+   "extracted_earlier_midpoint": 393.5,
+   "extracted_later_midpoint": 497.5
+  },
+  {
+   "item": 29,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "Raises FY22 Revenue Guidance to $25.9 Billion to $26.0 Billion",
+   "later_sentence": "Raises FY22 Revenue Guidance to $26.2 Billion to $26.3 Billion",
+   "extracted_earlier_midpoint": 25950.0,
+   "extracted_later_midpoint": 26250.0
+  },
+  {
+   "item": 30,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "\u2022 Reaffirmed fiscal year 2022 net sales guidance of $1.36-$1.41 billion and Adjusted EBITDA (non-GAAP) guidance of $255-$265 million",
+   "later_sentence": "\u2022 Raised fiscal year 2022 net sales guidance to $1.39-$1.43 billion and Adjusted EBITDA (non-GAAP) guidance to $258-$268 million",
+   "extracted_earlier_midpoint": 1385.0,
+   "extracted_later_midpoint": 1410.0
+  },
+  {
+   "item": 31,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "Company anticipates exceeding its March 2021 guidance of $1.1 million in revenue for fiscal year 2021.",
+   "later_sentence": "exceeded its March 2021 revenue guidance for the year, generating revenue of $1.2 million with 78% gross margin for the year ended December",
+   "extracted_earlier_midpoint": 1.1,
+   "extracted_later_midpoint": 1.2
+  },
+  {
+   "item": 32,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "The Company now expects total revenue of $325 million for the fiscal year ended December 31, 2022, reflecting growth of approximately 34% compared to the full year 2021.",
+   "later_sentence": "The Company expects total revenue of $340 million for the fiscal year ended December 31, 2022, in line with the 40% full-year growth rate previewed in conjunction with the release of preliminary third quarter financial results.",
+   "extracted_earlier_midpoint": 325.0,
+   "extracted_later_midpoint": 340.0
+  },
+  {
+   "item": 33,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "FY2021 Revenue of $6.15 billion to $6.35 billion, compared to prior guidance of $5.35 billion to",
+   "later_sentence": "FY2021 Revenue of $6.375 billion to $6.425 billion, compared to prior guidance of $6.15 billion to",
+   "extracted_earlier_midpoint": 6250.0,
+   "extracted_later_midpoint": 6400.0
+  },
+  {
+   "item": 34,
+   "fiscal_year": 2023,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "Reiterates FY23 Revenue Guidance of $31.7 Billion to $31.8 Billion",
+   "later_sentence": "\u201cAs we continue to see tremendous demand from customers, we\u2019re raising our FY23 revenue guidance to $32.1 billion at the high-end of range, with non-GAAP operating margin of 20%, and operating cash flow growth of 22% year-over-year.\u201d",
+   "extracted_earlier_midpoint": 31750.0,
+   "extracted_later_midpoint": 32100.0
+  },
+  {
+   "item": 35,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "Management remains mindful of supply chain uncertainties in this pandemic environment and is updating its 2021 guidance for sales from $430 \u2013 $490 million to $445 \u2013 $500 million, and for adjusted earnings per diluted share from $1.20 \u2013 $1.60 to $1.35 \u2013 $1.70.",
+   "later_sentence": "While management remains mindful of supply chain uncertainties, CTS is updating its 2021 guidance for sales from $445 \u2013 $500 million to $480 \u2013 $500 million, and for adjusted diluted EPS from $1.35 \u2013 $1.70 to $1.70 \u2013 $1.90.",
+   "extracted_earlier_midpoint": 460.0,
+   "extracted_later_midpoint": 472.5
+  },
+  {
+   "item": 36,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "For fiscal year 2022, the company expects total revenue in the range of $3.470 billion to $3.510 billion.",
+   "later_sentence": "For fiscal year 2022, the company expects total revenue in the range of $3.532 billion to $3.552 billion.",
+   "extracted_earlier_midpoint": 3490.0,
+   "extracted_later_midpoint": 3542.0
+  },
+  {
+   "item": 37,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "continue to see, we are increasing our full year 2021 revenue guidance to $612-617 million, representing 135% year-over-year growth at",
+   "later_sentence": "year 2021 total revenue is expected to be between $622-627 million, an increase of 138-140%",
+   "extracted_earlier_midpoint": 614.5,
+   "extracted_later_midpoint": 624.5
+  },
+  {
+   "item": 38,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "Full year 2021 revenue is now projected to be approximately $252 million to $256 million .",
+   "later_sentence": "Management is updating revenue guidance for full year 2021 to a range of $ 270 to $ 275 million, corresponding to growth of approximately 3 1 % to 33 % for the year.",
+   "extracted_earlier_midpoint": 254.0,
+   "extracted_later_midpoint": 272.5
+  },
+  {
+   "item": 39,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "For the full year of 2022, total revenues are expected to range between $7.202 and $7.252 billion, a 9% increase over the previous year on an as-reported basis, or a 9 - 10%",
+   "later_sentence": "For the full year of 2022, total revenues are expected to range between $7.291 and $7.341 billion, a 10 - 11% increase over the previous year, or a normalized and constant currency increase of approximately 10%.",
+   "extracted_earlier_midpoint": 7227.0,
+   "extracted_later_midpoint": 7316.0
+  },
+  {
+   "item": 40,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "RAISE",
+   "earlier_sentence": "Consolidated net sales for full-year fiscal 2022 are expected to range from $27.22 billion to $27.85 billion.",
+   "later_sentence": "~ Company Narrows Fiscal 2022 Revenue Outlook to $27.85 Billion to $28.10 Billion ~",
+   "extracted_earlier_midpoint": 27220.0,
+   "extracted_later_midpoint": 27975.0
+  },
+  {
+   "item": 41,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "CUT",
+   "earlier_sentence": "\u2022 Reiterated 2021 revenue guidance of $375 - 405 million",
+   "later_sentence": "Corcept modified its 2021 revenue guidance to $355 \u2013 $385 million.",
+   "extracted_earlier_midpoint": 390.0,
+   "extracted_later_midpoint": 370.0
+  },
+  {
+   "item": 42,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "CUT",
+   "earlier_sentence": "We are reconfirming our prior framework with full-year 2022 guidance reflecting our expectation of performance at the midpoint of revenue in a range of $5.250 billion to $5.350 billion, and Adjusted EPS in a range of $8.50 to $8.80.",
+   "later_sentence": "The net impact is a $100 million reduction in our guidance for 2022 revenue growth, with a resulting midpoint in our guidance for 2022 revenue of $5.2 billion.",
+   "extracted_earlier_midpoint": 5300.0,
+   "extracted_later_midpoint": 5200.0
+  },
+  {
+   "item": 43,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "CUT",
+   "earlier_sentence": "Allison expects 2021 Net Sales in the range of $2,325 to $2,475 million, Net Income in the range of $395 to $465 million, Adjusted EBITDA in the range of $795 to",
+   "later_sentence": "Allison expects 2021 Net Sales in the range of $2,325 to $2,400 million, Net Income in the range of $395 to $440 million,",
+   "extracted_earlier_midpoint": 2400.0,
+   "extracted_later_midpoint": 2362.5
+  },
+  {
+   "item": 44,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "CUT",
+   "earlier_sentence": "We still expect to deliver between 19,500 and 20,000 lots generating approximately $1.7 billion of revenue in fiscal 2022 and now expect our pre-tax profit margin for the full fiscal year to be between 14.0% and 14.5%, up from our previous guidance of 13.5% to 14.0%.",
+   "later_sentence": "Additionally, we expect to deliver approximately 17,000 lots generating approximately $1.425 billion of revenue in fiscal 2022, compared to our prior guidance of between 19,500 and 20,000 lots generating approximately $1.7 billion of revenue.",
+   "extracted_earlier_midpoint": 1700.0,
+   "extracted_later_midpoint": 1425.0
+  },
+  {
+   "item": 45,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "CUT",
+   "earlier_sentence": "Expects 2022 revenue of $427 million to $432 million, growth of 19% to 21% YoY; expects 2022 Adjusted EBITDA loss of $57 million to $59 million",
+   "later_sentence": "Expects 2022 revenue of $421 million to $424 million, growth of 17% to 18% YoY; expects 2022 Adjusted EBITDA loss of $59 million to $61 million",
+   "extracted_earlier_midpoint": 429.5,
+   "extracted_later_midpoint": 422.5
+  },
+  {
+   "item": 46,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "CUT",
+   "earlier_sentence": "For fiscal year 2022, the Company maintains its net revenue guidance of $115 million to $135 million from sales of LUPKYNIS.",
+   "later_sentence": "\u201cGiven these current market dynamics, we are adjusting our net revenue guidance to $100-105 million from sales of LUPKYNIS for 2022.",
+   "extracted_earlier_midpoint": 125.0,
+   "extracted_later_midpoint": 102.5
+  },
+  {
+   "item": 47,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "CUT",
+   "earlier_sentence": "We are making no change to our full-year 2022 revenue guidance of $400 million.",
+   "later_sentence": "We are lowering our full-year 2022 revenue guidance to $275 million.",
+   "extracted_earlier_midpoint": 400.0,
+   "extracted_later_midpoint": 275.0
+  },
+  {
+   "item": 48,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "CUT",
+   "earlier_sentence": "\u2022 Full-year 2022 revenue is expected to be $20.0-$20.5 billion, or growth of 7.8%-10.8% (8.5%-11.5% in constant currency).",
+   "later_sentence": "\u2022 Full-year 2022 revenue is expected to be $19.8-$20.2 billion, or growth of 7.2%-9.2% (9.0%-11.0% in constant currency).",
+   "extracted_earlier_midpoint": 20250.0,
+   "extracted_later_midpoint": 20000.0
+  },
+  {
+   "item": 49,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "CUT",
+   "earlier_sentence": "The Company is maintaining its revenue guidance range of $365 million to $405 million for fiscal year 2022.",
+   "later_sentence": "For fiscal year 2022, the Company now expects revenue to be in the range of $365 million to $385 million, versus the previous guidance range of $365 million to $405",
+   "extracted_earlier_midpoint": 385.0,
+   "extracted_later_midpoint": 375.0
+  },
+  {
+   "item": 50,
+   "fiscal_year": 2022,
+   "kind": "growth",
+   "assigned_direction": "CUT",
+   "earlier_sentence": "Our updated sales outlook for 2022 projects our sales to increase between 14% and 16% year-over-year.",
+   "later_sentence": "\u201cBecause we expect the normalization of North America residential industry volumes to persist through the remainder of 2022, we announced on October 13 and reaffirm today that we lowered our sales outlook for 2022 to an increase of between 5% and 7% year-over-year, including approximately $100 million from Giant.",
+   "extracted_earlier_midpoint": 0.15,
+   "extracted_later_midpoint": 0.06
+  },
+  {
+   "item": 51,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "CUT",
+   "earlier_sentence": "\u2022 For the fiscal year 2022, due to uncertainty surrounding the macro freight and shipping environment, the Company anticipates roughly 2% of risk to the $516 million of revenue guidance originally provided in December of 2020.",
+   "later_sentence": "For the fiscal year 2022, the Company anticipates total revenue of $505 million, which reflects the Company factoring in certain risks to revenue given the ongoing macro supply chain headwinds and the acceleration of the Company's prioritization of Adjusted EBITDA profitability.",
+   "extracted_earlier_midpoint": 516.0,
+   "extracted_later_midpoint": 505.0
+  },
+  {
+   "item": 52,
+   "fiscal_year": 2023,
+   "kind": "dollar",
+   "assigned_direction": "CUT",
+   "earlier_sentence": "\u201cAs we continue to see tremendous demand from customers, we\u2019re raising our FY23 revenue guidance to $32.1 billion at the high-end of range, with non-GAAP operating margin of 20%, and operating cash flow growth of 22% year-over-year.\u201d",
+   "later_sentence": "\u2022 Updates Full Year FY23 Revenue Guidance to $31.7 Billion to $31.8 Billion, up ~20% Year-Over-Year",
+   "extracted_earlier_midpoint": 32100.0,
+   "extracted_later_midpoint": 31750.0
+  },
+  {
+   "item": 53,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "CUT",
+   "earlier_sentence": "\u201cFor 2022 we expect net sales between $17.4 and $17.8 billion and operating EBITDA between $4.3 and $4.5 billion, an increase of 6 percent at the mid-point versus 2021, with top-line volume growth and pricing gains more than offsetting year-over-year raw material and logistics costs increases,\u201d said Lori Koch, Chief Financial Officer of DuPont.",
+   "later_sentence": "We are increasing our estimated full year 2022 net sales range for continuing operations to be between $13.3 billion and $13.7 billion to reflect our current assumption for cost inflation related to raw materials, logistics and energy which we continue to expect to offset with price.\u201d",
+   "extracted_earlier_midpoint": 17600.0,
+   "extracted_later_midpoint": 13500.0
+  },
+  {
+   "item": 54,
+   "fiscal_year": 2021,
+   "kind": "dollar",
+   "assigned_direction": "CUT",
+   "earlier_sentence": "AerSale anticipates revenue of $340\u2013$360 million and adjusted EBITDA of $60-$70 million in 2021.",
+   "later_sentence": "\u25cf 2021 guidance updated; revenue of $320 - $340 million and adjusted EBITDA of $80 - $90 million 1 , which exceeds prior guidance for adjusted EBITDA of $60 - $70 million.",
+   "extracted_earlier_midpoint": 350.0,
+   "extracted_later_midpoint": 330.0
+  },
+  {
+   "item": 55,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "CUT",
+   "earlier_sentence": "\u2022 The company now expects fiscal year 2022 revenues to be in the range of approximately $19.6 billion to $19.8 billion, which reflects an increase of approximately $50 million at the mid-point compared to $19.55 billion to $19.75 billion previously announced.",
+   "later_sentence": "\u2022 The company now expects fiscal year 2022 revenues to be in the range of approximately $18.75 billion to $18.83 billion compared to $18.5 billion to $18.7 billion previously announced, which reflects an increase of approximately $190 million at the mid-point.",
+   "extracted_earlier_midpoint": 19700.0,
+   "extracted_later_midpoint": 18790.0
+  },
+  {
+   "item": 56,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "CUT",
+   "earlier_sentence": "\u2022 Revised 2022 revenue expectations to the range of $325 million to $335 million due to higher than expected mix of commercial patients from the success of new launches and market expansion",
+   "later_sentence": "For the full year 2022, CareDx is revising our revenue expectations to be in the range of $320 million to $325 million due to lower Q3 revenue and a higher than anticipated shift in payer mix to commercial payors.",
+   "extracted_earlier_midpoint": 330.0,
+   "extracted_later_midpoint": 322.5
+  },
+  {
+   "item": 57,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "CUT",
+   "earlier_sentence": "\u2022 Full-year 2022 revenue is expected to be $19.8-$20.2 billion, or growth of 7.2%-9.2% (9.0%-11.0% in constant currency).",
+   "later_sentence": "\u2022 Full-year 2022 revenue is expected to be $19.7-$19.9 billion, or growth of 6.3%-7.3% (8.5%-9.5% in constant currency).",
+   "extracted_earlier_midpoint": 20000.0,
+   "extracted_later_midpoint": 19800.0
+  },
+  {
+   "item": 58,
+   "fiscal_year": 2020,
+   "kind": "dollar",
+   "assigned_direction": "CUT",
+   "earlier_sentence": "\u2022 Reaffirmed 2020 revenue guidance of $355 \u2013 375 million",
+   "later_sentence": "\u2022 2020 revenue guidance narrowed to $355 \u2013 365 million",
+   "extracted_earlier_midpoint": 365.0,
+   "extracted_later_midpoint": 360.0
+  },
+  {
+   "item": 59,
+   "fiscal_year": 2022,
+   "kind": "dollar",
+   "assigned_direction": "CUT",
+   "earlier_sentence": "Based on current trends and expectations, we have revised 2022 guidance and we currently expect fiscal year 2022 revenue to be in the range of $2.0 billion to $2.1 billion, and diluted adjusted earnings per common share in the range of $3.05 to $3.25.",
+   "later_sentence": "Based on current trends and expectations, we have updated 2022 guidance and we currently expect fiscal year 2022 revenue to be $2.0 billion and diluted adjusted earnings per common share to be in the range of $2.60 to $2.65.",
+   "extracted_earlier_midpoint": 2050.0,
+   "extracted_later_midpoint": 2000.0
+  },
+  {
+   "item": 60,
+   "fiscal_year": 2022,
+   "kind": "growth",
+   "assigned_direction": "CUT",
+   "earlier_sentence": "We now expect full year 2022 reported sales growth to be approximately 4% to 5% (previously 5% to 8%), including the negative effect from currency of approximately 1% versus original expectations.",
+   "later_sentence": "Farrell stated, \u201cWe continue to expect full year 2022 reported sales growth to be approximately 3%, the midpoint of our previous range (2-4%).",
+   "extracted_earlier_midpoint": 0.045,
+   "extracted_later_midpoint": 0.03
+  }
+ ]
+}
