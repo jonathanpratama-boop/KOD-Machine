@@ -1,0 +1,52 @@
+{
+  "stage": "counts only, no prices (amendment 1)",
+  "stamp": "20261017T075023Z",
+  "counts": {
+    "filings_listed": 36215,
+    "filings_fetched": 13671,
+    "acceptance_found_share": 1.0,
+    "releases_in_event_span": 10729,
+    "releases_in_span_with_guidance": 842,
+    "dropped_as_mismatch_beyond_50pct": {
+      "CUT": 9,
+      "RAISE": 6
+    },
+    "events_by_class": {
+      "MAINTAIN": 196,
+      "RAISE": 146,
+      "CUT": 57
+    },
+    "events_by_class_and_year": {
+      "2020": {
+        "CUT": 6,
+        "MAINTAIN": 16,
+        "RAISE": 14
+      },
+      "2021": {
+        "CUT": 9,
+        "MAINTAIN": 65,
+        "RAISE": 84
+      },
+      "2022": {
+        "CUT": 42,
+        "MAINTAIN": 115,
+        "RAISE": 48
+      }
+    },
+    "events_by_kind": {
+      "dollar": 345,
+      "growth": 54
+    },
+    "issuers_with_events": 131,
+    "events_on_etoro_listed": {
+      "MAINTAIN": 194,
+      "RAISE": 136,
+      "CUT": 56
+    },
+    "level_change_quantiles_raise": {
+      "0.1": 0.0134,
+      "0.5": 0.0367,
+      "0.9": 0.0893
+    }
+  }
+}
