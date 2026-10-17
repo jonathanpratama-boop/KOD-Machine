@@ -124,6 +124,11 @@ def main(argv=None) -> int:
     for p_ in (p_ps, p_sc):
         p_.add_argument("--market", choices=("IDX", "US", "CRYPTO"), default="IDX")
     sub.add_parser("paper-verify", help="check the paper ledger's hash chain and timestamp tokens")
+    p_gp2 = sub.add_parser("guidance-paper", help="forward paper test of revenue guidance raises (dry run unless "
+                                                  "E10 passed and --record; never an order)")
+    p_gp2.add_argument("--day", help="filing day to scan, YYYY-MM-DD (default: yesterday)")
+    p_gp2.add_argument("--bootstrap", action="store_true", help="rebuild the guidance state from the 200 days before")
+    p_gp2.add_argument("--record", action="store_true", help="append to paper/guidance/ledger.jsonl (needs E10 PASS)")
     for name, helptext in (("e3-reproduce", "experiment E3 precondition: re-run the recorded E1 trading runs on E3's data"),
                            ("e3-discovery", "experiment E3 discovery: every (detector, plan) pair through the harness"),
                            ("e3-validation", "experiment E3 validation: the frozen pair on 2023, as a recorded run")):
@@ -473,6 +478,32 @@ def main(argv=None) -> int:
         for p_ in problems:
             print(f"  {p_}")
         return 1 if problems else 0
+    elif args.cmd == "guidance-paper":
+        import os
+        from datetime import date, datetime, timedelta, timezone
+
+        from . import guidance_paper as gp
+        from .us_actions import SecClient, cik_map
+
+        contact = os.environ.get("KOD_SEC_CONTACT", "").strip()
+        if "@" not in contact:
+            raise SystemExit("error: set KOD_SEC_CONTACT to the owner's contact email (SEC fair-access policy)")
+        now = datetime.now(timezone.utc)
+        day = date.fromisoformat(args.day) if args.day else (now - timedelta(days=1)).date()
+        client = SecClient(f"KOD-Machine research {contact}", gp.PKG_ROOT / "data" / "raw" / "sec_guidance" /
+                           now.strftime("%Y%m%dT%H%M%SZ"))
+        universe = gp.etoro_us()
+        ciks = {c: t for t, c in cik_map(client).items() if t in universe}
+        print(f"universe: {len(ciks)} eToro-listed US stocks with a CIK")
+        state = gp.bootstrap(day, client.get, ciks) if args.bootstrap or not gp.STATE.exists() else gp.load_state()
+        decisions, events, state = gp.scan_day(day, state, client.get, ciks, now)
+        records = gp.record(decisions, events, day, now, dry_run=not args.record)
+        if args.record:
+            gp.save_state(state)
+        print(json.dumps({"day": day.isoformat(), "dry_run": not args.record, "events": len(events),
+                          "decisions": [{k: d[k] for k in ("ticker", "accession", "acceptance_ny")} | {
+                              "level_change": d["event"]["level_change"]} for d in decisions],
+                          "records": len(records)}, indent=1))
     elif args.cmd == "verify-runs":
         from .results import verify_runs
 
