@@ -1,0 +1,422 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns:dei="http://xbrl.sec.gov/dei/2023" xmlns:us-types="http://fasb.org/us-types/2023" xmlns:nonnum="http://www.xbrl.org/dtr/type/non-numeric" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:bned="http://www.ba.com/20240605" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:utr="http://www.xbrl.org/2009/utr" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>8-K</title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+   <body><div style="display:none"> <ix:header> <ix:hidden> <ix:nonNumeric name="dei:AmendmentFlag" contextRef="duration_2024-06-05_to_2024-06-05" id="ixv-514">false</ix:nonNumeric> <ix:nonNumeric id="Hidden_dei_EntityCentralIndexKey" name="dei:EntityCentralIndexKey" contextRef="duration_2024-06-05_to_2024-06-05">0001634117</ix:nonNumeric> </ix:hidden> <ix:references> <link:schemaRef xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:link="http://www.xbrl.org/2003/linkbase" xlink:type="simple" xlink:href="bned-20240605.xsd" xlink:arcrole="http://www.xbrl.org/2003/linkbase"/> </ix:references> <ix:resources> <xbrli:context id="duration_2024-06-05_to_2024-06-05"> <xbrli:entity> <xbrli:identifier scheme="http://www.sec.gov/CIK">0001634117</xbrli:identifier> </xbrli:entity> <xbrli:period> <xbrli:startDate>2024-06-05</xbrli:startDate> <xbrli:endDate>2024-06-05</xbrli:endDate> </xbrli:period> </xbrli:context> </ix:resources> </ix:header> </div> <div style="text-align:center"> <div style="width:8.5in;text-align:left;margin-left: auto;margin-right: auto"> <p style="line-height:1.0pt;margin-top:0pt;margin-bottom:0pt;border-bottom:1px solid #000000">&#160;</p> <p style="line-height:3.0pt;margin-top:0pt;margin-bottom:2pt;border-bottom:1px solid #000000">&#160;</p> <p style="margin-top:4pt; margin-bottom:0pt; font-size:18pt; font-family:Times New Roman;font-weight:bold;text-align:center">UNITED STATES</p> <p style="margin-top:0pt; margin-bottom:0pt; font-size:18pt; font-family:Times New Roman;font-weight:bold;text-align:center">SECURITIES AND EXCHANGE COMMISSION</p> <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt; font-family:Times New Roman;font-weight:bold;text-align:center">Washington, D.C. 20549</p> <p style="font-size:8pt;margin-top:0pt;margin-bottom:0pt">&#160;</p> <div style="text-align:center"> <p style="line-height:6.0pt;margin-top:0pt;margin-bottom:2pt;border-bottom:1.00pt solid #000000;width:21%;text-align:center;margin-left: auto;margin-right: auto">&#160;</p></div> <p style="margin-top:8pt; margin-bottom:0pt; font-size:18pt; font-family:Times New Roman;font-weight:bold;text-align:center">FORM <span style="white-space:nowrap"><ix:nonNumeric name="dei:DocumentType" contextRef="duration_2024-06-05_to_2024-06-05" id="ixv-525">8-K</ix:nonNumeric></span></p> <p style="font-size:8pt;margin-top:0pt;margin-bottom:0pt">&#160;</p> <div style="text-align:center"> <p style="line-height:6.0pt;margin-top:0pt;margin-bottom:2pt;border-bottom:1.00pt solid #000000;width:21%;text-align:center;margin-left: auto;margin-right: auto">&#160;</p></div> <p style="margin-top:8pt; margin-bottom:0pt; font-size:12pt; font-family:Times New Roman;font-weight:bold;text-align:center">CURRENT REPORT</p> <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt; font-family:Times New Roman;font-weight:bold;text-align:center">Pursuant to Section&#160;13 or 15(d)</p> <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt; font-family:Times New Roman;font-weight:bold;text-align:center">of the Securities Exchange Act of 1934</p> <p style="margin-top:10pt; margin-bottom:0pt; font-size:12pt; font-family:Times New Roman;font-weight:bold;text-align:center">Date of Report (Date of earliest event reported): <ix:nonNumeric name="dei:DocumentPeriodEndDate" contextRef="duration_2024-06-05_to_2024-06-05" format="ixt:datemonthdayyearen" id="ixv-526">June&#160;5, 2024</ix:nonNumeric></p> <p style="font-size:8pt;margin-top:0pt;margin-bottom:0pt">&#160;</p> <div style="text-align:center"> <p style="line-height:6.0pt;margin-top:0pt;margin-bottom:2pt;border-bottom:1.00pt solid #000000;width:21%;text-align:center;margin-left: auto;margin-right: auto">&#160;</p></div> <p style="margin-top:8pt; margin-bottom:0pt; font-size:24pt; font-family:Times New Roman;font-weight:bold;text-align:center"> <ix:nonNumeric name="dei:EntityRegistrantName" contextRef="duration_2024-06-05_to_2024-06-05" id="ixv-527">BARNES&#160;&amp; NOBLE EDUCATION, INC.</ix:nonNumeric> </p> <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;font-weight:bold;text-align:center">(Exact name of registrant as specified in its charter)</p> <p style="font-size:8pt;margin-top:0pt;margin-bottom:0pt">&#160;</p> <div style="text-align:center"> <p style="line-height:6.0pt;margin-top:0pt;margin-bottom:2pt;border-bottom:1.00pt solid #000000;width:21%;text-align:center;margin-left: auto;margin-right: auto">&#160;</p></div> <p style="font-size:8pt;margin-top:0pt;margin-bottom:0pt">&#160;</p>
+<table cellspacing="0" cellpadding="0" style="border-collapse:collapse; font-family:Times New Roman; font-size:8pt;width:100%;border:0;margin:0 auto">
+<tr>
+<td style="width:34%"/>
+<td style="vertical-align:bottom"/>
+<td style="width:32%"/>
+<td style="vertical-align:bottom;width:1%"/>
+<td style="width:32%"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style=" text-align: center;margin:auto; vertical-align:top"><span style="font-weight:bold"><ix:nonNumeric name="dei:EntityIncorporationStateCountryCode" contextRef="duration_2024-06-05_to_2024-06-05" format="ixt-sec:stateprovnameen" id="ixv-528">Delaware</ix:nonNumeric></span></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style=" text-align: center;margin:auto; vertical-align:top"><span style="font-weight:bold"><span style="white-space:nowrap"><ix:nonNumeric name="dei:EntityFileNumber" contextRef="duration_2024-06-05_to_2024-06-05" id="ixv-529">1-37499</ix:nonNumeric></span></span></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style=" text-align: center;margin:auto; vertical-align:top"><span style="font-weight:bold"><span style="white-space:nowrap"><ix:nonNumeric name="dei:EntityTaxIdentificationNumber" contextRef="duration_2024-06-05_to_2024-06-05" id="ixv-530">46-0599018</ix:nonNumeric></span></span></td></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:8pt">
+<td style=" text-align: center;margin:auto; vertical-align:top"><span style="font-weight:bold">(State or other jurisdiction<br/>of incorporation)</span></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style=" text-align: center;margin:auto; vertical-align:top"> <p style="margin-top:0pt; margin-bottom:0pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">(Commission</p> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">File Number)</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style=" text-align: center;margin:auto; vertical-align:top"><span style="font-weight:bold">(IRS Employer<br/>Identification No.)</span></td></tr></table> <p style="margin-top:10pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;font-weight:bold;text-align:center"><ix:nonNumeric name="dei:EntityAddressAddressLine1" contextRef="duration_2024-06-05_to_2024-06-05" id="ixv-531">120 Mountainview Blvd.</ix:nonNumeric>, <ix:nonNumeric name="dei:EntityAddressCityOrTown" contextRef="duration_2024-06-05_to_2024-06-05" id="ixv-532">Basking Ridge</ix:nonNumeric>, <ix:nonNumeric name="dei:EntityAddressStateOrProvince" contextRef="duration_2024-06-05_to_2024-06-05" id="ixv-533">NJ</ix:nonNumeric> <ix:nonNumeric name="dei:EntityAddressPostalZipCode" contextRef="duration_2024-06-05_to_2024-06-05" id="ixv-534">07920</ix:nonNumeric></p> <p style="margin-top:0pt; margin-bottom:0pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">(Address of principal executive offices)(Zip Code)</p> <p style="margin-top:10pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;font-weight:bold;text-align:center">Registrant&#8217;s telephone number, including area code:</p> <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;font-weight:bold;text-align:center"><ix:nonNumeric name="dei:CityAreaCode" contextRef="duration_2024-06-05_to_2024-06-05" id="ixv-535">(908)</ix:nonNumeric> <span style="white-space:nowrap"><ix:nonNumeric name="dei:LocalPhoneNumber" contextRef="duration_2024-06-05_to_2024-06-05" id="ixv-536">991-2665</ix:nonNumeric></span></p> <p style="margin-top:10pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;font-weight:bold;text-align:center">Not Applicable</p> <p style="margin-top:0pt; margin-bottom:0pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">(Former name or former address, if changed since last report)</p> <p style="font-size:8pt;margin-top:0pt;margin-bottom:0pt">&#160;</p> <div style="text-align:center"> <p style="line-height:6.0pt;margin-top:0pt;margin-bottom:2pt;border-bottom:1.00pt solid #000000;width:21%;text-align:center;margin-left: auto;margin-right: auto">&#160;</p></div> <p style="margin-top:8pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman">Check the appropriate box below if the Form <span style="white-space:nowrap">8-K</span> filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</p> <p style="font-size:6pt;margin-top:0pt;margin-bottom:0pt">&#160;</p>
+<table style="border-collapse:collapse; font-family:Times New Roman; font-size:10pt;border:0;width:100%" cellpadding="0" cellspacing="0">
+<tr style="page-break-inside:avoid">
+<td style="width:4%;vertical-align:top"><ix:nonNumeric name="dei:WrittenCommunications" contextRef="duration_2024-06-05_to_2024-06-05" format="ixt-sec:boolballotbox" id="ixv-537">&#9744;</ix:nonNumeric></td>
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;text-align:left">Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</p></td></tr></table> <p style="font-size:6pt;margin-top:0pt;margin-bottom:0pt">&#160;</p>
+<table style="border-collapse:collapse; font-family:Times New Roman; font-size:10pt;border:0;width:100%" cellpadding="0" cellspacing="0">
+<tr style="page-break-inside:avoid">
+<td style="width:4%;vertical-align:top"><ix:nonNumeric name="dei:SolicitingMaterial" contextRef="duration_2024-06-05_to_2024-06-05" format="ixt-sec:boolballotbox" id="ixv-538">&#9744;</ix:nonNumeric></td>
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;text-align:left">Soliciting material pursuant to Rule <span style="white-space:nowrap">14a-12</span> under the Exchange Act (17 CFR <span style="white-space:nowrap">240.14a-12)</span></p></td></tr></table> <p style="font-size:6pt;margin-top:0pt;margin-bottom:0pt">&#160;</p>
+<table style="border-collapse:collapse; font-family:Times New Roman; font-size:10pt;border:0;width:100%" cellpadding="0" cellspacing="0">
+<tr style="page-break-inside:avoid">
+<td style="width:4%;vertical-align:top"><ix:nonNumeric name="dei:PreCommencementTenderOffer" contextRef="duration_2024-06-05_to_2024-06-05" format="ixt-sec:boolballotbox" id="ixv-539">&#9744;</ix:nonNumeric></td>
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;text-align:left"><span style="white-space:nowrap">Pre-commencement</span> communications pursuant to Rule <span style="white-space:nowrap">14d-2(b)</span> under the Exchange Act (17 CFR <span style="white-space:nowrap">240.14d-2(b))</span></p></td></tr></table> <p style="font-size:6pt;margin-top:0pt;margin-bottom:0pt">&#160;</p>
+<table style="border-collapse:collapse; font-family:Times New Roman; font-size:10pt;border:0;width:100%" cellpadding="0" cellspacing="0">
+<tr style="page-break-inside:avoid">
+<td style="width:4%;vertical-align:top"><ix:nonNumeric name="dei:PreCommencementIssuerTenderOffer" contextRef="duration_2024-06-05_to_2024-06-05" format="ixt-sec:boolballotbox" id="ixv-540">&#9744;</ix:nonNumeric></td>
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;text-align:left"><span style="white-space:nowrap">Pre-commencement</span> communications pursuant to Rule <span style="white-space:nowrap">13e-4(c)</span> under the Exchange Act (17 CFR <span style="white-space:nowrap">240.13e-4(c))</span></p></td></tr></table> <p style="margin-top:10pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman">Securities registered pursuant to Section&#160;12(b) of the Act:</p> <p style="font-size:10pt;margin-top:0pt;margin-bottom:0pt">&#160;</p>
+<table cellspacing="0" cellpadding="0" style="border-collapse:collapse; font-family:Times New Roman; font-size:8pt;width:100%;border:0;margin:0 auto">
+<tr>
+<td style="width:34%"/>
+<td style="vertical-align:bottom"/>
+<td style="width:32%"/>
+<td style="vertical-align:bottom;width:1%"/>
+<td style="width:32%"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:8pt">
+<td style=" text-align: center;margin:auto; border-bottom:1.00pt solid #000000;vertical-align:bottom;white-space:nowrap"> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Title of Class</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style=" text-align: center;margin:auto; border-bottom:1.00pt solid #000000;vertical-align:bottom"> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Trading<br/>Symbol</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style=" text-align: center;margin:auto; border-bottom:1.00pt solid #000000;vertical-align:bottom"> <p style="margin-top:0pt; margin-bottom:0pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Name of Exchange</p> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">on which registered</p></td></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style=" text-align: center;margin:auto; vertical-align:top"><ix:nonNumeric name="dei:Security12bTitle" contextRef="duration_2024-06-05_to_2024-06-05" id="ixv-541">Common Stock, $0.01 par value per share</ix:nonNumeric></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style=" text-align: center;margin:auto; vertical-align:top"><ix:nonNumeric name="dei:TradingSymbol" contextRef="duration_2024-06-05_to_2024-06-05" id="ixv-542">BNED</ix:nonNumeric></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style=" text-align: center;margin:auto; vertical-align:top"><ix:nonNumeric name="dei:SecurityExchangeName" contextRef="duration_2024-06-05_to_2024-06-05" format="ixt-sec:exchnameen" id="ixv-543">New York Stock Exchange</ix:nonNumeric></td></tr></table> <p style="margin-top:10pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman">Indicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or Rule <span style="white-space:nowrap">12b-2</span> of the Securities Exchange Act of 1934 <span style="white-space:nowrap">(&#167;240.12b-2</span> of this chapter).</p> <p style="margin-top:10pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;text-align:right">Emerging growth company&#8194;<ix:nonNumeric name="dei:EntityEmergingGrowthCompany" contextRef="duration_2024-06-05_to_2024-06-05" format="ixt-sec:boolballotbox" id="ixv-544">&#9744;</ix:nonNumeric></p> <p style="margin-top:10pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman">If an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section&#160;13(a) of the Exchange Act.&#8194;&#9744;</p> <p style="font-size:10pt;margin-top:0pt;margin-bottom:0pt">&#160;</p> <p style="line-height:1.0pt;margin-top:0pt;margin-bottom:0pt;border-bottom:1px solid #000000">&#160;</p> <p style="line-height:3.0pt;margin-top:0pt;margin-bottom:2pt;border-bottom:1px solid #000000">&#160;</p></div></div>
+
+<p style="margin-top:1em; margin-bottom:0em; page-break-before:always"> </p>
+<hr style="color:#999999;height:3px;width:100%"/>
+
+<div style="text-align:center"><div style="width:8.5in;text-align:left;margin-left: auto;margin-right: auto">
+
+<table style="BORDER-COLLAPSE:COLLAPSE; font-family:Times New Roman; font-size:10pt;border:0;width:100%" cellpadding="0" cellspacing="0">
+<tr style="page-break-inside:avoid">
+<td style="width:11%;vertical-align:top" align="left"><span style="font-weight:bold">Item&#8201;5.07</span></td>
+<td align="left" style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;font-weight:bold;text-align:left">Submission of Matters to a Vote of Security Holders. </p></td></tr></table> <p style="margin-top:6pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman">On June&#160;5, 2024, Barnes&#160;&amp; Noble Education, Inc. (&#8220;BNED&#8221; or the &#8220;Company&#8221;)&#160;held a virtual special meeting of stockholders (the &#8220;Special Meeting&#8221;) to vote upon certain proposals related to a rights offering (the &#8220;Rights Offering&#8221;) and other transactions (collectively, the &#8220;Transactions&#8221;) in connection with a Standby, Securities Purchase and Debt Conversion Agreement (the &#8220;Purchase Agreement&#8221;) by and among the Company, Toro 18 Holdings LLC (&#8220;Immersion&#8221;), Selz Family 2011 Trust, Outerbridge Capital Management, LLC, Vital Fundco, LLC and TopLids LendCo, LLC, dated as of April&#160;16, 2024. A more complete description of each of the proposals is set forth in the definitive proxy statement filed by the Company with the Securities and Exchange Commission on May&#160;15, 2024. </p> <p style="margin-top:12pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman">At the Special Meeting, at least 44,152,734 shares of Common Stock were represented out of the 53,156,369 shares of Common Stock outstanding and entitled to vote as of May&#160;13, 2024, the record date for the Special Meeting, constituting a quorum. The voting results for each of the proposals submitted to a vote at the Special Meeting are set forth below. </p> <p style="margin-top:12pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman"><span style="font-weight:bold">Proposal 1.</span> The approval of the issuance of shares of Common Stock in connection with the Rights Offering and other Transactions (the &#8220;Share Issuance&#8221;), in each case pursuant to the Purchase Agreement. </p> <p style="font-size:12pt;margin-top:0pt;margin-bottom:0pt">&#160;</p>
+<table cellspacing="0" cellpadding="0" style="BORDER-COLLAPSE:COLLAPSE; font-family:Times New Roman; font-size:8pt;width:100%;border:0;margin:0 auto">
+
+
+<tr>
+
+<td style="width:24%"/>
+
+<td style="vertical-align:bottom"/>
+<td style="width:24%"/>
+
+<td style="vertical-align:bottom;width:1%"/>
+<td style="width:25%"/>
+
+<td style="vertical-align:bottom;width:1%"/>
+<td style="width:24%"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:8pt">
+<td align="center" style="border-bottom:1.00pt solid #000000;vertical-align:bottom;white-space:nowrap"> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Votes For</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td align="center" style="border-bottom:1.00pt solid #000000;vertical-align:bottom"> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Votes Against</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td align="center" style="border-bottom:1.00pt solid #000000;vertical-align:bottom"> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Abstentions</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td align="center" style="border-bottom:1.00pt solid #000000;vertical-align:bottom"> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Broker <span style="white-space:nowrap">Non-Votes</span></p></td></tr>
+
+
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt;background-color:#cceeff">
+<td style="vertical-align:bottom" align="center">31,930,984</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom" align="center">1,526,142</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom" align="center">77,338</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom" align="center">10,618,270</td></tr>
+</table> <p style="margin-top:12pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman"><span style="font-weight:bold">Proposal 2.</span> The approval of an amendment to the Certificate of Incorporation to increase the aggregate number of authorized shares of Common Stock from 200,000,000 shares to 10,000,000,000 shares. </p> <p style="font-size:12pt;margin-top:0pt;margin-bottom:0pt">&#160;</p>
+<table cellspacing="0" cellpadding="0" style="BORDER-COLLAPSE:COLLAPSE; font-family:Times New Roman; font-size:8pt;width:100%;border:0;margin:0 auto">
+
+
+<tr>
+
+<td style="width:24%"/>
+
+<td style="vertical-align:bottom"/>
+<td style="width:24%"/>
+
+<td style="vertical-align:bottom;width:1%"/>
+<td style="width:25%"/>
+
+<td style="vertical-align:bottom;width:1%"/>
+<td style="width:24%"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:8pt">
+<td align="center" style="border-bottom:1.00pt solid #000000;vertical-align:bottom;white-space:nowrap"> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Votes For</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td align="center" style="border-bottom:1.00pt solid #000000;vertical-align:bottom"> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Votes Against</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td align="center" style="border-bottom:1.00pt solid #000000;vertical-align:bottom"> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Abstentions</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td align="center" style="border-bottom:1.00pt solid #000000;vertical-align:bottom"> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Broker <span style="white-space:nowrap">Non-Votes</span></p></td></tr>
+
+
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt;background-color:#cceeff">
+<td style="vertical-align:bottom" align="center">30,503,123</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom" align="center">1,574,198</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom" align="center">1,457,143</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom" align="center">10,618,270</td></tr>
+</table> <p style="margin-top:12pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman"><span style="font-weight:bold">Proposal 3.</span> The approval of an amendment to the Certificate of Incorporation to effect a reverse stock split of shares of Common Stock at a ratio of <span style="white-space:nowrap"><span style="white-space:nowrap">1-for-100,</span></span> which split may be effected by the Board of Directors of the Company (the &#8220;Board of Directors&#8221;) following the Share Issuance and the closing (the &#8220;Closing&#8221;) of the other Transactions contemplated by the Purchase Agreement, but no later than forty-five (45)&#160;calendar days following the Closing. </p> <p style="font-size:12pt;margin-top:0pt;margin-bottom:0pt">&#160;</p>
+<table cellspacing="0" cellpadding="0" style="BORDER-COLLAPSE:COLLAPSE; font-family:Times New Roman; font-size:8pt;width:100%;border:0;margin:0 auto">
+
+
+<tr>
+
+<td style="width:24%"/>
+
+<td style="vertical-align:bottom"/>
+<td style="width:24%"/>
+
+<td style="vertical-align:bottom;width:1%"/>
+<td style="width:25%"/>
+
+<td style="vertical-align:bottom;width:1%"/>
+<td style="width:24%"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:8pt">
+<td align="center" style="border-bottom:1.00pt solid #000000;vertical-align:bottom;white-space:nowrap"> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Votes For</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td align="center" style="border-bottom:1.00pt solid #000000;vertical-align:bottom"> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Votes Against</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td align="center" style="border-bottom:1.00pt solid #000000;vertical-align:bottom"> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Abstentions</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td align="center" style="border-bottom:1.00pt solid #000000;vertical-align:bottom"> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Broker <span style="white-space:nowrap">Non-Votes</span></p></td></tr>
+
+
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt;background-color:#cceeff">
+<td style="vertical-align:bottom" align="center">41,866,808</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom" align="center">2,122,186</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom" align="center">163,740</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom" align="center">&#8212;&#8194;</td></tr>
+</table> <p style="margin-top:12pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman"><span style="font-weight:bold">Proposal 4.</span> The election of seven (7)&#160;directors to serve on the Board of Directors from Closing until the Company&#8217;s next annual meeting of stockholders and until their respective successors are duly elected and qualified. </p> <p style="font-size:12pt;margin-top:0pt;margin-bottom:0pt">&#160;</p>
+<table cellspacing="0" cellpadding="0" style="BORDER-COLLAPSE:COLLAPSE; font-family:Times New Roman; font-size:10pt;width:100%;border:0;margin:0 auto">
+
+
+<tr>
+
+<td style="width:18%"/>
+
+<td style="vertical-align:bottom"/>
+<td style="width:19%"/>
+
+<td style="vertical-align:bottom;width:1%"/>
+<td style="width:20%"/>
+
+<td style="vertical-align:bottom;width:1%"/>
+<td style="width:20%"/>
+
+<td style="vertical-align:bottom;width:1%"/>
+<td style="width:19%"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:8pt">
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom" align="center"><span style="font-weight:bold">Votes For</span></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom" align="center"><span style="font-weight:bold">Votes Against</span></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom" align="center"><span style="font-weight:bold">Abstentions</span></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom" align="center"><span style="font-weight:bold">Broker <span style="white-space:nowrap">Non-Votes</span></span></td></tr>
+
+
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt;background-color:#cceeff">
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; margin-left:1.00em; text-indent:-1.00em; font-size:10pt; font-family:Times New Roman">Emily S. Hoffman</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">30,017,773</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">2,742,421</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">774,270</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">10,618,270</td></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; margin-left:1.00em; text-indent:-1.00em; font-size:10pt; font-family:Times New Roman">Sean Madnani</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">30,364,069</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">1,074,813</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">2,095,582</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">10,618,270</td></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt;background-color:#cceeff">
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; margin-left:1.00em; text-indent:-1.00em; font-size:10pt; font-family:Times New Roman">William C. Martin</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">28,728,261</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">2,718,584</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">2,087,619</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">10,618,270</td></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; margin-left:1.00em; text-indent:-1.00em; font-size:10pt; font-family:Times New Roman">Elias Nader</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">28,660,382</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">2,769,662</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">2,104,420</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">10,618,270</td></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt;background-color:#cceeff">
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; margin-left:1.00em; text-indent:-1.00em; font-size:10pt; font-family:Times New Roman">Eric Singer</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">28,737,642</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">2,677,230</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">2,119,592</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">10,618,270</td></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; margin-left:1.00em; text-indent:-1.00em; font-size:10pt; font-family:Times New Roman">Kathryn Eberle Walker</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">29,052,331</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">2,424,261</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">2,057,872</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">10,618,270</td></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt;background-color:#cceeff">
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; margin-left:1.00em; text-indent:-1.00em; font-size:10pt; font-family:Times New Roman">Denise Warren</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">28,552,594</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">2,970,159</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">2,011,711</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom;white-space:nowrap" align="center">10,618,270</td></tr>
+</table>
+</div></div>
+
+
+
+<p style="margin-top:1em; margin-bottom:0em; page-break-before:always"> </p>
+<hr style="color:#999999;height:3px;width:100%"/>
+
+<div style="text-align:center"><div style="width:8.5in;text-align:left;margin-left: auto;margin-right: auto">
+ <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman"><span style="font-weight:bold">Proposal 5.</span> The authorization of an adjournment or adjournments of the Special Meeting to a later date or dates, if necessary or appropriate, to solicit additional proxies if there are not sufficient votes in favor of the aforementioned proposals. </p> <p style="font-size:12pt;margin-top:0pt;margin-bottom:0pt">&#160;</p>
+<table cellspacing="0" cellpadding="0" style="BORDER-COLLAPSE:COLLAPSE; font-family:Times New Roman; font-size:8pt;width:100%;border:0;margin:0 auto">
+
+
+<tr>
+
+<td style="width:24%"/>
+
+<td style="vertical-align:bottom"/>
+<td style="width:24%"/>
+
+<td style="vertical-align:bottom;width:1%"/>
+<td style="width:25%"/>
+
+<td style="vertical-align:bottom;width:1%"/>
+<td style="width:24%"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:8pt">
+<td align="center" style="border-bottom:1.00pt solid #000000;vertical-align:bottom;white-space:nowrap"> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Votes For</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td align="center" style="border-bottom:1.00pt solid #000000;vertical-align:bottom"> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Votes Against</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td align="center" style="border-bottom:1.00pt solid #000000;vertical-align:bottom"> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Abstentions</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td align="center" style="border-bottom:1.00pt solid #000000;vertical-align:bottom"> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Broker <span style="white-space:nowrap">Non-Votes</span></p></td></tr>
+
+
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt;background-color:#cceeff">
+<td style="vertical-align:bottom" align="center">42,241,731</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom" align="center">1,642,582</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom" align="center">268,421</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom" align="center">&#8212;&#8194;</td></tr>
+</table> <p style="font-size:18pt;margin-top:0pt;margin-bottom:0pt">&#160;</p>
+<table style="BORDER-COLLAPSE:COLLAPSE; font-family:Times New Roman; font-size:10pt;border:0;width:100%" cellpadding="0" cellspacing="0">
+<tr style="page-break-inside:avoid">
+<td style="width:11%;vertical-align:top" align="left"><span style="font-weight:bold">Item&#8201;8.01</span></td>
+<td align="left" style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;font-weight:bold;text-align:left">Other Events. </p></td></tr></table> <p style="margin-top:6pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman">In connection with the $45&#160;million fully-backstopped Rights Offering, the Company distributed to each holder of record of Common Stock <span style="white-space:nowrap">one&#160;non-transferable&#160;subscription</span> right (each, a &#8220;Subscription Right&#8221;) for every share of Common Stock owned by such holder on May&#160;14, 2024, the record date for the Rights Offering. Each Subscription Right carried with it a &#8220;basic subscription right&#8221; (the &#8220;Basic Subscription Right&#8221;), which entitled Subscription Rights holders to purchase seventeen (17)&#160;shares of Common Stock at a subscription price of $0.05 per share (the &#8220;Subscription Price&#8221;), and an &#8220;over-subscription right&#8221; (the &#8220;Over-Subscription Right&#8221;), which entitled each Subscription Rights holder that had exercised its Basic Subscription Right in full to subscribe for additional shares of Common Stock at the same Subscription Price of $0.05 per share, to the extent that shares of Common Stock offered in the Rights Offering had not been purchased by other holders of Basic Subscription Rights. The Rights Offering expired on June&#160;5, 2024 at 5:00 p.m., Eastern Daylight Time and the Subscription Rights are no longer exercisable. </p> <p style="margin-top:12pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman">The Rights Offering resulted in subscriptions for approximately 641,995,541 shares, or 71%, of the 900,000,000 shares of Common Stock offered at the Subscription Price. The shares of Common Stock subscribed for are expected to be issued to participating stockholders on or about June&#160;10, 2024. </p> <p style="margin-top:12pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman">As previously disclosed, the Company entered into an agreement with Immersion Corporation (NASDAQ: IMMR) and certain of the Company&#8217;s existing stockholders (collectively, the &#8220;Standby Purchasers&#8221;), through which the Standby Purchasers will collectively purchase, at the Subscription Price, any Subscription Rights that remain unexercised upon the expiration of the Rights Offering after accounting for all Over-Subscription Rights exercised (the &#8220;Unexercised Shares&#8221;), up to $45&#160;million in shares of Common Stock not subscribed for by the Company&#8217;s stockholders (the &#8220;Backstop Commitment&#8221;). Subject to the Backstop Commitment, the Standby Purchasers will purchase the 258,004,459 Unexercised Shares for an aggregate purchase price of $12.9&#160;million. </p> <p style="margin-top:12pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman">On June&#160;5, 2024, the Company issued a press release announcing the results of the Special Meeting, which is filed hereto as Exhibit 99.1, and incorporated by reference herein. On June&#160;6, 2024, the Company issued a press release announcing the results of the Rights Offering, which is filed hereto as Exhibit 99.2, and incorporated by reference herein. </p> <p style="margin-top:18pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;font-weight:bold">Forward-Looking Statements </p> <p style="margin-top:6pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman">This Current Report on Form <span style="white-space:nowrap">8-K</span> contains certain &#8220;forward-looking statements&#8221; within the meaning of the Private Securities Litigation Reform Act of 1995 and information relating to us and our business that are based on the beliefs of our management as well as assumptions made by and information currently available to our management. When used in this communication, the words &#8220;anticipate,&#8221; &#8220;believe,&#8221; &#8220;estimate,&#8221; &#8220;expect,&#8221; &#8220;intend,&#8221; &#8220;plan,&#8221; &#8220;will,&#8221; &#8220;forecasts,&#8221; &#8220;projections,&#8221; and similar expressions, as they relate to us or our management, identify forward-looking statements. Moreover, we operate in a very competitive and rapidly changing environment. New risks emerge from time to time. It is not possible for our management to predict all risks, nor can we assess the impact of all factors on our business or the extent to which any factor, or combination of factors, may cause actual results to differ materially from those contained in any forward-looking statements we may make. In light of these risks, uncertainties and assumptions, the future events and trends discussed in this Form <span style="white-space:nowrap">8-K</span> may not occur and actual results could differ materially and adversely from those anticipated or implied in the forward-looking statements. Such statements reflect our current views with respect to future events, the outcome of which is subject to certain </p>
+</div></div>
+
+
+
+<p style="margin-top:1em; margin-bottom:0em; page-break-before:always"> </p>
+<hr style="color:#999999;height:3px;width:100%"/>
+
+<div style="text-align:center"><div style="width:8.5in;text-align:left;margin-left: auto;margin-right: auto">
+ <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman">
+risks, including, among others: the completion, timing, size and use of proceeds of the Transactions; the amount of our indebtedness and ability to comply with covenants applicable to current and/or any future debt financing; our ability to satisfy future capital and liquidity requirements; our ability to continue as a going concern; our ability to access the credit and capital markets at the times and in the amounts needed and on acceptable terms; our ability to maintain adequate liquidity levels to support ongoing inventory purchases and related vendor payments in a timely manner; our ability to attract and retain employees; the pace of equitable and inclusive access adoption in the marketplace is slower than anticipated and our ability to successfully convert the majority of our institutions to our BNC First Day<sup style="font-size:75%; vertical-align:top">&#174;</sup> equitable and inclusive access course material models or successfully compete with third parties that provide similar equitable and inclusive access solutions; the United States Department of Education has recently proposed regulatory changes that, if adopted as proposed, could impact equitable and inclusive access models across the higher education industry; the strategic objectives, successful integration, anticipated synergies, and/or other expected potential benefits of various strategic and restructuring initiative, may not be fully realized or may take longer than expected; dependency on strategic service provider relationships, such as with VitalSource Technologies, Inc. and the Fanatics Retail Group Fulfillment, LLC (&#8220;Fanatics&#8221;) and Fanatics Lids College, Inc. D/B/A &#8220;Lids&#8221; (&#8220;Lids&#8221;), and the potential for adverse operational and financial changes to these strategic service provider relationships, may adversely impact our business; <span style="white-space:nowrap">non-renewal</span> of managed bookstore, physical and/or online store contracts and higher-than-anticipated store closings; decisions by <span style="white-space:nowrap">K-12</span> schools, colleges and universities to outsource their physical and/or online bookstore operations or change the operation of their bookstores; general competitive conditions, including actions our competitors and content providers may take to grow their businesses; the risk of changes in price or in formats of course materials by publishers, which could negatively impact revenues and margin; changes to purchase or rental terms, payment terms, return policies, the discount or margin on products or other terms with our suppliers; product shortages, including decreases in the used textbook inventory supply associated with the implementation of publishers&#8217; digital offerings and direct to student textbook consignment rental programs; work stoppages or increases in labor costs; possible increases in shipping rates or interruptions in shipping services; a decline in college enrollment or decreased funding available for students; decreased consumer demand for our products, low growth or declining sales; the general economic environment and consumer spending patterns; trends and challenges to our business and in the locations in which we have stores; risks associated with operation or performance of MBS Textbook Exchange, LLC&#8217;s <span style="white-space:nowrap"><span style="white-space:nowrap">point-of-sales</span></span> systems that are sold to college bookstore customers; technological changes, including the adoption of artificial intelligence technologies for educational content; risks associated with counterfeit and piracy of digital and print materials; risks associated with the potential loss of control over personal information; risks associated with the potential misappropriation of our intellectual property; disruptions to our information technology systems, infrastructure, data, supplier systems, and customer ordering and payment systems due to computer malware, viruses, hacking and phishing attacks, resulting in harm to our business and results of operations; disruption of or interference with third party service providers and our own proprietary technology; risks associated with the impact that public health crises, epidemics, and pandemics, such as the <span style="white-space:nowrap">COVID-19</span> pandemic, have on the overall demand for BNED products and services, our operations, the operations of our suppliers, service providers, and campus partners, and the effectiveness of our response to these risks; lingering impacts that public health crises may have on the ability of our suppliers to manufacture or source products, particularly from outside of the United States; changes in applicable domestic and international laws, rules or regulations, including, without limitation, U.S. tax reform, changes in tax rates, laws and regulations, as well as related guidance; changes in and enactment of applicable laws, rules or regulations or changes in enforcement practices including, without limitation, with regard to consumer data privacy rights, which may restrict or prohibit our use of consumer personal information for texts, emails, interest based online advertising, or similar marketing and sales activities; adverse results from litigation, governmental investigations, <span style="white-space:nowrap">tax-related</span> proceedings, or audits; changes in accounting standards; and the other risks and uncertainties detailed in the section titled &#8220;Risk Factors&#8221; in Part I&#8212;Item 1A in our Annual Report on Form <span style="white-space:nowrap">10-K</span> for the fiscal year ended April&#160;29, 2023 and in Part II &#8211; Item 1A in our Quarterly Reports on Form <span style="white-space:nowrap">10-Q.</span> Should one or more of these risks or uncertainties materialize, or should underlying assumptions prove incorrect, actual results or outcomes may vary materially from those described as anticipated, believed, estimated, expected, intended or planned. Subsequent written and oral forward-looking statements attributable to us or persons acting on our behalf are expressly qualified in their entirety by the cautionary statements in this paragraph. We undertake no obligation to publicly update or revise any forward-looking statements, whether as a result of new information, future events or otherwise after the date of this Form <span style="white-space:nowrap">8-K.</span> </p>
+</div></div>
+
+
+
+<p style="margin-top:1em; margin-bottom:0em; page-break-before:always"> </p>
+<hr style="color:#999999;height:3px;width:100%"/>
+
+<div style="text-align:center"><div style="width:8.5in;text-align:left;margin-left: auto;margin-right: auto">
+
+<table style="BORDER-COLLAPSE:COLLAPSE; font-family:Times New Roman; font-size:10pt;border:0;width:100%" cellpadding="0" cellspacing="0">
+<tr style="page-break-inside:avoid">
+<td style="width:11%;vertical-align:top" align="left"><span style="font-weight:bold">Item&#8201;9.01</span></td>
+<td align="left" style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;font-weight:bold;text-align:left">Financial Statements and Exhibits </p></td></tr></table> <p style="font-size:12pt;margin-top:0pt;margin-bottom:0pt">&#160;</p>
+<table cellspacing="0" cellpadding="0" style="BORDER-COLLAPSE:COLLAPSE; font-family:Times New Roman; font-size:10pt;width:100%;border:0;margin:0 auto">
+
+
+<tr>
+
+<td/>
+
+<td style="vertical-align:bottom;width:4%"/>
+<td style="width:93%"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:8pt">
+<td style="vertical-align:bottom" align="center"> <p style="margin-top:0pt; margin-bottom:0pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Exhibit</p> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">No.</p></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="vertical-align:bottom"><span style="font-weight:bold">Description</span></td></tr>
+
+
+<tr style="font-size:1pt">
+<td style="height:6pt"/>
+<td style="height:6pt" colspan="2"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style="vertical-align:top;white-space:nowrap"><span style="font-weight:bold">99.1</span></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="vertical-align:top"><a href="d768790dex991.htm">Press Release of Barnes&#160;&amp; Noble Education, Inc. dated June&#160;5, 2024. </a></td></tr>
+<tr style="font-size:1pt">
+<td style="height:6pt"/>
+<td style="height:6pt" colspan="2"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style="vertical-align:top;white-space:nowrap"><span style="font-weight:bold">99.2</span></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="vertical-align:top"><a href="d768790dex992.htm">Press Release of Barnes&#160;&amp; Noble Education, Inc. dated June&#160;6, 2024. </a></td></tr>
+<tr style="font-size:1pt">
+<td style="height:6pt"/>
+<td style="height:6pt" colspan="2"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style="vertical-align:top;white-space:nowrap"><span style="font-weight:bold">104</span></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="vertical-align:top">Cover Page Interactive Data File (embedded within the Inline XBRL document).</td></tr>
+</table>
+</div></div>
+
+
+
+<p style="margin-top:1em; margin-bottom:0em; page-break-before:always"> </p>
+<hr style="color:#999999;height:3px;width:100%"/>
+
+<div style="text-align:center"><div style="width:8.5in;text-align:left;margin-left: auto;margin-right: auto">
+ <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;font-weight:bold;text-align:center"><span style="text-decoration:underline">Signatures </span></p> <p style="margin-top:12pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman">Pursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned thereunto duly authorized. </p> <p style="margin-top:12pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman">Date: June&#160;6, 2024 </p> <p style="font-size:12pt;margin-top:0pt;margin-bottom:0pt">&#160;</p>
+<table cellspacing="0" cellpadding="0" style="BORDER-COLLAPSE:COLLAPSE; font-family:Times New Roman; font-size:10pt;width:40%;border:0">
+
+
+<tr>
+
+<td style="width:13%"/>
+
+<td style="vertical-align:bottom;width:1%"/>
+<td style="width:86%"/></tr>
+
+
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style="vertical-align:top" colspan="3"><span style="font-weight:bold">BARNES&#160;&amp; NOBLE EDUCATION, INC.</span></td></tr>
+<tr style="font-size:1pt">
+<td style="height:12pt"/>
+<td style="height:12pt" colspan="2"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style="vertical-align:top">By:</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom"> <p style="margin-top:0pt; margin-bottom:1pt; border-bottom:1px solid #000000; font-size:10pt; font-family:Times New Roman">/s/ Michael C. Miller</p></td></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style="vertical-align:top">Name:</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom">Michael C. Miller</td></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style="vertical-align:top">Title:</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom">Executive Vice President, Corporate Development&#160;&amp; Affairs and Chief Legal Officer</td></tr>
+</table>
+</div></div>
+
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body></html>

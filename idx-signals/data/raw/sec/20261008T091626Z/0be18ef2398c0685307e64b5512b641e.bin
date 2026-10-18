@@ -1,0 +1,654 @@
+<?xml version='1.0' encoding='ASCII'?>
+<!-- Template (c) 2024-2025 Novaworks, LLC -->
+<!-- Field: Set; Name: AliasFileType; Value: Forms View; Template: Fee Exhibit\Fee Exhibit FE.xds -->
+<!-- Field: Set; Name: Platform; Value: Novaworks Fee Exhibit Editor; Version: 1.2b -->
+<!-- Field: Set; Name: Control; Value: VGVtcGxhdGU6IChkZWZhdWx0KQ0KQmFzZSBGb250OiBUaW1lcyBOZXcgUm9tYW4sIFRpbWVzLCBTZXJpZg0KQ2FwdGlvbiBTaXplOiAxMnB0DQpUYWJsZSBUaXRsZSBTaXplOiAxMXB0DQpUYWJsZSBIZWFkIFNpemU6IDhwdA0KVGFibGUgQm9keSBTaXplOiAxMHB0 -->
+<!-- Field: Set; Name: MD5; Value: 25815aee5b58ed6435310b59be6d6971 -->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2025" xmlns:ffd="http://xbrl.sec.gov/ffd/2025">
+<head>
+  <title>Filing Fee Exhibit</title>
+  <meta http-equiv="Content-Type" content="text/html"/>
+  </head>
+<body style="font: 10pt Times New Roman, Times, Serif">
+
+<div style="display: none">
+  <ix:header>
+    <ix:hidden>
+      <ix:nonNumeric name="ffd:SubmissnTp" contextRef="c_report" id="fee_001">F-1</ix:nonNumeric>
+      <ix:nonNumeric name="ffd:FeeExhibitTp" contextRef="c_report" id="fee_002">EX-FILING FEES</ix:nonNumeric>
+      <ix:nonNumeric name="dei:EntityCentralIndexKey" contextRef="c_report" id="fee_003">0001905660</ix:nonNumeric>
+      <ix:nonNumeric name="ffd:OffsetClmdInd" contextRef="c_offset_1" id="fee_004">true</ix:nonNumeric>
+      <ix:nonNumeric name="ffd:OffsetClmdInd" contextRef="c_offset_2" id="fee_005">false</ix:nonNumeric>
+      <ix:nonNumeric name="ffd:OffsetClmdInd" contextRef="c_offset_3" id="fee_006">true</ix:nonNumeric>
+      <ix:nonNumeric name="ffd:OffsetClmdInd" contextRef="c_offset_4" id="fee_007">false</ix:nonNumeric>
+      <ix:nonNumeric name="ffd:OffsetClmdInd" contextRef="c_offset_5" id="fee_008">true</ix:nonNumeric>
+      <ix:nonNumeric name="ffd:OffsetClmdInd" contextRef="c_offset_6" id="fee_009">false</ix:nonNumeric>
+      <ix:nonNumeric name="ffd:OfferingTableNa" contextRef="c_report" xs:nil="true" id="fee_010"></ix:nonNumeric>
+      <ix:nonNumeric name="ffd:OffsetTableNa" contextRef="c_report" xs:nil="true" id="fee_011"></ix:nonNumeric>
+      <ix:nonNumeric name="ffd:CombinedProspectusTableNa" contextRef="c_report" id="fee_012">N/A</ix:nonNumeric>
+      </ix:hidden>
+    <ix:references>
+      <link:schemaRef xlink:href="https://xbrl.sec.gov/ffd/2025/ffd-2025.xsd" xlink:type="simple"/>
+      </ix:references>
+    <ix:resources>
+      <xbrli:context id="c_offering_1">
+        <xbrli:entity>
+          <xbrli:identifier scheme="http://www.sec.gov/CIK">0001905660</xbrli:identifier>
+          <xbrli:segment>
+            <xbrldi:typedMember dimension="ffd:OfferingAxis"><dei:lineNo>1</dei:lineNo></xbrldi:typedMember>
+            </xbrli:segment>
+          </xbrli:entity>
+        <xbrli:period>
+          <xbrli:startDate>2025-08-28</xbrli:startDate>
+          <xbrli:endDate>2025-08-28</xbrli:endDate>
+          </xbrli:period>
+        </xbrli:context>
+      <xbrli:context id="c_offset_1">
+        <xbrli:entity>
+          <xbrli:identifier scheme="http://www.sec.gov/CIK">0001905660</xbrli:identifier>
+          <xbrli:segment>
+            <xbrldi:typedMember dimension="ffd:OffsetAxis"><dei:lineNo>1</dei:lineNo></xbrldi:typedMember>
+            </xbrli:segment>
+          </xbrli:entity>
+        <xbrli:period>
+          <xbrli:startDate>2025-08-28</xbrli:startDate>
+          <xbrli:endDate>2025-08-28</xbrli:endDate>
+          </xbrli:period>
+        </xbrli:context>
+      <xbrli:context id="c_offset_2">
+        <xbrli:entity>
+          <xbrli:identifier scheme="http://www.sec.gov/CIK">0001905660</xbrli:identifier>
+          <xbrli:segment>
+            <xbrldi:typedMember dimension="ffd:OffsetAxis"><dei:lineNo>2</dei:lineNo></xbrldi:typedMember>
+            </xbrli:segment>
+          </xbrli:entity>
+        <xbrli:period>
+          <xbrli:startDate>2025-08-28</xbrli:startDate>
+          <xbrli:endDate>2025-08-28</xbrli:endDate>
+          </xbrli:period>
+        </xbrli:context>
+      <xbrli:context id="c_offset_3">
+        <xbrli:entity>
+          <xbrli:identifier scheme="http://www.sec.gov/CIK">0001905660</xbrli:identifier>
+          <xbrli:segment>
+            <xbrldi:typedMember dimension="ffd:OffsetAxis"><dei:lineNo>3</dei:lineNo></xbrldi:typedMember>
+            </xbrli:segment>
+          </xbrli:entity>
+        <xbrli:period>
+          <xbrli:startDate>2025-08-28</xbrli:startDate>
+          <xbrli:endDate>2025-08-28</xbrli:endDate>
+          </xbrli:period>
+        </xbrli:context>
+      <xbrli:context id="c_offset_4">
+        <xbrli:entity>
+          <xbrli:identifier scheme="http://www.sec.gov/CIK">0001905660</xbrli:identifier>
+          <xbrli:segment>
+            <xbrldi:typedMember dimension="ffd:OffsetAxis"><dei:lineNo>4</dei:lineNo></xbrldi:typedMember>
+            </xbrli:segment>
+          </xbrli:entity>
+        <xbrli:period>
+          <xbrli:startDate>2025-08-28</xbrli:startDate>
+          <xbrli:endDate>2025-08-28</xbrli:endDate>
+          </xbrli:period>
+        </xbrli:context>
+      <xbrli:context id="c_offset_5">
+        <xbrli:entity>
+          <xbrli:identifier scheme="http://www.sec.gov/CIK">0001905660</xbrli:identifier>
+          <xbrli:segment>
+            <xbrldi:typedMember dimension="ffd:OffsetAxis"><dei:lineNo>5</dei:lineNo></xbrldi:typedMember>
+            </xbrli:segment>
+          </xbrli:entity>
+        <xbrli:period>
+          <xbrli:startDate>2025-08-28</xbrli:startDate>
+          <xbrli:endDate>2025-08-28</xbrli:endDate>
+          </xbrli:period>
+        </xbrli:context>
+      <xbrli:context id="c_offset_6">
+        <xbrli:entity>
+          <xbrli:identifier scheme="http://www.sec.gov/CIK">0001905660</xbrli:identifier>
+          <xbrli:segment>
+            <xbrldi:typedMember dimension="ffd:OffsetAxis"><dei:lineNo>6</dei:lineNo></xbrldi:typedMember>
+            </xbrli:segment>
+          </xbrli:entity>
+        <xbrli:period>
+          <xbrli:startDate>2025-08-28</xbrli:startDate>
+          <xbrli:endDate>2025-08-28</xbrli:endDate>
+          </xbrli:period>
+        </xbrli:context>
+      <xbrli:context id="c_report">
+        <xbrli:entity>
+          <xbrli:identifier scheme="http://www.sec.gov/CIK">0001905660</xbrli:identifier>
+          </xbrli:entity>
+        <xbrli:period>
+          <xbrli:startDate>2025-08-28</xbrli:startDate>
+          <xbrli:endDate>2025-08-28</xbrli:endDate>
+          </xbrli:period>
+        </xbrli:context>
+      <xbrli:unit id="USD">
+        <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unit>
+      <xbrli:unit id="pure">
+        <xbrli:measure>xbrli:pure</xbrli:measure>
+        </xbrli:unit>
+      <xbrli:unit id="shares">
+        <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unit>
+      </ix:resources>
+    </ix:header>
+  </div>
+
+<p style="font: bold 12pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 12pt; text-align: right">Ex-Filing Fees</p>
+
+<p style="font: bold 12pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 6pt; text-align: center">CALCULATION OF FILING FEE TABLES</p>
+
+<p style="font: bold 12pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 6pt; text-align: center"><ix:nonNumeric name="ffd:FormTp" contextRef="c_report" id="fee_013">F-1</ix:nonNumeric></p>
+
+<p style="font: bold 12pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 12pt; text-align: center"><ix:nonNumeric name="dei:EntityRegistrantName" contextRef="c_report" id="fee_014">HUB Cyber Security Ltd.</ix:nonNumeric></p>
+
+<p style="font: bold 11pt Times New Roman, Times, Serif; border-top: Gray 3pt double; padding-top: 6pt; text-align: center; margin-top: 0pt; margin-bottom: 4pt">Table 1: Newly Registered and Carry Forward Securities</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+<tr style="font-size: 2pt; vertical-align: bottom; text-align: center; font-weight: bold">
+  <td style="width: 12%">&#160;</td>
+  <td style="width: 0.5%">&#160;</td>
+  <td style="width: 15%">&#160;</td>
+  <td style="width: 0.5%">&#160;</td>
+  <td style="width: 15%">&#160;</td>
+  <td style="width: 0.5%">&#160;</td>
+  <td style="width: 6.5%">&#160;</td>
+  <td style="width: 0.5%">&#160;</td>
+  <td style="width: 8%">&#160;</td>
+  <td style="width: 0.5%">&#160;</td>
+  <td style="width: 9%">&#160;</td>
+  <td style="width: 0.5%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 5%">&#160;</td>
+  <td style="width: 0.5%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 9%">&#160;</td>
+  <td style="width: 0.5%">&#160;</td>
+  <td style="width: 5%">&#160;</td>
+  <td style="width: 0.5%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 8%">&#160;</td></tr>
+<tr style="font-size: 8pt; vertical-align: bottom; text-align: center; font-weight: bold">
+  <td style="border-bottom: Black 1pt solid">Line Item Type</td>
+  <td style="padding-bottom: 1pt">&#160;</td>
+  <td style="border-bottom: Black 1pt solid">Security Type</td>
+  <td style="padding-bottom: 1pt">&#160;</td>
+  <td style="border-bottom: Black 1pt solid">Security Class Title</td>
+  <td style="padding-bottom: 1pt">&#160;</td>
+  <td style="border-bottom: Black 1pt solid">Notes</td>
+  <td style="padding-bottom: 1pt">&#160;</td>
+  <td style="border-bottom: Black 1pt solid">Fee Calculation<br/> Rule</td>
+  <td style="padding-bottom: 1pt">&#160;</td>
+  <td style="border-bottom: Black 1pt solid">Amount Registered</td>
+  <td>&#160;</td>
+  <td colspan="2" style="border-bottom: Black 1pt solid">Proposed Maximum Offering<br/> Price Per Unit</td>
+  <td>&#160;</td>
+  <td colspan="2" style="border-bottom: Black 1pt solid">Maximum Aggregate Offering Price</td>
+  <td style="padding-bottom: 1pt">&#160;</td>
+  <td style="border-bottom: Black 1pt solid">Fee Rate</td>
+  <td>&#160;</td>
+  <td colspan="2" style="border-bottom: Black 1pt solid">Amount of Registration Fee</td></tr>
+<tr style="font-size: 2pt; vertical-align: top; text-align: left">
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td></tr>
+<tr style="vertical-align: top; text-align: left">
+  <td colspan="22" style="padding-top: 2pt; font-style: italic; text-align: center; padding-bottom: 2pt">Newly Registered Securities</td></tr>
+<tr style="vertical-align: top; text-align: left">
+  <td style="white-space: nowrap"><ix:nonNumeric name="ffd:PrevslyPdFlg" contextRef="c_offering_1" format="ixt:booleanfalse" id="fee_015">Fees to be Paid</ix:nonNumeric></td>
+  <td>&#160;</td>
+  <td style="white-space: nowrap"><ix:nonNumeric name="ffd:OfferingSctyTp" contextRef="c_offering_1" id="fee_016">Equity</ix:nonNumeric></td>
+  <td>&#160;</td>
+  <td><ix:nonNumeric name="ffd:OfferingSctyTitl" contextRef="c_offering_1" id="fee_017">Ordinary shares, no par value per share</ix:nonNumeric></td>
+  <td>&#160;</td>
+  <td style="text-align: center">(1)</td>
+  <td>&#160;</td>
+  <td style="text-align: center"><ix:nonNumeric name="ffd:FeesOthrRuleFlg" contextRef="c_offering_1" format="ixt:booleantrue" id="fee_018">Other</ix:nonNumeric></td>
+  <td>&#160;</td>
+  <td style="text-align: right"><ix:nonFraction name="ffd:AmtSctiesRegd" unitRef="shares" decimals="0" format="ixt:numdotdecimal" contextRef="c_offering_1" id="fee_019">26,746,175</ix:nonFraction></td>
+  <td>&#160;</td>
+  <td>$</td>
+  <td style="text-align: right"><ix:nonFraction name="ffd:MaxOfferingPricPerScty" unitRef="USD" decimals="INF" format="ixt:numdotdecimal" contextRef="c_offering_1" id="fee_020">2.29</ix:nonFraction></td>
+  <td>&#160;</td>
+  <td>$</td>
+  <td style="text-align: right"><ix:nonFraction name="ffd:MaxAggtOfferingPric" unitRef="USD" decimals="INF" format="ixt:numdotdecimal" contextRef="c_offering_1" id="fee_021">61,248,740.75</ix:nonFraction></td>
+  <td>&#160;</td>
+  <td style="text-align: center"><ix:nonFraction name="ffd:FeeRate" unitRef="pure" decimals="INF" format="ixt:numdotdecimal" contextRef="c_offering_1" id="fee_022">0.0001531</ix:nonFraction></td>
+  <td>&#160;</td>
+  <td>$</td>
+  <td style="text-align: right"><ix:nonFraction name="ffd:FeeAmt" unitRef="USD" decimals="INF" format="ixt:numdotdecimal" contextRef="c_offering_1" id="fee_023">9,377.19</ix:nonFraction></td></tr>
+<tr style="font-size: 4pt; vertical-align: top; text-align: left">
+  <td style="width: 11%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 15%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 15%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 5%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 8%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 8%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 5%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="border-bottom: Black 1pt solid; width: 1%">&#160;</td>
+  <td style="border-bottom: Black 1pt solid; width: 8%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 5%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="border-bottom: Black 1pt solid; width: 1%">&#160;</td>
+  <td style="border-bottom: Black 1pt solid; width: 8%">&#160;</td></tr>
+<tr style="vertical-align: top; text-align: left">
+  <td colspan="14" style="text-align: right">Total Offering Amounts:</td>
+  <td>&#160;</td>
+  <td>$</td>
+  <td style="text-align: right"><ix:nonFraction name="ffd:TtlOfferingAmt" contextRef="c_report" decimals="INF" format="ixt:numdotdecimal" unitRef="USD" id="fee_024">61,248,740.75</ix:nonFraction></td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td style="text-align: right"><ix:nonFraction name="ffd:TtlFeeAmt" contextRef="c_report" decimals="INF" format="ixt:numdotdecimal" unitRef="USD" id="fee_025">9,377.19</ix:nonFraction></td></tr>
+<tr style="vertical-align: top; text-align: left">
+  <td colspan="14" style="text-align: right">Total Fees Previously Paid:</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td style="text-align: right"><ix:nonFraction name="ffd:TtlPrevslyPdAmt" contextRef="c_report" decimals="INF" format="ixt:numdotdecimal" unitRef="USD" id="fee_026">0.00</ix:nonFraction></td></tr>
+<tr style="vertical-align: top; text-align: left">
+  <td colspan="14" style="text-align: right">Total Fee Offsets:</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td style="border-bottom: Black 1pt solid">&#160;</td>
+  <td style="border-bottom: Black 1pt solid; text-align: right"><ix:nonFraction name="ffd:TtlOffsetAmt" contextRef="c_report" decimals="INF" format="ixt:numdotdecimal" unitRef="USD" id="fee_027">44,943.15</ix:nonFraction></td></tr>
+<tr style="vertical-align: top; text-align: left">
+  <td colspan="14" style="text-align: right">Net Fee Due:</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td style="border-bottom: Black 3pt double">$</td>
+  <td style="border-bottom: Black 3pt double; text-align: right"><ix:nonFraction name="ffd:NetFeeAmt" contextRef="c_report" decimals="INF" format="ixt:numdotdecimal" unitRef="USD" id="fee_028">0.00</ix:nonFraction></td></tr>
+</table>
+
+<p style="font: bold 8pt Times New Roman, Times, Serif; margin-top: 6pt; margin-bottom: 6pt">__________________________________________<br/>
+Offering Note(s)</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 6pt; width: 100%">
+<tr style="vertical-align: top; text-align: justify">
+  <td style="width: 15pt; text-align: right">(1)</td><td style="width: 5pt"/>
+  <td style="text-align: justify"><ix:nonNumeric name="ffd:OfferingNote" escape="1" contextRef="c_offering_1" id="fee_029">Pursuant to Rule 416 under the Securities Act of 1933, as amended, or the Securities Act, the Registrant is also registering hereunder an indeterminate number of additional ordinary shares that shall be issuable pursuant to Rule 416 to prevent dilution resulting from share splits, share dividends or similar transactions.<br/><br/>Consists of up to 26,746,175 ordinary shares being registered for resale by the selling securityholders named in this Registration Statement which includes (a) up to 22,624,434 ordinary shares that we may elect, in our sole discretion, to issue and sell to Keystone Capital Partners, LLC (&#8220;Keystone&#8221;), from time to time under the Purchase Agreement, and subject to applicable stock exchange rules and (b) up to 4,121,741 ordinary shares issuable upon conversion of the Commitment Notes issued to Keystone as consideration for Keystone entering into the Ordinary Share Purchase Agreement dated March 11, 2025.<br/><br/>Estimated solely for the purpose of computing the amount of the registration fee for the ordinary shares being registered in accordance with Rule 457(c) under the Securities Act based upon a proposed maximum aggregate offering price per unit of $2.29 per ordinary share, the average of the high ($2.38) and low ($2.2) prices of the ordinary shares of the registrant as reported on the Nasdaq Global Market (&#8220;Nasdaq&#8221;) on August 29, 2025, which such date is within five business days of the filing of this registration statement.</ix:nonNumeric></td></tr>
+  </table>
+
+<p style="font: bold 11pt Times New Roman, Times, Serif; border-top: Gray 3pt double; padding-top: 6pt; text-align: center; margin-top: 0pt; margin-bottom: 4pt">Table 2: Fee Offset Claims and Sources</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+<tr style="font-size: 2pt; vertical-align: bottom; text-align: center; font-weight: bold">
+  <td style="width: 13%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 15%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 4%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 4%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 8%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 8%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 8%">&#160;</td>
+    <td style="width: 1%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 4%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 4%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 4%">&#160;</td>
+    <td style="width: 1%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 4%">&#160;</td>
+    <td style="width: 1%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 4%">&#160;</td>
+    <td style="width: 1%">&#160;</td>
+  <td style="width: 1%">&#160;</td>
+  <td style="width: 4%">&#160;</td></tr>
+<tr style="font-size: 8pt; vertical-align: bottom; text-align: center; font-weight: bold">
+  <td style="border-bottom: Black 1pt solid">Line Item Type</td>
+  <td style="padding-bottom: 1pt">&#160;</td>
+  <td style="border-bottom: Black 1pt solid">Registrant or Filer Name
+</td>
+  <td style="padding-bottom: 1pt">&#160;</td>
+  <td style="border-bottom: Black 1pt solid">Notes</td>
+  <td style="padding-bottom: 1pt">&#160;</td>
+  <td style="border-bottom: Black 1pt solid">Form or Filing Type
+</td>
+  <td style="padding-bottom: 1pt">&#160;</td>
+  <td style="border-bottom: Black 1pt solid">File Number
+</td>
+  <td style="padding-bottom: 1pt">&#160;</td>
+  <td style="border-bottom: Black 1pt solid">Initial Filing Date</td>
+  <td>&#160;</td>
+  <td style="border-bottom: Black 1pt solid">Filing Date</td>
+  <td style="padding-bottom: 1pt">&#160;</td>
+  <td colspan="2" style="border-bottom: Black 1pt solid">Fee Offset Claimed</td>
+  <td>&#160;</td>
+  <td style="border-bottom: Black 1pt solid">Security Type Associated with Fee Offset Claimed</td>
+  <td style="padding-bottom: 1pt">&#160;</td>
+  <td style="border-bottom: Black 1pt solid">Security Title Associated with Fee Offset Claimed</td>
+  <td style="padding-bottom: 1pt">&#160;</td>
+  <td colspan="2" style="border-bottom: Black 1pt solid">Unsold Securities Associated with Fee Offset Claimed</td>
+  <td>&#160;</td>
+  <td colspan="2" style="border-bottom: Black 1pt solid">Unsold Aggregate Offering Amount Associated with Fee Offset Claimed</td>
+  <td style="padding-bottom: 1pt">&#160;</td>
+  <td colspan="2" style="border-bottom: Black 1pt solid">Fee Paid with Fee Offset Source</td></tr>
+<tr style="font-size: 2pt; vertical-align: top; text-align: left">
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+    <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td></tr>
+<tr style="vertical-align: top; text-align: left">
+  <td colspan="29" style="padding-top: 2pt; font-style: italic; text-align: center; padding-bottom: 2pt">Rule 457(p)</td></tr>
+<tr>
+    <td style="white-space: nowrap"><ix:nonNumeric name="ffd:Rule457pOffsetFlg" contextRef="c_offset_1" format="ixt:booleantrue" id="fee_030">Fee Offset Claims</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td><ix:nonNumeric name="ffd:OffsetPrrFilerNm" contextRef="c_offset_1" id="fee_031">HUB Cyber Security Ltd.</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center">&#160;(1)</td>
+    <td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric name="ffd:OffsetPrrFormTp" contextRef="c_offset_1" id="fee_032">F-1</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric name="ffd:OffsetPrrFileNb" contextRef="c_offset_1" id="fee_033">333-274385</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric name="ffd:OffsetClmInitlFilgDt" format="ixt:datemonthdayyear" contextRef="c_offset_1" id="fee_034">09/07/2023</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center">&#160;</td>
+    <td>&#160;</td>
+    <td>$</td>
+    <td style="text-align: right"><ix:nonFraction name="ffd:OffsetClmdAmt" decimals="INF" format="ixt:numdotdecimal" unitRef="USD" contextRef="c_offset_1" id="fee_035">3,556.05</ix:nonFraction></td>
+    <td>&#160;</td>
+    <td><ix:nonNumeric name="ffd:OffsetPrrSctyTp" contextRef="c_offset_1" id="fee_036">Equity</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td><ix:nonNumeric name="ffd:OffsetPrrSctyTitl" contextRef="c_offset_1" id="fee_037">Ordinary shares</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right"><ix:nonFraction name="ffd:OffsetPrrNbOfUnsoldScties" decimals="INF" format="ixt:numdotdecimal" unitRef="pure" contextRef="c_offset_1" id="fee_038">87,807,052</ix:nonFraction></td>
+    <td>&#160;</td>
+    <td>$</td>
+    <td style="text-align: right"><ix:nonFraction name="ffd:OffsetPrrUnsoldOfferingAmt" decimals="INF" format="ixt:numdotdecimal" unitRef="USD" contextRef="c_offset_1" id="fee_039">32,269,091.61</ix:nonFraction></td>
+    <td>&#160;</td>
+    <td>$</td>
+    <td style="text-align: right">&#160;</td></tr>
+<tr>
+    <td style="white-space: nowrap"><ix:nonNumeric name="ffd:Rule457pOffsetFlg" contextRef="c_offset_2" format="ixt:booleantrue" id="fee_040">Fee Offset Sources</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td><ix:nonNumeric name="ffd:OffsetPrrFilerNm" contextRef="c_offset_2" id="fee_041">HUB Cyber Security Ltd.</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center">&#160;&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric name="ffd:OffsetPrrFormTp" contextRef="c_offset_2" id="fee_042">F-1</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric name="ffd:OffsetPrrFileNb" contextRef="c_offset_2" id="fee_043">333-274385</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center">&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric name="ffd:OffsetSrcFilgDt" format="ixt:datemonthdayyear" contextRef="c_offset_2" id="fee_044">09/07/2023</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right">&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right">&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right">&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right"><ix:nonFraction name="ffd:OffsetPrrFeeAmt" decimals="INF" format="ixt:numdotdecimal" unitRef="USD" contextRef="c_offset_2" id="fee_045">3,556.05</ix:nonFraction></td></tr>
+<tr>
+    <td style="white-space: nowrap"><ix:nonNumeric name="ffd:Rule457pOffsetFlg" contextRef="c_offset_3" format="ixt:booleantrue" id="fee_046">Fee Offset Claims</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td><ix:nonNumeric name="ffd:OffsetPrrFilerNm" contextRef="c_offset_3" id="fee_047">HUB Cyber Security Ltd.</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center">&#160;(2)</td>
+    <td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric name="ffd:OffsetPrrFormTp" contextRef="c_offset_3" id="fee_048">F-1</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric name="ffd:OffsetPrrFileNb" contextRef="c_offset_3" id="fee_049">333-274385</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric name="ffd:OffsetClmInitlFilgDt" format="ixt:datemonthdayyear" contextRef="c_offset_3" id="fee_050">09/07/2023</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center">&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right"><ix:nonFraction name="ffd:OffsetClmdAmt" decimals="INF" format="ixt:numdotdecimal" unitRef="USD" contextRef="c_offset_3" id="fee_051">1,540.36</ix:nonFraction></td>
+    <td>&#160;</td>
+    <td><ix:nonNumeric name="ffd:OffsetPrrSctyTp" contextRef="c_offset_3" id="fee_052">Equity</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td><ix:nonNumeric name="ffd:OffsetPrrSctyTitl" contextRef="c_offset_3" id="fee_053">Ordinary shares issuable upon the exercise of warrants</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right"><ix:nonFraction name="ffd:OffsetPrrNbOfUnsoldScties" decimals="INF" format="ixt:numdotdecimal" unitRef="pure" contextRef="c_offset_3" id="fee_054">6,885,632</ix:nonFraction></td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right"><ix:nonFraction name="ffd:OffsetPrrUnsoldOfferingAmt" decimals="INF" format="ixt:numdotdecimal" unitRef="USD" contextRef="c_offset_3" id="fee_055">19,619,811.96</ix:nonFraction></td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right">&#160;</td></tr>
+<tr>
+    <td style="white-space: nowrap"><ix:nonNumeric name="ffd:Rule457pOffsetFlg" contextRef="c_offset_4" format="ixt:booleantrue" id="fee_056">Fee Offset Sources</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td><ix:nonNumeric name="ffd:OffsetPrrFilerNm" contextRef="c_offset_4" id="fee_057">HUB Cyber Security Ltd.</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center">&#160;&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric name="ffd:OffsetPrrFormTp" contextRef="c_offset_4" id="fee_058">F-1</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric name="ffd:OffsetPrrFileNb" contextRef="c_offset_4" id="fee_059">333-274385</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center">&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric name="ffd:OffsetSrcFilgDt" format="ixt:datemonthdayyear" contextRef="c_offset_4" id="fee_060">09/07/2023</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right">&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right">&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right">&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right"><ix:nonFraction name="ffd:OffsetPrrFeeAmt" decimals="INF" format="ixt:numdotdecimal" unitRef="USD" contextRef="c_offset_4" id="fee_061">1,540.36</ix:nonFraction></td></tr>
+<tr>
+    <td style="white-space: nowrap"><ix:nonNumeric name="ffd:Rule457pOffsetFlg" contextRef="c_offset_5" format="ixt:booleantrue" id="fee_062">Fee Offset Claims</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td><ix:nonNumeric name="ffd:OffsetPrrFilerNm" contextRef="c_offset_5" id="fee_063">HUB Cyber Security Ltd.</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center">&#160;(3)</td>
+    <td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric name="ffd:OffsetPrrFormTp" contextRef="c_offset_5" id="fee_064">F-4</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric name="ffd:OffsetPrrFileNb" contextRef="c_offset_5" id="fee_065">333-267035</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric name="ffd:OffsetClmInitlFilgDt" format="ixt:datemonthdayyear" contextRef="c_offset_5" id="fee_066">08/24/2022</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center">&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right"><ix:nonFraction name="ffd:OffsetClmdAmt" decimals="INF" format="ixt:numdotdecimal" unitRef="USD" contextRef="c_offset_5" id="fee_067">39,846.74</ix:nonFraction></td>
+    <td>&#160;</td>
+    <td><ix:nonNumeric name="ffd:OffsetPrrSctyTp" contextRef="c_offset_5" id="fee_068">Equity</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td><ix:nonNumeric name="ffd:OffsetPrrSctyTitl" contextRef="c_offset_5" id="fee_069">Ordinary shares issuable upon the exercise of warrants</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right"><ix:nonFraction name="ffd:OffsetPrrNbOfUnsoldScties" decimals="INF" format="ixt:numdotdecimal" unitRef="pure" contextRef="c_offset_5" id="fee_070">1,203,284</ix:nonFraction></td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right"><ix:nonFraction name="ffd:OffsetPrrUnsoldOfferingAmt" decimals="INF" format="ixt:numdotdecimal" unitRef="USD" contextRef="c_offset_5" id="fee_071">153,900,023.60</ix:nonFraction></td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right">&#160;</td></tr>
+<tr>
+    <td style="white-space: nowrap"><ix:nonNumeric name="ffd:Rule457pOffsetFlg" contextRef="c_offset_6" format="ixt:booleantrue" id="fee_072">Fee Offset Sources</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td><ix:nonNumeric name="ffd:OffsetPrrFilerNm" contextRef="c_offset_6" id="fee_073">HUB Cyber Security Ltd.</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center">&#160;&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric name="ffd:OffsetPrrFormTp" contextRef="c_offset_6" id="fee_074">F-4</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric name="ffd:OffsetPrrFileNb" contextRef="c_offset_6" id="fee_075">333-267035</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td style="text-align: center">&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric name="ffd:OffsetSrcFilgDt" format="ixt:datemonthdayyear" contextRef="c_offset_6" id="fee_076">08/24/2022</ix:nonNumeric></td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right">&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right">&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right">&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: right"><ix:nonFraction name="ffd:OffsetPrrFeeAmt" decimals="INF" format="ixt:numdotdecimal" unitRef="USD" contextRef="c_offset_6" id="fee_077">39,846.74</ix:nonFraction></td></tr>
+<tr style="font-size: 4pt; vertical-align: top; text-align: left">
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td></tr>
+</table>
+
+
+
+<p style="font: bold 8pt Times New Roman, Times, Serif; margin-top: 6pt; margin-bottom: 6pt">__________________________________________<br/>
+Rule 457(p) Statement of Withdrawal, Termination, or Completion:</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 6pt; width: 100%">
+<tr style="vertical-align: top; text-align: justify">
+  <td style="width: 15pt; text-align: right">(1)</td><td style="width: 5pt"/>
+  <td style="text-align: justify"><ix:nonNumeric name="ffd:TermntnCmpltnWdrwl" escape="1" contextRef="c_offset_1" id="fee_078">The Registrant&#8217;s Registration Statement on Form F-1 (Registration No. 333-274385) was initially filed on September 7, 2023 (the &#8220;September 2023 Registration Statement&#8221;) but was not declared effective by the SEC and there were no sales of the Registrant&#8217;s securities under the September 2023 Registration Statement. The Registrant withdrew the September 2023 Registration Statement by filing a Form RW on September 13, 2024.</ix:nonNumeric></td></tr>
+  </table>
+
+
+<p style="font: bold 8pt Times New Roman, Times, Serif; margin-top: 6pt; margin-bottom: 6pt">Rule 457(p) Statement of Withdrawal, Termination, or Completion:</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 6pt; width: 100%">
+<tr style="vertical-align: top; text-align: justify">
+  <td style="width: 15pt; text-align: right">(2)</td><td style="width: 5pt"/>
+  <td style="text-align: justify"><ix:nonNumeric name="ffd:TermntnCmpltnWdrwl" escape="1" contextRef="c_offset_3" id="fee_079">The Registrant&#8217;s Registration Statement on Form F-1 (Registration No. 333-274385) was initially filed on September 7, 2023 (the &#8220;September 2023 Registration Statement&#8221;) but was not declared effective by the SEC and there were no sales of the Registrant&#8217;s securities under the September 2023 Registration Statement. The Registrant withdrew the September 2023 Registration Statement by filing a Form RW on September 13, 2024.</ix:nonNumeric></td></tr>
+  </table>
+
+
+<p style="font: bold 8pt Times New Roman, Times, Serif; margin-top: 6pt; margin-bottom: 6pt">Rule 457(p) Statement of Withdrawal, Termination, or Completion:</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 6pt; width: 100%">
+<tr style="vertical-align: top; text-align: justify">
+  <td style="width: 15pt; text-align: right">(3)</td><td style="width: 5pt"/>
+  <td style="text-align: justify"><ix:nonNumeric name="ffd:TermntnCmpltnWdrwl" escape="1" contextRef="c_offset_5" id="fee_080">The Registrant previously registered 13,384,650 ordinary shares upon exercise of (i) warrants to purchase ordinary shares, originally issued by Mount Rainier Acquisition Corp. to the public in its initial public offering that were converted into warrants to purchase ordinary shares of the Registrant on the closing of the Business Combination (the &#8220;Public Warrants&#8221;) and (ii) warrants to purchase ordinary shares, originally issued by Mount Rainier Acquisition Corp. to the Sponsor and affiliated entities in connection with the initial public offering of Mount Rainier Acquisition Corp. that were converted into warrants to purchase ordinary shares of the Registrant on the closing of the Business Combination (the &#8220;Private Warrants&#8221;, and, together with the Public Warrants, the &#8220;SPAC Warrants&#8221;) under a registration statement on Form F-4 (File No. 333-267035) (the &#8220;August 2022 Registration Statement). After giving effect to a reverse 1-for-10 reverse share split that the Registrant effected on December 14, 2023, such number of ordinary shares issuable upon the exercise of the SPAC Warrants is 1,338,465 ordinary shares of which 1,203,284 ordinary shares issuable upon the exercise of SPAC Warrants have not yet been exercised and, consequently, none of the ordinary shares have been issued or sold under the August 2022 Registration Statement, consisting of (i) 11,630,882 ordinary shares that may be received upon exercise of Public Warrants and (ii) 401,992 ordinary shares that may be received upon exercise Private Warrants. The Registrant has completed the offering that included these registered but unissued ordinary shares under the August 2022 Registration Statement.</ix:nonNumeric></td></tr>
+  </table>
+
+
+
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

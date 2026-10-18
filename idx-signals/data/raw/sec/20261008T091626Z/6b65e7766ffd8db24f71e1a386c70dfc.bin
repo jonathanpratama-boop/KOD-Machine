@@ -1,0 +1,1481 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2024" xmlns:ref="http://www.xbrl.org/2006/ref" xmlns:us-gaap="http://fasb.org/us-gaap/2024" xmlns:us-roles="http://fasb.org/us-roles/2024" xmlns:country="http://xbrl.sec.gov/country/2024" xmlns:srt="http://fasb.org/srt/2024" xmlns:SSNT="http://ir.silversuntech.com/20240606">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02D_US%2DGAAP%2D2024 -->
+<!-- Field: Set; Name: xdx; ID: xdx_035_SSNT_ir.silversuntech.com_20240606 -->
+<!-- Field: Set; Name: xdx; ID: xdx_04A_20240606_20240606 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_051_edei%2D%2DCurrentFiscalYearEndDate_%2D%2DLS0xMi0zMQ== -->
+<!-- Field: Set; Name: xdx; ID: xdx_053_edei%2D%2DEntityCentralIndexKey_0001236275 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2024-06-06" id="Fact000003" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-06-06" id="Fact000004" name="dei:CurrentFiscalYearEndDate">--12-31</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-06-06" id="Fact000005" name="dei:EntityCentralIndexKey">0001236275</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="ssnt-20240606.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2024-06-06">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001236275</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2024-06-06</xbrli:startDate>
+        <xbrli:endDate>2024-06-06</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="margin: 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in; text-align: center"><b>UNITED STATES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in; text-align: center"><b>SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in; text-align: center"><b>Washington, D.C. 20549&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in; text-align: center"><b>FORM <span id="xdx_900_edei--DocumentType_c20240606__20240606_zOsP1ZmRRPc1"><ix:nonNumeric contextRef="AsOf2024-06-06" id="Fact000010" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in; text-align: center"><b>Pursuant to Section 13 OR 15(d) of The Securities
+Exchange Act of 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in; text-align: center">Date of Report (Date of earliest event reported):
+<b><span id="xdx_906_edei--DocumentPeriodEndDate_c20240606__20240606_zppjJ5hM2n1c"><ix:nonNumeric contextRef="AsOf2024-06-06" format="ixt:datemonthdayyearen" id="Fact000011" name="dei:DocumentPeriodEndDate">June 6, 2024</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: Black 1.5pt solid; width: 100%; font-size: 10pt; text-align: center"><span style="font-size: 14pt"><b><span><span id="xdx_903_edei--EntityRegistrantName_c20240606__20240606_z0xM8uvX8jqd"><ix:nonNumeric contextRef="AsOf2024-06-06" id="Fact000012" name="dei:EntityRegistrantName">QXO, INC.</ix:nonNumeric></span></span></b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="font-size: 10pt; text-align: center"><span style="font-size: 10pt">(Exact name of registrant as specified in its charter)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: Black 1.5pt solid; width: 32%; text-align: center"><span style="text-decoration: none; font-size: 10pt"><b><span id="xdx_902_edei--EntityIncorporationStateCountryCode_c20240606__20240606_zUtQxsCIqzzj"><ix:nonNumeric contextRef="AsOf2024-06-06" format="ixt-sec:stateprovnameen" id="Fact000013" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></b></span></td>
+    <td style="padding-bottom: 1.5pt; width: 2%"><span style="text-decoration: none">&#160;</span></td>
+    <td style="border-bottom: Black 1.5pt solid; width: 32%; text-align: center"><span style="text-decoration: none; font-size: 10pt"><b><span id="xdx_90B_edei--EntityFileNumber_c20240606__20240606_z7ItWtp7gOpe"><ix:nonNumeric contextRef="AsOf2024-06-06" id="Fact000014" name="dei:EntityFileNumber">000-50302</ix:nonNumeric></span></b></span></td>
+    <td style="padding-bottom: 1.5pt; width: 2%"><span style="text-decoration: none">&#160;</span></td>
+    <td style="border-bottom: Black 1.5pt solid; width: 32%; text-align: center"><span style="text-decoration: none; font-size: 10pt"><b><span id="xdx_90A_edei--EntityTaxIdentificationNumber_c20240606__20240606_zNfYEmmwduJ5"><ix:nonNumeric contextRef="AsOf2024-06-06" id="Fact000015" name="dei:EntityTaxIdentificationNumber">16-1633636</ix:nonNumeric></span></b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(State or other jurisdiction<br/>
+of incorporation)</p></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">(Commission File Number)</span></td>
+    <td>&#160;</td>
+    <td>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(IRS Employer<br/>
+Identification No.)</p></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: Black 1.5pt solid; vertical-align: bottom; width: 49%; text-align: center"><span style="font-family: Times New Roman, Times, Serif"><b><span id="xdx_902_edei--EntityAddressAddressLine1_c20240606__20240606_ze5aIVcTWZth"><ix:nonNumeric contextRef="AsOf2024-06-06" id="Fact000016" name="dei:EntityAddressAddressLine1">Five American Lane</ix:nonNumeric></span></b></span><br/>
+    <span style="text-decoration: none"><b><span id="xdx_90F_edei--EntityAddressCityOrTown_c20240606__20240606_zFtSZDtXRnCf"><ix:nonNumeric contextRef="AsOf2024-06-06" id="Fact000017" name="dei:EntityAddressCityOrTown">Greenwich</ix:nonNumeric></span>, <span id="xdx_906_edei--EntityAddressStateOrProvince_c20240606__20240606_zNWUduo04o99"><ix:nonNumeric contextRef="AsOf2024-06-06" format="ixt-sec:stateprovnameen" id="Fact000018" name="dei:EntityAddressStateOrProvince">Connecticut</ix:nonNumeric></span></b></span></td><td style="text-align: center; padding-bottom: 1.5pt; width: 2%; vertical-align: bottom"><span style="text-decoration: none">&#160;</span></td>
+    <td style="border-bottom: Black 1.5pt solid; vertical-align: bottom; width: 49%; text-align: center"><span style="text-decoration: none; font-size: 10pt"><b><span id="xdx_909_edei--EntityAddressPostalZipCode_c20240606__20240606_zxu8qJIsoR58"><ix:nonNumeric contextRef="AsOf2024-06-06" id="Fact000019" name="dei:EntityAddressPostalZipCode">06831</ix:nonNumeric></span></b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td><p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in; text-align: center"><span style="text-decoration: none">(Address
+    of principal executive offices)</span></p></td>
+    <td><span style="text-decoration: none">&#160;</span></td>
+    <td style="text-align: center"><span style="text-decoration: none; font-size: 10pt">(Zip Code)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in; text-align: center"><b><span style="text-decoration: underline"><span id="xdx_902_edei--CityAreaCode_c20240606__20240606_z9mit7BzDXDl"><ix:nonNumeric contextRef="AsOf2024-06-06" id="Fact000020" name="dei:CityAreaCode">888</ix:nonNumeric></span>-<span id="xdx_904_edei--LocalPhoneNumber_c20240606__20240606_zlDtWHuAcnAg"><ix:nonNumeric contextRef="AsOf2024-06-06" id="Fact000021" name="dei:LocalPhoneNumber">998-6000</ix:nonNumeric></span></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in; text-align: center">Registrant&#8217;s telephone number, including
+area code</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in; text-align: center"><b><span id="xdx_905_edei--EntityInformationFormerLegalOrRegisteredName_c20240606__20240606_zXVn9JsOSjuf"><ix:nonNumeric contextRef="AsOf2024-06-06" id="Fact000022" name="dei:EntityInformationFormerLegalOrRegisteredName">SilverSun Technologies, Inc.</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in; text-align: center"><b>120 Eagle Rock Ave</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in; text-align: center"><b><span style="text-decoration: underline">East Hanover, NJ 07936</span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.1in; text-align: center">(Former name or former address, if changed
+since last report.)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify; text-indent: 0pt">Check the appropriate box below if the 8-K filing is intended to
+simultaneously satisfy the filing obligations of the registrant under any of the following provisions:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90C_edei--WrittenCommunications_c20240606__20240606_zLZoZuYo36z"><ix:nonNumeric contextRef="AsOf2024-06-06" format="ixt:booleanfalse" id="Fact000023" name="dei:WrittenCommunications">&#9744;</ix:nonNumeric></span></span></td><td style="text-align: justify"><span style="font-size: 10pt">Written communication pursuant
+to Rule 425 under the Securities Act (17 CFR 230.425)</span></td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"></p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_905_edei--SolicitingMaterial_c20240606__20240606_ziB9HnN1spBg"><ix:nonNumeric contextRef="AsOf2024-06-06" format="ixt:booleanfalse" id="Fact000024" name="dei:SolicitingMaterial">&#9744;</ix:nonNumeric></span></span></td><td style="text-align: justify"><span style="font-size: 10pt">Soliciting material pursuant to
+Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</span></td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><span style="font-size: 10pt">&#160;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"></p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_909_edei--PreCommencementTenderOffer_c20240606__20240606_zoXNZ9IXF0Ji"><ix:nonNumeric contextRef="AsOf2024-06-06" format="ixt:booleanfalse" id="Fact000025" name="dei:PreCommencementTenderOffer">&#9744;</ix:nonNumeric></span></span></td><td style="text-align: justify"><span style="font-size: 10pt">Pre-commencement communications
+pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</span></td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><span style="font-size: 10pt">&#160;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"></p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90F_edei--PreCommencementIssuerTenderOffer_c20240606__20240606_zxUKzrMnOOte"><ix:nonNumeric contextRef="AsOf2024-06-06" format="ixt:booleanfalse" id="Fact000026" name="dei:PreCommencementIssuerTenderOffer">&#9744;</ix:nonNumeric></span></span></td><td style="text-align: justify"><span style="font-size: 10pt">Pre-commencement communications
+pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</span></td>
+</tr></table>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt">Securities registered pursuant to Section 12(b) of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr>
+    <td style="border-bottom: Black 1.5pt solid; vertical-align: bottom; width: 32%; text-align: center"><span style="text-decoration: none; font-size: 10pt"><b>Title of each class</b>&#160;</span></td>
+    <td style="padding-bottom: 1.5pt; text-align: center; width: 2%; vertical-align: bottom">&#160;</td>
+    <td style="border-bottom: Black 1.5pt solid; vertical-align: bottom; width: 32%; text-align: center"><span style="text-decoration: none; font-size: 10pt"><b>Trading Symbol(s)</b>&#160;</span></td>
+    <td style="padding-bottom: 1.5pt; text-align: center; width: 2%; vertical-align: bottom">&#160;</td>
+    <td style="border-bottom: Black 1.5pt solid; vertical-align: bottom; width: 32%; text-align: center"><span style="text-decoration: none; font-size: 10pt"><b>Name of each exchange on which
+    registered</b></span></td></tr>
+  <tr style="background-color: rgb(204,238,255)">
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_905_edei--Security12bTitle_c20240606__20240606_zZ4AjI0s1Kla"><ix:nonNumeric contextRef="AsOf2024-06-06" id="Fact000027" name="dei:Security12bTitle">Common Stock, par value $0.00001 per share</ix:nonNumeric></span></b>&#160;&#160;</span></td>
+    <td style="text-align: center; vertical-align: top">&#160;</td>
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_90A_edei--TradingSymbol_c20240606__20240606_zhp1JRxpowok"><ix:nonNumeric contextRef="AsOf2024-06-06" id="Fact000028" name="dei:TradingSymbol">QXO</ix:nonNumeric></span></b>&#160;</span></td>
+    <td style="text-align: center; vertical-align: top">&#160;</td>
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt"><b>The <span id="xdx_904_edei--SecurityExchangeName_c20240606__20240606_zcm2bfcajCYj"><ix:nonNumeric contextRef="AsOf2024-06-06" format="ixt-sec:exchnameen" id="Fact000029" name="dei:SecurityExchangeName">NASDAQ</ix:nonNumeric></span> Capital Market</b></span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Indicate by check mark whether the registrant
+is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (17 CFR &#167;230.405) or Rule 12b-2 of the Securities
+Exchange Act of 1934 (17 CFR &#167;240.12b-2).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Emerging growth company <span style="font-family: Times New Roman, Times, Serif"><span id="xdx_90F_edei--EntityEmergingGrowthCompany_c20240606__20240606_zhj7p7fAF9ed"><ix:nonNumeric contextRef="AsOf2024-06-06" format="ixt:booleanfalse" id="Fact000030" name="dei:EntityEmergingGrowthCompany">&#9744;</ix:nonNumeric></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">If an emerging growth company, indicate by
+check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting
+standards provided pursuant to Section 13(a) of the Exchange Act.&#160;<span style="font-family: Times New Roman, Times, Serif">&#9744;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><b>Introduction</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><br/>
+<span style="background-color: white">As previously disclosed, QXO, Inc. (formerly known as SilverSun Technologies, Inc.) (the &#8220;<span style="text-decoration: underline">Company</span>&#8221;
+or &#8220;<span style="text-decoration: underline">QXO</span>&#8221;) entered into an Amended and Restated Investment Agreement (as amended from time to time, the &#8220;<span style="text-decoration: underline">Investment
+Agreement</span>&#8221;), dated April 14, 2024, among the Company, Jacobs Private Equity II, LLC, a Delaware limited liability company (&#8220;<span style="text-decoration: underline">JPE</span>&#8221;)
+and the other investors party thereto </span>(each, an &#8220;<span style="text-decoration: underline">Other Investor</span>,&#8221; and together with JPE, the &#8220;<span style="text-decoration: underline">Investors</span>&#8221;)<span style="background-color: white">,
+providing for, among other things, an aggregate investment by the Investors of $1,000,000,000 in cash in the Company (the </span>&#8220;<span style="text-decoration: underline">Equity
+Investment</span>&#8221;)<span style="background-color: white">. </span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">On June 6, 2024, as contemplated by the Investment
+Agreement, the Company effected the 8-for-1 reverse stock split effective as of 9:00 a.m. Eastern Time (the &#8220;<span style="text-decoration: underline">Reverse Stock Split</span>&#8221;).
+As a result of the Reverse Stock Split, the Company&#8217;s issued and outstanding shares of common stock, par value $0.00001 per share
+(the &#8220;<span style="text-decoration: underline">Common Stock</span>&#8221;), has been reduced from 5,315,581 shares of Common Stock to 664,284 shares of Common Stock.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><span style="background-color: white">Following
+the effective time of the Reverse Stock Split, the Company and the Investors completed the Equity Investment pursuant to the Investment
+Agreement. </span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><b>Item 1.01. Entry into a Material Definitive
+Agreement</b>.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><span style="text-decoration: underline">Stockholders&#8217; Agreement</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">On June 6, 2024, as contemplated by the Investment
+Agreement, the Company entered into a stockholders&#8217; agreement (the &#8220;<span style="text-decoration: underline">Stockholders&#8217; Agreement</span>&#8221;), among the
+Company, JPE and the Other Investors, pursuant to which, among other things, each Other Investor agreed with the Company that such Other
+Investor will not, and will cause its affiliates not to, transfer all or any portion of the securities of the Company beneficially owned
+by such person until June 6, 2029, subject to certain exceptions provided in the Stockholders&#8217; Agreement, including exceptions in
+the event JPE transfers any of its Securities (as defined below) or shares of Common Stock issuable upon conversion of the Preferred Stock
+or upon exercise of the Warrants.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Each Other Investor also agreed with the Company
+that such Other Investor will (a) appear in person or by proxy at any meeting of the Company&#8217;s stockholders and (b) vote, or cause
+to be voted, or execute written consents with respect to, as applicable, all voting securities of the Company that it beneficially owns
+(i) in favor of the election of each candidate designated or nominated for election by JPE, (ii) in favor of removal of each person designated
+for removal by JPE and (iii) except with respect to matters that would adversely affect such Other Investor in a manner disproportionate
+to any other Investor, in accordance with JPE&#8217;s written direction with respect to any other matter presented at such meeting of
+the Company&#8217;s stockholders.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">The foregoing description of the Stockholders&#8217;
+Agreement is not complete and is qualified in its entirety by reference to the complete text of the Stockholders&#8217; Agreement, a copy
+of which is attached hereto as Exhibit 10.1 and is incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><span style="text-decoration: underline">Registration Rights Agreement </span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">On June 6, 2024, as contemplated by the Investment
+Agreement, the Company entered into a Registration Rights Agreement (the &#8220;<span style="text-decoration: underline">Registration Rights Agreement</span>&#8221;), among the
+Company, JPE and the Other Investors, pursuant to which, among other things, the holders of the Securities have been provided with certain
+rights to cause the Company to register the sale of shares of Preferred Stock, Warrants and shares of Common Stock issued or issuable
+upon conversion of the Preferred Stock or upon exercise of the Warrants, in each case other than any such securities that are then freely
+transferable without registration pursuant to Rule&#160;144 under the Securities Act without limitation as to volume, manner of sale or
+other restrictions under Rule&#160;144. Securities that are subject to registration under the Registration Rights Agreement as provided
+above are referred to as &#8220;<span style="text-decoration: underline">Registrable Securities</span>.&#8221;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">At any time on or after the closing of the
+Equity Investment, the holder or holders of Registrable Securities holding Registrable Securities constituting, in the aggregate, no less
+than a majority of the total number of Registrable Securities may request that the Company register the sale of such securities under
+the Securities Act of 1933, as amended (the &#8220;<span style="text-decoration: underline">Securities Act</span>&#8221;). Such majority holders may request a total of ten demand
+registrations.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">If the Company registers its securities on
+a registration statement, the Company must give each Investor prompt written notice thereof (subject to certain exceptions). The Company
+must then include on such registration statement all Registrable Securities requested to be included therein (subject to certain exceptions).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Subject to certain exceptions, all expenses
+incurred in connection with the registration or sale of the Registrable Securities will be borne by the Company.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">The foregoing description of the Registration
+Rights Agreement is not complete and is qualified in its entirety by reference to the complete text of the Registration Rights Agreement,
+a copy of which is attached hereto as Exhibit 10.2 and is incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><b></b></p>
+
+<!-- Field: Page; Sequence: 2; Options: NewSection -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->1<!-- Field: /Sequence -->-</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><b>Item 3.02. Unregistered Sales of Equity
+Securities</b>.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">On June 6, 2024, pursuant to the Investment
+Agreement and after the effective time of the Reverse Stock Split, the Company issued to the Investors, for $1,000,000,000 in cash: (i)&#160;an
+aggregate of 1,000,000 shares of Convertible Perpetual Preferred Stock of the Company, par value $0.001 per share (the &#8220;<span style="text-decoration: underline">Preferred
+Stock</span>&#8221;), which are initially convertible into an aggregate of 219,007,375 shares of Common Stock at an initial conversion price
+of $4.566 per share, and (ii)&#160;warrants initially exercisable for an aggregate of 219,007,375 shares of Common Stock (the &#8220;<span style="text-decoration: underline">Warrants</span>,&#8221;
+and together with the Preferred Stock, the &#8220;<span style="text-decoration: underline">Securities</span>&#8221;). The Warrants have an exercise price of $4.566 per share of
+Common Stock with respect to 50% of the Warrants, $6.849 per share of Common Stock with respect to 25% of the Warrants, and $13.698 per
+share of Common Stock with respect to the remaining 25% of the Warrants. The Securities are subject to customary anti-dilution adjustments.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><span style="text-decoration: underline">The Preferred Stock</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">The Preferred Stock has an initial liquidation
+preference of $1,000 per share, for an aggregate initial liquidation preference of $1,000,000,000. The Preferred Stock is convertible
+at any time, in whole or in part and from time to time, at the option of the holder thereof into a number of shares of Common Stock equal
+to the then-applicable liquidation preference divided by the conversion price, which initially is $4.566 per share of Common Stock (subject
+to customary anti-dilution adjustments). Shares of Preferred Stock are initially convertible into an aggregate of 219,007,375 shares of
+Common Stock (after giving effect to the Reverse Stock Split). The Preferred Stock will pay quarterly cash dividends equal to the greater
+of (i)&#160;the &#8220;as-converted&#8221; dividends on the underlying Common Stock for the relevant quarter and (ii)&#160;9% of the then-applicable
+liquidation preference per annum. Accrued and unpaid dividends for any quarter will accrete to liquidation preference. The Preferred Stock
+is not redeemable or subject to any required offer to purchase and votes together with the Common Stock on an &#8220;as-converted&#8221;
+basis on all matters, except as otherwise required by law, and separately as a class with respect to certain matters implicating the rights
+of holders of shares of Preferred Stock.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">The description of the Preferred Stock is
+qualified in its entirety by reference to the Certificate of Designation of Convertible Perpetual Preferred Stock, a copy of which is
+attached hereto as Exhibit&#160;4.1 and is incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><span style="text-decoration: underline">The Warrants</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Each Warrant will initially
+be exercisable at any time and from time to time from the closing date until June 6, 2034, at the option of the holder thereof, into
+one share of Common Stock. The Warrants have an exercise price of $4.566 per share of Common Stock with respect to 50% of the
+Warrants, $6.849 per share of Common Stock with respect to 25% of the Warrants, and $13.698 per share of Common Stock with respect
+to the remaining 25% of the Warrants, in each case subject to customary anti-dilution adjustments. The initial aggregate number of
+shares of Company common stock subject to Warrants is 219,007,375 shares.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">The description of the Warrants is qualified
+in its entirety by reference to the Forms of Warrant Certificate, copies of which are attached hereto as Exhibits&#160;4.2, 4.3 and 4.4
+and are incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">The Securities described above were sold to
+the Investors in a transaction exempt from the registration requirements of the Securities Act, pursuant to Section&#160;4(a)(2) thereof,
+as a transaction by an issuer not involving a public offering.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">The information described under &#8220;Registration
+Rights Agreement&#8221; above in Item 1.01 is incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><b></b></p>
+
+<!-- Field: Page; Sequence: 3 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence -->-</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><b>Item 3.03. Material Modifications to Rights
+of Security Holders</b>.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">The information described above under Item
+3.02 and below under Item 5.03 below is incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><b>Item 5.01. Changes in Control of Registrant</b>.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">On June 6, 2024 and after the effective time
+of the Reverse Stock Split, as part of the Equity Investment described in Item 3.02 above, the Company issued to JPE, for $900,000,000
+in cash, (i) 900,000 shares of Preferred Stock, which are initially convertible into an aggregate of 197,106,637 shares of Common Stock,
+and (ii) 197,106,637 Warrants initially exercisable for an aggregate of 197,106,637 shares of Common Stock (with an exercise price of
+$4.566 per share of Common Stock with respect to 50% of the Warrants, $6.849 per share of Common Stock with respect to 25% of the Warrants,
+and $13.698 per share of Common Stock with respect to the remaining 25% of the Warrants, in each case subject to customary anti-dilution
+adjustments), which resulted in a change of control of the Company. After the effective time of the Reverse Stock Split but prior to the
+Equity Investment, there were 664,284 shares of Common Stock issued and outstanding.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Based upon 664,284 shares of Common Stock
+outstanding immediately after consummation of Reverse Stock Split, JPE has acquired in the aggregate approximately 89.73% of the total
+voting power of the Company&#8217;s capital stock before giving effect to the exercise of Warrants, and approximately 89.86% of the total
+voting power of the Company&#8217;s capital stock after giving effect to the exercise of all of the Warrants.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">JPE used cash on hand of JPE to fund the purchase
+price for these shares of Preferred Stock and Warrants.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Pursuant to the A&amp;R Charter (as defined
+below), JPE is entitled to designate persons to the board of directors of the Company (the &#8220;<span style="text-decoration: underline">Board</span>&#8221;), in connection
+with each meeting of stockholders at which directors are to be elected (i) all of the members of the Board, for so long as the Investors
+collectively own or control (together with their affiliates) Preferred Stock, shares of Common Stock or other voting securities, or Warrants
+exercisable for such securities, representing, in the aggregate, at least 80% of the total voting power of the capital stock of the Company,
+calculated on a fully-diluted, as-converted basis; (ii) 75% of the total number of seats (rounded to the nearest whole number) on the
+Board, for so long as the Investors collectively own or control (together with their affiliates) Preferred Stock, shares of Common Stock
+or other voting securities, or Warrants exercisable for such securities, representing, in the aggregate, at least 65% (but less than 80%)
+of the total voting power of the capital stock of the Company, calculated on a fully-diluted, as-converted basis; (iii) a majority of
+the total number of seats (rounded up to the nearest whole number) on the Board for so long as the Investors collectively own or control
+(together with their affiliates) Preferred Stock, shares of Common Stock or other voting securities, or Warrants exercisable for such
+securities, representing, in the aggregate, at least 45% (but less than 65%) of the total voting power of the capital stock of the Company,
+calculated on a fully-diluted, as-converted basis; (iv) 40% of the total number of seats (rounded up to the nearest whole number) on the
+Board for so long as the Investors collectively own or control (together with their affiliates) Preferred Stock, shares of Common Stock
+or other voting securities, or Warrants exercisable for such securities, representing, in the aggregate, at least 30% (but less than 45%)
+of the total voting power of the Company on a fully-diluted, as-converted basis; (v) 33% of the total number of seats (rounded up to the
+nearest whole number) on the Board for so long as the Investors collectively own or control (together with their affiliates) Preferred
+Stock, shares of Common Stock or other voting securities, or Warrants exercisable for such securities, representing, in the aggregate,
+at least 15% (but less than 30%) of the total voting power of the Company on a fully-diluted, as-converted basis; and (vi) two members
+of the Board for so long as the Investors collectively own or control (together with their affiliates) Preferred Stock, shares of Common
+Stock or other voting securities, or Warrants exercisable for such securities, representing, in the aggregate, at least 5% (but less than
+15%) of the total voting power of the Company on a fully-diluted, as-converted basis.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">The information described under Introduction,
+Item 1.01, Item 3.02 and Item 5.02 is incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><b>Item 5.02 Departure of Directors or Certain
+Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><span style="text-decoration: underline">Departure of Directors</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Effective as of the closing of the Equity
+Investment, in accordance with the terms of the Investment Agreement, Mark Meller, Kenneth Edwards, Stanley Wunderlich and John Schachtel
+resigned from the Board and each of the committees of the Board.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Messrs. Edwards, Wunderlich and Schachtel
+resigned as members of the Audit Committee of the Board and the Nominating and Corporate Governance Committee of the Board, effective
+as of the closing of the Equity Investment. Messrs. Wunderlich and Schachtel resigned as members of the Compensation Committee of the
+Board, effective as of the closing of the Equity Investment.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Messrs. Meller&#8217;s, Edwards&#8217;s,
+Wunderlich&#8217;s and Schachtel&#8217;s decision to resign from the Board was not the result of any disagreement relating to the Company&#8217;s
+operations, policies or practices. The Company thanks Messrs. Meller, Edwards, Wunderlich and Schachtel for their commitment and service
+to the Company.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 4 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->3<!-- Field: /Sequence -->-</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><span style="text-decoration: underline">Increase in Size of the Board; Appointment
+of New Directors</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">In accordance with the terms of the Investment
+Agreement and the A&amp;R Charter, effective as of the closing of the Equity Investment, the size of the Board was increased from four
+to six members.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">In accordance with the A&amp;R Charter, JPE
+has the right to designate all directors on the Board following the closing of the Equity Investment. Accordingly, the Board appointed
+each of the JPE designees as directors of the Company, effective immediately following the closing of the Equity Investment: Brad Jacobs,
+Jason Aiken, Marlene Colucci, Mario Harik, Mary Kissel and Allison Landry.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">In accordance with the terms of the Investment
+Agreement and the A&amp;R Charter, Mr.&#160;Jacobs was elected as the Chairman of the Board effective upon the closing of the Equity Investment.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">The following biographical information is
+provided for the newly appointed members of the Board:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>Brad Jacobs (Age 67)</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Mr. Jacobs founded and led five public companies
+prior to QXO: United Waste Systems, Inc., United Rentals, Inc., XPO, Inc., and XPO&#8217;s spin-offs, GXO Logistics, Inc. and RXO, Inc.
+He serves as executive chairman of XPO and as non-executive chairman of GXO and RXO. Mr. Jacobs is the managing partner of JPE and Jacobs
+Private Equity, LLC.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>Jason Aiken (Age 51)</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Mr. Aiken has led the technologies segment
+of General Dynamics since 2023. Over the course of his 22-year tenure with General Dynamics, he served as the company&#8217;s chief financial
+officer from 2014 to 2024, and earlier as chief financial officer of General Dynamics subsidiary Gulfstream Aerospace, among other senior
+positions.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>Marlene Colucci (Age 61)</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Ms. Colucci is chief executive officer of
+The Business Council in Washington, D.C. since 2013. Previously, she was executive vice president of public policy for the American Hotel
+&amp; Lodging Association, and earlier held positions as special assistant to the President of the United States in the Office of Domestic
+Policy, deputy assistant secretary with the Department of Labor&#8217;s Office of Congressional and Intergovernmental Affairs, and senior
+counsel with Akin Gump Strauss Hauer &amp; Feld LLP. She is vice chair of the board of directors of GXO Logistics, Inc.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>Mario Harik (Age 43)</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Mr. Harik has led XPO, Inc. as chief executive
+officer since November 2022 and serves on its board. He joined XPO in 2011 as chief information officer, and held additional roles as
+chief customer officer and president, North American less-than-truckload. His prior career included chief information officer with Oakleaf
+Waste Management, chief technology officer with Tallan, Inc., and co-founder of G3 Analyst.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>Mary Kissel (Age 47)</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Ms. Kissel is executive vice
+president and senior policy advisor with Stephens Inc. She joined Stephens in 2021, following her role as senior advisor to the U.S.
+Secretary of State. Earlier, during 14 years with The Wall Street Journal, she served on the editorial board in New York, and as
+editorial page editor for Asia Pacific in Hong Kong. She began her career at Goldman Sachs. Ms. Kissel is a member of the Council on
+Foreign Relations, and a director of the American Australian Council. She is vice chair of the board of directors of RXO, Inc.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 5 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->4<!-- Field: /Sequence -->-</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>Allison Landry (Age 45)</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Ms. Landry is a former senior transportation
+research analyst with Credit Suisse, covering the trucking, railroad, airfreight and logistics industries for more than 15 years. Previously,
+she was a financial analyst and senior accountant with OneBeacon Insurance Co. (now Intact Insurance Specialty Solutions). She serves
+as vice chair of the board of directors of XPO, Inc.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Each of Messrs.&#160;Jacobs, Aiken and Harik,
+and Mses. Colucci, Kissel and Landry has direct or indirect rights under the Registration Rights Agreement in his or her capacity as a direct or indirect holder of Registrable Securities.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">As of the effective time of their election
+to the Board:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">Each of Jason Aiken, Mary Kissel and Allison Landry was
+appointed to serve as a member of the Audit Committee and Jason Aiken was appointed chair of the Audit Committee;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">Each of Marlene Colucci, Mary Kissel and Allison Landry was appointed to serve as members of
+                                                                                                                                                       the Compensation Committee (renamed the Compensation and Talent Committee, effective as of the closing of the Equity Investment),
+                                                                                                                                                       and Allison Landry was appointed chair of the Compensation and Talent Committee;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">Each of Marlene Colucci and Mary Kissel was appointed to serve as a member of the Nominating and
+                                                                                                                                                       Corporate Governance Committee (renamed the Nominating, Corporate Governance and Sustainability Committee, effective as of the
+                                                                                                                                                       closing of the Equity Investment), and Marlene Colucci was appointed chair of the Nominating, Corporate Governance and
+                                                                                                                                                       Sustainability Committee; and</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify"><span style="background-color: white">Allison Landry was
+appointed lead independent director of the Board.</span></td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><span style="text-decoration: underline">Departure of Certain Officers</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">In accordance with the terms of the Investment
+Agreement, effective as of the closing of the Equity Investment, Mark Meller resigned as President, Chief Executive Officer of the Company,
+and Joe Macaluso resigned as Chief Financial Officer of the Company. Mr.&#160;Meller and Mr. Macaluso each remain employed by the Company.
+Mr. Meller&#8217;s decision to resign from the Board was not the result of any disagreement relating to the Company&#8217;s operations,
+policies or practices.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><span style="text-decoration: underline">Appointment of Certain Officers; Employment
+Agreement with Mr. Jacobs</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Mr.&#160;Jacobs was appointed
+as Chief Executive Officer of the Company, Christopher Signorello was appointed as Chief Legal Officer of the Company, Sean Smith was
+appointed interim Chief Financial Officer and Chief Accounting Officer of the Company and Mark Meller was appointed President, SilverSun
+Technologies, in each case, effective as of the closing of the Equity Investment. Biographical information with respect to Messrs. Jacobs,
+Signorello, Smith and Meller is included below.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>Brad Jacobs (Age 67) </i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">The biographical information for Mr. Jacobs listed above under &#8220;Increase in Size of the Board; Appointment of New Directors&#8221; is hereby
+incorporated by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>Christopher Signorello (Age 51) </i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Mr. Signorello previously served in senior
+legal roles with XPO, Inc., most recently as deputy general counsel and chief compliance officer from 2021 to 2023. Prior to XPO, he was
+with industrial and consumer products leader Henkel Corporation for nearly a decade, where he was associate general counsel, among other
+leadership positions. Earlier, he spent nine years with the product liability and commercial litigation practice groups at Goodwin Procter
+LLP.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 6 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->5<!-- Field: /Sequence -->-</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>Sean Smith (Age 44) </i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Mr. Smith has more than two decades of senior
+financial experience across multiple industries. From 2019 to 2024, he served as corporate controller for Chewy, Inc., a leading e-commerce
+retailer of pet supplies and medications. Prior to Chewy, he held key finance positions with XPO, Inc. over more than three years, most
+recently as corporate controller. He began his career with KPMG LLP.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>Mark Meller (Age 64)</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Mr. Meller was the President and Director
+of the Company from September 15, 2003 until June 6, 2024, and was Chief Executive Officer from September 1, 2004 until June 6, 2024.
+He was previously Chairman of the Board from May 10, 2009 until June 6, 2024. From September 2003 through January 2015, he was Chief Financial
+Officer of the Company.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">No family relationships exist between either
+Mr. Jacobs, Mr. Signorello, Mr. Smith or Mr. Meller and any other directors or executive officers of the Company.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Each of Messrs Jacobs,
+Signorello and Smith have direct or indirect rights under the Registration Rights Agreement in their capacities as direct or
+indirect holders of Registrable Securities.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Other than as described above, there are no
+arrangements or understandings pursuant to which each of Messrs. Jacobs, Signorello, Meller and Smith were selected as officers or Messrs.
+Jacobs, Aiken and Harik and Mses. Colucci, Kissel and Landry were selected as directors. Other than as described above, there are no transactions
+to which the Company is or was a participant and in which Messrs. Jacobs, Aiken, Harik and Meller and Mses. Colucci, Kissel and Landry
+have a material interest subject to disclosure under Item 404(a) of Regulation S-K.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>Employment Agreement with Mr. Jacobs </i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">On June 5, 2024, the Company entered into
+an employment agreement (the &#8220;<span style="text-decoration: underline">Employment Agreement</span>&#8221;), effective as of the closing of the Equity Investment, with Mr. Jacobs for a five year term, pursuant to which Mr.&#160;Jacobs
+will be paid an annual base salary at an initial annual rate of $750,000 and his target annual bonus will initially be 100% of his base
+salary. Mr.&#160;Jacobs&#8217;s annual base salary and target annual bonus will increase (but not decrease) each calendar year of the
+term depending on the Company&#8217;s annualized revenue run rate as of the preceding December&#160;31 as follows:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>Potential Salary increases based on Annual
+Revenue Run Rate Band</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>&#160;</i></p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td colspan="2" style="border-bottom: Black 1.5pt solid; font-weight: bold">Annualized Revenue Run Rate Band</td><td style="padding-bottom: 1.5pt; font-weight: bold">&#160;</td><td style="padding-bottom: 1.5pt; font-weight: bold">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Base Salary</td><td style="padding-bottom: 1.5pt; font-weight: bold">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="width: 1%; text-align: left"><span style="font-size: 10pt">$</span></td>
+    <td style="width: 86%; text-align: left"><span style="font-size: 10pt">1 Billion to $5 Billion</span></td><td style="width: 1%; text-align: left">&#160;</td><td style="width: 1%">&#160;</td>
+    <td style="width: 1%; text-align: left">$</td><td style="width: 9%; text-align: right">950,000</td><td style="width: 1%; text-align: left">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: White">
+    <td style="text-align: left"><span style="font-size: 10pt">$</span></td>
+    <td style="text-align: left"><span style="font-size: 10pt">5 Billion to $10 Billion</span></td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">$</td><td style="text-align: right">1,150,000</td><td style="text-align: left">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="text-align: left"><span style="font-size: 10pt">$</span></td>
+    <td style="text-align: left"><span style="font-size: 10pt">10 Billion to $20 Billion</span></td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">$</td><td style="text-align: right">1,250,000</td><td style="text-align: left">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: White">
+    <td style="text-align: left"><span style="font-size: 10pt">$</span></td>
+    <td style="text-align: left"><span style="font-size: 10pt">20 Billion to $30 Billion</span></td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">$</td><td style="text-align: right">1,500,000</td><td style="text-align: left">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="text-align: left">&#160;</td>
+    <td style="text-align: left"><span style="font-size: 10pt">Greater than $30 Billion</span></td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">$</td><td style="text-align: right">1,700,000</td><td style="text-align: left">&#160;</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>Potential Target Bonus Amounts based on Annual
+Revenue Run Rate Band</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td colspan="2" style="border-bottom: Black 1.5pt solid; font-weight: bold">Annualized Revenue Run Rate Band</td><td style="padding-bottom: 1.5pt; font-weight: bold">&#160;</td>
+    <td style="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Target Bonus<br/> Percentage</td><td style="padding-bottom: 1.5pt; font-weight: bold">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1.5pt solid; font-weight: bold; text-align: center">Target&#160;Bonus<br/> Amount</td><td style="padding-bottom: 1.5pt; font-weight: bold">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="vertical-align: bottom; width: 1%; text-align: left"><span style="font-size: 10pt">$</span></td>
+    <td style="width: 61%; text-align: left"><span style="font-size: 10pt">1 Billion to $5 Billion</span></td><td style="width: 1%; text-align: left">&#160;</td>
+    <td style="width: 25%; text-align: center"><span style="font-size: 10pt">135% of Base Salary</span></td><td style="width: 1%">&#160;</td>
+    <td style="vertical-align: top; width: 1%; text-align: right">$</td><td style="width: 9%; text-align: right">1,282,500</td><td style="width: 1%; text-align: left">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: White">
+    <td style="vertical-align: bottom; text-align: left"><span style="font-size: 10pt">$</span></td>
+    <td style="text-align: left"><span style="font-size: 10pt">5 Billion to $10 Billion</span></td><td style="text-align: left">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">150% of Base Salary</span></td><td>&#160;</td>
+    <td style="vertical-align: top; text-align: right">$</td><td style="text-align: right">1,725,000</td><td style="text-align: left">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="vertical-align: bottom; text-align: left"><span style="font-size: 10pt">$</span></td>
+    <td style="text-align: left"><span style="font-size: 10pt">10 Billion to $20 Billion</span></td><td style="text-align: left">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">165% of Base Salary</span></td><td>&#160;</td>
+    <td style="vertical-align: top; text-align: right">$</td><td style="text-align: right">2,062,500</td><td style="text-align: left">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: White">
+    <td style="vertical-align: bottom; text-align: left"><span style="font-size: 10pt">$</span></td>
+    <td style="text-align: left"><span style="font-size: 10pt">20 Billion to $30 Billion</span></td><td style="text-align: left">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">200% of Base Salary</span></td><td>&#160;</td>
+    <td style="vertical-align: top; text-align: right">$</td><td style="text-align: right">3,000,000</td><td style="text-align: left">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="vertical-align: bottom; text-align: left">&#160;</td>
+    <td style="text-align: left"><span style="font-size: 10pt">Greater than $30 Billion</span></td><td style="text-align: left">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">200% of Base Salary</span></td><td>&#160;</td>
+    <td style="vertical-align: top; text-align: right">$</td><td style="text-align: right">3,400,000</td><td style="text-align: left">&#160;</td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>Non-CIC&#160;Termination.&#160;</i>In the
+event that either prior to a change in control of the Company or more than two&#160;years after a change in control of the Company occurs,
+the Company terminates Mr.&#160;Jacobs&#8217;s employment without cause, he will be entitled to receive, subject to his execution and
+nonrevocation of a release of claims in favor of the Company: (a)&#160;a cash payment equal to 12&#160;months of his annual base salary;
+(b) a prorated target bonus for the year of termination of employment; and (c) healthcare benefit coverage for a period of 12 months from
+the date of termination (or a cash payment in lieu of such coverage). Mr. Jacobs will also be entitled to vesting of equity-based&#160;or
+other long-term&#160;incentive compensation awards to the extent set forth in the applicable award agreement.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 7 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->6<!-- Field: /Sequence -->-</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">In addition, if Mr. Jacobs resigns due to
+certain specified good reason events, he will be entitled to receive the healthcare benefit coverage for 12 months and vesting of equity-based
+or other long-term incentive compensation awards to the extent set forth in the applicable award agreement.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>CIC Termination.&#160;</i>In the event
+that upon or within the two-year&#160;period following a change in control of the Company, Mr.&#160;Jacobs&#8217;s employment is terminated
+by the Company without cause or he resigns for good reason, he will be entitled to receive, subject to his execution and nonrevocation
+of a release of claims in favor of the Company:: (a) a cash payment equal to 2.99 times the sum of his annual base salary and target bonus;
+(b) a prorated target bonus for the year of termination of employment; and (c)&#160;healthcare benefit coverage for a period of 24&#160;months
+from the date of termination (or a cash payment in lieu of such coverage). Mr. Jacobs will also be entitled to vesting of equity-based&#160;or
+other long-term&#160;incentive compensation awards to the extent set forth in the applicable award agreement.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">In the event that any benefits due or amounts
+payable to Mr.&#160;Jacobs in connection with a change in control of the Company constitute &#8220;parachute payments&#8221; within the
+meaning of Section&#160;280G of the Code, then any such amounts will be reduced to avoid triggering the excise tax imposed by Section&#160;4999
+of the Code, provided that such reduction will be applied solely if it would result in Mr.&#160;Jacobs retaining a greater portion of
+the payments on a net after-tax&#160;basis.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>Restrictive Covenants. </i>Mr.&#160;Jacobs
+is generally subject to the following restrictive covenants: employee and customer non-solicitation&#160;covenants during his employment
+and for a period of two&#160;years thereafter; confidentiality and mutual non-disparagement&#160;covenants during his employment and thereafter;
+and non-competition&#160;covenants during his employment and for a period of 12&#160;months thereafter (during which period the Company
+will make monthly noncompete payments to Mr.&#160;Jacobs equal to one-twelfth&#160;of his annual base salary), and the Company will have
+the right (other than following a change in control of the Company) to extend the non-compete period&#160;for up to three additional one-year&#160;periods
+so long as the Company pays Mr.&#160;Jacobs an amount equal to one-twelfth&#160;of his base salary for each month during each applicable
+one-year&#160;extension period.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>Clawbacks.&#160;</i>Mr.&#160;Jacobs
+is subject to any compensation recovery policy maintained by the Company, as in effect from time to time.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>Grant of Initial Equity Awards.&#160;</i>In
+connection with the execution of the Employment Agreement, on a date selected by the Compensation and Talent Committee of the Board (which
+is no later than 120 days after June 6, 2024) and subject to Mr. Jacobs&#8217;s continued employment through such date, the Company will
+grant to Mr.&#160;Jacobs an award of time-based&#160;restricted stock units relating to 3,832,676&#160;shares of Common Stock (the &#8220;<span style="text-decoration: underline">RSUs</span>&#8221;)
+and an award of performance-based&#160;restricted stock units relating to 7,117,828&#160;shares of Common Stock at target (the &#8220;<span style="text-decoration: underline">PSUs</span>&#8221;),
+pursuant to award agreements substantially in the form attached as exhibits to the Employment Agreement. Any RSUs and PSUs that vest will
+be settled in Common Stock. Except in the event of a change in control of the Company, all shares delivered in settlement of RSUs and
+PSUs (net of any shares withheld to cover taxes) will be subject to a transfer restriction that prohibits Mr.&#160;Jacobs from disposing
+of such shares prior to December&#160;31, 2029. The Employment Agreement does not contemplate that any additional equity awards will be
+granted to Mr.&#160;Jacobs during the five-year&#160;term of the Employment Agreement.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>RSU Vesting.&#160;</i>The RSUs will
+vest in five tranches on each of the first five anniversaries of the grant date, with the first tranche covering 15% of the RSUs, each
+of the next two tranches covering 17.5% of the RSUs, and each of the final two tranches covering 25% of the awards. Vesting of RSUs will
+generally be subject to Mr.&#160;Jacobs&#8217;s continued service with the Company through the applicable vesting date.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>PSU Vesting.&#160;</i>The PSUs will
+be earned based on performance goals relating to the Company&#8217;s total stockholder return (&#8220;<span style="text-decoration: underline">TSR</span>&#8221;) compared to the
+TSR ranking of each company that is in the S&amp;P 500 Index. The PSUs may be earned at a level ranging from zero to 225% of the target
+number, depending upon the degree of achievement of the applicable performance goal. The degree of achievement of the Company TSR relative
+to the S&amp;P 500 companies&#8217; TSR will be measured against a specified payout matrix, pursuant to which Company TSR below the 55<sup>th</sup>&#160;percentile
+of the S&amp;P 500 companies will result in zero payout, while achievement at the 90<sup>th</sup>&#160;percentile or above will result
+in a payout of 225% of target. The performance goals for a portion of the PSUs will be measured over a cumulative performance period beginning
+on the grant date and ending on December&#160;31, 2028 and the performance goals for the remainder of the PSUs will be measured based
+on designated performance periods that occur within such cumulative period. Vesting of the PSUs will generally be subject to Mr.&#160;Jacobs&#8217;s
+continued service through the applicable performance period.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 8 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->7<!-- Field: /Sequence -->-</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><i>Termination of Employment.&#160;</i>The
+RSUs and PSUs will be subject to special rules providing for either partial or full vesting on a qualifying termination of employment,
+including due to death, disability, termination without cause or resignation due to specified good reason events.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">The foregoing summary of the Employment
+Agreement does not purport to be complete and is subject to, and qualified in its entirety by, the full text of the Employment Agreement,
+a copy of which is attached hereto as Exhibit&#160;10.3 and is incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><span style="text-decoration: underline">Termination of 2019 Equity and Incentive
+Plan</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">The SilverSun Technologies, Inc. 2019 Equity
+and Incentive Plan was terminated effective as of the closing of the Equity Investment and no further awards will be granted under such
+plan.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><span style="text-decoration: underline">QXO, Inc. Chartered Aircraft Use Policy</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">The Company also adopted a chartered aircraft
+use policy which provides for business use of chartered aircraft by the Chief Executive Officer and, with the prior approval of the Chief
+Executive Officer, by other senior executives. The policy also permits the use of the chartered aircraft for the Chief Executive Officer&#8217;s
+spouse or guests on scheduled flights subject to certain limitations including that the annual value (reportable as imputed income or
+subject to disclosure in the proxy statement) must be less than $250,000.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">The foregoing summary of the Chartered Aircraft
+Use Policy does not purport to be complete and is subject to, and qualified in its entirety by, the full text of the Chartered Aircraft
+Use Policy, a copy of which is attached hereto as Exhibit&#160;10.4 and is incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><b>Item 5.03. Amendments to Certificate of
+Incorporation and Bylaws; Change in Fiscal Year</b>.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">On June 6, 2024, in accordance with the terms
+of the Investment Agreement, the Company filed the Fifth Amended and Restated Certificate of Incorporation (as amended, the &#8220;<span style="text-decoration: underline">A&amp;R
+Charter</span>&#8221;) of the Company with the Secretary of State of the State of Delaware. The A&amp;R Charter, among other things, (a)&#160;increased
+the number of authorized shares of Common Stock to 2,000,000,000 shares and 10,000,000 preferred shares of the Company; (b)&#160;effected
+an 8-for-1 reverse stock split of the Common Stock; (c) provides the circumstances under which the stockholders of the Company are able
+to act by written consent in lieu of a stockholder meeting; (d) provides the circumstances under which a special meeting of stockholders
+may be called; (e) designates the exclusive forums in which certain claims relating to the Company may be brought; (f) provides for exculpation
+of directors and officers to the extent permitted by the Delaware General Corporation Law; and (g) provides JPE with certain board designation
+rights. The A&amp;R Charter became effective at 9:00 a.m., EDT, on June 6, 2024. The description of the A&amp;R Charter is qualified in
+its entirety by reference to the A&amp;R Charter, a copy of which is attached hereto as Exhibit&#160;3.1 and is incorporated by reference
+herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">On June 6, 2024, the Company filed a Certificate
+of Amendment to the Fifth Amended and Restated Certificate of Incorporation, as amended (the &#8220;<span style="text-decoration: underline">Certificate of Amendment</span>&#8221;)
+of the Company with the Secretary of State of the State of Delaware to change the name of the Company to &#8220;QXO, Inc.&#8221; (the
+&#8220;<span style="text-decoration: underline">Name Change</span>&#8221;). The Certificate of Amendment became effective at 9:01 a.m., EDT, on June 6, 2024. In connection with
+the Name Change, the Company began trading on the Nasdaq Capital Market under the new ticker symbol &#8220;QXO&#8221;, effective at the
+open of the market on June 6, 2024. The description of the Certificate of Amendment is qualified in its entirety by reference to the Certificate
+of Amendment, a copy of which is attached hereto as Exhibit 3.2 and is incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">On June 6, 2024, in connection with the closing
+of the Equity Investment, the Company filed the Certificate of Designation designating the Preferred Stock (the &#8220;<span style="text-decoration: underline">Certificate
+of Designation</span>&#8221;) with the Secretary of State of the State of Delaware. The information described under &#8220;The Preferred
+Stock&#8221; in Item 3.02 above is incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">On June 6, 2024, in accordance with the Investment
+Agreement and effective as of the Closing of the Equity Investment, the Company amended and restated its bylaws (the &#8220;<span style="text-decoration: underline">Amended
+and Restated Bylaws</span>&#8221;). The description of the Amended and Restated Bylaws is qualified in its entirety by reference to the Amended
+and Restated Bylaws, a copy of which is attached hereto as Exhibit 3.3 and is incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 9 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->8<!-- Field: /Sequence -->-</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><b>Item 5.05. Amendments to the Registrant&#8217;s
+Code of Ethics, or Waiver of a Provision of the Code of Ethics.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">In connection with the closing of the Equity
+Investment, the Board adopted the Code of Business Ethics, effective as of the closing of the Equity Investment. A copy of the Company&#8217;s
+Code of Business Ethics is available on the Company&#8217;s website at www.qxo.com. The information on the Company&#8217;s website does
+not constitute part of this Current Report on Form 8-K and is not incorporated by reference herein. The description of the Code of Business
+Ethics is qualified in its entirety by reference to the Code of Business Ethics, a copy of which is attached hereto as Exhibit 14.1 and
+is incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><b>Item 8.01. Other Events</b>.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">On June 6, 2024, the Company issued a press
+release announcing the closing of the Equity Investment. A copy of the press release is attached as Exhibit&#160;99.1 to this Current
+Report on Form 8-K and incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">On June 6, 2024, the Company issued a press
+release regarding certain leadership appointments. A copy of the press release is attached as Exhibit&#160;99.2 to this Current Report
+on Form 8-K and incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><b>Forward-Looking Statements</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">This Current Report on Form 8-K contains forward-looking
+statements. Statements that are not historical facts, including statements about beliefs, expectations, targets or goals, are forward-looking
+statements. These statements are based on plans, estimates, expectations and/or goals at the time the statements are made, and readers
+should not place undue reliance on them. In some cases, readers can identify forward-looking statements by the use of forward-looking
+terms such as &#8220;may,&#8221; &#8220;will,&#8221; &#8220;should,&#8221; &#8220;expect,&#8221; &#8220;opportunity,&#8221; &#8220;intend,&#8221;
+&#8220;plan,&#8221; &#8220;anticipate,&#8221; &#8220;believe,&#8221; &#8220;estimate,&#8221; &#8220;predict,&#8221; &#8220;potential,&#8221;
+&#8220;target,&#8221; &#8220;goal,&#8221; or &#8220;continue,&#8221; or the negative of these terms or other comparable terms. Forward-looking
+statements involve inherent risks and uncertainties and readers are cautioned that a number of important factors could cause actual results
+to differ materially from those contained in any such forward-looking statements. Factors that could cause actual results to differ materially
+from those described herein include, among others:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">risks associated with potential significant volatility and
+fluctuations in the market price of the Company&#8217;s common stock;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">risks associated with the Company&#8217;s relatively low
+public float, which may result in its common stock experiencing significant price volatility;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">risks associated with raising additional equity or debt capital
+from public or private markets to pursue the Company&#8217;s business plan following the closing of the Equity Investment, including
+in an amount that may significantly exceed the amount of the Equity Investment, and the effects that raising such capital may have on
+the Company and its business, including the risk of substantial dilution or that the Company&#8217;s common stock may experience a substantial
+decline in trading price;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">the possibility that additional future financings may not
+be available to the Company on acceptable terms or at all;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">the effect that the consummation of the Equity Investment
+and the other transactions contemplated by the Investment Agreement may have on the Company and its current or future business or on
+the price of the Company&#8217;s common stock;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">the possibility that an active, liquid trading market for
+the Company&#8217;s common stock may not develop or, if developed, may not be sustained;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">the possibility that the warrants and the preferred stock
+issued pursuant to the Investment Agreement may or may not be converted or exercised, and the economic impact on the Company and the
+holders of common stock of the Company that may result from either such exercise or conversion, including dilution, or the continuance
+of the preferred stock remaining outstanding, and the impact its terms, including its dividend, may have on the Company and the common
+stock of the Company;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">uncertainties regarding the Company&#8217;s focus, strategic
+plans and other management actions;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">the risk that the Company is or becomes highly dependent
+on the continued leadership of Brad Jacobs as chairman and chief executive officer and the possibility that the loss of Jacobs in these
+roles could have a material adverse effect on the Company&#8217;s business, financial condition and results of operations;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 10 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->9<!-- Field: /Sequence -->-</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">risks associated with becoming a &#8220;controlled company&#8221; following the closing of the Equity Investment, as defined under applicable
+stock exchange rules, including that Jacobs will be able to influence the Company&#8217;s management and affairs and all matters requiring stockholder
+approval, including the election of directors and approval of significant corporate transactions;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">the risk that certain rules of the U.S. Securities and Exchange
+Commission (the &#8220;SEC&#8221;) may require that any registration statement the Company may file with the SEC be subject to SEC review
+and potential delay in its effectiveness, and that a registration statement must be filed and declared effective for any acquisition
+(including an all-cash acquisition), which would delay its consummation and could reduce the Company&#8217;s attractiveness as an acquirer
+for potential acquisition targets;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">the possibility that the concentration of ownership by Jacobs
+may have the effect of delaying or preventing a change in control of the Company and might affect the market price of shares of the common
+stock of the Company;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">the possibility that the Company&#8217;s status as a &#8220;controlled
+company&#8221; could cause the common stock of the Company to be less attractive to certain investors;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">the risk that Jacobs&#8217; past performance may not be representative
+of future results;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">the risk that the Company is unable to retain world-class
+talent;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">the risk that the failure to consummate any acquisition expeditiously,
+or at all, could have a material adverse effect on the Company&#8217;s business prospects, financial condition, results of operations
+or the price of the Company&#8217;s common stock;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">risks that the Company may not be able to enter into
+agreements with acquisition targets on attractive terms, or at all, that agreed acquisitions may not be consummated, or, if consummated,
+that the anticipated benefits thereof may not be realized and that the Company encounter difficulties in integrating and operating such
+acquired companies, or that matters related to an acquired business (including operating results or liabilities or contingencies) may
+have a negative effect on the Company or its securities or ability to implement its business strategy, including that any such transaction
+may be dilutive or have other negative consequences to the Company and its value or the trading prices of its securities;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">risks associated with cybersecurity and technology, including
+attempts by third parties to defeat the security measures of the Company and its business partners, and the loss of confidential information
+and other business disruptions;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">the possibility that new investors in any future financing
+transactions could gain rights, preferences and privileges senior to those of the Company&#8217;s existing stockholders;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">the possibility that building products distribution industry
+demand may soften or shift substantially due to cyclicality or seasonality or dependence on general economic conditions, including inflation
+or deflation, interest rates, consumer confidence, labor and supply shortages, weather and commodity prices;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">the possibility that regional or global barriers to trade
+or a global trade war could increase the cost of products in the building products distribution industry, which could adversely impact
+the competitiveness of such products and the financial results of businesses in the industry;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">risks associated with potential litigation related to the
+transactions contemplated by the Investment Agreement or related to any possible subsequent financing transactions or acquisitions or
+investments;</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">uncertainties regarding general economic, business, competitive,
+legal, regulatory, tax and geopolitical conditions; and</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">&#9679;</span></td><td style="text-align: justify">other factors, including those set forth in the Company&#8217;s
+filings with the SEC, including its Annual Report on Form 10-K for the fiscal year ended December 31, 2023, Quarterly Report on Form
+10-Q for the fiscal quarter ended March 31, 2024, and subsequent Quarterly Reports on Form 10-Q.</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">Forward-looking statements herein speak only
+as of the date each statement is made. Neither the Company nor any person undertakes any obligation to update any of these statements
+in light of new information or future events, except to the extent required by applicable law.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 11 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->10<!-- Field: /Sequence -->-</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify"><b>Item 9.01 Financial Statements and Exhibits.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">(d) Exhibits</p>
+
+
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: Black 1.5pt solid; vertical-align: bottom; width: 9%; text-align: left"><span style="text-decoration: none; font-size: 10pt"><b>Exhibit
+    Number</b></span></td>
+    <td style="padding-bottom: 1.5pt; width: 1%">&#160;</td>
+    <td style="border-bottom: Black 1.5pt solid; vertical-align: bottom; width: 90%; text-align: center"><span style="text-decoration: none; font-size: 10pt"><b>Description</b></span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: justify"><span style="font-size: 10pt">3.1</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><a href="ea020740901ex3-1_qxoinc.htm"><span style="font-size: 10pt">Fifth Amended and Restated Certificate of Incorporation of the Company, dated June 6, 2024</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td style="text-align: justify"><span style="font-size: 10pt">3.2</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><a href="ea020740901ex3-2_qxoinc.htm"><span style="font-size: 10pt">Certificate of Amendment to the Fifth Amended and Restated Certificate of Incorporation of the Company, dated June 6, 2024</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: justify"><span style="font-size: 10pt">3.3</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><a href="ea020740901ex3-3_qxoinc.htm"><span style="font-size: 10pt">Amended and Restated Bylaws of the Company</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td style="text-align: justify"><span style="font-size: 10pt">4.1</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><a href="ea020740901ex4-1_qxoinc.htm"><span style="font-size: 10pt">Certificate of Designation of the Convertible Perpetual Preferred Stock of QXO, Inc. </span></a></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: justify"><span style="font-size: 10pt">4.2</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><a href="ea020740901ex4-2_qxoinc.htm"><span style="font-size: 10pt">Form of Warrant Certificate</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td style="text-align: justify"><span style="font-size: 10pt">4.3</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><a href="ea020740901ex4-3_qxoinc.htm"><span style="font-size: 10pt">Form of Warrant Certificate</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: justify"><span style="font-size: 10pt">4.4</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><a href="ea020740901ex4-4_qxoinc.htm"><span style="font-size: 10pt">Form of Warrant Certificate</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td style="text-align: justify"><span style="font-size: 10pt">10.1</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><a href="ea020740901ex10-1_qxoinc.htm"><span style="font-size: 10pt">Stockholders Agreement, dated as of June 6, 2024, by and among the Company, the Other Investors and JPE</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: justify"><span style="font-size: 10pt">10.2</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><a href="ea020740901ex10-2_qxoinc.htm"><span style="font-size: 10pt">Registration Rights Agreement, dated as of June 6, 2024, by and among the Company, the Other Investors and JPE</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td style="text-align: justify"><span style="font-size: 10pt">10.3+</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><a href="ea020740901ex10-3_qxoinc.htm"><span style="font-size: 10pt">Employment Agreement, dated as of June 5, 2024, by and between Brad Jacobs and the Company</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: justify"><span style="font-size: 10pt">10.4+</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><a href="ea020740901ex10-4_qxoinc.htm"><span style="font-size: 10pt">QXO, Inc. Chartered Aircraft Use Policy</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td style="text-align: justify"><span style="font-size: 10pt">14.1</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><a href="ea020740901ex14-1_qxoinc.htm"><span style="font-size: 10pt">QXO, Inc. Code of Business Ethics</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: justify"><span style="font-size: 10pt">99.1</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><a href="ea020740901ex99-1_qxoinc.htm"><span style="font-size: 10pt">Press Release Regarding Closing, dated June 6, 2024</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td style="text-align: justify"><span style="font-size: 10pt">99.2</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><a href="ea020740901ex99-2_qxoinc.htm"><span style="font-size: 10pt">Press Release Regarding Leadership Appointments, dated June 6, 2024</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: justify"><span style="font-size: 10pt">104</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><span style="font-size: 10pt">Cover Page Interactive Data File (embedded within Inline XBRL document)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0in"/><td style="width: 0.25in; text-align: left">*</td><td style="text-align: justify">Certain schedules and similar attachments have been omitted
+in reliance on Item 601(a)(5) of Regulation S-K. The Company will provide, on a supplemental basis, a copy of any omitted schedule or
+attachment to the SEC or its staff upon request.</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0in"/><td style="width: 0.25in; text-align: left">+</td><td style="text-align: justify">Indicates a management contract or any compensatory plan, contract
+or arrangement.</td>
+</tr></table>
+
+<p style="margin-top: 0; margin-bottom: 0">&#160;</p>
+
+<p style="margin-top: 0; margin-bottom: 0"></p>
+
+<!-- Field: Page; Sequence: 12 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">-<!-- Field: Sequence; Type: Arabic; Name: PageNo -->11<!-- Field: /Sequence -->-</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="margin-top: 0; margin-bottom: 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt; text-align: center"><b>SIGNATURE</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify; text-indent: 0pt">Pursuant to the requirements
+of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned hereunto
+duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td colspan="2"><span style="font-size: 10pt"><b>QXO, INC.</b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="width: 60%; padding-right: -76.5pt">&#160;</td>
+    <td style="width: 4%">&#160;</td>
+    <td style="width: 36%">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td style="padding-bottom: 1.5pt"><span style="font-size: 10pt">Date: June 6, 2024</span></td>
+    <td style="padding-bottom: 1.5pt"><span style="font-size: 10pt">By:</span></td>
+    <td style="border-bottom: black 1.5pt solid"><span style="font-size: 10pt">/s/ Brad Jacobs</span></td></tr>
+  <tr>
+    <td style="vertical-align: top">&#160;</td>
+    <td style="vertical-align: top">&#160;</td>
+    <td style="vertical-align: bottom"><span style="font-size: 10pt">Brad Jacobs</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt">Chief Executive Officer</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt">&#160;</p>
+
+<p style="text-align: center; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">-12-</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 1.5pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-indent: 0pt"></p>
+
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxFjd0KgkAQhZ/Adxj2Okq3nwvvSioii5CIbpecYkl3ZHYzfaTeslWJhgPDcM43R4iR2NJGF8hwXWUpnLGsCuUQMrwjo7mhTyS7fQx+Z/jQ1rEyrj9/YEKeQc/Mx1LevNFHa20xjyFcTLzkDEIZR1NYHkTQ+QmZu87ROK0KUCaHE1PFGp3idvhwVg0ZKtu+6oJsNZkYonE42B+QYSThSLV6Ez8tpGkiglE/gdgyvSqfWjcOTUfCusDS19mB/iv4Av3kSn0= -->
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

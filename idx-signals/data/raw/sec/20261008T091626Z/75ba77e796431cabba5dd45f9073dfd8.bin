@@ -1,0 +1,535 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2024" xmlns:ref="http://www.xbrl.org/2006/ref" xmlns:us-gaap="http://fasb.org/us-gaap/2024" xmlns:us-roles="http://fasb.org/us-roles/2024" xmlns:country="http://xbrl.sec.gov/country/2024" xmlns:srt="http://fasb.org/srt/2024" xmlns:AGFY="http://agrify.com/20240828">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02D_US%2DGAAP%2D2024 -->
+<!-- Field: Set; Name: xdx; ID: xdx_03D_AGFY_agrify.com_20240828 -->
+<!-- Field: Set; Name: xdx; ID: xdx_049_20240828_20240828 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_050_edei%2D%2DEntityCentralIndexKey_0001800637 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2024-08-28" id="Fact000003" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-08-28" id="Fact000004" name="dei:EntityCentralIndexKey">0001800637</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="agfy-20240828.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2024-08-28">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001800637</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2024-08-28</xbrli:startDate>
+        <xbrli:endDate>2024-08-28</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>UNITED STATES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>WASHINGTON, D.C. 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>FORM <span id="xdx_90F_edei--DocumentType_c20240828__20240828_z7oEHs9osoSc"><ix:nonNumeric contextRef="AsOf2024-08-28" id="Fact000009" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>CURRENT REPORT </b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Pursuant to Section 13 OR 15(d) </b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>of The Securities Exchange Act of 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Date of report (Date of earliest event reported):
+<b><span id="xdx_909_edei--DocumentPeriodEndDate_c20240828__20240828_zZQpxU3KzDhj"><ix:nonNumeric contextRef="AsOf2024-08-28" format="ixt:datemonthdayyearen" id="Fact000010" name="dei:DocumentPeriodEndDate">August 28, 2024</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_903_edei--EntityRegistrantName_c20240828__20240828_zMcIrMFH2HUh"><ix:nonNumeric contextRef="AsOf2024-08-28" id="Fact000011" name="dei:EntityRegistrantName">AGRIFY CORPORATION</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Exact name of registrant as specified in its charter)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: top; text-align: center; width: 32%"><span style="font-size: 10pt"><b><span id="xdx_909_edei--EntityIncorporationStateCountryCode_c20240828__20240828_zOQ9dH3tfbSa"><ix:nonNumeric contextRef="AsOf2024-08-28" format="ixt-sec:stateprovnameen" id="Fact000012" name="dei:EntityIncorporationStateCountryCode">Nevada</ix:nonNumeric></span></b></span></td>
+    <td style="text-align: center; vertical-align: top; width: 2%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: top; text-align: center; width: 32%"><span style="font-size: 10pt"><b><span id="xdx_907_edei--EntityFileNumber_c20240828__20240828_zDmDJcdMP3va"><ix:nonNumeric contextRef="AsOf2024-08-28" id="Fact000013" name="dei:EntityFileNumber">001-39946</ix:nonNumeric></span></b></span></td>
+    <td style="text-align: center; vertical-align: bottom; width: 2%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: top; text-align: center; width: 32%"><span style="font-size: 10pt"><b><span id="xdx_905_edei--EntityTaxIdentificationNumber_c20240828__20240828_zQv4hlG6U9Zh"><ix:nonNumeric contextRef="AsOf2024-08-28" id="Fact000014" name="dei:EntityTaxIdentificationNumber">30-0943453</ix:nonNumeric></span></b></span></td></tr>
+  <tr>
+    <td style="text-align: center; vertical-align: top">(State or other jurisdiction <br/> of incorporation)</td>
+    <td style="text-align: center; vertical-align: top">&#160;</td>
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt">(Commission File Number)</span></td>
+    <td style="text-align: center; vertical-align: bottom">&#160;</td>
+    <td style="text-align: center; vertical-align: top">(IRS Employer <br/> Identification No.)</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr>
+    <td style="border-bottom: black 1.5pt solid; text-align: center; vertical-align: top; width: 49%"><b><span id="xdx_90F_edei--EntityAddressAddressLine1_c20240828__20240828_zvlWq7lL0oZj"><ix:nonNumeric contextRef="AsOf2024-08-28" id="Fact000015" name="dei:EntityAddressAddressLine1">2468 Industrial Row Dr.</ix:nonNumeric></span></b> <b><br/>
+<span id="xdx_900_edei--EntityAddressCityOrTown_c20240828__20240828_z09D937QclJd"><ix:nonNumeric contextRef="AsOf2024-08-28" id="Fact000016" name="dei:EntityAddressCityOrTown">Troy</ix:nonNumeric></span>, <span id="xdx_90F_edei--EntityAddressStateOrProvince_c20240828__20240828_z3hv17WEjFEh"><ix:nonNumeric contextRef="AsOf2024-08-28" id="Fact000017" name="dei:EntityAddressStateOrProvince">MI</ix:nonNumeric></span></b></td>
+    <td style="text-align: center; vertical-align: bottom; width: 2%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: bottom; text-align: center; width: 49%"><span style="font-size: 10pt"><b><span id="xdx_909_edei--EntityAddressPostalZipCode_c20240828__20240828_zWa8HqMVq8ok"><ix:nonNumeric contextRef="AsOf2024-08-28" id="Fact000018" name="dei:EntityAddressPostalZipCode">48084</ix:nonNumeric></span></b></span></td></tr>
+  <tr>
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt">(Address of principal executive offices)</span></td>
+    <td style="text-align: center; vertical-align: bottom">&#160;</td>
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt">(Zip Code)</span></td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">Registrant&#8217;s telephone number, including
+area code: <b>(<span id="xdx_906_edei--CityAreaCode_c20240828__20240828_z2A8ytdVkevh"><ix:nonNumeric contextRef="AsOf2024-08-28" id="Fact000019" name="dei:CityAreaCode">617</ix:nonNumeric></span>) <span id="xdx_902_edei--LocalPhoneNumber_c20240828__20240828_ziL5b1yzvhPh"><ix:nonNumeric contextRef="AsOf2024-08-28" id="Fact000020" name="dei:LocalPhoneNumber">896-5243</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Former name or former address, if changed since
+last report)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Check the appropriate box below if the Form 8-K
+filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 0.25in"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90A_edei--WrittenCommunications_c20240828__20240828_zP1I74ggVIo"><ix:nonNumeric contextRef="AsOf2024-08-28" format="ixt:booleanfalse" id="Fact000021" name="dei:WrittenCommunications">&#9744;</ix:nonNumeric></span></span></td>
+    <td style="text-align: justify"><span style="font-size: 10pt">Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 0.25in"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_900_edei--SolicitingMaterial_c20240828__20240828_zhMzUIsldyH3"><ix:nonNumeric contextRef="AsOf2024-08-28" format="ixt:booleanfalse" id="Fact000022" name="dei:SolicitingMaterial">&#9744;</ix:nonNumeric></span></span></td>
+    <td style="text-align: justify"><span style="font-size: 10pt">Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 0.25in"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_905_edei--PreCommencementTenderOffer_c20240828__20240828_zTk3pZoKXfL7"><ix:nonNumeric contextRef="AsOf2024-08-28" format="ixt:booleanfalse" id="Fact000023" name="dei:PreCommencementTenderOffer">&#9744;</ix:nonNumeric></span></span></td>
+    <td style="text-align: justify"><span style="font-size: 10pt">Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 0.25in"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90B_edei--PreCommencementIssuerTenderOffer_c20240828__20240828_zCnBuHB3I59d"><ix:nonNumeric contextRef="AsOf2024-08-28" format="ixt:booleanfalse" id="Fact000024" name="dei:PreCommencementIssuerTenderOffer">&#9744;</ix:nonNumeric></span></span></td>
+    <td style="text-align: justify"><span style="font-size: 10pt">Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.25in; text-indent: -0.25in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Securities registered pursuant to Section 12(b) of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; text-align: center; width: 32%"><span style="font-size: 10pt"><b>Title of each class</b></span></td>
+    <td style="text-align: center; width: 2%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; text-align: center; width: 32%"><span style="font-size: 10pt"><b>Trading Symbol(s)</b></span></td>
+    <td style="text-align: center; width: 2%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; text-align: center; width: 32%"><span style="font-size: 10pt"><b>Name of each exchange on which registered</b></span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: center"><span style="font-size: 10pt"><span id="xdx_904_edei--Security12bTitle_c20240828__20240828_zOjGjXdoRZ8g"><ix:nonNumeric contextRef="AsOf2024-08-28" id="Fact000025" name="dei:Security12bTitle">Common Stock, par value $0.001 per share</ix:nonNumeric></span></span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt"><span id="xdx_903_edei--TradingSymbol_c20240828__20240828_z12VvGqYFSZk"><ix:nonNumeric contextRef="AsOf2024-08-28" id="Fact000026" name="dei:TradingSymbol">AGFY</ix:nonNumeric></span></span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt"><span id="xdx_90F_edei--SecurityExchangeName_c20240828__20240828_zzBpUQ6LNn"><ix:nonNumeric contextRef="AsOf2024-08-28" format="ixt-sec:exchnameen" id="Fact000027" name="dei:SecurityExchangeName">Nasdaq</ix:nonNumeric></span> Capital Market</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Indicate by check mark whether the registrant
+is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or Rule 12b-2 of the
+Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right">Emerging growth company <span style="font-family: Times New Roman, Times, Serif"><span id="xdx_90E_edei--EntityEmergingGrowthCompany_c20240828__20240828_zZ5iPmB9iPj1"><ix:nonNumeric contextRef="AsOf2024-08-28" format="ixt:booleantrue" id="Fact000028" name="dei:EntityEmergingGrowthCompany">&#9746;</ix:nonNumeric></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">If an emerging growth company, indicate by check
+mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting
+standards provided pursuant to Section 13(a) of the Exchange Act. <span style="font-family: Times New Roman, Times, Serif"><span id="xdx_907_edei--EntityExTransitionPeriod_c20240828__20240828_zLyBwjLuN3Yj"><ix:nonNumeric contextRef="AsOf2024-08-28" format="ixt:booleanfalse" id="Fact000029" name="dei:EntityExTransitionPeriod">&#9744;</ix:nonNumeric></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Item 1.01. Entry Into
+a Material Definitive Agreement.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><i>Purchase Agreement</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">On August 28, 2023, Agrify
+Corporation (the &#8220;Company&#8221;) entered into a purchase agreement (the &#8220;Purchase Agreement&#8221;) and a registration rights
+agreement (the &#8220;Registration Rights Agreement&#8221;), with Ionic Ventures, LLC (&#8220;Ionic&#8221;), pursuant to which Ionic has
+committed to purchase up to an aggregate of $15.0 million of the Company&#8217;s common stock, par value $0.001 per share (&#8220;Common
+Stock&#8221;), subject to certain limitations, from time to time and at the Company&#8217;s sole discretion over the term of the Purchase
+Agreement.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Under the terms and subject
+to the conditions of the Purchase Agreement, the Company has the right, but not the obligation, to sell to Ionic, and Ionic is obligated
+to purchase up to $15.0 million of the Company&#8217;s Common Stock. Such sales of Common Stock by the Company, if any, will be subject
+to certain limitations set forth in the Purchase Agreement, and may occur from time to time, at the Company&#8217;s sole discretion, over
+the 36-month period commencing on the date of the Purchase Agreement, including that a registration statement covering the resale by Ionic
+of shares of Common Stock that have been and may be issued to Ionic under the Purchase Agreement, which the Company agreed to file with
+the Securities and Exchange Commission (the &#8220;SEC&#8221;) pursuant to the Registration Rights Agreement, is declared effective by
+the SEC and a final prospectus relating thereto is filed with the SEC (the date on which all of such conditions are satisfied, the &#8220;Commencement
+Date&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">From and after the Commencement
+Date, the Company may from time to time on any business day, by written notice delivered by the Company to Ionic, direct Ionic to purchase
+between $250,000 and $750,000 of shares of Common Stock on such business day, at a purchase price per share that will be equal to 93%
+(or 80% if the Common Stock is not then trading on the Nasdaq Capital Market) of the lowest daily VWAP over a specified measurement period
+beginning after the delivery of the purchase notice, as described further in the Purchase Agreement (each, a &#8220;Regular Purchase&#8221;).
+The Purchase Agreement also permits the Company to deliver an exemption purchase notice for $400,000 on the date of signing, with the
+shares so purchased to be delivered following the Commencement Date, and the Company delivered an exemption purchase notice for $400,000
+for the purchase by Ionic of 2,844,672 shares of Common Stock.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">The Company will control
+the timing and amount of any sales of Common Stock to Ionic pursuant to the Purchase Agreement. Ionic has no right to require the Company
+to sell any shares of Common Stock to Ionic, but Ionic is obligated to make purchases as the Company directs, subject to certain conditions.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Actual sales of shares
+of Common Stock to Ionic will depend on a variety of factors to be determined by the Company from time to time, including, among others,
+market conditions, the trading price of the Company&#8217;s Common Stock and determinations by the Company as to the appropriate sources
+of funding for the Company and its operations. Ionic will not be required to buy any shares of Common Stock on any trading day on which
+the closing price of the Common Stock is below $0.25. The net proceeds under the Purchase Agreement to the Company will depend on the
+frequency and prices at which the Company sells shares of its stock to Ionic. The Company expects that any proceeds received by the Company
+from such sales to Ionic will be used to support its operations, for working capital and for other general corporate purposes.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">The aggregate number
+of shares that the Company can issue to Ionic under the Purchase Agreement may in no case exceed 2,844,672 shares (subject to adjustment
+as described above) of the Common Stock (which is equal to approximately 19.99% of the shares of the Common Stock outstanding immediately
+prior to the execution of the Purchase Agreement) (the &#8220;Exchange Cap&#8221;), unless (i) stockholder approval is obtained to issue
+Purchase Shares above the Exchange Cap, or (ii) the average price of all applicable sales of Common Stock to Ionic under the Purchase
+Agreement equals or exceeds $0.25668 per share (representing the average official closing price of the Common Stock on Nasdaq for the
+five consecutive trading days ending on the trading day immediately preceding the date of the Purchase Agreement), so that the Exchange
+Cap limitation would not apply to issuances and sales of Common Stock under the Purchase Agreement pursuant to the rules of The Nasdaq
+Capital Market.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"></p>
+
+<!-- Field: Page; Sequence: 2 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->1<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">The Purchase Agreement
+prohibits the Company from directing Ionic to purchase any shares of Common Stock if those shares, when aggregated with all other shares
+of Common Stock then beneficially owned by Ionic (as calculated pursuant to Section 13(d) of the Securities Exchange Act of 1934, as amended,
+and Rule 13d-3 thereunder), would result in Ionic beneficially owning more than 4.99% of the outstanding shares of Common Stock.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Ionic has agreed not
+to engage in or effect, directly or indirectly, for its own principal account or for the principal account of any of its affiliates, any
+short sales of the Common Stock or hedging transaction that establishes a net short position in the Common Stock during the term of the
+Purchase Agreement.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Under the Registration
+Rights Agreement, the Company agreed to file one or more registration statements, as necessary, to register under the Securities Act the
+resale of all of the shares of Common Stock that may, from time to time, be issued or become issuable to Ionic under the Purchase Agreement
+and the Registration Rights Agreement. The Registration Rights Agreement requires that the Company file, within 30 days after signing,
+a resale registration statement and use commercially reasonable efforts to have such resale registration statement declared effective
+by the SEC on or before the earlier of (i) 60 days after signing (or 90 days if such registration statement is subject to full review
+by the SEC) and (ii) the 2nd business day after the Company is notified it will not be subject to further SEC review. If the Company fails
+to have such registration statement filed by the specified deadline or declared effective by the specified deadline, then the Company
+will be required to issue to Ionic 250,000 shares of Common Stock within 2 trading days after such failure.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">The Purchase Agreement
+and the Registration Rights Agreement contain customary representations, warranties, conditions and indemnification obligations of the
+parties. The Company has the right to terminate the Purchase Agreement at any time, provided that if at the time of termination the Company
+has sold less than $5 million in Common Stock to Ionic under the Purchase Agreement, the Company shall pay an additional commitment fee
+of $300,000, which may be paid either in cash or in shares of Common Stock.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">The foregoing descriptions
+of the Purchase Agreement and the Registration Rights Agreement are qualified in their entirety by reference to the full text of such
+agreements, copies of which are attached hereto as Exhibits 10.1 and 10.2, respectively, and each of which is incorporated herein in its
+entirety by reference. The representations, warranties and covenants contained in such agreements were made only for purposes of such
+agreements and as of specific dates, were solely for the benefit of the parties to such agreements and may be subject to limitations agreed
+upon by the contracting parties.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">This current report on
+Form 8-K shall not constitute an offer to sell or a solicitation of an offer to buy any shares of common stock in any state or jurisdiction
+in which such an offer, solicitation or sale would be unlawful prior to registration or qualification under the securities laws of any
+such state or other jurisdiction.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><i>Pre-Funded Warrant
+Amendments</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">As previously reported,
+on June 30, 2024, the Company amended the terms of a pre-funded warrant (the &#8220;CP Warrant&#8221;) held by CP Acquisitions, LLC (&#8220;CP&#8221;),
+an entity affiliated with and controlled by Raymond Chang, the Chairman and Chief Executive Officer of the Company, and a pre-funded warrant
+(the &#8220;GIC Warrant&#8221;) held by GIC Acquisition LLC (&#8220;GIC&#8221;), an entity that is affiliated with and controlled by Mr.
+Chang and by I-Tseng Jenny Chan, a member of the Company&#8217;s Board of Directors. Among other things, the June 30, 2024 amendments
+removed certain adjustment provisions (the &#8220;Adjustment Provisions&#8221;) from the CP Warrant and the GIC Warrant. Pursuant to the
+Adjustment Provisions, each time the Company consummated any bona fide equity financing with the primary purpose of raising capital, then
+the number of shares of common stock underlying the CP Warrant or the GIC Warrant, as applicable, would be increased to an amount equal
+to (i) the amount of the convertible note that was originally converted into CP Warrant or the GIC Warrant, as applicable, divided by
+(ii) the purchase or conversion price in the equity financing transaction, subject to proportional adjustment in the event the CP Warrant
+or GIC Warrant, as applicable, has been partially exercised.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"></p>
+
+<!-- Field: Page; Sequence: 3 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Also as previously reported,
+on August 12, 2024, the shareholders of the Company approved a proposal to amend the CP Warrant and the GIC Warrant to add the Adjustment
+Provisions at a future date. Pursuant to that approval, on August 28, 2024, immediately prior to the execution of the Purchase Agreement,
+the Company entered into an amendment to the CP Warrant (the &#8220;CP Warrant Amendment&#8221;) and an amendment to the GIC Warrant (the
+&#8220;GIC Warrant Amendment). The CP Warrant Amendment and the GIC Warrant Amendment inserted the Adjustment Provisions into the CP Warrant
+and the GIC Warrant, respectively. As a result of the CP Warrant Amendment and the GIC Warrant Amendment and the subsequent issuance of
+2,844,672 shares of Common Stock to Ionic pursuant to the Purchase Agreement at an effective purchase price of approximately $0.1406 per
+share of Common Stock, the number of shares of Common Stock underlying the CP Warrant was adjusted to 81,784,320 and the number of shares
+of Common Stock underlying the GIC Warrant was adjusted to 16,276,832. As a result of such adjustment and the issuance to Ionic, CP agreed
+not to exercise the CP Warrant for more than 4,000,000 shares of Common Stock or to convert its outstanding convertible notes, and GIC
+agreed not to exercise the GIC Warrant for more than 7,383,053 shares of Common Stock, in each case until the Company completes a reverse
+stock split or increase in authorized shares resulting in sufficient authorized but unissued shares to permit such conversion or exercise.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">The foregoing descriptions of the CP Warrant Amendment and the GIC Warrant Amendment are qualified in their entirety by reference to the
+full text of such documents, copies of which are attached hereto as Exhibits 10.3 and 10.4, respectively, and each of which is incorporated
+herein in its entirety by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Item 3.02. Unregistered
+Sales of Equity Securities</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">The disclosure set forth
+above under Item 1.01 of this Current Report on Form 8-K is incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Item 9.01. Financial
+Statements and Exhibits.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"> <b>(d)</b> <b>Exhibits.</b></p>
+
+
+
+<p style="margin-top: 0; margin-bottom: 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: Black 1.5pt solid; text-align: left; width: 9%; vertical-align: bottom"><span style="font-family: Times New Roman, Times, Serif">Exhibit<br/>
+    Number</span></td>
+    <td style="text-align: left; width: 1%; vertical-align: bottom"><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td>
+    <td style="border-bottom: Black 1.5pt solid; text-align: left; width: 90%; vertical-align: bottom"><span style="font-family: Times New Roman, Times, Serif">Title</span></td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td>
+    <td><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td>
+    <td><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td><span style="font-family: Times New Roman, Times, Serif">10.1*</span></td>
+    <td><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td>
+    <td style="text-align: justify"><span style="font-family: Times New Roman, Times, Serif"><a href="ea021277101ex10-1_agrify.htm">Purchase
+    Agreement, dated as of August 28, 2024, by and between Agrify Corporation and Ionic Ventures, LLC</a></span></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td>
+    <td><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td>
+    <td><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td><span style="font-family: Times New Roman, Times, Serif">10.2</span></td>
+    <td><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td>
+    <td style="text-align: justify"><span style="font-family: Times New Roman, Times, Serif"><a href="ea021277101ex10-2_agrify.htm">Registration
+    Rights Agreement, dated as of August 28, 2024, by and between Agrify Corporation and Ionic Ventures, LLC</a></span></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td>
+    <td><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td>
+    <td style="text-align: justify"><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td><span style="font-family: Times New Roman, Times, Serif">10.3</span></td>
+    <td><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td>
+    <td style="text-align: justify"><a href="ea021277101ex10-3_agrify.htm"><span style="font-family: Times New Roman, Times, Serif">Amendment to Pre-Funded Common Stock Purchase Warrant, dated as of August 28, 2024, by and between Agrify Corporation and CP Acquisitions, LLC</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td>
+    <td><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td>
+    <td style="text-align: justify"><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td><span style="font-family: Times New Roman, Times, Serif">10.4</span></td>
+    <td><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td>
+    <td style="text-align: justify"><a href="ea021277101ex10-4_agrify.htm"><span style="font-family: Times New Roman, Times, Serif">Amendment to Pre-Funded Common Stock Purchase Warrant, dated as of August 28, 2024, by and between Agrify Corporation and GIC Acquisition LLC</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td>
+    <td><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td>
+    <td><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td><span style="font-family: Times New Roman, Times, Serif">104</span></td>
+    <td><span style="font-family: Times New Roman, Times, Serif">&#160;</span></td>
+    <td><span style="font-family: Times New Roman, Times, Serif">Cover Page Interactive Data File (embedded within the Inline XBRL document).</span></td></tr>
+  </table>
+
+<p style="margin-top: 0; margin-bottom: 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in; text-align: left">*</td><td style="text-align: justify">Schedules and exhibits have been omitted pursuant to Item
+601(a)(5) of Regulation S-K. The registrant hereby undertakes to furnish copies of any of the omitted schedules and exhibits upon request
+by the U.S. Securities and Exchange Commission.</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"></p>
+
+<!-- Field: Page; Sequence: 4 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->3<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Pursuant to the requirements
+of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto
+duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="font-size: 10pt">&#160;</td>
+    <td colspan="2" style="font-size: 10pt"><span style="font-size: 10pt"><b>AGRIFY CORPORATION</b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="font-size: 10pt; width: 60%">&#160;</td>
+    <td style="font-size: 10pt; width: 4%">&#160;</td>
+    <td style="font-size: 10pt; width: 36%">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td style="font-size: 10pt"><span style="font-size: 10pt">Date: August 29, 2024</span></td>
+    <td style="font-size: 10pt"><span style="font-size: 10pt">By:</span></td>
+    <td style="border-bottom: black 1.5pt solid; font-size: 10pt"><span style="font-size: 10pt">/s/ Raymond Nobu Chang</span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="font-size: 10pt">&#160;</td>
+    <td style="font-size: 10pt">&#160;</td>
+    <td style="font-size: 10pt"><span style="font-size: 10pt">Raymond Nobu Chang</span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="font-size: 10pt">&#160;</td>
+    <td style="font-size: 10pt">&#160;</td>
+    <td style="font-size: 10pt"><span style="font-size: 10pt">Chief Executive Officer</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">4</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 1.5pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxFjUEKwkAMRU/QO4RZS22rgnRpURGrSBFxO9oog+2kZEatR/KWxhYxfBLC/y9RaqCWtDAVMhxnRQ57rJtKe4QCL8hozyiJbLVOQWaBV+M8a+u79QdmJAwKMwmT0UmMLvowDssUoukwEY0hjlPpu40Kvn5G9mJKtN7oCrQtYcfUsEGv+dVf2OuWLNWv7tUB2RmyKcRh1NtvSKI4gS099JP45iDPMxUMugrUkuneSGreerRfEuYV1vLO9fRfwQcLYkqU -->
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

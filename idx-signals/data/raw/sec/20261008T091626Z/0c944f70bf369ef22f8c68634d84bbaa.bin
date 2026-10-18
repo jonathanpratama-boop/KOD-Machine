@@ -1,0 +1,910 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2025" xmlns:us-gaap="http://fasb.org/us-gaap/2025" xmlns:us-roles="http://fasb.org/us-roles/2025" xmlns:dtr-types="http://www.xbrl.org/dtr/type/2024-01-31" xmlns:country="http://xbrl.sec.gov/country/2025" xmlns:srt="http://fasb.org/srt/2025" xmlns:ETHZ="http://ethzilla.com/20251007">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02E_US%2DGAAP%2D2025 -->
+<!-- Field: Set; Name: xdx; ID: xdx_038_ETHZ_ethzilla.com_20251007 -->
+<!-- Field: Set; Name: xdx; ID: xdx_044_20251007_20251007 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_051_edei%2D%2DCurrentFiscalYearEndDate_%2D%2DLS0xMi0zMQ== -->
+<!-- Field: Set; Name: xdx; ID: xdx_051_edei%2D%2DEntityCentralIndexKey_0001690080 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2025-10-07" id="Fact000003" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2025-10-07" id="Fact000004" name="dei:CurrentFiscalYearEndDate">--12-31</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2025-10-07" id="Fact000005" name="dei:EntityCentralIndexKey">0001690080</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="ethz-20251007.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2025-10-07">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001690080</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2025-10-07</xbrli:startDate>
+        <xbrli:endDate>2025-10-07</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2025-10-072025-10-07_custom_CommonStockParValue0.0001PerShareMember">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001690080</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">ETHZ:CommonStockParValue0.0001PerShareMember</xbrldi:explicitMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2025-10-07</xbrli:startDate>
+        <xbrli:endDate>2025-10-07</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2025-10-072025-10-07_custom_WarrantsToPurchaseSharesOfCommonStockMember">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001690080</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">ETHZ:WarrantsToPurchaseSharesOfCommonStockMember</xbrldi:explicitMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2025-10-07</xbrli:startDate>
+        <xbrli:endDate>2025-10-07</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>UNITED STATES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b>SECURITIES AND EXCHANGE
+COMMISSION</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b>WASHINGTON, D.C. 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b>FORM&#160;<span id="xdx_901_edei--DocumentType_c20251007__20251007_zuwdcE0IfHV1"><ix:nonNumeric contextRef="AsOf2025-10-07" id="Fact000010" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b>PURSUANT TO SECTION
+13 OR 15(d)&#160;OF THE</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b>SECURITIES EXCHANGE
+ACT OF 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">Date of Report (Date of
+earliest event reported):&#160;<span id="xdx_90E_edei--DocumentPeriodEndDate_c20251007__20251007_zMWcvWlifjG4"><ix:nonNumeric contextRef="AsOf2025-10-07" format="ixt:datemonthdayyearen" id="Fact000011" name="dei:DocumentPeriodEndDate">October 7, 2025</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b><span style="text-decoration: underline"><span id="xdx_906_edei--EntityRegistrantName_c20251007__20251007_z5UOQ7iFXQaa"><ix:nonNumeric contextRef="AsOf2025-10-07" id="Fact000012" name="dei:EntityRegistrantName">ETHZilla Corporation</ix:nonNumeric></span></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">(Exact Name of Registrant
+as Specified in Charter)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+  <tr>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: top; width: 32%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_905_edei--EntityIncorporationStateCountryCode_c20251007__20251007_zTbfqyswcrG2"><ix:nonNumeric contextRef="AsOf2025-10-07" format="ixt-sec:stateprovnameen" id="Fact000013" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></b></span></td>
+    <td style="vertical-align: bottom; width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: top; width: 32%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_902_edei--EntityFileNumber_c20251007__20251007_zPTx2xKkAzOk"><ix:nonNumeric contextRef="AsOf2025-10-07" id="Fact000014" name="dei:EntityFileNumber">001-38105</ix:nonNumeric></span></b></span></td>
+    <td style="vertical-align: bottom; width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: top; width: 32%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_905_edei--EntityTaxIdentificationNumber_c20251007__20251007_zFYGO38jitcd"><ix:nonNumeric contextRef="AsOf2025-10-07" id="Fact000015" name="dei:EntityTaxIdentificationNumber">90-1890354</ix:nonNumeric></span></b></span></td></tr>
+  <tr>
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt">(State or Other Jurisdiction<br/>
+of Incorporation)</span></td>
+    <td style="vertical-align: bottom; text-align: center">&#160;</td>
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt">(Commission File Number)</span></td>
+    <td style="vertical-align: bottom; text-align: center">&#160;</td>
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt">(IRS Employer<br/>
+Identification No.)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+  <tr>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: top; width: 49%">
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_90C_edei--EntityAddressAddressLine1_c20251007__20251007_zksrndxuAxJc"><ix:nonNumeric contextRef="AsOf2025-10-07" id="Fact000016" name="dei:EntityAddressAddressLine1">2875 South Ocean Blvd</ix:nonNumeric></span>,&#160;<span id="xdx_90C_edei--EntityAddressAddressLine2_c20251007__20251007_zqQePQYVY36e"><ix:nonNumeric contextRef="AsOf2025-10-07" id="Fact000017" name="dei:EntityAddressAddressLine2">Suite 200</ix:nonNumeric></span></b></p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_90C_edei--EntityAddressCityOrTown_c20251007__20251007_ztMLnxNpSy48"><ix:nonNumeric contextRef="AsOf2025-10-07" id="Fact000018" name="dei:EntityAddressCityOrTown">Palm Beach</ix:nonNumeric></span>,&#160;<span id="xdx_90C_edei--EntityAddressStateOrProvince_c20251007__20251007_zLhJZoivget2"><ix:nonNumeric contextRef="AsOf2025-10-07" id="Fact000019" name="dei:EntityAddressStateOrProvince">FL</ix:nonNumeric></span></b></p></td>
+    <td style="vertical-align: bottom; width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: bottom; width: 49%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_905_edei--EntityAddressPostalZipCode_c20251007__20251007_zmMiefLzTI6g"><ix:nonNumeric contextRef="AsOf2025-10-07" id="Fact000020" name="dei:EntityAddressPostalZipCode">33480</ix:nonNumeric></span></b></span></td></tr>
+  <tr>
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt">(Address of Principal Executive Offices)</span></td>
+    <td style="vertical-align: bottom; text-align: center">&#160;</td>
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt">(Zip Code)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">Registrant&#8217;s telephone
+number, including area code:&#160;<b><span style="text-decoration: underline">(<span id="xdx_90B_edei--CityAreaCode_c20251007__20251007_zvSIq4Oldu32"><ix:nonNumeric contextRef="AsOf2025-10-07" id="Fact000021" name="dei:CityAreaCode">650</ix:nonNumeric></span>)&#160;<span id="xdx_902_edei--LocalPhoneNumber_c20251007__20251007_zwQRwiscW4Ma"><ix:nonNumeric contextRef="AsOf2025-10-07" id="Fact000022" name="dei:LocalPhoneNumber">507-0669</ix:nonNumeric></span></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Check the appropriate&#160;box
+below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following
+provisions (<i>see&#160;</i>General Instruction A.2. below):</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: -0.15pt; background-color: white">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_901_edei--WrittenCommunications_c20251007__20251007_zG6U5bjmwbSa"><ix:nonNumeric contextRef="AsOf2025-10-07" format="ixt:booleanfalse" id="Fact000023" name="dei:WrittenCommunications">&#9744;</ix:nonNumeric></span></span></td><td style="text-align: justify"><span style="font-size: 10pt">Written communications pursuant
+to Rule 425 under the Securities Act (17 CFR 230.425)</span></td>
+</tr></table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_903_edei--SolicitingMaterial_c20251007__20251007_zoHjR2jB3li2"><ix:nonNumeric contextRef="AsOf2025-10-07" format="ixt:booleanfalse" id="Fact000024" name="dei:SolicitingMaterial">&#9744;</ix:nonNumeric></span></span></td><td style="text-align: justify"><span style="font-size: 10pt">Soliciting material pursuant to
+Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</span></td>
+</tr></table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90A_edei--PreCommencementTenderOffer_c20251007__20251007_zMMG9P6Oy40l"><ix:nonNumeric contextRef="AsOf2025-10-07" format="ixt:booleanfalse" id="Fact000025" name="dei:PreCommencementTenderOffer">&#9744;</ix:nonNumeric></span></span></td><td style="text-align: justify"><span style="font-size: 10pt">Pre-commencement communications
+pursuant to Rule 14d-2(b)&#160;under the Exchange Act (17 CFR 240.14d-2(b))</span></td>
+</tr></table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90B_edei--PreCommencementIssuerTenderOffer_c20251007__20251007_zFH2U43WvL4g"><ix:nonNumeric contextRef="AsOf2025-10-07" format="ixt:booleanfalse" id="Fact000026" name="dei:PreCommencementIssuerTenderOffer">&#9744;</ix:nonNumeric></span></span></td><td style="text-align: justify"><span style="font-size: 10pt">Pre-commencement communications
+pursuant to Rule 13e-4(c)&#160;under the Exchange Act (17 CFR 240.13e 4(c))</span></td>
+</tr></table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Securities registered
+pursuant to Section 12(b)&#160;of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><span style="font-size: 10pt"><b>Title of each class</b></span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><span style="font-size: 10pt"><b>Trading Symbol(s)</b></span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><span style="font-size: 10pt"><b>Name of each exchange on which registered</b></span></td></tr>
+  <tr style="vertical-align: top; background-color: #CCEEFF">
+    <td style="text-align: center"><span style="font-size: 10pt"><span id="xdx_908_edei--Security12bTitle_c20251007__20251007__us-gaap--StatementClassOfStockAxis__custom--CommonStockParValue0.0001PerShareMember_zHZkSsXHMv36"><ix:nonNumeric contextRef="From2025-10-072025-10-07_custom_CommonStockParValue0.0001PerShareMember" id="Fact000027" name="dei:Security12bTitle">Common Stock, par value $0.0001 per share</ix:nonNumeric></span></span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt"><span id="xdx_900_edei--TradingSymbol_c20251007__20251007__us-gaap--StatementClassOfStockAxis__custom--CommonStockParValue0.0001PerShareMember_zZFkqrtfbVlh"><ix:nonNumeric contextRef="From2025-10-072025-10-07_custom_CommonStockParValue0.0001PerShareMember" id="Fact000028" name="dei:TradingSymbol">ETHZ</ix:nonNumeric></span></span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">The <span id="xdx_900_edei--SecurityExchangeName_c20251007__20251007__us-gaap--StatementClassOfStockAxis__custom--CommonStockParValue0.0001PerShareMember_zReZyR5oUDgj"><ix:nonNumeric contextRef="From2025-10-072025-10-07_custom_CommonStockParValue0.0001PerShareMember" format="ixt-sec:exchnameen" id="Fact000029" name="dei:SecurityExchangeName">NASDAQ</ix:nonNumeric></span> Stock Market LLC</span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="text-align: center"><span style="font-size: 10pt"><span id="xdx_90A_edei--Security12bTitle_c20251007__20251007__us-gaap--StatementClassOfStockAxis__custom--WarrantsToPurchaseSharesOfCommonStockMember_zpiEvGJmaslc"><ix:nonNumeric contextRef="From2025-10-072025-10-07_custom_WarrantsToPurchaseSharesOfCommonStockMember" id="Fact000030" name="dei:Security12bTitle">Warrants to purchase shares of Common Stock</ix:nonNumeric></span></span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt"><span id="xdx_904_edei--TradingSymbol_c20251007__20251007__us-gaap--StatementClassOfStockAxis__custom--WarrantsToPurchaseSharesOfCommonStockMember_zFD2hTEJIfv6"><ix:nonNumeric contextRef="From2025-10-072025-10-07_custom_WarrantsToPurchaseSharesOfCommonStockMember" id="Fact000031" name="dei:TradingSymbol">ETHZW</ix:nonNumeric></span></span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">The <span id="xdx_903_edei--SecurityExchangeName_c20251007__20251007__us-gaap--StatementClassOfStockAxis__custom--WarrantsToPurchaseSharesOfCommonStockMember_zmRksm07dpK1"><ix:nonNumeric contextRef="From2025-10-072025-10-07_custom_WarrantsToPurchaseSharesOfCommonStockMember" format="ixt-sec:exchnameen" id="Fact000032" name="dei:SecurityExchangeName">NASDAQ</ix:nonNumeric></span> Stock Market LLC</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Indicate by check mark
+whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter)&#160;or
+Rule 12b-2 of the Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Emerging growth company&#160;<span style="font-family: Times New Roman, Times, Serif"><span id="xdx_907_edei--EntityEmergingGrowthCompany_c20251007__20251007_zSxhcVmZSwBf"><ix:nonNumeric contextRef="AsOf2025-10-07" format="ixt:booleanfalse" id="Fact000033" name="dei:EntityEmergingGrowthCompany">&#9744;</ix:nonNumeric></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">If an emerging growth
+company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or
+revised financial accounting standards provided pursuant to Section 13(a)&#160;of the Exchange Act.&#160;<span style="font-family: Times New Roman, Times, Serif">&#9744;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Item 3.03 Material Modification to Rights of
+Security Holders.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">The disclosures set forth
+in&#160;<span style="text-decoration: underline">Item 5.03</span>&#160;of this Current Report on Form 8-K are incorporated into this&#160;<span style="text-decoration: underline">Item 3.03</span>&#160;by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Item 5.02 Departure of Directors or Certain
+Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 33.75pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">The disclosures set forth
+in&#160;<span style="text-decoration: underline">Item&#160;5.07</span>&#160;of this Current Report on Form 8-K are incorporated into this&#160;<span style="text-decoration: underline">Item&#160;5.02</span>&#160;by reference.&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><span style="background-color: white">On
+October 7, 2025, at the Special Meeting (the &#8220;<span style="text-decoration: underline">Special Meeting</span>&#8221;) of the stockholders of the ETHZilla Corporation (the
+&#8220;<span style="text-decoration: underline">Company</span>&#8221;, &#8220;<span style="text-decoration: underline">we</span>&#8221; and &#8220;<span style="text-decoration: underline">us</span>&#8221;)</span>, the stockholders of the Company approved:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.5in"/><td style="width: 0.25in; text-align: left">1.</td><td style="text-align: justify">The adoption of the ETHZilla Corporation 2025 Omnibus Incentive
+Plan (the &#8220;<span style="text-decoration: underline">Omnibus Plan</span>&#8221;);</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 1in; text-align: justify; text-indent: -0.5in">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.5in"/><td style="width: 0.25in; text-align: left">2.</td><td style="text-align: justify">The adoption of the ETHZilla Corporation 2025 Supplemental
+Option Incentive Plan (the &#8220;<span style="text-decoration: underline">2025 Supplemental Plan</span>&#8221;); and</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 1in; text-align: justify; text-indent: -0.5in">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.5in"/><td style="width: 0.25in; text-align: left">3.</td><td style="text-align: justify">The adoption of the ETHZilla Corporation 2025 Second Supplemental
+Option Incentive Plan (the &#8220;<span style="text-decoration: underline">Second 2025 Supplemental Plan</span>&#8221;, and collectively with the 2025 Supplemental Plan and Omnibus
+Plan, the &#8220;<span style="text-decoration: underline">Plans</span>&#8221;),</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">in accordance with the voting
+results set forth below under&#160;<span style="text-decoration: underline">Item&#160;5.07</span>.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 33.75pt">The material terms of the
+Omnibus Plan, 2025 Supplemental Plan, and the Second 2025 Supplemental Plan, were described in the Company&#8217;s&#160;Definitive Proxy
+Statement on Schedule 14A&#160;(the &#8220;<span style="text-decoration: underline">Proxy Statement</span>&#8221;) filed with the Securities and Exchange Commission (SEC) on September
+5, 2025, under &#8220;Proposal 2 Adoption of the ETHZilla Corporation 2025 Omnibus Incentive Plan&#8221;, &#8220;Proposal 3 Approval of
+the ETHZilla Corporation 2025 Supplemental Option Incentive Plan&#8221;, and &#8220;Proposal 4 Approval of the ETHZilla Corporation 2025
+Second Supplemental Option Incentive Plan&#8221;, respectively.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 33.75pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i><span style="text-decoration: underline">ETHZilla Corporation 2025 Omnibus Incentive
+Plan</span></i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 33.75pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">On August 26, 2025, the Board
+of Directors of the Company (the &#8220;<span style="text-decoration: underline">Board</span>&#8221;), with the recommendation of the Compensation Committee of the Board, adopted
+the Omnibus Plan, subject to stockholder approval at the Special Meeting.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 33.75pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 33.75pt">The Company&#8217;s 2022
+Omnibus Incentive Plan, as amended and restated (the &#8220;<span style="text-decoration: underline">Prior Plan</span>&#8221;), was originally adopted by the Board on April 26,
+2022. As a result of the approval by the stockholders of the Omnibus Plan, no further shares will be granted as awards under the Prior
+Plan, the remaining shares reserved under the Prior Plan will be cancelled and the annual &#8220;evergreen&#8221; increases under the
+Prior Plan will stop.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 33.75pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 33.75pt">The Omnibus Plan provides
+an opportunity for any employee, officer, director or consultant of the Company, subject to the terms of the Omnibus Plan, to receive
+(i) incentive stock options (to eligible employees only); or (ii) nonqualified stock options. Incentive stock options granted under the
+Omnibus Plan are intended to qualify as &#8220;incentive stock options&#8221; within the meaning of Section 422 of the Internal Revenue
+Code (the &#8220;<span style="text-decoration: underline">Code</span>&#8221;). Nonqualified (non-statutory stock options) granted under the Omnibus Plan are not intended to qualify
+as incentive stock options under the Code.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 33.75pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 33.75pt">Subject to adjustment in
+connection with the payment of a stock dividend, a stock split or subdivision or combination of the shares of common stock, or a reorganization
+or reclassification of the Company&#8217;s common stock, upon approval of the Omnibus Plan, the aggregate number of shares of common stock
+which may be issued pursuant to awards under the Omnibus Plan shall initially equal 50,000,000 shares, and will automatically increase
+on April 1st of each year for a period of ten years commencing on January 1, 2026 and ending on (and including) January 1, 2035, in an
+amount equal to ten percent (10%) of the total shares of Company common stock outstanding on the last day of the immediately preceding
+fiscal year (the &#8220;<span style="text-decoration: underline">Evergreen Measurement Date</span>&#8221;); provided, however, that the Board may act prior to January 1st of a
+given year to provide that the increase for such year will be a lesser number of shares of common stock. No more than 5 billion shares
+may be awarded under the plan upon exercise of incentive stock options.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 33.75pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 33.75pt">Awards under the Omnibus
+Plan may be made in the form of performance awards, restricted stock, restricted stock units, stock options, which may be either incentive
+stock options or non-qualified stock options, stock appreciation rights, other stock-based awards and dividend equivalents. Awards are
+generally non-transferable.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"></p>
+
+<!-- Field: Page; Sequence: 2; Options: NewSection -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->1<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i><span style="text-decoration: underline">2025 Supplemental Option Incentive Plan</span></i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">On July 29, 2025, the Board,
+with the recommendation of the Compensation Committee of the Board, adopted the 2025 Supplemental Plan. The 2025 Supplemental Plan was
+adopted, in accordance with the rules of The Nasdaq Capital Market, which allow the Company to adopt an equity arrangement and grant options
+thereunder prior to obtaining stockholder approval, provided that (i)&#160;no options can be exercised prior to obtaining stockholder
+approval, and (ii)&#160;the plan can be unwound, and the outstanding options cancelled, if stockholder approval is not obtained.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">The 2025 Supplemental Plan
+provides an opportunity for any employee, officer, director or consultant of the Company, subject to the terms of the 2025 Supplemental
+Plan, to receive (i) incentive stock options (to eligible employees only); or (ii) nonqualified stock options. Incentive stock options
+granted under the 2025 Supplemental Plan are intended to qualify as &#8220;<span style="text-decoration: underline">incentive stock options</span>&#8221; within the meaning of
+Section 422 of the Code. Nonqualified (non-statutory stock options) granted under the 2025 Supplemental Plan are not intended to qualify
+as incentive stock options under the Code.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">A total of 9,197,614 shares
+of common stock were reserved for awards under the 2025 Supplemental Plan, which awards have been fully granted to date.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i><span style="text-decoration: underline">2025 Second Supplemental Option Incentive
+Plan</span></i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">On August 8, 2025, the Board,
+with the recommendation of the Compensation Committee of the Board, adopted the 2025 Second Supplemental Option Incentive Plan. The 2025
+Second Supplemental Plan was adopted, in accordance with the rules of The Nasdaq Capital Market, which allow the Company to adopt an equity
+arrangement and grant options thereunder prior to obtaining stockholder approval, provided that (i)&#160;no options can be exercised prior
+to obtaining stockholder approval, and (ii)&#160;the plan can be unwound, and the outstanding options cancelled, if stockholder approval
+is not obtained.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">A total of 1,814,221 shares
+of common stock were reserved for awards under the Second 2025 Supplemental Plan, which awards have been fully granted to date.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">* * * * *</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 33.75pt">The above description of
+the Omnibus Plan, 2025 Supplemental Plan, and Second 2025 Supplemental Plan do not purport to be complete, and are qualified in their
+entirety by reference to the full text of the Omnibus Plan, 2025 Supplemental Plan, and Second 2025 Supplemental Plan which are filed
+herein or incorporated by reference herein, as&#160;<span style="text-decoration: underline">Exhibits 10.1,</span>&#160;<span style="text-decoration: underline">10.2</span>, and <span style="text-decoration: underline">10.3</span>, respectively, and are incorporated
+by reference into this&#160;<span style="text-decoration: underline">Item 5.02</span> in their entirety by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 33.75pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><b>Item 5.03 Amendments to Articles of Incorporation
+or Bylaws; Change in Fiscal Year.&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><i><span style="text-decoration: underline">Increase in Authorized Shares</span></i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 0.5in; background-color: white">As discussed in greater detail in&#160;<span style="text-decoration: underline">Item&#160;5.07</span> and &#8220;Proposal
+6 Approval of an Amendment to Our Second Amended and Restated Certificate of Incorporation to Increase the Company&#8217;s Authorized
+Number of Shares of Common Stock From One Billion (1,000,000,000) to Five Billion (5,000,000,000)&#8221; of the Proxy Statement, on October
+7, 2025, at the Special Meeting, the stockholders of the Company approved an amendment to the Company&#8217;s Second Amended and Restated
+Certificate of Incorporation, to increase the Company&#8217;s authorized number of shares of common stock, par value $0.0001 per share
+from one billion (1,000,000,000) shares to five billion (5,000,000,000) shares.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 0.5in; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in; background-color: white">On
+October 8, 2025, we filed a Certificate of Amendment to our Second Amended and Restated Certificate of Incorporation, as amended (the
+&#8220;<span style="text-decoration: underline">Certificate of Amendment</span>&#8221;) with the Secretary of State of the State of Delaware to increase the Company&#8217;s authorized
+number of shares of common stock, par value $0.0001 per share from one billion (1,000,000,000) shares to five billion (5,000,000,000)
+shares, which became effective when filed on October 8, 2025.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in; background-color: white">The
+foregoing description of the Certificate of Amendment does not purport to be complete and is qualified in its entirety by reference to
+the Certificate of Amendment attached hereto as&#160;<span style="text-decoration: underline">Exhibit 3.1</span>&#160;and incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"></p>
+
+<!-- Field: Page; Sequence: 3 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Item 5.07. Submission of Matters to a Vote of Security Holders.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><span style="background-color: white">At
+the Special Meeting,</span>&#160;stockholders representing 58,122,938 shares of the Company&#8217;s capital stock entitled to vote at
+the Special Meeting were present in person or by proxy representing 35.34% of the voting shares issued and outstanding on the record date
+of August 20, 2025, and constituting a quorum to conduct business at the Special Meeting. The following sets forth the matters that were
+voted upon by the Company&#8217;s stockholders at the Special Meeting and the voting results for such matters. These matters are described
+in more detail in the Proxy Statement.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b><i>Proposal 1</i></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.75in; text-align: justify; text-indent: -0.25in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">The one individual listed
+below was elected at the Special Meeting to serve as a Class II director of the Company, to serve a term of one year and until his respective
+successor has been elected and qualified, or until such director&#8217;s resignation or removal, by the following vote:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.75in; text-align: justify; text-indent: -0.25in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: top; width: 25%; text-align: center"><span style="font-size: 10pt"><b>Director Nominee</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: bottom; width: 24%; text-align: center"><span style="font-size: 10pt"><b>For</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: bottom; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Withheld</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: bottom; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Broker Non-Votes</b></span></td></tr>
+  <tr style="background-color: #CCEEFF">
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt">Jason New</span></td>
+    <td>&#160;</td>
+    <td style="vertical-align: bottom; text-align: center"><span style="font-size: 10pt">58,035,021</span></td>
+    <td>&#160;</td>
+    <td style="vertical-align: bottom; text-align: center"><span style="font-size: 10pt">87,917</span></td>
+    <td>&#160;</td>
+    <td style="vertical-align: bottom; text-align: center"><span style="font-size: 10pt">&#8212;</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">Mr. New&#8217;s biographical
+information and the other information required by Items 401(b), (d), (e) and Item 404(a) of Regulation S-K are described in greater detail
+in the Proxy Statement under &#8220;<span style="text-decoration: underline">Proposal 1 Election of Directors</span>&#8221;.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">No stockholders abstained
+from voting on the appointment of the director of the Company as discussed above.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b><i>Proposal 2</i></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">A management proposal to approve
+the adoption of the ETHZilla Corporation 2025 Omnibus Incentive Plan, was approved by the following vote:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 25%; text-align: center"><span style="font-size: 10pt"><b>For</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Against</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Abstain</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Broker Non-Votes</b></span></td></tr>
+  <tr style="vertical-align: bottom; background-color: #CCEEFF">
+    <td style="text-align: center"><span style="font-size: 10pt">57,809,800</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">267,242</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">45,596</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">&#8212;</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b><i>Proposal 3</i></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">A management proposal to approve
+the adoption of the ETHZilla Corporation 2025 Supplemental Option Incentive Plan, was approved by the following vote:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 25%; text-align: center"><span style="font-size: 10pt"><b>For</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Against</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Abstain</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Broker Non-Votes</b></span></td></tr>
+  <tr style="vertical-align: bottom; background-color: #CCEEFF">
+    <td style="text-align: center"><span style="font-size: 10pt">57,805,666</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">268,470</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">48,802</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">&#8212;</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b>&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b><i>Proposal 4</i></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">A management proposal to approve
+the adoption of the ETHZilla Corporation 2025 Second Supplemental Option Incentive Plan was approved by the following vote:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 25%; text-align: center"><span style="font-size: 10pt"><b>For</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Against</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Abstain</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Broker Non-Votes</b></span></td></tr>
+  <tr style="vertical-align: bottom; background-color: #CCEEFF">
+    <td style="text-align: center"><span style="font-size: 10pt">57,801,394</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">272,860</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">48,684</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">&#8212;</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 4 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->3<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b><i>Proposal 5</i></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">A management proposal to approve
+for purposes of complying with Section 5635(d) of the&#160;Listing Rules (the &#8220;<span style="text-decoration: underline">Nasdaq Listing Rules</span>&#8221;) of the Nasdaq
+Stock Market LLC as described in the Proxy Statement, the issuance of shares of the Company&#8217;s common stock underlying certain senior
+secured convertible notes issued by us pursuant to the terms of that certain Securities Purchase Agreement, dated August 8, 2025, between
+the Company and the investors named therein (the &#8220;<span style="text-decoration: underline">Convertible Notes</span>&#8221;), without giving effect to the exchange cap in
+such Convertible Notes in an amount that may be equal to or exceed 20% of our common stock outstanding immediately prior to the issuance
+of such Convertible Notes, was approved by the following vote:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 25%; text-align: center"><span style="font-size: 10pt"><b>For</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Against</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Abstain</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Broker Non-Votes</b></span></td></tr>
+  <tr style="vertical-align: bottom; background-color: #CCEEFF">
+    <td style="text-align: center"><span style="font-size: 10pt">57,968,712</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">135,489</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">18,737</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">&#8212;</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b>&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b><i>Proposal 6</i></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">A management proposal to approve
+an amendment to the Company&#8217;s Second Amended and Restated Certificate of Incorporation to increase the Company&#8217;s authorized
+number of shares of common stock, par value $0.0001 per share from one billion (1,000,000,000) shares to five billion (5,000,000,000)
+shares, was approved by the following vote:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 25%; text-align: center"><span style="font-size: 10pt"><b>For</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Against</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Abstain</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Broker Non-Votes</b></span></td></tr>
+  <tr style="vertical-align: bottom; background-color: #CCEEFF">
+    <td style="text-align: center"><span style="font-size: 10pt">57,921,498</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">185,460</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">15,980</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">&#8212;</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">The Company plans to file
+the Certificate of Amendment to increase the Company&#8217;s authorized shares of common stock in the next few days and will file a Current
+Report on Form 8-K once filed.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b><i>Proposal 7</i></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">A management proposal to approve
+amendments to the Company&#8217;s Second Amended and Restated Certificate of Incorporation to remove obsolete provisions and make certain
+other clarifying, technical and conforming changes, was not approved by the following vote as the affirmative vote of at least a majority
+of the voting power of the outstanding stock entitled to vote on such proposal was not obtained, and stockholders of the Company voted
+on such proposals as follows:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 25%; text-align: center"><span style="font-size: 10pt"><b>For</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Against</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Abstain</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Broker Non-Votes</b></span></td></tr>
+  <tr style="vertical-align: bottom; background-color: #CCEEFF">
+    <td style="text-align: center"><span style="font-size: 10pt">57,991,571</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">104,706</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">26,661</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">&#8212;</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b><i>Proposal 8</i></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">A management proposal to approve
+an adjournment of the Special Meeting, if necessary, to solicit additional proxies if there was not sufficient votes at the time of the
+Special Meeting to approve any of the proposals to be voted upon at the Special Meeting, was approved, provided that the Company determined
+not to adjourn the Special Meeting:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 25%; text-align: center"><span style="font-size: 10pt"><b>For</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Against</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Abstain</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Broker Non-Votes</b></span></td></tr>
+  <tr style="vertical-align: bottom; background-color: #CCEEFF">
+    <td style="text-align: center"><span style="font-size: 10pt">57,980,954</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">107,385</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">34,599</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">&#8212;</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Item 7.01 Regulation FD Disclosure.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">On October 8, 2025, the Company
+filed a press release announcing the appointment of Jason New as a member of the Board of Directors of the Company. A copy of the press
+release is attached as <span style="text-decoration: underline">Exhibit&#160;99.1</span> and is incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">The information in this&#160;<span style="text-decoration: underline">Item
+7.01&#160;</span>of this Current Report on Form 8-K, including the information contained in&#160;<span style="text-decoration: underline">Exhibit 99.1</span>&#160;is being furnished
+to the Securities and Exchange Commission, and shall not be deemed to be &#8220;filed&#8221; for the purposes of Section 18 of the Exchange
+Act or otherwise subject to the liabilities of that section, and shall not be deemed to be incorporated by reference into any filing under
+the Securities Act of 1933, as amended, or the Exchange Act of 1934, as amended, except as shall be expressly set forth by a specific
+reference in such filing.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 5 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->4<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Item 8.01. Other Events</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">The information provided in&#160;<span style="text-decoration: underline">Item
+5.07</span>&#160;is hereby incorporated by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">As a result of the approval
+of&#160;<span style="text-decoration: underline">Proposal No. 3</span>&#160;above, the outstanding options to purchase 9,197,614 shares of common stock with an exercise price
+of $2.92 per share and cashless exercise rights, are now exercisable during the term of such options.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">As a result of the approval
+of&#160;<span style="text-decoration: underline">Proposal No. 4</span>&#160;above, outstanding options to purchase up to 1,814,221 shares of common stock with an exercise price
+of $3.01 per share and cashless exercise rights, are now exercisable during the term of such options.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">As a result of the approval
+of <span style="text-decoration: underline">Proposal No. 5</span> above, the principal amount of Convertible Notes is convertible into 51,229,508 shares of common stock, subject
+to further adjustment as provided therein, based on a current conversion price of $3.05 per share.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Item 9.01 Financial Statements and Exhibits.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>(d) Exhibits.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: top; width: 9%"><span style="font-size: 10pt"><b>Exhibit&#160;No.</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; text-align: justify; vertical-align: bottom; width: 90%"><span style="font-size: 10pt"><b>Description</b></span></td></tr>
+  <tr style="background-color: rgb(204,238,255)">
+    <td style="vertical-align: top">3.1*</td>
+    <td>&#160;</td>
+    <td style="text-align: justify; vertical-align: top"><a href="ea026065301ex3-1_ethzilla.htm">Certificate of Amendment&#160;of Second Amended and Restated
+    Certificate of Incorporation for ETHZilla Corporation increasing the Company&#8217;s Authorized Number of Shares of Common Stock From One Billion (1,000,000,000) to
+Five Billion (5,000,000,000), as filed with the Secretary of State of Delaware on October 8, 2025</a></td></tr>
+  <tr style="background-color: White">
+    <td style="vertical-align: top"><span style="font-size: 10pt">10.1*</span></td>
+    <td>&#160;</td>
+    <td style="vertical-align: top; text-align: justify"><a href="ea026065301ex10-1_ethzilla.htm"><span style="font-size: 10pt">ETHZilla Corporation 2025 Omnibus Incentive Plan </span></a></td></tr>
+  <tr style="background-color: rgb(204,238,255)">
+    <td style="vertical-align: top"><span style="font-size: 10pt">10.2</span></td>
+    <td>&#160;</td>
+    <td style="vertical-align: top; text-align: justify"><a href="https://www.sec.gov/Archives/edgar/data/1690080/000121390025068930/ea025010101ex10-4_180life.htm"><span style="font-size: 10pt">ETHZilla Corporation 2025 Supplemental Option Incentive Plan (filed as Exhibit 10.4 to the Company&#8217;s Current Report on Form 8-K, filed with the Securities and Exchange Commission on July 30, 2025, and incorporated by reference herein)</span></a></td></tr>
+  <tr style="background-color: White">
+    <td style="vertical-align: top"><span style="font-size: 10pt">10.3</span></td>
+    <td>&#160;</td>
+    <td style="vertical-align: top; text-align: justify"><a href="https://www.sec.gov/Archives/edgar/data/1690080/000121390025074030/ea025239601ex10-6_180life.htm"><span style="font-size: 10pt">ETHZilla Corporation 2025 Second Supplemental Option Incentive Plan (filed as Exhibit 10.6 to the Company&#8217;s Current Report on Form 8-K, filed with the Securities and Exchange Commission on August 11, 2025, and incorporated by reference herein)</span></a></td></tr>
+  <tr style="background-color: rgb(204,238,255)">
+    <td style="vertical-align: top"><span style="font-size: 10pt">99.1**</span></td>
+    <td>&#160;</td>
+    <td style="vertical-align: top; text-align: justify"><span style="font-size: 10pt"><a href="ea026065301ex99-1_ethzilla.htm">Press Release of ETHZilla Corporation dated October 8, 2025</a></span></td></tr>
+  <tr style="background-color: White">
+    <td style="vertical-align: top"><span style="font-size: 10pt">104</span></td>
+    <td>&#160;</td>
+    <td style="vertical-align: top; text-align: justify"><span style="font-size: 10pt">Cover Page Interactive Data File (embedded within the Inline XBRL document)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0in"/><td style="width: 0.25in; text-align: left">*</td><td style="text-align: justify">Filed herewith.</td>
+</tr></table>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0in"/><td style="width: 0.25in; text-align: left">**</td><td style="text-align: justify">Furnished herewith.</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"></p>
+
+<!-- Field: Page; Sequence: 6 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->5<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in; background-color: white">Pursuant
+to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the
+undersigned hereunto duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr>
+    <td style="vertical-align: top">&#160;</td>
+    <td colspan="2"><span style="font-size: 10pt"><b>ETHZILLA CORPORATION</b></span></td></tr>
+  <tr>
+    <td style="width: 60%">&#160;</td>
+    <td style="width: 4%">&#160;</td>
+    <td style="width: 36%">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-size: 10pt">Date: October 8, 2025</span></td>
+    <td><span style="font-size: 10pt">By:&#160;</span></td>
+    <td style="border-bottom: black 1.5pt solid"><span style="font-size: 10pt"><i>/s/ McAndrew Rudisill</i></span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt">McAndrew Rudisill</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt">Chief Executive Officer</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">6</p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 1.5pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJx1kUFuwjAQRU/AHUZRlwiciBYpuzaiqCq0ESDa7TRMSkTiicZOCkfqLes4oLJoLUuWPfP+/yMHwTCY82NRksD7w2oBG6rqEi3BinIS0hm5juTpOQZ3ruizMFZQW3+9gAk7hhxzN4rQvfvOtjC0iyFUYzUdR7egpvFkAukyGHT1hHVe7EjbAktAvYNUuJaCLMqpV9jgkTVXJ++0JTEFayc3Un35GyIVRvDCLX6xHAwsFkkwGPo1CObCTe26ZkdLuiNhVlLl7ExP/26fJmuM5Sp+Q+lmMxtOG8n2aGi9RyHzmrsJK9Zry9lhSdUHiYNCFUWhuj/nubBgGeozDcbjwDn0AuAV/nC+0k9Rtlg2pEZKqTAl8Rn+cb2WHUKNAm3Hwk1PQ+1+x4e4eP4ABJGV1Q== -->
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

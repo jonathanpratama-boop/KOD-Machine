@@ -1,0 +1,563 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2025" xmlns:us-gaap="http://fasb.org/us-gaap/2025" xmlns:us-roles="http://fasb.org/us-roles/2025" xmlns:country="http://xbrl.sec.gov/country/2025" xmlns:srt="http://fasb.org/srt/2025" xmlns:vyne="http://menlotherapeutics.com/20260716">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02E_US%2DGAAP%2D2025 -->
+<!-- Field: Set; Name: xdx; ID: xdx_031_vyne_menlotherapeutics.com_20260716 -->
+<!-- Field: Set; Name: xdx; ID: xdx_04D_20260716_20260716 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_053_edei%2D%2DEntityCentralIndexKey_0001566044 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2026-07-16" id="Fact000003" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2026-07-16" id="Fact000004" name="dei:EntityCentralIndexKey">0001566044</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="vyne-20260716.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2026-07-16">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001566044</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2026-07-16</xbrli:startDate>
+        <xbrli:endDate>2026-07-16</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="margin-top: 0; margin-bottom: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0; margin-bottom: 0; width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>UNITED STATES</b></p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Washington, D.C. 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+
+
+
+
+
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>FORM <span id="xdx_90E_edei--DocumentType_c20260716__20260716_zjKzukud52i3"><ix:nonNumeric contextRef="AsOf2026-07-16" id="Fact000009" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span style="font-size: 10pt">&#160;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Pursuant to Section 13 or 15(d) of the</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Securities Exchange Act of 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Date of Report (Date of earliest event reported):
+<span id="xdx_907_edei--DocumentPeriodEndDate_c20260716__20260716_zx8oVxvi3oRb"><ix:nonNumeric contextRef="AsOf2026-07-16" format="ixt:datemonthdayyearen" id="Fact000010" name="dei:DocumentPeriodEndDate">July 16, 2026</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 24pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span id="xdx_903_edei--EntityRegistrantName_c20260716__20260716_z3ldBbRClzog"><b><ix:nonNumeric contextRef="AsOf2026-07-16" id="Fact000011" name="dei:EntityRegistrantName">VYNE
+Therapeutics Inc.</ix:nonNumeric></b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Exact Name of Registrant as Specified in its
+Charter)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+<tr style="vertical-align: top">
+    <td style="padding-top: 1pt; width: 32%; text-align: center; font-size: 10pt; padding-bottom: 1pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_903_edei--EntityIncorporationStateCountryCode_c20260716__20260716_zcvfPPR8nQ3d"><ix:nonNumeric contextRef="AsOf2026-07-16" format="ixt-sec:stateprovnameen" id="Fact000012" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></b></span></td>
+    <td style="padding-top: 1pt; width: 2%; padding-bottom: 1pt">&#160;</td>
+    <td style="padding-top: 1pt; width: 32%; text-align: center; font-size: 10pt; padding-bottom: 1pt"><span id="xdx_900_edei--EntityFileNumber_c20260716__20260716_zNEMg9eBqzlg" style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><ix:nonNumeric contextRef="AsOf2026-07-16" id="Fact000013" name="dei:EntityFileNumber">001-38356</ix:nonNumeric></b></span></td>
+    <td style="padding-top: 1pt; width: 2%; padding-bottom: 1pt">&#160;</td>
+    <td style="padding-top: 1pt; width: 32%; text-align: center; font-size: 10pt; padding-bottom: 1pt"><span id="xdx_905_edei--EntityTaxIdentificationNumber_c20260716__20260716_zo08S0l6QeLf" style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><ix:nonNumeric contextRef="AsOf2026-07-16" id="Fact000014" name="dei:EntityTaxIdentificationNumber">45-3757789</ix:nonNumeric></b></span></td></tr>
+<tr style="vertical-align: top">
+    <td style="text-align: center; padding-top: 1pt; padding-bottom: 1pt">(State
+or Other Jurisdiction<br/>
+of Incorporation)</td>
+    <td style="padding-top: 1pt; padding-bottom: 1pt">&#160;</td>
+    <td style="text-align: center; padding-top: 1pt; padding-bottom: 1pt">(Commission<br/>
+File
+Number)</td>
+    <td style="padding-top: 1pt; padding-bottom: 1pt">&#160;</td>
+    <td style="text-align: center; padding-top: 1pt; padding-bottom: 1pt">(IRS
+Employer<br/>
+Identification No.)</td></tr>
+</table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr>
+    <td style="vertical-align: top; font-size: 10pt; text-align: center; width: 49%"><b><span id="xdx_900_edei--EntityAddressAddressLine1_c20260716__20260716_zWL2Z42yJ5Gh"><ix:nonNumeric contextRef="AsOf2026-07-16" id="Fact000015" name="dei:EntityAddressAddressLine1">P.O.&#160;Box 125</ix:nonNumeric></span>, <span id="xdx_909_edei--EntityAddressCityOrTown_c20260716__20260716_zksHLLAvsXj4"><ix:nonNumeric contextRef="AsOf2026-07-16" id="Fact000016" name="dei:EntityAddressCityOrTown">Stewartsville</ix:nonNumeric></span>, <span id="xdx_906_edei--EntityAddressStateOrProvince_c20260716__20260716_zEBGli8JCzN1"><ix:nonNumeric contextRef="AsOf2026-07-16" id="Fact000017" name="dei:EntityAddressStateOrProvince">NJ</ix:nonNumeric></span></b></td>
+    <td style="vertical-align: bottom; font-size: 10pt; width: 2%">&#160;</td>
+    <td style="text-align: center; vertical-align: top; width: 49%"><b><span id="xdx_904_edei--EntityAddressPostalZipCode_c20260716__20260716_z6MUjd5K7gH9"><ix:nonNumeric contextRef="AsOf2026-07-16" id="Fact000018" name="dei:EntityAddressPostalZipCode">08886</ix:nonNumeric></span></b></td></tr>
+  <tr>
+    <td style="vertical-align: top; font-size: 10pt; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(Address of Principal Executive Offices)</span></td>
+    <td style="vertical-align: bottom; font-size: 10pt">&#160;</td>
+    <td style="text-align: center; vertical-align: top">(Zip Code)</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Registrant&#8217;s telephone number, including area code: (<span id="xdx_90F_edei--CityAreaCode_c20260716__20260716_zWOslaAEegb7"><ix:nonNumeric contextRef="AsOf2026-07-16" id="Fact000019" name="dei:CityAreaCode">800</ix:nonNumeric></span>) <span id="xdx_904_edei--LocalPhoneNumber_c20260716__20260716_zGrspdN0IWV2"><ix:nonNumeric contextRef="AsOf2026-07-16" id="Fact000020" name="dei:LocalPhoneNumber">775-7936</ix:nonNumeric></span></p>
+
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: left">&#160;</p>
+
+
+
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Check the appropriate box below if the Form&#160;8-K&#160;filing
+is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" border="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0pt; margin-bottom: 0pt">
+<tr style="vertical-align: top">
+    <td style="text-align: left; width: 0.25in"><span id="xdx_901_edei--WrittenCommunications_c20260716__20260716_zaEV2lKL13C4" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2026-07-16" format="ixt:booleanfalse" id="Fact000021" name="dei:WrittenCommunications">&#168;</ix:nonNumeric></span></td>
+    <td>Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</td></tr>
+
+<tr style="vertical-align: top">
+    <td style="text-align: left">&#160;</td>
+    <td>&#160;</td></tr>
+<tr style="vertical-align: top">
+    <td style="text-align: left"><span id="xdx_90B_edei--SolicitingMaterial_c20260716__20260716_zo5qx1pXOB95" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2026-07-16" format="ixt:booleanfalse" id="Fact000022" name="dei:SolicitingMaterial">&#168;</ix:nonNumeric></span></td>
+    <td>Soliciting material pursuant to Rule&#160;14a-12&#160;under the Exchange Act (17
+    CFR&#160;240.14a-12)</td></tr>
+
+<tr style="vertical-align: top">
+    <td style="text-align: left">&#160;</td>
+    <td>&#160;</td></tr>
+<tr style="vertical-align: top">
+    <td style="text-align: left"><span id="xdx_908_edei--PreCommencementTenderOffer_c20260716__20260716_zNipNItoefch" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2026-07-16" format="ixt:booleanfalse" id="Fact000023" name="dei:PreCommencementTenderOffer">&#168;</ix:nonNumeric></span></td>
+    <td>Pre-commencement&#160;communications pursuant to Rule&#160;14d-2(b)&#160;under
+    the Exchange Act (17 CFR&#160;240.14d-2(b))</td></tr>
+
+<tr style="vertical-align: top">
+    <td style="text-align: left">&#160;</td>
+    <td>&#160;</td></tr>
+<tr style="vertical-align: top">
+    <td style="text-align: left"><span id="xdx_90D_edei--PreCommencementIssuerTenderOffer_c20260716__20260716_zWgJXhQUiFpc" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2026-07-16" format="ixt:booleanfalse" id="Fact000024" name="dei:PreCommencementIssuerTenderOffer">&#168;</ix:nonNumeric></span></td>
+    <td>Pre-commencement&#160;communications pursuant to Rule&#160;13e-4(c)&#160;under
+    the Exchange Act (17 CFR&#160;240.13e-4(c))</td></tr>
+</table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">Securities registered pursuant to Section 12(b) of the Securities Exchange Act of 1934:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+<tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1pt solid; white-space: nowrap; padding-bottom: 1pt; text-align: center; font-size: 10pt; width: 34%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Title
+    of each class</b></span></td>
+    <td style="font-size: 10pt; width: 2%">&#160;</td>
+    <td style="border-bottom: black 1pt solid; padding-bottom: 1pt; text-align: center; font-size: 10pt; width: 28%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Trading<br/>
+symbol</b></span></td>
+    <td style="font-size: 10pt; width: 2%">&#160;</td>
+    <td style="border-bottom: black 1pt solid; text-align: center; width: 34%"><b>Name
+of each exchange<br/>
+on which registered</b></td></tr>
+<tr>
+    <td style="vertical-align: top; text-align: center; font-size: 10pt"><span id="xdx_905_edei--Security12bTitle_c20260716__20260716_zgR37N7dfkp2" style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><ix:nonNumeric contextRef="AsOf2026-07-16" id="Fact000025" name="dei:Security12bTitle">Common
+    Stock, $0.0001 par value</ix:nonNumeric></b></span></td>
+    <td style="vertical-align: bottom; font-size: 10pt">&#160;</td>
+    <td style="vertical-align: top; text-align: center; font-size: 10pt"><span id="xdx_900_edei--TradingSymbol_c20260716__20260716_zuBeDzdQ7ro1" style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><ix:nonNumeric contextRef="AsOf2026-07-16" id="Fact000026" name="dei:TradingSymbol">VYNE</ix:nonNumeric></b></span></td>
+    <td style="vertical-align: bottom; font-size: 10pt">&#160;</td>
+    <td style="vertical-align: top; text-align: center; font-size: 10pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_902_edei--SecurityExchangeName_c20260716__20260716_zhLPQ00aqnkg"><ix:nonNumeric contextRef="AsOf2026-07-16" format="ixt-sec:exchnameen" id="Fact000027" name="dei:SecurityExchangeName">The Nasdaq Stock Market LLC</ix:nonNumeric></span></b></span></td></tr>
+</table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Indicate by check mark whether the registrant is an emerging growth
+company as defined in Rule&#160;405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or Rule&#160;12b-2&#160;of the Securities
+Exchange Act of 1934&#160;(&#167;240.12b-2&#160;of this chapter).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Emerging growth company <span id="xdx_90C_edei--EntityEmergingGrowthCompany_c20260716__20260716_z3DzwOIN1or4" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2026-07-16" format="ixt:booleanfalse" id="Fact000028" name="dei:EntityEmergingGrowthCompany">&#168;</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">If an emerging growth company, indicate by check mark if the registrant
+has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant
+to Section&#160;13(a)&#160;of the Exchange Act. <span style="font-family: Wingdings">&#168;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 3pt; margin-bottom: 12pt; width: 100%"><div style="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">As previously disclosed, on December&#160;17,
+2025, VYNE Therapeutics Inc., a Delaware corporation (&#8220;VYNE&#8221; or the &#8220;Company&#8221;), entered into an Agreement and
+Plan of Merger and Reorganization (as amended, the &#8220;Merger Agreement&#8221;), by and among VYNE, Yellow Merger Sub Corp., a Delaware
+corporation and a wholly owned subsidiary of VYNE (&#8220;Merger Sub&#8221;), and Yarrow Bioscience,&#160;Inc., a Delaware corporation
+(&#8220;Yarrow&#8221;), pursuant to which, and subject to the satisfaction or waiver of the conditions set forth in the Merger Agreement,
+among other things, Merger Sub will merge with and into Yarrow, with Yarrow continuing as a wholly owned subsidiary of VYNE and the surviving
+corporation of the merger (the &#8220;Merger&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Item 5.07 Submission of Matters to a Vote of Security Holders.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">In connection with the Merger, VYNE held a special
+meeting in lieu of the annual meeting of VYNE stockholders on July&#160;16, 2026 (the &#8220;Special Meeting&#8221;), at which the Company&#8217;s
+stockholders voted on the proposals set forth below relating to the Merger Agreement. The proposals are described in detail in the Company&#8217;s
+definitive proxy statement/prospectus filed on Form&#160;S-4 with the Securities and Exchange Commission (the &#8220;SEC&#8221;), most
+recently amended on June&#160;3, 2026 and declared effective on June&#160;15, 2026 (as amended, the &#8220;Proxy Statement&#8221;) and
+first mailed to the Company&#8217;s stockholders on June&#160;15, 2026. The final voting results regarding each proposal are set forth
+below. There were 33,385,055 shares of common stock of VYNE, par value $0.0001 per share (the &#8220;VYNE Common Stock&#8221;), outstanding
+and entitled to vote on June&#160;5, 2026, the record date for the Special Meeting, and 25,949,357 shares of the VYNE Common Stock were
+represented in person or by proxy at the Special Meeting, which number constituted a quorum.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Proposal No.&#160;1</b>: To approve the issuance
+of shares of VYNE Common Stock (including the shares of VYNE Common Stock issuable upon exercise of VYNE pre-funded warrants) to stockholders
+of Yarrow pursuant to the terms of the Merger Agreement, as more fully described in the Proxy Statement , which will (i)&#160;represent
+more than 20% of the shares of VYNE Common Stock outstanding immediately prior to the Merger under Nasdaq Listing Rule&#160;5635(a)&#160;and
+(ii)&#160;result in a change of control under Nasdaq Listing Rule&#160;5635(b).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Votes For</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Votes Against</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Abstentions</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Broker Non-Votes</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 25%; text-align: center">15,915,017</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 24%; text-align: center">137,159</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 24%; text-align: center">7,840</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 24%; text-align: center">9,889,341</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Proposal No.&#160;2</b>: To approve an amendment
+to the amended and restated certificate of incorporation of VYNE (the &#8220;VYNE Charter&#8221;) to effect a reverse stock split of issued
+and outstanding VYNE Common Stock at a ratio determined by the VYNE board of directors and agreed to by Yarrow, of one new share of VYNE
+Common Stock for every 10 to 70 shares (or any number in between) of outstanding VYNE Common Stock, in the form attached as Annex C to
+the Proxy Statement.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-left: auto; border-collapse: collapse; width: 85%; margin-right: auto">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Votes For</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Votes Against</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Abstentions</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 33%; text-align: center">25,389,760</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 33%; text-align: center">550,694</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 32%; text-align: center">8,903</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Proposal No.&#160;3</b>: To approve an amendment
+to the VYNE Charter to increase the number of shares of VYNE Common Stock that VYNE is authorized to issue from 150,000,000 to 300,000,000,
+in the form attached as Annex D to the Proxy Statement.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-left: auto; border-collapse: collapse; width: 85%; margin-right: auto">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Votes For</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Votes Against</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Abstentions</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 33%; text-align: center">23,921,348</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 33%; text-align: center">2,013,526</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 32%; text-align: center">14,483</td></tr>
+  <tr style="vertical-align: bottom; background-color: White">
+    <td style="font-size: 10pt">&#160;</td><td style="font-size: 10pt">&#160;</td>
+    <td style="font-size: 10pt">&#160;</td><td style="font-size: 10pt">&#160;</td>
+    <td style="font-size: 10pt">&#160;</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Proposal No.&#160;4</b>: <span style="color: #231f20">To approve
+the Yarrow Bioscience,&#160;Inc. 2026 Stock Incentive Plan</span>.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Votes For</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Votes Against</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Abstentions</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Broker Non-Votes</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 25%; text-align: center">12,691,384</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 24%; text-align: center">3,358,164</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 24%; text-align: center">10,468</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 24%; text-align: center">9,889,341</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 2 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Proposal No.&#160;5</b>: <span style="color: #231f20">To
+approve the Yarrow Bioscience,&#160;Inc. 2026 Employee Stock Purchase Plan</span>.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Votes For</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Votes Against</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Abstentions</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Broker Non-Votes</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 25%; text-align: center">13,131,018</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 24%; text-align: center">2,909,493</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 24%; text-align: center">19,505</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 24%; text-align: center">9,889,341</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Proposal No.&#160;6</b>: <span style="color: #231f20">To elect the
+Class&#160;II director, Sharon Barbari, to the VYNE board of directors to hold office until VYNE&#8217;s 2029 annual meeting of stockholders
+and until her successor has been duly elected and qualified, or until her earlier death, resignation or removal; provided that if the
+Merger is consummated, the approval of Proposal No.&#160;6 will only have an effect until the completion of the Merger because the composition
+of the VYNE board of directors will be reconstituted upon completion of the Merger, in accordance with the Merger Agreement</span>.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-left: auto; border-collapse: collapse; width: 85%; margin-right: auto">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Votes For</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Votes Withheld</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Broker Non-Votes</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 33%; text-align: center">13,507,888</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 33%; text-align: center">2,552,128</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 32%; text-align: center">9,889,341</td></tr>
+  <tr style="vertical-align: bottom; background-color: White">
+    <td style="font-size: 10pt">&#160;</td><td style="font-size: 10pt">&#160;</td>
+    <td style="font-size: 10pt">&#160;</td><td style="font-size: 10pt">&#160;</td>
+    <td style="font-size: 10pt">&#160;</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Proposal No.&#160;7</b>: To ratify the appointment
+of Baker Tilly US, LLP as VYNE&#8217;s independent registered public accounting firm for fiscal year ending December&#160;31, 2026.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-left: auto; border-collapse: collapse; width: 85%; margin-right: auto">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Votes For</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Votes Against</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Abstentions</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 33%; text-align: center">25,838,022</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 33%; text-align: center">87,181</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 32%; text-align: center">24,154</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Proposal No.&#160;8</b>:	&#160;&#160;&#160;&#160;&#160;To
+approve, on an advisory basis, certain compensation arrangements for VYNE&#8217;s named executive officers that are based on or otherwise
+relate to the Merger.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Votes For</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Votes Against</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Abstentions</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Broker Non-Votes</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 25%; text-align: center">15,690,875</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 24%; text-align: center">247,872</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 24%; text-align: center">121,269</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 24%; text-align: center">9,889,341</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Proposal No.&#160;9</b>: To approve, on an
+advisory basis, the compensation of VYNE&#8217;s named executive officers, as disclosed in the Proxy Statement.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Votes For</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Votes Against</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Abstentions</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Broker Non-Votes</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 25%; text-align: center">15,713,654</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 24%; text-align: center">245,606</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 24%; text-align: center">100,756</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 24%; text-align: center">9,889,341</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Proposal No.&#160;10</b>: To approve an adjournment
+of the Special Meeting, if necessary, to solicit additional proxies if there are not sufficient votes in favor of Proposal Nos. 1 and
+2.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">At the Special Meeting, (i)&#160;Proposal Nos. 1, 2, 3, 4, 5, 7, 8
+and 9 were approved by the affirmative vote of a majority of the votes properly cast for and against by the holders of VYNE Common Stock
+at the Special Meeting and (ii)&#160;the Class&#160;II director nominee under Proposal No.&#160;6 was elected by the affirmative vote
+of a plurality of the votes properly cast by the holders of VYNE Common Stock entitled to vote at the Special Meeting. As there were sufficient
+votes to approve Proposal No.&#160;1 and Proposal No.&#160;2 at the time of the Special Meeting, Proposal No.&#160;10 was not presented
+to stockholders.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 3 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>No Offer or Solicitation</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">This Current Report on Form&#160;8-K is not
+intended to and does not constitute (i)&#160;a solicitation of a proxy, consent or approval with respect to any securities or in
+respect of the proposed transactions or (ii)&#160;an offer to sell or the solicitation of an offer to subscribe for or buy or an
+invitation to purchase or subscribe for any securities pursuant to the proposed transactions or otherwise, nor shall there be any
+sale, issuance or transfer of securities in any jurisdiction in contravention of applicable law. No offer of securities shall be
+made except by means of a prospectus meeting the requirements of the Securities Act of 1933, as amended, or an exemption therefrom.
+Subject to certain exceptions to be approved by the relevant regulators or certain facts to be ascertained, the public offer will
+not be made directly or indirectly, in or into any jurisdiction where to do so would constitute a violation of the laws of such
+jurisdiction, or by use of the mails or by any means or instrumentality (including without limitation, facsimile transmission,
+telephone and the internet) of interstate or foreign commerce, or any facility of a national securities exchange, of any such
+jurisdiction.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">NEITHER THE SEC NOR ANY STATE SECURITIES COMMISSION
+HAS APPROVED OR DISAPPROVED OF THE SECURITIES OR DETERMINED IF THIS CURRENT REPORT ON FORM&#160;8-K IS TRUTHFUL OR COMPLETE.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 4 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Pursuant to the requirements of the Securities
+Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="width: 50%">&#160;</td>
+    <td style="width: 50%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>VYNE THERAPEUTICS INC.</b></span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  <tr style="vertical-align: bottom">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Date: July&#160;17, 2026</span></td>
+    <td style="border-bottom: black 1pt solid"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">/s/ Mutya Harsch</span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td>&#160;</td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Mutya Harsch</span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td>&#160;</td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Chief Legal Officer and General Counsel</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 5; Options: Last -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxFjU0KwjAQhU/QOwxZS22iLuzSokWsIkXEbbSjBNtMmcS/I3lLY4s4DAzDe997QgxETgtTI8NhVhaww6attUco8YyM9oTBkS1XKYRb4sU4z9r67v2BGQUGAzOJ1egYhM56Nw6rFJLpUMqhGkOiUiVhuxbRV8/Ink2F1htdg7YVbJlaNug1v/qEnX6SpebVVe2RnSGbgoyTXn6DSqSCDd31g/jqoCgyEQ26iUTOdGuDa/70aL8kzGtsQp3r6f9GHwVcSoo= -->
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

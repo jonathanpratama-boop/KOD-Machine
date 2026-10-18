@@ -1,0 +1,546 @@
+<html xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:srt="http://fasb.org/srt/2023" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2020-02-12" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:us-gaap="http://fasb.org/us-gaap/2023" xmlns:dei="http://xbrl.sec.gov/dei/2023" xmlns:country="http://xbrl.sec.gov/country/2023" xmlns:currency="http://xbrl.sec.gov/currency/2023" xmlns:dtr-types="http://www.xbrl.org/dtr/type/2022-03-31" xmlns:utr="http://www.xbrl.org/2009/utr" xmlns:naics="http://xbrl.sec.gov/naics/2023" xmlns:sic="http://xbrl.sec.gov/sic/2023" xmlns:stpr="http://xbrl.sec.gov/stpr/2023" xmlns:exch="http://xbrl.sec.gov/exch/2023" xmlns:cef="http://xbrl.sec.gov/cef/2023" xmlns:femy="http://femasys.com/20230906" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title></title>
+    <!-- Licensed to: Broadridge
+         Document created using Broadridge PROfile 23.7.1.5162
+         Copyright 1995 - 2023 Broadridge -->
+    <meta http-equiv="Content-Type" content="text/html" />
+</head>
+
+<body style="font-family: 'Times New Roman'; font-size: 10pt; text-align: left; color: #000000; background-color: #ffffff;">
+<div id="DSPFiXBRLHidden" style="display: none;"><ix:header><ix:hidden><ix:nonNumeric name="dei:AmendmentFlag" id="Fact_3d97293324cf4e8aa2e78eabc3afcfa6" contextRef="c20230906to20230906" format="ixt:fixed-false">false</ix:nonNumeric><ix:nonNumeric name="dei:EntityCentralIndexKey" id="Fact_0d4fbd612dde4cbdb5b78877c943c0d3" contextRef="c20230906to20230906">0001339005</ix:nonNumeric></ix:hidden><ix:references><link:schemaRef xlink:href="femy-20230906.xsd" xlink:type="simple"></link:schemaRef></ix:references><ix:resources><xbrli:context id="c20230906to20230906"><xbrli:entity><xbrli:identifier scheme="http://www.sec.gov/CIK">0001339005</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2023-09-06</xbrli:startDate><xbrli:endDate>2023-09-06</xbrli:endDate></xbrli:period></xbrli:context></ix:resources></ix:header></div>
+
+  <div><span style="font-family: 'Times New Roman'; font-size: 10pt;"> </span></div>
+
+  <div>
+    <hr style="border: none; border-bottom: 1px solid black; border-top: 4px solid black; height: 10px; color: #ffffff; background-color: #ffffff; text-align: center; margin-left: auto; margin-right: auto;" />
+    <div>
+      <div style="text-align: center;"><span style="font-weight: bold; font-size: 14pt;">UNITED STATES</span></div>
+
+      <div>
+        <div style="text-align: center; color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: 14pt; font-weight: bold;">SECURITIES AND EXCHANGE COMMISSION</div>
+
+        <div style="text-align: center; color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: 12pt; font-weight: bold;">Washington, D.C. 20549</div>
+
+      </div>
+
+      <div>
+        <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman'; color: #000000;"> </span><span style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+          </span></div>
+
+      </div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 18pt;">
+        <div style="text-align: center; color: rgb(0, 0, 0); font-weight: bold;">FORM <ix:nonNumeric name="dei:DocumentType" id="Fact_bd3ba0f6b6bd406d92b10ec2daf1fac8" contextRef="c20230906to20230906">8-K</ix:nonNumeric></div>
+
+      </div>
+
+      <div>
+        <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman'; color: #000000;"> </span><span style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+          </span></div>
+
+      </div>
+
+      <div>
+        <div style="text-align: center; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">CURRENT REPORT</div>
+
+        <div style="text-align: center; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Pursuant to Section 13 or 15(d)</div>
+
+        <div style="text-align: center; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">of the Securities Exchange Act of 1934</div>
+
+      </div>
+
+      <div>
+        <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman'; color: #000000;"> </span><span style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+          </span></div>
+
+      </div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;">
+        <div style="text-align: center; color: rgb(0, 0, 0); font-weight: bold;">Date of Report (Date of earliest event reported): <ix:nonNumeric name="dei:DocumentPeriodEndDate" id="Fact_aa87ed5bf33f4e4e9f10cd4a7eac4b5f" contextRef="c20230906to20230906" format="ixt:date-monthname-day-year-en">September 6, 2023</ix:nonNumeric></div>
+
+      </div>
+
+      <div>
+        <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman'; color: #000000;"> </span><span style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+          </span></div>
+
+      </div>
+
+      <div>
+        <div style="text-align: center; color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: 24pt; font-weight: bold;"><ix:nonNumeric name="dei:EntityRegistrantName" id="Fact_5d8e1cf1a5944fa49a5a88d552c16611" contextRef="c20230906to20230906">Femasys Inc.</ix:nonNumeric><br />
+        </div>
+
+        <div style="text-align: center; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">(Exact name of registrant as specified in its charter)</div>
+
+        <div style="text-align: center; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;"> <br />
+        </div>
+
+      </div>
+
+      <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; border-collapse: collapse; text-align: left; color: #000000;">
+
+
+  <tr>
+
+    <td style="width: 33.42%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; color: rgb(0, 0, 0); font-weight: bold;"><ix:nonNumeric name="dei:EntityIncorporationStateCountryCode" id="Fact_a633e93a2f6349b0b7a8fb72a0fb4d33" contextRef="c20230906to20230906" format="ixt-sec:stateprovnameen">Delaware</ix:nonNumeric><br />
+              </div>
+            </td>
+
+    <td style="width: 34%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; color: rgb(0, 0, 0); font-weight: bold;"><ix:nonNumeric name="dei:EntityFileNumber" id="Fact_5dee82498601496c9240397d20cbcf10" contextRef="c20230906to20230906">001-40492</ix:nonNumeric><br />
+              </div>
+            </td>
+
+    <td style="width: 33.17%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; color: rgb(0, 0, 0); font-weight: bold;"><ix:nonNumeric name="dei:EntityTaxIdentificationNumber" id="Fact_9ba9e2f675124921a67a96421643a8de" contextRef="c20230906to20230906">11-3713499</ix:nonNumeric><br />
+              </div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 33.42%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; color: rgb(0, 0, 0); font-weight: bold;">(State or other jurisdiction of incorporation)</div>
+            </td>
+
+    <td style="width: 34%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; color: rgb(0, 0, 0); font-weight: bold;">(Commission File Number)</div>
+            </td>
+
+    <td style="width: 33.17%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; color: rgb(0, 0, 0); font-weight: bold;">(IRS Employer Identification No.)</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;">
+        <div><br />
+        </div>
+
+      </div>
+
+      <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; border-collapse: collapse; text-align: left; color: #000000;">
+
+
+  <tr>
+
+    <td rowspan="1" style="width: 49%; vertical-align: top; font-weight: bold; text-align: center;"><ix:nonNumeric name="dei:EntityAddressAddressLine1" id="Fact_8e70342c3d2442acb5631876544ab01f" contextRef="c20230906to20230906">3950 Johns Creek Court</ix:nonNumeric>, <ix:nonNumeric name="dei:EntityAddressAddressLine2" id="Fact_ae4d627e1e1640898b06e102f6c8356e" contextRef="c20230906to20230906">Suite 100</ix:nonNumeric></td>
+
+    <td rowspan="1" style="width: 2%; vertical-align: bottom; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</td>
+
+    <td rowspan="1" style="width: 49%; vertical-align: bottom; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 49%; vertical-align: top;">
+              <div style="text-align: center; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;"><ix:nonNumeric name="dei:EntityAddressCityOrTown" id="Fact_da68428326484dd89166524a3edd3092" contextRef="c20230906to20230906">Suwanee</ix:nonNumeric>, <ix:nonNumeric name="dei:EntityAddressStateOrProvince" id="Fact_8ce35641d3694b66b228661303cb48e3" contextRef="c20230906to20230906" format="ixt-sec:stateprovnameen">Georgia</ix:nonNumeric></div>
+            </td>
+
+    <td style="width: 2%; vertical-align: bottom; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 49%; vertical-align: bottom; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; color: rgb(0, 0, 0); font-weight: bold;"><ix:nonNumeric name="dei:EntityAddressPostalZipCode" id="Fact_15e2d7714a3e4c04847b553fda015cf3" contextRef="c20230906to20230906">30024</ix:nonNumeric><br />
+              </div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 49%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; color: rgb(0, 0, 0); font-weight: bold;">(Address of principal executive offices)</div>
+            </td>
+
+    <td style="width: 2%; vertical-align: bottom; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 49%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; color: rgb(0, 0, 0); font-weight: bold;">(Zip Code)</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: center; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">(<ix:nonNumeric name="dei:CityAreaCode" id="Fact_3ec06f99149f42838b69954f551e0c86" contextRef="c20230906to20230906">770</ix:nonNumeric>) <ix:nonNumeric name="dei:LocalPhoneNumber" id="Fact_4c34e2ee7a5449ff9b431ea3153de660" contextRef="c20230906to20230906">500-3910</ix:nonNumeric></div>
+
+      <div style="text-align: center; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">(Registrant&#8217;s telephone number, including area code)</div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: center; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">n/a</div>
+
+      <div style="text-align: center; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">(Former name or former address, if changed since last report)</div>
+
+      <div>
+        <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman'; color: #000000;"> </span><span style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+          </span></div>
+
+        <div style="text-align: left; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;">Check the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the
+          following provisions (see General Instructions A.2. below):</div>
+
+      </div>
+
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 22.5pt; vertical-align: top; color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: 10pt;"><ix:nonNumeric name="dei:WrittenCommunications" id="Fact_b39f4b404ae144b9a312ee283e4c40d8" contextRef="c20230906to20230906" format="ixt-sec:boolballotbox">&#x2610;</ix:nonNumeric></td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="color: rgb(0, 0, 0);">Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 22.5pt; vertical-align: top; color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: 10pt;"><ix:nonNumeric name="dei:SolicitingMaterial" id="Fact_4f3c6557ac84482f9a70c2204617d26e" contextRef="c20230906to20230906" format="ixt-sec:boolballotbox">&#x2610;</ix:nonNumeric></td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="color: rgb(0, 0, 0);">Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 22.5pt; vertical-align: top; color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: 10pt;"><ix:nonNumeric name="dei:PreCommencementTenderOffer" id="Fact_0766f771cdf640289040ee55876d84c9" contextRef="c20230906to20230906" format="ixt-sec:boolballotbox">&#x2610;</ix:nonNumeric></td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="color: rgb(0, 0, 0);">Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 22.5pt; vertical-align: top; color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: 10pt;"><ix:nonNumeric name="dei:PreCommencementIssuerTenderOffer" id="Fact_31ec2f2383b8486ca7c17dc1177f3a4f" contextRef="c20230906to20230906" format="ixt-sec:boolballotbox">&#x2610;</ix:nonNumeric></td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="color: rgb(0, 0, 0);">Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div>
+        <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman'; color: #000000;"> </span><span style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+          </span></div>
+
+        <div style="text-align: left; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;">Securities registered pursuant to Section 12(b) of the Exchange Act:</div>
+
+      </div>
+
+      <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; border-collapse: collapse; text-align: left; color: #000000;">
+
+
+  <tr>
+
+    <td style="width: 55.92%; vertical-align: bottom; border-bottom: 2px solid rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: 10pt; white-space: nowrap;">
+              <div style="text-align: center; color: rgb(0, 0, 0); font-weight: bold;">Title of each class</div>
+            </td>
+
+    <td style="width: 1.28%; vertical-align: bottom; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 20.76%; vertical-align: bottom; border-bottom: #000000 2px solid;">
+              <div style="text-align: center; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Trading</div>
+              <div style="text-align: center; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Symbol(s)</div>
+            </td>
+
+    <td style="width: 1.28%; vertical-align: bottom; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 20.76%; vertical-align: bottom; border-bottom: #000000 2px solid;">
+              <div style="text-align: center; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Name of each exchange</div>
+              <div style="text-align: center; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">on which registered</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 55.92%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; color: rgb(0, 0, 0); font-weight: bold;"><ix:nonNumeric name="dei:Security12bTitle" id="Fact_8fe286835b4e43d49eaa602e370575f6" contextRef="c20230906to20230906">Common Stock, par value $0.001 per share</ix:nonNumeric><br />
+              </div>
+            </td>
+
+    <td style="width: 1.28%; vertical-align: bottom; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 20.76%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; color: rgb(0, 0, 0); font-weight: bold;"><ix:nonNumeric name="dei:TradingSymbol" id="Fact_4b5650a63f564aa481d3aa2ac98da6e7" contextRef="c20230906to20230906">FEMY</ix:nonNumeric><br />
+              </div>
+            </td>
+
+    <td style="width: 1.28%; vertical-align: bottom; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 20.76%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; color: rgb(0, 0, 0); font-weight: bold;"><ix:nonNumeric name="dei:SecurityExchangeName" id="Fact_c0e05f8ccdf24b828ec8cc38ea03809c" contextRef="c20230906to20230906" format="ixt-sec:exchnameen">The Nasdaq Stock Market LLC</ix:nonNumeric><br />
+              </div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div>
+        <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman'; color: #000000;"> </span><span style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+          </span></div>
+
+        <div style="text-align: left; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;">Indicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167; 230.405 of this
+          chapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (&#167; 240.12b-2 of this chapter).</div>
+
+        <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman'; color: #000000;"> </span><span style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+          </span></div>
+
+        <div style="text-align: left; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;">Emerging growth company <ix:nonNumeric name="dei:EntityEmergingGrowthCompany" id="Fact_4b3ad683f8b3433caca5652b2932c5a5" contextRef="c20230906to20230906" format="ixt-sec:boolballotbox">&#x2612;</ix:nonNumeric></div>
+
+        <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman'; color: #000000;"> </span><span style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+          </span></div>
+
+        <div style="text-align: left; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;">If an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new
+          or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. <ix:nonNumeric name="dei:EntityExTransitionPeriod" id="Fact_d3e12aed065145229f6e600cce0888b9" contextRef="c20230906to20230906" format="ixt-sec:boolballotbox">&#x2612;</ix:nonNumeric></div>
+
+        <div style="text-align: left; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;"> <br />
+        </div>
+
+        <div style="text-align: left; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;">
+          <hr style="border: none; border-bottom: 4px solid black; border-top: 1px solid black; height: 10px; color: #ffffff; background-color: #ffffff; text-align: center; margin-left: auto; margin-right: auto;" /> </div>
+
+      </div>
+
+      <div style="clear: both; margin-top: 10pt; margin-bottom: 10pt;" class="BRPFPageBreakArea">
+        <div style="page-break-after: always;" class="BRPFPageBreak">
+          <hr style="margin: 4px 0px; width: 100%; border-width: 0; height: 2px; color: #000000; background-color: #000000; clear: both;" /></div>
+
+      </div>
+
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 54pt; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Item 5.07</td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="font-weight: bold;">Submission of Matters to a Vote of Security Holders.</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+      </div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">A Special Meeting of Stockholders of Femasys Inc. (the &#8220;<span style="font-weight: bold; font-style: italic;">Company</span>&#8221;) was held on September 6, 2023 (the &#8220;<span style="font-weight: bold; font-style: italic;">Special Meeting</span>&#8221;). At the Special Meeting, there were present, in person virtually or by proxy, holders of 6,417,397 shares of common stock, or approximately 42.58% of the total outstanding
+        shares eligible to be voted. The final voting results with respect the proposal presented at the Special Meeting is set forth below:</div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+      </div>
+
+      <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt; font-style: italic; font-weight: bold;">Proposal One &#8211; Approval of an Amendment to the Company&#8217;s Certificate of Incorporation to Provide for a Reverse Split</div>
+
+      <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> <br />
+        </span></div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">The Company&#8217;s stockholders approved an Amendment to the Company&#8217;s Certificate of Incorporation to effect, at the discretion of the board of directors, a reverse stock
+        split of Femasys&#8217;s common stock, par value $0.001 per share, at a ratio in the range of 1-for-2 to 1-for-25, with such ratio to be determined at the discretion of the board of directors at any time prior to April 28, 2024 by the following votes:</div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+      </div>
+
+      <table cellspacing="0" cellpadding="0" border="0" style="border-collapse: collapse; width: 50%; color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: 10pt; text-align: left;">
+
+
+  <tr>
+
+    <td style="width: 12%; vertical-align: top; border-bottom: 2px solid rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; margin-right: 0.8pt; font-weight: bold;">Votes For</div>
+            </td>
+
+    <td style="width: 13%; vertical-align: top; border-bottom: 2px solid rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; margin-right: 0.8pt; font-weight: bold;">Votes Against</div>
+            </td>
+
+    <td style="width: 13%; vertical-align: top; border-bottom: 2px solid rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; margin-right: 0.8pt; font-weight: bold;">Abstentions</div>
+            </td>
+
+    <td style="width: 12%; vertical-align: top; border-bottom: 2px solid rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: 10pt; white-space: nowrap;">
+              <div style="text-align: center; margin-right: 0.8pt; font-weight: bold;">Broker Non-Votes</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 12%; vertical-align: bottom; font-family: 'Times New Roman'; font-size: 10pt; background-color: rgb(204, 238, 255);">
+              <div style="text-align: center; margin-right: 0.8pt;">5,672,975</div>
+            </td>
+
+    <td style="width: 13%; vertical-align: bottom; font-family: 'Times New Roman'; font-size: 10pt; background-color: rgb(204, 238, 255);">
+              <div style="text-align: center; margin-right: 0.8pt;">689,589</div>
+            </td>
+
+    <td style="width: 13%; vertical-align: bottom; font-family: 'Times New Roman'; font-size: 10pt; background-color: rgb(204, 238, 255);">
+              <div style="text-align: center; margin-right: 0.8pt;">52,609</div>
+            </td>
+
+    <td style="width: 12%; vertical-align: bottom; font-family: 'Times New Roman'; font-size: 10pt; background-color: rgb(204, 238, 255);">
+              <div style="text-align: center; margin-right: 0.8pt;">N/A</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+      </div>
+
+      <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">Because there were sufficient votes to approve Proposal One, the Adjournment Proposal was not presented.</div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;">
+        <div><br />
+        </div>
+
+      </div>
+
+      <div style="clear: both; margin-top: 10pt; margin-bottom: 10pt;" class="BRPFPageBreakArea">
+        <div style="page-break-after: always;" class="BRPFPageBreak">
+          <hr style="margin: 4px 0px; width: 100%; border-width: 0; height: 2px; color: #000000; background-color: #000000; clear: both;" /></div>
+
+      </div>
+
+      <div>
+        <div style="text-align: center; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">SIGNATURES</div>
+
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+      </div>
+
+      <div>
+        <div style="text-align: left; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;">Pursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the
+          undersigned hereunto duly authorized.</div>
+
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+      </div>
+
+      <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; border-collapse: collapse; text-align: left; color: #000000;">
+
+
+  <tr>
+
+    <td style="width: 49.5%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;"><br />
+            </td>
+
+    <td colspan="2" style="vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0); font-weight: bold;">Femasys Inc.</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 49.5%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;"><br />
+            </td>
+
+    <td style="width: 3%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0);">By:</div>
+            </td>
+
+    <td style="width: 47%; vertical-align: top; border-bottom: 2px solid rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0);">/s/ Kathy Lee-Sepsick</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 49.5%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;"><br />
+            </td>
+
+    <td colspan="2" style="vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0);">Names: Kathy Lee-Sepsick</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 49.5%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;"><br />
+            </td>
+
+    <td colspan="2" style="vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0);">Title: Chief Executive Officer</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 49.5%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;"><br />
+            </td>
+
+    <td colspan="2" style="vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;"><br />
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 49.5%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0);">Date: September 6, 2023</div>
+            </td>
+
+    <td colspan="2" style="vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;"><br />
+            </td>
+
+  </tr>
+
+
+</table>
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+        </div>
+
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+      </div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;">
+        <hr style="height: 2px; color: #000000; background-color: #000000; text-align: center; border: none; margin-left: auto; margin-right: auto;" /></div>
+
+    </div>
+
+  </div>
+
+  <div><span style="font-family: 'Times New Roman'; font-size: 10pt;"> </span></div>
+
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

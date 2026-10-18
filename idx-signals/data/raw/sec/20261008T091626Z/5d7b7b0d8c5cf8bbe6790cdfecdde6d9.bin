@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?><edgarSubmission xmlns="http://www.sec.gov/edgar/schedule13D" xmlns:com="http://www.sec.gov/edgar/common">
+  <headerData>
+    <submissionType>SCHEDULE 13D/A</submissionType>
+    <filerInfo>
+      <filer>
+        <filerCredentials>
+          <!-- Field: Pseudo-Tag; ID: Name; Data: Li Eric -->
+          <cik>0001965905</cik>
+          <ccc>XXXXXXXX</ccc>
+        </filerCredentials>
+      </filer>
+      <liveTestFlag>LIVE</liveTestFlag>
+
+
+    </filerInfo>
+  </headerData>
+  <formData>
+    <coverPageHeader>
+      <amendmentNo>8</amendmentNo>
+      <securitiesClassTitle>Class A American Depositary Shares, Class A Ordinary Shares, par value $0.01 each</securitiesClassTitle>
+      <dateOfEvent>12/19/2025</dateOfEvent>
+      <previouslyFiledFlag>false</previouslyFiledFlag>
+      <issuerInfo>
+        <issuerCIK>0001884082</issuerCIK>
+        <issuerCUSIP>731105201</issuerCUSIP>
+        <issuerName>Polestar Automotive Holding UK PLC</issuerName>
+        <address>
+          <com:street1>Assar Gabrielssons Vag 9</com:street1>
+          <com:city>Gothenburg</com:city>
+          <com:stateOrCountry>V7</com:stateOrCountry>
+          <com:zipCode>405 31</com:zipCode>
+        </address>
+      </issuerInfo>
+      <authorizedPersons>
+        <notificationInfo>
+          <personName>Zhejiang Geely Holding Group</personName>
+          <personPhoneNum>86 (571) 2809 8282</personPhoneNum>
+          <personAddress>
+            <com:street1>No. 1760 Jiangling Road</com:street1>
+            <com:street2>Binjiang District</com:street2>
+            <com:city>Hangzhou</com:city>
+            <com:stateOrCountry>F4</com:stateOrCountry>
+            <com:zipCode>310051</com:zipCode>
+          </personAddress>
+        </notificationInfo>
+      </authorizedPersons>
+    </coverPageHeader>
+    <reportingPersons>
+      <reportingPersonInfo>
+        <reportingPersonCIK>0001965905</reportingPersonCIK>
+        <reportingPersonNoCIK>N</reportingPersonNoCIK>
+        <reportingPersonName>Eric Li</reportingPersonName>
+        <fundType>WC</fundType>
+        <fundType>OO</fundType>
+        <legalProceedings>N</legalProceedings>
+        <citizenshipOrOrganization>F4</citizenshipOrOrganization>
+        <soleVotingPower>72799747.00</soleVotingPower>
+        <sharedVotingPower>0.00</sharedVotingPower>
+        <soleDispositivePower>63831976.00</soleDispositivePower>
+        <sharedDispositivePower>0.00</sharedDispositivePower>
+        <aggregateAmountOwned>63831976.00</aggregateAmountOwned>
+        <isAggregateExcludeShares>N</isAggregateExcludeShares>
+        <percentOfClass>82.9</percentOfClass>
+        <typeOfReportingPerson>IN</typeOfReportingPerson>
+      </reportingPersonInfo>
+      <reportingPersonInfo>
+        <reportingPersonCIK>0001936654</reportingPersonCIK>
+        <reportingPersonNoCIK>N</reportingPersonNoCIK>
+        <reportingPersonName>Volvo Car Corporation</reportingPersonName>
+        <fundType>WC</fundType>
+        <fundType>OO</fundType>
+        <legalProceedings>N</legalProceedings>
+        <citizenshipOrOrganization>V7</citizenshipOrOrganization>
+        <soleVotingPower>12677431.00</soleVotingPower>
+        <sharedVotingPower>0.00</sharedVotingPower>
+        <soleDispositivePower>12677431.00</soleDispositivePower>
+        <sharedDispositivePower>0.00</sharedDispositivePower>
+        <aggregateAmountOwned>12677431.00</aggregateAmountOwned>
+        <isAggregateExcludeShares>N</isAggregateExcludeShares>
+        <percentOfClass>16.5</percentOfClass>
+        <typeOfReportingPerson>CO</typeOfReportingPerson>
+      </reportingPersonInfo>
+      <reportingPersonInfo>
+        <reportingPersonNoCIK>Y</reportingPersonNoCIK>
+        <reportingPersonName>PSD Investment Limited</reportingPersonName>
+        <fundType>OO</fundType>
+        <legalProceedings>N</legalProceedings>
+        <citizenshipOrOrganization>D8</citizenshipOrOrganization>
+        <soleVotingPower>42917431.00</soleVotingPower>
+        <sharedVotingPower>0.00</sharedVotingPower>
+        <soleDispositivePower>33949660.00</soleDispositivePower>
+        <sharedDispositivePower>0.00</sharedDispositivePower>
+        <aggregateAmountOwned>33949660.00</aggregateAmountOwned>
+        <isAggregateExcludeShares>N</isAggregateExcludeShares>
+        <percentOfClass>44.1</percentOfClass>
+        <typeOfReportingPerson>CO</typeOfReportingPerson>
+      </reportingPersonInfo>
+      <reportingPersonInfo>
+        <reportingPersonNoCIK>Y</reportingPersonNoCIK>
+        <reportingPersonName>PSD Capital Limited</reportingPersonName>
+        <fundType>OO</fundType>
+        <legalProceedings>N</legalProceedings>
+        <citizenshipOrOrganization>D8</citizenshipOrOrganization>
+        <soleVotingPower>42917431.00</soleVotingPower>
+        <sharedVotingPower>0.00</sharedVotingPower>
+        <soleDispositivePower>33949660.00</soleDispositivePower>
+        <sharedDispositivePower>0.00</sharedDispositivePower>
+        <aggregateAmountOwned>33949660.00</aggregateAmountOwned>
+        <isAggregateExcludeShares>N</isAggregateExcludeShares>
+        <percentOfClass>44.1</percentOfClass>
+        <typeOfReportingPerson>CO</typeOfReportingPerson>
+      </reportingPersonInfo>
+      <reportingPersonInfo>
+        <reportingPersonNoCIK>Y</reportingPersonNoCIK>
+        <reportingPersonName>Snita Holding B.V.</reportingPersonName>
+        <fundType>AF</fundType>
+        <fundType>OO</fundType>
+        <legalProceedings>N</legalProceedings>
+        <citizenshipOrOrganization>P7</citizenshipOrOrganization>
+        <soleVotingPower>12677431.00</soleVotingPower>
+        <sharedVotingPower>0.00</sharedVotingPower>
+        <soleDispositivePower>12677431.00</soleDispositivePower>
+        <sharedDispositivePower>0.00</sharedDispositivePower>
+        <aggregateAmountOwned>12677431.00</aggregateAmountOwned>
+        <isAggregateExcludeShares>N</isAggregateExcludeShares>
+        <percentOfClass>16.5</percentOfClass>
+        <typeOfReportingPerson>CO</typeOfReportingPerson>
+      </reportingPersonInfo>
+      <reportingPersonInfo>
+        <reportingPersonCIK>0001899294</reportingPersonCIK>
+        <reportingPersonNoCIK>N</reportingPersonNoCIK>
+        <reportingPersonName>Volvo Car AB</reportingPersonName>
+        <fundType>WC</fundType>
+        <fundType>OO</fundType>
+        <legalProceedings>N</legalProceedings>
+        <citizenshipOrOrganization>V7</citizenshipOrOrganization>
+        <soleVotingPower>12677431.00</soleVotingPower>
+        <sharedVotingPower>0.00</sharedVotingPower>
+        <soleDispositivePower>0.00</soleDispositivePower>
+        <sharedDispositivePower>12677431.00</sharedDispositivePower>
+        <aggregateAmountOwned>12677431.00</aggregateAmountOwned>
+        <isAggregateExcludeShares>N</isAggregateExcludeShares>
+        <percentOfClass>16.5</percentOfClass>
+        <typeOfReportingPerson>CO</typeOfReportingPerson>
+      </reportingPersonInfo>
+      <reportingPersonInfo>
+        <reportingPersonNoCIK>Y</reportingPersonNoCIK>
+        <reportingPersonName>Geely Sweden Holdings AB</reportingPersonName>
+        <fundType>WC</fundType>
+        <fundType>OO</fundType>
+        <legalProceedings>N</legalProceedings>
+        <citizenshipOrOrganization>V7</citizenshipOrOrganization>
+        <soleVotingPower>29882316.00</soleVotingPower>
+        <sharedVotingPower>0.00</sharedVotingPower>
+        <soleDispositivePower>29882316.00</soleDispositivePower>
+        <sharedDispositivePower>0.00</sharedDispositivePower>
+        <aggregateAmountOwned>29882316.00</aggregateAmountOwned>
+        <isAggregateExcludeShares>N</isAggregateExcludeShares>
+        <percentOfClass>38.8</percentOfClass>
+        <typeOfReportingPerson>CO</typeOfReportingPerson>
+      </reportingPersonInfo>
+      <reportingPersonInfo>
+        <reportingPersonNoCIK>Y</reportingPersonNoCIK>
+        <reportingPersonName>Shanghai Geely Zhaoyuan International Investment Co., Ltd</reportingPersonName>
+        <fundType>WC</fundType>
+        <fundType>OO</fundType>
+        <legalProceedings>N</legalProceedings>
+        <citizenshipOrOrganization>F4</citizenshipOrOrganization>
+        <soleVotingPower>29882316.00</soleVotingPower>
+        <sharedVotingPower>0.00</sharedVotingPower>
+        <soleDispositivePower>29882316.00</soleDispositivePower>
+        <sharedDispositivePower>0.00</sharedDispositivePower>
+        <aggregateAmountOwned>29882316.00</aggregateAmountOwned>
+        <isAggregateExcludeShares>N</isAggregateExcludeShares>
+        <percentOfClass>38.8</percentOfClass>
+        <typeOfReportingPerson>CO</typeOfReportingPerson>
+      </reportingPersonInfo>
+      <reportingPersonInfo>
+        <reportingPersonNoCIK>Y</reportingPersonNoCIK>
+        <reportingPersonName>Beijing Geely Wanyuan International Investment Co., Ltd</reportingPersonName>
+        <fundType>WC</fundType>
+        <fundType>OO</fundType>
+        <legalProceedings>N</legalProceedings>
+        <citizenshipOrOrganization>F4</citizenshipOrOrganization>
+        <soleVotingPower>29882316.00</soleVotingPower>
+        <sharedVotingPower>0.00</sharedVotingPower>
+        <soleDispositivePower>29882316.00</soleDispositivePower>
+        <sharedDispositivePower>0.00</sharedDispositivePower>
+        <aggregateAmountOwned>29882316.00</aggregateAmountOwned>
+        <isAggregateExcludeShares>N</isAggregateExcludeShares>
+        <percentOfClass>38.8</percentOfClass>
+        <typeOfReportingPerson>CO</typeOfReportingPerson>
+      </reportingPersonInfo>
+      <reportingPersonInfo>
+        <reportingPersonNoCIK>Y</reportingPersonNoCIK>
+        <reportingPersonName>Beijing Geely Kaisheng International Investment Co., Ltd</reportingPersonName>
+        <fundType>WC</fundType>
+        <fundType>OO</fundType>
+        <legalProceedings>N</legalProceedings>
+        <citizenshipOrOrganization>F4</citizenshipOrOrganization>
+        <soleVotingPower>29882316.00</soleVotingPower>
+        <sharedVotingPower>0.00</sharedVotingPower>
+        <soleDispositivePower>29882316.00</soleDispositivePower>
+        <sharedDispositivePower>0.00</sharedDispositivePower>
+        <aggregateAmountOwned>29882316.00</aggregateAmountOwned>
+        <isAggregateExcludeShares>N</isAggregateExcludeShares>
+        <percentOfClass>38.8</percentOfClass>
+        <typeOfReportingPerson>CO</typeOfReportingPerson>
+      </reportingPersonInfo>
+      <reportingPersonInfo>
+        <reportingPersonNoCIK>Y</reportingPersonNoCIK>
+        <reportingPersonName>Zhejiang Geely Holding Group Company Limited</reportingPersonName>
+        <fundType>WC</fundType>
+        <fundType>OO</fundType>
+        <legalProceedings>N</legalProceedings>
+        <citizenshipOrOrganization>F4</citizenshipOrOrganization>
+        <soleVotingPower>29882316.00</soleVotingPower>
+        <sharedVotingPower>0.00</sharedVotingPower>
+        <soleDispositivePower>29882316.00</soleDispositivePower>
+        <sharedDispositivePower>0.00</sharedDispositivePower>
+        <aggregateAmountOwned>29882316.00</aggregateAmountOwned>
+        <isAggregateExcludeShares>N</isAggregateExcludeShares>
+        <percentOfClass>38.8</percentOfClass>
+        <typeOfReportingPerson>CO</typeOfReportingPerson>
+      </reportingPersonInfo>
+      <reportingPersonInfo>
+        <reportingPersonNoCIK>Y</reportingPersonNoCIK>
+        <reportingPersonName>Geely Sweden Automative Investment B.V.</reportingPersonName>
+        <fundType>WC</fundType>
+        <fundType>OO</fundType>
+        <legalProceedings>N</legalProceedings>
+        <citizenshipOrOrganization>P7</citizenshipOrOrganization>
+        <soleVotingPower>16738542.00</soleVotingPower>
+        <sharedVotingPower>0.00</sharedVotingPower>
+        <soleDispositivePower>16738542.00</soleDispositivePower>
+        <sharedDispositivePower>0.00</sharedDispositivePower>
+        <aggregateAmountOwned>16738542.00</aggregateAmountOwned>
+        <isAggregateExcludeShares>N</isAggregateExcludeShares>
+        <percentOfClass>21.7</percentOfClass>
+        <typeOfReportingPerson>CO</typeOfReportingPerson>
+      </reportingPersonInfo>
+    </reportingPersons>
+    <items1To7>
+      <item1>
+        <securityTitle>Class A American Depositary Shares, Class A Ordinary Shares, par value $0.01 each</securityTitle>
+        <issuerName>Polestar Automotive Holding UK PLC</issuerName>
+        <issuerPrincipalAddress>
+          <com:street1>Assar Gabrielssons Vag 9</com:street1>
+          <com:city>Gothenburg</com:city>
+          <com:stateOrCountry>V7</com:stateOrCountry>
+          <com:zipCode>405 31</com:zipCode>
+        </issuerPrincipalAddress>
+        <commentText>This Amendment No. 8 to Schedule 13D ("Amendment No. 8") amends and supplements the Statement on Schedule 13D filed with the United States Securities and Exchange Commission on July 7, 2022 (as amended to date, the "Statement"), relating to Class A ordinary shares, par value $0.01 per share (the "Class A Shares"), of Polestar Automotive Holding UK PLC, a limited company incorporated under the laws of England and Wales (the "Issuer"). Capitalized terms used herein without definition shall have the meaning set forth in the Statement.</commentText>
+      </item1>
+      <item4>
+        <transactionPurpose>Item 4 of the Statement is hereby amended and supplemented by inserting the following:
+
+PUT OPTIONS AND GUARANTEE AGREEMENTS
+
+On December 19, 2025, Polestar Automotive Holding UK PLC (the "Issuer") entered into securities purchase agreements (collectively, the "Purchase Agreements") with each of Banco Bilbao Vizcaya Argentaria, S.A. and NATIXIS (each, a "Purchaser" and collectively, the "Purchasers"), pursuant to which the Issuer agreed to sell an aggregate of 15,511,892 Class A American Depositary Shares (the "Class A ADS") to the Purchasers through a private investment in public equity ("PIPE").
+
+Concurrent with the entry into the Purchase Agreements, the Purchasers have each entered into a put option arrangement (each a "Put Option" and collectively, the "Put Options") with Geely Sweden Automotive Investment AB ("GSAI"), whose obligations under the Put Options are guaranteed (collectively, the "Guarantees") by Geely Sweden Holdings AB ("Geely Sweden"). GSAI is a wholly owned subsidiary of Geely Sweden. Each Put Option carries a three-year term and is extendable by one-year subject to mutual consent. Each Put Option allows the relevant Purchaser to sell the Class A ADSs acquired from the PIPE to GSAI at the end of the term at a pre-determined price to the extent such Purchaser has not disposed of such Class A ADSs before the end of the term. Upon the occurrence of certain events (e.g., delisting of the Issuer, acceleration of credit facilities of the Issuer and certain events of defaults by GSAI or Geely Sweden), a Purchaser could exercise its Put Option before the maturity date. In addition, GSAI can choose to early settle the Put Options in certain circumstances.
+
+The foregoing descriptions of the Put Options and the Guarantees do not purport to be complete, and are qualified in their entirety by reference to the form of each such agreement, which are attached as exhibits to this Schedule 13D and incorporated herein by reference.
+
+CONVERSION AGREEMENT
+
+Also on December 19, 2025, GSAI and the Issuer entered into a conversion agreement (the "Conversion Agreement") pursuant to which GSAI has agreed to convert approximately USD 300,000,000 of its outstanding principal and interest owed by the Issuer under the Term Facility Agreement, dated November 8, 2023, into equity. This conversion is expected to be completed after receipt of any necessary regulatory approvals. Upon signing of the Conversion Agreement and prior to completion of the conversion, it is expected that GSAI will transfer its rights under the Conversion Agreement to Geely Sweden Automotive Investment B.V. by means of a capital contribution.</transactionPurpose>
+      </item4>
+      <item5>
+        <percentageOfClassSecurities>Item 5(a) of the Statement is hereby amended and restated in its entirety as follows:
+
+The information contained on the cover pages to this Statement is incorporated herein by reference.
+
+The percentages of beneficial ownership set forth herein are based on 75,995,830 Class A ADSs and (ii) 996,419 Class B ADSs, issued and outstanding as of December 19, 2025.
+
+On December 9, 2025, the Company effected an ADS ratio change, pursuant to which the Issuer's Class A, Class B, Class C-1 and Class C-2 American Depositary Shares (collectively, the "ADSs") ratio to the respective Class A, Class B, Class C-1 and Class C-2 ordinary shares (the "ADS Ratio") changed from the ADS Ratio of one ADS to one (1) ordinary share, to the new ADS Ratio of one ADS to 30 ordinary shares (the "ADS Ratio Change"). The reporting person's beneficial ownership reported herein is presented on a post-ADS Ratio Change basis.</percentageOfClassSecurities>
+        <numberOfShares>Item 5(b) of the Statement is hereby amended and restated in its entirety as follows:
+
+The information contained on the cover pages to this Statement is incorporated herein by reference.</numberOfShares>
+        <transactionDesc>Item 5(c) of the Statement is hereby amended and supplemented as follows:
+
+Except as described in Item 4 of this Amendment No. 8, the Reporting Persons have not effected any transactions in the Issuer's Shares in the past 60 days.</transactionDesc>
+        <listOfShareholders>None.</listOfShareholders>
+        <date5PercentOwnership>Not applicable.</date5PercentOwnership>
+      </item5>
+      <item6>
+        <contractDescription>Item 6 of the Statement is hereby amended and supplemented by inserting the following:
+
+Item 4 above summarizes certain provisions of the Put Options and the Guarantees and is incorporated herein by reference. A copy of the form of each agreement is filed as an exhibit to this Schedule 13D and incorporated herein by reference.
+
+Except as set forth herein, none of the Reporting Persons has any contracts, arrangements, understandings or relationships (legal or otherwise) with any person with respect to any securities of the Issuer, including, but not limited to, any contracts, arrangements, understandings or relationships concerning the transfer or voting of such securities, finder's fees, joint ventures, loan or option arrangements, puts or calls, guarantees of profits, division of profits or losses, or the giving or withholding of proxies.</contractDescription>
+      </item6>
+      <item7>
+        <filedExhibits>Item 7 of the Statement is hereby amended and supplemented by inserting the following:
+
+Exhibit 5: Form of Put Option
+
+Exhibit 6: Form of Guarantee</filedExhibits>
+      </item7>
+    </items1To7>
+    <signatureInfo>
+      <signaturePerson>
+        <signatureReportingPerson>Eric Li</signatureReportingPerson>
+        <signatureDetails>
+          <signature>/s/ Eric Li</signature>
+          <title>Eric Li (Shufu Li)</title>
+          <date>12/19/2025</date>
+        </signatureDetails>
+      </signaturePerson>
+      <signaturePerson>
+        <signatureReportingPerson>Volvo Car Corporation</signatureReportingPerson>
+        <signatureDetails>
+          <signature>/s/ Hakan Samuelsson</signature>
+          <title>Hakan Samuelsson, Director</title>
+          <date>12/19/2025</date>
+        </signatureDetails>
+        <signatureDetails>
+          <signature>/s/ Helen Hu</signature>
+          <title>Helen Hu, Director &amp; Authorized Signatory</title>
+          <date>12/19/2025</date>
+        </signatureDetails>
+      </signaturePerson>
+      <signaturePerson>
+        <signatureReportingPerson>PSD Investment Limited</signatureReportingPerson>
+        <signatureDetails>
+          <signature>/s/ Shufu Li</signature>
+          <title>Shufu Li, Sole Director</title>
+          <date>12/19/2025</date>
+        </signatureDetails>
+      </signaturePerson>
+      <signaturePerson>
+        <signatureReportingPerson>PSD Capital Limited</signatureReportingPerson>
+        <signatureDetails>
+          <signature>/s/ Shufu Li</signature>
+          <title>Shufu Li, Sole Director</title>
+          <date>12/19/2025</date>
+        </signatureDetails>
+      </signaturePerson>
+      <signaturePerson>
+        <signatureReportingPerson>Snita Holding B.V.</signatureReportingPerson>
+        <signatureDetails>
+          <signature>/s/ Fredrik Hansson</signature>
+          <title>Fredrik Hansson, Authorized Signatory</title>
+          <date>12/19/2025</date>
+        </signatureDetails>
+        <signatureDetails>
+          <signature>/s/ Helen Hu</signature>
+          <title>Helen Hu, Director</title>
+          <date>12/19/2025</date>
+        </signatureDetails>
+      </signaturePerson>
+      <signaturePerson>
+        <signatureReportingPerson>Volvo Car AB</signatureReportingPerson>
+        <signatureDetails>
+          <signature>/s/ Hakan Samuelsson</signature>
+          <title>Hakan Samuelsson, Director</title>
+          <date>12/19/2025</date>
+        </signatureDetails>
+        <signatureDetails>
+          <signature>/s/ Helen Hu</signature>
+          <title>Helen Hu, Director</title>
+          <date>12/19/2025</date>
+        </signatureDetails>
+      </signaturePerson>
+      <signaturePerson>
+        <signatureReportingPerson>Geely Sweden Holdings AB</signatureReportingPerson>
+        <signatureDetails>
+          <signature>/s/ Shufu Li</signature>
+          <title>Shufu Li, Director</title>
+          <date>12/19/2025</date>
+        </signatureDetails>
+        <signatureDetails>
+          <signature>/s/ Donghui Li</signature>
+          <title>Donghui Li, Director</title>
+          <date>12/19/2025</date>
+        </signatureDetails>
+      </signaturePerson>
+      <signaturePerson>
+        <signatureReportingPerson>Shanghai Geely Zhaoyuan International Investment Co., Ltd</signatureReportingPerson>
+        <signatureDetails>
+          <signature>/s/ Quang Zhang</signature>
+          <title>Quan Zhang, Director</title>
+          <date>12/19/2025</date>
+        </signatureDetails>
+      </signaturePerson>
+      <signaturePerson>
+        <signatureReportingPerson>Beijing Geely Wanyuan International Investment Co., Ltd</signatureReportingPerson>
+        <signatureDetails>
+          <signature>/s/ Quan Zhang</signature>
+          <title>Quan Zhang, Director</title>
+          <date>12/19/2025</date>
+        </signatureDetails>
+      </signaturePerson>
+      <signaturePerson>
+        <signatureReportingPerson>Beijing Geely Kaisheng International Investment Co., Ltd</signatureReportingPerson>
+        <signatureDetails>
+          <signature>/s/ Quan Zhang</signature>
+          <title>Quan Zhang, Director</title>
+          <date>12/19/2025</date>
+        </signatureDetails>
+      </signaturePerson>
+      <signaturePerson>
+        <signatureReportingPerson>Zhejiang Geely Holding Group Company Limited</signatureReportingPerson>
+        <signatureDetails>
+          <signature>/s/ Donghui Li</signature>
+          <title>Donghui Li, Legal Representative &amp; Director</title>
+          <date>12/19/2025</date>
+        </signatureDetails>
+      </signaturePerson>
+      <signaturePerson>
+        <signatureReportingPerson>Geely Sweden Automative Investment B.V.</signatureReportingPerson>
+        <signatureDetails>
+          <signature>/s/ Per Ansgar</signature>
+          <title>Per Ansgar, Director</title>
+          <date>12/19/2025</date>
+        </signatureDetails>
+        <signatureDetails>
+          <signature>/s/ Quan Zhang</signature>
+          <title>Quan Zhang, Director</title>
+          <date>12/19/2025</date>
+        </signatureDetails>
+      </signaturePerson>
+    </signatureInfo>
+  </formData>
+
+</edgarSubmission>

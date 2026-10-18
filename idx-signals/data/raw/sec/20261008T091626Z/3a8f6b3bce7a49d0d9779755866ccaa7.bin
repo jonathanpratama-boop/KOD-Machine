@@ -1,0 +1,861 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2026" xmlns:us-gaap="http://fasb.org/us-gaap/2026" xmlns:us-roles="http://fasb.org/us-roles/2026" xmlns:country="http://xbrl.sec.gov/country/2026" xmlns:srt="http://fasb.org/srt/2026" xmlns:LNAI="http://LNAI/20260427">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02F_US%2DGAAP%2D2026 -->
+<!-- Field: Set; Name: xdx; ID: xdx_03E_LNAI_LNAI_20260427 -->
+<!-- Field: Set; Name: xdx; ID: xdx_04F_20260427_20260427 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_050_edei%2D%2DCurrentFiscalYearEndDate_06%2D30 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DEntityCentralIndexKey_0001527728 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000003" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000004" name="dei:CurrentFiscalYearEndDate">--06-30</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000005" name="dei:EntityCentralIndexKey">0001527728</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="lnai-20260427.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2026-04-27">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001527728</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2026-04-27</xbrli:startDate>
+        <xbrli:endDate>2026-04-27</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="margin: 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 10pt; margin-bottom: 3pt; width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 14pt"><b>UNITED
+STATES</b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 14pt"><b>SECURITIES
+AND EXCHANGE COMMISSION</b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 12pt"><b>Washington,
+D.C. 20549</b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 18pt"><b>FORM
+<span id="xdx_908_edei--DocumentType_c20260427__20260427_zYhtMECTbIV4"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000010" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center"><b>Pursuant to Section 13 or 15(d) of the Securities
+Exchange Act of 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center">Date of Report (Date of earliest event reported): <b><span id="xdx_90F_edei--DocumentPeriodEndDate_c20260427__20260427_zZVuSKOM9hpg"><ix:nonNumeric contextRef="AsOf2026-04-27" format="ixt:datemonthdayyearen" id="Fact000011" name="dei:DocumentPeriodEndDate">April
+27, 2026</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 24pt"><b><span style="text-decoration: underline"><span id="xdx_901_edei--EntityRegistrantName_c20260427__20260427_z1tmRUYoIL6d"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000012" name="dei:EntityRegistrantName">LUNAI
+BIOWORKS, INC.</ix:nonNumeric></span></span></b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center"><i>(Exact name of registrant as specified in its charter)</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="font: 10pt Times New Roman, Times, Serif; padding: 0pt; text-indent: 0pt; width: 35%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_90B_edei--EntityIncorporationStateCountryCode_c20260427__20260427_zTGpTiSAa2R"><ix:nonNumeric contextRef="AsOf2026-04-27" format="ixt-sec:stateprovnameen" id="Fact000013" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></b></span></td>
+    <td style="font: 10pt Times New Roman, Times, Serif; padding: 0pt; text-indent: 0pt; width: 30%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_90B_edei--EntityFileNumber_c20260427__20260427_z6EwQ4LVkkxf"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000014" name="dei:EntityFileNumber">001-38758</ix:nonNumeric></span></b></span></td>
+    <td style="font: 10pt Times New Roman, Times, Serif; padding: 0pt; text-indent: 0pt; width: 35%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_908_edei--EntityTaxIdentificationNumber_c20260427__20260427_zVNxB7uQaQHk"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000015" name="dei:EntityTaxIdentificationNumber">45-2259340</ix:nonNumeric></span></b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="padding: 0pt; text-indent: 0pt">
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">(State or other jurisdiction</p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center"></p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">of incorporation)</p></td>
+    <td style="font: 10pt Times New Roman, Times, Serif; padding: 0pt; text-indent: 0pt; text-align: center"><span style="font-size: 10pt">(Commission File Number)</span></td>
+    <td style="padding: 0pt; text-indent: 0pt">
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">(I.R.S. Employer&#160;</p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">Identification No.)</p></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center"><b><span id="xdx_90C_edei--EntityAddressAddressLine1_c20260427__20260427_zGzWS2svynme"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000016" name="dei:EntityAddressAddressLine1">3400 Cottage Way</ix:nonNumeric></span>, <span id="xdx_90E_edei--EntityAddressAddressLine2_c20260427__20260427_zPB6fuoabqQi"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000017" name="dei:EntityAddressAddressLine2">Suite G2</ix:nonNumeric></span>, <span id="xdx_906_edei--EntityAddressAddressLine3_c20260427__20260427_z9e6RjFxIYb4"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000018" name="dei:EntityAddressAddressLine3">#3256</ix:nonNumeric></span>, <span id="xdx_90F_edei--EntityAddressCityOrTown_c20260427__20260427_zXD7ja4ApqJh"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000019" name="dei:EntityAddressCityOrTown">Sacramento</ix:nonNumeric></span>,
+<span id="xdx_90E_edei--EntityAddressStateOrProvince_c20260427__20260427_zHX53nsIz8kf"><ix:nonNumeric contextRef="AsOf2026-04-27" format="ixt-sec:stateprovnameen" id="Fact000020" name="dei:EntityAddressStateOrProvince">California</ix:nonNumeric></span> <span id="xdx_900_edei--EntityAddressPostalZipCode_c20260427__20260427_zKPtuhAmwWe2"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000021" name="dei:EntityAddressPostalZipCode">95825</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center"><i>(Address of principal executive offices)</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center"><b><span style="text-decoration: underline"><span id="xdx_906_edei--CityAreaCode_c20260427__20260427_ztZJcJfab0vh"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000022" name="dei:CityAreaCode">(424)</ix:nonNumeric></span> <span id="xdx_90B_edei--LocalPhoneNumber_c20260427__20260427_zyk458dOeDd9"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000023" name="dei:LocalPhoneNumber">222-9301</ix:nonNumeric></span></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center"><i>(Registrant&#8217;s telephone number, including
+area code)</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">Former name or former address, if changed since last report: Not Applicable</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">Check the appropriate box below if the Form 8-K filing is intended to simultaneously
+satisfy the filing obligation of the registrant under any of the following provisions:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><span style="font-family: Segoe UI Symbol,sans-serif"><span id="xdx_905_edei--WrittenCommunications_c20260427__20260427_z7xEnB2z3AX2"><ix:nonNumeric contextRef="AsOf2026-04-27" format="ixt:booleanfalse" id="Fact000024" name="dei:WrittenCommunications">&#9744;</ix:nonNumeric></span></span> Written
+communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><span style="font-family: Segoe UI Symbol,sans-serif"><span id="xdx_902_edei--SolicitingMaterial_c20260427__20260427_z4iVpBnBD4I"><ix:nonNumeric contextRef="AsOf2026-04-27" format="ixt:booleanfalse" id="Fact000025" name="dei:SolicitingMaterial">&#9744;</ix:nonNumeric></span></span> Soliciting
+material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><span style="font-family: Segoe UI Symbol,sans-serif"><span id="xdx_90E_edei--PreCommencementTenderOffer_c20260427__20260427_zMXwWxjCmyYh"><ix:nonNumeric contextRef="AsOf2026-04-27" format="ixt:booleanfalse" id="Fact000026" name="dei:PreCommencementTenderOffer">&#9744;</ix:nonNumeric></span></span> Pre-commencement
+communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><span style="font-family: Segoe UI Symbol,sans-serif"><span id="xdx_90F_edei--PreCommencementIssuerTenderOffer_c20260427__20260427_zphzZMPmq8l4"><ix:nonNumeric contextRef="AsOf2026-04-27" format="ixt:booleanfalse" id="Fact000027" name="dei:PreCommencementIssuerTenderOffer">&#9744;</ix:nonNumeric></span></span> Pre-commencement
+communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">Securities registered pursuant to Section 12(b) of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border: black 1pt solid; padding: 0pt; text-indent: 0pt; width: 38%; text-align: center"><span style="font-size: 10pt"><b>Title of Each Class</b></span></td>
+    <td style="border-top: black 1pt solid; border-right: black 1pt solid; border-bottom: black 1pt solid; padding: 0pt; text-indent: 0pt; width: 24%; text-align: center"><span style="font-size: 10pt"><b>Trading Symbol(s)</b></span></td>
+    <td style="border-top: black 1pt solid; border-right: black 1pt solid; border-bottom: black 1pt solid; padding: 0pt; text-indent: 0pt; width: 38%; text-align: center"><span style="font-size: 10pt"><b>Name of Each Exchange on Which Registered</b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="border-right: black 1pt solid; border-bottom: black 1pt solid; border-left: black 1pt solid; padding: 0pt; text-indent: 0pt; text-align: center"><span id="xdx_908_edei--Security12bTitle_c20260427__20260427_zyBBTr0sZCYl" style="font-size: 10pt"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000028" name="dei:Security12bTitle">Common
+Stock, par value $0.0001 per share</ix:nonNumeric></span></td>
+    <td style="border-right: black 1pt solid; border-bottom: black 1pt solid; padding: 0pt; text-indent: 0pt; text-align: center"><span style="font-size: 10pt"><span id="xdx_90C_edei--TradingSymbol_c20260427__20260427_z5fMhQB469T9"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000029" name="dei:TradingSymbol">LNAI</ix:nonNumeric></span></span></td>
+    <td style="border-right: black 1pt solid; border-bottom: black 1pt solid; padding: 0pt; text-indent: 0pt; text-align: center"><span style="font-size: 10pt"><span id="xdx_908_edei--SecurityExchangeName_c20260427__20260427_zGeRBIUrtCmj"><ix:nonNumeric contextRef="AsOf2026-04-27" format="ixt-sec:exchnameen" id="Fact000030" name="dei:SecurityExchangeName">The Nasdaq Stock Market LLC</ix:nonNumeric></span></span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">Indicate by check mark whether the registrant is an emerging growth company
+as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or Rule 12b-2 of the Securities Exchange Act of
+1934 (&#167;240.12b-2 of this chapter).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">Emerging growth company <span style="font-family: Segoe UI Symbol,sans-serif"><span id="xdx_90D_edei--EntityEmergingGrowthCompany_c20260427__20260427_zfTmTEi8rZ91"><ix:nonNumeric contextRef="AsOf2026-04-27" format="ixt:booleanfalse" id="Fact000031" name="dei:EntityEmergingGrowthCompany">&#9744;</ix:nonNumeric></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">If an emerging growth company, indicate by check mark if the registrant
+has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant
+to Section 13(a) of the Exchange Act. <span style="font-family: Segoe UI Symbol,sans-serif">&#9744;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 2pt solid; margin-top: 6pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>Item 1.01 Entry into a Material Definitive Agreement.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">On April 27, 2026, Lunai Bioworks, Inc. (the &#8220;Company&#8221;) entered
+into an Agreement and Plan of Merger (the &#8220;Merger Agreement&#8221;) with Neurobridge IP Holdings Incorporated, a Delaware corporation
+(&#8220;Holdings&#8221;), Lunai Bioworks IP, Inc., a Delaware corporation and a wholly owned subsidiary of the Company (&#8220;Merger
+Sub&#8221;), and the holders of all of the issued and outstanding capital stock of Holdings, namely Oncotelic Inc., a Delaware corporation
+(&#8220;Oncotelic&#8221;), and Pelerin Therapeutics Inc., a corporation existing under the laws of the Province of British Columbia, Canada
+(&#8220;Pelerin&#8221; and, together with Oncotelic, the &#8220;Holders&#8221;). Pursuant to the Merger Agreement, Holdings merged with
+and into Merger Sub in a triangular merger (the &#8220;Merger&#8221;), with Merger Sub continuing as the surviving corporation and as
+a wholly owned subsidiary of the Company. The Merger was completed on May 1, 2026, and the information set forth under Item 2.01 below
+regarding the completion of the Merger is incorporated into this Item 1.01 by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">The foregoing description of the Merger Agreement is a summary only and
+is qualified in its entirety by reference to the full text of the Merger Agreement, a copy of which is filed as Exhibit 2.1 to this Current
+Report on Form 8-K and is incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">Immediately prior to the effective time of the Merger, all of the issued
+and outstanding capital stock of Holdings was owned 62.5% by Oncotelic and 37.5% by Pelerin. The sole assets of Holdings at the effective
+time of the Merger consisted of a multi-jurisdictional patent portfolio (collectively, and as further defined in the Merger Agreement,
+the &#8220;Patents&#8221;), which the Holders had contributed to Holdings prior to the effective time. The Patents are described in further
+detail under the heading &#8220;The Patents&#8221; below, and a complete listing is set forth on Schedule 3.6 to the Merger Agreement.
+The acquired intellectual-property rights consist solely of those patents and patent applications; Holdings had no continuity of revenue-producing
+activity or operating infrastructure, including no employees, customers, sales force, distribution system, facilities, production techniques,
+trade names or revenue-producing operations, and had no material liabilities.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><b>Merger Consideration; Series B Convertible Preferred Stock. </b>In consideration
+for the Merger, on May 1, 2026 the Company issued to the Holders an aggregate of eight (8) shares of a newly designated series of preferred
+stock of the Company, designated as &#8220;Series B Convertible Preferred Stock&#8221; (the &#8220;Series B Preferred Stock&#8221;), having
+an aggregate stated value (the &#8220;Stated Value&#8221;) of $20,000,000. The Series B Preferred Stock was allocated five (5) shares
+to Oncotelic (representing 62.5% of the Series B Preferred Stock and an aggregate Stated Value of $12,500,000) and three (3) shares to
+Pelerin (representing 37.5% of the Series B Preferred Stock and an aggregate Stated Value of $7,500,000). No cash consideration was paid
+in connection with the Merger.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><b>Material Terms of the Series B Preferred Stock. </b>The rights, preferences,
+privileges and restrictions of the Series B Preferred Stock are set forth in a Certificate of Designation of Series B Convertible Preferred
+Stock (the &#8220;Certificate of Designation&#8221;), which the Company filed with the Secretary of State of the State of Delaware on
+May 1, 2026 pursuant to 8 Del. C. &#167; 151(g) and which became effective upon filing. The Certificate of Designation is filed as Exhibit
+3.1 to this Current Report on Form 8-K and is incorporated herein by reference. The Series B Preferred Stock has the following material
+terms:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<!-- Field: Page; Sequence: 2 -->
+    <div style="border-bottom: Black 2pt solid; margin-top: 6pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0; margin-bottom: 0"><tr style="vertical-align: top">
+<td style="width: 18pt"/><td style="width: 18pt">&#9679;</td><td style="text-align: justify"><b>Conversion; Conversion Gate; Section 5.11 Solicitation Covenant. </b>The Series B Preferred Stock is convertible into common stock at a fixed conversion
+price of $1.50 per share (the &#8220;Conversion Price&#8221;), with a maximum of 13,333,333 underlying shares of common stock based on
+the aggregate Stated Value (subject to adjustment under the Certificate of Designation). No shares of the Series B Preferred Stock are
+convertible prior to the Company&#8217;s receipt of the requisite stockholder approval under Nasdaq Listing Rule 5635 (the &#8220;Stockholder
+Approval&#8221;). Stockholder Approval is not a condition to the closing of the Merger, and the Stockholder Approval Proposal is not being
+submitted at the Company&#8217;sspecial meeting on May 8, 2026 (rescheduled from May 4, 2026) absent a separate definitive proxy supplement.
+Pursuant to Section 5.11 of the Merger Agreement, the Company has covenanted, subject to applicable law and the fiduciary duties of the
+Company&#8217;s Board of Directors, to use commercially reasonable efforts to submit the Stockholder Approval Proposal to its stockholders
+as soon as reasonably practicable after the closing of the Merger, and in any event to commence such process within 180 days after the
+closing. The Merger Agreement also contains an express Nasdaq savings clause: the failure to obtain such Stockholder Approval will not
+result in any increase in the Stated Value, the Conversion Ratio or any dividend, any decrease in the Conversion Price, any redemption
+right, rescission right, penalty, fee, liquidated damages or other monetary or economic consequence favorable to any Holder. The savings
+clause is an express Nasdaq Listing Rule 5635 / IM-5635-2 compliance feature and is not a reservation of any right by the Company to delay
+or decline to perform the Section 5.11 covenant.</td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 36pt; text-indent: -18pt">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0; margin-bottom: 0"><tr style="vertical-align: top">
+<td style="width: 18pt"/><td style="width: 18pt">&#9679;</td><td style="text-align: justify"><b>Voting; dividends; redemption; anti-dilution. </b>The Series B Preferred Stock is non-voting (except as required by Delaware law
+and for limited class-protection rights), bears no dividends, is not redeemable, has no price-based anti-dilution protection, and is not
+a &#8220;Future Priced Security&#8221; under Nasdaq Listing Rule IM-5635-4. Consistent with Nasdaq Listing Rule IM-5635-2, the voting
+exclusion follows the securities issued as Merger Consideration (and any common stock issuable upon conversion). The issuance does not
+constitute or effect a change of control under Nasdaq Listing Rule 5635(b).</td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 36pt; text-indent: -18pt">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0; margin-bottom: 0"><tr style="vertical-align: top">
+<td style="width: 18pt"/><td style="width: 18pt">&#9679;</td><td style="text-align: justify"><b>Beneficial-ownership limitation. </b>Conversion is subject to a 4.99% beneficial-ownership blocker (increasable by a holder to
+9.99% on 61 days&#8217; prior written notice; further increases require Company consent and Nasdaq Listing Rule 5635 review).</td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 36pt; text-indent: -18pt">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0; margin-bottom: 0"><tr style="vertical-align: top">
+<td style="width: 18pt"/><td style="width: 18pt">&#9679;</td><td style="text-align: justify"><b>Forfeiture, cancellation and set-off; IP clawback. </b>Under Article VI of the Merger Agreement (and subject to Section 160 of
+the Delaware General Corporation Law), the Company may satisfy finally determined indemnification obligations of a Holder by set-off,
+forfeiture and cancellation of Series B Preferred Stock (at Stated Value) or directly held converted common stock (at the Conversion Price),
+or direct cash recovery. Conversion is suspended for any Holder against whom the Company has asserted unresolved indemnification claims
+reasonably estimated to exceed $250,000. Section 6.9 of the Merger Agreement establishes a special IP clawback architecture, with stop-transfer
+and conversion suspension upon an &#8220;IP Assertion Event&#8221; and forfeiture and cancellation upon an &#8220;IP Clawback Event,&#8221;
+subject to a contractual liquidated-damages framework for final invalidity or unenforceability of the Patents.</td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 36pt; text-indent: -18pt">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0; margin-bottom: 0"><tr style="vertical-align: top">
+<td style="width: 18pt"/><td style="width: 18pt">&#9679;</td><td style="text-align: justify"><b>Restricted securities; legends; no DTC. </b>The Series B Preferred Stock (and any underlying common stock) constitute &#8220;restricted
+securities&#8221; under Rule 144, will bear customary restrictive legends, and will be maintained in restricted book-entry form directly
+on the records of the Company or its transfer agent and will not be DTC-eligible until the legends are removed. The Series B Preferred
+Stock issued to Pelerin bears an additional NI 45-102 Canadian restrictive legend reflecting a hold period expiring four (4) months and
+one (1) day after the later of the original issue date and the date the issuer became a reporting issuer in any province or territory
+of Canada.</td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 36pt; text-indent: -18pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 36pt; text-indent: -18pt"></p>
+
+<!-- Field: Page; Sequence: 3 -->
+    <div style="border-bottom: Black 2pt solid; margin-top: 6pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 36pt; text-indent: -18pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><b>Indemnification; restrictive covenants. </b>The Holders&#8217; indemnification
+obligations under the Merger Agreement are several (and not joint), on a pro rata basis (62.5% Oncotelic / 37.5% Pelerin), subject to
+a $25,000 deductible and a general 25% cap, with fundamental, IP, tax and certain other matters uncapped subject to a collective aggregate
+cap equal to the $20,000,000 Stated Value of the Merger Consideration; Holder-specific representations are recoverable solely from the
+breaching Holder; fraud and willful-breach losses are uncapped. The Holders are subject to customary restrictive covenants (including
+non-challenge of the Patents, confidentiality and non-disparagement, in each case with customary regulatory, whistleblower and California
+&#167; 16600 carveouts), and have contractually waived appraisal rights under Section 262 of the Delaware General Corporation Law.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><b>The Patents. </b>The Patents are a multi-jurisdictional patent portfolio
+consisting of patent applications and granted patents directed to (i) heterocyclic compounds and methods for the treatment of Alzheimer&#8217;s
+disease (the &#8220;Pelerin Patent Family&#8221;) and (ii) anti-TGF-beta agents, apomorphine formulations, and intranasal and combination
+delivery technologies for the treatment of neurological disorders (the &#8220;Oncotelic Patent Family,&#8221; and together with the Pelerin
+Patent Family, the &#8220;Patents&#8221;). Each of the Patents was contributed by the applicable Holder to Holdings prior to the effective
+time of the Merger and, upon the effective time of the Merger, became owned by the surviving corporation as a wholly owned subsidiary
+of the Company. The Patents are described in summary form below; a complete inventory (including patent and application numbers, jurisdictions,
+filing and issue dates, and current status) is set forth on Schedule 3.6 to the Merger Agreement.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><i>Pelerin Patent Family. </i>Canadian Patent Application No. CA2026050584
+(Applicant: Pelerin Therapeutics Inc.; File No. P6943PC00; Date of Receipt: April 22, 2026; Status: Pending), titled &#8220;Heterocyclic
+Compounds for the Treatment of Alzheimer Disease,&#8221; which generally covers heterocyclic compounds, their preparation, and their use
+as medicaments for the treatment of Alzheimer&#8217;s disease. The Pelerin Patent Family also includes the related U.S. provisional application
+set forth on Schedule 3.6.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><i>Oncotelic Patent Family. </i>The Oncotelic Patent Family consists of
+an international (PCT) patent application, a pending U.S. patent application, three U.S. provisional patent applications, one granted
+Australian patent, and pending patent applications in 10 additional jurisdictions, in each case directed to anti-TGF-beta agents, apomorphine
+formulations, and related compositions and delivery technologies for the treatment of neurological disorders. Material members of the
+Oncotelic Patent Family include:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0; margin-bottom: 0"><tr style="vertical-align: top">
+<td style="width: 18pt"/><td style="width: 18pt">&#9679;</td><td style="text-align: justify">International Patent Application No. PCT/US2022/075763, titled &#8220;Treatment of Neurological Disorders,&#8221; filed on August
+31, 2022, published as WO 2023/039345 on March 16, 2023, which generally covers anti-TGF-beta agents (including antisense oligonucleotides
+and OT-101/Trabedersen), apomorphine-based formulations, and therapeutic compositions for the treatment of Parkinson&#8217;s disease,
+Alzheimer&#8217;s disease, and related conditions;</td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 36pt; text-indent: -18pt">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0; margin-bottom: 0"><tr style="vertical-align: top">
+<td style="width: 18pt"/><td style="width: 18pt">&#9679;</td><td style="text-align: justify">U.S. Patent Application No. 18/600,993 (continuation), titled &#8220;Treatment of Neurological Disorders,&#8221; filed on March 11,
+2024, published as US 2024/0216359 A1 on July 4, 2024, status pending, which generally covers anti-TGF-beta agents, apomorphine formulations,
+and methods for treating neurological disorders;</td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 36pt; text-indent: -18pt">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0; margin-bottom: 0"><tr style="vertical-align: top">
+<td style="width: 18pt"/><td style="width: 18pt">&#9679;</td><td style="text-align: justify">U.S. Provisional Patent Application No. 64/042,932, filed on April 17, 2026, titled &#8220;Nasal Delivery of Pharmaceutical Agents,&#8221;
+which generally covers intranasal-delivery formulations and methods for dopaminergic modulators (including apomorphine), oxytocin receptor
+agonists (including carbetocin), and other CNS-active compounds;</td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 36pt; text-indent: -18pt">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0; margin-bottom: 0"><tr style="vertical-align: top">
+<td style="width: 18pt"/><td style="width: 18pt">&#9679;</td><td style="text-align: justify">U.S. Provisional Patent Application No. 64/042,938, filed on April 17, 2026, titled &#8220;Drug Delivery of CNS Agents,&#8221; which
+generally covers multi-agent intranasal-delivery formulations including combinations of CNS-active pharmaceutical agents;</td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 36pt; text-indent: -18pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 36pt; text-indent: -18pt"></p>
+
+<!-- Field: Page; Sequence: 4 -->
+    <div style="border-bottom: Black 2pt solid; margin-top: 6pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 36pt; text-indent: -18pt">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0; margin-bottom: 0"><tr style="vertical-align: top">
+<td style="width: 18pt"/><td style="width: 18pt">&#9679;</td><td style="text-align: justify">U.S. Provisional Patent Application No. 64/042,941, filed on April 17, 2026, titled &#8220;Combination Therapeutics for CNS Disorders,&#8221;
+which generally covers multi-drug therapeutic combinations for CNS disorders, including dopaminergic, GABAergic, NMDA-modulating, antihistamine
+and anticonvulsant agents; and</td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 36pt; text-indent: -18pt">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0; margin-bottom: 0"><tr style="vertical-align: top">
+<td style="width: 18pt"/><td style="width: 18pt">&#9679;</td><td style="text-align: justify">Australian Patent No. 2022341090 (granted), with corresponding pending applications in Japan, Canada, Brazil, Mexico, the European
+Union, India, China, Hong Kong and South Korea, in each case as further described on Schedule 3.6 to the Merger Agreement.</td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 36pt; text-indent: -18pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">The Company intends to evaluate the Patents in connection with its central
+nervous system (CNS) and related research and development programs, including in the context of evaluating opportunities for combination
+and intranasal delivery of CNS-active compounds. Whether and to what extent the Company is able to advance any program based on the Patents
+(including any combination or delivery approach) will depend on a variety of factors, including continued patent prosecution, validity
+and enforceability, the outcome of any opposition, reexamination or similar proceeding, the regulatory pathway selected by the Company
+for any candidate, the success of related preclinical and clinical activities, the availability of capital, and the discretion of the
+Company&#8217;s Board of Directors. The Patents are not associated with any ongoing operations, and the Company has not assumed any material
+liabilities in connection with the acquisition. No assurance can be given as to the commercial value, validity or enforceability of any
+of the Patents, as to the issuance of any patent based on any pending patent application, or as to the success of any program that the
+Company may pursue based on the Patents. See the section titled &#8220;Forward-Looking Statements&#8221; below.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><b>No &#8220;Business&#8221; for purposes of Rule 3-05 of Regulation S-X.
+</b>The Company does not believe that the acquisition of Holdings constitutes the acquisition of a &#8220;business&#8221; within the meaning
+of Rule 11-01(d) of Regulation S-X. The Company&#8217;s management performed the facts-and-circumstances continuity analysis required
+under Rule 11-01(d) and determined that the transferred assets consisted solely of the Patents, that there was no continuity of revenue-producing
+activity, and that no operating infrastructure was acquired or transferred &#8212; including no employees, customer base, sales force,
+distribution system, physical facilities, production techniques, trade names or revenue-producing operations. Accordingly, the Company
+does not believe that historical financial statements of Holdings or pro forma financial information are required to be filed under Item
+9.01 of Form 8-K.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>Item 2.01 Completion of Acquisition or Disposition of Assets.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">On May 1, 2026, the Company completed the Merger described under Item 1.01
+above. Upon the effective time of the Merger on May 1, 2026, Holdings merged with and into Merger Sub, with Merger Sub continuing as the
+surviving corporation and as a wholly owned subsidiary of the Company. The sole assets of Holdings as of immediately prior to the effective
+time of the Merger consisted of the multi-jurisdictional patent portfolio described under Item 1.01 above and under the heading &#8220;The
+Patents&#8221; below (collectively, the &#8220;Patents&#8221;), which the Holders contributed to Holdings prior to the effective time.
+Holdings had no operations, no employees, no revenue, and no assets or material liabilities other than the Patents.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<!-- Field: Page; Sequence: 5 -->
+    <div style="border-bottom: Black 2pt solid; margin-top: 6pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">In consideration for the Merger, on May 1, 2026 the Company issued an aggregate
+of eight (8) shares of Series B Convertible Preferred Stock (the &#8220;Series B Preferred Stock&#8221;) to the Holders, allocated five
+(5) shares to Oncotelic Inc. (representing 62.5% of the Series B Preferred Stock and an aggregate Stated Value of $12,500,000) and three
+(3) shares to Pelerin Therapeutics Inc. (representing 37.5% of the Series B Preferred Stock and an aggregate Stated Value of $7,500,000).
+The Series B Preferred Stock has a per-share Stated Value of $2,500,000 and an aggregate Stated Value of $20,000,000. The maximum number
+of shares of common stock issuable upon full conversion of the Series B Preferred Stock following receipt of the Stockholder Approval
+(calculated based on the aggregate Stated Value and the fixed Conversion Price of $1.50 per share of common stock) is 13,333,333 shares
+of common stock, subject to adjustment under the Certificate of Designation. No cash consideration was paid in connection with the Merger.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">The information set forth under Item 1.01 above (including the Rule 11-01(d)
+management analysis) and under Items 3.02, 3.03 and 5.03 below is incorporated into this Item 2.01 by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>Item 3.01 Notice of Delisting or Failure to Satisfy a Continued Listing
+Rule or Standard; Transfer of Listing.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0; text-align: justify">As previously disclosed, on February 6, 2026, the Company received a letter
+from the Listing Qualifications Staff of The Nasdaq Stock Market LLC (&#8220;Nasdaq&#8221;) notifying the Company that the Staff had determined
+to delist the Company&#8217;s common stock from The Nasdaq Capital Market. The Company timely requested a hearing before the Nasdaq Hearings
+Panel (the &#8220;Panel&#8221;), which stayed the delisting action pending the Panel&#8217;s decision.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0; text-align: justify">On April 20, 2026, the Company received notice from
+the Panel (in the &#8220;Decision&#8221;) that it had until April 27, 2026, to regain compliance with the $2.5 million equity requirement
+under</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 24px"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="width: 24px"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="font: 12pt Times New Roman, Times, Serif; text-align: justify"><span style="font-size: 10pt">Nasdaq Listing Rule 5550(b)(1)
+    (the &#8220;Stockholders&#8217; Equity Rule&#8221;).&#160;&#160;On April 27, 2026, the Company requested an extension from the Panel
+    through May 1, 2026 to regain compliance with the Stockholder&#8217; Equity Rule. </span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0.5in; text-indent: -0.25in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 24px"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="width: 24px"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="font: 12pt Times New Roman, Times, Serif; text-align: justify"><span style="font-size: 10pt">The Decision also provided
+    the Companythrough June 1, 2026 to demonstrate compliance with the $1.00 closng bid price requirement under Nasdaq Listing Rule 5550(a)(2)
+    (the &#8220;Bid Price Rule&#8221;).&#160;&#160;On April 27, 2026, the Company requested an extension from the Panel through June
+    4, 2026, to regain compliance with the Bid Price Rule.</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0.5in; text-indent: -0.25in">&#160;&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 6 -->
+    <div style="border-bottom: Black 2pt solid; margin-top: 6pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">On May 1, 2026, the Company completed the Merger
+described under Item 1.01 and Item 2.01 above and issued the Series B Preferred Stock having an aggregate Stated Value of $20,000,000
+to the Holders. The Merger and the related issuance of the Series B Preferred Stock is the principal transaction undertaken by the Company
+to achieve compliance with the Stockholders&#8217; Equity Rule and the&#160;Company will determine and disclose the equity treatment
+of the Series B Preferred Stock in accordance with applicable accounting standards.After giving effect to the Merger,the issuance of
+the Series B Preferred Stock, and based on the Company&#8217;s preliminary accounting and fair-value analysis, the Company believes its
+stockholders&#8217; equity exceeds the $2.5 million minimum required by Nasdaq Listing Rule 5550(b)(1). The Company is awaiting the Panel&#8217;s
+formal determination of compliance with the Stockholder&#8217;s Equity Rule. There can be no assurance that the Panel will determine
+that the Company has satisfied the Stockholders&#8217; Equity Rule, and any such determination by the Panel is subject to the Panel&#8217;s
+continuing review of the Company&#8217;s disclosures, financial condition and progress toward compliance with the Bid Price Rule. If
+the Panel determines that the Company has not satisfied the conditions set forth in the Panel&#8217;s decision (as so extended), Nasdaq
+may take further action to delist the Company&#8217;s common stock from The Nasdaq Capital Market.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>Item 3.02 Unregistered Sales of Equity Securities.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">The disclosure set forth under Item 1.01 and Item 2.01 above is incorporated
+herein by reference. On May 1, 2026, the Company issued an aggregate of eight (8) shares of Series B Preferred Stock to the Holders as
+Merger Consideration, of which five (5) shares were issued to Oncotelic Inc. and three (3) shares were issued to Pelerin Therapeutics
+Inc. The Series B Preferred Stock has a per-share Stated Value of $2,500,000 and an aggregate Stated Value of $20,000,000. The maximum
+number of shares of common stock issuable upon full conversion of the Series B Preferred Stock following receipt of the Stockholder Approval
+is 13,333,333 shares of common stock, subject to adjustment under the Certificate of Designation.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">The Series B Preferred Stock was issued in a private placement in reliance
+on the exemption from the registration requirements of the Securities Act of 1933, as amended (the &#8220;Securities Act&#8221;), provided
+by Section 4(a)(2) of the Securities Act and Rule 506 of Regulation D promulgated thereunder. Each of the Holders represented to the Company
+that it is an &#8220;accredited investor&#8221; as defined in Rule 501(a) of Regulation D, that it acquired the Series B Preferred Stock
+for its own account, for investment purposes only and not with a view to, or for sale in connection with, any distribution in violation
+of the Securities Act, and that it has such knowledge and experience in financial and business matters as to be capable of evaluating
+the merits and risks of the investment. The issuance did not involve any general solicitation or general advertising, and no commissions
+or underwriting discounts were paid in connection with the issuance.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<!-- Field: Page; Sequence: 7 -->
+    <div style="border-bottom: Black 2pt solid; margin-top: 6pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">The Series B Preferred Stock (and any shares of common stock issuable upon
+conversion thereof) constitutes &#8220;restricted securities&#8221; within the meaning of Rule 144 under the Securities Act and bears
+customary restrictive legends, including legends evidencing the Conversion Gate, the forfeiture, cancellation and set-off rights of the
+Company under Article VI of the Merger Agreement (including the special IP clawback under Section 6.9), and the transfer restrictions
+and stop-transfer mechanics set forth in the Certificate of Designation. The Series B Preferred Stock issued to Pelerin additionally bears
+a restrictive legend required by Section 2.5 of National Instrument 45-102 &#8212; Resale of Securities of the Canadian Securities Administrators,
+evidencing a Canadian hold period (the parties intend the holder not to trade the security before the date that is four (4) months and
+one (1) day after the later of the original issue date and the date the issuer became a reporting issuer in any province or territory
+of Canada).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>Item 3.03 Material Modification to Rights of Security Holders.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">The information set forth under Item 1.01, Item 2.01 and Item 5.03 of this
+Current Report on Form 8-K is incorporated into this Item 3.03 by reference. On May 1, 2026, in connection with the closing of the Merger
+and the issuance of the Series B Preferred Stock, the Company filed the Certificate of Designation of Series B Convertible Preferred Stock
+with the Secretary of State of the State of Delaware, designating the Series B Preferred Stock and fixing the rights, preferences, privileges
+and restrictions thereof. The issuance of the Series B Preferred Stock and the filing of the Certificate of Designation may be deemed
+to materially modify the rights of holders of the Company&#8217;s common stock to the extent that, in the event of any liquidation, dissolution
+or winding up of the Company, the holders of the Series B Preferred Stock are entitled to a senior liquidation preference equal to the
+aggregate Stated Value of the Series B Preferred Stock ($20,000,000), and to the extent that, upon receipt of the Stockholder Approval,
+the Series B Preferred Stock will become convertible into shares of common stock at a fixed Conversion Price of $1.50 per share, subject
+to a 4.99% beneficial ownership limitation (which a holder may elect to increase to 9.99% on 61 days&#8217; prior written notice and which
+any further increase requires the Company&#8217;s consent and Nasdaq Listing Rule 5635 compliance review).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>Item 5.03 Amendments to Articles of Incorporation or Bylaws; Change
+in Fiscal Year.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">On May 1, 2026, the Company filed the Certificate of Designation of Series
+B Convertible Preferred Stock (the &#8220;Certificate of Designation&#8221;) with the Secretary of State of the State of Delaware, designating
+the Series B Preferred Stock and fixing the rights, preferences, privileges and restrictions thereof. The Certificate of Designation became
+effective upon filing. A summary of the material terms of the Series B Preferred Stock is set forth under Item 1.01 and Item 2.01 above
+and is incorporated into this Item 5.03 by reference. The foregoing description of the Certificate of Designation is qualified in its
+entirety by reference to the full text of the Certificate of Designation, a copy of which is filed as Exhibit 3.1 to this Current Report
+on Form 8-K and is incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<!-- Field: Page; Sequence: 8 -->
+    <div style="border-bottom: Black 2pt solid; margin-top: 6pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>Item 9.01 Financial Statements and Exhibits.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>(a) Financial Statements of Business Acquired.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">Not applicable. As described under Item 1.01 above, the Company does not
+believe that the acquisition of Holdings constitutes the acquisition of a &#8220;business&#8221; within the meaning of Rule 11-01(d) of
+Regulation S-X. Accordingly, the Company does not believe that financial statements of Holdings are required to be filed pursuant to Rule
+3-05 of Regulation S-X.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>(b) Pro Forma Financial Information.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">Not applicable, for the reasons set forth in paragraph (a) above. See also
+Article 11 of Regulation S-X.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>(d) Exhibits.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b></b></p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border: Black 1pt solid; padding: 0pt; width: 10%; text-align: center; text-indent: 0pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Exhibit No.</b></span></td>
+    <td style="border-top: Black 1pt solid; border-right: Black 1pt solid; border-bottom: Black 1pt solid; padding: 0pt; width: 2%; text-indent: 0pt">&#160;</td>
+    <td style="border-top: Black 1pt solid; border-right: Black 1pt solid; border-bottom: Black 1pt solid; padding: 0pt; width: 88%; text-indent: 0pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Description</b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="border-right: Black 1pt solid; border-bottom: Black 1pt solid; border-left: Black 1pt solid; padding: 0pt; text-align: center; text-indent: 0pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">2.1</span></td>
+    <td style="border-right: Black 1pt solid; border-bottom: Black 1pt solid; padding: 0pt; text-indent: 0pt">&#160;</td>
+    <td style="border-right: Black 1pt solid; border-bottom: Black 1pt solid; padding: 0pt; text-align: justify; text-indent: 0pt"><a href="e7595_ex2-1.htm"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Agreement and Plan of Merger, dated as of April 27, 2026, by and among Lunai Bioworks, Inc., Lunai Bioworks IP, Inc., Neurobridge IP Holdings Incorporated, Oncotelic Inc., and Pelerin Therapeutics Inc.</span></a></td></tr>
+  <tr style="vertical-align: top">
+    <td style="border-right: Black 1pt solid; border-bottom: Black 1pt solid; border-left: Black 1pt solid; padding: 0pt; text-align: center; text-indent: 0pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">3.1</span></td>
+    <td style="border-right: Black 1pt solid; border-bottom: Black 1pt solid; padding: 0pt; text-indent: 0pt">&#160;</td>
+    <td style="border-right: Black 1pt solid; border-bottom: Black 1pt solid; padding: 0pt; text-align: justify; text-indent: 0pt"><a href="e7595_ex3-1.htm"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Certificate of Designation of Series B Convertible Preferred Stock of Lunai Bioworks, Inc., as filed with the Secretary of State of the State of Delaware on May 1, 2026.</span></a></td></tr>
+  <tr style="vertical-align: top">
+    <td style="border-right: Black 1pt solid; border-bottom: Black 1pt solid; border-left: Black 1pt solid; padding: 0pt; text-align: center; text-indent: 0pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">104</span></td>
+    <td style="border-right: Black 1pt solid; border-bottom: Black 1pt solid; padding: 0pt; text-indent: 0pt">&#160;</td>
+    <td style="border-right: Black 1pt solid; border-bottom: Black 1pt solid; padding: 0pt; text-align: justify; text-indent: 0pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Cover Page Interactive Data File (embedded within the Inline XBRL document).</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;<b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>The Special Meeting and the Proposals Being Voted On</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">This Current Report on Form 8-K may be deemed to constitute definitive
+additional soliciting material filed pursuant to Rule 14a-6(b) under the Securities Exchange Act of 1934, as amended, in connection with
+the Company&#8217;s special meeting of stockholders scheduled to be held on May 8, 2026.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">The Company&#8217;s special meeting of stockholders is scheduled to be
+held on May 8, 2026 (rescheduled from May 4, 2026) (the &#8220;Special Meeting&#8221;), virtually via the meeting platform identified
+in the Definitive Proxy Statement (as defined below). The proposals to be considered by stockholders at the Special Meeting (including
+the proposal to approve a reverse stock split intended to assist the Company in regaining compliance with the Bid Price Rule (the &#8220;Reverse Split Proposal&#8221;)) are described in the Definitive Proxy Statement, and the Company&#8217;s Board
+of Directors recommends that stockholders vote</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>FOR </b>each of the proposals described in the Definitive Proxy Statement,
+including the Reverse Split Proposal.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><b>This Current Report on Form 8-K does not change any of the proposals
+to be voted on at the Special Meeting, and does not seek any vote, consent or other authorization with respect to the Merger, the issuance
+of the Series B Preferred Stock or the conversion of the Series B Preferred Stock into common stock. </b>The Stockholder Approval Proposal
+is <b>not </b>on the ballot for the Special Meeting unless the Company files a separate definitive proxy supplement expressly adding such
+proposal. The Merger and the issuance of the Series B Preferred Stock are intended to address the Stockholders&#8217; Equity Rule under
+Nasdaq Listing Rule 5550(b)(1) only; they do not cure the Bid Price Rule under Nasdaq Listing Rule 5550(a)(2), and the Reverse Split Proposal
+remains necessary to assist the Company in regaining compliance with the Bid Price Rule. The Board of Directors&#8217; recommendation
+in favor of the Reverse Split Proposal is unchanged. Proxies previously submitted by stockholders remain effective and will be voted at
+the Special Meeting in accordance with such stockholders&#8217; instructions, unless and until properly revoked. Stockholders who have
+already voted do not need to take any action in response to this Current Report on Form 8-K, but may change their vote at any time before
+the Special Meeting in the manner described in the Definitive Proxy Statement, as amended and supplemented.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<!-- Field: Page; Sequence: 9 -->
+    <div style="border-bottom: Black 2pt solid; margin-top: 6pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>Additional Information and Where to Find It</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">In connection with the Special Meeting, the Company has filed with the
+U.S. Securities and Exchange Commission (the &#8220;SEC&#8221;) a definitive proxy statement, as amended and supplemented, including (i)
+the original definitive proxy statement and form of proxy filed on April 13, 2026, (ii) a revised definitive proxy statement on Schedule
+14A (DEFR14A) filed on April 15, 2026 amending the original definitive proxy statement, and (iii) the Current Report on Form 8-K filed
+on April 28, 2026 announcing the postponement of the previously scheduled May 4, 2026 Special Meeting to May 8, 2026 (together with any
+further amendment or supplement thereto, the &#8220;Definitive Proxy Statement, as amended and supplemented&#8221;). The Company has filed
+with the SEC a definitive proxy statement, as amended and supplemented, in connection with the Special Meeting. Stockholders are urged
+to read the definitive proxy statement, as amended and supplemented, and any other relevant documents filed with the SEC because they
+contain important information regarding the matters to be voted on at the Special Meeting. Stockholders may obtain free copies of the
+Definitive Proxy Statement, as amended and supplemented, this Current Report on Form 8-K and any other documents filed by the Company
+with the SEC at the SEC&#8217;s website at www.sec.gov, or by directing a request to the Company at 3400 Cottage Way, Suite G2, #3256,
+Sacramento, California 95825, Attention: Corporate Secretary.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>Participants in the Solicitation</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">The Company and its directors and executive officers
+may be deemed to be participants in the solicitation of proxies from the Company&#8217;s stockholders in connection with the Special
+Meeting. Information regarding the names of the Company&#8217;s directors and executive officers and their respective interests in the
+Company by security holdings or otherwise is set forth in (i) the Original <a href="http://www.sec.gov/Archives/edgar/data/1527728/000173112226000559/e7555_def14a.htm">Definitive Proxy Statement</a> filed on April 13, 2026 (specifically
+including the sections captioned &#8220;Security Ownership of Certain Beneficial Owners and Management&#8221; and &#8220;Compensation
+of Directors and Executive Officers&#8221;), (ii) the <a href="http://www.sec.gov/Archives/edgar/data/1527728/000173112226000570/e7558_defr14a.htm">DEFR14A</a> filed on April 15, 2026, and (iii) the Company&#8217;s most recent Annual
+Report on <a href="http://www.sec.gov/ix?doc=/Archives/edgar/data/0001527728/000173112225001316/e6882_10-k.htm">Form 10-K</a> filed with the SEC, in each case as updated from time to time by the Company&#8217;s other filings with the SEC.
+To the extent that holdings of the Company&#8217;s securities by such participants have changed since the amounts set forth in the Definitive
+Proxy Statement, as amended and supplemented, such changes have been or will be reflected on Statements of Change in Ownership on Form
+4 filed by such participants with the SEC. The foregoing filings, including hyperlinks where they are available on the SEC&#8217;s EDGAR
+system, may be accessed free of charge at www.sec.gov, in each case as contemplated by SEC Compliance and Disclosure Interpretation 132.03.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>Forward-Looking Statements</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">This Current Report on Form 8-K contains forward-looking statements within
+the meaning of the Private Securities Litigation Reform Act of 1995, including, without limitation, statements regarding the expected
+effects of the Merger and the issuance of the Series B Preferred Stock on the Company&#8217;s stockholders&#8217; equity and on the Company&#8217;s
+compliance with Nasdaq Listing Rule 5550(b)(1) and Nasdaq Listing Rule 5550(a)(2); the accounting and fair-value treatment of the Series
+B Preferred Stock; the Company&#8217;s solicitation covenant under Section 5.11 of the Merger Agreement; the timing, content and terms
+of any solicitation of the Stockholder Approval; the issuance of any common stock upon conversion of the Series B Preferred Stock; the
+conduct, outcome and timing of the Special Meeting (including the Reverse Split Proposal); the value, validity or enforceability of the
+patents and patent application acquired in the Merger; and the Company&#8217;s continued listing on The Nasdaq Capital Market. These statements
+involve known and unknown risks and uncertainties that could cause actual results to differ materially from those expressed or implied.
+Important factors include, without limitation, the risk that Nasdaq or the Nasdaq Hearings Panel does not accept the Merger and the related
+issuance of the Series B Preferred Stock as sufficient to demonstrate compliance with the Stockholders&#8217; Equity Rule; the risk that
+the accounting, classification or fair-value treatment of the Series B Preferred Stock differs from the Company&#8217;s expected treatment
+in a manner that affects pro forma stockholders&#8217; equity (including the risk that the equity component recognized for purposes of
+the Stockholders&#8217; Equity Rule is less than the aggregate $20,000,000 Stated Value of the Series B Preferred Stock); the risk that
+the Company is unable to satisfy the Bid Price Rule (with or without effecting a reverse stock split); the risk that, although the Company
+has covenanted under Section 5.11 of the Merger Agreement to use commercially reasonable efforts to submit the Stockholder Approval Proposal
+to its stockholders and to commence such process within 180 days after the closing of the Merger, the stockholders do not approve the
+Stockholder Approval Proposal at any meeting at which it is submitted; the risk that the Company&#8217;s commencement of the Section 5.11
+solicitation process is delayed or that the timing, content or terms of the solicitation differ from current expectations; the risk that
+any proposal voted on at the Special Meeting (including the Reverse Split Proposal, and any proposal seeking the Stockholder Approval
+if subsequently added to the ballot by definitive proxy supplement) is not approved by stockholders; the risk that the patents and patent
+application acquired in the Merger are invalidated, infringed or otherwise impaired (which may trigger the Company&#8217;s IP clawback
+rights under Section 6.9 of the Merger Agreement); the risk of delisting from The Nasdaq Capital Market; and the risks described in the
+Company&#8217;s filings with the SEC, including under &#8220;Risk Factors&#8221; in the Company&#8217;s most recent Annual Report on Form
+10-K and subsequent Quarterly Reports on Form 10-Q. The Company undertakes no obligation to update any forward-looking statement, except
+as required by law.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<!-- Field: Page; Sequence: 10 -->
+    <div style="border-bottom: Black 2pt solid; margin-top: 6pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; text-align: center"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">Pursuant to the requirements of the Securities Exchange Act of 1934, the
+registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+<tr style="vertical-align: top; text-align: left">
+  <td colspan="2"><b>LUNAI BIOWORKS, INC.</b></td>
+  <td>&#160;</td></tr>
+<tr style="vertical-align: top; text-align: left">
+  <td style="width: 5%">&#160;</td>
+  <td style="width: 45%">&#160;</td>
+  <td style="width: 50%">&#160;</td></tr>
+<tr style="vertical-align: top; text-align: left">
+  <td>Date:</td>
+  <td>May 1, 2026</td>
+  <td>&#160;</td></tr>
+<tr style="vertical-align: top; text-align: left">
+  <td>&#160;</td>
+  <td>&#160;</td>
+  <td>&#160;</td></tr>
+<tr style="vertical-align: top; text-align: left">
+  <td>By:</td>
+  <td>/s/ David Weinstein</td>
+  <td>&#160;</td></tr>
+<tr style="vertical-align: top; text-align: left">
+  <td>Name:</td>
+  <td>David Weinstein</td>
+  <td>&#160;</td></tr>
+<tr style="vertical-align: top; text-align: left">
+  <td>Title:</td>
+  <td>Chief Executive Officer</td>
+  <td>&#160;</td></tr>
+</table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 3pt; margin-bottom: 3pt; width: 100%"><div style="border-top: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxFjd0KgkAQhZ/Adxj2WvIHjPAyMYksQiK6XXKMJd2R2c3skXrLNiUaBoaZc745QviioI1qkeGyrko4Yde30iJU2CCjvqJzZNtdCm5WeFPGstR2Wn9gRo5BxywXiXT3yTkog3UKYRKEURAvIYrTZAXHvfC+eka6UTVqq2QLUtdwZOpZoZX8mj+c5EiauteUdEY2inQK0SKc5TfEYRTDgQb5JL4bKMtMeP5UniiYHr1z5aNF/SUhb7FzcWam/+19AM8XSmI= -->
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

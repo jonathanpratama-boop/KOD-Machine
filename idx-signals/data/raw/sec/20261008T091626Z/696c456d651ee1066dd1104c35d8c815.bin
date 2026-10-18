@@ -1,0 +1,366 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2023" xmlns:us-gaap="http://fasb.org/us-gaap/2023" xmlns:us-roles="http://fasb.org/us-roles/2023" xmlns:country="http://xbrl.sec.gov/country/2023" xmlns:srt="http://fasb.org/srt/2023" xmlns:kutg="http://kthightechmarketinginc.com/20250613">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02C_US%2DGAAP%2D2023 -->
+<!-- Field: Set; Name: xdx; ID: xdx_033_kutg_kthightechmarketinginc.com_20250613 -->
+<!-- Field: Set; Name: xdx; ID: xdx_048_20250613_20250613 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_058_edei%2D%2DEntityCentralIndexKey_0001662684 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2025-06-13" id="Fact000003" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2025-06-13" id="Fact000004" name="dei:EntityCentralIndexKey">0001662684</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="kutg-20250613.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2025-06-13">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001662684</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2025-06-13</xbrli:startDate>
+        <xbrli:endDate>2025-06-13</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="margin: 0">&#160;</p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0; margin-bottom: 0; width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page --><p style="margin: 0pt 0">&#160;</p>
+
+<p style="font: 12pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Washington, DC 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 14pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Form <span id="xdx_90E_edei--DocumentType_c20250613__20250613_zsoGaFY1cVIf"><ix:nonNumeric contextRef="AsOf2025-06-13" id="Fact000009" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Pursuant to Section 13 or 15(d) of the Securities
+Exchange Act of 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Date of Report (Date of earliest event reported):
+<span id="xdx_90C_edei--DocumentPeriodEndDate_c20250613__20250613_zA0ZjtUFMaEa"> <ix:nonNumeric contextRef="AsOf2025-06-13" format="ixt:datemonthdayyearen" id="Fact000010" name="dei:DocumentPeriodEndDate">June 13, 2025</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="border-bottom: Black 1pt solid; font: 14pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><span id="xdx_905_edei--EntityRegistrantName_c20250613__20250613_znXIu410yb9i" style="font-size: 14pt"><b><span><ix:nonNumeric contextRef="AsOf2025-06-13" id="Fact000011" name="dei:EntityRegistrantName">KULR
+TECHNOLOGY GROUP, INC.</ix:nonNumeric></span></b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><span style="font-size: 10pt">(Exact
+name of the registrant as specified in its charter)</span></p>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr>
+    <td style="border-bottom: black 1pt solid; width: 32%; text-align: center"><span id="xdx_903_edei--EntityIncorporationStateCountryCode_c20250613__20250613_zdRf6pD4TKd2" style="font-size: 10pt"><ix:nonNumeric contextRef="AsOf2025-06-13" format="ixt-sec:stateprovnameen" id="Fact000012" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></td>
+    <td style="vertical-align: top; width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; width: 32%; text-align: center"><span id="xdx_90A_edei--EntityFileNumber_c20250613__20250613_ziNsv6687Wqf" style="font-size: 10pt"><ix:nonNumeric contextRef="AsOf2025-06-13" id="Fact000013" name="dei:EntityFileNumber">001-40454</ix:nonNumeric></span></td>
+    <td style="vertical-align: top; width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1pt solid; width: 32%; text-align: center"><span id="xdx_90F_edei--EntityTaxIdentificationNumber_c20250613__20250613_zs5Eg4rw7RAj" style="font-size: 10pt"><ix:nonNumeric contextRef="AsOf2025-06-13" id="Fact000014" name="dei:EntityTaxIdentificationNumber">81-1004273</ix:nonNumeric></span></td></tr>
+  <tr>
+    <td style="text-align: center"><span style="font-size: 10pt">(State or other jurisdiction of<br/>
+    incorporation)</span></td>
+    <td style="vertical-align: top; text-align: center">&#160;</td>
+    <td style="text-align: center">(Commission<br/>
+    File Number)</td>
+    <td style="vertical-align: top; text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">(IRS Employer<br/>
+    Identification No.)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span style="text-decoration: underline"><span id="xdx_90C_edei--EntityAddressAddressLine1_c20250613__20250613_z4BJ1M9Cjss7"><ix:nonNumeric contextRef="AsOf2025-06-13" id="Fact000015" name="dei:EntityAddressAddressLine1">555
+Forge River Road, Suite 100</ix:nonNumeric></span>, <span id="xdx_906_edei--EntityAddressCityOrTown_c20250613__20250613_z1zUlSK1F0Jh"><ix:nonNumeric contextRef="AsOf2025-06-13" id="Fact000016" name="dei:EntityAddressCityOrTown">Webster</ix:nonNumeric></span>, <span id="xdx_90E_edei--EntityAddressStateOrProvince_c20250613__20250613_zcGPz3F2gSDd"><ix:nonNumeric contextRef="AsOf2025-06-13" format="ixt-sec:stateprovnameen" id="Fact000017" name="dei:EntityAddressStateOrProvince">Texas</ix:nonNumeric></span> <span id="xdx_902_edei--EntityAddressPostalZipCode_c20250613__20250613_z7AQqdEbbyJj"><ix:nonNumeric contextRef="AsOf2025-06-13" id="Fact000018" name="dei:EntityAddressPostalZipCode">77598</ix:nonNumeric></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Address of principle executive offices) (Zip
+code)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Registrant&#8217;s telephone number, including
+area code:&#160;(<span id="xdx_909_edei--CityAreaCode_c20250613__20250613_z5OPbFG2wrGg"><ix:nonNumeric contextRef="AsOf2025-06-13" id="Fact000019" name="dei:CityAreaCode">408</ix:nonNumeric></span>) <span id="xdx_90C_edei--LocalPhoneNumber_c20250613__20250613_zF19BFU5gyIg"><ix:nonNumeric contextRef="AsOf2025-06-13" id="Fact000020" name="dei:LocalPhoneNumber">663-5247</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">N/A</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Former name or address if changed since last
+report)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Check the appropriate box below if the Form 8-K
+filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions (see General
+Instruction A.2. below):</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: left; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 24px"><span id="xdx_90F_edei--WrittenCommunications_c20250613__20250613_zUeHC7wFOtGb" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2025-06-13" format="ixt:booleanfalse" id="Fact000021" name="dei:WrittenCommunications">&#168;</ix:nonNumeric></span></td>
+    <td><span style="font-size: 10pt">Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td><span id="xdx_90A_edei--SolicitingMaterial_c20250613__20250613_zOnxcVBBHv58" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2025-06-13" format="ixt:booleanfalse" id="Fact000022" name="dei:SolicitingMaterial">&#168;</ix:nonNumeric></span></td>
+    <td><span style="font-size: 10pt">Soliciting material pursuant to Rule 14A-12 under the Exchange Act (17 CFR 240.14a-12)</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td><span id="xdx_90C_edei--PreCommencementTenderOffer_c20250613__20250613_zsx7vhCVCUy3" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2025-06-13" format="ixt:booleanfalse" id="Fact000023" name="dei:PreCommencementTenderOffer">&#168;</ix:nonNumeric></span></td>
+    <td><span style="font-size: 10pt">Pre-commencement communications pursuant to Rule 14D-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td><span id="xdx_90C_edei--PreCommencementIssuerTenderOffer_c20250613__20250613_zIuzSRLwSRba" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2025-06-13" format="ixt:booleanfalse" id="Fact000024" name="dei:PreCommencementIssuerTenderOffer">&#168;</ix:nonNumeric></span></td>
+    <td><span style="font-size: 10pt">Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Securities registered pursuant to Section 12(b) of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: Black 1pt solid; text-align: center; width: 25%"><span style="font-size: 10pt"><b>Title of each class:</b></span></td>
+    <td style="width: 2%; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; width: 25%; text-align: center"><span style="font-size: 10pt"><b>Trading Symbol(s)</b></span></td>
+    <td style="width: 2%; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; width: 46%; text-align: center"><span style="font-size: 10pt"><b>Name of each exchange
+    on which registered:</b></span></td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="text-align: center"><span id="xdx_904_edei--Security12bTitle_c20250613__20250613_zUnNXg7PS6b7" style="font-size: 10pt"><ix:nonNumeric contextRef="AsOf2025-06-13" id="Fact000025" name="dei:Security12bTitle">Common
+    Stock</ix:nonNumeric></span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span id="xdx_904_edei--TradingSymbol_c20250613__20250613_zW00HhwNwR5c" style="font-size: 10pt"><ix:nonNumeric contextRef="AsOf2025-06-13" id="Fact000026" name="dei:TradingSymbol">KULR</ix:nonNumeric></span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span id="xdx_90B_edei--SecurityExchangeName_c20250613__20250613_zixYRHYV0vrj" style="font-size: 10pt"><ix:nonNumeric contextRef="AsOf2025-06-13" format="ixt-sec:exchnameen" id="Fact000027" name="dei:SecurityExchangeName">NYSE
+    American LLC</ix:nonNumeric></span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Indicate by check mark whether the registrant is an emerging growth company as defined in as defined in Rule 405 of the Securities Act
+of 1933 (&#167;230.405) or Rule 12b-2 of the Securities Exchange Act of 1934 (&#167;240.12b-2).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: left">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Emerging growth company <span id="xdx_90B_edei--EntityEmergingGrowthCompany_c20250613__20250613_zwTM3Y4jw523" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2025-06-13" format="ixt:booleanfalse" id="Fact000028" name="dei:EntityEmergingGrowthCompany">&#168;</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: left">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">If an emerging growth company, indicate by check
+mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting
+standards provided pursuant to Section 13(a) of the Exchange Act. <span style="font-family: Wingdings">&#168;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0; margin-bottom: 0; width: 100%"><div style="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page --><p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;&#160;</p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page --><p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Item 7.01 Regulation FD Disclosure.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-indent: 0.5in; margin: 0pt 0 0pt 0in; text-align: justify">On June 12, 2025, KULR Technology Group, Inc., a Delaware
+corporation (the &#8220;Company&#8221;), approved a reverse stock split of the Company&#8217;s issued and outstanding shares of common
+stock, at a ratio of 1-for-8 (the &#8220;Reverse Stock Split&#8221;). The Reverse Stock Split has been duly approved by the stockholders
+of the Company in February 2024.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">A copy of the Company&#8217;s
+press release announcing the &#8220;Reverse Stock Split is attached as Exhibit 99.1 to this Current Report on Form 8-K and is incorporated
+herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">By filing this Current Report
+on Form 8-K and furnishing the information contained herein, the Company makes no admission as to the materiality of any information in
+this report that is required to be disclosed solely by reason of Regulation FD. The Company uses, and will continue to use, its website,
+press releases, and various social media channels, including its Twitter account (twitter.com/kulrtech), its LinkedIn account (linkedin.com/company/kulr-technology-corporation),
+its Facebook account (facebook.com/KULRTechnology), its TikTok account (tiktok.com/Kulr_tech), its Instagram account (instagram.com/Kulr_tech),
+and its YouTube account (youtube.com/channel/UC3wZBPINQd51N6p35Mo5uQg), as additional means of disclosing public information to investors,
+the media and others interested in the Company. It is possible that certain information that the Company posts on its website, disseminated
+in press releases and on social media could be deemed to be material information, and the Company encourages investors, the media and
+others interested in the Company to review the business and financial information that the Company posts on its website, disseminates
+in press releases and on the social media channels identified above, as such information could be deemed to be material information.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">The information in this Item
+7.01 disclosure, including Exhibit 99.1, is being furnished and shall not be deemed &#8220;filed&#8221; for purposes of Section 18 of
+the Securities Exchange Act of 1934, as amended (the &#8220;Exchange Act&#8221;), or otherwise subject to the liabilities under that Section.
+In addition, the information in this Item 7.01 disclosure, including Exhibits 99.1, shall not be incorporated by reference into the filings
+of the Company under the Securities Act of 1933, as amended, or the Exchange Act, except as shall be expressly set forth by specific reference
+in such filing.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<!-- Field: Page; Sequence: 2 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Item 8.01 Other Events.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">On June 13, 2025 the
+Company issued a press release announcing that the Reverse Stock Split is to become effective on June 23, 2025 and regarding other
+matters related to the Reverse Stock Split, including that the Company&#8217;s outstanding shares of Common Stock will begin trading
+on a split-adjusted basis at market open on June 23, 2025 under the existing symbol &#8220;KULR&#8221; and a new CUSIP number.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">A copy of the press release
+announcing these matters is filed as Exhibit 99.1 to this Current Report on Form 8-K, and is incorporated by reference into this Item
+8.01.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Forward-Looking Statements</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><i>This current report and
+the press release filed as Exhibit 99.1 hereto contains &#8220;forward-looking&#8221; statements. Such statements can be identified by,
+among other things, the use of forward-looking language such as the words &#8220;believe,&#8221; &#8220;goal,&#8221; &#8220;may,&#8221;
+&#8220;will,&#8221; &#8220;intend,&#8221; &#8220;expect,&#8221; &#8220;anticipate,&#8221; &#8220;estimate,&#8221; &#8220;project,&#8221;
+&#8220;would,&#8221; &#8220;could&#8221; or words with similar meaning or the negatives of these terms or by the discussion of strategy
+or intentions. The forward-looking statements in this release include express or implied statements regarding the strategic reverse stock
+split, among others. Such forward-looking statements are subject to a number of risks and uncertainties that could cause KULR&#8217;s
+actual results to differ materially from those discussed here, such as risks inherent with implementing a reverse stock split; along with
+those other risk factors detailed in KULR&#8217;s filings with the Securities and Exchange Commission. These forward-looking statements
+involve assumptions, estimates, and uncertainties that reflect current internal projections, expectations or beliefs. There can be no
+assurance that such statements will prove to be accurate, and actual results and future events could differ materially from those anticipated
+in such statements. All forward-looking statements contained in this current report on Form 8-K and in the press release filed as Exhibit
+99.1 hereto are qualified in their entirety by these cautionary statements and the risk factors described herein. Furthermore, all such
+statements are made as of the date of this current report on Form 8-K and KULR assumes no obligation to update or revise these statements
+unless otherwise required by law.</i></p>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Item 9.01</b></span> <span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Exhibits</b></span></p>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1pt solid; width: 8%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Exhibit&#160;<br/>
+No.</b></span></td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1pt solid; width: 91%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Description</b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td><a href="tm2517954d1_ex99-1.htm" style="-sec-extract: exhibit"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">99.1</span></a></td>
+    <td>&#160;</td>
+    <td><a href="tm2517954d1_ex99-1.htm" style="-sec-extract: exhibit"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Press Release dated June 13, 2025</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: white">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">104</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Cover Page&#160;Interactive Data File - The cover page&#160;interactive data file does not appear in the Interactive Data File because its XBRL tags are embedded within the Inline XBRL document</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<!-- Field: Page; Sequence: 3 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">Pursuant to the requirements
+of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on behalf of the undersigned hereunto
+duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr>
+    <td style="vertical-align: top">&#160;</td>
+    <td colspan="2"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">KULR TECHNOLOGY GROUP,&#160;INC.</span></td></tr>
+  <tr>
+    <td style="vertical-align: top">&#160;</td>
+    <td colspan="2">&#160;</td></tr>
+  <tr>
+    <td style="vertical-align: top; width: 50%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Date: June 13, 2025</span></td>
+    <td style="width: 3%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">By:</span></td>
+    <td style="border-bottom: black 1pt solid; vertical-align: top; width: 47%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">/s/ Michael Mo</span></td></tr>
+  <tr>
+    <td style="vertical-align: top">&#160;</td>
+    <td>&#160;</td>
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Michael Mo</span></td></tr>
+  <tr>
+    <td style="vertical-align: top">&#160;</td>
+    <td>&#160;</td>
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Chief Executive Officer</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<!-- Field: Page; Sequence: 4; Options: Last -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxFjU0KwjAQhU/QOwxZS02DXdilRUWsUoqI22BHCbaZMok/PZK3NLaIw8AwvPe9J8RErGllGmQ4LaoCDth2jfYIFV6Q0Z4xOPLNNoNwK7wa51lbP7w/MKfAYGDSWCkdhMH6MA7rDORsKtOpmoGcZzKBcieir56TvZgarTe6AW1rKJk6Nug192PCQb/IUtsPVUdkZ8hmkMRylN+gZKJgTw/9JL45KIpcRJNhIrFmunfBtXx5tF8Slg22oc6N9H+jDwWmSos= -->
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

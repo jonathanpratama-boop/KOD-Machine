@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2022" xmlns:ref="http://www.xbrl.org/2006/ref" xmlns:us-gaap="http://fasb.org/us-gaap/2022" xmlns:us-gaap-supplement="http://fasb.org/us-gaap-sup/2022q3" xmlns:srt-supplement="http://fasb.org/srt-sup/2022q3" xmlns:us-roles="http://fasb.org/us-roles/2022" xmlns:country="http://xbrl.sec.gov/country/2022" xmlns:srt="http://fasb.org/srt/2022" xmlns:POAI="http://predictive-oncology.com/20230419">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html" />
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02B_US%2DGAAP%2D2022 -->
+<!-- Field: Set; Name: xdx; ID: xdx_037_POAI_predictive%2Doncology.com_20230419 -->
+<!-- Field: Set; Name: xdx; ID: xdx_04C_20230419_20230419 -->
+<!-- Field: Set; Name: xdx; ID: xdx_05F_edei%2D%2DEntityCentralIndexKey_0001446159 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body>
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="From2023-04-19to2023-04-19" name="dei:EntityCentralIndexKey">0001446159</ix:nonNumeric>
+  <ix:nonNumeric contextRef="From2023-04-19to2023-04-19" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="From2023-04-19to2023-04-19" format="ixt:datemonthday" name="dei:CurrentFiscalYearEndDate">12/31</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="poai-20230419.xsd" xlink:type="simple" />
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="From2023-04-19to2023-04-19">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001446159</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2023-04-19</xbrli:startDate>
+        <xbrli:endDate>2023-04-19</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center"><b>UNITED STATES</b></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center"><b>SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center"><b>Washington, D.C. 20549</b></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center"><b>FORM <span id="xdx_901_edei--DocumentType_c20230419__20230419_zO5n19tvGWfk"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center"><b>&#160;</b></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center"><b>Pursuant to Section&#160;13 or 15(d) of the</b></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center"><b>Securities Exchange Act of 1934</b></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center; text-indent: 36pt">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center"><b>Date of Report (Date of earliest event reported): <span id="xdx_900_edei--DocumentPeriodEndDate_c20230419__20230419_zyoyBFSfgcJb"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" format="ixt:datemonthdayyearen" name="dei:DocumentPeriodEndDate">April 19, 2023</ix:nonNumeric></span></b></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-indent: 36pt">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center"><b><span id="xdx_900_edei--EntityRegistrantName_c20230419__20230419_zORxBYL74oBl"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" name="dei:EntityRegistrantName">Predictive Oncology Inc.</ix:nonNumeric></span></b></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center"><b>(Exact name of Registrant as Specified in its Charter)</b></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center"></p>
+
+<table cellpadding="0" cellspacing="0" style="border-collapse: collapse; font-size: 10pt; width: 100%">
+<tr style="vertical-align: top; text-align: left">
+  <td style="text-align: center; width: 33%"><b><span id="xdx_902_edei--EntityIncorporationStateCountryCode_c20230419__20230419_zhCID47ZMAC5"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" format="ixt-sec:stateprovnameen" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></b></td>
+  <td style="text-align: center; width: 34%"><span style="font-size: 10pt"><b><span id="xdx_90E_edei--EntityFileNumber_c20230419__20230419_zQwPBG1e1z2h"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" name="dei:EntityFileNumber">001-36790</ix:nonNumeric></span></b></span></td>
+  <td style="text-align: center; width: 33%"><span style="font-size: 10pt"><b><span id="xdx_904_edei--EntityTaxIdentificationNumber_c20230419__20230419_z08fsyxDsrae"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" name="dei:EntityTaxIdentificationNumber">33-1007393</ix:nonNumeric></span></b></span></td></tr>
+<tr style="vertical-align: top; text-align: left">
+  <td style="text-align: center"><span style="font-size: 10pt">(State or Other Jurisdiction of Incorporation)</span></td>
+  <td style="text-align: center"><span style="font-size: 10pt">(Commission File Number)</span></td>
+  <td style="text-align: center">(IRS Employer Identification No.)</td></tr>
+</table>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center"></p>
+
+<table cellpadding="0" cellspacing="0" style="border-collapse: collapse; font-size: 10pt; width: 100%">
+<tr style="vertical-align: top; text-align: left">
+  <td style="text-align: center; width: 67%"><p style="text-align: center; margin-top: 0; margin-bottom: 0"><b><span id="xdx_903_edei--EntityAddressAddressLine1_c20230419__20230419_z91FkfLljFZ"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" name="dei:EntityAddressAddressLine1">2915 Commers Drive</ix:nonNumeric></span>, <span id="xdx_909_edei--EntityAddressAddressLine2_c20230419__20230419_zmBEGy0DBt73"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" name="dei:EntityAddressAddressLine2">Suite
+                                            900</ix:nonNumeric></span></b></p>
+                         <p style="text-align: center; margin-top: 0; margin-bottom: 0"><b><span id="xdx_90E_edei--EntityAddressCityOrTown_c20230419__20230419_zF6cXYHSKXka"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" name="dei:EntityAddressCityOrTown">Eagan</ix:nonNumeric></span>, <span id="xdx_90E_edei--EntityAddressStateOrProvince_c20230419__20230419_zIV1GqKN0su3"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" format="ixt-sec:stateprovnameen" name="dei:EntityAddressStateOrProvince">Minnesota</ix:nonNumeric></span></b></p></td>
+  <td style="text-align: center; width: 33%"><b><span id="xdx_90D_edei--EntityAddressPostalZipCode_c20230419__20230419_zPCtpxKG4AE4"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" name="dei:EntityAddressPostalZipCode">55121</ix:nonNumeric></span></b></td></tr>
+<tr style="vertical-align: top; text-align: left">
+  <td style="text-align: center">(Address of Principal Executive Offices)</td>
+  <td style="text-align: center"><span style="font-size: 10pt">(Zip Code)</span></td></tr>
+</table>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center">&#160;&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify">Registrant&#8217;s telephone number, including area code: <b><span id="xdx_90B_edei--CityAreaCode_c20230419__20230419_zMi3avOJ11vf"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" name="dei:CityAreaCode">(651)</ix:nonNumeric></span> <span id="xdx_905_edei--LocalPhoneNumber_c20230419__20230419_zg9tM8Q6BJa8"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" name="dei:LocalPhoneNumber">389-4800</ix:nonNumeric></span></b></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify">Former Name or Former Address, if Changed Since Last Report: Not Applicable</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify">Check the appropriate box below if the Form 8-K filing is intended to
+simultaneously satisfy the filing obligation of the registrant under any of the following provisions (<i>see</i> General Instruction
+A.2. below): </p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; text-indent: 36pt">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font-size: 10pt; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 3%"><span id="xdx_900_edei--WrittenCommunications_c20230419__20230419_zcQoo4AOAmS3"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" format="ixt:booleanfalse" name="dei:WrittenCommunications">&#9744;</ix:nonNumeric></span></td>
+    <td style="text-align: justify; font-size: 10pt; width: 97%"><span style="font-size: 10pt">Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425) </span></td></tr>
+</table>
+
+<p style="margin: 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font-size: 10pt; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 3%"><span id="xdx_90A_edei--SolicitingMaterial_c20230419__20230419_z0Aut8YNwZn2"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" format="ixt:booleanfalse" name="dei:SolicitingMaterial">&#9744;</ix:nonNumeric></span></td>
+    <td style="text-align: justify; font-size: 10pt; width: 97%"><span style="font-size: 10pt">Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12) </span></td></tr>
+</table>
+
+<p style="margin: 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font-size: 10pt; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 3%"><span id="xdx_901_edei--PreCommencementTenderOffer_c20230419__20230419_zmJZ6XblWkZ"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" format="ixt:booleanfalse" name="dei:PreCommencementTenderOffer">&#9744;</ix:nonNumeric></span></td>
+    <td style="text-align: justify; font-size: 10pt; width: 97%"><span style="font-size: 10pt">Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b)) </span></td></tr>
+</table>
+
+<p style="margin: 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font-size: 10pt; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 3%"><span id="xdx_901_edei--PreCommencementIssuerTenderOffer_c20230419__20230419_zZdmmvGNChV8"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" format="ixt:booleanfalse" name="dei:PreCommencementIssuerTenderOffer">&#9744;</ix:nonNumeric></span></td>
+    <td style="text-align: justify; font-size: 10pt; width: 97%"><span style="font-size: 10pt">Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c)) </span></td></tr>
+  </table>
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify">Securities registered pursuant to Section 12(b) of the Act:&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="width: 100%; border-collapse: collapse; font-size: 10pt">
+  <tr style="vertical-align: top">
+    <td style="border: Black 1pt solid; width: 33%; text-align: justify"><span style="font-size: 10pt">Title of each class</span></td>
+    <td style="border-top: Black 1pt solid; width: 34%; border-right: Black 1pt solid; border-bottom: Black 1pt solid; text-align: justify"><span style="font-size: 10pt">Trading Symbol(s)</span></td>
+    <td style="border-top: Black 1pt solid; width: 33%; border-right: Black 1pt solid; border-bottom: Black 1pt solid; text-align: justify"><span style="font-size: 10pt">Name of each exchange on which registered</span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="border-right: Black 1pt solid; border-bottom: Black 1pt solid; border-left: Black 1pt solid; text-align: justify"><span style="font-size: 10pt"><span id="xdx_90E_edei--Security12bTitle_c20230419__20230419_zUKcUIyc7R6a"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" name="dei:Security12bTitle">Common stock, $0.01 par value</ix:nonNumeric></span></span></td>
+    <td style="border-right: Black 1pt solid; border-bottom: Black 1pt solid; text-align: justify"><span style="font-size: 10pt"><span id="xdx_907_edei--TradingSymbol_c20230419__20230419_zEcGeFZT1pvg"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" name="dei:TradingSymbol">POAI</ix:nonNumeric></span></span></td>
+    <td style="border-right: Black 1pt solid; border-bottom: Black 1pt solid; text-align: justify"><span style="font-size: 10pt"><span id="xdx_900_edei--SecurityExchangeName_c20230419__20230419_zraMXVaMGf1b"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" name="dei:SecurityExchangeName">NASDAQ</ix:nonNumeric> Capital Market</span></span></td></tr>
+  </table>
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify"><br />
+Indicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405
+of this chapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter).</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify">Emerging growth company <span id="xdx_90E_edei--EntityEmergingGrowthCompany_c20230419__20230419_zRi3aFx20Nel"><ix:nonNumeric contextRef="From2023-04-19to2023-04-19" format="ixt:booleanfalse" name="dei:EntityEmergingGrowthCompany">&#9744;</ix:nonNumeric></span></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify">If an emerging growth company, indicate by check mark if the registrant
+has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant
+to Section 13(a) of the Exchange Act. &#9744;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 4pt solid; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; background-color: white"><b>Item 3.03. Material Modification to Rights of Security Holders.</b></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; background-color: white">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">To the extent required by Item 3.03 of Form 8-K,
+the information contained in Item 5.03 of this report is incorporated herein by reference.</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; background-color: white"><b>Item 5.03. Amendments to Articles of Incorporation or Bylaws; Change
+in Fiscal Year.</b></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; background-color: white">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">On April 19, 2023, Predictive Oncology Inc. (the
+&#8220;Company&#8221;) filed a Certificate of Amendment to the Certificate of Incorporation (the &#8220;Certificate of Amendment&#8221;)
+with the Secretary of State of Delaware to effect a 1-for-20 reverse stock split of the shares of the Company&#8217;s common stock, par
+value $0.01 per share (the &#8220;Common Stock&#8221;), effective as of 12:01 a.m. (Delaware time) on April 24, 2023 (the &#8220;Reverse
+Stock Split&#8221;). As reported below under Item 5.07 of this report, the Company initially convened a special meeting of stockholders
+on April 17, 2023, which was adjourned due to the lack of a quorum and reconvened on April 19, 2023 (the &#8220;Special Meeting&#8221;).
+At the reconvened Special Meeting, the Company&#8217;s stockholders approved the amendment to the Company&#8217;s Certificate of Incorporation
+(the &#8220;Certificate of Incorporation&#8221;) to effect a reverse stock split of the Company&#8217;s common stock at a ratio in the
+range of 1-for-2 to 1-for-25, with such ratio to be determined by the Company&#8217;s Board of Directors (the &#8220;Board&#8221;). Following
+the Special Meeting, the Board determined to effect the Reverse Stock Split at a ratio of 1-for-20.</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">As a result of the Reverse Stock Split, every
+20 shares of issued and outstanding Common Stock will be automatically combined into one issued and outstanding share of Common Stock,
+without any change in the par value per share. No fractional shares will be issued as a result of the Reverse Stock Split. Any fractional
+shares that would otherwise have resulted from the Reverse Stock Split will be rounded up to the next whole number. The Reverse Stock
+Split will reduce the number of shares of Common Stock outstanding from 79,597,181 shares to approximately 3,979,860 shares, subject to
+adjustment for the rounding up of fractional shares. The number of authorized shares of Common Stock under the Certificate of Incorporation
+will remain unchanged at 200,000,000 shares.</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">The number of shares reserved for issuance under
+the Company&#8217;s 2012 Equity Incentive Plan will be proportionately reduced in accordance with the terms of such plans. The Reverse
+Stock Split will also result in proportionate reductions in the number of shares of Common Stock issuable upon exercise or vesting of
+equity awards and cause a proportionate increase in exercise price or share-based performance criteria, if any, applicable to such awards.</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">The Common Stock will begin trading on a reverse
+stock split-adjusted basis on The Nasdaq Capital Market on April 24, 2023. The trading symbol for the Common Stock will remain &#8220;POAI.&#8221;
+The new CUSIP number for the Common Stock following the Reverse Stock Split is 74039M309.</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">For more information about the Reverse Stock Split,
+see the Company&#8217;s definitive proxy statement filed with the U.S. Securities and Exchange Commission on March 29, 2023 (the &#8220;Proxy
+Statement&#8221;). The information set forth herein is qualified in its entirety by reference to the complete text of the Certificate
+of Amendment, a copy of which is filed with this report as Exhibit 3.1.</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white"><b>Item 5.07 Submission of Matters to a Vote of
+Security Holders.</b></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">The Special Meeting was initially convened on
+April 17, 2023, was adjourned due to the lack of a quorum, and was reconvened on April 19, 2023. As of the close of business on March
+28, 2023, the record date for the Special Meeting, there were 79,403,893 shares of Common Stock and 79,403.893 shares of shares of our
+Series F Preferred Stock, par value $0.01 (&#8220;Series F Preferred Stock&#8221;) outstanding and entitled to vote on the proposals described
+below. The matters described below were submitted to a vote of the holders of the Company&#8217;s Common Stock and Series F Preferred
+Stock, voting together as a single class, at the Special Meeting. Each proposal is described in detail in the Proxy Statement.</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">At the Special Meeting, the proposals set forth
+below were submitted to a vote of the Company&#8217;s stockholders. The final voting results are as follows:</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="width: 100%; border-collapse: collapse; font-size: 10pt">
+  <tr>
+    <td style="text-align: justify; width: 3%">&#160;</td>
+    <td style="white-space: nowrap; vertical-align: top; width: 3%; text-align: justify"><span style="font-size: 10pt">1.</span></td>
+    <td style="width: 94%; text-align: justify"><span style="font-size: 10pt">To approve an amendment of the Company&#8217;s certificate of incorporation to effect a reverse stock split of the outstanding shares of its common stock at a ratio of not less than one-for-two (1:2) and not more than one-for-twenty-five (1:25), with the exact ratio to be set at a whole number within this range as determined by our Board of Directors (the &#8220;Reverse Split Proposal&#8221;).</span></td></tr>
+  </table>
+<p style="margin: 0pt 0; font-size: 10pt; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="width: 100%; border-collapse: collapse; font-size: 10pt">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">For</span></td>
+    <td style="width: 2%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Against</span></td>
+    <td style="width: 2%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Abstain</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Broker Non-Votes</span></td></tr>
+  <tr style="background-color: #CCEEFF">
+    <td style="text-align: center"><span style="font-size: 10pt">29,332,407,453</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">6,785,775,332</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">548,565,438</span></td>
+    <td style="vertical-align: top; text-align: center">&#160;</td>
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt">5,000,001</span></td></tr>
+  </table>
+<p style="margin: 0pt 0; font-size: 10pt; background-color: white">&#160;</p>
+
+<!-- Field: Page; Sequence: 2 -->
+    <div style="border-bottom: Black 4pt solid; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="margin: 0pt 0; font-size: 10pt; background-color: white">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; background-color: white"></p>
+
+<table cellspacing="0" cellpadding="0" style="width: 100%; border-collapse: collapse; font-size: 10pt">
+  <tr>
+    <td style="text-align: justify; width: 3%">&#160;</td>
+    <td style="white-space: nowrap; vertical-align: top; width: 3%; text-align: justify"><span style="font-size: 10pt">2.</span></td>
+    <td style="text-align: justify; width: 94%">To approve a proposal to adjourn the Special Meeting, if necessary, to solicit additional proxies for approval of the Reverse Split Proposal, in the event that there are not sufficient votes at the time of the Special Meeting to approve such proposal (the &#8220;Adjournment Proposal&#8221;). For &#160;&#160;&#160;&#160; Against &#160;&#160;&#160;&#160; Abstain &#160; &#160; &#160; Broker Non-Votes 23,828,229,377 &#160; 7,327,325,751 &#160; 868,886,698 &#160; &#160; &#160; 4,647,603,397</td></tr>
+  </table>
+<p style="margin: 0pt 0; font-size: 10pt; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="width: 100%; border-collapse: collapse; font-size: 10pt">
+<tr style="vertical-align: top">
+    <td style="border-bottom: black 1.5pt solid; text-align: center; width: 24%"><span style="font-size: 10pt">For</span></td>
+    <td style="width: 2%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; text-align: center; width: 23%"><span style="font-size: 10pt">Against</span></td>
+    <td style="width: 2%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; text-align: center; width: 23%"><span style="font-size: 10pt">Abstain</span></td>
+    <td style="text-align: center; width: 2%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; text-align: center; width: 24%"><span style="font-size: 10pt">Broker Non-Votes</span></td></tr>
+<tr style="background-color: #CCEEFF">
+    <td style="text-align: center"><span style="font-size: 10pt">23,828,229,377</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">7,327,325,751</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">868,886,698</span></td>
+    <td style="vertical-align: top; text-align: center">&#160;</td>
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt">4,647,603,397</span></td></tr>
+</table>
+
+<p style="margin: 0pt 0; font-size: 10pt; background-color: white">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white"></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">The results reported above are final voting results.
+No other matters were considered or voted upon at the meeting.</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; background-color: white"><b>Item&#160;7.01. Regulation FD Disclosure.</b></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; background-color: white">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">On April 20, 2023, the Company issued a press
+release announcing the Reverse Stock Split. A copy of that press release is furnished as Exhibit&#160;99.1 to this Current Report and
+incorporated herein by reference.</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">In accordance with General Instruction B.2 of
+Form&#160;8-K, the information in Exhibit&#160;99.1, which is incorporated into this Item&#160;7.01, is being furnished pursuant to Item&#160;7.01
+and shall not be deemed &#8220;filed&#8221; for the purposes of Section&#160;18 of the Exchange Act, or otherwise subject to the liabilities
+of that section, nor shall it be deemed incorporated by reference in any filing under the Securities Exchange Act of 1934, as amended,
+or the Securities Act of 1933, as amended, except as shall be expressly set forth by reference in such a filing.</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; background-color: white">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; background-color: white"><b>Item&#160;9.01. Financial Statements and Exhibits.</b></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; background-color: white">&#160;</p>
+
+<p style="margin: 0pt 0 0pt 36pt; font-size: 10pt; text-align: justify; background-color: white">(d)&#160;Exhibits.</p>
+
+<p style="margin: 0pt 0 0pt 36pt; font-size: 10pt; text-align: justify; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="width: 100%; border-collapse: collapse; font-size: 10pt">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: black 1pt solid; width: 13%"><span style="font-size: 10pt"><b>Exhibit&#160;No.</b></span></td>
+    <td style="width: 2%">&#160;</td>
+    <td style="border-bottom: black 1pt solid; width: 85%"><span style="font-size: 10pt"><b>Description</b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-size: 10pt"><a href="exh_31.htm">3.1</a></span></td>
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt"><a href="exh_31.htm">Certificate of Amendment to Certificate of Incorporation of Predictive Oncology Inc.</a></span></td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-size: 10pt"><a href="exh_991.htm">99.1</a></span></td>
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt"><a href="exh_991.htm">Press Release, issued April 20, 2023 (furnished pursuant to Item&#160;7.01)</a></span></td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-size: 10pt">104</span></td>
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt">Cover Page&#160;Interactive Data File (embedded within the Inline XBRL document)</span></td></tr>
+  </table>
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center"><b>&#160;</b></p>
+
+<p style="margin: 0pt 0; font-size: 10pt"><b>&#160;</b></p>
+
+<!-- Field: Page; Sequence: 3 -->
+    <div style="border-bottom: Black 4pt solid; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="margin: 0pt 0; font-size: 10pt"><b></b>&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt"></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: center"><b>SIGNATURES</b></p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; text-indent: 36pt">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; text-indent: 36pt">Pursuant to the requirements of the Securities Exchange
+Act of 1934, as amended, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.</p>
+
+<p style="margin: 0pt 0; font-size: 10pt; text-align: justify; text-indent: 36pt">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="width: 100%; border-collapse: collapse; font-size: 10pt">
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td colspan="2"><span style="font-size: 10pt; text-transform: uppercase"><b>PREDICTIVE ONCOLOGY inc. </b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td colspan="2">&#160;</td></tr>
+  <tr>
+    <td style="width: 53%">&#160;</td>
+    <td style="vertical-align: top; width: 4%"><span style="font-size: 10pt">By:</span></td>
+    <td style="border-bottom: black 1pt solid; vertical-align: top; width: 43%"><span style="font-size: 10pt">/s/ Bob Myers</span></td></tr>
+  <tr>
+    <td>&#160;</td>
+    <td style="vertical-align: top">&#160;</td>
+    <td style="vertical-align: bottom">
+    <p style="margin: 0pt 0; font-size: 10pt">Name: Bob Myers</p>
+    <p style="margin: 0pt 0; font-size: 10pt"></p></td></tr>
+  <tr>
+    <td>&#160;</td>
+    <td style="vertical-align: top">&#160;</td>
+    <td style="vertical-align: bottom">Title: Chief Financial Officer</td></tr>
+  </table>
+<p style="margin: 0pt 0; font-size: 10pt">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt">Date: April 20, 2023</p>
+
+<p style="margin: 0pt 0; font-size: 10pt">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt">&#160;</p>
+
+<p style="margin: 0pt 0; font-size: 10pt">&#160;</p>
+
+
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxFjV0KwjAQhE/QOyx5lprWP+ijRUWsIkXE12i3EmyzZROrHslbGlvEZWFZZr4ZIQZiRUtdIcNpnmdwwLqplEPIsURGc0HvSNebBPzN8aqtY2Vc9/7AlDyDnpmE0ezshc7aaotFAnI8jOUwHoGcJZMp7Lci+OopmVIXaJxWFShTwJ6pYY1O8atPOKgnGapfXdUR2WoyCUSh7OU3xDKKYUetehDfLGRZKoJBN4FYMd2bb83dOqphUWHtu2yP/jf4AB1YSVI= -->

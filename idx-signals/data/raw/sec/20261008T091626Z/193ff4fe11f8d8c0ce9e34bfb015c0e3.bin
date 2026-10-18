@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2023" xmlns:ref="http://www.xbrl.org/2006/ref" xmlns:us-gaap="http://fasb.org/us-gaap/2023" xmlns:us-roles="http://fasb.org/us-roles/2023" xmlns:dtr-types="http://www.xbrl.org/dtr/type/2022-03-31" xmlns:country="http://xbrl.sec.gov/country/2023" xmlns:srt="http://fasb.org/srt/2023" xmlns:SQL="http://seqll.com/20230829">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html" />
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02C_US%2DGAAP%2D2023 -->
+<!-- Field: Set; Name: xdx; ID: xdx_03C_SQL_seqll.com_20230829 -->
+<!-- Field: Set; Name: xdx; ID: xdx_049_20230829_20230829 -->
+<!-- Field: Set; Name: xdx; ID: xdx_054_edei%2D%2DEntityCentralIndexKey_0001605888 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_051_edei%2D%2DCurrentFiscalYearEndDate_%2D%2DLS0xMi0zMQ== -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2023-08-29" name="dei:EntityCentralIndexKey">0001605888</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2023-08-29" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2023-08-29" name="dei:CurrentFiscalYearEndDate">--12-31</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="sql-20230829.xsd" xlink:type="simple" />
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2023-08-29">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001605888</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2023-08-29</xbrli:startDate>
+        <xbrli:endDate>2023-08-29</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2023-08-292023-08-29_custom_CommonStockParValue.00001PerShareMember">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001605888</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">SQL:CommonStockParValue.00001PerShareMember</xbrldi:explicitMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2023-08-29</xbrli:startDate>
+        <xbrli:endDate>2023-08-29</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2023-08-292023-08-29_custom_WarrantsToPurchaseCommonStockMember">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001605888</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">SQL:WarrantsToPurchaseCommonStockMember</xbrldi:explicitMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2023-08-29</xbrli:startDate>
+        <xbrli:endDate>2023-08-29</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="margin: 0"></p>
+
+<p style="margin: 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="margin: 0">&#160;</p>
+
+<p style="margin: 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>UNITED STATES<br />
+SECURITIES AND EXCHANGE COMMISSION<br />
+Washington, D.C. 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b></b>&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>FORM <span id="xdx_909_edei--DocumentType_c20230829__20230829_zywN0KDxxtRb"><ix:nonNumeric contextRef="AsOf2023-08-29" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Pursuant to Section 13 or 15(d) of the Securities
+Exchange Act of 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Date of Report (Date of earliest event reported)
+<b><span style="text-decoration: underline"><span id="xdx_90A_edei--DocumentPeriodEndDate_c20230829__20230829_zANMkohhfF5e"><ix:nonNumeric contextRef="AsOf2023-08-29" format="ixt:datemonthdayyearen" name="dei:DocumentPeriodEndDate">August 29, 2023</ix:nonNumeric></span></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span id="xdx_90D_edei--EntityRegistrantName_c20230829__20230829_zjEtHZsoemzj"><b><span style="text-decoration: underline"><ix:nonNumeric contextRef="AsOf2023-08-29" name="dei:EntityRegistrantName">SEQLL
+INC.</ix:nonNumeric></span></b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Exact name of registrant as specified in charter)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr>
+    <td style="border-bottom: black 1.5pt solid; width: 32%; padding-bottom: 0.75pt; font-size: 10pt; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_90D_edei--EntityIncorporationStateCountryCode_c20230829__20230829_zlH7XQzz8Uee"><ix:nonNumeric contextRef="AsOf2023-08-29" format="ixt-sec:stateprovnameen" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></b></span></td>
+    <td style="width: 2%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 32%; padding-bottom: 0.75pt; font-size: 10pt; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_904_edei--EntityFileNumber_c20230829__20230829_zjyxJXPogGP6"><ix:nonNumeric contextRef="AsOf2023-08-29" name="dei:EntityFileNumber">001-40760</ix:nonNumeric></span></b></span></td>
+    <td style="width: 2%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 32%; padding-bottom: 0.75pt; font-size: 10pt; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_904_edei--EntityTaxIdentificationNumber_c20230829__20230829_zmdZwzTsiWQ2"><ix:nonNumeric contextRef="AsOf2023-08-29" name="dei:EntityTaxIdentificationNumber">46-5319744</ix:nonNumeric></span></b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="font-size: 10pt; text-align: center"><span style="font-size: 10pt">(State or other Jurisdiction of <br />
+Incorporation or Organization)</span></td>
+    <td>&#160;</td>
+    <td style="font-size: 10pt; text-align: center"><span style="font-size: 10pt">(Commission File Number)</span></td>
+    <td>&#160;</td>
+    <td style="font-size: 10pt; text-align: center"><span style="font-size: 10pt">(IRS Employer <br />
+Identification No.)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 49%; padding-bottom: 0.75pt">
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 7pt; text-align: center"><span id="xdx_90C_edei--EntityAddressAddressLine1_c20230829__20230829_zGQjIqFL5AO6"><b><ix:nonNumeric contextRef="AsOf2023-08-29" name="dei:EntityAddressAddressLine1">3
+Federal Street</ix:nonNumeric></b></span><b><br />
+<span id="xdx_90C_edei--EntityAddressCityOrTown_c20230829__20230829_zLh98mPN9h52"><ix:nonNumeric contextRef="AsOf2023-08-29" name="dei:EntityAddressCityOrTown">Billerica</ix:nonNumeric></span></b><b>, <span id="xdx_900_edei--EntityAddressStateOrProvince_c20230829__20230829_zAFY2AMI1dLj"><ix:nonNumeric contextRef="AsOf2023-08-29" format="ixt-sec:stateprovnameen" name="dei:EntityAddressStateOrProvince">Massachusetts</ix:nonNumeric>
+</span></b></p></td>
+    <td style="width: 2%; padding-bottom: 1.5pt">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 49%; padding-bottom: 0.75pt; font-size: 10pt; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_90E_edei--EntityAddressPostalZipCode_c20230829__20230829_zZiYN9YDpnb4"><ix:nonNumeric contextRef="AsOf2023-08-29" name="dei:EntityAddressPostalZipCode">01821</ix:nonNumeric></span></b></span></td></tr>
+  <tr>
+    <td style="font-size: 10pt; text-align: center"><span style="font-size: 10pt">(Address of Principal Executive Offices)</span></td>
+    <td>&#160;</td>
+    <td style="font-size: 10pt; text-align: center"><span style="font-size: 10pt">(zip code)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr>
+    <td style="width: 25%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 50%; padding-bottom: 0.75pt">
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>(<span id="xdx_900_edei--CityAreaCode_c20230829__20230829_zYlkMPLrULge"><ix:nonNumeric contextRef="AsOf2023-08-29" name="dei:CityAreaCode">781</ix:nonNumeric></span></b><b>)
+<span id="xdx_904_edei--LocalPhoneNumber_c20230829__20230829_z2GNN2E0IE2k"><ix:nonNumeric contextRef="AsOf2023-08-29" name="dei:LocalPhoneNumber">460-6016</ix:nonNumeric></span></b></p></td>
+    <td style="width: 25%">&#160;</td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Registrant&#8217;s telephone number, including
+area code)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Check the appropriate box below if the Form 8-K
+filing is intended to simultaneously satisfy the filing obligation of registrant under any of the following provisions:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 24px; font-size: 10pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_902_edei--WrittenCommunications_c20230829__20230829_zdHXExieKvzk"><ix:nonNumeric contextRef="AsOf2023-08-29" format="ixt:booleanfalse" name="dei:WrittenCommunications">&#9744;</ix:nonNumeric></span></span></td>
+    <td style="font-size: 10pt"><span style="font-size: 10pt">Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 24px; font-size: 10pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90B_edei--SolicitingMaterial_c20230829__20230829_zr6EakhersSh"><ix:nonNumeric contextRef="AsOf2023-08-29" format="ixt:booleanfalse" name="dei:SolicitingMaterial">&#9744;</ix:nonNumeric></span></span></td>
+    <td style="font-size: 10pt"><span style="font-size: 10pt">Soliciting material pursuant to Rule 14a-12(b) under the Exchange Act (17 CFR 240.14a-12(b))</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 24px; font-size: 10pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_906_edei--PreCommencementTenderOffer_c20230829__20230829_zhtV7KWz1x2"><ix:nonNumeric contextRef="AsOf2023-08-29" format="ixt:booleanfalse" name="dei:PreCommencementTenderOffer">&#9744;</ix:nonNumeric></span></span></td>
+    <td style="font-size: 10pt"><span style="font-size: 10pt">Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 24px; font-size: 10pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90E_edei--PreCommencementIssuerTenderOffer_c20230829__20230829_zbH4hElriGxg"><ix:nonNumeric contextRef="AsOf2023-08-29" format="ixt:booleanfalse" name="dei:PreCommencementIssuerTenderOffer">&#9744;</ix:nonNumeric></span></span></td>
+    <td style="font-size: 10pt"><span style="font-size: 10pt">Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Securities registered pursuant to Section 12(b) of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 32%; padding-bottom: 0.75pt; font-size: 10pt; text-align: center"><span style="font-size: 10pt"><b>Title of each class</b></span></td>
+    <td style="width: 2%; padding-bottom: 1.5pt">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 32%; padding-bottom: 0.75pt; font-size: 10pt; text-align: center"><span style="font-size: 10pt"><b>Trading Symbol(s)</b></span></td>
+    <td style="width: 2%; padding-bottom: 1.5pt">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 32%; padding-bottom: 0.75pt; font-size: 10pt; text-align: center"><span style="font-size: 10pt"><b>Name of each exchange on which registered</b></span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: center; font-size: 10pt"><span style="font-size: 10pt"><span id="xdx_903_edei--Security12bTitle_c20230829__20230829__us-gaap--StatementClassOfStockAxis__custom--CommonStockParValue.00001PerShareMember_zYeiaEfs1Ig1"><ix:nonNumeric contextRef="From2023-08-292023-08-29_custom_CommonStockParValue.00001PerShareMember" name="dei:Security12bTitle">Common Stock, par value $.00001 per share</ix:nonNumeric></span></span></td>
+    <td>&#160;</td>
+    <td style="font-size: 10pt; text-align: center"><span style="font-size: 10pt"><span id="xdx_907_edei--TradingSymbol_c20230829__20230829__us-gaap--StatementClassOfStockAxis__custom--CommonStockParValue.00001PerShareMember_zBF8YsgyQ7Vi"><ix:nonNumeric contextRef="From2023-08-292023-08-29_custom_CommonStockParValue.00001PerShareMember" name="dei:TradingSymbol">SQL</ix:nonNumeric></span></span></td>
+    <td>&#160;</td>
+    <td style="font-size: 10pt; text-align: center"><span style="font-size: 10pt">The <span id="xdx_90C_edei--SecurityExchangeName_c20230829__20230829__us-gaap--StatementClassOfStockAxis__custom--CommonStockParValue.00001PerShareMember_zvn0NLzuVKdd"><ix:nonNumeric contextRef="From2023-08-292023-08-29_custom_CommonStockParValue.00001PerShareMember" format="ixt-sec:exchnameen" name="dei:SecurityExchangeName">Nasdaq</ix:nonNumeric></span> Stock Market LLC</span></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td style="text-align: center; font-size: 10pt"><span style="font-size: 10pt"><span id="xdx_905_edei--Security12bTitle_c20230829__20230829__us-gaap--StatementClassOfStockAxis__custom--WarrantsToPurchaseCommonStockMember_z7h0VhjU1Qbb"><ix:nonNumeric contextRef="From2023-08-292023-08-29_custom_WarrantsToPurchaseCommonStockMember" name="dei:Security12bTitle">Warrants to purchase Common Stock</ix:nonNumeric></span></span></td>
+    <td>&#160;</td>
+    <td style="font-size: 10pt; text-align: center"><span style="font-size: 10pt"><span id="xdx_904_edei--TradingSymbol_c20230829__20230829__us-gaap--StatementClassOfStockAxis__custom--WarrantsToPurchaseCommonStockMember_zqdVs5rh5x21"><ix:nonNumeric contextRef="From2023-08-292023-08-29_custom_WarrantsToPurchaseCommonStockMember" name="dei:TradingSymbol">SQLLW</ix:nonNumeric></span></span></td>
+    <td>&#160;</td>
+    <td style="font-size: 10pt; text-align: center"><span style="font-size: 10pt">The <span id="xdx_907_edei--SecurityExchangeName_c20230829__20230829__us-gaap--StatementClassOfStockAxis__custom--WarrantsToPurchaseCommonStockMember_zxE7U7FAws8f"><ix:nonNumeric contextRef="From2023-08-292023-08-29_custom_WarrantsToPurchaseCommonStockMember" format="ixt-sec:exchnameen" name="dei:SecurityExchangeName">Nasdaq</ix:nonNumeric></span> Stock Market LLC</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Indicate by check mark whether the registrant
+is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (17 CFR &#167;230.405) or Rule 12b-2 of the Securities
+Exchange Act of 1934 (17 CFR &#167;240.12b-2).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right; text-indent: 1.25in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right; text-indent: 1.25in">Emerging growth company <span id="xdx_902_edei--EntityEmergingGrowthCompany_c20230829__20230829_zfTp9gGTwsG"><ix:nonNumeric contextRef="AsOf2023-08-29" format="ixt:booleantrue" name="dei:EntityEmergingGrowthCompany">&#9746;</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">If an emerging growth company, indicate by check
+mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting
+standards provided pursuant to Section 13(a) of the Exchange Act. <span style="font-family: Times New Roman, Times, Serif"><span id="xdx_903_edei--EntityExTransitionPeriod_c20230829__20230829_zosllQFblU26"><ix:nonNumeric contextRef="AsOf2023-08-29" format="ixt:booleanfalse" name="dei:EntityExTransitionPeriod">&#9744;</ix:nonNumeric></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><b>Item 5.03</b> <b>Amendments to Articles of Incorporation or Bylaws; Change in Fiscal Year</b></p>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">On August 29, 2023, SeqLL
+Inc. (the &#8220;Company&#8221;) filed a Certificate of Amendment (the &#8220;Certificate of Amendment&#8221;) to the Company&#8217;s
+Third Amended and Restated Certificate of Incorporation to (i) effect a reverse stock split of its issued common stock, par value $.00001
+per share (&#8220;Common Stock&#8221;), in the ratio of one-for-40 (the &#8220;Reverse Stock Split&#8221;) to be effective at 11:59 p.m.,
+eastern time, on August 30, 2023, and (ii) to increase the authorized capital stock of the Company to 320,000,000 shares, of which 300,000,000
+shares shall be Common Stock, and 20,000,000 shares shall be Preferred Stock (the &#8220;Capital Stock Increase&#8221;). The Common Stock
+will begin trading on a split-adjusted basis at the market open on August 31, 2023.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">The Reverse Stock Split and
+the Capital Stock Increase were previously approved by the Company&#8217;s Board of Directors and the Company&#8217;s stockholders. No
+fractional shares will be issued as a result of the Reverse Stock Split. Instead, any fractional shares that would have resulted from
+the Reverse Stock Split will be rounded up to the nearest whole number. The Reverse Stock Split affects all stockholders uniformly and
+will not alter any stockholder&#8217;s percentage interest in the Company&#8217;s outstanding Common Stock, except for adjustments that
+may result from the treatment of fractional shares. The number of authorized shares of Common Stock of the Company was not changed solely
+as a result of the Reverse Stock Split.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">The above description of the
+Certificate of Amendment does not purport to be complete and is qualified in its entirety by reference to the full text of the Certificate
+of Amendment, which is filed as Exhibit 3.1 to this Current Report on Form 8-K and is incorporated by reference herein.&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">On August 30, 2023, the Company
+issued a press release announcing the filing of the Certificate of Amendment, the Reverse Stock Split and the Capital Stock Increase,
+a copy of which is attached hereto as Exhibit 99.1.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><span style="font-size: 10pt"><b>Item 9.01.</b></span> <span style="font-size: 10pt"><b>Financial Statements and Exhibits</b></span></p>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: left"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">(d) Exhibits.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; white-space: nowrap; width: 10%; font-size: 10pt; text-align: left"><span style="font-size: 10pt"><b>Exhibit No.</b></span></td>
+    <td style="width: 1%; font-size: 10pt; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; white-space: nowrap; width: 89%; font-size: 10pt; text-align: left"><span style="font-size: 10pt"><b>Description</b></span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="white-space: nowrap; font-size: 10pt; text-align: left"><span style="font-size: 10pt">3.1</span></td>
+    <td style="font-size: 10pt; text-align: center">&#160;</td>
+    <td style="font-size: 10pt"><a href="ea184395ex3-1_seqllinc.htm"><span style="font-size: 10pt">Certificate of Amendment to the Third Amended and Restated Certificate of Incorporation filed August 29, 2023</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td style="white-space: nowrap; font-size: 10pt; text-align: left"><span style="font-size: 10pt">99.1</span></td>
+    <td style="font-size: 10pt; text-align: center">&#160;</td>
+    <td style="font-size: 10pt"><span style="font-size: 10pt"><a href="ea184395ex99-1_seqllinc.htm" style="-sec-extract: exhibit">Press Release dated August 30, 2023</a></span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="white-space: nowrap; font-size: 10pt; text-align: left"><span style="font-size: 10pt">104</span></td>
+    <td style="font-size: 10pt; text-align: center">&#160;</td>
+    <td style="font-size: 10pt"><span style="font-size: 10pt">Cover Page Interactive Data File (embedded within the Inline XBRL document)</span></td></tr>
+  </table>
+
+<p style="margin-top: 0; margin-bottom: 0">&#160;</p>
+
+<!-- Field: Page; Sequence: 2; Options: NewSection; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="text-align: center; margin-top: 0pt; margin-bottom: 0pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->1<!-- Field: /Sequence --></span></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">Pursuant to the requirements
+of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto
+duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td><span style="font-size: 10pt">Date: August 30, 2023</span></td>
+    <td colspan="2"><span style="font-size: 10pt"><b>SEQLL INC.</b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="width: 60%">&#160;</td>
+    <td style="width: 5%">&#160;</td>
+    <td style="width: 35%">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt">By: </span></td>
+    <td style="border-bottom: Black 1.5pt solid"><span style="font-size: 10pt">/s/ Daniel Jones</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt">Name: </span></td>
+    <td><span style="font-size: 10pt">Daniel Jones </span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt">Title: </span></td>
+    <td><span style="font-size: 10pt">Chief Executive Officer</span></td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">2</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 1.5pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">&#160;</p>
+
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJx1kdFOwkAQRb+Af5g0PhLYVk2kb9ooMYJpgKCvYzvIhnanmd2ifJJ/6XYLgQedbLLZzD33zmSjaBhN+UlXJPD+sJjBiuqmQkewoA0JmYK8Int+ScHfC/rU1gkaF54nMGPPkGduR/Gk8I0g3WtLZQrqbpxMxsk1qDi9UZDPo0HXz9hsdEnGaawATQm5cCOaHMqhd1jhNxuuDyFqTWI1mxTikerbP5CoOIFX3uMXy87CbJZFg2GoQTQVbpsuprWOa3isqPZZtkfPJ4xSBE36htJtZlect1Js0ZLfq2azdFzs5lR/kHhxrBKfe38c4sSAY2iOFPQYBO6PnAvXHGWNVUsj5SvOSZZbFPon69J2CA0K7DsWrnoaGv8TtuNPmb9IRI4V -->
+

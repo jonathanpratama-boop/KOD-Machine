@@ -1,0 +1,406 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2023" xmlns:ref="http://www.xbrl.org/2006/ref" xmlns:us-gaap="http://fasb.org/us-gaap/2023" xmlns:us-roles="http://fasb.org/us-roles/2023" xmlns:country="http://xbrl.sec.gov/country/2023" xmlns:srt="http://fasb.org/srt/2023" xmlns:PLUR="http://pluri-biotech.com/20240327">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02C_US%2DGAAP%2D2023 -->
+<!-- Field: Set; Name: xdx; ID: xdx_033_PLUR_pluri%2Dbiotech.com_20240327 -->
+<!-- Field: Set; Name: xdx; ID: xdx_04A_20240327_20240327 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_050_edei%2D%2DCurrentFiscalYearEndDate_%2D%2DLS0wNi0zMA== -->
+<!-- Field: Set; Name: xdx; ID: xdx_05F_edei%2D%2DEntityCentralIndexKey_0001158780 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2024-03-27" name="dei:AmendmentFlag" id="ixv-316">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-03-27" name="dei:CurrentFiscalYearEndDate" id="ixv-317">--06-30</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-03-27" name="dei:EntityCentralIndexKey" id="ixv-318">0001158780</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="plur-20240327.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2024-03-27">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001158780</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2024-03-27</xbrli:startDate>
+        <xbrli:endDate>2024-03-27</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>UNITED STATES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>WASHINGTON, DC 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>FORM <span id="xdx_901_edei--DocumentType_c20240327__20240327_zREJVR8FlnIi"><ix:nonNumeric contextRef="AsOf2024-03-27" name="dei:DocumentType" id="ixv-338">8-K</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>CURRENT REPORT PURSUANT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>TO SECTION 13 OR 15(d) OF THE</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SECURITIES EXCHANGE ACT OF 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Date of report (Date of earliest event reported):
+<b><span id="xdx_901_edei--DocumentPeriodEndDate_c20240327__20240327_zDs7EQ6bSwEh"><ix:nonNumeric contextRef="AsOf2024-03-27" format="ixt:datemonthdayyearen" name="dei:DocumentPeriodEndDate" id="ixv-339">March 27, 2024</ix:nonNumeric></span> </b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_907_edei--EntityRegistrantName_c20240327__20240327_zpfARXYMff4b"><ix:nonNumeric contextRef="AsOf2024-03-27" name="dei:EntityRegistrantName" id="ixv-340">PLURI INC.</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Exact Name of Registrant as Specified in Its Charter)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: top; width: 32%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_90C_edei--EntityIncorporationStateCountryCode_c20240327__20240327_z4bEGw2UajSj"><ix:nonNumeric contextRef="AsOf2024-03-27" format="ixt-sec:stateprovnameen" name="dei:EntityIncorporationStateCountryCode" id="ixv-341">Nevada</ix:nonNumeric></span></b></span></td>
+    <td style="width: 2%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: top; width: 32%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_905_edei--EntityFileNumber_c20240327__20240327_zUQWj3jx3Yyi"><ix:nonNumeric contextRef="AsOf2024-03-27" name="dei:EntityFileNumber" id="ixv-342">001-31392</ix:nonNumeric></span></b></span></td>
+    <td style="vertical-align: bottom; width: 2%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: top; width: 32%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_900_edei--EntityTaxIdentificationNumber_c20240327__20240327_zfOOYHcmzAGl"><ix:nonNumeric contextRef="AsOf2024-03-27" name="dei:EntityTaxIdentificationNumber" id="ixv-343">98-0351734</ix:nonNumeric></span></b></span></td></tr>
+  <tr>
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt">(State or Other Jurisdiction<br/>
+of Incorporation)</span></td>
+    <td>&#160;</td>
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt">(Commission File Number)</span></td>
+    <td style="vertical-align: bottom; text-align: center">&#160;</td>
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt">(IRS Employer<br/>
+Identification No.)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr>
+    <td style="vertical-align: bottom; width: 49%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_90C_edei--EntityAddressAddressLine1_c20240327__20240327_zR1EvswGnMI7"><ix:nonNumeric contextRef="AsOf2024-03-27" name="dei:EntityAddressAddressLine1" id="ixv-344">MATAM Advanced Technology Park</ix:nonNumeric></span></b></span></td>
+    <td style="vertical-align: bottom; width: 2%; text-align: right">&#160;</td>
+    <td style="vertical-align: top; width: 49%; text-align: center">&#160;</td></tr>
+  <tr>
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_90C_edei--EntityAddressAddressLine2_c20240327__20240327_z7lE6vuiYt55"><ix:nonNumeric contextRef="AsOf2024-03-27" name="dei:EntityAddressAddressLine2" id="ixv-345">Building No. 5</ix:nonNumeric></span></b></span></td>
+    <td style="vertical-align: bottom; text-align: right">&#160;</td>
+    <td style="vertical-align: top; text-align: center">&#160;</td></tr>
+  <tr>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: top; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_900_edei--EntityAddressCityOrTown_c20240327__20240327_zV92FwfFGrrl"><ix:nonNumeric contextRef="AsOf2024-03-27" name="dei:EntityAddressCityOrTown" id="ixv-346">Haifa</ix:nonNumeric></span>, <span id="xdx_903_edei--EntityAddressCountry_c20240327__20240327_z2pl5ozLXh8a"><ix:nonNumeric contextRef="AsOf2024-03-27" format="ixt-sec:countrynameen" name="dei:EntityAddressCountry" id="ixv-347">Israel</ix:nonNumeric></span></b></span></td>
+    <td style="vertical-align: bottom; text-align: right">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: top; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_908_edei--EntityAddressPostalZipCode_c20240327__20240327_zEmndfQpMUZf"><ix:nonNumeric contextRef="AsOf2024-03-27" name="dei:EntityAddressPostalZipCode" id="ixv-348">3508409</ix:nonNumeric></span></b></span></td></tr>
+  <tr>
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt">(Address of Principal Executive Offices)</span></td>
+    <td style="vertical-align: bottom; text-align: right">&#160;</td>
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt">(Zip Code)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span style="background-color: white"><b><span id="xdx_90B_edei--CityAreaCode_c20240327__20240327_zpJggaSlY6Qf"><ix:nonNumeric contextRef="AsOf2024-03-27" name="dei:CityAreaCode" id="ixv-349">011</ix:nonNumeric></span>-
+<span id="xdx_906_edei--LocalPhoneNumber_c20240327__20240327_zDuRWdHlCWe3"><ix:nonNumeric contextRef="AsOf2024-03-27" name="dei:LocalPhoneNumber" id="ixv-350">972-74-7108600</ix:nonNumeric></span></b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Registrant&#8217;s telephone number, including
+area code)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Not applicable</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">(Former name or former address, if changed since
+last report)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Check the appropriate box below if the Form 8-K
+filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 0.25in"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_901_edei--WrittenCommunications_c20240327__20240327_zzg8ac0LwPs4"><ix:nonNumeric contextRef="AsOf2024-03-27" format="ixt:booleanfalse" name="dei:WrittenCommunications" id="ixv-351">&#9744;</ix:nonNumeric></span></span></td>
+    <td><span style="font-size: 10pt">Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 0.25in"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90C_edei--SolicitingMaterial_c20240327__20240327_zvnvAz8Ombwf"><ix:nonNumeric contextRef="AsOf2024-03-27" format="ixt:booleanfalse" name="dei:SolicitingMaterial" id="ixv-352">&#9744;</ix:nonNumeric></span></span></td>
+    <td><span style="font-size: 10pt">Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 0.25in"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90D_edei--PreCommencementTenderOffer_c20240327__20240327_zjFjKAdXdBXk"><ix:nonNumeric contextRef="AsOf2024-03-27" format="ixt:booleanfalse" name="dei:PreCommencementTenderOffer" id="ixv-353">&#9744;</ix:nonNumeric></span></span></td>
+    <td><span style="font-size: 10pt">Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 0.25in"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_909_edei--PreCommencementIssuerTenderOffer_c20240327__20240327_zMoFiprv96k9"><ix:nonNumeric contextRef="AsOf2024-03-27" format="ixt:booleanfalse" name="dei:PreCommencementIssuerTenderOffer" id="ixv-354">&#9744;</ix:nonNumeric></span></span></td>
+    <td><span style="font-size: 10pt">Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Securities registered pursuant to Section 12(b) of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><span style="font-size: 10pt"><b>Title of each class</b></span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><span style="font-size: 10pt"><b>Trading Symbol(s)</b></span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><span style="font-size: 10pt"><b>Name of each exchange on which registered</b></span></td></tr>
+  <tr style="vertical-align: top; background-color: #CCEEFF">
+    <td style="text-align: center"><span style="font-size: 10pt"><span id="xdx_901_edei--Security12bTitle_c20240327__20240327_zZgoy5CGvzHb"><ix:nonNumeric contextRef="AsOf2024-03-27" name="dei:Security12bTitle" id="ixv-355">Common Shares, par value $0.00001 per share</ix:nonNumeric></span></span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt"><span id="xdx_909_edei--TradingSymbol_c20240327__20240327_z9zj0dIqMKk7"><ix:nonNumeric contextRef="AsOf2024-03-27" name="dei:TradingSymbol" id="ixv-356">PLUR</ix:nonNumeric></span></span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">The <span id="xdx_90B_edei--SecurityExchangeName_c20240327__20240327_zpmUmsciY6e1"><ix:nonNumeric contextRef="AsOf2024-03-27" format="ixt-sec:exchnameen" name="dei:SecurityExchangeName" id="ixv-357">Nasdaq</ix:nonNumeric></span> Capital Market</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Indicate by check mark whether the registrant
+is an emerging growth company as defined in as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or Rule
+12b-2 of the Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Emerging growth company <span style="font-family: Times New Roman, Times, Serif"><span id="xdx_905_edei--EntityEmergingGrowthCompany_c20240327__20240327_zB09mgbCIjck"><ix:nonNumeric contextRef="AsOf2024-03-27" format="ixt:booleanfalse" name="dei:EntityEmergingGrowthCompany" id="ixv-358">&#9744;</ix:nonNumeric></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">If an emerging growth company, indicate by check
+mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting
+standards provided pursuant to Section 13(a) of the Exchange Act. <span style="font-family: Times New Roman, Times, Serif">&#9744;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><span style="font-size: 10pt"><b>Item 3.03</b></span> <span style="font-size: 10pt"><b>Material Modification to Rights of Security Holders.</b></span></p>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">On March 27, 2024,
+Pluri Inc. (the &#8220;Company&#8221;) filed a Certificate of Change (the &#8220;Certificate&#8221;) with the secretary of state of
+Nevada relating to a 1-for-8 reverse share split of the Company&#8217;s authorized common shares, which will take effect on April 1,
+2024 (the &#8220;Reverse Split&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"><b><i>Effects of the Reverse Split</i></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><i>Effective Date;
+Symbol; CUSIP Number</i>. The Reverse Split will be effective at 12:01 a.m. Eastern Standard Time on April 1, 2024, and will be
+reflected with the Nasdaq Capital Market (&#8220;Nasdaq&#8221;) and in the marketplace at the open of business on April 1, 2024 (the
+&#8220;Effective Date&#8221;), whereupon the common shares will begin trading on a split-adjusted basis. In connection with the
+Reverse Split, the Company&#8217;s common shares will continue to trade on Nasdaq under the symbol &#8220;PLUR&#8221; but will trade
+under a new CUSIP Number, 72942G203.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><i>Split Adjustment; No Fractional Shares</i>.
+On the Effective Date, the total number of the Company&#8217;s common shares held by each shareholder were converted automatically into
+the number of whole common shares equal to the number of issued and outstanding common shares held by such shareholder immediately prior
+to the Reverse Split, divided by eight (8).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">No fractional shares will be issued, and no
+cash or other consideration will be paid. Instead, the Company will issue one additional whole share of the post-Reverse Split to any
+shareholder who otherwise would have received a fractional share as a result of the Reverse Split.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><i>State Filing</i>. The Reverse Split was
+effected by the Company filing the Certificate  pursuant to Nevada Revised Statutes (&#8220;NRS&#8221;)
+Section 78.209 with the Secretary of State of the State of Nevada on March 27, 2024. The Certificate was not effective until the Effective
+Date. Under Nevada law, no amendment to the Company&#8217;s Articles of Incorporation is required in connection with the Reverse Split.
+A copy of the Certificate is attached hereto as Exhibit 3.1 and incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><i>No Shareholder Approval Required</i>. Under
+Nevada law, because the Reverse Split was approved by the Board of Directors of the Company in accordance with NRS Section 78.207, no
+shareholder approval was required. NRS Section 78.207 provides that the Company may effect the Reverse Split without shareholder approval
+if (x) both the number of authorized common shares and the number of outstanding common shares are proportionally reduced as a result
+of the Reverse Split; (y) the Reverse Split does not adversely affect any other class of shares of the Company; and (z) the Company does
+not pay money or issue scrip to shareholders who would otherwise be entitled to receive a fractional share as a result of the Reverse
+Split. As described herein, the Company has complied with these requirements.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><i>Capitalization</i>.
+Prior to the Effective Date of the Certificate, the Company was authorized to issue 300,000,000 common shares. As a result of the Reverse
+Split, the Company is authorized to issue 37,500,000 common shares (the Company&#8217;s authorized common shares were reduced in the same
+ratio (1-for-8) as its outstanding common shares were reduced). As of March 28, 2024 (immediately prior to the Effective Date), there
+were 41,816,959 common shares outstanding. As a result of the Reverse Split, there are approximately 5,227,120 common shares outstanding
+(subject to adjustment due to the effect of rounding fractional shares into whole shares). The Reverse Split will not have any effect
+on the stated par value of the common shares.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Each shareholder&#8217;s percentage ownership
+interest in the Company and proportional voting power remains virtually unchanged as a result of the Reverse Split, except for minor changes
+and adjustments that will result from rounding fractional shares into whole shares. The rights and privileges of the holders of common
+shares will be substantially unaffected by the Reverse Split.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">All options, convertible securities, unvested
+restricted shares, restricted share units and warrants of the Company outstanding immediately prior to the Reverse Split will be appropriately
+adjusted by dividing the number of common shares into which the options, convertible securities, unvested restricted shares, restricted
+share units and warrants are exercisable or convertible by eight (8) and multiplying the exercise or conversion price thereof by eight
+(8), as a result of the Reverse Split.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><span style="font-size: 10pt"><b>Item
+5.03. Amendments to Articles of Incorporation or Bylaws; Change in Fiscal Year.</b></span></p>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The information required by this Item 5.03 is set forth in Item 3.03
+above, which information is incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><span style="font-size: 10pt"><b>Item
+9.01. Financial Statements and Exhibits.</b></span></p>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><b>&#160;</b></p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr>
+    <td style="vertical-align: bottom; width: 9%">
+    <p style="border-bottom: Black 1.5pt solid; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Exhibit No.</b></p></td>
+    <td style="vertical-align: top; width: 1%">&#160;</td>
+    <td style="vertical-align: top; width: 90%">
+<div style="border-bottom: Black 1.5pt solid; padding: 0in">
+
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Description</b></p>
+</div></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td><span style="font-size: 10pt">3.1</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><span style="font-size: 10pt"><a href="ea020285701ex3-1_pluriinc.htm">Certificate of Change Pursuant to Nevada Revised Statutes Section 78.209, as filed by Pluri Inc. with the Secretary of State of the State of Nevada on March 27, 2024.</a></span></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td>3.2</td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><a href="ea020285701ex3-2_pluriinc.htm">Certificate of Correction to the Certificate of Change, as filed by Pluri Inc. with the <span style="text-decoration: none">Secretary of State of the State of Nevada on March 28, 2024.</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td>104</td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Cover Page Interactive Data File (embedded within the Inline XBRL document).</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 2; Options: NewSection; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->1<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Pursuant to the requirements of the Securities
+Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td colspan="2"><span style="font-size: 10pt"><b>PLURI INC.</b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="width: 60%"><span style="font-size: 10pt">&#160;Date: April 1, 2024</span></td>
+    <td style="width: 5%">&#160;</td>
+    <td style="width: 35%">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt">By:</span></td>
+    <td style="border-bottom: black 1.5pt solid">/s/ <span style="font-size: 10pt">Chen Franco-Yehuda</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt">Name:</span></td>
+    <td><span style="font-size: 10pt">Chen Franco-Yehuda</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt">Title:</span></td>
+    <td><span style="font-size: 10pt">Chief Financial Officer</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">2</p>
+<p style="margin: 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 1.5pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="margin: 0">&#160;</p>
+
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

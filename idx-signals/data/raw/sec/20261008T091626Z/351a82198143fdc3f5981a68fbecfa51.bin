@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2023" xmlns:ref="http://www.xbrl.org/2006/ref" xmlns:us-gaap="http://fasb.org/us-gaap/2023" xmlns:us-roles="http://fasb.org/us-roles/2023" xmlns:country="http://xbrl.sec.gov/country/2023" xmlns:srt="http://fasb.org/srt/2023" xmlns:VLCN="http://volcon.com/20231116">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html" />
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02C_US%2DGAAP%2D2023 -->
+<!-- Field: Set; Name: xdx; ID: xdx_03F_VLCN_volcon.com_20231116 -->
+<!-- Field: Set; Name: xdx; ID: xdx_042_20231116_20231116 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_050_edei%2D%2DEntityCentralIndexKey_0001829794 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2023-11-16" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2023-11-16" name="dei:EntityCentralIndexKey">0001829794</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="vlcn-20231116.xsd" xlink:type="simple" />
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2023-11-16">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001829794</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2023-11-16</xbrli:startDate>
+        <xbrli:endDate>2023-11-16</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>UNITED STATES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>WASHINGTON, D.C. 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>__________________________</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>FORM <span id="xdx_906_edei--DocumentType_c20231116__20231116_zt7A2lo1skcf"><ix:nonNumeric contextRef="AsOf2023-11-16" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">__________________________</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Pursuant to Section  13
+OR 15(d)</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>of The Securities Exchange Act of  1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Date of Report (Date of earliest event
+reported): November 17, 2023 (<span id="xdx_908_edei--DocumentPeriodEndDate_c20231116__20231116_zPQJXQmjN1Z1"><ix:nonNumeric contextRef="AsOf2023-11-16" format="ixt:datemonthdayyearen" name="dei:DocumentPeriodEndDate">November 16,
+2023</ix:nonNumeric></span>)</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">__________________________</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 12pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_906_edei--EntityRegistrantName_c20231116__20231116_zHIfV7Xj2SIe"><ix:nonNumeric contextRef="AsOf2023-11-16" name="dei:EntityRegistrantName">Volcon, Inc.</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Exact Name of Registrant as Specified in its Charter)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">__________________________</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr>
+    <td style="width: 34%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_90C_edei--EntityIncorporationStateCountryCode_c20231116__20231116_zUpsSWDkQvbk"><ix:nonNumeric contextRef="AsOf2023-11-16" format="ixt-sec:stateprovnameen" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></b></span></td>
+    <td style="width: 32%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_90E_edei--EntityFileNumber_c20231116__20231116_zbSEC2mmvUJk"><ix:nonNumeric contextRef="AsOf2023-11-16" name="dei:EntityFileNumber">001-40867</ix:nonNumeric></span></b></span></td>
+    <td style="width: 34%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_90F_edei--EntityTaxIdentificationNumber_c20231116__20231116_zKt4ser9wbr4"><ix:nonNumeric contextRef="AsOf2023-11-16" name="dei:EntityTaxIdentificationNumber">84-4882689</ix:nonNumeric></span></b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="text-align: center"><p style="margin-top: 0; margin-bottom: 0"><span style="font-size: 10pt">(State or Other Jurisdiction</span></p>
+                                   <p style="margin-top: 0; margin-bottom: 0"><span style="font-size: 10pt">of Incorporation)</span></p></td>
+    <td style="text-align: center"><p style="margin-top: 0; margin-bottom: 0"><span style="font-size: 10pt">(Commission</span></p>
+                                   <p style="margin-top: 0; margin-bottom: 0"><span style="font-size: 10pt">File Number)</span></p></td>
+    <td style="text-align: center"><p style="margin-top: 0; margin-bottom: 0"><span style="font-size: 10pt">(I.R.S. Employer</span></p>
+                                   <p style="margin-top: 0; margin-bottom: 0"><span style="font-size: 10pt">Identification Number)</span></p></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_90F_edei--EntityAddressAddressLine1_c20231116__20231116_zxoysEo8tixf"><ix:nonNumeric contextRef="AsOf2023-11-16" name="dei:EntityAddressAddressLine1">3121
+Eagles Nest Street, Suite 120</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_900_edei--EntityAddressCityOrTown_c20231116__20231116_zEOCJcmoJOh9"><ix:nonNumeric contextRef="AsOf2023-11-16" name="dei:EntityAddressCityOrTown">Round Rock</ix:nonNumeric></span>, <span id="xdx_900_edei--EntityAddressStateOrProvince_c20231116__20231116_zKz8vtt5pRn"><ix:nonNumeric contextRef="AsOf2023-11-16" name="dei:EntityAddressStateOrProvince">TX</ix:nonNumeric></span> <span id="xdx_909_edei--EntityAddressPostalZipCode_c20231116__20231116_zcBYxh8DnLF4"><ix:nonNumeric contextRef="AsOf2023-11-16" name="dei:EntityAddressPostalZipCode">78665</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Address of principal executive offices and zip
+code)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_907_edei--CityAreaCode_c20231116__20231116_zVNTHpHWQAbj"><ix:nonNumeric contextRef="AsOf2023-11-16" name="dei:CityAreaCode">(512)</ix:nonNumeric></span> <span id="xdx_900_edei--LocalPhoneNumber_c20231116__20231116_zWZoGcDKLbg1"><ix:nonNumeric contextRef="AsOf2023-11-16" name="dei:LocalPhoneNumber">400-4271</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Registrant&#8217;s telephone number, including
+area code)</p>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Check the appropriate box below if the Form 8-K
+filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions (see General
+Instruction A.2. below):</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="width: 100%">
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><span style="font-family: Times New Roman, Times, Serif"><span id="xdx_90B_edei--WrittenCommunications_c20231116__20231116_z403o9SrVf15"><ix:nonNumeric contextRef="AsOf2023-11-16" format="ixt:booleanfalse" name="dei:WrittenCommunications">&#9744;</ix:nonNumeric></span></span>
+    Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p></td></tr>
+  <tr style="vertical-align: bottom">
+    <td>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><span style="font-family: Times New Roman, Times, Serif"><span id="xdx_908_edei--SolicitingMaterial_c20231116__20231116_zfY3fy75IcX5"><ix:nonNumeric contextRef="AsOf2023-11-16" format="ixt:booleanfalse" name="dei:SolicitingMaterial">&#9744;</ix:nonNumeric></span></span>
+    Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p></td></tr>
+  <tr style="vertical-align: bottom">
+    <td>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><span style="font-family: Times New Roman, Times, Serif"><span id="xdx_907_edei--PreCommencementTenderOffer_c20231116__20231116_zEkV51FCDnk3"><ix:nonNumeric contextRef="AsOf2023-11-16" format="ixt:booleanfalse" name="dei:PreCommencementTenderOffer">&#9744;</ix:nonNumeric></span></span>
+    Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p></td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="font-size: 10pt; text-align: justify"><span style="font: 10pt Times New Roman, Times, Serif"><span id="xdx_90F_edei--PreCommencementIssuerTenderOffer_c20231116__20231116_z9ZiNvwswvA5"><ix:nonNumeric contextRef="AsOf2023-11-16" format="ixt:booleanfalse" name="dei:PreCommencementIssuerTenderOffer">&#9744;</ix:nonNumeric></span></span> <span style="font-size: 10pt">Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-14(c)).</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Securities registered pursuant to Section 12(b)
+of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: Black 1pt solid; width: 37%; font-size: 10pt; text-align: center"><span style="font-size: 10pt"><b>Title of each class</b></span></td>
+    <td style="width: 2%">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; width: 22%; font-size: 10pt; text-align: center"><span style="font-size: 10pt"><b>Trading Symbol(s)</b></span></td>
+    <td style="width: 2%">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; width: 37%; font-size: 10pt; text-align: center"><span style="font-size: 10pt"><b>Name of each exchange on which registered</b></span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="font-size: 10pt; text-align: center"><span style="font-size: 10pt"><span id="xdx_909_edei--Security12bTitle_c20231116__20231116_z7nuaMbOIIy9"><ix:nonNumeric contextRef="AsOf2023-11-16" name="dei:Security12bTitle">Common Stock</ix:nonNumeric></span>, par value $0.00001 per share</span></td>
+    <td>&#160;</td>
+    <td style="font-size: 10pt; text-align: center"><span style="font-size: 10pt"><span id="xdx_906_edei--TradingSymbol_c20231116__20231116_zVDjHYSaUEFe"><ix:nonNumeric contextRef="AsOf2023-11-16" name="dei:TradingSymbol">VLCN</ix:nonNumeric></span></span></td>
+    <td>&#160;</td>
+    <td style="font-size: 10pt; text-align: center"><span id="xdx_906_edei--SecurityExchangeName_c20231116__20231116_zMZ2SrQgo7t2" style="font-size: 10pt"><ix:nonNumeric contextRef="AsOf2023-11-16" format="ixt-sec:exchnameen" name="dei:SecurityExchangeName">NASDAQ</ix:nonNumeric></span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Indicate by check mark whether the registrant
+is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or Rule 12b-2 of the
+Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right">Emerging growth company <span style="font-family: Times New Roman, Times, Serif"><span id="xdx_906_edei--EntityEmergingGrowthCompany_c20231116__20231116_zR9TpxOoGbxb"><ix:nonNumeric contextRef="AsOf2023-11-16" format="ixt:booleantrue" name="dei:EntityEmergingGrowthCompany">&#9746;</ix:nonNumeric></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">If an emerging growth company, indicate by check
+mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting
+standards provided pursuant to Section 13(a) of the Exchange Act. <span style="font-family: Times New Roman, Times, Serif"><span id="xdx_90A_edei--EntityExTransitionPeriod_c20231116__20231116_zKMmWISS0rNk"><ix:nonNumeric contextRef="AsOf2023-11-16" format="ixt:booleanfalse" name="dei:EntityExTransitionPeriod">&#9744;</ix:nonNumeric></span></span></p>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1pt solid; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; font-size: 10pt"><tr style="vertical-align: top; text-align: left"><td style="width: 33%">&#160;</td><td style="width: 34%; text-align: center"><!-- Field: Sequence; Type: Arabic; Name: PageNo; Options: Hidden -->&#160;<!-- Field: /Sequence --></td><td style="width: 33%; text-align: right">&#160;</td></tr></table></div>
+    <div style="break-before: page; margin-top: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<p style="margin-top: 0; margin-bottom: 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0pt; margin-bottom: 0pt">
+  <tr style="vertical-align: top">
+    <td style="width: 1in"><b>Item 1.01</b></td>
+    <td><b>Entry into a Material Definitive Agreement.</b></td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span style="background-color: white"></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><i>Public Offering</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">On November 16, 2023, Volcon,
+Inc. (the &#8220;Company&#8221;) entered into&#160;an underwriting agreement (the &#8220;Underwriting Agreement&#8221;) with Aegis Capital
+Corp. (the &#8220;Underwriter&#8221;), in connection with a firm commitment underwritten public offering (the &#8220;Offering&#8221;)
+of (i) 3,326,042 common units (&#8220;Common Units&#8221;), each consisting of one share of common stock of the Company (&#8220;common
+stock&#8221;), 0.35 of a warrant to purchase one share of common stock at an exercise price of $0.55 per share (or 130% of the price of
+each Common Unit sold in the Offering) or pursuant to an alternative cashless exercise option (described below), which warrant will expire
+on the five-year anniversary of the original issuance date (the &#8220;Series A Warrants&#8221;) and 0.35 of a warrant to purchase one
+share of common stock at an exercise price of $0.84 per share (or 200% of the price of each Common Unit sold in the Offering), which warrant
+will expire on the five-year anniversary of the original issuance date (the &#8220;Series B Warrants&#8221; and together with the Series
+A Warrants, the &#8220;Warrants&#8221;); and (ii) 39,531,100 pre-funded units (the &#8220;Pre-funded Units&#8221; and together with the
+Common Units, the &#8220;Units&#8221;), each consisting of one pre-funded warrant to purchase one share of common stock (the &#8220;Pre-funded
+Warrants&#8221;), 0.35 of a Series A Warrant and 0.35 of a Series B Warrant. The purchase price of each Common Unit was $0.42, and the
+purchase price of each Pre-Funded Unit was $0.41999 (which is equal to the public offering price per Common Unit to be sold in the Offering
+minus $0.00001).&#160;The Pre-Funded Warrants are immediately exercisable and may be exercised at any time until all of the Pre-Funded
+Warrants are exercised in full.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">In addition, the Company granted
+the Underwriter a 45-day option to purchase additional 6,428,571 shares of common stock and/or Pre-Funded Warrants, representing up to
+15% of the number of common stock and Pre-Funded Warrants sold in the Offering, and/or additional 2,250,000 Series A Warrants representing
+up to 15% of the Series A Warrants sold in the Offering, and/or additional 2,250,000 Series B Warrants representing up to 15% of the Series
+B Warrants sold in the Offering solely to cover over-allotments, if any.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">Under the alternate cashless
+exercise option of the Series A Warrants, beginning on the date of the Warrant Stockholder Approval (described below), the holder of the
+Series A Warrant, has the right to receive an aggregate number of shares equal to three times the aggregate number of shares of common
+stock that would be issuable upon a cash exercise of the Series A Warrant. &#160;In addition, beginning on the date of the Warrant Stockholder
+Approval, the Warrants will contain a reset of the exercise price to a price equal to the lesser of (i) the then-current exercise price
+and (ii) lowest volume weighted average price for the five trading days immediately preceding and immediately following the date we effect
+a reverse stock split in the future with a proportionate adjustment to the number of shares underlying the Warrants. Finally, with certain
+exceptions, the Series B Warrants provide for an adjustment to the exercise price and, subject to Warrant Stockholder Approval, to the
+number of shares underlying the Series B Warrant, upon our issuance of our common stock or common stock equivalents at a price per share
+that is less than the then-current exercise price of the Series B Warrant.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">The alternative cashless exercise
+option included in the Series A Warrants and the other adjustment provisions in the Warrants described above will be available only upon
+receipt of such stockholder approval as may be required by the applicable rules and regulations of the Nasdaq Capital Market to permit
+the alternate cashless exercise of the Series A Warrants and the other adjustment provisions described above included in the Warrants
+(the &#8220;Warrant Stockholder Approval&#8221;). In the event that the Company is unable to obtain the Warrant Stockholder Approval,
+the Series A Warrants will not be exercisable using the alternative cashless exercise option and certain of the other adjustment provisions
+described above included in the Warrants will not be effective.</p>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in; background-color: white">The
+Offering closed on November 17, 2023. An aggregate of 3,326,042 Common Units (which includes 3,326,042 shares of common stock) and 39,531,100
+Pre-Funded Units (which includes 39,531,100 Pre-Funded Warrants) were sold in the Offering. On November 17, 2023, the Underwriter partially
+exercised its over-allotment option with respect to 842,575 Series A Warrants and Series B Warrants. The aggregate gross proceeds to the
+Company were approximately $18.0 million, before deducting underwriting discounts and other estimated expenses payable by the Company.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in; background-color: white">The
+Offering was made pursuant to an effective&#160;registration statement on Form S-1 (File No. 333-274800) and the preliminary prospectus
+contained therein, which was filed by the Company with the Securities and Exchange Commission on September 29, 2023, amended on November
+8, 2023, and declared effective on November 15, 2023. A final prospectus relating to the Offering was filed with the SEC on
+November 17, 2023.&#160;The Company intends to use the net proceeds from the Offering for general corporate purposes.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in; background-color: white"></p>
+
+<!-- Field: Page; Sequence: 2 -->
+    <div style="margin-top: 6pt; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="border-bottom: Black 1pt solid; border-collapse: collapse; width: 100%; font-size: 10pt"><tr style="vertical-align: top; text-align: left"><td style="width: 33%">&#160;</td><td style="width: 34%; text-align: center"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence --></td><td style="width: 33%; text-align: right">&#160;</td></tr></table></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in; background-color: white">Under
+the terms of the Underwriting Agreement, the Underwriter received an underwriting discount of 8.0% to the public offering price for the
+Units. In addition, the Company agreed to (a) pay a non-accountable expense allowance to the Underwriter equal to 1.0% of the gross proceeds
+received in this Offering and (b) to reimburse the Underwriter for certain out-of-pocket expenses, including, but not limited to, up to
+$100,000 for reasonable legal fees and disbursements for the Underwriter&#8217;s counsel.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in; background-color: white">The
+Underwriting Agreement contains customary representations, warranties and agreements by the Company, customary conditions to closing,
+indemnification obligations of the Company and the Underwriter, including for liabilities under the Securities Act of 1933, as amended,
+other obligations of the parties and termination provisions.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">The foregoing description
+of the Underwriting Agreement, Pre-funded Warrant, Series A Warrant and Series B Warrant is not complete and is qualified in its entirety
+by reference to the full text of such agreements, copies of which are filed as Exhibits 1.1, 4.1, 4.2, and 4.3 and are incorporated by
+reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in"><i>Note Amendment</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">On November 17, 2023, the
+Company entered into&#160;an amendment agreement (the &#8220;Amendment&#8221;) with Empery Asset Master, LTD, Empery Tax Efficient, LP
+and Empery Debt Opportunity Fund, LP (collectively, the &#8220;Holders&#8221;), the holders of certain convertible notes and warrants.
+Pursuant to the Amendment, among other items, the Holders agreed to amend certain provisions in the notes and warrants to allow the Company
+more flexibility with respect to the issuance of future securities related the Offering discussed above, and the Company agreed to add
+in the notes additional operational covenants.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">The foregoing description
+of the Amendment, the amended note, and the amended warrant is not complete and is qualified in its entirety by reference to the full
+text of such agreements, copies of which are filed as Exhibits 10.1, 4.4, and 4.5 and are incorporated by reference herein.</p>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"></p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0pt; margin-bottom: 0pt"><tr style="vertical-align: top">
+<td style="width: 1in"><b>Item 8.01.</b></td><td><b>Other Events.</b></td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">In connection with the Offering,
+on November 17, 2023, the Company issued a press release announcing the closing of the Offering. A copy of the press release is attached
+hereto as Exhibit 99.1 and is incorporated herein by reference.</p>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0pt; margin-bottom: 0pt">
+<tr style="vertical-align: top">
+  <td style="text-align: left; width: 1in"><b>Item 9.01.</b></td>
+  <td style="text-align: left"><b> Exhibits.</b></td></tr>
+</table>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">(d) Exhibits</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 10%; font-size: 10pt"><span style="font-size: 10pt"><b>Exhibit No. </b></span></td>
+    <td style="width: 90%; font-size: 10pt"><span style="font-size: 10pt"><b>Description</b></span></td></tr>
+
+<tr style="vertical-align: top">
+    <td><span style="font-size: 10pt">1.1</span></td>
+    <td><a href="volcon_ex0101.htm"><span style="font-size: 10pt">Underwriting Agreement, dated November 16, 2023, with Aegis Capital Corp.</span></a></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-size: 10pt">4.1</span></td>
+    <td><a href="volcon_ex0401.htm"><span style="font-size: 10pt">Form of Pre-funded Warrant</span></a></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-size: 10pt">4.2</span></td>
+    <td><a href="volcon_ex0402.htm"><span style="font-size: 10pt">Form of Series A Warrant</span></a></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-size: 10pt">4.3</span></td>
+    <td><a href="volcon_ex0403.htm"><span style="font-size: 10pt">Form of Series B Warrant</span></a></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+
+<tr style="vertical-align: top">
+    <td><span style="font-size: 10pt">4.4</span></td>
+    <td><a href="volcon_ex0404.htm"><span style="font-size: 10pt">Form of Amended and Restated Convertible Note</span></a></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-size: 10pt">4.5</span></td>
+    <td><a href="volcon_ex0405.htm"><span style="font-size: 10pt">Form of Amended and Restated Warrant</span></a></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-size: 10pt">10.1</span></td>
+    <td><a href="volcon_ex1001.htm"><span style="font-size: 10pt">Form of  Amendment Agreement</span></a></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+
+<tr style="vertical-align: top">
+    <td style="width: 10%"><span style="font-size: 10pt">99.1</span></td>
+    <td style="width: 90%"><a href="volcon_ex9901.htm"><span style="font-size: 10pt">Press Release, dated November 17, 2023, issued by Volcon, Inc.</span></a></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td style="white-space: nowrap"><span style="font-size: 10pt">104</span></td>
+    <td><span style="font-size: 10pt">Cover Page Interactive Data File (embedded within the Inline XBRL document).</span></td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white"></p>
+
+<!-- Field: Page; Sequence: 3 -->
+    <div style="border-bottom: Black 1pt solid; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; font-size: 10pt"><tr style="vertical-align: top; text-align: left"><td style="width: 33%">&#160;</td><td style="width: 34%; text-align: center"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->3<!-- Field: /Sequence --></td><td style="width: 33%; text-align: right">&#160;</td></tr></table></div>
+    <div style="break-before: page; margin-top: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 0.5in">Pursuant to the requirements of
+the Securities and Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto
+duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr>
+    <td style="vertical-align: top">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt"><b>Volcon, Inc.</b></span></td></tr>
+  <tr>
+    <td style="vertical-align: top">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">(Registrant)</span></td></tr>
+  <tr>
+    <td style="vertical-align: top">&#160;</td>
+    <td>&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td style="width: 60%"><span style="font-size: 10pt">Date: November 20, 2023</span></td>
+    <td style="width: 40%; text-align: center"><span style="font-size: 10pt">/s/ Greg Endo</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td style="border-top: black 1pt solid; text-align: center"><span style="font-size: 10pt">Greg Endo<br />
+Chief Financial Officer</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<!-- Field: Page; Sequence: 4; Options: Last -->
+    <div style="border-bottom: Black 1pt solid; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; font-size: 10pt"><tr style="vertical-align: top; text-align: left"><td style="width: 33%">&#160;</td><td style="width: 34%; text-align: center"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->4<!-- Field: /Sequence --></td><td style="width: 33%; text-align: right">&#160;</td></tr></table></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxFjU0KwjAQhU/QOwxZS00qLuzSoiJWkSLiNtqpBNtMmaT+HMlbGlvEYWAY3vveE2IkVrQ0NTKc5kUOB2zaWnuEAitktBcMjmy9SSHcAq/GedbW9+8PzCgwGJhprOQ5CL31bhyWKSg1VtNxokBOUjmD/VZEXz0jW5kSrTe6Bm1L2DO1bNBrfg0JB/0kS82rrzoiO0M2xMVykN+QSJXAju76QXxzkOeZiEb9RGLF1LXfms55amBRYxO63ID+N/oAFRhJRQ== -->
+
+
+
+

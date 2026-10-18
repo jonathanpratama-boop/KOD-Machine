@@ -1,0 +1,462 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2024" xmlns:us-gaap="http://fasb.org/us-gaap/2024" xmlns:us-roles="http://fasb.org/us-roles/2024" xmlns:country="http://xbrl.sec.gov/country/2024" xmlns:srt="http://fasb.org/srt/2024" xmlns:DLPN="http://dolphineentertainment.com/20240924">
+<head>
+     <title>Current Report</title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02D_US%2DGAAP%2D2024 -->
+<!-- Field: Set; Name: xdx; ID: xdx_03E_DLPN_dolphineentertainment.com_20240924 -->
+<!-- Field: Set; Name: xdx; ID: xdx_04F_20240924_20240924 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_051_edei%2D%2DCurrentFiscalYearEndDate_%2D%2DLS0xMi0zMQ== -->
+<!-- Field: Set; Name: xdx; ID: xdx_054_edei%2D%2DEntityCentralIndexKey_0001282224 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2024-09-24" id="Fact000003" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-09-24" id="Fact000004" name="dei:CurrentFiscalYearEndDate">--12-31</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-09-24" id="Fact000005" name="dei:EntityCentralIndexKey">0001282224</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="dlpn-20240924.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2024-09-24">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001282224</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2024-09-24</xbrli:startDate>
+        <xbrli:endDate>2024-09-24</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 12pt; text-align: center"><b></b></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 1pt; margin-bottom: 1pt; width: 100%"><div style="border-top: Black 0.25pc solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<!-- Field: Rule-Page --><div style="margin-top: 1pt; margin-bottom: 1pt; width: 100%"><div style="border-top: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 12pt; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 12pt; text-align: center"><b>UNITED STATES</b><br/>
+<b>SECURITIES AND EXCHANGE COMMISSION </b><br/>
+Washington, D.C. 20549</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 12pt; text-align: center"><b>FORM <span id="xdx_908_edei--DocumentType_c20240924__20240924_zL8kUzt7L5ze"><ix:nonNumeric contextRef="AsOf2024-09-24" id="Fact000010" name="dei:DocumentType">8-K</ix:nonNumeric></span> </b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 12pt; text-align: center"><span style="text-transform: uppercase"><b>Current
+Report</b></span><br/>
+<b>Pursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 12pt; text-align: center">Date of Report (Date of earliest event
+reported): <b><span id="xdx_909_edei--DocumentPeriodEndDate_c20240924__20240924_zV2BdhpYWUd3"><ix:nonNumeric contextRef="AsOf2024-09-24" format="ixt:datemonthdayyearen" id="Fact000011" name="dei:DocumentPeriodEndDate">September 24,
+2024</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 12pt; text-align: center"><span id="xdx_90F_edei--EntityRegistrantName_c20240924__20240924_zOixN6WBWVvl"><b><ix:nonNumeric contextRef="AsOf2024-09-24" id="Fact000012" name="dei:EntityRegistrantName">DOLPHIN
+ENTERTAINMENT, INC.</ix:nonNumeric></b></span><br/>
+<span style="font-size: 8pt"><i>(Exact name of registrant as specified in its charter)</i></span></p>
+
+<table cellspacing="0" cellpadding="0" style="font: 11pt Arial, Helvetica, Sans-Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="line-height: 115%; text-align: center"><span style="font: 10pt/115% Times New Roman, Times, Serif"><b><span id="xdx_908_edei--EntityIncorporationStateCountryCode_c20240924__20240924_z5BRsP7APMj5"><ix:nonNumeric contextRef="AsOf2024-09-24" format="ixt-sec:stateprovnameen" id="Fact000013" name="dei:EntityIncorporationStateCountryCode">Florida</ix:nonNumeric></span> </b></span></td>
+    <td style="width: 33%; line-height: 115%; text-align: center"><span style="font: 10pt/115% Times New Roman, Times, Serif"><b><span id="xdx_907_edei--EntityFileNumber_c20240924__20240924_zIkmWrPpHJud"><ix:nonNumeric contextRef="AsOf2024-09-24" id="Fact000014" name="dei:EntityFileNumber">001-38331</ix:nonNumeric></span> </b></span></td>
+    <td style="width: 33%; line-height: 115%; text-align: center"><span style="font: 10pt/115% Times New Roman, Times, Serif"><b><span id="xdx_902_edei--EntityTaxIdentificationNumber_c20240924__20240924_zYcNf18XUfcg"><ix:nonNumeric contextRef="AsOf2024-09-24" id="Fact000015" name="dei:EntityTaxIdentificationNumber">86-0787790</ix:nonNumeric></span> </b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="line-height: 115%; text-align: center"><span style="font: 8pt/115% Times New Roman, Times, Serif"><i>(State
+    or other jurisdiction </i></span></td>
+    <td style="line-height: 115%; text-align: center"><span style="font: 8pt/115% Times New Roman, Times, Serif"><i>(Commission
+    </i></span></td>
+    <td style="line-height: 115%; text-align: center"><span style="font: 8pt/115% Times New Roman, Times, Serif"><i>(IRS
+    Employer </i></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="line-height: 115%; text-align: center"><span style="font: 8pt/115% Times New Roman, Times, Serif"><i>of
+    incorporation) </i></span></td>
+    <td style="line-height: 115%; text-align: center"><span style="font: 8pt/115% Times New Roman, Times, Serif"><i>File
+    Number) </i></span></td>
+    <td style="line-height: 115%; text-align: center"><span style="font: 8pt/115% Times New Roman, Times, Serif"><i>Identification
+    No.)</i></span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0; margin-right: 0; margin-left: 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0; margin-right: 0; margin-left: 0"><span id="xdx_90A_edei--EntityAddressAddressLine1_c20240924__20240924_z0QnZyAejyfc"><b><ix:nonNumeric contextRef="AsOf2024-09-24" id="Fact000016" name="dei:EntityAddressAddressLine1">150
+Alhambra Circle</ix:nonNumeric></b></span><b>, <span id="xdx_902_edei--EntityAddressAddressLine2_c20240924__20240924_zKEDBSVNghQg"><ix:nonNumeric contextRef="AsOf2024-09-24" id="Fact000017" name="dei:EntityAddressAddressLine2">Suite 1200</ix:nonNumeric></span></b><b>,
+<span id="xdx_903_edei--EntityAddressCityOrTown_c20240924__20240924_zveUCYHQ89o"><ix:nonNumeric contextRef="AsOf2024-09-24" id="Fact000018" name="dei:EntityAddressCityOrTown">Coral Gables</ix:nonNumeric></span></b><b>, <span id="xdx_901_edei--EntityAddressStateOrProvince_c20240924__20240924_zBTZkq0bLct2"><ix:nonNumeric contextRef="AsOf2024-09-24" format="ixt-sec:stateprovnameen" id="Fact000019" name="dei:EntityAddressStateOrProvince">Florida</ix:nonNumeric>
+</span></b><b><span id="xdx_903_edei--EntityAddressPostalZipCode_c20240924__20240924_zubsLburS2ii"><ix:nonNumeric contextRef="AsOf2024-09-24" id="Fact000020" name="dei:EntityAddressPostalZipCode">33134</ix:nonNumeric></span></b><br/>
+<span style="font-size: 8pt"><i>(Address of principal executive offices) (Zip Code)</i></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 12pt; text-align: center">Registrant's telephone number, including area
+code (<span id="xdx_90C_edei--CityAreaCode_c20240924__20240924_zCDMNB0wDrc8"><b><ix:nonNumeric contextRef="AsOf2024-09-24" id="Fact000021" name="dei:CityAreaCode">305</ix:nonNumeric></b></span><b>) <span id="xdx_907_edei--LocalPhoneNumber_c20240924__20240924_zgyVpEBrH1H8"><ix:nonNumeric contextRef="AsOf2024-09-24" id="Fact000022" name="dei:LocalPhoneNumber">774
+-0407</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center"><b>Not Applicable</b></p>
+
+<p style="font: 8pt Times New Roman, Times, Serif; margin: 0; text-align: center"><i>(Former Name or Former Address, if Changed Since
+Last Report)</i></p>
+
+<p style="font: 8pt Times New Roman, Times, Serif; margin: 0; text-align: center"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 12pt">Check the appropriate box below if the Form 8-K filing is intended
+to simultaneously satisfy the filing obligation of the registrant under any of the following provisions (see General Instruction A.2.
+below):</p>
+
+<p style="font: 10pt Arial, Helvetica, Sans-Serif; margin: 0 0 12pt"><span style="font-family: MS Mincho"><span id="xdx_901_edei--WrittenCommunications_c20240924__20240924_zwCV0T7qiEPi"><ix:nonNumeric contextRef="AsOf2024-09-24" format="ixt:booleanfalse" id="Fact000023" name="dei:WrittenCommunications">&#9744;</ix:nonNumeric></span></span> <span style="font-family: Times New Roman, Times, Serif">Written
+communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</span></p>
+
+<p style="font: 10pt Arial, Helvetica, Sans-Serif; margin: 0 0 12pt"><span style="font-family: MS Mincho"><span id="xdx_901_edei--SolicitingMaterial_c20240924__20240924_zBJQo9Pzacbc"><ix:nonNumeric contextRef="AsOf2024-09-24" format="ixt:booleanfalse" id="Fact000024" name="dei:SolicitingMaterial">&#9744;</ix:nonNumeric></span></span> <span style="font-family: Times New Roman, Times, Serif">Soliciting
+material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a -12)</span></p>
+
+<p style="font: 10pt Arial, Helvetica, Sans-Serif; margin: 0 0 12pt"><span style="font-family: MS Mincho"><span id="xdx_909_edei--PreCommencementTenderOffer_c20240924__20240924_zEOLm7jSPPF4"><ix:nonNumeric contextRef="AsOf2024-09-24" format="ixt:booleanfalse" id="Fact000025" name="dei:PreCommencementTenderOffer">&#9744;</ix:nonNumeric></span></span> <span style="font-family: Times New Roman, Times, Serif">Pre-commencement
+communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d -2(b))</span></p>
+
+<p style="font: 10pt Arial, Helvetica, Sans-Serif; margin: 0 0 12pt"><span style="font-family: MS Mincho"><span id="xdx_907_edei--PreCommencementIssuerTenderOffer_c20240924__20240924_zhGuRbfjp6i6"><ix:nonNumeric contextRef="AsOf2024-09-24" format="ixt:booleanfalse" id="Fact000026" name="dei:PreCommencementIssuerTenderOffer">&#9744;</ix:nonNumeric></span></span> <span style="font-family: Times New Roman, Times, Serif">Pre-commencement
+communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e -4(c))</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">Securities registered pursuant to Section 12(b) of
+the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><b>&#160;</b></p>
+
+<table cellspacing="0" cellpadding="0" style="font: 11pt Arial, Helvetica, Sans-Serif; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 34%; text-align: center"><span style="font: 10pt Times New Roman, Times, Serif"><b>Title
+    of each class</b></span></td>
+    <td style="width: 1%; text-align: center"><b>&#160;</b></td>
+    <td style="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><span style="font: 10pt Times New Roman, Times, Serif"><b>Trading
+    symbol(s)</b></span></td>
+    <td style="width: 1%; text-align: center"><b>&#160;</b></td>
+    <td style="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><span style="font: 10pt Times New Roman, Times, Serif"><b>Name
+    of each exchange on which registered</b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="text-align: center"><span style="font: 10pt Times New Roman, Times, Serif"><span id="xdx_90D_edei--Security12bTitle_c20240924__20240924_zlquls6jnMo9"><ix:nonNumeric contextRef="AsOf2024-09-24" id="Fact000027" name="dei:Security12bTitle">Common
+    Stock</ix:nonNumeric></span>, $0.015 par value per share</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font: 10pt Times New Roman, Times, Serif"><span id="xdx_905_edei--TradingSymbol_c20240924__20240924_zSDxVhl1kst2"><ix:nonNumeric contextRef="AsOf2024-09-24" id="Fact000028" name="dei:TradingSymbol">DLPN</ix:nonNumeric></span></span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font: 10pt Times New Roman, Times, Serif">The <span id="xdx_907_edei--SecurityExchangeName_c20240924__20240924_zQOqFcgWgkT9"><ix:nonNumeric contextRef="AsOf2024-09-24" format="ixt-sec:exchnameen" id="Fact000029" name="dei:SecurityExchangeName">Nasdaq</ix:nonNumeric></span>
+    Capital Market</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; color: white">&#160;&#160;</p>
+
+<p style="font: 10pt/115% Times New Roman, Times, Serif; margin: 0">Indicate by check mark whether the registrant is an emerging growth
+company as defined in Rule 405 of the Securities Act of 1933 (17 CFR &#167;230.405) or Rule 12b-2 of the Securities Exchange Act of 1934
+(17 CFR &#167;240.12b-2).</p>
+
+<p style="font: 10pt/115% Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt/115% Arial, Helvetica, Sans-Serif; margin: 0 0 10pt; text-align: right"><span style="font-family: Times New Roman, Times, Serif">Emerging
+growth company </span><span style="font-family: MS Mincho"><span id="xdx_90E_edei--EntityEmergingGrowthCompany_c20240924__20240924_zTDJcY6GJyhc"><ix:nonNumeric contextRef="AsOf2024-09-24" format="ixt:booleanfalse" id="Fact000030" name="dei:EntityEmergingGrowthCompany">&#9744;</ix:nonNumeric></span></span></p>
+
+<p style="font: 10pt/115% Arial, Helvetica, Sans-Serif; margin: 0 0 10pt"><span style="font-family: Times New Roman, Times, Serif">If
+an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying
+with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. </span><span style="font-family: MS Mincho">&#9744;</span></p>
+
+<p style="font: 10pt/115% Arial, Helvetica, Sans-Serif; margin: 0pt"><span style="font-family: MS Mincho">&#160;</span></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 1pt; margin-bottom: 1pt; width: 100%"><div style="border-top: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<!-- Field: Rule-Page --><div style="margin-top: 1pt; margin-bottom: 1pt; width: 100%"><div style="border-top: Black 0.25pc solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+<p style="font: 10pt/115% Arial, Helvetica, Sans-Serif; margin: 0 0 10pt"><span style="font-family: MS Mincho"></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b></b></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="width: 100%"><tr><td style="text-align: center; width: 100%">&#160;</td></tr></table></div>
+    <div style="break-before: page; margin-top: 6pt"><table cellpadding="0" cellspacing="0" style="width: 100%"><tr><td style="text-align: center; width: 100%">&#160;</td></tr></table></div>
+    <!-- Field: /Page -->
+
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 0 1in; text-indent: -1in"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b></b></p>
+
+<p style="font: 10pt/115% Arial, Helvetica, Sans-Serif; margin: 0 0 10pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>Item 5.03 Amendments to Articles of Incorporation or Bylaws; Change
+in Fiscal Year.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">On September 25, 2024, Dolphin Entertainment, Inc.,
+a Florida corporation (the &#8220;<span style="text-decoration: underline">Company</span>&#8221;), filed Articles of Amendment (the &#8220;<span style="text-decoration: underline">Articles of&#160;Amendment</span>&#8221;)
+to its Amended and Restated&#160;Articles&#160;of&#160;Incorporation&#160;with the Secretary of State of the State of Florida effecting
+an amendment to modify the terms of the Company&#8217;s Series C Convertible Preferred Stock (the &#8220;<span style="text-decoration: underline">Series C</span>&#8221;) to increase
+the number of votes per share of common stock the Series C is convertible into from five votes per share to ten votes per share. The Articles
+of Amendment were approved by the Company&#8217;s shareholders at the annual meeting of shareholders (the &#8220;<span style="text-decoration: underline">Annual Meeting</span>&#8221;),
+as discussed below in Item 5.07.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">The foregoing description of the Articles of Amendment
+does not purport to be complete and is qualified in its entirety by reference to the full text of the Articles of Amendment, a copy of
+which is filed herewith as Exhibit 3.1 and incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>Item 5.07 Submission of matters to a vote of security holders.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">On September 24, 2024, the Company held the Annual
+Meeting. A total of 40,531,601 votes of the Company&#8217;s voting capital stock were present or represented by proxy at the Annual Meeting,
+representing approximately eighty-eight percent (88%) of the votes entitled to be cast by the Company&#8217;s shareholders as of July
+29, 2024, the record date for the Annual Meeting.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">At the Annual Meeting, four (4) proposals were submitted
+for a vote of the Company&#8217;s shareholders and the related results are as follows:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><span style="text-decoration: underline">Proposal No. 1</span>: The election of William O&#8217;Dowd,
+IV, Mirta Negrini, Michael Espensen, Nelson Famadas, Hilarie Bass, Nicholas Stanham and Claudia Grillo for terms until the next succeeding
+annual meeting of shareholders or until such directors&#8217; successor shall have been duly elected and qualified. The shareholders elected
+the seven (7) directors by the following votes:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="text-align: center"><span style="font-size: 10pt"><b>Name</b></span></td>
+    <td style="text-align: center"><span style="font-size: 10pt"><b>For</b></span></td>
+    <td style="text-align: center"><span style="font-size: 10pt"><b>Withheld</b></span></td>
+    <td style="text-align: center"><span style="font-size: 10pt"><b>Broker Non-Votes</b></span></td></tr>
+  <tr style="vertical-align: top; background-color: #CCEEFF">
+    <td style="text-align: justify"><span style="font-size: 10pt">William O&#8217;Dowd, IV</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">32,985,658</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">351,387</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">7,194,556</span></td></tr>
+  <tr style="vertical-align: top; background-color: white">
+    <td style="text-align: justify"><span style="font-size: 10pt">Mirta Negrini</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">32,990,237</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">346,808</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">7,194,556</span></td></tr>
+  <tr style="vertical-align: top; background-color: #CCEEFF">
+    <td style="text-align: justify"><span style="font-size: 10pt">Michael Espensen</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">32,512,238</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">824,807</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">7,194,556</span></td></tr>
+  <tr style="vertical-align: top; background-color: white">
+    <td style="text-align: justify"><span style="font-size: 10pt">Nelson Famadas</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">32,621,456</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">715,589</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">7,194,556</span></td></tr>
+  <tr style="vertical-align: top; background-color: #CCEEFF">
+    <td style="text-align: justify"><span style="font-size: 10pt">Hilarie Bass</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">33,034,607</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">302,438</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">7,194,556</span></td></tr>
+  <tr style="vertical-align: top; background-color: white">
+    <td style="text-align: justify"><span style="font-size: 10pt">Nicholas Stanham</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">32,624,931</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">712,114</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">7,194,556</span></td></tr>
+  <tr style="vertical-align: top; background-color: #CCEEFF">
+    <td style="text-align: justify"><span style="font-size: 10pt">Claudia Grillo</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">33,022,934</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">314,111</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">7,194,556</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><span style="text-decoration: underline">Proposal No. 2</span>: The shareholders ratified Grant
+Thornton LLP as the Company&#8217;s independent registered accounting firm by the following votes:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top; background-color: #CCEEFF">
+    <td style="text-align: justify">Votes For</td>
+    <td style="text-align: right"><span style="font-size: 10pt">40,176,430</span></td></tr>
+  <tr style="vertical-align: top; background-color: white">
+    <td style="text-align: justify">Votes Against</td>
+    <td style="text-align: right"><span style="font-size: 10pt">311,897</span></td></tr>
+  <tr style="vertical-align: top; background-color: #CCEEFF">
+    <td style="text-align: justify">Abstentions</td>
+    <td style="text-align: right"><span style="font-size: 10pt">43,274</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><span style="text-decoration: underline">Proposal No. 3</span>: The shareholders voted to
+approve, but not require, the Articles of Amendment that would effect a reverse stock split of 1-for-2 by the following votes:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top; background-color: #CCEEFF">
+    <td style="text-align: justify">Votes For</td>
+    <td style="text-align: right"><span style="font-size: 10pt">39,526,714</span></td></tr>
+  <tr style="vertical-align: top; background-color: white">
+    <td style="text-align: justify">Votes Against</td>
+    <td style="text-align: right"><span style="font-size: 10pt">940,750</span></td></tr>
+  <tr style="vertical-align: top; background-color: #CCEEFF">
+    <td style="text-align: justify">Abstentions</td>
+    <td style="text-align: right">64,137</td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<!-- Field: Page; Sequence: 2 -->
+    <div style="border-bottom: Black 1pt solid; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="width: 100%"><tr><td style="text-align: center; width: 100%">&#160;</td></tr></table></div>
+    <div style="break-before: page; margin-top: 6pt"><table cellpadding="0" cellspacing="0" style="width: 100%"><tr><td style="text-align: center; width: 100%">&#160;</td></tr></table></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><span style="text-decoration: underline">Proposal No. 4</span>: The shareholders voted to approve
+the adoption of the Articles of Amendment that would modify the terms of the Series C to increase the number of votes per share of common
+stock the Series C is convertible into from five votes per share to ten votes per share and such amendment was approved by the following
+votes:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top; background-color: #CCEEFF">
+    <td style="text-align: justify">Votes For</td>
+    <td style="text-align: right"><span style="font-size: 10pt">31,694,179</span></td></tr>
+  <tr style="vertical-align: top; background-color: white">
+    <td style="text-align: justify">Votes Against</td>
+    <td style="text-align: right"><span style="font-size: 10pt">1,552,425</span></td></tr>
+  <tr style="vertical-align: top; background-color: #CCEEFF">
+    <td style="text-align: justify">Abstentions</td>
+    <td style="text-align: right">90,441</td></tr>
+  <tr style="vertical-align: top; background-color: white">
+    <td style="text-align: justify">Broker Non-Votes</td>
+    <td style="text-align: right">7,194,556</td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 0.5in"><span style="font-size: 10pt"></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 0.5in"><span style="font-size: 10pt">&#160;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><span style="font-size: 10pt"><b>Item 9.01. Financial
+Statements and Exhibits.</b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><span style="font-size: 10pt">&#160;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><span style="font-size: 10pt"><b>(d) Exhibits. </b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><span style="font-size: 10pt">&#160;</span></p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: black 1.5pt solid; text-align: justify"><span style="font-size: 10pt"><b>Exhibit No.</b></span></td>
+    <td style="text-align: justify"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="border-bottom: black 1.5pt solid; text-align: justify"><span style="font-size: 10pt"><b>Description</b></span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: justify">3.1</td>
+    <td style="text-align: justify">&#160;</td>
+    <td style="text-align: justify"><a href="dlpn_ex3z1.htm">Articles of Amendment to Amended and Restated Articles of Incorporation of Dolphin Entertainment, Inc.</a></td></tr>
+  <tr style="vertical-align: top">
+    <td style="text-align: justify">&#160;</td>
+    <td style="text-align: justify">&#160;</td>
+    <td style="text-align: justify">&#160;</td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: justify"><span style="font-size: 10pt">104</span></td>
+    <td style="text-align: justify"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="text-align: justify"><span style="font-size: 10pt">Cover Page Interactive Data File (embedded within the Inline XBRL document)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><span style="font-size: 10pt">&#160;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><span style="font-size: 10pt"><i>&#160;</i></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><span style="font-size: 10pt"><i>&#160;</i></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 3 -->
+    <div style="border-bottom: Black 1pt solid; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="width: 100%"><tr><td style="text-align: center; width: 100%">&#160;</td></tr></table></div>
+    <div style="break-before: page; margin-top: 6pt"><table cellpadding="0" cellspacing="0" style="width: 100%"><tr><td style="text-align: center; width: 100%">&#160;</td></tr></table></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 12pt; text-align: center"><span style="font-size: 10pt"><b>SIGNATURES</b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0 0 12pt; text-indent: 0.5in"><span style="font-size: 10pt">Pursuant to the
+requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned
+hereunto duly authorized.</span></p><table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr>
+    <td style="width: 45%"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: bottom; width: 1%"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="width: 4%"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: bottom"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="width: 3%"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: bottom; width: 1%"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="width: 45%"><span style="font-size: 10pt">&#160;</span></td></tr>
+  <tr>
+    <td style="vertical-align: top"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: bottom"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: top"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: bottom"><span style="font-size: 10pt">&#160;</span></td>
+    <td colspan="3" style="vertical-align: top"><span style="font-size: 10pt"><b>DOLPHIN ENTERTAINMENT, INC.</b></span></td></tr>
+  <tr>
+    <td><span style="font-size: 10pt">&#160;</span></td>
+    <td colspan="2"><span style="font-size: 10pt">&#160;</span></td>
+    <td colspan="2"><span style="font-size: 10pt">&#160;</span></td>
+    <td colspan="2"><span style="font-size: 10pt">&#160;</span></td></tr>
+  <tr>
+    <td style="vertical-align: top"><span style="font-size: 10pt">Date: September 27, 2024</span></td>
+    <td style="vertical-align: bottom"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: top"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: bottom"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: top"><span style="font-size: 10pt">By:</span></td>
+    <td style="vertical-align: bottom"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: top"><p style="border-bottom: black 0.75pt solid; font: 10pt Times New Roman, Times, Serif; margin: 0"><span style="font-size: 10pt">/s/
+    Mirta A. Negrini</span></p></td></tr>
+  <tr>
+    <td style="vertical-align: top"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: bottom"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: top"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: bottom"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: top"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: bottom"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: top"><span style="font-size: 10pt">Mirta A. Negrini</span></td></tr>
+  <tr>
+    <td style="vertical-align: top"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: bottom"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: top"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: bottom"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: top"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: bottom"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="vertical-align: top"><span style="font-size: 10pt">Chief Financial and Operating Officer</span></td></tr>
+  </table>
+
+<p style="margin-top: 0; margin-bottom: 0"><span style="font-size: 10pt">&#160;</span></p>
+
+<p style="margin-top: 0; margin-bottom: 0"><span style="font-size: 10pt">&#160;</span></p>
+
+<p style="margin-top: 0; margin-bottom: 0"><span style="font-size: 10pt">&#160;</span></p>
+
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

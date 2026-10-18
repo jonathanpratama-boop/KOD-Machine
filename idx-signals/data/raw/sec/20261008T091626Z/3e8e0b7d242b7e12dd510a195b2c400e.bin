@@ -1,0 +1,375 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2026" xmlns:us-gaap="http://fasb.org/us-gaap/2026" xmlns:us-roles="http://fasb.org/us-roles/2026" xmlns:country="http://xbrl.sec.gov/country/2026" xmlns:srt="http://fasb.org/srt/2026" xmlns:LNAI="http://LNAI/20260427">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02F_US%2DGAAP%2D2026 -->
+<!-- Field: Set; Name: xdx; ID: xdx_03E_LNAI_LNAI_20260427 -->
+<!-- Field: Set; Name: xdx; ID: xdx_04F_20260427_20260427 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DEntityCentralIndexKey_0001527728 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000003" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000004" name="dei:EntityCentralIndexKey">0001527728</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="lnai-20260427.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2026-04-27">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001527728</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2026-04-27</xbrli:startDate>
+        <xbrli:endDate>2026-04-27</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="margin: 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 10pt; margin-bottom: 3pt; width: 100%"><div style="border-top: Black 2pt solid; font-size: 1pt; border-bottom: Black 1pt solid">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="margin: 0">&#160;</p>
+
+<p style="font: 14pt Times New Roman, Times, Serif; margin: 0; text-align: center"><b>UNITED STATES</b></p>
+
+<p style="font: 14pt Times New Roman, Times, Serif; margin: 0; text-align: center"><b>SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="font: 12pt Times New Roman, Times, Serif; margin: 0; text-align: center"><b>Washington, D.C. 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">&#160;</p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0; text-align: center"><b>FORM <span id="xdx_909_edei--DocumentType_c20260427__20260427_zdKHbuD2bnqa"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000009" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">Pursuant to Section 13 or 15(d) of the</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">Securities Exchange Act of 1934</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">Date of Report (Date of earliest event reported): <span id="xdx_90F_edei--DocumentPeriodEndDate_c20260427__20260427_zAmY9Yn1Q687"><ix:nonNumeric contextRef="AsOf2026-04-27" format="ixt:datemonthdayyearen" id="Fact000010" name="dei:DocumentPeriodEndDate">April
+27, 2026</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">&#160;</p>
+
+<p style="font: 24pt Times New Roman, Times, Serif; margin: 0; text-align: center"><b><span id="xdx_90B_edei--EntityRegistrantName_c20260427__20260427_zj1pJTSfLvma"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000011" name="dei:EntityRegistrantName">LUNAI BIOWORKS, INC.</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center"><i>(Exact name of registrant as specified in its charter)</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center"><i>&#160;</i></p>
+
+<table cellspacing="0" cellpadding="0" style="width: 100%; border-collapse: collapse">
+<tr style="vertical-align: top"><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 34%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_90F_edei--EntityIncorporationStateCountryCode_c20260427__20260427_zWOePPl7lQTf"><ix:nonNumeric contextRef="AsOf2026-04-27" format="ixt-sec:stateprovnameen" id="Fact000012" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></b></span></td>
+<td style="font: 11pt Calibri, Helvetica, Sans-Serif; text-align: center; width: 32%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_90C_edei--EntityFileNumber_c20260427__20260427_zOduRqDNfJB8"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000013" name="dei:EntityFileNumber">001-38758</ix:nonNumeric></span></b></span></td>
+<td style="font: 11pt Calibri, Helvetica, Sans-Serif; text-align: center; width: 34%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_902_edei--EntityTaxIdentificationNumber_c20260427__20260427_zMmNFv4GaZe9"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000014" name="dei:EntityTaxIdentificationNumber">45-2259340</ix:nonNumeric></span></b></span></td></tr>
+<tr style="vertical-align: top">
+<td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><i>(State or other jurisdiction
+of incorporation)</i></span></td>
+<td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><i>(Commission File Number)</i></span></td>
+<td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><i>(I.R.S. Employer Identification
+No.)</i></span></td></tr>
+</table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center"><span id="xdx_904_edei--EntityAddressAddressLine1_c20260427__20260427_zruuqTZAer09"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000015" name="dei:EntityAddressAddressLine1">3400 Cottage Way</ix:nonNumeric></span>, <span id="xdx_90E_edei--EntityAddressAddressLine2_c20260427__20260427_z0xfCdl9ZgM9"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000016" name="dei:EntityAddressAddressLine2">Suite G2</ix:nonNumeric></span>, <span id="xdx_900_edei--EntityAddressAddressLine3_c20260427__20260427_zo56vWOqL5Z5"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000017" name="dei:EntityAddressAddressLine3">#3256</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center"><span id="xdx_90B_edei--EntityAddressCityOrTown_c20260427__20260427_zy888aiq7CFl"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000018" name="dei:EntityAddressCityOrTown">Sacramento</ix:nonNumeric></span>, <span id="xdx_90F_edei--EntityAddressStateOrProvince_c20260427__20260427_zmmBXIJNZeM5"><ix:nonNumeric contextRef="AsOf2026-04-27" format="ixt-sec:stateprovnameen" id="Fact000019" name="dei:EntityAddressStateOrProvince">California</ix:nonNumeric></span> <span id="xdx_907_edei--EntityAddressPostalZipCode_c20260427__20260427_zFLGBVIQ2aQh"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000020" name="dei:EntityAddressPostalZipCode">95825</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center"><i>(Address of principal executive offices, including
+zip code)</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center"><span id="xdx_90F_edei--CityAreaCode_c20260427__20260427_zc6xlBY9re87"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000021" name="dei:CityAreaCode">(424)</ix:nonNumeric></span> <span id="xdx_90E_edei--LocalPhoneNumber_c20260427__20260427_zOTkhcJLlWy7"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000022" name="dei:LocalPhoneNumber">222-9301</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center"><i>(Registrant&#8217;s telephone number, including
+area code)</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">Not Applicable</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center"><i>(Former name or former address, if changed since
+last report)</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">Check the appropriate box below if the Form 8-K filing is intended to simultaneously
+satisfy the filing obligation of the registrant under any of the following provisions:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><span style="font-family: Segoe UI Symbol,sans-serif"><span id="xdx_904_edei--WrittenCommunications_c20260427__20260427_z6ow71HzX6A8"><ix:nonNumeric contextRef="AsOf2026-04-27" format="ixt:booleanfalse" id="Fact000023" name="dei:WrittenCommunications">&#9744;</ix:nonNumeric></span></span> Written
+communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><span style="font-family: Segoe UI Symbol,sans-serif"><span id="xdx_908_edei--SolicitingMaterial_c20260427__20260427_zSksd8VdT3e1"><ix:nonNumeric contextRef="AsOf2026-04-27" format="ixt:booleanfalse" id="Fact000024" name="dei:SolicitingMaterial">&#9744;</ix:nonNumeric></span></span> Soliciting
+material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><span style="font-family: Segoe UI Symbol,sans-serif"><span id="xdx_90E_edei--PreCommencementTenderOffer_c20260427__20260427_zzZQTSjy6Gah"><ix:nonNumeric contextRef="AsOf2026-04-27" format="ixt:booleanfalse" id="Fact000025" name="dei:PreCommencementTenderOffer">&#9744;</ix:nonNumeric></span></span> Pre-commencement
+communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><span style="font-family: Segoe UI Symbol,sans-serif"><span id="xdx_908_edei--PreCommencementIssuerTenderOffer_c20260427__20260427_zi1QNkTpPLKk"><ix:nonNumeric contextRef="AsOf2026-04-27" format="ixt:booleanfalse" id="Fact000026" name="dei:PreCommencementIssuerTenderOffer">&#9744;</ix:nonNumeric></span></span> Pre-commencement
+communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">Securities reg<span style="letter-spacing: 0.05pt">i</span>stered pursuant
+to Sec<span style="letter-spacing: 0.05pt">t</span>ion 12(b) of th<span style="letter-spacing: 1.75pt">e</span>Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border: Black 1pt solid; width: 38%; text-align: center"><span style="font-size: 10pt"><b><span style="text-decoration: underline">Title of Each Class</span></b></span></td>
+    <td style="border-top: Black 1pt solid; width: 24%; border-right: Black 1pt solid; border-bottom: Black 1pt solid; text-align: center"><span style="font-size: 10pt"><b><span style="text-decoration: underline">Trading Symbol</span></b></span></td>
+    <td style="border-top: Black 1pt solid; width: 38%; border-right: Black 1pt solid; border-bottom: Black 1pt solid; text-align: center"><span style="font-size: 10pt"><b><span style="text-decoration: underline">Name of Each Exchange on Which Registered</span></b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="border-right: Black 1pt solid; border-bottom: Black 1pt solid; border-left: Black 1pt solid; text-align: center"><span style="font-size: 10pt"><span id="xdx_902_edei--Security12bTitle_c20260427__20260427_z5pN2FRTFE5k"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000027" name="dei:Security12bTitle">Common Stock, par value $0.0001 per share</ix:nonNumeric></span></span></td>
+    <td style="border-right: Black 1pt solid; border-bottom: Black 1pt solid; text-align: center"><span style="font-size: 10pt"><span id="xdx_90C_edei--TradingSymbol_c20260427__20260427_zIFSczhwl2r9"><ix:nonNumeric contextRef="AsOf2026-04-27" id="Fact000028" name="dei:TradingSymbol">LNAI</ix:nonNumeric></span></span></td>
+    <td style="border-right: Black 1pt solid; border-bottom: Black 1pt solid; text-align: center"><span style="font-size: 10pt"><span id="xdx_900_edei--SecurityExchangeName_c20260427__20260427_zxVo9zFOqSsf"><ix:nonNumeric contextRef="AsOf2026-04-27" format="ixt-sec:exchnameen" id="Fact000029" name="dei:SecurityExchangeName">The Nasdaq Stock Market LLC</ix:nonNumeric></span></span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">Indicate by check mark whether the registrant is an emerging growth company
+as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or Rule 12b-2 of the Securities Exchange Act of 1934
+(&#167;240.12b-2 of this chapter).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">Emerging growth company <span style="font-family: Segoe UI Symbol,sans-serif"><span id="xdx_907_edei--EntityEmergingGrowthCompany_c20260427__20260427_ziNHJRHAg06c"><ix:nonNumeric contextRef="AsOf2026-04-27" format="ixt:booleanfalse" id="Fact000030" name="dei:EntityEmergingGrowthCompany">&#9744;</ix:nonNumeric></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">If an emerging growth company, indicate by check mark if the registrant
+has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant
+to Section 13(a) of the Exchange Act. <span style="font-family: Segoe UI Symbol,sans-serif">&#9744;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 2pt solid; margin-top: 6pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>Item 8.01 Other Events.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">On April 27, 2026, Lunai Bioworks, Inc. (the &#8220;Company&#8221;) determined
+to postpone its previously scheduled Special Meeting of Stockholders (the &#8220;Special Meeting&#8221;), originally scheduled for May
+4, 2026, to May 8, 2026 at 9:00 a.m. Eastern Time. The Special Meeting will continue to be held in a virtual-only format via live webcast
+at www.virtualshareholdermeeting.com/LNAI2026SM. The Special Meeting was called to consider the proposals described in the Company&#8217;s
+definitive proxy statement on Schedule 14A originally filed with the U.S. Securities and Exchange Commission on April 13, 2026, as amended
+by Amendment No. 1 (DEFR14A) filed on April 15, 2026 (collectively, the &#8220;Definitive Proxy Statement&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">The postponement is intended to provide stockholders with additional time
+to vote their shares and to assist the Company in obtaining a quorum. The Company was advised by its proxy administrator that, due to
+the timing of Broadridge Financial Solutions, Inc.&#8217;s distribution of proxy materials to beneficial owners holding shares in street
+name on April 22, 2026, the timing requirements applicable to broker discretionary voting under New York Stock Exchange Rule 452, which
+governs the authority of NYSE member organizations to vote uninstructed shares (including shares of Nasdaq-listed issuers), were not expected
+to be satisfied before the originally scheduled meeting date of May 4, 2026. Postponing the Special Meeting to May 8, 2026 is expected
+to permit the applicable timing requirements to be satisfied so that brokers may exercise discretionary voting authority on matters classified
+as routine under NYSE Rule 452. As described in the Definitive Proxy Statement, the Company believes that the Reverse Stock Split Proposal
+and the Adjournment Proposal are likely to be classified as routine matters under NYSE Rule 452, although the routine or non-routine classification
+is determined by the New York Stock Exchange and not by the Company, and brokers may choose not to exercise discretionary voting authority.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">The record date for determining stockholders entitled to notice of, and
+to vote at, the Special Meeting remains the close of business on April 10, 2026. Stockholders who have already submitted proxies or voting
+instructions need not take any further action unless they wish to change their vote. Proxies previously submitted will be voted at the
+Special Meeting as postponed unless properly revoked in accordance with the procedures described in the Definitive Proxy Statement.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">Concurrently with the filing of this Current Report on Form 8-K, the Company
+is filing a supplement to the Definitive Proxy Statement and a revised Notice of Special Meeting of Stockholders as additional definitive
+soliciting materials on Schedule 14A. The Company encourages all stockholders entitled to vote at the Special Meeting to submit their
+proxies promptly in accordance with the instructions set forth in the Definitive Proxy Statement, as supplemented, and the accompanying
+proxy card or voting instruction form.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>Item 9.01 Financial Statements and Exhibits.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>(d) Exhibits.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 10%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Exhibit No.</b></span></td>
+    <td style="width: 90%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Description</b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">99.1</span></td>
+    <td><a href="e7584_ex99-1.htm"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Press Release issued by Lunai Bioworks, Inc. on April 28, 2026.</span></a></td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">104</span></td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Cover Page Interactive Data File (embedded within the
+    Inline XBRL document).</span></td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>Cautionary Note Regarding Forward-Looking Statements</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">This Current Report on Form 8-K contains forward-looking statements within
+the meaning of Section 27A of the Securities Act of 1933, as amended, and Section 21E of the Exchange Act, and is intended to qualify
+for the safe harbors created thereby. Forward-looking statements include, without limitation, statements regarding the timing and conduct
+of the Special Meeting, the availability of broker discretionary voting authority, the Company&#8217;s ability to obtain a quorum, the
+outcome of the proposals to be voted upon at the Special Meeting (including the proposed reverse stock split), the Company&#8217;s ability
+to maintain compliance with the continued listing requirements of The Nasdaq Stock Market LLC, and any related effects of the foregoing.
+Forward-looking statements may be identified by the use of words such as &#8220;may,&#8221; &#8220;will,&#8221; &#8220;expect,&#8221;
+&#8220;anticipate,&#8221; &#8220;intend,&#8221; &#8220;believe,&#8221; &#8220;estimate,&#8221; &#8220;plan&#8221; or similar expressions.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<!-- Field: Page; Sequence: 2 -->
+    <div style="border-bottom: Black 2pt solid; margin-top: 6pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">Forward-looking statements are subject to a number of known and unknown
+risks, uncertainties and assumptions, including, but not limited to: (i) the risk that the Company will be unable to obtain a quorum at
+the Special Meeting as postponed; (ii) the risk that the Special Meeting may be further postponed or adjourned; (iii) the risk that one
+or more proposals submitted to stockholders may not receive the required vote for approval; (iv) the risk that broker discretionary voting
+authority on routine matters may not be available on the timeline currently expected, including as a result of any reclassification of
+any proposal as non-routine by the New York Stock Exchange; (v) the risk that the Company&#8217;s common stock may be delisted from The
+Nasdaq Stock Market LLC, including as a result of the Company&#8217;s failure to maintain compliance with Nasdaq&#8217;s continued listing
+requirements; (vi) the risk of technical or operational disruptions affecting the virtual meeting platform; and (vii) the other risks
+and uncertainties described under the heading &#8220;Risk Factors&#8221; in the Company&#8217;s most recent Annual Report on Form 10-K
+and any subsequent Quarterly Reports on Form 10-Q filed with the U.S. Securities and Exchange Commission.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">Actual results may differ materially from those expressed or implied by
+the forward-looking statements. The Company undertakes no obligation to update or revise any forward-looking statements, whether as a
+result of new information, future events or otherwise, except as may be required by applicable law.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>Important Information for Investors and Stockholders</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">In connection with the Special Meeting, the Company has filed the Definitive
+Proxy Statement and other relevant documents with the U.S. Securities and Exchange Commission. Stockholders are urged to read the Definitive
+Proxy Statement, as supplemented, and any other relevant documents filed with the U.S. Securities and Exchange Commission, because they
+contain important information about the Company and the matters to be voted upon at the Special Meeting. Investors and stockholders may
+obtain free copies of the Definitive Proxy Statement, as supplemented, and other documents filed by the Company with the U.S. Securities
+and Exchange Commission at the website maintained by the U.S. Securities and Exchange Commission at www.sec.gov, or by directing a request
+to the Company at 3400 Cottage Way, Suite G2, #3256, Sacramento, California 95825, Attention: Investor Relations, email: ir@lunaibioworks.com.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>Participants in the Solicitation</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">The Company and its directors and executive officers may be deemed to be
+participants in the solicitation of proxies from stockholders in connection with the Special Meeting. Information regarding the Company&#8217;s
+directors and executive officers, including their respective interests in the Company by security holdings or otherwise, is set forth
+in the Definitive Proxy Statement and the Company&#8217;s most recent Annual Report on Form 10-K, in each case as filed with the U.S.
+Securities and Exchange Commission and as updated from time to time by the Company&#8217;s other filings with the U.S. Securities and
+Exchange Commission, including Statements of Change in Beneficial Ownership on Form 4.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<!-- Field: Page; Sequence: 3 -->
+    <div style="border-bottom: Black 2pt solid; margin-top: 6pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">Pursuant to the requirements of the Securities Exchange Act of 1934, the
+registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><b>LUNAI BIOWORKS, INC.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+<tr style="vertical-align: top">
+<td style="width: 50%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Date: April 28, 2026</span></td>
+<td style="width: 50%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">By: /s/ David Weinstein</span></td></tr>
+<tr style="vertical-align: top">
+<td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;</span></td>
+<td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Name: David Weinstein</span></td></tr>
+<tr style="vertical-align: top">
+<td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;</span></td>
+<td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Title: Chief Executive Officer and Director</span></td></tr>
+</table>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 3pt; margin-bottom: 3pt; width: 100%"><div style="border-top: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxFjdEKwjAMRb9g/xD6LLoVJ7JHhw5xigwRX4vLpLg1I63TfZJ/ad0QQyAk955cISYio42ukeGyKnI4YdPWyiEUWCGjuaJ3pNtdAn4WeNPWsTJuWH9gSp5BzyymsfL3wdlpi2UC4XwmlzO5gDBKZAzHvQi+ekqm0iUap1UNypRwZGpZo1Pcjx9O6kWGmn5IOiNbTSaBaBqO8htkGEk4UKeexHcLeZ6KYDJUIDKmR+td65dD8yVhXWPj4+xI/zv4AM9USmI= -->
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

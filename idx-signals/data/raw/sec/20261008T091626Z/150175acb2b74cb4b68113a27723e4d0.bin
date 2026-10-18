@@ -1,0 +1,813 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2024" xmlns:us-gaap="http://fasb.org/us-gaap/2024" xmlns:us-roles="http://fasb.org/us-roles/2024" xmlns:dtr-types="http://www.xbrl.org/dtr/type/2022-03-31" xmlns:country="http://xbrl.sec.gov/country/2024" xmlns:srt="http://fasb.org/srt/2024" xmlns:ACON="http://aclarion.com/20241231">
+<head>
+     <title>Aclarion, Inc. 8-K</title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02D_US%2DGAAP%2D2024 -->
+<!-- Field: Set; Name: xdx; ID: xdx_03D_ACON_aclarion.com_20241231 -->
+<!-- Field: Set; Name: xdx; ID: xdx_040_20241231_20241231 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_05C_edei%2D%2DEntityCentralIndexKey_0001635077 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2024-12-31" id="Fact000003" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-12-31" id="Fact000004" name="dei:EntityCentralIndexKey">0001635077</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="acon-20241231.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2024-12-31">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001635077</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2024-12-31</xbrli:startDate>
+        <xbrli:endDate>2024-12-31</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2024-12-312024-12-31_custom_CommonStockParValue0.00001PerShareMember">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001635077</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">ACON:CommonStockParValue0.00001PerShareMember</xbrldi:explicitMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2024-12-31</xbrli:startDate>
+        <xbrli:endDate>2024-12-31</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2024-12-312024-12-31_custom_WarrantsEachExercisableForOneShareOfCommonStockMember">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001635077</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">ACON:WarrantsEachExercisableForOneShareOfCommonStockMember</xbrldi:explicitMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2024-12-31</xbrli:startDate>
+        <xbrli:endDate>2024-12-31</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span style="font-size: 12pt"><b>UNITED STATES</b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span style="font-size: 12pt"><b>SECURITIES AND
+EXCHANGE COMMISSION</b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Washington, D.C. 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin: 3pt auto; width: 100%"><div style="border-top: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span style="font-size: 12pt"><b>FORM <span id="xdx_90F_edei--DocumentType_c20241231__20241231_zPXvs09woAve"><ix:nonNumeric contextRef="AsOf2024-12-31" id="Fact000009" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></p>
+
+<!-- Field: Rule-Page --><div style="margin: 3pt auto; width: 100%"><div style="border-top: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 20pt; text-align: center"><b>Pursuant to Section 13 or 15(d) of the Securities
+Exchange Act of 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 20pt; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Date of Report (Date of earliest event
+reported): <b>January 3, 2025</b> <b>(<span id="xdx_907_edei--DocumentPeriodEndDate_c20241231__20241231_zbgflM3QT4sg"><ix:nonNumeric contextRef="AsOf2024-12-31" format="ixt:datemonthdayyearen" id="Fact000010" name="dei:DocumentPeriodEndDate">December 31, 2024</ix:nonNumeric></span></b><b>)</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></p>
+
+<!-- Field: Rule-Page --><div style="margin: 3pt auto; width: 100%"><div style="border-top: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p><p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span id="xdx_908_edei--EntityRegistrantName_c20241231__20241231_ziPooGOBRmi2" style="font-size: 14pt"><b><ix:nonNumeric contextRef="AsOf2024-12-31" id="Fact000011" name="dei:EntityRegistrantName">Aclarion,
+Inc.</ix:nonNumeric></b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Exact name of registrant as specified in its charter)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+<tr style="vertical-align: top; text-align: left">
+  <td style="text-align: center; width: 34%"><b><span id="xdx_902_edei--EntityIncorporationStateCountryCode_c20241231__20241231_zrAEJRHIKiFh"><ix:nonNumeric contextRef="AsOf2024-12-31" format="ixt-sec:stateprovnameen" id="Fact000012" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></b></td>
+  <td style="text-align: center; width: 32%"><b><span id="xdx_909_edei--EntityFileNumber_c20241231__20241231_zc6R8F7evJX9"><ix:nonNumeric contextRef="AsOf2024-12-31" id="Fact000013" name="dei:EntityFileNumber">001-41358</ix:nonNumeric></span></b></td>
+  <td style="text-align: center; width: 34%"><b><span id="xdx_902_edei--EntityTaxIdentificationNumber_c20241231__20241231_zeyKPEm1cGZ3"><ix:nonNumeric contextRef="AsOf2024-12-31" id="Fact000014" name="dei:EntityTaxIdentificationNumber">47-3324725</ix:nonNumeric></span></b></td></tr>
+<tr style="vertical-align: top; text-align: left">
+  <td style="text-align: center">(State or other jurisdiction</td>
+  <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(Commission</span></td>
+  <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(IRS Employer</span></td></tr>
+<tr style="vertical-align: top; text-align: left">
+  <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">of incorporation)</span></td>
+  <td style="text-align: center">File Number)</td>
+  <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Identification No.)</span></td></tr>
+</table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+<tr style="vertical-align: top; text-align: left">
+  <td style="text-align: center; width: 50%"><b><span id="xdx_906_edei--EntityAddressAddressLine1_c20241231__20241231_zowknT1R1Qz9"><ix:nonNumeric contextRef="AsOf2024-12-31" id="Fact000015" name="dei:EntityAddressAddressLine1">8181 Arista Place</ix:nonNumeric></span>, <span id="xdx_90A_edei--EntityAddressAddressLine2_c20241231__20241231_z8oGRzz9Bpw9"><ix:nonNumeric contextRef="AsOf2024-12-31" id="Fact000016" name="dei:EntityAddressAddressLine2">Suite 100</ix:nonNumeric></span></b></td>
+  <td style="text-align: center; width: 50%"><b>&#160;</b></td></tr>
+<tr style="vertical-align: top; text-align: left">
+  <td style="text-align: center"><b><span id="xdx_900_edei--EntityAddressCityOrTown_c20241231__20241231_zyTSokfha0Ui"><ix:nonNumeric contextRef="AsOf2024-12-31" id="Fact000017" name="dei:EntityAddressCityOrTown">Broomfield</ix:nonNumeric></span>, <span id="xdx_900_edei--EntityAddressStateOrProvince_c20241231__20241231_zDrcHGDnPo14"><ix:nonNumeric contextRef="AsOf2024-12-31" format="ixt-sec:stateprovnameen" id="Fact000018" name="dei:EntityAddressStateOrProvince">Colorado</ix:nonNumeric></span></b></td>
+  <td style="text-align: center"><b><span id="xdx_90A_edei--EntityAddressPostalZipCode_c20241231__20241231_zTnjOM4JTqvc"><ix:nonNumeric contextRef="AsOf2024-12-31" id="Fact000019" name="dei:EntityAddressPostalZipCode">80021</ix:nonNumeric></span></b></td></tr>
+<tr style="vertical-align: top; text-align: left">
+  <td style="text-align: center">(Address of Principal Executive Offices)</td>
+  <td style="text-align: center">(Zip Code)</td></tr>
+</table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<p style="margin: 0">&#160;</p>
+
+<p style="margin: 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Registrant&#8217;s telephone number, including area code: <b><span id="xdx_90A_edei--CityAreaCode_c20241231__20241231_zkRzT4K2fHn8"><ix:nonNumeric contextRef="AsOf2024-12-31" id="Fact000020" name="dei:CityAreaCode">(833)</ix:nonNumeric></span> <span id="xdx_900_edei--LocalPhoneNumber_c20241231__20241231_zSfe0VaGUCb2"><ix:nonNumeric contextRef="AsOf2024-12-31" id="Fact000021" name="dei:LocalPhoneNumber">275-2266</ix:nonNumeric></span></b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>&#160;</b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Not
+Applicable</b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(Former name or former address, if changed since last report)</span> </p>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Check the appropriate box
+below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following
+provisions:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0pt; margin-bottom: 0pt"><tr style="vertical-align: top">
+<td style="width: 0.4pt"/><td style="width: 16.6pt"><span id="xdx_905_edei--WrittenCommunications_c20241231__20241231_zT7CNgzD3Pjc"><ix:nonNumeric contextRef="AsOf2024-12-31" format="ixt:booleanfalse" id="Fact000022" name="dei:WrittenCommunications">&#9744;</ix:nonNumeric></span></td><td style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0pt; margin-bottom: 0pt"><tr style="vertical-align: top">
+<td style="width: 0.4pt"/><td style="width: 16.6pt"><span id="xdx_90B_edei--SolicitingMaterial_c20241231__20241231_z97Uc1qLz1p9"><ix:nonNumeric contextRef="AsOf2024-12-31" format="ixt:booleanfalse" id="Fact000023" name="dei:SolicitingMaterial">&#9744;</ix:nonNumeric></span></td><td style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0pt; margin-bottom: 0pt"><tr style="vertical-align: top">
+<td style="width: 0.4pt"/><td style="width: 16.6pt"><span id="xdx_904_edei--PreCommencementTenderOffer_c20241231__20241231_zY3mMuXsvyn6"><ix:nonNumeric contextRef="AsOf2024-12-31" format="ixt:booleanfalse" id="Fact000024" name="dei:PreCommencementTenderOffer">&#9744;</ix:nonNumeric></span></td><td style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0pt; margin-bottom: 0pt"><tr style="vertical-align: top">
+<td style="width: 0.4pt"/><td style="width: 16.6pt"><span id="xdx_90B_edei--PreCommencementIssuerTenderOffer_c20241231__20241231_zM64UeHmYOic"><ix:nonNumeric contextRef="AsOf2024-12-31" format="ixt:booleanfalse" id="Fact000025" name="dei:PreCommencementIssuerTenderOffer">&#9744;</ix:nonNumeric></span></td><td style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Securities registered pursuant to Section 12(b) of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="width: 42%">&#160;</td>
+    <td style="text-align: center; width: 18%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Trading</b></span></td>
+    <td style="width: 40%">&#160;</td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: Black 1pt solid; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Title of each class</b></span></td>
+    <td style="border-bottom: Black 1pt solid; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Symbol(s)</b></span></td>
+    <td style="border-bottom: Black 1pt solid; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Name of each exchange on which registered</b></span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_908_edei--Security12bTitle_c20241231__20241231__us-gaap--StatementClassOfStockAxis__custom--CommonStockParValue0.00001PerShareMember_zjGTGPOIrNn3"><ix:nonNumeric contextRef="From2024-12-312024-12-31_custom_CommonStockParValue0.00001PerShareMember" id="Fact000026" name="dei:Security12bTitle">Common Stock</ix:nonNumeric></span></span></td>
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90F_edei--TradingSymbol_c20241231__20241231__us-gaap--StatementClassOfStockAxis__custom--CommonStockParValue0.00001PerShareMember_z0rmNh1hVOCi"><ix:nonNumeric contextRef="From2024-12-312024-12-31_custom_CommonStockParValue0.00001PerShareMember" id="Fact000027" name="dei:TradingSymbol">ACON</ix:nonNumeric></span></span></td>
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90B_edei--SecurityExchangeName_c20241231__20241231__us-gaap--StatementClassOfStockAxis__custom--CommonStockParValue0.00001PerShareMember_zoB70aFWfmEk"><ix:nonNumeric contextRef="From2024-12-312024-12-31_custom_CommonStockParValue0.00001PerShareMember" format="ixt-sec:exchnameen" id="Fact000028" name="dei:SecurityExchangeName">Nasdaq Stock Market</ix:nonNumeric></span></span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_905_edei--Security12bTitle_c20241231__20241231__us-gaap--StatementClassOfStockAxis__custom--WarrantsEachExercisableForOneShareOfCommonStockMember_zvN1M6AGdmTb"><ix:nonNumeric contextRef="From2024-12-312024-12-31_custom_WarrantsEachExercisableForOneShareOfCommonStockMember" id="Fact000029" name="dei:Security12bTitle">Common
+    Stock Warrants</ix:nonNumeric></span></span></td>
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_905_edei--TradingSymbol_c20241231__20241231__us-gaap--StatementClassOfStockAxis__custom--WarrantsEachExercisableForOneShareOfCommonStockMember_ztKVuCA0K3z2"><ix:nonNumeric contextRef="From2024-12-312024-12-31_custom_WarrantsEachExercisableForOneShareOfCommonStockMember" id="Fact000030" name="dei:TradingSymbol">ACONW</ix:nonNumeric></span></span></td>
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_901_edei--SecurityExchangeName_c20241231__20241231__us-gaap--StatementClassOfStockAxis__custom--WarrantsEachExercisableForOneShareOfCommonStockMember_z7Ij4WHIMyzf"><ix:nonNumeric contextRef="From2024-12-312024-12-31_custom_WarrantsEachExercisableForOneShareOfCommonStockMember" format="ixt-sec:exchnameen" id="Fact000031" name="dei:SecurityExchangeName">Nasdaq Stock Market</ix:nonNumeric></span></span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Indicate by check mark whether
+the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or Rule
+12b-2 of the Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 33pt">Emerging growth company <span id="xdx_908_edei--EntityEmergingGrowthCompany_c20241231__20241231_zKQ1eVa8hkY"><ix:nonNumeric contextRef="AsOf2024-12-31" format="ixt:booleantrue" id="Fact000032" name="dei:EntityEmergingGrowthCompany">&#9746;</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">If an emerging growth company,
+indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial
+accounting standards provided pursuant to Section 13(a) of the Exchange Act. <span id="xdx_90D_edei--EntityExTransitionPeriod_c20241231__20241231_zIKHHuql8fF"><ix:nonNumeric contextRef="AsOf2024-12-31" format="ixt:booleanfalse" id="Fact000033" name="dei:EntityExTransitionPeriod">&#9744;</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 6pt; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; font-size: 10pt"><tr style="vertical-align: top; text-align: left"><td style="width: 33%">&#160;</td><td style="width: 34%; text-align: center"><!-- Field: Sequence; Type: Arabic; Name: PageNo; Options: Hidden -->&#160;<!-- Field: /Sequence --></td><td style="width: 33%; text-align: right">&#160;</td></tr></table></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"></p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 13%; font-size: 10pt"><span style="font-size: 10pt"><b>Item 5.07</b></span></td>
+    <td style="width: 87%; font-size: 10pt"><span style="font-size: 10pt"><b>Submission of Matters to a Vote of Security Holders.</b></span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">On December 31, 2024, the Company held its 2024
+Annual Meeting of Stockholders.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">The matters voted upon at the Annual Meeting and
+the results of such voting are set forth below.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white"><b>Proposal 1 - Election of seven directors to
+serve a term ending at the 2024 annual meeting, in each case until their respective successors are duly elected and qualified.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Nominee</span></td>
+    <td>&#160;</td>
+    <td style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Votes For</span></td>
+    <td>&#160;</td>
+    <td style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Withheld</span></td>
+    <td>&#160;</td>
+    <td style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Broker Non-Votes</span></td></tr>
+  <tr style="vertical-align: bottom; background-color: #CCEEFF">
+    <td style="width: 43%"><span style="font-size: 10pt">Jeffrey Thramann</span></td>
+    <td style="width: 2%">&#160;</td>
+    <td style="width: 17%; text-align: center"><span style="font-size: 10pt">1,189,506</span></td>
+    <td style="width: 2%">&#160;</td>
+    <td style="width: 17%; text-align: center"><span style="font-size: 10pt">107,489</span></td>
+    <td style="width: 2%">&#160;</td>
+    <td style="width: 17%; text-align: center"><span style="font-size: 10pt">2,741,544</span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td><span style="font-size: 10pt">Brent Ness</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">1,191,173</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">105,822</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">2,741,544</span></td></tr>
+  <tr style="vertical-align: bottom; background-color: #CCEEFF">
+    <td><span style="font-size: 10pt">Stephen Deitsch</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">1,190,745</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">106,250</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">2,741,544</span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td><span style="font-size: 10pt">Scott Breidbart</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">1,190,700</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">106,295</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">2,741,544</span></td></tr>
+  <tr style="vertical-align: bottom; background-color: #CCEEFF">
+    <td><span style="font-size: 10pt">David Neal</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">1,191,463</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">105,532</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">2,741,544</span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td><span style="font-size: 10pt">William Wesemann</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">1,190,739</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">106,256</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">2,741,544</span></td></tr>
+  <tr style="vertical-align: bottom; background-color: #CCEEFF">
+    <td><span style="font-size: 10pt">Amanda William</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">1,189,744</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">107,251</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">2,741,544</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">All seven director nominees were duly elected.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white"><b>Proposal 2 - Ratification of appointment of
+independent registered accounting firm &#8211; Haynie &amp; Company</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Votes For</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Votes Against</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Abstain</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Broker Non-Votes</span></td></tr>
+  <tr style="vertical-align: bottom; background-color: #CCEEFF">
+    <td style="width: 0%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">3,776,879</span></td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">250,987</span></td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">10,673</span></td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">0</span></td>
+    <td style="width: 0%; text-align: center">&#160;</td></tr>
+  <tr>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">Proposal 2 was approved.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; background-color: white"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white"><b>Proposal 3 &#8211; Approval of the issuance
+of shares pursuant to the Company&#8217;s equity line</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Votes For</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Votes Against</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Abstain</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Broker Non-Votes</span></td></tr>
+  <tr style="vertical-align: bottom; background-color: #CCEEFF">
+    <td style="width: 0%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">1,129,322</span></td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">164,731</span></td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">2,941</span></td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">2,741,545</span></td>
+    <td style="width: 0%; text-align: center">&#160;</td></tr>
+  <tr>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">Proposal 3 was approved.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; background-color: white"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white"><b>Proposal 4 &#8211; Approval of the issuance
+of shares pursuant to the Company&#8217;s Series B convertible preferred stock</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Votes For</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Votes Against</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Abstain</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Broker Non-Votes</span></td></tr>
+  <tr style="vertical-align: bottom; background-color: #CCEEFF">
+    <td style="width: 0%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">1,126,568</span></td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">167,172</span></td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">3,254</span></td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">2,741,545</span></td>
+    <td style="width: 0%; text-align: center">&#160;</td></tr>
+  <tr>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">Proposal 4 was approved.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; background-color: white"></p>
+
+<!-- Field: Page; Sequence: 2 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 6pt; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; font-size: 10pt"><tr style="vertical-align: top; text-align: left"><td style="width: 33%">&#160;</td><td style="width: 34%; text-align: center"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence --></td><td style="width: 33%; text-align: right">&#160;</td></tr></table></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; background-color: white"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white"><b>Proposal 5 &#8211; Approval of the issuance
+of shares pursuant to the Company&#8217;s Series C convertible preferred stock and related warrants</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Votes For</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Votes Against</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Abstain</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Broker Non-Votes</span></td></tr>
+  <tr style="vertical-align: bottom; background-color: #CCEEFF">
+    <td style="width: 0%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">1,119,622</span></td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">174,470</span></td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">2,902</span></td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">2,741,545</span></td>
+    <td style="width: 0%; text-align: center">&#160;</td></tr>
+  <tr>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">Proposal 5 was approved.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white"><b>Proposal 6 &#8211; Approval of a proposed reverse
+stock split</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Votes For</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Votes Against</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Abstain</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Broker Non-Votes</span></td></tr>
+  <tr style="vertical-align: bottom; background-color: #CCEEFF">
+    <td style="width: 0%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">3,006,776</span></td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">1,016,688</span></td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">15,072</span></td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">0</span></td>
+    <td style="width: 0%; text-align: center">&#160;</td></tr>
+  <tr>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">Proposal 6 was approved.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white"><b>Proposal 7 &#8211; Approval of an amendment
+to our 2022 equity incentive plan</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Votes For</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Votes Against</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Abstain</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Broker Non-Votes</span></td></tr>
+  <tr style="vertical-align: bottom; background-color: #CCEEFF">
+    <td style="width: 0%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">1,074,285</span></td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">202,442</span></td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">20,268</span></td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="width: 1%; text-align: center">&#160;</td>
+    <td style="width: 22%; text-align: center"><span style="font-size: 10pt">2,741,544</span></td>
+    <td style="width: 0%; text-align: center">&#160;</td></tr>
+  <tr>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white">Proposal 7 was approved.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; background-color: white"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"></p>
+
+<!-- Field: Page; Sequence: 3 -->
+    <div style="margin-top: 6pt; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="border-bottom: Black 1pt solid; border-collapse: collapse; width: 100%; font-size: 10pt"><tr style="vertical-align: top; text-align: left"><td style="width: 33%">&#160;</td><td style="width: 34%; text-align: center"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->3<!-- Field: /Sequence --></td><td style="width: 33%; text-align: right">&#160;</td></tr></table></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0; margin-bottom: 0"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 13.2pt 0 0; text-align: justify; text-indent: 26.4pt">Pursuant to the requirements of the Securities
+Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr>
+    <td style="vertical-align: bottom; padding-left: 1.1pt">&#160;</td>
+    <td colspan="2" style="vertical-align: top; padding-left: 1.1pt"><b>ACLARION, INC.</b></td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="padding-left: 1.1pt">&#160;</td>
+    <td style="padding-left: 1.1pt">&#160;</td>
+    <td style="padding-left: 1.1pt">&#160;</td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="padding-left: 1.1pt; width: 50%">January 3, 2025</td>
+    <td style="padding-left: 1.1pt; width: 6%">By:</td><td style="border-bottom: black 1pt solid; padding-left: 1.1pt; width: 44%">/s/ John Lorbiecki</td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="padding-left: 1.1pt">&#160;</td>
+    <td style="padding-left: 1.1pt">Name:</td>
+    <td style="padding-left: 1.1pt">John Lorbiecki</td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="padding-left: 1.1pt">&#160;</td>
+    <td style="padding-left: 1.1pt">Title:</td>
+    <td style="padding-left: 1.1pt">Chief Financial Officer</td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 4; Options: Last -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 6pt; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; font-size: 10pt"><tr style="vertical-align: top; text-align: left"><td style="width: 33%">&#160;</td><td style="width: 34%; text-align: center"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->4<!-- Field: /Sequence --></td><td style="width: 33%; text-align: right">&#160;</td></tr></table></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: left; text-indent: 0pt; margin-top: 0pt; margin-bottom: 6pt"></p>
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxFjUEKwjAQRU/QOwxZizbBbrq0qIhVShFxG+xUgm2mTGKtR/KWxhZxGBiG/9//QszEljamQYbLqszhhG3XaI9QYo2M9orBke32KYRb4s04z9r68f2BGQUGA5PMldJBGK29cVilEC8XUi7UEmKVygSKg4i+eka2NhVab3QD2lZQMHVs0Gt+TQknPZCl9jVWnZGdIZuCnMeT/AYVSwVH6vWT+O4gzzMRzcaJxJbp0QXXevBovySsG2xDnZvo/0YfApRKhg== -->
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

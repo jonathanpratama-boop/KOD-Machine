@@ -1,0 +1,702 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:srt="http://fasb.org/srt/2024" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2020-02-12" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:us-gaap="http://fasb.org/us-gaap/2024" xmlns:dei="http://xbrl.sec.gov/dei/2024" xmlns:country="http://xbrl.sec.gov/country/2024" xmlns:currency="http://xbrl.sec.gov/currency/2024" xmlns:dtr-types="http://www.xbrl.org/dtr/type/2022-03-31" xmlns:utr="http://www.xbrl.org/2009/utr" xmlns:naics="http://xbrl.sec.gov/naics/2024" xmlns:sic="http://xbrl.sec.gov/sic/2024" xmlns:stpr="http://xbrl.sec.gov/stpr/2024" xmlns:exch="http://xbrl.sec.gov/exch/2024" xmlns:cef="http://xbrl.sec.gov/cef/2024" xmlns:cyd="http://xbrl.sec.gov/cyd/2024" xmlns:slxn="http://silexion.com/20250708" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title></title>
+    <!-- Licensed to: company
+         Document created using Broadridge PROfile 25.5.1.5318
+         Copyright 1995 - 2025 Broadridge -->
+    <meta http-equiv="Content-Type" content="text/html"/>
+</head>
+
+<body style="font-family: 'Times New Roman', Times, serif; font-size: 10pt; text-align: left; color: #000000; background-color: #ffffff;">
+<div id="DSPFiXBRLHidden" style="display: none;"><ix:header><ix:hidden><ix:nonNumeric name="dei:AmendmentFlag" id="Fact_7c23c28424f7455c83cbbf97eb0304f4" contextRef="c20250708to20250708" format="ixt:fixed-false">false</ix:nonNumeric><ix:nonNumeric name="dei:EntityCentralIndexKey" id="Fact_b4777ce4fbe74e98aacb8c8e31561da9" contextRef="c20250708to20250708">0002022416</ix:nonNumeric><ix:nonNumeric name="dei:EntityTaxIdentificationNumber" id="Fact_a8cb03ea40f84ae9ac888931ec7adcb7" contextRef="c20250708to20250708">00-0000000</ix:nonNumeric><ix:nonNumeric name="dei:CityAreaCode" id="Fact_498e55a128b349a19300533b98fca675" contextRef="c20250708to20250708">972</ix:nonNumeric><ix:nonNumeric name="dei:SecurityExchangeName" id="Fact_a4febf17ac014512ba3e464923503dda" contextRef="c20250708to20250708_StatementClassOfStockAxis_WarrantsExercisableForOrdinarySharesAtAnExercisePriceOf1150PerShareMember">NASDAQ</ix:nonNumeric><ix:nonNumeric name="dei:SecurityExchangeName" id="Fact_71dda04d7f9a4ed1b11bbd4f9ea5dbe3" contextRef="c20250708to20250708_StatementClassOfStockAxis_OrdinarySharesParValue00001PerShareMember">NASDAQ</ix:nonNumeric></ix:hidden><ix:references><link:schemaRef xlink:href="slxn-20250708.xsd" xlink:type="simple"/></ix:references><ix:resources><xbrli:context id="c20250708to20250708"><xbrli:entity><xbrli:identifier scheme="http://www.sec.gov/CIK">0002022416</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2025-07-08</xbrli:startDate><xbrli:endDate>2025-07-08</xbrli:endDate></xbrli:period></xbrli:context><xbrli:context id="c20250708to20250708_StatementClassOfStockAxis_WarrantsExercisableForOrdinarySharesAtAnExercisePriceOf1150PerShareMember"><xbrli:entity><xbrli:identifier scheme="http://www.sec.gov/CIK">0002022416</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">slxn:WarrantsExercisableForOrdinarySharesAtAnExercisePriceOf1150PerShareMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-07-08</xbrli:startDate><xbrli:endDate>2025-07-08</xbrli:endDate></xbrli:period></xbrli:context><xbrli:context id="c20250708to20250708_StatementClassOfStockAxis_OrdinarySharesParValue00001PerShareMember"><xbrli:entity><xbrli:identifier scheme="http://www.sec.gov/CIK">0002022416</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">slxn:OrdinarySharesParValue00001PerShareMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2025-07-08</xbrli:startDate><xbrli:endDate>2025-07-08</xbrli:endDate></xbrli:period></xbrli:context></ix:resources></ix:header></div>
+<div style="line-height: initial;">
+  <div>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: center;"><b style="box-sizing: border-box; font-weight: bolder;"> </b></p>
+    <hr style="border: none; border-bottom: 1px solid black; border-top: 4px solid black; height: 10px; color: #ffffff; background-color: #ffffff; text-align: center; margin-left: auto; margin-right: auto;"/>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: center;"><b style="box-sizing: border-box; font-weight: bolder;"> <br/>
+      </b></p>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: center;"><b style="box-sizing: border-box; font-weight: bolder;"><span style="font-size: 14pt;">UNITED STATES<br/>
+          SECURITIES AND EXCHANGE COMMISSION</span><br/>
+        Washington, D.C. 20549</b></p>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: center;"><span style="box-sizing: border-box; text-transform: uppercase;"><b style="box-sizing: border-box; font-weight: bolder;">&#160;</b></span></p>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 14pt 'Times New Roman',Times,serif; letter-spacing: normal; text-indent: 0px; text-transform: none; word-spacing: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; text-align: center;"><span style="box-sizing: border-box; text-transform: uppercase;"><b style="box-sizing: border-box; font-weight: bolder;">FORM <ix:nonNumeric name="dei:DocumentType" id="Fact_432983d6421549f2814c63645098f945" contextRef="c20250708to20250708">8-K</ix:nonNumeric></b></span></p>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: center;"><span style="box-sizing: border-box; text-transform: uppercase;"><b style="box-sizing: border-box; font-weight: bolder;">&#160;</b></span></p>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: center;"><span style="box-sizing: border-box; text-transform: uppercase;"><b style="box-sizing: border-box; font-weight: bolder;">CURRENT REPORT</b></span></p>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: center;"><b style="box-sizing: border-box; font-weight: bolder;">&#160;</b></p>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: center;"><b style="box-sizing: border-box; font-weight: bolder;">Pursuant
+        to Section 13 or 15(d) of the<br/>
+        Securities Exchange Act of 1934</b></p>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: center;">&#160;</p>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: center;">Date of report (Date of earliest event reported): <span style="font-weight: bold;"><ix:nonNumeric name="dei:DocumentPeriodEndDate" id="Fact_96d94273d1364794b2e6082c2cb08f7b" contextRef="c20250708to20250708" format="ixt:date-monthname-day-year-en">July 8, 2025</ix:nonNumeric> (July 7, 2025)</span></p>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: center;"> </p>
+    <p style="box-sizing: border-box; color: rgb(0, 0, 0); font: 10pt 'Times New Roman',Times,serif; letter-spacing: normal; text-transform: none; word-spacing: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; text-align: center;"><span style="font-size: 16pt; font-weight: bold;"><ix:nonNumeric name="dei:EntityRegistrantName" id="Fact_a89d98f34da4487a8dd992d7e0ab36fe" contextRef="c20250708to20250708">Silexion Therapeutics Corp</ix:nonNumeric></span><br/>
+      (Exact name of registrant as specified in its charter)</p>
+    <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman', Times, serif; font-size: 10pt; color: #000000; width: 100%; border-spacing: 0;">
+
+
+  <tr>
+
+    <td style="width: 32%; text-align: center; vertical-align: bottom; border-bottom: 2px solid rgb(0, 0, 0);">
+            <div><span style="font-weight: bold;"><ix:nonNumeric name="dei:EntityIncorporationStateCountryCode" id="Fact_eb758170ecc247fa8a60577523eb0438" contextRef="c20250708to20250708" format="ixt-sec:edgarprovcountryen">Cayman Islands</ix:nonNumeric></span><br/>
+            </div>
+          </td>
+
+    <td style="width: 1%; text-align: center; vertical-align: bottom; padding-bottom: 2px;">
+            <div>&#160;</div>
+          </td>
+
+    <td style="width: 34%; text-align: center; vertical-align: bottom; border-bottom: 2px solid rgb(0, 0, 0);">
+            <div><span style="box-sizing: border-box; font-family: 'Times New Roman', Times, serif; font-size: 10pt;"><b style="box-sizing: border-box; font-weight: bolder;"><span style="box-sizing: border-box;"><span style="box-sizing: border-box;"><ix:nonNumeric name="dei:EntityFileNumber" id="Fact_11377dcffbc04333b7ebc8b465bac5eb" contextRef="c20250708to20250708">001-42253</ix:nonNumeric><br/>
+                    </span></span></b></span></div>
+          </td>
+
+    <td style="width: 1%; text-align: center; vertical-align: bottom; padding-bottom: 2px;">
+            <div>&#160;</div>
+          </td>
+
+    <td style="width: 32%; text-align: center; vertical-align: bottom; border-bottom: 2px solid rgb(0, 0, 0);"><span style="font-weight: bold;"><span style="-sec-ix-hidden:Fact_a8cb03ea40f84ae9ac888931ec7adcb7">N/A</span></span><br/>
+          </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 32%;">
+            <div style="text-align: center;"><span style="box-sizing: border-box; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">(State or other jurisdiction</span></div>
+          </td>
+
+    <td style="width: 1%;">
+            <div style="text-align: center;">&#160;</div>
+          </td>
+
+    <td style="width: 34%;">
+            <div style="text-align: center;"><span style="box-sizing: border-box; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">(Commission File Number)</span></div>
+          </td>
+
+    <td style="width: 1%;">
+            <div style="text-align: center;">&#160;</div>
+          </td>
+
+    <td style="width: 32%;">
+            <div style="text-align: center;"><span style="box-sizing: border-box; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">(I.R.S. Employer</span></div>
+          </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 32%;">
+            <div style="text-align: center;"><span style="box-sizing: border-box; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">of incorporation)</span></div>
+          </td>
+
+    <td style="width: 1%;">
+            <div style="text-align: center;">&#160;</div>
+          </td>
+
+    <td style="width: 34%;"><br/>
+          </td>
+
+    <td style="width: 1%;">
+            <div style="text-align: center;">&#160;</div>
+          </td>
+
+    <td style="width: 32%;">
+            <div style="text-align: center;"><span style="box-sizing: border-box; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">Identification No.) <br/>
+              </span></div>
+          </td>
+
+  </tr>
+
+
+</table>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: justify;">&#160;</p>
+    <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman', Times, serif; font-size: 10pt; color: #000000; width: 100%; border-spacing: 0;">
+
+
+  <tr>
+
+    <td style="width: 49%; text-align: center; vertical-align: bottom; border-bottom: 2px solid rgb(0, 0, 0);">
+            <div>
+              <p style="box-sizing: border-box; margin: 0pt 0px; font: 10pt 'Times New Roman', Times, serif; text-align: center;"><b style="box-sizing: border-box; font-weight: bolder;"><span style="box-sizing: border-box;"><span style="box-sizing: border-box;"><ix:nonNumeric name="dei:EntityAddressAddressLine1" id="Fact_96ff48b7d3674cecaa2373ef1a88a913" contextRef="c20250708to20250708">12 Abba Hillel Road</ix:nonNumeric><br/>
+                    </span></span></b></p>
+              <p style="box-sizing: border-box; margin: 0pt 0px; font: 10pt 'Times New Roman', Times, serif; text-align: center;"><b style="box-sizing: border-box; font-weight: bolder;"><ix:nonNumeric name="dei:EntityAddressCityOrTown" id="Fact_86a59fcc99a5428eb076b06a8dc07dfe" contextRef="c20250708to20250708">Ramat-Gan</ix:nonNumeric>, <ix:nonNumeric name="dei:EntityAddressCountry" id="Fact_7d0e01e6a4bb45c8ae95ef8286d88724" contextRef="c20250708to20250708" format="ixt-sec:countrynameen">Israel</ix:nonNumeric></b></p>
+            </div>
+          </td>
+
+    <td style="width: 1.49%; text-align: center; vertical-align: bottom; padding-bottom: 2px;">
+            <div>&#160;</div>
+          </td>
+
+    <td style="width: 50%; text-align: center; vertical-align: bottom; border-bottom: 2px solid rgb(0, 0, 0);">
+            <div><span style="box-sizing: border-box; font-family: 'Times New Roman', Times, serif; font-size: 10pt;"><b style="box-sizing: border-box; font-weight: bolder;"><span style="box-sizing: border-box;"><span style="box-sizing: border-box;"><ix:nonNumeric name="dei:EntityAddressPostalZipCode" id="Fact_3a5fd69786b34691b0148f5417309f10" contextRef="c20250708to20250708">5250606</ix:nonNumeric><br/>
+                    </span></span></b></span></div>
+          </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 49%;">
+            <div style="text-align: center;"><span style="box-sizing: border-box; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">(Address of principal executive offices)</span></div>
+          </td>
+
+    <td style="width: 1.49%;">
+            <div style="text-align: center;">&#160;</div>
+          </td>
+
+    <td style="width: 50%;">
+            <div style="text-align: center;"><span style="box-sizing: border-box; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">(Zip Code) <br/>
+              </span></div>
+          </td>
+
+  </tr>
+
+
+</table>
+    <p style="box-sizing: border-box; color: rgb(0, 0, 0); font: 10pt 'Times New Roman',Times,serif; letter-spacing: normal; text-transform: none; word-spacing: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-style: initial; text-decoration-color: initial; text-align: left;"> </p>
+    <div style="text-align: center;"><span style="box-sizing: border-box; font-family: 'Times New Roman',Times,serif; font-size: 10pt;"><b style="box-sizing: border-box; font-weight: bolder;"><span style="-sec-ix-hidden:Fact_498e55a128b349a19300533b98fca675">+972</span>-<ix:nonNumeric name="dei:LocalPhoneNumber" id="Fact_28b27498a9684a13bc4681ade6b283a1" contextRef="c20250708to20250708">3-7564999</ix:nonNumeric></b></span></div>
+
+    <div>
+      <div style="text-align: center;"><span style="box-sizing: border-box; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">(Registrant&#8217;s telephone number, including area code)</span></div>
+
+    </div>
+
+    <div style="text-align: center;"><span style="box-sizing: border-box; font-family: 'Times New Roman',Times,serif; font-size: 10pt;"><b style="box-sizing: border-box; font-weight: bolder;"> <br/>
+        </b></span></div>
+
+    <div style="text-align: center;"> <span style="box-sizing: border-box; font-family: 'Times New Roman',Times,serif; font-size: 10pt;"><b style="box-sizing: border-box; font-weight: bolder;">N/A</b></span></div>
+
+    <div style="text-align: center;"> <span style="box-sizing: border-box; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">(Former name or former address, if changed since last report)</span></div>
+
+    <div> <br/>
+    </div>
+
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0in; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">Check the appropriate box below if the Form 8-K is
+      intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</p>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: justify;">&#160;</p>
+    <table cellspacing="0" cellpadding="0" style="box-sizing: border-box; caption-side: bottom; border-collapse: collapse; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; margin-top: 0pt; margin-bottom: 0pt; width: 1127px; border-spacing: 0;">
+
+
+  <tr style="box-sizing: border-box; border-color: rgb(220, 220, 220); border-style: solid; border-width: 0px; vertical-align: top; text-align: justify;">
+
+    <td style="box-sizing: border-box; border-color: inherit; border-style: solid; border-width: 0px; vertical-align: middle; width: 0.25in; text-align: left;"><span style="box-sizing: border-box; font-family: 'Times New Roman', Times, serif; font-size: 10pt;"><span id="xdx_908_edei--WrittenCommunications_c20240916__20240916_z3LsBWWs2fb" style="box-sizing: border-box;"><span style="box-sizing: border-box;"><ix:nonNumeric name="dei:WrittenCommunications" id="Fact_5a3018e8e3f54ef69882872e1d7f6c56" contextRef="c20250708to20250708" format="ixt-sec:boolballotbox">&#9744;</ix:nonNumeric><br/>
+                </span></span></span></td>
+
+    <td style="box-sizing: border-box; border-color: inherit; border-style: solid; border-width: 0px; vertical-align: middle; text-align: left;"><span style="box-sizing: border-box; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">Written
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</span></td>
+
+  </tr>
+
+
+</table>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: justify;">&#160;</p>
+    <table cellspacing="0" cellpadding="0" style="box-sizing: border-box; caption-side: bottom; border-collapse: collapse; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; margin-top: 0pt; margin-bottom: 0pt; width: 1127px; border-spacing: 0;">
+
+
+  <tr style="box-sizing: border-box; border-color: rgb(220, 220, 220); border-style: solid; border-width: 0px; vertical-align: top; text-align: justify;">
+
+    <td style="box-sizing: border-box; border-color: inherit; border-style: solid; border-width: 0px; vertical-align: middle; width: 0.25in; text-align: left;"><span id="xdx_904_edei--SolicitingMaterial_c20240916__20240916_zJspqn6JoLf5" style="box-sizing: border-box;"><span style="box-sizing: border-box;"><ix:nonNumeric name="dei:SolicitingMaterial" id="Fact_6d7a59ebad5c40489f75a4fc2fcfe384" contextRef="c20250708to20250708" format="ixt-sec:boolballotbox">&#9744;</ix:nonNumeric><br/>
+              </span></span></td>
+
+    <td style="box-sizing: border-box; border-color: inherit; border-style: solid; border-width: 0px; vertical-align: middle; text-align: left;"><span style="box-sizing: border-box; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">Soliciting
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</span></td>
+
+  </tr>
+
+
+</table>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: justify;">&#160;</p>
+    <table cellspacing="0" cellpadding="0" style="box-sizing: border-box; caption-side: bottom; border-collapse: collapse; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; margin-top: 0pt; margin-bottom: 0pt; width: 1127px; border-spacing: 0;">
+
+
+  <tr style="box-sizing: border-box; border-color: rgb(220, 220, 220); border-style: solid; border-width: 0px; vertical-align: top; text-align: justify;">
+
+    <td style="box-sizing: border-box; border-color: inherit; border-style: solid; border-width: 0px; vertical-align: middle; width: 0.25in; text-align: left;"><span id="xdx_90E_edei--PreCommencementTenderOffer_c20240916__20240916_zfPNIVJ1DUm8" style="box-sizing: border-box;"><span style="box-sizing: border-box;"><ix:nonNumeric name="dei:PreCommencementTenderOffer" id="Fact_a1bbe08da32343d2bdac63ee574a8a47" contextRef="c20250708to20250708" format="ixt-sec:boolballotbox">&#9744;</ix:nonNumeric><br/>
+              </span></span></td>
+
+    <td style="box-sizing: border-box; border-color: inherit; border-style: solid; border-width: 0px; vertical-align: middle; text-align: left;"><span style="box-sizing: border-box; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">Pre-commencement
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</span></td>
+
+  </tr>
+
+
+</table>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: justify;">&#160;</p>
+    <table cellspacing="0" cellpadding="0" style="box-sizing: border-box; caption-side: bottom; border-collapse: collapse; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-align: start; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; margin-top: 0pt; margin-bottom: 0pt; width: 1127px; border-spacing: 0;">
+
+
+  <tr style="box-sizing: border-box; border-color: rgb(220, 220, 220); border-style: solid; border-width: 0px; vertical-align: top; text-align: justify;">
+
+    <td style="box-sizing: border-box; border-color: inherit; border-style: solid; border-width: 0px; vertical-align: middle; width: 0.25in; text-align: left;"><span id="xdx_909_edei--PreCommencementIssuerTenderOffer_c20240916__20240916_zL8mjMpxx7Gf" style="box-sizing: border-box;"><span style="box-sizing: border-box;"><ix:nonNumeric name="dei:PreCommencementIssuerTenderOffer" id="Fact_60b35d2eff63490b9095315e0e0a0211" contextRef="c20250708to20250708" format="ixt-sec:boolballotbox">&#9744;</ix:nonNumeric><br/>
+              </span></span></td>
+
+    <td style="box-sizing: border-box; border-color: inherit; border-style: solid; border-width: 0px; vertical-align: middle; text-align: left;"><span style="box-sizing: border-box; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">Pre-commencement
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</span></td>
+
+  </tr>
+
+
+</table>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: justify;">&#160;</p>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: justify;">Securities registered pursuant to Section 12(b) of the Act:</p>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: justify;">&#160;</p>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: justify;"> </p>
+    <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman', Times, serif; font-size: 10pt; color: #000000; width: 100%; border-spacing: 0;">
+
+
+  <tr>
+
+    <td style="width: 32%; text-align: center; vertical-align: bottom; border-bottom: 2px solid rgb(0, 0, 0);">
+            <div><span style="box-sizing: border-box; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">Title of each class</span></div>
+          </td>
+
+    <td style="width: 1%; text-align: center; vertical-align: bottom; padding-bottom: 2px;">
+            <div>&#160;</div>
+          </td>
+
+    <td style="width: 33%; text-align: center; vertical-align: bottom; border-bottom: 2px solid rgb(0, 0, 0);">
+            <div><span style="box-sizing: border-box; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">Trading Symbol(s)</span></div>
+          </td>
+
+    <td style="width: 1%; text-align: center; vertical-align: bottom; padding-bottom: 2px;">
+            <div>&#160;</div>
+          </td>
+
+    <td style="width: 32%; text-align: center; vertical-align: bottom; border-bottom: 2px solid rgb(0, 0, 0);">
+            <div><span style="box-sizing: border-box; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">Name of each exchange on which registered</span></div>
+          </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 32%; background-color: rgb(204, 238, 255);">
+            <div style="text-align: center;"><span style="font-weight: bold;"><ix:nonNumeric name="dei:Security12bTitle" id="Fact_bceec3f1bd314365955ba68dcfb5fa9b" contextRef="c20250708to20250708_StatementClassOfStockAxis_OrdinarySharesParValue00001PerShareMember">Ordinary Shares, par value $0.0009 per share</ix:nonNumeric></span><br/>
+            </div>
+          </td>
+
+    <td style="width: 1%; background-color: rgb(204, 238, 255);">
+            <div style="text-align: center;">&#160;</div>
+          </td>
+
+    <td style="width: 33%; background-color: rgb(204, 238, 255); text-align: center; font-weight: bold;"><ix:nonNumeric name="dei:TradingSymbol" id="Fact_f1d988fb52c843f9936fb1015c2a0000" contextRef="c20250708to20250708_StatementClassOfStockAxis_OrdinarySharesParValue00001PerShareMember">SLXN</ix:nonNumeric></td>
+
+    <td style="width: 1%; background-color: rgb(204, 238, 255);">
+            <div style="text-align: center;">&#160;</div>
+          </td>
+
+    <td style="width: 32%; background-color: rgb(204, 238, 255);">
+            <div style="text-align: center;"><span style="font-weight: bold;"><span style="-sec-ix-hidden:Fact_71dda04d7f9a4ed1b11bbd4f9ea5dbe3">The Nasdaq Stock Market LLC</span></span><br/>
+            </div>
+          </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 32%; text-align: center; vertical-align: top;">
+            <div><span style="font-weight: bold;"><ix:nonNumeric name="dei:Security12bTitle" id="Fact_81bdf768356c46238a83329b76ee179b" contextRef="c20250708to20250708_StatementClassOfStockAxis_WarrantsExercisableForOrdinarySharesAtAnExercisePriceOf1150PerShareMember">Warrants exercisable for Ordinary Shares at an exercise price of $103.50 per share</ix:nonNumeric></span><br/>
+            </div>
+          </td>
+
+    <td style="width: 1%; text-align: center; vertical-align: top;">
+            <div>&#160;</div>
+          </td>
+
+    <td style="width: 33%; text-align: center; vertical-align: top;">
+            <div><span style="box-sizing: border-box; font-family: 'Times New Roman',Times,serif; font-size: 10pt;"><b style="box-sizing: border-box; font-weight: bolder;"><span style="box-sizing: border-box;"><span style="box-sizing: border-box;"><ix:nonNumeric name="dei:TradingSymbol" id="Fact_395e8615d88148a79c5a2d7d5f401b03" contextRef="c20250708to20250708_StatementClassOfStockAxis_WarrantsExercisableForOrdinarySharesAtAnExercisePriceOf1150PerShareMember">SLXNW</ix:nonNumeric><br/>
+                    </span></span></b></span></div>
+          </td>
+
+    <td style="width: 1%; text-align: center; vertical-align: top;">
+            <div>&#160;</div>
+          </td>
+
+    <td style="width: 32%; text-align: center; vertical-align: top;">
+            <div><span style="font-weight: bold;"><span style="-sec-ix-hidden:Fact_a4febf17ac014512ba3e464923503dda">The Nasdaq Stock Market LLC</span></span><br/>
+            </div>
+          </td>
+
+  </tr>
+
+
+</table>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; text-align: justify;"> <br/>
+    </p>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">Indicate by check mark whether the registrant is an
+      emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter).</p>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">&#160;</p>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;"><span style="box-sizing: border-box; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">Emerging growth company <ix:nonNumeric name="dei:EntityEmergingGrowthCompany" id="Fact_911bc8b004b84a0c8644c6e60774b470" contextRef="c20250708to20250708" format="ixt-sec:boolballotbox">&#9746;</ix:nonNumeric></span></p>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">&#160;</p>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">If an emerging growth company, indicate by check mark if
+      the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. <ix:nonNumeric name="dei:EntityExTransitionPeriod" id="Fact_d3d95deeef5d49d88545d35b474ac341" contextRef="c20250708to20250708" format="ixt-sec:boolballotbox">&#9744;</ix:nonNumeric></p>
+    <p style="box-sizing: border-box; margin: 0pt 0px; color: rgb(33, 37, 41); font: 10pt 'Times New Roman', Times, serif; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;"><span id="xdx_900_edei--EntityExTransitionPeriod_c20240916__20240916_zYTJUGciT3Xb" style="box-sizing: border-box;"><span style="box-sizing: border-box;"> <br/>
+        </span></span></p>
+    <div class="BRPFPageBreakArea" style="clear: both; margin-top: 10pt; margin-bottom: 10pt;">
+      <div class="BRPFPageBreak" style="page-break-after: always;">
+        <hr style="border-width: 0px; clear: both; margin: 4px 0px; width: 100%; height: 2px; color: #000000; background-color: #000000;"/></div>
+
+    </div>
+
+    <div><br/></div>
+
+    <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', serif; font-size: 10pt; font-weight: bold;">Item 8.01 Other Events.</div>
+
+    <div style="line-height: 1.25;"><br/>
+    </div>
+
+    <div style="text-align: left; line-height: 1.25; color: #000000; font-family: 'Times New Roman', serif; font-size: 10pt; font-style: italic; font-weight: bold;">Outcome of Hearing Re: Nasdaq Delisting Notice; Continued Listing of Securities</div>
+
+    <div style="line-height: 1.25;"><br/>
+    </div>
+
+    <div style="text-align: left; text-indent: 36pt; line-height: 1.25; color: #000000; font-family: 'Times New Roman', serif; font-size: 10pt;">On July 7, 2025,&#160; Silexion Therapeutics Corp, a Cayman Islands exempted company (&#8220;<span style="font-family: 'Times New Roman', serif; font-size: 10pt; font-weight: bold;">Silexion</span>&#8221;, the &#8220;<span style="font-family: 'Times New Roman', serif; font-size: 10pt; font-weight: bold;">Company</span>&#8221;, &#8220;<span style="font-family: 'Times New Roman', serif; font-size: 10pt; font-weight: bold;">we</span>&#8221;, &#8220;<span style="font-family: 'Times New Roman', serif; font-size: 10pt; font-weight: bold;">us</span>&#8221; or &#8220;<span style="font-family: 'Times New Roman', serif; font-size: 10pt; font-weight: bold;">our</span>&#8221;)
+      received a favorable decision from a hearings panel of the Nasdaq Stock Market (&#8220;<span style="font-family: 'Times New Roman', serif; font-size: 10pt; font-weight: bold;">Nasdaq</span>&#8221;), granting the Company&#8217;s request to remain listed on Nasdaq,
+      subject to certain conditions.&#160; The Nasdaq panel&#8217;s decision follows upon a hearing held before the panel on June 26, 2025 at which the Company appealed a delisting notice that it had received from the Nasdaq Listing Qualifications Department on May
+      22, 2025 in respect of two listing deficiencies. As a result of the favorable outcome of the hearing, the listing of the Company&#8217;s ordinary shares and warrants is expected to be transferred from the Nasdaq Global Market to the Nasdaq Capital Market
+      on July 8, 2025, and trading will continue under the existing symbols &#8220;SLXN&#8221; and &#8220;SLXNW&#8221;, respectively.</div>
+
+    <div style="line-height: 1.25;"><br/>
+    </div>
+
+    <div style="text-align: left; text-indent: 36pt; line-height: 1.25; color: #000000; font-family: 'Times New Roman', serif; font-size: 10pt;">Under the terms of the decision reached by the hearings panel, the continued listing of Silexion&#8217;s securities
+      on the Nasdaq Capital Market will be conditioned on Silexion&#8217;s fulfillment of the terms of the compliance plan that it had presented to the panel in connection with the June 26, 2025 hearing. That plan was designed to enable the Company to achieve at
+      least $2.5 million of shareholders&#8217; equity (the &#8220;<span style="font-family: 'Times New Roman', serif; font-size: 10pt; font-weight: bold;">shareholders&#8217; equity requirement</span>&#8221;) and thereby comply with the Equity Standard for listing on the Nasdaq
+      Capital Market on a continued basis.&#160; The terms of the compliance plan consist, in primary part, of the following:</div>
+
+    <div style="line-height: 1.25;"><br/>
+    </div>
+
+    <div style="line-height: 1.25;">
+      <table cellspacing="0" cellpadding="0" class="DSPFListTable" style="font-family: 'Times New Roman', Times, serif; font-size: 10pt; width: 100%; text-align: left; color: #000000; border-spacing: 0;">
+
+
+  <tr>
+
+    <td style="width: 21pt;"><br/>
+            </td>
+
+    <td style="width: 18pt; vertical-align: top; color: #000000; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#8226;</td>
+
+    <td style="width: auto; vertical-align: top; text-align: left;">
+              <div style="color: #000000; font-family: 'Times New Roman', serif; font-size: 10pt;">on or before September 19, 2025, Silexion is required to demonstrate in a report filed under the Securities Exchange Act of 1934, as amended (the &#8220;<span style="font-family: 'Times New Roman', serif; font-size: 10pt; font-weight: bold;">Exchange Act</span>&#8221;), its restoration of compliance with, and its expected long-term compliance with, the shareholders&#8217; equity requirement, as to be
+                demonstrated in a balance sheet not older than 60 days to be included in such a filing; and</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="line-height: 1.25;"><br/>
+      </div>
+
+      <table cellspacing="0" cellpadding="0" class="DSPFListTable" style="font-family: 'Times New Roman', Times, serif; font-size: 10pt; width: 100%; text-align: left; color: #000000; border-spacing: 0;">
+
+
+  <tr>
+
+    <td style="width: 21pt;"><br/>
+            </td>
+
+    <td style="width: 18pt; vertical-align: top; color: #000000; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#8226;</td>
+
+    <td style="width: auto; vertical-align: top; text-align: left;">
+              <div style="color: #000000; font-family: 'Times New Roman', serif; font-size: 10pt;">if Silexion fails to maintain compliance with any Nasdaq listing rule on or before November 18, 2025, Silexion will be required to submit, and the Nasdaq
+                hearings panel will review (as part of its maintenance of jurisdiction over the Company&#8217;s listing status until November 18, 2025), a compliance plan for the subject deficiency to determine whether the panel is willing to grant an exception
+                to Silexion to cure that deficiency.</div>
+            </td>
+
+  </tr>
+
+
+</table>
+    </div>
+
+    <div><br/></div>
+
+    <div style="text-align: left; text-indent: 35.45pt; line-height: 1.25; color: #000000; font-family: 'Times New Roman', serif; font-size: 10pt;">As part of the hearing process, the Company disclosed to the Nasdaq hearings panel that the Company may soon
+      become deficient with Nasdaq Listing Rule 5550(a)(2), which may result from the bid price of the Company&#8217;s ordinary shares closing below $1.00 for 30 consecutive trading days. The Company expects that following the completion of its 2025 annual
+      general meeting, which, as disclosed in the Company&#8217;s supplementary proxy materials filed with the Securities and Exchange Commission on July 7, 2025, will be reconvened on July 14, 2025, the Company will effect a 1-for-15 reverse share split, which
+      will enable the Company to remedy that bid price deficiency on or about July 25, 2025. The completion of that reverse share split is subject to the Company&#8217;s shareholders&#8217; approval of that reverse share split pursuant to Proposal 3 at the reconvened
+      meeting.</div>
+
+    <div style="line-height: 1.25;"><br/>
+    </div>
+
+    <div style="text-align: left; text-indent: 35.45pt; line-height: 1.25; color: #000000; font-family: 'Times New Roman', serif; font-size: 10pt;">There can be no assurance that Silexion will successfully meet the terms of its compliance plan and/or
+      maintain compliance with the Equity Standard and/or all other standards for listing on the Nasdaq Capital Market even if it initially successfully restores compliance.</div>
+
+    <div style="line-height: 1.25;"><br/>
+    </div>
+
+    <div style="line-height: 1.25;">
+      <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', serif; font-size: 10pt; font-weight: bold;">Forward-Looking Statements</div>
+
+      <div style="line-height: 1.25;"><br/>
+      </div>
+
+    </div>
+
+    <div style="line-height: 1.25;">
+      <div style="text-align: left; text-indent: 35.45pt; line-height: 1.25; font-family: 'Times New Roman', serif; font-size: 10pt;">This Current Report on Form 8-K contains certain forward-looking statements within the meaning of the Private Securities
+        Litigation Reform Act of 1995. Some of the forward-looking statements can be identified by the use of forward-looking words. Statements that are not historical in nature, including the words &#8220;anticipate,&#8221; &#8220;expect,&#8221; &#8220;suggests,&#8221; &#8220;plan,&#8221; &#8220;believe,&#8221;
+        &#8220;intend,&#8221; &#8220;estimates,&#8221; &#8220;targets,&#8221; &#8220;projects,&#8221; &#8220;should,&#8221; &#8220;could,&#8221; &#8220;would,&#8221; &#8220;may,&#8221; &#8220;will,&#8221; &#8220;forecast&#8221; and other similar expressions are intended to identify forward-looking statements. Those statements include, without limitation, those related to:
+        the Company&#8217;s <span style="font-family: 'Times New Roman', serif; font-size: 10pt; color: #000000;">ability to achieve at least $2.5 million of shareholders&#8217; equity and meet the Equity Standard for continued listing on the Nasdaq Capital Market by
+          the September 19, 2025 deadline set under the Company&#8217;s compliance plan; the Company&#8217;s expected cure of its potential listing deficiency for not maintaining a minimum bid price of at least $1.00 for 30 consecutive trading days via a reverse share
+          split to be effected on or about July 25, 2025; the Company&#8217;s ability to comply, on an ongoing basis, with the Equity Standard and all other Nasdaq Listing Rules for maintenance of its listing on the Nasdaq Capital Market even after September 19,
+          2025; </span>and all other statements that are not historical facts. Forward-looking statements are predictions, projections and other statements about future events that are based on current expectations and assumptions and, as a result, are
+        subject to risks and uncertainties. Many factors could cause actual future events to differ materially from the forward-looking statements in this Current Report on Form 8-K, including, but not limited to, that: the Company may not be successful in
+        effecting transactions that raise the Company&#8217;s shareholders&#8217; equity to the minimum level of $2.5 million required <span style="font-family: 'Times New Roman', serif; font-size: 10pt; color: #000000;">to meet the Equity Standard of the Nasdaq
+          Capital Market by September 19, 2025</span>; the Company&#8217;s shareholders may not approve the proposed 1-for-15 reverse share split pursuant to Proposal 3 at the Company&#8217;s upcoming reconvened annual general meeting on July 14, 2025 to enable the
+        Company&#8217;s remediation of its potential minimum bid price listing deficiency; and the Company may encounter other difficulties in maintaining compliance with the $2.5 million minimum shareholders&#8217; equity level or other Nasdaq listing standards on an
+        ongoing basis. The foregoing list of factors is not exhaustive. You should carefully consider the foregoing factors and the other risks and uncertainties described in the &#8220;Risk Factors&#8221; section of the Company&#8217;s filings with the SEC, including the
+        Company&#8217;s Annual Report on Form 10-K for the year ended December 31, 2024, filed with the SEC on March 18, 2025. That filing identifies and addresses other important risks and uncertainties that could cause actual events and results to differ
+        materially from those contained in the forward-looking statements. Forward-looking statements speak only as of the date they are made. Readers are cautioned not to put undue reliance on forward-looking statements, and the Company assumes no
+        obligation and does not intend to update or revise those forward-looking statements, whether as a result of new information, future events, or otherwise. The Company does not give any assurance that it will achieve its expectations.</div>
+
+    </div>
+
+    <div style="line-height: 1.25;">
+      <div style="line-height: 1.25;"><br/>
+      </div>
+
+    </div>
+
+
+  </div>
+
+  <div class="BRPFPageBreakArea" style="clear: both; margin-top: 10pt; margin-bottom: 10pt;">
+    <div class="BRPFPageBreak" style="page-break-after: always;">
+      <hr style="border-width: 0px; clear: both; margin: 4px 0px; width: 100%; height: 2px; color: #000000; background-color: #000000;"/></div>
+
+  </div>
+
+  <div>
+    <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">
+      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt; font-weight: bold;"> <br/>
+      </div>
+
+      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">SIGNATURE</div>
+
+      <div style="text-align: left; text-indent: 35.45pt; line-height: 1.25; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: left; text-indent: 35.45pt; line-height: 1.25; font-family: 'Times New Roman'; font-size: 10pt;">Pursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on
+        its behalf by the undersigned hereunto duly authorized.</div>
+
+      <div style="text-align: left; text-indent: 35.45pt; line-height: 1.25; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+      <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000; border-spacing: 0;">
+
+
+  <tr>
+
+    <td style="width: 50%; vertical-align: top;">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+            </td>
+
+    <td style="vertical-align: top;" colspan="2">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">SILEXION THERAPEUTICS CORP</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 50%; vertical-align: top;">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+            </td>
+
+    <td style="vertical-align: top;" colspan="2">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 50%; vertical-align: top;">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman'; font-size: 10pt;">Date: July 8, 2025</div>
+            </td>
+
+    <td style="vertical-align: top; border-bottom: 2px solid rgb(0, 0, 0);" colspan="2">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman'; font-size: 10pt;">/s/ Ilan Hadar</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 50%; vertical-align: top;">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+            </td>
+
+    <td style="width: 5%; vertical-align: top;">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman'; font-size: 10pt;">Name:</div>
+            </td>
+
+    <td style="width: 45%; vertical-align: top;">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman'; font-size: 10pt;">Ilan Hadar</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 50%; vertical-align: top;">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+            </td>
+
+    <td style="width: 5%; vertical-align: top;">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman'; font-size: 10pt;">Title:</div>
+            </td>
+
+    <td style="width: 45%; vertical-align: top;">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman'; font-size: 10pt;">Chief Executive Officer</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman'; font-size: 10pt;">&#160; <br/>
+      </div>
+
+    </div>
+
+    <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">
+      <hr style="border: none; border-bottom: 4px solid black; border-top: 1px solid black; height: 10px; color: #ffffff; background-color: #ffffff; text-align: center; margin-left: auto; margin-right: auto;"/></div>
+
+  </div>
+
+</div>
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

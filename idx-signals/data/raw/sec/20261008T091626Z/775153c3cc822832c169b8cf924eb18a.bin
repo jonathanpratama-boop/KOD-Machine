@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:flgc="http://www.floragrowth.com/20250804" xmlns:us-gaap="http://fasb.org/us-gaap/2025" xmlns:currency="http://xbrl.sec.gov/currency/2025" xmlns:dei="http://xbrl.sec.gov/dei/2025" xmlns:country="http://xbrl.sec.gov/country/2025" xmlns:stpr="http://xbrl.sec.gov/stpr/2025" xmlns:exch="http://xbrl.sec.gov/exch/2025" xmlns:naics="http://xbrl.sec.gov/naics/2025" xmlns:sic="http://xbrl.sec.gov/sic/2025" xmlns:srt="http://fasb.org/srt/2025" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance">
+
+<head>
+    <title>Flora Growth Corp.: Form 8-K - Filed by newsfilecorp.com</title>
+</head>
+
+<body style="font-size:10pt;font-family:Times New Roman;">
+
+    <div style="font-family: Times New Roman; font-size: 10pt; line-height: initial;">
+        <hr style="width: 100%; color: #000000; height: 3px; background-color: black;"/><a id="page_1"></a>
+        <div style="display: none;">
+            <ix:header>
+                <ix:hidden>
+                    <ix:nonNumeric name="dei:AmendmentFlag" contextRef="CR20250804" id="ixv-148">false</ix:nonNumeric>
+                    <ix:nonNumeric name="dei:DocumentPeriodEndDate" contextRef="CR20250804" id="ixv-149">2025-08-04</ix:nonNumeric>
+                    <ix:nonNumeric name="dei:EntityCentralIndexKey" contextRef="CR20250804" id="ixv-150">0001790169</ix:nonNumeric>
+                    <ix:nonNumeric name="dei:CurrentFiscalYearEndDate" contextRef="CR20250804" id="ixv-151">--06-30</ix:nonNumeric>
+                    <ix:nonNumeric name="dei:EntityTaxIdentificationNumber" id="EntityTaxIdentificationNumber" contextRef="CR20250804">00-0000000</ix:nonNumeric>
+                    <ix:nonNumeric name="dei:EntityRegistrantName" id="EntityRegistrantName" contextRef="CR20250804">Flora Growth Corp.</ix:nonNumeric>
+                </ix:hidden>
+                <ix:references>
+                    <link:schemaRef xlink:href="flgc-20250804.xsd" xlink:type="simple"/>
+                </ix:references>
+                <ix:resources>
+                    <xbrli:context id="CR20250804">
+                        <xbrli:entity>
+                            <xbrli:identifier scheme="http://www.sec.gov/CIK">0001790169</xbrli:identifier>
+                        </xbrli:entity>
+                        <xbrli:period>
+                            <xbrli:startDate>2025-08-04</xbrli:startDate>
+                            <xbrli:endDate>2025-08-04</xbrli:endDate>
+                        </xbrli:period>
+                    </xbrli:context>
+                </ix:resources>
+            </ix:header>
+        </div>
+        <p style="text-align: center; margin-top: 10pt; margin-bottom: 10pt;"><b><span style="font-size: 25pt;">UNITED STATES</span></b><br/><b><span style="font-size: 25pt;">SECURITIES AND EXCHANGE COMMISSION</span></b><br/>Washington, D.C. 20549<br/><b>___________________________</b></p>
+        <p style="text-align: center; margin-top: 10pt; margin-bottom: 10pt;"><b><span style="font-size: 25pt;">FORM <ix:nonNumeric name="dei:DocumentType" contextRef="CR20250804" id="ixv-163">8-K</ix:nonNumeric></span></b></p>
+        <p style="text-align: center; margin-top: 10pt; margin-bottom: 10pt;"><b>CURRENT REPORT</b><br/><b>Pursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934</b></p>
+        <p style="text-align: center; margin-top: 10pt; margin-bottom: 10pt;">Date of Report (Date of earliest event reported): <span style="text-decoration: underline; font-weight: bold;">
+                <ix:nonNumeric name="dei:DocumentCreationDate" format="ixt:datemonthdayyearen" contextRef="CR20250804" id="ixv-164">August 4, 2025</ix:nonNumeric>
+            </span></p>
+        <p style="text-align: center; margin-top: 10pt; margin-bottom: 10pt;"><span style="text-decoration: underline; font-weight: bold; font-size: 25pt; -sec-ix-hidden: EntityRegistrantName;">FLORA GROWTH CORP.</span><br/>(Exact name of registrant as specified in its charter)</p>
+        <table style="border-color: black; font-size: 10pt; border-collapse: collapse; width: 100%;">
+            <tr style="vertical-align: top;">
+                <td style="text-align: center;"><span style="text-decoration: underline; font-weight: bold;">
+                        <ix:nonNumeric name="dei:EntityIncorporationStateCountryCode" format="ixt-sec:edgarprovcountryen" contextRef="CR20250804" id="ixv-165">Ontario</ix:nonNumeric>
+                    </span></td>
+                <td style="text-align: center; width: 33%;"><span style="text-decoration: underline; font-weight: bold;">
+                        <ix:nonNumeric name="dei:EntityFileNumber" contextRef="CR20250804" id="ixv-166">001-40397</ix:nonNumeric>
+                    </span></td>
+                <td style="text-align: center; width: 33%;"><span style="text-decoration: underline; font-weight: bold; -sec-ix-hidden: EntityTaxIdentificationNumber;">Not Applicable</span></td>
+            </tr>
+            <tr style="vertical-align: top;">
+                <td style="text-align: center;">(State or other jurisdiction</td>
+                <td style="text-align: center; width: 33%;">(Commission</td>
+                <td style="text-align: center; width: 33%;">(IRS Employer</td>
+            </tr>
+            <tr style="vertical-align: top;">
+                <td style="text-align: center;">of incorporation)</td>
+                <td style="text-align: center; width: 33%;">File Number)</td>
+                <td style="text-align: center; width: 33%;">Identification No.)</td>
+            </tr>
+        </table>
+        <p style="text-align: center; margin-top: 10pt; margin-bottom: 10pt;"><span style="font-weight: bold;">
+                <ix:nonNumeric name="dei:EntityAddressAddressLine1" contextRef="CR20250804" id="ixv-167">3230 W. Commercial Boulevard, Suite 180</ix:nonNumeric><br/>
+            </span> <span style="text-decoration: underline; font-weight: bold;">
+                <ix:nonNumeric name="dei:EntityAddressCityOrTown" contextRef="CR20250804" id="ixv-168">Fort Lauderdale</ix:nonNumeric>, <ix:nonNumeric name="dei:EntityAddressStateOrProvince" format="ixt-sec:stateprovnameen" contextRef="CR20250804" id="ixv-169">Florida</ix:nonNumeric>, <ix:nonNumeric name="dei:EntityAddressCountry" format="ixt-sec:countrynameen" contextRef="CR20250804" id="ixv-170">United States</ix:nonNumeric>
+                <ix:nonNumeric name="dei:EntityAddressPostalZipCode" contextRef="CR20250804" id="ixv-171">33309</ix:nonNumeric><br/>
+            </span> (Address of principal executive offices) (ZIP Code)</p>
+        <p style="text-align: center; margin-top: 10pt; margin-bottom: 10pt;">Registrant&#8217;s telephone number, including area code: <span style="text-decoration: underline; font-weight: bold;">(<ix:nonNumeric name="dei:CityAreaCode" contextRef="CR20250804" id="ixv-172">954</ix:nonNumeric>) <ix:nonNumeric name="dei:LocalPhoneNumber" contextRef="CR20250804" id="ixv-173">842-4989</ix:nonNumeric></span></p>
+        <p style="text-align: center; margin-top: 10pt; margin-bottom: 10pt;"><span style="font-weight: bold; text-decoration: underline;">Not Applicable</span> <br/>(Former name or former address, if changed since last report)</p>
+        <p style="text-align: justify; margin-top: 10pt; margin-bottom: 10pt;">Check the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</p>
+        <p style="text-align: justify; margin-top: 10pt; margin-bottom: 10pt;">
+            <ix:nonNumeric name="dei:WrittenCommunications" format="ixt-sec:boolballotbox" contextRef="CR20250804" id="ixv-174">&#9744;</ix:nonNumeric> Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)
+        </p>
+        <p style="text-align: justify; margin-top: 10pt; margin-bottom: 10pt;">
+            <ix:nonNumeric name="dei:SolicitingMaterial" format="ixt-sec:boolballotbox" contextRef="CR20250804" id="ixv-175">&#9744;</ix:nonNumeric> Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)
+        </p>
+        <p style="text-align: justify; margin-top: 10pt; margin-bottom: 10pt;">
+            <ix:nonNumeric name="dei:PreCommencementTenderOffer" format="ixt-sec:boolballotbox" contextRef="CR20250804" id="ixv-176">&#9744;</ix:nonNumeric> Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))
+        </p>
+        <p style="text-align: justify; margin-top: 10pt; margin-bottom: 10pt;">
+            <ix:nonNumeric name="dei:PreCommencementIssuerTenderOffer" format="ixt-sec:boolballotbox" contextRef="CR20250804" id="ixv-177">&#9744;</ix:nonNumeric> Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))
+        </p>
+        <p style="margin-top: 10pt; margin-bottom: 10pt;">Securities registered pursuant to Section 12(b) of the Act:</p>
+        <table style="border-color: black; font-size: 10pt; border-collapse: collapse; width: 100%;">
+            <tr style="vertical-align: top;">
+                <td style="text-align: center; border-bottom: 1px solid; white-space: nowrap;"><b>Title of each class</b></td>
+                <td style="width: 5%; white-space: nowrap;">&#160;</td>
+                <td style="text-align: center; width: 30%; border-bottom: 1px solid; white-space: nowrap;"><b>Trading Symbols</b></td>
+                <td style="width: 5%; white-space: nowrap;">&#160;</td>
+                <td style="text-align: center; width: 30%; border-bottom: 1px solid; white-space: nowrap;"><b>Name of each exchange on which registered</b></td>
+            </tr>
+            <tr style="vertical-align: top;">
+                <td style="text-align: center;">
+                    <ix:nonNumeric name="dei:Security12bTitle" contextRef="CR20250804" id="ixv-178">Common Shares, no par value</ix:nonNumeric>
+                </td>
+                <td style="width: 5%;">&#160;</td>
+                <td style="text-align: center; width: 30%;">
+                    <ix:nonNumeric name="dei:TradingSymbol" contextRef="CR20250804" id="ixv-179">FLGC</ix:nonNumeric>
+                </td>
+                <td style="width: 5%;">&#160;</td>
+                <td style="text-align: center; width: 30%;">
+                    <ix:nonNumeric name="dei:SecurityExchangeName" format="ixt-sec:exchnameen" contextRef="CR20250804" id="ixv-180">NASDAQ</ix:nonNumeric> Capital Market
+                </td>
+            </tr>
+        </table>
+        <p style="text-align: justify; margin-top: 10pt; margin-bottom: 10pt;">Indicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167; 230.405 of this chapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (&#167; 240.12b -2 of this chapter).</p>
+        <p style="text-align: justify; margin-top: 10pt; margin-bottom: 10pt;">Emerging growth company <ix:nonNumeric name="dei:EntityEmergingGrowthCompany" format="ixt-sec:boolballotbox" contextRef="CR20250804" id="ixv-181">&#9745;</ix:nonNumeric>
+        </p>
+        <p style="text-align: justify; margin-top: 10pt; margin-bottom: 10pt;">If an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. <ix:nonNumeric name="dei:EntityExTransitionPeriod" format="ixt-sec:boolballotbox" contextRef="CR20250804" id="ixv-182">&#9744;</ix:nonNumeric>
+        </p>
+        <hr style="page-break-after: always; width: 100%; color: #000000; height: 5px; background-color: black;"/><a id="page_2"></a>
+        <p style="text-align: justify; margin-top: 10pt; margin-bottom: 10pt;"><b>Item 3.03 Material Modification to Rights of Security Holders</b></p>
+        <p style="text-align: justify; margin-top: 10pt; margin-bottom: 10pt;">On August 4, 2025, Flora Growth Corp., a corporation organized under the laws of the Province of Ontario (the "<span style="text-decoration: underline;">Company</span>"), effected a 1-for-39 share consolidation (the "Share Consolidation") of the Company's issued and outstanding common shares, no par value (the "Common Shares") by the filing of Articles of Amendment to the Company's amended and restated Articles of Incorporation (the "Articles of Amendment") with the Ontario Ministry of Public and Business Service Delivery and Procurement. The Share Consolidation became effective at 5:00 p.m. Eastern Time on August 3, 2025. The Company anticipates that the Common Shares will begin to trade on a post-Share Consolidation basis as of the opening of the Nasdaq Capital Market on August 4, 2025.</p>
+        <p style="text-align: justify; margin-top: 10pt; margin-bottom: 10pt;">On June 30, 2025, the Company held its Annual and Special Meeting of Shareholders (the "Annual Meeting"). At the Annual Meeting, the Company's shareholders approved the Share Consolidation at a ratio ranging from 1-for-10 up to a ratio of 1-for-100, such ratio and the implementation and timing of such Share Consolidation to be determined by the Company's board of directors (the "Board") at its sole discretion, if at all, within one year of the date the proposal is approved by shareholders. On July 10, 2025, the Board approved the Share Consolidation at a ratio of 1-for-39 Common Shares.</p>
+        <p style="text-align: justify; margin-top: 10pt; margin-bottom: 10pt;">As a result of the Share Consolidation, every 39 Common Shares issued and outstanding were automatically reclassified into one new Common Share. The Share Consolidation did not modify any rights or preferences of the Common Shares. Proportionate adjustments will be made to the exercise or conversion prices and the number of Common Shares underlying the Company's outstanding equity awards, convertible securities and warrants, as well as to the number of Common Shares issued and issuable under the Company's equity incentive plans. The Common Shares issued pursuant to the Share Consolidation will remain fully paid and non-assessable.</p>
+        <p style="text-align: justify; margin-top: 10pt; margin-bottom: 10pt;">No fractional shares were issued in connection with the Share Consolidation. Any fractional shares resulting from the Share Consolidation were automatically rounded up to the nearest whole Common Share. Ownership percentages did not meaningfully change as a result of rounding down the fractional shares. Similarly, no fractional shares were issued on the exercise of outstanding stock options, awards or rights, except as otherwise expressly specified in the documents governing such stock options, awards or rights.</p>
+        <p style="text-align: justify; margin-top: 10pt; margin-bottom: 10pt;">The foregoing descriptions of the Articles of Amendment does not purport to be complete and is qualified in its entirety by reference to the complete text of the Articles of Amendment, which is filed herewith as Exhibit 3.1 and incorporated herein by reference.</p>
+        <p style="text-align: justify; margin-top: 10pt; margin-bottom: 10pt;"><b>Item 5.03 Amendments to Articles of Incorporation or Bylaws; Change in Fiscal Year.</b></p>
+        <p style="text-align: justify; margin-top: 10pt; margin-bottom: 10pt;">The information set forth in Item 3.03 of this Current Report on Form 8-K with respect to the Articles of Amendment is incorporated by reference into this Item 5.03.</p>
+        <p style="text-align: justify; margin-top: 10pt; margin-bottom: 10pt;"><b>Item 9.01 Financial Statements and Exhibits.</b></p>
+        <table style="width: 100%; border-collapse: collapse; font-size: 10pt;" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <td style="width: 8%; white-space: nowrap; padding-right: 15pt; vertical-align: top;"><b>Exhibit No.</b></td>
+                <td style="white-space: nowrap; vertical-align: top;"><b>Description</b></td>
+            </tr>
+            <tr>
+                <td style="width: 8%; vertical-align: top;">&#160;</td>
+                <td style="vertical-align: top;">&#160;</td>
+            </tr>
+            <tr>
+                <td style="width: 8%; vertical-align: top; background-color: #eeeeee;"><a href="exhibit3-1.htm">3.1</a></td>
+                <td style="vertical-align: top; background-color: #eeeeee;"><a href="exhibit3-1.htm">Articles of Amendment, filed August 3, 2025</a></td>
+            </tr>
+            <tr>
+                <td style="width: 8%; vertical-align: top;">&#160;</td>
+                <td style="vertical-align: top;">&#160;</td>
+            </tr>
+            <tr>
+                <td style="width: 8%; vertical-align: top; background-color: #eeeeee;">104</td>
+                <td style="vertical-align: top; background-color: #eeeeee;">Cover Page Interactive Data File (embedded within the Inline XBRL document)</td>
+            </tr>
+        </table>
+        <br/>
+        <hr style="break-after: page; text-align: center; height: 5px; color: #000000; background-color: #000000; width: 100%;"/><a id="page_3"></a>
+        <p style="text-align: center; margin-top: 10pt; margin-bottom: 10pt;"><b>SIGNATURES</b></p>
+        <p style="text-align: justify; margin-top: 10pt; margin-bottom: 10pt;">Pursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned thereunto duly authorized.</p>
+        <table style="width: 100%; font-size: 10pt;" cellspacing="0" cellpadding="0">
+            <tr>
+                <td style="vertical-align: middle; text-align: justify; width: 50%;">&#160;</td>
+                <td style="vertical-align: bottom; text-align: justify;" colspan="2"><b>FLORA GROWTH CORP.</b></td>
+            </tr>
+            <tr>
+                <td style="width: 50%; vertical-align: middle; text-align: justify;">&#160;</td>
+                <td style="width: 5%; vertical-align: middle; text-align: justify;">&#160;</td>
+                <td style="vertical-align: middle; text-align: justify;">&#160;</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: bottom; text-align: justify; width: 50%;">Date: August 4, 2025</td>
+                <td style="vertical-align: bottom; text-align: justify; width: 5%;">By:</td>
+                <td style="vertical-align: bottom; border-bottom: 0.75pt solid #000000; text-align: justify;"><i>/s/ Clifford Starke</i></td>
+            </tr>
+            <tr>
+                <td style="vertical-align: middle; text-align: justify; width: 50%;">&#160;</td>
+                <td style="vertical-align: bottom; text-align: justify; width: 5%;">Name:</td>
+                <td style="vertical-align: bottom; text-align: justify;">Clifford Starke</td>
+            </tr>
+            <tr>
+                <td style="margin-top: 0pt; margin-bottom: 0pt; width: 50%;">&#160;</td>
+                <td style="margin-top: 0pt; margin-bottom: 0pt; width: 5%;">Title:</td>
+                <td style="vertical-align: middle; text-align: justify;">Chief Executive Officer</td>
+            </tr>
+        </table>
+        <br/>
+        <hr style="height: 5px; color: #000000; background-color: #000000; width: 100%;"/>
+    </div>
+
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+
+</html>

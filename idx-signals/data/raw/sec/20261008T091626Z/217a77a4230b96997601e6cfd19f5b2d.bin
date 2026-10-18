@@ -1,0 +1,426 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dei="http://xbrl.sec.gov/dei/2026" xmlns:ffd="http://xbrl.sec.gov/ffd/2026">
+  <head>
+    <title>EX-FILING FEES</title>
+  </head>
+  <body>
+    <div style="display: none">
+      <ix:header>
+        <ix:hidden>
+          <ix:nonNumeric name="ffd:FormTp" contextRef="rc" id="ixv-168">S-8</ix:nonNumeric>
+          <ix:nonNumeric name="ffd:SubmissnTp" contextRef="rc" id="ixv-169">S-8</ix:nonNumeric>
+          <ix:nonNumeric name="ffd:FeeExhibitTp" contextRef="rc" id="ixv-170">EX-FILING FEES</ix:nonNumeric>
+          <ix:nonNumeric name="dei:EntityCentralIndexKey" contextRef="rc" id="ixv-171">0000945394</ix:nonNumeric>
+          <ix:nonNumeric name="dei:EntityRegistrantName" contextRef="rc" id="ixv-172">Service Properties Trust</ix:nonNumeric>
+          <ix:nonNumeric name="ffd:OfferingTableNa" contextRef="rc" id="hiddenrcOfferingTableNa" xsi:nil="true"></ix:nonNumeric>
+          <ix:nonNumeric name="ffd:OffsetTableNa" contextRef="rc" id="hiddenrcOffsetTableNa">N/A</ix:nonNumeric>
+          <ix:nonNumeric name="ffd:PrevslyPdFlg" contextRef="offrl_1" format="ixt:booleanfalse" id="ixv-175">Fees to be Paid</ix:nonNumeric>
+        </ix:hidden>
+        <ix:references>
+          <link:schemaRef xlink:href="https://xbrl.sec.gov/ffd/2026/ffd-2026.xsd" xlink:type="simple"/>
+        </ix:references>
+        <ix:resources>
+          <xbrli:context id="rc">
+            <xbrli:entity>
+              <xbrli:identifier scheme="http://www.sec.gov/CIK">0000945394</xbrli:identifier>
+            </xbrli:entity>
+            <xbrli:period>
+              <xbrli:startDate>2026-07-08</xbrli:startDate>
+              <xbrli:endDate>2026-07-08</xbrli:endDate>
+            </xbrli:period>
+          </xbrli:context>
+          <xbrli:context id="offrl_1">
+            <xbrli:entity>
+              <xbrli:identifier scheme="http://www.sec.gov/CIK">0000945394</xbrli:identifier>
+              <xbrli:segment>
+                <xbrldi:typedMember dimension="ffd:OfferingAxis">
+                  <dei:lineNo>1</dei:lineNo>
+                </xbrldi:typedMember>
+              </xbrli:segment>
+            </xbrli:entity>
+            <xbrli:period>
+              <xbrli:startDate>2026-07-08</xbrli:startDate>
+              <xbrli:endDate>2026-07-08</xbrli:endDate>
+            </xbrli:period>
+          </xbrli:context>
+          <xbrli:unit id="USD">
+            <xbrli:measure>iso4217:USD</xbrli:measure>
+          </xbrli:unit>
+          <xbrli:unit id="pure">
+            <xbrli:measure>xbrli:pure</xbrli:measure>
+          </xbrli:unit>
+          <xbrli:unit id="Shares">
+            <xbrli:measure>xbrli:shares</xbrli:measure>
+          </xbrli:unit>
+        </ix:resources>
+      </ix:header>
+    </div>
+    <div>
+      <table style="width: 99%; font-family: Arial, Helvetica, sans-serif; font-size: 20pt; text-align: center;">
+        <tr>
+          <td colspan="4" style="padding-bottom: .5em">
+            <p>
+              <b>Calculation of Filing Fee Tables</b>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-bottom: .25em">
+            <p>
+              <b>
+                <ix:nonNumeric name="ffd:FormTp" contextRef="rc" id="ixv-200">S-8</ix:nonNumeric>
+              </b>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-bottom: .25em">
+            <p>
+              <b>
+                <ix:nonNumeric name="dei:EntityRegistrantName" contextRef="rc" id="ixv-201">Service Properties Trust</ix:nonNumeric>
+              </b>
+            </p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div style="padding-bottom: 20px;">
+      <table style="float: center; width: 100%; text-align: left;  ">
+        <tr style="font-family: Arial, Helvetica, sans-serif; font-size: 16px">
+          <th style="vertical-align: bottom; text-align: center; width: 90%; word-wrap: break-word">
+            <p style="margin: 0pt; text-align: center;">
+              <b>Table 1: Newly Registered Securities</b>
+            </p>
+          </th>
+        </tr>
+      </table>
+      <table style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; float: center; width: 90%; text-align: center;  border: 1px solid black; margin-left: auto; margin-right: auto;">
+        <tr style="background-color:#9ADAF6">
+          <th style="width: 2%;">
+            <!-- BLANK -->
+          </th>
+          <th style="width: 10%;">
+            <p style="margin: 0pt; text-align: center;">
+              <b>Security Type</b>
+            </p>
+          </th>
+          <th style="width: 10%;">
+            <p style="margin: 0pt; text-align: center;">
+              <b>Security Class Title </b>
+            </p>
+          </th>
+          <th style="width: 10%;">
+            <p style="margin: 0pt; text-align: center;">
+              <b>Fee Calculation Rule</b>
+            </p>
+          </th>
+          <th style="width: 10%;">
+            <p style="margin: 0pt; text-align: center;">
+              <b>Amount Registered</b>
+            </p>
+          </th>
+          <th style="width: 15%;">
+            <p style="margin: 0pt; text-align: center;">
+              <b>Proposed Maximum Offering Price Per Unit</b>
+            </p>
+          </th>
+          <th style="width: 15%;">
+            <p style="margin: 0pt; text-align: center;">
+              <b>Maximum Aggregate Offering Price</b>
+            </p>
+          </th>
+          <th style="width: 3%;">
+            <p style="margin: 0pt; text-align: center;">
+              <b>Fee Rate</b>
+            </p>
+          </th>
+          <th style="width: 15%;">
+            <p style="margin: 0pt; text-align: center;">
+              <b>Amount of Registration Fee</b>
+            </p>
+          </th>
+        </tr>
+        <tr style="background-color:#E7E7E2">
+          <td style="text-align: center;">
+		1
+	</td>
+          <td style="text-align: left;">
+            <ix:nonNumeric name="ffd:OfferingSctyTp" contextRef="offrl_1" id="ixv-202">Equity</ix:nonNumeric>
+          </td>
+          <td style="text-align: left;">
+            <ix:nonNumeric name="ffd:OfferingSctyTitl" contextRef="offrl_1" id="ixv-203">Common shares of beneficial interest, par value $.01 per share</ix:nonNumeric>
+          </td>
+          <td style="text-align: center;">
+            <ix:nonNumeric name="ffd:Rule457aFlg" contextRef="offrl_1" format="ixt:booleantrue" id="ixv-204">457(a)</ix:nonNumeric>
+          </td>
+          <td style="text-align: right;">
+            <ix:nonFraction name="ffd:AmtSctiesRegd" unitRef="Shares" decimals="0" format="ixt:numdotdecimal" contextRef="offrl_1" id="ixv-205">800,000</ix:nonFraction>
+          </td>
+          <td style="text-align: right;">
+            <span>$</span>
+            <ix:nonFraction name="ffd:MaxOfferingPricPerScty" unitRef="USD" decimals="3" format="ixt:numdotdecimal" contextRef="offrl_1" id="ixv-206">8.645</ix:nonFraction>
+          </td>
+          <td style="text-align: right;">
+            <span>$</span>
+            <ix:nonFraction name="ffd:MaxAggtOfferingPric" unitRef="USD" decimals="2" format="ixt:numdotdecimal" contextRef="offrl_1" id="ixv-207">6,916,000.00</ix:nonFraction>
+          </td>
+          <td style="text-align: right;">
+            <ix:nonFraction name="ffd:FeeRate" unitRef="pure" decimals="7" format="ixt:numdotdecimal" contextRef="offrl_1" id="ixv-208">0.0001381</ix:nonFraction>
+          </td>
+          <td style="text-align: right;">
+            <span>$</span>
+            <ix:nonFraction name="ffd:FeeAmt" unitRef="USD" decimals="2" format="ixt:numdotdecimal" contextRef="offrl_1" id="ixv-209">955.10</ix:nonFraction>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5" style="vertical-align: top">
+            <p style="margin: 0pt; text-align: right">Total Offering Amounts:</p>
+          </td>
+          <td>
+            <!-- BLANK -->
+          </td>
+          <td style="vertical-align: top; width: 16%;">
+            <p id="MaxAggtOfferingPrice" style="margin: 0pt; text-align: right">
+              <span>$</span>
+              <ix:nonFraction name="ffd:TtlOfferingAmt" contextRef="rc" decimals="2" format="ixt:numdotdecimal" unitRef="USD" id="ixv-210">6,916,000.00</ix:nonFraction>
+            </p>
+          </td>
+          <td>
+            <!-- BLANK -->
+          </td>
+          <td style="vertical-align: top; border-bottom: 1px black; width: 16%;">
+            <p id="TotalFeeAmt" style="margin: 0pt; text-align: right">
+              <span>$</span>
+              <ix:nonFraction name="ffd:TtlFeeAmt" contextRef="rc" decimals="2" format="ixt:numdotdecimal" unitRef="USD" id="ixv-211">955.10</ix:nonFraction>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5" style="vertical-align: top">
+            <p style="margin: 0pt; text-align: right">
+					Total Fee Offsets:
+				</p>
+          </td>
+          <td>
+            <!-- BLANK -->
+          </td>
+          <td>
+            <!-- BLANK -->
+          </td>
+          <td>
+            <!-- BLANK -->
+          </td>
+          <td style="vertical-align: top">
+            <p id="TotalOffsetAmt" style="margin: 0pt; text-align: right">
+              <span>$</span>
+              <ix:nonFraction name="ffd:TtlOffsetAmt" contextRef="rc" decimals="2" format="ixt:numdotdecimal" unitRef="USD" id="ixv-212">0.00</ix:nonFraction>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5" style="vertical-align: top">
+            <p style="margin: 0pt; text-align: right">
+					Net Fee Due:
+				</p>
+          </td>
+          <td>
+            <!-- BLANK -->
+          </td>
+          <td>
+            <!-- BLANK -->
+          </td>
+          <td>
+            <!-- BLANK -->
+          </td>
+          <td style="vertical-align: top">
+            <p id="NetFeeAmt" style="margin: 0pt; text-align: right">
+              <span>$</span>
+              <ix:nonFraction name="ffd:NetFeeAmt" contextRef="rc" decimals="2" format="ixt:numdotdecimal" unitRef="USD" id="ixv-213">955.10</ix:nonFraction>
+            </p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <table style="width: 90%; margin-left:auto; margin-right:auto; text-indent: 0px;">
+        <tbody>
+          <tr style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; vertical-align: top;">
+            <td>
+              <p style="margin:0pt;text-align:left; margin-bottom: 5px;">
+                <b>Offering Note</b>
+              </p>
+            </td>
+            <td/>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="padding-bottom: 20px;">
+      <table style="width: 90%; margin-left:auto; margin-right:auto; text-indent: 0px;">
+        <tr style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; vertical-align: top;">
+          <td style="width:10pt;">
+            <p style="margin:0pt;text-align:left;">
+              <sup style="vertical-align:top;line-height:120%;font-size:10px">1</sup>
+            </p>
+          </td>
+          <td colspan="7" style="white-space: pre-line;">
+            <ix:nonNumeric name="ffd:OfferingNote" escape="1" contextRef="offrl_1" id="ixv-214">(a)	Pursuant to Rule 416 under the Securities Act of 1933, as amended, or the Securities Act, this registration statement on Form S-8 also covers an indeterminate number of additional common shares of beneficial interest of Service Properties Trust, or the Registrant, that may become issuable under the Service Properties Trust Third Amended and Restated 2012 Equity Compensation Plan, or the Plan, by any reason of any stock dividend, stock split, recapitalization or other similar transaction. The share amount gives effect to the 1-for-5 reverse share split effected by the Registrant on July 6, 2026.
+
+(b)	Represents an additional 800,000 common shares of beneficial interest of the Registrant issuable under the Plan. The Registrant previously filed registration statements on Form S-8 (No. 333-191096 and No. 333-288038) with respect to common shares of beneficial interest issuable under the Plan.
+
+(c)	Estimated solely for the purpose of calculating the registration fee pursuant to Rules 457(c) and (h) under the Securities Act on the basis of the average of the high and low prices per share of the common shares of beneficial interest as reported on The Nasdaq Stock Market LLC on July 8, 2026.
+
+</ix:nonNumeric>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="7">
+            <hr style="width:100%;text-align:left;margin-left:0"/>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div style="padding-bottom: 20px;">
+      <table style="float: center; width: 100%; text-align: left;  ">
+        <tr style="font-family: Arial, Helvetica, sans-serif; font-size: 16px">
+          <th style="vertical-align: bottom; text-align: left; word-wrap: break-word">
+            <b>Table 2: Fee Offset Claims and Sources</b>
+          </th>
+          <th style="vertical-align: bottom; word-wrap: break-word; text-align: right;">
+            <span style="-sec-ix-hidden: hiddenrcOffsetTableNa">&#9745;Not Applicable</span>
+          </th>
+        </tr>
+      </table>
+      <table style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; float: center; width: 100%; text-align: center;  border: 1px solid black;">
+        <tr style="background-color:#9ADAF6">
+          <th style="width: 10%; text-align: left;">
+            <!-- BLANK -->
+          </th>
+          <th style="width: 8%; text-align: left;">
+            <!-- BLANK -->
+          </th>
+          <th style="width: 16%;">
+				Registrant or Filer Name
+			</th>
+          <th style="width: 6%;">
+				Form or Filing Type
+			</th>
+          <th style="width: 7%;">
+				File Number
+			</th>
+          <th style="width: 6%;">
+				Initial Filing Date
+			</th>
+          <th style="width: 6%;">
+				Filing Date
+			</th>
+          <th style="width: 6%;">
+				Fee Offset Claimed
+			</th>
+          <th style="width: 6%;">
+				Security Type Associated with Fee Offset Claimed
+			</th>
+          <th style="width: 8%;">
+				Security Title Associated with Fee Offset Claimed
+			</th>
+          <th style="width: 6%;">
+				Unsold Securities Associated with Fee Offset Claimed
+			</th>
+          <th style="width: 9%;">
+				Unsold Aggregate Offering Amount Associated with Fee Offset Claimed
+			</th>
+          <th style="width: 6%;">
+				Fee Paid with Fee Offset Source
+			</th>
+        </tr>
+        <tr>
+          <td colspan="14" style="text-align: center">
+            <b>Rule 457(p)</b>
+          </td>
+        </tr>
+        <tr style="background-color:#E7E7E2">
+          <td style="text-align: left;">
+		Fee Offset Claims
+	</td>
+          <td>
+
+	</td>
+          <td style="text-align: left;">
+
+	</td>
+          <td>
+
+	</td>
+          <td>
+
+	</td>
+          <td>
+
+	</td>
+          <td>
+
+	</td>
+          <td style="text-align: right;">
+
+	</td>
+          <td style="text-align: left;">
+
+	</td>
+          <td style="text-align: left;">
+
+	</td>
+          <td style="text-align: right;">
+
+	</td>
+          <td style="text-align: right;">
+
+	</td>
+          <td style="text-align: right;">
+
+	</td>
+        </tr>
+        <tr style="background-color:#E7E7E2">
+          <td style="text-align: left;">
+		Fee Offset Sources
+	</td>
+          <td>
+
+	</td>
+          <td style="text-align: left;">
+
+	</td>
+          <td>
+
+	</td>
+          <td>
+
+	</td>
+          <td>
+
+	</td>
+          <td>
+
+	</td>
+          <td style="text-align: right;">
+
+	</td>
+          <td style="text-align: left;">
+
+	</td>
+          <td style="text-align: left;">
+
+	</td>
+          <td style="text-align: right;">
+
+	</td>
+          <td style="text-align: right;">
+
+	</td>
+          <td style="text-align: right;">
+
+	</td>
+        </tr>
+      </table>
+    </div>
+  <script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

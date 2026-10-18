@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><edgarSubmission xmlns="http://www.sec.gov/edgar/schedule13D" xmlns:com="http://www.sec.gov/edgar/common">
+  <headerData>
+    <submissionType>SCHEDULE 13D/A</submissionType>
+    <filerInfo>
+      <filer>
+        <filerCredentials>
+          <!-- Field: Pseudo-Tag; ID: Name; Data: Golden Stream Ltd. -->
+          <cik>0001954495</cik>
+          <ccc>XXXXXXXX</ccc>
+        </filerCredentials>
+      </filer>
+      <liveTestFlag>LIVE</liveTestFlag>
+
+
+    </filerInfo>
+  </headerData>
+  <formData>
+    <coverPageHeader>
+      <amendmentNo>2</amendmentNo>
+      <securitiesClassTitle>Class A ordinary shares, par value $0.0000001 per share</securitiesClassTitle>
+      <dateOfEvent>05/09/2025</dateOfEvent>
+      <previouslyFiledFlag>false</previouslyFiledFlag>
+      <issuerInfo>
+        <issuerCIK>0001769256</issuerCIK>
+        <issuerCUSIP>G7308L100</issuerCUSIP>
+        <issuerName>XChange TEC.INC</issuerName>
+        <address>
+          <com:street1>No.801, Building 1</com:street1>
+          <com:street2>1136 Xinzha Road JingAn District</com:street2>
+          <com:city>Shanghai</com:city>
+          <com:stateOrCountry>F4</com:stateOrCountry>
+          <com:zipCode>200041</com:zipCode>
+        </address>
+      </issuerInfo>
+      <authorizedPersons>
+        <notificationInfo>
+          <personName>Yong Zhang</personName>
+          <personPhoneNum>8602133834262</personPhoneNum>
+          <personAddress>
+            <com:street1>c/o Start Chambers, Wickham's Cay II,</com:street1>
+            <com:street2>P. O. Box 2221 Road Town,</com:street2>
+            <com:city>Tortola</com:city>
+            <com:stateOrCountry>D8</com:stateOrCountry>
+            <com:zipCode>00000</com:zipCode>
+          </personAddress>
+        </notificationInfo>
+      </authorizedPersons>
+    </coverPageHeader>
+    <reportingPersons>
+      <reportingPersonInfo>
+        <reportingPersonCIK>0001954495</reportingPersonCIK>
+        <reportingPersonNoCIK>N</reportingPersonNoCIK>
+        <reportingPersonName>Golden Stream Ltd.</reportingPersonName>
+        <fundType>OO</fundType>
+        <legalProceedings>N</legalProceedings>
+        <citizenshipOrOrganization>D8</citizenshipOrOrganization>
+        <soleVotingPower>11863927890.00</soleVotingPower>
+        <sharedVotingPower>0.00</sharedVotingPower>
+        <soleDispositivePower>11863927890.00</soleDispositivePower>
+        <sharedDispositivePower>0.00</sharedDispositivePower>
+        <aggregateAmountOwned>11863927890.00</aggregateAmountOwned>
+        <isAggregateExcludeShares>N</isAggregateExcludeShares>
+        <percentOfClass>9.59</percentOfClass>
+        <typeOfReportingPerson>CO</typeOfReportingPerson>
+        <commentContent>1. Represents 11,863,927,890 Class B ordinary shares, par value $0.0000001 per share ("Class B Ordinary Shares") (the "Shares") directly held by Golden Stream Ltd. ("Golden Stream"). Mr. Yong Zhang is the current sole shareholder and sole director of Golden Stream. As disclosed in the Schedule 13D amendment filed by Golden Stream on October 29, 2024, on June 6, 2024, the Issuer adopted an equity incentive plan (the "2024 Plan") and issued thereunder 6,142,789,000,000 Class B Ordinary Shares to Golden Stream, pursuant to which Golden Stream owned a total of 6,392,789,000,000 Class B Ordinary Shares, par value $0.0000001 per share, which became 63,927,890 Class B Ordinary Shares, par value $0.0000001 per share, effective May 9, 2025 as a result of the proposed share consolidation, capital reduction, and share subdivision as disclosed in the report on Form 6-K filed by the Issuer on February 5, 2025. On May 9, 2025, the Issuer adopted an equity incentive plan (the "2025 Plan") and issued thereunder 11,800,000,000 Class B Ordinary Shares to Golden Stream, pursuant to which Golden Stream owns a total of 11,863,927,890 Class B Ordinary Shares, par value $0.0000001. Golden Stream holds the Shares underlying the share-based awards pursuant to the 2024 Plan and the 2025 Plan and will act upon the instructions of a senior management committee of the Issuer consisting of Yong Zhang and Jiaxing Chang determined on a unanimous basis in relation to the voting and, prior to the vesting of the Shares to the relevant grantee of the share-based awards the Company may grant under the 2024 and/or the 2025 Plan, the disposition of the Shares. According to the Sixth Amended and Restated Articles of the Issuer, each Class B ordinary share is convertible into one (1) Class A ordinary share (the Class A ordinary shares and Class B Ordinary Shares, together as the "Ordinary Shares") at any time by the holder thereof.
+
+2. This percentage is calculated using 123,715,022,675 Ordinary Shares as the denominator, which is the sum of total 111,851,094,785 Class A Ordinary Shares and 11,863,927,890 Class B ordinary shares outstanding as of May 9, 2025, as derived from the Issuer's corporate records. Each of the Issuer's Class B Ordinary Shares has 10 votes per share, and each of the Issuer's Class A Ordinary Shares has 1 vote per share. As such, Golden Stream Ltd. has 51.47% of the Issuer's total voting power.</commentContent>
+      </reportingPersonInfo>
+      <reportingPersonInfo>
+        <reportingPersonCIK>0001390289</reportingPersonCIK>
+        <reportingPersonNoCIK>N</reportingPersonNoCIK>
+        <reportingPersonName>Yong Zhang</reportingPersonName>
+        <fundType>OO</fundType>
+        <legalProceedings>N</legalProceedings>
+        <citizenshipOrOrganization>F4</citizenshipOrOrganization>
+        <soleVotingPower>11863927890.00</soleVotingPower>
+        <sharedVotingPower>0.00</sharedVotingPower>
+        <soleDispositivePower>11863927890.00</soleDispositivePower>
+        <sharedDispositivePower>0.00</sharedDispositivePower>
+        <aggregateAmountOwned>11863927890.00</aggregateAmountOwned>
+        <isAggregateExcludeShares>N</isAggregateExcludeShares>
+        <percentOfClass>9.59</percentOfClass>
+        <typeOfReportingPerson>IN</typeOfReportingPerson>
+        <commentContent>1. Represents 11,863,927,890 Class B Ordinary Shares directly held by Golden Stream. Mr. Yong Zhang is the current sole shareholder and sole director of Golden Stream. Refer to footnote 1 at page 2 above for more information.
+
+2. This percentage is calculated using 123,715,022,675 Ordinary Shares as the denominator, which is the sum of total 111,851,094,785 Class A Ordinary Shares and 11,863,927,890 Class B Ordinary Shares outstanding as of May 9, 2025, as derived from the Issuer's corporate records. Each of the Issuer's Class B Ordinary Shares has 10 votes per share, and each of the Issuer's Class A Ordinary Shares has 1 vote per share. As such, Golden Stream Ltd. has 51.47% of the Issuer's total voting power.</commentContent>
+      </reportingPersonInfo>
+    </reportingPersons>
+    <items1To7>
+      <item1>
+        <securityTitle>Class A ordinary shares, par value $0.0000001 per share</securityTitle>
+        <issuerName>XChange TEC.INC</issuerName>
+        <issuerPrincipalAddress>
+          <com:street1>No.801, Building 1</com:street1>
+          <com:street2>1136 Xinzha Road JingAn District</com:street2>
+          <com:city>Shanghai</com:city>
+          <com:stateOrCountry>F4</com:stateOrCountry>
+          <com:zipCode>200041</com:zipCode>
+        </issuerPrincipalAddress>
+        <commentText>This Statement on Schedule 13D relates to the Class A Ordinary Shares, par value US$0.0000001 per share of XChange TEC.INC (the "Issuer"). The principal executive office of the Issuer is located at No.801, Building 1, 1136 Xinzha Road, JingAn District, Shanghai, 200041, People's Republic of China.</commentText>
+      </item1>
+      <item2>
+        <filingPersonName>This Statement on Schedule 13D is jointly filed by the following persons (the "Reporting Persons"): Golden Stream Ltd., a company limited by shares incorporated in the British Virgin Islands, and Mr. Yong Zhang, a citizen of the People's Republic of China.</filingPersonName>
+        <principalBusinessAddress>Business address and address of principal office of the Reporting Persons:
+
+For both Golden Stream Ltd. and Yong Zhang:
+
+Start Chambers, Wickham's Cay II, P. O. Box 2221, Road Town, Tortola, British Virgin Islands.</principalBusinessAddress>
+        <principalJob>Golden Stream Ltd. is an investment holding company, and Mr. Yong Zhang is its sole shareholder and sole director.</principalJob>
+        <hasBeenConvicted>Neither of the Reporting Persons, during the last five years, has been convicted in a criminal proceeding (excluding traffic violations or similar misdemeanors).</hasBeenConvicted>
+        <convictionDescription>Neither of the Reporting Persons, during the last five years, has been a party to a civil proceeding of a judicial or administrative body of competent jurisdiction and as a result of such proceeding was or is subject to a judgment, decree or final order enjoining future violations of, or prohibiting or mandating activities subject to, federal or state securities laws or finding any violation with respect to such laws.</convictionDescription>
+      </item2>
+      <item3>
+        <fundsSource>In November 2022, Golden Stream paid US$25,000 from its shareholder contribution to purchase the 2,500,000,000 Class B Ordinary Shares of the Issuer (which became 250,000,000,000 Class B Ordinary Shares effective September 18, 2023, par value $0.0000001 per share, as a result of the share subdivision) at a par value of US$0.00001 each.
+
+In June 2024, Golden Stream paid US$614,278.90 to purchase 6,142,789,000,000 Class B Ordinary Shares of the Issuer (which became  63,927,890 Class B Ordinary Shares, par value $0.0000001 per share, effective May 9, 2025 as a result of the share consolidation, capital reduction, and share subdivision) at a par value of US$0.0000001 each.
+
+In May 2025, Golden Stream paid US$1,180 to purchase 11,800,000,000 Class B Ordinary Shares of the Issuer at a par value of US$0.0000001 each.</fundsSource>
+      </item3>
+      <item4>
+        <transactionPurpose>The information set forth in Items 3 and 6 is hereby incorporated by reference in this Item 4.
+
+On May 9, 2025, the Issuer adopted the 2025 Plan and issued thereunder 11,800,000,000 Class B Ordinary Shares to Golden Stream, pursuant to which Golden Stream owns a total of 11,863,927,890 Class B Ordinary Shares. Golden Stream holds the Shares underlying the share-based awards pursuant to the 2024 Plan and the 2025 Plan and will act upon the instructions of a senior management committee of the Issuer consisting of Yong Zhang and Jiaxing Chang determined on a unanimous basis in relation to the voting and, prior to the vesting of the Shares to the relevant grantee of the share-based awards the Company may grant under the 2024 Plan and/or the 2025 Plan, the disposition of the Shares. According to the Fifth Amended and Restated Articles of the Issuer, each Class B ordinary share is convertible into one (1) Class A ordinary share at any time by the holder thereof.
+
+Although the Reporting Persons have no present intention to acquire additional securities of the Issuer, they intend to review their investment on a regular basis and, as a result thereof, may at any time or from time to time determine, either alone or as part of a group, (i) to acquire additional securities of the Issuer, through open market purchases, privately negotiated transactions or otherwise, (ii) to dispose of all or a portion of the securities of the Issuer owned by them in the open market, in privately negotiated transactions or otherwise or (iii) to take any other available course of action, which could involve one or more of the types of transactions or have one or more of the results specified in clauses (a) through (j) of Item 4 of Schedule 13D under the Securities Exchange Act of 1934, as amended (the "Exchange Act"). Any such acquisition or disposition or other transaction would be made in compliance with all applicable laws and regulations. Notwithstanding anything contained herein, the Reporting Persons specifically reserve the right to change their intention with respect to any or all of such matters. In reaching any decision as to its course of action (as well as to the specific elements thereof), the Reporting Persons currently expect that they would take into consideration a variety of factors, including, but not limited to, the following: the Issuer's business and prospects; other developments concerning the Issuer and its businesses generally; other business opportunities available to such Reporting Persons; changes in law and government regulations; general economic conditions; and liquidity and stock market conditions, including the market price of the securities of the Issuer.
+
+Except as set forth in this Item 4, the Reporting Persons have no present plans or proposals that relate to, or that would result in, any of the actions specified in clauses (a) through (j) of Item 4 of Schedule 13D under the Exchange Act.</transactionPurpose>
+      </item4>
+      <item5>
+        <percentageOfClassSecurities>The responses of each Reporting Person to Rows (7) through (13) of the cover pages of this Schedule 13D are hereby incorporated by reference in this Item 5. The Reporting Persons disclaim membership in any "group" (within the meaning of Section 13(d)(3) of the Exchange Act) with any person other than the Reporting Persons.</percentageOfClassSecurities>
+        <numberOfShares>The percentage is calculated using 123,715,022,675 Ordinary Shares as the denominator, which is the sum of total 111,851,094,785 Class A Ordinary Shares and 11,863,927,890 Class B ordinary shares outstanding as of May 9, 2025, as derived from the Issuer's corporate records. Each of the Issuer's Class B Ordinary Shares has 10 votes per share, and each of the Issuer's Class A Ordinary Shares has 1 vote per share. As such, Golden Stream Ltd. has 51.47% of the Issuer's total voting power.</numberOfShares>
+        <transactionDesc>Other than as described in Items 3 and 4 above, there have been no transactions in the class of securities reported on that were effected during the past sixty days by the Reporting Persons.</transactionDesc>
+        <listOfShareholders>Golden Stream holds the Class B Ordinary Shares underlying the share-based awards pursuant to the 2024 Plan and the 2025 Plan and will act upon the instructions of a senior management committee of the Issuer consisting of Yong Zhang and Jiaxing Chang determined on a unanimous basis in relation to the voting and, prior to the vesting of the Shares to the relevant grantee of the share-based awards the Company may grant under 2024 Plan and/or the 2025 Plan, the disposition of the Shares.
+
+Upon vesting of the Shares, subject to any applicable provisions in the relevant award agreement, the grantee of the share-based awards will have the right to instruct Golden Stream on the disposition of the Shares, and to receive dividends, distributions, and the net proceeds from the disposition of the Shares, after deduction of the applicable withholding and other taxes.</listOfShareholders>
+      </item5>
+      <item6>
+        <contractDescription>Except as described in Items 1 through 7 of this Schedule 13D, there are no contracts, arrangements, understandings or relationships (legal or otherwise) between the Reporting Persons and any other person, including but not limited to transfer or voting of any of the securities, finder's fees, joint ventures, loan or option arrangements, puts or calls, guarantees of profits, division of profits or loss, or the giving or withholding of proxies, with respect to any securities of the Issuer, including any securities pledged or otherwise subject to a contingency the occurrence of which would give another person voting power or investment power over such securities except for standard default and similar provisions contained in loan agreements.</contractDescription>
+      </item6>
+      <item7>
+        <filedExhibits>Exhibit Number   Title
+
+99.1      Agreement in relation to the ESOP Shares, dated May 13, 2025, among Golden Stream Ltd., Yong Zhang (as the sole shareholder of Golden Stream Ltd.), and Yong Zhang and Jiaxing Chang.
+
+99.2  Joint Filling Agreement, dated October 28, 2024.</filedExhibits>
+      </item7>
+    </items1To7>
+    <signatureInfo>
+      <signaturePerson>
+        <signatureReportingPerson>Golden Stream Ltd.</signatureReportingPerson>
+        <signatureDetails>
+          <signature>/s/ Yong Zhang</signature>
+          <title>Yong Zhang/Director</title>
+          <date>05/13/2025</date>
+        </signatureDetails>
+      </signaturePerson>
+      <signaturePerson>
+        <signatureReportingPerson>Yong Zhang</signatureReportingPerson>
+        <signatureDetails>
+          <signature>/s/ Yong Zhang</signature>
+          <title>Yong Zhang</title>
+          <date>05/13/2025</date>
+        </signatureDetails>
+      </signaturePerson>
+    </signatureInfo>
+  </formData>
+
+</edgarSubmission>
