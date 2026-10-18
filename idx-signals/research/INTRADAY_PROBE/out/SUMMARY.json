@@ -1,0 +1,34 @@
+{
+ "halts": {
+  "dates_with_records": 11,
+  "dates": 12,
+  "halts": 361,
+  "sampled_names_halted": [
+   {
+    "date": "2020-07-29",
+    "symbol": "AGYS",
+    "reason": "LUDP"
+   },
+   {
+    "date": "2021-12-08",
+    "symbol": "PPSI",
+    "reason": "LUDP"
+   },
+   {
+    "date": "2022-03-16",
+    "symbol": "WAFU",
+    "reason": "LUDP"
+   },
+   {
+    "date": "2022-03-29",
+    "symbol": "GME",
+    "reason": "M"
+   },
+   {
+    "date": "2022-04-28",
+    "symbol": "TKC",
+    "reason": "T3"
+   }
+  ]
+ }
+}
