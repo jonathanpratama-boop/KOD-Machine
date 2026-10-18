@@ -1,0 +1,692 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2023" xmlns:ref="http://www.xbrl.org/2006/ref" xmlns:us-gaap="http://fasb.org/us-gaap/2023" xmlns:us-roles="http://fasb.org/us-roles/2023" xmlns:country="http://xbrl.sec.gov/country/2023" xmlns:srt="http://fasb.org/srt/2023" xmlns:WKHS="http://workhorsegroupinc.com/20240510">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02C_US%2DGAAP%2D2023 -->
+<!-- Field: Set; Name: xdx; ID: xdx_038_WKHS_workhorsegroupinc.com_20240510 -->
+<!-- Field: Set; Name: xdx; ID: xdx_04F_20240510_20240510 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_05C_edei%2D%2DEntityCentralIndexKey_0001425287 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2024-05-10" id="Fact000003" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-05-10" id="Fact000004" name="dei:EntityCentralIndexKey">0001425287</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="wkhs-20240510.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2024-05-10">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001425287</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2024-05-10</xbrli:startDate>
+        <xbrli:endDate>2024-05-10</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">UNITED STATES</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">SECURITIES AND EXCHANGE COMMISSION</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Washington, D.C. 20549</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">FORM <span id="xdx_900_edei--DocumentType_c20240510__20240510_zOHDuGmT7SPl"><ix:nonNumeric contextRef="AsOf2024-05-10" id="Fact000009" name="dei:DocumentType">8-K</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">CURRENT REPORT</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">PURSUANT TO SECTION 13 OR 15(d) OF</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">THE SECURITIES EXCHANGE ACT OF 1934</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Date of Report (Date of earliest event reported):
+<span id="xdx_906_edei--DocumentPeriodEndDate_c20240510__20240510_zwHGg5KzzdA8"><ix:nonNumeric contextRef="AsOf2024-05-10" format="ixt:datemonthdayyearen" id="Fact000010" name="dei:DocumentPeriodEndDate">May 10, 2024</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span id="xdx_900_edei--EntityRegistrantName_c20240510__20240510_zz9IVwAk3QRi"><ix:nonNumeric contextRef="AsOf2024-05-10" id="Fact000011" name="dei:EntityRegistrantName">WORKHORSE GROUP INC.</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Exact name of registrant as specified in its charter)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: Black 1.5pt solid; width: 32%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_906_edei--EntityIncorporationStateCountryCode_c20240510__20240510_z33QunVkggZ7"><ix:nonNumeric contextRef="AsOf2024-05-10" format="ixt-sec:stateprovnameen" id="Fact000012" name="dei:EntityIncorporationStateCountryCode">Nevada</ix:nonNumeric></span></span></td>
+    <td style="padding-bottom: 1.5pt; width: 2%">&#160;</td>
+    <td style="border-bottom: Black 1.5pt solid; width: 32%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90E_edei--EntityFileNumber_c20240510__20240510_z3MowtUZ9rf3"><ix:nonNumeric contextRef="AsOf2024-05-10" id="Fact000013" name="dei:EntityFileNumber">001-37673</ix:nonNumeric></span></span></td>
+    <td style="padding-bottom: 1.5pt; width: 2%">&#160;</td>
+    <td style="border-bottom: Black 1.5pt solid; width: 32%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_908_edei--EntityTaxIdentificationNumber_c20240510__20240510_zD9B5ELBsISc"><ix:nonNumeric contextRef="AsOf2024-05-10" id="Fact000014" name="dei:EntityTaxIdentificationNumber">26-1394771</ix:nonNumeric></span></span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(State or Other Jurisdiction <br/>
+of Incorporation)</span></td>
+    <td>&#160;</td>
+    <td style="vertical-align: top; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(Commission File Number)</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(IRS Employer <br/>
+Identification Number)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span id="xdx_907_edei--EntityAddressAddressLine1_c20240510__20240510_zivflVIUbuJc"><ix:nonNumeric contextRef="AsOf2024-05-10" id="Fact000015" name="dei:EntityAddressAddressLine1">3600 Park 42 Drive</ix:nonNumeric></span>, <span id="xdx_909_edei--EntityAddressAddressLine2_c20240510__20240510_ziSx4avaOGOj"><ix:nonNumeric contextRef="AsOf2024-05-10" id="Fact000016" name="dei:EntityAddressAddressLine2">Suite 160E</ix:nonNumeric></span>,   <span id="xdx_903_edei--EntityAddressCityOrTown_c20240510__20240510_z30LDPhBkROh"><ix:nonNumeric contextRef="AsOf2024-05-10" id="Fact000017" name="dei:EntityAddressCityOrTown">Sharonville</ix:nonNumeric></span>, <span id="xdx_900_edei--EntityAddressStateOrProvince_c20240510__20240510_zgYFo8YIoTmh"><ix:nonNumeric contextRef="AsOf2024-05-10" format="ixt-sec:stateprovnameen" id="Fact000018" name="dei:EntityAddressStateOrProvince">Ohio</ix:nonNumeric></span>
+<span id="xdx_901_edei--EntityAddressPostalZipCode_c20240510__20240510_zlXH0bVbj0D3"><ix:nonNumeric contextRef="AsOf2024-05-10" id="Fact000019" name="dei:EntityAddressPostalZipCode">45241</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Address of principal executive offices) (zip code)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">1 (<span id="xdx_90A_edei--CityAreaCode_c20240510__20240510_zNUvotnVQOq9"><ix:nonNumeric contextRef="AsOf2024-05-10" id="Fact000020" name="dei:CityAreaCode">888</ix:nonNumeric></span>) <span id="xdx_907_edei--LocalPhoneNumber_c20240510__20240510_z693KrKt5282"><ix:nonNumeric contextRef="AsOf2024-05-10" id="Fact000021" name="dei:LocalPhoneNumber">646-5205</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Registrant&#8217;s telephone number, including
+area code)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Check the appropriate box below if the Form 8-K filing is intended
+to simultaneously satisfy the filing obligation of the registrant under any of the following provisions (see General Instruction A.2.
+below):</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0in"/><td style="width: 0.25in; text-align: left"><span id="xdx_907_edei--WrittenCommunications_c20240510__20240510_zeqzEMYJQ1me"><ix:nonNumeric contextRef="AsOf2024-05-10" format="ixt:booleanfalse" id="Fact000022" name="dei:WrittenCommunications">&#9744;</ix:nonNumeric></span></td><td style="text-align: justify">Written communications pursuant to Rule 425 under the Securities
+Act (17 CFR 230.425)</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0in"/><td style="width: 0.25in; text-align: left"><span id="xdx_902_edei--SolicitingMaterial_c20240510__20240510_zsl5g2qW3HKd"><ix:nonNumeric contextRef="AsOf2024-05-10" format="ixt:booleanfalse" id="Fact000023" name="dei:SolicitingMaterial">&#9744;</ix:nonNumeric></span></td><td style="text-align: justify">Soliciting material pursuant to Rule 14a-12 under the Exchange
+Act (17 CFR 240.14a-12)</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0in"/><td style="width: 0.25in; text-align: left"><span id="xdx_90F_edei--PreCommencementTenderOffer_c20240510__20240510_zqb21d1HcVN7"><ix:nonNumeric contextRef="AsOf2024-05-10" format="ixt:booleanfalse" id="Fact000024" name="dei:PreCommencementTenderOffer">&#9744;</ix:nonNumeric></span></td><td style="text-align: justify">Pre-commencement communications pursuant to Rule 14d-2(b) under
+the Exchange Act (17 CFR 240.14d-2(b))</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0in"/><td style="width: 0.25in; text-align: left"><span id="xdx_907_edei--PreCommencementIssuerTenderOffer_c20240510__20240510_zWAYBjActSW1"><ix:nonNumeric contextRef="AsOf2024-05-10" format="ixt:booleanfalse" id="Fact000025" name="dei:PreCommencementIssuerTenderOffer">&#9744;</ix:nonNumeric></span></td><td style="text-align: justify">Pre-commencement communications pursuant to Rule 13e-4(c) under
+the Exchange Act (17 CFR 240.13e-4(c))</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Indicate by check mark whether the registrant
+is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or Rule 12b-2 of the
+Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Emerging growth company <span id="xdx_909_edei--EntityEmergingGrowthCompany_c20240510__20240510_zESe03S2Thhg"><ix:nonNumeric contextRef="AsOf2024-05-10" format="ixt:booleanfalse" id="Fact000026" name="dei:EntityEmergingGrowthCompany">&#9744;</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">If an emerging growth company, indicate by check
+mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting
+standards provided pursuant to Section 13(a) of the Exchange Act. &#9744;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Securities registered pursuant to Section 12(b) of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: Black 1.5pt solid; width: 32%; padding-right: 1.75pt; padding-left: 1pt; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Title of each class</span></td>
+    <td style="padding-bottom: 1.5pt; width: 2%">&#160;</td>
+    <td style="border-bottom: Black 1.5pt solid; width: 32%; padding-right: 1.8pt; padding-left: 1pt; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Trading Symbol(s)</span></td>
+    <td style="padding-bottom: 1.5pt; width: 2%">&#160;</td>
+    <td style="border-bottom: Black 1.5pt solid; width: 32%; padding-right: 1.8pt; padding-left: 1pt; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Name of each exchange on which registered</span></td></tr>
+  <tr style="vertical-align: bottom; background-color: #CCEEFF">
+    <td style="vertical-align: top; padding-right: 1.75pt; padding-left: 1pt; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90F_edei--Security12bTitle_c20240510__20240510_z5iqRjnmpOC9"><ix:nonNumeric contextRef="AsOf2024-05-10" id="Fact000027" name="dei:Security12bTitle">Common Stock, $0.001 par value per share</ix:nonNumeric></span></span></td>
+    <td style="text-align: center; vertical-align: top">&#160;</td>
+    <td style="vertical-align: top; padding-right: 1.8pt; padding-left: 1pt; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_900_edei--TradingSymbol_c20240510__20240510_zuUUoQDlQrrl"><ix:nonNumeric contextRef="AsOf2024-05-10" id="Fact000028" name="dei:TradingSymbol">WKHS</ix:nonNumeric></span></span></td>
+    <td style="text-align: center; vertical-align: top">&#160;</td>
+    <td style="vertical-align: top; padding-right: 1.8pt; padding-left: 1pt; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">The <span id="xdx_901_edei--SecurityExchangeName_c20240510__20240510_zYzgmU098Yyk"><ix:nonNumeric contextRef="AsOf2024-05-10" format="ixt-sec:exchnameen" id="Fact000029" name="dei:SecurityExchangeName">Nasdaq</ix:nonNumeric></span> Capital Market</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"><span style="background-color: white"><b>Item&#160;1.01.
+Entry into a Material Definitive Agreement.</b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><span style="background-color: white"><i>Securities
+Purchase Agreement</i></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><span style="background-color: white">As
+previously disclosed, on March 15, 2024, Workhorse Group Inc. (the &#8220;Company&#8221;) entered into a securities purchase agreement
+(the &#8220;Securities Purchase Agreement&#8221;) with an institutional investor (the &#8220;Investor&#8221;) under which the Company
+agreed to issue and sell, in one or more registered public offerings by the Company directly to the Investor, (i) senior secured convertible
+notes for up to an aggregate principal amount of $139,000,000 (the &#8220;Notes&#8221;) that will be convertible into shares of the Company&#8217;s
+common stock, par value of $0.001 per share (the &#8220;Common Stock&#8221;) and (ii) warrants (the &#8220;Warrants&#8221;) to purchase
+shares of Common Stock in multiple tranches over a period beginning on March 15, 2024. Pursuant to the Securities Purchase Agreement,
+on May 10, 2024, the Company issued and sold to the Investor a (i) Note in the original principal amount of $6,285,714 (the &#8220;First
+Additional Note&#8221;) and (ii) Warrant to purchase up to 36,785,453 shares of Common Stock (the &#8220;First Additional Warrant&#8221;).
+Refer to the Company&#8217;s Current Report on Form 8-K filed on March 15, 2024 for additional information related to the Securities Purchase
+Agreement, the Notes, and the Warrants. The First Additional Note was issued pursuant to the Company&#8217;s Indenture between the Company
+and U.S. Bank Trust Company, National Association, as trustee (the &#8220;Trustee&#8221;), dated December 27, 2023 (the &#8220;Base Indenture&#8221;),
+and a Third Supplemental Indenture to be entered into between the Company and the Trustee (together with the Base Indenture, the &#8220;Indenture&#8221;).</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">As previously disclosed,
+on March 15, 2024, the Company issued and sold to the Investor (i) a Note in original principal amount of $9,000,000 (the &#8220;Initial
+Note&#8221;) and (ii) a Warrant to purchase up to 31,992,890 shares of Common Stock (the &#8220;Initial Warrant&#8221;) pursuant to the
+Securities Purchase Agreement and a prospectus supplement filed on March 15, 2024. As of the date hereof, the Initial Note has been fully
+converted into shares of our common stock and is no longer outstanding, and no shares have been issued pursuant to the Initial Warrant.
+Upon our filing of one or more additional prospectus supplements, and our satisfaction of certain other conditions, the Securities Purchase
+Agreement contemplates additional closings of up to $123,714,286 in aggregate principal amount of additional Notes and a corresponding
+Warrant pursuant to the Securities Purchase Agreement as further described on our Current Report on Form 8-K filed on March 15, 2024.
+The description of the Securities Purchase Agreement, form of Note, form of Warrant, Indenture, Security Agreement and Subsidiary Guarantee
+contained therein are hereby incorporated by reference herein in its entirety.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">No Note may be converted
+and no Warrant may be exercised to the extent that such conversion or exercise would cause the then holder of such Note or Warrant to
+become the beneficial owner of more than 4.99%, or, at the option of such holder, 9.99% of the Company&#8217;s then outstanding Common
+Stock, after giving effect to such conversion or exercise (the &#8220;Beneficial Ownership Cap&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><i>Notes</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><span style="background-color: white">Like
+the Initial Note, the First Additional Note was issued with original issue discount of 12.5%, resulting in $5,500,000 of proceeds to the
+Company before fees and expenses.</span> The First Additional Note is senior, secured obligations of the Company, ranking senior to all
+other unsecured indebtedness, subject to certain limitations and are unconditionally guaranteed by each of the Company&#8217;s subsidiaries,
+pursuant to the terms of a certain security agreement and subsidiary guarantee.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Like the Initial Note,
+the First Additional Note bears interest at a rate of 9.0% per annum, payable in arrears on the first trading day of each calendar quarter,
+at the Company&#8217;s option, either in cash or in-kind by compounding and becoming additional principal. Upon the occurrence and during
+the continuance of an event of default, the interest rate will increase to 18.0% per annum. Unless earlier converted or redeemed, the
+First Additional Note will mature on the one-year anniversary of the date hereof, subject to extension at the option of the holders in
+certain circumstances as provided in the First Additional Note.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"></p>
+
+<!-- Field: Page; Sequence: 2; Options: NewSection; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->1<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Like the Initial Note,
+all amounts due under the First Additional Note are convertible at any time, in whole or in part, and subject to the Beneficial Ownership
+Cap, at the option of the holders into shares of Common Stock at a conversion price equal to the lower of $0.1367 (the &#8220;Reference
+Price&#8221;) or (b) the greater of (x) $0.0420 (the &#8220;Floor Price&#8221;) and (y) 87.5% of the volume weighted average price of
+the Common Stock during the ten trading days ending and including the trading day immediately preceding the delivery or deemed delivery
+of the applicable conversion notice, as elected by the converting holder. The Reference Price and Floor Price are subject to customary
+adjustments upon any stock split, stock dividend, stock combination, recapitalization or similar event. The Reference Price is also subject
+to full-ratchet adjustment in connection with a subsequent offering at a per share price less than the Reference Price then in effect.
+Subject to the rules and regulations of Nasdaq, we have the right, at any time, with the written consent of the Investor, to lower the
+reference price to any amount and for any period of time deemed appropriate by our board of directors. Upon the satisfaction of certain
+conditions, we may prepay the First Additional Note upon 15 business days&#8217; written notice by paying an amount equal to the greater
+of (i) the face value of the Notes at premium of 25% (or 75% premium, during the occurrence and continuance of an event of default, or
+in the event certain redemption conditions are not satisfied) and (ii) the equity value of the shares of common stock underlying the First
+Additional Note. The equity value of our common stock underlying the First Additional Note is calculated using the two greatest volume
+weighted average prices of our common stock during the period immediately preceding the date of such redemption and ending on the date
+we make the required payment.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Like the Initial Note,
+the First Additional Note contains customary affirmative and negative covenants, including certain limitations on debt, liens, restricted
+payments, asset transfers, changes in the business and transactions with affiliates. It also requires the Company maintain minimum liquidity
+on the last day of each fiscal quarter in the amount of either (i) $1,500,000 if the sale leaseback transaction of Company&#8217;s manufacturing
+facility in Union City, Indiana (the &#8220;Sale Leaseback&#8221;) has not been consummated and (ii) $4,000,000 if the Sale Leaseback
+has been consummated, subject to certain conditions. The Notes also contain customary events of default.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Under certain circumstances,
+including a change of control, the holder may cause us to redeem all or a portion of the then-outstanding amount of principal and interest
+on the First Additional Note in cash at the greater of (i) the face value of the amount of Note to be redeemed at a 25% premium (or at
+a 75% premium, if certain redemption conditions are not satisfied or during the occurrence and continuance of an event of default), (ii)
+the equity value of our Common Stock underlying such amount of Note to be redeemed and (iii) the equity value of the change of control
+consideration payable to the holder of our Common Stock underlying the First Initial Note.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">In addition, during an
+event of default, the holder may require us to redeem in cash all, or any portion, of the Fist Additional Note at the greater of (i) the
+face value of our Common Stock underlying the Notes at a 75% premium and (ii) the equity value of our Common Stock underlying the First
+Additional Note. In addition, during a bankruptcy event of default, we shall immediately redeem in cash all amounts due under the Notes
+at a 75% premium unless the holder of the First Additional Note waives such right to receive payment. Further, upon the sale of certain
+assets, the holder may cause a redemption at a premium, including upon consummation of the Sale Leaseback if the redemption conditions
+are not satisfied. The First Additional Note also provides for purchase and participation rights in the event of a dividend or other purchase
+right being granted to the holders of Common Stock.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"></p>
+
+<!-- Field: Page; Sequence: 3; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><i>Warrants</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">The exercise price per
+share of Common Stock under the First Additional Warrant is $0.2943. Like the Initial Warrant, the First Additional Warrant is immediately
+exercisable for a period of 10 years following its issuance date.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Like the Initial Warrant,
+the Investor has a purchase right that allows the Investor to participate in transactions in which the Company issues or sells certain
+securities or other property to holders of Common Stock, allowing the Investor to acquire, on the terms and conditions applicable to such
+purchase rights, the aggregate purchase rights which the Investor would have been able to acquire if the Investor held the number of shares
+of Common Stock acquirable upon exercise of the First Additional Warrant.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">In the event of a Fundamental
+Transaction (as defined in the Warrant) that is not a change of control or corporate event as described in the Warrant, the surviving
+entity would be required to assume the Company&#8217;s obligations under the First Additional Warrant. In addition, if the Company engages
+in certain transactions that result in the holders of the Common Stock receiving consideration, a holder of the First Additional Warrant
+will have the option to either (i) exercise the First Additional Warrant prior to the consummation of such transaction and receive the
+consideration to be issued or distributed in connection with such transaction or (ii) cause the Company to repurchase the First Additional
+Warrant for its then Black Scholes Value (as defined in the Warrant).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><span style="background-color: white">The
+issuance of the First Additional Note, First Additional Warrant and the shares of Common Stock issuable upon conversion or exercise, as
+the case may, have been registered pursuant to the Company&#8217;s effective shelf registration statement on Form S-3 (File No. 333-273357)
+(the &#8220;Registration Statement&#8221;), and the related base prospectus included in the Registration Statement, as further supplemented
+by a prospectus supplement filed on May 10, 2024. </span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><span style="background-color: white">The
+description of the terms and conditions of the Securities Purchase Agreement, the Note, the Warrant and the Base Indenture do not purport
+to be complete and is qualified in its entirety by the full text of Securities Purchase Agreement, the Note, the Warrant and the Base
+Indenture, which are filed as exhibits to the Company&#8217;s Current Report on Form 8-K filed on March 15, 2024.</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><span style="background-color: white"><b>Item
+2.03 Creation of a Direct Financial Obligation or an Obligation under an Off-Balance Sheet Arrangement of a Registrant.</b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><span style="background-color: white">The
+information set forth under Item 1.01 of this Current Report on Form 8-K is hereby incorporated by reference in its entirety.</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><span style="background-color: white"><b>Item
+8.01 Other Events</b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>Recent Orders, Deliveries and Commercial Dealers</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">The Company
+recently received an order for 141 W4CC trucks. As of the date hereof, 30 such W4CC trucks have shipped. In addition, the Company
+has now received orders for a total of 68  W56 trucks. The Company
+expects to begin making shipments of these trucks during 2024. Each of these orders are subject to significant terms and conditions
+including, in the case of trucks to be delivered in California the receipt of HVIP vouchers for such trucks, and the purchasers
+have, under certain circumstances, the right to cancel such orders without any penalty or other cost. In addition, the Company
+entered into agreements to add three new dealers to its dealer network in the past thirty days for a total of twelve dealer
+partners. </p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>Sale Leaseback</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">As previously reported, on January 31, 2024,
+a subsidiary of the Company entered into a purchase and sale agreement (the &#8220;Purchase and Sale Agreement&#8221;) with William
+Repny LLC (the &#8220;Union City Purchaser&#8221;) for the sale of the Company&#8217;s Union City, Indiana manufacturing facility
+for a purchase price, before fees and expenses, of approximately $34.5 million, in connection with which the Company would lease the
+property back from the Union City Purchaser. Although the Purchase and Sale Agreement has not been terminated, the Company does not
+believe the transaction will be consummated at the current purchase price. Accordingly, the Company is currently discussing
+alternative sale and leaseback transactions with other potential purchasers, as well as possible changes of the terms of the
+Purchase and Sale Agreement with the Union City Purchaser. The Company expects that if a sale and leaseback transaction for the
+Union City facility is consummated, whether with the Union City Purchaser or another party, the purchase price in such transaction
+will be materially lower than the price provided in the Purchase and Sale Agreement.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 4; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->3<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>Cost-saving Measures</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">On April 22, 2024, the
+Company furloughed 73 employees at its Union City manufacturing facility without pay. The Company expects the furloughs
+to provide savings of approximately $300,000 per month and has not incurred, and does not expect to incur, material costs in connection
+with the furloughs. The Company is also currently working with certain of its vendors to extend
+or restructure the payment terms of certain of its accounts payable. The furloughs, salary deferrals and vendor discussions are part of
+the Company&#8217;s previously disclosed strategy to reduce costs, including as described in the Company&#8217;s Annual Report on Form
+10-K for the fiscal year ended December 31, 2023. The Company currently intends to reinstate all furloughed employees when the Company&#8217;s financial and operational position permits. There can, however, be no assurance that all such
+furloughed employees will be available and willing to return to work.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="margin: 0pt 0; text-align: justify">As previously announced, the Company decided to fully transition its Aero business
+from a design and manufacturing drone business to a Drones as a Service business. In addition, the Company is currently working with
+a third party to complete the divestiture of its Aero business. The Company does not expect to realize cash proceeds upon
+consummation of the sale but expects the transition to a Drones as a Service business and the subsequent divestiture to provide it
+savings of approximately $375,000 per month. In addition, the Company expects that the final divestiture agreements will include
+limited earn-out provisions under which the Company would receive a portion of the proceeds if Aero realizes revenues from certain
+contingent sources. The Company expects to consummate this transaction during the second fiscal quarter of 2024.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>CSI Litigation</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On April 19, 2024, Coulomb Solutions Inc. (&#8220;CSI&#8221;), a supplier
+to the Company of certain of the batteries used in its trucks, filed a complaint against the Company in United States District Court for
+the Eastern District of Michigan concerning late payment for certain products sold by CSI to the Company in the amount of approximately
+$4 million. The Company is currently in negotiations with CSI to resolve this matter.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>First Quarter Unaudited Preliminary Selected
+Financial Items</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Certain preliminary, unaudited selected
+financial items for the financial quarter ended March 31, 2024 are set forth below (the &#8220;Unaudited Preliminary Selected
+Financial Items&#8221;). The Unaudited Preliminary Selected Financial Items are not audited and are not final, and therefore cannot
+be relied upon with the same assurance as audited or final financial results. In addition, the Unaudited Preliminary Selected
+Financial Items do not include condensed consolidated statements of operations, consolidated balance sheets, condensed consolidated
+statements of stockholders&#8217; equity and condensed consolidated statements of cash flows or any notes thereto, and accordingly,
+do not provide the same information as our consolidated financial statements. Further, the Unaudited Preliminary Selected Financial
+Items are not necessarily indicative of results that may be expected for the full year or any future period.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left">&#9679;</td><td style="text-align: justify">Sales, net of returns and allowances, were $1.3 million for
+the financial quarter ended March 31, 2024, compared to $1.7 million in the same period last year and $4.4 million for the financial
+quarter ended December 31, 2023.</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left">&#9679;</td><td style="text-align: justify">Cost of sales for the financial quarter ended March 31, 2024,
+increased to $7.4 million from $5.3 million in the same period last year, but decreased relative to these costs for the financial quarter
+ended December 31, 2023, $18.1 million, driven by the launch of the W56 step-van product.</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left">&#9679;</td><td style="text-align: justify">Selling, general and administrative expenses for the financial
+quarter ended March 31, 2024, decreased slightly to $14.4 million from $14.7 million in the same period last year and $15.1 million for
+the financial quarter ended December 31, 2023.</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left">&#9679;</td><td style="text-align: justify">Net operating loss for the financial quarter ended March 31, 2024 was $18.1 million, compared to
+                                                                                       $21.9 million in the same period last year and $21.5 million for the financial quarter ended December 31, 2023.</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left">&#9679;</td><td style="text-align: justify">As of March 31, 2024, the Company had $6.7 million in cash and cash equivalents, accounts receivable
+                                                                                       of $1.7 million, net inventory of $49.9 million and accounts payable of $14.3 million, which compared to $25.8 million in cash and
+                                                                                       cash equivalents, $4.5 million in accounts receivable and $12.5 million in accounts payable as of December 31, 2023. Additionally,
+                                                                                       as of March 31, 2024, the only financial indebtedness the Company had was $6.2 million in principal and accrued interest on the
+                                                                                       Initial Notes, all of which has been converted into shares of the Company&#8217;s common stock.</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 5; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->4<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b><i>Forward-Looking Statements</i></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Certain statements contained in this Form 8-K, other than purely historical information, including,
+but not limited to, estimates, projections, statements relating to our business plans, objectives and expected operating results, and
+the assumptions upon which those statements are based, contain forward-looking statements reflecting our current expectations that involve
+risks and uncertainties. These statements are made under the &#8220;safe harbor&#8221; provisions of the U.S. Private Securities Litigation
+Reform Act of 1995. When used in this prospectus supplement, the words &#8220;anticipate,&#8221; &#8220;expect,&#8221; &#8220;plan,&#8221;
+&#8220;believe,&#8221; &#8220;seek,&#8221; &#8220;estimate&#8221; and similar expressions are intended to identify forward-looking statements.
+These are statements that relate to future periods and include, but are not limited to, statements about the features, benefits and performance
+of our products, our ability to introduce new product offerings and increase revenue from existing products, expected expenses including
+those related to selling and marketing, product development and general and administrative, our beliefs regarding the health and growth
+of the market for our products, anticipated increase in our customer base, expansion of our products functionalities, expected revenue
+levels and sources of revenue, expected impact, if any, of legal proceedings, the adequacy of our liquidity and capital resources, the
+likelihood of us obtaining additional financing in the immediate future and the expected terms of such financing, and expected growth
+in business. Forward-looking statements are statements that are not historical facts. Such forward-looking statements are subject to risks
+and uncertainties, which could cause actual results to differ materially from the forward-looking statements contained in this Report.
+Factors that could cause actual results to differ materially include, but are not limited to: our ability to develop and manufacture our
+new product portfolio, including the W4 CC, W750, W56 and WNext programs; our ability to attract and retain customers for our existing
+and new products; risks associated with obtaining orders and executing upon such orders; the unavailability, reduction, elimination or
+adverse application of government subsidies, incentives and regulations; supply chain disruptions, including constraints on steel, semiconductors
+and other material inputs and resulting cost increases impacting our Company, our customers, our suppliers or the industry; our ability
+to capitalize on opportunities to deliver products to meet customer requirements; our limited operations and need to expand and enhance
+elements of our production process to fulfill product orders; our general inability to raise additional capital to fund our operations
+and business plan; our ability to obtain financing to meet our immediate liquidity needs and the potential costs, dilution and restrictions
+imposed by any such financing; our ability to regain compliance with the listing requirements of the Nasdaq Capital Market and otherwise
+maintain the listing of our securities thereon and the impact of any steps we take to regain such compliance, such as a reverse split
+of our common stock, on our operations, stock price and future access to liquidity; our ability to protect our intellectual property;
+market acceptance for our products; our ability to obtain sufficient liquidity from operations and financing activities to continue as
+a going concern and, our ability to control our expenses; the effectiveness of our cost control measures and impact such measures could
+have on our operations, including the effects of the furloughing employees; potential competition, including without limitation shifts
+in technology; volatility in and deterioration of national and international capital markets and economic conditions; global and local
+business conditions; acts of war (including without limitation the conflicts in Ukraine and Israel) and/or terrorism; the prices being
+charged by our competitors; our inability to retain key members of our management team; our inability to satisfy our customer warranty
+claims; the outcome of any regulatory or legal proceedings, including with Coulomb Solutions Inc.; our ability to consummate the divestiture
+of our aero business, our ability to consummate and realize the benefits of a potential sale and leaseback transaction of our Union City
+Facility; and other risks and uncertainties and other factors discussed from time to time in our filings with the SEC. Forward-looking
+statements speak only as of the date hereof. We expressly disclaim any obligation or undertaking to release publicly any updates or revisions
+to any forward-looking statements contained herein to reflect any change in our expectations with regard thereto or any change in events,
+conditions or circumstances on which any such statement is based, except as required by law.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Discussions containing these forward-looking
+statements may be found, among other places, in &#8220;Business&#8221; and &#8220;Management&#8217;s Discussion and Analysis of Financial
+Condition and Results of Operations&#8221; incorporated by reference from our most recent Annual Report on Form 10-K and our Quarterly
+Reports on Form 10-Q, as well as any amendments thereto reflected in subsequent filings with the SEC or in any Current Report on Form
+8-K. These forward-looking statements involve known and unknown risks, uncertainties and other factors that may cause our actual results,
+levels of activity, performance or achievements to be materially different from the information expressed or implied by these forward-looking
+statements. While we believe that we have a reasonable basis for each forward-looking statement contained in this Form 8-K, but we caution
+you that these statements are based on a combination of facts and factors currently known by us and our projections of the future, about
+which we cannot be certain. As a result of these factors, we cannot assure you that the forward-looking statements in this prospectus
+and the documents incorporated by reference herein will prove to be accurate. Furthermore, if our forward-looking statements prove to
+be inaccurate, the inaccuracy may be material. In light of the significant uncertainties in these forward-looking statements, you should
+not regard these statements as a representation or warranty by us or any other person that we will achieve our objectives and plans in
+any specified time frame, or at all. You should not place undue reliance on these forward-looking statements, which apply only as of the
+date of this Form 8-K. You should read this Form 8-K completely and with the understanding that our actual future results may be materially
+different from what we expect. We undertake no obligation to publicly update any forward-looking statements, whether as a result of new
+information, future events or otherwise. You are advised, however, to consult any further disclosures we make on related subjects in our
+Annual Reports on Form 10-K, Quarterly Reports on Form 10-Q, Current Reports on Form 8-K, as well as any amendments thereto.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Item 9.01. Exhibits.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: black 1.5pt solid; width: 10%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Exhibit&#160;No.</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 89%; text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Description</b></span></td></tr>
+  <tr style="vertical-align: top; background-color: #CCECFF">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">10.4</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><a href="ea020570601ex10-4_workhorse.htm"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Form of Third Supplemental Indenture.</span></a></td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">104</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Cover page from this Current Report on Form 8-K, formatted as Inline XBRL.</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 6; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->5<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Pursuant to the requirements of the Securities
+Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td>&#160;</td>
+    <td colspan="2" style="padding-right: 4.8pt; padding-left: 1pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">WORKHORSE GROUP INC.</span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td>&#160;</td>
+    <td colspan="2">&#160;</td></tr>
+  <tr>
+    <td style="vertical-align: top; width: 60%; padding-right: 1.75pt; padding-left: 1pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Date: May 10, 2024</span></td>
+    <td style="vertical-align: bottom; width: 5%; padding-right: 1.8pt; padding-left: 1pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">By:</span></td>
+    <td style="border-bottom: Black 1.5pt solid; vertical-align: top; width: 35%; padding-right: 1.8pt; padding-left: 1pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">/s/ James D. Harrington</span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td>&#160;</td>
+    <td style="text-align: left; padding-right: 1.8pt; padding-left: 1pt; vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Name:<br/>
+Title:</span></td>
+    <td style="padding-right: 1.8pt; padding-left: 1pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">James D. Harrington<br/>
+General Counsel, Chief Compliance Officer and Secretary</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">6</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 1.5pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxFjU0KwjAQhU/QOwxZi8ZoF+3SoiJWkVLEbbCjBNtMmcS/I3lL0xZxGBiG9773hBiJNa1MjQynRZFDiU1ba49Q4AUZ7RmDI9tsUwi3wKtxnrX1/fsDMwoMBiYeK6WD0FsfxmGVgownMpmoOUiVzhI47ETU6RnZi6nQeqNr0LaCA1PLBr3m95BQ6hdZat591RHZGbIpTMdykD+g5FTBnh76SXxzkOeZiEb9RGLNdG+Da/nyaDsSljU2oc4N9H+jLwr4SpQ= -->
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

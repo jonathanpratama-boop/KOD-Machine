@@ -1,0 +1,788 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2023" xmlns:us-gaap="http://fasb.org/us-gaap/2023" xmlns:us-roles="http://fasb.org/us-roles/2023" xmlns:country="http://xbrl.sec.gov/country/2023" xmlns:srt="http://fasb.org/srt/2023" xmlns:AVTE="http://aerovatetx.com/20250416">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02C_US%2DGAAP%2D2023 -->
+<!-- Field: Set; Name: xdx; ID: xdx_03B_AVTE_aerovatetx.com_20250416 -->
+<!-- Field: Set; Name: xdx; ID: xdx_04A_20250416_20250416 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_05D_edei%2D%2DEntityCentralIndexKey_0001798749 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2025-04-16" id="Fact000003" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2025-04-16" id="Fact000004" name="dei:EntityCentralIndexKey">0001798749</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2025-04-16" id="xdx2ixbrl0022" name="dei:WrittenCommunications">false</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="avte-20250416.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2025-04-16">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001798749</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2025-04-16</xbrli:startDate>
+        <xbrli:endDate>2025-04-16</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="margin: 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0; margin-bottom: 0; width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>UNITED STATES</b></p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>SECURITIES AND EXCHANGE
+COMMISSION</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>WASHINGTON, D.C. 20549</b></p>
+
+<p style="border-bottom: Black 1pt solid; font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>FORM&#160;<span id="xdx_905_edei--DocumentType_c20250416__20250416_z3mlvMzOD2f9"><ix:nonNumeric contextRef="AsOf2025-04-16" id="Fact000009" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+<p style="border-bottom: Black 1pt solid; font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>Pursuant to Section&#160;13
+or 15(d) of the Securities Exchange Act of 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>Date of Report (Date
+of earliest event reported): <span id="xdx_908_edei--DocumentPeriodEndDate_c20250416__20250416_zOQYeSIZWsNj"><ix:nonNumeric contextRef="AsOf2025-04-16" format="ixt:datemonthdayyearen" id="Fact000010" name="dei:DocumentPeriodEndDate">April 16, 2025</ix:nonNumeric></span></b></p>
+
+<p style="border-bottom: Black 1pt solid; font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><span id="xdx_90C_edei--EntityRegistrantName_c20250416__20250416_zU6FRGpleJ7b"><b><ix:nonNumeric contextRef="AsOf2025-04-16" id="Fact000011" name="dei:EntityRegistrantName">AEROVATE
+THERAPEUTICS,&#160;INC.</ix:nonNumeric></b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>(Exact name of Registrant
+as Specified in Its Charter)</b></p>
+
+<p style="border-bottom: Black 1pt solid; font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr>
+    <td style="padding: 0.25pt; vertical-align: top; width: 32%; font-size: 10pt; text-align: center"><b><span id="xdx_903_edei--EntityIncorporationStateCountryCode_c20250416__20250416_zFPXMpO4VSHl"><ix:nonNumeric contextRef="AsOf2025-04-16" format="ixt-sec:stateprovnameen" id="Fact000012" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></b></td>
+    <td style="width: 2%">&#160;</td>
+    <td style="padding: 0.25pt; vertical-align: top; width: 32%; font-size: 10pt; text-align: center"><span id="xdx_903_edei--EntityFileNumber_c20250416__20250416_z2pTH0f6sPOf"><b><ix:nonNumeric contextRef="AsOf2025-04-16" id="Fact000013" name="dei:EntityFileNumber">001-40544</ix:nonNumeric></b></span></td>
+    <td style="padding: 0.25pt; vertical-align: bottom; font-size: 10pt; width: 2%">&#160;</td>
+    <td style="padding: 0.25pt; vertical-align: top; font-size: 10pt; text-align: center; width: 32%"><span id="xdx_90F_edei--EntityTaxIdentificationNumber_c20250416__20250416_zZPHfySEcmpf"><b><ix:nonNumeric contextRef="AsOf2025-04-16" id="Fact000014" name="dei:EntityTaxIdentificationNumber">83-1377888</ix:nonNumeric></b></span></td></tr>
+  <tr>
+    <td style="padding: 0.25pt; text-align: center; vertical-align: top"><b>(State or Other Jurisdiction<br/>
+    of Incorporation)</b></td>
+    <td>&#160;</td>
+    <td style="padding: 0.25pt; text-align: center; vertical-align: top"><b>(Commission<br/>
+ File Number)</b></td>
+    <td style="padding: 0.25pt; vertical-align: bottom; font-size: 10pt">&#160;</td>
+    <td style="padding: 0.25pt; text-align: center; vertical-align: top"><b>(IRS Employer<br/>
+    Identification No.)</b></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="text-align: center"><span id="xdx_90B_edei--EntityAddressAddressLine1_c20250416__20250416_z8VN1kLZwlJk"><b><ix:nonNumeric contextRef="AsOf2025-04-16" id="Fact000015" name="dei:EntityAddressAddressLine1">930 Winter
+Street</ix:nonNumeric></b></span><br/><span id="xdx_901_edei--EntityAddressAddressLine2_c20250416__20250416_ztF0Y2ZO4aG9"><b><ix:nonNumeric contextRef="AsOf2025-04-16" id="Fact000016" name="dei:EntityAddressAddressLine2">Suite M-500</ix:nonNumeric></b></span></td><td style="text-align: center">&#160;</td><td style="text-align: center">&#160;</td></tr>
+                                                                                                                                      <tr style="vertical-align: top; text-align: justify">
+<td style="text-align: center; width: 66%"><span id="xdx_90A_edei--EntityAddressCityOrTown_c20250416__20250416_znbnELotzj5"><b><ix:nonNumeric contextRef="AsOf2025-04-16" id="Fact000017" name="dei:EntityAddressCityOrTown">Waltham</ix:nonNumeric></b></span><b>,
+<span id="xdx_90A_edei--EntityAddressStateOrProvince_c20250416__20250416_zHi7jECj8am1"><ix:nonNumeric contextRef="AsOf2025-04-16" format="ixt-sec:stateprovnameen" id="Fact000018" name="dei:EntityAddressStateOrProvince">Massachusetts</ix:nonNumeric></span></b></td><td style="width: 2%; text-align: center">&#160;</td><td style="text-align: center; width: 32%"><span id="xdx_901_edei--EntityAddressPostalZipCode_c20250416__20250416_zrmuXEpvYYKf"><b><ix:nonNumeric contextRef="AsOf2025-04-16" id="Fact000019" name="dei:EntityAddressPostalZipCode">02451</ix:nonNumeric></b></span></td>
+</tr><tr style="vertical-align: top; text-align: justify">
+<td style="text-align: center"><b>(Address of Principal Executive Offices)</b></td><td style="text-align: center">&#160;</td><td style="text-align: center"><b>(Zip
+                                            Code)</b></td></tr>
+     </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Registrant's Telephone Number, Including Area
+Code: (<span id="xdx_908_edei--CityAreaCode_c20250416__20250416_zp1VAEc6W3Tc"><ix:nonNumeric contextRef="AsOf2025-04-16" id="Fact000020" name="dei:CityAreaCode">617</ix:nonNumeric></span></b><b>) <span id="xdx_908_edei--LocalPhoneNumber_c20250416__20250416_zlG4XiyxNyud"><ix:nonNumeric contextRef="AsOf2025-04-16" id="Fact000021" name="dei:LocalPhoneNumber">443-2400</ix:nonNumeric></span></b></p>
+
+<p style="border-bottom: Black 1pt solid; font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: left">Check the appropriate box below if the Form&#160;8-K
+filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="padding: 0.25pt; width: 4%"><span id="xdx_902_edei--WrittenCommunications_c20250416__20250416_zRCI7qL2jXu1" style="font-family: Wingdings"><span style="-sec-ix-hidden: xdx2ixbrl0022"><span style="font-family: Wingdings">&#168;</span></span></span></td>
+    <td style="padding: 0.25pt">Written communications pursuant to Rule&#160;425 under the Securities Act (17 CFR 230.425)</td></tr>
+  <tr style="vertical-align: top">
+    <td style="padding: 0.25pt">&#160;</td>
+    <td style="padding: 0.25pt">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td style="padding: 0.25pt"><span id="xdx_90A_edei--SolicitingMaterial_c20250416__20250416_z52ZQ6grIDzf" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2025-04-16" format="ixt:booleanfalse" id="Fact000023" name="dei:SolicitingMaterial">&#168;</ix:nonNumeric></span></td>
+    <td style="padding: 0.25pt">Soliciting material pursuant to Rule&#160;14a-12 under the Exchange Act (17 CFR 240.14a-12)</td></tr>
+  <tr style="vertical-align: top">
+    <td style="padding: 0.25pt">&#160;</td>
+    <td style="padding: 0.25pt">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td style="padding: 0.25pt"><span id="xdx_90A_edei--PreCommencementTenderOffer_c20250416__20250416_zew6n2ik98K" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2025-04-16" format="ixt:booleanfalse" id="Fact000024" name="dei:PreCommencementTenderOffer">&#168;</ix:nonNumeric></span></td>
+    <td style="padding: 0.25pt">Pre-commencement communications pursuant to Rule&#160;14d-2(b)&#160;under the Exchange Act (17 CFR 240.14d-2(b))</td></tr>
+  <tr style="vertical-align: top">
+    <td style="padding: 0.25pt">&#160;</td>
+    <td style="padding: 0.25pt">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td style="padding: 0.25pt"><span id="xdx_90F_edei--PreCommencementIssuerTenderOffer_c20250416__20250416_zt2IqHOW7JAb" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2025-04-16" format="ixt:booleanfalse" id="Fact000025" name="dei:PreCommencementIssuerTenderOffer">&#168;</ix:nonNumeric></span></td>
+    <td style="padding: 0.25pt">Pre-commencement communications pursuant to Rule&#160;13e-4(c)&#160;under the Exchange Act (17 CFR 240.13e-4(c))</td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><b>Securities registered
+pursuant to Section&#160;12(b)&#160;of the Act:</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: Black 1pt solid; padding-top: 1.75pt; padding-right: 1.75pt; padding-left: 1.75pt; width: 38%; text-align: center"><span style="font-size: 10pt"><b>Title
+    of each class</b></span></td>
+    <td style="padding-bottom: 1pt; width: 2%"><b>&#160;</b></td>
+    <td style="border-bottom: Black 1pt solid; padding-top: 1.75pt; padding-right: 1.75pt; padding-left: 1.75pt; width: 23%; text-align: center"><span style="font-size: 10pt"><b>Trading<br/>
+    Symbol(s)</b></span></td>
+    <td style="padding-bottom: 1pt; width: 2%"><b>&#160;</b></td>
+    <td style="border-bottom: Black 1pt solid; padding-top: 1.75pt; padding-right: 1.75pt; padding-left: 1.75pt; width: 35%; text-align: center"><span style="font-size: 10pt"><b>Name
+    of each exchange on which registered</b></span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="padding: 1.75pt; white-space: nowrap; text-align: center"><span id="xdx_908_edei--Security12bTitle_c20250416__20250416_z6xUwLhlk2L"><ix:nonNumeric contextRef="AsOf2025-04-16" id="Fact000026" name="dei:Security12bTitle">Common
+    Stock, $0.0001 par value per share</ix:nonNumeric></span></td>
+    <td>&#160;</td>
+    <td style="padding: 1.75pt; text-align: center"><span id="xdx_90C_edei--TradingSymbol_c20250416__20250416_zymYtR9YOCB5"><ix:nonNumeric contextRef="AsOf2025-04-16" id="Fact000027" name="dei:TradingSymbol">AVTE</ix:nonNumeric></span></td>
+    <td>&#160;</td>
+    <td style="padding: 1.75pt; text-align: center"><span id="xdx_908_edei--SecurityExchangeName_c20250416__20250416_z4nEyPd8rkUf"><ix:nonNumeric contextRef="AsOf2025-04-16" format="ixt-sec:exchnameen" id="Fact000028" name="dei:SecurityExchangeName">The
+    Nasdaq Global Market</ix:nonNumeric></span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: left">Indicate by check mark whether the registrant is
+an emerging growth company as defined in Rule&#160;405 of the Securities Act of 1933 (&#167;&#160;230.405 of this chapter) or Rule&#160;12b-2
+of the Securities Exchange Act of 1934 (&#167;&#160;240.12b-2 of this chapter).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Emerging growth company&#160;&#160;<span id="xdx_907_edei--EntityEmergingGrowthCompany_c20250416__20250416_zyFiDe7HMST4" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2025-04-16" format="ixt:booleantrue" id="Fact000029" name="dei:EntityEmergingGrowthCompany">x</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: left">If an emerging growth company, indicate by check
+mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting
+standards provided pursuant to Section&#160;13(a)&#160;of the Exchange Act.&#160;&#160;<span id="xdx_907_edei--EntityExTransitionPeriod_c20250416__20250416_zVWbKS7KCjv5" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2025-04-16" format="ixt:booleantrue" id="Fact000030" name="dei:EntityExTransitionPeriod">x</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0; margin-bottom: 0; width: 100%"><div style="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">As previously disclosed, on October&#160;30, 2024, Aerovate Therapeutics,&#160;Inc.,
+a Delaware corporation (&#8220;Aerovate&#8221; or the &#8220;Company&#8221;), entered into an Agreement and Plan of Merger (the &#8220;Merger
+Agreement&#8221;), by and among Aerovate, Caribbean Merger Sub I,&#160;Inc., a Delaware corporation and a wholly owned subsidiary of Aerovate
+(&#8220;Merger Sub I&#8221;), Caribbean Merger Sub II, LLC, a Delaware limited liability company and a wholly owned subsidiary of Aerovate
+(&#8220;Merger Sub II&#8221; and together with Merger Sub I, &#8220;Merger Subs&#8221;), and Jade Biosciences,&#160;Inc., a Delaware corporation
+(&#8220;Jade&#8221;), pursuant to which, and subject to the satisfaction or waiver of the conditions set forth in the Merger Agreement,
+among other things, Merger Sub I will merge with and into Jade, with Jade surviving the merger as the surviving corporation (the &#8220;First
+Merger&#8221;), and as part of the same overall transaction, Jade will merge with and into Merger Sub II, with Merger Sub II continuing
+as a wholly owned subsidiary of Aerovate and the surviving corporation of the merger (the &#8220;Second Merger&#8221; and together with
+the First Merger, the &#8220;Merger&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="font-size: 10pt; width: 12%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Item&#8201;5.07</b></span></td>
+    <td style="font-size: 10pt; width: 88%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Submission of Matters to a Vote of Security Holders</b></span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">In connection with the Merger, Aerovate held a special meeting in lieu
+of the annual meeting of Aerovate stockholders on April&#160;16, 2025 (the &#8220;Special Meeting&#8221;), at which the Company&#8217;s
+stockholders voted on the proposals set forth below relating to the Merger Agreement. The proposals are described in detail in the Company&#8217;s
+definitive proxy statement/prospectus filed on Form&#160;S-4 with the Securities and Exchange Commission (the &#8220;SEC&#8221;), most
+recently amended on March&#160;24, 2025 and declared effective on March&#160;25, 2025 (as amended, the &#8220;Proxy Statement&#8221;)
+and first mailed to the Company&#8217;s stockholders on March&#160;25, 2025. The final voting results regarding each proposal are set
+forth below. There were 28,985,019 shares of the Company&#8217;s common stock outstanding and entitled to vote on March&#160;14, 2025,
+the record date for the Special Meeting, and 26,436,555 shares of the Company&#8217;s common stock were represented in person or by proxy
+at the Special Meeting, which number constituted a quorum.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><i>Proposal
+No.&#160;1</i></b></span><i>: To approve the issuance of shares of Aerovate common stock (including the shares of Aerovate common stock
+issuable upon conversion of the Aerovate Series&#160;A Non-Voting Convertible Preferred Stock and exercise of the Aerovate pre-funded
+warrants) to stockholders of Jade pursuant to the terms of the Merger Agreement, which will (i)&#160;represent more than 20% of the shares
+of Aerovate common stock outstanding immediately prior to the Merger under Nasdaq Listing Rule&#160;5635(a), and (ii)&#160;result in a
+change of control under Nasdaq Listing Rule&#160;5635(b).</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">This proposal was approved by the requisite vote of the Company&#8217;s
+stockholders.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">For</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Against</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Abstain</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Broker Non-Votes</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 23%; text-align: center">23,857,840</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">8,006</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">71,126</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">2,499,583</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><i>Proposal
+No.&#160;2</i></b></span><i>: To approve an amendment to the amended and restated certificate of incorporation of Aerovate (the &#8220;Aerovate
+Charter&#8221;) to effect a reverse stock split of Aerovate&#8217;s issued and outstanding common stock at a ratio determined by Aerovate&#8217;s
+board of directors and agreed to by Jade, of one new share of Aerovate common stock for every 20 to 120 shares (or any number in between)
+of outstanding Aerovate common stock in the form attached as Annex B to the Proxy Statement (the &#8220;Reverse Stock Split Proposal&#8221;).</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">This proposal was approved by the requisite vote
+of the Company&#8217;s stockholders.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">For</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Against</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Abstain</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Broker Non-Votes</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 23%; text-align: center">26,387,235</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">44,496</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">4,824</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">0</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><i>Proposal
+No.&#160;3</i></b></span><i>: To approve an amendment to the Aerovate Charter to increase the number of shares of Aerovate common stock
+that Aerovate is authorized to issue from 150,000,000 to 300,000,000 in the form attached as Annex C to the Proxy Statement.</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">This proposal was approved by the requisite vote
+of the Company&#8217;s stockholders.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">For</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Against</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Abstain</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Broker Non-Votes</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 23%; text-align: center">26,374,108</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">56,920</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">5,527</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">0</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 2 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><i>Proposal
+No.&#160;4</i></b></span><i>: To approve the redomestication of Aerovate from the State of Delaware to the State of Nevada by conversion.</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">This proposal was approved by the requisite vote
+of the Company&#8217;s stockholders.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">For</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Against</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Abstain</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Broker Non-Votes</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 23%; text-align: center">21,232,151</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">2,699,714</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">5,107</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">2,499,583</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><i>Proposal
+No.&#160;5</i></b></span><i>: To approve the Jade Biosciences,&#160;Inc. 2025 Stock Incentive Plan.</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">This proposal was approved by the requisite vote
+of the Company&#8217;s stockholders.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">For</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Against</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Abstain</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Broker Non-Votes</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 23%; text-align: center">16,417,145</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">7,513,710</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">6,117</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">2,499,583</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><i>Proposal
+No.&#160;6</i></b></span><i>: To approve the Jade Biosciences,&#160;Inc. 2025 Employee Stock Purchase Plan.</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">This proposal was approved by the requisite vote
+of the Company&#8217;s stockholders.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">For</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Against</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Abstain</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Broker Non-Votes</td><td style="font: bold 10pt Times New Roman, Times, Serif; padding-bottom: 1pt">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 23%; text-align: center">22,004,391</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">1,926,464</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">6,117</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">2,499,583</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><i>Proposal
+No.&#160;7</i></b></span><i>: To elect the three Class&#160;I directors, Mark Iwicki, Timothy P. Noyes, and Donald J. Santel, to Aerovate&#8217;s
+board of directors and to hold office until Aerovate&#8217;s 2028 annual meeting of stockholders and until their successor has been duly
+elected and qualified, or until earlier death, resignation or removal; provided that if the Merger is consummated, the approval of Proposal
+No.&#160;7 will only have an effect until completion of the Merger because the composition of the board of directors will be reconstituted
+upon completion of the Merger, in accordance with the Merger Agreement.</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Each Class&#160;I director was elected by the
+requisite vote of the Company&#8217;s stockholders.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td style="text-align: center; font-size: 10pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; text-align: center; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">For</td><td style="font: bold 10pt Times New Roman, Times, Serif; text-align: center; padding-bottom: 1pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; text-align: center; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Withheld</td><td style="font: bold 10pt Times New Roman, Times, Serif; text-align: center; padding-bottom: 1pt">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif; text-align: center; padding-bottom: 1pt">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Broker Non-Votes</td><td style="font: bold 10pt Times New Roman, Times, Serif; text-align: center; padding-bottom: 1pt">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 46%; text-align: center">Mark Iwicki</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 15%; text-align: center">17,036,605</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 15%; text-align: center">6,900,367</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 15%; text-align: center">2,499,583</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: White">
+    <td style="font: 10pt Times New Roman, Times, Serif; text-align: center">Timothy P. Noyes</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center">23,902,335</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center">34,637</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center">2,499,583</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="font: 10pt Times New Roman, Times, Serif; text-align: center">Donald J. Santel</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center">18,022,726</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center">5,914,246</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center">2,499,583</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center">&#160;</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><i>Proposal
+No.&#160;8</i></b></span><i>: To ratify the appointment of KPMG LLP as Aerovate&#8217;s independent registered public accounting firm
+for fiscal year ending December&#160;31, 2025; provided that PricewaterhouseCoopers LLP is expected to be appointed for that fiscal year
+if the Merger is completed.</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">This proposal was approved by the requisite vote
+of the Company&#8217;s stockholders.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: Black 1pt solid; white-space: nowrap; width: 22%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>For</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; white-space: nowrap; width: 25%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Against</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; white-space: nowrap; width: 26%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Abstain</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; white-space: nowrap; width: 24%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Broker Non-Votes</b></span></td></tr>
+  <tr style="background-color: #CCEEFF">
+    <td style="vertical-align: top; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">26,418,033</span></td>
+    <td style="vertical-align: bottom">&#160;</td>
+    <td style="vertical-align: top; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">13,490</span></td>
+    <td style="vertical-align: bottom">&#160;</td>
+    <td style="vertical-align: top; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">5,032</span></td>
+    <td style="vertical-align: bottom">&#160;</td>
+    <td style="vertical-align: top; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">0</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><i>Proposal
+No.&#160;9</i></b></span><i>: To approve of an adjournment of the Special Meeting, if necessary, to solicit additional proxies if there
+are not sufficient votes in favor of Proposal No.&#160;1, Proposal No.&#160;2 and Proposal No.&#160;3.</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">At the Special Meeting, (i)&#160;Proposal No.&#160;1
+was approved by the affirmative vote of a majority of the votes properly cast by the holders of Aerovate common stock at the Special Meeting,
+(ii)&#160;Proposal No.&#160;2 was approved by the affirmative vote of the holders of a majority in voting power of the outstanding shares
+of Aerovate common stock entitled to vote, (iii)&#160;Proposal No.&#160;3 was approved by the affirmative vote of the holders of a majority
+in voting power of the outstanding shares of Aerovate common stock entitled to vote, (iv)&#160;Proposal No.&#160;4 was approved by the
+affirmative vote of the holders of a majority in voting power of the outstanding shares of Aerovate common stock entitled to vote, (v)&#160;Proposal
+No.&#160;5 was approved by the affirmative vote of a majority of the votes properly cast by the holders of Aerovate common stock at the
+Special Meeting, (vi)&#160;Proposal No.&#160;6 was approved by the affirmative vote of a majority of the votes properly cast by the holders
+of Aerovate common stock at the Special Meeting, (vii)&#160;the Class&#160;I director nominees under Proposal No.&#160;7 were elected
+by the affirmative vote of a plurality of the votes properly cast by the holders of Aerovate common stock, and (viii)&#160;Proposal No.&#160;8
+was approved by the affirmative vote of a majority of the votes properly cast by the holders of Aerovate common stock at the Special Meeting.
+As there were sufficient votes to approve Proposal No.&#160;1, Proposal No.&#160;2 and Proposal No.&#160;3 at the time of the Special
+Meeting, Proposal No.&#160;9 was not presented to stockholders.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 3 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0pt; margin-bottom: 0pt"><tr style="vertical-align: top">
+<td style="width: 12%"><b>Item 7.01</b></td><td style="width: 88%"><b>Regulation FD Disclosure</b></td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On April&#160;21, 2025, Aerovate issued a press
+release titled &#8220;Aerovate Therapeutics Stockholders Approve Proposed Merger with Jade Biosciences and All Related Proposals.&#8221;
+A copy of the press release is being furnished as Exhibit&#160;99.1 to this Current Report on Form&#160;8-K.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The information under Item 7.01 of this Current
+Report on Form&#160;8-K (including Exhibit&#160;99.1) is intended to be furnished and shall not be deemed &#8220;filed&#8221; for purposes
+of Section&#160;18 of the Securities Exchange Act of 1934, as amended (the &#8220;Exchange Act&#8221;), or otherwise subject to the liabilities
+of that section, nor shall it be deemed incorporated by reference in any filing under the Securities Act of 1933, as amended, or the Exchange
+Act, except as expressly set forth by specific reference in such filing.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+<tr style="vertical-align: top">
+  <td style="width: 12%"><b>Item 8.01 </b></td>
+  <td style="width: 88%"><b>Other Events.</b></td></tr>
+</table>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">At the Special Meeting on April&#160;16, 2025,
+Aerovate&#8217;s stockholders approved the Reverse Stock Split Proposal. Following this approval, Aerovate&#8217;s board of directors
+approved the reverse stock split of Aerovate&#8217;s issued and outstanding common stock at a final ratio, agreed to by Jade, of 1-for-35
+shares of Aerovate common stock (the &#8220;Reverse Stock Split&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Prior to the closing of the Merger, Aerovate will
+file a certificate of amendment to the Aerovate Charter with the Secretary of State of the State of Delaware to effect the Reverse Stock
+Split. Upon the effectiveness of such amendment (the &#8220;Reverse Stock Split Effective Time&#8221;), each 35 shares of Aerovate common
+stock outstanding immediately prior to the Reverse Stock Split Effective Time will be combined and reclassified, automatically and without
+any action on the part of Aerovate or its stockholders, into one new share of Aerovate common stock. No fractional shares of common stock
+will be issued as a result of the Reverse Stock Split. Stockholders of record who otherwise would be entitled to receive fractional shares
+because they hold a number of pre-split shares not evenly divisible by the number of pre-split shares for which each post-split share
+is to be reclassified, will be entitled to a cash payment in lieu thereof at a price equal to the fraction of a share to which the stockholder
+would otherwise be entitled multiplied by the closing price of the Company&#8217;s common stock on Nasdaq on the date of the filing of
+the amendment to the Aerovate Charter effecting the Reverse Stock Split.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Reverse Stock Split is expected to reduce
+the number of Aerovate&#8217;s outstanding common stock from approximately 30.0 million shares to approximately 0.8 million shares of
+common stock. The number of shares of Aerovate&#8217;s authorized common stock will not be affected by the Reverse Stock Split. At the
+Special Meeting, Aerovate&#8217;s stockholders approved an increase in the number of shares of Aerovate&#8217;s authorized common stock
+from 150,000,000 to 300,000,000 shares in connection with closing of the Merger. The par value per share of the common stock will remain
+unchanged.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">In addition, effective as of the Reverse Stock
+Split Effective Time and as a result of the Reverse Stock Split, proportionate adjustments will be made to the per share exercise price
+and the number of shares issuable upon the exercise, vesting or settlement of all outstanding options to purchase shares of Aerovate common
+stock, and the number of shares reserved for issuance pursuant to Aerovate&#8217;s existing equity incentive and employee stock purchase
+plans will be reduced proportionately based on the Reverse Stock Split.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Following the Reverse Stock Split Effective Time
+and consummation of the Merger, the combined company&#8217;s common stock is expected to commence trading on a split-adjusted, post-Merger
+basis on Nasdaq under the name &#8220;Jade Biosciences,&#160;Inc.&#8221; and ticker symbol &#8220;JBIO&#8221; at the open of trading on
+April&#160;29, 2025, at which time the common stock will be represented by a new CUSIP number (008064206) and ISIN Number (US0080642061).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 4 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">The previously announced special cash dividend (the &#8220;Cash Dividend&#8221;)
+will not be affected by the Reverse Stock Split. An aggregate Cash Dividend of $69.6 million, or an estimated $2.40 per share, will be
+payable in cash to Aerovate&#8217;s stockholders of record as of April&#160;25, 2025 based on their holdings as of that date prior to
+the Reverse Stock Split. The estimated per share dividend is based on 28,985,019 shares of Aerovate&#8217;s common stock outstanding as
+of April&#160;18, 2025.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Following the closing of the Merger, Jade Biosciences&#8217; total
+issued and outstanding common stock is expected to be approximately 32.2 million shares, or approximately 60.6 million shares on a fully-diluted
+basis.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0pt; margin-bottom: 0pt"><tr style="vertical-align: top">
+<td style="width: 0"/><td style="width: 1in"><b>Item 9.01</b></td><td><b>Financial Statements and Exhibits</b></td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">(d)&#160;Exhibits</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1pt solid; white-space: nowrap"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Exhibit<br/> No.</span></td>
+    <td>&#160;</td>
+    <td style="border-bottom: black 1pt solid"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Description</span></td></tr>
+  <tr>
+    <td style="white-space: nowrap; vertical-align: top"><a href="tm2512432d1_ex99-1.htm">99.1</a></td>
+    <td style="vertical-align: bottom">&#160;</td>
+    <td style="vertical-align: top"><a href="tm2512432d1_ex99-1.htm">Press Release issued by Aerovate Therapeutics,&#160;Inc. on April&#160;21, 2025, furnished herewith.</a></td></tr>
+  <tr>
+    <td style="white-space: nowrap; vertical-align: top">104</td>
+    <td style="vertical-align: bottom">&#160;</td>
+    <td style="vertical-align: top">Cover Page&#160;Interactive Data File (embedded within the Inline XBRL document)</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Forward-Looking Statements</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Certain statements in this Current Report on Form&#160;8-K, other than
+purely historical information, may constitute &#8220;forward-looking statements&#8221; within the meaning of the federal securities laws,
+including for purposes of the &#8220;safe harbor&#8221; provisions under the Private Securities Litigation Reform Act of 1995, concerning
+Aerovate, Jade, the proposed pre-closing financing and the proposed merger between Aerovate and Jade (collectively, the &#8220;Proposed
+Transactions&#8221;) and other matters. These forward-looking statements include, but are not limited to: Aerovate&#8217;s payment of
+the Cash Dividend in connection with the Proposed Transactions, including anticipated amount and timing; expectations related to anticipated
+timing of the closing of the Merger and satisfaction (or waiver) of closing conditions under the Merger Agreement; the combined company&#8217;s
+listing on Nasdaq after the closing of the proposed Merger; the number of shares of Aerovate common stock that may be outstanding as a
+result of the Reverse Stock Split; expectations regarding the ownership structure of the combined company; and the expected executive
+officers and directors of the combined company. In addition, any statements that refer to projections, forecasts or other characterizations
+of future events or circumstances, including any underlying assumptions, are forward-looking statements. The words &#8220;opportunity,&#8221;
+&#8220;potential,&#8221; &#8220;can,&#8221; &#8220;goal,&#8221; &#8220;strategy,&#8221; &#8220;target,&#8221; &#8220;anticipate,&#8221;
+&#8220;achieve,&#8221; &#8220;believe,&#8221; &#8220;contemplate,&#8221; &#8220;continue,&#8221; &#8220;could,&#8221; &#8220;estimate,&#8221;
+&#8220;expect,&#8221; &#8220;intends,&#8221; &#8220;may,&#8221; &#8220;plan,&#8221; &#8220;possible,&#8221; &#8220;project,&#8221; &#8220;should,&#8221;
+&#8220;will,&#8221; &#8220;would&#8221; and similar expressions (including the negatives of these terms or variations of them) may identify
+forward-looking statements, but the absence of these words does not mean that a statement is not forward-looking. These forward-looking
+statements are based on current expectations and beliefs concerning future developments and their potential effects. There can be no assurance
+that future developments affecting Aerovate, Jade, the Proposed Transactions, the Cash Dividend or the Reverse Stock Split will be those
+that have been anticipated. These forward-looking statements involve a number of risks, uncertainties (some of which are beyond Aerovate&#8217;s
+control) or other assumptions that may cause actual results or performance to be materially different from those expressed or implied
+by these forward-looking statements. These risks and uncertainties include, but are not limited to, the risk that the conditions to the
+closing or consummation of the Proposed Transactions are not satisfied; the risk that the proposed pre-closing financing is not completed
+in a timely manner or at all; uncertainties as to the timing of the consummation of the Proposed Transactions and the ability of each
+of Aerovate and Jade to consummate the transactions contemplated by the Proposed Transactions; risks related to Aerovate&#8217;s continued
+listing on Nasdaq until closing of the Proposed Transactions and the combined company&#8217;s ability to remain listed following the Proposed
+Transactions; risks related to Aerovate&#8217;s and Jade&#8217;s ability to correctly estimate their respective operating expenses and
+expenses associated with the Proposed Transactions, as applicable, as well as uncertainties regarding the impact any delay in the closing
+of any of the Proposed Transactions would have on the anticipated cash resources of the resulting combined company upon closing and other
+events and unanticipated spending and costs that could reduce the combined company&#8217;s cash resources; the failure or delay in obtaining
+required approvals from any governmental or quasi-governmental entity necessary to consummate the Proposed Transactions; the occurrence
+of any event, change or other circumstance or condition that could give rise to the termination of the business combination between Aerovate
+and Jade; costs related to the merger; as a result of adjustments to the exchange ratio, Jade stockholders and Aerovate stockholders could
+own more or less of the combined company than is currently anticipated; the outcome of any legal proceedings that may be instituted against
+Aerovate, Jade or any of their respective directors or officers related to the Merger Agreement or the transactions contemplated thereby;
+unexpected costs, charges or expenses resulting from the Proposed Transactions; potential adverse reactions or changes to business relationships
+resulting from the announcement or completion of the Proposed Transactions; the risk that Aerovate stockholders receive more or less of
+the Cash Dividend than is currently anticipated; and those uncertainties and factors more fully described in filings with the SEC, including
+reports filed on Form&#160;10-K, 10-Q and 8-K, in other filings that Aerovate makes and will make with the SEC in connection with the
+proposed Merger, including the proxy statement/prospectus on Form&#160;S-4 filed by Aerovate with the SEC on March&#160;24, 2025, as well
+as discussions of potential risks, uncertainties, and other important factors included in other filings by Aerovate from time to time,
+any risk factors related to Aerovate or Jade made available to you in connection with the Proposed Transactions, as well as risk factors
+associated with companies, such as Jade, that operate in the biopharma industry. Should one or more of these risks or uncertainties materialize,
+or should any of Aerovate&#8217;s or Jade&#8217;s assumptions prove incorrect, actual results may vary in material respects from those
+projected in these forward-looking statements. Nothing in this Current Report on Form&#160;8-K should be regarded as a representation
+by any person that the forward-looking statements set forth herein will be achieved or that any of the contemplated results of such forward-looking
+statements will be achieved. You should not place undue reliance on forward-looking statements in this Current Report on Form&#160;8-K,
+which speak only as of the date they are made and are qualified in their entirety by reference to the cautionary statements herein. Neither
+Aerovate nor Jade undertakes or accepts any duty to release publicly any updates or revisions to any forward-looking statements. This
+Current Report on Form&#160;8-K does not purport to summarize all of the conditions, risks and other attributes of an investment in Aerovate
+or Jade.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 5 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>No Offer or Solicitation</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">This Current Report on Form&#160;8-K is not intended to and does not
+constitute an offer to sell or the solicitation of an offer to subscribe for or buy or an invitation to purchase or subscribe for any
+securities pursuant to the Proposed Transactions or otherwise, nor shall there be any sale, issuance or transfer of securities in any
+jurisdiction in contravention of applicable law. No offer of securities shall be made except by means of a prospectus meeting the requirements
+of the Securities Act of 1933, as amended, or an exemption therefrom. Subject to certain exceptions to be approved by the relevant regulators
+or certain facts to be ascertained, the public offer will not be made directly or indirectly, in or into any jurisdiction where to do
+so would constitute a violation of the laws of such jurisdiction, or by use of the mails or by any means or instrumentality (including
+without limitation, facsimile transmission, telephone and the internet) of interstate or foreign commerce, or any facility of a national
+securities exchange, of any such jurisdiction.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">NEITHER THE SEC NOR ANY STATE SECURITIES COMMISSION HAS APPROVED OR
+DISAPPROVED OF THE SECURITIES OR DETERMINED IF THIS CURRENT REPORT ON FORM&#160;8-K IS TRUTHFUL OR COMPLETE.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 6 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Pursuant to the requirements of the Securities Exchange Act of 1934,
+the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td>&#160;</td>
+    <td colspan="2"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Aerovate Therapeutics,&#160;Inc.</span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td>&#160;</td>
+    <td colspan="2">&#160;</td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="width: 50%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Date: April&#160;</span>21, 2025</td>
+    <td style="width: 3%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">By: </span></td>
+    <td style="border-bottom: black 1pt solid; width: 47%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#8239;/s/ George A. Eldridge</span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">George A. Eldridge</span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Chief Financial Officer</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 7; Options: Last -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxFjdEKgkAQRb/Afxj2OUy3evGtpCKyCInodcsplnRHZjfTT+ov25RoGBiGe8+9QozEmla6RIbzIs/giFVdKoeQ4w0ZzRW9I91sE/A3x7u2jpVx/fsDU/IMemYWyunFC7210RaLBOJoPInHcgqxTCYzmO9E8NVTMjddoHFalaBMAQemmjU6xd2QcFQtGaq6vuqEbDUZHxdGg/wGGcUS9tSoF/HDQpalIhj1E4g107P2rmXr0HxJWJZY+To70P8NPv0rSnw= -->
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

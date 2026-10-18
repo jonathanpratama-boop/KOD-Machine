@@ -1,0 +1,525 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2026" xmlns:us-gaap="http://fasb.org/us-gaap/2026" xmlns:us-roles="http://fasb.org/us-roles/2026" xmlns:dtr-types="http://www.xbrl.org/dtr/type/2024-01-31" xmlns:country="http://xbrl.sec.gov/country/2026" xmlns:srt="http://fasb.org/srt/2026" xmlns:GRML="http://greenlandmines.com/20260722">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02F_US%2DGAAP%2D2026 -->
+<!-- Field: Set; Name: xdx; ID: xdx_037_GRML_greenlandmines.com_20260722 -->
+<!-- Field: Set; Name: xdx; ID: xdx_04C_20260722_20260722 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_051_edei%2D%2DEntityCentralIndexKey_0001907223 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2026-07-22" id="Fact000003" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2026-07-22" id="Fact000004" name="dei:EntityCentralIndexKey">0001907223</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="grml-20260722.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2026-07-22">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001907223</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2026-07-22</xbrli:startDate>
+        <xbrli:endDate>2026-07-22</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2026-07-222026-07-22_us-gaap_CommonStockMember">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001907223</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">us-gaap:CommonStockMember</xbrldi:explicitMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2026-07-22</xbrli:startDate>
+        <xbrli:endDate>2026-07-22</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2026-07-222026-07-22_custom_WarrantsMember">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001907223</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">GRML:WarrantsMember</xbrldi:explicitMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2026-07-22</xbrli:startDate>
+        <xbrli:endDate>2026-07-22</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>UNITED STATES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Washington, D.C. 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>FORM&#160;<span id="xdx_90B_edei--DocumentType_c20260722__20260722_zsPpol91IAA3"><ix:nonNumeric contextRef="AsOf2026-07-22" id="Fact000009" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>PURSUANT TO SECTION 13 OR 15(d) OF THE</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SECURITIES EXCHANGE ACT OF 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Date of Report (Date of earliest event reported):
+<b><span id="xdx_909_edei--DocumentPeriodEndDate_c20260722__20260722_zljkTF7WAsF6"><ix:nonNumeric contextRef="AsOf2026-07-22" format="ixt:datemonthdayyearen" id="Fact000010" name="dei:DocumentPeriodEndDate">July 22, 2026</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_90B_edei--EntityRegistrantName_c20260722__20260722_zZJWBI1Mf4T4"><ix:nonNumeric contextRef="AsOf2026-07-22" id="Fact000011" name="dei:EntityRegistrantName">Greenland Mines Ltd</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Exact name of registrant as specified in its charter)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_902_edei--EntityIncorporationStateCountryCode_c20260722__20260722_zRJiPKNzUAEe"><ix:nonNumeric contextRef="AsOf2026-07-22" format="ixt-sec:stateprovnameen" id="Fact000012" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(State or other jurisdiction of incorporation)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: black 1.5pt solid; width: 49%; font-size: 10pt; text-align: center"><span style="font-size: 10pt; background-color: white"><b><span id="xdx_901_edei--EntityFileNumber_c20260722__20260722_zLTL4vdK3xt"><ix:nonNumeric contextRef="AsOf2026-07-22" id="Fact000013" name="dei:EntityFileNumber">001-41340</ix:nonNumeric></span></b></span></td>
+    <td style="width: 2%; padding-bottom: 1.5pt; font-size: 10pt; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 49%; font-size: 10pt; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_900_edei--EntityTaxIdentificationNumber_c20260722__20260722_z5dTh0PXwJd7"><ix:nonNumeric contextRef="AsOf2026-07-22" id="Fact000014" name="dei:EntityTaxIdentificationNumber">86-2727441</ix:nonNumeric></span></b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="font-size: 10pt; text-align: center"><span style="font-size: 10pt">(Commission File Number)</span></td>
+    <td style="font-size: 10pt; text-align: center">&#160;</td>
+    <td>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(IRS Employer</p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Identification No.)</p></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span id="xdx_907_edei--EntityAddressAddressLine1_c20260722__20260722_zmKf5J1a1Wda"><ix:nonNumeric contextRef="AsOf2026-07-22" id="Fact000015" name="dei:EntityAddressAddressLine1">1300 South Boulevard</ix:nonNumeric></span>, <span id="xdx_90F_edei--EntityAddressAddressLine2_c20260722__20260722_zqJnnyl1RUcl"><ix:nonNumeric contextRef="AsOf2026-07-22" id="Fact000016" name="dei:EntityAddressAddressLine2">Suite D</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span id="xdx_901_edei--EntityAddressCityOrTown_c20260722__20260722_zRq9T1mzHrai"><ix:nonNumeric contextRef="AsOf2026-07-22" id="Fact000017" name="dei:EntityAddressCityOrTown">Charlotte</ix:nonNumeric></span>, <span id="xdx_900_edei--EntityAddressStateOrProvince_c20260722__20260722_zsOv1vSgYRp6"><ix:nonNumeric contextRef="AsOf2026-07-22" id="Fact000018" name="dei:EntityAddressStateOrProvince">NC</ix:nonNumeric></span> <span id="xdx_90D_edei--EntityAddressPostalZipCode_c20260722__20260722_z76SHRuVmBH9"><ix:nonNumeric contextRef="AsOf2026-07-22" id="Fact000019" name="dei:EntityAddressPostalZipCode">28203</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Address of principal executive offices) (Zip Code)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Registrant&#8217;s telephone number, including
+area code&#160;(<span id="xdx_904_edei--CityAreaCode_c20260722__20260722_zLB0zjD9Axic"><ix:nonNumeric contextRef="AsOf2026-07-22" id="Fact000020" name="dei:CityAreaCode">833</ix:nonNumeric></span>) <span id="xdx_909_edei--LocalPhoneNumber_c20260722__20260722_zrxQ0o9zSqe5"><ix:nonNumeric contextRef="AsOf2026-07-22" id="Fact000021" name="dei:LocalPhoneNumber">931-6330</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Former name or former address, if changed since
+last report)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Check the appropriate box below if the Form 8-K
+filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_907_edei--WrittenCommunications_c20260722__20260722_zPoZWrCnfqdc"><ix:nonNumeric contextRef="AsOf2026-07-22" format="ixt:booleanfalse" id="Fact000022" name="dei:WrittenCommunications">&#9744;</ix:nonNumeric></span></span></td><td style="text-align: justify"><span style="font-size: 10pt">Written communications pursuant
+to&#160;Rule 425&#160;under the&#160;Securities Act&#160;(17 CFR 230.425)</span></td>
+</tr></table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_902_edei--SolicitingMaterial_c20260722__20260722_ze9sQHhH3iW7"><ix:nonNumeric contextRef="AsOf2026-07-22" format="ixt:booleanfalse" id="Fact000023" name="dei:SolicitingMaterial">&#9744;</ix:nonNumeric></span></span></td><td style="text-align: justify"><span style="font-size: 10pt">Soliciting material pursuant to&#160;Rule
+14a-12&#160;under the&#160;Exchange Act&#160;(17 CFR 240.14a-12)</span></td>
+</tr></table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_905_edei--PreCommencementTenderOffer_c20260722__20260722_zAEzzAZxfkh7"><ix:nonNumeric contextRef="AsOf2026-07-22" format="ixt:booleanfalse" id="Fact000024" name="dei:PreCommencementTenderOffer">&#9744;</ix:nonNumeric></span></span></td><td style="text-align: justify"><span style="font-size: 10pt">Pre-commencement communications
+pursuant to&#160;Rule 14d-2(b) under the&#160;Exchange Act&#160;(17 CFR 240.14d-2(b))</span></td>
+</tr></table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90F_edei--PreCommencementIssuerTenderOffer_c20260722__20260722_z4J10IfbSSU9"><ix:nonNumeric contextRef="AsOf2026-07-22" format="ixt:booleanfalse" id="Fact000025" name="dei:PreCommencementIssuerTenderOffer">&#9744;</ix:nonNumeric></span></span></td><td style="text-align: justify"><span style="font-size: 10pt">Pre-commencement communications
+pursuant to&#160;Rule 13e-4(c) under the&#160;Exchange Act&#160;(17 CFR 240.13e-4(c))</span></td>
+</tr></table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Securities registered pursuant to Section 12(b)
+of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><span style="font-size: 10pt"><b>Title of Each Class</b></span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><span style="font-size: 10pt"><b>Trading Symbol(s)</b></span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><span style="font-size: 10pt"><b>Name of Each Exchange on Which Registered</b></span></td></tr>
+  <tr style="vertical-align: top; background-color: #CCEEFF">
+    <td style="text-align: center"><span style="font-size: 10pt"><span id="xdx_904_edei--Security12bTitle_c20260722__20260722__us-gaap--StatementClassOfStockAxis__custom--CommonStockMember_zJHWNclvS47b"><ix:nonNumeric contextRef="From2026-07-222026-07-22_us-gaap_CommonStockMember" id="Fact000026" name="dei:Security12bTitle">Common Stock</ix:nonNumeric></span></span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt"><span id="xdx_90C_edei--TradingSymbol_c20260722__20260722__us-gaap--StatementClassOfStockAxis__custom--CommonStockMember_zNbsIE3o3ktg"><ix:nonNumeric contextRef="From2026-07-222026-07-22_us-gaap_CommonStockMember" id="Fact000027" name="dei:TradingSymbol">GRML</ix:nonNumeric></span></span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">The <span id="xdx_905_edei--SecurityExchangeName_c20260722__20260722__us-gaap--StatementClassOfStockAxis__custom--CommonStockMember_zePseZbFJDNd"><ix:nonNumeric contextRef="From2026-07-222026-07-22_us-gaap_CommonStockMember" format="ixt-sec:exchnameen" id="Fact000028" name="dei:SecurityExchangeName">Nasdaq</ix:nonNumeric></span>&#160;Stock Market LLC</span></td></tr>
+  <tr style="vertical-align: top; background-color: white">
+    <td style="text-align: center"><span style="font-size: 10pt"><span id="xdx_90B_edei--Security12bTitle_c20260722__20260722__us-gaap--StatementClassOfStockAxis__custom--WarrantsMember_zy88Ps3K7oi2"><ix:nonNumeric contextRef="From2026-07-222026-07-22_custom_WarrantsMember" id="Fact000029" name="dei:Security12bTitle">Warrants</ix:nonNumeric></span></span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt"><span id="xdx_903_edei--TradingSymbol_c20260722__20260722__us-gaap--StatementClassOfStockAxis__custom--WarrantsMember_zA1SGHKhqol4"><ix:nonNumeric contextRef="From2026-07-222026-07-22_custom_WarrantsMember" id="Fact000030" name="dei:TradingSymbol">GRMLW</ix:nonNumeric></span></span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">The <span id="xdx_908_edei--SecurityExchangeName_c20260722__20260722__us-gaap--StatementClassOfStockAxis__custom--WarrantsMember_zDutgkywxt0h"><ix:nonNumeric contextRef="From2026-07-222026-07-22_custom_WarrantsMember" format="ixt-sec:exchnameen" id="Fact000031" name="dei:SecurityExchangeName">Nasdaq</ix:nonNumeric></span>&#160;Stock Market LLC</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Indicate by check mark whether the registrant
+is an emerging growth company as defined in&#160;Rule 405&#160;of the&#160;Securities Act of 1933&#160;(&#167;230.405 of this chapter)
+or&#160;Rule 12b-2&#160;of the&#160;Securities Exchange Act of 1934&#160;(&#167;240.12b-2 of this chapter).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right">Emerging growth company&#160;<span style="font-family: Times New Roman, Times, Serif"><span id="xdx_903_edei--EntityEmergingGrowthCompany_c20260722__20260722_zlq9kApBtOE4"><ix:nonNumeric contextRef="AsOf2026-07-22" format="ixt:booleantrue" id="Fact000032" name="dei:EntityEmergingGrowthCompany">&#9746;</ix:nonNumeric></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">If an emerging growth company, indicate by check
+mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting
+standards provided pursuant to Section 13(a) of the&#160;Exchange Act.&#160;<span style="font-family: Times New Roman, Times, Serif"><span id="xdx_900_edei--EntityExTransitionPeriod_c20260722__20260722_zvfqVbpApZCd"><ix:nonNumeric contextRef="AsOf2026-07-22" format="ixt:booleanfalse" id="Fact000033" name="dei:EntityExTransitionPeriod">&#9744;</ix:nonNumeric></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Item 1.01. Entry into a Material Definitive Agreement.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">On July 21, 2026, the board of directors (the &#8220;Board of Directors&#8221;)
+of Greenland Mines Ltd. (the &#8220;Company&#8221;) declared a dividend of one right (a &#8220;Right&#8221;) for each outstanding share
+of Common Stock, par value $0.0001 per share of the Company (the &#8220;Common Shares&#8221;). The dividend is payable on August 7, 2026
+to stockholders of record as of the close of business on that date (the &#8220;Record Date&#8221;). Each Right, once exercisable, entitles
+the registered holder of Common Shares to purchase from the Company one (1) Common Share, at a price of $0.75, subject to certain adjustments
+(the &#8220;Exercise Price&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">The description and terms of the Rights are set forth in a Stockholder
+Rights Agreement, dated as of July 22, 2026 (as it may be amended from time to time, the &#8220;Rights Agreement&#8221;) by and between
+the Company and Continental Stock Transfer and Trust, as rights agent (the &#8220;Rights Agent&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">The following description of the terms of the Rights Agreement does
+not purport to be complete and is qualified in its entirety by reference to the full text of the Rights Agreement, including the exhibits
+thereto, a copy of which is attached as Exhibit 4.1 hereto and incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span style="text-decoration: underline">Distribution and Exercise of Rights; Distribution Date and Expiration
+Date</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Subject to the terms and conditions of the Rights Agreement, the Rights
+will be issued in respect of all Common Shares outstanding on the Record Date, and in respect of all Common Shares issued after the Record
+Date and prior to the earliest to occur of the Distribution Date (as defined below) and the Expiration Date (as defined below). In addition,
+following the Distribution Date and prior to the Expiration Date, the Company may issue Rights in respect of any voting shares of the
+Company issued or sold pursuant to any of the following, to the extent already existing or outstanding prior to the Distribution Date:
+the exercise of stock options, under any employee plan or arrangement, upon the exercise, conversion or exchange of securities, notes
+or debentures issued by the Company or pursuant to contractual obligations of the Company.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">The Rights are not exercisable until the Distribution Date and will expire
+upon the close of business on the earliest to occur of: (i) July 22, 2027, (ii) the date on which the rights are redeemed or exchanged
+by the Board of Directors in accordance with the Rights Agreement or (iii) the date of the Company&#8217;s 2027 annual meeting of stockholders
+if requisite stockholder approval of the Rights Agreement is not obtained at such meeting (such date, the &#8220;Expiration Date&#8221;).
+Subject to certain exceptions specified in the Rights Agreement, the Rights will separate from the Common Shares and become exercisable
+upon the close of business on the day (the &#8220;Distribution Date&#8221;) which is the earlier to occur of (i) the tenth (10th) business
+day following a public announcement that a person or group of affiliated or associated persons (subject to certain exceptions set forth
+in the Rights Agreement) has acquired beneficial ownership of 15% or more of the outstanding Common Shares (an &#8220;Acquiring Person&#8221;)
+and (ii) the tenth (10th) business day (or such later date as may be determined by the Board of Directors prior to such time as any person
+or group of affiliated or associated persons becomes an Acquiring Person) after the date of the commencement of, or the first public announcement
+of the intention to commence, by any person (other than an Exempt Person, as defined in the Rights Agreement) a tender or exchange offer,
+the consummation of which would result in such person or group of affiliated or associated persons becoming an Acquiring Person. For purposes
+of calculating beneficial ownership under the Rights Agreement, certain synthetic interests in securities created by derivative positions
+are treated as beneficial ownership of the number of Common Shares equivalent to the economic exposure created by the derivative security.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 2; Options: NewSection; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->1<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span style="text-decoration: underline">Transfer of Rights Prior to the Distribution Date; Right Certificates</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Prior to the Distribution Date, the Rights will not be represented
+by a separate certificate, and will be evidenced by the certificate or book-entry account, as applicable, representing record ownership
+of the associated Common Shares. Until the earlier of the Distribution Date and the Expiration Date, any new Common Share certificate
+(the &#8220;Share Certificates&#8221;) issued after the Record Date will, in each case, contain a legend incorporating the Rights Agreement
+by reference. Notice of such legend will also be provided to holders of any new uncertificated Common Shares.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">The Rights Agreement provides that, prior to the Distribution Date
+(or the earlier occurrence of the Expiration Date), the Rights will be transferrable only together with the transfer of the Common Shares.
+During such period, the surrender for transfer of any Share Certificates (or the effectuation of a book-entry transfer of Common Shares)
+will also constitute the transfer of the Rights associated with such Common Shares, as applicable, represented thereby. As soon as practicable
+following the Distribution Date, separate certificates evidencing the Rights (&#8220;Right Certificates&#8221;) will be mailed to holders
+of record of the Common Shares, as of the close of business on the Distribution Date, and such separate certificates alone will evidence
+the Rights from and after the Distribution Date. The Company and the Rights Agent may from time to time amend the Rights Agreement to
+provide for uncertificated Rights in addition to or in place of Rights evidenced by Rights Certificates.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span style="text-decoration: underline">Shares Purchasable Upon Exercise of Rights</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">After the Distribution Date, each Right (other than Rights beneficially
+owned by an Acquiring Person and certain affiliates, associates and transferees thereof, whose Rights will have become null and void)
+will entitle the holder to purchase, upon payment of the Exercise Price, one (1) Common Share (subject to certain anti-dilution adjustments
+set forth in the Rights Agreement and described below).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span style="text-decoration: underline">Anti-Dilution</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">The Exercise Price, the number of outstanding Rights and the number
+of Common Shares issuable upon exercise of the Rights are subject to certain adjustments from time to time to prevent dilution in the
+event of a stock dividend on, stock split affecting or a subdivision or combination of, or a reclassification of, the Common Shares, or
+if a person or group becomes an Acquiring Person. With certain exceptions, no adjustment in the Exercise Price will be required until
+cumulative adjustments require an adjustment, upward or downward, of at least 1% in such Exercise Price. Consequences of a Person or Group
+Becoming an Acquiring Person Flip-In Trigger. In the event that a person or group becomes an Acquiring Person, each Right (other than
+Rights beneficially owned by an Acquiring Person and certain affiliates, associates and transferees thereof, whose Rights will have become
+null and void), will thereafter entitle the holder to purchase (in lieu of acquiring one (1) Common Share), upon payment of the Exercise
+Price, a number of Common Shares having a fair market value (determined pursuant to the Rights Agreement) equal to approximately two (2)
+times the Exercise Price in accordance with the terms of the Rights Agreement. Flip-Over Trigger. In the event that, after the time that
+a person or group becomes an Acquiring Person, the Company is acquired in a merger or other business combination (in which any Common
+Shares are changed into or exchanged for other securities or assets) or more than fifty percent (50%) of the consolidated assets or earning
+power of the Company and its subsidiaries are sold, proper provision will be made so that each holder of record of a Right (other than
+Rights beneficially owned by an Acquiring Person and certain affiliates, associates and transferees thereof, whose Rights will have become
+null and void) will thereafter have the right to receive, upon exercise of the Right, that number of shares of common stock of the Principal
+Party (as such term is defined in the Rights Agreement) having a fair market value at the time of such transaction determined in accordance
+with the Rights Agreement equal to approximately two (2) times the Exercise Price. Exchange of Rights. At any time after any person or
+group becomes an Acquiring Person (but prior to the acquisition by such person or group of fifty percent (50%) or more of the outstanding
+Common Shares), the Board of Directors may exchange the Rights (other than Rights owned by such person or group which will have become
+null and void), in whole or in part, at an exchange ratio of one (1) Common Share for each Right (subject to adjustment to reflect any
+stock split, stock dividend or similar transaction occurring after the date of the Rights Agreement) in accordance with the Rights Agreement.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 3; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span style="text-decoration: underline">Redemption of Rights</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">The Rights are redeemable by the Board of Directors (in its sole discretion)
+at any time prior to a person or group becoming an Acquiring Person. The Board of Directors must redeem all outstanding Rights, at a redemption
+price of $0.0001 per Right, subject to adjustment for stock dividends, subdivisions, splits, combinations or consolidations with respect
+to the Common Shares (the &#8220;Redemption Price&#8221;) payable, at the option of the Company, in cash, Common Shares. The right to
+exercise the Rights will terminate immediately upon the effective time of the redemption, and thereafter the only right of the holders
+of Rights will be to receive the Redemption Price.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span style="text-decoration: underline">No Rights of Holders as a Stockholder</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Until a Right is exercised, the holder, in their capacity as such,
+will have no rights as a stockholder of the Company, including, without limitation, the right to vote or to receive dividends or to be
+deemed (or have the rights of a) holder of Common Shares or other securities that may at any time be issuable upon exercise thereof. Amendments
+For as long as the Rights are then redeemable, the Company may amend the Rights Agreement in any manner without the approval of any holders
+of the Rights. After the Rights are no longer redeemable, the Company may amend the Rights Agreement (other than the Redemption Price
+or in a manner that would cause the Rights to again become redeemable) without the approval of any holders of the Rights so long as amendment
+does not materially adversely affect the interests of the holders of Rights (other than an Acquiring Person or any other person in whose
+hands Rights have become null and in accordance with the Rights Agreement).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Item 3.03 Material Modification to Rights of Security Holders.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">The information set forth under Item 1.01 of this Current Report on
+Form 8-K is incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><span style="font-size: 10pt"><b>Item 8.01</b></span> <span style="font-size: 10pt"><b>Other Events.</b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><span style="font-size: 10pt"><b>&#160;</b></span></p>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">On July 23, 2026, the Company issued a press release announcing the
+adoption of the Rights Agreement and the declaration of the dividend of the Rights. A copy of the press release is attached hereto as
+Exhibit 99.1 and is incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: left">This Form 8-K contains forward-looking statements.
+These statements are made under the &#8220;safe harbor&#8221; provisions of the U.S. Private Securities Litigation Reform Act of 1995. These
+forward-looking statements generally are identified by the words &#8220;believe,&#8221; &#8220;project,&#8221; &#8220;expect,&#8221; &#8220;anticipate,&#8221;
+&#8220;estimate,&#8221; &#8220;intend,&#8221; &#8220;strategy,&#8221; &#8220;future,&#8221; &#8220;opportunity,&#8221; &#8220;plan,&#8221; &#8220;may,&#8221;
+&#8220;should,&#8221; &#8220;will,&#8221; &#8220;would,&#8221; &#8220;will be,&#8221; &#8220;will continue,&#8221; &#8220;will likely result,&#8221;
+and similar expressions. Without limiting the generality of the foregoing, the forward-looking statements in this press release include
+descriptions of the Company&#8217;s future commercial operations. Forward-looking statements are predictions, projections and other statements
+about future events that are based on current expectations and assumptions and, as a result, are subject to risks and uncertainties. Many
+factors could cause actual future events to differ materially from the forward-looking statements in this press release, such as the Company&#8217;s
+inability to implement its business plans, identify and realize additional opportunities, or meet or exceed its financial projections
+and changes in the regulatory or competitive environment in which the Company operates. You should carefully consider the foregoing factors
+and the other risks and uncertainties described in the documents filed or to be filed by the Company with the U.S. Securities and Exchange
+Commission (the &#8220;SEC&#8221;) from time to time, which could cause actual events and results to differ materially from those contained
+in the forward-looking statements. Copies of these documents are available on the SEC&#8217;s website, www.sec.gov. All information provided
+herein is as of the date of this press release, and the Company undertakes no obligation to update any forward-looking statement, except
+as required under applicable law.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt"><span style="font-size: 10pt"><b>Item 9.01</b></span> <span style="font-size: 10pt"><b>Financial Statements and Exhibits.</b></span></p>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: Black 1.5pt solid; width: 9%"><span style="font-size: 10pt"><b>Exhibits</b></span></td>
+    <td style="padding-bottom: 1.5pt; width: 1%"><b>&#160;</b></td>
+    <td style="border-bottom: Black 1.5pt solid; width: 90%"><span style="font-size: 10pt"><b>Description</b></span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td><span style="font-size: 10pt">4.1</span></td>
+    <td>&#160;</td>
+    <td><a href="ea029894801ex4-1.htm"><span style="font-size: 10pt">Stockholder Rights Agreement, dated as of July 22, 2026, by and
+    between Greenland Mines Ltd. and Continental Stock Transfer and Trust, as Rights Agent</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td><span style="font-size: 10pt">99.1</span></td>
+    <td>&#160;</td>
+    <td><a href="ea029894801ex99-1.htm"><span style="font-size: 10pt">Press Release</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td><span style="font-size: 10pt">104</span></td>
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt">Cover Page Interactive Data File (embedded within the Inline XBRL document).</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 24pt">&#160;</p>
+
+<!-- Field: Page; Sequence: 4; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->3<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 24pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: left; text-indent: 0.5in">Pursuant to the requirements
+of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned hereunto
+duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td><span style="font-size: 10pt">Dated: July 23, 2026</span></td>
+    <td colspan="2"><span style="font-size: 10pt"><b>GREENLAND MINES LTD</b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="width: 60%">&#160;</td>
+    <td style="width: 5%">&#160;</td>
+    <td style="width: 35%">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt">By:</span></td>
+    <td style="border-bottom: black 1.5pt solid"><span style="font-size: 10pt">/s/ Joseph Sinkule</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt">Name:&#160;</span></td>
+    <td><span style="font-size: 10pt">Joseph Sinkule</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt">Title:</span></td>
+    <td><span style="font-size: 10pt">Chief Executive Officer</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 5; Options: Last -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: normal 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->4<!-- Field: /Sequence --></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJx1kEFOwzAQRU+QO4y8rlrHQJGyg6hUiBRVoaJsTTJFVmNPNHZLeyRuieNQsQHLkjXz/5tvW4iJWNKD6ZDh7b6uYIO273RAqHGHjK7B6CgfnwqIZ40fxgfWLqTyApYUGYzMfHqjYz85j8ZjW4C8nSk1U3OQ10V+BeuVyAa9JLczLbpgdAfatbBm6tlg0HweJ2z0iRzZc0p6RfaGXAH5VI7yFyiZK3imo/4k3nuoqlJkk7QysWQ69NG1OAV0AwmLDm2M8yP9u9NtmoMPZIut5uFtfoX2HTn2c6lULu9+Ii/yH2T8AUvuJVCz/wceHZAslwHfWy5tZw== -->
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

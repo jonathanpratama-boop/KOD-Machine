@@ -1,0 +1,767 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2023" xmlns:ref="http://www.xbrl.org/2006/ref" xmlns:us-gaap="http://fasb.org/us-gaap/2023" xmlns:us-roles="http://fasb.org/us-roles/2023" xmlns:country="http://xbrl.sec.gov/country/2023" xmlns:srt="http://fasb.org/srt/2023" xmlns:SSNT="http://silversuntech.com/20231201">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html" />
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02C_US%2DGAAP%2D2023 -->
+<!-- Field: Set; Name: xdx; ID: xdx_035_SSNT_silversuntech.com_20231201 -->
+<!-- Field: Set; Name: xdx; ID: xdx_049_20231201_20231201 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_051_edei%2D%2DCurrentFiscalYearEndDate_%2D%2DLS0xMi0zMQ== -->
+<!-- Field: Set; Name: xdx; ID: xdx_053_edei%2D%2DEntityCentralIndexKey_0001236275 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2023-12-01" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2023-12-01" name="dei:CurrentFiscalYearEndDate">--12-31</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2023-12-01" name="dei:EntityCentralIndexKey">0001236275</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="ssnt-20231201.xsd" xlink:type="simple" />
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2023-12-01">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001236275</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2023-12-01</xbrli:startDate>
+        <xbrli:endDate>2023-12-01</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>UNITED STATES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">Washington, D.C. 20549&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>FORM <span id="xdx_901_edei--DocumentType_c20231201__20231201_zSZOCGMJN9cg"><ix:nonNumeric contextRef="AsOf2023-12-01" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>Pursuant to Section 13 or 15(d) of the Securities
+Exchange Act of 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">Date of Report (Date of
+earliest event reported): <b> December 4, 2023 (<span id="xdx_907_edei--DocumentPeriodEndDate_c20231201__20231201_zlhIGgBQgEO9"><ix:nonNumeric contextRef="AsOf2023-12-01" format="ixt:datemonthdayyearen" name="dei:DocumentPeriodEndDate">December 1, 2023</ix:nonNumeric></span>) </b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 100%; font-size: 10pt; text-align: center"><span style="font-size: 14pt"><b><span style="text-decoration: underline"><span id="xdx_909_edei--EntityRegistrantName_c20231201__20231201_zApbwUBqrFP6"><ix:nonNumeric contextRef="AsOf2023-12-01" name="dei:EntityRegistrantName">SILVERSUN TECHNOLOGIES, INC.</ix:nonNumeric></span></span></b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="font-size: 10pt; text-align: center"><span style="font-size: 10pt">(Exact name of registrant as specified in its charter)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: Black 1.5pt solid; width: 32%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_904_edei--EntityIncorporationStateCountryCode_c20231201__20231201_zBP5nejBxJFa"><ix:nonNumeric contextRef="AsOf2023-12-01" format="ixt-sec:stateprovnameen" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></b></span></td>
+    <td style="padding-bottom: 1.5pt; text-align: center; width: 2%">&#160;</td>
+    <td style="border-bottom: Black 1.5pt solid; width: 32%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_905_edei--EntityFileNumber_c20231201__20231201_zhB2pSPDSH1d"><ix:nonNumeric contextRef="AsOf2023-12-01" name="dei:EntityFileNumber">000-50302</ix:nonNumeric></span></b></span></td>
+    <td style="padding-bottom: 1.5pt; text-align: center; width: 2%">&#160;</td>
+    <td style="border-bottom: Black 1.5pt solid; width: 32%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_90A_edei--EntityTaxIdentificationNumber_c20231201__20231201_zyIQfeX5DXFk"><ix:nonNumeric contextRef="AsOf2023-12-01" name="dei:EntityTaxIdentificationNumber">16-1633636</ix:nonNumeric></span></b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="text-align: center">
+    <p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">(State or other jurisdiction</p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">of incorporation)</p></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">(Commission File Number)</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center">
+    <p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">(IRS Employer</p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">Identification No.)</p></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b><span id="xdx_90A_edei--EntityAddressAddressLine1_c20231201__20231201_zfcjMJD0gtk2"><ix:nonNumeric contextRef="AsOf2023-12-01" name="dei:EntityAddressAddressLine1">120 Eagle Rock Ave</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b><span style="text-decoration: underline"><span id="xdx_908_edei--EntityAddressCityOrTown_c20231201__20231201_zdKuP9btXsBi"><ix:nonNumeric contextRef="AsOf2023-12-01" name="dei:EntityAddressCityOrTown">East Hanover</ix:nonNumeric></span>, <span id="xdx_900_edei--EntityAddressStateOrProvince_c20231201__20231201_zco5O135N6x6"><ix:nonNumeric contextRef="AsOf2023-12-01" name="dei:EntityAddressStateOrProvince">NJ</ix:nonNumeric></span> <span id="xdx_905_edei--EntityAddressPostalZipCode_c20231201__20231201_zE8X6ltlqjt2"><ix:nonNumeric contextRef="AsOf2023-12-01" name="dei:EntityAddressPostalZipCode">07936</ix:nonNumeric></span></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">(Address of Principal Executive Offices)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b><span style="text-decoration: underline">(<span id="xdx_906_edei--CityAreaCode_c20231201__20231201_zhmLdQoIGrqf"><ix:nonNumeric contextRef="AsOf2023-12-01" name="dei:CityAreaCode">973</ix:nonNumeric></span>) <span id="xdx_903_edei--LocalPhoneNumber_c20231201__20231201_zDyrmdruVzWa"><ix:nonNumeric contextRef="AsOf2023-12-01" name="dei:LocalPhoneNumber">396-1720</ix:nonNumeric></span></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">Registrant&#8217;s telephone number, including
+area code</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin-top: 0pt; margin-bottom: 0pt">Check the appropriate box below if the 8-K filing is intended to
+simultaneously satisfy the filing obligations of the registrant under any of the following provisions:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 0.25in"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_909_edei--WrittenCommunications_c20231201__20231201_zdGJe6zYbQI6"><ix:nonNumeric contextRef="AsOf2023-12-01" format="ixt:booleanfalse" name="dei:WrittenCommunications">&#9744;</ix:nonNumeric></span></span></td>
+    <td><span style="font-size: 10pt">Written communication pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90C_edei--SolicitingMaterial_c20231201__20231201_zIm3nT3xgiUg"><ix:nonNumeric contextRef="AsOf2023-12-01" format="ixt:booleantrue" name="dei:SolicitingMaterial">&#9746;</ix:nonNumeric></span></span></td>
+    <td><span style="font-size: 10pt">Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_904_edei--PreCommencementTenderOffer_c20231201__20231201_zcaeAthoQ2Wi"><ix:nonNumeric contextRef="AsOf2023-12-01" format="ixt:booleanfalse" name="dei:PreCommencementTenderOffer">&#9744;</ix:nonNumeric></span></span></td>
+    <td><span style="font-size: 10pt">Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_901_edei--PreCommencementIssuerTenderOffer_c20231201__20231201_z3E2nMxd2nt2"><ix:nonNumeric contextRef="AsOf2023-12-01" format="ixt:booleanfalse" name="dei:PreCommencementIssuerTenderOffer">&#9744;</ix:nonNumeric></span></span></td>
+    <td><span style="font-size: 10pt">Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c)).</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">Securities registered pursuant to Section 12(b) of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr>
+    <td style="border-bottom: Black 1.5pt solid; vertical-align: bottom; width: 32%; text-align: center"><span style="font-size: 10pt"><b>Title of each class</b>&#160;</span></td>
+    <td style="padding-bottom: 1.5pt; text-align: center; width: 2%; vertical-align: bottom">&#160;</td>
+    <td style="border-bottom: Black 1.5pt solid; vertical-align: bottom; width: 32%; text-align: center"><span style="font-size: 10pt"><b>Trading Symbol(s)</b>&#160;</span></td>
+    <td style="padding-bottom: 1.5pt; text-align: center; width: 2%; vertical-align: bottom">&#160;</td>
+    <td style="border-bottom: Black 1.5pt solid; vertical-align: bottom; width: 32%; text-align: center"><span style="font-size: 10pt"><b>Name of each exchange on which registered</b></span></td></tr>
+  <tr style="background-color: rgb(204,238,255)">
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_902_edei--Security12bTitle_c20231201__20231201_zGVUjOs8HMQb"><ix:nonNumeric contextRef="AsOf2023-12-01" name="dei:Security12bTitle">Common Stock, par value $0.00001 per share</ix:nonNumeric></span></b>&#160;&#160;</span></td>
+    <td>&#160;</td>
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_903_edei--TradingSymbol_c20231201__20231201_zD3Y8AoCQKSl"><ix:nonNumeric contextRef="AsOf2023-12-01" name="dei:TradingSymbol">SSNT</ix:nonNumeric></span></b>&#160;</span></td>
+    <td>&#160;</td>
+    <td style="vertical-align: top; text-align: center"><span style="font-size: 10pt"><b>The <span id="xdx_906_edei--SecurityExchangeName_c20231201__20231201_zn8xM1CVJzNe"><ix:nonNumeric contextRef="AsOf2023-12-01" format="ixt-sec:exchnameen" name="dei:SecurityExchangeName">NASDAQ</ix:nonNumeric></span> Capital Market</b></span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Indicate by check mark whether the registrant
+is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (17 CFR &#167;230.405) or Rule 12b-2 of the Securities
+Exchange Act of 1934 (17 CFR &#167;240.12b-2).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Emerging growth company <span style="font-family: Times New Roman, Times, Serif"><span id="xdx_906_edei--EntityEmergingGrowthCompany_c20231201__20231201_z3PCV7ckOEAh"><ix:nonNumeric contextRef="AsOf2023-12-01" format="ixt:booleanfalse" name="dei:EntityEmergingGrowthCompany">&#9744;</ix:nonNumeric></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">If an emerging growth company, indicate by
+check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting
+standards provided pursuant to Section 13(a) of the Exchange Act.&#160;<span style="font-family: Times New Roman, Times, Serif">&#9744;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"><b>Item 1.01. Entry into a Material Definitive
+Agreement</b>.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"><i><span style="text-decoration: underline">Investment Agreement</span></i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"><b><i>&#160;</i></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">On December 3, 2023, SilverSun Technologies,
+Inc., a Delaware corporation (&#8220;<span style="text-decoration: underline">SilverSun</span>&#8221; or the &#8220;<span style="text-decoration: underline">Company</span>&#8221;), entered into an Investment Agreement
+(the &#8220;<span style="text-decoration: underline">Investment Agreement</span>&#8221;), with Jacobs Private Equity II, LLC, a Delaware limited liability company (&#8220;<span style="text-decoration: underline">JPE</span>&#8221;),
+and the other investors party thereto (collectively with JPE, the &#8220;<span style="text-decoration: underline">Investors</span>&#8221;), providing for an aggregate investment
+by the Investors of $1,000,000,000 in cash in the Company (collectively, the &#8220;<span style="text-decoration: underline">Equity Investment</span>&#8221;). Following the closing
+of the Equity Investment, JPE will be the controlling stockholder of the Company and Mr. Brad Jacobs, who controls JPE, will become Chairman
+and Chief Executive Officer of the Company.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Prior to the closing of the Equity Investment,
+the Company will amend and restate its certificate of incorporation to, among other things, effect an 8:1 reverse stock split with respect
+to the Company&#8217;s common stock. Upon the closing of the Equity Investment and giving effect to the reverse stock split, the Company
+will issue to the Investors, in the aggregate: (a) 1,000,000 shares of Convertible Perpetual Preferred Stock of the Company (the &#8220;<span style="text-decoration: underline">Preferred
+Stock</span>&#8221;) that, in aggregate, will be convertible into approximately 219 million shares of the Company&#8217;s common stock at
+an initial conversion price of $4.57 per share (equivalent to $0.57 per share pre-split), subject to customary anti-dilution adjustments;
+and (b) warrants to purchase an additional approximately 219&#160;million shares of the Company&#8217;s common stock (the &#8220;<span style="text-decoration: underline">Warrants</span>&#8221;
+and, together with the Preferred Stock, the &#8220;<span style="text-decoration: underline">Securities</span>&#8221;) at initial exercise prices of $4.57 per share (equivalent
+to $0.57 per share pre-split) with respect to 50% of the warrants, $6.85 per share (equivalent to $0.86 per share pre-split) with respect
+to 25% of the warrants, and $13.70 per share (equivalent to $1.71 per share pre-split) with respect to the remaining 25% of the warrants,
+in each case subject to customary anti-dilution adjustments. Following the closing of the Equity Investment, the Investors will own approximately
+99.85% of the Company&#8217;s common stock on an as-converted, as-exchanged basis. The terms of the fifth amended and restated certificate
+of incorporation (which includes the 8:1 reverse stock split) are more fully set forth in Exhibit&#160;D to the Investment Agreement filed
+herewith and incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">The Preferred Stock will pay quarterly cash
+dividends equal to the greater of (a)&#160;the as-converted dividends on the underlying Company common stock for the relevant quarter
+and (b)&#160;9% of the then-applicable liquidation preference per annum. Accrued and unpaid dividends for any quarter will accrete to
+liquidation preference for all purposes. The Preferred Stock will not be redeemable and will vote together with the Company&#8217;s common
+stock on an as-converted basis on all matters, except as otherwise required by law, and separately as a class with respect to certain
+matters implicating the rights of holders of shares of Preferred Stock. The terms of the Preferred Stock are more fully set forth in Exhibit&#160;A
+to the Investment Agreement filed herewith and incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Each Warrant will initially be exercisable
+at any time and from time to time from the closing date until the tenth anniversary of the closing date, at the option of the holder thereof,
+into one share of Company common stock at the exercise prices described above, subject to customary anti-dilution adjustments. The terms
+of the Warrants are more fully set forth in Exhibit&#160;B to the Investment Agreement filed herewith and incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Under the terms of the Investment Agreement,
+SilverSun will, within six days after the closing of the Equity Investment (the &#8220;<span style="text-decoration: underline">distribution date</span>&#8221;), separate the
+existing SilverSun business as SilverSun Technologies Holdings, Inc., a Nevada corporation and currently a wholly owned subsidiary of
+SilverSun (the &#8220;<span style="text-decoration: underline">spin-off company</span>&#8221; or &#8220;<span style="text-decoration: underline">SilverSun Holdings</span>&#8221;), and distribute all of the shares of
+the spin-off company to the stockholders of SilverSun as of the close of business on a record date that is expected to be one day prior
+to the closing date of the Equity Investment (the &#8220;<span style="text-decoration: underline">record date</span>&#8221;). The terms of the separation and distribution (collectively,
+the &#8220;<span style="text-decoration: underline">spin-off</span>&#8221;) are more fully set forth in the Separation and Distribution Agreement to be entered into by SilverSun
+and SilverSun Holdings one day prior to the distribution date, the form of which is attached as Exhibit I to the Investment Agreement
+filed herewith and incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 2; Options: NewSection; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->1<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Also pursuant to the Investment Agreement,
+SilverSun will declare a $2.5 million aggregate cash dividend to its stockholders of record as of as of the close of business on the record
+date. The dividend will be paid on the distribution date from proceeds received by SilverSun from the Equity Investment.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">SilverSun and SilverSun Holdings will also
+enter into tax matters and employee matters agreements in the forms attached as Exhibits J and K, respectively, to the Investment
+Agreement filed herewith and incorporated by reference herein, providing for certain tax and employee compensation and benefits matters
+in connection with the spin-off.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Following the spin-off, the Company&#8217;s
+current executive officers and directors, including Mark Meller, SilverSun&#8217;s chief executive officer, are expected to continue in
+their current roles at the spin-off company and its subsidiaries. The spin-off company will apply for the public quotation of its shares
+on the OTCQX tier of OTC Markets, which shares will be registered pursuant to a Form 10 registration statement that will be filed with
+the U.S. Securities and Exchange Commission (the &#8220;<span style="text-decoration: underline">SEC</span>&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">The Investment Agreement and the transactions
+contemplated by the Investment Agreement have been approved by SilverSun&#8217;s board of directors. The approval of theEquity Investment,
+the fifth amended and restated certificate of incorporation (including the 8:1 reverse stock split contemplated therein) and any equity
+incentive plan proposed by JPE prior to the mailing of the definitive proxy statement are subject to SilverSun stockholder approval at
+a special stockholders&#8217; meeting. The transactions are also subject to the receipt of necessary antitrust approvals and the satisfaction
+of other customary closing conditions.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Following the closing of the Equity Investment,
+the board of directors of SilverSun will be reconstituted such that (a) the number of seats on the board of directors will be as directed
+by JPE, (b) each of such directors (including Mr. Jacobs) will be individuals designated by JPE, (c) each standing committee of the board
+of directors of the Company will be reconstituted in a manner designated by JPE and (d) Mr. Jacobs will be appointed as the Chairman of
+the Board of Directors of SilverSun and Chief Executive Officer of SilverSun. In addition, the current executive officers of SilverSun
+will resign and new officers designated by JPE will be appointed, and SilverSun will change its name and trading symbol as determined
+by JPE.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Under the Investment Agreement, between signing
+and closing, the Company will cooperate with JPE in JPE&#8217;s efforts for the Company to consummate an acquisition of one or more businesses
+selected by JPE, the consummation of which will not occur until the closing of the spin-off. Such cooperation by the Company will include
+signing any definitive agreements with respect to such acquisition so long as the closing thereunder does not occur until the Closing.
+JPE will pay for the expenses of this cooperation until the closing of the Spin-Off, at which point the Company will reimburse JPE for
+all such expenses (with the intention being that these expenses shall not reduce cash otherwise available to the spin-off company).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">If JPE consummates an acquisition of a business
+or businesses before the Closing, at the sole election of JPE, JPE may contribute such business or businesses to the Company and the Company
+will cooperate with JPE to effectuate any such contribution. As part of such contribution, the Company will issue to JPE (and as directed
+by JPE) shares of Preferred Stock and Warrants with a value equal to the amount paid by JPE to purchase such business or businesses contributed
+by JPE, based on the same per share of Preferred Stock/per Warrant prices set forth above, and in such case the portion of the purchase
+price otherwise payable by JPE to the Company will be reduced by the amount JPE paid for the contributed business or businesses.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Under the <span style="background-color: white">Investment
+Agreement, the Company will be subject to restrictions on its ability to solicit alternative acquisition proposals from third parties
+and to provide non-public information to and enter into discussions or negotiations with third parties regarding alternative acquisition
+proposals, subject to the exceptions set forth in the Investment Agreement.&#160; </span>The Investment Agreement contains termination
+rights for both JPE and the Company, <span style="background-color: white">including, among others, for the Company if its Board changes
+its recommendation to its stockholders of the Equity Investment in connection with a Superior Proposal (as defined in the Investment Agreement)
+to acquire the Company, and for JPE in the event of the Board changing its recommendation to its stockholders of the Equity Investment.
+Upon termination of the Investment Agreement in connection with a Superior Proposal and certain other circumstances described in the Investment
+Agreement, the Company may be obligated to pay JPE a termination fee of $600,000. </span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 3; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Under the Investment Agreement, JPE will be
+permitted to delay the closing of the Equity Investment, on one or more occasions, to a date that does not exceed 12 months following
+the signing (subject to the continued satisfaction of closing conditions at such time). If JPE delays the closing by more than 7 months
+following the signing, JPE will pay the Company the following fees on the first day of each additional month, starting with the first
+day of the eighth month: (a) month eight (8): $40,000, (b) month nine (9): $40,000, (c) month ten (10): $50,000, (d) month eleven (11):
+$50,000; and (e) month twelve (12): $50,000.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Concurrently with the closing of the Equity
+Investment, the Company and the Investors will enter into a Registration Rights Agreement with respect to the shares of Preferred Stock
+and Warrants and the shares of Company common stock issuable upon conversion or exercise thereof, which agreement will contain, among
+other customary provisions, the terms set forth on Exhibit C to the Investment Agreement filed herewith and incorporated by reference
+herein. In addition, concurrently with the closing of the Equity Investment, the Company and the Investors will enter into a stockholders
+agreement in the form attached as Exhibit G to the Investment Agreement filed herewith and incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Upon the closing of the Equity Investment,
+the SilverSun Technologies, Inc. 2019 Equity and Incentive Plan and all outstanding options issued thereunder will be terminated. All
+such outstanding options, all of which are presently vested and exercisable, may be exercised prior to termination.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">The Company and the Investors have made customary
+representations and warranties and covenants in the Investment Agreement.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">The Investment Agreement contains representations,
+warranties, covenants and other terms, provisions and conditions that the parties thereto made to each other as of specific dates. The
+assertions embodied therein were made solely for purposes of the Investment Agreement and may be subject to important qualifications and
+limitations agreed to by the parties thereto in connection with negotiating their respective terms. Moreover, they may be subject to a
+contractual standard of materiality that may be different from what may be viewed as material to stockholders, or may have been used for
+the purpose of allocating risk between the parties thereto rather than establishing matters as facts. For the foregoing reasons, no person
+should rely on such representations, warranties, covenants or other terms, provisions or conditions as statements of factual information
+at the time they were made or otherwise. Unless required by applicable law, SilverSun undertakes no obligation to update such information.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">The foregoing descriptions of the Investment
+Agreement and the related Exhibits do not purport to be complete and are subject to, and qualified by, the full text of the Investment
+Agreement and the Exhibits thereto, copies of which are filed as <span style="text-decoration: underline">Exhibit 2.1</span> and incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"><i><span style="text-decoration: underline">Voting and Support Agreement</span></i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">On December 3, 2023, concurrently with the
+execution and delivery of the Investment Agreement, Mr. Meller and certain of his affiliates, in their capacities as stockholders of the
+Company, entered into a voting and support agreement (the &#8220;<span style="text-decoration: underline">Voting and Support Agreement</span>&#8221;) pursuant to which such stockholders
+have agreed, among other things, to vote in favor of the approval of the Equity Investment and the other transactions contemplated by
+the Investment Agreement, the amendment to the Company&#8217;s certificate of incorporation contemplated by the Investment Agreement,
+and any equity incentive plan proposed by JPE pursuant to the Investment Agreement, and to take, and refrain from taking, certain other
+actions in connection with the transactions, in each case, on the terms set forth in the Voting and Support Agreement.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">The foregoing description of the Voting and
+Support Agreement does not purport to be complete and is subject to, and qualified by, the full text thereof, a copy of which is filed
+as <span style="text-decoration: underline">Exhibit 10.1</span> and incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"><i><span style="text-decoration: underline">Meller Letter Agreement</span></i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">The information set
+forth in Item 5.02 of this Current Report is incorporated by reference into this Item 1.01.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 4; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->3<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"><b>Item 3.02. Unregistered Sales of Equity
+Securities</b>.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Subject to the terms and conditions of the
+Investment Agreement, the Securities will be issued only to the accredited investors party to the Investment Agreement, in accordance
+with Section&#160;4(a)(2) of the Securities Act, as an offering not involving any public offering. The terms of the Securities set forth
+under Item&#160;1.01 herein are hereby incorporated by reference into this Item&#160;3.02.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"><b>Item 5.02 Departure of Directors or Certain
+Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Concurrently with the execution and delivery
+of the Investment Agreement on December 3, 2023, Mark Meller entered into a letter agreement with the Company (the &#8220;Meller Letter
+Agreement&#8221;). Pursuant to the Meller Letter Agreement, the Amended and Restated Employment Agreement, dated as of February 4, 2016
+by and between Mark Meller and the Company (the &#8220;Meller Employment Agreement&#8221;), will be terminated and liquidated as of immediately
+prior to the Closing.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Subject to certain conditions, upon termination
+of the Meller Employment Agreement the Company will pay a lump sum cash severance payment to Mark Meller in an amount up to $3,000,000
+to be paid no later than the second regularly scheduled payroll date following the closing of the Equity Investment. This payment will
+be in full satisfaction of all of the Company&#8217;s obligations under the Meller Employment Agreement.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">The foregoing description of the Meller Letter
+Agreement does not purport to be complete and is subject to, and qualified by, the full text thereof, a copy of which is filed as Exhibit
+10.2 and incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"><b>Item 5.03 Amendments to Articles of Incorporation
+or Bylaws; Change in Fiscal Year.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">On December 1, 2023, SilverSun filed a Certificate
+of Elimination with the Secretary of State of the State of Delaware with respect to the Company&#8217;s Series A Preferred Stock (the
+&#8220;<span style="text-decoration: underline">Series A Preferred Stock</span>&#8221;), pursuant to which the Series A Preferred Stock was eliminated and returned to the status
+of authorized and unissued preferred shares of the Company. There were no outstanding shares of the Series A Preferred Stock. The Certificate
+of Elimination became effective with the Secretary of State of the State of Delaware upon filing. The full text of the Certificate of
+Elimination is included as <span style="text-decoration: underline">Exhibit 3.1</span> to this Current Report on Form 8-K and is incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"><b>Item 8.01 Other Events.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">On December 4, 2023, JPE and the Company announced
+the signing of the Investment Agreement as described in Item&#160;1.01 above. A copy of the press release announcing the signing of the
+Investment Agreement is attached hereto as Exhibit&#160;99.1 and is incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"><b>Additional Information and Where to Find
+It</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">In connection with the proposed equity investment,
+the Company will prepare a proxy statement to be filed with the U.S. Securities and Exchange Commission (the &#8220;SEC&#8221;). When
+completed, a definitive proxy statement and a form of proxy will be mailed to the stockholders of the Company. THE COMPANY&#8217;S STOCKHOLDERS
+ARE URGED TO READ THE PROXY STATEMENT REGARDING THE PROPOSED TRANSACTIONS BECAUSE IT WILL CONTAIN IMPORTANT INFORMATION. The Company&#8217;s
+stockholders will be able to obtain, without charge, a copy of the proxy statement (when available) and other relevant documents filed
+with the SEC from the SEC&#8217;s website at http://www.sec.gov. The Company&#8217;s stockholders will also be able to obtain, without
+charge, a copy of the proxy statement (when available) and other relevant documents from the Company&#8217;s website at https://www.silversuntech.com
+or by written request to the Company at 120 Eagle Rock Avenue, East Hanover, New Jersey 07936.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 5; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->4<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"><b>Participants in Solicitation</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">JPE and the Company and its directors and
+officers may be deemed to be participants in the solicitation of proxies from the Company&#8217;s stockholders with respect to the proposed
+equity investment and the other transactions contemplated by the Investment Agreement. Information about the Company&#8217;s directors
+and executive officers and their ownership of the Company&#8217;s common stock is set forth in the proxy statement for the Company&#8217;s
+2023 Annual Meeting of Stockholders, which was filed with the SEC on November 27, 2023. The interests of the Company and its directors
+and executive officers with regard to the proposed equity investment may differ from the interests of the Company&#8217;s stockholders
+generally, and stockholders may obtain additional information by reading the proxy statement and other relevant documents regarding the
+proposed equity investment and the other transactions contemplated by the Investment Agreement, when filed with the SEC.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"><b>Forward-Looking Statements</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin-top: 0pt; margin-bottom: 0pt; background-color: white">This Current Report on Form 8-K
+contains forward-looking statements. Statements that are not historical facts, including statements about beliefs or expectations, are
+forward-looking statements. These statements are based on plans, estimates, expectations and projections at the time the statements are
+made, and readers should not place undue reliance on them. In some cases, readers can identify forward-looking statements by the use of
+forward-looking terms such as &#8220;may,&#8221; &#8220;will,&#8221; &#8220;should,&#8221; &#8220;expect,&#8221; &#8220;opportunity,&#8221;
+&#8220;intend,&#8221; &#8220;plan,&#8221; &#8220;anticipate,&#8221; &#8220;believe,&#8221; &#8220;estimate,&#8221; &#8220;predict,&#8221;
+&#8220;potential,&#8221; or &#8220;continue,&#8221; or the negative of these terms or other comparable terms. Forward-looking statements
+involve inherent risks and uncertainties and readers are cautioned that a number of important factors could cause actual results to differ
+materially from those contained in any such forward-looking statements. Factors that could cause actual results to differ materially from
+those described in this press release include, among others:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 0.25in">&#9679;<span style="font-family: Symbol; font-size: 10pt"></span></td>
+    <td style="text-align: justify"><span style="font-size: 10pt">uncertainties as to the completion of the Equity Investment, the spin-off and the other transactions contemplated by the Investment Agreement, including the risk that one or more of the transactions may involve unexpected costs, liabilities or delays; </span></td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Symbol; font-size: 10pt"></span></td>
+    <td style="text-align: justify">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#9679;</td>
+    <td style="text-align: justify"><span style="font-size: 10pt">the risks associated with the Company&#8217;s relatively low public float, which may result in its common stock experiencing significant price volatility; </span></td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Symbol; font-size: 10pt"></span></td>
+    <td style="text-align: justify">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#9679;</td>
+    <td style="text-align: justify"><span style="font-size: 10pt">the possibility that competing transaction proposals may be made; </span></td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Symbol; font-size: 10pt"></span></td>
+    <td style="text-align: justify">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#9679;</td>
+    <td style="text-align: justify"><span style="font-size: 10pt">the effects that the announcement, pendency or consummation of the Equity Investment, the spin-off and the other transactions contemplated by the Investment Agreement may have on the Company and its current or future business and on the price of the Company&#8217;s common stock; </span></td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Symbol; font-size: 10pt"></span></td>
+    <td style="text-align: justify">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#9679;</td>
+    <td style="text-align: justify"><span style="font-size: 10pt">the possibility that an active, liquid trading market for the Company&#8217;s common stock may not develop or, if developed, may not be sustained; </span></td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Symbol; font-size: 10pt"></span></td>
+    <td style="text-align: justify">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#9679;</td>
+    <td style="text-align: justify"><span style="font-size: 10pt">the possibility that various closing conditions for the Equity Investment, the spin-off and the other transactions contemplated by the Investment Agreement may not be satisfied or waived, or any other required consents or approvals may not be obtained within the expected timeframe, on the expected terms, or at all, including the possibility that the Company may fail to obtain stockholder approval for the transactions contemplated by the Investment Agreement; </span></td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Symbol; font-size: 10pt"></span></td>
+    <td style="text-align: justify">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#9679;</td>
+    <td style="text-align: justify"><span style="font-size: 10pt">the effects that a termination of the Investment Agreement may have on the Company, including the risk that the price of the Company&#8217;s common stock may decline significantly if the equity investment is not completed; </span></td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Symbol; font-size: 10pt"></span></td>
+    <td style="text-align: justify">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#9679;</td>
+    <td style="text-align: justify"><span style="font-size: 10pt">the risk that the spin-off may be more difficult, time-consuming or costly than expected or the possibility that the anticipated benefits of the spin-off may not be realized; </span></td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Symbol; font-size: 10pt"></span></td>
+    <td style="text-align: justify">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#9679;</td>
+    <td style="text-align: justify"><span style="font-size: 10pt">uncertainties regarding the Company&#8217;s focus, strategic plans and other management actions; </span></td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Symbol; font-size: 10pt"></span></td>
+    <td style="text-align: justify">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#9679;</td>
+    <td style="text-align: justify"><span style="font-size: 10pt">the risks associated with cybersecurity and technology, including attempts by third parties to defeat the security measures of the Company and its business partners, and the loss of confidential information and other business disruptions; </span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td style="text-align: justify">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#9679;</td>
+    <td style="text-align: justify"><span style="font-size: 10pt">the risks associated with potential litigation related to the transactions contemplated by the Investment Agreement or related to any possible subsequent financing transactions or acquisitions or investments; </span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td style="text-align: justify">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#9679;</td>
+    <td style="text-align: justify"><span style="font-size: 10pt">uncertainties regarding general economic, business, competitive, legal, regulatory, tax and geopolitical conditions;</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td style="text-align: justify">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#9679;</td>
+    <td style="text-align: justify"><span style="font-size: 10pt">and other factors, including those set forth in the Company&#8217;s filings with the U.S. Securities and Exchange Commission, including its Annual Report on Form 10-K for the fiscal year ended December 31, 2022 and subsequent Quarterly Reports on Form 10-Q. </span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin-top: 0pt; margin-bottom: 0pt; background-color: white">Forward-looking statements included
+in this report speak only as of the date each statement is made. Neither the Company nor any person undertakes any obligation to update
+any of these statements in light of new information or future events, except to the extent required by applicable law.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 6; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->5<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"><b>Item 9.01 Financial Statements and Exhibits.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">(d) Exhibits</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: Black 1.5pt solid; vertical-align: bottom; width: 9%; text-align: left"><span style="font-size: 10pt"><b>Exhibit Number</b></span></td>
+    <td style="padding-bottom: 1.5pt; text-align: left; width: 1%; vertical-align: bottom">&#160;</td>
+    <td style="border-bottom: Black 1.5pt solid; vertical-align: bottom; width: 90%; text-align: left"><span style="font-size: 10pt"><b>Description</b></span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: justify"><span style="font-size: 10pt">2.1 </span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><span style="font-size: 10pt"><a href="ea189429ex2-1_silversun.htm">Investment Agreement, dated December 3, 2023, by and among SilverSun Technologies, Inc., Jacobs Private Equity II, LLC and the other Investors party thereto.</a></span></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td style="text-align: justify"><span style="font-size: 10pt">3.1 </span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><span style="font-size: 10pt"><a href="ea189429ex3-1_silversun.htm">Certificate of Elimination for Series A Preferred Stock filed with the Delaware Secretary of State on December 1, 2023.</a></span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: justify"><span style="font-size: 10pt">10.1</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><span style="font-size: 10pt"><a href="ea189429ex10-1_silversun.htm">Voting and Support Agreement, dated December 3, 2023, by and between Jacobs Private Equity II, LLC, Mark Meller, Sharieve Meller Family Trust and Mark M. Meller Family Trust.</a></span></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td style="text-align: justify"><span style="font-size: 10pt">10.2</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><span style="font-size: 10pt"><a href="ea189429ex10-2_silversun.htm">Meller Letter Agreement, dated December 3, 2023, by and between SilverSun Technologies, Inc. and Mark Meller.</a> </span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: justify"><span style="font-size: 10pt">99.1 </span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><span style="font-size: 10pt"><a href="ea189429ex99-1_silversun.htm">Press Release, dated December 4, 2023.</a></span></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td style="text-align: justify"><span style="font-size: 10pt">104</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><span style="font-size: 10pt">Cover Page Interactive Data File (formatted as Inline XBRL).</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in; text-align: left">*</td><td style="text-align: justify">Certain schedules and similar attachments have been omitted
+in reliance on Item 601(a)(5) of Regulation S-K. The Company will provide, on a supplemental basis, a copy of any omitted schedule or
+attachment to the SEC or its staff upon request.</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 7; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->6<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>SIGNATURE</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Pursuant to the requirements
+of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned hereunto
+duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td colspan="2"><span style="font-size: 10pt"><b>SILVERSUN TECHNOLOGIES, INC.</b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="width: 60%">&#160;</td>
+    <td style="width: 4%">&#160;</td>
+    <td style="width: 36%">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-size: 10pt">Date: December 4, 2023</span></td>
+    <td><span style="font-size: 10pt">By:</span></td>
+    <td style="border-bottom: black 1.5pt solid"><span style="font-size: 10pt">/<span style="text-decoration: none">s/ Mark Meller</span></span></td></tr>
+  <tr>
+    <td style="vertical-align: top">&#160;</td>
+    <td style="vertical-align: top">&#160;</td>
+    <td style="vertical-align: bottom"><span style="font-size: 10pt">Mark Meller</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt">Chief Executive Officer</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">7</p>
+
+<p style="margin-top: 0; margin-bottom: 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 1.5pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="margin-top: 0; margin-bottom: 0"></p>
+
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxFjd0KwjAMhZ9g7xB6LVuteOEuHSrilDGGeFtcJsWtGWn9eyTf0rohhkASTr5zhJiIDa1NiwynZZlDhV3fao9QYoOM9ozhI9vuUgizxItxnrX1w/kDMwoMBmYeK6mDMLzejcM6halK5CxRs7CkcgHFXkRfPSPbmBqtN7oFbWsomHo26DW/RodKP8lS9xqijsjOkA12sRzlNyg5VXCgu34QXx3keSaiyVCR2DDd+m/MzXnqYNViF7LciP47+gAVF0lF -->

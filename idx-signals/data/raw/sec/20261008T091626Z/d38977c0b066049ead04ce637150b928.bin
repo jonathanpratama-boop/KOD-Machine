@@ -1,0 +1,918 @@
+<html xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:srt="http://fasb.org/srt/2022" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2020-02-12" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:us-gaap="http://fasb.org/us-gaap/2022" xmlns:dei="http://xbrl.sec.gov/dei/2022" xmlns:country="http://xbrl.sec.gov/country/2022" xmlns:currency="http://xbrl.sec.gov/currency/2022" xmlns:dtr-types="http://www.xbrl.org/dtr/type/2020-01-21" xmlns:utr="http://www.xbrl.org/2009/utr" xmlns:naics="http://xbrl.sec.gov/naics/2022" xmlns:sic="http://xbrl.sec.gov/sic/2022" xmlns:stpr="http://xbrl.sec.gov/stpr/2022" xmlns:exch="http://xbrl.sec.gov/exch/2022" xmlns:cef="http://xbrl.sec.gov/cef/2022" xmlns:cycn="http://cyclerion.com/20230511" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title></title>
+    <!-- Licensed to: Summit, a Broadridge Company
+         Document created using Broadridge PROfile 23.3.2.5148
+         Copyright 1995 - 2023 Broadridge -->
+    <meta http-equiv="Content-Type" content="text/html" />
+</head>
+
+<body style="font-family: 'Times New Roman'; font-size: 10pt; text-align: left; color: #000000; background-color: #ffffff;">
+<div id="DSPFiXBRLHidden" style="display: none;"><ix:header><ix:hidden><ix:nonNumeric name="dei:AmendmentFlag" id="Fact_70a910050d0d4aaa89938a08ba9ba8b2" contextRef="c20230511to20230511" format="ixt:fixed-false">false</ix:nonNumeric><ix:nonNumeric name="dei:EntityCentralIndexKey" id="Fact_f4fc9f99926b4ca2bbf095bdad7a039b" contextRef="c20230511to20230511">0001755237</ix:nonNumeric><ix:nonNumeric name="dei:SecurityExchangeName" id="Fact_75e7204540804d93a7755cf2b035170a" contextRef="c20230511to20230511">NASDAQ</ix:nonNumeric></ix:hidden><ix:references><link:schemaRef xlink:href="cycn-20230511.xsd" xlink:type="simple"></link:schemaRef></ix:references><ix:resources><xbrli:context id="c20230511to20230511"><xbrli:entity><xbrli:identifier scheme="http://www.sec.gov/CIK">0001755237</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2023-05-11</xbrli:startDate><xbrli:endDate>2023-05-11</xbrli:endDate></xbrli:period></xbrli:context></ix:resources></ix:header></div>
+
+  <div><span style="font-family: 'Times New Roman'; font-size: 10pt;"> </span></div>
+
+  <div>
+    <hr style="border: none; border-bottom: 1px solid black; border-top: 4px solid black; height: 10px; color: #ffffff; background-color: #ffffff; text-align: center; margin-left: auto; margin-right: auto;" />
+    <div>
+      <div style="text-align: center; margin-right: 1.35pt; font-family: 'Times New Roman'; font-size: 14pt; font-weight: bold;">UNITED STATES</div>
+
+      <div style="text-align: center; margin-right: 0.4pt; font-family: 'Times New Roman'; font-size: 14pt; font-weight: bold;">SECURITIES AND EXCHANGE COMMISSION</div>
+
+      <div style="text-align: center; margin-right: 0.4pt; font-family: 'Times New Roman'; font-size: 12pt; font-weight: bold;">Washington, D.C. 20549</div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;">
+<div>&#160;
+        </div>
+<hr style="height: 2px; width: 20%; color: #000000; background-color: #000000; text-align: center; border: none; margin-left: auto; margin-right: auto;" />
+        <div> <br />
+        </div>
+
+      </div>
+
+      <div style="text-align: center; margin-right: 0.15pt; font-family: 'Times New Roman'; font-size: 18pt; font-weight: bold;">FORM <ix:nonNumeric name="dei:DocumentType" id="Fact_8d171c9e620d40e285846aed8fd5a8dd" contextRef="c20230511to20230511">8-K</ix:nonNumeric></div>
+
+      <div style="text-align: center; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;"><br />
+      </div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;">
+        <hr style="height: 2px; width: 20%; color: #000000; background-color: #000000; text-align: center; border: none; margin-left: auto; margin-right: auto;" /></div>
+
+      <div style="text-align: center; margin-right: 1.05pt; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;"> <br />
+      </div>
+
+      <div style="text-align: center; margin-right: 1.05pt; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">CURRENT REPORT</div>
+
+      <div style="text-align: center; margin-right: 0.4pt; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Pursuant to Section 13 or 15(d)</div>
+
+      <div style="text-align: center; margin-right: 0.3pt; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">of the Securities Exchange Act of 1934</div>
+
+      <div style="text-align: center; margin-right: 0.25pt; font-family: 'Times New Roman'; font-size: 10pt;"><span style="font-size: 10pt; font-family: 'Times New Roman';">Date of Report (Date of earliest event reported): <span style="font-weight: bold;"><ix:nonNumeric name="dei:DocumentPeriodEndDate" id="Fact_90a5497aa9304f15baf334cb3eb6cec5" contextRef="c20230511to20230511" format="ixt:date-monthname-day-year-en">May 11, 2023</ix:nonNumeric></span></span></div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;">
+<div>&#160;
+        </div>
+<hr style="height: 2px; width: 20%; color: #000000; background-color: #000000; text-align: center; border: none; margin-left: auto; margin-right: auto;" /></div>
+
+      <div style="text-align: center; margin-right: 1pt; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;"> <br />
+      </div>
+
+      <div style="text-align: center; margin-right: 1pt; font-family: 'Times New Roman'; font-size: 24pt; font-weight: bold;"><ix:nonNumeric name="dei:EntityRegistrantName" id="Fact_8dd4da28bd3742f6b1dc87a517511cfa" contextRef="c20230511to20230511">CYCLERION THERAPEUTICS, INC.</ix:nonNumeric><br />
+      </div>
+
+      <div style="text-align: center; margin-left: 6pt; font-family: 'Times New Roman'; font-size: 10pt;">(Exact name of registrant as specified in its charter)</div>
+
+      <div style="text-align: center; margin-left: 6pt; font-family: 'Times New Roman'; font-size: 10pt;"> <br />
+      </div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;">
+        <hr style="height: 2px; width: 20%; color: #000000; background-color: #000000; text-align: center; border: none; margin-left: auto; margin-right: auto;" />
+        <div> <br />
+        </div>
+
+      </div>
+
+      <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; border-collapse: collapse; text-align: left; color: #000000;">
+
+
+  <tr>
+
+    <td style="width: 33%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; margin-right: 4.35pt;"><ix:nonNumeric name="dei:EntityIncorporationStateCountryCode" id="Fact_14b7e787eefb4eb5a44c46e52c0588da" contextRef="c20230511to20230511" format="ixt-sec:stateprovnameen">Massachusetts</ix:nonNumeric><br />
+              </div>
+            </td>
+
+    <td style="width: 34%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; margin-right: 4.35pt;"><ix:nonNumeric name="dei:EntityFileNumber" id="Fact_4db9174b7496450f899d5cfb0a003307" contextRef="c20230511to20230511">001-38787</ix:nonNumeric><br />
+              </div>
+            </td>
+
+    <td style="width: 33%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; margin-right: 4.35pt;"><ix:nonNumeric name="dei:EntityTaxIdentificationNumber" id="Fact_a8dc3de1dab8445784ad748b005b2dd1" contextRef="c20230511to20230511">83-1895370</ix:nonNumeric><br />
+              </div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 33%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; margin-right: 4.35pt;">(State or other jurisdiction of incorporation)</div>
+            </td>
+
+    <td style="width: 34%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; margin-right: 4.35pt;">(Commission File Number)</div>
+            </td>
+
+    <td style="width: 33%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center; margin-right: 4.35pt;">(IRS Employer Identification Number)</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+      </div>
+
+      <div style="text-align: center; margin-right: 56.9pt; margin-left: 64.599pt; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;"><ix:nonNumeric name="dei:EntityAddressAddressLine1" id="Fact_e979de97853244cfb57205dd7384c660" contextRef="c20230511to20230511">245 First Street, 18th Floor</ix:nonNumeric><br />
+      </div>
+
+      <div style="text-align: center; margin-right: 56.9pt; margin-left: 64.599pt; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;"><ix:nonNumeric name="dei:EntityAddressCityOrTown" id="Fact_5ca774c9e39c4112aaaa875cc4cb19ea" contextRef="c20230511to20230511">Cambridge</ix:nonNumeric>,
+        <ix:nonNumeric name="dei:EntityAddressStateOrProvince" id="Fact_69768291671b49869ab96120e0049772" contextRef="c20230511to20230511" format="ixt-sec:stateprovnameen">Massachusetts</ix:nonNumeric> <ix:nonNumeric name="dei:EntityAddressPostalZipCode" id="Fact_2283ec48dc1e4788b03bb98a57a254a3" contextRef="c20230511to20230511">02142</ix:nonNumeric></div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+      </div>
+
+      <div style="text-align: center; margin-left: 6pt; font-family: 'Times New Roman'; font-size: 10pt;">(Address of principal executive offices, including Zip Code)</div>
+
+      <div style="text-align: center; margin-left: 6pt; font-family: 'Times New Roman'; font-size: 10pt;">Registrant&#8217;s telephone number, including area code: <span style="font-weight: bold;">(<ix:nonNumeric name="dei:CityAreaCode" id="Fact_1907283afe494fb483d9b9a1953e456e" contextRef="c20230511to20230511">857</ix:nonNumeric>) <ix:nonNumeric name="dei:LocalPhoneNumber" id="Fact_91c6791eb12f41058955901cb7068911" contextRef="c20230511to20230511">327-8778</ix:nonNumeric></span></div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+      </div>
+
+      <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">Check the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following
+        provisions:</div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+      </div>
+
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 18pt;">&#160;</td>
+
+    <td style="width: 31.5pt; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;"><ix:nonNumeric name="dei:WrittenCommunications" id="Fact_101a6924f21e446cae8661b0d87ba0c2" contextRef="c20230511to20230511" format="ixt-sec:boolballotbox">&#x2610;</ix:nonNumeric><br />
+            </td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div>Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 18pt;">&#160;</td>
+
+    <td style="width: 31.5pt; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;"><ix:nonNumeric name="dei:SolicitingMaterial" id="Fact_1b40454929264942be74578bea322ddf" contextRef="c20230511to20230511" format="ixt-sec:boolballotbox">&#x2612;</ix:nonNumeric><br />
+            </td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div>Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 18pt;">&#160;</td>
+
+    <td style="width: 31.5pt; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;"><ix:nonNumeric name="dei:PreCommencementTenderOffer" id="Fact_ec71d35b13df4157b91fe33ba3aa4f13" contextRef="c20230511to20230511" format="ixt-sec:boolballotbox">&#x2610;</ix:nonNumeric><br />
+            </td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div>Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 18pt;">&#160;</td>
+
+    <td style="width: 31.5pt; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;"><ix:nonNumeric name="dei:PreCommencementIssuerTenderOffer" id="Fact_d74b8508f05442bb89f024f0e922b214" contextRef="c20230511to20230511" format="ixt-sec:boolballotbox">&#x2610;</ix:nonNumeric><br />
+            </td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div>Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">Securities registered pursuant to Section 12(b) of the Act:</div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+      <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; border-collapse: collapse; text-align: left; color: #000000;">
+
+
+  <tr>
+
+    <td style="width: 30%; vertical-align: bottom; border-bottom: 2px solid rgb(0, 0, 0); text-align: center;">
+              <div>
+                <div style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Title of each class</div>
+              </div>
+            </td>
+
+    <td style="width: 1%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt; padding-bottom: 2px;"><br />
+            </td>
+
+    <td style="width: 30%; vertical-align: bottom; border-bottom: 2px solid rgb(0, 0, 0); text-align: center;">
+              <div>
+                <div style="margin-right: 3.4pt; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Trading Symbol(s)</div>
+              </div>
+            </td>
+
+    <td style="width: 1%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt; padding-bottom: 2px;"><br />
+            </td>
+
+    <td style="width: 38%; vertical-align: top; border-bottom: 2px solid rgb(0, 0, 0);">
+              <div>
+                <div style="text-align: center; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Name of each exchange on which registered</div>
+              </div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 30%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center;"><ix:nonNumeric name="dei:Security12bTitle" id="Fact_bfc5e325cbef49e6b6dc15c692cfddbe" contextRef="c20230511to20230511">Common Stock, no par value</ix:nonNumeric><br />
+              </div>
+            </td>
+
+    <td style="width: 1%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 30%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: center;"><ix:nonNumeric name="dei:TradingSymbol" id="Fact_ba93d4bfca5f460293c5b0f2286615ed" contextRef="c20230511to20230511">CYCN</ix:nonNumeric><br />
+              </div>
+            </td>
+
+    <td style="width: 1%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 38%; vertical-align: top;">
+              <div style="text-align: center; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;"><span style="font-size: 10pt; font-family: 'Times New Roman';"><span style="-sec-ix-hidden:Fact_75e7204540804d93a7755cf2b035170a">The Nasdaq Capital Market LLC</span><br />
+                </span></div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">Indicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or Rule 12b-2
+        of the Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter). Emerging growth company&#160; <ix:nonNumeric name="dei:EntityEmergingGrowthCompany" id="Fact_3d3f3a48e13a4f5cad66ecae6aeab6a6" contextRef="c20230511to20230511" format="ixt-sec:boolballotbox">&#x2612;</ix:nonNumeric></div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+      </div>
+
+      <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">If an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised
+        financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. <ix:nonNumeric name="dei:EntityExTransitionPeriod" id="Fact_ef09057232df47e4844385a97300493a" contextRef="c20230511to20230511" format="ixt-sec:boolballotbox">&#x2610;</ix:nonNumeric></div>
+
+      <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt;"> <br />
+      </div>
+
+      <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">
+        <hr style="border: none; border-bottom: 4px solid black; border-top: 1px solid black; height: 10px; color: #ffffff; background-color: #ffffff; text-align: center; margin-left: auto; margin-right: auto;" /> </div>
+
+      <div style="clear: both; margin-top: 10pt; margin-bottom: 10pt;" class="BRPFPageBreakArea">
+        <div style="page-break-after: always;" class="BRPFPageBreak">
+          <hr style="margin: 4px 0px; width: 100%; border-width: 0; height: 2px; color: #000000; background-color: #000000; clear: both;" /></div>
+
+      </div>
+
+      <!--PROfilePageNumberReset%Num%2%%%-->
+      <div>
+        <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 72pt; vertical-align: top; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Item 1.01.</td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">
+                <div style="color: rgb(0, 0, 0); font-weight: bold;">Entry into a Material Definitive Agreement.</div>
+              </td>
+
+  </tr>
+
+
+</table>
+      </div>
+
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+        </div>
+
+        <div style="text-align: left; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">The Asset Purchase Agreement</div>
+
+      </div>
+
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+        </div>
+
+        <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;"><span style="font-size: 10pt; font-family: 'Times New Roman';">On May 11, 2023, Cyclerion Therapeutics, Inc., a Massachusetts
+            corporation (the &#8220;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">Company</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221;, &#8220;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">we</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221;, &#8220;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">us</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221; or &#8220;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">our</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221;) entered into an Asset Purchase Agreement
+            (the &#8220;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">Asset Purchase Agreement</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221;) with JW Celtics Investment Corp., a Delaware
+            corporation (&#8220;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">Buyer Parent</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221;) and JW Cycle Inc., a Delaware corporation (&#8220;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">Buyer</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221; and together with Buyer Parent, &#8220;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">Buyers</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221;), pursuant to which the Company has agreed, subject to certain conditions, including the authorization and approval of the Asset
+            Purchase Agreement by its shareholders, to sell to Buyer specified assets relating to the Company&#8217;s zagociguat (previously known as CY6463) and CY3018 programs (the &#8220;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">Purchased Programs</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221;, and such assets, the &#8220;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">Purchased Assets</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221;), and Buyer has agreed to assume certain liabilities relating to the Purchased Programs, including, but not limited to (i) liabilities, costs and expenses arising after the date of the
+            Asset Purchase Agreement relating to the employment of certain individuals prior to the Employee Expenses End Date (as defined in the Asset Purchase Agreement) (&#8220;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">Employee Expenses</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221;) and the conduct of certain preclinical and clinical trial activities prior to the closing of the transactions contemplated by the Asset Purchase
+            Agreement (&#8220;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">R&amp;D Expenses</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221;), and (ii) liabilities relating to the Purchased Assets
+            or the Purchased Programs to the extent relating to the period after the closing of the transaction, in each case, subject to the terms and conditions of the Asset Purchase Agreement (the &#8220;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">Asset Sale Transaction</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221;). Cyclerion will retain the assets comprising the olinciguat, praliciguat and preclinical programs (the &#8220;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">Retained Programs</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221;), which the Company intends to continue to develop and/or out-license following
+            the closing of the Asset Sale Transaction.</span></div>
+
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+        <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;"><span style="font-size: 10pt; font-family: 'Times New Roman';">As consideration for the Asset Sale Transaction, Buyers agreed to
+            (a) pay the Company (i) $8,000,000 at the closing of the Asset Sale Transaction, plus (ii) the amount of any Employee Expenses and R&amp;D Expenses for which Buyers are obligated to reimburse the Company pursuant to the Asset Purchase Agreement
+            and which remain unpaid as of the closing of the Asset Sale Transaction; and (b) deliver to the Company a number of shares of common stock, par value $0.0001 per share, of Buyer Parent, such that following the issuance thereof, such shares
+            comprise 10% of the issued and outstanding shares of Buyer Parent immediately following the closing of the Asset Sale Transaction, subject to certain protections against dilution up to a $100 million valuation of Buyer Parent on a fully diluted
+            basis.</span></div>
+
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+        <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;"><span style="font-size: 10pt; font-family: 'Times New Roman';">The transaction has been unanimously approved by the Company&#8217;s
+            board of directors (the &#8220;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">Board</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221;)</span> without participation of Peter M. Hecht,
+          Ph.D., our Chief Executive Officer, and Terrence McGuire, due to their interests in Buyer Parent<span style="font-size: 10pt; font-family: 'Times New Roman';">. The affirmative vote of the holders of a majority of all shares entitled to vote on
+            the proposal, in person or by proxy, is required to approve the Asset Sale Transaction (the &#8220;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">Stockholder Approval</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221;). The Board has recommended that the Company&#8217;s shareholders vote in favor of the Asset Sale Transaction.</span></div>
+
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+        <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;"><span style="font-size: 10pt; font-family: 'Times New Roman';">In addition to the receipt of Stockholder Approval, the obligation
+            of the Company, on the one hand, and Buyers, on the other hand, to consummate the Asset Sale Transaction is conditioned upon certain other customary closing conditions, including the accuracy of the other party&#8217;s representations and warranties
+            as of closing, subject, in certain instances, to certain materiality and other thresholds, the performance by the other party of its obligations and covenants under the Asset Purchase Agreement, the absence of any law or government order of any
+            nature that restrains, enjoins or otherwise prohibits, or has the effect of restraining, enjoining or otherwise prohibiting, the Asset Sale Transaction from being consummated, the absence of a material adverse effect with respect to the
+            Company, the Company having received evidence that Buyer Parent closed on the second tranche of its $81 million financing, and the delivery of certain documentation by the other party, in each case, as set forth in the Asset Purchase Agreement.</span></div>
+
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+        <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;">The Asset Purchase Agreement also contains representations, warranties, covenants, indemnification and termination rights of the
+          applicable parties customary for transactions similar to those contemplated by the Asset Purchase Agreement. Such representations and warranties are made solely for purposes of the Asset Purchase Agreement and, in some cases, may be subject to
+          qualifications and limitations agreed to by the parties in connection with the negotiated terms of the Asset Purchase Agreement and may have been qualified by disclosures that were made in connection with the parties&#8217; entry into the Asset
+          Purchase Agreement.</div>
+
+        <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;"> <br />
+        </div>
+
+      </div>
+
+      <div style="clear: both; margin-top: 10pt; margin-bottom: 10pt;" class="BRPFPageBreakArea">
+        <div class="BRPFPageNumberArea" style="text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 8pt; color: #000000; font-weight: normal; font-style: normal;">2</span></div>
+
+        <div style="page-break-after: always;" class="BRPFPageBreak">
+          <hr style="margin: 4px 0px; width: 100%; border-width: 0; height: 2px; color: #000000; background-color: #000000; clear: both;" /></div>
+
+      </div>
+
+      <div>
+        <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;">The Asset Purchase Agreement requires that Cyclerion, from signing until the earlier of the termination of the Asset Purchase
+          Agreement or closing of the Asset Sale Transaction, not initiate contact with or solicit any inquiry or proposal or engage in any discussions with third parties in connection with possible proposals regarding a sale or licensing of the Purchased
+          Assets and certain other strategic transactions involving the Company. The Company has agreed to promptly provide notice to Buyer of any solicitation or offer made by any third party in connection with such alternative transaction. If Buyers
+          terminate the Asset Purchase Agreement because there is a Cyclerion Adverse Recommendation Change (as defined in the Asset Purchase Agreement), the Company must pay a termination fee of $500,000 as well as reimburse out-of-pocket expenses of
+          Buyers in an amount equal to $1,000,000 and reimbursement of Employee Expenses and R&amp;D Expenses actually reimbursed or paid by Buyers.</div>
+
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+        <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;">The Asset Purchase Agreement may be terminated by either party if the transaction is not completed by September 11, 2023 or
+          otherwise under certain specified conditions.</div>
+
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+        <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;"><span style="font-size: 10pt; font-family: 'Times New Roman';">The foregoing description of the Asset Purchase Agreement does not
+            purport to be complete and is qualified in its entirety by reference to the full text of such agreement filed herewith as <span style="text-decoration: underline;">Exhibit 2.1</span> and incorporated herein by reference.</span></div>
+
+      </div>
+
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+        </div>
+
+        <div style="text-align: justify; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Fairness Opinion</div>
+
+      </div>
+
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+        </div>
+
+        <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;">In connection with the Asset Sale Transaction, our financial advisor, Stifel, Nicolaus &amp; Company, delivered to our Board its
+          opinion, dated May 10, 2023, that, as of the date thereof, the consideration to be received by the Company from Buyer in the Asset Sale Transaction pursuant to the Asset Purchase Agreement is fair to the Company, from a financial point of view.</div>
+
+      </div>
+
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+        </div>
+
+        <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 72pt; vertical-align: top; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Item 2.02.</td>
+
+    <td style="width: auto; vertical-align: top; text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">
+                <div style="color: rgb(0, 0, 0); font-weight: bold;">Results of Operations and Financial Condition.</div>
+              </td>
+
+  </tr>
+
+
+</table>
+      </div>
+
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+        </div>
+
+        <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;">The disclosure set forth in Item 7.01 of this Current Report on Form 8-K is incorporated herein by reference.</div>
+
+      </div>
+
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+        <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 72pt; vertical-align: top; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Item 3.02</td>
+
+    <td style="width: auto; vertical-align: top; text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">
+                <div style="color: rgb(0, 0, 0); font-weight: bold;">Unregistered Sales of Equity Securities.</div>
+              </td>
+
+  </tr>
+
+
+</table>
+      </div>
+
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+        </div>
+
+        <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;">
+<div><span style="font-size: 10pt; font-family: 'Times New Roman';">As previously announced, on March 31, 2023, </span>the Company<span style="font-size: 10pt; font-family: 'Times New Roman';"> entered into an agreement (the &#8220;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">Subscription Agreement</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221;) with Peter M. Hecht, Ph.D., our Chief Executive Officer and a member of the Board, for him to make an equity investment in the Company of $5,000,000 in cash for common stock or nonvoting Series A convertible
+            preferred stock of the Company, the purchase price, consistent with Nasdaq rules, to be at or above the market price at the time of signing that agreement of $0.434 per share (subject to appropriate adjustment for the reverse stock split
+            anticipated to be implemented after our 2023 annual meeting of stockholders, if such reverse stock split is approved by shareholders, or any other change in our common stock). With the signing of the Asset Purchase Agreement, all contingencies
+            to the investment have been met and the closing of the equity investment is scheduled to take place on May 19, 2023. Pursuant to the Subscription Agreement, the Board intends to solicit our shareholders to vote in favor of approval of the
+            issuance of shares of common stock to Dr. Hecht upon conversion of such Series A convertible preferred stock. </span>Each share of Series A convertible preferred stock is initially convertible into one share of common stock, subject to
+          customary anti-dilution protections.
+          </div>
+<div><br />
+          </div>
+
+          <div style="text-align: left; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">The Company relied upon the exemptions from registration afforded by Regulation D under, and Section 4(a)(2) of, the Securities Act of 1933, as amended
+            (the <span style="font-size: 10pt; font-family: 'Times New Roman';">&#8220;</span><span style="font-weight: bold;">Securities Act</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221;</span>), as transactions not involving any
+            public offering.</div>
+
+        </div>
+
+      </div>
+
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+        </div>
+
+        <div style="text-align: justify; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;">Additionally, Dr. Hecht and Mr. McGuire, directly, beneficially or through affiliates, are equity investors in Buyer Parent, and each has committed
+          to, directly, beneficially or through affiliates, purchase shares of Buyer Parent&#8217;s preferred stock.</div>
+
+      </div>
+
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+        </div>
+
+        <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 72pt; vertical-align: top; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Item 7.01</td>
+
+    <td style="width: auto; vertical-align: top; text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">
+                <div style="color: rgb(0, 0, 0); font-weight: bold;">Regulation FD Disclosure.</div>
+              </td>
+
+  </tr>
+
+
+</table>
+      </div>
+
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+        </div>
+
+        <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;"><span style="font-size: 10pt; font-family: 'Times New Roman';">On May 11, 2023, the Company issued press releases regarding the
+            execution of the Asset Purchase Agreement and its financial and operating results for the first quarter of 2023, respectively. Copies of the press releases are furnished as <span style="text-decoration: underline;">Exhibits 99.1</span> and <span style="text-decoration: underline;">99.2</span>, respectively, to this Current
+            Report on Form 8-K. Such exhibits and the information set forth therein shall not be deemed to be filed for purposes of Section 18 of the Securities Exchange Act of 1934 (the &#8220;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">Exchange Act</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221;) or otherwise be subject to the liabilities of that section, nor shall they be deemed to be incorporated by reference in any filing under
+            the Securities Act or the Exchange Act.</span></div>
+
+        <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> <br />
+          </span></div>
+
+      </div>
+
+      <div style="clear: both; margin-top: 10pt; margin-bottom: 10pt;" class="BRPFPageBreakArea">
+        <div class="BRPFPageNumberArea" style="text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 8pt; color: #000000; font-weight: normal; font-style: normal;">3</span></div>
+
+        <div style="page-break-after: always;" class="BRPFPageBreak">
+          <hr style="margin: 4px 0px; width: 100%; border-width: 0; height: 2px; color: #000000; background-color: #000000; clear: both;" /></div>
+
+      </div>
+
+      <div>
+        <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 72pt; vertical-align: top; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Item 8.01</td>
+
+    <td style="width: auto; vertical-align: top; text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">
+                <div style="color: rgb(0, 0, 0); font-weight: bold;">Other Events.</div>
+              </td>
+
+  </tr>
+
+
+</table>
+      </div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+      </div>
+
+      <div style="text-align: justify; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Voting and Support Agreements</div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+      </div>
+
+      <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;"><span style="font-size: 10pt; font-family: 'Times New Roman';">Simultaneously with the execution of the Asset Purchase Agreement,
+          Buyer Parent entered into voting and support agreements (each, a &#8220;<span style="text-decoration: underline;">Voting and Support Agreement</span>&#8221;) with each equityholder (and certain affiliates of any such equityholder) of Buyer Parent or any subsidiary of Buyer Parent that is also a
+          shareholder of the Company, which shareholders collectively held approximately 21.3% of the total outstanding voting shares of the Company and include Dr. Hecht and The Invus Group, LLC, each of whom owns more than five percent of our total
+          outstanding voting shares, as well as certain funds managed by Polaris Partners, an affiliate of Mr. McGuire.</span></div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+      </div>
+
+      <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;"><span style="font-size: 10pt; font-family: 'Times New Roman';">Pursuant to the Voting and Support Agreements, each shareholder
+          signatory thereto has agreed, with respect to all of the shares of the Company&#8217;s common stock that such shareholder beneficially owns as of the date thereof or thereafter (the &#8220;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">Covered Stock</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221;), to, among other things, (a) vote in favor of the Asset Sale Transaction; and (b) not transfer any such Covered Stock during the term of
+          such Voting and Support Agreement. The Voting and Support Agreements will terminate upon the earlier of the termination of the Asset Purchase Agreement in accordance with its terms, the consummation of the closing of the Asset Sale Transaction,
+          Buyer Parent&#8217;s receipt of notice of a Cyclerion Adverse Recommendation Change, the mutual written consent of the parties thereto, and the entry into any amendment to the Asset Purchase Agreement without the prior written consent of the applicable
+          shareholder that is materially adverse to such shareholder. The Company is an express third-party beneficiary of the Voting and Support Agreements.</span></div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+      </div>
+
+      <div style="text-align: justify; color: rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: 10pt; text-indent: 36pt;">The foregoing description of the Voting and Support Agreements does not purport to be<span style="font-size: 10pt; font-family: 'Times New Roman';"> complete and is qualified in its entirety by reference to the full text of the form of Voting and Support Agreement, a copy of which is filed herewith as <span style="text-decoration: underline;">Exhibit 10.1</span> and incorporated herein by reference.</span></div>
+
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+        </div>
+
+        <div style="text-align: justify; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Forward-Looking Statements</div>
+
+      </div>
+
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+        </div>
+
+        <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;">This Current Report on Form 8-K and the attached exhibits contain &#8220;forward-looking statements&#8221; within the meaning of the federal
+          securities laws. These forward-looking statements include statements concerning our outlook for the future, as well as other statements of beliefs, future plans and strategies or anticipated events, and similar expressions concerning matters that
+          are not historical facts. These statements can be identified by the use of forward-looking terminology such as &#8220;predicts,&#8221; &#8220;believes,&#8221; &#8220;potential,&#8221; &#8220;continues,&#8221; &#8220;estimates,&#8221; &#8220;anticipates,&#8221; &#8220;expects,&#8221; &#8220;plans,&#8221; &#8220;intends,&#8221; &#8220;may,&#8221; &#8220;could,&#8221; &#8220;might,&#8221;
+          &#8220;will,&#8221; &#8220;should,&#8221; &#8220;positive,&#8221; &#8220;projects,&#8221; &#8220;targets,&#8221; &#8220;optimistic,&#8221; aims,&#8221; or the negative thereof or other variations thereon or other comparable terminology. The forward-looking statements included in this Current Report on Form 8-K or the
+          attached exhibits are based on management&#8217;s current expectations and assumptions about future events, which are inherently subject to uncertainties, risks and changes in circumstances that are difficult to predict and could cause actual results
+          to differ materially from those expressed in, or implied by, the forward-looking statements. These risks and uncertainties include, but are not limited to, the following: our shareholders failing to approve the Asset Sale Transaction; the failure
+          of one or more conditions to the closing of the Asset Sale Transaction to be satisfied or waived by the applicable party; an increase in the anticipated amount of costs, fees, expenses and other charges related to the Asset Purchase Agreement or
+          Asset Sale Transaction, including the expenses of any claims or litigation seeking to challenge the transaction or disclosures in connection therewith or recover any damages alleged to arise therefrom; expenses associated with the potential
+          exercise of appraisal rights and any related adjudication of the fair value of our common stock; the occurrence of any event, change or other circumstances that could give rise to the termination of the Asset Purchase Agreement; risks arising
+          from the diversion of management&#8217;s attention from our ongoing business operations; risks associated with our ability to monetize the Retained Programs and/or to identify and realize business opportunities following the Asset Sale Transaction;
+          fluctuations in demand for our technology; risks of losing key personnel, customers, distributors, or suppliers; protection of the Company&#8217;s intellectual property and government policies and regulations, including, but not limited to those
+          affecting the Company&#8217;s industry; and the matters discussed under &#8220;Item 1A. Risk Factors&#8221; of the Company&#8217;s Annual Report on Form 10-K for the fiscal year ended December 31, 2022, as amended and updated from time to time in the Company&#8217;s
+          subsequent filings with the SEC. Readers are cautioned not to place undue reliance on forward-looking statements. Any forward-looking statement speaks only as of the date that it was made and the Company undertakes no obligation to update any
+          forward-looking statement, whether as a result of new information or otherwise.</div>
+
+        <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;"> <br />
+        </div>
+
+      </div>
+
+      <div style="clear: both; margin-top: 10pt; margin-bottom: 10pt;" class="BRPFPageBreakArea">
+        <div class="BRPFPageNumberArea" style="text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 8pt; color: #000000; font-weight: normal; font-style: normal;">4</span></div>
+
+        <div style="page-break-after: always;" class="BRPFPageBreak">
+          <hr style="margin: 4px 0px; width: 100%; border-width: 0; height: 2px; color: #000000; background-color: #000000; clear: both;" /></div>
+
+      </div>
+
+      <div>
+        <div style="text-align: justify; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Additional Information and Where to Find It</div>
+
+      </div>
+
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+        </div>
+
+        <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;"><span style="font-size: 10pt; font-family: 'Times New Roman';">This Current Report on Form 8-K may be deemed to be a solicitation
+            of proxies from the Company&#8217;s shareholders in connection with the proposed transaction. In connection with the proposed transaction, the Company intends to file a proxy statement and relevant documents with respect to the special meeting to be
+            held in connection with the proposed transaction with the U.S. Securities and Exchange Commission (&#8220;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">SEC</span><span style="font-size: 10pt; font-family: 'Times New Roman';">&#8221;). The definitive proxy statement will be mailed to the Company&#8217;s shareholders in advance of the special meeting. Investors and security holders of the Company are urged to read the proxy statement and any other relevant
+            documents filed with the SEC when they become available because they will contain important information about the Company, Buyers and the proposed transaction. The proxy statement, when it becomes available, and any other documents filed by the
+            Company with the SEC may be obtained free of charge at the SEC&#8217;s website at www.sec.gov. In addition, investors and security holders may obtain free copies of the documents filed with the SEC by the Company by sending a written request to
+            Cyclerion Therapeutics, 245 First Street, 18th Floor, Cambridge, Massachusetts 02142, Attention: Corporate Secretary.</span></div>
+
+      </div>
+
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+        </div>
+
+        <div style="text-align: justify; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Participants in the Solicitation</div>
+
+      </div>
+
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+        </div>
+
+        <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;">The Company and its directors and executive officers may, under SEC rules, be deemed to be participants in the solicitation of
+          proxies from the Company&#8217;s shareholders in connection with the proposed transaction. Information about the directors and executive officers, including their interests in the transaction, will be included in the Company&#8217;s proxy statement relating
+          to the transaction when it becomes available.</div>
+
+      </div>
+
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+        <div style="text-align: justify; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">No Offer or Solicitation</div>
+
+      </div>
+
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+        <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;">This Current Report on Form 8-K shall not constitute an offer to sell or the solicitation of an offer to buy any securities, nor
+          shall there be any sale of securities in any jurisdiction in which such offer, solicitation or sale would be unlawful prior to registration or qualification under the securities laws of any such jurisdiction. No offering of securities shall be
+          made except by means of a prospectus meeting the requirements of Section 10 of the Securities Act.</div>
+
+      </div>
+
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+        </div>
+
+        <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 72pt; vertical-align: top; color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Item 9.01</td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">
+                <div style="color: rgb(0, 0, 0); font-weight: bold;">Financial Statements and Exhibits.</div>
+              </td>
+
+  </tr>
+
+
+</table>
+      </div>
+
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+        </div>
+
+        <div style="text-align: justify; text-indent: 36pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;">(d) Exhibits</div>
+
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+      </div>
+
+      <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; border-collapse: collapse; text-align: left; color: rgb(0, 0, 0);">
+
+
+  <tr>
+
+    <td style="width: 12%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0);"><span style="text-decoration: underline;">Exhibit No.</span></div>
+            </td>
+
+    <td style="width: 88%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; margin-right: 273.75pt; color: rgb(0, 0, 0);"><span style="text-decoration: underline;">Description</span></div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 12%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 88%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 12%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0);"><a href="brhc20052804_ex2-1.htm">2.1*</a></div>
+            </td>
+
+    <td style="width: 88%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0);">Asset Purchase Agreement, dated as of May 11, 2023, among the Company, JW Celtics Investment Corp. and JW Cycle Inc.</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 12%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0);"><a href="brhc20052804_ex10-1.htm">10.1</a></div>
+            </td>
+
+    <td style="width: 88%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0);">Form of Voting and Support Agreement</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 12%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left;"><a href="brhc20052804_ex99-1.htm">99.1</a></div>
+            </td>
+
+    <td style="width: 88%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0);">Press Release dated May 11, 2023, announcing the Asset Sale Transaction</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 12%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left;"><a href="brhc20052804_ex99-2.htm">99.2</a></div>
+            </td>
+
+    <td style="width: 88%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0);">Press Release dated May 11, 2023, announcing financial and operating results for the first quarter of 2023</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 12%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left;">104</div>
+            </td>
+
+    <td style="width: 88%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0);">Cover Page Interactive Data File</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div>
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;"><br />
+        </div>
+
+      </div>
+
+      <div style="text-align: left; margin-right: 0.55pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;">*Schedules have been omitted pursuant to Item 601(a)(5) of Regulation S-K. The Company hereby undertakes to furnish supplemental
+        copies of any of the omitted schedules upon request by the U.S. Securities and Exchange Commission.</div>
+
+      <div style="text-align: left; margin-right: 0.55pt; color: #000000; font-family: 'Times New Roman'; font-size: 10pt;"> <br />
+      </div>
+
+      <div style="clear: both; margin-top: 10pt; margin-bottom: 10pt;" class="BRPFPageBreakArea">
+        <div class="BRPFPageNumberArea" style="text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 8pt; color: #000000; font-weight: normal; font-style: normal;">5</span></div>
+
+        <div style="page-break-after: always;" class="BRPFPageBreak">
+          <hr style="margin: 4px 0px; width: 100%; border-width: 0; height: 2px; color: #000000; background-color: #000000; clear: both;" /></div>
+
+      </div>
+
+      <div>
+        <div style="text-align: center; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">SIGNATURES</div>
+
+        <div style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+      </div>
+
+      <div style="text-align: left; text-indent: 36pt; margin-right: 0.7pt; font-family: 'Times New Roman'; font-size: 10pt;">Pursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on
+        its behalf by the undersigned hereunto duly authorized.</div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</div>
+
+      <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; border-collapse: collapse; text-align: left; color: #000000;">
+
+
+  <tr>
+
+    <td style="width: 49.96%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</td>
+
+    <td colspan="3" style="vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0); font-weight: bold;">Cyclerion Therapeutics, Inc.</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 49.96%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 3%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</td>
+
+    <td colspan="2" style="vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 49.96%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0); text-indent: 36pt;">Dated: May 11, 2023</div>
+            </td>
+
+    <td style="width: 3%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0);">By:</div>
+            </td>
+
+    <td colspan="2" style="vertical-align: top; border-bottom: 2px solid rgb(0, 0, 0); font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0);">/s/ Anjeza Gjino</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 49.96%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 3%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 5%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0);">Name:</div>
+            </td>
+
+    <td style="width: 42%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0);">Anjeza Gjino</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 49.96%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 3%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 5%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0);">Title:</div>
+            </td>
+
+    <td style="width: 42%; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">
+              <div style="text-align: left; color: rgb(0, 0, 0);">Chief Financial Officer</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div> <br />
+      </div>
+
+      <div> <br />
+      </div>
+
+      <div>
+        <div class="BRPFPageNumberArea" style="text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 8pt; color: #000000; font-weight: normal; font-style: normal;">6</span></div>
+
+      </div>
+
+      <div style="font-family: 'Times New Roman'; font-size: 10pt;">
+        <hr style="height: 2px; color: #000000; background-color: #000000; text-align: center; border: none; margin-left: auto; margin-right: auto;" /></div>
+
+    </div>
+
+  </div>
+
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

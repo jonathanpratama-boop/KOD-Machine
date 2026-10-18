@@ -1,0 +1,783 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2023" xmlns:ref="http://www.xbrl.org/2006/ref" xmlns:us-gaap="http://fasb.org/us-gaap/2023" xmlns:us-roles="http://fasb.org/us-roles/2023" xmlns:country="http://xbrl.sec.gov/country/2023" xmlns:srt="http://fasb.org/srt/2023" xmlns:GRYP="http://akerna.com/20240208">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02C_US%2DGAAP%2D2023 -->
+<!-- Field: Set; Name: xdx; ID: xdx_038_GRYP_akerna.com_20240208 -->
+<!-- Field: Set; Name: xdx; ID: xdx_046_20240208_20240208 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_051_edei%2D%2DCurrentFiscalYearEndDate_%2D%2DLS0xMi0zMQ== -->
+<!-- Field: Set; Name: xdx; ID: xdx_05A_edei%2D%2DEntityCentralIndexKey_0001755953 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2024-02-08" name="dei:AmendmentFlag" id="ixv-514">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-02-08" name="dei:CurrentFiscalYearEndDate" id="ixv-515">--12-31</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-02-08" name="dei:EntityCentralIndexKey" id="ixv-516">0001755953</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-02-08" id="xdx2ixbrl0012" name="dei:EntityRegistrantName">AKERNA CORP.</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="gryp-20240208.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2024-02-08">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001755953</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2024-02-08</xbrli:startDate>
+        <xbrli:endDate>2024-02-08</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="text-align: center; margin-top: 0; margin-bottom: 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="text-align: center; margin-top: 0; margin-bottom: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>UNITED STATES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Washington, D.C. 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>FORM <span id="xdx_908_edei--DocumentType_c20240208__20240208_zmhj2cyooKca"><ix:nonNumeric contextRef="AsOf2024-02-08" name="dei:DocumentType" id="ixv-537">8-K</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Pursuant to Section 13 OR 15(d) of the Securities
+Exchange Act of 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Date of Report (Date of earliest event reported):
+<b><span id="xdx_90B_edei--DocumentPeriodEndDate_c20240208__20240208_zA3kbF95qQud"><ix:nonNumeric contextRef="AsOf2024-02-08" format="ixt:datemonthdayyearen" name="dei:DocumentPeriodEndDate" id="ixv-538">February 8, 2024</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: black 1.5pt solid; text-align: center; font-size: 10pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_90C_edei--EntityRegistrantName_dxL_c20240208__20240208_zpBdGPen7O0l" title="::XDX::AKERNA%20CORP."><span style="-sec-ix-hidden: xdx2ixbrl0012">GRYPHON DIGITAL MINING, INC.</span></span></b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="text-align: center; font-size: 10pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(Exact name of registrant as specified in its charter)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_903_edei--EntityIncorporationStateCountryCode_c20240208__20240208_zqAON2BCxse9"><ix:nonNumeric contextRef="AsOf2024-02-08" format="ixt-sec:stateprovnameen" name="dei:EntityIncorporationStateCountryCode" id="ixv-539">Delaware</ix:nonNumeric></span></b></span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_90D_edei--EntityFileNumber_c20240208__20240208_zVMQHaB0MxB6"><ix:nonNumeric contextRef="AsOf2024-02-08" name="dei:EntityFileNumber" id="ixv-540">001-39096</ix:nonNumeric></span></b></span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_902_edei--EntityTaxIdentificationNumber_c20240208__20240208_zNN4BN7rgRf6"><ix:nonNumeric contextRef="AsOf2024-02-08" name="dei:EntityTaxIdentificationNumber" id="ixv-541">83-2242651</ix:nonNumeric></span></b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(State or other jurisdiction<br/>
+of incorporation)</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(Commission File Number)</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(IRS Employer<br/>
+Identification No.)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 49%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_90C_edei--EntityAddressAddressLine1_c20240208__20240208_zfOOA3zAezPj"><ix:nonNumeric contextRef="AsOf2024-02-08" name="dei:EntityAddressAddressLine1" id="ixv-542">1180 N. Town Center Drive</ix:nonNumeric></span>, <span id="xdx_902_edei--EntityAddressAddressLine2_c20240208__20240208_zyZlzjZONrQ1"><ix:nonNumeric contextRef="AsOf2024-02-08" name="dei:EntityAddressAddressLine2" id="ixv-543">Suite 100</ix:nonNumeric></span>, <span id="xdx_906_edei--EntityAddressCityOrTown_c20240208__20240208_zQbCIIH52jrc"><ix:nonNumeric contextRef="AsOf2024-02-08" name="dei:EntityAddressCityOrTown" id="ixv-544">Las Vegas</ix:nonNumeric></span>, <span id="xdx_90C_edei--EntityAddressStateOrProvince_c20240208__20240208_zpEFCTw7Mb03"><ix:nonNumeric contextRef="AsOf2024-02-08" name="dei:EntityAddressStateOrProvince" id="ixv-545">NV</ix:nonNumeric></span></b></span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 49%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_905_edei--EntityAddressPostalZipCode_c20240208__20240208_zYOeyhGYzyq6"><ix:nonNumeric contextRef="AsOf2024-02-08" name="dei:EntityAddressPostalZipCode" id="ixv-546">89144</ix:nonNumeric></span></b>&#160;</span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(Address of principal executive offices)</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(Zip Code)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Registrant&#8217;s telephone number, including
+area code: (<span id="xdx_90C_edei--CityAreaCode_c20240208__20240208_zUbCQYbpTKEf"><ix:nonNumeric contextRef="AsOf2024-02-08" name="dei:CityAreaCode" id="ixv-547">877</ix:nonNumeric></span>) <span id="xdx_903_edei--LocalPhoneNumber_c20240208__20240208_zRKACedfVm3e"><ix:nonNumeric contextRef="AsOf2024-02-08" name="dei:LocalPhoneNumber" id="ixv-548">646-3374</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: black 1.5pt solid">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(Former name or former address, if changed since last report)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Check the appropriate box below if the Form 8-K
+filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions (<span style="text-decoration: underline">see</span>
+General Instruction A.2. below):</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 24px"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90A_edei--WrittenCommunications_c20240208__20240208_zAjbhk5bYZbc"><ix:nonNumeric contextRef="AsOf2024-02-08" format="ixt:booleanfalse" name="dei:WrittenCommunications" id="ixv-549">&#9744;</ix:nonNumeric></span></span></td>
+    <td style="text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 24px"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90B_edei--SolicitingMaterial_c20240208__20240208_zMOftYrDK3X6"><ix:nonNumeric contextRef="AsOf2024-02-08" format="ixt:booleanfalse" name="dei:SolicitingMaterial" id="ixv-550">&#9744;</ix:nonNumeric></span></span></td>
+    <td style="text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 24px"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_909_edei--PreCommencementTenderOffer_c20240208__20240208_z7CtxX8rs2j2"><ix:nonNumeric contextRef="AsOf2024-02-08" format="ixt:booleanfalse" name="dei:PreCommencementTenderOffer" id="ixv-551">&#9744;</ix:nonNumeric></span></span></td>
+    <td style="text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 24px"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_901_edei--PreCommencementIssuerTenderOffer_c20240208__20240208_zkKr0nnSZijc"><ix:nonNumeric contextRef="AsOf2024-02-08" format="ixt:booleanfalse" name="dei:PreCommencementIssuerTenderOffer" id="ixv-552">&#9744;</ix:nonNumeric></span></span></td>
+    <td style="text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Securities registered pursuant to Section 12(b)
+of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; white-space: nowrap; width: 32%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Title of each class</b></span></td>
+    <td style="white-space: nowrap; width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; white-space: nowrap; width: 32%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Trading Symbol(s)</b></span></td>
+    <td style="white-space: nowrap; width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; white-space: nowrap; width: 32%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Name of each exchange on which registered</b></span></td></tr>
+  <tr style="vertical-align: top; background-color: #CCEEFF">
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_905_edei--Security12bTitle_c20240208__20240208_zVmw0wgzou8h"><ix:nonNumeric contextRef="AsOf2024-02-08" name="dei:Security12bTitle" id="ixv-553">Common Stock, par value $0.0001 per share</ix:nonNumeric></span></span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90B_edei--TradingSymbol_c20240208__20240208_zbkQvz08kBVb"><ix:nonNumeric contextRef="AsOf2024-02-08" name="dei:TradingSymbol" id="ixv-554">GRYP</ix:nonNumeric></span></span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">The <span id="xdx_902_edei--SecurityExchangeName_c20240208__20240208_zwcmfRry2Q89"><ix:nonNumeric contextRef="AsOf2024-02-08" format="ixt-sec:exchnameen" name="dei:SecurityExchangeName" id="ixv-555">Nasdaq</ix:nonNumeric></span> Stock Market LLC</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Indicate by check mark whether the registrant
+is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or Rule 12b-2 of the
+Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right; text-indent: 0.5in">Emerging growth company <span id="xdx_90E_edei--EntityEmergingGrowthCompany_c20240208__20240208_zQ7Oof9y4bic"><ix:nonNumeric contextRef="AsOf2024-02-08" format="ixt:booleantrue" name="dei:EntityEmergingGrowthCompany" id="ixv-556">&#9746;</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">If an emerging growth company, indicate by check
+mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting
+standards provided pursuant to Section 13(a) of the Exchange Act. <span id="xdx_906_edei--EntityExTransitionPeriod_c20240208__20240208_z6LyV7zCIODk"><ix:nonNumeric contextRef="AsOf2024-02-08" format="ixt:booleanfalse" name="dei:EntityExTransitionPeriod" id="ixv-557">&#9744;</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 1; Options: NewSection -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Item 1.01 Entry into
+a Material Definitive Agreement. </b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Section 3(a)(9) Exchange
+Agreements</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">On February 8, 2024,
+Gryphon Digital Mining, Inc. (formerly known as Akerna Corp.), a Delaware corporation (the &#8220;Company&#8221;), entered into certain
+exchange agreements under Section 3(a)(9) of the United States Securities Act of 1933, as amended (the &#8220;Securities Act&#8221;),
+in relation to the exchange of the Company&#8217;s issued and outstanding shares of Series C Preferred Stock (&#8216;Series C Shares&#8221;)
+for shares of common stock, par value $0.0001 per share (the &#8220;Common Stock&#8221;), of the Company (the &#8220;3(a)(9) Exchange
+Agreements&#8221;). Pursuant to the Section 3(a)(9) Exchange Agreements, on February 9, 2024, all 3,244 Series C Shares with a face value
+of $1,000 per share were exchanged for 756,746 shares of Common Stock. The exchange of the Series C Shares for shares of Common Stock
+was made pursuant to the exemption from registration provided by Section 3(a)(9) under the Securities Act.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Amendment No. 2 to
+the Exchange Agreements</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">On February 8, 2024,
+the Company entered into amendment no. 2 (&#8220;Amendment No. 2&#8221;) to those certain exchange agreements, dated as of January 27,
+2023, as amended (the &#8220;Exchange Agreements&#8221;), by and among the Company and each of the holders of its senior secured convertible
+notes (the &#8220;Akerna Notes&#8221;) issued pursuant to a securities purchase agreement dated October 5, 2021.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Pursuant to Amendment
+No. 2, the Company and the holders of the Akerna Notes amended the terms of the Exchange Agreements to (i) set the &#8220;Final Closing
+Date&#8221; under the Exchange Agreement to conduct the &#8220;Final Exchange&#8221; to take place immediately following the effective
+time of the Merger (as defined in Item 2.01 below), (ii) agree that the &#8220;Company Optional Redemption Price&#8221; of the Akerna
+Notes in relation to the &#8220;Cash Sweep&#8221; was $nil (iii) agree as to the principal amount of the Akerna Note remaining outstanding
+held by each holder of Akerna Notes following the payment of portion of the Akerna Note pursuant to the Cash Sweep and that such Akerna
+Note will be exchanged at the Final Closing into shares of Common Stock based on a per share price of $4.60 (being $0.23, as adjusted
+to reflect the 1-for-20 reverse stock split to be effected immediately prior to the Final Closing), (iv) agree that such number of shares
+of common stock will not exceed the &#8220;Maximum Percentage&#8221; and therefore there will be no &#8220;Abeyance Shares&#8221;, and
+(v) the Final Exchange shall be consummated pursuant to Section 3(a)(9) of the Securities Act and the terms set forth in Amendment No.
+2.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Pursuant to the terms
+of Amendment No. 2, on February 9, 2024, the remaining principal amount of Akerna Notes was exchanged for 824,977 shares of Common Stock.
+The exchange of Akerna Notes for shares of Common Stock was made pursuant to the exemption from registration provided by Section 3(a)(9)
+under the Securities Act.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Release and Termination
+of Security Agreements and Consents</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">In order to consummate
+the Merger and the Sale Transaction (as defined in Item 2.01 below), pursuant to the terms of the Exchange Agreements, the Company entered
+into a release and termination agreement dated February 8, 2024 (&#8220;Release and Termination Agreement&#8221;), to obtain a release
+under, and termination of, the Amended and Restated Security and Pledge Agreement dated October 5, 2021 entered into by and among the
+Company, certain of its subsidiaries, and the collateral agent named therein, the Amended and Restated Intellectual Property Security
+Agreement dated October 5, 2021 by and between the Company, certain of its subsidiaries and the collateral agent named therein, and the
+Amended and Restated Guaranty dated October 5, 2021 by and between certain subsidiaries of the Company and the collateral agent named
+therein (collectively, the &#8220;Credit Agreements&#8221;). Pursuant to the Release and Termination Agreement, the collateral agent released
+the Company and its subsidiaries from all of the security interests and guarantees set forth in the Credit Agreements and agreed that,
+upon receipt by the holders of the Akerna Notes of (i) the shares of Common Stock to be issued pursuant to Amendment No. 2 and (ii) evidence
+of the receipt of assignment of a stated monetary interest in the Company&#8217;s Employee Retention Tax Credit (&#8220;ERTC&#8221;) to
+the holders of the Akerna Notes (who were also holders of the Series C Shares), the Credit Agreements would terminate without any further
+action by the collateral agent or the holders of the Akerna Notes.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Further, the Company
+entered into a separate consent and agreement dated February 8, 2024 with each of the two institutions that hold the Akerna Notes, pursuant
+to which each such holder separately consented to the Release and Termination Agreement (the &#8220;Noteholder Consents&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"></p>
+
+<!-- Field: Page; Sequence: 2; Options: NewSection; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->1<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">In order to consummate
+the Merger and Sale Transaction, pursuant to the terms of the SPA (as defined in Item 2.01 below), the Company also entered into a release
+and termination agreement dated February 8, 2024 (the &#8220;MJA Release and Termination Agreement&#8221;) with MJ Acquisition Corp. (&#8220;MJA&#8221;)
+to obtain a release under and termination of the Second Amended and Restated Security and Pledge Agreement dated November 15, 2023 entered
+into by and among the Company, certain of its subsidiaries, and MJA under the Second Amended and Restated Intellectual Property Security
+Agreement dated November 15, 2023 by and between the Company, certain of its subsidiaries and MJA and under the Second Amended and Restated
+Guaranty dated November 15, 2023, by and between certain subsidiaries of the Company and MJA (the &#8220;MJA Credit Agreement&#8221;).
+Pursuant to the MJA Release and Termination Agreement, MJA released the Company and its subsidiaries from all of the security interests
+and guarantees set forth in the MJA Credit Agreements and agreed that, upon receipt by MJA of the assignment of the membership interests
+of MJ Freeway, LLC (&#8220;MJ Freeway&#8221;) and the shares of Common Stock to be issued to MJA upon conversion of the promissory note
+held by MJA into shares of Common Stock pursuant to the terms of the MJA Note, the MJA Credit Agreements would terminate without any further
+action by  MJA.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>ERTC Assignment Agreement</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">On February 8, 2024,
+the Company entered into a ERTC &amp; Liability Assignment Agreement (the &#8220;ERTC Agreement&#8221;) with Distributionco LLC, a Colorado
+limited liability company (&#8220;Distributionco&#8221;). Pursuant to the ERTC Agreement, in order to (i) induce the holders of the Akerna
+Notes and Series C Shares to agree to the closing of the Merger and Sale Transaction, (ii) settle certain accounts payable to a third
+party service provider and (iii) settle certain amounts of compensation due and payable to officers of the Company, the Company agreed
+to the assignment of the Company ERTC credit anticipated to be approximately $2,111,665 to Distributionco in exchange for Distributionco
+assuming the above liabilities of the Company totaling in the aggregate, $2,111,665 of liabilities.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Share Settlement Agreements</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">On February 8, 2024,
+the Company entered into share settlement agreements (the &#8220;Share Settlement Agreements&#8221;) with David McCullough, Cecil R. Thompson,
+Larry Dean Ditto, Jessica Billingsley and Scott Sozio, each a former officer of the Company (the &#8220;Purchasers&#8221;), pursuant to
+which the Purchasers were issued shares of Common Stock as satisfaction for outstanding compensation balances owed to the Purchasers.
+On February 9, 2024, an aggregate of 446,611 shares of Common Stock (the &#8220;Settlement Shares&#8221;) were issued to the Purchasers
+pursuant to the terms of the Share Settlement Agreements. The issuance of the Settlement Shares was made pursuant to the exemption from
+registration contained in Section 4(a)(2) of the Securities Act.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Registration Rights
+Agreement</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">In order to induce the
+Purchasers to execute and deliver the Share Settlement Agreements, the Company agreed to provide certain registration rights under the
+Securities Act and applicable state securities laws with respect to the Settlement Shares, pursuant to registration rights agreements
+(the &#8220;Registration Rights Agreements&#8221;), dated February 8, 2024, between the Company and each of the Purchasers.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">The foregoing description
+of the material terms of the 3(a)(9) Exchange Agreements, Amendment No. 2 to the Exchange Agreements, the Release and Termination Agreement,
+the Noteholder Consents, the MJA Release and Termination Agreement, the ERTC Agreement, the Share Settlement Agreements and the Registration
+Rights Agreements does not purport to be complete and is qualified in its entirety by reference to the full text of the form of 3(a)(9)
+Exchange Agreement, form of Amendment No. 2 to the Exchange Agreements, the Release and Termination Agreement, the form of Noteholder
+Consent, the MJA Release and Termination Agreement, the ERTC Agreement, the form of Share Settlement Agreement and the form of Registration
+Rights Agreement, which are filed as Exhibit 10.1 through 10.8, respectively, to this Current Report on Form 8-K and which are incorporated
+herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Item 1.02 Termination
+of a Material Definitive Agreement.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">The information included
+in Item 1.01 hereof regarding the Release and Termination Agreement and the MJA Release and Termination Agreement and the termination
+of the Credit Agreements and the MJA Credit Agreement is also incorporated by reference into this Item 1.02.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b></b></p>
+
+<!-- Field: Page; Sequence: 3; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Item 2.01 Completion
+of Acquisition or Disposition of Assets.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Merger Agreement</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">On February 9, 2024,
+the Company completed the transactions contemplated by that certain agreement and plan of merger by and between the Company, Akerna Merger
+Co., a wholly-owned subsidiary of the Company (&#8220;Merger Sub&#8221;), and Ivy Crypto, Inc. (formerly known as Gryphon Digital Mining,
+Inc.) (&#8220;Ivy&#8221;), dated January 27, 2023, as amended on April 28, 2023 and June 14, 2023 (the &#8220;Merger Agreement&#8221;).
+A copy of the Merger Agreement, the first amendment thereto and the second amendment thereto are attached as Exhibits 2.2, 2.5 and 4.1
+to the Company&#8217;s Current Reports on Form 8-K filed with the Securities and Exchange Commission (the &#8220;SEC&#8221;) on January
+27, 2023, May 1, 2023 and June 15, 2023, respectively, which Current Reports are hereby incorporated by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Under the terms of the Merger Agreement, Merger
+Sub merged with and into Ivy, with Ivy surviving as a wholly-owned subsidiary of the Company (the &#8220;Merger&#8221;). At the effective
+time of the Merger (the &#8220;Effective Time&#8221;), each share of Ivy&#8217;s common stock, par value $0.0001 per share (the &#8220;Ivy
+Common Stock&#8221;), and Ivy&#8217;s preferred stock, par value $0.0001 per share (the &#8220;Ivy Preferred Stock,&#8221; collectively
+referred to herein with the Ivy Common Stock as the &#8220;Ivy Shares&#8221;), outstanding immediately prior to the Effective Time was
+converted into the right to receive approximately 1.7273744 shares of Common Stock.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Each warrant to purchase common stock of Ivy that
+was issued and outstanding at the Effective Time will remain issued and outstanding, and was assumed by the Company and is exercisable
+for shares of Common Stock pursuant to its existing terms and conditions as adjusted to reflect the ratio of exchange of Ivy Shares for
+shares of Common Stock.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Immediately after giving effect to the Merger, the Company had 38,733,554
+shares of Common Stock outstanding and warrants to purchase Common Stock outstanding and exercisable to acquire shares of Common Stock.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On February 9, 2024, the Common Stock began trading on the Nasdaq Capital
+Market (&#8220;NASDAQ&#8221;) under the symbol &#8220;GRYP.&#8221;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"><b>Sale Transaction Agreement</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On February 9, 2024, the Company closed on the
+sale transaction (the &#8220;Sale Transaction&#8221;) pursuant to that certain securities purchase agreement dated April 28, 2023 (as
+amended, the &#8220;SPA&#8221;) with Akerna Canada Ample Exchange Inc. and MJ Acquisition Corp. (&#8220;MJA&#8221;), as amended October
+12, 2023, November 15, 2023 and December 28, 2023. A copy of the SPA, the first amendment thereto and the second amendment thereto are
+attached as Exhibits 2.1, 2.1 and 2.1 to the Company&#8217;s Current Reports on Form 8-K filed with the SEC on May 1, 2023, October 4,
+2023 and November 17, 2023, respectively, which Current Reports are hereby incorporated by reference and the third amendment thereto is
+attached as Exhibit 2.11 to the Company&#8217;s Registration Statement on Form S-4/A as filed with the SEC on December 29, 2023 and is
+hereby incorporated by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Upon the terms and subject to the satisfaction
+of the conditions described in the SPA, including approval of the transaction by Akerna&#8217;s stockholders, Akerna sold to MJA all of
+the membership interests in MJ Freeway, LLC <span style="background-color: white">for an aggregate purchase price of approximately $1.2
+million and conversion of a loan to Akerna from MJA in the amount of $1,650,000 (funded $1,000,000 on April&#160;28, 2023, $500,000 on
+October&#160;11, 2023 and $150,000 on November&#160;15, 2023) evidence by a Second Amended and Restated Promissory Note dated November
+15, 2023 (the &#8220;MJA Note&#8221;), which principal amount of MJA Note converted into shares of Common Stock of Akerna at closing of
+the Sale Transaction, </span>with such MJA Note deemed paid in full at closing of the Sale Transaction. The conversion of principal amount
+of MJA Note for shares of Common Stock was made pursuant to the exemption from registration provided by Section 3(a)(9) under the Securities
+Act.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 1in; text-align: justify; text-indent: -1in; background-color: white"><b>Item
+3.01 Notice of Delisting or Failure to Satisfy a Continued Listing Rule or Standard; Transfer of Listing</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 67.5pt; text-align: justify; text-indent: -67.5pt; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">On February 8, 2024,
+the Company notified the NASDAQ that in connection with the closing of the Merger, the Company would not continue the listing of its publicly
+traded warrants on the NASDAQ and that such listing is to be withdrawn upon completion of the Merger on February 9, 2024. The Company
+anticipates that following withdrawal from the NASDAQ, the publicly traded warrants will be quoted for trading on the over-the-counter
+markets. Following the 1-for-20 reverse stock split, the publicly traded warrants are exercisable for an aggregate total of 14,534 shares
+of Common Stock at an exercise price of $4,600 per share, and such warrants expire on June 17, 2024.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Item 3.02 Unregistered
+Sales of Equity Securities</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">The information included
+in Item 1.01 hereof related to the issuance of shares of Common Stock pursuant to the 3(a)(9) Exchange Agreements, Amendment No. 2 to
+the Exchange Agreements, and the Share Settlement Agreements and the information included in Item 2.01 hereof related to the issuance
+of shares of Common Stock upon the conversion of the MJA Note is also incorporated by reference into this Item 3.02.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b></b></p>
+
+<!-- Field: Page; Sequence: 4; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->3<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Item 3.03 Material Modification of Rights
+to Security Holders.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><span style="background-color: white">The
+information included in Items 5.10 and 5.03 hereof is also incorporated by reference into this Item 3.03.</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Item 5.01 Changes
+in Control of Registrant</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Following the Merger,
+the former holders of Ivy&#8217;s equity securities now hold 92.5% of the Common Stock, on a fully diluted basis, with the remainder being
+held by the legacy holders of the Company. The disclosure contained in Item 2.01 of this Current Report on Form 8-K is incorporated herein
+by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Item 5.02 Departure
+of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Removal and Appointment
+of Directors and Officers</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">As of the Effective Date,
+and in accordance with the terms of the Merger Agreement, the Board became comprised of five directors: Robby Chang, Brittany Kaiser,
+Heather Cox, Steve Gutterman and Jessica Billingsley. As of the Effective Date, the following individuals became the executive officers
+of the Company: Robby Chang, Chief Executive Officer, and Simeon Salzman, Chief Financial Officer and Corporate Secretary. With the exception
+of Jessica Billingsley, each of the Company&#8217;s previous officers and directors resigned from their respective positions at the Company
+on the Effective Date.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">For more information
+concerning the executive officers and directors, see the disclosure in the Company&#8217;s final prospectus and definitive proxy statement
+dated as of January 5, 2024 (the &#8220;Proxy Statement&#8221;) filed with the SEC on January 9, 2024 in the sections titled &#8220;Management
+Following the Merger,&#8221; &#8220;Akerna Executive Compensation&#8221; &#8220;Gryphon&#8217;s Executive and Director Compensation&#8221;
+and &#8220;Certain Relationships and Related-Party Transactions of the Combined Company,&#8221; each of which is incorporated herein by
+reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Executive Officer
+Compensation</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">On February 8, 2024,
+the Company&#8217;s Compensation Committee (the &#8220;Committee&#8221;) finalized the grant of bonuses to executive officers in connection
+with their performance in 2023 and in connection with the closing of the Merger and Sale Transaction. The Committee granted the following
+cash bonuses all of which, along with other unpaid compensation, were then settled in shares of Common Stock pursuant to the Share Settlement
+Agreements: Jessica Billingsley - $719,670, Scott Sozio - $314,000, Larry Dean Ditto - $212,317, David McCullough - $37,539 and Cecil
+R. Thompson - $37,307.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Item 5.03 Amendments
+to Articles of Incorporation or Bylaws; Change in Fiscal Year. </b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Name Change</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">On February 8, 2024,
+the Company filed a Certificate of Amendment to its Amended and Restated Articles of Incorporation (the &#8220;Name Change Amendment&#8221;).
+The Name Change Amendment changed the name of the Company from &#8220;Akerna Corp.&#8221; to &#8220;Gryphon Digital Mining, Inc.&#8221;
+The Name Change Amendment is attached hereto as Exhibit 3.1 and incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Reverse Stock Split</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">On February 8, 2024,
+the Company filed a Certificate of Amendment to its Amended and Restated Articles of Incorporation (the &#8220;Reverse Stock Split Amendment&#8221;).
+The Reverse Stock Split Amendment effected a reverse stock split of the Common Stock, at a ratio of one new share for every twenty shares
+of outstanding Common Stock (the &#8220;Reverse Stock Split&#8221;). The Reverse Stock Split Amendment is attached hereto as Exhibit 3.2
+and incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"></p>
+
+<!-- Field: Page; Sequence: 5; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->4<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">The Reverse Stock Split
+was approved at a Special Meeting of the Stockholders held on January 29, 2024 (the &#8220;Special Meeting&#8221;). The Reverse Stock
+Split is more fully described in the Company&#8217;s proxy statement/prospectus included in the registration statement on Form S-4 (File
+No. 333-271857) as filed with the SEC on May 12, 2023 and declared effective by the Commission on January 9, 2024. Immediately after the
+Special Meeting, on January 29, 2024, the Akerna board of directors (the &#8220;Board&#8221;) determined the ratio of the Reverse Stock
+Split at 1-for-20.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Pursuant to the authorization
+of the Board and the Certificate of Amendment, the Reverse Stock Split became effective on February 8, 2024 at 4:05 p.m. Eastern Standard
+Time (the &#8220;Effective Time&#8221;). The shares of Common Stock began trading on the NASDAQ on a post-split basis on February 9, 2024,
+with a new CUSIP number: 400510103.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">At the Effective Time,
+every twenty (20) shares of issued and outstanding Common Stock were converted into one (1) share of issued and outstanding Common Stock.
+The Company&#8217;s transfer agent, Continental Stock Transfer &amp; Trust Company (&#8220;Continental&#8221;), served as exchange agent
+for the Reverse Stock Split and provided instructions to stockholders of record regarding the Reverse Stock Split.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Because the Reverse Stock Split Amendment did
+not reduce the number of authorized shares of Common Stock, the effect of the Reverse Stock Split was to increase the number of shares
+of Common Stock available for issuance relative to the number of shares issued and outstanding. The Reverse Stock Split did not alter
+the par value of the Common Stock or modify any voting rights or other terms of the Common Stock.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">No fractional shares were issued in connection
+with the Reverse Stock Split. Stockholders of record who otherwise would be entitled to receive fractional shares were entitled to rounding
+up of their fractional share to the nearest whole share. No stockholders received cash in lieu of fractional shares.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Each certificate that immediately prior to the
+Effective Time represented shares of Common Stock (&#8220;Old Certificates&#8221;) thereafter represented that number of shares of Common
+Stock into which the shares of Common Stock represented by the Old Certificate shall have been combined, subject to the adjustment for
+fractional shares as described above. Unless otherwise requested by the stockholder, Continental issued all of the post-split shares in
+paperless, &#8220;book-entry&#8221; form, and unless otherwise requested by the stockholder, Continental will be holding the shares in
+an account set up for the stockholder. All book-entry or other electronic positions representing issued and outstanding shares of Common
+Stock will be automatically adjusted. Those stockholders holding Common Stock in &#8220;street name&#8221; will receive instructions from
+their brokers.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">In addition, the number of shares of Common Stock
+issuable upon exercise or conversion of Akerna&#8217;s outstanding warrants were proportionately adjusted by the applicable administrator, using
+the 1-for-20 ratio, rounded up to the nearest whole share and nearest whole cent. The Board or the applicable administrator implemented
+only applicable technical, conforming changes to the securities, including ratably reducing the authorized shares of Common Stock available
+for awards under the Company&#8217;s equity plans. In addition, the exercise price for each outstanding warrant was increased in inverse
+proportion to the 1-for-20 split ratio such that upon a conversion or exercise, the aggregate exercise price payable by the warrant holder
+to the Company for the shares subject to the warrant remains approximately the same as the aggregate exercise price prior to the Reverse
+Stock Split.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"><b>Item 9.01 Financial Statements and Exhibits.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"><b>(d) Exhibits</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Exhibit<br/>
+Number</b></span></td>
+    <td>&#160;</td>
+    <td style="border-bottom: black 1.5pt solid"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Description</b></span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">3.1</span></td>
+    <td>&#160;</td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><a href="ea193558ex3-1_gryphon.htm">Certificate of Amendment for Name Change</a></span></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">3.2</span></td>
+    <td>&#160;</td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><a href="ea193558ex3-2_gryphon.htm">Certificate of Amendment for Reverse Stock Split</a></span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">10.1</span></td>
+    <td>&#160;</td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><a href="ea193558ex10-1_gryphon.htm">Form of 3(a)(9) Exchange Agreement</a></span></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">10.2</span></td>
+    <td>&#160;</td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><a href="ea193558ex10-2_gryphon.htm">Form of Amendment No. 2 to the Exchange Agreements</a></span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">10.3</span></td>
+    <td>&#160;</td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><a href="ea193558ex10-3_gryphon.htm">Release and Termination Agreement</a></span></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">10.4</span></td>
+    <td>&#160;</td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><a href="ea193558ex10-4_gryphon.htm">Form of Noteholder Consent</a></span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">10.5</span></td>
+    <td>&#160;</td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><a href="ea193558ex10-5_gryphon.htm">MJA Release and Termination Agreement</a></span></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">10.6</span></td>
+    <td>&#160;</td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><a href="ea193558ex10-6_gryphon.htm">ERTC Agreement</a></span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">10.7</span></td>
+    <td>&#160;</td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><a href="ea193558ex10-7_gryphon.htm">Form of Share Settlement Agreement</a></span></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">10.8</span></td>
+    <td>&#160;</td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><a href="ea193558ex10-8_gryphon.htm">Form of Registration Rights Agreement</a></span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">104</span></td>
+    <td>&#160;</td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Cover Page Interactive Data File (embedded within the Inline XBRL Document).</span></td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 6; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->5<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Pursuant to the requirements of the Securities
+Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned, hereunto duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr>
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Dated: February 13, 2024</span></td>
+    <td colspan="3"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>GRYPHON DIGITAL MINING, INC. </b></span></td></tr>
+  <tr>
+    <td style="vertical-align: top">&#160;</td>
+    <td colspan="3">&#160;</td></tr>
+  <tr>
+    <td style="vertical-align: top">&#160;</td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">By: </span></td>
+    <td colspan="2" style="border-bottom: black 1.5pt solid; vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">/s/ Robby Chang</span></td></tr>
+  <tr>
+    <td style="vertical-align: top; width: 60%">&#160;</td>
+    <td style="width: 4%">&#160;</td>
+    <td style="vertical-align: top; width: 5%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Name:&#160; </span></td>
+    <td style="vertical-align: top; width: 31%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Robby Chang</span></td></tr>
+  <tr>
+    <td style="vertical-align: top">&#160;</td>
+    <td>&#160;</td>
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Title: </span></td>
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Chief Executive Officer</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: left">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: left">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">6</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 1.5pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

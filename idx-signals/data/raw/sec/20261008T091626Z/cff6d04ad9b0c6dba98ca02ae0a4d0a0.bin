@@ -1,0 +1,891 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2023" xmlns:ref="http://www.xbrl.org/2006/ref" xmlns:us-gaap="http://fasb.org/us-gaap/2023" xmlns:us-roles="http://fasb.org/us-roles/2023" xmlns:country="http://xbrl.sec.gov/country/2023" xmlns:srt="http://fasb.org/srt/2023" xmlns:INTZ="http://intrusion.com/20240315">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02C_US%2DGAAP%2D2023 -->
+<!-- Field: Set; Name: xdx; ID: xdx_039_INTZ_intrusion.com_20240315 -->
+<!-- Field: Set; Name: xdx; ID: xdx_044_20240315_20240315 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_051_edei%2D%2DCurrentFiscalYearEndDate_%2D%2DLS0xMi0zMQ== -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DEntityCentralIndexKey_0000736012 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2024-03-15" name="dei:AmendmentFlag" id="ixv-670">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-03-15" name="dei:CurrentFiscalYearEndDate" id="ixv-671">--12-31</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-03-15" name="dei:EntityCentralIndexKey" id="ixv-672">0000736012</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-03-15" id="xdx2ixbrl0023" name="dei:WrittenCommunications">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-03-15" id="xdx2ixbrl0024" name="dei:SolicitingMaterial">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-03-15" id="xdx2ixbrl0025" name="dei:PreCommencementTenderOffer">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-03-15" id="xdx2ixbrl0026" name="dei:PreCommencementIssuerTenderOffer">false</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="intz-20240315.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2024-03-15">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0000736012</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2024-03-15</xbrli:startDate>
+        <xbrli:endDate>2024-03-15</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>UNITED STATES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>WASHINGTON, D.C. 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><span style="font-size: 12pt"><b>FORM
+<span id="xdx_903_edei--DocumentType_c20240315__20240315_zKJDHLJXKLCj"><ix:nonNumeric contextRef="AsOf2024-03-15" name="dei:DocumentType" id="ixv-696">8-K</ix:nonNumeric></span></b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">Pursuant to Section 13 or 15(d) of the Securities
+Exchange Act of 1934</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">Date of Report (Date of earliest event reported):
+<b><span id="xdx_905_edei--DocumentPeriodEndDate_c20240315__20240315_zfsaOSftNSJk"><ix:nonNumeric contextRef="AsOf2024-03-15" format="ixt:datemonthdayyearen" name="dei:DocumentPeriodEndDate" id="ixv-697">March 15, 2024</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><span style="font-size: 12pt"><b><span id="xdx_902_edei--EntityRegistrantName_c20240315__20240315_zGdHqWG49Lk"><ix:nonNumeric contextRef="AsOf2024-03-15" name="dei:EntityRegistrantName" id="ixv-698">INTRUSION
+INC.</ix:nonNumeric></span></b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">(Exact Name of Registrant as Specified in Its Charter)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 33%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_909_edei--EntityIncorporationStateCountryCode_c20240315__20240315_zsGemqAxF7k5"><ix:nonNumeric contextRef="AsOf2024-03-15" format="ixt-sec:stateprovnameen" name="dei:EntityIncorporationStateCountryCode" id="ixv-699">Delaware</ix:nonNumeric></span></b></span></td>
+    <td style="width: 34%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_90B_edei--EntityFileNumber_c20240315__20240315_zlUcPga0dTV4"><ix:nonNumeric contextRef="AsOf2024-03-15" name="dei:EntityFileNumber" id="ixv-700">001-39608</ix:nonNumeric></span></b></span></td>
+    <td style="width: 33%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_90B_edei--EntityTaxIdentificationNumber_c20240315__20240315_zOwArV8ipXN6"><ix:nonNumeric contextRef="AsOf2024-03-15" name="dei:EntityTaxIdentificationNumber" id="ixv-701">75-1911917</ix:nonNumeric></span></b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="text-align: center"><span style="font-size: 10pt">(State or Other Jurisdiction<br/>
+of Incorporation)</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">(Commission File<br/>
+Number)</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">(IRS Employer<br/>
+Identification No.)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr>
+    <td style="vertical-align: top; width: 50%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_905_edei--EntityAddressAddressLine1_c20240315__20240315_z1Ua5XCQB3oa"><ix:nonNumeric contextRef="AsOf2024-03-15" name="dei:EntityAddressAddressLine1" id="ixv-702">101 East Park Blvd</ix:nonNumeric></span>, <span id="xdx_906_edei--EntityAddressAddressLine2_c20240315__20240315_za9dEjPc4huf"><ix:nonNumeric contextRef="AsOf2024-03-15" name="dei:EntityAddressAddressLine2" id="ixv-703">Suite 1200</ix:nonNumeric></span><br/>
+<span id="xdx_905_edei--EntityAddressCityOrTown_c20240315__20240315_zi12NIa463W9"><ix:nonNumeric contextRef="AsOf2024-03-15" name="dei:EntityAddressCityOrTown" id="ixv-704">Plano</ix:nonNumeric></span>, <span id="xdx_90B_edei--EntityAddressStateOrProvince_c20240315__20240315_zyVGWd6U73ob"><ix:nonNumeric contextRef="AsOf2024-03-15" format="ixt-sec:stateprovnameen" name="dei:EntityAddressStateOrProvince" id="ixv-705">Texas</ix:nonNumeric></span></b></span></td>
+    <td style="vertical-align: bottom; width: 50%; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_90F_edei--EntityAddressPostalZipCode_c20240315__20240315_zWEfgbeOGygl"><ix:nonNumeric contextRef="AsOf2024-03-15" name="dei:EntityAddressPostalZipCode" id="ixv-706">75074</ix:nonNumeric></span></b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="text-align: center"><span style="font-size: 10pt">(Address of Principal Executive Offices)</span></td>
+    <td style="text-align: center"><span style="font-size: 10pt">(Zip Code)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_90C_edei--CityAreaCode_c20240315__20240315_zW8T0MnLeTkf"><ix:nonNumeric contextRef="AsOf2024-03-15" name="dei:CityAreaCode" id="ixv-707">(888)</ix:nonNumeric></span> <span id="xdx_90C_edei--LocalPhoneNumber_c20240315__20240315_zJ25bFy9JNI4"><ix:nonNumeric contextRef="AsOf2024-03-15" name="dei:LocalPhoneNumber" id="ixv-708">637-7770</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Registrant&#8217;s Telephone Number, Including
+Area Code)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>N/A</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Former Name or Former Address, if Changed Since
+Last Report)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Check the appropriate box below if the Form 8-K
+filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 24px"><span style="font-family: Wingdings; font-size: 10pt"><span id="xdx_904_edei--WrittenCommunications_c20240315__20240315_zPd8ZqMrk29h"><span style="-sec-ix-hidden: xdx2ixbrl0023">o</span></span></span></td>
+    <td><span style="font-size: 10pt">Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 24px"><span style="font-family: Wingdings; font-size: 10pt"><span id="xdx_902_edei--SolicitingMaterial_c20240315__20240315_zSrwmPsXZEcl"><span style="-sec-ix-hidden: xdx2ixbrl0024">o</span></span></span></td>
+    <td><span style="font-size: 10pt">Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 24px; font-size: 10pt"><span style="font-family: Wingdings; font-size: 10pt"><span id="xdx_90A_edei--PreCommencementTenderOffer_c20240315__20240315_zDpqtwMlCE5h"><span style="-sec-ix-hidden: xdx2ixbrl0025">o</span></span></span></td>
+    <td style="font-size: 10pt"><span style="font-size: 10pt">Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 24px; font-size: 10pt"><span style="font-family: Wingdings; font-size: 10pt"><span id="xdx_90C_edei--PreCommencementIssuerTenderOffer_c20240315__20240315_zluEHgXWm6T8"><span style="-sec-ix-hidden: xdx2ixbrl0026">o</span></span></span></td>
+    <td style="font-size: 10pt"><span style="font-size: 10pt">Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Securities registered pursuant to Section 12(b)
+of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border: black 1pt solid; width: 33%; text-align: center"><span style="font-size: 10pt">Title of each class</span></td>
+    <td style="border-top: black 1pt solid; border-right: black 1pt solid; border-bottom: black 1pt solid; width: 34%; text-align: center"><span style="font-size: 10pt">Trading Symbol(s)</span></td>
+    <td style="border-top: black 1pt solid; border-right: black 1pt solid; border-bottom: black 1pt solid; width: 33%; text-align: center"><span style="font-size: 10pt">Name of each exchange on which registered</span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="border-right: black 1pt solid; border-bottom: black 1pt solid; border-left: black 1pt solid; text-align: center"><span style="font-size: 10pt"><span id="xdx_90A_edei--Security12bTitle_c20240315__20240315_z17l00JXG3U4"><ix:nonNumeric contextRef="AsOf2024-03-15" name="dei:Security12bTitle" id="ixv-709">Common Stock, $0.01 par value per share</ix:nonNumeric></span></span></td>
+    <td style="border-right: black 1pt solid; border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt"><span id="xdx_90D_edei--TradingSymbol_c20240315__20240315_zirg5kqCXxr8"><ix:nonNumeric contextRef="AsOf2024-03-15" name="dei:TradingSymbol" id="ixv-710">INTZ</ix:nonNumeric></span></span></td>
+    <td style="border-right: black 1pt solid; border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt"><span id="xdx_903_edei--SecurityExchangeName_c20240315__20240315_zX3CKZOTdT78"><ix:nonNumeric contextRef="AsOf2024-03-15" format="ixt-sec:exchnameen" name="dei:SecurityExchangeName" id="ixv-711">NASDAQ</ix:nonNumeric></span> Capital Market</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Indicate by check mark whether the registrant
+is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 or Rule 12b-2 of the Securities Exchange Act of 1934.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Emerging growth company <span style="font-family: Times New Roman, Times, Serif"><span id="xdx_90F_edei--EntityEmergingGrowthCompany_c20240315__20240315_zLvsBN62f6yc"><ix:nonNumeric contextRef="AsOf2024-03-15" format="ixt:booleanfalse" name="dei:EntityEmergingGrowthCompany" id="ixv-712">&#9744;</ix:nonNumeric></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">If an emerging growth company, indicate by check
+mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting
+standards provided pursuant to Section 13(a) of the Exchange Act. <span style="font-family: Times New Roman, Times, Serif">&#9744;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="margin-top: 6pt; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="border-bottom: Black 1pt solid; border-collapse: collapse; width: 100%; font-size: 10pt"><tr style="vertical-align: top; text-align: left"><td style="width: 33%">&#160;</td><td style="width: 34%; text-align: center"><!-- Field: Sequence; Type: Arabic; Name: PageNo; Options: Hidden -->&#160;<!-- Field: /Sequence --></td><td style="width: 33%; text-align: right">&#160;</td></tr></table></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Item 1.01 Entry into a Material Definitive Agreement.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: left; margin-top: 0pt; margin-right: 0; margin-bottom: 0pt"><i>Streeterville Capital, LLC Exchange Agreement</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On March 15, 2024, Intrusion Inc. (the &#8220;Company&#8221;),
+entered into and closed an Exchange Agreement with Streeterville Capital, LLC (&#8220;Streeterville&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Exchange Agreement facilitates the exchange
+of debt for Series A Preferred Stock of the Company and the retirement of a promissory note between the Company and Streeterville as follows:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On March 10, 2022, the Company sold to Streeterville
+that certain Promissory Note #1 in the original principal amount of $5,350,000.00 (&#8220;Note #1&#8221;). Then, on June 29, 2022, the
+Company sold to Streeterville that certain Promissory Note #2 in the original principal amount of $5,350,000.00 (&#8220;Note #2&#8221;).
+Subject to the terms of the Agreement, the Company and Streeterville have partitioned a new Promissory Note (&#8220;Note #1&#8221;) in
+the original principal amount of $3,007,237.26 from Note #1 and then cause the outstanding balance of Note #1 to be reduced by an amount
+equal to the Note #1 Exchange Amount, and such outstanding balance shall therefore be $500,120.07. According to the terms of the Agreement,
+Company and Streeterville have exchanged (the &#8220;Exchange&#8221;) Note #2 and the Partitioned Note for 9,275 shares of Series A Preferred
+Stock (the &#8220;Exchange Shares&#8221;). Other than the surrender of Note #2 and the Partitioned Note, no consideration of any kind
+was given by the Company to Streeterville in connection with the Agreement.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Company and Streeterville have agreed that
+following the partition of Note #1, that Note #1 and the security interest with respect to Note #1 shall remain in full force and effect,
+provided that the outstanding balance of Note #1 shall be reduced by an amount equal to the Note #1 Exchange Amount. According to the
+Agreement, all of the, the Note #1 Transaction Documents remain in full force and effect, enforceable in accordance with all of its original
+terms and provisions. If there is any conflict between the terms of the Agreement, on the one hand, and the Note #1 Transaction Documents,
+on the other hand, the terms the Agreement shall prevail.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><i>Partitioned Note</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Pursuant to the Agreement, on March 15, 2024,
+the Company and Streeterville executed a Partitioned Promissory Note, in the form of Note #1 (the &#8220;Partitioned Note&#8221;). The
+Partitioned Note represents the remaining portion of the prior amount owed by the Company to Streeterville pursuant to the previous Note
+#1, and partitioned on March 15, 2024, as referenced in the section above. The principal amount of the Partitioned Note is $3,007,237.26
+with interest, fees, charges, and late fees accruing on the first business day following March 15, 2024 (the &#8220;Maturity Date&#8221;).
+Interest on the principal amount is at the rate of 7% per annum, simple interest, from the issuance date until the Partitioned Note is
+paid or satisfied in full.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><span style="background-color: white">The foregoing
+description of the Exchange Agreement and Partitioned Note is not complete and is qualified in its entirety by the full text of the Exchange
+Agreement and the Partitioned Note, which are filed herewith as Exhibits 10.1, and 10.2 to this Current Report on Form 8-K, respectively,
+and which are incorporated by reference herein.</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><span style="background-color: white"></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b></b></p>
+
+<!-- Field: Page; Sequence: 2 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 6pt; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; font-size: 10pt"><tr style="vertical-align: top; text-align: left"><td style="width: 33%">&#160;</td><td style="width: 34%; text-align: center"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence --></td><td style="width: 33%; text-align: right">&#160;</td></tr></table></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Item 5.03. Amendments to Articles of Incorporation or Bylaws; Change
+in Fiscal Year.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><i>Amended and Restated Certificate</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On March 15, 2024, following approval by stockholders
+at the Special Meeting (as hereinafter defined), as discussed in Item 5.07 of this Current Report on Form 8-K, the Company filed the Amended
+and Restated Certificate of Incorporation (the &#8220;A&amp;R Certificate&#8221;) to (i) eliminate the Series 1, Series 2, and Series
+3 preferred shares, (ii) create a right of stockholders to take action by written consent; (iii) add a Delaware forum selection provision;
+and (iv) update, clarify and remove outdated provisions.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">The description of the A&amp;R
+Certificate contained herein does not purport to be complete and is qualified in its entirety by reference to the full text of the A&amp;R
+Certificate, a copy of which will be filed as an exhibit to the Company&#8217;s next periodic report.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><i>Series A Certificate of Designations</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Also on March 15, 2024, following approval by
+stockholders at the Special Meeting and following the filing of the A&amp;R Certificate, filed a Certificate of Designations (the &#8220;Series
+A Certificate&#8221;) creating Series A preferred stock, $0.01 par value per share (the &#8220;Series A Stock&#8221;). Pursuant to the
+terms of the Series A Certificate, 20,000 shares of Series A Stock are authorized and each share of Series A Stock has a stated value
+of $1,100 (the &#8220;Stated Value&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Except to the extent that the holders of at least
+a majority of the outstanding Series A Stock (the &#8220;Required Holders&#8221;) expressly consent to the creation of Parity Stock (as
+defined below), all shares of the Company&#8217;s capital stock shall be junior in rank to all Series A Stock with respect to the preferences
+as to dividends, distributions and payments upon the liquidation, dissolution and winding up of the Company (such junior stock is referred
+to herein collectively as &#8220;Junior Stock&#8221;). The rights of all such shares of the Company&#8217;s capital stock shall be qualified
+by the rights, powers, preferences and privileges of the Series A Stock. Without limiting any other provision of the Series A Certificate,
+without the prior express consent of the Required Holders, voting separately as a single class, and with each share of Series A Stock
+having one vote on such matter, the Company shall not hereafter authorize or issue any additional or other shares of capital stock that
+is (i) of senior rank to the Series A Stock in respect of the preferences as to dividends, distributions and payments upon the liquidation,
+dissolution and winding up of the Company (collectively, the &#8220;Senior Preferred Stock&#8221;), or (ii) of pari passu rank to the
+Series A Stock in respect of the preferences as to dividends, distributions and payments upon the liquidation, dissolution and winding
+up of the Company (collectively, the &#8220;Parity Stock&#8221;). In the event of the merger or consolidation of the Company with or into
+another corporation wherein the Company is the surviving entity, the shares of Series A Stock shall maintain their relative rights, powers,
+designations, privileges and preferences provided for herein and no such merger or consolidation shall provide for a result inconsistent
+therewith, subject to the other terms and conditions herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span style="text-decoration: underline">Preferred Return</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Each share of Series A Stock
+accrues a rate of return on the Stated Value at the rate of 10% per year, compounded annually to the extent not paid as set forth in the
+Series A Certificate, and to be determined pro rata for any factional year periods (the &#8220;Preferred Return&#8221;). The Preferred
+Return accrues on each share of Series A Stock from the date of its issuance, and shall be payable or otherwise settled as set forth herein.
+The Preferred Return will be payable on a quarterly basis, either in cash or via the issuance to the applicable Series A Holder of an
+additional number of shares of Series A Stock equal to (i) the Preferred Return then accrued and unpaid, divided by (ii) the Stated Value,
+with the election as to payment in cash or via the issuance of additional shares of Series A Stock to be determined in the discretion
+of the Company.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in"></p>
+
+<!-- Field: Page; Sequence: 3 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 6pt; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; font-size: 10pt"><tr style="vertical-align: top; text-align: left"><td style="width: 33%">&#160;</td><td style="width: 34%; text-align: center"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->3<!-- Field: /Sequence --></td><td style="width: 33%; text-align: right">&#160;</td></tr></table></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-right: 0; margin-bottom: 0pt; text-align: left"><span style="text-decoration: underline">Series
+A Dividend </span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">Commencing on the one-year anniversary
+of the issuance date of each share of Series A Stock, each such share of Series A Stock shall accrue an automatic quarterly dividend,
+based on three quarters of 91 days each and the last quarter of 92 days (or 93 days for leap years), which shall be calculated on the
+Stated Value of such share of Series A Stock, and which shall be payable in additional shares of Series A Stock, based on the Stated Value,
+or in cash as set forth herein (each, as applicable, the &#8220;Quarterly Dividend&#8221;). For the period from the one-year anniversary
+of the issuance date of a share of Series A Stock to the two-year anniversary of the issuance date of a share of Series A Stock, the Quarterly
+Dividend shall be 2.5% per quarter, and for all periods following the two-year anniversary of the issuance date of a share of Series A
+Stock, the Quarterly Dividend shall be 5% per quarter.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">The Quarterly Dividend shall
+be aggregated for each Series A Holder, and shall be paid to each Series A Holder following the end of each applicable quarter, via the
+issuance to such Series A Holder of the whole number of shares of Series A Stock payable with respect to such Quarterly Dividend, and
+payment in cash for any fractional shares of Series A Stock that would be issuable with respect to such applicable Quarterly Dividend.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in"><span style="text-decoration: underline">Liquidation,
+Dissolution or Winding Up; Certain Mergers, Consolidations and Asset Sales</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">In the event of any voluntary
+or involuntary liquidation, dissolution or winding up of the Company or Deemed Liquidation Event (as defined in the Series A Certificate),
+each share of Series A Stock shall be entitled to be paid out of the assets of the Company available for distribution to its shareholders
+before any payment shall be made to the holders of the Company&#8217;s common stock equal to by reason of their ownership thereof, an
+amount per share of Series A Stock equal to the Stated Value at such time plus any accrued but unpaid Preferred Return plus any accrued
+and unpaid Quarterly Dividend (as applicable, the &#8220;Series A Preferred Liquidation Amount&#8221;). If upon any such liquidation,
+dissolution or winding up of the Company or Deemed Liquidation Event, the assets of the Company available for distribution to its shareholders
+shall be insufficient to pay the Series A Preferred Liquidation Amount, the Series A Holders with respect to their shares of Series A
+Stock shall share ratably in any distribution of the assets available for distribution in proportion to the respective amounts which would
+otherwise be payable in respect of the shares held by them upon such distribution if all amounts payable on or with respect to such shares
+were paid in full. Following the payment of the Series A Preferred Liquidation Amount, if there are any remaining assets of the Corporation
+available for distribution to its shareholders, the Series A Stock shall not participate in such distributions.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in"><span style="text-decoration: underline">No
+Conversions</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-right: 0; margin-bottom: 0pt; text-align: left">The Series A Stock is not
+be convertible into shares of common stock or into any other class or series of stock of the Company.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-right: 0; margin-bottom: 0pt; text-align: left"><span style="text-decoration: underline">Corporation
+Optional Redemption</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">Subject to the terms and conditions
+of the Series A Certificate, at any time the Company may elect, in the sole discretion of the Board, to redeem all or any portion of the
+Series A Stock then issued and outstanding from all of the Series A Holders (a &#8220;Corporation Optional Redemption&#8221;) by paying
+to the applicable Series A Holders an amount in cash equal to the Series A Preferred Liquidation Amount then applicable to such shares
+of Series A Stock being redeemed in the Corporation Optional Conversion (the &#8220;Redemption Price&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in"><span style="text-decoration: underline">Dividends
+and Distributions</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">The Series A Stock will not
+participate in any dividends, distributions or payments to the holders of the common stock.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-right: 0; margin-bottom: 0pt; text-align: left"><span style="text-decoration: underline">Voting</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">Except as set forth in the Series
+A Certificate, the Series A Stock will not have any voting rights and will not vote on any matter submitted to the holders of the common
+stock, or any class thereof, for a vote.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">The Company may not, and will
+not, amend or repeal the Series A Certificate without the prior written consent of Series A Holders holding a majority of the Series A
+Stock then issued and outstanding, in which vote each share of Series A Stock then issued and outstanding shall have one vote, voting
+separately as a single class, in person or by proxy, either in writing without a meeting or at an annual or a special meeting of such
+Series A Holders, and any such&#160;act or transaction entered into without such vote or consent shall be null and void <i>ab initio</i>,
+and of no force or effect.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">The description of the Series
+A Certificate contained herein does not purport to be complete and is qualified in its entirety by reference to the full text of the Series
+A Certificate, a copy of which will be filed as an exhibit to the Company&#8217;s next periodic report.</p>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 4 -->
+    <div style="margin-top: 6pt; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="border-bottom: Black 1pt solid; border-collapse: collapse; width: 100%; font-size: 10pt"><tr style="vertical-align: top; text-align: left"><td style="width: 33%">&#160;</td><td style="width: 34%; text-align: center"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->4<!-- Field: /Sequence --></td><td style="width: 33%; text-align: right">&#160;</td></tr></table></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Item 5.07. Submission of Matters to a Vote of Security Holders.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On March 15, 2024, held a special meeting of stockholders
+(the &#8220;Special Meeting&#8221;) to vote on the following matters:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>1.&#160;&#160;Reverse Stock Split</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Stockholders approved the amendment of the Company&#8217;s
+Restated Certificate of Incorporation, as amended (the &#8220;Certificate of Incorporation&#8221;), to effectuate a reverse stock split
+of Intrusion&#8217;s outstanding shares of common stock, at a ratio of no less than 1-for-2 and no more than 1-for-20, with such ratio
+to be determined at the sole discretion of the Board, in accordance with the voting results listed below.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 28%; text-align: center"><span style="font-size: 10pt"><b>For</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt"><b>Against</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt"><b>Abstain</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt"><b>Broker Non-Votes</b></span></td></tr>
+  <tr style="vertical-align: top; background-color: #CCEEFF">
+    <td style="text-align: center"><span style="font-size: 10pt">20,683,455</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">810,865</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">75,068</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">N/A</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>2.&#160;&#160;Elimination of Series 1, Series 2, and Series 3 Preferred
+Shares</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Stockholders approved the amendment of the Certificate
+of Incorporation to eliminate Series 1, Series 2, and Series 3 preferred shares, in accordance with the voting results listed below.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 28%; text-align: center"><span style="font-size: 10pt"><b>For</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt"><b>Against</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt"><b>Abstain</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt"><b>Broker Non-Votes</b></span></td></tr>
+  <tr style="vertical-align: top; background-color: #CCEEFF">
+    <td style="text-align: center"><span style="font-size: 10pt">11,537,514</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">61,337</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">86,958</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">&#160;9,883,579</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>3.&#160;&#160;Amendment of Certificate of Incorporation to Create
+a Right of Stockholders to Take Action by Written Consent</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Stockholders approved the amendment of the Certificate
+of Incorporation to create a right of stockholders to take action by written consent, in accordance with the voting results listed below.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 28%; text-align: center"><span style="font-size: 10pt"><b>For</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt"><b>Against</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt"><b>Abstain</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt"><b>Broker Non-Votes</b></span></td></tr>
+  <tr style="vertical-align: top; background-color: #CCEEFF">
+    <td style="text-align: center"><span style="font-size: 10pt">7,096,104</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">4,547,473</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">42,232</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">9,883,579</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>4.&#160;&#160;Amendment of Certificate of Incorporation to Add a
+Delaware Forum Selection Provision</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Stockholders approved the amendment of the Certificate
+of Incorporation to add a Delaware forum selection provision, in accordance with the voting results listed below.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 28%; text-align: center"><span style="font-size: 10pt"><b>For</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt"><b>Against</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt"><b>Abstain</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt"><b>Broker Non-Votes</b></span></td></tr>
+  <tr style="vertical-align: top; background-color: #CCEEFF">
+    <td style="text-align: center"><span style="font-size: 10pt">11,264,210</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">130,617</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">290,982</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">9,883,579</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>5.&#160;&#160;Amendment of Certificate of Incorporation to Update,
+Clarify and Remove Outdated Provisions</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Stockholders approved the amendment of the Certificate
+of Incorporation to update, clarify and remove outdated provisions, in accordance with the voting results below.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 28%; text-align: center"><span style="font-size: 10pt"><b>For</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt"><b>Against</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt"><b>Abstain</b></span></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt"><b>Broker Non-Votes</b></span></td></tr>
+  <tr style="vertical-align: top; background-color: #CCEEFF">
+    <td style="text-align: center"><span style="font-size: 10pt">&#160;11,375,971</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">33,257</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">276,581</span></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">9,883,579</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b></p>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b></b></p>
+
+<!-- Field: Page; Sequence: 5 -->
+    <div style="margin-top: 6pt; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="border-bottom: Black 1pt solid; border-collapse: collapse; width: 100%; font-size: 10pt"><tr style="vertical-align: top; text-align: left"><td style="width: 33%">&#160;</td><td style="width: 34%; text-align: center"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->5<!-- Field: /Sequence --></td><td style="width: 33%; text-align: right">&#160;</td></tr></table></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Item 7.01. Regulation
+FD Disclosure.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">On March 18, 2024, the
+Company issued a press release announcing that following approval from stockholders at the Special Meeting, the Company intends to effectuate
+a 1-for-20 reverse stock split of its issued and outstanding shares of common stock (the &#8220;Reverse Split&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Company also announced that it has entered
+into the Exchange Agreement under which the Company and Streeterville partitioned the Partitioned Note.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">The information included
+in this Item 7.01, including Exhibit 99.1, shall not be deemed to be &#8220;filed&#8221; for purposes of Section 18 of the Securities
+Exchange Act of 1934, as amended (the &#8220;Exchange Act&#8221;), or otherwise subject to the liabilities of that section, nor shall
+such information be deemed incorporated by reference in any filing under the Securities Act of 1933, as amended, or the Exchange Act,
+except as shall be expressly set forth by specific reference in such a filing. The information set forth under this Item 7.01 shall not
+be deemed an admission as to the materiality of any information in this Current Report on Form 8-K that is required to be disclosed solely
+to satisfy the requirements of Regulation FD.&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Item 8.01. Other Events.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Following approval from
+stockholders at the Special Meeting on March 15, 2024, the Company intends to effectuate a 1-for-20 Reverse Split of its issued and outstanding
+shares of common stock. The Company expects that the Reverse Split will become effective on March 22, 2024, at 4:00 p.m., Eastern Time.
+As of the open of trading on March 25, 2024, the Company&#8217;s common stock will continue to trade on the Nasdaq Capital Market (&#8220;Nasdaq&#8221;)
+under the ticker symbol &#8220;INTZ&#8221; on a Reverse Split-adjusted basis, with the new CUSIP number 46121E 304. The Reverse Split
+is intended to increase the price per share of the Company's common stock to allow the Company to demonstrate compliance with the $1.00
+minimum bid price requirement for continued listing on Nasdaq.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Upon the effectiveness
+of the Reverse Split, every 20 shares of the Company&#8217;s issued and outstanding shares of common stock will be combined into one issued
+and outstanding share of common stock. No fractional shares of common stock will be issued as a result of the Reverse Split. Rather, any
+fractional shares will be rounded up to the next higher whole share. The Reverse Split will have no impact on the total authorized number
+of shares of common stock and the par value per share of the Company&#8217;s common stock will remain unchanged at $0.01. The Reverse
+Split will affect all stockholders uniformly and will not alter any stockholder&#8217;s percentage of common stock, except to the extent
+that the Reverse Split would result in some stockholders owning a fractional share as described above.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">The Company&#8217;s transfer
+agent, Computershare Inc., is acting as the exchange agent for the Reverse Split. Registered stockholders holding pre-Reverse Split shares
+of the Company&#8217;s common stock electronically in book-entry form are not required to take any action to receive post-Reverse Split
+shares. Those stockholders who hold their shares in brokerage accounts or in "street name" will have their positions automatically
+adjusted to reflect the Reverse Split, subject to each broker's particular processes, and will not be required to take any action in connection
+with the Reverse Split.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Additional information
+concerning the Reverse Split can be found in the Company&#8217;s Definitive Proxy Statement on Schedule 14A filed with the Securities
+and Exchange Commission on January 25, 2024, which can also be found on the Company&#8217;s investor relations website.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 6 -->
+    <div style="margin-top: 6pt; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="border-bottom: Black 1pt solid; border-collapse: collapse; width: 100%; font-size: 10pt"><tr style="vertical-align: top; text-align: left"><td style="width: 33%">&#160;</td><td style="width: 34%; text-align: center"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->6<!-- Field: /Sequence --></td><td style="width: 33%; text-align: right">&#160;</td></tr></table></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Item 9.01 Financial
+Statement and Exhibits.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">(d) Exhibits</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: top; width: 8%"><span style="font-size: 10pt"><b>Exhibit No.</b></span></td>
+    <td style="vertical-align: bottom; width: 1%; text-align: justify">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; vertical-align: bottom; width: 91%; text-align: justify"><span style="font-size: 10pt"><b>Description</b></span></td></tr>
+  <tr style="background-color: rgb(204,238,255)">
+    <td style="vertical-align: top">10.1</td>
+    <td style="vertical-align: bottom; text-align: justify">&#160;</td>
+    <td style="vertical-align: bottom"><a href="intrusion_ex1001.htm"><span>Exchange Agreement dated March 15, 2024, between Streeterville Capital, LLC and the registrant.</span></a></td></tr>
+  <tr style="background-color: White">
+    <td style="vertical-align: top">10.2</td>
+    <td style="vertical-align: bottom; text-align: justify">&#160;</td>
+    <td style="vertical-align: bottom"><a href="intrusion_ex1002.htm"><span>Partitioned Promissory Note, Note #1 dated March 15, 2024, between Streeterville Capital, LLC and the registrant.</span></a></td></tr>
+  <tr style="background-color: rgb(204,238,255)">
+    <td style="vertical-align: top">99.1</td>
+    <td style="vertical-align: bottom; text-align: justify">&#160;</td>
+    <td style="vertical-align: bottom"><a href="intrusion_ex9901.htm">Press release of the registrant dated March 15, 2024.</a></td></tr>
+  <tr style="background-color: White">
+    <td style="vertical-align: top; text-align: justify"><span style="font-size: 10pt">104.1</span></td>
+    <td style="vertical-align: bottom; text-align: justify">&#160;</td>
+    <td style="vertical-align: bottom; text-align: justify"><span style="font-size: 10pt">Cover Page Interactive Data File - the cover page XBRL tags are embedded with the Inline XBRL document.</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p>
+
+<!-- Field: Page; Sequence: 7 -->
+    <div style="margin-top: 6pt; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="border-bottom: Black 1pt solid; border-collapse: collapse; width: 100%; font-size: 10pt"><tr style="vertical-align: top; text-align: left"><td style="width: 33%">&#160;</td><td style="width: 34%; text-align: center"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->7<!-- Field: /Sequence --></td><td style="width: 33%; text-align: right">&#160;</td></tr></table></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SIGNATURE</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">Pursuant to the requirements
+of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned, hereunto
+duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td>&#160;</td>
+    <td colspan="2"><span style="font-size: 10pt"><b>Intrusion, Inc.</b></span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td>&#160;</td>
+    <td colspan="2">&#160;</td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="width: 52%"><span style="font-size: 10pt">Dated: March 18, 2024</span></td>
+    <td style="width: 3%"><span style="font-size: 10pt">By:</span></td>
+    <td style="width: 45%"><span style="font-size: 10pt"><i>/s/ Kimberly Pinson</i></span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="border-top: black 1pt solid"><span style="font-size: 10pt">Kimberly Pinson</span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt">Chief Financial Officer</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 8; Options: Last -->
+    <div style="margin-top: 6pt; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="border-bottom: Black 1pt solid; border-collapse: collapse; width: 100%; font-size: 10pt"><tr style="vertical-align: top; text-align: left"><td style="width: 33%">&#160;</td><td style="width: 34%; text-align: center"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->8<!-- Field: /Sequence --></td><td style="width: 33%; text-align: right">&#160;</td></tr></table></div>
+    <!-- Field: /Page -->
+
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

@@ -1,0 +1,1316 @@
+<html xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:srt="http://fasb.org/srt/2022" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2020-02-12" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:us-gaap="http://fasb.org/us-gaap/2022" xmlns:dei="http://xbrl.sec.gov/dei/2022" xmlns:country="http://xbrl.sec.gov/country/2022" xmlns:currency="http://xbrl.sec.gov/currency/2022" xmlns:dtr-types="http://www.xbrl.org/dtr/type/2020-01-21" xmlns:utr="http://www.xbrl.org/2009/utr" xmlns:naics="http://xbrl.sec.gov/naics/2022" xmlns:sic="http://xbrl.sec.gov/sic/2022" xmlns:stpr="http://xbrl.sec.gov/stpr/2022" xmlns:exch="http://xbrl.sec.gov/exch/2022" xmlns:cef="http://xbrl.sec.gov/cef/2022" xmlns:cbio="http://ir.catalystbiosciences.com/20221222" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title></title>
+    <!-- Licensed to: Broadridge Financial Solutions, LLC
+         Document created using Broadridge PROfile 22.12.1.5105
+         Copyright 1995 - 2022 Broadridge -->
+    <meta http-equiv="Content-Type" content="text/html" />
+</head>
+
+<body style="font-family: 'Times New Roman'; font-size: 10pt; text-align: left; color: #000000; background-color: #ffffff;">
+<div id="DSPFiXBRLHidden" style="display: none;"><ix:header><ix:hidden><ix:nonNumeric name="dei:AmendmentFlag" id="Fact_8e9b258e2d234049b502feeff108548e" contextRef="c20221222to20221222" format="ixt:fixed-false">false</ix:nonNumeric><ix:nonNumeric name="dei:CurrentFiscalYearEndDate" id="Fact_fc825aca94a14a53ad723d4a30dc83a9" contextRef="c20221222to20221222" format="ixt:date-month-day">12-31</ix:nonNumeric><ix:nonNumeric name="dei:EntityCentralIndexKey" id="Fact_3d3dab207bf9497190bc03dc08f9a44e" contextRef="c20221222to20221222">0001124105</ix:nonNumeric></ix:hidden><ix:references><link:schemaRef xlink:href="cbio-20221222.xsd" xlink:type="simple"></link:schemaRef></ix:references><ix:resources><xbrli:context id="c20221222to20221222"><xbrli:entity><xbrli:identifier scheme="http://www.sec.gov/CIK">0001124105</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2022-12-22</xbrli:startDate><xbrli:endDate>2022-12-22</xbrli:endDate></xbrli:period></xbrli:context></ix:resources></ix:header></div>
+
+  <div><span style="font-size: 10pt;"> </span></div>
+
+  <div>
+    <hr style="border: none; border-bottom: 1px solid black; border-top: 4px solid black; height: 10px; color: #ffffff; background-color: #ffffff; text-align: center; margin-left: auto; margin-right: auto;" />
+    <div>
+      <div style="text-align: center; font-family: 'Times New Roman'; font-size: 14pt; font-weight: bold;">UNITED STATES</div>
+
+      <div style="text-align: center; font-family: 'Times New Roman'; font-size: 14pt; font-weight: bold;">SECURITIES AND EXCHANGE COMMISSION</div>
+
+      <div style="text-align: center; font-family: 'Times New Roman'; font-size: 12pt; font-weight: bold;">WASHINGTON, DC 20549</div>
+
+      <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt; font-weight: 400;"> <br />
+      </div>
+
+      <div style="text-align: center;">
+<div><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span></div>
+
+        <hr style="background-color: #000000; border-bottom: medium none; border-left: medium none; border-right: medium none; border-top: medium none; margin: 0px auto; height: 2px; color: #000000; text-align: center; margin-left: auto; margin-right: auto;" /></div>
+
+      <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt; font-weight: 400;"> <br />
+      </div>
+
+      <div style="text-align: center; font-family: 'Times New Roman'; font-size: 18pt; font-weight: bold;">FORM <ix:nonNumeric name="dei:DocumentType" id="Fact_4175b9d281de460d963942b8deab33e8" contextRef="c20221222to20221222">8-K</ix:nonNumeric></div>
+
+      <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt; font-weight: 400;"> <br />
+      </div>
+
+      <div style="text-align: center;">
+<div><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span></div>
+
+        <hr style="background-color: #000000; border-bottom: medium none; border-left: medium none; border-right: medium none; border-top: medium none; margin: 0px auto; height: 2px; color: #000000; text-align: center; margin-left: auto; margin-right: auto;" /></div>
+
+      <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt;"> <br />
+      </div>
+
+      <div style="text-align: center; font-family: 'Times New Roman'; font-size: 10pt;">&#160;<span style="font-family: 'Times New Roman'; font-weight: bold;">CURRENT REPORT</span></div>
+
+      <div style="text-align: center; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Pursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934</div>
+
+      <div style="text-align: center;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <div style="text-align: center; font-family: 'Times New Roman'; font-size: 10pt;">Date of report (Date of earliest event reported): <ix:nonNumeric name="dei:DocumentPeriodEndDate" id="Fact_ee68d9335bf34729922b6c05bf6232a5" contextRef="c20221222to20221222" format="ixt:date-monthname-day-year-en">December 22, 2022</ix:nonNumeric></div>
+
+      <div style="text-align: center;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <div style="text-align: center; font-weight: bold; font-size: 24pt;"><ix:nonNumeric name="dei:EntityRegistrantName" id="Fact_c1c5a8d5b4114816bee8dfb5eb433c7a" contextRef="c20221222to20221222">Catalyst Biosciences, Inc.</ix:nonNumeric></div>
+
+      <div style="text-align: center; font-family: 'Times New Roman'; font-size: 10pt;">(Exact Name of Registrant as Specified in Charter)</div>
+
+      <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; border-collapse: collapse; text-align: left; color: rgb(0, 0, 0);">
+
+
+  <tr>
+
+    <td style="width: 31.99%; vertical-align: bottom; font-size: 10pt; font-weight: bold; text-align: center;"><ix:nonNumeric name="dei:EntityIncorporationStateCountryCode" id="Fact_0ef00e55524a4b6e988f998a7cc1110c" contextRef="c20221222to20221222" format="ixt-sec:stateprovnameen">Delaware</ix:nonNumeric><br />
+            </td>
+
+    <td style="width: 1.99%; vertical-align: bottom; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 32%; vertical-align: bottom; font-size: 10pt; text-align: center; font-weight: bold;"><ix:nonNumeric name="dei:EntityFileNumber" id="Fact_7ca280648418459d8066bf5a96a55ba3" contextRef="c20221222to20221222">000-51173</ix:nonNumeric><br />
+            </td>
+
+    <td style="width: 2%; vertical-align: bottom; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 32%; vertical-align: bottom; font-size: 10pt;">
+              <div style="text-align: center; font-family: 'Times New Roman'; font-weight: bold;"><ix:nonNumeric name="dei:EntityTaxIdentificationNumber" id="Fact_f1bf6332a2bc481b863406c06221f44c" contextRef="c20221222to20221222">56-2020050</ix:nonNumeric><br />
+              </div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 31.99%; vertical-align: top;">
+              <div style="text-align: center; font-family: 'Times New Roman'; font-size: 10pt;">(State or Other Jurisdiction of Incorporation)</div>
+            </td>
+
+    <td style="width: 1.99%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 32%; vertical-align: top;">
+              <div style="text-align: center; font-family: 'Times New Roman'; font-size: 10pt;">(Commission File Number)</div>
+            </td>
+
+    <td style="width: 2%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 32%; vertical-align: top;">
+              <div style="text-align: center; font-family: 'Times New Roman'; font-size: 10pt;">(IRS Employer Identification No.)</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; border-collapse: collapse; text-align: left; color: rgb(0, 0, 0);">
+
+
+  <tr>
+
+    <td style="width: 49%; vertical-align: bottom;">
+              <div style="text-align: center; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;"><ix:nonNumeric name="dei:EntityAddressAddressLine1" id="Fact_45f6b09df39346238cd9948be3a854ce" contextRef="c20221222to20221222">611 Gateway Blvd</ix:nonNumeric><br />
+              </div>
+              <div style="text-align: center; font-weight: bold;"><ix:nonNumeric name="dei:EntityAddressAddressLine2" id="Fact_4156e4d59f144574a9a2b8d7d7929065" contextRef="c20221222to20221222">Suite 120</ix:nonNumeric></div>
+              <div style="text-align: center; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;"><ix:nonNumeric name="dei:EntityAddressCityOrTown" id="Fact_5cc9157ddbb24cd1a15cf8da0c9b3e24" contextRef="c20221222to20221222">South San Francisco</ix:nonNumeric>, <ix:nonNumeric name="dei:EntityAddressStateOrProvince" id="Fact_6a0448635c254944ac76a80615ca8511" contextRef="c20221222to20221222">CA</ix:nonNumeric></div>
+            </td>
+
+    <td style="width: 2%; vertical-align: bottom; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 49%; vertical-align: bottom; font-size: 10pt; font-weight: bold; text-align: center;"><ix:nonNumeric name="dei:EntityAddressPostalZipCode" id="Fact_9ee2cd9737914d2eb27f5680b6c03b69" contextRef="c20221222to20221222">94080</ix:nonNumeric><br />
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 49%; vertical-align: top; font-size: 10pt;">
+              <div style="text-align: center; font-family: 'Times New Roman';">(Address of Principal Executive Offices)</div>
+            </td>
+
+    <td style="width: 2%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 49%; vertical-align: top; font-size: 10pt;">
+              <div style="text-align: center; font-family: 'Times New Roman';">(Zip Code)</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="text-align: center;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <div style="text-align: center; font-family: 'Times New Roman'; font-size: 10pt;">Registrant&#8217;s telephone number, including area code: <span style="font-family: 'Times New Roman'; font-weight: bold;">(<ix:nonNumeric name="dei:CityAreaCode" id="Fact_9e899fe8ce2f4754bc3b212d2eca1272" contextRef="c20221222to20221222">650</ix:nonNumeric>) <ix:nonNumeric name="dei:LocalPhoneNumber" id="Fact_bc21d161ee0a49f0882958351c1087ae" contextRef="c20221222to20221222">871-0761</ix:nonNumeric></span></div>
+
+      <div style="text-align: center;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <div style="text-align: center; font-family: 'Times New Roman'; font-size: 10pt;">(Former Name or Former Address, if Changed Since Last Report)</div>
+
+      <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt;"> <br />
+      </div>
+
+      <div style="font-size: 10pt;">
+        <hr style="background-color: #000000; border-bottom: medium none; border-left: medium none; border-right: medium none; border-top: medium none; margin: 0px auto; height: 2px; color: #000000; text-align: center; margin-left: auto; margin-right: auto;" /></div>
+
+      <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt;"> <br />
+      </div>
+
+      <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">Check the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions
+        (<span style="font-family: 'Times New Roman'; font-style: italic;">see</span> General Instruction A.2. below):</div>
+
+      <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 18pt; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;"><ix:nonNumeric name="dei:WrittenCommunications" id="Fact_75fe7112683643ffb0289e92035da9d0" contextRef="c20221222to20221222" format="ixt-sec:boolballotbox">&#x2612;</ix:nonNumeric><br />
+            </td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-size: 10pt;">
+              <div style="font-family: 'Times New Roman';">Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 18pt; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;"><ix:nonNumeric name="dei:SolicitingMaterial" id="Fact_8ca776076b294625af1ff3a731b6bcfd" contextRef="c20221222to20221222" format="ixt-sec:boolballotbox">&#x2610;</ix:nonNumeric><br />
+            </td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-size: 10pt;">
+              <div style="font-family: 'Times New Roman';">Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 18pt; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;"><ix:nonNumeric name="dei:PreCommencementTenderOffer" id="Fact_79a4f9b6f19f43f38800f14281885a2d" contextRef="c20221222to20221222" format="ixt-sec:boolballotbox">&#x2610;</ix:nonNumeric><br />
+            </td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-size: 10pt;">
+              <div style="font-family: 'Times New Roman';">Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 18pt; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;"><ix:nonNumeric name="dei:PreCommencementIssuerTenderOffer" id="Fact_e3a4fca9fcc548c298275c768dc42a7b" contextRef="c20221222to20221222" format="ixt-sec:boolballotbox">&#x2610;</ix:nonNumeric><br />
+            </td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-size: 10pt;">
+              <div style="font-family: 'Times New Roman';">Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <div style="font-size: 10pt;">
+        <div style="text-align: left; font-family: 'Times New Roman';">Securities registered pursuant to Section 12(b) of the Act:</div>
+
+        <div style="text-align: left; font-family: 'Times New Roman';"> <br />
+        </div>
+
+      </div>
+
+      <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; border-collapse: collapse; text-align: left; color: #000000;">
+
+
+  <tr>
+
+    <td style="width: 32%; vertical-align: bottom; border-bottom: 2px solid rgb(0, 0, 0); font-size: 10pt; white-space: nowrap;">
+              <div style="text-align: center; font-family: 'Times New Roman';">&#160;<span style="font-family: 'Times New Roman';">Title of each class</span></div>
+            </td>
+
+    <td style="width: 2%; vertical-align: bottom; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 32%; vertical-align: bottom; border-bottom: 2px solid rgb(0, 0, 0); font-size: 10pt;">
+              <div style="text-align: center; font-family: 'Times New Roman';">Trading Symbol(s)</div>
+            </td>
+
+    <td style="width: 2%; vertical-align: bottom; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 32%; vertical-align: bottom; border-bottom: #000000 2px solid;">
+              <div style="text-align: center; font-family: 'Times New Roman'; font-size: 10pt;">Name of each exchange on which registered</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 32%; vertical-align: top; font-size: 10pt; text-align: center;"><ix:nonNumeric name="dei:Security12bTitle" id="Fact_2102a7a4329747839b1d1396ec0027d5" contextRef="c20221222to20221222">Common Stock</ix:nonNumeric><br />
+            </td>
+
+    <td style="width: 2%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 32%; vertical-align: top; font-size: 10pt;">
+              <div style="text-align: center; font-family: 'Times New Roman';"><ix:nonNumeric name="dei:TradingSymbol" id="Fact_cf862516b7eb4687be754b03aaf78ccb" contextRef="c20221222to20221222">CBIO</ix:nonNumeric><br />
+              </div>
+            </td>
+
+    <td style="width: 2%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 32%; vertical-align: top; font-size: 10pt;">
+              <div style="text-align: center; font-family: 'Times New Roman';"><ix:nonNumeric name="dei:SecurityExchangeName" id="Fact_5df8d7f4d1394ebb91cbbe22725d938c" contextRef="c20221222to20221222" format="ixt-sec:exchnameen">Nasdaq</ix:nonNumeric><br />
+              </div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="font-size: 10pt;"><br />
+      </div>
+
+      <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">Indicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or Rule 12b-2
+        of the Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter).</div>
+
+      <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <div style="text-align: left; text-indent: 36pt; font-family: 'Times New Roman'; font-size: 10pt;">Emerging growth company <ix:nonNumeric name="dei:EntityEmergingGrowthCompany" id="Fact_ee4ae055f5cb4fa491e58dc4eef300d2" contextRef="c20221222to20221222" format="ixt-sec:boolballotbox">&#x2610;</ix:nonNumeric></div>
+
+      <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">If an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised
+        financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. &#9744;</div>
+
+      <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt;"><span style="font-family: 'Times New Roman';"> <br />
+        </span></div>
+
+      <div style="font-size: 10pt;">
+        <hr style="border: none; border-bottom: 4px solid black; border-top: 1px solid black; height: 10px; color: #ffffff; background-color: #ffffff; text-align: center; margin-left: auto; margin-right: auto;" /></div>
+
+      <div style="clear: both; margin-top: 10pt; margin-bottom: 10pt;" class="BRPFPageBreakArea">
+        <div style="page-break-after: always;" class="BRPFPageBreak">
+          <hr style="margin: 4px 0px; width: 100%; border-width: 0; height: 2px; color: #000000; background-color: #000000; clear: both;" /></div>
+
+      </div>
+
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 54pt; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Item 1.01</td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-size: 10pt;">
+              <div style="font-family: 'Times New Roman'; font-weight: bold; text-align: justify;">Entry into a Material Definitive Agreement.</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt; font-style: italic;">F351 Asset Purchase Agreement</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">On December 26, 2022, Catalyst Biosciences, Inc., a Delaware corporation (&#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Catalyst</span></span>&#8221;), acquired the F351
+        Assets (as defined below) from GNI Group Ltd., a company incorporated under the laws of Japan with limited liability (&#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">GNI Japan</span></span>&#8221;), and GNI Hong Kong Limited, a company incorporated under
+        the laws of Hong Kong with limited liability (&#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">GNI Hong Kong</span></span>&#8221; and, together with GNI Japan, the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Sellers</span></span>&#8221;), pursuant to that
+        certain Asset Purchase Agreement, dated December 26 2022 (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">F351 Agreement</span></span>&#8221;), by and among Catalyst and the Sellers. Pursuant to the F351 Agreement, Catalyst acquired all of the assets
+        and intellectual property rights primarily related to the Sellers&#8217; proprietary Hydronidone compound (collectively, the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">F351 Assets</span></span>&#8221;), other than such assets and intellectual property
+        rights located in the People&#8217;s Republic of China. The F351 Assets include 15 issued or pending patents and patent applications outside of the People&#8217;s Republic of China, with the last acquired issued patent expected to expire in August 2037.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">Under the terms of the F351 Agreement and upon the effective time of the transactions contemplated by the F351 Agreement (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">F351 Effective Time</span></span>&#8221;), Catalyst paid the Sellers $35,000,000 in the form of: 6,266,521 shares of Catalyst common stock, par value $0.001 per share (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Catalyst Common Stock</span></span>&#8221;);
+
+
+
+
+
+
+
+
+
+
+        and 12,340 shares of Catalyst Series X Convertible Preferred Stock, par value $0.001 per share (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Catalyst Convertible Preferred Stock</span></span>&#8221; and collectively with the Catalyst Common Stock
+        issued pursuant to the F351 Agreement, the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Catalyst F351 Securities</span></span>&#8221;).</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;"> <br />
+      </div>
+
+      <div>
+        <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">Each of Catalyst and the Sellers has agreed to customary representations, warranties and covenants in the F351 Agreement, including, among others, covenants relating
+          to (1) Catalyst filing with the U.S. Securities and Exchange Commission (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">SEC</span></span>&#8221;) and causing to become effective a registration statement (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Registration Statement</span></span>&#8221;) to register (a) the shares of Catalyst Common Stock issued pursuant to the F351 Agreement, and (b) the shares of Catalyst Common Stock reserved for issuance upon conversion of the Catalyst
+          Convertible Preferred Stock, (2) Catalyst using reasonable best efforts to maintain the existing listing of the Catalyst Common Stock on The Nasdaq Stock Market LLC (&#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Nasdaq</span></span>&#8221;) and
+          Catalyst causing the (a) shares of Catalyst Common Stock issued in connection with the F351 Agreement and (b) the shares of Catalyst Common Stock reserved for issuance upon conversion of the Catalyst Convertible Preferred Stock, to be approved
+          for listing on Nasdaq, and (3) the Sellers assuming and paying, discharging, performing or otherwise satisfying the liabilities and obligations of any kind and nature relating to the Purchased Contracts (as defined in the F351 Agreement).</div>
+
+        <div style="font-size: 10pt;">&#160;</div>
+
+        <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">The foregoing description of the F351 Agreement does not purport to be complete and is qualified in its entirety by reference to the F351 Agreement, which is filed
+          as Exhibit 2.1 to this Current Report on Form 8-K and is incorporated herein by reference.</div>
+
+        <div style="font-size: 10pt;">&#160;</div>
+
+        <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">The F351 Agreement has been included to provide investors and security holders with information regarding its terms. It is not intended to provide any other factual
+          information about Catalyst or the Sellers. The F351 Agreement contains representations, warranties and covenants that Catalyst and the Sellers made to each other as of specific dates. The assertions embodied in those representations, warranties
+          and covenants were made solely for purposes of the F351 Agreement between Catalyst and the Sellers and may be subject to important qualifications and limitations agreed to by Catalyst and the Sellers in connection with negotiating its terms,
+          including being qualified by confidential disclosures exchanged between the parties in connection with the execution of the F351 Agreement. The representations and warranties may be subject to a contractual standard of materiality that may be
+          different from what may be viewed as material to investors or securityholders or may have been used for the purpose of allocating risk between Catalyst and the Sellers rather than establishing matters as facts. Moreover, information concerning
+          the subject matter of the representations and warranties may change after the date of the F351 Agreement, which subsequent information may or may not be fully reflected in Catalyst&#8217;s public disclosures. For the foregoing reasons, no person should
+          rely on the representations and warranties as statements of factual information at the time they were made or otherwise.</div>
+
+        <div style="font-size: 10pt;"><br />
+        </div>
+
+      </div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt; font-style: italic;">Business Combination Agreement</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">On December 26, 2022, Catalyst, GNI USA, Inc., a Delaware corporation (&#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">GNI USA</span></span>&#8221;), GNI Japan, GNI Hong
+        Kong, Shanghai Genomics, Inc., a company organized under the laws of the People&#8217;s Republic of China (&#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">SG</span></span>&#8221;, and collectively with GNI USA, GNI Japan and GNI HK, &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Contributors</span></span>,&#8221; and each a &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Contributor</span></span>&#8221;), the individuals (each, a &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Minority Holder</span></span>&#8221; and
+        collectively, the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Minority Holders</span></span>&#8221;) listed on Annex A to that certain Business Combination Agreement (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Business Combination Agreement</span></span>&#8221;),
+
+
+
+
+
+
+
+
+
+        and Continent Pharmaceuticals Inc., a Cayman Islands company limited by shares (&#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">CPI</span></span>&#8221;), entered into the Business Combination Agreement, pursuant to which, among other matters, and subject
+        to the satisfaction or waiver of the conditions set forth in the Business Combination Agreement, Catalyst will acquire an indirect controlling interest in Beijing Continent Pharmaceuticals Co., Ltd, a company organized under the laws of the
+        People&#8217;s Republic of China (&#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">BC</span></span>&#8221;), pursuant to the following transactions: (a) GNI USA will contribute all of its ordinary shares in the capital of CPI, par value $0.0001 per share (each a
+        &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">CPI Ordinary Share</span></span>&#8221;) to Catalyst (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">CPI Contribution</span></span>&#8221;), (b) GNI USA will contribute its interest in Further Challenger
+        International Limited, a company incorporated and existing under the laws of the British Virgin Islands with company number 1982271 (&#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Further Challenger</span></span>&#8221;), to Catalyst (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">FC Contribution</span></span>&#8221;) and (c) each Minority Holder will contribute 100% of the interest he or she holds in his or her respective Entity (as defined in the Business Combination Agreement) to
+        Catalyst (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Minority Holder Contributions</span></span>&#8221; and together with the CPI Contribution and the FC Contribution, the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Contributions</span></span>&#8221;).
+
+
+
+
+
+
+
+
+
+        The Contributions are intended to qualify as exchanges governed by Section 351 of the Internal Revenue Code of 1986, as amended (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Code</span></span>&#8221;), for U.S. federal income tax purposes.</div>
+
+      <div style="font-size: 10pt;"><br />
+      </div>
+
+      <div style="clear: both; margin-top: 10pt; margin-bottom: 10pt;" class="BRPFPageBreakArea">
+        <div style="page-break-after: always;" class="BRPFPageBreak">
+          <hr style="margin: 4px 0px; width: 100%; border-width: 0; height: 2px; color: #000000; background-color: #000000; clear: both;" /></div>
+
+      </div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">Subject to the terms and conditions of the Business Combination Agreement, at the effective time of the Contributions (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Effective Time</span></span>&#8221;), (a) GNI USA will contribute all of the CPI Ordinary Shares it holds immediately prior to the Effective Time to Catalyst in exchange for 688,850,101 shares of Catalyst Common Stock, (b) GNI USA will
+        contribute all of the ordinary shares of Further Challenger it holds immediately prior to the Effective Time to Catalyst in exchange for 264,971,695 shares of Catalyst Common Stock and (c) each Minority Holder will contribute 100% of the interest
+        he or she holds in his or her respective Entity to Catalyst in exchange for an aggregate of 156,954,428 shares of Catalyst Common Stock in the amounts set forth on Annex A to the Business Combination Agreement. At the election GNI USA or any
+        Minority Holder, GNI USA or such Minority Holder shall be issued shares of Catalyst Convertible Preferred Stock in lieu of some or all of the shares of Catalyst Common Stock GNI USA or such Minority Holder is entitled to receive. In addition, at
+        the Effective Time, each option (a &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">BC Option</span></span>&#8221;) to purchase common shares (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">BC Common Shares</span></span>&#8221;) of BC, granted under any
+        employee or director stock option, stock purchase or equity compensation plan, arrangement or agreement of BC, that is (i) outstanding immediately prior to the Effective Time, and (ii) held by a United States taxpayer, will be converted into an
+        option to purchase shares of Catalyst Common Stock with the exercise price, the number of shares of Catalyst Common Stock subject to such option and the terms and conditions of exercise of such option to be determined in a manner consistent with
+        the requirements of Section 409A of the Code in order to avoid the imposition of any additional taxes thereunder. BC Options that are held by non-United States taxpayers will remain outstanding and, at the time that any such BC Option becomes
+        exercisable, the holder thereof shall have the option to receive, in lieu of BC Common Shares, a number of shares of Catalyst Common Stock equal to the intrinsic value of such BC Option on the exercise date.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">At the Effective Time, pre-Contributions Catalyst stockholders are expected to own approximately 2.5% of the voting power of the combined company, GNI USA is expected
+        to own approximately 97.5% of the voting power of the combined company, and the combined company will own the F351 Assets and an approximately 65% indirect controlling interest in BC.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">In connection with the Contributions, Catalyst will seek the approval of its stockholders for, among other things, (a) the issuance of the shares of Catalyst Common
+        Stock issuable in connection with the Contributions under Nasdaq rules pursuant to the terms of the Business Combination Agreement (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Business Combination Proposal</span></span>&#8221;), (b) the conversion
+        of the shares of Catalyst Convertible Preferred Stock issued pursuant to the F351 Agreement into shares of Catalyst Common Stock in accordance with Nasdaq rules (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Conversion Proposal</span></span>&#8221;),
+
+
+
+
+
+
+
+
+
+
+        (c) if deemed necessary or appropriate by Catalyst or as otherwise required by applicable law or contract, authorization of sufficient Catalyst Common Stock in Catalyst&#8217;s certificate of incorporation (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Certificate of Incorporation</span></span>&#8221;) for the conversion of the shares of Catalyst Convertible Preferred Stock issued pursuant to the F351 Agreement, a reverse stock split and/or the creation of non-voting common stock of Catalyst
+        (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Charter Amendment Proposal</span></span>&#8221;), and (d) if deemed necessary or appropriate by the parties to the Business Combination Agreement or as otherwise required by applicable law or contract,
+        an increase in the share reserve under Catalyst&#8217;s 2018 Omnibus Incentive Plan (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Incentive Plan Proposal</span></span>&#8221; and, together with the Business Combination, the Conversion Proposal and the
+        Charter Amendment Proposal, the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Meeting Proposals</span></span>&#8221;).</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">Each of Catalyst and the Contributors has agreed to customary representations, warranties and covenants in the Business Combination Agreement, including, among others,
+        covenants relating to (1) the conduct of their respective businesses during the period between the date of signing the Business Combination Agreement and the closing of the Contributions, (2) the non-solicitation of alternative acquisition
+        proposals by Catalyst, (3) Catalyst filing the Registration Statement with the SEC and causing the Registration Statement to become effective to register (a) the shares of Catalyst Common Stock issued pursuant to the Business Combination Agreement
+        and (b) the shares of Catalyst Common Stock reserved for issuance upon conversion of the Catalyst Convertible Preferred Stock, (4) Catalyst using reasonable best efforts to maintain the existing listing of the Catalyst Common Stock on Nasdaq and
+        Catalyst causing the shares of Catalyst Common Stock to be issued in connection with the Contributions to be approved for listing on Nasdaq prior to the closing of the Contributions, and&#160; (5) Catalyst using reasonable best efforts to obtain the
+        requisite approvals of its stockholders.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="clear: both; margin-top: 10pt; margin-bottom: 10pt;" class="BRPFPageBreakArea">
+        <div style="page-break-after: always;" class="BRPFPageBreak">
+          <hr style="margin: 4px 0px; width: 100%; border-width: 0; height: 2px; color: #000000; background-color: #000000; clear: both;" /></div>
+
+      </div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">Consummation of the Contributions is subject to certain closing conditions, including, among other things, (1) approval by the holders of at least a majority of the
+        outstanding shares of Catalyst Common Stock in accordance with the requirements of applicable law and Nasdaq rules and regulations, (2) Nasdaq&#8217;s approval of the listing of the shares of Catalyst Common Stock to be issued in connection with the
+        Contributions, (3) the absence of any injunction or legal restraint which has the effect of prohibiting the consummation of the Contributions or making the Contributions illegal and (4) the effectiveness of the Registration Statement. Each party&#8217;s
+        obligation to consummate the Contributions is also subject to other specified customary conditions, including the representations and warranties of the other party being true and correct as of the date of the Business Combination Agreement and as
+        of the closing date of the Contributions, generally subject to an overall material adverse effect qualification, and the performance in all material respects by the other party of its obligations under the Business Combination Agreement required to
+        be performed on or prior to the date of the closing of the Contributions.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">The Business Combination Agreement contains certain termination rights of each of Catalyst and the Contributors, including, subject to compliance with the applicable
+        terms of the Business Combination Agreement, the right of Catalyst to terminate the Business Combination Agreement to enter into a definitive agreement for a superior proposal. Upon termination of the Business Combination Agreement under specified
+        circumstances, Catalyst may be required to pay the Contributors a termination fee of $2,000,000 and the Contributors or Catalyst, as the case may be, may be required to reimburse the other parties for reasonable out-of-pocket fees and expenses
+        incurred by such party in connection with the transactions contemplated by the Business Combination Agreement, up to a maximum amount of $2,000,000.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">The foregoing description of the Contributions and the Business Combination Agreement does not purport to be complete and is qualified in its entirety by reference to
+        the Business Combination Agreement, which is filed as Exhibit 2.2 to this Current Report on Form 8-K and is incorporated herein by reference.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">The Business Combination Agreement has been included to provide investors and security holders with information regarding its terms. It is not intended to provide any
+        other factual information about Catalyst, the Contributors, the Minority Holders, the Entities, CPI, or BC. The Business Combination Agreement contains representations, warranties and covenants that Catalyst, the Contributors, the Minority Holders
+        and CPI made to each other as of specific dates. The assertions embodied in those representations, warranties and covenants were made solely for purposes of the Business Combination Agreement between Catalyst, the Contributors, the Minority Holders
+        and CPI and may be subject to important qualifications and limitations agreed to by Catalyst, the Contributors, the Minority Holders and CPI in connection with negotiating its terms, including being qualified by confidential disclosures exchanged
+        between the parties in connection with the execution of the Business Combination Agreement. The representations and warranties may be subject to a contractual standard of materiality that may be different from what may be viewed as material to
+        investors or securityholders, or may have been used for the purpose of allocating risk between Catalyst, the Contributors, the Minority Holders and CPI rather than establishing matters as facts. Moreover, information concerning the subject matter
+        of the representations and warranties may change after the date of the Business Combination Agreement, which subsequent information may or may not be fully reflected in Catalyst&#8217;s public disclosures. For the foregoing reasons, no person should rely
+        on the representations and warranties as statements of factual information at the time they were made or otherwise.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt; font-style: italic;">Contingent Value Rights Agreement</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">The Business Combination Agreement contemplates that concurrently with the signing of the Business Combination Agreement, Catalyst and the Rights Agent (as defined
+        therein) will execute and deliver a contingent value rights agreement (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">CVR Agreement</span></span>&#8221;), pursuant to which each holder of Catalyst Common Stock as of January 5, 2023 (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Record Date</span></span>&#8221;) shall be entitled to one contractual contingent value right issued by Catalyst, subject to and in accordance with the terms and conditions of the CVR Agreement, for each share of
+        Catalyst Common Stock held by such holder at the Record Date. Each contingent value right shall entitle the holder thereof to receive (i) certain cash payments from the net proceeds, if any, related to the disposition of Catalyst&#8217;s legacy assets
+        within three years following the Closing (as defined in the CVR Agreement), (ii) 100% of the excess cash (net of all current or contingent liabilities, including transaction-related expenses) retained by Catalyst in excess of $1,000,000 as of the
+        Closing and (iii) 100% of the amount actually received (net of indemnity claims, if any) by Catalyst pursuant to the Asset Purchase Agreement, dated as of May 19, 2022, by and between Catalyst and Vertex Pharmaceuticals Incorporated. The contingent
+        value rights are not transferable, except in certain limited circumstances as will be provided in the CVR Agreement, will not be certificated or evidenced by any instrument and will not be registered with the SEC or listed for trading on any
+        exchange.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">The foregoing description of the CVR Agreement does not purport to be complete and is qualified in its entirety by reference to the form of the CVR Agreement, which is
+        provided as Exhibit A to the Business Combination Agreement, which is filed as Exhibit 2.2 to this Current Report on Form 8-K and incorporated herein by reference.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 54pt; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Item 2.01</td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-size: 10pt;">
+              <div style="font-family: 'Times New Roman'; font-weight: bold; text-align: justify;">Completion of Acquisition or Disposition of Assets.</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">On December 26, 2022, Catalyst completed its acquisition of the F351 Assets. The information contained in Item 1.01 of this Current Report on Form 8-K regarding the
+        acquisition of the F351 Assets is incorporated by reference into this Item 2.01.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="clear: both; margin-top: 10pt; margin-bottom: 10pt;" class="BRPFPageBreakArea">
+        <div style="page-break-after: always;" class="BRPFPageBreak">
+          <hr style="margin: 4px 0px; width: 100%; border-width: 0; height: 2px; color: #000000; background-color: #000000; clear: both;" /></div>
+
+      </div>
+
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 54pt; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Item 3.02</td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-size: 10pt;">
+              <div style="font-family: 'Times New Roman'; font-weight: bold;">Unregistered Sales of Equity Securities.</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">The information contained under &#8220;<span style="font-family: 'Times New Roman'; font-style: italic;">F351 Asset Purchase Agreement</span>&#8221; in Item 1.01 of this Current
+        Report on Form 8-K is incorporated by reference into this Item 3.02. The Catalyst F351 Securities were offered and sold in transactions exempt from registration under the Securities Act of 1933, as amended (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Securities Act</span></span>&#8221;), in reliance on Section 4(a)(2) thereof and/or Regulation D thereunder, in each case as transactions by an issuer not involving a public offering. Each of the Sellers is an &#8220;accredited investor,&#8221; as defined
+        in Regulation D, and is acquiring the Catalyst F351 Securities for investment only and not with a view towards, or for resale in connection with, the public sale or distribution thereof, and appropriate legends have been affixed to the Catalyst
+        F351 Securities.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">The Catalyst F351 Securities have not been registered under the Securities Act and such Catalyst F351 Securities may not be offered or sold in the United States absent
+        registration or an exemption from registration under the Securities Act and any applicable state securities laws. Neither this Current Report on Form 8-K nor any of the exhibits attached hereto is an offer to sell or the solicitation of an offer to
+        buy shares of Catalyst Common Stock or any other securities of Catalyst.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 54pt; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Item 5.02</td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-size: 10pt;">
+              <div style="font-family: 'Times New Roman'; font-weight: bold; text-align: justify;">Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Resignation of Directors</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">On December 26, 2022, immediately prior to the F351 Effective Time, Errol B. De Souza, Ph.D., Jeanne Jew, Geoffrey Ling, M.D./Ph.D., Sharon Tetlow and Eddie Williams
+        voluntarily resigned from Catalyst&#8217;s Board of Directors (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Board</span></span>&#8221;). The resignations were made in connection with the consummation of the transactions contemplated by the F351 Agreement
+        and were not due to any disagreement or dispute relating to Catalyst&#8217;s operations, policies or practices.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Appointment of Directors</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">In accordance with the F351 Agreement, on December 26, 2022, effective as of the F351 Effective Time, the Board appointed Ying Luo, Ph.D. and Mr. Thomas Eastling to
+        the Board as directors. Dr. Luo will serve as a Class I director with a term expiring at Catalyst&#8217;s 2025 annual meeting of the stockholders and until such time as his successor is duly elected and qualified, or until his earlier death, resignation
+        or removal. Mr. Eastling will serve as a Class III director with a term expiring at Catalyst&#8217;s 2024 annual meeting of the stockholders and until such time as his successor is duly elected and qualified, or until his earlier death, resignation or
+        removal.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">The Board also appointed Ms. Andrea Hunt to serve as a Class II director with a term expiring at Catalyst&#8217;s 2023 annual meeting of the stockholders and until such time
+        as her successor is duly elected and qualified, or until her earlier death, resignation or removal. The Board appointed Nassim Usman, Ph.D. to serve as a Class III director with a term expiring at Catalyst&#8217;s 2024 annual meeting of the stockholders
+        and until such time as his successor is duly elected and qualified, or until his earlier death, resignation or removal. The Board appointed Mr. Augustine Lawlor to serve as a Class I director with a term expiring at Catalyst&#8217;s 2025 annual meeting
+        of the stockholders and until such time as his successor is duly elected and qualified, or until his earlier death, resignation or removal. The Board appointed immediately upon the closing of the F351 Asset Purchase Agreement, (i) Ms. Andrea Hunt
+        as Chair and Mr. Augustine Lawlor and Dr. Ying Luo as members of the Governance and Nominating Committee of the Board, (ii) Mr. Augustine Lawlor as Chair and Ms. Andrea Hunt and Mr. Thomas Eastling as members of the Compensation Committee of the
+        Board, and (iii) Mr. Augustine Lawlor as Chair and Ms. Andrea Hunt and Mr. Thomas Eastling as members of the Audit Committee of the Board.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;"><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">Ying Luo, Ph.D. </span><span style="font-size: 10pt;">(Age 57). Dr. Luo has served
+          as a director, representative executive officer, president and chief executive officer of GNI Japan since 2007, Chief Executive Officer of SG from 2001 to 2021, chairman of the board of BC since 2011, a director of the board of GNI Hong Kong
+          since 2013, and chairman of the board and Chief Executive Officer of Cullgen, Inc. since 2018. Dr. Luo has also served as a director of board and President of GNI USA since 2015, a director of Berkeley Advanced Biomaterials LLC since 2017. Dr.
+          Luo had been a postdoctoral fellow at the University of California at San Francisco studying HIV gene regulation from 1991 to 1992, a scientist at Aviron Company from 1992 to 1993, a scientist at Clontech Laboratories from 1993 to 1997 and senior
+          scientist/director/senior director of genomics and target discovery of Rigel Inc. from 1997 to 2000, led research in the field of protein-protein interactions in cancer and inflammation signaling pathways. In his career, Dr. Luo has authored more
+          than 37 research publications. Dr. Luo did his undergraduate education at Peking Union Medical College (Peking University&#8217;s Premedicine) from 1982 to 1986 and received his doctorate in biomedical sciences from the University of Connecticut Health
+          Center in 1991.</span></div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="clear: both; margin-top: 10pt; margin-bottom: 10pt;" class="BRPFPageBreakArea">
+        <div style="page-break-after: always;" class="BRPFPageBreak">
+          <hr style="margin: 4px 0px; width: 100%; border-width: 0; height: 2px; color: #000000; background-color: #000000; clear: both;" /></div>
+
+      </div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;"><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">Thomas Eastling </span><span style="font-size: 10pt;">(Age 63). Mr. Eastling has
+          served as a board member and Chief Financial Officer of Cullgen Inc. (&#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Cullgen</span></span>&#8221;), a privately-held biotech firm in San Diego, since February 2018 and as an outside member of GNI Japan
+          since April 2013 and executive committee member of GNI Japan since September 2013. He previously served as Chief Financial Officer of GNI Japan from 2013 to 2021. Mr. Eastling has more than nine years of experience serving as a public company
+          board member, as well as positions on numerous private company boards. His career covers 35 years of experience in executive management, global finance, and mergers and acquisitions, with senior postings in New York, London, Tokyo and Hong Kong.
+          Mr. Eastling started his career on Wall Street at Nikko Securities Co. International, Inc., where he worked from June 1983 to November 1999, rising to the position of Senior Vice President &amp; General Manager of the Investment Banking and
+          Syndicate Divisions. Mr. Eastling was the Company Representative in Japan for Duff &amp; Phelps Credit Rating Co., which was acquired by Fitch Ratings, Inc. in 2021, from May 2000 to June 2001 and subsequently worked as Managing Director for
+          Softbank Corp. from July 2001 to July 2003. In 2009 he relocated to Hong Kong with American Appraisal where he served as Director of the firm&#8217;s Transaction Advisory Services in Asia from April 2008 to August 2013. He returned to Japan in 2013 to
+          assume the position of Chief Financial Officer and Representative Executive Officer for GNI Japan from 2013 to 2021, relocating in 2021 to Cullgen&#8217;s San Diego headquarters. Mr. Eastling has a bachelor&#8217;s degree from the University of Southern
+          California and a master&#8217;s degree from the American Graduate School of International Management. He graduated from the Board Director Training Institute of Japan and is a member of the National Association of Corporate Directors.</span></div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Indemnification Agreements</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">In connection with their appointment as directors, each of Ying Luo, Ph.D. and Thomas Eastling entered into Catalyst&#8217;s standard form of indemnification agreement, a
+        copy of which is filed as Exhibit 10.1 to this Current Report on Form 8-K and is incorporated herein by reference.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Compensatory Arrangements of Certain Officers</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">As a result of Catalyst&#8217;s previous sale of its complement-related assets to Vertex Pharmaceuticals for up to $60 million and the subsequent distribution of
+        approximately $45 million to Catalyst stockholders in a special dividend, the Catalyst Compensation Committee has approved special bonuses to Nassim Usman, Catalyst&#8217;s President and Chief Executive Officer, Seline Miller, Catalyst&#8217;s interim Chief
+        Financial Officer and Grant Blouse, Catalyst&#8217;s Chief Scientific Officer, in the amounts of $861,750, $277,763 and $429,187, respectively. In addition, upon the distribution to Catalyst stockholders of additional cash and/or other consideration with
+        an aggregate value of at least $10 million, as determined by the Compensation Committee, Dr. Usman, Ms. Miller, and Dr. Blouse will be eligible to receive additional cash bonus payments of $287,250, $92,588, and $143,062, respectively. These bonus
+        payments are dependent only on the events noted in this paragraph and the applicable executive officer&#8217;s service through January 15, 2023 or termination without cause prior to the applicable milestone date, whether or not any other transactions
+        described in this Form 8-K are completed, and independent of any such transactions, or any other transactions or events. As a condition to receiving such bonuses, each of Dr. Usman, Ms. Miller and Dr. Blouse (i) must forego amounts they would be
+        entitled to receive in connection with any severance related to a &#8220;change in control&#8221; and the value of any options granted in 2022 or that are unvested as of the payment date of the respective bonuses and (ii) execute a general release of claims.
+        Such bonuses are expected to be paid in the first quarter of 2023.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 54pt; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Item 5.03</td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-size: 10pt;">
+              <div style="font-family: 'Times New Roman'; font-weight: bold;">Amendments to Articles of Incorporation or Bylaws; Change in Fiscal Year.</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt; font-style: italic;">Certificate of Designation</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">On December 27, 2022, Catalyst filed a Certificate of Designation of Preferences, Rights and Limitations of the Series X Catalyst Convertible Preferred Stock with the
+        Secretary of State of the State of Delaware (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Certificate of Designation</span></span>&#8221;) in connection with the F351 Agreement. The Certificate of Designation establishes the rights of the shares of
+        Catalyst Convertible Preferred Stock, which is intended to have economic rights equivalent to the Catalyst Common Stock, but only limited voting rights.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="clear: both; margin-top: 10pt; margin-bottom: 10pt;" class="BRPFPageBreakArea">
+        <div style="page-break-after: always;" class="BRPFPageBreak">
+          <hr style="margin: 4px 0px; width: 100%; border-width: 0; height: 2px; color: #000000; background-color: #000000; clear: both;" /></div>
+
+      </div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">Holders of Catalyst Convertible Preferred Stock are entitled to receive when, as and if dividends are declared and paid on the Catalyst Common Stock, an equivalent
+        dividend (with the same dividend declaration date and payment date), calculated on an as-converted basis without regard to the Beneficial Ownership Limitation (as defined in the Certificate of Designation). Subject to stockholder approval of the
+        Conversion Proposal, the Catalyst Convertible Preferred Stock is convertible into Catalyst Common Stock at a rate equal to $10,000 per share divided by the $1.00 (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Conversion Ratio</span></span>&#8221;).
+        Except as otherwise required by the Delaware General Corporation Law or as provided below, the Catalyst Convertible Preferred Stock does not have voting rights. As long as any shares of Catalyst Convertible Preferred Stock are outstanding, in
+        addition to any other requirement of the Delaware General Corporation Law, Catalyst will not, without the affirmative vote of the holders of a majority of the then outstanding shares of the Catalyst Convertible Preferred Stock, (i) alter or change
+        adversely the powers, preferences or rights given to the Catalyst Convertible Preferred Stock or alter or amend the Certificate of Designation, amend or repeal any provision of or add any provision to, the Certificate of Incorporation or bylaws of
+        Catalyst, or file any articles of amendment, certificate of designations, preferences, limitations and relative rights of any series of preferred stock of Catalyst, if such action would adversely alter or change the preferences, rights, privileges
+        or powers of, or restrictions provided for the benefit of, the Catalyst Convertible Preferred Stock, regardless of whether any of the foregoing actions shall be by means of amendment to the Certificate of Incorporation or by merger, consolidation
+        or otherwise, (ii) issue further shares of Catalyst Convertible Preferred Stock or increase or decrease (other than by conversion) the number of authorized shares of Catalyst Convertible Preferred Stock, or (iii) enter into any agreement with
+        respect to any of the foregoing. Additionally, the approval of the holders of a majority of the Catalyst Convertible Preferred Stock is required for certain change of control transactions; provided, that this approval right will terminate upon
+        stockholder approval of the Conversion Proposal or in the event that less than 30% of the originally issued Catalyst Convertible Preferred Stock remains issued and outstanding. The Catalyst Convertible Preferred Stock does not have a preference
+        upon any liquidation, dissolution or winding-up of Catalyst.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="font-size: 10pt;">
+        <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">If, at any time after the earlier of receipt of stockholder approval of the Conversion Proposal or six months after the initial issuance of the Catalyst Convertible
+          Preferred Stock, the Company fails to deliver to a holder shares of Catalyst Common Stock on or prior to the third (3rd) Trading Day after the date applicable to such conversion, then, the Company shall pay an amount equal to the Fair Value (as
+          defined in the Certificate of Designation) of such undelivered shares of Catalyst Common Stock.</div>
+
+      </div>
+
+      <div style="font-size: 10pt;"> <br />
+      </div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">Following stockholder approval of the Conversion Proposal, at any time and from time to time after 5:00 p.m. (New York City time) on the second business day after the
+        date on which such stockholder approval is received, each holder of Catalyst Convertible Preferred Stock, each holder of Catalyst Convertible Preferred Stock may, at its option, effect conversions of shares of Catalyst Convertible Preferred Stock
+        into a number of shares of Catalyst Common Stock equal to the Conversion Ratio, subject to certain beneficial ownership limitations, including that a holder of Catalyst Convertible Preferred Stock is prohibited from converting shares of Catalyst
+        Convertible Preferred Stock into shares of Catalyst Common Stock if, as a result of such conversion, such holder, together with its affiliates, would beneficially own more than a specified percentage (to be initially set at 9.99% and thereafter
+        adjusted by the holder to a number between 4.99% and 19.99%) of the total number of shares of Catalyst Common Stock issued and outstanding immediately after giving effect to such conversion.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">The foregoing description of the Catalyst Convertible Preferred Stock does not purport to be complete and is qualified in its entirety by reference to the Certificate
+        of Designation, a copy of which is filed as Exhibit 3.1 to this Current Report on Form 8-K and is incorporated herein by reference.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt; font-style: italic;">Bylaw Amendment</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">On December 22, 2022, the Board approved an amendment to the Company&#8217;s Amended and Restated Bylaws (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Bylaws</span></span>&#8221;),
+
+
+
+
+
+
+
+
+
+
+        effective immediately. The amendment modified the provisions for determining the presence of a quorum at all meetings of stockholders to provide that the presence, in person or by proxy, of the holders of at least one-third of all issued and
+        outstanding shares of common stock entitled to vote at the meeting will constitute a quorum at all meetings of the stockholders for the transaction of business. Prior to the amendment, the presence, in person or by proxy, of the holders of a
+        majority of the outstanding shares of stock entitled to vote would constitute a quorum for the transaction of business.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">The foregoing brief description of the Company&#8217;s amended Bylaws is qualified in its entirety by the full text of the Bylaws, as amended, filed as Exhibit 3.2 hereto
+        and incorporated herein by reference.</div>
+
+      <div style="font-size: 10pt;">&#160;</div>
+
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 54pt; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Item 7.01</td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-size: 10pt;">
+              <div style="font-family: 'Times New Roman'; font-weight: bold;">Regulation FD Disclosure.</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="text-align: justify;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">On December 27, 2022, Catalyst issued a press release announcing, among other things, the Contributions and the transactions effectuated by the F351 Agreement and
+        Catalyst made available a presentation to investors discussing the Contributions. Copies of the press release and the presentation are furnished as Exhibit 99.1 and Exhibit 99.2 to this Current Report on Form 8-K.</div>
+
+      <div style="text-align: justify;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">The information in Item 7.01 of this Current Report on Form 8-K, including the information in the press release and the presentation attached as Exhibit 99.1 and
+        Exhibit 99.2, respectively, to this Current Report on Form 8-K, is furnished pursuant to Item 7.01 of Form 8-K and shall not be deemed &#8220;filed&#8221; for the purposes of Section 18 of the Securities Exchange Act of 1934, as amended (the &#8220;<span style="font-family: 'Times New Roman';"><span style="text-decoration: underline;">Exchange Act</span></span>&#8221;), or otherwise subject to the liabilities of that section. Furthermore, the information in Item 7.01 of this Current Report on Form 8-K, including the information in the press
+        release and presentation attached as Exhibit 99.1 and Exhibit 99.2, respectively, to this Current Report on Form 8-K, shall not be deemed to be incorporated by reference in the filings of Catalyst under the Securities Act.</div>
+
+      <div style="font-size: 10pt;"><br />
+      </div>
+
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 54pt; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Item 8.01</td>
+
+    <td style="width: auto; vertical-align: top; text-align: justify; font-size: 10pt;">
+              <div style="font-family: 'Times New Roman'; font-weight: bold;">Other Events</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="font-size: 10pt;"><br />
+      </div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">On December 27, 2022, Catalyst announced in a press release that the Board has approved the payment of a special dividend to its stockholders. The dividend of $0.24
+        per share of common stock, or approximately $7.5 million in the aggregate, will be paid on January 12, 2023 to stockholders of record on the close of business on the Record Date. Future regular or special dividends will be subject to Board
+        approval. A copy of the press release is attached as Exhibit 99.1 to this Current Report on Form 8-K.</div>
+
+      <div style="font-size: 10pt;"><br />
+      </div>
+
+      <div style="clear: both; margin-top: 10pt; margin-bottom: 10pt;" class="BRPFPageBreakArea">
+        <div style="page-break-after: always;" class="BRPFPageBreak">
+          <hr style="margin: 4px 0px; width: 100%; border-width: 0; height: 2px; color: #000000; background-color: #000000; clear: both;" /></div>
+
+      </div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Forward-Looking Statements</div>
+
+      <div style="text-align: justify;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">This Current Report on Form 8-K and the exhibits furnished herewith contain forward-looking statements based upon Catalyst&#8217;s current expectations. Forward-looking
+        statements involve risks and uncertainties and include, but are not limited to, statements about the structure, timing and completion of the Contributions; the listing of the combined company on Nasdaq after the closing of the proposed
+        Contributions; expectations regarding the ownership structure of the combined company after the closing of the proposed Contributions; the expected executive officers and directors of the combined company; and other statements that are not
+        historical facts. Actual results and the timing of events could differ materially from those anticipated in such forward-looking statements as a result of these risks and uncertainties, which include, without limitation: (i) the risk that the
+        conditions to the closing of the Contributions are not satisfied, including the failure to timely obtain stockholder approval for the transactions contemplated by the Business Combination Agreement, if at all, and Nasdaq's approval of the listing
+        of the shares of Catalyst Common Stock to be issued in connection with the Contributions; (ii) uncertainties as to the timing of the consummation of the proposed transactions contemplated by the Business Combination Agreement and the ability of
+        each of Catalyst, the Contributors, the Minority Holders and CPI to consummate the proposed Contributions, as applicable; (iii) risks related to Catalyst&#8217;s ability to manage its operating expenses and expenses associated with the proposed
+        transactions contemplated by the Business Combination Agreement; (iv) risks related to the failure or delay in obtaining required approvals from any governmental or quasi-governmental entity necessary to consummate the proposed transactions
+        contemplated by the Business Combination Agreement; (v) unexpected costs, charges or expenses resulting from the purchase of the F351 Assets or the Contributions; (vi) potential adverse reactions or changes to business relationships resulting from
+        the announcement or completion of the Contributions or the purchase of the F351 Assets; (vii) risks related to the inability of the combined company to obtain sufficient additional capital to continue to advance the product candidates and
+        preclinical programs of Catalyst; and (viii) risks associated with the possible failure to realize certain anticipated benefits of the Contributions or the purchase of the F351 Assets, including with respect to future financial and operating
+        results. Actual results and the timing of events could differ materially from those anticipated in such forward-looking statements as a result of these risks and uncertainties. These and other risks and uncertainties are more fully described in
+        periodic filings with the SEC, including the factors described in the section titled &#8220;Risk Factors&#8221; in Catalyst&#8217;s Quarterly Report on Form 10-Q for the quarter ended September 30, 2022 filed with the SEC, and in other filings that Catalyst makes
+        and will make with the SEC in connection with the F351 Agreement and the proposed transactions contemplated by the Business Combination Agreement, including the proxy statement/prospectus described below under &#8220;Important Additional Information Will
+        be Filed with the SEC.&#8221; You should not place undue reliance on these forward-looking statements, which are made only as of the date hereof or as of the dates indicated in the forward-looking statements. Except as required by law, Catalyst expressly
+        disclaims any obligation or undertaking to update or revise any forward-looking statements contained herein to reflect any change in its expectations with regard thereto or any change in events, conditions or circumstances on which any such
+        statements are based.</div>
+
+      <div style="font-size: 10pt;"><br />
+      </div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">No Offer or Solicitation</div>
+
+      <div style="font-size: 10pt;"><br />
+      </div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">This Current Report on Form 8-K is not intended to be, and does not constitute, an offer to sell or the solicitation of an offer to subscribe for or buy or an
+        invitation to purchase or subscribe for any securities or the solicitation of any vote in any jurisdiction pursuant to the proposed transactions or otherwise, nor shall there be any sale, issuance or transfer of securities in any jurisdiction in
+        contravention of applicable law. No offer of securities shall be made except by means of a prospectus meeting the requirements of the Securities Act. Subject to certain exceptions to be approved by the relevant regulators or certain facts to be
+        ascertained, the public offer will not be made directly or indirectly, in or into any jurisdiction where to do so would constitute a violation of the laws of such jurisdiction, or by use of the mails or by any means or instrumentality (including
+        without limitation, facsimile transmission, telephone and the internet) of interstate or foreign commerce, or any facility of a national securities exchange, of any such jurisdiction.</div>
+
+      <div style="font-size: 10pt;"><br />
+      </div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Important Additional Information Will be Filed with the SEC</div>
+
+      <div style="font-size: 10pt;"><br />
+      </div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">In connection with the proposed transactions between Catalyst, the Contributors, the Minority Holders and CPI, Catalyst intends to file relevant materials with the
+        SEC, including a registration statement on Form S-4 that will contain a proxy statement/prospectus. CATALYST URGES ITS INVESTORS AND STOCKHOLDERS TO READ THESE MATERIALS CAREFULLY AND IN THEIR ENTIRETY WHEN THEY BECOME AVAILABLE BECAUSE THEY WILL
+        CONTAIN IMPORTANT INFORMATION ABOUT CATALYST, CPI, THE PROPOSED TRANSACTIONS AND RELATED MATTERS. Investors and stockholders will be able to obtain free copies of the proxy statement/prospectus and other documents filed by Catalyst with the SEC
+        (when they become available) through the website maintained by the SEC at www.sec.gov. In addition, investors and stockholders will be able to obtain free copies of the proxy statement/prospectus and other documents filed by Catalyst with the SEC
+        by contacting Catalyst Biosciences, Inc. at 611 Gateway Blvd. Suite 120, South San Francisco, California 94080. Investors and stockholders are urged to read the proxy statement/prospectus and the other relevant materials when they become available
+        before making any voting or investment decision with respect to the proposed transactions.</div>
+
+      <div style="font-size: 10pt;"><br />
+      </div>
+
+      <div style="clear: both; margin-top: 10pt; margin-bottom: 10pt;" class="BRPFPageBreakArea">
+        <div style="page-break-after: always;" class="BRPFPageBreak">
+          <hr style="margin: 4px 0px; width: 100%; border-width: 0; height: 2px; color: #000000; background-color: #000000; clear: both;" /></div>
+
+      </div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Participants in the Solicitation</div>
+
+      <div style="font-size: 10pt;"><br />
+      </div>
+
+      <div style="text-align: justify; font-family: 'Times New Roman'; font-size: 10pt;">Catalyst, the Contributors, the Minority Holders, the Entities, and CPI, and their respective directors and executive officers may be deemed to be participants in the
+        solicitation of proxies in connection with the proposed transactions. Information about Catalyst&#8217;s directors and executive officers is included in Catalyst&#8217;s most recent Annual Report on Form 10-K, including any information incorporated therein by
+        reference, as filed with the SEC, and the proxy statement for Catalyst&#8217;s 2022 annual meeting of stockholders, filed with the SEC on July 19, 2022. Additional information regarding the persons who may be deemed participants in the solicitation of
+        proxies will be included in the proxy statement/prospectus relating to the proposed transactions when it is filed with the SEC. These documents can be obtained free of charge from the sources indicated above.</div>
+
+      <div style="text-align: justify;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 54pt; vertical-align: top;"><span style="font-size: 10pt; font-family: 'Times New Roman';">&#160;</span><span style="font-size: 10pt; font-family: 'Times New Roman'; font-weight: bold;">Item 9.01</span></td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-size: 10pt;">
+              <div style="font-family: 'Times New Roman'; font-weight: bold;">Financial Statements and Exhibits</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">(d) Exhibits</div>
+
+      <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; border-collapse: collapse; text-align: left; color: rgb(0, 0, 0);">
+
+
+  <tr>
+
+    <td style="width: 8%; vertical-align: bottom; border-bottom: 2px solid rgb(0, 0, 0);">
+              <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Exhibit</div>
+              <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Number</div>
+            </td>
+
+    <td style="width: 1.54%; vertical-align: top; font-size: 10pt; padding-bottom: 2px;">&#160;</td>
+
+    <td style="width: 89.56%; vertical-align: bottom; font-size: 10pt; border-bottom: 2px solid rgb(0, 0, 0);">
+              <div style="text-align: center; font-family: 'Times New Roman'; font-weight: bold;">Description</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 8%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);">
+              <div style="text-align: left; font-family: 'Times New Roman';"><a href="brhc10045912_ex2-1.htm">2.1* +</a></div>
+            </td>
+
+    <td style="width: 1.54%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);">&#160;</td>
+
+    <td style="width: 89.56%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);">
+              <div style="text-align: justify; font-family: 'Times New Roman';">Asset Purchase Agreement, dated December 26, 2022, by and among Catalyst Biosciences, Inc., GNI Group Ltd., and GNI Hong Kong Limited</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 8%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 1.54%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 89.56%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 8%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);">
+              <div style="text-align: left; font-family: 'Times New Roman';"><a href="brhc10045912_ex2-2.htm">2.2*<br />
+                </a></div>
+            </td>
+
+    <td style="width: 1.54%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);">&#160;</td>
+
+    <td style="width: 89.56%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);">
+              <div style="text-align: justify; font-family: 'Times New Roman';">Business Combination Agreement, dated December 26, 2022, by and among Catalyst Biosciences, Inc., GNI USA, Inc., GNI Group Ltd., GNI Hong Kong Limited, Shanghai Genomics, Inc.,
+                the individuals listed on Annex A thereto and Continent Pharmaceuticals Inc.</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 8%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 1.54%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 89.56%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 8%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);">
+              <div style="text-align: left; font-family: 'Times New Roman';"><a href="brhc10045912_ex3-1.htm">3.1</a></div>
+            </td>
+
+    <td style="width: 1.54%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);">&#160;</td>
+
+    <td style="width: 89.56%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);">
+              <div style="text-align: justify; font-family: 'Times New Roman';">Certificate of Designation of Series X Convertible Preferred Stock</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 8%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 1.54%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 89.56%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 8%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);">
+              <div style="text-align: left; font-family: 'Times New Roman';"><a href="brhc10045912_ex3-2.htm">3.2</a></div>
+            </td>
+
+    <td style="width: 1.54%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);">&#160;</td>
+
+    <td style="width: 89.56%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);">
+              <div style="text-align: justify; font-family: 'Times New Roman';">Amended and Restated Bylaws of Catalyst Biosciences, Inc.</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td rowspan="1" style="width: 8%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td rowspan="1" style="width: 1.54%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td rowspan="1" style="width: 89.56%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+  </tr>
+
+  <tr>
+
+    <td rowspan="1" style="width: 8%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);"><a href="brhc10045912_ex10-1.htm">10.1</a><br />
+            </td>
+
+    <td rowspan="1" style="width: 1.54%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);">&#160;</td>
+
+    <td rowspan="1" style="width: 89.56%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);">Catalyst Biosciences, Inc. Form of Director Indemnification Agreement<br />
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td rowspan="1" style="width: 8%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td rowspan="1" style="width: 1.54%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td rowspan="1" style="width: 89.56%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 8%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);">
+              <div style="text-align: left; font-family: 'Times New Roman';"><a href="brhc10045912_ex99-1.htm">99.1</a></div>
+            </td>
+
+    <td style="width: 1.54%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);">&#160;</td>
+
+    <td style="width: 89.56%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);">
+              <div style="text-align: justify; font-family: 'Times New Roman';">Press Release of Catalyst Biosciences, Inc., dated December 27, 2022</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 8%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 1.54%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 89.56%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 8%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);">
+              <div style="text-align: left; font-family: 'Times New Roman';"><a href="brhc10045912_ex99-2.htm">99.2</a></div>
+            </td>
+
+    <td style="width: 1.54%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);">&#160;</td>
+
+    <td style="width: 89.56%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);">
+              <div style="text-align: justify; font-family: 'Times New Roman';">Presentation for investor conference call held by Catalyst Biosciences, Inc. on December 27, 2022</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 8%; vertical-align: top; font-size: 10pt;" rowspan="1">&#160;</td>
+
+    <td style="width: 1.54%; vertical-align: top; font-size: 10pt;" rowspan="1">&#160;</td>
+
+    <td style="width: 89.56%; vertical-align: top; font-size: 10pt;" rowspan="1">&#160;</td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 8%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);" rowspan="1">104<br />
+            </td>
+
+    <td style="width: 1.54%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);" rowspan="1">&#160;</td>
+
+    <td style="width: 89.56%; vertical-align: top; font-size: 10pt; background-color: rgb(204, 238, 255);" rowspan="1">Cover Page Interactive Data File (embedded within the Inline XBRL document).<br />
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; text-align: left; color: #000000;" class="DSPFListTable">
+
+
+  <tr>
+
+    <td style="width: 18pt; vertical-align: top; font-family: 'Times New Roman'; font-size: 10pt;">*</td>
+
+    <td style="width: auto; vertical-align: top; text-align: left; font-size: 10pt;">
+              <div style="font-family: 'Times New Roman'; text-align: justify;">Exhibits and/or schedules have been omitted pursuant to Item 601(a)(5) of Regulation S-K. Catalyst hereby undertakes to supplementally furnish copies of any of the omitted
+                exhibits and schedules upon request by the SEC; provided, however, that Catalyst may request confidential treatment pursuant to Rule 24b-2 of the Exchange Act for any exhibits or schedules so furnished.</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="text-align: justify;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <div>
+        <table cellspacing="0" cellpadding="0" style="width: 100%; font-family: 'Times New Roman'; font-size: 10pt;" class="DSPFListTable">
+
+
+  <tr style="vertical-align: top;">
+
+    <td style="vertical-align: top; width: 18pt;">
+                <div style="text-align: justify; font-family: 'Times New Roman';">(+)</div>
+              </td>
+
+    <td style="align: left; vertical-align: top; width: auto;">
+                <div style="text-align: justify; font-family: 'Times New Roman';">Certain portions of this exhibit (indicated by &#8220;[***]&#8221;) have been omitted because they are both (i) not material and (ii) would be competitively harmful if publicly
+                  disclosed.</div>
+              </td>
+
+  </tr>
+
+
+</table>
+      </div>
+
+    </div>
+
+    <div>
+<div><span style="font-size: 10pt;"><br />
+      </span></div>
+
+      <div style="clear: both; margin-top: 10pt; margin-bottom: 10pt;" class="BRPFPageBreakArea">
+        <div style="page-break-after: always;" class="BRPFPageBreak">
+          <hr style="margin: 4px 0px; width: 100%; border-width: 0; height: 2px; color: #000000; background-color: #000000; clear: both;" /></div>
+
+      </div>
+
+      <div style="text-align: center; font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">SIGNATURES</div>
+
+      <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <div style="text-align: left; text-indent: 36pt; font-family: 'Times New Roman'; font-size: 10pt;">Pursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the
+        undersigned hereunto duly authorized.</div>
+
+      <div style="text-align: left;"><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span><span style="font-size: 10pt;"><br />
+        </span></div>
+
+      <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman'; font-size: 10pt; width: 100%; border-collapse: collapse; text-align: left; color: rgb(0, 0, 0);">
+
+
+  <tr>
+
+    <td style="width: 50%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td colspan="2" style="width: 50%; vertical-align: top; font-size: 10pt;">
+              <div style="text-align: left; font-family: 'Times New Roman';">CATALYST BIOSCIENCES, INC.</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 50%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 3%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 47%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 50%; vertical-align: top; font-size: 10pt; padding-bottom: 2px;">
+              <div style="text-align: left; font-family: 'Times New Roman';">Date: December 27, 2022</div>
+            </td>
+
+    <td style="width: 3%; vertical-align: top; font-size: 10pt; padding-bottom: 2px;">
+              <div style="text-align: left; font-family: 'Times New Roman';">By:</div>
+            </td>
+
+    <td style="width: 47%; vertical-align: top; font-size: 10pt; border-bottom: 2px solid rgb(0, 0, 0);">
+              <div style="text-align: left; font-family: 'Times New Roman';">/s/ Nassim Usman, PhD.<br />
+              </div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 50%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 3%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 47%; vertical-align: top;">
+              <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">Nassim Usman, Ph.D.<br />
+              </div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 50%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 3%; vertical-align: top; font-size: 10pt;">&#160;</td>
+
+    <td style="width: 47%; vertical-align: top;">
+              <div style="text-align: left; font-family: 'Times New Roman'; font-size: 10pt;">President and Chief Executive Officer</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div> <br />
+      </div>
+
+      <div> <br />
+      </div>
+
+      <div style="text-align: left;">
+<div><span style="font-size: 10pt; font-family: 'Times New Roman';"> </span></div>
+
+        <hr style="height: 2px; color: #000000; background-color: #000000; text-align: center; border: none; margin-left: auto; margin-right: auto;" /></div>
+
+    </div>
+
+  </div>
+
+  <div><span style="font-size: 10pt;"> </span></div>
+
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

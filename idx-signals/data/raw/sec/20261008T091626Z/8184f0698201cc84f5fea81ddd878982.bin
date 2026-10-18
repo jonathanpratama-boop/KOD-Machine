@@ -1,0 +1,521 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2025" xmlns:us-gaap="http://fasb.org/us-gaap/2025" xmlns:us-roles="http://fasb.org/us-roles/2025" xmlns:dtr-types="http://www.xbrl.org/dtr/type/2022-03-31" xmlns:country="http://xbrl.sec.gov/country/2025" xmlns:srt="http://fasb.org/srt/2025" xmlns:SBEV="http://splashbeveragegroup.com/20250320">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02E_US%2DGAAP%2D2025 -->
+<!-- Field: Set; Name: xdx; ID: xdx_037_SBEV_splashbeveragegroup.com_20250320 -->
+<!-- Field: Set; Name: xdx; ID: xdx_04F_20250320_20250320 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_052_edei%2D%2DCurrentFiscalYearEndDate_12%2D31 -->
+<!-- Field: Set; Name: xdx; ID: xdx_055_edei%2D%2DEntityCentralIndexKey_0001553788 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2025-03-20" id="Fact000003" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2025-03-20" id="Fact000004" name="dei:CurrentFiscalYearEndDate">--12-31</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2025-03-20" id="Fact000005" name="dei:EntityCentralIndexKey">0001553788</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="sbev-20250320.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2025-03-20">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001553788</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2025-03-20</xbrli:startDate>
+        <xbrli:endDate>2025-03-20</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2025-03-202025-03-20_custom_CommonStockParValue0.001PerShareMember">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001553788</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">SBEV:CommonStockParValue0.001PerShareMember</xbrldi:explicitMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2025-03-20</xbrli:startDate>
+        <xbrli:endDate>2025-03-20</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2025-03-202025-03-20_custom_WarrantsToPurchaseSharesOfCommonStockMember">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001553788</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">SBEV:WarrantsToPurchaseSharesOfCommonStockMember</xbrldi:explicitMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2025-03-20</xbrli:startDate>
+        <xbrli:endDate>2025-03-20</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="margin: 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 10pt; margin-bottom: 3pt; width: 100%"><div style="border-top: Black 2pt solid; font-size: 1pt; border-bottom: Black 1pt solid">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="margin: 0">&#160;</p>
+
+<p style="font: 14pt Times New Roman, Times, Serif; margin: 0; text-align: center"><b>UNITED STATES<br/>
+SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="font: 12pt Times New Roman, Times, Serif; margin: 0; text-align: center"><b>WASHINGTON, DC 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">&#160;</p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0; text-align: center"><b>FORM <span id="xdx_900_edei--DocumentType_c20250320__20250320_zPD5548OWNZ8"><ix:nonNumeric contextRef="AsOf2025-03-20" id="Fact000010" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center"><b>CURRENT REPORT PURSUANT<br/>
+TO SECTION 13 OR 15(D) OF THE<br/>
+SECURITIES EXCHANGE ACT OF 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">Date of report (Date of earliest event reported): <span id="xdx_909_edei--DocumentPeriodEndDate_c20250320__20250320_zAs0nzPSTgdb"><ix:nonNumeric contextRef="AsOf2025-03-20" format="ixt:datemonthdayyearen" id="Fact000011" name="dei:DocumentPeriodEndDate">March
+20, 2025</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="width: 100%; border-collapse: collapse">
+  <tr>
+    <td style="border-bottom: black 1pt solid; font: 10pt Times New Roman, Times, Serif; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 24pt"><b><span id="xdx_904_edei--EntityRegistrantName_c20250320__20250320_zfEF7mM2fTm"><ix:nonNumeric contextRef="AsOf2025-03-20" id="Fact000012" name="dei:EntityRegistrantName">SPLASH
+    BEVERAGE GROUP, INC.</ix:nonNumeric></span></b></span></td></tr>
+  <tr>
+    <td style="font: 10pt Times New Roman, Times, Serif; text-align: center"><span style="font-size: 10pt">(Exact Name of Registrant as Specified in Its Charter)</span></td></tr>
+  <tr>
+    <td style="font: 10pt Times New Roman, Times, Serif; text-align: center">&#160;</td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1pt solid; font: 10pt Times New Roman, Times, Serif; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_90E_edei--EntityIncorporationStateCountryCode_c20250320__20250320_zAAUjinMwJS9"><ix:nonNumeric contextRef="AsOf2025-03-20" format="ixt-sec:stateprovnameen" id="Fact000013" name="dei:EntityIncorporationStateCountryCode">Nevada</ix:nonNumeric></span></b></span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="font: 10pt Times New Roman, Times, Serif; text-align: center"><span style="font-size: 10pt">(State or Other Jurisdiction of Incorporation)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1pt solid; text-align: center; width: 49%"><span style="font-size: 10pt"><b><span id="xdx_90F_edei--EntityFileNumber_c20250320__20250320_z6aV3VQHcpq6"><ix:nonNumeric contextRef="AsOf2025-03-20" id="Fact000014" name="dei:EntityFileNumber">001-40471</ix:nonNumeric></span></b></span></td>
+    <td style="text-align: center; width: 1%">&#160;</td>
+    <td style="border-bottom: black 1pt solid; white-space: nowrap; text-align: center; width: 50%"><span style="font-size: 10pt"><b><span id="xdx_909_edei--EntityTaxIdentificationNumber_c20250320__20250320_zJyZKDQgx6jf"><ix:nonNumeric contextRef="AsOf2025-03-20" id="Fact000015" name="dei:EntityTaxIdentificationNumber">34-1720075</ix:nonNumeric></span></b></span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="text-align: center"><span style="font-size: 10pt">(Commission File Number)</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">(IRS Employer Identification No.)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="text-align: center">&#160;</td>
+    <td style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_90B_edei--EntityAddressAddressLine1_c20250320__20250320_zn6Xx4hwR3b2"><ix:nonNumeric contextRef="AsOf2025-03-20" id="Fact000016" name="dei:EntityAddressAddressLine1">1314 East Las Olas Blvd</ix:nonNumeric></span>, <span id="xdx_905_edei--EntityAddressAddressLine2_c20250320__20250320_zt1LBHoY6f2g"><ix:nonNumeric contextRef="AsOf2025-03-20" id="Fact000017" name="dei:EntityAddressAddressLine2">Suite
+    221</ix:nonNumeric></span><br/> <span id="xdx_909_edei--EntityAddressCityOrTown_c20250320__20250320_zGnvCJOT41Qi"><ix:nonNumeric contextRef="AsOf2025-03-20" id="Fact000018" name="dei:EntityAddressCityOrTown">Fort Lauderdale</ix:nonNumeric></span>, <span id="xdx_906_edei--EntityAddressStateOrProvince_c20250320__20250320_zECa7oLpzWB5"><ix:nonNumeric contextRef="AsOf2025-03-20" format="ixt-sec:stateprovnameen" id="Fact000019" name="dei:EntityAddressStateOrProvince">Florida</ix:nonNumeric></span> <span id="xdx_90F_edei--EntityAddressPostalZipCode_c20250320__20250320_zOYNNluH3yFl"><ix:nonNumeric contextRef="AsOf2025-03-20" id="Fact000020" name="dei:EntityAddressPostalZipCode">33316</ix:nonNumeric></span></b></span></td>
+    <td style="text-align: center">&#160;</td></tr>
+  <tr style="vertical-align: bottom">
+    <td colspan="3" style="text-align: center"><span style="font-size: 10pt">(Address of Principal Executive Offices)</span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td colspan="3" style="text-align: center">&#160;</td></tr>
+  <tr style="vertical-align: bottom">
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt"><b><span id="xdx_901_edei--CityAreaCode_c20250320__20250320_zZ8aRv4DXSZf"><ix:nonNumeric contextRef="AsOf2025-03-20" id="Fact000021" name="dei:CityAreaCode">(954)</ix:nonNumeric></span> <span id="xdx_903_edei--LocalPhoneNumber_c20250320__20250320_znqqy5Y7NB3b"><ix:nonNumeric contextRef="AsOf2025-03-20" id="Fact000022" name="dei:LocalPhoneNumber">745-5815</ix:nonNumeric></span></b></span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td colspan="3" style="text-align: center"><span style="font-size: 10pt">(Registrant&#8217;s Telephone Number, Including Area Code)</span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td colspan="3" style="border-bottom: black 1pt solid; text-align: center">&#160;</td></tr>
+  <tr style="vertical-align: bottom">
+    <td colspan="3" style="text-align: center"><span style="font-size: 10pt">(Former Name or Former Address, if Changed Since Last Report)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">Check the appropriate box below if the Form 8-K filing
+is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions (see General Instruction
+A.2. below):</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr>
+    <td style="text-align: justify"><span style="font-family: Segoe UI Symbol,sans-serif; font-size: 10pt"><span id="xdx_907_edei--WrittenCommunications_c20250320__20250320_z3Bj10XEtt46"><ix:nonNumeric contextRef="AsOf2025-03-20" format="ixt:booleanfalse" id="Fact000023" name="dei:WrittenCommunications">&#9744;</ix:nonNumeric></span></span></td>
+    <td style="text-align: justify"><span style="font-size: 10pt">Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</span></td></tr>
+  <tr>
+    <td style="text-align: justify">&#160;</td>
+    <td style="text-align: justify">&#160;</td></tr>
+  <tr>
+    <td style="text-align: justify"><span style="font-family: Segoe UI Symbol,sans-serif; font-size: 10pt"><span id="xdx_90B_edei--SolicitingMaterial_c20250320__20250320_zajMvC15KK7h"><ix:nonNumeric contextRef="AsOf2025-03-20" format="ixt:booleanfalse" id="Fact000024" name="dei:SolicitingMaterial">&#9744;</ix:nonNumeric></span></span></td>
+    <td style="text-align: justify"><span style="font-size: 10pt">Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</span></td></tr>
+  <tr>
+    <td style="text-align: justify">&#160;</td>
+    <td style="text-align: justify">&#160;</td></tr>
+  <tr>
+    <td style="text-align: justify"><span style="font-family: Segoe UI Symbol,sans-serif; font-size: 10pt"><span id="xdx_906_edei--PreCommencementTenderOffer_c20250320__20250320_zsKjOXmpjEih"><ix:nonNumeric contextRef="AsOf2025-03-20" format="ixt:booleanfalse" id="Fact000025" name="dei:PreCommencementTenderOffer">&#9744;</ix:nonNumeric></span></span></td>
+    <td style="text-align: justify"><span style="font-size: 10pt">Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</span></td></tr>
+  <tr>
+    <td style="text-align: justify">&#160;</td>
+    <td style="text-align: justify">&#160;</td></tr>
+  <tr>
+    <td style="text-align: justify"><span style="font-family: Segoe UI Symbol,sans-serif; font-size: 10pt"><span id="xdx_905_edei--PreCommencementIssuerTenderOffer_c20250320__20250320_zidBlALdVZlf"><ix:nonNumeric contextRef="AsOf2025-03-20" format="ixt:booleanfalse" id="Fact000026" name="dei:PreCommencementIssuerTenderOffer">&#9744;</ix:nonNumeric></span></span></td>
+    <td style="text-align: justify"><span style="font-size: 10pt">Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">Securities registered pursuant to Section 12(b) of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Title of each class</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Trading Symbol(s)</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="border-bottom: black 1pt solid; text-align: center"><span style="font-size: 10pt">Name of each exchange on which registered</span></td></tr>
+  <tr style="vertical-align: bottom; background-color: #CCEEFF">
+    <td style="text-align: center"><span style="font-size: 10pt"><span id="xdx_90E_edei--Security12bTitle_c20250320__20250320__us-gaap--StatementClassOfStockAxis__custom--CommonStockParValue0.001PerShareMember_zcJTe6NuycF8"><ix:nonNumeric contextRef="From2025-03-202025-03-20_custom_CommonStockParValue0.001PerShareMember" id="Fact000027" name="dei:Security12bTitle">Common Stock, par value $0.001 per share</ix:nonNumeric></span></span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt"><span id="xdx_908_edei--TradingSymbol_c20250320__20250320__us-gaap--StatementClassOfStockAxis__custom--CommonStockParValue0.001PerShareMember_zeVv5N4F4Kua"><ix:nonNumeric contextRef="From2025-03-202025-03-20_custom_CommonStockParValue0.001PerShareMember" id="Fact000028" name="dei:TradingSymbol">SBEV</ix:nonNumeric></span></span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt"><b><span id="xdx_902_edei--SecurityExchangeName_c20250320__20250320__us-gaap--StatementClassOfStockAxis__custom--CommonStockParValue0.001PerShareMember_zAvfhiBetOHd"><ix:nonNumeric contextRef="From2025-03-202025-03-20_custom_CommonStockParValue0.001PerShareMember" format="ixt-sec:exchnameen" id="Fact000029" name="dei:SecurityExchangeName">NYSE American LLC</ix:nonNumeric></span></b></span></td></tr>
+  <tr style="vertical-align: bottom; background-color: white">
+    <td style="text-align: center"><span style="font-size: 10pt"><span id="xdx_902_edei--Security12bTitle_c20250320__20250320__us-gaap--StatementClassOfStockAxis__custom--WarrantsToPurchaseSharesOfCommonStockMember_z79xxZLv3Juj"><ix:nonNumeric contextRef="From2025-03-202025-03-20_custom_WarrantsToPurchaseSharesOfCommonStockMember" id="Fact000030" name="dei:Security12bTitle">Warrants to purchase shares of common stock</ix:nonNumeric></span></span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt"><span id="xdx_908_edei--TradingSymbol_c20250320__20250320__us-gaap--StatementClassOfStockAxis__custom--WarrantsToPurchaseSharesOfCommonStockMember_zWPewjle4Mi4"><ix:nonNumeric contextRef="From2025-03-202025-03-20_custom_WarrantsToPurchaseSharesOfCommonStockMember" id="Fact000031" name="dei:TradingSymbol">SBEV-WT</ix:nonNumeric></span></span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt"><b><span id="xdx_908_edei--SecurityExchangeName_c20250320__20250320__us-gaap--StatementClassOfStockAxis__custom--WarrantsToPurchaseSharesOfCommonStockMember_zt6LSSuYF5q8"><ix:nonNumeric contextRef="From2025-03-202025-03-20_custom_WarrantsToPurchaseSharesOfCommonStockMember" format="ixt-sec:exchnameen" id="Fact000032" name="dei:SecurityExchangeName">NYSE American LLC</ix:nonNumeric></span></b></span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><br/>
+Indicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405
+of this chapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">Emerging growth company <span style="font-family: Segoe UI Symbol,sans-serif"><span id="xdx_90F_edei--EntityEmergingGrowthCompany_c20250320__20250320_zZvzDOekaXBl"><ix:nonNumeric contextRef="AsOf2025-03-20" format="ixt:booleanfalse" id="Fact000033" name="dei:EntityEmergingGrowthCompany">&#9744;</ix:nonNumeric></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">If an emerging growth company, indicate by check mark
+if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards
+provided pursuant to Section 13(a) of the Exchange Act. <span style="font-family: Segoe UI Symbol,sans-serif">&#9744;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 1; Options: NewSection -->
+    <div style="border-bottom: Black 2pt solid; margin-top: 6pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><b>Item 3.03 Material Modification to Rights of Security
+Holders.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 36pt">To the extent required by Item
+3.03 of Form 8-K, the information regarding the Reverse Stock Split (as defined below) contained in Item 5.03 of this Current Report on
+Form 8-K is incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 36pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><b>Item 5.02 Departure of Directors or Certain Officers;
+Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 36pt"><span style="background-color: white">On
+March 20, 2025, the Board of Directors of Splash Beverage Group, Inc. (the &#8220;Company&#8221;) appointed Mr. William &#8220;Bill&#8221;
+Devereux to serve as Chief Financial Officer of the Company, effective as of the same date.</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 36pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 36pt">William Devereux is a strategic
+finance executive with over 20 years of experience in corporate finance, investment management, and investor relations. He has successfully
+led multi-million-dollar growth initiatives, secured institutional funding, and optimized financial operations across high-growth consumer
+and technology sectors.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 36pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">Before joining Splash Beverage Group, William was
+CFO at Hembal Labs and Akin AI, where he secured enterprise contracts, sourced a merger offer, and positioned companies for significant
+investment. Earlier, he was a Partner at Daruma Capital, where he played a key leadership role in managing a $2B portfolio. He also advised
+on M&amp;A and regulatory matters at Dames Point Partners and held leadership roles in investment strategy and corporate governance. An
+expert in corporate finance, capital allocation, and M&amp;A strategy, William holds an MBA from the University of North Carolina at Chapel
+Hill and a BS in Finance from the University of Florida.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 36pt">There is no family relationship
+between Mr. Devereux and any director or executive officer of the Company. There are no transactions between Mr. Devereux and the Company
+that would be required to be reported under Item&#160;404(a)&#160;of&#160;Regulation S-K.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 36pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 36pt">There is no arrangement or understanding
+between Mr. Devereux and any other persons, pursuant to which she was selected as Chief Financial Officer. Mr. Devereux has not engaged
+in any transaction, or any currently proposed transaction, in which the Company was or is to be a participant and the amount involved
+exceeds $120,000, and in which any related person had or will have a direct or indirect material interest. There are no family relationships
+between Mr. Devereux and any director or executive officer of the Company.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 36pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-indent: 36pt">Simultaneously, the Board of Directors of the Company
+appointed Mr. Thomas Fore&#160;to serve as a Director of the Company, effective March 20, 2025.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-indent: 36pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0; text-indent: 36pt">Thomas Butler Fore is a Boston-based entrepreneur with
+more than 30 years of experience in structured finance. Thomas has developed an expertise in M&amp;A, corporate strategy, corporate finance,
+reorganizations, and dispute resolution. He has served as a key strategist for numerous challenged microcap and small cap public companies,
+as well as numerous private company capitalizations and reorganizations. Thomas also has managed numerous restructurings, dispute resolutions,
+and workouts for top law firms, private equity clients, and fund managers. As an example, he structured and capitalized the purchase and
+rebranding of Gray and Company in 2017. Gray and Company was a troubled minority owned &#8220;fund to fund&#8221; advisory with more than
+$3B AUM. Additionally, since 2007, Thomas has served as the chief visionary and CEO of Sora Companies, a boutique real estate development
+firm. As the lead executive for Sora, Thomas led the award-winning Rowan Boulevard Project in Glassboro, New Jersey. This $300MM mixed-use
+project remains a national model for public-private partnership. As an advisor and strategist,</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-indent: 36pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-indent: 36pt"></p>
+
+<!-- Field: Page; Sequence: 2 -->
+    <div style="border-bottom: Black 2pt solid; margin-top: 6pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-indent: 36pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin: 0; text-indent: 36pt">Thomas currently leads the real estate investment strategy
+for Epogee Capital Management, a Boston-based Registered Investment Advisory, and for Wise Capital, an international investment fund with
+more than $500MM AUM. Previously, he served as the CEO of TideRock Media from 2011 to 2024. TideRock has produced more than 15 feature
+films for the Sundance Labs Program and has worked with top Hollywood talent including: Elizabeth Banks, Richard Gere, Common, Danny Glover,
+and Christopher Columbus. TideRock co-founded the Sundance Investor&#8217;s Catalyst Lab in 2013 in order to provide education and resources
+to film investors. Thomas is a board member of My Pebble Inc., a private technology company which is involved in the effort to help companies
+become carbon neutral, and is a graduate of Towson University (1991) and has retired from the Baltimore City Police Department as a Detective
+Agent in 2000.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-indent: 36pt">&#160;</p>
+
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-indent: 36pt"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 36pt">There is no family relationship
+between Mr. Fore and any director or executive officer of the Company. There are no transactions between Mr. Fore and the Company that
+would be required to be reported under Item&#160;404(a)&#160;of&#160;Regulation S-K.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 36pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 36pt">There is no arrangement or understanding
+between Mr. Fore and any other persons, pursuant to which he was selected as a Director. Mr. Fore. has not engaged in any transaction,
+or any currently proposed transaction, in which the Company was or is to be a participant and the amount involved exceeds $120,000, and
+in which any related person had or will have a direct or indirect material interest. There are no family relationships between Mr. Fore
+and any other director or executive officer of the Company.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 36pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 36pt">Additionally, on March 27, 2025,
+Mr. Fore was appointed by the Board of Directors to the Audit Committee.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 36pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><b>Item 5.03 Amendments to Articles of Incorporation
+or Bylaws.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">The Board of Directors of the Company approved a reverse
+stock split of the Company&#8217;s authorized and issued and outstanding shares of common stock, par value $0.001 per share (the &#8220;Common
+Stock&#8221;) at a ratio of 1-for-40 (the &#8220;Reverse Stock Split&#8221;). The Company filed a Certificate of Change (the &#8220;Certificate
+of Change&#8221;) pursuant to Nevada Revised Statutes Section 78.209 with the Secretary of State of the State of Nevada on March 26, 2025,
+to be effective March 27, 2025 .</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">In connection with the Reverse Stock Split, the CUSIP
+number for the Common Stock will change to 84862C302.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">Pursuant to the laws of the State of Nevada, the Company&#8217;s
+state of incorporation, the Company&#8217;s Board of Directors has the authority to effect a reverse stock split without stockholder approval
+if the number of authorized shares of Common Stock and the number of outstanding shares of Common Stock are proportionally reduced.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><i>Split Adjustment; Treatment of Fractional Shares</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">As a result of the Reverse Stock Split, on the Effective
+Date, the number of shares of the Company&#8217;s authorized Common Stock will be reduced from 300,000,000 shares to 7,500,000 shares
+and each forty (40) shares of Common Stock outstanding will automatically combine into one (1) new share of Common Stock without any action
+on the part of the holders, and the number of outstanding shares Common Stock will be reduced from 75,692,712 shares to approximately
+1,892,318 shares (subject to rounding of fractional shares).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">No fractional shares will be issued in connection
+with the Reverse Stock Split. Stockholders who otherwise would be entitled to receive fractional shares because they hold a number of
+pre-Reverse Stock Split shares of the Company&#8217;s Common Stock not evenly divisible by 40 will, in lieu of a fractional share, automatically
+be entitled to receive an additional fractional share of the Company&#8217;s Common Stock to round up to the next whole number. The Company
+will issue one whole share of the post-Reverse Stock Split Common Stock to any stockholder who otherwise would have received a fractional
+share as a result of the Reverse Stock Split. As a result, no fractional shares will be issued in connection with the Reverse Stock Split
+and no cash or other consideration will be paid in connection with any fractional shares that would otherwise have resulted from the Reverse
+Stock Split.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 3 -->
+    <div style="border-bottom: Black 2pt solid; margin-top: 6pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify"><i>Capitalization; Adjustment of Outstanding Securities</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">The Reverse Stock Split has no effect on the par value
+of the Company&#8217;s Common Stock or authorized or outstanding shares of preferred stock, and did not modify any voting rights or other
+terms of the Common Stock or preferred stock. Immediately after the Reverse Stock Split, each stockholder&#8217;s percentage ownership
+interest in the Company and proportional voting power will remain unchanged, except for minor changes and adjustments that will result
+from the treatment of fractional shares. The rights and privileges of the holders of shares of Common Stock will be substantially unaffected
+by the Reverse Stock Split.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">Stockholders who are holding their shares in electronic
+form at brokerage firms do not need to take any action, as the effect of the Reverse Stock Split will automatically be reflected in their
+brokerage accounts. Stockholders holding paper certificates may (but are not required to) send the certificates to the Company&#8217;s
+transfer agent and registrar, Equiniti Trust Company. Equiniti Trust Company will issue a new stock certificate reflecting the Reverse
+Stock Split to each requesting stockholder.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><i><br/>
+NYSE American Compliance</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">The Reverse Stock Split is being effected for the primary purpose of meeting
+the per share price requirements for our Common Stock in order to maintain the listing of our Common Stock on the NYSE American.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"><i>Certificate of Change</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">The above description of the Certificate of Change and the Reverse Stock
+Split is a summary of the material terms thereof and is qualified in its entirety by reference to the Certificate of Change, a copy of
+which is attached hereto as Exhibit 3.1, as filed with the Secretary of State of the State of Nevada on March 26, 2025 (effective as of
+March 27, 2025).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<!-- Field: Page; Sequence: 4 -->
+    <div style="border-bottom: Black 2pt solid; margin-top: 6pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0; margin-bottom: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0; margin-bottom: 0"><img src="img_001.jpg" alt="" style="height: 1294px; width: 1000px"/>&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<!-- Field: Page; Sequence: 5 -->
+    <div style="border-bottom: Black 2pt solid; margin-top: 6pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0; margin-bottom: 0">&#160;<img src="img_002.jpg" alt="" style="height: 1294px; width: 1000px"/></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0"></p>
+
+<!-- Field: Page; Sequence: 6 -->
+    <div style="border-bottom: Black 2pt solid; margin-top: 6pt; margin-bottom: 6pt"><p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">SIGNATURE</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 36pt">Pursuant to the requirements of
+the Securities Exchange Act of 1934, the Registrant has duly caused this Current Report on Form 8-K to be signed on its behalf by the
+undersigned hereunto duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-align: justify; text-indent: 36pt">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td colspan="2"><span style="font-size: 10pt"><b>SPLASH BEVERAGE GROUP, INC.</b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="width: 50%">&#160;</td>
+    <td style="width: 7%">&#160;</td>
+    <td style="width: 43%">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-size: 10pt">Dated: April 2, 2025</span></td>
+    <td><span style="font-size: 10pt">By: </span></td>
+    <td style="border-bottom: black 1pt solid"><span style="font-size: 10pt"><i>/s/ Robert Nistico</i></span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt">Name: </span></td>
+    <td><span style="font-size: 10pt; background-color: white">Robert Nistico</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt">Title: </span></td>
+    <td style="text-align: justify"><span style="font-size: 10pt">Chief Executive Officer </span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-indent: 36pt"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-indent: 36pt"><b></b></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 3pt; margin-bottom: 3pt; width: 100%"><div style="border-top: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0; text-indent: 36pt"><b>&#160;</b></p>
+
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJx1kUFOwzAQRU/QO4willHrBIpEdhCVCtFC1EaFrZtMqNXEE42d0h6JW+I4rWABliXLnnn//5GDIAzm9KhqZHh/WC0gx6atpUVYYYWMukDXkT49J+DOFX4oY1lq668XMCXHoGNux2Lr3n3nQRksExA3ExFP4imI62R6B9kyGPX1lHSlStRWyRqkLiFjalmhlXwaFHJ5JE3NyTttkI0inUA0FkP5C2IRxfBCB/lJvDewWKTBKPRrFMyZutZ1zY4WdU/CrMbG2ZmB/tk+TdEZS03yJrmfzeSUdVzspMH1TjKa18pN2JBeWyr2S2y2yA6KRBxH4v6c58KCJWjPNBiPA1VQeAEwvcIfzr/0M8kbWXcoxkJEGbKP8I/pgIHnQmglw6FH4crD0Lq/8REujt8A/ZW0 -->
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2021q4" xmlns:ref="http://www.xbrl.org/2006/ref" xmlns:us-gaap="http://fasb.org/us-gaap/2021-01-31" xmlns:us-roles="http://fasb.org/us-roles/2021-01-31" xmlns:dtr-types="http://www.xbrl.org/dtr/type/2020-01-21" xmlns:country="http://xbrl.sec.gov/country/2021" xmlns:srt="http://fasb.org/srt/2021-01-31" xmlns:up="http://wheelsup.com/20230607">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html" />
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02A_US%2DGAAP%2D2021 -->
+<!-- Field: Set; Name: xdx; ID: xdx_03F_up_wheelsup.com_20230607 -->
+<!-- Field: Set; Name: xdx; ID: xdx_04A_20230607_20230607 -->
+<!-- Field: Set; Name: xdx; ID: xdx_05E_edei%2D%2DEntityCentralIndexKey_0001819516 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_051_edei%2D%2DCurrentFiscalYearEndDate_%2D%2DLS0xMi0zMQ== -->
+<!-- Field: Set; Name: xdx; ID: xdx_072_SO_T%2D%2D\DeptFiles%2DiXBRL 8%2DK Covers Templates\+++%2DROOT%2DElement%2D+++\DocumentInformationLineItems.xdxs -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="From2023-06-07to2023-06-07" name="dei:EntityCentralIndexKey">0001819516</ix:nonNumeric>
+  <ix:nonNumeric contextRef="From2023-06-07to2023-06-07" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="From2023-06-07to2023-06-07" name="dei:CurrentFiscalYearEndDate">--12-31</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="up-20230607.xsd" xlink:type="simple" />
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="From2023-06-07to2023-06-07">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001819516</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2023-06-07</xbrli:startDate>
+        <xbrli:endDate>2023-06-07</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2023-06-072023-06-07_us-gaap_CommonClassAMember">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001819516</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">us-gaap:CommonClassAMember</xbrldi:explicitMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2023-06-07</xbrli:startDate>
+        <xbrli:endDate>2023-06-07</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2023-06-072023-06-07_us-gaap_WarrantMember">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001819516</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">us-gaap:WarrantMember</xbrldi:explicitMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2023-06-07</xbrli:startDate>
+        <xbrli:endDate>2023-06-07</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="margin: 0"></p>
+
+<p style="margin: 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0; margin-bottom: 0; width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="margin: 0"></p>
+
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 14pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>UNITED STATES</b></p>
+
+<p style="font: 14pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Washington, D.C. 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin: 3pt auto; width: 25%"><div style="border-top: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 14pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>FORM <span id="xdx_90F_edei--DocumentType_c20230607__20230607_zdi561a3bHkb"><ix:nonNumeric contextRef="From2023-06-07to2023-06-07" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin: 3pt auto; width: 25%"><div style="border-top: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>PURSUANT TO SECTION&#160;13 OR 15(d)</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>OF THE SECURITIES EXCHANGE ACT OF 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Date of Report (Date of earliest event reported):
+<span id="xdx_90A_edei--DocumentPeriodEndDate_c20230607__20230607_zbPdMVhFh4e4"><ix:nonNumeric contextRef="From2023-06-07to2023-06-07" format="ixt:datemonthdayyearen" name="dei:DocumentPeriodEndDate">June 7, 2023</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin: 3pt auto; width: 25%"><div style="border-top: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span id="xdx_902_edei--EntityRegistrantName_c20230607__20230607_zmtn1wo4wvs8"><b><ix:nonNumeric contextRef="From2023-06-07to2023-06-07" name="dei:EntityRegistrantName">WHEELS
+UP EXPERIENCE INC.</ix:nonNumeric></b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>(Exact name of registrant as specified in its
+charter)</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin: 3pt auto; width: 25%"><div style="border-top: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 33%; text-align: center"><b><span id="xdx_908_edei--EntityIncorporationStateCountryCode_c20230607__20230607_zPr03IFrKf8h"><ix:nonNumeric contextRef="From2023-06-07to2023-06-07" format="ixt-sec:stateprovnameen" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></b></td>
+    <td style="width: 34%; text-align: center"><span id="xdx_90B_edei--EntityFileNumber_c20230607__20230607_zspeRatuKm33"><b><ix:nonNumeric contextRef="From2023-06-07to2023-06-07" name="dei:EntityFileNumber">001-39541</ix:nonNumeric></b></span></td>
+    <td style="width: 33%; text-align: center"><span id="xdx_905_edei--EntityTaxIdentificationNumber_c20230607__20230607_zuHPOVwAFS9l"><b><ix:nonNumeric contextRef="From2023-06-07to2023-06-07" name="dei:EntityTaxIdentificationNumber">98-1617611</ix:nonNumeric></b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="text-align: center"><b>(State or other jurisdiction</b></td>
+    <td style="text-align: center"><b>(Commission</b></td>
+    <td style="text-align: center"><b>(I.R.S. Employer</b></td></tr>
+  <tr style="vertical-align: top">
+    <td style="text-align: center"><b>of incorporation)</b></td>
+    <td style="text-align: center"><b>File Number)</b></td>
+    <td style="text-align: center"><b>Identification No.)</b></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.75in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 50%; text-align: center"><span id="xdx_90A_edei--EntityAddressAddressLine1_c20230607__20230607_zUpRnMlaSNOe"><b><ix:nonNumeric contextRef="From2023-06-07to2023-06-07" name="dei:EntityAddressAddressLine1">601
+    West 26<sup>th</sup> Street, Suite 900</ix:nonNumeric></b></span></td>
+    <td style="width: 50%; text-align: center">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td style="text-align: center"><span id="xdx_909_edei--EntityAddressCityOrTown_c20230607__20230607_zpU86Hotogfj"><b><ix:nonNumeric contextRef="From2023-06-07to2023-06-07" name="dei:EntityAddressCityOrTown">New York</ix:nonNumeric></b></span><b>,
+    <span id="xdx_905_edei--EntityAddressStateOrProvince_c20230607__20230607_z1kmSVCF2w4a"><ix:nonNumeric contextRef="From2023-06-07to2023-06-07" format="ixt-sec:stateprovnameen" name="dei:EntityAddressStateOrProvince">New York</ix:nonNumeric></span></b></td>
+    <td style="text-align: center"><span id="xdx_90E_edei--EntityAddressPostalZipCode_c20230607__20230607_zREu5q8fmve7"><b><ix:nonNumeric contextRef="From2023-06-07to2023-06-07" name="dei:EntityAddressPostalZipCode">10001</ix:nonNumeric></b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="text-align: center"><b>(Address of principal executive offices)</b></td>
+    <td style="text-align: center"><b>(Zip Code)</b></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 1in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>(<span id="xdx_90E_edei--CityAreaCode_c20230607__20230607_zJh9y2iwdstd"><ix:nonNumeric contextRef="From2023-06-07to2023-06-07" name="dei:CityAreaCode">212</ix:nonNumeric></span></b><b>)
+<span id="xdx_90D_edei--LocalPhoneNumber_c20230607__20230607_zXKriUmd2FF1"><ix:nonNumeric contextRef="From2023-06-07to2023-06-07" name="dei:LocalPhoneNumber">257-5252</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>(Registrant&#8217;s telephone number, including
+area code)</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>(Former name or former address, if changed
+since last report)</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin: 3pt auto; width: 25%"><div style="border-top: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Check the appropriate box below if the Form&#160;8-K
+filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 0px; text-align: justify"></td>
+    <td style="width: 24px"><span id="xdx_90C_edei--WrittenCommunications_c20230607__20230607_zYUlVRdjJtu7" style="font-family: Wingdings"><ix:nonNumeric contextRef="From2023-06-07to2023-06-07" format="ixt:booleanfalse" name="dei:WrittenCommunications">&#168;</ix:nonNumeric></span></td>
+    <td style="text-align: justify">Written communications pursuant to Rule&#160;425 under the Securities Act (17 CFR 230.425)</td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 0px; text-align: justify"></td>
+    <td style="width: 24px"><span id="xdx_906_edei--SolicitingMaterial_c20230607__20230607_zep9VJ0nC4C8" style="font-family: Wingdings"><ix:nonNumeric contextRef="From2023-06-07to2023-06-07" format="ixt:booleanfalse" name="dei:SolicitingMaterial">&#168;</ix:nonNumeric></span></td>
+    <td style="text-align: justify">Soliciting material pursuant to Rule&#160;14a-12 under the Exchange Act (17 CFR 240.14a-12)</td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 0px; text-align: justify"></td>
+    <td style="width: 24px"><span id="xdx_903_edei--PreCommencementTenderOffer_c20230607__20230607_zevDztUXJYr6" style="font-family: Wingdings"><ix:nonNumeric contextRef="From2023-06-07to2023-06-07" format="ixt:booleanfalse" name="dei:PreCommencementTenderOffer">&#168;</ix:nonNumeric></span></td>
+    <td style="text-align: justify">Pre-commencement communications pursuant to Rule&#160;14d-2(b)&#160;under the Exchange Act (17 CFR
+    240.14d-2(b))</td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 0px; text-align: justify"></td>
+    <td style="width: 24px"><span id="xdx_909_edei--PreCommencementIssuerTenderOffer_c20230607__20230607_zp08x3fCt3r8" style="font-family: Wingdings"><ix:nonNumeric contextRef="From2023-06-07to2023-06-07" format="ixt:booleanfalse" name="dei:PreCommencementIssuerTenderOffer">&#168;</ix:nonNumeric></span></td>
+    <td style="text-align: justify">Pre-commencement communications pursuant to Rule&#160;13e-4(c)&#160;under the Exchange Act (17 CFR
+    240.13e-4(c))</td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.25in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Securities registered pursuant to Section 12(b) of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; margin-left: auto; width: 95%; border-collapse: collapse; margin-right: auto">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1pt solid; white-space: nowrap; width: 58%; padding-bottom: 1pt; text-align: center"><b>Title of
+    each class</b></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1pt solid; width: 10%"><p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Trading</b></p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Symbol(s)</b></p></td>
+    <td style="width: 1%">&#160;</td>
+    <td style="border-bottom: black 1pt solid; width: 30%"><p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Name of each exchange</b></p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>on which registered</b></p></td></tr>
+  <tr>
+    <td style="vertical-align: top; text-align: left"><b><span id="xdx_90F_edei--Security12bTitle_c20230607__20230607__us-gaap--StatementClassOfStockAxis__us-gaap--CommonClassAMember_z1UdCKVDDBt2"><ix:nonNumeric contextRef="From2023-06-072023-06-07_us-gaap_CommonClassAMember" name="dei:Security12bTitle">Class
+    A common stock, par value $0.0001 per share</ix:nonNumeric></span></b></td>
+    <td style="vertical-align: bottom">&#160;</td>
+    <td style="vertical-align: top; text-align: center"><b><span id="xdx_908_edei--TradingSymbol_c20230607__20230607__us-gaap--StatementClassOfStockAxis__us-gaap--CommonClassAMember_zrLiZMCKpZtc"><ix:nonNumeric contextRef="From2023-06-072023-06-07_us-gaap_CommonClassAMember" name="dei:TradingSymbol">UP</ix:nonNumeric></span></b></td>
+    <td style="vertical-align: bottom">&#160;</td>
+    <td style="vertical-align: top; text-align: center"><b><span id="xdx_90C_edei--SecurityExchangeName_c20230607__20230607__us-gaap--StatementClassOfStockAxis__us-gaap--CommonClassAMember_zMRfESvJdFig"><ix:nonNumeric contextRef="From2023-06-072023-06-07_us-gaap_CommonClassAMember" format="ixt-sec:exchnameen" name="dei:SecurityExchangeName">New
+    York Stock Exchange</ix:nonNumeric></span></b></td></tr>
+  <tr>
+    <td style="vertical-align: top; text-align: left">&#160;</td>
+    <td style="vertical-align: bottom">&#160;</td>
+    <td style="vertical-align: top; text-align: center">&#160;</td>
+    <td style="vertical-align: bottom">&#160;</td>
+    <td style="vertical-align: top; text-align: center">&#160;</td></tr>
+  <tr>
+    <td style="vertical-align: top; text-align: left"><b><span id="xdx_904_edei--Security12bTitle_c20230607__20230607__us-gaap--StatementClassOfStockAxis__us-gaap--WarrantMember_zrNV7BOrYJjj"><ix:nonNumeric contextRef="From2023-06-072023-06-07_us-gaap_WarrantMember" name="dei:Security12bTitle">Redeemable warrants, each warrant exercisable for 1/10 of one share of Class A common stock at an exercise price of $115.00</ix:nonNumeric></span> per whole share of Class A common stock</b></td>
+    <td style="vertical-align: bottom">&#160;</td>
+    <td style="vertical-align: top; text-align: center"><b><span id="xdx_90F_edei--TradingSymbol_c20230607__20230607__us-gaap--StatementClassOfStockAxis__us-gaap--WarrantMember_zPvje9m4NxRe"><ix:nonNumeric contextRef="From2023-06-072023-06-07_us-gaap_WarrantMember" name="dei:TradingSymbol">UP
+    WS</ix:nonNumeric></span></b></td>
+    <td style="vertical-align: bottom">&#160;</td>
+    <td style="vertical-align: top; text-align: center"><b><span id="xdx_90B_edei--SecurityExchangeName_c20230607__20230607__us-gaap--StatementClassOfStockAxis__us-gaap--WarrantMember_zAQikMj0K699"><ix:nonNumeric contextRef="From2023-06-072023-06-07_us-gaap_WarrantMember" format="ixt-sec:exchnameen" name="dei:SecurityExchangeName">New
+    York Stock Exchange</ix:nonNumeric></span></b></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.75in; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Indicate by check mark
+whether the registrant is an emerging growth company as defined in Rule&#160;405 of the Securities Act of 1933 (&#167;230.405 of this
+chapter) or Rule&#160;12b-2&#160;of the Securities Exchange Act of 1934&#160;(&#167;240.12b-2&#160;of this chapter).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in; background-color: white">Emerging growth company&#160;&#160;<span id="xdx_90F_edei--EntityEmergingGrowthCompany_c20230607__20230607_zpUM3RrLmKh9" style="font-family: Wingdings"><ix:nonNumeric contextRef="From2023-06-07to2023-06-07" format="ixt:booleanfalse" name="dei:EntityEmergingGrowthCompany">&#168;</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">If an emerging growth
+company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or
+revised financial accounting standards provided pursuant to Section&#160;13(a)&#160;of the Exchange Act.&#160;&#160;<span style="font-family: Wingdings">&#168;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0; margin-bottom: 0; width: 100%"><div style="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0pt; margin-bottom: 0pt"><tr style="vertical-align: top">
+<td style="width: 0"></td><td style="width: 1in"><b>Item 1.01</b></td><td style="text-align: justify"><b>Entry into a Material Definitive Agreement.</b></td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">As previously announced, following the 2023 annual
+meeting of stockholders of Wheels&#160;Up Experience&#160;Inc. (the &#8220;Company&#8221; or &#8220;Wheels&#160;Up&#8221;) held on May&#160;31,&#160;2023
+(the &#8220;Annual Meeting&#8221;), the Board of Directors of the Company (the &#8220;Board&#8221;) approved a Reverse Stock Split (as
+defined below) that became effective immediately after the close of trading on The New York Stock Exchange (the &#8220;NYSE&#8221;) on
+June&#160;7,&#160;2023 (the &#8220;Effective Time&#8221;). In connection with such Reverse Stock Split, the Company, in its capacity as
+the managing member of Wheels Up Partners Holdings&#160;LLC, a Delaware limited liability company and direct subsidiary of the Company
+(&#8220;WUPH&#8221;), entered into Amendment No.&#160;2 to Seventh Amended and Restated Limited Liability Company Agreement of Wheels
+Up Partners Holdings&#160;LLC, dated as of June&#160;7,&#160;2023 (the &#8220;WUPH&#160;Agreement Amendment&#8221;), to, among other things,
+update certain provisions to reflect adjustments to outstanding and issuable membership interests in WUPH as a result of the Reverse Stock
+Split.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The foregoing summary of the WUPH&#160; Agreement
+Amendment does not purport to be complete and is qualified in its entirety by reference to the WUPH Agreement Amendment, a copy
+of which is attached as Exhibit&#160;10.1 to this Current Report on Form 8-K and incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0pt; margin-bottom: 0pt"><tr style="vertical-align: top">
+<td style="width: 0"></td><td style="width: 1in"><b>Item 3.03</b></td><td style="text-align: justify"><b>Material Modification to Rights of Security Holders.</b></td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">In connection with the Reverse Stock Split, and
+pursuant to the terms of the Warrant Agreement, dated as of September 25, 2020 (the&#160;&#8220;Warrant Agreement&#8221;), by and between
+Aspirational Consumer Lifestyle Corp., a blank check company and the predecessor in-interest to Wheels Up (&#8220;Aspirational&#8221;),
+and Continental Stock Transfer &amp; Trust Company, as warrant agent, the exercise and redemption terms of the Company&#8217;s issued
+and outstanding redeemable public warrants (the &#8220;Public Warrants&#8221;) and private placement warrants (together with the Public
+Warrants, the &#8220;Warrants&#8221;) to purchase shares of Wheels Up Class&#160;A common stock, par value $0.0001 per share (&#8220;Common
+Stock&#8221;), were adjusted to reflect: (i)&#160;a reduction in the number of shares of Common Stock issuable upon exercise of each Warrant,
+which resulted in each Warrant being exercisable for 1/10th of a share of Common Stock; (ii)&#160;an increase in the exercise price per
+whole share of Common Stock to $115.00; and (iii)&#160;the stated redemption prices per Warrant being proportionately reduced. All Warrants
+issued and outstanding prior to the Effective Time remain outstanding, and the Public Warrants continue to be traded on the NYSE under
+the ticker symbol &#8220;UP WS&#8221; with the same CUSIP and ISIN numbers. The Company does not intend to amend the terms of the Warrant
+Agreement to reflect the corresponding adjustments as a result of the Reverse Stock Split.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The foregoing description of the Warrant Agreement
+does not purport to be complete and is qualified in its entirety by reference to the Warrant Agreement, which was originally filed as
+Exhibit&#160;4.1 to Aspirational&#8217;s Current Report on Form&#160;8-K filed with the U.S.&#160;Securities and Exchange Commission (&#8220;SEC&#8221;)
+on September&#160;25,&#160;2020 and is incorporated herein by reference. In addition, the information provided in Item&#160;5.03 (Amendments
+to Articles of Incorporation or Bylaws; Change in Fiscal Year) below is incorporated by reference into this Item&#160;3.03.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0pt; margin-bottom: 0pt"><tr style="vertical-align: top">
+<td style="width: 0"></td><td style="width: 1in"><b>Item 5.03</b></td><td style="text-align: justify"><b>Amendments to Articles of Incorporation or Bylaws; Change in Fiscal Year.</b></td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">As previously announced, at the Annual Meeting,
+the Company&#8217;s stockholders approved&#160;an amendment to the Company&#8217;s Certificate of Incorporation to effect, at the discretion
+of the Board at any time prior to the first anniversary of the Annual Meeting, (i)&#160;a reverse stock split of Wheels Up&#8217;s outstanding
+shares of Common Stock, at a reverse stock split ratio of not less than 1-for-5 and not greater than 1-for-10, with an exact ratio within
+that range as may be determined by the Board at a later date (the &#8220;Reverse Stock Split&#8221;) and (ii)&#160;contemporaneously with
+the Reverse Stock Split, a reduction in the number of authorized shares of Common Stock by a ratio corresponding to the reverse stock
+split ratio (the &#8220;Authorized Share Reduction&#8221; and, together with the Reverse Stock Split, the &#8220;Reverse Stock Split Amendment&#8221;).
+Following receipt of stockholder approval of the Reverse Stock Split Amendment at the Annual Meeting, on May&#160;31,&#160;2023, the Board
+approved the Reverse Stock Split at a ratio of 1-for-10 shares of Common Stock (the &#8220;Reverse Stock Split Ratio&#8221;), together
+with a proportionate reduction in the number of authorized shares of Common Stock from 2.5&#160;billion shares of Common Stock to 250&#160;million
+shares.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Company amended the Company&#8217;s existing
+Certificate of Incorporation, dated as of July&#160;13,&#160;2021 (the &#8220;Prior Certificate&#8221;), to implement the Reverse Stock
+Split Amendment by filing the Certificate of Amendment to Certificate of Incorporation (the &#8220;Certificate of Amendment&#8221;) with
+the Secretary of State of the State of Delaware on June&#160;7,&#160;2023, which became effective immediately after the close of trading
+on the NYSE on June&#160;7,&#160;2023. To implement the Reverse Stock Split Amendment, Section&#160;4.1 of the Prior Certificate was amended
+to (i)&#160;reduce the total number of shares of all classes of capital stock and Common Stock of the Company authorized for issuance
+to 275&#160;million and 250&#160;million, respectively, taking into account the Reverse Stock Split and Authorized Share Reduction based
+on the Reverse Stock Split Ratio, and (ii)&#160;clarify the treatment of any fractional shares of Common Stock upon the effectiveness
+of the Reverse Stock Split.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 2 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The foregoing summary of the Certificate of Amendment
+does not purport to be complete and is qualified in its entirety by reference to the Certificate of Amendment, a copy of which is attached
+as Exhibit&#160;3.1 to this Current Report on Form 8-K and incorporated herein by reference.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Forward-Looking Statements</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">This Current Report on Form&#160;8-K contains
+certain &#8220;forward-looking statements&#8221; within the meaning of the federal securities laws. Forward-looking statements are predictions,
+projections and other statements about future events that are based on current expectations and assumptions and, as a result, are subject
+to known and unknown risks, uncertainties, assumptions and other important factors, many of which are outside of the control of Wheels&#160;Up
+that could cause actual results to differ materially from the results discussed in the forward-looking statements. These forward-looking
+statements include, but are not limited to, statements regarding the expectations, hopes, beliefs, intentions or strategies of Wheels
+Up regarding the future, including, without limitation, statements regarding: (i) the impact of the Reverse Stock Split and Authorized
+Share Reduction on the trading market for the Company&#8217;s Common Stock and Warrants, including the trading price, liquidity, trading
+volume, volatility and marketability of the Common Stock and Warrants after the Reverse Stock Split; (ii)&#160;public perception of the
+Reverse Stock Split and Authorized Share Reduction in light of the history of reverse stock splits for other companies and the potential
+impacts on the trading market or price of the Common Stock and Warrants; (iii)&#160;the likelihood that the Reverse Stock Split will result
+in any permanent increase in the trading price per share of Common Stock or price per Warrant; and (iv)&#160;whether or not the Reverse
+Stock Split will cure any deficiency under, and allow the Company to regain compliance with, Section 802.01C of the NYSE Listed Company
+Manual. The words &#8220;anticipate,&#8221; &#8220;believe,&#8221; continue,&#8221; &#8220;could,&#8221; &#8220;estimate,&#8221; &#8220;expect,&#8221;
+&#8220;intend,&#8221; &#8220;may,&#8221; &#8220;might,&#8221; &#8220;plan,&#8221; &#8220;possible,&#8221; &#8220;potential,&#8221; &#8220;predict,&#8221;
+&#8220;project,&#8221; &#8220;should,&#8221; &#8220;strive,&#8221; &#8220;would&#8221; and similar expressions may identify forward-looking
+statements, but the absence of these words does not mean that statement is not forward-looking. These forward-looking statements are subject
+to a number of risks, uncertainties and assumptions that could cause actual events and results to differ materially from those contained
+in such forward-looking statements. Factors that could cause actual results to differ materially from those expressed or implied in forward-looking
+statements can be found in Wheels&#160;Up&#8217;s Annual Report on Form 10-K for the year ended December 31, 2022 filed with the SEC on
+March 31, 2023 and Wheels&#160;Up&#8217;s other filings with the SEC. Moreover, Wheels&#160;Up operates in a very competitive and rapidly
+changing environment. New risks and uncertainties arise from time to time, and it is impossible for us to predict these events or how
+they may affect us. You are cautioned not to place undue reliance upon any forward-looking statements, which speak only as of the date
+made, and Wheels Up undertakes no obligation to update or revise the forward-looking statements, whether as a result of new information,
+changes in expectations, future events or otherwise. Although Wheels Up believes that the expectations reflected in the forward-looking
+statements are reasonable, Wheels Up cannot guarantee future results, levels of activity, performance or achievements. Except as required
+by law, Wheels Up does not intend to update any of these forward-looking statements after the date of this Current Report on Form&#160;8-K
+or to conform these statements to actual results or revised expectations.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0pt; margin-bottom: 0pt"><tr style="vertical-align: top">
+<td style="width: 1in"><b>Item 9.01</b></td><td><b>Financial Statements and Exhibits.</b></td></tr><tr style="vertical-align: top">
+<td>&#160;</td><td>&#160;</td></tr>
+                                                                                                                             <tr style="vertical-align: top">
+<td style="text-align: center"><b>(d)&#160;</b></td><td><b>Exhibits.</b></td></tr>
+                                                                                                                             </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr>
+    <td style="vertical-align: bottom; font-size: 10pt; text-align: center; width: 10%"><b>Exhibit<br /> Number</b></td>
+    <td style="width: 2%"><b>&#160;</b></td>
+    <td style="vertical-align: bottom; font-size: 10pt; text-align: center; width: 88%"><b>Description</b></td></tr>
+  <tr>
+    <td style="vertical-align: bottom; font-size: 10pt; text-align: center">&#160;</td>
+    <td>&#160;</td>
+    <td style="vertical-align: bottom; font-size: 10pt; text-align: justify">&#160;</td></tr>
+  <tr>
+    <td style="vertical-align: top; font-size: 10pt; text-align: center"><a href="tm2317838d1_ex3-1.htm">3.1</a></td>
+    <td style="font-size: 10pt">&#160;</td>
+    <td style="text-align: justify; vertical-align: top"><a href="tm2317838d1_ex3-1.htm">Certificate of Amendment to Certificate of Incorporation of Wheels&#160;Up Experience&#160;Inc., effective as of June&#160;7,&#160;2023</a></td></tr>
+  <tr>
+    <td style="vertical-align: top; font-size: 10pt; text-align: center">&#160;</td>
+    <td style="font-size: 10pt">&#160;</td>
+    <td style="text-align: justify; vertical-align: top">&#160;</td></tr>
+  <tr>
+    <td style="vertical-align: top; font-size: 10pt; text-align: center"><a href="https://www.sec.gov/Archives/edgar/data/1819516/000110465920108991/tm2031705d1_ex4-1.htm" style="-sec-extract: exhibit">4.1</a></td>
+    <td style="font-size: 10pt">&#160;</td>
+    <td style="text-align: justify; vertical-align: top"><a href="https://www.sec.gov/Archives/edgar/data/1819516/000110465920108991/tm2031705d1_ex4-1.htm" style="-sec-extract: exhibit">Warrant Agreement, dated as of September 25, 2020, between Aspirational Consumer Lifestyle Corp. and Continental Stock Transfer &amp; Trust Company, as warrant agent (incorporated by reference to Exhibit&#160;4.1 to Aspirational Consumer Lifestyle Corp.&#8217;s Current Report on Form&#160;8-K, filed with the SEC on September&#160;25, 2020)</a></td></tr>
+  <tr>
+    <td style="vertical-align: top; font-size: 10pt; text-align: center">&#160;</td>
+    <td style="font-size: 10pt">&#160;</td>
+    <td style="text-align: justify; vertical-align: top">&#160;</td></tr>
+  <tr>
+    <td style="vertical-align: top; font-size: 10pt; text-align: center"><a href="tm2317838d1_ex10-1.htm">10.1</a></td>
+    <td style="font-size: 10pt">&#160;</td>
+    <td style="text-align: justify; vertical-align: top"><a href="tm2317838d1_ex10-1.htm">Amendment No. 2 to Seventh Amended and Restated Limited Liability Company Agreement of Wheels&#160;Up Partners Holdings&#160;LLC, dated as of June&#160;7,&#160;2023</a></td></tr>
+  <tr>
+    <td style="vertical-align: top; font-size: 10pt; text-align: center">&#160;</td>
+    <td style="font-size: 10pt">&#160;</td>
+    <td style="text-align: justify; vertical-align: top">&#160;</td></tr>
+  <tr>
+    <td style="vertical-align: top; font-size: 10pt; text-align: center">104</td>
+    <td>&#160;</td>
+    <td style="text-align: justify; vertical-align: top">Cover Page Interactive Data File (embedded within the Inline XBRL document)</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b></b></p>
+
+<!-- Field: Page; Sequence: 3 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SIGNATURE</b></p>
+
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Pursuant to the requirements of the Securities Exchange Act of 1934,
+the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td colspan="3"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>WHEELS UP EXPERIENCE INC</b>.</span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="width: 50%">&#160;</td>
+    <td style="width: 3%">&#160;</td>
+    <td style="width: 4%">&#160;</td>
+    <td style="width: 43%">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Date:&#160;&#160;June&#160;8,&#160;2023</span></td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">By:</span></td>
+    <td colspan="2"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">/s/ Todd&#160;Smith</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td style="border-top: black 1pt solid"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Name:</span></td>
+    <td style="border-top: black 1pt solid"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Todd Smith</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Title:</span></td>
+    <td>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Interim Chief Executive Officer and</p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Chief Financial Officer</p></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 4; Options: Last -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxVT9FuwjAM/AL+weozKkknXvrGKkDTyqg6NPYaWndENHHlBAaftL9c2opNRJYi++585yiaRmta6RYZPp/LHHZoulZ5hBIbZLQVBkb28ppC+Ev80s6zsn5o78KMggaDZh5LcQjAQL1oh3UKUs4SMUskSJHKJyg20aTHM7KNrtF6rVpQtoaCqWONXvFt3LBTV7JkboPVB7LTZMO6WIzwDyRCJvBGF/VNfHKQ51k0mQ5vEq2Zzl1vc3aeDCxbNMHLjdL/GqJUAyctsUY06tDiXnF/o1uq6rg/0t9geUWutOspK+KtxaxVzoXrDdl3T9VpcadgwbrCbSNlPBcbNAfkYCRFEjIvxGOEX/v5dRM= -->

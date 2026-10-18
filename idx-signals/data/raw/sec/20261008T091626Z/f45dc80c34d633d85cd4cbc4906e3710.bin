@@ -1,0 +1,374 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:ffd="http://xbrl.sec.gov/ffd/2025" xmlns:dei="http://xbrl.sec.gov/dei/2025" xmlns:WNW="http://wnw108.com/20251212">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_027_FFD%2D2025 -->
+<!-- Field: Set; Name: xdx; ID: xdx_03E_WNW_wnw108.com_20251212 -->
+<!-- Field: Set; Name: xdx; ID: xdx_040_20251212_20251212 -->
+<!-- Field: Set; Name: xdx; ID: xdx_05B_edei%2D%2DEntityCentralIndexKey_0001787803 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_065_Ratio_4_xbrli%2D%2Dpure -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2025-12-12" id="Fact000003" name="dei:EntityCentralIndexKey">0001787803</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2025-12-12" id="xdx2ixbrl0009" name="ffd:FeeExhibitTp">EX-FILING FEES</ix:nonNumeric>
+  <ix:nonFraction name="ffd:MaxAggtOfferingPric" contextRef="From2025-12-122025-12-12_6" id="xdx2ixbrl0031" unitRef="USD" xs:nil="true"></ix:nonFraction>
+  <ix:nonFraction name="ffd:TtlPrevslyPdAmt" contextRef="AsOf2025-12-12" id="xdx2ixbrl0048" unitRef="USD" xs:nil="true"></ix:nonFraction>
+  <ix:nonFraction name="ffd:TtlOffsetAmt" contextRef="AsOf2025-12-12" id="xdx2ixbrl0049" unitRef="USD" xs:nil="true"></ix:nonFraction>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="https://xbrl.sec.gov/ffd/2025/ffd-2025.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2025-12-12">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001787803</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2025-12-12</xbrli:startDate>
+        <xbrli:endDate>2025-12-12</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2025-12-122025-12-12_1">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001787803</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:typedMember dimension="ffd:OfferingAxis">
+            <dei:lineNo>1</dei:lineNo>
+          </xbrldi:typedMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2025-12-12</xbrli:startDate>
+        <xbrli:endDate>2025-12-12</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2025-12-122025-12-12_2">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001787803</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:typedMember dimension="ffd:OfferingAxis">
+            <dei:lineNo>2</dei:lineNo>
+          </xbrldi:typedMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2025-12-12</xbrli:startDate>
+        <xbrli:endDate>2025-12-12</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2025-12-122025-12-12_3">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001787803</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:typedMember dimension="ffd:OfferingAxis">
+            <dei:lineNo>3</dei:lineNo>
+          </xbrldi:typedMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2025-12-12</xbrli:startDate>
+        <xbrli:endDate>2025-12-12</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2025-12-122025-12-12_4">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001787803</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:typedMember dimension="ffd:OfferingAxis">
+            <dei:lineNo>4</dei:lineNo>
+          </xbrldi:typedMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2025-12-12</xbrli:startDate>
+        <xbrli:endDate>2025-12-12</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2025-12-122025-12-12_5">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001787803</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:typedMember dimension="ffd:OfferingAxis">
+            <dei:lineNo>5</dei:lineNo>
+          </xbrldi:typedMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2025-12-12</xbrli:startDate>
+        <xbrli:endDate>2025-12-12</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2025-12-122025-12-12_6">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001787803</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:typedMember dimension="ffd:OfferingAxis">
+            <dei:lineNo>6</dei:lineNo>
+          </xbrldi:typedMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2025-12-12</xbrli:startDate>
+        <xbrli:endDate>2025-12-12</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2025-12-122025-12-12_7">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001787803</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:typedMember dimension="ffd:OfferingAxis">
+            <dei:lineNo>7</dei:lineNo>
+          </xbrldi:typedMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2025-12-12</xbrli:startDate>
+        <xbrli:endDate>2025-12-12</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+    <xbrli:unit id="Ratio">
+      <xbrli:measure>xbrli:pure</xbrli:measure>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0; text-align: right"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_901_effd--FeeExhibitTp_dxL_c20251212__20251212_zz8Ocful0PWj" title="::XDX::EX-FILING FEES"><span style="-sec-ix-hidden: xdx2ixbrl0009">Exhibit
+107</span></span></b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Calculation
+of Filing Fee Tables</b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Form
+<span id="xdx_90E_effd--FormTp_c20251212__20251212_zx0gngV1Ovdi"><span id="xdx_907_effd--SubmissnTp_c20251212__20251212_zD4jwDyqxUme"><ix:nonNumeric contextRef="AsOf2025-12-12" id="Fact000010" name="ffd:FormTp"><ix:nonNumeric contextRef="AsOf2025-12-12" id="Fact000011" name="ffd:SubmissnTp">F-3</ix:nonNumeric></ix:nonNumeric></span></span></b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(Form
+Type)</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_901_edei--EntityRegistrantName_c20251212__20251212_zsxDkwh1KeM7"><ix:nonNumeric contextRef="AsOf2025-12-12" id="Fact000012" name="dei:EntityRegistrantName">Meiwu
+Technology Company Limited</ix:nonNumeric></span></b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(Exact
+Name of Registrant as Specified in its Charter)</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span style="text-decoration: underline">Table
+1: Newly Registered Securities</span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;</span></p>
+
+<table cellpadding="0" cellspacing="0" id="xdx_30D_zlPNTLmGqcF6" summary="xdx: Document - Offerings" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <tr style="display: none; vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="text-align: center">&#160;</td><td>&#160;</td>
+    <td id="xdx_480_effd--OfferingSctyTp_zxr6j0189cj" style="text-align: center">&#160;</td><td>&#160;</td>
+    <td id="xdx_482_effd--OfferingSctyTitl_zuktXZkUXqPa">&#160;</td><td>&#160;</td>
+    <td style="text-align: center">&#160;</td><td style="text-align: center">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td></tr>
+<tr style="vertical-align: bottom">
+    <td style="padding-bottom: 1pt; text-align: center">&#160;</td><td style="padding-bottom: 1pt; text-align: center; font-weight: bold">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; text-align: center; font-weight: bold">Security &#160;Type</td><td style="padding-bottom: 1pt; text-align: center; font-weight: bold">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; text-align: center; font-weight: bold">Security Class Title</td><td style="padding-bottom: 1pt; text-align: center; font-weight: bold">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; text-align: center; font-weight: bold"><p style="margin-top: 0; margin-bottom: 0">Fee Calculation</p>
+                                                                                <p style="margin-top: 0; margin-bottom: 0">or Carry Forward</p>
+                                                                                <p style="margin-top: 0; margin-bottom: 0">&#160;Rule</p></td><td style="padding-bottom: 1pt; text-align: center; font-weight: bold">&#160;</td><td style="padding-bottom: 1pt; text-align: center; font-weight: bold">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; text-align: center; font-weight: bold"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Amount Registered</b><sup>(1)</sup></span></td><td style="padding-bottom: 1pt; text-align: center; font-weight: bold">&#160;</td><td style="padding-bottom: 1pt; text-align: center; font-weight: bold">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; text-align: center; font-weight: bold">Proposed &#160;Maximum &#160;Offering Price Per Share</td><td style="padding-bottom: 1pt; text-align: center; font-weight: bold">&#160;</td><td style="padding-bottom: 1pt; text-align: center; font-weight: bold">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; text-align: center; font-weight: bold"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Maximum Aggregate Offering Price</b><sup>(2)(3)</sup></span></td><td style="padding-bottom: 1pt; text-align: center; font-weight: bold">&#160;</td><td style="padding-bottom: 1pt; text-align: center; font-weight: bold">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; text-align: center; font-weight: bold">Fee Rate</td><td style="padding-bottom: 1pt; text-align: center; font-weight: bold">&#160;</td><td style="padding-bottom: 1pt; text-align: center; font-weight: bold">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; text-align: center; font-weight: bold">Amount of Registration Fee</td><td style="padding-bottom: 1pt; text-align: center; font-weight: bold">&#160;</td></tr>
+  <tr id="xdx_41B_20251212__20251212__ffd--OfferingAxis__1_zLRdFFRCBuFe" style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="width: 4%; text-align: center">Fees to Be Paid</td><td style="width: 2%">&#160;</td>
+    <td style="text-align: center; width: 10%"><ix:nonNumeric contextRef="From2025-12-122025-12-12_1" id="Fact000013" name="ffd:OfferingSctyTp">Equity</ix:nonNumeric></td><td style="width: 2%">&#160;</td>
+    <td style="width: 10%"><ix:nonNumeric contextRef="From2025-12-122025-12-12_1" id="Fact000014" name="ffd:OfferingSctyTitl">Ordinary shares, no par value</ix:nonNumeric></td><td style="width: 2%">&#160;</td>
+    <td style="width: 1%; text-align: center">&#160;</td><td id="xdx_98C_effd--Rule457oFlg_dbT_c20251212__20251212__ffd--OfferingAxis__1_zERwRBn554Ck" style="width: 8%; text-align: center"><ix:nonNumeric contextRef="From2025-12-122025-12-12_1" format="ixt:booleantrue" id="Fact000015" name="ffd:Rule457oFlg">457(o)</ix:nonNumeric></td><td style="width: 1%; text-align: left">&#160;</td><td style="width: 2%">&#160;</td>
+    <td style="width: 1%; text-align: left">&#160;</td><td style="width: 8%; text-align: right">&#160;&#160;&#160;&#160;&#160;&#160;</td><td style="width: 1%; text-align: left">&#160;</td><td style="width: 2%">&#160;</td>
+    <td style="width: 1%; text-align: left">&#160;</td><td style="width: 8%; text-align: right">&#160;&#160;&#160;&#160;&#160;&#160;</td><td style="width: 1%; text-align: left">&#160;</td><td style="width: 2%">&#160;</td>
+    <td style="width: 1%; text-align: left">&#160;</td><td style="width: 8%; text-align: right">&#160;&#160;&#160;</td><td style="width: 1%; text-align: left">&#160;</td><td style="width: 2%">&#160;</td>
+    <td style="width: 1%; text-align: left">&#160;</td><td style="width: 8%; text-align: right">&#160;</td><td style="width: 1%; text-align: left">&#160;</td><td style="width: 2%">&#160;</td>
+    <td style="width: 1%; text-align: left">&#160;</td><td style="width: 8%; text-align: right">&#160;</td><td style="width: 1%; text-align: left">&#160;</td></tr>
+  <tr id="xdx_417_20251212__20251212__ffd--OfferingAxis__2_z9AOmhOjsqAj" style="vertical-align: bottom; background-color: White">
+    <td>&#160;</td><td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric contextRef="From2025-12-122025-12-12_2" id="Fact000016" name="ffd:OfferingSctyTp">Equity</ix:nonNumeric></td><td>&#160;</td>
+    <td><ix:nonNumeric contextRef="From2025-12-122025-12-12_2" id="Fact000017" name="ffd:OfferingSctyTitl">Preferred shares,</ix:nonNumeric></td><td>&#160;</td>
+    <td style="text-align: center">&#160;</td><td id="xdx_984_effd--Rule457oFlg_dbT_c20251212__20251212__ffd--OfferingAxis__2_zz7QKJwL1ZU7" style="text-align: center"><ix:nonNumeric contextRef="From2025-12-122025-12-12_2" format="ixt:booleantrue" id="Fact000018" name="ffd:Rule457oFlg">457(o)</ix:nonNumeric></td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td></tr>
+  <tr id="xdx_41A_20251212__20251212__ffd--OfferingAxis__3_zthl22XRjY9c" style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td>&#160;</td><td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric contextRef="From2025-12-122025-12-12_3" id="Fact000019" name="ffd:OfferingSctyTp">Other</ix:nonNumeric></td><td>&#160;</td>
+    <td><ix:nonNumeric contextRef="From2025-12-122025-12-12_3" id="Fact000020" name="ffd:OfferingSctyTitl">Warrants</ix:nonNumeric></td><td>&#160;</td>
+    <td style="text-align: center">&#160;</td><td id="xdx_983_effd--Rule457oFlg_dbT_c20251212__20251212__ffd--OfferingAxis__3_zzE4hTgKStv3" style="text-align: center"><ix:nonNumeric contextRef="From2025-12-122025-12-12_3" format="ixt:booleantrue" id="Fact000021" name="ffd:Rule457oFlg">457(o)</ix:nonNumeric></td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td></tr>
+  <tr id="xdx_413_20251212__20251212__ffd--OfferingAxis__4_zD6XyksTCT24" style="vertical-align: bottom; background-color: White">
+    <td>&#160;</td><td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric contextRef="From2025-12-122025-12-12_4" id="Fact000022" name="ffd:OfferingSctyTp">Debt</ix:nonNumeric></td><td>&#160;</td>
+    <td style="text-align: left"><ix:nonNumeric contextRef="From2025-12-122025-12-12_4" id="Fact000023" name="ffd:OfferingSctyTitl">Debt Securities</ix:nonNumeric></td><td>&#160;</td>
+    <td style="text-align: center">&#160;</td><td id="xdx_988_effd--Rule457oFlg_dbT_c20251212__20251212__ffd--OfferingAxis__4_zfk6OVQRu3ck" style="text-align: center"><ix:nonNumeric contextRef="From2025-12-122025-12-12_4" format="ixt:booleantrue" id="Fact000024" name="ffd:Rule457oFlg">457(o)</ix:nonNumeric></td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td></tr>
+  <tr id="xdx_419_20251212__20251212__ffd--OfferingAxis__5_zrGwTa9pWSC9" style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td>&#160;</td><td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric contextRef="From2025-12-122025-12-12_5" id="Fact000025" name="ffd:OfferingSctyTp">Other</ix:nonNumeric></td><td>&#160;</td>
+    <td><ix:nonNumeric contextRef="From2025-12-122025-12-12_5" id="Fact000026" name="ffd:OfferingSctyTitl">Units</ix:nonNumeric></td><td>&#160;</td>
+    <td style="text-align: center">&#160;</td><td id="xdx_981_effd--Rule457oFlg_dbT_c20251212__20251212__ffd--OfferingAxis__5_zJRLyxBXK9jl" style="text-align: center"><ix:nonNumeric contextRef="From2025-12-122025-12-12_5" format="ixt:booleantrue" id="Fact000027" name="ffd:Rule457oFlg">457(o)</ix:nonNumeric></td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td></tr>
+  <tr id="xdx_41F_20251212__20251212__ffd--OfferingAxis__6_zINUTqi0jX05" style="vertical-align: bottom; background-color: White">
+    <td>&#160;</td><td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric contextRef="From2025-12-122025-12-12_6" id="Fact000028" name="ffd:OfferingSctyTp">Other</ix:nonNumeric></td><td>&#160;</td>
+    <td><ix:nonNumeric contextRef="From2025-12-122025-12-12_6" id="Fact000029" name="ffd:OfferingSctyTitl">Rights</ix:nonNumeric></td><td>&#160;</td>
+    <td style="text-align: center">&#160;</td><td id="xdx_986_effd--FeesOthrRuleFlg_dbT_c20251212__20251212__ffd--OfferingAxis__6_zCSvZdhQtiQc" style="text-align: center"><ix:nonNumeric contextRef="From2025-12-122025-12-12_6" format="ixt:booleantrue" id="Fact000030" name="ffd:FeesOthrRuleFlg">457(g)</ix:nonNumeric></td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td id="xdx_983_effd--MaxAggtOfferingPric_pid_c20251212__20251212__ffd--OfferingAxis__6_zBNrsvyxEVJh" style="text-align: right"><span style="display: none; font-family: Times New Roman, Times, Serif; font-size: 10pt"><span style="-sec-ix-hidden: xdx2ixbrl0031">-</span></span></td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td id="xdx_984_effd--FeeAmt_pid_c20251212__20251212__ffd--OfferingAxis__6_zrre2g6V49M7" style="text-align: right"><span style="display: none; font-family: Times New Roman, Times, Serif; font-size: 10pt"><ix:nonFraction name="ffd:FeeAmt" contextRef="From2025-12-122025-12-12_6" id="Fact000032" format="ixt:numdotdecimal" decimals="INF" unitRef="USD">0</ix:nonFraction></span></td><td style="text-align: left">&#160;</td></tr>
+  <tr id="xdx_412_20251212__20251212__ffd--OfferingAxis__7_zqcqifDo917c" style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td>&#160;</td><td>&#160;</td>
+    <td style="text-align: center"><ix:nonNumeric contextRef="From2025-12-122025-12-12_7" id="Fact000033" name="ffd:OfferingSctyTp">Unallocated (Universal) Shelf</ix:nonNumeric></td><td>&#160;</td>
+    <td>&#160;</td><td>&#160;</td>
+    <td style="text-align: center">&#160;</td><td id="xdx_983_effd--Rule457oFlg_dbT_c20251212__20251212__ffd--OfferingAxis__7_zz9jabHhiyY6" style="text-align: center"><ix:nonNumeric contextRef="From2025-12-122025-12-12_7" format="ixt:booleantrue" id="Fact000035" name="ffd:Rule457oFlg">457(o)</ix:nonNumeric></td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">$</td><td id="xdx_98C_effd--MaxAggtOfferingPric_pid_c20251212__20251212__ffd--OfferingAxis__7_zZCEIJnLMDL1" style="text-align: right"><ix:nonFraction name="ffd:MaxAggtOfferingPric" contextRef="From2025-12-122025-12-12_7" id="Fact000036" format="ixt:numdotdecimal" decimals="INF" unitRef="USD">200,000,000</ix:nonFraction></td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">$</td><td id="xdx_98B_effd--FeeRate_pid_c20251212__20251212__ffd--OfferingAxis__7_zurvClxBBXXb" style="text-align: right"><ix:nonFraction name="ffd:FeeRate" contextRef="From2025-12-122025-12-12_7" id="Fact000037" format="ixt:numdotdecimal" decimals="INF" unitRef="Ratio">0.0001381</ix:nonFraction></td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">$</td><td id="xdx_986_effd--FeeAmt_pid_c20251212__20251212__ffd--OfferingAxis__7_zslAsbguMtVf" style="text-align: right"><ix:nonFraction name="ffd:FeeAmt" contextRef="From2025-12-122025-12-12_7" id="Fact000038" format="ixt:numdotdecimal" decimals="INF" unitRef="USD">27,620</ix:nonFraction></td><td style="text-align: left">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: White">
+    <td>&#160;</td><td style="font-weight: bold">&#160;</td>
+    <td colspan="10" style="font-weight: bold; text-align: center">Total Offering Amounts</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">$</td><td id="xdx_980_effd--TtlOfferingAmt_pid_c20251212__20251212_z95YsjU1TWEa" style="text-align: right"><ix:nonFraction name="ffd:TtlOfferingAmt" contextRef="AsOf2025-12-12" id="Fact000039" format="ixt:numdotdecimal" decimals="INF" unitRef="USD">200,000,000</ix:nonFraction></td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">$</td><td id="xdx_982_effd--TtlFeeAmt_pid_c20251212__20251212_zFXSOHo6BXbl" style="text-align: right"><ix:nonFraction name="ffd:TtlFeeAmt" contextRef="AsOf2025-12-12" id="Fact000040" format="ixt:numdotdecimal" decimals="INF" unitRef="USD">27,620</ix:nonFraction></td><td style="text-align: left">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td>&#160;</td><td style="font-weight: bold">&#160;</td>
+    <td colspan="10" style="font-weight: bold; text-align: center">Total <span id="xdx_90C_effd--PrevslyPdFlg_dbF_c20251212__20251212__ffd--OfferingAxis__1_zgm3DWJmb2hh"><span id="xdx_90B_effd--PrevslyPdFlg_dbF_c20251212__20251212__ffd--OfferingAxis__2_z2UYscH2lBm2"><span id="xdx_902_effd--PrevslyPdFlg_dbF_c20251212__20251212__ffd--OfferingAxis__3_zww6YhXPm98e"><span id="xdx_906_effd--PrevslyPdFlg_dbF_c20251212__20251212__ffd--OfferingAxis__4_zX6iy9gTvfS1"><span id="xdx_90F_effd--PrevslyPdFlg_dbF_c20251212__20251212__ffd--OfferingAxis__5_zRJNi9QZs4q8"><span id="xdx_901_effd--PrevslyPdFlg_dbF_c20251212__20251212__ffd--OfferingAxis__6_zufGQ7tWjgDd"><span id="xdx_903_effd--PrevslyPdFlg_dbF_c20251212__20251212__ffd--OfferingAxis__7_z6oNvG3fHwad"><ix:nonNumeric contextRef="From2025-12-122025-12-12_1" format="ixt:booleanfalse" id="Fact000041" name="ffd:PrevslyPdFlg"><ix:nonNumeric contextRef="From2025-12-122025-12-12_2" format="ixt:booleanfalse" id="Fact000042" name="ffd:PrevslyPdFlg"><ix:nonNumeric contextRef="From2025-12-122025-12-12_3" format="ixt:booleanfalse" id="Fact000043" name="ffd:PrevslyPdFlg"><ix:nonNumeric contextRef="From2025-12-122025-12-12_4" format="ixt:booleanfalse" id="Fact000044" name="ffd:PrevslyPdFlg"><ix:nonNumeric contextRef="From2025-12-122025-12-12_5" format="ixt:booleanfalse" id="Fact000045" name="ffd:PrevslyPdFlg"><ix:nonNumeric contextRef="From2025-12-122025-12-12_6" format="ixt:booleanfalse" id="Fact000046" name="ffd:PrevslyPdFlg"><ix:nonNumeric contextRef="From2025-12-122025-12-12_7" format="ixt:booleanfalse" id="Fact000047" name="ffd:PrevslyPdFlg">Fees Previously Paid</ix:nonNumeric></ix:nonNumeric></ix:nonNumeric></ix:nonNumeric></ix:nonNumeric></ix:nonNumeric></ix:nonNumeric></span></span></span></span></span></span></span></td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td id="xdx_98C_effd--TtlPrevslyPdAmt_pid_c20251212__20251212_zYWp9yiDeuUj" style="text-align: right"><span style="display: none; font-family: Times New Roman, Times, Serif; font-size: 10pt"><span style="-sec-ix-hidden: xdx2ixbrl0048">-</span></span></td><td style="text-align: left">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: White">
+    <td>&#160;</td><td style="font-weight: bold">&#160;</td>
+    <td colspan="10" style="font-weight: bold; text-align: center">Total Fee Offsets</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td id="xdx_988_effd--TtlOffsetAmt_pid_c20251212__20251212_zuRAsvR1n79h" style="text-align: right"><span style="display: none; font-family: Times New Roman, Times, Serif; font-size: 10pt"><span style="-sec-ix-hidden: xdx2ixbrl0049">-</span></span></td><td style="text-align: left">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td>&#160;</td><td style="font-weight: bold">&#160;</td>
+    <td colspan="10" style="font-weight: bold; text-align: center">Net Fee Due</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">&#160;</td><td style="text-align: right">&#160;</td><td style="text-align: left">&#160;</td><td>&#160;</td>
+    <td style="text-align: left">$</td><td id="xdx_985_effd--NetFeeAmt_pid_c20251212__20251212_zPCTYTEj526c" style="text-align: right"><ix:nonFraction name="ffd:NetFeeAmt" contextRef="AsOf2025-12-12" id="Fact000050" format="ixt:numdotdecimal" decimals="INF" unitRef="USD">27,620</ix:nonFraction></td><td style="text-align: left">&#160;</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 0; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"></span>&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="font: 10pt Times New Roman, Times, Serif; vertical-align: top">
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 0.25in"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;</span></td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 0.25in"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(1)</span></td>
+    <td style="font: 10pt Times New Roman, Times, Serif; text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_908_effd--OfferingNote_c20251212__20251212__ffd--OfferingAxis__1_gIFON-HY_zBWiA2oEtyG5"><span id="xdx_90E_effd--OfferingNote_c20251212__20251212__ffd--OfferingAxis__2_gIFON-SIJ_zEMLMTKoHbJe"><span id="xdx_901_effd--OfferingNote_c20251212__20251212__ffd--OfferingAxis__3_gIFON-NTCP_zMkYOjegccfk"><span id="xdx_907_effd--OfferingNote_c20251212__20251212__ffd--OfferingAxis__4_gIFON-F_zZ9ZJKCIykyj"><span id="xdx_90B_effd--OfferingNote_c20251212__20251212__ffd--OfferingAxis__5_gIFON-DGN_zsSwasnR3RXl"><span id="xdx_90C_effd--OfferingNote_c20251212__20251212__ffd--OfferingAxis__6_gIFON-CIRYJ_zYMGbOkkAVS2"><span id="xdx_907_effd--OfferingNote_c20251212__20251212__ffd--OfferingAxis__7_gIFON-T_za7S5epmSoB8"><ix:nonNumeric contextRef="From2025-12-122025-12-12_1" continuedAt="ConU000053-01" escape="true" id="Fact000053" name="ffd:OfferingNote"><ix:nonNumeric contextRef="From2025-12-122025-12-12_2" continuedAt="ConU000056-01" escape="true" id="Fact000056" name="ffd:OfferingNote"><ix:nonNumeric contextRef="From2025-12-122025-12-12_3" continuedAt="ConU000059-01" escape="true" id="Fact000059" name="ffd:OfferingNote"><ix:nonNumeric contextRef="From2025-12-122025-12-12_4" continuedAt="ConU000062-01" escape="true" id="Fact000062" name="ffd:OfferingNote"><ix:nonNumeric contextRef="From2025-12-122025-12-12_5" continuedAt="ConU000065-01" escape="true" id="Fact000065" name="ffd:OfferingNote"><ix:nonNumeric contextRef="From2025-12-122025-12-12_6" continuedAt="ConU000068-01" escape="true" id="Fact000068" name="ffd:OfferingNote"><ix:nonNumeric contextRef="From2025-12-122025-12-12_7" continuedAt="ConU000071-01" escape="true" id="Fact000071" name="ffd:OfferingNote">Pursuant
+    to Rule 416 under the Securities Act of 1933, as amended (or the Securities Act), an indeterminate number of additional securities
+    are registered hereunder that may be issued to prevent dilution in connection with a stock split, stock dividend, recapitalization,
+    or similar event or adjustment. In addition, an indeterminate number of common shares are registered hereunder that may be issued
+    upon conversion of or exchange for any other securities.</ix:nonNumeric></ix:nonNumeric></ix:nonNumeric></ix:nonNumeric></ix:nonNumeric></ix:nonNumeric></ix:nonNumeric></span></span></span></span></span></span></span></span></td></tr>
+  <tr style="font: 10pt Times New Roman, Times, Serif; vertical-align: top">
+    <td style="font: 10pt Times New Roman, Times, Serif"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;</span></td>
+    <td style="font: 10pt Times New Roman, Times, Serif"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;</span></td>
+    <td style="font: 10pt Times New Roman, Times, Serif; text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;</span></td></tr>
+  <tr style="font: 10pt Times New Roman, Times, Serif; vertical-align: top">
+    <td style="font: 10pt Times New Roman, Times, Serif"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;</span></td>
+    <td style="font: 10pt Times New Roman, Times, Serif"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(2)</span></td>
+    <td style="font: 10pt Times New Roman, Times, Serif; text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_C06_gIFON-HY_z2E1hYMijU4e"><ix:continuation continuedAt="ConU000053-02" id="ConU000053-01"><span id="xdx_C02_gIFON-SIJ_zCHNM5umluHd"><ix:continuation continuedAt="ConU000056-02" id="ConU000056-01"><span id="xdx_C06_gIFON-NTCP_zoPJaqHK0dJ"><ix:continuation continuedAt="ConU000059-02" id="ConU000059-01"><span id="xdx_C0F_gIFON-F_zR0AMjnrIvD2"><ix:continuation continuedAt="ConU000062-02" id="ConU000062-01"><span id="xdx_C0B_gIFON-DGN_ziBGYCrwcZvj"><ix:continuation continuedAt="ConU000065-02" id="ConU000065-01"><span id="xdx_C0E_gIFON-CIRYJ_ztm5uQO0IVo9"><ix:continuation continuedAt="ConU000068-02" id="ConU000068-01"><span id="xdx_C0C_gIFON-T_zkpLgoF9raFf"><ix:continuation continuedAt="ConU000071-02" id="ConU000071-01">There
+    are being registered hereunder such indeterminate number of the securities of each identified class being registered as may be sold
+    from time to time at indeterminate prices, with an initial aggregate public offering price not to exceed $200,000,000. Separate consideration
+    may or may not be received for securities that are issuable on exercise, conversion or exchange of other securities or that are issued
+    in units. To the extent that separate consideration is received for any such securities, the aggregate amount of such consideration
+    will be included in the aggregate offering price of all securities sold. If any debt securities are issued at an original issue discount,
+    then the offering may be in such greater principal amount as shall result in a maximum aggregate offering price not to exceed $200,000,000,
+    less the aggregate dollar amount of all securities previously issued hereunder. Any securities registered hereunder may be sold separately
+    or as part of units, which may consist of any combination of the securities registered hereunder.</ix:continuation></span></ix:continuation></span></ix:continuation></span></ix:continuation></span></ix:continuation></span></ix:continuation></span></ix:continuation></span></span></td></tr>
+  <tr style="font: 10pt Times New Roman, Times, Serif; vertical-align: top">
+    <td style="font: 10pt Times New Roman, Times, Serif"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;</span></td>
+    <td style="font: 10pt Times New Roman, Times, Serif"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;</span></td>
+    <td style="font: 10pt Times New Roman, Times, Serif; text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;</span></td></tr>
+  <tr style="font: 10pt Times New Roman, Times, Serif; vertical-align: top">
+    <td style="font: 10pt Times New Roman, Times, Serif"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;</span></td>
+    <td style="font: 10pt Times New Roman, Times, Serif"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(3)</span></td>
+    <td style="font: 10pt Times New Roman, Times, Serif; text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_C0F_gIFON-HY_z7mb8cYKe9Gc"><ix:continuation id="ConU000053-02"><span id="xdx_C04_gIFON-SIJ_zv2U9r5WyGzk"><ix:continuation id="ConU000056-02"><span id="xdx_C0E_gIFON-NTCP_z3hDVSUt8gG8"><ix:continuation id="ConU000059-02"><span id="xdx_C0A_gIFON-F_zk9sdriTwtu6"><ix:continuation id="ConU000062-02"><span id="xdx_C0F_gIFON-DGN_zM2wcR3fx3oc"><ix:continuation id="ConU000065-02"><span id="xdx_C09_gIFON-CIRYJ_zY8KRd63zbTa"><ix:continuation id="ConU000068-02"><span id="xdx_C01_gIFON-T_zvxnzHxn8cu4"><ix:continuation id="ConU000071-02">Pursuant
+    to Instructions to the Calculation of Filing Fee Tables and Related Disclosure of Form F-3, the table does not specify by each class
+    information as to the proposed maximum aggregate offering price. Any securities registered hereunder may be sold separately or as
+    units with other securities registered hereunder.</ix:continuation></span></ix:continuation></span></ix:continuation></span></ix:continuation></span></ix:continuation></span></ix:continuation></span></ix:continuation></span></span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 24pt; text-align: justify; text-indent: -24pt"><span style="display: none; font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;<span id="xdx_90E_effd--OffsetTableNa_c20251212__20251212_z4cmvUpeSoVk"><span id="xdx_905_effd--CombinedProspectusTableNa_c20251212__20251212_zExv5fYx7mJc"><ix:nonNumeric contextRef="AsOf2025-12-12" id="Fact000072" name="ffd:OffsetTableNa"><ix:nonNumeric contextRef="AsOf2025-12-12" id="Fact000073" name="ffd:CombinedProspectusTableNa">N/A</ix:nonNumeric></ix:nonNumeric></span></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 24pt; text-align: justify; text-indent: -24pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"></span></p>
+
+<!-- Field: Page; Sequence: 1; Options: Last -->
+    <div style="border-bottom: Black 1pt solid; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; font-size: 10pt"><tr style="vertical-align: top; text-align: left"><td style="width: 100%">&#160;</td></tr></table></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0pt 0pt 24pt; text-align: justify; text-indent: -24pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">&#160;</span></p>
+
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxFjU0KwkAMhU/QO4RZi7bjz6I7LSpiFSlF3A42ymA7KZmx2iN5S6ctYgiE5L3vRYiR2NJGl8hwWWUp5FjVpXIIGd6Q0VzRO5LdPgY/M7xr61gZ168/MCHPoGcW46ny997ZaItFDJGcROFEziGcxzMJy4MIOj0hc9MFGqdVCcoUcGKqWaNT3A4JuXqToartP52RrSbj48bhIH9AhpGEIzXqRfywkKaJCEZ9BWLL9Ky9a/12aDoS1iVW/p0d6H8HX8BtSkk= -->
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

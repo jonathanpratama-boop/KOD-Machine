@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<ownershipDocument>
+
+    <schemaVersion>X0306</schemaVersion>
+
+    <documentType>4</documentType>
+
+    <periodOfReport>2023-01-30</periodOfReport>
+
+    <notSubjectToSection16>0</notSubjectToSection16>
+
+    <issuer>
+        <issuerCik>0001821175</issuerCik>
+        <issuerName>Motorsport Games Inc.</issuerName>
+        <issuerTradingSymbol>MSGM</issuerTradingSymbol>
+    </issuer>
+
+    <reportingOwner>
+        <reportingOwnerId>
+            <rptOwnerCik>0001273345</rptOwnerCik>
+            <rptOwnerName>ZOI MIKE</rptOwnerName>
+        </reportingOwnerId>
+        <reportingOwnerAddress>
+            <rptOwnerStreet1>C/O MOTORSPORT GAMES INC.</rptOwnerStreet1>
+            <rptOwnerStreet2>5972 NE 4TH AVENUE</rptOwnerStreet2>
+            <rptOwnerCity>MIAMI</rptOwnerCity>
+            <rptOwnerState>FL</rptOwnerState>
+            <rptOwnerZipCode>33137</rptOwnerZipCode>
+            <rptOwnerStateDescription></rptOwnerStateDescription>
+        </reportingOwnerAddress>
+        <reportingOwnerRelationship>
+            <isDirector>0</isDirector>
+            <isOfficer>0</isOfficer>
+            <isTenPercentOwner>1</isTenPercentOwner>
+            <isOther>0</isOther>
+            <officerTitle></officerTitle>
+            <otherText></otherText>
+        </reportingOwnerRelationship>
+    </reportingOwner>
+
+    <nonDerivativeTable>
+        <nonDerivativeTransaction>
+            <securityTitle>
+                <value>Class A Common Stock</value>
+            </securityTitle>
+            <transactionDate>
+                <value>2023-01-30</value>
+            </transactionDate>
+            <deemedExecutionDate></deemedExecutionDate>
+            <transactionCoding>
+                <transactionFormType>4</transactionFormType>
+                <transactionCode>P</transactionCode>
+                <equitySwapInvolved>0</equitySwapInvolved>
+                <footnoteId id="F1"/>
+            </transactionCoding>
+            <transactionTimeliness></transactionTimeliness>
+            <transactionAmounts>
+                <transactionShares>
+                    <value>338983</value>
+                </transactionShares>
+                <transactionPricePerShare>
+                    <value>2.95</value>
+                    <footnoteId id="F2"/>
+                </transactionPricePerShare>
+                <transactionAcquiredDisposedCode>
+                    <value>A</value>
+                </transactionAcquiredDisposedCode>
+            </transactionAmounts>
+            <postTransactionAmounts>
+                <sharesOwnedFollowingTransaction>
+                    <value>1038983</value>
+                    <footnoteId id="F3"/>
+                </sharesOwnedFollowingTransaction>
+            </postTransactionAmounts>
+            <ownershipNature>
+                <directOrIndirectOwnership>
+                    <value>I</value>
+                </directOrIndirectOwnership>
+                <natureOfOwnership>
+                    <value>By Motorsport Network, LLC</value>
+                    <footnoteId id="F4"/>
+                </natureOfOwnership>
+            </ownershipNature>
+        </nonDerivativeTransaction>
+    </nonDerivativeTable>
+
+    <footnotes>
+        <footnote id="F1">On January 30, 2023, Motorsport Network, LLC (&quot;Motorsport Network&quot;) entered into a debt-for-equity exchange agreement with Motorsport Games Inc. (the &quot;Company&quot;) pursuant to which the Company agreed to issue to Motorsport Network 338,983 shares of the Company's Class A common stock in exchange for an amount equal to $1,000,000, which represents a portion of the Company's outstanding balance (including the principal and accrued and not yet paid interests thereon) under the promissory note in favor of Motorsport Network dated April 1, 2020, as amended on November 23, 2020.</footnote>
+        <footnote id="F2">The Nasdaq Official Closing Price as reported on January 27, 2023.</footnote>
+        <footnote id="F3">On November 10, 2022, the Company effected a 1-for-10 reverse stock split of its outstanding shares of Class A common stock. The amount of securities reported as beneficially owned on this Form 4 has been adjusted to reflect the reverse stock split.</footnote>
+        <footnote id="F4">These shares are owned directly by Motorsport Network and indirectly by Mike Zoi as Manager of Motorsport Network.</footnote>
+    </footnotes>
+
+    <remarks>Exhibit List: 99.1 List of Other Reporting Person</remarks>
+
+    <ownerSignature>
+        <signatureName>/s/ Dmitry Kozko, attorney-in-fact for Mike Zoi</signatureName>
+        <signatureDate>2023-01-30</signatureDate>
+    </ownerSignature>
+
+    <ownerSignature>
+        <signatureName>/s/ Dmitry Kozko, attorney-in-fact for Motorsport Network, LLC</signatureName>
+        <signatureDate>2023-01-30</signatureDate>
+    </ownerSignature>
+</ownershipDocument>

@@ -1,0 +1,740 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2025" xmlns:us-gaap="http://fasb.org/us-gaap/2025" xmlns:us-roles="http://fasb.org/us-roles/2025" xmlns:country="http://xbrl.sec.gov/country/2025" xmlns:srt="http://fasb.org/srt/2025" xmlns:RENX="http://sgdevco.com/20260212">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02E_US%2DGAAP%2D2025 -->
+<!-- Field: Set; Name: xdx; ID: xdx_032_RENX_sgdevco.com_20260212 -->
+<!-- Field: Set; Name: xdx; ID: xdx_040_20260212_20260212 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_05C_edei%2D%2DEntityCentralIndexKey_0001959023 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2026-02-12" id="Fact000003" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2026-02-12" id="Fact000004" name="dei:EntityCentralIndexKey">0001959023</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="renx-20260212.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2026-02-12">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001959023</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2026-02-12</xbrli:startDate>
+        <xbrli:endDate>2026-02-12</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></p>
+
+<!-- Field: Rule-Page --><div style="width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>UNITED STATES&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Washington, D.C. 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>FORM <span id="xdx_906_edei--DocumentType_c20260212__20260212_zu96X59LqI89"><ix:nonNumeric contextRef="AsOf2026-02-12" id="Fact000009" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>PURSUANT TO SECTION 13 OR 15(d) OF THE</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SECURITIES EXCHANGE ACT OF 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Date of Report (Date of earliest event reported):
+<span id="xdx_900_edei--DocumentPeriodEndDate_c20260212__20260212_zdRITs0uNy0g"><ix:nonNumeric contextRef="AsOf2026-02-12" format="ixt:datemonthdayyearen" id="Fact000010" name="dei:DocumentPeriodEndDate">February 12, 2026</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_909_edei--EntityRegistrantName_c20260212__20260212_zDLaEzO8j7E1"><ix:nonNumeric contextRef="AsOf2026-02-12" id="Fact000011" name="dei:EntityRegistrantName">RENX ENTERPRISES CORP.</ix:nonNumeric></span> </b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Exact Name of Registrant as Specified in its
+Charter)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_90F_edei--EntityIncorporationStateCountryCode_c20260212__20260212_zw8KxW6Az3aa"><ix:nonNumeric contextRef="AsOf2026-02-12" format="ixt-sec:stateprovnameen" id="Fact000012" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></b></span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_908_edei--EntityFileNumber_c20260212__20260212_zi3CbuN3Fp3b"><ix:nonNumeric contextRef="AsOf2026-02-12" id="Fact000013" name="dei:EntityFileNumber">001-41581</ix:nonNumeric></span></b></span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_90B_edei--EntityTaxIdentificationNumber_c20260212__20260212_zcjLwFYXV8gb"><ix:nonNumeric contextRef="AsOf2026-02-12" id="Fact000014" name="dei:EntityTaxIdentificationNumber">87-1375590</ix:nonNumeric></span></b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(State or Other Jurisdiction<br/>
+    of Incorporation)</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(Commission File Number)</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(I.R.S. Employer<br/>
+    Identification Number)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_903_edei--EntityAddressAddressLine1_c20260212__20260212_zZZeSsRioPz2"><ix:nonNumeric contextRef="AsOf2026-02-12" id="Fact000015" name="dei:EntityAddressAddressLine1">100 Biscayne Blvd.</ix:nonNumeric></span>, <span id="xdx_900_edei--EntityAddressAddressLine2_c20260212__20260212_zcs4xZDj4m59"><ix:nonNumeric contextRef="AsOf2026-02-12" id="Fact000016" name="dei:EntityAddressAddressLine2">#1201</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_90A_edei--EntityAddressCityOrTown_c20260212__20260212_zmj2v09mEcSc"><ix:nonNumeric contextRef="AsOf2026-02-12" id="Fact000017" name="dei:EntityAddressCityOrTown">Miami</ix:nonNumeric></span>, <span id="xdx_902_edei--EntityAddressStateOrProvince_c20260212__20260212_zBMH3c8jQUGb"><ix:nonNumeric contextRef="AsOf2026-02-12" id="Fact000018" name="dei:EntityAddressStateOrProvince">FL</ix:nonNumeric></span> <span id="xdx_90F_edei--EntityAddressPostalZipCode_c20260212__20260212_zvKOhGL9Bil3"><ix:nonNumeric contextRef="AsOf2026-02-12" id="Fact000019" name="dei:EntityAddressPostalZipCode">33132</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Address of Principal Executive Offices, Zip Code)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Former name or former address, if changed since
+last report.)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Registrant&#8217;s telephone number, including
+area code: <b><span id="xdx_904_edei--CityAreaCode_c20260212__20260212_zF1BuPmhbVxi"><ix:nonNumeric contextRef="AsOf2026-02-12" id="Fact000020" name="dei:CityAreaCode">646</ix:nonNumeric></span>-<span id="xdx_901_edei--LocalPhoneNumber_c20260212__20260212_zmAY6b3ddG48"><ix:nonNumeric contextRef="AsOf2026-02-12" id="Fact000021" name="dei:LocalPhoneNumber">240-4235</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Check the appropriate box below if the Form 8-K
+filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 0.25in"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90C_edei--WrittenCommunications_c20260212__20260212_zfJiLCb2GV68"><ix:nonNumeric contextRef="AsOf2026-02-12" format="ixt:booleanfalse" id="Fact000022" name="dei:WrittenCommunications">&#9744;</ix:nonNumeric></span></span></td>
+    <td style="text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Written communications
+    pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td style="text-align: justify">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90E_edei--SolicitingMaterial_c20260212__20260212_zq3jYFT21dul"><ix:nonNumeric contextRef="AsOf2026-02-12" format="ixt:booleanfalse" id="Fact000023" name="dei:SolicitingMaterial">&#9744;</ix:nonNumeric></span></span></td>
+    <td style="text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Soliciting material pursuant
+    to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td style="text-align: justify">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_90F_edei--PreCommencementTenderOffer_c20260212__20260212_zeVtodfsr1Lg"><ix:nonNumeric contextRef="AsOf2026-02-12" format="ixt:booleanfalse" id="Fact000024" name="dei:PreCommencementTenderOffer">&#9744;</ix:nonNumeric></span></span></td>
+    <td style="text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Pre-commencement communications
+    pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td style="text-align: justify">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><span id="xdx_903_edei--PreCommencementIssuerTenderOffer_c20260212__20260212_zVnssrLe60Mf"><ix:nonNumeric contextRef="AsOf2026-02-12" format="ixt:booleanfalse" id="Fact000025" name="dei:PreCommencementIssuerTenderOffer">&#9744;</ix:nonNumeric></span></span></td>
+    <td style="text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Pre-commencement communications
+    pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Securities registered pursuant to Section 12(b)
+of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Title
+    of Each Class</b></span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Trading
+    Symbol(s)</b></span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 32%; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Name
+    of Each Exchange on Which Registered</b></span></td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_90B_edei--Security12bTitle_c20260212__20260212_zYVC55tzpqkc"><ix:nonNumeric contextRef="AsOf2026-02-12" id="Fact000026" name="dei:Security12bTitle">Common Stock, par value
+    $0.001&#8204;</ix:nonNumeric></span></b></span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_90B_edei--TradingSymbol_c20260212__20260212_zr3kqUvr6Sf"><ix:nonNumeric contextRef="AsOf2026-02-12" id="Fact000027" name="dei:TradingSymbol">RENX</ix:nonNumeric></span></b></span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>The <span id="xdx_90C_edei--SecurityExchangeName_c20260212__20260212_zxwRLdoaqHs9"><ix:nonNumeric contextRef="AsOf2026-02-12" format="ixt-sec:exchnameen" id="Fact000028" name="dei:SecurityExchangeName">Nasdaq</ix:nonNumeric></span> Stock Market
+    LLC&#8204;</b></span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Indicate by check mark whether the registrant
+is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or Rule 12b-2 of the
+Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right">Emerging growth company <span id="xdx_90F_edei--EntityEmergingGrowthCompany_c20260212__20260212_zR79SVodRLdi"><ix:nonNumeric contextRef="AsOf2026-02-12" format="ixt:booleantrue" id="Fact000029" name="dei:EntityEmergingGrowthCompany">&#9746;</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">If an emerging growth company, indicate by check
+mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting
+standards provided pursuant to Section 13(a) of the Exchange Act. <span id="xdx_909_edei--EntityExTransitionPeriod_c20260212__20260212_zw71D28jThDg"><ix:nonNumeric contextRef="AsOf2026-02-12" format="ixt:booleanfalse" id="Fact000030" name="dei:EntityExTransitionPeriod">&#9744;</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<!-- Field: Rule-Page --><div style="width: 100%"><div style="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Item 1.01 Entry into a Material Definitive Agreement</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On February 12, 2026, RenX Enterprises Corp.
+(the &#8220;Company&#8221;) entered into a securities purchase agreement (the &#8220;Purchase Agreement&#8221;) with certain institutional
+investors (the &#8220;Purchasers&#8221;) for the issuance and sale in a private placement transaction (the &#8220;Private Placement&#8221;)
+of Senior Convertible Notes (&#8220;Notes&#8221;) in the aggregate principal amount of $6,042,985.39. The Notes bear interest at a rate
+of 12% per annum, will mature 13 months from the date of issuance and, without taking into account any accrued and unpaid interest, are
+initially convertible, at the option of the holder, into an aggregate of 21,505,287 shares of the Company&#8217;s common stock, par value
+$0.001&#8204; (the &#8220;Common Stock&#8221;), at a conversion price of $0.281 per share (the &#8220;Conversion Price&#8221;). In connection
+with the Private Placement, the Company also issued the Purchasers warrants (collectively, the &#8220;Warrants&#8221;) to purchase an
+aggregate of 38,751,991 shares of Common Stock (which is equal to the face value of the Notes divided by the exercise price of the Warrants), of which (i) Warrants to purchase 21,505,287 shares of Common Stock (the &#8220;First Warrants&#8221;) are exercisable immediately
+upon issuance and (ii) Warrants to purchase 17,246,704 shares of Common Stock (the &#8220;Second Warrants) cannot be exercised by the
+Purchasers unless and until Stockholder Approval (as defined below) is obtained. The First Warrants will have a term of six years from
+the date of issuance and will be exercisable at a price of $0.15594 per share of Common Stock, and the Second Warrants
+will have a term of six years from the date that Stockholder Approval is obtained and will be exercisable at a price of $0.15594 per
+share of Common Stock.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Private Placement closed on February 17,
+2026 (the &#8220;Closing Date&#8221;).&#160;The net proceeds to the Company from the Private Placement are expected to be approximately
+$5.4 million, after deducting placement agent fees and the payment of other offering expenses associated with the offering that were
+payable by the Company and excluding any deductions for make whole payments made to certain of the investors. The Company intends to use the net proceeds from the Private Placement for working capital purposes.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b><i>The Senior Convertible Notes</i></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b><i>&#160;</i></b>&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Notes mature 13 months from their date
+of issuance (subject to extension under certain circumstances), bear interest at a rate of 12% per annum, and are payable in ten
+monthly installments in an amount equal to 110% of (i) 1/10<sup>th</sup> of the principal of the Notes (ii) plus accrued
+interest, with the first installment due and payable on the earlier of 180 days from the Closing Date or 90 days following the date
+that the Registration Statement (as defined below) is declared effective by the Securities and Exchange Commission (the
+&#8220;SEC&#8221;). The Notes are unsecured and are senior to all other Indebtedness (as such term is defined in the Notes) of the
+Company and its subsidiaries, with each Note ranking <i>pari passu</i> with all other Notes.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Notes are convertible, at the option of the
+holder, at any time after the date of issuance, into that number of shares of Common Stock equal to the principal amount of the Notes,
+plus all accrued and unpaid interest and late charges and any other unpaid amounts, at the Conversion Price of $0.281 per share, subject
+to adjustment for any stock splits, stock dividends, recapitalizations and similar events. The holders of the Notes are prohibited from
+converting the Notes into shares of Common Stock if, as a result of such conversion, such holder, together with its affiliates, would
+beneficially own in excess of 4.99% (or, at the option of the holder, 9.99%) of the total number of shares of Common Stock issued and
+outstanding immediately after giving effect to such exercise.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Notes are redeemable by the Company at any
+time, at the Company&#8217;s option, in whole or in part, at a redemption price equal to 110% of the sum of the principal amount to be
+redeemed plus accrued interest, if any.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Notes contain customary events of
+default. If an event of default occurs, from and after the occurrence, and during the continuance of, an such event of default, the
+interest rate of the Notes shall automatically increase to 18% per annum until such event of default is cured. Additionally, if an
+event of default occurs, the holders of outstanding Notes may, regardless of whether such event of default has been cured, require
+the Company to redeem all or any portion of the outstanding Notes at a price equal to the greater of (i) the product of (A) the
+value of the Notes to be redeemed multiplied by (B) 110% and (ii) the product of (X) the value of the Notes to be redeemed, divided
+by the Conversion Price (the &#8220;Conversion Rate&#8221;), multiplied by (Y) the product of (1) 110% multiplied by (2) the
+greatest closing sale price of the Common Stock on any trading day during the period commencing on the date immediately preceding
+such event of default and ending on the date the Company makes the entire payment.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Pursuant to the Notes, the Company shall not enter into or be a party
+to a Fundamental Transaction (as such term is defined in the Notes) unless (i) the successor entity assumes in writing all of the obligations
+under the Notes and the other transaction documents and (ii) the successor entity is a publicly traded corporation whose common stock
+is quoted on or listed for trading on an eligible market, as set forth in the Notes.&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b><i>&#160;</i></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 2 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="text-align: center; margin-top: 0pt; margin-bottom: 0pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->1<!-- Field: /Sequence --></span></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">While the Notes are outstanding, subject to certain
+exempt issuances, if the Company sells, offers or grants any option or right to purchase, or otherwise disposes of or sells any equity
+security or equity-linked or related security, any convertible securities any preferred stock or other securities, the holders of outstanding
+Notes shall have the right, in their sole discretion, to require that the Company apply up to 30% of the gross proceeds from such sales
+or offers to redeem all, or any portion, of the outstanding Notes at a price equal to 110% of the amount of the Note being redeemed.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Without giving effect to any default interest
+or penalties which may accrue thereunder, assuming the full conversion of the Notes plus accrued interest in full into Common Stock without regard
+to any conversion limitations set forth in the Notes (assuming the Notes accrued interest at 12% for a period of thirteen (13) months),
+approximately 24,300,975 shares of  Common Stock would be issuable upon conversion.</p>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b><i>The Warrants</i></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>Stockholder Approval</i>&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Pursuant to the Second Warrants, the Company agreed
+to file a proxy statement with the SEC within 45 days of the Closing Date and hold a meeting of stockholders at the earliest practical
+date after the date following the filing thereof (and in no event later than 90 days after the Closing Date) (the &#8220;Stockholder Meeting
+Deadline&#8221;) for the purpose of obtaining such approval as may be required under the applicable rules of Nasdaq from the Company&#8217;s
+stockholders with respect to the issuance of all of the Warrant Shares upon the exercise of the Second Warrants in accordance with their
+terms (including adjustment provisions set forth therein) (the &#8220;Stockholder Approval&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Company agreed to use its reasonable best efforts to obtain such
+Stockholder Approval. If, despite the Company&#8217;s reasonable best efforts the Stockholder Approval is not obtained on or prior to
+the Stockholder Meeting Deadline, the Company is obligated to cause an additional stockholder meeting to be held on or prior to the 90th
+calendar day following the failure to obtain Stockholder Approval. If, despite the Company&#8217;s reasonable best efforts the Stockholder
+Approval is not obtained after such subsequent stockholder meetings, the Company shall cause an additional Stockholder Meeting to be held
+every 90 days thereafter until such Stockholder Approval is obtained, or (ii) the Second Warrants are no longer outstanding, whichever
+is sooner.</p>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>Exercise Price</i></p>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The First Warrants are immediately
+exercisable upon issuance, have a term of six years from the date of issuance, and are exercisable for shares of Common Stock at a
+price of $0.15594 per share. The Second Warrants shall become exercisable on such date, if ever, that Stockholder Approval is
+obtained, have a term of six years from the date of Stockholder Approval, and will be exercisable for shares of Common Stock at a
+price of $0.15594 per share. The exercise price and number of shares of Common Stock issuable upon exercise of the Warrants are
+subject to customary adjustments pursuant to stock dividends, stock splits or similar events.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>Cashless Exercise</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">In the event there is no effective registration
+statement registering, or the prospectus contained therein is not available for the resale of the shares of Common Stock issuable upon
+exercise of the Warrants (the &#8220;Warrant Shares&#8221;), the Warrants may be exercised, in whole or in part, by means of a &#8220;cashless
+exercise&#8221; in which case the holder will be entitled to receive a number of Warrant Shares equal to the quotient obtained by dividing,
+(x) (A) as applicable, the volume weighted average price (&#8220;VWAP&#8221;) of the Common Stock on the date immediately preceding the
+exercise date (if the notice of exercise is (1) both executed and delivered on a day that is not a Trading Day (as defined in the Warrant)
+or (2) both executed and delivered on a Trading Day prior to the opening of &#8220;regular trading hours) or the bid price of the Common
+Stock as of the time of the holder&#8217;s execution of the applicable notice of exercise (if the notice of exercise is executed during
+&#8220;regular trading hours&#8221; on a Trading Day), less the exercise price of the Warrant, multiplied by (B) the number of Warrant
+Shares that would be issuable upon exercise of the Warrant if the exercise were by means of a cash exercise rather than a cashless exercise,
+by (y) the price used in (A).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>Fundamental Transaction</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">If a Fundamental Transaction (as such term is
+defined in the Warrant) occurs, then the successor entity will succeed to, and be substituted for the Company, and may exercise every
+right and power that the Company may exercise and will assume all of the Company&#8217;s obligations under the Warrants with the same
+effect as if such successor entity had been named in the Warrant itself. If holders of the Common Stock are given a choice as to the
+securities, cash or property to be received in a fundamental transaction, then the holder shall be given the same choice as to the consideration
+it receives upon any exercise of the Warrant following such Fundamental Transaction. In certain circumstances, the holder will have the
+right to receive the Black Scholes Value of the Warrant calculated pursuant to a formula set forth in the Warrants, payable either in
+cash or in the same type or form of consideration that is being offered and being paid to the holders of the Common Stock as described
+in the Warrants.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i></i></p>
+
+<!-- Field: Page; Sequence: 3 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="text-align: center; margin-top: 0pt; margin-bottom: 0pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence --></span></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>Rights of Holder</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Except as otherwise provided in the Warrants
+or by virtue of such holder&#8217;s ownership of shares of Common Stock, the holder of a Warrant does not have the rights or privileges
+of a holder of the Common Stock, including any voting rights, until the holder exercises the Warrant.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>Limitations on Exercise</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The holders of the Warrants are prohibited from
+exercising the Warrants for shares of Common Stock if, as a result of such conversion, such holder, together with its affiliates, would
+beneficially own in excess of 4.99% (or, at the option of the holder, 9.99%) of the total number of shares of Common Stock issued and
+outstanding immediately after giving effect to such exercise.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b><i>The Securities Purchase Agreement</i></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Purchase Agreement provides that, for a period
+of 30 trading days following the earliest of the date that (i) the initial registration statement registering
+for resale all Conversion Shares and Warrant Shares has been declared effective by the SEC, (ii) all of the Conversion Shares and Warrant
+Shares have been sold pursuant to Rule 144 or may be sold pursuant to Rule 144 without the requirement for the Company to be in compliance
+with the current public information required under Rule 144 and without volume or manner-of-sale restrictions, (iii) following the one
+year anniversary of the Closing Date provided that a holder of Conversion Shares and Warrant Shares is not an affiliate of us, or (iv)
+all of the Shares and Warrant Shares may be sold pursuant to an exemption from registration under Section 4(a)(1) of the Securities Act
+without volume or manner-of-sale restrictions and counsel to the Company has delivered to such holders a standing written unqualified
+opinion that resales may then be made by such holders of the Conversion Shares and Warrant Shares pursuant to such exemption which opinion
+shall be in form and substance reasonably acceptable to such holders, the Company and its subsidiaries
+may not issue, enter into any agreement to issue or announce the issuance or proposed issuance of any shares of Common Stock or common
+stock equivalents or file any registration statement or amendment or supplement thereto other than a registration statement providing
+for the resale of the Warrant Shares and the shares of Common Stock issuable upon conversion of the Notes (the &#8220;Conversion Shares&#8221;),
+subject to certain other limited exceptions.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Purchase Agreement further provides that
+until the date on which the Notes are no longer outstanding, the Company will be prohibited from effecting or entering into an agreement
+to effect any issuance by the Company or any of its subsidiaries of Common Stock or common stock equivalents (or a combination of units
+thereof) involving a Variable Rate Transaction (as defined therein).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Pursuant to the Purchase Agreement, until 12
+months after the date on which the Notes are no longer outstanding, upon the Company or any of its subsidiaries issuing any securities,
+including Common Stock, preferred stock, Indebtedness (as defined in the Purchase Agreement) or options or securities convertible into
+shares of Common Stock (a &#8220;Subsequent Financing&#8221;), the Purchasers shall have the right to participate in the Subsequent Financing
+up to an amount, in the aggregate, equal to 50% of the Subsequent Financing on the same terms, conditions and price provided for in the
+financing.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Purchase Agreement contains customary representations,
+warranties, agreements and conditions to completing future sale transactions, indemnification rights and obligations of the parties.
+Among other things, each of the Purchasers represented to the Company, that it is an &#8220;accredited investor&#8221; (as such term
+is defined in Rule 501(a) of Regulation D under the Securities Act of 1933, as amended (the &#8220;Securities Act&#8221;)), and the Company
+sold the securities in reliance upon an exemption from registration contained in Section 4(a)(2) of the Securities Act and/or Regulation
+D promulgated thereunder.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 4 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="text-align: center; margin-top: 0pt; margin-bottom: 0pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->3<!-- Field: /Sequence --></span></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b><i>The Registration Rights Agreement</i></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">In connection with the Private Placement, the
+Company entered into a registration rights agreement (the &#8220;Registration Rights Agreement&#8221;), dated February 12, 2026, with
+the Purchasers, pursuant to which the Company agreed to prepare and file a registration statement with the SEC registering the resale
+of: (a) all Warrant Shares then issued and issuable upon exercise of the Warrants (assuming on such date the Warrants are exercised in
+full without regard to any exercise limitations therein), (b) all Conversion Shares then issued and issuable upon conversion of the Notes
+(assuming on such date the Notes are converted in full without regard to any conversion limitations therein), (c) any additional shares
+of Common Stock issued and issuable in connection with any anti-dilution provisions in the Warrants and/or the Notes, as applicable (without
+giving effect to any limitations on exercise set forth in the Warrants and/or the Notes, as applicable) and (d) any securities issued
+or then issuable upon any stock split, dividend or other distribution, recapitalization or similar event with respect to the foregoing
+(collectively, the &#8220;Registrable Securities&#8221;) no later than 30 calendar days after the Closing Date (the &#8220;Filing Date&#8221;)
+and to use its commercially reasonable efforts to have the registration statement declared effective as promptly as possible thereafter,
+and in any event not more than 45 days following the Closing Date (or 75 days following the Closing Date in the event of a &#8220;full
+review&#8221; by the SEC) (the &#8220;Effectiveness Date&#8221;). Pursuant to the Registration Rights Agreement, the Company will be
+required to pay to the Purchasers liquidated damages in the event the registration statement is not filed by the Filing Date or declared
+effective by the Effectiveness Date, and in certain other limited circumstances, on a monthly basis until cured. The Registration Rights
+Agreement further provides that the Company shall use commercially reasonable efforts to keep such registration statement effective at
+all times until all Registrable Securities covered by such registration statement have been sold or may be sold without volume or manner-of-sale
+restrictions pursuant to Rule&#160;144 and without the requirement for the Company to be in compliance with the current public information
+requirement under Rule&#160;144.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b><i>The Placement Agency Agreement</i></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Dawson James Securities, Inc. (&#8220;Dawson
+James&#8221;) served as the Company&#8217;s exclusive placement agent in connection with the Private Placement pursuant to the terms
+of a placement agency agreement (the &#8220;Placement Agency Agreement&#8221;), dated February 12, 2026, entered into between the Company
+and Dawson James. Pursuant to the Placement Agency Agreement, Dawson James is entitled to receive (i)&#160;a cash fee equal to 7.0% of
+the aggregate gross proceeds of the Private Placement, and (ii)&#160;up to $50,000 for legal fees and other out-of-pocket expenses.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Pursuant to the Placement Agency Agreement, the
+directors, officers and 5% stockholders of the Company executed lock-up agreements, pursuant to which they agreed not to offer, pledge,
+sell, contract to sell, sell any option or contract to purchase, purchase any option or contract to sell, grant any option, right or
+warrant to purchase, lend, or otherwise transfer or dispose of, directly or indirectly, any shares of capital stock of the Company or
+any securities convertible into or exercisable or exchangeable for shares of capital stock of the Company until 30 days after the effective
+date of the Initial Registration Statement (as such term is defined in the Registration Rights Agreement).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The foregoing descriptions of the Purchase
+Agreement, Notes, First Warrants, Second Warrants, Registration Rights Agreement and Placement Agency Agreement are qualified in
+their entirety by reference to the full text of such agreements, copies of the forms of which are attached hereto as Exhibit 1.1,
+4.1, 4.2, 4.3, 10.2 and 10.3, respectively, and each of which is incorporated herein in its entirety by reference. The
+representations, warranties and covenants contained in such agreements were made only for purposes of such agreements and as of
+specific dates, were solely for the benefit of the parties to such agreements and may be subject to limitations agreed upon by the
+contracting parties.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Item 2.03 Creation of a Direct Financial Obligation
+or an Obligation Under an Off-balance Sheet Arrangement of a Registrant.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The information set forth under Item 1.01 above
+of this Current Report on Form 8-K is incorporated by reference in this Item 2.03.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Item 3.02. Unregistered Sales of Equity Securities.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The information set forth under Item 1.01 above
+of this Current Report on Form 8-K is incorporated by reference in this Item 3.02.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Notes and the Warrants were offered and sold
+in a private placement pursuant to Section 4(a)(2) of the Securities Act, and/or Regulation D promulgated thereunder. The Notes, Warrants,
+Conversion Shares and Warrant Shares have not been registered under the Securities Act or applicable state securities laws. Accordingly,
+these securities may not be reoffered or resold in the United States absent registration with the SEC or an applicable exemption from
+such registration requirements. The Company relied, in part, on representations made by the Purchasers in the Purchase Agreement. Each
+Purchaser has represented that it is an &#8220;accredited investor&#8221; as defined in&#160;Regulation D&#160;of the&#160;Securities
+Act&#160;and that it is acquiring the securities for investment only and not with a view towards, or for resale in connection with, the
+public sale or distribution thereof, and appropriate legends will be affixed to the securities. The sale of the securities did not involve
+a public offering and was made without general solicitation or general advertising.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 5 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="text-align: center; margin-top: 0pt; margin-bottom: 0pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->4<!-- Field: /Sequence --></span></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>Item 7.01. Regulation
+FD Disclosure.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">On February 13, 2026,
+the Company issued a press release (the &#8220;Press Release&#8221;) announcing the Private Placement. A copy of the press release is
+attached as Exhibit&#160;99.1 to this Current Report on Form 8-K and is incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The information in this Item 7.01 and Exhibit&#160;99.1
+attached hereto are furnished and shall not be deemed to be &#8220;filed&#8221; with the SEC for purposes of Section&#160;18 of the Securities
+Exchange Act of 1934, as amended (the &#8220;Exchange Act&#8221;), or otherwise subject to the liabilities of that section, nor shall
+such information be deemed incorporated by reference into any filing under the Securities Act or the Exchange Act, except as expressly
+set forth by specific reference in such filing.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Item 8.01 Other Events</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">As of February 13, 2026, there are
+46,360,994 shares of Company Common Stock issued and outstanding, which includes an aggregate of 13,235,294 shares of Common Stock
+that were issued upon the conversion of shares of Series B Non-Voting Convertible Preferred Stock (&#8220;Series B Preferred
+Stock&#8221;) and the exercise of the warrants sold and issued to investors in the Company&#8217;s private placement that closed on
+October 16, 2025 (the &#8220;October 2025 PIPE&#8221;). As a result of such conversions and exercises, 551 of the Company&#8217;s
+Series B Preferred Stock and warrants to purchase 2,146 shares of Common Stock sold in the October
+2025 PIPE remain issued and outstanding.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Item 9.01 Financial Statements and Exhibits.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">(d) Exhibits</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The following exhibits are filed or furnished,
+as applicable, with this Current Report on Form&#160;8-K:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 10.5pt; text-indent: -10.7pt; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: Black 1.5pt solid; width: 9%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Exhibit<br/>
+    Number</b></span></td>
+    <td style="padding-bottom: 1.5pt; width: 1%">&#160;</td>
+    <td style="border-bottom: Black 1.5pt solid; width: 90%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Exhibit
+    Description</b></span></td></tr>
+  <tr style="background-color: rgb(204,238,255)">
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">1.1</span></td>
+    <td style="vertical-align: bottom">&#160;</td>
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><a href="ea027697801ex1-1_renx.htm">Placement Agency Agreement, dated February 12, 2026, between the Company and Dawson James Securities, Inc.</a></span></td></tr>
+  <tr style="background-color: White">
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">4.1</span></td>
+    <td style="vertical-align: bottom">&#160;</td>
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><a href="ea027697801ex4-1_renx.htm">Form of Senior Convertible Note</a></span></td></tr>
+  <tr style="background-color: rgb(204,238,255)">
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">4.2</span></td>
+    <td style="vertical-align: bottom">&#160;</td>
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><a href="ea027697801ex4-2_renx.htm">Form of Warrant</a></span></td></tr>
+  <tr style="background-color: White">
+    <td style="vertical-align: top">4.3</td>
+    <td style="vertical-align: bottom">&#160;</td>
+    <td style="vertical-align: top"><a href="ea027697801ex4-3_renx.htm">Form of Warrant</a></td></tr>
+  <tr style="background-color: rgb(204,238,255)">
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">10.1*</span></td>
+    <td style="vertical-align: bottom">&#160;</td>
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><a href="ea027697801ex10-1_renx.htm">Form of Securities Purchase Agreement, dated February 12, 2026</a></span></td></tr>
+  <tr style="background-color: White">
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">10.2</span></td>
+    <td style="vertical-align: bottom">&#160;</td>
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><a href="ea027697801ex10-2_renx.htm">Form of Registration Rights Agreement, dated February 12, 2026</a></span></td></tr>
+  <tr style="background-color: rgb(204,238,255)">
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">99.1</span></td>
+    <td style="vertical-align: bottom">&#160;</td>
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><a href="ea027697801ex99-1_renx.htm">Pricing Press Release, dated February 13, 2026</a></span></td></tr>
+  <tr style="background-color: White">
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">104</span></td>
+    <td style="vertical-align: bottom">&#160;</td>
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Cover Page Interactive
+    Data File (the cover page XBRL tags are embedded within the inline XBRL document)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 0.25in"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>*</b></span></td>
+    <td style="text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Schedules have been omitted
+    pursuant to Item 601(a)(5) of Regulation S-K. The Company agrees to furnish supplementally a copy of any omitted exhibit to the SEC
+    upon request.</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></p>
+
+<!-- Field: Page; Sequence: 6 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="text-align: center; margin-top: 0pt; margin-bottom: 0pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->5<!-- Field: /Sequence --></span></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Pursuant to the requirements of the Securities
+Exchange Act of 1934, as amended, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly
+authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td colspan="3"><p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>RENX ENTERPRISES CORP. </b></p></td></tr>
+  <tr style="vertical-align: top">
+    <td style="width: 60%">&#160;</td>
+    <td style="width: 4%">&#160;</td>
+    <td style="width: 5%">&#160;</td>
+    <td style="width: 31%">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Dated: February 17, 2026</span></td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">By:</span></td>
+    <td colspan="2" style="border-bottom: black 1.5pt solid"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">/s/
+    Nicolai Brune</span></td></tr>
+  <tr>
+    <td style="vertical-align: top">&#160;</td>
+    <td style="vertical-align: top">&#160;</td>
+    <td style="vertical-align: bottom"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Name:&#160;</span></td>
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Nicolai Brune</span></td></tr>
+  <tr>
+    <td style="vertical-align: top">&#160;</td>
+    <td style="vertical-align: top">&#160;</td>
+    <td style="vertical-align: bottom"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Title:</span></td>
+    <td style="vertical-align: top"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Chief Financial Officer</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">6</p>
+
+<!-- Field: Rule-Page --><div style="width: 100%"><div style="border-top: Black 1.5pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxFjU0KwkAMhU/QO4RZF21H7aI7LVrEKlJE3A42ymA7KZnx70je0mmLGAIhee/LEyIUOa10jQynRVnAAZu2Vg6hxAsymjN6R7bepOBniVdtHSvj+vUHZuQZ9Ewymip/750PbbFKIZLjeDKWCUSzVE5hvhVBp2dkLrpC47SqQZkK9kwta3SK38OHg3qRoebdJx2RrSaTQjyKBvkDMool7OihnsQ3C0WRiSDsKxA50731ruXLoelIWNbY+Dg70P8OvsLtSk0= -->
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

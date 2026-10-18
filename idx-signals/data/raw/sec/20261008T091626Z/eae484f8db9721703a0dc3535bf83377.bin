@@ -1,0 +1,1208 @@
+<?xml version='1.0' encoding='ASCII'?>
+<!--Created by Genesis Filings LLC, Powered by IRIS Carbon, Unique Code 683d7d767bc96533f4476aaa, Generated At Mon, 02 Jun 2025 10:31:27 GMT-->
+<html xmlns:dei="http://xbrl.sec.gov/dei/2024" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:utr="http://www.xbrl.org/2009/utr" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2020-02-12" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:dtr-types="http://www.xbrl.org/dtr/type/2022-03-31" xmlns:clro="http://www.clearone.com/20250602" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:ref="http://www.xbrl.org/2006/ref" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:num="http://www.xbrl.org/dtr/type/numeric" xmlns:nonnum="http://www.xbrl.org/dtr/type/non-numeric" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.w3.org/1999/xhtml"><head><title>clro-20250602.htm</title><meta http-equiv="Content-Type" content="text/html"/></head><body>
+<div style="display: none;">
+<ix:header><ix:hidden>
+<ix:nonNumeric name="dei:EntityRegistrantName" contextRef="D20250602" id="Tag1">CLEARONE INC</ix:nonNumeric>
+<ix:nonNumeric name="dei:EntityCentralIndexKey" contextRef="D20250602" id="Tag2">0000840715</ix:nonNumeric>
+<ix:nonNumeric name="dei:AmendmentFlag" contextRef="D20250602" id="Tag3">false</ix:nonNumeric>
+<ix:nonNumeric name="dei:CurrentFiscalYearEndDate" contextRef="D20250602" id="Tag23">--12-31</ix:nonNumeric></ix:hidden>
+<ix:references><link:schemaRef xlink:href="clro-20250602.xsd" xlink:type="simple"/></ix:references><ix:resources><xbrli:context id="D20250602"><xbrli:entity><xbrli:identifier scheme="http://www.sec.gov/CIK">0000840715</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2025-06-02</xbrli:startDate><xbrli:endDate>2025-06-02</xbrli:endDate></xbrli:period></xbrli:context></ix:resources></ix:header></div><div class="content_container"><div id="D136hn784ansr6obdgdg7p" style="font-family: 'times new roman', times; font-size: 10pt;">
+<div>
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 12pt;">&#160;</span></p>
+<div style="border-top: #000000 3pt solid; line-height: 3px; border-bottom: #000000 1pt solid; font-size: 3pt; width: 100%; padding: 0in;">&#160;</div>
+<p style="line-height: 3pt; margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 3pt;">&#160;</span></p>
+<p style="line-height: 1.2; margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 14pt; font-weight: bold; line-height: inherit;">UNITED STATES</span><span style="font-family: 'Times New Roman'; font-size: 14pt; font-weight: bold; line-height: inherit;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 14pt; font-weight: bold; line-height: inherit;">SECURITIES AND EXCHANGE COMMISSION</span></p>
+<p style="margin: 0pt; text-align: center; line-height: 1.2;"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold; line-height: inherit;">Washington, D.C. 20549</span></p>
+<p style="margin: 0pt; text-align: center; line-height: 1.2;"><span style="font-family: 'Times New Roman'; font-size: 10pt; line-height: inherit;">&#160;</span></p>
+<p style="margin: 0pt; text-align: center; line-height: 1.2;"><span style="font-family: 'Times New Roman'; font-size: 14pt; font-weight: bold; line-height: inherit;">FORM <ix:nonNumeric name="dei:DocumentType" contextRef="D20250602" id="Tag4">8-K</ix:nonNumeric></span></p>
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">CURRENT REPORT</span></p>
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Pursuant to Section 13 OR 15(d) of the Securities Exchange Act of 1934</span></p>
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">Date of report (Date of earliest event reported): </span><ix:nonNumeric name="dei:DocumentPeriodEndDate" contextRef="D20250602" format="ixt:date-monthname-day-year-en" id="Tag5"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">June 2</span><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">, 2025</span></ix:nonNumeric><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;"> (May 30, 2025)</span></p>
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 14pt; font-weight: bold; text-decoration: underline;"><span class="ParaMarked" style="-sec-ix-hidden:Tag1">ClearOne, Inc.</span></span></p>
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">(Exact name of registrant as specified in its charter)</span></p>
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<table cellspacing="0" cellpadding="0" style="border-collapse: collapse; margin-left: 0pt; font-family: 'times new roman'; font-size: 10pt;" width="100%">
+<tbody>
+<tr style="height: 12pt;">
+<td style="vertical-align: bottom;border-bottom-width:1pt; border-bottom-style: solid; border-bottom-color:rgb(0, 0, 0) !important;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;"><ix:nonNumeric name="dei:EntityIncorporationStateCountryCode" contextRef="D20250602" format="ixt-sec:stateprovnameen" id="Tag6">Delaware</ix:nonNumeric> </span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span> </p>
+
+
+
+</td>
+<td style="vertical-align: bottom;border-bottom-width:1pt; border-bottom-style: solid; border-bottom-color:rgb(0, 0, 0) !important;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;"><ix:nonNumeric name="dei:EntityFileNumber" contextRef="D20250602" id="Tag7">001-33660</ix:nonNumeric> </span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span> </p>
+
+
+
+</td>
+<td style="vertical-align: bottom;border-bottom-width:1pt; border-bottom-style: solid; border-bottom-color:rgb(0, 0, 0) !important;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;"><ix:nonNumeric name="dei:EntityTaxIdentificationNumber" contextRef="D20250602" id="Tag8">87-0398877</ix:nonNumeric> </span></p>
+
+
+
+</td>
+
+
+
+</tr>
+<tr style="height: 12pt;">
+<td style="vertical-align: bottom; width: 39.5%;">
+<p style="margin: 0pt 0pt 0pt 2.25pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">(State or Other Jurisdiction</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">of Incorporation) </span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 0.5%;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span> </p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 20%;">
+<p style="margin: 0pt 0pt 0pt 2.25pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">(Commission</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">File Number) </span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 0.5%;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span> </p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 39.5%;">
+<p style="margin: 0pt 0pt 0pt 1.5pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">(I.R.S. Employer</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">Identification No.) </span></p>
+
+
+
+</td>
+
+
+
+</tr>
+
+
+
+</tbody>
+
+
+
+</table>
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<table cellspacing="0" cellpadding="0" style="border-collapse: collapse; margin-left: 0pt; font-family: 'times new roman'; font-size: 10pt;" width="100%">
+<tbody>
+<tr>
+<td style="vertical-align: bottom; width: 66%;border-bottom-width:1pt; border-bottom-style: solid; border-bottom-color:rgb(0, 0, 0) !important;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;"><ix:nonNumeric name="dei:EntityAddressAddressLine1" contextRef="D20250602" id="Tag9">5225 Wiley Post Way, Suite 500</ix:nonNumeric>, <ix:nonNumeric name="dei:EntityAddressCityOrTown" contextRef="D20250602" id="Tag10">Salt Lake City</ix:nonNumeric>, <ix:nonNumeric name="dei:EntityAddressStateOrProvince" contextRef="D20250602" format="ixt-sec:stateprovnameen" id="Tag11">Utah</ix:nonNumeric> </span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2%;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span> </p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 32%;border-bottom-width:1pt; border-bottom-style: solid; border-bottom-color:rgb(0, 0, 0) !important;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;"><ix:nonNumeric name="dei:EntityAddressPostalZipCode" contextRef="D20250602" id="Tag12">84116</ix:nonNumeric> </span></p>
+
+
+
+</td>
+
+
+
+</tr>
+<tr>
+<td style="vertical-align: bottom; width: 66%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">(Address of principal executive offices) </span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2%;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span> </p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 32%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">(Zip Code) </span></p>
+
+
+
+</td>
+
+
+
+</tr>
+
+
+
+</tbody>
+
+
+
+</table>
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold; text-decoration: underline;">+1 <ix:nonNumeric name="dei:CityAreaCode" contextRef="D20250602" id="Tag13">(801)</ix:nonNumeric> <ix:nonNumeric name="dei:LocalPhoneNumber" contextRef="D20250602" id="Tag14">975-7200</ix:nonNumeric></span></p>
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">(Registrant&#8217;s telephone number, including area code)</span></p>
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold; text-decoration: underline;">Not applicable</span></p>
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">(Former name or former address, if changed since last report)</span></p>
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">Check the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</span></p>
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<table cellspacing="0" cellpadding="0" style="border-collapse: collapse; margin-left: 0pt; font-family: 'times new roman'; font-size: 10pt;" width="100%">
+<tbody>
+<tr>
+<td style="vertical-align: top; width: 3.8%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'MS Mincho'; font-size: 10pt;"><ix:nonNumeric name="dei:WrittenCommunications" contextRef="D20250602" format="ixt-sec:boolballotbox" id="Tag15">&#9744;</ix:nonNumeric></span> </p>
+
+
+
+</td>
+<td style="vertical-align: top; width: 96.1%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425) </span></p>
+
+
+
+</td>
+
+
+
+</tr>
+<tr>
+<td style="vertical-align: top; width: 3.8%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'MS Mincho'; font-size: 10pt;"><ix:nonNumeric name="dei:SolicitingMaterial" contextRef="D20250602" format="ixt-sec:boolballotbox" id="Tag16">&#9744;</ix:nonNumeric></span> </p>
+
+
+
+</td>
+<td style="vertical-align: top; width: 96.1%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12) </span></p>
+
+
+
+</td>
+
+
+
+</tr>
+<tr>
+<td style="vertical-align: top; width: 3.8%;">
+<p style="margin: 0pt;"><span style="font-family: 'MS Mincho'; font-size: 10pt;"><ix:nonNumeric name="dei:PreCommencementTenderOffer" contextRef="D20250602" format="ixt-sec:boolballotbox" id="Tag17">&#9744;</ix:nonNumeric></span> </p>
+
+
+
+</td>
+<td style="vertical-align: top; width: 96.1%;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b)) </span></p>
+
+
+
+</td>
+
+
+
+</tr>
+<tr>
+<td style="vertical-align: top; width: 3.8%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'MS Mincho'; font-size: 10pt;"><ix:nonNumeric name="dei:PreCommencementIssuerTenderOffer" contextRef="D20250602" format="ixt-sec:boolballotbox" id="Tag18">&#9744;</ix:nonNumeric></span> </p>
+
+
+
+</td>
+<td style="vertical-align: top; width: 96.1%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">Pre-commencement communication pursuant to Rule 13e-4</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#169;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> under the Exchange Act (17 CFR 240.13e-4</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#169;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">) </span></p>
+
+
+
+</td>
+
+
+
+</tr>
+
+
+
+</tbody>
+
+
+
+</table>
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">Securities Registered Pursuant to Section 12(b) of the Act:</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<table cellspacing="0" cellpadding="0" style="border-collapse: collapse; margin-left: 0pt; font-family: 'times new roman'; font-size: 10pt;" width="100%">
+<tbody>
+<tr>
+<td style="vertical-align: top; width: 33.28%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt; text-decoration: underline;">Title of each class</span></p>
+
+
+
+</td>
+<td style="vertical-align: top; width: 20.46%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt; text-decoration: underline;">Trading Symbol(s)</span></p>
+
+
+
+</td>
+<td style="vertical-align: top; width: 45.16%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt; text-decoration: underline;">Name of each exchange on which registered</span></p>
+
+
+
+</td>
+
+
+
+</tr>
+<tr>
+<td style="vertical-align: top; width: 33.28%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;"><ix:nonNumeric name="dei:Security12bTitle" contextRef="D20250602" id="Tag19">Common Stock, $0.001</ix:nonNumeric></span></p>
+
+
+
+</td>
+<td style="vertical-align: top; width: 20.46%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;"><ix:nonNumeric name="dei:TradingSymbol" contextRef="D20250602" id="Tag20">CLRO</ix:nonNumeric></span></p>
+
+
+
+</td>
+<td style="vertical-align: top; width: 45.16%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">The <ix:nonNumeric name="dei:SecurityExchangeName" contextRef="D20250602" format="ixt-sec:exchnameen" id="Tag21">NASDAQ</ix:nonNumeric> Capital Market</span></p>
+
+
+
+</td>
+
+
+
+</tr>
+
+
+
+</tbody>
+
+
+
+</table>
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">Indicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter). </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">Emerging growth company </span><span style="font-family: 'MS Mincho'; font-size: 10pt;"><ix:nonNumeric name="dei:EntityEmergingGrowthCompany" contextRef="D20250602" format="ixt-sec:boolballotbox" id="Tag22">&#9744;</ix:nonNumeric></span></p>
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">If an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. </span><span style="font-family: 'MS Mincho'; font-size: 10pt;">&#9744;</span></p>
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<div><hr class="horizontalLineRemoved" style="border-bottom-color: #000000; border-top-color: #000000; color: #000000; background-color: #000000;"/>
+<div class="pageBreak" style="page-break-before: always;"><a href="#TOC"></a><br/></div>
+
+
+</div>
+<p style="margin: 0pt; text-align: left;"><br/></p>
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Item</span> <span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">5</span><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">.0</span><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">3</span> <span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Amendments to Articles of Incorporation or Bylaws; Change in Fiscal Year</span><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">.</span></p>
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt; text-align: justify; text-indent: 36pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">At a special meeting of </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">stockholders</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> held on May 30, 2025</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> (the &#8220;Special Meeting&#8221;) of ClearOne, Inc., a Delaware corporation (the &#8220;Company&#8221;), </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">the Company&#8217;s stockholders </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">approve</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">d</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> a </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">proposal to authorize a reverse stock split</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> of the Company&#8217;s issued </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">and outstanding common stock, par value $0.001 per share</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> (the &#8220;Common Stock&#8221;)</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> by a ratio of between 1-for-1</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">0 and 1-for-15</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">.</span></p>
+<p style="margin: 0pt; text-align: justify; text-indent: 36pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt; text-align: justify; text-indent: 36pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">On May 21, 2025, the Company had previously announced that the Company expected to effect a 1-for-15 reverse stock split with a market effective date of June 3, 2025.&#160; </span></p>
+<p style="margin: 0pt; text-align: justify; text-indent: 36pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt; text-align: justify; text-indent: 36pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">On </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">June 2</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">, 202</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">5</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">, </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">the Company </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">a</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">nnounced that</span> <span style="font-family: 'Times New Roman'; font-size: 10pt;">the Company</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> will effect </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">its</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> 1-for-15 reverse stock split of the Company&#8217;s issued </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">and outstanding </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">Common Stock</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> (the &#8220;Reverse Stock Split&#8221;)</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> effective at 5:00 p.m. Eastern time on Ju</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">ne</span> <span style="font-family: 'Times New Roman'; font-size: 10pt;">9</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">, 202</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">5</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> (the &#8220;Effective Time&#8221;).&#160; The Company&#8217;s </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">C</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">ommon </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">S</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">tock will</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> now</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> begin trading on a reverse stock split adjusted basis on The Nasdaq Capital Market at market open on Ju</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">ne</span> <span style="font-family: 'Times New Roman'; font-size: 10pt;">10</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">, 202</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">5</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">. </span> </p>
+<p style="margin: 0pt; text-align: justify; text-indent: 36pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt; text-align: justify; text-indent: 36pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">The Company&#8217;s Board of Directors has approved the 1-for-15 reverse split ratio</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">, and </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">the Company </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">has filed</span> <span style="font-family: 'Times New Roman'; font-size: 10pt;">with the Delaware Secretary of State a C</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">ertificate of </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">A</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">mendment to its Certificate of Incorporation</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> (the &#8220;Certificate of Amendment&#8221;)</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> to effect the Reverse Stock Split at the Effective </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">T</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">ime. </span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> A copy of the Certificate of Amendment is filed herewith as Exhibit 3.1. </span></p>
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Item 5.07</span><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Submission of Matters to a Vote of Security Holders.</span></p>
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt 7.5pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">On May 30, 2025, the Company held </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">the Special Meeting </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">at which shareholders voted on the </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">six</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> proposals listed below. The final voting results with respect to each proposal are also set forth below. As of </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">May 9, 2025,</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> the record date for the </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">Special</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> Meeting, there were </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">25,992,995</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> shares of </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">C</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">ommon </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">S</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">tock issued and outstanding.</span></p>
+<p style="margin: 0pt 7.5pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt 7.5pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">1.&#160; Election of Directors: All </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">three</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> directors were re-elected to serve terms expiring at the 202</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">5</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> annual meeting of shareholders or until their successors are duly elected and qualified.</span></p>
+<p style="margin: 0pt 7.5pt 0pt 43.5pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<table cellspacing="0" cellpadding="0" style="height: 68px; border-collapse: collapse; margin: 0px auto; font-family: &quot;times new roman&quot;; font-size: 10pt; width: 100%;" width="100%">
+<tbody>
+<tr style="height: 17px;">
+<td style="vertical-align: bottom; height: 17px;"><br/></td>
+<td style="vertical-align: bottom; height: 17px; border-bottom-width: 1pt; border-bottom-style: solid; border-bottom-color: rgb(0, 0, 0) !important;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">Nominee</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><br/></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; text-align: center; border-bottom-width: 1pt; border-bottom-style: solid; border-bottom-color: rgb(0, 0, 0) !important;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: 10pt; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">Votes For</span></td>
+<td style="vertical-align: bottom; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><br/></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; text-align: center; border-bottom-width: 1pt; border-bottom-style: solid; border-bottom-color: rgb(0, 0, 0) !important;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: 10pt; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">Votes withheld</span></td>
+</tr>
+<tr style="height: 17px;">
+<td style="vertical-align: bottom; height: 17px; width: 2%;"><br/></td>
+<td style="vertical-align: bottom; height: 17px; width: 30%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">Eric L. Robinson</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px; width: 2%;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px; width: 2%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px; width: 30%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">1</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">9,470,179</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px; width: 2%;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px; width: 2%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px; width: 30%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">157,779</span></p>
+
+
+
+</td>
+</tr>
+<tr style="height: 17px;">
+<td style="vertical-align: bottom; height: 17px;"><br/></td>
+<td style="vertical-align: bottom; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">Lisa B. Higley</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">19,427,758</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">200,201</span></p>
+
+
+
+</td>
+</tr>
+<tr style="height: 17px;">
+<td style="vertical-align: bottom; height: 17px;"><br/></td>
+<td style="vertical-align: bottom; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">Bruce Whaley</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">19,435,237</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">192,721</span></p>
+
+
+
+</td>
+</tr>
+</tbody>
+
+
+
+</table>
+<p style="margin: 0pt 7.5pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt 7.5pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">2. </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">Approval of an amendment to the Company&#8217;s Certificate of Incorporation </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">to increase our authorized shares of Common Stock from 50,000,000 to 150,000,000 shares</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">:</span></p>
+<p style="margin: 0pt 7.5pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<table cellspacing="0" cellpadding="0" style="border-collapse: collapse; margin: 0px auto; font-family: &quot;times new roman&quot;; font-size: 10pt; width: 100%; height: 27px;" width="100%">
+<tbody>
+<tr style="height: 10px;">
+<td style="vertical-align: bottom; width: 2%; height: 10px;"><br/></td>
+<td style="vertical-align: bottom; width: 30%; text-align: center; height: 10px;border-bottom-width: 1pt ;border-bottom-style: solid ;border-bottom-color: #000000;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: 10pt; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">Votes For</span></td>
+<td style="vertical-align: bottom; width: 2.00154%; height: 10px;"><br/></td>
+<td style="vertical-align: bottom; width: 1.97843%; height: 10px;"><br/></td>
+<td style="vertical-align: bottom; width: 30.0216%; text-align: center; height: 10px;border-bottom-width: 1pt ;border-bottom-style: solid ;border-bottom-color: #000000;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: 10pt; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">Votes Against</span></td>
+<td style="vertical-align: bottom; width: 2.00154%; height: 10px;"><br/></td>
+<td style="vertical-align: bottom; width: 2%; height: 10px;"><br/></td>
+<td style="vertical-align: bottom; width: 30%; height: 10px; text-align: center;border-bottom-width: 1pt ;border-bottom-style: solid ;border-bottom-color: #000000;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: 10pt; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">Votes Abstained</span></td>
+</tr>
+<tr style="height: 17px;">
+<td style="vertical-align: bottom; width: 2%; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 30%; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">19,043,717</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2.00154%; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 1.97843%; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 30.0216%; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">940,172</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2.00154%; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2%; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 30%; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">12,973</span></p>
+
+
+
+</td>
+</tr>
+</tbody>
+
+
+
+</table>
+<p style="margin: 0pt 7.5pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt 7.5pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">3.&#160; Approval of </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">an amendment to the Company&#8217;s Certificate of Incorporation to authorize 50,000,000 shares of &#8220;blank check&#8221; Preferred Stock</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">:</span></p>
+<p style="margin: 0pt 7.5pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<table cellspacing="0" cellpadding="0" style="height: 27px; border-collapse: collapse; margin: 0px auto; font-family: &quot;times new roman&quot;; font-size: 10pt; width: 100%;" width="100%">
+<tbody>
+<tr style="height: 10px;">
+<td style="vertical-align: bottom; width: 2%; height: 10px;"><br/></td>
+<td style="vertical-align: bottom; width: 30%; height: 10px; text-align: center;border-bottom-width: 1pt ;border-bottom-style: solid ;border-bottom-color: #000000;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: 10pt; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">Votes For</span></td>
+<td style="vertical-align: bottom; width: 2%; height: 10px;"><br/></td>
+<td style="vertical-align: bottom; width: 2%; height: 10px;"><br/></td>
+<td style="vertical-align: bottom; width: 30%; height: 10px; text-align: center;border-bottom-width: 1pt ;border-bottom-style: solid ;border-bottom-color: #000000;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: 10pt; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">Votes Against</span></td>
+<td style="vertical-align: bottom; width: 2%; height: 10px;"><br/></td>
+<td style="vertical-align: bottom; width: 2%; height: 10px;"><br/></td>
+<td style="vertical-align: bottom; width: 30%; height: 10px; text-align: center;border-bottom-width: 1pt ;border-bottom-style: solid ;border-bottom-color: #000000;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: 10pt; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">Votes Abstained</span></td>
+</tr>
+<tr style="height: 17px;">
+<td style="vertical-align: bottom; width: 2%; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 30%; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">18,577,334</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2%; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2%; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 30%; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">1,033,914</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2%; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2%; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 30%; height: 17px;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">16,710</span></p>
+
+
+
+</td>
+</tr>
+</tbody>
+
+
+
+</table>
+<p style="margin: 0pt 7.5pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt 7.5pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">4.&#160; Approval of </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">an amendment to the Company&#8217;s Certificate of Incorporation </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">to effect a reverse stock split of the Company&#8217;s outstanding shares of common stock by a ratio of between 1-for-10 to 1-for-15, with such ratio to be determined at the discretion of the Board of Directors</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">:</span></p>
+<p style="margin: 0pt 7.5pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<table cellspacing="0" cellpadding="0" style="border-collapse: collapse; margin: 0px auto; font-family: &quot;times new roman&quot;; font-size: 10pt; width: 100%;" width="100%">
+<tbody>
+<tr>
+<td style="vertical-align: bottom; width: 2%;"><br/></td>
+<td style="vertical-align: bottom; width: 30%; text-align: center;border-bottom-width: 1pt ;border-bottom-style: solid ;border-bottom-color: #000000;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: 10pt; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">Votes For</span></td>
+<td style="vertical-align: bottom; width: 2%;"><br/></td>
+<td style="vertical-align: bottom; width: 2%;"><br/></td>
+<td style="vertical-align: bottom; width: 30%; text-align: center;border-bottom-width: 1pt ;border-bottom-style: solid ;border-bottom-color: #000000;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: 10pt; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">Votes Against</span></td>
+<td style="vertical-align: bottom; width: 2%;"><br/></td>
+<td style="vertical-align: bottom; width: 2%;"><br/></td>
+<td style="vertical-align: bottom; width: 30%; text-align: center;border-bottom-width: 1pt ;border-bottom-style: solid ;border-bottom-color: #000000;"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: 10pt; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">Votes Abstained</span></td>
+</tr>
+<tr>
+<td style="vertical-align: bottom; width: 2%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 30%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">19,634,604</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 30%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">346,054</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 30%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">16,205</span></p>
+
+
+
+</td>
+</tr>
+</tbody>
+
+
+
+</table>
+<p style="margin: 0pt; text-align: justify; text-indent: 0pt;"><br/></p>
+<div><hr class="horizontalLineRemoved" style="border-bottom-color: #000000; border-top-color: #000000; color: #000000; background-color: #000000;"/>
+<div class="pageBreak" style="page-break-before: always;"><a href="#TOC"></a><br/></div>
+
+
+</div>
+<p style="margin: 0pt 7.5pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;"><br/></span></p>
+<p style="margin: 0pt 7.5pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">5.&#160; Approval of </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">an amendment to the Company&#8217;s Certificate of Incorporation </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">to eliminate the prohibition against shareholders acting by written consent and expressly authorize shareholders to act by written consent</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">:</span></p>
+<p style="margin: 0pt 7.5pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<table cellspacing="0" cellpadding="0" style="border-collapse: collapse; margin: 0px auto; font-family: &quot;times new roman&quot;; font-size: 10pt; width: 100%;" width="100%">
+<tbody>
+<tr>
+<td style="vertical-align: bottom;">
+<p style="margin: 0pt; text-align: center;"><br/></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; text-align: center; border-bottom: 1pt solid rgb(0, 0, 0);"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: 10pt; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">Votes For</span></td>
+<td style="vertical-align: bottom;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom;">
+<p style="margin: 0pt; text-align: center;"><br/></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; text-align: center; border-bottom: 1pt solid rgb(0, 0, 0);"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: 10pt; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">Votes Against</span></td>
+<td style="vertical-align: bottom;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom;">
+<p style="margin: 0pt; text-align: center;"><br/></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; text-align: center; border-bottom: 1pt solid rgb(0, 0, 0);"><span style="color: rgb(0, 0, 0); font-family: &quot;Times New Roman&quot;; font-size: 10pt; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">Votes Abstained</span></td>
+</tr>
+<tr>
+<td style="vertical-align: bottom; width: 2%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 30%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">18,388,548</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 30%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">1,208,370</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 30%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">31,040</span></p>
+
+
+
+</td>
+</tr>
+</tbody>
+
+
+
+</table>
+<p style="margin: 0pt 7.5pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt 7.5pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">6. </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">Advisory Vote on the frequency of the advisory vote on the compensation of the Company&#8217;s named executive officers: Shareholders approved an advisory vote once every t</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">wo</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> years.</span></p>
+<p style="margin: 0pt 7.5pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<table cellspacing="0" cellpadding="0" style="height: 34px; border-collapse: collapse; margin: 0px auto; font-family: 'times new roman'; font-size: 10pt; width: 100%;" width="100%">
+<tbody>
+<tr style="height: 17px;">
+<td style="vertical-align: bottom; height: 17px;"><br/></td>
+<td style="vertical-align: bottom; height: 17px; text-align: center;border-bottom-width:1pt; border-bottom-style: solid; border-bottom-color:rgb(0, 0, 0) !important;"><span style="color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">1 Year</span></td>
+<td style="vertical-align: bottom; height: 17px;"><br/></td>
+<td style="vertical-align: bottom; height: 17px;"><br/></td>
+<td style="vertical-align: bottom; height: 17px; text-align: center;border-bottom-width:1pt; border-bottom-style: solid; border-bottom-color:rgb(0, 0, 0) !important;"><span style="color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">2 Years</span></td>
+<td style="vertical-align: bottom; height: 17px;"><br/></td>
+<td style="vertical-align: bottom; height: 17px;" colspan="2"><br/></td>
+<td style="vertical-align: bottom; height: 17px; text-align: center;border-bottom-width:1pt; border-bottom-style: solid; border-bottom-color:rgb(0, 0, 0) !important;"><span style="color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">3 Years</span></td>
+<td style="vertical-align: bottom; height: 17px;"><br/></td>
+<td style="vertical-align: top; height: 17px; text-align: center;border-bottom-width:1pt; border-bottom-style: solid; border-bottom-color:rgb(0, 0, 0) !important;"><span style="color: #000000; font-family: 'Times New Roman'; font-size: 10pt; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">Abstained</span></td>
+<td style="vertical-align: top; height: 17px;" colspan="2"><br/></td>
+
+</tr>
+<tr style="height: 17px;">
+<td style="vertical-align: bottom; height: 17px; width: 2%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px; width: 22%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">2,210,643</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px; width: 1%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px; width: 1.5%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px; width: 22%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">9,112,304</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px; width: 1%;"><br/></td>
+<td colspan="2" style="vertical-align: bottom; height: 17px; width: 1.5%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px; width: 22%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;<span style="color: #000000; font-family: 'Times New Roman'; font-size: 13.3333px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;">8,223,390</span></span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; height: 17px; width: 2.5%;">
+<p style="margin: 0pt; text-align: center;"><br/></p>
+
+
+
+</td>
+<td style="vertical-align: top; height: 17px; width: 22%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">0</span></p>
+
+</td>
+<td style="vertical-align: top; height: 17px; width: 2.5%;" colspan="2"><br/></td>
+
+</tr>
+
+</tbody>
+
+
+
+</table>
+<p style="margin: 0pt 7.5pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt 7.5pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">In accordance with Item 5.07(d) of Form 8-K, the Company hereby discloses its intention to include in its proxy materials an advisory vote on the compensation of its named executive officers once </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">two</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> three years in accordance with the results of the advisory vote on the frequency of the advisory vote on executive compensation at the </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">Special</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> Meeting.</span></p>
+<p style="margin: 0pt 7.5pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Item 8.01</span><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Other Events.</span></p>
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">&#160;</span></p>
+<p style="margin: 0pt; text-align: justify; text-indent: 36pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">As described in Item 5.03 above, on June 2, 2025, the Company announced that it will effect a 1-for-15 reverse </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">split of the Company&#8217;s issued and outstanding </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">Common Stock and will begin trading </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">on a reverse stock split adjusted basis on The Nasdaq Capital Market at market open on June </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">10</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">, 2025. </span> </p>
+<p style="margin: 0pt; text-align: justify; text-indent: 36pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt; text-align: justify; text-indent: 36pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">The Reverse Stock Split is primarily intended to increase the Company&#8217;s per share market price of its Common Stock to regain compliance with the minimum per share bid price requirement for continued listing on The Nasdaq Capital Market. The Company&#8217;s common stock will continue to trade on The Nasdaq Capital Market under the trading symbol &#8220;CLRO,&#8221; but will trade under the following new CUSIP number: 18506U203.&#160; </span></p>
+<p style="margin: 0pt; text-align: justify; text-indent: 36pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt; text-align: justify; text-indent: 36pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">As a result of the Reverse Stock Split, every 15 shares of the Company&#8217;s issued and outstanding Common Stock will be automatically combined into one new share of Common Stock. No fractional shares will be issued in connection with the Reverse Stock Split. Any fraction of a share resulting from the Reverse Stock Split will be converted to one whole share of Common Stock in lieu of such fractional shares. The par value per share of Common Stock will remain unchanged at $0.001.&#160; Proportional adjustments will be made to the number of shares of Common Stock issuable upon the exercise of the Company&#8217;s outstanding stock options and warrants, and the number of shares authorized and reserved for issuance pursuant to the Company&#8217;s equity incentive plans. The Reverse Stock Split will not alter stockholders&#8217; percentage ownership interest in the Company, except to the extent that the Reverse Stock Split results in fractional ownership as described above. The Reverse Stock Split will not change the authorized number of shares of the Company&#8217;s common stock, and will reduce the number of issued and outstanding shares of the Company&#8217;s Common Stock from approximately 26.0 million to approximately 1.7 million.</span></p>
+<p style="margin: 0pt; text-indent: 36pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt; text-align: justify; text-indent: 36pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">The Company&#8217;s transfer agent, Colonial Stock Transfer, will serve as the exchange agent for the Reverse Stock Split. Registered stockholders holding pre-split shares of the Company&#8217;s Common Stock electronically in book-entry form are not required to take any action to receive post-split shares. Those stockholders who hold their shares in brokerage accounts or in &#8220;street name&#8221; will have their positions automatically adjusted to reflect the Reverse Stock Split, subject to each broker's particular processes, and will not be required to take any action in connection with the Reverse Stock Split. Stockholders holding shares of the Company&#8217;s Common Stock in certificate form will receive a transmittal letter from Colonial Stock Transfer with instructions as soon as practicable after the Effective Time.</span></p>
+<p style="margin: 0pt;"><br/></p>
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Item 9.01</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span> <span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Financial Statements and Exhibits</span></p>
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">(d)</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> Exhibits</span></p>
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<table cellspacing="0" cellpadding="0" style="border-collapse: collapse; margin-left: 0pt; font-family: 'times new roman'; font-size: 10pt; width: 100%;" width="100%">
+<tbody>
+<tr>
+<td style="vertical-align: bottom; width: 17.88%;border-bottom-width:1pt; border-bottom-style: solid; border-bottom-color:rgb(0, 0, 0) !important;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Exhibit</span><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Number</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 0.64%;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 81.48%;border-bottom-width:1pt; border-bottom-style: solid; border-bottom-color:rgb(0, 0, 0) !important;">
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Exhibit</span><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">Title</span></p>
+
+
+
+</td>
+
+
+
+</tr>
+<tr>
+<td style="vertical-align: top; width: 17.88%;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">3.1</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 0.64%;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: top; width: 81.48%;">
+<p style="margin: 0pt;"><a href="ex31_1.htm" style="-sec-extract:exhibit"><span style="font-family: 'Times New Roman'; font-size: 10pt;">Certificate of Amendment to Certificate of Incorporation dated June 2, 2025.</span></a></p>
+
+
+
+</td>
+
+
+
+</tr>
+<tr>
+<td style="vertical-align: top; width: 17.88%;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 0.64%;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: top; width: 81.48%;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+
+
+
+</tr>
+<tr>
+<td style="vertical-align: top; width: 17.88%;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">99.1</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 0.64%;">
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: top; width: 81.48%;">
+<p style="margin: 0pt;"><a href="ex991_2.htm" style="-sec-extract:exhibit"><span style="font-family: 'Times New Roman'; font-size: 10pt;">Press Release dated </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">June 2</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">, 2025.</span></a></p>
+
+
+
+</td>
+
+
+
+</tr>
+<tr style="height: 13.5pt;">
+<td style="vertical-align: top; width: 17.88%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 0.64%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: top; width: 81.48%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+
+
+
+</tr>
+<tr style="height: 13.5pt;">
+<td style="vertical-align: top; width: 17.88%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">104.1</span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 0.64%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+
+
+
+</td>
+<td style="vertical-align: top; width: 81.48%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">The cover page from this Current Report on Form 8-K, formatted in Inline XBRL.</span></p>
+
+
+
+</td>
+
+
+
+</tr>
+
+
+
+</tbody>
+
+
+
+</table>
+<p style="margin: 0pt;"><br/></p>
+<div><hr class="horizontalLineRemoved" style="border-bottom-color: #000000; border-top-color: #000000; color: #000000; background-color: #000000;"/>
+<div class="pageBreak" style="page-break-before: always;"><a href="#TOC"></a><br/></div>
+
+
+</div>
+<p style="margin: 0pt; text-align: center;"><br/></p>
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold;">SIGNATURES</span></p>
+<p style="margin: 0pt; text-align: center;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">Pursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.</span></p>
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span></p>
+<table cellspacing="0" cellpadding="0" style="border-collapse: collapse; margin-left: 0pt; font-family: 'times new roman'; font-size: 10pt;" width="100%">
+<tbody>
+<tr style="height: 12.75pt;">
+<td style="vertical-align: bottom; width: 45%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span> </p>
+
+
+
+</td>
+<td colspan="2" style="vertical-align: bottom;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">CLEARONE, INC. </span></p>
+
+
+
+</td>
+
+
+
+</tr>
+<tr style="height: 12.75pt;">
+<td style="vertical-align: bottom; width: 45%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span> </p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span> </p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 53%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span> </p>
+
+
+
+</td>
+
+
+
+</tr>
+<tr style="height: 12.75pt;">
+<td style="vertical-align: bottom; width: 45%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">Date: </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">June</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> 2,</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> 202</span><span style="font-family: 'Times New Roman'; font-size: 10pt;">5</span> </p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">By: </span></p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 53%;border-bottom-width:1pt; border-bottom-style: solid; border-bottom-color:rgb(0, 0, 0) !important;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt; font-style: italic;">/s/ </span><span style="font-family: 'Times New Roman'; font-size: 10pt; font-style: italic;">Simon Brewer</span></p>
+
+
+
+</td>
+
+
+
+</tr>
+<tr style="height: 12.75pt;">
+<td style="vertical-align: bottom; width: 45%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span> </p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span> </p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 53%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">Simon Brewer</span></p>
+
+
+
+</td>
+
+
+
+</tr>
+<tr style="height: 25.5pt;">
+<td style="vertical-align: bottom; width: 45%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span> </p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 2%;">
+<p style="margin: 0pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span> </p>
+
+
+
+</td>
+<td style="vertical-align: bottom; width: 53%;">
+<p style="margin: 0pt 0pt 0pt 1.5pt; text-align: justify;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">Chief </span><span style="font-family: 'Times New Roman'; font-size: 10pt;">Financial</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> Officer</span><span style="font-family: 'Times New Roman'; font-size: 10pt;"> (Principal Accounting and Principal Financial Officer) </span> </p>
+
+
+
+</td>
+
+
+
+</tr>
+
+
+
+</tbody>
+
+
+
+</table>
+<p style="margin: 0pt;"><span style="font-family: 'Times New Roman'; font-size: 10pt;">&#160;</span><span style="font-family: 'Times New Roman'; font-size: 10pt; font-weight: bold; text-align: right;">&#8239;</span></p>
+
+</div>
+
+
+</div></div><script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body></html>

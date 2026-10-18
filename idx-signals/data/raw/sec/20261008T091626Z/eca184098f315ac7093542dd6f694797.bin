@@ -1,0 +1,337 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2023" xmlns:ref="http://www.xbrl.org/2006/ref" xmlns:us-gaap="http://fasb.org/us-gaap/2023" xmlns:us-roles="http://fasb.org/us-roles/2023" xmlns:dtr-types="http://www.xbrl.org/dtr/type/2022-03-31" xmlns:country="http://xbrl.sec.gov/country/2023" xmlns:srt="http://fasb.org/srt/2023" xmlns:SBFM="http://sunshinebiopharma.com/20240628">
+<head>
+     <title>8-K</title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02C_US%2DGAAP%2D2023 -->
+<!-- Field: Set; Name: xdx; ID: xdx_03F_SBFM_sunshinebiopharma.com_20240628 -->
+<!-- Field: Set; Name: xdx; ID: xdx_04D_20240628_20240628 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_055_edei%2D%2DEntityCentralIndexKey_0001402328 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2024-06-28" id="Fact000003" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-06-28" id="Fact000004" name="dei:EntityCentralIndexKey">0001402328</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="sbfm-20240628.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2024-06-28">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001402328</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2024-06-28</xbrli:startDate>
+        <xbrli:endDate>2024-06-28</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2024-06-282024-06-28_us-gaap_CommonStockMember">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001402328</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">us-gaap:CommonStockMember</xbrldi:explicitMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2024-06-28</xbrli:startDate>
+        <xbrli:endDate>2024-06-28</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2024-06-282024-06-28_custom_CommonStockPurchaseWarrantsMember">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001402328</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">SBFM:CommonStockPurchaseWarrantsMember</xbrldi:explicitMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2024-06-28</xbrli:startDate>
+        <xbrli:endDate>2024-06-28</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>UNITED STATES</b></p>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b> SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>WASHINGTON, D.C. 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span style="font-size: 12pt"><b>FORM
+<span id="xdx_904_edei--DocumentType_c20240628__20240628_zC4DiIU3Gbml"><ix:nonNumeric contextRef="AsOf2024-06-28" id="Fact000009" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Current Report</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Pursuant to Section 13 or 15(d) of the
+Securities Exchange Act of 1934</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Date of Report (Date of earliest event
+reported): <b><span style="text-decoration: underline"><span id="xdx_905_edei--DocumentPeriodEndDate_c20240628__20240628_zzdPhGfZIky4"><ix:nonNumeric contextRef="AsOf2024-06-28" format="ixt:datemonthdayyearen" id="Fact000010" name="dei:DocumentPeriodEndDate">June
+28, 2024</ix:nonNumeric></span></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span id="xdx_90D_edei--EntityRegistrantName_c20240628__20240628_zY6ZGNpsnovi" style="font-size: 12pt"><b><span style="text-decoration: underline"><ix:nonNumeric contextRef="AsOf2024-06-28" id="Fact000011" name="dei:EntityRegistrantName">SUNSHINE
+BIOPHARMA, INC.</ix:nonNumeric></span></b></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Exact name of registrant as specified in its charter)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 33%; font-size: 10pt; text-align: center"><b><span style="text-decoration: underline"><span id="xdx_90D_edei--EntityIncorporationStateCountryCode_c20240628__20240628_zZ6NIMZ3Q8R7"><ix:nonNumeric contextRef="AsOf2024-06-28" format="ixt-sec:stateprovnameen" id="Fact000012" name="dei:EntityIncorporationStateCountryCode">Colorado</ix:nonNumeric></span></span></b></td>
+    <td style="width: 34%; font-size: 10pt; text-align: center"><b><span style="text-decoration: underline"><span id="xdx_90E_edei--EntityFileNumber_c20240628__20240628_z5nTL03FAInl"><ix:nonNumeric contextRef="AsOf2024-06-28" id="Fact000013" name="dei:EntityFileNumber">001-41282</ix:nonNumeric></span></span></b></td>
+    <td style="width: 33%; font-size: 10pt; text-align: center"><b><span style="text-decoration: underline"><span id="xdx_902_edei--EntityTaxIdentificationNumber_c20240628__20240628_zDqPs0GhH7rl"><ix:nonNumeric contextRef="AsOf2024-06-28" id="Fact000014" name="dei:EntityTaxIdentificationNumber">20-5566275</ix:nonNumeric></span></span></b></td></tr>
+  <tr style="vertical-align: top">
+    <td>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(State or other jurisdiction</p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">of incorporation)</p></td>
+    <td style="font-size: 10pt; text-align: center"><span style="font-size: 10pt">(Commission File Number)</span></td>
+    <td style="font-size: 10pt; text-align: center"><span style="font-size: 10pt">(IRS Employer ID No.)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span id="xdx_90D_edei--EntityAddressAddressLine1_c20240628__20240628_zIbn6VFExog2"><b><ix:nonNumeric contextRef="AsOf2024-06-28" id="Fact000015" name="dei:EntityAddressAddressLine1">333
+Las Olas Way,</ix:nonNumeric> </b></span><b><span id="xdx_905_edei--EntityAddressAddressLine2_c20240628__20240628_zf3DEgYEKWb9"><ix:nonNumeric contextRef="AsOf2024-06-28" id="Fact000016" name="dei:EntityAddressAddressLine2">CU4
+Suite 433</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span id="xdx_905_edei--EntityAddressCityOrTown_c20240628__20240628_zRqPJDW78Eff"><b><span style="text-decoration: underline"><ix:nonNumeric contextRef="AsOf2024-06-28" id="Fact000017" name="dei:EntityAddressCityOrTown">Fort Lauderdale</ix:nonNumeric></span></b></span><b><span style="text-decoration: underline">, <span id="xdx_90A_edei--EntityAddressStateOrProvince_c20240628__20240628_zl896jS0IzJ1"><ix:nonNumeric contextRef="AsOf2024-06-28" id="Fact000018" name="dei:EntityAddressStateOrProvince">FL</ix:nonNumeric> </span></span></b><b><span style="text-decoration: underline"> <span id="xdx_909_edei--EntityAddressPostalZipCode_c20240628__20240628_zW1LF4euyVD2"><ix:nonNumeric contextRef="AsOf2024-06-28" id="Fact000019" name="dei:EntityAddressPostalZipCode">33301</ix:nonNumeric></span></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Address of principal executive offices) (zip
+code)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span style="text-decoration: underline"><span id="xdx_90D_edei--CityAreaCode_c20240628__20240628_zfQU5Lg2kw5"><ix:nonNumeric contextRef="AsOf2024-06-28" id="Fact000020" name="dei:CityAreaCode">(954)</ix:nonNumeric></span> <span id="xdx_90A_edei--LocalPhoneNumber_c20240628__20240628_zy6BNpNN2hQ"><ix:nonNumeric contextRef="AsOf2024-06-28" id="Fact000021" name="dei:LocalPhoneNumber">515-0810</ix:nonNumeric></span></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Registrant&#8217;s telephone number, including area code)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><span style="text-decoration: underline">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</span></p>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Former name or former address, if changed since
+last report.)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; color: rgb(0, 0, 0); text-indent: 0px; background-color: rgb(255, 255, 255)">Securities
+registered pursuant to Section 12(b) of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; color: rgb(0, 0, 0); text-indent: 0px; background-color: rgb(255, 255, 255)">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 34%; text-align: center"><span style="font-size: 10pt"><span style="text-decoration: underline">Title of Each Class</span></span></td>
+    <td style="width: 32%; text-align: center; text-indent: 0.35pt"><span style="font-size: 10pt"><span style="text-decoration: underline">Trading Symbol</span></span></td>
+    <td style="width: 34%; text-align: center"><span style="font-size: 10pt"><span style="text-decoration: underline">Name of Each Exchange on Which Registered</span></span></td></tr>
+  <tr style="vertical-align: top">
+    <td id="xdx_98C_edei--Security12bTitle_c20240628__20240628__us-gaap--StatementClassOfStockAxis__us-gaap--CommonStockMember_zDrXuwSA7MH7" style="text-align: center"><span style="font-size: 10pt"><ix:nonNumeric contextRef="From2024-06-282024-06-28_us-gaap_CommonStockMember" id="Fact000022" name="dei:Security12bTitle">Common Stock, par value $0.001</ix:nonNumeric></span></td>
+    <td id="xdx_981_edei--TradingSymbol_c20240628__20240628__us-gaap--StatementClassOfStockAxis__us-gaap--CommonStockMember_zmMEKY4ORLue" style="text-align: center; text-indent: 0.35pt"><span style="font-size: 10pt"><ix:nonNumeric contextRef="From2024-06-282024-06-28_us-gaap_CommonStockMember" id="Fact000023" name="dei:TradingSymbol">SBFM</ix:nonNumeric></span></td>
+
+
+<td style="text-align: center">The <span style="font-size: 10pt"><span id="xdx_90B_edei--SecurityExchangeName_c20240628__20240628__us-gaap--StatementClassOfStockAxis__us-gaap--CommonStockMember_z70UdEItJ8kl"><ix:nonNumeric contextRef="From2024-06-282024-06-28_us-gaap_CommonStockMember" format="ixt-sec:exchnameen" id="Fact000024" name="dei:SecurityExchangeName">Nasdaq</ix:nonNumeric></span></span>
+                                                   Stock Market LLC</td></tr>
+  <tr style="vertical-align: top">
+    <td id="xdx_98F_edei--Security12bTitle_c20240628__20240628__us-gaap--StatementClassOfStockAxis__custom--CommonStockPurchaseWarrantsMember_z7HsguzDPS8h" style="text-align: center"><span style="font-size: 10pt"><ix:nonNumeric contextRef="From2024-06-282024-06-28_custom_CommonStockPurchaseWarrantsMember" id="Fact000025" name="dei:Security12bTitle">Common Stock Purchase Warrants</ix:nonNumeric></span></td>
+    <td id="xdx_986_edei--TradingSymbol_c20240628__20240628__us-gaap--StatementClassOfStockAxis__custom--CommonStockPurchaseWarrantsMember_zaTDvc9bktL" style="text-align: center; text-indent: 0.35pt"><span style="font-size: 10pt"><ix:nonNumeric contextRef="From2024-06-282024-06-28_custom_CommonStockPurchaseWarrantsMember" id="Fact000026" name="dei:TradingSymbol">SBFMW</ix:nonNumeric></span></td>
+
+
+<td style="text-align: center">The <span style="font-size: 10pt"><span id="xdx_90D_edei--SecurityExchangeName_c20240628__20240628__us-gaap--StatementClassOfStockAxis__custom--CommonStockPurchaseWarrantsMember_zRTW1ouz5Mqh"><ix:nonNumeric contextRef="From2024-06-282024-06-28_custom_CommonStockPurchaseWarrantsMember" format="ixt-sec:exchnameen" id="Fact000027" name="dei:SecurityExchangeName">Nasdaq</ix:nonNumeric></span></span>
+                                                   Stock Market LLC</td></tr>
+  </table>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Check the appropriate box below if the Form 8-K filing is intended
+to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span id="xdx_902_edei--WrittenCommunications_c20240628__20240628_zN5sy7uiEFk5"><ix:nonNumeric contextRef="AsOf2024-06-28" format="ixt:booleanfalse" id="Fact000028" name="dei:WrittenCommunications">&#9744;</ix:nonNumeric></span>&#160;&#160;Written communications pursuant to Rule 425 under the Securities
+Act (17 CFR 230.425)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span id="xdx_90E_edei--SolicitingMaterial_c20240628__20240628_znRzB7bByzNb"><ix:nonNumeric contextRef="AsOf2024-06-28" format="ixt:booleanfalse" id="Fact000029" name="dei:SolicitingMaterial">&#9744;</ix:nonNumeric></span>&#160;&#160;Soliciting material pursuant to Rule 14a-12 under the Exchange
+Act (17 CFR 240.14a-12)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span id="xdx_90E_edei--PreCommencementTenderOffer_c20240628__20240628_zdniV9qi7Fpb"><ix:nonNumeric contextRef="AsOf2024-06-28" format="ixt:booleanfalse" id="Fact000030" name="dei:PreCommencementTenderOffer">&#9744;</ix:nonNumeric></span>&#160;&#160;Pre-commencement communications pursuant to Rule 14d-2(b) under
+the Exchange Act (17 CFR 240.14d-2(b))</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span id="xdx_902_edei--PreCommencementIssuerTenderOffer_c20240628__20240628_zVvuX7CnlJUk"><ix:nonNumeric contextRef="AsOf2024-06-28" format="ixt:booleanfalse" id="Fact000031" name="dei:PreCommencementIssuerTenderOffer">&#9744;</ix:nonNumeric></span>&#160;&#160;Pre-commencement communications pursuant to Rule 13e-4(c) under
+the Exchange Act (17 CFR 240.13e-4(c))</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Indicate by check mark whether the registrant
+is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or Rule 12b-2 of the
+Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Emerging growth company <span id="xdx_904_edei--EntityEmergingGrowthCompany_c20240628__20240628_zxp5XIsBih2b"><ix:nonNumeric contextRef="AsOf2024-06-28" format="ixt:booleanfalse" id="Fact000032" name="dei:EntityEmergingGrowthCompany">&#9744;</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">If an emerging growth company, indicate by check
+mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting
+standards provided pursuant to Section 13(a) of the Exchange Act. &#9744;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="margin-top: 6pt; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="border-bottom: Black 1pt solid; border-collapse: collapse; width: 100%; font-size: 10pt"><tr style="vertical-align: top; text-align: left"><td style="width: 33%">&#160;</td><td style="width: 34%; text-align: center"><!-- Field: Sequence; Type: Arabic; Name: PageNo; Options: Hidden -->&#160;<!-- Field: /Sequence --></td><td style="width: 33%; text-align: right">&#160;</td></tr></table></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; color: #212529"><b></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Item 5.07 Submission of Matters to a Vote of
+Security Holders.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On June 28, 2024, Dr. Steve Slilaty, as the holder
+of the majority of the voting power of the stockholders of Sunshine Biopharma, Inc. (the &#8220;Company&#8221;), approved by written consent
+an amendment to the Company&#8217;s articles of incorporation to effect a reverse split of the Company&#8217;s common stock at a ratio
+of up to 60-for-1. The consent will be effective 20 days after the definitive information statement relating to such consent is mailed
+to shareholders. As of June 28, 2024, Dr. Slilaty, who is the Company&#8217;s chief executive officer, held 84.8% of the total voting
+power of the Company&#8217;s stockholders.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; color: #212529">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; color: #212529">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; color: #212529">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; color: #212529">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; color: #212529">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; color: #212529">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; color: #212529"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b></b></p>
+
+<!-- Field: Page; Sequence: 2 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 6pt; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="border-collapse: collapse; width: 100%; font-size: 10pt"><tr style="vertical-align: top; text-align: left"><td style="width: 33%">&#160;</td><td style="width: 34%; text-align: center"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence --></td><td style="width: 33%; text-align: right">&#160;</td></tr></table></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b></b>&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">Pursuant to the requirements
+of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto
+duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 50%">Dated: July 2, 2024</td>
+    <td style="width: 50%"><b>SUNSHINE BIOPHARMA, INC.</b></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>By: <span style="text-decoration: underline">/s/ Dr. Steve N. Slilaty&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; </span></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>Dr. Steve N. Slilaty, Chief Executive Officer</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b></p>
+
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 3in"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 3; Options: Last -->
+    <div style="margin-top: 6pt; margin-bottom: 6pt"><table cellpadding="0" cellspacing="0" style="border-bottom: Black 1pt solid; border-collapse: collapse; width: 100%; font-size: 10pt"><tr style="vertical-align: top; text-align: left"><td style="width: 33%">&#160;</td><td style="width: 34%; text-align: center"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->3<!-- Field: /Sequence --></td><td style="width: 33%; text-align: right">&#160;</td></tr></table></div>
+    <!-- Field: /Page -->
+
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxFjd0KgkAQhZ/Adxj2OlK3P/AyqYgsRCS6XXKKJd2R2e3vkXrLViUaBobhnO8cIUZiQ2tdI8NpWWRQYtPWyiEUeEFGc0bvSLe7BPwt8KqtY2Vc//7AlDyDnpmNpVRe6K0PbbFKIJqEchHKKcRREs8h34ug01MyF12hcVrVoEwFOVPLGp3i95BQqhcZat591RHZajIJxONokD8go1jCgR7qSXyzkGWpCEb9BGLDdG+9a/VyaDoSVjU2vs4O9H+DLwY+Sow= -->
+
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

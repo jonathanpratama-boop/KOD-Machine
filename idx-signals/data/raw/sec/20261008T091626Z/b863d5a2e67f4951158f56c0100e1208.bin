@@ -1,0 +1,686 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:srt="http://fasb.org/srt/2025" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2020-02-12" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:us-gaap="http://fasb.org/us-gaap/2025" xmlns:dei="http://xbrl.sec.gov/dei/2025" xmlns:country="http://xbrl.sec.gov/country/2025" xmlns:currency="http://xbrl.sec.gov/currency/2025" xmlns:dtr-types="http://www.xbrl.org/dtr/type/2024-01-31" xmlns:utr="http://www.xbrl.org/2009/utr" xmlns:naics="http://xbrl.sec.gov/naics/2025" xmlns:sic="http://xbrl.sec.gov/sic/2025" xmlns:stpr="http://xbrl.sec.gov/stpr/2025" xmlns:exch="http://xbrl.sec.gov/exch/2025" xmlns:cef="http://xbrl.sec.gov/cef/2025" xmlns:cyd="http://xbrl.sec.gov/cyd/2025" xmlns:rwlk="http://golifeward.com./20260203" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title></title>
+    <!-- Licensed to: ZKG
+         Document created using Broadridge PROfile 25.10.1.5333
+         Copyright 1995 - 2026 Broadridge -->
+    <meta http-equiv="Content-Type" content="text/html"/>
+</head>
+
+<body style="font-family: 'Times New Roman', Times, serif; font-size: 10pt; text-align: left; color: #000000; background-color: #ffffff;">
+<div id="DSPFiXBRLHidden" style="display: none;"><ix:header><ix:hidden><ix:nonNumeric name="dei:AmendmentFlag" id="Fact_083c776ec40c4a30a7f47c9ea9d10006" contextRef="c20260203to20260203" format="ixt:fixed-false">false</ix:nonNumeric><ix:nonNumeric name="dei:EntityCentralIndexKey" id="Fact_6669b9ba4b0d4ed1966b4d6a2a2b95eb" contextRef="c20260203to20260203">0001607962</ix:nonNumeric><ix:nonNumeric name="dei:EntityIncorporationStateCountryCode" id="Fact_2f228e60c3184cc3a135121900fbefb6" contextRef="c20260203to20260203">L3</ix:nonNumeric><ix:nonNumeric name="dei:EntityTaxIdentificationNumber" id="Fact_03e4abaed0824daa969a99350a6c6911" contextRef="c20260203to20260203">00-0000000</ix:nonNumeric><ix:nonNumeric name="dei:EntityAddressAddressLine2" id="Fact_649947267c514369b40d533f661a9220" contextRef="c20260203to20260203">Floor 6</ix:nonNumeric><ix:nonNumeric name="dei:EntityAddressCityOrTown" id="Fact_dbc6376b49ec44f8be7d105000eeab97" contextRef="c20260203to20260203">Yokneam Ilit</ix:nonNumeric><ix:nonNumeric name="dei:CityAreaCode" id="Fact_0eace3ac76b946b0a88effe18a59d440" contextRef="c20260203to20260203">+508.251.1154</ix:nonNumeric><ix:nonNumeric name="dei:LocalPhoneNumber" id="Fact_3ecc22a3dd6245368b5f66233a8f3678" contextRef="c20260203to20260203">4.959.0123</ix:nonNumeric><ix:nonNumeric name="dei:Security12bTitle" id="Fact_7b583d8cef634e4fbb1b099844e7ab38" contextRef="c20260203to20260203">Ordinary shares, no par value</ix:nonNumeric><ix:nonNumeric name="dei:SecurityExchangeName" id="Fact_8ad4e8a30f4640ffb73bf98444a1b166" contextRef="c20260203to20260203">NASDAQ</ix:nonNumeric></ix:hidden><ix:references><link:schemaRef xlink:href="rwlk-20260203.xsd" xlink:type="simple"/></ix:references><ix:resources><xbrli:context id="c20260203to20260203"><xbrli:entity><xbrli:identifier scheme="http://www.sec.gov/CIK">0001607962</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2026-02-03</xbrli:startDate><xbrli:endDate>2026-02-03</xbrli:endDate></xbrli:period></xbrli:context></ix:resources></ix:header></div>
+<div style="line-height: initial;">
+  <div>
+    <hr style="border: none; border-bottom: 1px solid black; border-top: 4px solid black; height: 10px; color: #ffffff; background-color: #ffffff; text-align: center; margin-left: auto; margin-right: auto;"/>
+    <div> <br/>
+    </div>
+
+    <div>
+      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 14pt; font-weight: bold;">UNITED STATES</div>
+
+      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 14pt; font-weight: bold;">SECURITIES AND EXCHANGE COMMISSION</div>
+
+      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt; font-weight: bold;">Washington, D.C. 20549</div>
+
+      <div style="text-align: center; text-indent: 36pt; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt; font-weight: bold;">&#160;</div>
+
+      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 14pt; font-weight: bold;">FORM <ix:nonNumeric name="dei:DocumentType" id="Fact_a4a486160e5f4386a226566a7e116937" contextRef="c20260203to20260203">8-K</ix:nonNumeric></div>
+
+      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt; font-weight: bold;"> <br/>
+      </div>
+
+      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt; font-weight: bold;">CURRENT REPORT</div>
+
+      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt; font-weight: bold;">Pursuant to Section 13 or 15(d) of the Securities Exchange Act of 1934</div>
+
+      <div style="text-align: justify; text-indent: 36pt; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: normal;">Date of Report (Date of earliest event reported): <span style="text-decoration: underline;"><ix:nonNumeric name="dei:DocumentPeriodEndDate" id="Fact_53309189ac464563ab17ac2804e6bc3d" contextRef="c20260203to20260203" format="ixt:date-monthname-day-year-en">February 3, 2026</ix:nonNumeric></span></div>
+
+      <div style="text-align: justify; text-indent: 36pt; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+
+      <div style="line-height: 1.25; font-size: 16pt;">
+        <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-weight: bold;">
+<div><ix:nonNumeric name="dei:EntityRegistrantName" id="Fact_cd84b200d835423680d7360480aac004" contextRef="c20260203to20260203">Lifeward Ltd.</ix:nonNumeric><br/></div>
+
+          <hr style="height: 2px; color: #000000; background-color: #000000; text-align: center; border: none; margin-left: auto; margin-right: auto;"/></div>
+
+      </div>
+
+      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">
+        <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">
+          <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">
+            <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">(Exact <span style="font-size: 10pt; font-family: 'Times New Roman', Times, serif;">Name</span> of <span style="font-size: 10pt; font-family: 'Times New Roman', Times, serif;">Registrant</span> as <span style="font-size: 10pt; font-family: 'Times New Roman', Times, serif;">Specified</span> in its <span style="font-size: 10pt; font-family: 'Times New Roman', Times, serif;">Charter</span>)</div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div style="text-align: center; text-indent: 36pt; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;&#160;</div>
+
+      <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman', Times, serif; font-size: 10pt; width: 100%; text-align: left; color: #000000; border-spacing: 0;">
+
+
+  <tr>
+
+    <td style="width: 32%; vertical-align: top; border-bottom: 2px solid rgb(0, 0, 0);">
+              <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: normal;"><ix:nonNumeric name="dei:EntityAddressCountry" id="Fact_87070915229944feb537a6cc0aa554bf" contextRef="c20260203to20260203" format="ixt-sec:countrynameen">Israel</ix:nonNumeric><br/>
+              </div>
+            </td>
+
+    <td colspan="1" style="width: 2%; vertical-align: top; padding-bottom: 2px; font-weight: normal;">&#160;</td>
+
+    <td style="width: 32%; vertical-align: top; border-bottom: 2px solid rgb(0, 0, 0);">
+              <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: normal;"><ix:nonNumeric name="dei:EntityFileNumber" id="Fact_a3ea2ac29bf344468d331a08eaa1227b" contextRef="c20260203to20260203">001-36612</ix:nonNumeric><br/>
+              </div>
+            </td>
+
+    <td colspan="1" style="width: 2%; vertical-align: top; padding-bottom: 2px; font-weight: normal;">&#160;</td>
+
+    <td style="width: 32%; vertical-align: top; border-bottom: 2px solid rgb(0, 0, 0);">
+              <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: normal;"><span style="-sec-ix-hidden:Fact_03e4abaed0824daa969a99350a6c6911">Not Applicable</span><br/>
+              </div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 32%; vertical-align: top; white-space: nowrap;">
+              <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">(State or Other Jurisdiction of Incorporation)</div>
+            </td>
+
+    <td colspan="1" style="width: 2%; vertical-align: top; white-space: nowrap;">&#160;</td>
+
+    <td style="width: 32%; vertical-align: top;">
+              <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">(Commission File Number)</div>
+            </td>
+
+    <td colspan="1" style="width: 2%; vertical-align: top;">&#160;</td>
+
+    <td style="width: 32%; vertical-align: top;">
+              <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">(IRS Employer Identification No.)</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div><br/>
+      </div>
+
+      <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman', Times, serif; font-size: 10pt; width: 100%; text-align: left; color: #000000; border-spacing: 0;">
+
+
+  <tr>
+
+    <td style="width: 49%; vertical-align: top; border-bottom: 2px solid rgb(0, 0, 0); white-space: nowrap;">
+              <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: normal;"><ix:nonNumeric name="dei:EntityAddressAddressLine1" id="Fact_4a5baf4d1e3c46f49da58568a085fb34" contextRef="c20260203to20260203">200 Donald Lynch Blvd., Marlborough MA</ix:nonNumeric><br/>
+              </div>
+            </td>
+
+    <td style="width: 2%; vertical-align: top; padding-bottom: 2px; white-space: nowrap;">
+              <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: normal;">&#160;</div>
+            </td>
+
+    <td style="width: 49%; vertical-align: top; border-bottom: 2px solid rgb(0, 0, 0); white-space: nowrap;">
+              <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: normal;"><ix:nonNumeric name="dei:EntityAddressPostalZipCode" id="Fact_550a14f4845e4020b5e2f0eeedc25dfa" contextRef="c20260203to20260203">01752</ix:nonNumeric><br/>
+              </div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 49%; vertical-align: top;">
+              <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">
+                <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">(Address of principal executive offices)</div>
+              </div>
+            </td>
+
+    <td style="width: 2%; vertical-align: top;">
+              <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+            </td>
+
+    <td style="width: 49%; vertical-align: top;">
+              <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">(Zip Code)</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="text-align: center; text-indent: 36pt; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">
+        <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">Registrant&#8217;s telephone number, including area code: <span style="text-decoration: underline;"><span style="-sec-ix-hidden:Fact_3ecc22a3dd6245368b5f66233a8f3678">+</span><span style="font-size: 10pt; font-family: 'Times New Roman',Times,serif; font-weight: normal;"><span style="-sec-ix-hidden:Fact_0eace3ac76b946b0a88effe18a59d440">508.251.1154</span></span><span style="font-size: 10pt; font-family: 'Times New Roman',Times,serif; font-weight: bold;"> </span></span></div>
+
+      </div>
+
+      <div style="text-align: left; text-indent: 36pt; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;&#160;</div>
+
+      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">
+        <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman', Times, serif; font-size: 10pt; color: #000000; width: 100%; border-spacing: 0;">
+
+
+  <tr>
+
+    <td style="width: 100%; border-bottom: 2px solid rgb(0, 0, 0); text-align: center;">Not applicable<br/>
+              </td>
+
+  </tr>
+
+
+</table>
+      </div>
+
+      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">(Former name or former address, if changed since last report)</div>
+
+      <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">
+        <div><br/>
+        </div>
+
+        <div>
+          <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt; font-weight: bold;">Securities registered pursuant to Section 12(b) of the Act:</div>
+
+        </div>
+
+        <div><br/></div>
+
+        <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: bold;">
+          <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">
+            <div style="line-height: 1.25;">
+              <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">
+                <div style="line-height: 1.25;">
+                  <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">
+                    <div style="line-height: 1.25;">
+                      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt; font-weight: bold;">
+                        <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">
+                          <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">
+                            <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">
+                              <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman', Times, serif; font-size: 10pt; width: 100%; text-align: left; color: #000000; border-spacing: 0;">
+
+
+  <tr>
+
+    <td style="width: 32.01%; vertical-align: bottom; border-bottom: 2px solid rgb(0, 0, 0); text-align: center;">
+                                      <div style="line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: bold;">
+                                        <div style="line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: bold;">
+                                          <div style="line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: bold;">
+                                            <div style="line-height: 1.25;">
+                                              <div style="line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: bold;">
+                                                <div style="line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: bold;">
+                                                  <div style="line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: bold;">
+                                                    <div style="line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: bold;">
+                                                      <div style="line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: bold; text-align: center;">
+                                                        <div style="line-height: 1.25; color: rgb(0, 0, 0); font-family: 'Times New Roman',serif; font-size: 10pt; font-weight: bold; text-align: center;">
+                                                          <div style="line-height: 1.25; color: rgb(0, 0, 0); font-family: 'Times New Roman',serif; font-size: 10pt; font-weight: bold;">
+                                                            <div style="line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: bold;">
+                                                              <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: bold;">Title of each class</div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </td>
+
+    <td style="width: 2%; vertical-align: bottom;">
+                                      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+                                    </td>
+
+    <td style="width: 32%; vertical-align: bottom; border-bottom: #000000 2px solid;">
+                                      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt; font-weight: bold;">
+                                        <div style="line-height: 1.25">
+                                          <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: bold;">Trading <span style="font-size: 10pt; font-family: 'Times New Roman',Times,serif;">Symbol</span></div>
+                                        </div>
+                                      </div>
+                                    </td>
+
+    <td style="width: 2%; vertical-align: bottom;">
+                                      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+                                    </td>
+
+    <td style="width: 32%; vertical-align: bottom; border-bottom: #000000 2px solid;">
+                                      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt; font-weight: bold;">
+                                        <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: bold;">
+                                          <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: bold;">Name of <span style="font-size: 10pt; font-family: 'Times New Roman',Times,serif;">each </span>exchange on which<span style="font-size: 10pt; font-family: 'Times New Roman',Times,serif;">&#160;</span>registered</div>
+                                        </div>
+                                      </div>
+                                    </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 32.01%; vertical-align: top; background-color: #CCEEFF;">
+                                      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;"><span style="-sec-ix-hidden:Fact_7b583d8cef634e4fbb1b099844e7ab38">Ordinary Shares, no par value </span><br/>
+                                      </div>
+                                    </td>
+
+    <td style="width: 2%; vertical-align: top; background-color: #CCEEFF;">
+                                      <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+                                    </td>
+
+    <td style="width: 32%; vertical-align: top; background-color: #CCEEFF;">
+                                      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;"><ix:nonNumeric name="dei:TradingSymbol" id="Fact_c9f5f7804bef4911a681fbb44c60ccd8" contextRef="c20260203to20260203">LFWD</ix:nonNumeric><br/>
+                                      </div>
+                                    </td>
+
+    <td style="width: 2%; vertical-align: top; background-color: #CCEEFF;">
+                                      <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+                                    </td>
+
+    <td style="width: 32%; vertical-align: top; background-color: #CCEEFF;">
+                                      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;"><span style="-sec-ix-hidden:Fact_8ad4e8a30f4640ffb73bf98444a1b166">Nasdaq Capital Market</span><br/>
+                                      </div>
+                                    </td>
+
+  </tr>
+
+
+</table>
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                      <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: bold;">
+                        <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">
+                          <div style="line-height: 1.25;">
+                            <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">
+                              <div style="line-height: 1.25;">
+                                <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">
+                                  <div style="line-height: 1.25;">
+                                    <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">
+                                      <div style="line-height: 1.25;">
+                                        <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">
+                                          <div style="line-height: 1.25;">
+                                            <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">
+                                              <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: normal;">
+<div><br/></div>
+
+                                                <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: bold;">
+                                                  <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">
+                                                    <div style="line-height: 1.25;">
+                                                      <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">
+                                                        <div style="line-height: 1.25;">
+                                                          <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">
+                                                            <div style="line-height: 1.25;">
+                                                              <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">
+                                                                <div style="line-height: 1.25;">
+                                                                  <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">
+                                                                    <div style="line-height: 1.25;">
+                                                                      <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">
+                                                                        <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt; font-weight: normal;">
+                                                                          <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">
+                                                                            <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">
+                                                                              <div style="text-align: justify; text-indent: 18pt; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">Check the appropriate box below if the Form
+                                                                                8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:<br/>
+                                                                              </div>
+
+                                                                            </div>
+
+                                                                          </div>
+
+                                                                        </div>
+
+                                                                      </div>
+
+                                                                      <div style="text-align: justify; text-indent: 36pt; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+
+                                                                      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman', Times, serif; font-size: 10pt; width: 100%; text-align: left; color: #000000; border-spacing: 0;">
+
+
+  <tr>
+
+    <td style="width: 3.85%; vertical-align: top;">
+                                                                              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+                                                                            </td>
+
+    <td style="width: 3.85%; vertical-align: top;">
+                                                                              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;"><ix:nonNumeric name="dei:WrittenCommunications" id="Fact_ee6ce484fcf14b7ea90e531e1fef7d84" contextRef="c20260203to20260203" format="ixt-sec:boolballotbox">&#9744;</ix:nonNumeric><br/>
+                                                                              </div>
+                                                                            </td>
+
+    <td style="width: 92.31%; vertical-align: top;">
+                                                                              <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">Written communications pursuant to Rule 425 under the
+                                                                                Securities Act (17 CFR 230.425)</div>
+                                                                            </td>
+
+  </tr>
+
+
+</table>
+                                                                      <div style="text-align: justify; text-indent: 36pt; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+
+                                                                      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman', Times, serif; font-size: 10pt; width: 100%; text-align: left; color: #000000; border-spacing: 0;">
+
+
+  <tr>
+
+    <td style="width: 3.85%; vertical-align: top;">
+                                                                              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+                                                                            </td>
+
+    <td style="width: 3.85%; vertical-align: top; font-family: 'Times New Roman',Times,serif; font-size: 10pt;"><ix:nonNumeric name="dei:SolicitingMaterial" id="Fact_bb3c83e13a20494e92002e5e72ed0e0b" contextRef="c20260203to20260203" format="ixt-sec:boolballotbox">&#9744;</ix:nonNumeric><br/>
+                                                                            </td>
+
+    <td style="width: 92.31%; vertical-align: top;">
+                                                                              <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">Soliciting material pursuant to Rule 14a-12 under the Exchange
+                                                                                Act (17 CFR 240.14a-12)</div>
+                                                                            </td>
+
+  </tr>
+
+
+</table>
+                                                                      <div style="text-align: justify; text-indent: 36pt; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+
+                                                                      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman', Times, serif; font-size: 10pt; width: 100%; text-align: left; color: #000000; border-spacing: 0;">
+
+
+  <tr>
+
+    <td style="width: 3.85%; vertical-align: top;">
+                                                                              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+                                                                            </td>
+
+    <td style="width: 3.85%; vertical-align: top;">
+                                                                              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;"><ix:nonNumeric name="dei:PreCommencementTenderOffer" id="Fact_03170be9627948b58ec7476c5c9b4fdb" contextRef="c20260203to20260203" format="ixt-sec:boolballotbox">&#9744;</ix:nonNumeric><br/>
+                                                                              </div>
+                                                                            </td>
+
+    <td style="width: 92.31%; vertical-align: top;">
+                                                                              <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">Pre-commencement communications pursuant to Rule 14d-2(b)
+                                                                                under the Exchange Act (17 CFR 240.14d-2(b))</div>
+                                                                            </td>
+
+  </tr>
+
+
+</table>
+                                                                      <div style="text-align: justify; text-indent: 36pt; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+
+                                                                      <table cellspacing="0" cellpadding="0" style="font-family: 'Times New Roman', Times, serif; font-size: 10pt; width: 100%; text-align: left; color: #000000; border-spacing: 0;">
+
+
+  <tr>
+
+    <td style="width: 3.85%; vertical-align: top;">
+                                                                              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+                                                                            </td>
+
+    <td style="width: 3.85%; vertical-align: top;">
+                                                                              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;"><ix:nonNumeric name="dei:PreCommencementIssuerTenderOffer" id="Fact_e573cd1920464e06a9699d19c3a86ac7" contextRef="c20260203to20260203" format="ixt-sec:boolballotbox">&#9744;</ix:nonNumeric><br/>
+                                                                              </div>
+                                                                            </td>
+
+    <td style="width: 92.31%; vertical-align: top;">
+                                                                              <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">Pre-commencement communications pursuant to Rule 13e-4(c)
+                                                                                under the Exchange Act (17 CFR 240.13e-4(c))</div>
+                                                                            </td>
+
+  </tr>
+
+
+</table>
+                                                                    </div>
+
+                                                                  </div>
+
+                                                                </div>
+
+                                                              </div>
+
+                                                            </div>
+
+                                                            <div style="line-height: 1.25;"><br/>
+                                                            </div>
+
+                                                          </div>
+
+                                                        </div>
+
+                                                      </div>
+
+                                                    </div>
+
+                                                  </div>
+
+                                                </div>
+
+                                              </div>
+
+                                            </div>
+
+                                          </div>
+
+                                        </div>
+
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+
+                                </div>
+
+                              </div>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">Indicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933
+          (&#167;230.405 of this chapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter).</div>
+
+        <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;"> <br/>
+        </div>
+
+      </div>
+
+      <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">Emerging growth company <ix:nonNumeric name="dei:EntityEmergingGrowthCompany" id="Fact_2999625e7fed40ceaa6cd5d2431796b3" contextRef="c20260203to20260203" format="ixt-sec:boolballotbox">&#9744;</ix:nonNumeric></div>
+
+      <div style="text-align: left; text-indent: 36pt; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">If an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for
+        complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. &#9744;</div>
+
+      <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman',Times,serif; font-size: 10pt;">&#160;</div>
+
+      <div style="clear: both; margin-top: 10pt; margin-bottom: 10pt;" class="BRPFPageBreakArea">
+        <div style="page-break-after: always;" class="BRPFPageBreak">
+          <hr style="border-width: 0px; clear: both; margin: 4px 0px; width: 100%; height: 2px; color: #000000; background-color: #000000;"/></div>
+
+      </div>
+
+      <div style="text-align: left; line-height: 1.25;"><span style="font-size: 10pt; font-family: 'Times New Roman', Times, serif; font-weight: bold;">Item 8.01</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="font-size: 10pt; font-family: 'Times New Roman', Times, serif; font-weight: bold;">Other Events.</span></div>
+
+      <div style="line-height: 1.25;"><br/>
+      </div>
+
+      <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">As previously reported, Lifeward Ltd. (the &#8220;<span style="font-size: 10pt; font-family: 'Times New Roman', Times, serif;"><span style="text-decoration: underline;">Company</span></span>&#8221;)
+
+
+        received a deficiency letter (the &#8220;<span style="font-size: 10pt; font-family: 'Times New Roman', Times, serif;"><span style="text-decoration: underline;">Notice</span></span>&#8221;) from the Listing Qualifications Department of the Nasdaq Stock Market LLC (&#8220;<span style="font-size: 10pt; font-family: 'Times New Roman', Times, serif;"><span style="text-decoration: underline;">Nasdaq</span></span>&#8221;) on August 5, 2025 indicating that, based on the closing&#160;bid price&#160;for the last 30 consecutive business days, the Company was not in compliance with the $1.00 minimum&#160;bid
+        price&#160;requirement for continued listing on The Nasdaq Capital Market, as set forth in Nasdaq Listing Rule 5550(a)(2) (the &#8220;<span style="font-size: 10pt; font-family: 'Times New Roman', Times, serif;"><span style="text-decoration: underline;">Bid Price&#160;Rule</span></span>&#8221;). In accordance
+        with Nasdaq Listing Rule 5810(c)(3)(A), the Company was provided a period of 180 calendar days, or until February 2, 2026 (the &#8220;<span style="font-size: 10pt; font-family: 'Times New Roman', Times, serif;"><span style="text-decoration: underline;">Initial Compliance Date</span></span>&#8221;), to
+        regain compliance with the&#160;Bid Price&#160;Rule.</div>
+
+      <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">The Company did not regain compliance with the&#160;Bid Price&#160;Rule by the Initial Compliance Date. On February 3, 2026, the Company
+        received a notification letter from Nasdaq indicating that the Company&#160;has been provided an additional period of 180 calendar days, or until August 3, 2026 (the &#8220;<span style="font-size: 10pt; font-family: 'Times New Roman', Times, serif;"><span style="text-decoration: underline;">Extended
+
+
+            Compliance Date</span></span>&#8221;), to regain compliance with&#160;the Bid Price Rule. If, at any time before the Extended Compliance Date, the closing bid price for the Company&#8217;s ordinary shares is at least $1.00 per share for a minimum of 10 consecutive
+        business days as required under the&#160;Bid Price&#160;Rule, Nasdaq will provide written notification to the Company that it complies with the&#160;Bid Price&#160;Rule.</div>
+
+      <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">As previously reported, at the Extraordinary General Meeting of Shareholders on January 6, 2026, the shareholders of the Company
+        approved a reverse share split with a split ratio in the range of 1-for-2 and 1-for-12 and the Board of Directors of the Company (the &#8220;<span style="font-size: 10pt; font-family: 'Times New Roman', Times, serif;"><span style="text-decoration: underline;">Board</span></span>&#8221;) subsequently
+        approved a split ratio of 1-for-12, with the timing and implementation of such reverse share split to be determined by the Board (the &#8220;<span style="font-size: 10pt; font-family: 'Times New Roman', Times, serif;"><span style="text-decoration: underline;">Reverse Share Split</span></span>&#8221;).
+        The Company intends to monitor closely the closing&#160;bid price&#160;of its ordinary shares and to consider plans for regaining compliance with the Bid Price Rule, including but not limited to the Reverse Share Split. While the Company plans to review all
+        available options, there can be no assurance that it will be able to regain compliance with the applicable rules during the additional 180-day compliance period.</div>
+
+      <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">If the Company does not regain compliance with the Bid Price Rule during the applicable cure period, Nasdaq will notify the Company
+        that its ordinary shares are subject to delisting. The Company would then be permitted to appeal any delisting determination to a Nasdaq Hearings Panel. The Company&#8217;s ordinary shares would remain listed on The Nasdaq Capital Market pending the
+        Hearing Panel&#8217;s decision after the hearing.</div>
+
+      <div style="line-height: 1.25;"><br/>
+      </div>
+
+      <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt; font-weight: bold;">Forward-Looking Statements</div>
+
+      <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">In addition to historical information, this report contains forward-looking statements within the meaning of the U.S. Private
+        Securities Litigation Reform Act of 1995, Section 27A of the U.S. Securities Act of 1933, as amended, and Section 21E of the U.S. Securities Exchange Act of 1934, as amended. Such forward-looking statements may include projections regarding the
+        Company&#8217;s future performance and other statements that are not statements of historical fact and, in some cases, may be identified by words like &#8220;anticipate,&#8221; &#8220;assume,&#8221; &#8220;believe,&#8221; &#8220;continue,&#8221; &#8220;could,&#8221; &#8220;estimate,&#8221; &#8220;expect,&#8221; &#8220;intend,&#8221; &#8220;may,&#8221; &#8220;plan,&#8221;
+        &#8220;potential,&#8221; &#8220;predict,&#8221; &#8220;project,&#8221; &#8220;future,&#8221; &#8220;will,&#8221; &#8220;should,&#8221; &#8220;would,&#8221; &#8220;seek&#8221; and similar terms or phrases. For example, statements regarding the Company&#8217;s intent or ability to regain compliance with Nasdaq&#8217;s Bid Price Rule are forward-looking,
+        and there can be no assurance that the Company will meet the minimum bid price requirement by the Extended Compliance Date or at all, otherwise meet Nasdaq compliance standards in the future, or that Nasdaq will grant the Company any relief from
+        delisting as necessary or whether the Company can ultimately meet applicable Nasdaq requirements for any such relief. The forward-looking statements contained in this report are based on management&#8217;s current expectations, which are subject to
+        uncertainty, risks and changes in circumstances that are difficult to predict and many of which are outside of the Company&#8217;s control. Important factors that could cause the Company&#8217;s actual results to differ materially from those indicated in the
+        forward-looking statements are more fully discussed in the Company&#8217;s periodic filings with the Securities and Exchange Commission (&#8220;SEC&#8221;), including the risk factors described under the heading &#8220;Risk Factors&#8221; in the Company&#8217;s Annual Report on Form
+        10-K for the year ended December 31, 2024 filed with the SEC and other documents subsequently filed with or furnished to the SEC. Any forward-looking statement made in this report speaks only as of the date hereof. Factors or events that could
+        cause the Company&#8217;s actual results to differ from the statements contained herein may emerge from time to time, and it is not possible for the Company to predict all of them. Except as required by law, the Company undertakes no obligation to
+        publicly update any forward-looking statements, whether as a result of new information, future developments or otherwise.</div>
+
+      <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;"> <br/>
+      </div>
+
+    </div>
+
+    <div class="BRPFPageBreakArea" style="clear: both; margin-top: 10pt; margin-bottom: 10pt;">
+      <div class="BRPFPageBreak" style="page-break-after: always;">
+        <hr style="border-width: 0px; clear: both; margin: 4px 0px; width: 100%; height: 2px; color: #000000; background-color: #000000;"/></div>
+
+    </div>
+
+    <div>
+      <div style="text-align: center; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt; font-weight: bold;">SIGNATURES</div>
+
+      <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: justify; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">Pursuant to the requirements of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its
+        behalf by the undersigned hereunto duly authorized.</div>
+
+      <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+
+      <table cellspacing="0" cellpadding="0" border="0" style="font-family: 'Times New Roman', Times, serif; font-size: 10pt; width: 100%; text-align: left; color: #000000; border-spacing: 0;">
+
+
+  <tr>
+
+    <td style="width: 49.83%; vertical-align: top;">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+            </td>
+
+    <td style="vertical-align: top;" colspan="2">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt; font-weight: bold;">Lifeward Ltd.</div>
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt; font-weight: bold;"> <br/>
+              </div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 49.83%; vertical-align: top;">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">
+                <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">
+                  <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">Dated: February 9, 2026</div>
+                </div>
+              </div>
+            </td>
+
+    <td style="width: 4%; vertical-align: top;">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">By:</div>
+            </td>
+
+    <td style="width: 46.17%; vertical-align: top; border-bottom: 2px solid rgb(0, 0, 0);">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">/s/ Almog Adar</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 49.83%; vertical-align: top;">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+            </td>
+
+    <td style="width: 4%; vertical-align: top;">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">Name:</div>
+            </td>
+
+    <td style="width: 46.17%; vertical-align: top;">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">Almog Adar</div>
+            </td>
+
+  </tr>
+
+  <tr>
+
+    <td style="width: 49.83%; vertical-align: top;">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+            </td>
+
+    <td style="width: 4%; vertical-align: top;">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">Title:</div>
+            </td>
+
+    <td style="width: 46.17%; vertical-align: top;">
+              <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">Chief Financial Officer</div>
+            </td>
+
+  </tr>
+
+
+</table>
+      <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">&#160;</div>
+
+      <div style="text-align: left; line-height: 1.25; font-family: 'Times New Roman', Times, serif; font-size: 10pt;">
+        <hr style="border: none; border-bottom: 4px solid black; border-top: 1px solid black; height: 10px; color: #ffffff; background-color: #ffffff; text-align: center; margin-left: auto; margin-right: auto;"/> </div>
+
+    </div>
+
+  </div>
+
+</div>
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

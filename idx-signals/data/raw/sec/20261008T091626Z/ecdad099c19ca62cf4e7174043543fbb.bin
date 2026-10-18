@@ -1,0 +1,374 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2023" xmlns:us-gaap="http://fasb.org/us-gaap/2023" xmlns:us-roles="http://fasb.org/us-roles/2023" xmlns:country="http://xbrl.sec.gov/country/2023" xmlns:srt="http://fasb.org/srt/2023" xmlns:EYEN="http://eyenovia.com/20250121">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02C_US%2DGAAP%2D2023 -->
+<!-- Field: Set; Name: xdx; ID: xdx_034_EYEN_eyenovia.com_20250121 -->
+<!-- Field: Set; Name: xdx; ID: xdx_04D_20250121_20250121 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_05A_edei%2D%2DEntityCentralIndexKey_0001682639 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2025-01-21" id="Fact000003" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2025-01-21" id="Fact000004" name="dei:EntityCentralIndexKey">0001682639</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="eyen-20250121.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2025-01-21">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001682639</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2025-01-21</xbrli:startDate>
+        <xbrli:endDate>2025-01-21</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="margin: 0pt">&#160;</p>
+
+<p style="margin: 0pt"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="margin: 0pt">&#160;</p>
+
+<p style="font: 14pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b>UNITED STATES</b></p>
+
+<p style="font: 14pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b>SECURITIES AND EXCHANGE
+COMMISSION</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b>Washington, D.C. 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<p style="border-top: Black 1pt solid; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+
+
+<p style="font: 14pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b>FORM <span id="xdx_90B_edei--DocumentType_c20250121__20250121_zlvBPLMYySd5"><ix:nonNumeric contextRef="AsOf2025-01-21" id="Fact000009" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<p style="border-top: Black 1pt solid; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b>Pursuant to Section&#160;13
+or 15(d)</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b>of the Securities Exchange
+Act of 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b>Date of Report (Date
+of earliest event reported): <span id="xdx_900_edei--DocumentPeriodEndDate_c20250121__20250121_zaCEc9hBZS27"><ix:nonNumeric contextRef="AsOf2025-01-21" format="ixt:datemonthdayyearen" id="Fact000010" name="dei:DocumentPeriodEndDate">January 21, 2025</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<p style="border-top: Black 1pt solid; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+
+
+<p style="font: 24pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b><span id="xdx_90D_edei--EntityRegistrantName_c20250121__20250121_zmHk2l6UHTCd"><ix:nonNumeric contextRef="AsOf2025-01-21" id="Fact000011" name="dei:EntityRegistrantName">EYENOVIA, INC.</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white"><b>(Exact Name of Registrant
+as Specified in its Charter)</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<p style="border-top: Black 1pt solid; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="background-color: white">
+    <td style="vertical-align: top; text-align: center; width: 32%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_901_edei--EntityIncorporationStateCountryCode_c20250121__20250121_zBwgoctNUSu5"><ix:nonNumeric contextRef="AsOf2025-01-21" format="ixt-sec:stateprovnameen" id="Fact000012" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></b></span></td>
+    <td style="text-align: center; vertical-align: bottom; width: 2%">&#160;</td>
+    <td style="vertical-align: top; text-align: center; width: 32%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_907_edei--EntityFileNumber_c20250121__20250121_zRtbvRTTWfjj"><ix:nonNumeric contextRef="AsOf2025-01-21" id="Fact000013" name="dei:EntityFileNumber">001-38365</ix:nonNumeric></span></b></span></td>
+    <td style="text-align: center; vertical-align: bottom; width: 2%">&#160;</td>
+    <td style="vertical-align: top; text-align: center; width: 32%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_907_edei--EntityTaxIdentificationNumber_c20250121__20250121_zJOu9lc6UpLj"><ix:nonNumeric contextRef="AsOf2025-01-21" id="Fact000014" name="dei:EntityTaxIdentificationNumber">47-1178401</ix:nonNumeric></span></b></span></td></tr>
+  <tr style="background-color: white">
+    <td style="text-align: center; vertical-align: top"><b>(State or other jurisdiction</b> <b><br/>
+of incorporation)</b> </td>
+    <td style="text-align: center; vertical-align: bottom">&#160;</td>
+    <td style="text-align: center; vertical-align: top"><b>(Commission<br/>
+</b> <b>File Number)</b> </td>
+    <td style="text-align: center; vertical-align: bottom">&#160;</td>
+    <td style="text-align: center; vertical-align: top"><b>(IRS Employer<br/>
+</b> <b>Identification No.)</b> </td></tr>
+  </table>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center; background-color: white">&#160;</p>
+
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_902_edei--EntityAddressAddressLine1_c20250121__20250121_zA5lxowu25Gh"><ix:nonNumeric contextRef="AsOf2025-01-21" id="Fact000015" name="dei:EntityAddressAddressLine1">295 Madison Avenue</ix:nonNumeric></span>, <span id="xdx_905_edei--EntityAddressAddressLine2_c20250121__20250121_zGhfIc1Zd2al"><ix:nonNumeric contextRef="AsOf2025-01-21" id="Fact000016" name="dei:EntityAddressAddressLine2">Suite 2400</ix:nonNumeric></span>, <span id="xdx_90B_edei--EntityAddressCityOrTown_c20250121__20250121_zOaEF0hDfYel"><ix:nonNumeric contextRef="AsOf2025-01-21" id="Fact000017" name="dei:EntityAddressCityOrTown">New York</ix:nonNumeric></span>, <span id="xdx_900_edei--EntityAddressStateOrProvince_c20250121__20250121_ztZCcJXtGO4a"><ix:nonNumeric contextRef="AsOf2025-01-21" id="Fact000018" name="dei:EntityAddressStateOrProvince">NY</ix:nonNumeric></span>
+<span id="xdx_901_edei--EntityAddressPostalZipCode_c20250121__20250121_zNAN5QEoa1kf"><ix:nonNumeric contextRef="AsOf2025-01-21" id="Fact000019" name="dei:EntityAddressPostalZipCode">10017</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>(Address of Principal Executive Offices, and
+Zip Code)</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>(<span id="xdx_901_edei--CityAreaCode_c20250121__20250121_zNSMHTFLzFGh"><ix:nonNumeric contextRef="AsOf2025-01-21" id="Fact000020" name="dei:CityAreaCode">833</ix:nonNumeric></span>) <span id="xdx_90F_edei--LocalPhoneNumber_c20250121__20250121_zvYGmbGKsst5"><ix:nonNumeric contextRef="AsOf2025-01-21" id="Fact000021" name="dei:LocalPhoneNumber">393-6684</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Registrant&#8217;s Telephone Number, Including
+Area Code</b>&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="border-top: Black 1pt solid; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: left">Check the appropriate box below if the Form 8-K
+filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"> <span style="font-family: Wingdings"><span id="xdx_901_edei--WrittenCommunications_c20250121__20250121_zaCnCgPlOJa8"><ix:nonNumeric contextRef="AsOf2025-01-21" format="ixt:booleanfalse" id="Fact000022" name="dei:WrittenCommunications">&#168;</ix:nonNumeric></span></span> <span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Written
+communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span style="font-family: Wingdings"><span id="xdx_90E_edei--SolicitingMaterial_c20250121__20250121_zHFqTvkV9O9b"><ix:nonNumeric contextRef="AsOf2025-01-21" format="ixt:booleanfalse" id="Fact000023" name="dei:SolicitingMaterial">&#168;</ix:nonNumeric></span></span> <span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Soliciting
+material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span style="font-family: Wingdings"><span id="xdx_900_edei--PreCommencementTenderOffer_c20250121__20250121_zTGpA3Rdq0V9"><ix:nonNumeric contextRef="AsOf2025-01-21" format="ixt:booleanfalse" id="Fact000024" name="dei:PreCommencementTenderOffer">&#168;</ix:nonNumeric></span></span> <span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Pre-commencement
+communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"> <span style="font-family: Wingdings"><span id="xdx_904_edei--PreCommencementIssuerTenderOffer_c20250121__20250121_zOWYNH26BLlb"><ix:nonNumeric contextRef="AsOf2025-01-21" format="ixt:booleanfalse" id="Fact000025" name="dei:PreCommencementIssuerTenderOffer">&#168;</ix:nonNumeric></span></span> <span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Pre-commencement communications pursuant to Rule 13e-4(c) under
+the Exchange Act (17 CFR 240.13e-4(c))</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">Securities registered pursuant to Section
+12(b) of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1pt solid; white-space: nowrap; padding-bottom: 1pt; text-align: center; font-size: 10pt; width: 32%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>(Title of each class)</b></span></td>
+    <td style="text-align: center; font-size: 10pt; width: 2%">&#160;</td>
+    <td style="border-bottom: black 1pt solid; text-align: center; width: 32%"><b>(Trading</b> <b><br/>
+Symbol)</b> </td>
+    <td style="text-align: center; font-size: 10pt; width: 2%">&#160;</td>
+    <td style="border-bottom: black 1pt solid; text-align: center; width: 32%"><b>(Name of each exchange</b> <b><br/>
+on which registered)</b> </td></tr>
+  <tr>
+    <td style="vertical-align: top; padding-bottom: 10pt; text-align: center; font-size: 10pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_901_edei--Security12bTitle_c20250121__20250121_z4C8t1XfUkHf"><ix:nonNumeric contextRef="AsOf2025-01-21" id="Fact000026" name="dei:Security12bTitle">Common stock, par value $0.0001 per share</ix:nonNumeric></span></b></span></td>
+    <td style="text-align: center; vertical-align: bottom; font-size: 10pt">&#160;</td>
+    <td style="vertical-align: top; padding-bottom: 10pt; text-align: center; font-size: 10pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b><span id="xdx_90F_edei--TradingSymbol_c20250121__20250121_zkFdN4Sk7um4"><ix:nonNumeric contextRef="AsOf2025-01-21" id="Fact000027" name="dei:TradingSymbol">EYEN</ix:nonNumeric></span></b></span></td>
+    <td style="text-align: center; vertical-align: bottom; font-size: 10pt">&#160;</td>
+    <td style="text-align: center; vertical-align: top"><b><span id="xdx_907_edei--SecurityExchangeName_c20250121__20250121_zFE7xnFb4Tgd"><ix:nonNumeric contextRef="AsOf2025-01-21" format="ixt-sec:exchnameen" id="Fact000028" name="dei:SecurityExchangeName">The Nasdaq Stock Market</ix:nonNumeric></span><br/>
+</b> <b>(Nasdaq Capital Market)</b></td></tr>
+  </table>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: left">Indicate by check mark whether the registrant
+is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (17 CFR &#167;230.405) or Rule 12b-2 of the Securities
+Exchange Act of 1934 (17 CFR &#167;240.12b-2).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Emerging
+growth company </span><span style="font-family: Wingdings"><span id="xdx_90E_edei--EntityEmergingGrowthCompany_c20250121__20250121_z4WDs75e1mG"><ix:nonNumeric contextRef="AsOf2025-01-21" format="ixt:booleanfalse" id="Fact000029" name="dei:EntityEmergingGrowthCompany">&#168;</ix:nonNumeric></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: left"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">If
+an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying
+with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. </span><span style="font-family: Wingdings">&#168;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 3pt; margin-bottom: 3pt; width: 100%"><div style="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="margin: 0pt 0">&#160;</p>
+
+
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b></b></p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0pt; margin-bottom: 0pt">
+<tr style="vertical-align: top">
+<td style="width: 0%"/>
+<td style="width: 1in"><b>Item 5.07.</b></td>
+<td><b>Submission of Matters to a Vote of Security Holders.</b></td></tr>
+</table>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">A Special Meeting of Stockholders
+(the &#8220;Special Meeting&#8221;) of Eyenovia, Inc. (&#8220;Eyenovia&#8221; or the &#8220;Company&#8221;) was held in a virtual format
+on January 21, 2025 starting at 10:00 AM EDT. Of Eyenovia&#8217;s 111,425,129 shares of common stock, $0.0001 par value per share (the
+&#8220;common stock&#8221;), issued and eligible to vote as of the record date of December 9, 2024, a quorum of 58,272,257 shares, or
+approximately 52.3% of the eligible shares, was present virtually or represented by proxy at the Special Meeting. The actions set forth
+below were taken at the Special Meeting. Each of the matters set forth below is described in detail in Eyenovia&#8217;s definitive proxy
+statement on Schedule 14A related to the Special Meeting, filed on December 23, 2024 (the &#8220;Proxy Statement&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0.25in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif">1.</span></td><td style="text-align: justify">Approval of an amendment to Eyenovia&#8217;s Amended and Restated
+Certificate of Incorporation, as amended, to effect a reverse stock split of the Company&#8217;s issued and outstanding shares of common
+stock, at a ratio of between 1:40 and 1:80 (the &#8220;Reverse Stock Split Amendment&#8221;).</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Shares <br/> Voted For</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Shares Voted<br/> Against</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Shares<br/> Abstaining</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Broker <br/> Non-Votes</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 23%; text-align: center">45,289,590</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">12,572,704</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">409,963</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">0</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; width: 100%"><tr style="vertical-align: top">
+<td style="width: 0.25in"/><td style="width: 0.25in"><span style="font-family: Times New Roman, Times, Serif">2.</span></td><td>Approval of an amendment to Eyenovia&#8217;s Amended and Restated 2018 Omnibus Stock Incentive Plan to reserve an additional 350,000
+shares of the Company&#8217;s common stock for issuance thereunder, which number will not be adjusted as a result of the Reverse Stock
+Split Amendment.</td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Shares <br/> Voted For</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Shares Voted<br/> Against</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Shares<br/> Abstaining</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Broker <br/> Non-Votes</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 23%; text-align: center">22,969,009</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">8,945,460</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">527,690</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">25,830,098</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0; margin-bottom: 0; width: 100%"><tr style="vertical-align: top">
+<td style="width: 0.25in"/><td style="width: 0.25in"><span style="font-family: Times New Roman, Times, Serif">3.</span></td><td>Approval of, for purposes of Nasdaq Listing Rule 5635(d), the potential issuance of up to an aggregate of 73,029,273 shares of common
+stock upon the exercise of the Purchase Warrants issued by the Company pursuant to the Purchase Agreements (each, as defined in the Proxy
+Statement).</td></tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <tr style="vertical-align: bottom">
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Shares <br/> Voted For</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Shares Voted<br/> Against</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Shares<br/> Abstaining</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td>
+    <td colspan="2" style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; text-align: center">Broker <br/> Non-votes</td><td style="font: bold 10pt Times New Roman, Times, Serif">&#160;</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 23%; text-align: center">23,097,136</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">8,735,529</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">609,494</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; text-align: center; width: 1%">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td><td style="font: 10pt Times New Roman, Times, Serif; width: 22%; text-align: center">25,830,098</td><td style="font: 10pt Times New Roman, Times, Serif; width: 1%; text-align: center">&#160;</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 2 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="text-align: justify; font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in">Pursuant to the requirements of the Securities
+Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="padding-left: 10pt; text-indent: -10pt; width: 50%">&#160;</td>
+    <td style="width: 50%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>EYENOVIA,&#160;INC.</b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="padding-left: 10pt; text-indent: -10pt">&#160;</td>
+    <td>&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td style="padding-left: 10pt; text-indent: -10pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Date: January 24, 2025</span></td>
+    <td style="border-bottom: black 1pt solid"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">/s/ Michael Rowe</span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="padding-left: 10pt; text-indent: -10pt">&#160;</td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Michael Rowe</span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="padding-left: 10pt; text-indent: -10pt">&#160;</td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Chief Executive Officer</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 4; Options: Last -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"></p>
+
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxFjU0KwkAMhU/QO4RZi7ajdtGlRUWsUoqI28GmMthOSmb86ZG8pdMWMQSS8N6XJ8REbGmja2S4rIoMTti0tXIIBVbIaK7oHelun4CfBd60dayMG84fmJJn0DPLqZRXLwzWp7ZYJhDGs2g+kwu/JFEM+UEEvZ6SqXSJxmlVgzIl5Ewta3SKu/HDSb3JUNMNUWdkq8kkEE3DUf6ADCMJR3qqF/HdQpalIpgMFYgt06P1rvXboelJWNfY+Dg70v8OvglgSpE= -->
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2023" xmlns:ref="http://www.xbrl.org/2006/ref" xmlns:us-gaap="http://fasb.org/us-gaap/2023" xmlns:us-roles="http://fasb.org/us-roles/2023" xmlns:dtr-types="http://www.xbrl.org/dtr/type/2022-03-31" xmlns:country="http://xbrl.sec.gov/country/2023" xmlns:srt="http://fasb.org/srt/2023" xmlns:amch="http://amctheatres.com/20230721">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html" />
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02C_US%2DGAAP%2D2023 -->
+<!-- Field: Set; Name: xdx; ID: xdx_038_amch_amctheatres.com_20230721 -->
+<!-- Field: Set; Name: xdx; ID: xdx_044_20230721_20230721 -->
+<!-- Field: Set; Name: xdx; ID: xdx_05D_edei%2D%2DEntityCentralIndexKey_0001411579 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_072_SO_T%2D%2D\DeptFiles%2DiXBRL 8%2DK Covers Templates\+++%2DROOT%2DElement%2D+++\DocumentInformationLineItems.xdxs -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2023-07-21" name="dei:EntityCentralIndexKey">0001411579</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2023-07-21" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="amch-20230721.xsd" xlink:type="simple" />
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2023-07-21">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001411579</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2023-07-21</xbrli:startDate>
+        <xbrli:endDate>2023-07-21</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2023-07-212023-07-21_us-gaap_CommonClassAMember">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001411579</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">us-gaap:CommonClassAMember</xbrldi:explicitMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2023-07-21</xbrli:startDate>
+        <xbrli:endDate>2023-07-21</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="From2023-07-212023-07-21_custom_AMCPreferredEquityUnitseachconstitutingadepositarysharerepresentinga1by100thinterestinashareofSeriesAConvertibleParticipatingPreferredStockMember">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001411579</xbrli:identifier>
+        <xbrli:segment>
+          <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">amch:AMCPreferredEquityUnitseachconstitutingadepositarysharerepresentinga1by100thinterestinashareofSeriesAConvertibleParticipatingPreferredStockMember</xbrldi:explicitMember>
+        </xbrli:segment>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2023-07-21</xbrli:startDate>
+        <xbrli:endDate>2023-07-21</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="margin: 0">&#160;</p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>UNITED STATES</b></p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Washington, D.C.&#160; 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>FORM&#160;<span id="xdx_909_edei--DocumentType_c20230721__20230721_z7K0twqf5KX4"><ix:nonNumeric contextRef="AsOf2023-07-21" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 12pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="font: 12pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Pursuant to Section&#160;13 or 15(d)&#160;of
+the Securities Exchange Act of 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: center">Date of Report (Date
+of earliest event reported): <b><span id="xdx_907_edei--DocumentPeriodEndDate_c20230721__20230721_zZqsvhtneJO4"><ix:nonNumeric contextRef="AsOf2023-07-21" format="ixt:datemonthdayyearen" name="dei:DocumentPeriodEndDate">July 21, 2023</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span id="xdx_909_edei--EntityRegistrantName_c20230721__20230721_zPEcEZrkhAr5"><b><ix:nonNumeric contextRef="AsOf2023-07-21" name="dei:EntityRegistrantName">AMC
+ENTERTAINMENT HOLDINGS, INC.</ix:nonNumeric></b></span><b></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Exact Name of Registrant as Specified in Charter)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+<tr>
+    <td style="border-width: 1pt; vertical-align: top; padding-right: 0.8pt; width: 31%; text-align: center"><span style="font: 10pt Times New Roman, Times, Serif"><b><span id="xdx_90C_edei--EntityIncorporationStateCountryCode_c20230721__20230721_z2fApCnGpIrd"><ix:nonNumeric contextRef="AsOf2023-07-21" format="ixt-sec:stateprovnameen" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></b></span></td>
+    <td style="border-width: 1pt; vertical-align: bottom; padding-right: 0.8pt; width: 3%">&#160;</td>
+    <td style="border-width: 1pt; vertical-align: top; padding-right: 0.8pt; width: 32%; text-align: center"><span style="font: 10pt Times New Roman, Times, Serif"><b><span id="xdx_904_edei--EntityFileNumber_c20230721__20230721_zktIAD3KSSGb"><ix:nonNumeric contextRef="AsOf2023-07-21" name="dei:EntityFileNumber">001-33892</ix:nonNumeric></span></b></span></td>
+    <td style="border-width: 1pt; vertical-align: bottom; padding-right: 0.8pt; width: 3%">&#160;</td>
+    <td style="border-width: 1pt; vertical-align: top; padding-right: 0.8pt; width: 31%; text-align: center"><span style="font: 10pt Times New Roman, Times, Serif"><b><span id="xdx_906_edei--EntityTaxIdentificationNumber_c20230721__20230721_zSwtowlE8qfe"><ix:nonNumeric contextRef="AsOf2023-07-21" name="dei:EntityTaxIdentificationNumber">26-0303916</ix:nonNumeric></span></b></span></td></tr>
+<tr>
+    <td style="border-width: 1pt; vertical-align: top; padding-right: 0.8pt; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(State
+    or Other Jurisdiction of</span></td>
+    <td style="border-width: 1pt; vertical-align: bottom; padding-right: 0.8pt"><b>&#160;</b></td>
+    <td style="border-width: 1pt; vertical-align: top; padding-right: 0.8pt; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(Commission
+    File Number)</span></td>
+    <td style="border-width: 1pt; vertical-align: bottom; padding-right: 0.8pt"><b>&#160;</b></td>
+    <td style="border-width: 1pt; vertical-align: top; padding-right: 0.8pt; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">(I.R.S.
+    Employer Identification</span></td></tr>
+<tr>
+    <td style="border-width: 1pt; vertical-align: top; padding-right: 0.8pt; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Incorporation)</span></td>
+    <td style="border-width: 1pt; vertical-align: bottom; padding-right: 0.8pt"><b>&#160;</b></td>
+    <td style="border-width: 1pt; vertical-align: top; padding-right: 0.8pt; text-align: center"><b>&#160;</b></td>
+    <td style="border-width: 1pt; vertical-align: bottom; padding-right: 0.8pt"><b>&#160;</b></td>
+    <td style="border-width: 1pt; vertical-align: top; padding-right: 0.8pt; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Number)</span></td></tr>
+</table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_907_edei--EntityAddressAddressLine1_c20230721__20230721_zMiSQrV0TiN6"><ix:nonNumeric contextRef="AsOf2023-07-21" name="dei:EntityAddressAddressLine1">One AMC Way</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_90F_edei--EntityAddressAddressLine2_c20230721__20230721_zUNsOSZS57Nk"><ix:nonNumeric contextRef="AsOf2023-07-21" name="dei:EntityAddressAddressLine2">11500 Ash Street</ix:nonNumeric></span>, <span id="xdx_907_edei--EntityAddressCityOrTown_c20230721__20230721_zN6BV2FL1PHh"><ix:nonNumeric contextRef="AsOf2023-07-21" name="dei:EntityAddressCityOrTown">Leawood</ix:nonNumeric></span>, <span id="xdx_90B_edei--EntityAddressStateOrProvince_c20230721__20230721_zxpn06WCss28"><ix:nonNumeric contextRef="AsOf2023-07-21" name="dei:EntityAddressStateOrProvince">KS</ix:nonNumeric></span> <span id="xdx_90A_edei--EntityAddressPostalZipCode_c20230721__20230721_zGW3sDxIudV3"><ix:nonNumeric contextRef="AsOf2023-07-21" name="dei:EntityAddressPostalZipCode">66211</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Address of Principal Executive Offices, including
+Zip Code)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>(<span id="xdx_90E_edei--CityAreaCode_c20230721__20230721_zSJ6tJKxR5R9"><ix:nonNumeric contextRef="AsOf2023-07-21" name="dei:CityAreaCode">913</ix:nonNumeric></span>) <span id="xdx_900_edei--LocalPhoneNumber_c20230721__20230721_zDTJ9V8urwD8"><ix:nonNumeric contextRef="AsOf2023-07-21" name="dei:LocalPhoneNumber">213-2000</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Registrant&#8217;s Telephone Number, including
+Area Code)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Check the appropriate box below if the Form&#160;8-K filing
+is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span id="xdx_904_edei--WrittenCommunications_c20230721__20230721_zMjjmZhlQHK2" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2023-07-21" format="ixt:booleanfalse" name="dei:WrittenCommunications">&#168;</ix:nonNumeric></span><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">
+Written communications pursuant to Rule&#160;425 under the Securities Act (17 CFR 230.425)&#160;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span style="font: 10pt Times New Roman, Times, Serif"></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span id="xdx_909_edei--SolicitingMaterial_c20230721__20230721_zfzTT1n91gcg" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2023-07-21" format="ixt:booleanfalse" name="dei:SolicitingMaterial">&#168;</ix:nonNumeric></span><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">
+Soliciting material pursuant to Rule&#160;14a-12 under the Exchange Act (17 CFR 240.14a-12)&#160;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span style="font: 10pt Times New Roman, Times, Serif"></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span id="xdx_90D_edei--PreCommencementTenderOffer_c20230721__20230721_zT8ry81hFOBf" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2023-07-21" format="ixt:booleanfalse" name="dei:PreCommencementTenderOffer">&#168;</ix:nonNumeric></span><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">
+Pre-commencement communications pursuant to Rule&#160;14d-2(b)&#160;under the Exchange Act (17 CFR 240.14d-2(b))&#160;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span style="font: 10pt Times New Roman, Times, Serif"></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span id="xdx_908_edei--PreCommencementIssuerTenderOffer_c20230721__20230721_zAfCjtScPWq6" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2023-07-21" format="ixt:booleanfalse" name="dei:PreCommencementIssuerTenderOffer">&#168;</ix:nonNumeric></span><span style="font: 10pt Times New Roman, Times, Serif">
+Pre-commencement communications pursuant to Rule&#160;13e-4(c)&#160;under the Exchange Act (17 CFR 240.13e-4(c))&#160;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; margin-left: auto; width: 100%; border-collapse: collapse; margin-right: auto">
+<tr style="vertical-align: bottom">
+    <td style="border-bottom-width: 1pt; border-bottom-style: solid; text-align: center; width: 32%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt; color: rgb(0, 0, 0)"><b>Title
+    of each class</b></span></td>
+    <td style="border-width: 1pt; width: 2%; text-align: center"><b>&#160;</b></td>
+    <td style="border-bottom-width: 1pt; border-bottom-style: solid; text-align: center; width: 32%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt; color: rgb(0, 0, 0)"><b>Trading
+    Symbol</b></span></td>
+    <td style="border-width: 1pt; width: 2%; text-align: center"><b>&#160;</b></td>
+    <td style="border-bottom-width: 1pt; border-bottom-style: solid; text-align: center; width: 32%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt; color: rgb(0, 0, 0)"><b>Name
+    of each exchange on which registered</b></span></td></tr>
+<tr style="vertical-align: bottom">
+    <td style="border-width: 1pt"><span id="xdx_900_edei--Security12bTitle_c20230721__20230721__us-gaap--StatementClassOfStockAxis__us-gaap--CommonClassAMember_zSNV3lqKNoJh" style="font-family: Times New Roman, Times, Serif; font-size: 10pt; color: rgb(0, 0, 0)"><ix:nonNumeric contextRef="From2023-07-212023-07-21_us-gaap_CommonClassAMember" name="dei:Security12bTitle">Class
+    A common stock</ix:nonNumeric></span></td>
+    <td style="border-width: 1pt">&#160;</td>
+    <td style="border-width: 1pt; text-align: center"><span id="xdx_90E_edei--TradingSymbol_c20230721__20230721__us-gaap--StatementClassOfStockAxis__us-gaap--CommonClassAMember_ziDNe0cJLtm1" style="font-family: Times New Roman, Times, Serif; font-size: 10pt; color: rgb(0, 0, 0)"><ix:nonNumeric contextRef="From2023-07-212023-07-21_us-gaap_CommonClassAMember" name="dei:TradingSymbol">AMC</ix:nonNumeric></span></td>
+    <td style="border-width: 1pt; text-align: center">&#160;</td>
+    <td style="border-width: 1pt; text-align: center"><span id="xdx_90A_edei--SecurityExchangeName_c20230721__20230721__us-gaap--StatementClassOfStockAxis__us-gaap--CommonClassAMember_zVcSJ0DejYZd" style="font-family: Times New Roman, Times, Serif; font-size: 10pt; color: rgb(0, 0, 0)"><ix:nonNumeric contextRef="From2023-07-212023-07-21_us-gaap_CommonClassAMember" format="ixt-sec:exchnameen" name="dei:SecurityExchangeName">New
+    York Stock Exchange</ix:nonNumeric></span></td></tr>
+<tr style="vertical-align: bottom">
+    <td style="border-width: 1pt">&#160;</td>
+    <td style="border-width: 1pt">&#160;</td>
+    <td style="border-width: 1pt; text-align: center">&#160;</td>
+    <td style="border-width: 1pt; text-align: center">&#160;</td>
+    <td style="border-width: 1pt; text-align: center">&#160;</td></tr>
+<tr style="vertical-align: bottom">
+    <td style="border-width: 1pt"><span id="xdx_903_edei--Security12bTitle_c20230721__20230721__us-gaap--StatementClassOfStockAxis__custom--AMCPreferredEquityUnitseachconstitutingadepositarysharerepresentinga1by100thinterestinashareofSeriesAConvertibleParticipatingPreferredStockMember_zBJetbRxqeT6"><ix:nonNumeric contextRef="From2023-07-212023-07-21_custom_AMCPreferredEquityUnitseachconstitutingadepositarysharerepresentinga1by100thinterestinashareofSeriesAConvertibleParticipatingPreferredStockMember" name="dei:Security12bTitle">AMC Preferred Equity Units</ix:nonNumeric></span>, each constituting a depositary share representing  1/100th interest in a share of Series A Convertible Participating
+Preferred Stock</td>
+    <td style="border-width: 1pt">&#160;</td>
+    <td style="border-width: 1pt; vertical-align: bottom; text-align: center"><span id="xdx_902_edei--TradingSymbol_c20230721__20230721__us-gaap--StatementClassOfStockAxis__custom--AMCPreferredEquityUnitseachconstitutingadepositarysharerepresentinga1by100thinterestinashareofSeriesAConvertibleParticipatingPreferredStockMember_zOpl8lfbm4m9"><ix:nonNumeric contextRef="From2023-07-212023-07-21_custom_AMCPreferredEquityUnitseachconstitutingadepositarysharerepresentinga1by100thinterestinashareofSeriesAConvertibleParticipatingPreferredStockMember" name="dei:TradingSymbol">APE</ix:nonNumeric></span></td>
+    <td style="border-width: 1pt; text-align: center">&#160;</td>
+    <td style="border-width: 1pt; vertical-align: bottom; text-align: center"><span id="xdx_90F_edei--SecurityExchangeName_c20230721__20230721__us-gaap--StatementClassOfStockAxis__custom--AMCPreferredEquityUnitseachconstitutingadepositarysharerepresentinga1by100thinterestinashareofSeriesAConvertibleParticipatingPreferredStockMember_zs1KVGCz3IG7"><ix:nonNumeric contextRef="From2023-07-212023-07-21_custom_AMCPreferredEquityUnitseachconstitutingadepositarysharerepresentinga1by100thinterestinashareofSeriesAConvertibleParticipatingPreferredStockMember" format="ixt-sec:exchnameen" name="dei:SecurityExchangeName">New York Stock Exchange</ix:nonNumeric></span></td></tr>
+</table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; color: rgb(0, 0, 0)">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; color: rgb(17, 25, 0)">Indicate by check mark whether the registrant
+is an emerging growth company as defined in Rule&#160;405 of the Securities Act of 1933 <span style="color: rgb(17, 25, 0)">(&#167;230.405
+of this chapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter).</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; color: rgb(17, 25, 0)">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: right"><span style="font-family: Times New Roman, Times, Serif">Emerging
+growth company&#160; </span><span style="font-family: Wingdings"><span id="xdx_907_edei--EntityEmergingGrowthCompany_c20230721__20230721_zjFPVB2SNlE7"><ix:nonNumeric contextRef="AsOf2023-07-21" format="ixt:booleanfalse" name="dei:EntityEmergingGrowthCompany">&#168;</ix:nonNumeric></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><span style="font-family: Times New Roman, Times, Serif; color: rgb(17, 25, 0)">If
+an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for&#160;complying
+with any new or revised financial </span><span style="font-family: Times New Roman, Times, Serif; color: rgb(0, 0, 0)">accounting
+standards provided pursuant to Section&#160;13(a) of the Exchange Act. &#160;</span><span style="font-family: Wingdings"><span style="font-family: Wingdings">&#168;</span></span></p>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; color: rgb(0, 0, 0)">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; color: rgb(0, 0, 0)"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0; margin-bottom: 0; width: 100%"><div style="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; color: rgb(0, 0, 0)">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; color: rgb(0, 0, 0)"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; color: rgb(0, 0, 0)">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Item 7.01 Regulation FD Disclosure.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">On July&#160;23, 2023, AMC Entertainment Holdings,&#160;Inc.&#8217;s
+(the &#8220;Company&#8221;) Chief Executive Officer, Adam Aron, made the following statement on his Twitter account:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#8220;My open letter message below to you all is on a subject of existential
+importance to AMC Entertainment shareholders. I urge you to read it. Adam Aron #AMCSurviveThenThrive</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">AN OPEN LETTER TO OUR INVESTORS ON JULY 23, 2023:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Raising fresh equity in the near term is critical to our company, so
+it is important that we work to address the concern raised in the Delaware Court of Chancery&#8217;s ruling on Friday.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">In leading AMC through this once-in-a-century pandemic and its aftermath,&#160;I
+have been driven by this over-arching goal: Do not let AMC fall into financial ruin, ensure that AMC survives, put AMC on a path to eventually
+thrive.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Along the way,&#160;I have done my utmost to be transparent with AMC
+shareholders, and am doing so again right now.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">AMC must be in a position to raise equity capital. I repeat, to protect
+AMC&#8217;s shareholder value over the long term, we MUST be able to raise equity capital.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">That is especially the case now with the added uncertainty caused by
+the writers and actors strikes, which could delay the release of movies currently scheduled for 2024 and 2025.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">If we are unable to raise equity capital, the risk materially increases
+of AMC conceivably running out of cash in 2024 or 2025, or of AMC being unable to satisfactorily refinance and stretch out the maturity
+of some of our debt (which is required of us beginning as early as 2024).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">The risk of financial collapse is not whimsical. Cineworld/Regal, the
+second largest movie theatre chain in the world, fell into bankruptcy and their equity holders were essentially wiped out. Bed, Bath and
+Beyond which was viewed as the third most watched meme stock, also fell into bankruptcy and their equity holders also were essentially
+wiped out.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Fortunately, at AMC, we have been much smarter, much more agile and
+much more skillful. We have risen to every Covid challenge heretofore, and I have every confidence in our continued ability to successfully
+navigate through these complicated times.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">The AMC shareholders who actually voted in our March&#160;14 special
+election understood all this: 72% of AMC common shareholders and 91% of APE preferred unit holders who casted votes agreed with our Board&#8217;s
+and my view as to how best to proceed. We appreciate their support, and genuinely know that they are in our corner. We sincerely believe
+we are on the surest path to ensuring AMC&#8217;s survival, by allowing us to raise equity and to do so at the highest possible price
+with the least amount of dilution.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">With millions of shareholders, though, understandably there are many
+voices, many opinions and many critics. Some wish ill for the company and have nefarious aims. Some are grandstanding, and trying to gain
+notoriety for themselves at AMC&#8217;s expense. These individuals do not deserve your trust.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">But most are well intentioned, and are motivated by varying concerns.
+Some are distraught if the value of their AMC shares or APE units fall. Some are skeptical and greatly troubled by how Wall Street markets
+function, their anger about their view of manipulative practices is constantly visible on Twitter. And many are just trying to understand
+how, what and why we are doing what we do. They especially are trying to figure out the impact dilution may have on their AMC investment.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">To these latter groups,&#160;I would say again &#8212; AMC Entertainment
+must put ourselves in a position to be able to raise equity capital. That is what will make it more likely that first we survive and then
+that we thrive. Indeed, over the last several years, there has been an enormous short share position in AMC stock. In my view, the wisest
+way to defeat that short thesis is to take bankruptcy risk off the table, to the extent possible. And we do that by AMC being able to
+raise equity if, as and when needed.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<!-- Field: Page; Sequence: 2 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">I don&#8217;t hold these views cavalierly. Remember,&#160;I am AMC&#8217;s
+largest retail shareholder, with an economic interest in more than 8.3 million AMC shares or APE units. And while I did file a share selling
+plan in August&#160;of 2021 that was implemented over a three month period,&#160;I have not sold a single AMC share or APE unit in more
+than a year and a half, and have no intention of selling any shares/units any time soon. My own finances are directly aligned with yours.
+As I have said before,&#160;I Ride With You.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Accordingly, given the absolute imperative to be able to raise equity
+capital going forward, we take seriously the Court&#8217;s Friday ruling. In response, yesterday we along with the plaintiffs filed with
+the Delaware Court, a modification of the legal release surrounding the settlement of the Delaware litigation in an effort to address
+the Court&#8217;s voiced concern. If the Court agrees, it would be our hope to implement as soon as possible the plan approved in the
+AMC stockholders election in March.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">In closing,&#160;I would remind everyone that we have several enormously
+popular movies in our theatres this very minute, highlighted by Barbie, Oppenheimer, Sound of Freedom and Mission Impossible - Dead Reckoning
+Part&#160;One. All this effort around AMC Entertainment these past three plus years has been about saving moviegoing... in theatres...
+in America and the world over. I encourage you all to enjoy the fruits of that labor &#8212; go see dazzling images on our huge silver
+screens, enjoy yourselves and go see a movie!&#8221;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">The information in this Item 7.01 disclosure is being furnished and
+shall not be deemed &#8220;filed&#8221; for purposes of Section&#160;18 of the Securities Exchange Act of 1934, as amended (the &#8220;Exchange
+Act&#8221;), or otherwise subject to the liabilities under that Section. In addition, the information in this Item 7.01 disclosure, shall
+not be incorporated by reference into the filings of the Company under the Securities Act of 1933, as amended, or the Exchange Act, except
+as shall be expressly set forth by specific reference in such filing.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Item 8.01 Other Events.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: left"><span style="background-color: white">As previously
+reported, on February&#160;20, 2023, two putative stockholder class actions were filed in the Delaware Court of Chancery (the &#8220;Court&#8221;)
+against certain current and former directors of the Company, captioned&#160;</span><i>Allegheny County Employees&#8217; Retirement System
+v. AMC Entertainment Holdings,&#160;Inc., et al.</i><span style="background-color: white">, C.A. No.&#160;2023-0215-MTZ (Del. Ch.) (the
+&#8220;Allegheny Action&#8221;), and&#160;</span><i>Munoz v. Adam M. Aron, et al.</i><span style="background-color: white">, C.A. No.&#160;2023-0216-MTZ
+(Del. Ch.) (the &#8220;Munoz Action&#8221;). The Allegheny Action and Munoz Action were later consolidated and captioned&#160;</span><i>In
+re AMC Entertainment Holdings,&#160;Inc. Stockholder Litigation</i><span style="background-color: white">, C.A. No.&#160;2023-0215-MTZ
+(Del. Ch.) (the &#8220;Action&#8221;). On April&#160;27, 2023, the parties to the Action entered into a Stipulation and Agreement of Compromise,
+Settlement, and Release (the &#8220;Stipulation&#8221;) to resolve the Action and to lift that the status quo order imposed thereunder
+(the &#8220;Status Quo Order&#8221;).</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: left">The Court held settlement hearings on June&#160;29
+&#8211; 30, 2023 to consider whether to approve the settlement as outlined in the Stipulation. On July&#160;21, 2023, the Court issued
+an opinion which, citing issues with the scope of the release sought under the proposed settlement, declined to approve the settlement
+as presented. On July&#160;22, 2023, the parties filed an addendum to the Stipulation in an effort to address the issues with the scope
+of the release raised by the Court and requested that the Court approve the settlement with the revised release set forth in the addendum.
+Unless and until the Court lifts the Status Quo Order, the Company will not proceed with filing the amendment to the Company&#8217;s certificate
+of incorporation to effect the share increase and the reverse stock split previously approved by stockholders or the conversion of AMC
+Preferred Equity Units (APEs) into Class&#160;A common stock. Nor will the Company make the litigation settlement payment contemplated
+by the Stipulation.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 3 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Pursuant to the requirements of the Securities Exchange Act of 1934,
+as amended, the Registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td colspan="2">AMC ENTERTAINMENT HOLDINGS,&#160;INC.</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td colspan="2">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td colspan="2">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td style="width: 50%">Date: July&#160;24, 2023</td>
+    <td style="width: 3%">By:</td>
+    <td style="border-bottom: black 1pt solid; width: 47%">/s/ Kevin M. Connor</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>Name: Kevin M. Connor</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>Title: Senior Vice President, General Counsel and Secretary</td></tr>
+  </table>
+
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; color: rgb(0, 0, 0)">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; color: rgb(0, 0, 0)"></p>
+
+<!-- Field: Page; Sequence: 4; Options: Last -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="text-align: center; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; color: rgb(0, 0, 0)">&#160;</p>
+
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJzVkuFOgzAUhZ9g73DD72VrMZrIPyRzMW5m2aYxMf7o4LI1gxbbMuWRfEtvS+bwESRNSjnncL9DiKJxNNf3skIDr3frBWyxbirhENZYokGVIzmyh8cEaF/jXlpnhHLheA5mmjJImesJvxEkBOtJWiwSYLfTmE/jGBhPOIN0GY28nmlVygKVk6ICoQpYGd0YiU6Yrn/DVnxppesujHpBY6VWCfAJ6+VviBmP4UmfxKc2RwuLRRaNxuEaRXOj28aPaa3TNcwqrGmW7aOXFVDy4EnSZbYyvrTBYvbRStc9K+ksivyQa2WddK2Tai8KbLSVntMehKFv1Bi0vghpfNdxxtxBKkcCZZQIJl1ukMrZlGqf0Di5q3AlaM9lI3zyd/LG6fy4xHqHhtAYi68YT31lwoNfF/SAEAjH4BlhCAkCLpgQEGAISjqfBlI4o9INPe2tuoSeF1IYEMMf5AFNgIa3Hvv9v8GGH+EH+joGDQ== -->

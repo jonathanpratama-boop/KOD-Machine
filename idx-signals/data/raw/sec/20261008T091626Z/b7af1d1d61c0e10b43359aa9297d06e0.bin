@@ -1,0 +1,387 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2023" xmlns:us-gaap="http://fasb.org/us-gaap/2023" xmlns:us-roles="http://fasb.org/us-roles/2023" xmlns:country="http://xbrl.sec.gov/country/2023" xmlns:srt="http://fasb.org/srt/2023" xmlns:CARA="http://caratherapeutics.com/20241119">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02C_US%2DGAAP%2D2023 -->
+<!-- Field: Set; Name: xdx; ID: xdx_038_CARA_caratherapeutics.com_20241119 -->
+<!-- Field: Set; Name: xdx; ID: xdx_04A_20241119_20241119 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_050_edei%2D%2DEntityCentralIndexKey_0001346830 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2024-11-19" id="Fact000003" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-11-19" id="Fact000004" name="dei:EntityCentralIndexKey">0001346830</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="cara-20241119.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2024-11-19">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001346830</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2024-11-19</xbrli:startDate>
+        <xbrli:endDate>2024-11-19</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="margin: 0"></p>
+
+<p style="font: 14pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 12pt; margin-bottom: 3pt; width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 14pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span style="font-size: 10pt"><b>&#160;</b></span></p>
+
+<p style="font: 14pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>UNITED STATES</b></p>
+
+<p style="font: 14pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="font: 14pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Washington, D.C. 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>FORM <span id="xdx_906_edei--DocumentType_c20241119__20241119_zj6OG8BFdYoj"><ix:nonNumeric contextRef="AsOf2024-11-19" id="Fact000009" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Pursuant to Section 13 OR 15(d) of The Securities Exchange Act of 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Date of Report (Date of earliest event reported)
+<b><span id="xdx_900_edei--DocumentPeriodEndDate_c20241119__20241119_zoWtgH819bgk"><ix:nonNumeric contextRef="AsOf2024-11-19" format="ixt:datemonthdayyearen" id="Fact000010" name="dei:DocumentPeriodEndDate">November 19, 2024</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;&#160;</p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_906_edei--EntityRegistrantName_c20241119__20241119_zvuHy7kjTOne"><ix:nonNumeric contextRef="AsOf2024-11-19" id="Fact000011" name="dei:EntityRegistrantName">CARA THERAPEUTICS, INC.</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Exact name of registrant as specified in its charter)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="text-align: center; width: 32%"><b><span id="xdx_908_edei--EntityIncorporationStateCountryCode_c20241119__20241119_zKcn7VDxnuXj"><ix:nonNumeric contextRef="AsOf2024-11-19" format="ixt-sec:stateprovnameen" id="Fact000012" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></b></td>
+    <td style="padding-bottom: 1pt; width: 2%">&#160;</td>
+    <td style="text-align: center; width: 32%"><b><span id="xdx_90A_edei--EntityFileNumber_c20241119__20241119_zFe5aH9z5uld"><ix:nonNumeric contextRef="AsOf2024-11-19" id="Fact000013" name="dei:EntityFileNumber">001-36279</ix:nonNumeric></span></b></td>
+    <td style="padding-bottom: 1pt; width: 2%">&#160;</td>
+    <td style="text-align: center; width: 32%"><b><span id="xdx_907_edei--EntityTaxIdentificationNumber_c20241119__20241119_z4bogJHH88u4"><ix:nonNumeric contextRef="AsOf2024-11-19" id="Fact000014" name="dei:EntityTaxIdentificationNumber">75-3175693</ix:nonNumeric></span></b></td></tr>
+  <tr style="vertical-align: top">
+    <td>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(State or other jurisdiction</p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">of incorporation)</p></td>
+    <td>&#160;</td>
+    <td>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Commission</p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">File Number)</p></td>
+    <td>&#160;</td>
+    <td>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(IRS Employer</p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Identification No.)</p></td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span><b><span id="xdx_905_edei--EntityAddressAddressLine1_c20241119__20241119_zTCau0hBrl9b"><ix:nonNumeric contextRef="AsOf2024-11-19" id="Fact000015" name="dei:EntityAddressAddressLine1">400 Atlantic Street</ix:nonNumeric></span></b></span></p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_90E_edei--EntityAddressAddressLine2_c20241119__20241119_zLXUV1polLo2"><ix:nonNumeric contextRef="AsOf2024-11-19" id="Fact000016" name="dei:EntityAddressAddressLine2">Suite 500</ix:nonNumeric></span></b></p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_902_edei--EntityAddressCityOrTown_c20241119__20241119_ziX5iqawiWB2"><ix:nonNumeric contextRef="AsOf2024-11-19" id="Fact000017" name="dei:EntityAddressCityOrTown">Stamford</ix:nonNumeric></span>, <span id="xdx_90B_edei--EntityAddressStateOrProvince_c20241119__20241119_z6L1NpT3eEq4"><ix:nonNumeric contextRef="AsOf2024-11-19" format="ixt-sec:stateprovnameen" id="Fact000018" name="dei:EntityAddressStateOrProvince">Connecticut</ix:nonNumeric></span></b></p></td>
+    <td>&#160;</td>
+    <td style="text-align: center">&#160;</td>
+    <td>&#160;</td>
+    <td style="vertical-align: bottom; text-align: center"><b><span id="xdx_90D_edei--EntityAddressPostalZipCode_c20241119__20241119_znyEvIiu8AT8"><ix:nonNumeric contextRef="AsOf2024-11-19" id="Fact000019" name="dei:EntityAddressPostalZipCode">06901</ix:nonNumeric></span></b></td></tr>
+  <tr style="vertical-align: top">
+    <td style="text-align: center">(Address of principal executive offices)</td>
+    <td>&#160;</td>
+    <td style="text-align: center">&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: center">(Zip Code)</td></tr>
+  <tr style="vertical-align: top">
+    <td>&#160;</td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center">&#160;</td>
+    <td>&#160;</td>
+    <td style="text-align: center">&#160;</td></tr>
+  <tr style="vertical-align: top">
+    <td colspan="5" style="text-align: center">Registrant's telephone number, including area code: <b>(<span id="xdx_90C_edei--CityAreaCode_c20241119__20241119_zZYd5oLRsMl7"><ix:nonNumeric contextRef="AsOf2024-11-19" id="Fact000020" name="dei:CityAreaCode">203</ix:nonNumeric></span>) <span id="xdx_904_edei--LocalPhoneNumber_c20241119__20241119_zGPn2nH9O6Ic"><ix:nonNumeric contextRef="AsOf2024-11-19" id="Fact000021" name="dei:LocalPhoneNumber">406-3700</ix:nonNumeric></span></b></td>
+    </tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: left">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: left">Check the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions (<i>see </i>General Instruction A.2.):</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 3%"><span style="font-family: Wingdings"><span style="font-family: Wingdings"><span id="xdx_901_edei--WrittenCommunications_c20241119__20241119_z6GaiVyNLunb"><ix:nonNumeric contextRef="AsOf2024-11-19" format="ixt:booleanfalse" id="Fact000022" name="dei:WrittenCommunications">&#168;</ix:nonNumeric></span></span></span></td>
+    <td style="text-align: justify; width: 97%">Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 3%"><span style="font-family: Wingdings"><span style="font-family: Wingdings"><span id="xdx_905_edei--SolicitingMaterial_c20241119__20241119_z13j6Ww6i7za"><ix:nonNumeric contextRef="AsOf2024-11-19" format="ixt:booleanfalse" id="Fact000023" name="dei:SolicitingMaterial">&#168;</ix:nonNumeric></span></span></span></td>
+    <td style="text-align: justify; width: 97%">Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 3%"><span style="font-family: Wingdings"><span style="font-family: Wingdings"><span id="xdx_909_edei--PreCommencementTenderOffer_c20241119__20241119_zhpxmu8iA7pa"><ix:nonNumeric contextRef="AsOf2024-11-19" format="ixt:booleanfalse" id="Fact000024" name="dei:PreCommencementTenderOffer">&#168;</ix:nonNumeric></span></span></span></td>
+    <td style="text-align: justify; width: 97%">Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 3%"><span style="font-family: Wingdings"><span style="font-family: Wingdings"><span id="xdx_90D_edei--PreCommencementIssuerTenderOffer_c20241119__20241119_zRf96BRi1Zuj"><ix:nonNumeric contextRef="AsOf2024-11-19" format="ixt:booleanfalse" id="Fact000025" name="dei:PreCommencementIssuerTenderOffer">&#168;</ix:nonNumeric></span></span></span></td>
+    <td style="text-align: justify; width: 97%">Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Securities registered pursuant to Section 12(b) of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border: Black 1pt solid; width: 40%; padding-right: 5.4pt; padding-left: 5.4pt; text-align: center"><span style="font-style: normal"><b>Title
+    of each class</b></span></td>
+    <td style="border-top: Black 1pt solid; border-right: Black 1pt solid; border-bottom: Black 1pt solid; width: 20%; padding-right: 5.4pt; padding-left: 5.4pt; text-align: center"><b>Trading<br/>
+
+Symbol(s)</b></td>
+    <td style="border-top: Black 1pt solid; border-right: Black 1pt solid; border-bottom: Black 1pt solid; width: 40%; padding-right: 5.4pt; padding-left: 5.4pt; text-align: center"><span style="font-style: normal"><b>Name
+    of each exchange on which <br/>
+registered</b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="border-right: Black 1pt solid; border-bottom: Black 1pt solid; border-left: Black 1pt solid; padding-right: 5.4pt; padding-left: 5.4pt; text-align: center"><span id="xdx_901_edei--Security12bTitle_c20241119__20241119_z1KR7x6eme9h"><ix:nonNumeric contextRef="AsOf2024-11-19" id="Fact000026" name="dei:Security12bTitle">Common Stock, par value $0.001 per share</ix:nonNumeric></span></td>
+    <td style="border-right: Black 1pt solid; border-bottom: Black 1pt solid; padding-right: 5.4pt; padding-left: 5.4pt; text-align: center"><span id="xdx_909_edei--TradingSymbol_c20241119__20241119_zsRkBL7CgbMf"><ix:nonNumeric contextRef="AsOf2024-11-19" id="Fact000027" name="dei:TradingSymbol">CARA</ix:nonNumeric></span></td>
+    <td style="border-right: Black 1pt solid; border-bottom: Black 1pt solid; padding-right: 5.4pt; padding-left: 5.4pt; text-align: center"><span id="xdx_906_edei--SecurityExchangeName_c20241119__20241119_z9jGV7kaJEb3"><ix:nonNumeric contextRef="AsOf2024-11-19" format="ixt-sec:exchnameen" id="Fact000028" name="dei:SecurityExchangeName">The Nasdaq Stock Market LLC</ix:nonNumeric></span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: left">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: left">Indicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0.5in 0pt 0; text-align: left">Emerging growth company <span style="font-family: Wingdings"><span style="font-family: Wingdings"><span id="xdx_90F_edei--EntityEmergingGrowthCompany_c20241119__20241119_zNVSP22y1B6"><ix:nonNumeric contextRef="AsOf2024-11-19" format="ixt:booleanfalse" id="Fact000029" name="dei:EntityEmergingGrowthCompany">&#168;</ix:nonNumeric></span></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 315pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: left">If an emerging growth company, indicate by
+check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial
+accounting standards provided pursuant to Section 13(a) of the Exchange Act. <span style="font-family: Wingdings">&#168;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 3pt; margin-bottom: 12pt; width: 100%"><div style="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 10%; font-size: 10pt"><b>Item 3.01</b></td>
+    <td style="width: 90%; font-size: 10pt"><b>Notice of Delisting or Failure to Satisfy a Continued Listing Rule or Standard; Transfer of Listing.</b></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">On November 19, 2024, Cara Therapeutics, Inc. (the &#8220;Company&#8221;)
+received a letter (the &#8220;Notice&#8221;) from the Listing Qualifications Department (the &#8220;Staff&#8221;) of The Nasdaq Stock
+Market (&#8220;Nasdaq&#8221;) notifying the Company that it was not in compliance with the minimum stockholders&#8217; equity requirement
+for continued listing on The Nasdaq Capital Market as set forth in Nasdaq Listing Rule 5550(b)(1) (the &#8220;Stockholders&#8217; Equity
+Requirement&#8221;), because the Company&#8217;s stockholders&#8217; equity of $707,000, as reported in the Company&#8217;s Quarterly
+Report on Form 10-Q for the quarterly period ended September 30, 2024, was below the required minimum of $2.5 million, and because, as
+of the date of the Notice (and as of the date of this report), the Company did not meet either of the alternative compliance standards,
+relating to market value of listed securities of at least $35 million or net income from continuing operations of $500,000 in the most
+recently completed fiscal year or in two of the last three most recently completed fiscal years.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">As with the Minimum Bid Price Deficiency Letter (as defined below),
+the Notice has no immediate effect on the listing of the Company&#8217;s common stock on The Nasdaq Capital Market, and, therefore, the
+Company&#8217;s listing remains fully effective, subject to the Company&#8217;s compliance with the other continued listing requirements,
+and the Company&#8217;s regaining compliance with the Stockholders&#8217; Equity Requirement. Under Nasdaq rules and as specified in the
+Notice, the Company has 45 calendar days from November 19, 2024, or until Friday, January 3, 2025, to submit to Nasdaq a plan to regain
+compliance with the Stockholders&#8217; Equity Requirement. If the Company&#8217;s plan to regain compliance is accepted, Nasdaq may grant
+an extension of up to 180 calendar days from the date of the Notice for the Company to evidence compliance.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">The Company is presently evaluating various courses of action to regain
+compliance and intends to timely submit a plan to Nasdaq to regain compliance with the Stockholders&#8217; Equity Requirement. However,
+there can be no assurance that the Company&#8217;s plan will be accepted or that if it is, the Company will be able to regain compliance
+and maintain its listing on The Nasdaq Capital Market. If the Company fails to submit a plan to regain compliance with the Stockholders&#8217;
+Equity Requirement, or the Company&#8217;s plan is not accepted, or if Nasdaq grants an extension but the Company does not regain compliance
+within the extension period, or if the Company fails to satisfy another Nasdaq requirement for continued listing, the Staff could provide
+notice that the Company&#8217;s securities will become subject to delisting. In such event, Nasdaq rules would permit the Company to appeal
+the decision to reject the Company&#8217;s proposed compliance plan or any delisting determination to a Nasdaq Hearings Panel. The hearing
+request would ordinarily stay any suspension or delisting action pending the conclusion of the hearing process and the expiration of any
+additional extension period granted by the panel following the hearing, but there can be no assurance that any such appeal would be successful.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">The notification is separate from, and in addition to, the
+previously disclosed deficiency letter that the Company received from the Staff on February 1, 2024 (the &#8220;Minimum Bid Price
+Deficiency Letter&#8221;), with respect to the Company&#8217;s failure to maintain a minimum closing bid price of $1.00 per share on
+any business day over a thirty consecutive business day period, as required for continued listing on The Nasdaq Global Market
+pursuant to Nasdaq Listing Rule 5450(a)(1) (the &#8220;Rule 5450(a)(1)&#8221;). As previously disclosed, the Company had been
+provided an initial period of 180 calendar days, or until July 30, 2024, to regain compliance with Rule 5450(a)(1), which period was
+extended by Nasdaq by notification received on July 31, 2024 for an additional 180 calendar day period ending January 27, 2025 to
+regain compliance with the same minimum closing bid price requirement for continued listing on The Nasdaq Capital Market under
+Nasdaq Listing Rule 5550(a)(2) (together with Rule 5450(a)(1), the "Minimum Bid Price Requirement") in connection with the transfer
+of the listing of the Company&#8217;s common stock from The Nasdaq Global Market to The Nasdaq Capital Market effective as of August
+1, 2024. Compliance may be achieved automatically and without further action if the closing bid price of the Company&#8217;s common
+stock is at or above $1.00 for a minimum of ten consecutive business days at any time prior to January 27, 2025, following which
+Nasdaq will notify the Company that it has regained compliance with the Minimum Bid Price Requirement and the matter will be
+closed.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 2 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">The Company intends to continue to actively monitor the bid price
+for its common stock between now and January 27, 2025, and will consider available options to resolve the deficiency and regain
+compliance with the Minimum Bid Price Requirement. These options include, but are not limited to, effecting a reverse stock split,
+if necessary, to attempt to regain compliance. There is no assurance, however, that the Company will regain compliance with the Minimum Bid Price Requirement
+or that the Company&#8217;s common stock will not be delisted from Nasdaq. If the Company does not regain compliance with the Minimum
+Bid Price Requirement by January 27, 2025, Nasdaq will provide written notification to the Company that its common stock will be
+delisted. The Company would then be entitled to appeal that determination to a Nasdaq hearings panel. However, there can be no assurance that, if the Company does appeal the delisting determination by Nasdaq to the hearings panel, that
+such appeal would be successful.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="width: 10%; font-size: 10pt"><b>Item 9.01</b></td>
+    <td style="width: 90%; font-size: 10pt"><b>Financial Statements and Exhibits. </b></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b><i>(d) Exhibits. </i></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: Black 1pt solid; text-align: left; vertical-align: top; width: 8%"><b>Exhibit<br/>
+</b> <b>No. </b> &#160;</td>
+    <td style="padding-bottom: 1pt; width: 2%">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font-size: 10pt; width: 90%"><span style="font-size: 10pt"><b>Description</b></span></td></tr>
+  <tr>
+    <td style="white-space: nowrap; vertical-align: top; font-size: 10pt">104</td>
+    <td>&#160;</td>
+    <td style="vertical-align: top; font-size: 10pt">Cover Page Interactive Data File (the cover page XBRL tags are embedded within the inline XBRL document)</td></tr>
+  </table>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 3 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Pursuant to the requirements of the Securities Exchange Act of 1934,
+the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td colspan="2" style="font-size: 10pt"><span style="font-size: 10pt"><b>CARA THERAPEUTICS,&#160;INC.</b></span></td>
+    <td style="font-size: 10pt"><span style="font-size: 10pt">&#160;</span></td></tr>
+  <tr style="font-size: 10pt; vertical-align: top">
+    <td colspan="2" style="font-size: 10pt"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="font-size: 10pt"><span style="font-size: 10pt">&#160;</span></td></tr>
+  <tr style="font-size: 10pt; vertical-align: top">
+    <td style="font-size: 10pt; width: 3%"><span style="font-size: 10pt"><b>By:</b></span></td>
+    <td style="border-bottom: black 1pt solid; font-size: 10pt; width: 47%"><span style="font-size: 10pt">/s/ RYAN MAYNARD</span></td>
+    <td style="font-size: 10pt; width: 50%"><span style="font-size: 10pt">&#160;</span></td></tr>
+  <tr style="font-size: 10pt; vertical-align: top">
+    <td style="font-size: 10pt"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="font-size: 10pt"><span style="font-size: 10pt">Ryan Maynard</span></td>
+    <td style="font-size: 10pt"><span style="font-size: 10pt">&#160;</span></td></tr>
+  <tr style="font-size: 10pt; vertical-align: top">
+    <td style="font-size: 10pt"><span style="font-size: 10pt">&#160;</span></td>
+    <td style="font-size: 10pt"><span style="font-size: 10pt">Chief Financial Officer</span></td>
+    <td style="font-size: 10pt"><span style="font-size: 10pt">&#160;</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Date: November 22, 2024</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 4; Options: Last -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="font-size: 10pt; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxFjd0KgkAQhZ/Adxj2Okq3nwsvk4rIQiSi2yXHWNIdmd1KH6m3bFWi4cAwnPPNEWIidrTVFTJc13kKZ6ybSjmEHEtkNDf0iWR/iMHvHO/aOlbGDecPTMgz6JnlVMqbN4boS1ssYghXMy+5gHAezyPIjiLo/YRMqQs0TqsKlCkgY2pYo1PcjR/OqiVDdTdUXZCtJhNDNA1H+wMyjCSc6KXexA8LaZqIYDJMIHZMz8anNq1D05OwqbD2dXak/wq+BxpKjQ== -->
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

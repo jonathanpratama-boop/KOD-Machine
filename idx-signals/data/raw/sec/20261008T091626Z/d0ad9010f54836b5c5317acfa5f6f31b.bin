@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2021q4" xmlns:ref="http://www.xbrl.org/2006/ref" xmlns:us-gaap="http://fasb.org/us-gaap/2021-01-31" xmlns:us-roles="http://fasb.org/us-roles/2021-01-31" xmlns:country="http://xbrl.sec.gov/country/2021" xmlns:srt="http://fasb.org/srt/2021-01-31" xmlns:vyne="http://menlotherapeutics.com/20230112">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html" />
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02A_US%2DGAAP%2D2021 -->
+<!-- Field: Set; Name: xdx; ID: xdx_031_vyne_menlotherapeutics.com_20230112 -->
+<!-- Field: Set; Name: xdx; ID: xdx_049_20230112_20230112 -->
+<!-- Field: Set; Name: xdx; ID: xdx_053_edei%2D%2DEntityCentralIndexKey_0001566044 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="From2023-01-12to2023-01-12" name="dei:EntityCentralIndexKey">0001566044</ix:nonNumeric>
+  <ix:nonNumeric contextRef="From2023-01-12to2023-01-12" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="vyne-20230112.xsd" xlink:type="simple" />
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="From2023-01-12to2023-01-12">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001566044</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2023-01-12</xbrli:startDate>
+        <xbrli:endDate>2023-01-12</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="margin-top: 0; margin-bottom: 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0; margin-bottom: 0; width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>UNITED STATES</b></p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Washington, D.C. 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>FORM <span id="xdx_903_edei--DocumentType_c20230112__20230112_zPPUokiHd1Ek"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span style="font-size: 10pt"></span></p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span style="font-size: 10pt">&#160;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Pursuant to Section 13 or 15(d) of the</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Securities Exchange Act of 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Date of Report (Date of earliest event reported) <span id="xdx_90C_edei--DocumentPeriodEndDate_c20230112__20230112_z5JXoIDyBPHd"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" format="ixt:datemonthdayyearen" name="dei:DocumentPeriodEndDate">January 12, 2023</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></p>
+
+<p style="font: 24pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_900_edei--EntityRegistrantName_c20230112__20230112_zccsueVhdc2i"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" name="dei:EntityRegistrantName">VYNE Therapeutics Inc.</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>(Exact name of registrant as specified
+in its charter)</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b></b>&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+<tr style="vertical-align: top">
+    <td style="padding-top: 1pt; width: 34%; text-align: center; font-size: 10pt; padding-bottom: 1pt"><span style="font: 10pt Times New Roman, Times, Serif"><b><span id="xdx_907_edei--EntityIncorporationStateCountryCode_c20230112__20230112_zr8AiuK6XMd9"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" format="ixt-sec:stateprovnameen" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></b></span></td>
+    <td style="padding-top: 1pt; width: 1%; padding-bottom: 1pt">&#160;</td>
+    <td style="padding-top: 1pt; width: 30%; text-align: center; font-size: 10pt; padding-bottom: 1pt"><span style="font: 10pt Times New Roman, Times, Serif"><b><span id="xdx_903_edei--EntityFileNumber_c20230112__20230112_zcniHbLM7xZg"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" name="dei:EntityFileNumber">001-38356</ix:nonNumeric></span></b></span></td>
+    <td style="padding-top: 1pt; width: 1%; padding-bottom: 1pt">&#160;</td>
+    <td style="padding-top: 1pt; width: 34%; text-align: center; font-size: 10pt; padding-bottom: 1pt"><span style="font: 10pt Times New Roman, Times, Serif"><b><span id="xdx_909_edei--EntityTaxIdentificationNumber_c20230112__20230112_zDb4jQuLvFO4"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" name="dei:EntityTaxIdentificationNumber">45-3757789</ix:nonNumeric></span></b></span></td></tr>
+<tr style="vertical-align: top">
+    <td style="padding-top: 1pt; padding-bottom: 1pt">
+        <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>(State or other jurisdiction</b></p>
+        <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>of incorporation)</b></p></td>
+    <td style="padding-top: 1pt; padding-bottom: 1pt">&#160;</td>
+    <td style="padding-top: 1pt; padding-bottom: 1pt">
+        <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>(Commission</b></p>
+        <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>File Number)</b></p></td>
+    <td style="padding-top: 1pt; padding-bottom: 1pt">&#160;</td>
+    <td style="padding-top: 1pt; padding-bottom: 1pt">
+        <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>(IRS Employer</b></p>
+        <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Identification Number)</b></p></td></tr>
+</table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_906_edei--EntityAddressAddressLine1_c20230112__20230112_zmPsaFre3V09"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" name="dei:EntityAddressAddressLine1">685 Route 202/206</ix:nonNumeric></span>, <span id="xdx_90F_edei--EntityAddressAddressLine2_c20230112__20230112_zWW8piitjeY7"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" name="dei:EntityAddressAddressLine2">Suite 301A</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_908_edei--EntityAddressCityOrTown_c20230112__20230112_zvVUloQXiFdl"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" name="dei:EntityAddressCityOrTown">Bridgewater</ix:nonNumeric></span>, <span id="xdx_906_edei--EntityAddressStateOrProvince_c20230112__20230112_zRxJT1W9jlP9"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" format="ixt-sec:stateprovnameen" name="dei:EntityAddressStateOrProvince">New Jersey</ix:nonNumeric></span> <span id="xdx_901_edei--EntityAddressPostalZipCode_c20230112__20230112_zNVo8UXUyrF3"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" name="dei:EntityAddressPostalZipCode">08807</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>(Address of principal executive offices,
+including Zip Code)</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>(<span id="xdx_901_edei--CityAreaCode_c20230112__20230112_zR7gOUG66U2l"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" name="dei:CityAreaCode">800</ix:nonNumeric></span>) <span id="xdx_907_edei--LocalPhoneNumber_c20230112__20230112_z8X8TIlnx83h"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" name="dei:LocalPhoneNumber">775-7936</ix:nonNumeric></span> </b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>(Registrant&#8217;s telephone number, including
+area code)</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b></b>&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: left">Check the appropriate box below if the Form&#160;8-K&#160;filing
+is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" border="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0pt; margin-bottom: 0pt">
+<tr style="vertical-align: top">
+    <td style="text-align: left; padding-left: 0.25in; width: 0.5in"><span style="font-family: Wingdings"></span><span style="font-family: Wingdings"><span id="xdx_908_edei--WrittenCommunications_c20230112__20230112_z16RbVy5yG7b"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" format="ixt:booleanfalse" name="dei:WrittenCommunications">&#168;</ix:nonNumeric></span></span></td>
+    <td style="padding-left: 10pt; text-indent: -10pt">Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</td></tr>
+</table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" border="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0pt; margin-bottom: 0pt">
+<tr style="vertical-align: top">
+    <td style="text-align: left; padding-left: 0.25in; width: 0.5in"><span style="font-family: Wingdings"><span style="font-family: Wingdings"><span id="xdx_90D_edei--SolicitingMaterial_c20230112__20230112_z5RcPMlhAdii"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" format="ixt:booleanfalse" name="dei:SolicitingMaterial">&#168;</ix:nonNumeric></span></span></span></td>
+    <td style="padding-left: 10pt; text-indent: -10pt">Soliciting material pursuant to Rule&#160;14a-12&#160;under the Exchange Act (17 CFR&#160;240.14a-12)</td></tr>
+</table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" border="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0pt; margin-bottom: 0pt">
+<tr style="vertical-align: top">
+    <td style="text-align: left; padding-left: 0.25in; width: 0.5in"><span style="font-family: Wingdings"><span style="font-family: Wingdings"><span id="xdx_90C_edei--PreCommencementTenderOffer_c20230112__20230112_zGZieFpXLJ9h"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" format="ixt:booleanfalse" name="dei:PreCommencementTenderOffer">&#168;</ix:nonNumeric></span></span></span></td>
+    <td style="padding-left: 10pt; text-indent: -10pt">Pre-commencement&#160;communications pursuant to Rule&#160;14d-2(b)&#160;under the Exchange Act (17 CFR&#160;240.14d-2(b))</td></tr>
+</table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" border="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; margin-top: 0pt; margin-bottom: 0pt">
+<tr style="vertical-align: top">
+    <td style="text-align: left; padding-left: 0.25in; width: 0.5in"><span style="font-family: Wingdings"></span><span style="font-family: Wingdings"><span id="xdx_906_edei--PreCommencementIssuerTenderOffer_c20230112__20230112_zTgSrfc9Vrrb"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" format="ixt:booleanfalse" name="dei:PreCommencementIssuerTenderOffer">&#168;</ix:nonNumeric></span></span></td>
+    <td style="padding-left: 10pt; text-indent: -10pt">Pre-commencement&#160;communications pursuant to Rule&#160;13e-4(c)&#160;under the Exchange Act (17 CFR&#160;240.13e-4(c))</td></tr>
+</table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">Securities registered pursuant to Section&#160;12(b)
+of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; background-color: white; border-collapse: collapse">
+<tr style="vertical-align: bottom">
+    <td style="border-bottom: black 1pt solid; white-space: nowrap; padding-bottom: 1pt; text-align: center; font-size: 10pt; width: 34%"><span style="font: 10pt Times New Roman, Times, Serif"><b>Title of each class</b></span></td>
+    <td style="font-size: 10pt; width: 1%">&#160;</td>
+    <td style="border-bottom: black 1pt solid; padding-bottom: 1pt; text-align: center; font-size: 10pt; width: 30%"><span style="font: 10pt Times New Roman, Times, Serif"><b>Trading<br />
+Symbol(s)</b></span></td>
+    <td style="font-size: 10pt; width: 1%">&#160;</td>
+    <td style="border-bottom: black 1pt solid; width: 34%">
+        <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Name of each exchange</b></p>
+        <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>on which registered</b></p></td></tr>
+<tr>
+    <td style="vertical-align: top; text-align: center; font-size: 10pt"><span style="font: 10pt Times New Roman, Times, Serif"><b><span id="xdx_907_edei--Security12bTitle_c20230112__20230112_zVNXdRLGGwqk"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" name="dei:Security12bTitle">Common Stock, $0.0001 par value</ix:nonNumeric></span></b></span></td>
+    <td style="vertical-align: bottom; font-size: 10pt">&#160;</td>
+    <td style="vertical-align: top; text-align: center; font-size: 10pt"><span style="font: 10pt Times New Roman, Times, Serif"><b><span id="xdx_905_edei--TradingSymbol_c20230112__20230112_zbghsGB6kHHk"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" name="dei:TradingSymbol">VYNE</ix:nonNumeric></span></b></span></td>
+    <td style="vertical-align: bottom; font-size: 10pt">&#160;</td>
+    <td style="vertical-align: top; text-align: center; font-size: 10pt"><span style="font: 10pt Times New Roman, Times, Serif"><b><span id="xdx_90D_edei--SecurityExchangeName_c20230112__20230112_zWcDFQSPKm85"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" format="ixt-sec:exchnameen" name="dei:SecurityExchangeName">The Nasdaq Stock Market LLC</ix:nonNumeric></span></b></span></td></tr>
+</table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Indicate by check mark whether the registrant is an emerging
+growth company as defined in Rule&#160;405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or Rule&#160;12b-2&#160;of
+the Securities Exchange Act of 1934&#160;(&#167;240.12b-2&#160;of this chapter). Emerging growth company <span style="font-family: Wingdings"><span style="font-family: Wingdings"><span id="xdx_90A_edei--EntityEmergingGrowthCompany_c20230112__20230112_zzoC0GawXMDf"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" format="ixt:booleantrue" name="dei:EntityEmergingGrowthCompany">&#120;</ix:nonNumeric></span></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">If an emerging growth company, indicate by check mark if the registrant
+has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant
+to Section&#160;13(a)&#160;of the Exchange Act. <span style="font-family: Wingdings"><span style="font-family: Wingdings"><span id="xdx_901_edei--EntityExTransitionPeriod_c20230112__20230112_z7fNgKtJ0uWb"><ix:nonNumeric contextRef="From2023-01-12to2023-01-12" format="ixt:booleantrue" name="dei:EntityExTransitionPeriod">&#120;</ix:nonNumeric></span></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0; margin-bottom: 0; width: 100%"><div style="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="text-align: center; font-size: 10pt; margin-top: 0pt; margin-bottom: 0pt"></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"><b>Item 2.02. Results of Operations and Financial
+Condition.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">The information included in Item 8.01 of this
+Current Report on Form&#160;8-K is incorporated in this Item 2.02 by reference.</p>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Item 5.07. Submission of Matters to a Vote of Security Holders.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">On January&#160;12, 2023, VYNE Therapeutics Inc. (the &#8220;Company&#8221;)
+convened a special meeting of stockholders (the &#8220;Special Meeting&#8221;) to adopt and approve a proposed amendment to the Company&#8217;s
+Amended and Restated Certificate of Incorporation and authorize the Board of Directors of the Company (the &#8220;Board&#8221;), in its
+sole discretion, to effect a reverse stock split of the outstanding shares of common stock of the Company (the &#8220;Common Stock&#8221;)
+at any time on or before the one year anniversary of the Special Meeting, at a reverse stock split ratio ranging from 1-for-10 to 1-for-25,
+as determined by the Board at a later date (the &#8220;Reverse Stock Split Proposal&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">At the Special Meeting, the stockholders voted on the Reverse Stock
+Split Proposal, which is described as Proposal 1 in the Company&#8217;s definitive proxy statement filed with the Securities and Exchange
+Commission on November&#160;25, 2022 (the &#8220;Proxy Statement&#8221;), and a proposal to adjourn the Special Meeting if necessary to
+solicit additional proxies if there are insufficient votes to adopt the Reverse Stock Split Proposal, as described in Proposal 2 in the
+Proxy Statement (the &#8220;Adjournment Proposal,&#8221; and together with the Reverse Stock Split Proposal, the &#8220;Proposals&#8221;).
+Each of the 58,035,827 shares of Common Stock outstanding on the record date for the Special Meeting and present either by attendance
+or by proxy was entitled to one vote per share on the Proposals, and each of the 3,000 shares of Series&#160;A Preferred Stock of the
+Company (&#8220;Series&#160;A Preferred&#8221;), constituting 100% of the outstanding shares of Series&#160;A Preferred, outstanding on
+the record date for the Special Meeting, all of which were present by proxy at the Special Meeting, were entitled to 1,000,000 votes per
+share with respect to the Proposals. As described in the Proxy Statement, shares of Series&#160;A Preferred may only vote on the Proposals,
+vote with the Common Stock as a single class, and are, to the extent cast, voted in the same proportion as the aggregate shares of Common
+Stock (excluding abstentions and any shares of Common Stock that are not voted) are voted on the Proposals.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">The following is a summary of the voting results:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><i>Proposal
+1: Reverse Stock Split Proposal</i></span>. With respect to the shares of Common Stock present in person or by proxy at the Special Meeting,
+votes &#8220;For&#8221; were 24,230,441; votes &#8220;Against&#8221; were 3,711,239; votes abstaining or withheld were 204,263, and there
+were no broker non-votes. Including the votes of the Series&#160;A Preferred, voting results were as follows:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-left: auto; border-collapse: collapse; width: 60%; margin-right: auto">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; width: 32%; text-align: left">Votes For</td><td style="font: bold 10pt Times New Roman, Times, Serif; width: 2%; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; width: 32%; text-align: left">Votes Against</td><td style="font: bold 10pt Times New Roman, Times, Serif; width: 2%; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; width: 32%; text-align: left">Abstentions / Withheld</td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="font: 10pt Times New Roman, Times, Serif">2,625,767,750</td><td style="font: 10pt Times New Roman, Times, Serif">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif">402,173,930</td><td style="font: 10pt Times New Roman, Times, Serif">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif">204,263</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">The Reverse Stock Split Proposal was approved.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><i>Proposal
+2: Adjournment Proposal</i></span>. With respect to the shares of Common Stock present in person or by proxy at the Special Meeting, votes
+ &#8220;For&#8221; were 24,029,283; votes &#8220;Against&#8221; were 3,693,414; votes abstaining or withheld were 423,246, and there were
+no broker non-votes. Including the votes of the Series&#160;A Preferred, voting results were as follows:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-left: auto; border-collapse: collapse; width: 60%; margin-right: auto">
+  <tr style="vertical-align: bottom">
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; width: 32%; text-align: left">Votes For</td><td style="font: bold 10pt Times New Roman, Times, Serif; width: 2%; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; width: 32%; text-align: left">Votes Against</td><td style="font: bold 10pt Times New Roman, Times, Serif; width: 2%; padding-bottom: 1pt">&#160;</td>
+    <td style="border-bottom: Black 1pt solid; font: bold 10pt Times New Roman, Times, Serif; width: 32%; text-align: left">Abstentions / Withheld</td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="font: 10pt Times New Roman, Times, Serif">2,624,348,039</td><td style="font: 10pt Times New Roman, Times, Serif">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif">403,374,658</td><td style="font: 10pt Times New Roman, Times, Serif">&#160;</td>
+    <td style="font: 10pt Times New Roman, Times, Serif">423,246</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">The Adjournment Proposal was approved.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 2 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Item 7.01. Regulation FD Disclosure.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">On January&#160;12, 2023, the Company delivered a notice of redemption
+to the holder of the Series&#160;A Preferred. The Series&#160;A Preferred will be redeemed on January&#160;17, 2023 (the &#8220;Redemption
+Date&#8221;) for an aggregate of $360,000 to be paid to the sole holder of the Series&#160;A Preferred. On the Redemption Date, the Company
+will file a Certificate of Elimination (the &#8220;Certificate&#8221;) with the Secretary of State of the State of Delaware with respect
+to the Series&#160;A Preferred. The Certificate will (i)&#160;eliminate the previous designation of 3,000 shares of Series&#160;A Preferred
+from the Company&#8217;s Amended and Restated Certificate of Incorporation and (ii)&#160;cause such shares of Series&#160;A Preferred
+to resume their status as authorized but unissued and non-designated shares of preferred stock.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b>Item 8.01. Other Events.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">On
+January&#160;12, 2023, the Company received the $5.0 million deferred payment from Journey Medical Corporation pursuant to the Asset Purchase
+Agreement, dated as of January&#160;12, 2022. As of December&#160;31, 2022, the Company had approximately $35.9 million of cash and cash
+equivalents on a pro forma basis after giving effect to the receipt of this deferred payment. </span>The preliminary financial information
+set forth in this Current Report on Form&#160;8-K is unaudited and subject to the completion of the Company&#8217;s audit process and
+is subject to change. The estimated preliminary results included in this  report should not be viewed as a substitute for the Company&#8217;s
+annual financial statements prepared in accordance with U.S. generally accepted accounting principles.</p>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 3 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Pursuant to the requirements of the Securities Exchange Act of 1934,
+as amended, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td style="font-size: 10pt">&#160;</td>
+    <td colspan="2" style="font-size: 10pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>VYNE THERAPEUTICS INC</b></span>.</td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="width: 50%; font-size: 10pt">&#160;</td>
+    <td style="width: 3%; font-size: 10pt">&#160;</td>
+    <td style="width: 47%; font-size: 10pt">&#160;</td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="font-size: 10pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Date: January&#160;12, 2023</span></td>
+    <td style="font-size: 10pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">By:</span></td>
+    <td style="border-bottom: black 1pt solid; font-size: 10pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">/s/ Mutya Harsch</span></td></tr>
+  <tr>
+    <td style="vertical-align: bottom; font-size: 10pt">&#160;</td>
+    <td style="vertical-align: bottom; font-size: 10pt">&#160;</td>
+    <td style="vertical-align: top">
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Mutya Harsch</p>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Chief Legal Officer and General Counsel</p></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 4; Options: Last -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxFjU0KwkAMhU/QO4RZS5226qI7LVrEKlJE3A5tlMF2UjLj35G8pWOLGAIhee/LE2IkclrpBhlOi7KAA7ZdoxxCiWdkNBV6R7bepOBniRdtHSvj+vUHZuQZ9Mw0TCp/7513bbFOQc7GMhnHEmSSRhOYb0Xw1TMyZ12jcVo1oEwNe6aONTrFr+HDQT3JUPvqk47IVpNJIQrlIL8hllEMO7qrB/HVQlFkIhj1FYic6dZ9Y27WUQvLBlufZQf038EH0l1JBQ== -->

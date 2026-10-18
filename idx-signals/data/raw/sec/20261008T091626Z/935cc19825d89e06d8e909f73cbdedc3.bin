@@ -1,0 +1,738 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2023" xmlns:ref="http://www.xbrl.org/2006/ref" xmlns:us-gaap="http://fasb.org/us-gaap/2023" xmlns:us-roles="http://fasb.org/us-roles/2023" xmlns:country="http://xbrl.sec.gov/country/2023" xmlns:srt="http://fasb.org/srt/2023" xmlns:SSNT="http://ir.silversuntech.com/20240530">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02C_US%2DGAAP%2D2023 -->
+<!-- Field: Set; Name: xdx; ID: xdx_038_SSNT_ir.silversuntech.com_20240530 -->
+<!-- Field: Set; Name: xdx; ID: xdx_042_20240530_20240530 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_053_edei%2D%2DEntityCentralIndexKey_0001236275 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2024-05-30" id="Fact000003" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2024-05-30" id="Fact000004" name="dei:EntityCentralIndexKey">0001236275</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="ssnt-20240530.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2024-05-30">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001236275</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2024-05-30</xbrli:startDate>
+        <xbrli:endDate>2024-05-30</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></p>
+
+<!-- Field: Rule-Page --><div style="width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>UNITED STATES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Washington, D.C. 20549</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<!-- Field: Rule-Page --><div style="margin-left: auto; margin-right: auto; width: 25%"><div style="border-top: Black 1.5pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>FORM <span id="xdx_90F_edei--DocumentType_c20240530__20240530_zNrFGk4JPSrd"><ix:nonNumeric contextRef="AsOf2024-05-30" id="Fact000009" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-left: auto; margin-right: auto; width: 25%"><div style="border-top: Black 1.5pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Pursuant to Section 13 or 15(d) of the Securities
+Exchange Act of 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Date of Report (Date of earliest event reported):
+<b><span id="xdx_900_edei--DocumentPeriodEndDate_c20240530__20240530_z8Zv25Q05vlf"><ix:nonNumeric contextRef="AsOf2024-05-30" format="ixt:datemonthdayyearen" id="Fact000010" name="dei:DocumentPeriodEndDate">May 30, 2024</ix:nonNumeric></span> </b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="font-size: 10pt; text-align: center"><span style="font-family: Times New Roman, Times, Serif; font-size: 12pt"><b><span style="text-decoration: underline"><span id="xdx_907_edei--EntityRegistrantName_c20240530__20240530_zYK7ugSDqYri"><ix:nonNumeric contextRef="AsOf2024-05-30" id="Fact000011" name="dei:EntityRegistrantName">SILVERSUN
+    TECHNOLOGIES, INC.</ix:nonNumeric></span></span></b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td style="font-size: 10pt; text-align: center"><span style="font-size: 10pt">(Exact name of registrant as specified in its charter)</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: Black 1.5pt solid; text-align: center; width: 32%"><span style="font-size: 10pt"><b><span id="xdx_909_edei--EntityIncorporationStateCountryCode_c20240530__20240530_zkma8FXCNSR"><ix:nonNumeric contextRef="AsOf2024-05-30" format="ixt-sec:stateprovnameen" id="Fact000012" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></b></span></td>
+    <td style="padding-bottom: 1.5pt; width: 2%">&#160;</td>
+    <td style="border-bottom: Black 1.5pt solid; text-align: center; width: 32%"><span style="font-size: 10pt"><b><span id="xdx_90E_edei--EntityFileNumber_c20240530__20240530_zAEJf3ndzaih"><ix:nonNumeric contextRef="AsOf2024-05-30" id="Fact000013" name="dei:EntityFileNumber">001-38063</ix:nonNumeric></span></b></span></td>
+    <td style="padding-bottom: 1.5pt; width: 2%">&#160;</td>
+    <td style="border-bottom: Black 1.5pt solid; text-align: center; width: 32%"><span style="font-size: 10pt"><b><span id="xdx_904_edei--EntityTaxIdentificationNumber_c20240530__20240530_ztorDrsIRvX5"><ix:nonNumeric contextRef="AsOf2024-05-30" id="Fact000014" name="dei:EntityTaxIdentificationNumber">16-1633636</ix:nonNumeric></span></b></span></td></tr>
+  <tr style="vertical-align: top">
+    <td>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(State or other jurisdiction<br/>
+of incorporation)</p></td>
+    <td>&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">(Commission File Number)</span></td>
+    <td>&#160;</td>
+    <td>
+    <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(IRS Employer<br/>
+Identification No.)</p></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_90A_edei--EntityAddressAddressLine1_c20240530__20240530_zdV0A16Fdyo2"><ix:nonNumeric contextRef="AsOf2024-05-30" id="Fact000015" name="dei:EntityAddressAddressLine1">120 Eagle Rock Ave</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span style="text-decoration: underline"><span id="xdx_906_edei--EntityAddressCityOrTown_c20240530__20240530_z1Ka68nTERl7"><ix:nonNumeric contextRef="AsOf2024-05-30" id="Fact000016" name="dei:EntityAddressCityOrTown">East Hanover</ix:nonNumeric></span>, <span id="xdx_903_edei--EntityAddressStateOrProvince_c20240530__20240530_zBlDtOt3Enmh"><ix:nonNumeric contextRef="AsOf2024-05-30" id="Fact000017" name="dei:EntityAddressStateOrProvince">NJ</ix:nonNumeric></span> <span id="xdx_909_edei--EntityAddressPostalZipCode_c20240530__20240530_zkQbQzCXzvM3"><ix:nonNumeric contextRef="AsOf2024-05-30" id="Fact000018" name="dei:EntityAddressPostalZipCode">07936</ix:nonNumeric></span></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Address of Principal Executive Offices)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span style="text-decoration: underline">(<span id="xdx_90C_edei--CityAreaCode_c20240530__20240530_zktGI9JVE6Cd"><ix:nonNumeric contextRef="AsOf2024-05-30" id="Fact000019" name="dei:CityAreaCode">973</ix:nonNumeric></span>) <span id="xdx_902_edei--LocalPhoneNumber_c20240530__20240530_zj2DGIqQMFA7"><ix:nonNumeric contextRef="AsOf2024-05-30" id="Fact000020" name="dei:LocalPhoneNumber">396-1720</ix:nonNumeric></span></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Registrant&#8217;s telephone number, including
+area code</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Check the appropriate box below if the Form 8-K
+filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif"><span id="xdx_90E_edei--WrittenCommunications_c20240530__20240530_zHx7jn6ynorf"><ix:nonNumeric contextRef="AsOf2024-05-30" format="ixt:booleanfalse" id="Fact000021" name="dei:WrittenCommunications">&#9744;</ix:nonNumeric></span></span></td><td style="text-align: justify">Written communications pursuant to Rule 425 under the Securities
+Act (17 CFR 230.425)</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif"><span id="xdx_901_edei--SolicitingMaterial_c20240530__20240530_zJq8fCenSD34"><ix:nonNumeric contextRef="AsOf2024-05-30" format="ixt:booleanfalse" id="Fact000022" name="dei:SolicitingMaterial">&#9744;</ix:nonNumeric></span></span></td><td style="text-align: justify">Soliciting material pursuant to Rule 14a-12 under the Exchange
+Act (17 CFR 240.14a-12)</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif"><span id="xdx_90A_edei--PreCommencementTenderOffer_c20240530__20240530_zxJ0nt08plYa"><ix:nonNumeric contextRef="AsOf2024-05-30" format="ixt:booleanfalse" id="Fact000023" name="dei:PreCommencementTenderOffer">&#9744;</ix:nonNumeric></span></span></td><td style="text-align: justify">Pre-commencement communications pursuant to Rule 14d-2(b)
+under the Exchange Act (17 CFR 240.14d-2(b))</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; width: 100%"><tr style="vertical-align: top; text-align: justify">
+<td style="width: 0in"/><td style="width: 0.25in; text-align: left"><span style="font-family: Times New Roman, Times, Serif"><span id="xdx_908_edei--PreCommencementIssuerTenderOffer_c20240530__20240530_z6uGBwv0wPO4"><ix:nonNumeric contextRef="AsOf2024-05-30" format="ixt:booleanfalse" id="Fact000024" name="dei:PreCommencementIssuerTenderOffer">&#9744;</ix:nonNumeric></span></span></td><td style="text-align: justify">Pre-commencement communications pursuant to Rule 13e-4(c)
+under the Exchange Act (17 CFR 240.13e-4(c))</td>
+</tr></table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Securities registered pursuant to Section 12(b)
+of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+  <tr style="vertical-align: bottom; background-color: White">
+    <td style="border-bottom: Black 1.5pt solid; width: 36%; font-weight: bold; text-align: center">Title of each class</td><td style="padding-bottom: 1.5pt; width: 2%; font-weight: bold">&#160;</td>
+    <td style="border-bottom: Black 1.5pt solid; width: 24%; font-weight: bold; text-align: center">Trading Symbol(s)</td><td style="padding-bottom: 1.5pt; width: 2%; font-weight: bold">&#160;</td>
+    <td style="border-bottom: Black 1.5pt solid; width: 36%; font-weight: bold; text-align: center">Name of each exchange on which registered</td></tr>
+  <tr style="vertical-align: bottom; background-color: rgb(204,238,255)">
+    <td style="text-align: center"><span id="xdx_90A_edei--Security12bTitle_c20240530__20240530_zJJwJ2gvljH8"><ix:nonNumeric contextRef="AsOf2024-05-30" id="Fact000025" name="dei:Security12bTitle">Common shares (par value $0.00001 per share)</ix:nonNumeric></span></td><td>&#160;</td>
+    <td style="text-align: center"><span id="xdx_909_edei--TradingSymbol_c20240530__20240530_zzcStdW8siz8"><ix:nonNumeric contextRef="AsOf2024-05-30" id="Fact000026" name="dei:TradingSymbol">SSNT</ix:nonNumeric></span></td><td>&#160;</td>
+    <td style="text-align: center">The <span id="xdx_908_edei--SecurityExchangeName_c20240530__20240530_zFslCy6kTUJh"><ix:nonNumeric contextRef="AsOf2024-05-30" format="ixt-sec:exchnameen" id="Fact000027" name="dei:SecurityExchangeName">NASDAQ</ix:nonNumeric></span> Capital Market</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Indicate by check mark whether the registrant
+is an emerging growth company as defined in Rule 405 of the Securities Act of 1934 (&#167;240.12b-2 of this chapter).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">Emerging growth company <span style="font-family: Times New Roman, Times, Serif"><span id="xdx_904_edei--EntityEmergingGrowthCompany_c20240530__20240530_zK9ylq58Snoh"><ix:nonNumeric contextRef="AsOf2024-05-30" format="ixt:booleanfalse" id="Fact000028" name="dei:EntityEmergingGrowthCompany">&#9744;</ix:nonNumeric></span></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">If an emerging growth company, indicate by check
+mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting
+standards provided pursuant to Section 13(a) of the Exchange Act. <span style="font-family: Times New Roman, Times, Serif">&#9744;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<!-- Field: Rule-Page --><div style="width: 100%"><div style="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Item 5.07 Submission of Matters to a Vote of
+Security Holders.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On May 30, 2024, SilverSun Technologies, Inc.
+(the &#8220;Company&#8221; or &#8220;SilverSun&#8221;) held a special meeting of stockholders (the &#8220;Special Meeting&#8221;) to consider
+certain proposals related to the Amended and Restated Investment Agreement, dated as of April l4, 2024 (as it may be amended or supplemented,
+the &#8220;Investment Agreement&#8221;), by and among Jacobs Private Equity II, LLC, a Delaware limited liability company (&#8220;JPE&#8221;),
+and the other investors party thereto (the &#8220;Other Investors,&#8221; and together with JPE, the &#8220;Investors&#8221;), pursuant
+to which the Investors will make an aggregate investment of $1,000,000,000 in cash in the Company, including $900,000,000 from JPE (the
+&#8220;Equity Investment&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">As of April 29, 2024, the record date for the
+Special Meeting (the &#8220;Record Date&#8221;), there were 5,315,581 shares of common stock, par value $0.00001 per share, of the Company
+(the &#8220;common stock&#8221;), each of which was entitled to one vote for each proposal at the Special Meeting. <span style="background-color: white">At
+the Special Meeting, a total of 3,655,153 shares of common stock, representing approximately 68.76% of the outstanding shares issued
+and entitled to vote, were present virtually or by proxy, constituting a quorum to conduct business.</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><span style="background-color: white"></span>&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The affirmative vote of a majority of the 5,315,581
+shares of common stock outstanding and entitled to vote as of the Record Date was required to approve Proposals 2-9. The affirmative vote
+of stockholders representing a majority of the votes properly cast by stockholders present in person or represented by proxy at the Special
+Meeting was required to approve Proposals 1 and 10. The final voting results on the proposals presented for stockholder approval at the&#160;Special
+Meeting are described below. For more information on each of these proposals, see the Company&#8217;s Definitive Proxy Statement on Schedule
+14A filed by the Company with the U.S. Securities and Exchange Commission on April 30, 2024 (as amended and supplemented, the &#8220;Proxy
+Statement&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Proposal No. 1:&#160;</b>To approve the issuance
+and sale to JPE, and the Other Investors of the Securities (as defined in the Investment Agreement), and the other transactions contemplated
+by the Investment Agreement.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Votes For</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Votes Against</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Abstentions</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Broker Non-Votes</span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: center"><span style="font-size: 10pt">3,552,481</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center">46,905</td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center">55,767</td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">-</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Proposal No. 2:&#160;</b>To approve the adoption
+of the Fifth Amended and Restated Certificate of Incorporation (the &#8220;Amended and Restated Certificate of Incorporation&#8221;),
+which would become effective prior to and in connection with the closing of the Equity Investment (as defined in the Investment Agreement).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Votes For</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Votes Against</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Abstentions</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Broker Non-Votes</span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: center"><span style="font-size: 10pt">3,324,828</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center">274,555</td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center">55,770</td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">-</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Proposal No. 3:&#160;</b>To approve separately
+a feature of the Amended and Restated Certificate of Incorporation implementing the Reverse Stock Split (as defined in the Investment
+Agreement).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Votes For</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Votes Against</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Abstentions</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Broker Non-Votes</span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: center">3,575,168</td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center">64,115</td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">15,870</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">-</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 2; Options: NewSection; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->1<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Proposal No. 4:&#160;</b>To approve separately
+a feature of the Amended and Restated Certificate of Incorporation effecting an increase in the number of authorized shares of common
+stock to 2,000,000,000 and an increase in the number of authorized shares of preferred stock to 10,000,000.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Votes For</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Votes Against</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Abstentions</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Broker Non-Votes</span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: center"><span style="font-size: 10pt">3,509,430</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center">85,826</td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center">59,897</td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">-</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Proposal No. 5:&#160;</b>To approve separately
+a feature of the Amended and Restated Certificate of Incorporation specifying the circumstances under which stockholders are able to act
+by written consent in lieu of a stockholder meeting.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Votes For</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Votes Against</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Abstentions</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Broker Non-Votes</span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: center"><span style="font-size: 10pt">3,104,253</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">496,499</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center">54,401</td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">-</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Proposal No. 6:&#160;</b>To approve separately
+a feature of the Amended and Restated Certificate of Incorporation specifying the circumstances under which a special meeting of stockholders
+may be called.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Votes For</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Votes Against</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Abstentions</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Broker Non-Votes</span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: center"><span style="font-size: 10pt">3,327,262</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">276,491</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">51,400</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">-</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Proposal No. 7:&#160;</b>To approve separately
+a feature of the Amended and Restated Certificate of Incorporation designating the exclusive forums in which certain claims relating to
+the Company may be brought.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Votes For</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Votes Against</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Abstentions</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Broker Non-Votes</span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: center"><span style="font-size: 10pt">3,317,179</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center">272,119</td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center">65,855</td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">-</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Proposal No. 8:&#160;</b>To approve separately
+a feature of the Amended and Restated Certificate of Incorporation providing for exculpation of directors and officers to the extent permitted
+by the Delaware General Corporation Law (the &#8220;DGCL&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Votes For</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Votes Against</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Abstentions</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Broker Non-Votes</span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: center"><span style="font-size: 10pt">3,317,810</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">284,040</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center">53,303</td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">-</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Proposal No. 9:&#160;</b>To approve separately
+a feature of the Amended and Restated Certificate of Incorporation providing JPE with certain board designation rights.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Votes For</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Votes Against</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Abstentions</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Broker Non-Votes</span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: center"><span style="font-size: 10pt">3,317,513</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center">280,032</td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center">57,608</td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">-</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b>Proposal No. 10:&#160;</b>To approve the QXO,
+Inc. 2024 Omnibus Incentive Plan.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Votes For</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Votes Against</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 23%; text-align: center"><span style="font-size: 10pt">Abstentions</span></td>
+    <td style="width: 2%; text-align: center">&#160;</td>
+    <td style="border-bottom: black 1.5pt solid; width: 24%; text-align: center"><span style="font-size: 10pt">Broker Non-Votes</span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: center"><span style="font-size: 10pt">3,083,553</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">505,071</span></td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center">66,529</td>
+    <td style="text-align: center">&#160;</td>
+    <td style="text-align: center"><span style="font-size: 10pt">-</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On the basis of the above votes, (i) the proposal
+to approve the issuance and sale to the Investors of the Securities was approved; (ii) the proposal to adopt the Amended and Restated
+Certificate of Incorporation was approved; (iii) the proposal to approve separately the feature of the Amended and Restated Certificate
+of Incorporation implementing the Reverse Stock Split was approved; (iv) the proposal to approve separately the feature of the Amended
+and Restated Certificate of Incorporation effecting an increase in the number of authorized shares of common stock to 2,000,000,000 and
+an increase in the number of authorized shares of preferred stock to 10,000,000 was approved; (v) the proposal to approve separately the
+feature of the Amended and Restated Certificate of Incorporation specifying the circumstances under which stockholders are able to act
+by written consent in lieu of a meeting was approved; (vi) the proposal to approve separately the feature of the Amended and Restated
+Certificate of Incorporation specifying the circumstances under which a special meeting of stockholders can be called was approved; (vii)
+the proposal to approve separately the feature of the Amended and Restated Certificate of Incorporation designating the exclusive forums
+in which certain claims relating to the Company may be brought was approved; (viii) the proposal to approve separately the feature of
+the Amended and Restated Certificate of Incorporation providing for exculpation of directors and officers to the extent permitted by the
+DGCL was approved; (ix) the proposal to approve separately a feature of the Amended and Restated Certificate of Incorporation providing
+JPE with certain board designation rights was approved, and (x) the proposal to approve the QXO, Inc. 2024 Omnibus Incentive Plan was
+approved.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"><b></b></p>
+
+<!-- Field: Page; Sequence: 3; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->2<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"><b>Item 7.01 Regulation FD Disclosure.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"><b>&#160;</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"><b><i>Press Release</i></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">On May 30, 2024, the
+Company jointly issued a press release with JPE announcing the results of the Special Meeting.&#160;A copy of the press release is attached
+hereto as Exhibit 99.1 and incorporated by reference herein.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0.5in; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The press release is being furnished pursuant
+to Item 7.01, and the information contained therein shall not be deemed &#8220;filed&#8221; for the purposes of Section 18 of the Securities
+Exchange Act of 1934, as amended (the &#8220;Exchange Act&#8221;), or otherwise subject to the liabilities of that section, nor shall
+it be deemed incorporated by reference in any filing under the Securities Act of 1933, as amended, or the Exchange Act, except as shall
+be expressly set forth by specific reference in such filing.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><b><i>Reverse Stock Split</i></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">As previously announced, the 8-1 reverse stock
+split of the Company&#8217;s common stock, which was approved by the Company&#8217;s stockholders at the Special Meeting and which also
+has been unanimously approved by the board of directors of the Company, is expected to take effect at 9:00 a.m. Eastern Time on June 6,
+2024 (the &#8220;Effective Time&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Accordingly, at the Effective Time, each eight
+shares of the Company&#8217;s common stock then issued and outstanding or held by the Company as treasury stock will, automatically and
+without any action on the part of the respective holders, be combined and converted into one share of the Company&#8217;s common stock.
+The Company&#8217;s common stock is expected to begin trading on the Nasdaq Capital Market on a post-reverse stock split basis beginning
+on June 6, 2024, under a new CUSIP number: 82846H 405.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The Company is implementing the reverse stock
+split in connection with the Investment Agreement. As a result of the reverse stock split, the number of outstanding shares of the Company&#8217;s
+common stock will be reduced from 5,315,581 to 664,447.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">No fractional shares will be issued in connection
+with the reverse stock split. Instead, each stockholder that would hold fractional shares as a result of the reverse stock split will
+be entitled to receive, in lieu of such fractional shares, cash in an amount based on the closing price of the Company&#8217;s common
+stock on the Nasdaq Capital Market on June 5, 2024. The reverse stock split will apply to all of the Company&#8217;s outstanding shares
+of common stock and therefore will not affect any stockholder&#8217;s ownership percentage of shares of the Company&#8217;s common stock,
+except for de minimis changes resulting from the payment of cash in lieu of fractional shares. Stockholders of record will be receiving
+information from Pacific Stock Transfer Company, the Company&#8217;s transfer agent (&#8220;Pacific Stock Transfer&#8221;), regarding
+their stock ownership following the reverse stock split and, if applicable, payments of cash in lieu of fractional shares.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Registered stockholders with certificated shares
+of common stock will receive a letter of transmittal from Pacific Stock Transfer with instructions on how to surrender certificates representing
+pre-reverse stock split shares, which will become book-entry shares post-reverse stock split. Such stockholders should not send in their
+pre-reverse stock split certificates until they receive a letter of transmittal. In order to receive new shares of the Company&#8217;s
+common stock, cash payments in lieu of fractional shares, and any future dividends or distributions the Company may declare with a record
+date after the Effective Time of the reverse stock split, stockholders must return these certificated shares of common stock. Stockholders
+with book-entry shares or who hold their shares through a bank, broker, or other nominee will not need to take any action.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"></p>
+
+<!-- Field: Page; Sequence: 4; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->3<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"><b>Forward-Looking Statements</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">This Current Report on Form 8-K contains forward-looking
+statements. Statements that are not historical facts, including statements about beliefs, expectations, targets or goals, are forward-looking
+statements. These statements are based on plans, estimates, expectations and/or goals at the time the statements are made, and readers
+should not place undue reliance on them. In some cases, readers can identify forward-looking statements by the use of forward-looking
+terms such as &#8220;may,&#8221; &#8220;will,&#8221; &#8220;should,&#8221; &#8220;expect,&#8221; &#8220;opportunity,&#8221; &#8220;intend,&#8221;
+&#8220;plan,&#8221; &#8220;anticipate,&#8221; &#8220;believe,&#8221; &#8220;estimate,&#8221; &#8220;predict,&#8221; &#8220;potential,&#8221;
+&#8220;target,&#8221; &#8220;goal,&#8221; or &#8220;continue,&#8221; or the negative of these terms or other comparable terms. Forward-looking
+statements involve inherent risks and uncertainties and readers are cautioned that a number of important factors could cause actual results
+to differ materially from those contained in any such forward-looking statements. Factors that could cause actual results to differ materially
+from those described herein include, among others uncertainties as to the completion of the equity investment and the other transactions
+contemplated by the Investment Agreement, including the risk that one or more of the transactions may involve unexpected costs, liabilities
+or delays and other factors, including those set forth in the Company&#8217;s filings with the U.S. Securities and Exchange Commission,
+including its Annual Report on Form 10-K for the fiscal year ended December 31, 2023, Quarterly Report on Form 10-Q for the fiscal quarter
+ended March 31, 2024, and subsequent Quarterly Reports on Form 10-Q.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.5in; text-align: justify; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">Forward-looking statements herein speak only
+as of the date each statement is made. None of the Company, JPE nor any other person undertakes any obligation to update any of these
+statements in light of new information or future events, except to the extent required by applicable law.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify"><b>Item 9.01 Financial Statements and Exhibits.</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.1in; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt; text-align: justify">(d) Exhibits</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.1in; text-align: justify">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: top">
+    <td style="border-bottom: Black 1.5pt solid; width: 9%; text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Exhibit
+    Number</b></span></td>
+    <td style="padding-bottom: 1.5pt; width: 1%">&#160;</td>
+    <td style="border-bottom: Black 1.5pt solid; vertical-align: bottom; width: 90%; text-align: left"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Description</b></span></td></tr>
+  <tr style="vertical-align: top; background-color: rgb(204,238,255)">
+    <td style="text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">99.1 </span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><a href="ea020707901ex99-1_silversun.htm"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Press Release, dated May 30, 2024.</span></a></td></tr>
+  <tr style="vertical-align: top; background-color: White">
+    <td style="text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">104</span></td>
+    <td>&#160;</td>
+    <td style="text-align: justify"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Cover Page Interactive Data File (formatted as Inline XBRL).</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<!-- Field: Page; Sequence: 5; Value: 1 -->
+    <div style="border-bottom: Black 1.5pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="text-align: center; margin-top: 0pt; margin-bottom: 0pt"><!-- Field: Sequence; Type: Arabic; Name: PageNo -->4<!-- Field: /Sequence --></p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt"></p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">Pursuant to the requirements
+of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned hereunto
+duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr>
+    <td>&#160;</td>
+    <td colspan="2"><span style="font-size: 10pt"><b>SILVERSUN TECHNOLOGIES, INC.</b></span></td></tr>
+  <tr>
+    <td>&#160;</td>
+    <td colspan="2">&#160;</td></tr>
+  <tr>
+    <td style="width: 60%"><span style="font-size: 10pt">Date: May 30, 2024</span></td>
+    <td style="width: 3%"><span style="font-size: 10pt">By:</span></td>
+    <td style="border-bottom: Black 1.5pt solid; width: 37%"><span style="font-size: 10pt"><i>/s/ Mark Meller</i></span></td>
+    </tr>
+  <tr>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt">Mark Meller</span></td></tr>
+  <tr>
+    <td>&#160;</td>
+    <td>&#160;</td>
+    <td><span style="font-size: 10pt">President, Chief Executive Officer</span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">5</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Rule-Page --><div style="margin-left: auto; margin-right: auto; width: 100%"><div style="border-top: Black 1.5pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxFjV0KwjAQhE/QOyx5llqDRe2jRUWsUoqIr9GuEmyzZRN/eiRvaWwRl4VlmflmhBiIFS11hQzHeZHBHuumUg6hwAsymjN6R7reJOBvgVdtHSvjuvcHpuQZ9EwcSnnyQmd9aItlAlE8lLOhHEM0TcYTyLci+OopmYsu0TitKlCmhJypYY1Ocdsn7NWLDNVtV3VAtppMAqMw6uU3yGgkYUcP9SS+WciyVASDbgKxYro33rV4OTRfEhYV1r7O9vR/gw8P3Eqc -->
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

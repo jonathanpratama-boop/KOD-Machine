@@ -1,0 +1,689 @@
+<?xml version='1.0' encoding='ASCII'?>
+<!-- DFIN New ActiveDisclosure (SM) Inline XBRL Document - http://www.dfinsolutions.com/ -->
+<!-- Creation Date :2024-06-12T15:28:44.4872+00:00 -->
+<!-- Copyright (c) 2024 Donnelly Financial Solutions, Inc. All Rights Reserved. -->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:nonNumeric="http://www.xbrl.org/dtr/type/non-numeric" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dei="http://xbrl.sec.gov/dei/2024" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:calc="https://xbrl.org/2023/calculation-1.1" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2022-02-16" xmlns:tcrt="http://alaunos.com/20240606" xmlns:utr="http://www.xbrl.org/2009/utr">
+ <head>
+  <title>8-K</title>
+  <meta http-equiv="Content-Type" content="text/html"/>
+ </head>
+ <body style="margin: auto!important;padding: 8px;">
+  <div style="display:none;"><ix:header><ix:hidden><ix:nonNumeric id="F_1737b111-2af1-4e42-a6cf-02a37316d23d" name="dei:EntityCentralIndexKey" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38">0001107421</ix:nonNumeric><ix:nonNumeric id="F_dae5f43d-bbc8-429a-bb8c-1ec0c3fab865" name="dei:AmendmentFlag" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" format="ixt:fixed-false">False</ix:nonNumeric><ix:nonNumeric id="F_d81b251b-426e-4d1d-956a-56cdfd7463c5" name="dei:CurrentFiscalYearEndDate" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38">--12-31</ix:nonNumeric></ix:hidden><ix:references><link:schemaRef xlink:type="simple" xlink:href="tcrt-20240606.xsd"/></ix:references><ix:resources><xbrli:context id="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38"><xbrli:entity><xbrli:identifier scheme="http://www.sec.gov/CIK">0001107421</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2024-06-06</xbrli:startDate><xbrli:endDate>2024-06-06</xbrli:endDate></xbrli:period></xbrli:context></ix:resources></ix:header></div>
+  <div style="padding-top:0.5in;min-height:1in;box-sizing:border-box;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p></div>
+  <p style="font-size:10pt;margin-top:2pt;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:18pt;font-family:Times New Roman;min-width:fit-content;">UNITED STATES</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:18pt;font-family:Times New Roman;min-width:fit-content;">SECURITIES AND EXCHANGE COMMISSION</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">Washington, D.C. 20549</span></p>
+  <p style="font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:18pt;font-family:Times New Roman;min-width:fit-content;">FORM </span><span style="font-size:18pt;font-family:Times New Roman;"><ix:nonNumeric id="F_d8fe6853-6fac-4686-b7c2-32cd66d5a93c" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:DocumentType"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:18pt;font-family:Times New Roman;min-width:fit-content;">8-K</span></ix:nonNumeric></span></p>
+  <p style="font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">CURRENT REPORT</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">Pursuant to Section 13 or 15(d)</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">of the Securities Exchange Act of 1934</span></p>
+  <p style="font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">Date of Report (Date of earliest event reported): </span><span style="font-size:12pt;font-family:Times New Roman;"><ix:nonNumeric id="F_6b5c8049-2f20-4438-8415-d5a58d2a4b08" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:DocumentPeriodEndDate" format="ixt:date-monthname-day-year-en"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">June 6, 2024</span></ix:nonNumeric></span></p>
+  <p style="font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="font-size:24pt;font-family:Times New Roman;"><ix:nonNumeric id="F_ad56dd9e-637e-4648-b8f3-d554ba3b4784" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:EntityRegistrantName"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:24pt;font-family:Times New Roman;min-width:fit-content;">Alaunos Therapeutics, Inc.</span></ix:nonNumeric></span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">(Exact name of registrant as specified in its charter)</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p>
+  <table style="border-spacing:0;table-layout:fixed;width:100.0%;border-collapse:separate;">
+   <tr style="visibility:collapse;">
+    <td style="width:33.32%;"/>
+    <td style="width:33.34%;"/>
+    <td style="width:33.34%;"/>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;text-align:left;">
+    <td style="padding-left:0.075in;vertical-align:top;padding-right:0.075in;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span><ix:nonNumeric id="F_c28f0faa-5797-400d-945a-d9bc077f5835" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:EntityIncorporationStateCountryCode" format="ixt-sec:stateprovnameen"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Delaware</span></ix:nonNumeric></span></p></td>
+    <td style="padding-left:0.075in;vertical-align:top;padding-right:0.075in;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span><ix:nonNumeric id="F_fdadf878-0f00-443b-bfc0-7aaa0599e131" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:EntityFileNumber"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">001-33038</span></ix:nonNumeric></span></p></td>
+    <td style="padding-left:0.075in;vertical-align:top;padding-right:0.075in;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span><ix:nonNumeric id="F_214db5fd-1235-4cce-8872-80e9c7953e62" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:EntityTaxIdentificationNumber"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">84-1475642</span></ix:nonNumeric></span></p></td>
+   </tr>
+   <tr style="height:8pt;word-break:break-word;white-space:pre-wrap;text-align:left;">
+    <td style="padding-left:0.075in;vertical-align:top;padding-right:0.075in;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">(State or other jurisdiction</span></p><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">of incorporation)</span></p></td>
+    <td style="padding-left:0.075in;vertical-align:top;padding-right:0.075in;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">(Commission</span><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;"> </span></p><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">File Number)</span></p></td>
+    <td style="padding-left:0.075in;vertical-align:top;padding-right:0.075in;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">(IRS Employer</span></p><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Identification No.)</span></p></td>
+   </tr>
+  </table>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="font-size:10pt;font-family:Times New Roman;"><ix:nonNumeric id="F_7a245ff1-b483-4829-bad9-490d4e36a45a" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:EntityAddressAddressLine1"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">2617 Bissonnet St</span></ix:nonNumeric></span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="font-size:10pt;font-family:Times New Roman;"><ix:nonNumeric id="F_78970bd3-6007-4fa8-84d3-53bc39658ad8" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:EntityAddressAddressLine2"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">Suite 225</span></ix:nonNumeric></span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="font-size:10pt;font-family:Times New Roman;"><ix:nonNumeric id="F_13735782-413b-4545-9125-2c25da615f50" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:EntityAddressCityOrTown"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">Houston</span></ix:nonNumeric></span><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">, </span><span style="font-size:10pt;font-family:Times New Roman;"><ix:nonNumeric id="F_065645f5-3980-473e-9a35-7644021d3379" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:EntityAddressStateOrProvince"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">TX</span></ix:nonNumeric></span><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;"> </span><span style="font-size:10pt;font-family:Times New Roman;"><ix:nonNumeric id="F_6afc8e92-0904-44f4-9ea0-e235444278d1" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:EntityAddressPostalZipCode"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">77005</span></ix:nonNumeric></span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:8pt;font-family:Times New Roman;min-width:fit-content;">(Address of principal executive offices, including zip code)</span></p>
+  <p style="font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="font-size:10pt;font-family:Times New Roman;"><ix:nonNumeric id="F_57c2d68f-49e2-4ff8-9a31-c3508a8d7314" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:CityAreaCode"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">(346)</span></ix:nonNumeric></span><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;"> </span><span style="font-size:10pt;font-family:Times New Roman;"><ix:nonNumeric id="F_996188c2-b815-412d-b9fb-4a406d0f8a68" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:LocalPhoneNumber"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">355-4099</span></ix:nonNumeric></span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:8pt;font-family:Times New Roman;min-width:fit-content;">(Registrant&#8217;s telephone number, including area code)</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="white-space:pre-wrap;font-size:8pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">Not applicable</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:8pt;font-family:Times New Roman;min-width:fit-content;">(Former name or former address, if changed since last report)</span></p>
+  <p style="font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">Check the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</span></p>
+  <table style="border-spacing:0;table-layout:fixed;width:100.0%;border-collapse:separate;">
+   <tr style="visibility:collapse;">
+    <td style="width:2.36%;"/>
+    <td style="width:97.64%;"/>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="font-family:'Segoe UI Symbol',sans-serif;"><ix:nonNumeric id="F_b25647fb-8627-4eeb-ba1f-a1f6efe7920b" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:WrittenCommunications" format="ixt-sec:boolballotbox"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">&#9744;</span></ix:nonNumeric></span></p></td>
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</span></p></td>
+   </tr>
+  </table>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p>
+  <table style="border-spacing:0;table-layout:fixed;width:100.0%;border-collapse:separate;">
+   <tr style="visibility:collapse;">
+    <td style="width:2.34%;"/>
+    <td style="width:97.66%;"/>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="font-family:'Segoe UI Symbol',sans-serif;"><ix:nonNumeric id="F_d39c1c65-192d-4118-9b7e-e7b8a86df243" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:SolicitingMaterial" format="ixt-sec:boolballotbox"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">&#9744;</span></ix:nonNumeric></span></p></td>
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</span></p></td>
+   </tr>
+  </table>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p>
+  <table style="border-spacing:0;table-layout:fixed;width:100.0%;border-collapse:separate;">
+   <tr style="visibility:collapse;">
+    <td style="width:1.9%;"/>
+    <td style="width:98.1%;"/>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="font-family:'Segoe UI Symbol',sans-serif;"><ix:nonNumeric id="F_e9a28e28-ef8f-4eb2-b0fb-60916fa9ce34" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:PreCommencementTenderOffer" format="ixt-sec:boolballotbox"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">&#9744;</span></ix:nonNumeric></span></p></td>
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</span></p></td>
+   </tr>
+  </table>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p>
+  <table style="border-spacing:0;table-layout:fixed;width:100.0%;border-collapse:separate;">
+   <tr style="visibility:collapse;">
+    <td style="width:1.9%;"/>
+    <td style="width:98.1%;"/>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="font-family:'Segoe UI Symbol',sans-serif;"><ix:nonNumeric id="F_75fe48f1-af53-4cc6-ab11-245a50b31388" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:PreCommencementIssuerTenderOffer" format="ixt-sec:boolballotbox"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">&#9744;</span></ix:nonNumeric></span></p></td>
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</span></p></td>
+   </tr>
+  </table>
+  <p style="font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">Securities registered pursuant to Section 12(b) of the Act:</span></p>
+  <table style="margin-left:auto;border-spacing:0;table-layout:fixed;width:100.0%;border-collapse:separate;margin-right:auto;">
+   <tr style="visibility:collapse;">
+    <td style="width:50.94%;"/>
+    <td style="width:1%;"/>
+    <td style="width:9.34%;"/>
+    <td style="width:1%;"/>
+    <td style="width:37.72%;"/>
+   </tr>
+   <tr style="word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:middle;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+   </tr>
+   <tr style="height:8pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:bottom;border-bottom:1pt solid #000000;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:1pt;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Title of each class</span></p></td>
+    <td style="vertical-align:bottom;border-bottom:1pt solid #ffffff03;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;border-bottom:1pt solid #000000;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:1pt;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Trading<br/>Symbol(s)</span></p></td>
+    <td style="vertical-align:bottom;border-bottom:1pt solid #ffffff03;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;border-bottom:1pt solid #000000;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:1pt;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Name of each exchange<br/>on which registered</span></p></td>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:top;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span><ix:nonNumeric id="F_3f4be5dd-a465-4a61-811e-83f7270d2d8e" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:Security12bTitle"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">Common Stock, par value $0.001 per share</span></ix:nonNumeric></span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:top;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span><ix:nonNumeric id="F_1a46228e-e12d-4bd2-a696-954f18e7bf7c" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:TradingSymbol"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">TCRT</span></ix:nonNumeric></span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:top;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span><ix:nonNumeric id="F_77962db6-1a61-4d7f-b187-3f87f50df35d" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:SecurityExchangeName" format="ixt-sec:exchnameen"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">The Nasdaq Stock Market LLC</span></ix:nonNumeric></span></p></td>
+   </tr>
+  </table>
+  <p style="font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">Indicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter).</span></p>
+  <p style="font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">Emerging growth company </span><span style="font-size:10pt;font-family:'Segoe UI Symbol',sans-serif;"><ix:nonNumeric id="F_620852d7-fc5c-4150-93b2-57303a226e3f" contextRef="C_80f360fe-d1f3-4a14-a40a-e91a94a9fa38" name="dei:EntityEmergingGrowthCompany" format="ixt-sec:boolballotbox"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:'Segoe UI Symbol',sans-serif;min-width:fit-content;">&#9744;</span></ix:nonNumeric></span></p>
+  <p style="font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">If an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act. </span><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:'Segoe UI Symbol',sans-serif;min-width:fit-content;">&#9744;</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p>
+  <div style="flex-direction:column;display:flex;padding-bottom:0.5in;min-height:1in;justify-content:flex-end;box-sizing:border-box;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p></div>
+  <hr style="page-break-after:always;"/>
+  <div style="padding-top:0.5in;min-height:1in;box-sizing:border-box;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p></div>
+  <table style="border-spacing:0;table-layout:fixed;width:100.0%;border-collapse:separate;">
+   <tr style="visibility:collapse;">
+    <td style="width:11%;"/>
+    <td style="width:89%;"/>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Item 3.03</span></p></td>
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Material Modification to Rights of Security Holders.</span></p></td>
+   </tr>
+  </table>
+  <p style="text-indent:4.533%;font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">At the 2024 Annual Meeting of Stockholders (the &#8220;Annual Meeting&#8221;) of Alaunos Therapeutics, Inc. (the &#8220;Company&#8221;), held on June 6, 2024, and as further described in Item 5.07 below, upon the recommendation of the Company&#8217;s Board of Directors (the &#8220;Board&#8221;), the Company&#8217;s stockholders voted on and approved an amendment (the &#8220;Amendment&#8221;) to the Company&#8217;s Amended and Restated Certificate of Incorporation, as amended (the &#8220;Certificate of Incorporation&#8221;) to increase the number of authorized shares of common stock from 34,666,667 shares to 50,000,000 shares.</span></p>
+  <p style="text-indent:4.533%;font-size:10pt;margin-top:12pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">The foregoing description of the Amendment is qualified, in its entirety, by the full text of the Amendment, a copy of which is attached to this Current Report on Form 8-K as Exhibit 3.1 and is incorporated herein by reference.</span></p>
+  <p style="text-indent:4.533%;font-size:10pt;margin-top:12pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">The Amendment became effective on June 12, 2024 upon filing with the Secretary of State of the State of Delaware.</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:18pt;font-family:Times New Roman;min-width:fit-content;"> </span></p>
+  <table style="border-spacing:0;table-layout:fixed;width:100.0%;border-collapse:separate;">
+   <tr style="visibility:collapse;">
+    <td style="width:11%;"/>
+    <td style="width:89%;"/>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Item 5.03</span></p></td>
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Amendments to Articles of Incorporation or Bylaws; Change in Fiscal Year.</span></p></td>
+   </tr>
+  </table>
+  <p style="text-indent:4.533%;font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">As described under Item 3.03, on June 12, 2024, the Company filed the Amendment with the Secretary of State of the State of Delaware. The information set forth in Item 3.03 of this Current Report on Form 8-K is incorporated by reference into this Item 5.03.</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:18pt;font-family:Times New Roman;min-width:fit-content;"> </span></p>
+  <table style="border-spacing:0;table-layout:fixed;width:100.0%;border-collapse:separate;">
+   <tr style="visibility:collapse;">
+    <td style="width:11%;"/>
+    <td style="width:89%;"/>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Item 5.07</span></p></td>
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Submission of Matters to a Vote of Security Holders.</span></p></td>
+   </tr>
+  </table>
+  <p style="text-indent:4.533%;font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">The Annual Meeting, at which a quorum was present, was held on June 6, 2024. The following is a brief description of the final voting results for each of the proposals submitted to a vote of the stockholders at the Annual Meeting.</span></p>
+  <p style="text-indent:4.533%;font-size:10pt;margin-top:12pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">At the Annual Meeting, the stockholders of the Company voted on the following six proposals: (1) to elect the Board&#8217;s five nominees for director to hold office until the Company&#8217;s 2025 Annual Meeting of Stockholders (&#8220;Proposal 1&#8221;); (2) to ratify the selection by the Audit Committee of the Board of RSM US LLP as the independent registered public accounting firm of the Company for its fiscal year ending December 31, 2024 (&#8220;Proposal 2&#8221;); (3) to approve, on an advisory basis, the compensation of the Company&#8217;s named executive officers as disclosed in the Company&#8217;s definitive proxy statement on Schedule 14A filed with the Securities and Exchange Commission on April 25, 2024 (&#8220;Proposal 3&#8221;); (4) to approve the amendment and restatement of the Company&#8217;s Certificate of Incorporation, to, at the discretion of the Board, effect a reverse stock split with respect to the Company&#8217;s issued and outstanding common stock, par value $0.001 per share, including stock held by the Company as treasury shares, at a reverse stock split ratio of 1-for-5 to 1-for-15, inclusive (&#8220;Proposal 4&#8221;), (5) to approve an amendment to the Company&#8217;s Certificate of Incorporation to increase the authorized number of shares of common stock from 34,666,667 shares to 50,000,000 shares (&#8220;Proposal 5&#8221;), and (6) to adjourn the Annual Meeting to a later date, if necessary or appropriate, to permit further solicitation and vote of proxies in the event that there are insufficient votes for, or otherwise in connection with, the approval of Proposal 4 and Proposal 5 (&#8220;Proposal 6&#8221;). The final results of the voting on each proposal are set forth below.</span></p>
+  <p style="font-size:10pt;margin-top:18pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">Proposal 1 - Election of Directors</span></p>
+  <p style="font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">The Company&#8217;s stockholders elected all seven persons listed below as directors, each to serve until the Company&#8217;s 2025 Annual Meeting of Stockholders and until their respective successors are duly elected and qualified. The votes cast were as follows:</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;"> </span></p>
+  <table style="border-spacing:0;table-layout:fixed;width:100.0%;border-collapse:separate;">
+   <tr style="visibility:collapse;">
+    <td style="width:62.388%;"/>
+    <td style="width:1%;"/>
+    <td style="width:1%;"/>
+    <td style="width:9.698%;"/>
+    <td style="width:1%;"/>
+    <td style="width:1%;"/>
+    <td style="width:1%;"/>
+    <td style="width:9.718%;"/>
+    <td style="width:1%;"/>
+    <td style="width:1%;"/>
+    <td style="width:1%;"/>
+    <td style="width:9.198%;"/>
+    <td style="width:1%;"/>
+   </tr>
+   <tr style="word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:middle;"><p style="font-size:12pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+   </tr>
+   <tr style="height:8pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Nominee</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td colspan="2" style="vertical-align:bottom;border-bottom:1pt solid #000000;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">For</span></p></td>
+    <td style="vertical-align:bottom;border-bottom:1pt solid #ffffff03;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td colspan="2" style="vertical-align:bottom;border-bottom:1pt solid #000000;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Withheld</span></p></td>
+    <td style="vertical-align:bottom;border-bottom:1pt solid #ffffff03;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td colspan="2" style="vertical-align:bottom;border-bottom:1pt solid #000000;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Broker Non-</span><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"><br/></span><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Votes</span></p></td>
+    <td style="vertical-align:bottom;border-bottom:1pt solid #ffffff03;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+   </tr>
+   <tr style="height:10pt;background-color:#cceeff;word-break:break-word;white-space:pre-wrap;">
+    <td style="text-indent:12pt;vertical-align:top;"><p style="text-indent:-12pt;padding-left:12pt;font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">Dale Curtis Hogue, Jr.</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:center;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:right;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">2,312,742</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:center;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:right;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">657,004</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:center;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:right;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">5,708,982</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="text-indent:12pt;vertical-align:top;"><p style="text-indent:-12pt;padding-left:12pt;font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">Robert J. Hofmeister</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:center;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:right;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">2,304,704</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:center;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:right;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">665,042</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:center;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:right;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">5,708,982</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="text-indent:12pt;vertical-align:top;"><p style="text-indent:-12pt;padding-left:12pt;font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">Robert W. Postma</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:center;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:right;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">1,702,665</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:center;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:right;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">1,267,081</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:center;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:right;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">5,708,982</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+   </tr>
+  </table>
+  <div style="flex-direction:column;display:flex;padding-bottom:0.5in;min-height:1in;justify-content:flex-end;box-sizing:border-box;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p></div>
+  <hr style="page-break-after:always;"/>
+  <div style="padding-top:0.5in;min-height:1in;box-sizing:border-box;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p></div>
+  <table style="border-spacing:0;table-layout:fixed;width:100.0%;border-collapse:separate;">
+   <tr style="visibility:collapse;">
+    <td style="width:62.388%;"/>
+    <td style="width:1%;"/>
+    <td style="width:1%;"/>
+    <td style="width:9.698%;"/>
+    <td style="width:1%;"/>
+    <td style="width:1%;"/>
+    <td style="width:1%;"/>
+    <td style="width:9.718%;"/>
+    <td style="width:1%;"/>
+    <td style="width:1%;"/>
+    <td style="width:1%;"/>
+    <td style="width:9.198%;"/>
+    <td style="width:1%;"/>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="text-indent:12pt;vertical-align:top;"><p style="text-indent:-12pt;padding-left:12pt;font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">Jaime Vieser</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:center;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:right;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">2,120,227</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:center;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:right;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">849,519</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:center;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:right;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">5,708,982</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+   </tr>
+   <tr style="height:10pt;background-color:#cceeff;word-break:break-word;white-space:pre-wrap;">
+    <td style="text-indent:12pt;vertical-align:top;"><p style="text-indent:-12pt;padding-left:12pt;font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">Holger Weis</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:center;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:right;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">2,143,828</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:center;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:right;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">825,918</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:center;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:right;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">5,708,982</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+   </tr>
+  </table>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;border-bottom:0.011pt solid #999999;text-align:left;"><span style="white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">Proposal 2 - Ratification of the Selection by the Audit Committee of the Board of Directors of RSM US LLP as the Independent Registered Public Accounting Firm of the Company for its Fiscal Year Ending December 31, 2024</span></p>
+  <p style="font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">The Company&#8217;s stockholders approved Proposal 2. The votes cast were as follows:</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;"> </span></p>
+  <table style="border-spacing:0;table-layout:fixed;width:100.0%;border-collapse:separate;">
+   <tr style="visibility:collapse;">
+    <td style="width:24%;"/>
+    <td style="width:1%;"/>
+    <td style="width:24%;"/>
+    <td style="width:1%;"/>
+    <td style="width:25%;"/>
+    <td style="width:1%;"/>
+    <td style="width:24%;"/>
+   </tr>
+   <tr style="word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:middle;"><p style="font-size:12pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+   </tr>
+   <tr style="height:8pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">For</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Against</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Abstain</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Broker Non-Votes</span></p></td>
+   </tr>
+   <tr style="height:10pt;background-color:#cceeff;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">7,860,095</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">162,992</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">655,641</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">5,708,982</span><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+   </tr>
+  </table>
+  <p style="font-size:10pt;margin-top:18pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">Proposal 3 - Advisory Vote on Executive Compensation</span></p>
+  <p style="font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">The Company&#8217;s stockholders approved, on a non-binding advisory basis, Proposal 3. The votes cast were as follows:</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;"> </span></p>
+  <table style="border-spacing:0;table-layout:fixed;width:100.0%;border-collapse:separate;">
+   <tr style="visibility:collapse;">
+    <td style="width:24%;"/>
+    <td style="width:1%;"/>
+    <td style="width:24%;"/>
+    <td style="width:1%;"/>
+    <td style="width:25%;"/>
+    <td style="width:1%;"/>
+    <td style="width:24%;"/>
+   </tr>
+   <tr style="word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:middle;"><p style="font-size:12pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+   </tr>
+   <tr style="height:8pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">For</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Against</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Abstain</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Broker Non-Votes</span></p></td>
+   </tr>
+   <tr style="height:10pt;background-color:#cceeff;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">1,851,846</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">1,032,789</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">85,111</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">5,708,982</span></p></td>
+   </tr>
+  </table>
+  <p style="font-size:10pt;margin-top:18pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">Proposal 4 - Approval of the Amendment and Restatement of the Certificate of Incorporation to, in the Discretion of the Board, Effect a Reverse Stock Split at a Ratio between 1-for-5 and 1-for-15, Inclusive</span></p>
+  <p style="font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">The Company&#8217;s stockholders approved Proposal 4. The votes cast were as follows:</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;"> </span></p>
+  <table style="border-spacing:0;table-layout:fixed;width:100.0%;border-collapse:separate;">
+   <tr style="visibility:collapse;">
+    <td style="width:24%;"/>
+    <td style="width:1%;"/>
+    <td style="width:24%;"/>
+    <td style="width:1%;"/>
+    <td style="width:25%;"/>
+    <td style="width:1%;"/>
+    <td style="width:24%;"/>
+   </tr>
+   <tr style="word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:middle;"><p style="font-size:12pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+   </tr>
+   <tr style="height:8pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">For</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Against</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Abstain</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Broker Non-Votes</span></p></td>
+   </tr>
+   <tr style="height:10pt;background-color:#cceeff;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">6,057,155</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">2,472,604</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">148,969</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">5,708,982</span><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+   </tr>
+  </table>
+  <p style="font-size:10pt;margin-top:18pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">Proposal 5 - Approval of Amendment of the Certificate of Incorporation to Increase the Total Number of Authorized Shares of Common Stock from 34,666,667 Shares to 50,000,000 Shares</span></p>
+  <p style="font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">The Company&#8217;s stockholders approved Proposal 5. The votes cast were as follows:</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;"> </span></p>
+  <table style="border-spacing:0;table-layout:fixed;width:100.0%;border-collapse:separate;">
+   <tr style="visibility:collapse;">
+    <td style="width:24%;"/>
+    <td style="width:1%;"/>
+    <td style="width:24%;"/>
+    <td style="width:1%;"/>
+    <td style="width:25%;"/>
+    <td style="width:1%;"/>
+    <td style="width:24%;"/>
+   </tr>
+   <tr style="word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:middle;"><p style="font-size:12pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+   </tr>
+   <tr style="height:8pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">For</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Against</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Abstain</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Broker Non-Votes</span></p></td>
+   </tr>
+   <tr style="height:10pt;background-color:#cceeff;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">5,961,470</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">2,665,548</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">51,710</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">5,708,982</span><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+   </tr>
+  </table>
+  <p style="font-size:10pt;margin-top:18pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">Proposal 6 - Adjournment</span></p>
+  <p style="font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">The Company&#8217;s stockholders approved Proposal 7. The votes cast were as follows:</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;"> </span></p>
+  <table style="border-spacing:0;table-layout:fixed;width:100.0%;border-collapse:separate;">
+   <tr style="visibility:collapse;">
+    <td style="width:24%;"/>
+    <td style="width:1%;"/>
+    <td style="width:24%;"/>
+    <td style="width:1%;"/>
+    <td style="width:25%;"/>
+    <td style="width:1%;"/>
+    <td style="width:24%;"/>
+   </tr>
+   <tr style="word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:middle;"><p style="font-size:12pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+   </tr>
+   <tr style="height:8pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">For</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Against</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Abstain</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Broker Non-Votes</span></p></td>
+   </tr>
+   <tr style="height:10pt;background-color:#cceeff;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">6,410,136</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">2,060,184</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">208,408</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">5,708,982</span><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+   </tr>
+  </table>
+  <p style="font-size:10pt;margin-top:12pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">No other items were presented for stockholder approval at the Annual Meeting.</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;border-bottom:0.011pt solid #999999;text-align:left;"><span style="white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p>
+  <table style="border-spacing:0;table-layout:fixed;width:100.0%;border-collapse:separate;">
+   <tr style="visibility:collapse;">
+    <td style="width:11%;"/>
+    <td style="width:89%;"/>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Item 9.01</span></p></td>
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Financial Statements and Exhibits.</span></p></td>
+   </tr>
+  </table>
+  <p style="font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">(d) Exhibits.</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;"> </span></p>
+  <table style="border-spacing:0;table-layout:fixed;width:100.0%;border-collapse:separate;">
+   <tr style="visibility:collapse;">
+    <td style="width:6.88%;"/>
+    <td style="width:3.84%;"/>
+    <td style="width:89.28%;"/>
+   </tr>
+   <tr style="word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:middle;"><p style="font-size:12pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+   </tr>
+  </table>
+  <div style="flex-direction:column;display:flex;padding-bottom:0.5in;min-height:1in;justify-content:flex-end;box-sizing:border-box;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p></div>
+  <hr style="page-break-after:always;"/>
+  <div style="padding-top:0.5in;min-height:1in;box-sizing:border-box;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p></div>
+  <table style="border-spacing:0;table-layout:fixed;width:100.0%;border-collapse:separate;">
+   <tr style="visibility:collapse;">
+    <td style="width:6.88%;"/>
+    <td style="width:3.84%;"/>
+    <td style="width:89.28%;"/>
+   </tr>
+   <tr style="height:8pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;border-bottom:1pt solid #000000;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Exhibit<br/>No.</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td style="vertical-align:bottom;text-align:left;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;border-bottom:1pt solid #000000;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Description</span></p></td>
+   </tr>
+   <tr style="height:5.75pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:middle;"><p style="font-size:8pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td colspan="2" style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">3.1W</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><a href="tcrt-ex3.htm"><span style="color:#0000ff;white-space:pre-wrap;text-decoration:underline;min-width:fit-content;">Certificate of Amendment to the Amended and Restated Certificate of Incorporation of Alaunos Therapeutics, Inc., dated June 12, 2024</span></a></p></td>
+   </tr>
+   <tr style="height:5.75pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td colspan="2" style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">104</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">  </span></p></td>
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">Cover Page Interactive Data File (embedded within the Inline XBRL document)</span></p></td>
+   </tr>
+  </table>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;border-bottom:0.011pt solid #999999;text-align:left;"><span style="white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p>
+  <div style="flex-direction:column;display:flex;padding-bottom:0.5in;min-height:1in;justify-content:flex-end;box-sizing:border-box;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p></div>
+  <hr style="page-break-after:always;"/>
+  <div style="padding-top:0.5in;min-height:1in;box-sizing:border-box;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p></div>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">SIGNATURES</span></p>
+  <p style="font-size:10pt;margin-top:12pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">Pursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;"> </span></p>
+  <table style="border-spacing:0;table-layout:fixed;width:100.0%;border-collapse:separate;">
+   <tr style="visibility:collapse;">
+    <td style="width:43.991%;"/>
+    <td style="width:1%;"/>
+    <td style="width:3.999%;"/>
+    <td style="width:1.02%;"/>
+    <td style="width:4.999%;"/>
+    <td style="width:1%;"/>
+    <td style="width:43.991%;"/>
+   </tr>
+   <tr style="word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:middle;"><p style="font-size:12pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td colspan="3" style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;min-width:fit-content;">Alaunos Therapeutics, Inc.</span></p></td>
+   </tr>
+   <tr style="height:12.25pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td colspan="2" style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td colspan="2" style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td colspan="2" style="vertical-align:middle;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">Date. June 12, 2024</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">By:</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:1pt;border-bottom:0.75pt solid #000000;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">/s/ Melinda Lackey</span></p></td>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">Name:</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">Melinda Lackey</span></p></td>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">Title:</span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;"> </span></p></td>
+    <td style="vertical-align:bottom;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">Legal and Administration</span></p></td>
+   </tr>
+  </table>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:right;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">Exhibit 3.1</span></p>
+  <p style="font-size:10pt;margin-top:12pt;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">CERTIFICATE OF AMENDMENT OF THE SECOND AMENDED AND RESTATED</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">CERTIFICATE OF INCORPORATION OF ALAUNOS THERAPEUTICS, INC.</span></p>
+  <p style="font-size:10pt;margin-top:12pt;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">(Pursuant to Section 242 of the</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">General Corporation Law of the State of Delaware)</span></p>
+  <p style="text-indent:4.533%;font-size:10pt;margin-top:12pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">Alaunos Therapeutics, Inc. (the &#8220;Corporation&#8221;), a corporation organized and existing under and by virtue of the provisions of the General Corporation Law of the State of Delaware (the &#8220;General Corporation Law&#8221;),</span></p>
+  <p style="font-size:10pt;margin-top:18pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">DOES HEREBY CERTIFY:</span></p>
+  <p style="text-indent:4.533%;font-size:10pt;margin-top:6pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">1. A resolution was duly adopted by the Board of Directors of the Corporation pursuant to Section 242 of the General Corporation Law proposing this Amendment of the Amended and Restated Certificate of Incorporation and declaring the advisability of this Amendment of the Amended and Restated Certificate of Incorporation, and authorizing the appropriate officers of the Corporation to solicit the approval of the stockholders therefor, which resolution setting forth the proposed amendment is as follows:</span></p>
+  <p style="text-indent:4.533%;font-size:10pt;margin-top:12pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">RESOLVED</span><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">: that the first paragraph of section four of the Amended and Restated Certificate of Incorporation of the Corporation, as amended, be and it hereby is, deleted in its entirety and the following paragraph is inserted in lieu thereof:</span></p>
+  <p style="text-indent:4.533%;font-size:10pt;margin-top:12pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">&#8220;4.</span><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;font-style:italic;min-width:fit-content;"> Number of Shares.</span><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;"> The total number of shares of all classes of stock that the Corporation shall have authority to issue is Eighty Million (80,000,000) shares consisting of: Fifty Million (50,000,000) shares of common stock, $0.001 par value per share (&#8220;Common Stock&#8221;); and Thirty Million (30,000,000) shares of preferred stock, $0.001 par value per share (&#8220;Preferred Stock&#8221;).&#8221;</span></p>
+  <p style="text-indent:4.533%;font-size:10pt;margin-top:12pt;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">2. This Certificate of Amendment of the Second Amended and Restated Certificate of Incorporation has been duly adopted by the stockholders of the Corporation in accordance with the provisions of Section 242 of the General Corporation Law.</span></p>
+  <p style="font-size:10pt;margin-top:12pt;font-family:Times New Roman;margin-bottom:0;text-align:center;"><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">[Remainder of page intentionally blank]</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p>
+  <div style="flex-direction:column;display:flex;padding-bottom:0.5in;min-height:1in;justify-content:flex-end;box-sizing:border-box;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p></div>
+  <hr style="page-break-after:always;"/>
+  <div style="padding-top:0.5in;min-height:1in;box-sizing:border-box;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p></div>
+  <p style="text-indent:4.533%;font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-weight:bold;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">IN WITNESS WHEREOF</span><span style="color:#000000;white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">, this Corporation has caused this Certificate of Amendment of the Amended and Restated Certificate of Incorporation to be signed by its Chief Executive Officer this 12th day of June, 2024.</span></p>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;"> </span></p>
+  <table style="margin-left:auto;border-spacing:0;table-layout:fixed;width:40.0%;border-collapse:separate;">
+   <tr style="visibility:collapse;">
+    <td style="width:100%;"/>
+   </tr>
+   <tr style="word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:middle;"><p style="font-size:12pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;min-width:fit-content;">&#160;</span></p></td>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:1pt;border-bottom:0.75pt solid #000000;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">/s/ Dale Curtis Hogue, Jr.</span></p></td>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">Name: Dale Curtis Hogue, Jr.</span></p></td>
+   </tr>
+   <tr style="height:10pt;word-break:break-word;white-space:pre-wrap;">
+    <td style="vertical-align:top;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="color:#000000;white-space:pre-wrap;min-width:fit-content;">Title: Interim Chief Executive Officer</span></p></td>
+   </tr>
+  </table>
+  <p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:10pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p>
+  <div style="flex-direction:column;display:flex;padding-bottom:0.5in;min-height:1in;justify-content:flex-end;box-sizing:border-box;"><p style="font-size:10pt;margin-top:0;font-family:Times New Roman;margin-bottom:0;text-align:left;"><span style="white-space:pre-wrap;font-size:12pt;font-family:Times New Roman;min-width:fit-content;">&#160;</span></p></div>
+  <hr style="page-break-after:always;"/>
+ <script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>

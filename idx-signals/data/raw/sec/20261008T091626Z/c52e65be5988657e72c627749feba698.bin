@@ -1,0 +1,226 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns:dei="http://xbrl.sec.gov/dei/2025" xmlns:us-types="http://fasb.org/us-types/2025" xmlns:nonnum="http://www.xbrl.org/dtr/type/non-numeric" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:sfb="http://imetrix.edgar-online.com/20260126" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:utr="http://www.xbrl.org/2009/utr" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:us-gaap="http://fasb.org/us-gaap/2025" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>8-K</title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+   <body><div style="display:none"> <ix:header> <ix:hidden> <ix:nonNumeric id="Hidden_dei_EntityRegistrantName" name="dei:EntityRegistrantName" contextRef="duration_2026-01-26_to_2026-01-26">STIFEL FINANCIAL CORP</ix:nonNumeric> <ix:nonNumeric name="dei:AmendmentFlag" contextRef="duration_2026-01-26_to_2026-01-26" id="ixv-340">false</ix:nonNumeric> <ix:nonNumeric id="Hidden_dei_EntityCentralIndexKey" name="dei:EntityCentralIndexKey" contextRef="duration_2026-01-26_to_2026-01-26">0000720672</ix:nonNumeric> </ix:hidden> <ix:references> <link:schemaRef xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:link="http://www.xbrl.org/2003/linkbase" xlink:type="simple" xlink:href="sfb-20260126.xsd" xlink:arcrole="http://www.xbrl.org/2003/linkbase"/> </ix:references> <ix:resources> <xbrli:context id="duration_2026-01-26_to_2026-01-26"> <xbrli:entity> <xbrli:identifier scheme="http://www.sec.gov/CIK">0000720672</xbrli:identifier> </xbrli:entity> <xbrli:period> <xbrli:startDate>2026-01-26</xbrli:startDate> <xbrli:endDate>2026-01-26</xbrli:endDate> </xbrli:period> </xbrli:context> <xbrli:context id="duration_2026-01-26_to_2026-01-26_us-gaap-StatementClassOfStockAxis_us-gaap-CommonStockMember"> <xbrli:entity> <xbrli:identifier scheme="http://www.sec.gov/CIK">0000720672</xbrli:identifier> <xbrli:segment> <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">us-gaap:CommonStockMember</xbrldi:explicitMember> </xbrli:segment> </xbrli:entity> <xbrli:period> <xbrli:startDate>2026-01-26</xbrli:startDate> <xbrli:endDate>2026-01-26</xbrli:endDate> </xbrli:period> </xbrli:context> <xbrli:context id="duration_2026-01-26_to_2026-01-26_us-gaap-StatementClassOfStockAxis_us-gaap-SeriesBPreferredStockMember"> <xbrli:entity> <xbrli:identifier scheme="http://www.sec.gov/CIK">0000720672</xbrli:identifier> <xbrli:segment> <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">us-gaap:SeriesBPreferredStockMember</xbrldi:explicitMember> </xbrli:segment> </xbrli:entity> <xbrli:period> <xbrli:startDate>2026-01-26</xbrli:startDate> <xbrli:endDate>2026-01-26</xbrli:endDate> </xbrli:period> </xbrli:context> <xbrli:context id="duration_2026-01-26_to_2026-01-26_us-gaap-StatementClassOfStockAxis_us-gaap-SeriesCPreferredStockMember"> <xbrli:entity> <xbrli:identifier scheme="http://www.sec.gov/CIK">0000720672</xbrli:identifier> <xbrli:segment> <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">us-gaap:SeriesCPreferredStockMember</xbrldi:explicitMember> </xbrli:segment> </xbrli:entity> <xbrli:period> <xbrli:startDate>2026-01-26</xbrli:startDate> <xbrli:endDate>2026-01-26</xbrli:endDate> </xbrli:period> </xbrli:context> <xbrli:context id="duration_2026-01-26_to_2026-01-26_us-gaap-StatementClassOfStockAxis_us-gaap-SeriesDPreferredStockMember"> <xbrli:entity> <xbrli:identifier scheme="http://www.sec.gov/CIK">0000720672</xbrli:identifier> <xbrli:segment> <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">us-gaap:SeriesDPreferredStockMember</xbrldi:explicitMember> </xbrli:segment> </xbrli:entity> <xbrli:period> <xbrli:startDate>2026-01-26</xbrli:startDate> <xbrli:endDate>2026-01-26</xbrli:endDate> </xbrli:period> </xbrli:context> <xbrli:context id="duration_2026-01-26_to_2026-01-26_us-gaap-StatementClassOfStockAxis_sfb-M5.20SeniorNotesDue2047Member"> <xbrli:entity> <xbrli:identifier scheme="http://www.sec.gov/CIK">0000720672</xbrli:identifier> <xbrli:segment> <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">sfb:M5.20SeniorNotesDue2047Member</xbrldi:explicitMember> </xbrli:segment> </xbrli:entity> <xbrli:period> <xbrli:startDate>2026-01-26</xbrli:startDate> <xbrli:endDate>2026-01-26</xbrli:endDate> </xbrli:period> </xbrli:context> </ix:resources> </ix:header> </div> <div style="text-align:center"> <div style="width:8.5in;text-align:left;margin-left: auto;margin-right: auto"> <div style="line-height:3.0pt;margin-top:0pt;margin-bottom:0pt;border-bottom:2.00pt solid #000000">&#160;</div> <div style="line-height:2.0pt;margin-top:0pt;margin-bottom:2pt;border-bottom:1.00pt solid #000000">&#160;</div> <p style="margin-top:4pt; margin-bottom:0pt; font-size:16pt; font-family:Times New Roman;font-weight:bold;text-align:center">UNITED STATES</p> <p style="margin-top:0pt; margin-bottom:0pt; font-size:16pt; font-family:Times New Roman;font-weight:bold;text-align:center">SECURITIES AND EXCHANGE COMMISSION</p> <p style="margin-top:0pt; margin-bottom:0pt; font-size:14pt; font-family:Times New Roman;font-weight:bold;text-align:center">Washington, DC 20549</p> <p style="font-size:6pt;margin-top:0pt;margin-bottom:0pt">&#160;</p> <div style="text-align:center"> <div style="line-height:6.0pt;margin-top:0pt;margin-bottom:2pt;border-bottom:1.00pt solid #000000;width:21%;text-align:center;margin-left: auto;margin-right: auto">&#160;</div></div> <p style="margin-top:4pt; margin-bottom:0pt; font-size:18pt; font-family:Times New Roman;font-weight:bold;text-align:center">FORM <span style="white-space:nowrap"><ix:nonNumeric name="dei:DocumentType" contextRef="duration_2026-01-26_to_2026-01-26" id="ixv-391">8-K</ix:nonNumeric></span></p> <p style="font-size:4pt;margin-top:0pt;margin-bottom:0pt">&#160;</p> <div style="text-align:center"> <div style="line-height:6.0pt;margin-top:0pt;margin-bottom:2pt;border-bottom:1.00pt solid #000000;width:21%;text-align:center;margin-left: auto;margin-right: auto">&#160;</div></div> <p style="margin-top:2pt; margin-bottom:0pt; font-size:14pt; font-family:Times New Roman;font-weight:bold;text-align:center">CURRENT REPORT</p> <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt; font-family:Times New Roman;font-weight:bold;text-align:center">Pursuant to Section&#160;13 OR 15(d) of the</p> <p style="margin-top:0pt; margin-bottom:0pt; font-size:12pt; font-family:Times New Roman;font-weight:bold;text-align:center">Securities Exchange Act of 1934</p> <p style="margin-top:2pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;font-weight:bold;text-align:center">Date of Report (Date of earliest event reported): <ix:nonNumeric name="dei:DocumentPeriodEndDate" contextRef="duration_2026-01-26_to_2026-01-26" format="ixt:datemonthdayyearen" id="ixv-392">January&#160;26, 2026</ix:nonNumeric></p> <p style="font-size:4pt;margin-top:0pt;margin-bottom:0pt">&#160;</p> <div style="text-align:center"> <div style="line-height:6.0pt;margin-top:0pt;margin-bottom:2pt;border-bottom:1.00pt solid #000000;width:21%;text-align:center;margin-left: auto;margin-right: auto">&#160;</div></div> <p style="margin-top:4pt; margin-bottom:0pt; font-size:20pt; font-family:Times New Roman;font-weight:bold;text-align:center"> <span style=" -sec-ix-hidden:Hidden_dei_EntityRegistrantName">STIFEL FINANCIAL CORP.</span> </p> <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;text-align:center">(Exact name of registrant as specified in its charter)</p> <p style="font-size:4pt;margin-top:0pt;margin-bottom:0pt">&#160;</p> <div style="text-align:center"> <div style="line-height:6.0pt;margin-top:0pt;margin-bottom:2pt;border-bottom:1.00pt solid #000000;width:21%;text-align:center;margin-left: auto;margin-right: auto">&#160;</div></div> <p style="font-size:9pt;margin-top:0pt;margin-bottom:0pt">&#160;</p>
+<table cellspacing="0" cellpadding="0" style="border-collapse:collapse; font-family:Times New Roman; font-size:10pt;width:100%;border-spacing:0;margin:0 auto">
+<tr>
+<td style="width:34%"/>
+<td style="vertical-align:bottom"/>
+<td style="width:32%"/>
+<td style="vertical-align:bottom;width:1%"/>
+<td style="width:32%"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style="vertical-align:top;text-align:center"><span style="font-weight:bold"><span style="text-decoration:underline"><ix:nonNumeric name="dei:EntityIncorporationStateCountryCode" contextRef="duration_2026-01-26_to_2026-01-26" format="ixt-sec:stateprovnameen" id="ixv-393">Delaware</ix:nonNumeric></span></span></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:top;text-align:center"><span style="font-weight:bold"><span style="text-decoration:underline"><ix:nonNumeric name="dei:EntityFileNumber" contextRef="duration_2026-01-26_to_2026-01-26" id="ixv-394">001-09305</ix:nonNumeric></span></span></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:top;text-align:center"><span style="font-weight:bold"><span style="text-decoration:underline"><ix:nonNumeric name="dei:EntityTaxIdentificationNumber" contextRef="duration_2026-01-26_to_2026-01-26" id="ixv-395">43-1273600</ix:nonNumeric></span></span></td></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style="vertical-align:top;text-align:center">(State of incorporation)</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:top;text-align:center">(Commission File Number)</td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:top;text-align:center"> <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;text-align:center">(IRS Employer</p> <p style="margin-top:0pt; margin-bottom:1pt; font-size:10pt; font-family:Times New Roman;text-align:center">Identification No.)</p></td></tr></table> <p style="margin-top:6pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;font-weight:bold;text-align:center"><ix:nonNumeric name="dei:EntityAddressAddressLine1" contextRef="duration_2026-01-26_to_2026-01-26" id="ixv-396">501 N. Broadway</ix:nonNumeric>, <ix:nonNumeric name="dei:EntityAddressCityOrTown" contextRef="duration_2026-01-26_to_2026-01-26" id="ixv-397">St. Louis</ix:nonNumeric>, <ix:nonNumeric name="dei:EntityAddressStateOrProvince" contextRef="duration_2026-01-26_to_2026-01-26" format="ixt-sec:stateprovnameen" id="ixv-398">Missouri</ix:nonNumeric> <ix:nonNumeric name="dei:EntityAddressPostalZipCode" contextRef="duration_2026-01-26_to_2026-01-26" id="ixv-399">63102-2188</ix:nonNumeric></p> <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;text-align:center">(Address of principal executive offices and zip code)</p> <p style="margin-top:6pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;font-weight:bold;text-align:center"><ix:nonNumeric name="dei:CityAreaCode" contextRef="duration_2026-01-26_to_2026-01-26" id="ixv-400">(314)</ix:nonNumeric> <span style="white-space:nowrap"><ix:nonNumeric name="dei:LocalPhoneNumber" contextRef="duration_2026-01-26_to_2026-01-26" id="ixv-401">342-2000</ix:nonNumeric></span></p> <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;text-align:center">(Registrant&#8217;s telephone number, including area code)</p> <p style="margin-top:6pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;font-weight:bold;text-align:center">Not Applicable</p> <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;text-align:center">(Former name or former address, if changed since last report)</p> <p style="font-size:4pt;margin-top:0pt;margin-bottom:0pt">&#160;</p> <div style="text-align:center"> <div style="line-height:6.0pt;margin-top:0pt;margin-bottom:2pt;border-bottom:1.00pt solid #000000;width:21%;text-align:center;margin-left: auto;margin-right: auto">&#160;</div></div> <p style="margin-top:6pt; margin-bottom:0pt; font-size:9pt; font-family:Times New Roman;text-align:justify">Securities registered pursuant to Section&#160;12(b) of the Act:</p> <p style="font-size:4pt;margin-top:0pt;margin-bottom:0pt">&#160;</p>
+<table cellspacing="0" cellpadding="0" style="border-collapse:collapse; font-family:Times New Roman; font-size:8pt;width:100%;border-spacing:0;margin:0 auto">
+<tr>
+<td style="width:56%"/>
+<td style="vertical-align:bottom;width:1%"/>
+<td style="width:20%"/>
+<td style="vertical-align:bottom;width:1%"/>
+<td style="width:22%"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:8pt">
+<td style="border-bottom:1.00pt solid #000000;vertical-align:bottom;white-space:nowrap;text-align:center"> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Title of Each Class</p></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="border-bottom:1.00pt solid #000000;vertical-align:bottom;text-align:center"> <p style="margin-top:0pt; margin-bottom:0pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Trading</p> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Symbol(s)</p></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="border-bottom:1.00pt solid #000000;vertical-align:bottom;text-align:center"> <p style="margin-top:0pt; margin-bottom:1pt; font-size:8pt; font-family:Times New Roman;font-weight:bold;text-align:center">Name&#160;of&#160;Each&#160;Exchange&#160;on&#160;Which<br/>Registered</p></td></tr>
+<tr style="font-size:1pt">
+<td style="height:6pt"/>
+<td style="height:6pt" colspan="2"/>
+<td style="height:6pt" colspan="2"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:8pt">
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:8pt;text-align:justify"><ix:nonNumeric name="dei:Security12bTitle" contextRef="duration_2026-01-26_to_2026-01-26_us-gaap-StatementClassOfStockAxis_us-gaap-CommonStockMember" id="ixv-402">Common Stock, $0.15 par value per share</ix:nonNumeric></p></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="vertical-align:bottom;text-align:center"><ix:nonNumeric name="dei:TradingSymbol" contextRef="duration_2026-01-26_to_2026-01-26_us-gaap-StatementClassOfStockAxis_us-gaap-CommonStockMember" id="ixv-403">SF</ix:nonNumeric></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="vertical-align:bottom;text-align:center"><ix:nonNumeric name="dei:SecurityExchangeName" contextRef="duration_2026-01-26_to_2026-01-26_us-gaap-StatementClassOfStockAxis_us-gaap-CommonStockMember" format="ixt-sec:exchnameen" id="ixv-404">New York Stock Exchange</ix:nonNumeric></td></tr>
+<tr style="font-size:1pt">
+<td style="height:1.5pt"/>
+<td style="height:1.5pt" colspan="2"/>
+<td style="height:1.5pt" colspan="2"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:8pt">
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:8pt;text-align:justify"><ix:nonNumeric name="dei:Security12bTitle" contextRef="duration_2026-01-26_to_2026-01-26_us-gaap-StatementClassOfStockAxis_us-gaap-SeriesBPreferredStockMember" id="ixv-111">Depository Shares, each representing 1/1,000th interest in a share of 6.25% <span style="white-space:nowrap">Non-Cumulative</span> Preferred Stock, Series B</ix:nonNumeric></p></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="vertical-align:bottom;text-align:center"><span style="white-space:nowrap"><ix:nonNumeric name="dei:TradingSymbol" contextRef="duration_2026-01-26_to_2026-01-26_us-gaap-StatementClassOfStockAxis_us-gaap-SeriesBPreferredStockMember" id="ixv-405">SF-PB</ix:nonNumeric></span></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="vertical-align:bottom;text-align:center"><ix:nonNumeric name="dei:SecurityExchangeName" contextRef="duration_2026-01-26_to_2026-01-26_us-gaap-StatementClassOfStockAxis_us-gaap-SeriesBPreferredStockMember" format="ixt-sec:exchnameen" id="ixv-406">New York Stock Exchange</ix:nonNumeric></td></tr>
+<tr style="font-size:1pt">
+<td style="height:1.5pt"/>
+<td style="height:1.5pt" colspan="2"/>
+<td style="height:1.5pt" colspan="2"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:8pt">
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:8pt;text-align:justify"><ix:nonNumeric name="dei:Security12bTitle" contextRef="duration_2026-01-26_to_2026-01-26_us-gaap-StatementClassOfStockAxis_us-gaap-SeriesCPreferredStockMember" id="ixv-125">Depository Shares, each representing 1/1,000th interest in a share of 6.125% <span style="white-space:nowrap">Non-Cumulative</span> Preferred Stock, Series C</ix:nonNumeric></p></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="vertical-align:bottom;text-align:center"><span style="white-space:nowrap"><ix:nonNumeric name="dei:TradingSymbol" contextRef="duration_2026-01-26_to_2026-01-26_us-gaap-StatementClassOfStockAxis_us-gaap-SeriesCPreferredStockMember" id="ixv-407">SF-PC</ix:nonNumeric></span></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="vertical-align:bottom;text-align:center"><ix:nonNumeric name="dei:SecurityExchangeName" contextRef="duration_2026-01-26_to_2026-01-26_us-gaap-StatementClassOfStockAxis_us-gaap-SeriesCPreferredStockMember" format="ixt-sec:exchnameen" id="ixv-408">New York Stock Exchange</ix:nonNumeric></td></tr>
+<tr style="font-size:1pt">
+<td style="height:1.5pt"/>
+<td style="height:1.5pt" colspan="2"/>
+<td style="height:1.5pt" colspan="2"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:8pt">
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:8pt;text-align:justify"><ix:nonNumeric name="dei:Security12bTitle" contextRef="duration_2026-01-26_to_2026-01-26_us-gaap-StatementClassOfStockAxis_us-gaap-SeriesDPreferredStockMember" id="ixv-139">Depository Shares, each representing 1/1,000th interest in a share of 4.50% <span style="white-space:nowrap">Non-Cumulative</span> Preferred Stock, Series D</ix:nonNumeric></p></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="vertical-align:bottom;text-align:center"><span style="white-space:nowrap"><ix:nonNumeric name="dei:TradingSymbol" contextRef="duration_2026-01-26_to_2026-01-26_us-gaap-StatementClassOfStockAxis_us-gaap-SeriesDPreferredStockMember" id="ixv-409">SF-PD</ix:nonNumeric></span></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="vertical-align:bottom;text-align:center"><ix:nonNumeric name="dei:SecurityExchangeName" contextRef="duration_2026-01-26_to_2026-01-26_us-gaap-StatementClassOfStockAxis_us-gaap-SeriesDPreferredStockMember" format="ixt-sec:exchnameen" id="ixv-410">New York Stock Exchange</ix:nonNumeric></td></tr>
+<tr style="font-size:1pt">
+<td style="height:3.75pt"/>
+<td style="height:3.75pt" colspan="2"/>
+<td style="height:3.75pt" colspan="2"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:8pt">
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:8pt;text-align:justify"><ix:nonNumeric name="dei:Security12bTitle" contextRef="duration_2026-01-26_to_2026-01-26_us-gaap-StatementClassOfStockAxis_sfb-M5.20SeniorNotesDue2047Member" id="ixv-411">5.20% Senior Notes due 2047</ix:nonNumeric></p></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="vertical-align:bottom;text-align:center"><ix:nonNumeric name="dei:TradingSymbol" contextRef="duration_2026-01-26_to_2026-01-26_us-gaap-StatementClassOfStockAxis_sfb-M5.20SeniorNotesDue2047Member" id="ixv-412">SFB</ix:nonNumeric></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="vertical-align:bottom;text-align:center"><ix:nonNumeric name="dei:SecurityExchangeName" contextRef="duration_2026-01-26_to_2026-01-26_us-gaap-StatementClassOfStockAxis_sfb-M5.20SeniorNotesDue2047Member" format="ixt-sec:exchnameen" id="ixv-413">New York Stock Exchange</ix:nonNumeric></td></tr></table> <p style="margin-top:4pt; margin-bottom:0pt; font-size:9pt; font-family:Times New Roman;text-align:justify">Check the appropriate box below if the Form <span style="white-space:nowrap">8-K</span> filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions (see General Instruction A.2. below):</p> <p style="font-size:4pt;margin-top:0pt;margin-bottom:0pt">&#160;</p>
+<table style="border-collapse:collapse; font-family:Times New Roman; font-size:9pt;border-spacing:0;width:100%" cellpadding="0" cellspacing="0">
+<tr style="page-break-inside:avoid">
+<td style="width:4%;vertical-align:top;text-align:justify"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:9pt;text-align:justify"><ix:nonNumeric name="dei:WrittenCommunications" contextRef="duration_2026-01-26_to_2026-01-26" format="ixt-sec:boolballotbox" id="ixv-414">&#9744;</ix:nonNumeric></p></td>
+<td style="vertical-align:top;text-align:left"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-size:9pt; font-family:Times New Roman;text-align:justify">Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</p></td></tr></table>
+<table style="border-collapse:collapse; font-family:Times New Roman; font-size:9pt;border-spacing:0;width:100%" cellpadding="0" cellspacing="0">
+<tr style="page-break-inside:avoid">
+<td style="width:4%;vertical-align:top;text-align:justify"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:9pt;text-align:justify"><ix:nonNumeric name="dei:SolicitingMaterial" contextRef="duration_2026-01-26_to_2026-01-26" format="ixt-sec:boolballotbox" id="ixv-415">&#9744;</ix:nonNumeric></p></td>
+<td style="vertical-align:top;text-align:left"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-size:9pt; font-family:Times New Roman;text-align:justify">Soliciting material pursuant to Rule <span style="white-space:nowrap">14a-12</span> under the Exchange Act (17 CFR <span style="white-space:nowrap">240.14a-12)</span></p></td></tr></table>
+<table style="border-collapse:collapse; font-family:Times New Roman; font-size:9pt;border-spacing:0;width:100%" cellpadding="0" cellspacing="0">
+<tr style="page-break-inside:avoid">
+<td style="width:4%;vertical-align:top;text-align:justify"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:9pt;text-align:justify"><ix:nonNumeric name="dei:PreCommencementTenderOffer" contextRef="duration_2026-01-26_to_2026-01-26" format="ixt-sec:boolballotbox" id="ixv-416">&#9744;</ix:nonNumeric></p></td>
+<td style="vertical-align:top;text-align:left"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-size:9pt; font-family:Times New Roman;text-align:justify"><span style="white-space:nowrap">Pre-commencement</span> communications pursuant to Rule <span style="white-space:nowrap">14d-2(b)</span> under the Exchange Act (17 CFR <span style="white-space:nowrap">240.14d-2(b))</span></p></td></tr></table>
+<table style="border-collapse:collapse; font-family:Times New Roman; font-size:9pt;border-spacing:0;width:100%" cellpadding="0" cellspacing="0">
+<tr style="page-break-inside:avoid">
+<td style="width:4%;vertical-align:top;text-align:justify"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:9pt;text-align:justify"><ix:nonNumeric name="dei:PreCommencementIssuerTenderOffer" contextRef="duration_2026-01-26_to_2026-01-26" format="ixt-sec:boolballotbox" id="ixv-417">&#9744;</ix:nonNumeric></p></td>
+<td style="vertical-align:top;text-align:left"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-size:9pt; font-family:Times New Roman;text-align:justify"><span style="white-space:nowrap">Pre-commencement</span> communications pursuant to Rule <span style="white-space:nowrap">13e-4(c)</span> under the Exchange Act (17 CFR <span style="white-space:nowrap">240.13e-4(c))</span></p></td></tr></table> <p style="margin-top:4pt; margin-bottom:0pt; font-size:9pt; font-family:Times New Roman;text-align:justify">Indicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this chapter) or <span style="white-space:nowrap">Rule&#160;12b-2</span> of the Securities Exchange Act of 1934 <span style="white-space:nowrap">(&#167;240.12b-2</span> of this chapter).</p> <p style="margin-top:4pt; margin-bottom:0pt; font-size:9pt; font-family:Times New Roman;text-align:justify">Emerging growth company <ix:nonNumeric name="dei:EntityEmergingGrowthCompany" contextRef="duration_2026-01-26_to_2026-01-26" format="ixt-sec:boolballotbox" id="ixv-418">&#9744;</ix:nonNumeric></p> <p style="margin-top:4pt; margin-bottom:0pt; font-size:9pt; font-family:Times New Roman;text-align:justify">If an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section&#160;13(a) of the Exchange Act. &#9744;</p> <p style="font-size:10pt;margin-top:0pt;margin-bottom:0pt">&#160;</p> <div style="line-height:2.0pt;margin-top:0pt;margin-bottom:0pt;border-bottom:1.00pt solid #000000">&#160;</div> <div style="line-height:3.0pt;margin-top:0pt;margin-bottom:2pt;border-bottom:2.00pt solid #000000">&#160;</div></div></div>
+
+<p style="margin-top:1em; margin-bottom:0em; page-break-before:always"> </p>
+<hr style="color:#999999;height:3px;width:100%;clear:both"/>
+
+<div style="text-align:center"><div style="width:8.5in;text-align:left;margin-left: auto;margin-right: auto">
+ <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;font-weight:bold;text-align:justify">Item&#8201;2.02 Results of Operations and Financial Condition. </p> <p style="margin-top:6pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;text-align:justify">On January&#160;28, 2026, Stifel Financial Corp. (the &#8220;Company&#8221;) reported its financial results for the quarter ended December&#160;31, 2025. A copy of the press release containing this information is attached as Exhibit 99.1 to this Report on Form <span style="white-space:nowrap">8-K.</span> </p> <p style="margin-top:12pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;text-align:justify">In addition, a copy of the Company&#8217;s Financial Supplement for the quarter ended December&#160;31, 2025, is attached as Exhibit 99.2 to this Report on <span style="white-space:nowrap">Form&#160;8-K.</span> </p> <p style="margin-top:12pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;text-align:justify">On Wednesday, January&#160;28, 2026, at 9:30 a.m. Eastern time, the Company will hold a conference call to discuss its financial results and other related matters. A copy of the presentation for the conference call is attached as Exhibit 99.3 to this Report on Form <span style="white-space:nowrap">8-K.</span> </p> <p style="margin-top:18pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;font-weight:bold;text-align:justify">Item&#8201;8.01 Other Events. </p> <p style="margin-top:6pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;text-align:justify">On January&#160;26, 2026, the Company&#8217;s Board of Directors declared a three-for-two stock split in the form of a 50% stock dividend to be distributed on February&#160;26, 2026, to shareholders of record as of the close of business on February 12, 2026. Shareholders will receive one additional share of Company common stock for every two shares owned as of the close of business on the record date. Cash will be distributed in lieu of fractional shares based on the closing price on the record date. </p> <p style="margin-top:12pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;text-align:justify">The exhibits are being furnished pursuant to Item 2.02, and the information contained therein shall not be deemed &#8220;filed&#8221; for the purposes of Section&#160;18 of the Securities Exchange Act of 1934, as amended (the &#8220;Exchange Act&#8221;), or otherwise subject to the liabilities of that Section, nor shall it be deemed incorporated by reference into any filing of the Company under the Securities Act of 1933, as amended, or the Exchange Act. </p> <p style="margin-top:18pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;font-weight:bold;text-align:justify">Item&#8201;9.01 Financial Statements and Exhibits. </p> <p style="margin-top:6pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;text-align:justify">(d) Exhibits. </p> <p style="font-size:20pt;margin-top:0pt;margin-bottom:0pt">&#160;</p>
+<table cellspacing="0" cellpadding="0" style="BORDER-COLLAPSE:COLLAPSE; font-family:Times New Roman; font-size:10pt;width:100%;border-spacing:0;margin:0 auto">
+
+
+<tr>
+
+<td/>
+
+<td style="vertical-align:bottom;width:3%"/>
+<td style="width:85%"/></tr>
+
+
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style="vertical-align:top;white-space:nowrap"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:10pt;text-align:justify"><span style="text-decoration:underline">Exhibit&#160;Number</span></p></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; text-indent:0.50em; font-size:10pt; font-family:Times New Roman;text-align:justify"><span style="text-decoration:underline">Description</span></p></td></tr>
+<tr style="font-size:1pt">
+<td style="height:12pt"/>
+<td style="height:12pt" colspan="2"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style="vertical-align:top;white-space:nowrap"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:10pt;text-align:justify">&#8195;99.1</p></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:10pt;text-align:justify"><a href="d28114dex991.htm">Press release dated January&#160;28, 2026. </a></p></td></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style="vertical-align:top;white-space:nowrap"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:10pt;text-align:justify">&#8195;99.2</p></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:10pt;text-align:justify"><a href="d28114dex992.htm">Financial Supplement for the quarter ended December&#160;31, 2025. </a></p></td></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style="vertical-align:top;white-space:nowrap"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:10pt;text-align:justify">&#8195;99.3</p></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:10pt;text-align:justify"><a href="d28114dex993.htm">Financial Results Presentation dated January&#160;28, 2026. </a></p></td></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style="vertical-align:top;white-space:nowrap"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:10pt;text-align:justify">&#8195;104</p></td>
+<td style="vertical-align:bottom">&#160;&#160;</td>
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:10pt;text-align:justify">Cover Page Interactive Data File (embedded within the Inline XBRL document).</p></td></tr>
+</table> <p style="font-size:18pt; margin-top:0pt; margin-bottom:0pt">&#160;</p>
+ <p style="margin-top:0pt;margin-bottom:0pt ; font-size:8pt">&#160;</p> <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;text-align:center">2 </p>
+
+</div></div>
+
+
+
+<p style="margin-top:1em; margin-bottom:0em; page-break-before:always"> </p>
+<hr style="color:#999999;height:3px;width:100%;clear:both"/>
+
+<div style="text-align:center"><div style="width:8.5in;text-align:left;margin-left: auto;margin-right: auto">
+ <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;font-weight:bold;text-align:center">SIGNATURE </p> <p style="margin-top:12pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;text-align:justify">Pursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned, hereunto duly authorized. </p> <p style="font-size:12pt;margin-top:0pt;margin-bottom:0pt">&#160;</p>
+<table cellspacing="0" cellpadding="0" style="BORDER-COLLAPSE:COLLAPSE; font-family:Times New Roman; font-size:10pt;width:100%;border-spacing:0">
+
+
+<tr>
+
+<td style="width:36%"/>
+
+<td style="vertical-align:bottom;width:1%"/>
+<td style="width:4%"/>
+
+<td style="vertical-align:bottom"/>
+<td style="width:5%"/>
+
+<td style="vertical-align:bottom;width:1%"/>
+<td style="width:36%"/>
+
+<td style="vertical-align:bottom;width:1%"/>
+<td style="width:15%"/></tr>
+
+
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:11pt">
+<td style="vertical-align:top"/>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:top"/>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:top"/>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:top"> <p style="margin-top:0pt; margin-bottom:0pt; text-indent:0.50em; font-size:11pt; font-family:Times New Roman;text-align:justify">STIFEL FINANCIAL CORP.</p> <p style="margin-top:0pt; margin-bottom:1pt; text-indent:0.50em; font-size:11pt; font-family:Times New Roman;text-align:justify">(Registrant)</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:top"/></tr>
+<tr style="font-size:1pt">
+<td style="height:12pt" colspan="3"/>
+<td style="height:12pt" colspan="2"/>
+<td style="height:12pt" colspan="2"/>
+<td style="height:12pt" colspan="2"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style="vertical-align:bottom" colspan="3"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:10pt;text-align:justify">Date: January&#160;28, 2026</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:10pt;text-align:justify">By:</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom"> <p style="margin-top:0pt; margin-bottom:1pt; border-bottom:1px solid #000000; font-size:10pt; font-family:Times New Roman;text-align:justify">&#8199;/s/ James M. Marischen</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:10pt;text-align:justify">&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;&#8195;</p></td></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style="vertical-align:bottom"/>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom"/>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:10pt;text-align:justify">Name:</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom"> <p style=" margin-top:0pt ; margin-bottom:0pt; text-indent:0.50em; font-size:10pt; font-family:Times New Roman;text-align:justify">James M. Marischen</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom"/></tr>
+<tr style="page-break-inside:avoid ; font-family:Times New Roman; font-size:10pt">
+<td style="vertical-align:bottom"/>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom"/>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:top"> <p style=" margin-top:0pt ; margin-bottom:0pt; font-family:Times New Roman; font-size:10pt;text-align:justify">Title:</p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom"> <p style=" margin-top:0pt ; margin-bottom:0pt; text-indent:0.50em; font-size:10pt; font-family:Times New Roman;text-align:justify"><span style="font-style:italic">Chief Financial Officer</span></p></td>
+<td style="vertical-align:bottom">&#160;</td>
+<td style="vertical-align:bottom"/></tr>
+</table>
+ <p style="margin-top:0pt;margin-bottom:0pt ; font-size:8pt">&#160;</p> <p style="margin-top:0pt; margin-bottom:0pt; font-size:10pt; font-family:Times New Roman;text-align:center">3 </p>
+
+</div></div>
+
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body></html>

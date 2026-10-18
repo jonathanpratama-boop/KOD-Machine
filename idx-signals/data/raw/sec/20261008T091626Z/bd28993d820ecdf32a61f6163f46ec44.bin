@@ -1,0 +1,385 @@
+<?xml version='1.0' encoding='ASCII'?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:xbrldi="http://xbrl.org/2006/xbrldi" xmlns:xbrldt="http://xbrl.org/2005/xbrldt" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:ix="http://www.xbrl.org/2013/inlineXBRL" xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2015-02-26" xmlns:ixt-sec="http://www.sec.gov/inlineXBRL/transformation/2015-08-31" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:dei="http://xbrl.sec.gov/dei/2023" xmlns:us-gaap="http://fasb.org/us-gaap/2023" xmlns:us-roles="http://fasb.org/us-roles/2023" xmlns:country="http://xbrl.sec.gov/country/2023" xmlns:srt="http://fasb.org/srt/2023" xmlns:angi="http://angihomeservices.com/20250306">
+<head>
+     <title></title>
+<meta http-equiv="Content-Type" content="text/html"/>
+</head>
+<!-- Field: Set; Name: xdx; ID: xdx_02C_US%2DGAAP%2D2023 -->
+<!-- Field: Set; Name: xdx; ID: xdx_03A_angi_angihomeservices.com_20250306 -->
+<!-- Field: Set; Name: xdx; ID: xdx_046_20250306_20250306 -->
+<!-- Field: Set; Name: xdx; ID: xdx_059_edei%2D%2DAmendmentFlag_false -->
+<!-- Field: Set; Name: xdx; ID: xdx_05D_edei%2D%2DEntityCentralIndexKey_0001705110 -->
+<!-- Field: Set; Name: xdx; ID: xdx_06B_USD_1_iso4217%2D%2DUSD -->
+<!-- Field: Set; Name: xdx; ID: xdx_062_Shares_2_xbrli%2D%2Dshares -->
+<!-- Field: Set; Name: xdx; ID: xdx_06D_USDPShares_3_iso4217%2D%2DUSD_xbrli%2D%2Dshares -->
+<body style="font: 10pt Times New Roman, Times, Serif">
+<div style="display: none">
+<ix:header>
+ <ix:hidden>
+  <ix:nonNumeric contextRef="AsOf2025-03-06" id="Fact000003" name="dei:AmendmentFlag">false</ix:nonNumeric>
+  <ix:nonNumeric contextRef="AsOf2025-03-06" id="Fact000004" name="dei:EntityCentralIndexKey">0001705110</ix:nonNumeric>
+  </ix:hidden>
+ <ix:references>
+  <link:schemaRef xlink:href="angi-20250306.xsd" xlink:type="simple"/>
+  </ix:references>
+ <ix:resources>
+    <xbrli:context id="AsOf2025-03-06">
+      <xbrli:entity>
+        <xbrli:identifier scheme="http://www.sec.gov/CIK">0001705110</xbrli:identifier>
+      </xbrli:entity>
+      <xbrli:period>
+        <xbrli:startDate>2025-03-06</xbrli:startDate>
+        <xbrli:endDate>2025-03-06</xbrli:endDate>
+      </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="USD">
+      <xbrli:measure>iso4217:USD</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="Shares">
+      <xbrli:measure>xbrli:shares</xbrli:measure>
+    </xbrli:unit>
+    <xbrli:unit id="USDPShares">
+      <xbrli:divide>
+        <xbrli:unitNumerator>
+          <xbrli:measure>iso4217:USD</xbrli:measure>
+        </xbrli:unitNumerator>
+        <xbrli:unitDenominator>
+          <xbrli:measure>xbrli:shares</xbrli:measure>
+        </xbrli:unitDenominator>
+      </xbrli:divide>
+    </xbrli:unit>
+  </ix:resources>
+ </ix:header>
+</div>
+
+
+<p style="margin: 0"></p>
+
+<p style="text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 2pt solid; border-bottom: Black 1pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page --><p style="text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>UNITED STATES</b></p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SECURITIES AND EXCHANGE COMMISSION</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Washington, D.C. 20549</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>FORM <span id="xdx_90E_edei--DocumentType_c20250306__20250306_zTG8aoobK2L"><ix:nonNumeric contextRef="AsOf2025-03-06" id="Fact000009" name="dei:DocumentType">8-K</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>CURRENT REPORT</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>Pursuant to Section 13 OR 15(d) of the
+<br/>
+Securities Exchange Act of 1934</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Date of Report (Date of earliest event reported):
+<b><span id="xdx_909_edei--DocumentPeriodEndDate_c20250306__20250306_zgfkG506fwc4"><ix:nonNumeric contextRef="AsOf2025-03-06" format="ixt:datemonthdayyearen" id="Fact000010" name="dei:DocumentPeriodEndDate">March 6, 2025</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 18pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b><span id="xdx_904_edei--EntityRegistrantName_c20250306__20250306_zK1T2LqqApaf"><ix:nonNumeric contextRef="AsOf2025-03-06" id="Fact000011" name="dei:EntityRegistrantName">Angi Inc.</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Exact name of registrant as specified in its
+charter)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+<tr style="vertical-align: bottom">
+    <td style="width: 32%; font-weight: bold; text-align: center"><span id="xdx_90D_edei--EntityIncorporationStateCountryCode_c20250306__20250306_z2Midv3u6TRe"><ix:nonNumeric contextRef="AsOf2025-03-06" format="ixt-sec:stateprovnameen" id="Fact000012" name="dei:EntityIncorporationStateCountryCode">Delaware</ix:nonNumeric></span></td>
+    <td style="width: 2%; font-weight: bold">&#160;</td>
+    <td style="width: 32%; font-weight: bold; text-align: center"><span id="xdx_907_edei--EntityFileNumber_c20250306__20250306_z212eQrC9DJ5"><ix:nonNumeric contextRef="AsOf2025-03-06" id="Fact000013" name="dei:EntityFileNumber">001-38220</ix:nonNumeric></span></td>
+    <td style="width: 2%; font-weight: bold">&#160;</td>
+    <td style="width: 32%; font-weight: bold; text-align: center"><span id="xdx_90F_edei--EntityTaxIdentificationNumber_c20250306__20250306_z2usDKWw4ec4"><ix:nonNumeric contextRef="AsOf2025-03-06" id="Fact000014" name="dei:EntityTaxIdentificationNumber">82-1204801</ix:nonNumeric></span></td></tr>
+<tr style="vertical-align: bottom">
+    <td style="text-align: center">(State or other jurisdiction<br/> of incorporation)</td>
+    <td>&#160;</td>
+    <td style="text-align: center">(Commission<br/> File No.)</td>
+    <td>&#160;</td>
+    <td style="text-align: center">(I.R.S. Employer<br/> Identification No.)</td></tr>
+</table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellpadding="0" cellspacing="0" style="font: 10pt Times New Roman, Times, Serif; border-collapse: collapse; width: 100%">
+<tr style="vertical-align: bottom">
+    <td style="width: 66%; text-align: center">
+        <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><span id="xdx_90D_edei--EntityAddressAddressLine1_c20250306__20250306_zj6vMCsHxzmh"><b><ix:nonNumeric contextRef="AsOf2025-03-06" id="Fact000015" name="dei:EntityAddressAddressLine1">3601
+        Walnut Street</ix:nonNumeric></b></span><b>, <span id="xdx_901_edei--EntityAddressAddressLine2_c20250306__20250306_zL00noA73NEa"><ix:nonNumeric contextRef="AsOf2025-03-06" id="Fact000016" name="dei:EntityAddressAddressLine2">Suite 700</ix:nonNumeric> </span></b><b><span id="xdx_908_edei--EntityAddressCityOrTown_c20250306__20250306_zEjmlW7ANu51"><ix:nonNumeric contextRef="AsOf2025-03-06" id="Fact000017" name="dei:EntityAddressCityOrTown">Denver</ix:nonNumeric></span></b><b>, <span id="xdx_905_edei--EntityAddressStateOrProvince_c20250306__20250306_zjoOUIyX9o16"><ix:nonNumeric contextRef="AsOf2025-03-06" id="Fact000018" name="dei:EntityAddressStateOrProvince">CO</ix:nonNumeric></span></b></p></td>
+    <td style="width: 2%; font-weight: bold">&#160;</td>
+    <td style="vertical-align: bottom; width: 32%; font-weight: bold; text-align: center"><span id="xdx_902_edei--EntityAddressPostalZipCode_c20250306__20250306_zRUipTMIBBc3"><ix:nonNumeric contextRef="AsOf2025-03-06" id="Fact000019" name="dei:EntityAddressPostalZipCode">80205</ix:nonNumeric></span></td></tr>
+<tr style="vertical-align: bottom">
+    <td style="text-align: center">(Address of principal executive offices)</td>
+    <td>&#160;</td>
+    <td style="text-align: center">(Zip Code)</td></tr>
+</table>
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: center; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">Registrant&#8217;s telephone number, including
+area code: <b>(<span id="xdx_90D_edei--CityAreaCode_c20250306__20250306_zRQgS5SnIeui"><ix:nonNumeric contextRef="AsOf2025-03-06" id="Fact000020" name="dei:CityAreaCode">303</ix:nonNumeric></span>) <span id="xdx_900_edei--LocalPhoneNumber_c20250306__20250306_zWmqykvnECk3"><ix:nonNumeric contextRef="AsOf2025-03-06" id="Fact000021" name="dei:LocalPhoneNumber">963-7200</ix:nonNumeric></span></b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">(Former name or former address, if changed
+since last report)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-indent: 0in; text-align: justify">Check the appropriate box below if the Form 8-K filing is intended
+to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin-top: 0pt; margin-bottom: 0pt"><span id="xdx_90F_edei--WrittenCommunications_c20250306__20250306_zcJe7KX5XO4f" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2025-03-06" format="ixt:booleanfalse" id="Fact000022" name="dei:WrittenCommunications">&#168;</ix:nonNumeric></span>&#160;Written
+communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin-top: 0pt; margin-bottom: 0pt"><span id="xdx_908_edei--SolicitingMaterial_c20250306__20250306_zcJYgJleHhV1" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2025-03-06" format="ixt:booleanfalse" id="Fact000023" name="dei:SolicitingMaterial">&#168;</ix:nonNumeric></span>&#160;Soliciting
+material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin-top: 0pt; margin-bottom: 0pt"><span id="xdx_90C_edei--PreCommencementTenderOffer_c20250306__20250306_zfLpLSxgPvi2" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2025-03-06" format="ixt:booleanfalse" id="Fact000024" name="dei:PreCommencementTenderOffer">&#168;</ix:nonNumeric></span>&#160;Pre-commencement
+communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin-top: 0pt; margin-bottom: 0pt"><span style="font-family: Wingdings"><span id="xdx_90C_edei--PreCommencementIssuerTenderOffer_c20250306__20250306_zasUjM46oji4"><ix:nonNumeric contextRef="AsOf2025-03-06" format="ixt:booleanfalse" id="Fact000025" name="dei:PreCommencementIssuerTenderOffer">&#168;</ix:nonNumeric></span></span>
+Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0 0pt 0.25in; text-indent: -0.25in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">Securities registered pursuant to Section 12(b) of the Act:</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+<tr style="vertical-align: top">
+    <td style="width: 40%; padding-right: 5.4pt; padding-left: 5.4pt; text-align: center">(Title of each class)</td>
+    <td style="width: 20%; padding-right: 5.4pt; padding-left: 5.4pt; text-align: center">(Trading Symbol(s))</td>
+    <td style="width: 40%; padding-right: 5.4pt; padding-left: 5.4pt; text-align: center">(Name of each exchange on which registered)</td></tr>
+<tr style="vertical-align: top">
+    <td style="padding-right: 5.4pt; padding-left: 5.4pt; text-align: center"><span id="xdx_90F_edei--Security12bTitle_c20250306__20250306_zK6JbmC2Rcxf"><b><ix:nonNumeric contextRef="AsOf2025-03-06" id="Fact000026" name="dei:Security12bTitle">Class
+    A Common Stock, par value $0.001</ix:nonNumeric></b></span></td>
+    <td style="padding-right: 5.4pt; padding-left: 5.4pt; text-align: center"><span id="xdx_90F_edei--TradingSymbol_c20250306__20250306_zjfGl4whk4Gc"><b><ix:nonNumeric contextRef="AsOf2025-03-06" id="Fact000027" name="dei:TradingSymbol">ANGI</ix:nonNumeric></b></span></td>
+    <td style="padding-right: 5.4pt; padding-left: 5.4pt"><p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>The
+                                            <span id="xdx_909_edei--SecurityExchangeName_c20250306__20250306_zcP8ApH3Qm6b"><ix:nonNumeric contextRef="AsOf2025-03-06" format="ixt-sec:exchnameen" id="Fact000028" name="dei:SecurityExchangeName">Nasdaq</ix:nonNumeric></span></b><b>
+                                            Stock Market LLC</b></p>
+        <p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>(Nasdaq Global Select Market)</b></p></td></tr>
+</table>
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: left; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Indicate by check mark
+whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (&#167;230.405 of this
+chapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (&#167;240.12b-2 of this chapter).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: justify">Emerging growth company <span id="xdx_909_edei--EntityEmergingGrowthCompany_c20250306__20250306_z489kuK4YJyj" style="font-family: Wingdings"><ix:nonNumeric contextRef="AsOf2025-03-06" format="ixt:booleanfalse" id="Fact000029" name="dei:EntityEmergingGrowthCompany">&#168;</ix:nonNumeric></span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; text-align: justify; margin-top: 0pt; margin-bottom: 0pt">If an emerging growth company, indicate by check
+mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting
+standards provided pursuant to Section 13(a) of the Exchange Act. <span style="font-family: Wingdings">&#168;</span></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<!-- Field: Rule-Page --><div style="margin-top: 0pt; margin-bottom: 0pt; width: 100%"><div style="border-top: Black 1pt solid; border-bottom: Black 2pt solid; font-size: 1pt">&#160;</div></div><!-- Field: /Rule-Page --><p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"><b></b></p>
+
+<!-- Field: Page; Sequence: 1 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%">
+  <tr style="vertical-align: top">
+    <td style="width: 7%; font-size: 10pt"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Item 8.01.</b></span></td>
+    <td style="font-size: 10pt; text-align: justify; width: 93%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt"><b>Other Events.</b></span></td></tr>
+  </table>
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i><span style="text-decoration: underline">Reverse Stock Split</span></i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On March 6, 2025, the Board of Directors of Angi Inc. (&#8220;Angi&#8221;
+or the &#8220;Company&#8221;) approved an effective date of March 24, 2025 for the reverse stock split (the &#8220;Reverse Stock Split&#8221;)
+of the shares of outstanding Angi Class A common stock, par value $0.001 per share (&#8220;Angi Class A common stock&#8221;) and Angi
+Class B common stock, par value $0.001 per share (&#8220;Angi Class B common stock) at a ratio of one-for-ten. The Reverse Stock Split
+was previously approved by the Angi Board of Directors and by the requisite Angi stockholder approval, as described in the Information
+Statement on Schedule 14C (the &#8220;Information Statement&#8221;) filed by the Company with the Securities and Exchange Commission (the
+&#8220;SEC&#8221;) on February 18, 2025.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i><span style="text-decoration: underline">Spin-Off from IAC Inc.</span></i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify"><i>&#160;</i></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">On March 7, 2025, the Board of Directors of IAC
+Inc. (&#8220;IAC&#8221;), the controlling stockholder of Angi, approved the planned spin-off of Angi and declared a special dividend (the
+&#8220;Distribution&#8221;) of all of the shares of Angi capital stock held by IAC to the holders of IAC common stock, par value $0.0001
+per share (the &#8220;IAC common stock&#8221;), and IAC Class B common stock, par value $0.0001 per share (the &#8220;IAC Class B common
+stock&#8221; and together with the IAC common stock, &#8220;IAC Stock&#8221;).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">The special dividend will be paid by IAC through the distribution of
+shares of Angi Class A common stock owned by IAC on the distribution date of March 31, 2025 (which shares of Angi Class A common stock
+will include all shares of Angi Class B common stock previously owned by IAC that IAC will convert to shares of Angi Class A common stock
+on a one-for-one basis prior to the Distribution) to the holders of record of IAC Stock as of the close of business on March 25, 2025
+(the &#8220;Record Date&#8221;), on a pro rata basis, subject to the the satisfaction or waiver of certain conditions to the Distribution,
+as described in the Registration Statement on Form S-3 (File No. 333-284531) (the &#8220;Form S-3&#8221;) filed by the Company and declared
+effective by the SEC on February 14, 2025 in connection with the Distribution. After the completion of the Distribution, IAC will no longer
+own any shares of Angi capital stock.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">Based on the number of shares of IAC Stock
+issued and outstanding and the number of shares of Angi capital stock owned by IAC, in each case as of March 7, 2025 and adjusted
+for the anticipated occurrence of the contemplated Reverse Stock Split prior to the completion of the Distribution, IAC has informed
+Angi that approximately 0.5178 shares of Angi Class A common stock would be distributed in respect of each share of IAC Stock held
+by IAC stockholders as of the Record Date (were the Distribution to occur based on shares owned and outstanding as of March 7,
+2025). The number of outstanding shares of IAC Stock and number of shares of Angi capital stock held by IAC may change prior to the
+Record Date and the completion of the Distribution, and therefore the actual number of shares of Angi Class A common stock to be
+distributed per share of IAC Stock is not yet determinable. No fractional shares of Angi Class&#160;A common stock will be received
+by IAC stockholders. Instead, IAC stockholders will receive a cash payment in lieu of any fractional share of Angi Class A common
+stock that they otherwise would have received.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">IAC expects that, beginning on or shortly before the Record Date
+and continuing up to and through the distribution date of March 31, 2025, Angi Class A common stock will continue to trade on Nasdaq
+under the ticker &#8220;ANGI&#8221; and will also trade on a &#8220;when-issued&#8221; basis with respect to the shares that are
+anticipated to be issued in the Distribution, and there will be two markets in IAC common stock: a &#8220;regular-way&#8221; market
+(in which shares of IAC common stock will trade with an entitlement to the special dividend of shares of Angi Class A common stock)
+and an &#8220;ex-distribution&#8221; market (in which shares of IAC common stock will trade without an entitlement to the special
+dividend of shares of Angi Class A common stock).</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0"></p>
+
+<!-- Field: Page; Sequence: 2 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white"><b>Safe Harbor Statement Under the Private
+Securities Litigation Reform Act of 1995 </b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; background-color: white">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; background-color: white">This Current Report on Form 8-K may contain
+&#8220;forward-looking statements&#8221; within the meaning of the Private Securities Litigation Reform Act of 1995. The use of words
+such as &#8220;anticipates,&#8221; &#8220;estimates,&#8221; &#8220;expects,&#8221; &#8220;plans&#8221; and &#8220;believes,&#8221; among
+others, generally identify forward-looking statements. These forward-looking statements include, among others, statements relating to:
+the future financial performance of the Company and its businesses, business prospects and strategy, the contemplated Distribution and
+its anticipated benefits, the contemplated Reverse Stock Split, anticipated trends and prospects in the home services industry and other
+similar matters. Actual results could differ materially from those contained in these forward-looking statements for a variety of reasons,
+including, among others: (i) the continued migration of the home services market online, (ii) Angi&#8217;s ability to market its various
+products and services in a successful and cost-effective manner, (iii) the continued prominence of the display of links to websites offering
+Angi&#8217;s products and services in search results, (iv) Angi&#8217;s ability to expand its pre-priced offerings, while balancing the
+overall mix of service requests and directory services on Angi platforms, (v) Angi&#8217;s ability to establish and maintain relationships
+with quality and trustworthy professionals, (vi) Angi&#8217;s continued ability to develop and monetize versions of its products and services
+for mobile and other digital devices, (vii) Angi&#8217;s ability to access, share, use and protect the personal data of consumers, (viii)
+Angi&#8217;s continued ability to communicate with consumers and professionals via e-mail (or other sufficient means), (ix) Angi&#8217;s
+ability to continue to generate leads for professionals given changing requirements applicable to certain communications with consumers,
+(x) any challenge to the contractor classification or employment status of Angi&#8217;s professionals, (xi) Angi&#8217;s ability to compete,
+(xii) unstable market and economic conditions (particularly those that adversely impact advertising spending levels and consumer confidence
+and spending behavior), either generally and/or in any of the markets in which Angi&#8217;s businesses operate, as well as geopolitical
+conflicts, (xiii) Angi&#8217;s ability to maintain and/or enhance its various brands, (xiv) Angi&#8217;s ability to protect its systems,
+technology and infrastructure from cyberattacks (including cyberattacks experienced by third parties who whom Angi does business), (xv)
+the occurrence of data security breaches and/or fraud, (xvi) increased liabilities and costs related to the processing, storage, use and
+disclosure of personal and confidential user information, (xvii) the integrity, quality, efficiency and scalability of Angi&#8217;s systems,
+technology and infrastructures (and those of third parties with whom Angi does business), (xviii) changes in key personnel, (xix) various
+risks related to Angi&#8217;s relationship with IAC, (xx) Angi&#8217;s ability to generate sufficient cash to service its indebtedness,
+(xxi) certain risks related to ownership of Angi capital stock and (xxii) risks related to the completion of the contemplated Reverse
+Stock Split and the contemplated Distribution. Certain of these and other risks and uncertainties are described in Angi&#8217;s and IAC&#8217;s
+respective filings with the SEC, including the most recent Annual Reports on Form 10-K filed by Angi and IAC with the SEC on February
+28, 2025, the Form S-3, the Information Statement and subsequent reports that Angi or IAC files with the SEC. Other unknown or unpredictable
+factors that could also adversely affect Angi&#8217;s or IAC&#8217;s business, financial condition and results of operations may arise
+from time to time. It is not possible for management to predict all risks, nor can Angi assess the impact of all factors on its business
+or the extent to which any factor, or combination of factors, may cause actual results to differ materially from those expressed in any
+forward-looking statements Angi may make. Except as required by law, Angi undertakes no obligation to update any forward-looking statements
+to reflect events or circumstances after the date of such statements. You should, therefore, not rely on these forward-looking statements
+as representing Angi&#8217;s views as of any date subsequent to the date of this Current Report on Form 8-K.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: left">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: left"></p>
+
+<!-- Field: Page; Sequence: 3 -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <div style="break-before: page; margin-top: 6pt; margin-bottom: 12pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: left">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: left"></p>
+
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify">&#160;</p>
+
+
+
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: center"><b>SIGNATURES</b></p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin-top: 0pt; margin-bottom: 0pt; text-align: left">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0.5in">Pursuant to the
+requirements of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its
+behalf by the undersigned hereunto duly authorized.</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&#160;</p>
+
+<table cellspacing="0" cellpadding="0" style="font: 10pt Times New Roman, Times, Serif; width: 100%; border-collapse: collapse">
+  <tr style="vertical-align: bottom">
+    <td>&#160;</td>
+    <td colspan="2"><b>ANGI INC.</b></td></tr>
+  <tr style="vertical-align: bottom">
+    <td>&#160;</td>
+    <td colspan="2">&#160;</td></tr>
+  <tr style="vertical-align: bottom">
+    <td style="width: 50%"/>
+    <td style="width: 4%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">By:</span></td>
+    <td style="border-bottom: black 1pt solid; width: 46%"><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">/s/
+    Shannon M. Shaw&#160;&#160;</span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td>&#160;</td>
+    <td>Name:&#160;</td>
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Shannon M. Shaw</span></td></tr>
+  <tr style="vertical-align: bottom">
+    <td>&#160;</td>
+    <td>Title:&#160;</td>
+    <td>Chief Legal Officer</td></tr>
+  <tr style="vertical-align: bottom">
+    <td><span style="font-family: Times New Roman, Times, Serif; font-size: 10pt">Date: March 10, 2025</span></td>
+    <td>&#160;</td>
+    <td>&#160;</td></tr>
+  </table>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&#160;</p>
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in"></p>
+
+<!-- Field: Page; Sequence: 5; Options: Last -->
+    <div style="border-bottom: Black 1pt solid; margin-top: 12pt; margin-bottom: 6pt"><p style="margin: 0pt">&#160;</p></div>
+    <!-- Field: /Page -->
+
+<p style="font: 10pt Times New Roman, Times, Serif; margin: 0pt 0; text-align: justify; text-indent: 0in">&#160;</p>
+
+<!-- Field: Set; Name: xdx; ID: xdx_08B_extensions -->
+<!-- eJxFjV0KwjAQhE/QOyx5Fm3iD9I3LSpiFSkivoZ2lWCbLZv4dyRvaWwRl4VlmflmhOiJFS1NhQyneZ7BAeum0h4hxzMy2gKDI11vEgg3x4txnrX17fsDUwoMBmbcV6oIQmu9G4dlAvFkIIcDNQIpk+EUZlsRffWU7NmUaL3RFWhbwp6pYYNe86tLOOgnWapfbdUR2RmyCch+3MlvULFUsKO7fhBfHWRZKqJeO5FYMd2a4Fo8PdovCYsK61DnOvq/0QcAyUqC -->
+<script type="text/javascript"  src="/NHfB/hR1N/z9/AfoF/hkPQ/D5VODVcwmV8VtphY/MBUmAQ/DVxoMFQ/ZWwQB"></script></body>
+</html>
