@@ -1,0 +1,8 @@
+{
+ "manifest": "archive-20261018T174417Z.jsonl.gz",
+ "manifest_sha256": "1b51b4384e543cd3df2451ab1bb4db11e052bac6475e93acc14ed7e042db6ad9",
+ "files": 218736,
+ "bytes": 7695946088,
+ "scope": "every file under idx-signals/data that git ignores",
+ "backup_status": "PENDING: no verified copy outside the build container yet"
+}
