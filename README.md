@@ -1,9 +1,8 @@
-# KOD-Machine data archive (irreplaceable tier)
+# KOD-Machine data archive (complete)
 
-Data-only branch. It holds the untracked inputs that cannot be fetched again exactly: the Yahoo pulls (the
-provider revises history), the IDX mirror, the eToro instrument snapshot, the US universe and the panels.
-SEC and Binance data are not here: they can be downloaded again, and the manifest proves whether a re-download
-matches byte for byte.
+Data-only branch holding every untracked data file listed in the archive manifest (218,736 files, 7.70 GB):
+the Yahoo pulls, IDX mirror, eToro snapshot, US universe, panels, SEC caches and filings, and Binance pulls.
+Batches 1-3 are the inputs that cannot be fetched again exactly; batches 4-7 are SEC and Binance data.
 
 Restore and verify (on the Mac, from a clone of the repository):
 
@@ -11,10 +10,9 @@ Restore and verify (on the Mac, from a clone of the repository):
     git worktree add ../KOD-data data-archive
     sh ../KOD-data/reassemble.sh
     python3 ../KOD-data/tools/verify_archive.py \
-        ../KOD-data/idx-signals/data/manifests/archive-20261018T174417Z.jsonl.gz ../KOD-data \
-        --only data/raw/yahoo data/raw/idx_mirror data/raw/etoro data/raw/us_universe data/panel
+        ../KOD-data/idx-signals/data/manifests/archive-20261018T174417Z.jsonl.gz ../KOD-data
 
-Expect "verified N, missing 0, mismatched 0". (`data/raw/yahoo` also matches the other yahoo_* folders.)
+Expect "full archive: verified 218736, missing 0, mismatched 0".
 The backup counts as done only after that check passes on a machine other than the build container.
 
 Not in the manifest: `idx-signals/data/raw/idx_mirror_git.tar` is the IDX mirror's own git history (a nested
