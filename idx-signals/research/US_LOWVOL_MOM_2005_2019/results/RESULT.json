@@ -1,0 +1,69 @@
+{
+ "experiment": "US low-vol and momentum 2005-2019 (PROTOCOL.md), run once",
+ "tickers_with_data": 3771,
+ "months": 178,
+ "months_skipped_too_few_stocks": 0,
+ "verdicts": {
+  "H1_lowvol_Q5_minus_Q1": {
+   "months": 178,
+   "mean_monthly": -0.003092456733084374,
+   "t": -0.69551662080309,
+   "years_positive": 9,
+   "years": 15,
+   "pass": false
+  },
+  "H2_momentum_Q5_minus_Q1": {
+   "months": 178,
+   "mean_monthly": -0.0014161159909115706,
+   "t": -0.35808652130955837,
+   "years_positive": 11,
+   "years": 15,
+   "pass": false
+  },
+  "H3_universe_minus_wildest_Q1": {
+   "months": 178,
+   "mean_monthly": -0.002162077310586893,
+   "t": -0.8674021961546516,
+   "years_positive": 8,
+   "years": 15,
+   "pass": false
+  },
+  "descriptive": {
+   "calm_Q5_minus_universe_gross_monthly": -0.0009303794224974801,
+   "calm_Q5_minus_universe_net_of_30bp_monthly": -0.003930379422497481,
+   "mean_monthly_by_quintile_lowvol": [
+    0.011197924249957348,
+    0.009150280960564704,
+    0.008055309351530584,
+    0.008677788140791926,
+    0.008105467516872975
+   ],
+   "mean_monthly_by_quintile_mom": [
+    0.00984085481100331,
+    0.009148118644265013,
+    0.009010805173168903,
+    0.008758225686840388,
+    0.008424738820091739
+   ],
+   "universe_mean_monthly": 0.009035846939370455,
+   "mean_eligible_stocks": 1474.4213483146068,
+   "by_period": {
+    "2005-2009": {
+     "H1": -0.009040790206658628,
+     "H2": -0.01195663830577182
+    },
+    "2010-2019": {
+     "H1": -6.788039058898992e-05,
+     "H2": 0.0039434716268139805
+    }
+   }
+  }
+ },
+ "limits": [
+  "survivor-only universe (today's listings)",
+  "no as-traded price floor",
+  "one era, 2005-2019",
+  "gross returns for the gates; long-only net reading is descriptive"
+ ],
+ "all_pass": false
+}
