@@ -1,0 +1,13 @@
+{
+ "id": "IDX_capacity",
+ "experiment": "IDX capacity",
+ "date": "2026-10-09",
+ "hypothesis": "the E1 fill rule concealed a profitable strategy",
+ "one_sided_p": null,
+ "p_source": "re-run of E1 with a causal fill rule; not an independent hypothesis",
+ "variants_searched": 1,
+ "outcome": "FAIL",
+ "note": "",
+ "counted": false,
+ "registered": "2026-10-20"
+}

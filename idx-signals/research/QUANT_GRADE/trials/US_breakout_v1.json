@@ -1,0 +1,13 @@
+{
+ "id": "US_breakout_v1",
+ "experiment": "US breakout",
+ "date": "2026-10-09",
+ "hypothesis": "buying a 60-session high with a 5% stop beats matched entries (US, 2023)",
+ "one_sided_p": 0.8638,
+ "p_source": "derived from the reported -0.042 pts (-0.115 to +0.035), normal approximation",
+ "variants_searched": 1,
+ "outcome": "FAIL",
+ "note": "",
+ "counted": true,
+ "registered": "2026-10-20"
+}

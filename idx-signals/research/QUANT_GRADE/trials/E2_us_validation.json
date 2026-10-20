@@ -1,0 +1,13 @@
+{
+ "id": "E2_us_validation",
+ "experiment": "E2",
+ "date": "2026-10-08",
+ "hypothesis": "G2_RET30 plan beats matched random entries (US, 2023), final repaired run",
+ "one_sided_p": 0.6218905,
+ "p_source": "results/RUNS.jsonl 20261008T115656Z p_value_avg_return_vs_matched",
+ "variants_searched": 10,
+ "outcome": "FAIL",
+ "note": "the 2023 US test was run 10 times as data repairs were completed; the strategy did not change",
+ "counted": true,
+ "registered": "2026-10-20"
+}

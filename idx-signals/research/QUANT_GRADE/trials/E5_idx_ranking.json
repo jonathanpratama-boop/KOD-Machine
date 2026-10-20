@@ -1,0 +1,13 @@
+{
+ "id": "E5_idx_ranking",
+ "experiment": "E5",
+ "date": "2026-10-14",
+ "hypothesis": "daily price data ranking separates up-moves from down-moves (IDX)",
+ "one_sided_p": 0.074,
+ "p_source": "status report: IDX p = 0.074 against a required 0.025",
+ "variants_searched": 1,
+ "outcome": "FAIL",
+ "note": "",
+ "counted": true,
+ "registered": "2026-10-20"
+}

@@ -1,0 +1,13 @@
+{
+ "id": "E9_catalyst_split",
+ "experiment": "E9",
+ "date": "2026-10-16",
+ "hypothesis": "movers with a supporting SEC filing beat movers without one (US)",
+ "one_sided_p": 0.1593,
+ "p_source": "derived from research/E9/results/RESULT.json separation_doc_minus_undoc.primary_5d, normal approximation",
+ "variants_searched": 1,
+ "outcome": "FAIL",
+ "note": "",
+ "counted": true,
+ "registered": "2026-10-20"
+}

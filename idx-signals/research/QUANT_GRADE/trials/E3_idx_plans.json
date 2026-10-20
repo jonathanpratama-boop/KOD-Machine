@@ -1,0 +1,13 @@
+{
+ "id": "E3_idx_plans",
+ "experiment": "E3",
+ "date": "2026-10-13",
+ "hypothesis": "any of 108 detector-plan pairs is admitted (IDX limit-up)",
+ "one_sided_p": null,
+ "p_source": "research/E3/discovery/summary.json: admissible = 0",
+ "variants_searched": 108,
+ "outcome": "FAIL",
+ "note": "p-values per plan not recorded; counts as 108 looks",
+ "counted": true,
+ "registered": "2026-10-20"
+}

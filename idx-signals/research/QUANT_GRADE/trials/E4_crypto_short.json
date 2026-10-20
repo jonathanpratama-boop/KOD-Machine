@@ -1,0 +1,13 @@
+{
+ "id": "E4_crypto_short",
+ "experiment": "E4",
+ "date": "2026-10-13",
+ "hypothesis": "short side after a +30% crypto day is profitable (144 detector-plan pairs; v2 redesigned on v1 results)",
+ "one_sided_p": null,
+ "p_source": "status report 2026-10-17: v1 0 of 144 admitted; v2 failed 2023 validation",
+ "variants_searched": 144,
+ "outcome": "FAIL",
+ "note": "",
+ "counted": true,
+ "registered": "2026-10-20"
+}

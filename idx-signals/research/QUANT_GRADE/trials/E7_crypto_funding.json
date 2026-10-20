@@ -1,0 +1,13 @@
+{
+ "id": "E7_crypto_funding",
+ "experiment": "E7",
+ "date": "2026-10-16",
+ "hypothesis": "negative funding with rising open interest predicts spot moves (crypto, local result)",
+ "one_sided_p": 0.8581,
+ "p_source": "derived from the reported 24h excess -0.35 pts (-0.95 to +0.33), normal approximation",
+ "variants_searched": 1,
+ "outcome": "FAIL",
+ "note": "",
+ "counted": true,
+ "registered": "2026-10-20"
+}

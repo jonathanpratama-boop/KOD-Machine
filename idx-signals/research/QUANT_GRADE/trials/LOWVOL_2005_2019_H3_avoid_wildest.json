@@ -1,0 +1,13 @@
+{
+ "id": "LOWVOL_2005_2019_H3_avoid_wildest",
+ "experiment": "US_LOWVOL_MOM_2005_2019",
+ "date": "2026-10-19",
+ "hypothesis": "H3_avoid_wildest: pre-registered monthly spread > 0 (US 2005-2019)",
+ "one_sided_p": 0.8071,
+ "p_source": "research/US_LOWVOL_MOM_2005_2019/results/RESULT.json t-statistic",
+ "variants_searched": 1,
+ "outcome": "FAIL",
+ "note": "",
+ "counted": true,
+ "registered": "2026-10-20"
+}

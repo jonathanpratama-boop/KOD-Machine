@@ -1,0 +1,13 @@
+{
+ "id": "E10_guidance_raise",
+ "experiment": "E10",
+ "date": "2026-10-17",
+ "hypothesis": "guidance raises beat matched controls after an obtainable entry (US 2020-2022)",
+ "one_sided_p": 0.2471,
+ "p_source": "research/E10/results/RESULT.json classes.RAISE.excess.p_one_sided",
+ "variants_searched": 1,
+ "outcome": "FAIL",
+ "note": "",
+ "counted": true,
+ "registered": "2026-10-20"
+}

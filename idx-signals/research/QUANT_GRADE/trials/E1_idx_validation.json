@@ -1,0 +1,13 @@
+{
+ "id": "E1_idx_validation",
+ "experiment": "E1",
+ "date": "2026-10-09",
+ "hypothesis": "F1_ARA detector plan beats matched random entries (IDX, 2023)",
+ "one_sided_p": 1.0,
+ "p_source": "results/RUNS.jsonl 20261009T050040Z_MOONSHOT_E1_D1_v1.1 p_value_avg_return_vs_matched",
+ "variants_searched": 1,
+ "outcome": "FAIL",
+ "note": "",
+ "counted": true,
+ "registered": "2026-10-20"
+}

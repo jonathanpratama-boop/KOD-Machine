@@ -1,0 +1,13 @@
+{
+ "id": "E8_crypto_spillover",
+ "experiment": "E8",
+ "date": "2026-10-16",
+ "hypothesis": "related coins follow a sharp rise within 72 hours (crypto)",
+ "one_sided_p": 0.1155,
+ "p_source": "derived from the reported +0.44 pts (-0.28 to +1.16), normal approximation",
+ "variants_searched": 1,
+ "outcome": "FAIL",
+ "note": "",
+ "counted": true,
+ "registered": "2026-10-20"
+}

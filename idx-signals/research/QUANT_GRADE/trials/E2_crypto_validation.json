@@ -1,0 +1,13 @@
+{
+ "id": "E2_crypto_validation",
+ "experiment": "E2",
+ "date": "2026-10-08",
+ "hypothesis": "G2_RET30 plan beats matched random entries (crypto, 2023)",
+ "one_sided_p": 1.0,
+ "p_source": "results/RUNS.jsonl 20261008T005732Z p_value_avg_return_vs_matched",
+ "variants_searched": 1,
+ "outcome": "FAIL",
+ "note": "",
+ "counted": true,
+ "registered": "2026-10-20"
+}

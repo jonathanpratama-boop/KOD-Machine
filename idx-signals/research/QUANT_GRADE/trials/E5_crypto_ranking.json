@@ -1,0 +1,13 @@
+{
+ "id": "E5_crypto_ranking",
+ "experiment": "E5",
+ "date": "2026-10-14",
+ "hypothesis": "same ranking test (crypto)",
+ "one_sided_p": 0.42,
+ "p_source": "status report: crypto p = 0.42",
+ "variants_searched": 1,
+ "outcome": "FAIL",
+ "note": "",
+ "counted": true,
+ "registered": "2026-10-20"
+}

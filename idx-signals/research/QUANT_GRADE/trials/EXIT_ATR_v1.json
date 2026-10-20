@@ -1,0 +1,13 @@
+{
+ "id": "EXIT_ATR_v1",
+ "experiment": "EXIT-ATR",
+ "date": "2026-10-16",
+ "hypothesis": "an ATR trailing stop improves the +30% entry (crypto)",
+ "one_sided_p": 0.7829,
+ "p_source": "derived from the reported change -0.82 pts (-2.92 to +1.19), normal approximation",
+ "variants_searched": 1,
+ "outcome": "FAIL",
+ "note": "",
+ "counted": true,
+ "registered": "2026-10-20"
+}

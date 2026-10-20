@@ -1,0 +1,117 @@
+{
+ "trials_counted": 18,
+ "trials_with_p_value": 15,
+ "total_variants_looked_at": 277,
+ "table": [
+  {
+   "id": "E5_idx_ranking",
+   "raw_p": 0.074,
+   "holm_p": 1.0,
+   "bh_q": 0.7965
+  },
+  {
+   "id": "E8_crypto_spillover",
+   "raw_p": 0.1155,
+   "holm_p": 1.0,
+   "bh_q": 0.7965
+  },
+  {
+   "id": "E9_catalyst_split",
+   "raw_p": 0.1593,
+   "holm_p": 1.0,
+   "bh_q": 0.7965
+  },
+  {
+   "id": "E10_guidance_raise",
+   "raw_p": 0.2471,
+   "holm_p": 1.0,
+   "bh_q": 0.9266
+  },
+  {
+   "id": "E6_crypto_pressure",
+   "raw_p": 0.32,
+   "holm_p": 1.0,
+   "bh_q": 0.96
+  },
+  {
+   "id": "E5_crypto_ranking",
+   "raw_p": 0.42,
+   "holm_p": 1.0,
+   "bh_q": 0.9967
+  },
+  {
+   "id": "E2_us_validation",
+   "raw_p": 0.6218905,
+   "holm_p": 1.0,
+   "bh_q": 0.9967
+  },
+  {
+   "id": "LOWVOL_2005_2019_H2_momentum",
+   "raw_p": 0.6399,
+   "holm_p": 1.0,
+   "bh_q": 0.9967
+  },
+  {
+   "id": "LOWVOL_2005_2019_H1_lowvol",
+   "raw_p": 0.7566,
+   "holm_p": 1.0,
+   "bh_q": 0.9967
+  },
+  {
+   "id": "EXIT_ATR_v1",
+   "raw_p": 0.7829,
+   "holm_p": 1.0,
+   "bh_q": 0.9967
+  },
+  {
+   "id": "LOWVOL_2005_2019_H3_avoid_wildest",
+   "raw_p": 0.8071,
+   "holm_p": 1.0,
+   "bh_q": 0.9967
+  },
+  {
+   "id": "E7_crypto_funding",
+   "raw_p": 0.8581,
+   "holm_p": 1.0,
+   "bh_q": 0.9967
+  },
+  {
+   "id": "US_breakout_v1",
+   "raw_p": 0.8638,
+   "holm_p": 1.0,
+   "bh_q": 0.9967
+  },
+  {
+   "id": "E1_idx_validation",
+   "raw_p": 1.0,
+   "holm_p": 1.0,
+   "bh_q": 1.0
+  },
+  {
+   "id": "E2_crypto_validation",
+   "raw_p": 1.0,
+   "holm_p": 1.0,
+   "bh_q": 1.0
+  }
+ ],
+ "smallest_raw_p": 0.074,
+ "smallest_holm_p": 1.0,
+ "any_significant_after_holm_5pct": false,
+ "expected_best_z_from_pure_noise": {
+  "over_hypotheses": 1.82,
+  "over_all_variants": 2.84
+ },
+ "hurdle_z_bonferroni_5pct": {
+  "next_test_given_hypotheses": 2.79,
+  "next_test_given_all_variants": 3.57
+ },
+ "project_hurdle_t_for_next_primary_test": 3.0,
+ "rule": "a future primary result must reach this t (and be pre-registered, run once, and added to trials/ first); where the search space is large (many plans or models), use the all-variants hurdle instead",
+ "caveats": [
+  "p-values for E7-E9, EXIT-ATR and US breakout are derived from published 95% intervals by normal approximation",
+  "experiments are correlated (shared data, reruns), so the effective number of tests is below the count",
+  "E3 and E4 searched 108 and 144 variants but recorded no p-values: they raise the search-level bar only",
+  "p-values are for the claimed positive effect, one-sided"
+ ],
+ "computed": "2026-10-20T18:19:46+00:00"
+}
