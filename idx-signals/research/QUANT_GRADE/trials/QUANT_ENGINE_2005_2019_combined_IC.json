@@ -1,0 +1,13 @@
+{
+ "id": "QUANT_ENGINE_2005_2019_combined_IC",
+ "experiment": "QUANT_ENGINE_2005_2019",
+ "date": "2026-10-20",
+ "hypothesis": "a walk-forward combination of seven features has positive rank-IC (US 2005-2019, survivor-only; NON-EVIDENCE run)",
+ "one_sided_p": 0.2312,
+ "p_source": "research/QUANT_ENGINE_2005_2019/results/RESULT.json ic_combined.t_nw",
+ "variants_searched": 8,
+ "outcome": "FAIL (all four gates)",
+ "note": "8 looks: the combined model plus 7 per-feature ICs reported. Exploratory only: the 1-month reversal feature had IC -0.023, NW t = -3.45 (past winners underperform next month); it was not a gate, so it is a candidate for its own pre-registered test, not a finding.",
+ "counted": true,
+ "registered": "2026-10-20"
+}
