@@ -1,0 +1,24 @@
+{
+ "fetched_at": "20261020T182212Z",
+ "source": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/",
+ "units": "daily returns as fractions",
+ "zips": {
+  "ff3": {
+   "file": "F-F_Research_Data_Factors_daily_CSV.zip",
+   "bytes": 178184,
+   "sha256": "2f29e22546069914890a712680a6f81f3680ebc3543b52864484d209ca13a7db"
+  },
+  "mom": {
+   "file": "F-F_Momentum_Factor_daily_CSV.zip",
+   "bytes": 85269,
+   "sha256": "ecf82b116e6ec56d2b79a2f27bd1d1598c217b5c6c25caa55b945bdd8a2c0b78"
+  }
+ },
+ "parsed": {
+  "path": "data/raw/french/factors_daily.csv.gz",
+  "rows": 26216,
+  "first": "1926-11-03",
+  "last": "2026-08-31",
+  "sha256": "6fb5401c94ad61644ea4ccabcdf99aa1698614de5b7ec69c159d2a90e04efba2"
+ }
+}
