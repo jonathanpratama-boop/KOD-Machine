@@ -1,0 +1,22 @@
+{
+ "fetched_at": "20261021T215048Z",
+ "sitemaps": [
+  {
+   "url": "https://www.emitennews.com/sitemap-2025.xml",
+   "bytes": 2457299,
+   "sha256": "ee658b1ae4b9b84d42ad9de229d39af8dd10101f8a2214be773dc1a4db2fdb09"
+  },
+  {
+   "url": "https://www.emitennews.com/sitemap-2026.xml",
+   "bytes": 2281614,
+   "sha256": "23e744b65960bb70dd5fdb1cfbc49c74f41649d02fe733dd293e1fae9beefe89"
+  }
+ ],
+ "kept_from": "2025-03-03",
+ "rows": 25291,
+ "first": "2025-03-03",
+ "last": "2026-10-22",
+ "file": "research/IDX_INSIDER_NEWS_OOT/sitemap_index.csv.gz",
+ "sha256": "150490d1c0fa355fbf8c1c0ea8e006448e7fa0a374b8279894f0158895f813af",
+ "note": "rows dated before kept_from were dropped in memory; date is the sitemap's lastmod, never earlier than publication"
+}

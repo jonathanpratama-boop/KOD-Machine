@@ -61,3 +61,58 @@ class EventTableTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class GateTests(unittest.TestCase):
+    def setUp(self):
+        self.st = load("oot_stats")
+
+    def frame(self, per_year):
+        rows = []
+        for year, (n, ex) in per_year.items():
+            rows += [{"posted_wib": f"{year}-05-0{1 + i % 9}T10:00:00+07:00", "excess": ex, "net_return": ex} for i in range(n)]
+        return pd.DataFrame(rows)
+
+    def stats(self, **kw):
+        base = {"mean_excess": 0.02, "t_excess": 2.0, "mean_net": 0.01, "winsorised_net": 0.01, "mean_net_extra_cost": 0.002}
+        return {**base, **kw}
+
+    def test_g1_is_the_one_sided_five_percent_line(self):
+        f = self.frame({"2025": (30, 0.01), "2026": (30, 0.01)})
+        self.assertFalse(self.st.gates(f, self.stats(t_excess=1.649))[0][self.st.G1])
+        self.assertTrue(self.st.gates(f, self.stats(t_excess=1.65))[0][self.st.G1])
+        self.assertFalse(self.st.gates(f, self.stats(t_excess=3.0, mean_excess=-0.001))[0][self.st.G1])
+
+    def test_years_with_fewer_than_20_events_do_not_count_for_g3(self):
+        ok = self.frame({"2025": (30, 0.02), "2026": (10, -0.05)})
+        self.assertTrue(self.st.gates(ok, self.stats())[0][self.st.G3])
+        bad = self.frame({"2025": (30, 0.02), "2026": (25, -0.05)})
+        self.assertFalse(self.st.gates(bad, self.stats())[0][self.st.G3])
+
+    def test_the_reading_follows_the_protocol_in_order(self):
+        f = self.frame({"2025": (30, 0.01), "2026": (30, 0.01)})
+        g, _ = self.st.gates(f, self.stats(t_excess=2.4))
+        self.assertEqual(self.st.reading(g, self.stats(t_excess=2.4)), "PASS")
+        s = self.stats(t_excess=2.4, mean_net_extra_cost=-0.004)
+        self.assertEqual(self.st.reading(self.st.gates(f, s)[0], s), "G1_HOLDS_G4_FAILS_TOO_SMALL_AFTER_FRICTIONS")
+        s = self.stats(t_excess=1.2)
+        self.assertEqual(self.st.reading(self.st.gates(f, s)[0], s), "LEAN_WITHOUT_POWER")
+        s = self.stats(t_excess=0.9)
+        self.assertEqual(self.st.reading(self.st.gates(f, s)[0], s), "NO_SIGN_IT_PERSISTED")
+        s = self.stats(t_excess=2.0, mean_excess=-0.01)
+        self.assertEqual(self.st.reading(self.st.gates(f, s)[0], s), "NO_SIGN_IT_PERSISTED")
+
+    def test_pooling_weights_by_precision(self):
+        a = {"mean_excess": 0.03, "lo95_excess": 0.03 - 1.96 * 0.01, "hi95_excess": 0.03 + 1.96 * 0.01}
+        b = {"mean_excess": 0.00, "lo95_excess": -1.96 * 0.02, "hi95_excess": 1.96 * 0.02}
+        p = self.st.pooled(a, b)
+        self.assertAlmostEqual(p["weights"]["discovery"], 0.8)
+        self.assertAlmostEqual(p["mean_excess"], 0.024)
+        self.assertAlmostEqual(p["se"], (1 / (1 / 0.01 ** 2 + 1 / 0.02 ** 2)) ** 0.5)
+
+    def test_tail_shares(self):
+        f = pd.DataFrame({"excess": [10.0] + [1.0] * 19 + [-1.0] * 10})
+        t = self.st.tail(f)
+        self.assertAlmostEqual(t["top5_share_of_total_excess"], 14 / 19)
+        self.assertAlmostEqual(t["mean_excess_without_top10"], 0.0)               # ten +1 and ten -1 remain
+        self.assertAlmostEqual(t["share_excess_positive"], 20 / 30)
