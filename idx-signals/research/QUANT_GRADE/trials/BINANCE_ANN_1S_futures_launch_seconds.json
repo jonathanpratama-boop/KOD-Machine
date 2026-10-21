@@ -1,0 +1,13 @@
+{
+ "id": "BINANCE_ANN_1S_futures_launch_seconds",
+ "experiment": "BINANCE_ANN_1S",
+ "date": "2026-10-21",
+ "hypothesis": "buying Binance spot at the first ask-side trade 2 seconds after the published time of a futures-perpetual launch announcement and selling 5 minutes later beats 0.2% round-trip fees (same 112 events as test 21; 103 fillable)",
+ "one_sided_p": 0.0002,
+ "p_source": "research/BINANCE_ANN_1S/results/RESULT.json gate_cell_L2_H300.t_net (day-cluster bootstrap), normal one-sided",
+ "variants_searched": 18,
+ "outcome": "PASS (all four gates), historical; not independent of test 21",
+ "note": "Net +1.30% per event at 2 s (t 3.58; +0.97% at 5 s, t 2.81; +0.91% at 10 s; +3.5% at 0.5 s; ~0 at 30 s). The move starts ~0.5-1 s after the published time (median half-move at 1.0 s), no pre-announcement drift, placebo day net -0.34%. Skewed: top 5 events give half the total, the median event nets +0.7%; positive in each of 2020-2023. Chosen after seeing test 21 on the same events (forking path), prices are trades not quotes, feed lag and book depth at T+2 s are unmeasured. Needs: an out-of-sample confirmation (the sealed 2024+ crypto holdout needs the owner's authorisation) and a forward measurement of feed lag and executable depth before any live use.",
+ "counted": true,
+ "registered": "2026-10-21"
+}

@@ -1,0 +1,106 @@
+{
+ "experiment": "BINANCE_ANN_1S",
+ "protocol": "research/BINANCE_ANN_1S/PROTOCOL.md",
+ "label": "historical research only; never prospective performance; follow-up on the same events as BINANCE_ANN_1M",
+ "inputs": {
+  "ticks_npz_sha256": "609ec5c94e9085050c3d6a9212fec514275dff4f0138b041abfcf3d0001efc0a",
+  "events_csv_sha256": "be597e0079f23eaaf42e9718b319b9e2f9da731f5b63bd57bd91f1e09d4b1ff1"
+ },
+ "events": {
+  "in_registered_run": 112,
+  "usable_event": 106,
+  "usable_placebo": 98
+ },
+ "reaction": {
+  "R_-1": -0.0008786656470196587,
+  "R_0": 0.0,
+  "R_0.5": 0.000778296122079396,
+  "R_1": 0.013297037476811508,
+  "R_2": 0.021755342368735657,
+  "R_5": 0.025262657002199766,
+  "R_10": 0.02596637655733817,
+  "R_60": 0.033489362882924166,
+  "R_300": 0.03850350074916523,
+  "share_done_by_1s": 0.39705256631177993,
+  "share_done_by_2s": 0.6496194760345366
+ },
+ "clock_check": {
+  "pre_mean": 0.0012742784092378322,
+  "total_mean": 0.035931377430359526,
+  "pre_share": 0.035464223761184153,
+  "R_-60": -0.0012417312839257846,
+  "R_-30": -0.0006362158270474973,
+  "R_-10": -0.0009424044419557209,
+  "R_-5": -0.001063065767883958,
+  "R_-2": -0.0008511436595078537
+ },
+ "half_move": {
+  "n": 63,
+  "median_s": 1.011,
+  "q25_s": 0.644,
+  "q75_s": 5.813,
+  "share_by_s": {
+   "0.5": 0.06349206349206349,
+   "1": 0.49206349206349204,
+   "2": 0.6825396825396826,
+   "5": 0.746031746031746,
+   "10": 0.7936507936507936,
+   "30": 0.9682539682539683
+  }
+ },
+ "spread_median": {
+  "before_T": 0.0011613050918230163,
+  "first_2s": 0.002417512664172729
+ },
+ "gate_cell_L2_H300": {
+  "L": 2,
+  "H": 300,
+  "n": 103,
+  "unfillable": 3,
+  "mean_gross": 0.014975966577645538,
+  "mean_net": 0.012975966577645536,
+  "t_net": 3.5803148737983586,
+  "lo95_net": 0.006178397222385131,
+  "share_net_positive": 0.6699029126213593,
+  "mean_net_conservative": 0.010975966577645538,
+  "winsorised_net": 0.012730107948541809
+ },
+ "gate_cell_L5_H300": {
+  "L": 5,
+  "H": 300,
+  "n": 102,
+  "unfillable": 4,
+  "mean_gross": 0.01170275816393388,
+  "mean_net": 0.009702758163933877,
+  "t_net": 2.8132744765323014,
+  "lo95_net": 0.0032320310733474984,
+  "share_net_positive": 0.6764705882352942,
+  "mean_net_conservative": 0.007702758163933879,
+  "winsorised_net": 0.008945202069662626
+ },
+ "placebo_L2_H300": {
+  "L": 2,
+  "H": 300,
+  "n": 87,
+  "unfillable": 11,
+  "mean_gross": -0.0013815192826722338,
+  "mean_net": -0.003381519282672235,
+  "t_net": -2.6809961488333998,
+  "lo95_net": -0.005823052498890184,
+  "share_net_positive": 0.28735632183908044,
+  "mean_net_conservative": -0.005381519282672234,
+  "winsorised_net": -0.0036870703467913406,
+  "net_t": -2.6809961488333998
+ },
+ "gates": {
+  "G1_L2s_H300_net_t_ge_3": true,
+  "G2_L5s_H300_net_gt_0": true,
+  "G3_L2s_H300_winsorised_net_gt_0": true,
+  "G4_placebo_net_t_lt_2.5": true
+ },
+ "verdict": "PASS",
+ "clock_flag": false,
+ "reading": "PASS: a window of seconds survives fees",
+ "p_one_sided_G1": 0.00017159020592007234,
+ "variants_reported": 18
+}
