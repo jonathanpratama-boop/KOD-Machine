@@ -1,0 +1,13 @@
+{
+ "id": "REVERSAL_1M_strev_2005_2019",
+ "experiment": "REVERSAL_1M",
+ "date": "2026-10-21",
+ "hypothesis": "1-month losers beat 1-month winners next month on survivorship-free data (French ST_Rev, US 2005-2019)",
+ "one_sided_p": 0.2928,
+ "p_source": "research/REVERSAL_1M/results/RESULT.json main_2005_2019.t_nw",
+ "variants_searched": 1,
+ "outcome": "FAIL (all four gates)",
+ "note": "Mean +0.11%/mo (NW t 0.55), factor alpha -0.02%/mo (t -0.11), 2020-2023 mean -0.04%/mo. The same factor earned +0.64%/mo (t 4.99) in 1963-2004, the published era. The engine's -3.45 lead (survivor-only, equal-weighted) does not hold on survivorship-free value-weighted data.",
+ "counted": true,
+ "registered": "2026-10-21"
+}
