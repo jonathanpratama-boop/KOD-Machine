@@ -1,0 +1,39 @@
+{
+ "events_in_table": 361,
+ "tickers_in_table": 165,
+ "events_by_half_year": {
+  "2025H1": 76,
+  "2025H2": 148,
+  "2026H1": 83,
+  "2026H2": 54
+ },
+ "mapped_to_panel": 361,
+ "not_in_panel": 0,
+ "status_counts": {
+  "EXITED": 221,
+  "SKIP_OVERLAP": 91,
+  "SKIP_LIQUIDITY": 34,
+  "SKIP_ARA_LOCK": 9,
+  "SKIP_CAPACITY_UNKNOWN": 3,
+  "SKIP_NOT_TRADED": 3
+ },
+ "exited": 221,
+ "exited_by_half_year": {
+  "2025H1": 41,
+  "2025H2": 91,
+  "2026H1": 57,
+  "2026H2": 32
+ },
+ "exited_without_any_scored_control_draw": 0,
+ "match_levels_of_exited": {
+  "0": 127,
+  "1": 2,
+  "2": 61,
+  "3": 26,
+  "4": 4,
+  "6": 1
+ },
+ "distinct_posting_days_exited": 173,
+ "go_rule": "EXITED events at hold 20 >= 100 (fixed in PROTOCOL.md before this run)",
+ "go": true
+}
