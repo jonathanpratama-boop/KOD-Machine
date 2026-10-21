@@ -1,0 +1,11 @@
+{
+ "fetched_at": "20261021T185353Z",
+ "seconds": 1390,
+ "candidates": 2112,
+ "failed": 52,
+ "without_posting_time": 0,
+ "without_body": 0,
+ "file": "research/IDX_INSIDER_NEWS/articles.csv.gz",
+ "sha256": "383737157173fa35e1747630ed16eb511c9001f7679f488efb21c86d32e81205",
+ "candidate_rule": "BROAD words in the slug and a four-letter IDX ticker code among the slug words (fetch_articles.py)"
+}
