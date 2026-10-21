@@ -1,0 +1,722 @@
+[
+ {
+  "item": 1,
+  "cls": "OUTSIDE_INVESTOR_BUY",
+  "issuer_ticker": "BULL",
+  "buyer": "PT Danatama Kapital Investama, corporate shareholder (5.86%)",
+  "transaction_date": "29 Agustus 2022",
+  "confidence": "medium"
+ },
+ {
+  "item": 2,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "TAMA",
+  "buyer": "Kathrin Widjaja, president director and controller",
+  "transaction_date": "2 dan 7 November 2022",
+  "confidence": "high"
+ },
+ {
+  "item": 3,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "FUJI",
+  "buyer": "Anton Santoso, commissioner",
+  "transaction_date": "7 Desember 2021",
+  "confidence": "high"
+ },
+ {
+  "item": 4,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "PSSI",
+  "buyer": "Iriawan Ibarat, president director",
+  "transaction_date": "15 September 2021",
+  "confidence": "high"
+ },
+ {
+  "item": 5,
+  "cls": "COMPANY_ACQUIRES_STAKE",
+  "issuer_ticker": null,
+  "buyer": "Digital Mediatama Maxima via subsidiary Digital Maxima Indonesia",
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 6,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "TSPC",
+  "buyer": "Bogamulia Nagadi, controller of Tempo Scan",
+  "transaction_date": "11-26 November 2021",
+  "confidence": "high"
+ },
+ {
+  "item": 7,
+  "cls": "OTHER",
+  "issuer_ticker": null,
+  "buyer": null,
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 8,
+  "cls": "OUTSIDE_INVESTOR_BUY",
+  "issuer_ticker": "ESSA",
+  "buyer": "Garibaldi (Boy) Thohir, individual, brother of SOE minister",
+  "transaction_date": "22 Desember 2023",
+  "confidence": "medium"
+ },
+ {
+  "item": 9,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "YELO",
+  "buyer": "PT Artalindo Semesta Nusantara, controlling shareholder",
+  "transaction_date": "24 Mei 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 10,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "HRUM",
+  "buyer": "Ray Antonio Gunara, president director",
+  "transaction_date": "6 Januari 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 11,
+  "cls": "OTHER",
+  "issuer_ticker": null,
+  "buyer": null,
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 12,
+  "cls": "OTHER",
+  "issuer_ticker": null,
+  "buyer": null,
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 13,
+  "cls": "OTHER",
+  "issuer_ticker": null,
+  "buyer": null,
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 14,
+  "cls": "OTHER",
+  "issuer_ticker": null,
+  "buyer": null,
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 15,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "BRNA",
+  "buyer": "Dwi Satrya Utama, controller of Berlina",
+  "transaction_date": "24 Agustus 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 16,
+  "cls": "OTHER",
+  "issuer_ticker": null,
+  "buyer": null,
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 17,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "LPKR",
+  "buyer": "Megapratama Karya Persada, controller of Lippo Karawaci",
+  "transaction_date": "9-27 Mei 2022",
+  "confidence": "high"
+ },
+ {
+  "item": 18,
+  "cls": "OTHER",
+  "issuer_ticker": null,
+  "buyer": null,
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 19,
+  "cls": "OTHER",
+  "issuer_ticker": null,
+  "buyer": null,
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 20,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "TRJA",
+  "buyer": "Damai Investama Sukses, controller of Transkon Jaya",
+  "transaction_date": "17 November 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 21,
+  "cls": "OUTSIDE_INVESTOR_BUY",
+  "issuer_ticker": "HELI",
+  "buyer": "PT Anugerah Bumiputra, third-largest shareholder (17.62%)",
+  "transaction_date": null,
+  "confidence": "medium"
+ },
+ {
+  "item": 22,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "BYAN",
+  "buyer": "Low Tuck Kwong, controlling shareholder and CEO",
+  "transaction_date": "10-15 November 2021",
+  "confidence": "high"
+ },
+ {
+  "item": 23,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "AKRA",
+  "buyer": "PT Arthakencana Rayatama, controlling shareholder",
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 24,
+  "cls": "MARKET_FLOW",
+  "issuer_ticker": null,
+  "buyer": "foreign investors, aggregate net buy",
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 25,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "TRJA",
+  "buyer": "Damai Investama Sukses, controller of Transkon Jaya",
+  "transaction_date": "15 November 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 26,
+  "cls": "OTHER",
+  "issuer_ticker": null,
+  "buyer": null,
+  "transaction_date": null,
+  "confidence": "low"
+ },
+ {
+  "item": 27,
+  "cls": "OTHER",
+  "issuer_ticker": null,
+  "buyer": null,
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 28,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "BSDE",
+  "buyer": "Paraga Arta Mida, controller of Bumi Serpong Damai",
+  "transaction_date": "1 November 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 29,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "ACST",
+  "buyer": "Karya Supra Perkasa, controller of Acset Indonusa",
+  "transaction_date": "4 dan 7 Agustus 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 30,
+  "cls": "OPTION_OR_RIGHTS_EXERCISE",
+  "issuer_ticker": "GOTO",
+  "buyer": "Wei-Jye Jacky Lo, senior official/director of Goto Group",
+  "transaction_date": "18 Desember 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 31,
+  "cls": "OUTSIDE_INVESTOR_BUY",
+  "issuer_ticker": "BBYB",
+  "buyer": "PT Akulaku Silvrr Indonesia, large corporate shareholder",
+  "transaction_date": "10-15 Februari 2022",
+  "confidence": "low"
+ },
+ {
+  "item": 32,
+  "cls": "OUTSIDE_INVESTOR_BUY",
+  "issuer_ticker": "SNLK",
+  "buyer": "Unilink Ventures Inc, corporate shareholder (31.41%)",
+  "transaction_date": "15 Desember 2021",
+  "confidence": "medium"
+ },
+ {
+  "item": 33,
+  "cls": "OUTSIDE_INVESTOR_BUY",
+  "issuer_ticker": "UNSP",
+  "buyer": "Bakrie Capital Indonesia, corporate shareholder (14.645%)",
+  "transaction_date": "27 Desember 2022",
+  "confidence": "low"
+ },
+ {
+  "item": 34,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "PTRO",
+  "buyer": "Romo Nitiyudo Wachjo, commissioner",
+  "transaction_date": "10 Agustus 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 35,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "SRAJ",
+  "buyer": "Dato Sri Tahir, deputy president commissioner and taipan",
+  "transaction_date": "23 November 2021",
+  "confidence": "high"
+ },
+ {
+  "item": 36,
+  "cls": "OUTSIDE_INVESTOR_BUY",
+  "issuer_ticker": "VTNY",
+  "buyer": "SBI Holdings, Inc, corporate investor (1.01%)",
+  "transaction_date": "19 Desember 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 37,
+  "cls": "OUTSIDE_INVESTOR_BUY",
+  "issuer_ticker": "BDKR",
+  "buyer": "Infinite Fund Management Pty Ltd, Australian company",
+  "transaction_date": "2 Maret 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 38,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "EAST",
+  "buyer": "Khalid Bin Omar Abdat, president director and controlling shareholder",
+  "transaction_date": "9 Juni 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 39,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "ARCI",
+  "buyer": "Ali Abbas Badre Alam, commissioner",
+  "transaction_date": "1 Oktober 2021",
+  "confidence": "high"
+ },
+ {
+  "item": 40,
+  "cls": "MARKET_FLOW",
+  "issuer_ticker": null,
+  "buyer": "foreign investors, aggregate flows",
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 41,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "BCAP",
+  "buyer": "MNC Asia Holding (BHIT), controller of MNC Kapital",
+  "transaction_date": "5 September 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 42,
+  "cls": "OUTSIDE_INVESTOR_BUY",
+  "issuer_ticker": "CASH",
+  "buyer": "Hasim Sutiono, head of PT Bara Alam Utama (Baracoal)",
+  "transaction_date": "22, 31 Agustus 2022 dan 8 September 2022",
+  "confidence": "medium"
+ },
+ {
+  "item": 43,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "GLVA",
+  "buyer": "Oki Widjaja, president director and controller",
+  "transaction_date": "29 Desember 2022 hingga 4 Januari 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 44,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "IPCM",
+  "buyer": "Shanti Puruhita, president director",
+  "transaction_date": "14 dan 15 November 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 45,
+  "cls": "OTHER",
+  "issuer_ticker": null,
+  "buyer": "General Atlantic Singapore KGBio Pte. Ltd. (investor in subsidiary)",
+  "transaction_date": "26 Oktober 2021",
+  "confidence": "low"
+ },
+ {
+  "item": 46,
+  "cls": "COMPANY_ACQUIRES_STAKE",
+  "issuer_ticker": null,
+  "buyer": "Smartfren Telecom (FREN), listed company",
+  "transaction_date": "21 Desember 2021",
+  "confidence": "medium"
+ },
+ {
+  "item": 47,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "BTON",
+  "buyer": "Gwie Gunadi Gunawan, president director",
+  "transaction_date": "25 Agustus 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 48,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "BIRD",
+  "buyer": "Adrianto Djokosoetono, deputy president director",
+  "transaction_date": "23-24 Mei 2022",
+  "confidence": "high"
+ },
+ {
+  "item": 49,
+  "cls": "OTHER",
+  "issuer_ticker": null,
+  "buyer": "BPKH (hajj fund manager), now holds 78.45%",
+  "transaction_date": null,
+  "confidence": "low"
+ },
+ {
+  "item": 50,
+  "cls": "SELL",
+  "issuer_ticker": "AMAR",
+  "buyer": null,
+  "transaction_date": "7 Juni 2022",
+  "confidence": "high"
+ },
+ {
+  "item": 51,
+  "cls": "OTHER",
+  "issuer_ticker": null,
+  "buyer": null,
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 52,
+  "cls": "OUTSIDE_INVESTOR_BUY",
+  "issuer_ticker": "SQMI",
+  "buyer": "Dato' Sri Chong Thim Pheng, individual shareholder (6.75%)",
+  "transaction_date": "30 Januari 2023",
+  "confidence": "medium"
+ },
+ {
+  "item": 53,
+  "cls": "OTHER",
+  "issuer_ticker": null,
+  "buyer": null,
+  "transaction_date": null,
+  "confidence": "medium"
+ },
+ {
+  "item": 54,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "IRRA",
+  "buyer": "PT Global Dinamika Kencana, controlling shareholder",
+  "transaction_date": "20 Desember 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 55,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "BMRI",
+  "buyer": "Timothy Utama, senior Bank Mandiri executive (director level)",
+  "transaction_date": "15 Agustus 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 56,
+  "cls": "OPTION_OR_RIGHTS_EXERCISE",
+  "issuer_ticker": "MAYA",
+  "buyer": "Lian Xi Ltd, new strategic investor (rights offering PUT XIII)",
+  "transaction_date": "24 Maret 2021",
+  "confidence": "medium"
+ },
+ {
+  "item": 57,
+  "cls": "OTHER",
+  "issuer_ticker": null,
+  "buyer": null,
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 58,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "KKGI",
+  "buyer": "Hendro Martowardojo, president commissioner",
+  "transaction_date": "20 Februari 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 59,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "BUKA",
+  "buyer": "Rd Adi Wardhana Sariaatmadja, commissioner",
+  "transaction_date": "13 Juni 2022",
+  "confidence": "high"
+ },
+ {
+  "item": 60,
+  "cls": "COMPANY_ACQUIRES_STAKE",
+  "issuer_ticker": null,
+  "buyer": "M Cash Integrasi (MCAS), listed parent of subsidiary",
+  "transaction_date": "29 Maret 2021",
+  "confidence": "medium"
+ },
+ {
+  "item": 61,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "BRIS",
+  "buyer": "Four commissioners and eight directors of Bank Syariah Indonesia",
+  "transaction_date": "9 Agustus 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 62,
+  "cls": "COMPANY_ACQUIRES_STAKE",
+  "issuer_ticker": null,
+  "buyer": "Puradelta Lestari (DMAS), listed company",
+  "transaction_date": "24 Oktober 2022",
+  "confidence": "medium"
+ },
+ {
+  "item": 63,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "BBYB",
+  "buyer": "Akulaku Silvrr Indonesia, controller of Bank Neo Commerce",
+  "transaction_date": "16-24 Mei 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 64,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "BOLA",
+  "buyer": "Pieter Tanuri, controlling shareholder of Bali United",
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 65,
+  "cls": "MARKET_FLOW",
+  "issuer_ticker": null,
+  "buyer": null,
+  "transaction_date": null,
+  "confidence": "medium"
+ },
+ {
+  "item": 66,
+  "cls": "OTHER",
+  "issuer_ticker": null,
+  "buyer": null,
+  "transaction_date": null,
+  "confidence": "low"
+ },
+ {
+  "item": 67,
+  "cls": "COMPANY_ACQUIRES_STAKE",
+  "issuer_ticker": null,
+  "buyer": "Barito Pacific (BRPT) via subsidiary Star Energy Group Holdings",
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 68,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "MICE",
+  "buyer": "Budiman Gitaloka, director",
+  "transaction_date": "2 hingga 3 November 2022",
+  "confidence": "high"
+ },
+ {
+  "item": 69,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "BIRD",
+  "buyer": "Purnomo Prawiro, one of Blue Bird's controlling shareholders",
+  "transaction_date": "23-25 November 2021",
+  "confidence": "high"
+ },
+ {
+  "item": 70,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "IDEA",
+  "buyer": "Eko Desriyanto, president director",
+  "transaction_date": "18 hingga 21 Juli 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 71,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "WMUU",
+  "buyer": "Tumiyana, commissioner and ultimate beneficial owner",
+  "transaction_date": "1 Maret 2022",
+  "confidence": "medium"
+ },
+ {
+  "item": 72,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "DILD",
+  "buyer": "Utama Gondokusumo, deputy president director",
+  "transaction_date": "28 Maret 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 73,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "BUKK",
+  "buyer": "Achmad, Solihin Jusuf and Suhaeli Kalla, three company officers",
+  "transaction_date": "22 Desember 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 74,
+  "cls": "COMPANY_ACQUIRES_STAKE",
+  "issuer_ticker": null,
+  "buyer": "Jakarta Setiabudi Internasional (JSPT), listed company",
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 75,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "PANR",
+  "buyer": "Budijanto Tirtawisata, president director",
+  "transaction_date": "17 September hingga 21 September 2021",
+  "confidence": "high"
+ },
+ {
+  "item": 76,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "ZATA",
+  "buyer": "Lembur Sadaya Investama, controller (Asep Sulaeman Sabanda)",
+  "transaction_date": "21 Maret 2021",
+  "confidence": "high"
+ },
+ {
+  "item": 77,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "BBHI",
+  "buyer": "Ali Gunawan (commissioner) and Ganda Raharja Rusli (director)",
+  "transaction_date": "17-19 Januari 2022",
+  "confidence": "high"
+ },
+ {
+  "item": 78,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "MASA",
+  "buyer": "Pieter Tanuri, commissioner (Bali United boss)",
+  "transaction_date": "22 Februari 2022",
+  "confidence": "high"
+ },
+ {
+  "item": 79,
+  "cls": "OTHER",
+  "issuer_ticker": null,
+  "buyer": null,
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 80,
+  "cls": "OUTSIDE_INVESTOR_BUY",
+  "issuer_ticker": "MDKA",
+  "buyer": "Garibaldi (Boy) Thohir, individual, brother of SOE minister",
+  "transaction_date": "19 Desember 2023",
+  "confidence": "medium"
+ },
+ {
+  "item": 81,
+  "cls": "COMPANY_ACQUIRES_STAKE",
+  "issuer_ticker": "MIDI",
+  "buyer": "Sumber Alfaria Trijaya (AMRT), parent holding 86.72% of Midi Utama",
+  "transaction_date": "22 Oktober 2021",
+  "confidence": "medium"
+ },
+ {
+  "item": 82,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "IPCC",
+  "buyer": "Sugeng Mulyadi, president director",
+  "transaction_date": "12 Desember 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 83,
+  "cls": "OTHER",
+  "issuer_ticker": null,
+  "buyer": null,
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 84,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "UFOE",
+  "buyer": "Henry Budiono, operations director",
+  "transaction_date": "9 Agustus 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 85,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "TMAS",
+  "buyer": "Temas Lestari, controller of Temas",
+  "transaction_date": "5 Desember 2023",
+  "confidence": "high"
+ },
+ {
+  "item": 86,
+  "cls": "SELL",
+  "issuer_ticker": "BNBR",
+  "buyer": null,
+  "transaction_date": null,
+  "confidence": "low"
+ },
+ {
+  "item": 87,
+  "cls": "INSIDER_BUY",
+  "issuer_ticker": "AMAR",
+  "buyer": "Tolaram Group Inc, controller of Bank Amar",
+  "transaction_date": "7 Juli 2022",
+  "confidence": "high"
+ },
+ {
+  "item": 88,
+  "cls": "OTHER",
+  "issuer_ticker": null,
+  "buyer": null,
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 89,
+  "cls": "MARKET_FLOW",
+  "issuer_ticker": null,
+  "buyer": "foreign investors, aggregate net buy",
+  "transaction_date": null,
+  "confidence": "high"
+ },
+ {
+  "item": 90,
+  "cls": "OUTSIDE_INVESTOR_BUY",
+  "issuer_ticker": "BNBR",
+  "buyer": "Daley Capital Limited, corporate shareholder (10.62%)",
+  "transaction_date": "2 November 2021",
+  "confidence": "high"
+ }
+]

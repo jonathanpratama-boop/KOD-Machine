@@ -1,0 +1,2061 @@
+item,cls,issuer_ticker,buyer,transaction_date,confidence,batch
+2,OUTSIDE_INVESTOR_BUY,IPTV,Tempus Eternity Ltd and Charlton Groups Holding Ltd (foreign investors),,high,labels_batch_000.json
+16,INSIDER_BUY,SMKL,"PT Satyamitra Investindo Pratama, controlling shareholder",13 Januari 2021,high,labels_batch_000.json
+21,INSIDER_BUY,FILM,"Manoj Dhamoo Punjabi, director (bought back after accidental sale)",15 Januari 2021,medium,labels_batch_000.json
+55,DENIAL_OR_RUMOR,BOLA,"Kaesang Pangarep (rumoured buyer), son of President Jokowi",,medium,labels_batch_000.json
+56,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+57,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+58,INSIDER_BUY,SMKL,"PT Satyamitra Investindo Pratama, controlling shareholder",23 Februari 2021,high,labels_batch_000.json
+59,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+60,INSIDER_BUY,INDR,"Indorama Holdings B.V, controlling shareholder",25 Februari 2021,high,labels_batch_000.json
+61,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+62,INSIDER_BUY,PSSI,"Chavalit Frederik Tsao, commissioner",5 Maret 2021,high,labels_batch_000.json
+63,INSIDER_BUY,BYAN,"Dato' Low Tuck Kwong, president director and controller","8, 9 dan 12 Maret 2021",high,labels_batch_000.json
+64,INSIDER_BUY,BISI,"Tan Jemmy Eka Putra, president director",4-12 Maret 2021,high,labels_batch_000.json
+65,OTHER,,,,high,labels_batch_000.json
+66,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+67,INSIDER_BUY,PSSI,"Chavalit Frederik Tsao, commissioner",8-10 Maret 2021,high,labels_batch_000.json
+68,OUTSIDE_INVESTOR_BUY,SBAT,"LDA Capital, US-based global alternative investment group",,low,labels_batch_000.json
+69,OTHER,,,,high,labels_batch_000.json
+70,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+71,OTHER,,,,high,labels_batch_000.json
+72,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+73,INSIDER_BUY,PSSI,"Chavalit Frederik Tsao, commissioner",12-15 Maret 2021,high,labels_batch_000.json
+74,OTHER,,,,high,labels_batch_000.json
+75,OTHER,,,,high,labels_batch_000.json
+76,COMPANY_ACQUIRES_STAKE,,"Duta Pertiwi (DUTI), Sinar Mas group property developer",,high,labels_batch_000.json
+77,OPTION_OR_RIGHTS_EXERCISE,AGRO,Management and employees of BRI Agroniaga via MESOP,,high,labels_batch_000.json
+78,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+79,OUTSIDE_INVESTOR_BUY,ZBRA,"Rudy Tanoesoedibjo, shareholder and brother of Hary Tanoesoedibjo",23 Maret 2021,low,labels_batch_000.json
+80,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+81,INSIDER_BUY,BOLA,"Pieter Tanuri, controlling shareholder",,high,labels_batch_000.json
+82,OTHER,,,,high,labels_batch_000.json
+83,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+84,INSIDER_BUY,SIDO,"Johan Hidayat, commissioner",17 dan 24 Maret 2021,high,labels_batch_000.json
+85,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+86,INSIDER_BUY,FILM,"Manoj Punjabi (director), MD Entertainment, controller MD Graha Utama",25-26 Maret 2021,high,labels_batch_000.json
+87,COMPANY_ACQUIRES_STAKE,,"M Cash Integrasi (MCAS), into its subsidiary Digital Maksima Karunia",29 Maret 2021,high,labels_batch_000.json
+88,INSIDER_BUY,PSSI,"Chavalit Frederik Tsao, commissioner",26-29 Maret 2021,high,labels_batch_000.json
+89,OPTION_OR_RIGHTS_EXERCISE,MAYA,"Lian Xi Ltd, new strategic investor, via rights offering PUT XIII",24 Maret 2021,medium,labels_batch_000.json
+90,INSIDER_BUY,BBCA,Four BCA directors incl. Gregory Hendra Lembong and Santoso,5 April 2021,high,labels_batch_000.json
+91,INSIDER_BUY,BBCA,"Gregory Hendra Lembong, director",5 April 2021,high,labels_batch_000.json
+92,MARKET_FLOW,,,,high,labels_batch_000.json
+93,INSIDER_BUY,ZBRA,"PT Trinity Healthcare, controlling shareholder",,high,labels_batch_000.json
+94,INSIDER_BUY,BOLA,"Pieter Tanuri, controlling shareholder",,high,labels_batch_000.json
+95,OTHER,,,,high,labels_batch_000.json
+96,INSIDER_BUY,HRME,"PT Wijaya Wisesa Realty, controlling shareholder",,high,labels_batch_000.json
+97,OTHER,,,,high,labels_batch_000.json
+98,OTHER,,,,high,labels_batch_000.json
+99,COMPANY_ACQUIRES_STAKE,,Harum Energy (HRUM) via its subsidiary,12 Mei 2021,high,labels_batch_000.json
+100,INSIDER_BUY,MCOL,Commissioner Diah Asriningpuri Sugianto and Prima Andalan directors,7-10 September 2021,high,labels_batch_000.json
+101,OTHER,,,,high,labels_batch_000.json
+102,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+103,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+104,OTHER,,,,medium,labels_batch_000.json
+105,INSIDER_BUY,PSSI,"Iriawan Ibarat, president director",3 dan 10 September 2021,high,labels_batch_000.json
+106,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+107,COMPANY_ACQUIRES_STAKE,RANC,"PT Global Digital Niaga (Blibli.com), prospective new controller",,medium,labels_batch_000.json
+108,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+109,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+110,OUTSIDE_INVESTOR_BUY,GTSI,PT Sarana Niaga Buana (corporate investor),9 September 2021,medium,labels_batch_000.json
+111,OTHER,,,,high,labels_batch_000.json
+112,OPTION_OR_RIGHTS_EXERCISE,TPIA,"Erwin Ciputra, president director and controller (HMETD and investment)",9 dan 13 September 2021,medium,labels_batch_000.json
+113,INSIDER_BUY,BIRD,"Purnomo Prawiro, one of the controlling shareholders",14-17 September 2021,high,labels_batch_000.json
+114,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+115,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+116,INSIDER_BUY,PGJO,"Adi Putera Widjaja, president director (CEO)",22 September 2021,high,labels_batch_000.json
+117,INSIDER_BUY,PANR,"Budijanto Tirtawisata, president director",17-21 September 2021,high,labels_batch_000.json
+118,INSIDER_BUY,PSSI,"Iriawan Ibarat, president director",15 September 2021,high,labels_batch_000.json
+119,INSIDER_BUY,BOLA,"Pieter Tanuri, controlling shareholder",,high,labels_batch_000.json
+120,MARKET_FLOW,,,,medium,labels_batch_000.json
+121,COMPANY_ACQUIRES_STAKE,,Supra Boga Lestari (RANC) via subsidiary Supra Investama Mandiri,,high,labels_batch_000.json
+122,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+123,INSIDER_BUY,MCOL,"Diah Asriningpuri Sugianto, commissioner",24-28 September 2021,high,labels_batch_000.json
+124,OUTSIDE_INVESTOR_BUY,PTBA,PT Taspen (received most of PTBA's treasury shares),,low,labels_batch_000.json
+125,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+126,OUTSIDE_INVESTOR_BUY,DMMX,PT Sicepat Ekspres Indonesia (corporate investor),28 September 2021,medium,labels_batch_000.json
+127,INSIDER_BUY,MCAS,"Suryandy Jahja, director",30 September 2021,high,labels_batch_000.json
+128,OTHER,,,,high,labels_batch_000.json
+129,OTHER,,,,high,labels_batch_000.json
+130,INSIDER_BUY,ARCI,"Ali Abbas Badre Alam, commissioner",1 Oktober 2021,high,labels_batch_000.json
+131,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+132,OTHER,,,,high,labels_batch_000.json
+133,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+134,INSIDER_BUY,SSTM,"Sunjono Suriadi, president commissioner",16 Agustus 2021,high,labels_batch_000.json
+135,OTHER,,,,high,labels_batch_000.json
+136,MARKET_FLOW,,,,medium,labels_batch_000.json
+137,INSIDER_BUY,COCO,"PT Interjaya Corpora, controlling shareholder",30 September 2021,high,labels_batch_000.json
+138,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+139,OUTSIDE_INVESTOR_BUY,AGII,"PT Saratoga Investama Sedaya (SRTG), Sandiaga Uno's listed company",13 April-30 September 2021,medium,labels_batch_000.json
+140,OUTSIDE_INVESTOR_BUY,MPPA,"PT Aplikasi Karya Anak Bangsa (GoTo), new 6.74 percent holder",4 Oktober 2021,high,labels_batch_000.json
+141,COMPANY_ACQUIRES_STAKE,DGIK,"PT Global Dinamika Kencana, new controlling shareholder",6 Oktober 2021,medium,labels_batch_000.json
+142,OUTSIDE_INVESTOR_BUY,MCOL,"Eka Rosita Kasih, shareholder and investor",4 Oktober 2021,medium,labels_batch_000.json
+143,MARKET_FLOW,,,,medium,labels_batch_000.json
+144,COMPANY_ACQUIRES_STAKE,,United Tractors (UNTR) via capital increase in subsidiary Energia Prima Nusantara,5 Oktober 2021,high,labels_batch_000.json
+145,COMPANY_ACQUIRES_STAKE,PANI,PT Multi Artha Pratama (Agung Sedayu group),,medium,labels_batch_000.json
+146,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+147,OTHER,,,,high,labels_batch_000.json
+148,COMPANY_ACQUIRES_STAKE,MBSS,"PT Galley Adhika Arnawama, new controlling shareholder",,medium,labels_batch_000.json
+149,OTHER,,,,high,labels_batch_000.json
+150,INSIDER_BUY,BIRD,"Purnomo Prawiro, one of the controlling shareholders",5-7 Oktober 2021,high,labels_batch_000.json
+151,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+152,OTHER,,,,high,labels_batch_000.json
+153,OTHER,,,,high,labels_batch_000.json
+154,MARKET_FLOW,,,,high,labels_batch_000.json
+155,MARKET_FLOW,BBCA,foreign investors (net buy in session I),12 Oktober 2021,medium,labels_batch_000.json
+156,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+157,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+158,INSIDER_BUY,BSDE,"PT Paraga Artamida, controlling shareholder",29 September-1 Oktober 2021,high,labels_batch_000.json
+159,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+160,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+161,MARKET_FLOW,,,,medium,labels_batch_000.json
+162,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+163,MARKET_FLOW,,,,medium,labels_batch_000.json
+164,INSIDER_BUY,BYAN,"Dato' Low Tuck Kwong, president director and controller",8-14 Oktober 2021,high,labels_batch_000.json
+165,INSIDER_BUY,AKRA,"Haryanto Adikoesoemo, president director",21-25 Juni 2021,high,labels_batch_000.json
+166,INSIDER_BUY,BIRD,"Purnomo Prawiro, one of the controlling shareholders",12-15 Oktober 2021,high,labels_batch_000.json
+167,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+168,OTHER,,,,high,labels_batch_000.json
+169,OTHER,,,,high,labels_batch_000.json
+170,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+171,OTHER,,,,high,labels_batch_000.json
+172,INSIDER_BUY,KMTR,Martinus Subandi Sinarya (president director) and director Jenny Widjaja,,high,labels_batch_000.json
+173,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+174,INSIDER_BUY,NICK,"PT Indovest Central, controlling shareholder",19 Oktober 2021,high,labels_batch_000.json
+175,OUTSIDE_INVESTOR_BUY,BBSI,PT FinAccel Teknologi Indonesia (corporate investor),15 Oktober 2021,medium,labels_batch_000.json
+176,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+177,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+178,OTHER,,,,high,labels_batch_000.json
+179,OPTION_OR_RIGHTS_EXERCISE,BBRI,"15 BRI commissioners and directors (tantiem, ESOP/ESA rights)",,high,labels_batch_000.json
+180,MARKET_FLOW,,,,medium,labels_batch_000.json
+181,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+182,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+183,INSIDER_BUY,ARCI,"Ali Abbas Badre Alam, commissioner",22 Oktober 2021,high,labels_batch_000.json
+184,COMPANY_ACQUIRES_STAKE,MIDI,"Sumber Alfaria Trijaya (AMRT), parent of MIDI",22 Oktober 2021,medium,labels_batch_000.json
+185,OUTSIDE_INVESTOR_BUY,FUJI,"PT Charnic Capital Tbk (NICK), corporate shareholder with 28.37 percent",19 Oktober 2021,low,labels_batch_000.json
+186,INSIDER_BUY,DMMX,"Supardi Tan, director",11 dan 13 Oktober 2021,high,labels_batch_000.json
+187,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+188,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+189,INSIDER_BUY,EAST,"Khalid Bin Omar Abdat, president director",26 Oktober 2021,high,labels_batch_000.json
+190,OUTSIDE_INVESTOR_BUY,FILM,Morgan Stanley & Co. International plc (MSIP),15 Oktober 2021,medium,labels_batch_000.json
+191,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+192,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+193,COMPANY_ACQUIRES_STAKE,,"General Atlantic Singapore KGBio Pte. Ltd., investor in Kalbe subsidiary",26 Oktober 2021,low,labels_batch_000.json
+194,OUTSIDE_INVESTOR_BUY,RDTX,"Sutiadi Widjaja, shareholder holding more than 5 percent",26 Oktober 2021,low,labels_batch_000.json
+195,SELL,CARE,,25 Oktober 2021,high,labels_batch_000.json
+196,INSIDER_BUY,BMRI,Bank Mandiri commissioners and directors incl. Darmawan Junaidi,19 Oktober 2021,medium,labels_batch_000.json
+197,OTHER,,,,high,labels_batch_000.json
+198,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+199,OUTSIDE_INVESTOR_BUY,BSDE,"Paraga Artamida, shareholder holding 32.03 percent",13 Oktober 2021,low,labels_batch_000.json
+200,OTHER,,,,high,labels_batch_000.json
+201,INSIDER_BUY,BIRD,"Purnomo Prawiro, one of the controlling shareholders","25, 27, 28 dan 29 Oktober 2021",high,labels_batch_000.json
+202,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+203,INSIDER_BUY,NICK,"PT Indovest Central, controlling shareholder",25-29 Oktober 2021,high,labels_batch_000.json
+204,OTHER,,,,high,labels_batch_000.json
+205,SELL,EXCL,,27 Oktober 2021,high,labels_batch_000.json
+206,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+207,OTHER,,,,medium,labels_batch_000.json
+208,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+209,MARKET_FLOW,,,,medium,labels_batch_000.json
+210,OUTSIDE_INVESTOR_BUY,BNBR,"Daley Capital Limited, 10.62 percent shareholder",2 November 2021,medium,labels_batch_000.json
+211,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+212,INSIDER_BUY,FILM,"Manoj Dhamoo Punjabi, director",25-27 Oktober 2021,high,labels_batch_000.json
+213,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+214,OTHER,,,,high,labels_batch_000.json
+215,INSIDER_BUY,FILM,"Manoj Punjabi, MD Pictures boss",1 November 2021,high,labels_batch_000.json
+216,OTHER,,,,high,labels_batch_000.json
+217,OUTSIDE_INVESTOR_BUY,DMMX,PT Sicepat Ekspres Indonesia (corporate investor),25-29 Oktober 2021,medium,labels_batch_000.json
+218,SELL,COCO,,"1 Oktober, 27 Oktober dan 2-3 November 2021",medium,labels_batch_000.json
+219,OTHER,,,,high,labels_batch_000.json
+220,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+221,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+222,INSIDER_BUY,BBTN,Three commissioners and six directors of Bank BTN,26 Oktober 2021,medium,labels_batch_000.json
+223,INSIDER_BUY,BIRD,"Purnomo Prawiro, one of the controlling shareholders",3-5 November 2021,high,labels_batch_000.json
+224,SELL,TEBE,,4 November 2021,high,labels_batch_000.json
+225,INSIDER_BUY,POWR,"Sutanto Joso, president commissioner",21 Oktober 2021,high,labels_batch_000.json
+226,INSIDER_BUY,MSIN,"Media Nusantara Citra (MNCN), one of MSIN's controlling shareholders",27 Oktober 2021,medium,labels_batch_000.json
+227,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+228,OUTSIDE_INVESTOR_BUY,DMMX,PT Soteria Wicaksana Investama (corporate investor),4-5 November 2021,medium,labels_batch_000.json
+229,INSIDER_BUY,NICK,"PT Indovest Central, controlling shareholder",1 November 2021,high,labels_batch_000.json
+230,OUTSIDE_INVESTOR_BUY,PMMP,"PT Harapan Bangsa Kita (GK Hebat), Kaesang Pangarep's company",8 November 2021,high,labels_batch_000.json
+231,COMPANY_ACQUIRES_STAKE,,"Mitra Investindo (MITI), acquiring a shipping company from PSKL",,medium,labels_batch_000.json
+232,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+233,OPTION_OR_RIGHTS_EXERCISE,BBKP,"Kookmin Bank Co., Ltd, main shareholder (to exercise all rights)",,medium,labels_batch_000.json
+234,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+235,OTHER,,,,high,labels_batch_000.json
+236,OUTSIDE_INVESTOR_BUY,CASH,"Steven Samudera, shareholder holding 14.5 percent",1 November 2021,medium,labels_batch_000.json
+237,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+238,INSIDER_BUY,BYAN,"Dato' Low Tuck Kwong, president director and controller",9 November 2021,high,labels_batch_000.json
+239,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+240,MARKET_FLOW,,,,medium,labels_batch_000.json
+241,INSIDER_BUY,KRAS,"Silmy Karim, Krakatau Steel CEO",2 November 2021,high,labels_batch_000.json
+242,COMPANY_ACQUIRES_STAKE,,Digital Mediatama Maxima (DMMX) via subsidiary DMMX Gamindo Global,11 November 2021,high,labels_batch_000.json
+243,INSIDER_BUY,INOV,"Jung Hyo Choi, commissioner",8-9 November 2021,high,labels_batch_000.json
+244,OUTSIDE_INVESTOR_BUY,DMMX,PT Sicepat Ekspres Indonesia (corporate investor),2-10 November 2021,medium,labels_batch_000.json
+245,OUTSIDE_INVESTOR_BUY,CASH,Andri Wijono Sutiono (no insider role stated),Oktober-November 2021,medium,labels_batch_000.json
+246,SELL,PSSI,,11 November 2021,high,labels_batch_000.json
+247,OTHER,,,,high,labels_batch_000.json
+248,INSIDER_BUY,BIRD,"Purnomo Prawiro, one of the controlling shareholders",8-11 November 2021,high,labels_batch_000.json
+249,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+250,MARKET_FLOW,,foreign investors (aggregate flows),,high,labels_batch_000.json
+251,INSIDER_BUY,SMDR,"Bani Maulana Mulia, director",9 November 2021,high,labels_batch_000.json
+252,INSIDER_BUY,CPRO,"PT Central Pangan Prima, now controlling shareholder (45.27%)",9 November 2021,medium,labels_batch_001.json
+253,INSIDER_BUY,RIGS,"PT Surya Indah Muara Pantai, new controlling shareholder (80.54%)",16 November 2021,low,labels_batch_001.json
+254,INSIDER_BUY,BYAN,"Dato' Dr Low Tuck Kwong, Bayan CEO and controlling shareholder",10-15 November 2021,high,labels_batch_001.json
+255,INSIDER_BUY,FILM,"Manoj Punjabi, MD Pictures boss and controlling shareholder",10-15 November 2021,high,labels_batch_001.json
+256,OPTION_OR_RIGHTS_EXERCISE,SILO,"Monica Surjapranata, Siloam director (MESOP exercise)",11 November 2021,high,labels_batch_001.json
+257,OUTSIDE_INVESTOR_BUY,,"BPKH (hajj fund agency), now holding 78.45% of Bank Muamalat",,low,labels_batch_001.json
+258,INSIDER_BUY,OASA,"PT Indovest Central, controlling shareholder",15 November 2021,high,labels_batch_001.json
+259,OTHER,,,,high,labels_batch_001.json
+260,MARKET_FLOW,,,,high,labels_batch_001.json
+261,INSIDER_BUY,HOKI,"Sukarto Bujung, one of Buyung Poetra's controlling shareholders",9 November 2021,high,labels_batch_001.json
+262,COMPANY_ACQUIRES_STAKE,,"Temas (TMAS), parent injecting capital into subsidiary Temas Shipping",,low,labels_batch_001.json
+263,OUTSIDE_INVESTOR_BUY,BNBA,"PT Takjub Finansial Teknologi (Ajaib Sekuritas), securities firm",,high,labels_batch_001.json
+264,COMPANY_ACQUIRES_STAKE,ABMM,"PT Tiara Marga Trakindo (Trakindo Group), raising stake to 53.55%",17 November 2021,medium,labels_batch_001.json
+265,OTHER,,,,high,labels_batch_001.json
+266,INSIDER_BUY,BIRD,"Purnomo Prawiro, one of Blue Bird's controlling shareholders","15, 16 dan 18 November 2021",high,labels_batch_001.json
+267,MARKET_FLOW,,,,high,labels_batch_001.json
+268,MARKET_FLOW,,,,high,labels_batch_001.json
+269,COMPANY_ACQUIRES_STAKE,,Digital Mediatama Maxima (DMMX) via subsidiary Digital Maxima Indonesia,,high,labels_batch_001.json
+270,MARKET_FLOW,,,,high,labels_batch_001.json
+271,MARKET_FLOW,,,,high,labels_batch_001.json
+272,SELL,TRIS,,1-12 November 2021,high,labels_batch_001.json
+273,OUTSIDE_INVESTOR_BUY,DMMX,"PT Sicepat Ekspres Indonesia, corporate investor",11-19 November 2021,medium,labels_batch_001.json
+274,MARKET_FLOW,,,,medium,labels_batch_001.json
+275,INSIDER_BUY,KOBX,"Kobexindo Investama, controlling shareholder of Kobexindo Tractors",17 November 2021,high,labels_batch_001.json
+276,INSIDER_BUY,UVCR,"Trimegah Sumber Mas, controlling shareholder",22 November 2021,high,labels_batch_001.json
+277,INSIDER_BUY,AKRA,"Haryanto Adikoesoemo, AKR Corporindo president director",19-23 November 2021,high,labels_batch_001.json
+278,OTHER,,,,high,labels_batch_001.json
+279,INSIDER_BUY,SRAJ,"Dato Sri Tahir, SRAJ deputy president commissioner, Mayapada founder",23 November 2021,high,labels_batch_001.json
+280,SELL,TOPS,,16 November 2021,high,labels_batch_001.json
+281,INSIDER_BUY,JAYA,"Darmawan Suryadi SM, one of Armada Berjaya's controlling shareholders","18, 19 dan 22 November 2021",high,labels_batch_001.json
+282,OTHER,,,,high,labels_batch_001.json
+283,COMPANY_ACQUIRES_STAKE,RSGK,"Sarana Meditama (SAME), Emtek Group hospital company",23 November 2021,medium,labels_batch_001.json
+284,INSIDER_BUY,ABMM,"PT Tiara Marga Trakindo, same ultimate owners as ABMM (internal restructuring)",,medium,labels_batch_001.json
+285,INSIDER_BUY,BIRD,"Purnomo Prawiro, one of Blue Bird's controlling shareholders",23-25 November 2021,high,labels_batch_001.json
+286,INSIDER_BUY,PNGO,"Hasan Tantri, one of Pinago Utama's controlling shareholders",26 November 2021,high,labels_batch_001.json
+287,INSIDER_BUY,JAYA,"Darmawan Suryadi SM, JAYA president director and controlling shareholder",23 November 2021,high,labels_batch_001.json
+288,INSIDER_BUY,BBKP,"Yohanes Suhardi, Bank KB Bukopin director",25 November 2021,high,labels_batch_001.json
+289,INSIDER_BUY,HEAL,"Hasmoro and Yulisar Khiat, Hermina hospital directors",,high,labels_batch_001.json
+290,OTHER,,,,high,labels_batch_001.json
+291,OTHER,,,,high,labels_batch_001.json
+292,OTHER,,,,high,labels_batch_001.json
+293,OTHER,,"PT Mordred Investama, creditor converting debt into shares, becoming sole controller",,low,labels_batch_001.json
+294,SELL,BBYB,,"23, 26 dan 29 November 2021",high,labels_batch_001.json
+295,INSIDER_BUY,SMMT,"Raphael Adhi Santosa Kodrata, Golden Eagle Energy director",26 dan 29 November 2021,high,labels_batch_001.json
+296,COMPANY_ACQUIRES_STAKE,ELSA,"PT Pertamina Hulu Energi (PHE), Pertamina upstream subholding",1 Desember 2021,medium,labels_batch_001.json
+297,OTHER,,,,high,labels_batch_001.json
+298,INSIDER_BUY,COCO,"Interjaya Corpora and Central Texindo, two controlling shareholders",26 dan 30 November 2021,high,labels_batch_001.json
+299,INSIDER_BUY,BBKP,"Helmi Fakhrudin, Bank KB Bukopin director",22 November 2021,high,labels_batch_001.json
+300,INSIDER_BUY,WINS,"Sugiman Layanto, one of Wintermar's controlling shareholders","24, 25, 26, 29 November dan 1 Desember 2021",high,labels_batch_001.json
+301,COMPANY_ACQUIRES_STAKE,PKPK,"PT Deli Pratama Batubara, via mandatory tender offer",10 Oktober - 17 November 2021,low,labels_batch_001.json
+302,INSIDER_BUY,MPRO,"Unnamed controlling shareholder (per headline), absorbing Raymond's shares",2 Desember 2021,medium,labels_batch_001.json
+303,INSIDER_BUY,MTEL,"Budi Setyawan Wijaya, Telkom Indonesia strategic portfolio director",22 November 2021,medium,labels_batch_001.json
+304,INSIDER_BUY,HEAL,"Aristo Setiawidjaja, Medikaloka Hermina director","26, 29, 30 November dan 1, 6 Desember 2021",high,labels_batch_001.json
+305,MARKET_FLOW,,,,medium,labels_batch_001.json
+306,INSIDER_BUY,OASA,"Gafur Sulistyo Umar, ex-BNBR boss, now majority shareholder (75%)",3 Desember 2021,low,labels_batch_001.json
+307,MARKET_FLOW,,,,high,labels_batch_001.json
+308,MARKET_FLOW,,,,high,labels_batch_001.json
+309,COMPANY_ACQUIRES_STAKE,,"Avia Avian (AVIA), parent subscribing to subsidiary Tirtakencana Tatawarna's capital increase",,low,labels_batch_001.json
+310,OTHER,,,,high,labels_batch_001.json
+311,OTHER,,,,high,labels_batch_001.json
+312,OTHER,,,,high,labels_batch_001.json
+313,INSIDER_BUY,TSPC,"Bogamulia Nagadi, controlling shareholder of Tempo Scan",11-26 November 2021,high,labels_batch_001.json
+314,OTHER,,,,high,labels_batch_001.json
+315,OTHER,,,,high,labels_batch_001.json
+316,INSIDER_BUY,DILD,"Hendro S. Gondokusumo, founder, via Graha Intan Mandiri",3 Desember 2021,high,labels_batch_001.json
+317,OPTION_OR_RIGHTS_EXERCISE,BBRI,Three Bank BRI directors exercising program rights,24 November dan 2 Desember 2021,high,labels_batch_001.json
+318,INSIDER_BUY,FUJI,"Anton Santoso, Fuji Finance commissioner",7 Desember 2021,high,labels_batch_001.json
+319,INSIDER_BUY,OASA,"Controlling shareholder (Gafur Sulistyo Umar), via tender offer",12 Januari 2022,low,labels_batch_001.json
+320,OTHER,,,,high,labels_batch_001.json
+321,OTHER,,,,high,labels_batch_001.json
+322,OUTSIDE_INVESTOR_BUY,BBYB,"PT Gozco Capital, existing shareholder (not described as controller)",,medium,labels_batch_001.json
+323,OTHER,,,,high,labels_batch_001.json
+324,SELL,INDO,,"22, 24 dan 25 November 2021",high,labels_batch_001.json
+325,COMPANY_ACQUIRES_STAKE,,Harum Energy (HRUM) via subsidiary Tanito Harum Nickel,13 Desember 2021,high,labels_batch_001.json
+326,MARKET_FLOW,,,,medium,labels_batch_001.json
+327,INSIDER_BUY,BYAN,"Dato' Dr Low Tuck Kwong, Bayan CEO and controlling shareholder",10 Desember 2021,high,labels_batch_001.json
+328,INSIDER_BUY,BSDE,"Paraga Artamida, controlling shareholder of BSDE",6 Desember 2021,high,labels_batch_001.json
+329,OUTSIDE_INVESTOR_BUY,DMMX,"PT Sicepat Ekspres Indonesia, corporate investor",8-9 Desember 2021,medium,labels_batch_001.json
+330,MARKET_FLOW,,,,high,labels_batch_001.json
+331,MARKET_FLOW,,,,medium,labels_batch_001.json
+332,OTHER,,,,medium,labels_batch_001.json
+333,INSIDER_BUY,KRAS,"Silmy Karim, Krakatau Steel leader ('pentolan')",8 Desember 2021 (transaksi pertama dari tiga),high,labels_batch_001.json
+334,SELL,BEBS,,10 November - 7 Desember 2021,high,labels_batch_001.json
+335,OTHER,,,,high,labels_batch_001.json
+336,COMPANY_ACQUIRES_STAKE,CITA,Adaro Energy (ADRO) via subsidiary Alam Tri Abadi (ATA),,high,labels_batch_001.json
+337,MARKET_FLOW,,,,high,labels_batch_001.json
+338,OTHER,,,,high,labels_batch_001.json
+339,OTHER,,,,high,labels_batch_001.json
+340,OUTSIDE_INVESTOR_BUY,SNLK,"Unilink Ventures Inc, shareholder (31.4% after purchase)",15 Desember 2021,medium,labels_batch_001.json
+341,OTHER,,,,high,labels_batch_001.json
+342,OUTSIDE_INVESTOR_BUY,AVIA,GIC Private Ltd and Archipelago Investment (Singapore government funds),7 Desember 2021,high,labels_batch_001.json
+343,OTHER,,,,high,labels_batch_001.json
+344,OUTSIDE_INVESTOR_BUY,SNLK,"Unilink Ventures Inc, shareholder (31.41% after purchase)",15 Desember 2021,medium,labels_batch_001.json
+345,INSIDER_BUY,BYAN,"Dato' Low Tuck Kwong, controlling shareholder of Bayan",17 Desember 2021,high,labels_batch_001.json
+346,MARKET_FLOW,,,,high,labels_batch_001.json
+347,INSIDER_BUY,EAST,"Khalid Bin Omar Abdat, Eastparc Hotel president director",16-20 Desember 2021,high,labels_batch_001.json
+348,OTHER,,,,high,labels_batch_001.json
+349,OUTSIDE_INVESTOR_BUY,MTEL,"Indonesia Investment Authority (INA), not a controller",22 November - 13 Desember 2021,high,labels_batch_001.json
+350,INSIDER_BUY,KINO,"Harry Sanusi, Kino Indonesia director",15 Desember 2021,high,labels_batch_001.json
+351,OTHER,,,,high,labels_batch_001.json
+352,OUTSIDE_INVESTOR_BUY,BBSI,"PT Finaccel Teknologi Indonesia (Kredivo), non-controlling 40% shareholder",,medium,labels_batch_001.json
+353,INSIDER_BUY,CCSI,"Peter Djatmiko, Communication Cable Systems director",20 Desember 2021,high,labels_batch_001.json
+354,OTHER,,,,high,labels_batch_001.json
+355,COMPANY_ACQUIRES_STAKE,,"Smartfren Telecom (FREN), via subscription to new Moratel shares",21 Desember 2021,medium,labels_batch_001.json
+356,INSIDER_BUY,BOLA,"Pieter Tanuri, controlling shareholder of Bali Bintang Sejahtera","13, 14 dan 15 Desember 2021",high,labels_batch_001.json
+357,OUTSIDE_INVESTOR_BUY,WIFI,"PT Prambanan Investasi Sukses, corporate shareholder",26 November 2021,medium,labels_batch_001.json
+358,OTHER,,,,medium,labels_batch_001.json
+359,OUTSIDE_INVESTOR_BUY,BMRI,"Indonesia Investment Authority (INA), sovereign wealth fund",23 Desember 2021,medium,labels_batch_001.json
+360,SELL,ESSA,,23 Desember 2021,high,labels_batch_001.json
+361,MARKET_FLOW,,,,high,labels_batch_001.json
+362,MARKET_FLOW,,,,high,labels_batch_001.json
+363,INSIDER_BUY,TGRA,"Terregra Asia Equity, controlling shareholder",23 Desember 2021,high,labels_batch_001.json
+364,INSIDER_BUY,DMMX,"Supardi Tan, Digital Mediatama Maxima director",17 dan 21 Desember 2021,high,labels_batch_001.json
+365,INSIDER_BUY,BSDE,"PT Paraga Artamida, controlling shareholder of BSDE",13 Desember 2021,high,labels_batch_001.json
+366,OTHER,,,,high,labels_batch_001.json
+367,OTHER,,,,high,labels_batch_001.json
+368,COMPANY_ACQUIRES_STAKE,ITMA,Astrindo Nusantara Infrastruktur (BIPI),29 Januari 2020,medium,labels_batch_001.json
+369,INSIDER_BUY,DILD,"PT Bina Yatra Sentosa, one of the controllers (simultaneous sale)",28 Desember 2021,low,labels_batch_001.json
+370,OTHER,,,,low,labels_batch_001.json
+371,OTHER,,,,high,labels_batch_001.json
+372,SELL,DEPO,,29 Desember 2021,high,labels_batch_001.json
+373,OPTION_OR_RIGHTS_EXERCISE,EMTK,Six Elang Mahkota directors incl. Alvin Sariaatmadja (MESOP III),,high,labels_batch_001.json
+374,MARKET_FLOW,,,,medium,labels_batch_001.json
+375,INSIDER_BUY,ALMI,"Welly Muliawan, Alumindo Light Metal Industry commissioner",28 dan 29 Desember 2021,high,labels_batch_001.json
+376,INSIDER_BUY,PSSI,"Harry Tjhen, Pelita Samudera Shipping director",28 Desember 2021,high,labels_batch_001.json
+377,OTHER,,,,high,labels_batch_001.json
+378,MARKET_FLOW,,,,high,labels_batch_001.json
+379,MARKET_FLOW,,,,medium,labels_batch_001.json
+380,COMPANY_ACQUIRES_STAKE,BBHI,"Bukalapak.com (BUKA), absorbing Allo Bank rights issue shares",,low,labels_batch_001.json
+381,INSIDER_BUY,SMMT,"Abed Nego, Golden Eagle Energy director",24 Desember 2021,medium,labels_batch_001.json
+382,OPTION_OR_RIGHTS_EXERCISE,BBNI,15 Bank BNI directors and commissioners (remuneration share programme),30 Desember 2021,high,labels_batch_001.json
+383,INSIDER_BUY,BSDE,"PT Paraga Artamida, controlling shareholder of BSDE",10 Desember 2021,high,labels_batch_001.json
+384,INSIDER_BUY,KINO,"Harry Sanusi, Kino president director and controller",29 Desember 2021,high,labels_batch_001.json
+385,INSIDER_BUY,SCMA,Surya Citra Media directors incl. president director Sutanto Hartono,30 Desember 2021,medium,labels_batch_001.json
+386,OTHER,,,,high,labels_batch_001.json
+387,INSIDER_BUY,BRPT,"Prajogo Pangestu, Barito Pacific commissioner and controlling shareholder",29 dan 30 Desember 2021,high,labels_batch_001.json
+388,INSIDER_BUY,COCO,"Mahogany Global Investment Pte Ltd, one of the controlling shareholders",28 Desember 2021,high,labels_batch_001.json
+389,INSIDER_BUY,SGER,"Welly Thomas (president director, controller) and Cendrasuri Ependy (director)",24-27 Desember 2021,high,labels_batch_001.json
+390,INSIDER_BUY,BOLA,"Pieter Tanuri, holder of about 40% of Bali Bintang Sejahtera",28 Desember 2021 - 6 Januari 2022,medium,labels_batch_001.json
+391,SELL,CASH,,22 Desember 2021 dan 4 Januari 2022,high,labels_batch_001.json
+392,MARKET_FLOW,,,,medium,labels_batch_001.json
+393,MARKET_FLOW,,,,high,labels_batch_001.json
+394,INSIDER_BUY,SMDR,"Farida Helianti Sastrosaton and Ridwan Hamid, Samudera Indonesia directors",6 Januari 2022,high,labels_batch_001.json
+395,OPTION_OR_RIGHTS_EXERCISE,WINS,"Wintermar directors and controllers (Nely Layanto, Janto Lili) under MSA programme",,high,labels_batch_001.json
+396,OTHER,,,,high,labels_batch_001.json
+397,MARKET_FLOW,,,,high,labels_batch_001.json
+398,INSIDER_BUY,BYAN,"Dato Low Tuck Kwong, Bayan president director and controller",3-7 Januari 2022,high,labels_batch_001.json
+399,OTHER,,,,high,labels_batch_001.json
+400,OTHER,,,,high,labels_batch_001.json
+401,OTHER,,,,high,labels_batch_001.json
+402,MARKET_FLOW,,,,high,labels_batch_001.json
+403,OTHER,,,,high,labels_batch_001.json
+404,OTHER,,,,high,labels_batch_001.json
+405,INSIDER_BUY,AGRS,"Industrial Bank of Korea (IBK), controlling shareholder, planned capital injection",,low,labels_batch_001.json
+406,MARKET_FLOW,,,,high,labels_batch_001.json
+407,INSIDER_BUY,ISAT,"Ooredoo Hutchison Asia Pte. Ltd, controlling shareholder of Indosat",5 Januari 2022,medium,labels_batch_001.json
+408,MARKET_FLOW,,,,high,labels_batch_001.json
+409,OTHER,,"Imelda Mulyani Harsono and Rachmat Harsono, directors (heirs)",,medium,labels_batch_001.json
+410,MARKET_FLOW,,,,high,labels_batch_001.json
+411,INSIDER_BUY,WSKT,Badrodin Haiti (commissioner) and Destiawan Soewardjono (president director),7-12 Januari 2022,high,labels_batch_001.json
+412,INSIDER_BUY,TSPC,"PT Bogamulia Nagadi, majority shareholder of Tempo Scan",23 Desember 2021 - 3 Januari 2022,high,labels_batch_001.json
+413,INSIDER_BUY,BSDE,"PT Paraga Artamida, controlling shareholder of BSDE",13 Januari 2022,high,labels_batch_001.json
+414,MARKET_FLOW,,,,high,labels_batch_001.json
+415,SELL,DEPO,,14 Januari 2022,high,labels_batch_001.json
+416,OUTSIDE_INVESTOR_BUY,DMMX,"PT Sicepat Ekspres Indonesia, over-5% corporate shareholder",14 Januari 2022,high,labels_batch_001.json
+417,COMPANY_ACQUIRES_STAKE,SUPR,"PT Profesional Telekomunikasi Indonesia (Protelindo), via mandatory tender offer",11 Januari 2022,medium,labels_batch_001.json
+418,SELL,ITMA,,17 Januari 2022,low,labels_batch_001.json
+419,INSIDER_BUY,WSKT,"Taufik Hendra Kusuma and Bambang Rianto, Waskita Karya directors",12 Januari 2022,high,labels_batch_001.json
+420,INSIDER_BUY,TSPC,"PT Bogamulia Nagadi, controlling shareholder of Tempo Scan",4-10 Januari 2022,high,labels_batch_001.json
+421,INSIDER_BUY,SKBM,"Oei Harry Lukmito, director and controlling shareholder of Sekar Bumi",14 Januari 2022,high,labels_batch_001.json
+422,MARKET_FLOW,,,,high,labels_batch_001.json
+423,COMPANY_ACQUIRES_STAKE,ITMA,PT Astrindo Nusantara Infrastruktur (BIPI),18 Januari 2022,medium,labels_batch_001.json
+424,OUTSIDE_INVESTOR_BUY,,A5-DB Holding (Grab subsidiary) and Singtel Alpha Investment,,low,labels_batch_001.json
+425,OTHER,,,,high,labels_batch_001.json
+426,INSIDER_BUY,BBHI,Ali Gunawan (commissioner) and Ganda Raharja Rusli (director),17-19 Januari 2022,medium,labels_batch_001.json
+427,INSIDER_BUY,BBYB,"PT Akulaku Silvrr Indonesia, controlling shareholder of Bank Neo",,high,labels_batch_001.json
+428,OUTSIDE_INVESTOR_BUY,PYFA,"PT Aldiracita Sekuritas Indonesia, securities firm",5-17 Januari 2021,medium,labels_batch_001.json
+429,INSIDER_BUY,BYAN,"Dato' DR. Low Tuck Kwong, Bayan controlling shareholder",21 Januari 2022,high,labels_batch_001.json
+430,OTHER,,,,high,labels_batch_001.json
+431,OTHER,,,,high,labels_batch_001.json
+432,OUTSIDE_INVESTOR_BUY,MTDL,"Sukarto Bujung, Buyung Poetra (HOKI) president director",,low,labels_batch_001.json
+433,OTHER,,"PT Star Pacific (LPLI), standby buyer paying in kind with building",,low,labels_batch_001.json
+434,COMPANY_ACQUIRES_STAKE,,Yelooo Integra Datanet (YELO),,medium,labels_batch_001.json
+435,INSIDER_BUY,BBYB,"PT Akulaku Silvrr Indonesia, controlling shareholder of Bank Neo",19-26 Januari 2022,high,labels_batch_001.json
+436,MARKET_FLOW,,,,high,labels_batch_001.json
+437,COMPANY_ACQUIRES_STAKE,RSGK,"PT Sarana Meditama Metropolitan (SAME), via mandatory tender offer",21 Desember 2021 - 19 Januari 2022,medium,labels_batch_001.json
+438,OTHER,,,,high,labels_batch_001.json
+439,OUTSIDE_INVESTOR_BUY,BUMI,"Bambang Sihono, retail investor",7-26 Januari 2022,high,labels_batch_001.json
+440,SELL,OASA,,"6, 21 dan 27 Januari 2022",high,labels_batch_001.json
+441,OTHER,,,,high,labels_batch_001.json
+442,OTHER,,,,high,labels_batch_001.json
+443,INSIDER_BUY,BSDE,"PT Paraga Artamida, controlling shareholder of BSDE",27 Januari 2022,high,labels_batch_001.json
+444,SELL,,PT Fauna Land Indonesia,31 Januari 2022,high,labels_batch_001.json
+445,MARKET_FLOW,,,,high,labels_batch_001.json
+446,OTHER,,,,high,labels_batch_001.json
+447,OUTSIDE_INVESTOR_BUY,BULL,"PT Delta Royal Sejahtera, corporate shareholder (20.72%)",28 Januari 2022,medium,labels_batch_001.json
+448,OUTSIDE_INVESTOR_BUY,BUMI,"Bambang Sihono, retail investor",31 Januari 2022,high,labels_batch_001.json
+449,OTHER,,,,high,labels_batch_001.json
+450,OTHER,,,,medium,labels_batch_001.json
+451,INSIDER_BUY,BOLA,"Pieter Tanuri, holder of about 40% of Bali Bintang Sejahtera",25 Januari 2022,medium,labels_batch_001.json
+452,COMPANY_ACQUIRES_STAKE,AGII,PT Saratoga Investama Sedaya (SRTG),11 Oktober 2021 - 3 Februari 2022,medium,labels_batch_002.json
+453,BUYBACK,LPPF,Perseroan sendiri (PT Matahari Department Store Tbk),6 Agustus 2021 - 5 November 2021,high,labels_batch_002.json
+454,INSIDER_BUY,BRMS,Dua pengendali BRMS (Group Bakrie),,high,labels_batch_002.json
+455,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+456,DENIAL_OR_RUMOR,KEEN,Pengendali KEEN (disebut melakukan jual beli),,medium,labels_batch_002.json
+457,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+458,OTHER,,,,high,labels_batch_002.json
+459,OUTSIDE_INVESTOR_BUY,BUMI,"Bambang Sihono, investor ritel",,high,labels_batch_002.json
+460,OTHER,,,,high,labels_batch_002.json
+461,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+462,OTHER,,,,high,labels_batch_002.json
+463,OTHER,,,,high,labels_batch_002.json
+464,MARKET_FLOW,,investor asing,,high,labels_batch_002.json
+465,MARKET_FLOW,,,,medium,labels_batch_002.json
+466,OTHER,,,,high,labels_batch_002.json
+467,INSIDER_BUY,BSDE,"PT Paraga Artamida, pemegang saham pengendali BSDE",27 Januari 2022,high,labels_batch_002.json
+468,OUTSIDE_INVESTOR_BUY,BBYB,PT Akulaku Silvrr Indonesia,4-9 Februari 2022,medium,labels_batch_002.json
+469,INSIDER_BUY,AVIA,"Robert Christian Tanoko, direktur Avia Avian",8 Februari 2022,high,labels_batch_002.json
+470,OTHER,,,,high,labels_batch_002.json
+471,INSIDER_BUY,TPMA,"Yonggi Tanuwidjaja, komisaris Trans Power Marine",10 Februari 2022,high,labels_batch_002.json
+472,SELL,BTPN,,31 Januari 2022,high,labels_batch_002.json
+473,OTHER,,,,high,labels_batch_002.json
+474,OUTSIDE_INVESTOR_BUY,MKNT,PT Anugerah Cakrawala Abadi,8 Februari 2022,medium,labels_batch_002.json
+475,OUTSIDE_INVESTOR_BUY,BBSI,PT FinAccel Teknologi Indonesia (induk Kredivo),,low,labels_batch_002.json
+476,OTHER,,,,high,labels_batch_002.json
+477,OPTION_OR_RIGHTS_EXERCISE,SILO,"Phua Meng Kuan, direktur Siloam (MESOP Tahap I)",14 Februari 2022,high,labels_batch_002.json
+478,SELL,KEEN,,14 Februari 2022,high,labels_batch_002.json
+479,SELL,MPPA,,2-9 Februari 2022,high,labels_batch_002.json
+480,OUTSIDE_INVESTOR_BUY,BBYB,PT Akulaku Silvrr Indonesia,10-15 Februari 2022,medium,labels_batch_002.json
+481,INSIDER_BUY,AVIA,"Robert Christian Tanoko, direktur Avia Avian",9-10 Februari 2022,high,labels_batch_002.json
+482,MARKET_FLOW,,investor asing,,high,labels_batch_002.json
+483,OTHER,,,,medium,labels_batch_002.json
+484,OTHER,,,,high,labels_batch_002.json
+485,INSIDER_BUY,PEHA,"Masrizal A. Syarief, komisaris Phapros",7-16 Februari 2022,high,labels_batch_002.json
+486,OUTSIDE_INVESTOR_BUY,BUMI,Clearstream Banking Luxembourg dan Barclays Capital Securities,17 Februari 2022,medium,labels_batch_002.json
+487,OTHER,,,,high,labels_batch_002.json
+488,MARKET_FLOW,,investor asing,,high,labels_batch_002.json
+489,OTHER,,,,high,labels_batch_002.json
+490,COMPANY_ACQUIRES_STAKE,,Perseroan (ALKA) menambah kepemilikan pada entitas anak,,high,labels_batch_002.json
+491,INSIDER_BUY,GEMA,"Pulung Peranginangin, komisaris utama Gema Grahasarana",17 Februari 2022,high,labels_batch_002.json
+492,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+493,MARKET_FLOW,,,,high,labels_batch_002.json
+494,OPTION_OR_RIGHTS_EXERCISE,BUMI,"Pemegang OWK, antara lain Nuzul Fajri dan Ita Haryavita",,low,labels_batch_002.json
+495,OTHER,,,,high,labels_batch_002.json
+496,COMPANY_ACQUIRES_STAKE,,SRAJ via PT Mandiri Prima Perdana (MPP),18 Februari 2022,medium,labels_batch_002.json
+497,OUTSIDE_INVESTOR_BUY,MPPA,"Consilium Frontier Equity Fund LP, pemegang saham bukan pengendali",17 Februari 2022,high,labels_batch_002.json
+498,MARKET_FLOW,,investor asing,,high,labels_batch_002.json
+499,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+500,OTHER,,,,high,labels_batch_002.json
+501,OTHER,,,,high,labels_batch_002.json
+502,OPTION_OR_RIGHTS_EXERCISE,MPMX,Empat direksi Mitra Pinasthika (program insentif jangka panjang),21 Februari 2022,high,labels_batch_002.json
+503,OTHER,,,,high,labels_batch_002.json
+504,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+505,INSIDER_BUY,MASA,"Pieter Tanuri, komisaris Multistrada (bos Bali United)",22 Februari 2022,high,labels_batch_002.json
+506,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+507,OTHER,,,,high,labels_batch_002.json
+508,INSIDER_BUY,GEMA,"Pulung Peranginangin, komisaris Gema Grahasarana",17 Februari - 2 Maret 2022,high,labels_batch_002.json
+509,OUTSIDE_INVESTOR_BUY,ABDA,Aseana Insurance Pte. Ltd,4 Maret 2022,high,labels_batch_002.json
+510,INSIDER_BUY,WMUU,"Tumiyana, komisaris dan UBO Widodo Makmur Unggas",1 Maret 2022,medium,labels_batch_002.json
+511,OTHER,,,,high,labels_batch_002.json
+512,COMPANY_ACQUIRES_STAKE,,PT Merdeka Copper Gold (MDKA),1 Maret 2022,high,labels_batch_002.json
+513,OUTSIDE_INVESTOR_BUY,BBSS,PT Agung Anugrah Investama (AAI),"9, 15-18 Februari 2022",low,labels_batch_002.json
+514,COMPANY_ACQUIRES_STAKE,,FWD Financial Service Pte. Ltd. (penerbitan saham baru BRI Life),,low,labels_batch_002.json
+515,MARKET_FLOW,,investor asing,,high,labels_batch_002.json
+516,OTHER,,,,high,labels_batch_002.json
+517,OUTSIDE_INVESTOR_BUY,WGSH,PT Walden Global Service (WGS),16-24 Februari 2022,medium,labels_batch_002.json
+518,OUTSIDE_INVESTOR_BUY,BBSS,PT Agung Anugrah Investama (AAI),21-22 Februari 2022,medium,labels_batch_002.json
+519,DENIAL_OR_RUMOR,ABBA,"Kresna Graha Investama (KREN), membantah",,medium,labels_batch_002.json
+520,OUTSIDE_INVESTOR_BUY,BPFI,"Woori Card Co Ltd (Korea Selatan), calon pengendali baru",4 Maret 2022,medium,labels_batch_002.json
+521,OTHER,,,,high,labels_batch_002.json
+522,OTHER,,,,high,labels_batch_002.json
+523,OTHER,,,,high,labels_batch_002.json
+524,SELL,KREN,,4 Maret 2022,high,labels_batch_002.json
+525,SELL,ITMG,,,high,labels_batch_002.json
+526,OTHER,,,,high,labels_batch_002.json
+527,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+528,OUTSIDE_INVESTOR_BUY,BULL,PT Bhakti Cahaya Intiperkasa,8 Maret 2022,medium,labels_batch_002.json
+529,SELL,CASH,,1 Maret 2022,high,labels_batch_002.json
+530,OUTSIDE_INVESTOR_BUY,MPPA,Consilium Frontier Equity Fund LP (equity fund AS),1-2 Maret 2022,high,labels_batch_002.json
+531,INSIDER_BUY,UNIQ,Dua pengendali: Burhan Tjokro (direktur) dan Ulung Wijaya,8 Maret 2022,high,labels_batch_002.json
+532,OTHER,,,,high,labels_batch_002.json
+533,OTHER,,,,high,labels_batch_002.json
+534,OUTSIDE_INVESTOR_BUY,BUMI,PT Clearstream Banking S.A. Luxembourg,9 Maret 2022,medium,labels_batch_002.json
+535,INSIDER_BUY,IMPC,Enam direksi Impack Pratama Industri,8 Maret 2022,high,labels_batch_002.json
+536,INSIDER_BUY,BSDE,"PT Paraga Artamida, pengendali Bumi Serpong Damai",7 Maret 2022,high,labels_batch_002.json
+537,OTHER,,,,high,labels_batch_002.json
+538,OUTSIDE_INVESTOR_BUY,ARTO,GIC Private Limited (dana abadi pemerintah Singapura),Februari-Maret 2022,high,labels_batch_002.json
+539,OUTSIDE_INVESTOR_BUY,BBYB,PT Akulaku Silvrr Indonesia,21-22 Februari 2022 dan 10 Maret 2022,medium,labels_batch_002.json
+540,OTHER,,,,high,labels_batch_002.json
+541,SELL,ADRO,,7 Maret 2022,high,labels_batch_002.json
+542,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+543,INSIDER_BUY,RISE,"Belinda Natalia, direktur utama (kepemilikan tidak langsung)",10 Maret 2022,high,labels_batch_002.json
+544,OUTSIDE_INVESTOR_BUY,BUMI,PT Clearstream Banking S.A. Luxembourg,11 Maret 2022,medium,labels_batch_002.json
+545,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+546,INSIDER_BUY,RDTX,"Wiriady Widjaja, presiden direktur Roda Vivatex",15 Maret 2022,high,labels_batch_002.json
+547,INSIDER_BUY,BYAN,"Dato' Low Tuck Kwong, direktur utama Bayan Resources",15 Maret 2022,high,labels_batch_002.json
+548,SELL,BYAN,,15 Maret 2022,high,labels_batch_002.json
+549,SELL,MARK,,11 dan 15 Maret 2022,high,labels_batch_002.json
+550,INSIDER_BUY,PEHA,"Masrizal A. Syarief, komisaris Phapros","8, 9, 15, 16 Maret 2022",high,labels_batch_002.json
+551,OTHER,,,,high,labels_batch_002.json
+552,OUTSIDE_INVESTOR_BUY,BNBR,Daley Capital Limited,,medium,labels_batch_002.json
+553,OTHER,,,,medium,labels_batch_002.json
+554,INSIDER_BUY,GEMA,"Pulung Peranginangin, presiden komisaris Gema Grahasarana",17 Maret 2022,high,labels_batch_002.json
+555,COMPANY_ACQUIRES_STAKE,,PT Mitrabahtera Segara Sejati (MBSS),17 Maret 2022,high,labels_batch_002.json
+556,OTHER,,,,high,labels_batch_002.json
+557,INSIDER_BUY,BBCA,"Jahja Setiaatmadja, direktur utama Bank BCA",22 Maret 2022,high,labels_batch_002.json
+558,INSIDER_BUY,RDTX,Komisaris dan direksi RDTX (membeli dari pengendali Geno Intiperkasa),21 Maret 2022,medium,labels_batch_002.json
+559,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+560,OUTSIDE_INVESTOR_BUY,BUMI,Clearstream Banking S.A. Luxembourg,21 Maret 2022,medium,labels_batch_002.json
+561,INSIDER_BUY,PEHA,"Masrizal A. Syarief, komisaris Phapros",17 dan 23 Maret 2022,high,labels_batch_002.json
+562,INSIDER_BUY,SDMU,"Tjoe Mien Sasminto, pengendali dan direksi Sidomulyo Selaras",15 dan 17 Maret 2022,high,labels_batch_002.json
+563,INSIDER_BUY,ESIP,"Eric Budisetio Kurniawan, direktur utama dan pengendali",15 dan 23 Maret 2022,high,labels_batch_002.json
+564,SELL,,PT Agro Muko (membeli kembali sahamnya),23 Maret 2022,medium,labels_batch_002.json
+565,SELL,ESTA,,18 Maret 2022,high,labels_batch_002.json
+566,OTHER,,,,high,labels_batch_002.json
+567,INSIDER_BUY,BBCA,Dua komisaris dan dua direksi BCA,23 Maret 2022,high,labels_batch_002.json
+568,OTHER,,,,high,labels_batch_002.json
+569,OUTSIDE_INVESTOR_BUY,BBYB,PT Akulaku Silvrr Indonesia,22-23 Maret 2022,medium,labels_batch_002.json
+570,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+571,INSIDER_BUY,UNVR,"Ainul Yaqin, direktur Unilever Indonesia",24 Maret 2022,high,labels_batch_002.json
+572,INSIDER_BUY,BISI,"Tjiu Thomas Effendy, komisaris utama BISI International",25 Maret 2022,high,labels_batch_002.json
+573,INSIDER_BUY,NANO,"Suryandaru, direksi Nanotech Indonesia Global",18 Maret 2022,high,labels_batch_002.json
+574,INSIDER_BUY,UNVR,"Ira Noviarti, direktur Unilever Indonesia",28 Maret 2022,high,labels_batch_002.json
+575,OTHER,,,,low,labels_batch_002.json
+576,OUTSIDE_INVESTOR_BUY,DILD,PT Graha Intan Mandiri (GIM),17 Maret 2022,low,labels_batch_002.json
+577,OTHER,,,,high,labels_batch_002.json
+578,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+579,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+580,MARKET_FLOW,,,,medium,labels_batch_002.json
+581,OTHER,,,,high,labels_batch_002.json
+582,OTHER,,,,medium,labels_batch_002.json
+583,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+584,OPTION_OR_RIGHTS_EXERCISE,BUMI,Innovate Capital Pte. Ltd. (konversi OWK),23 Februari 2022,low,labels_batch_002.json
+585,BUYBACK,PSSI,Perseroan sendiri (PT Pelita Samudera Shipping),30 Maret 2022,high,labels_batch_002.json
+586,OTHER,,,,high,labels_batch_002.json
+587,OUTSIDE_INVESTOR_BUY,CENT,"EP ID Holdings Pte Ltd (Edge Point, Singapura)",23 Maret 2022,medium,labels_batch_002.json
+588,OUTSIDE_INVESTOR_BUY,BULL,PT Danatama Kapital Investama,29 Maret 2022,medium,labels_batch_002.json
+589,OTHER,,,,high,labels_batch_002.json
+590,OTHER,,,,medium,labels_batch_002.json
+591,INSIDER_BUY,TSPC,"PT Bogamulia Nagadi, pengendali Tempo Scan Pacific",11 dan 12 Januari 2022,high,labels_batch_002.json
+592,COMPANY_ACQUIRES_STAKE,,"PT Adi Sarana Investindo, anak usaha ASSA",,high,labels_batch_002.json
+593,MARKET_FLOW,,,,medium,labels_batch_002.json
+594,OTHER,,,,high,labels_batch_002.json
+595,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+596,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+597,OTHER,,,,high,labels_batch_002.json
+598,INSIDER_BUY,SWAT,"Shio Alim Susanto, direksi Sriwahana Adityakarta",6 April 2022,high,labels_batch_002.json
+599,INSIDER_BUY,SILO,"PT Megapratama Karya Persada, pengendali Siloam","31 Maret 2022, 5-6 April 2022",high,labels_batch_002.json
+600,OTHER,,,,high,labels_batch_002.json
+601,COMPANY_ACQUIRES_STAKE,,"PT Sumatra Resources, anak usaha Bhakti Coal (grup IATA)",,high,labels_batch_002.json
+602,INSIDER_BUY,MBAP,"PT Wahana Batubara Indonesia, pengendali Mitrabara Adiperdana",30 Maret 2022,high,labels_batch_002.json
+603,OTHER,,,,low,labels_batch_002.json
+604,OTHER,,,,high,labels_batch_002.json
+605,INSIDER_BUY,HEAL,"Aristo Setiawidjaja, direktur Medikaloka Hermina",14-16 Maret 2022,high,labels_batch_002.json
+606,INSIDER_BUY,SIPD,"PT Great Giant Pineapple, pengendali Sreeya Sewu",28-31 Maret 2022,high,labels_batch_002.json
+607,INSIDER_BUY,HEAL,"Aristo Setiawidjaja, direktur Medikaloka Hermina",14-16 Maret 2022,high,labels_batch_002.json
+608,OUTSIDE_INVESTOR_BUY,BBSI,PT FinAccel Teknologi Indonesia (induk Kredivo),31 Maret 2022 dan 8 April 2022,medium,labels_batch_002.json
+609,OUTSIDE_INVESTOR_BUY,BNBA,PT Takjub Financial Teknologi (Grup Ajaib),8 April 2022,medium,labels_batch_002.json
+610,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+611,OTHER,,,,high,labels_batch_002.json
+612,OUTSIDE_INVESTOR_BUY,BBYB,PT Akulaku Silvrr Indonesia,"8, 11 dan 12 April 2022",medium,labels_batch_002.json
+613,OTHER,,,,high,labels_batch_002.json
+614,OTHER,,,,high,labels_batch_002.json
+615,OTHER,,,,high,labels_batch_002.json
+616,OTHER,,,,medium,labels_batch_002.json
+617,OTHER,,,,high,labels_batch_002.json
+618,OUTSIDE_INVESTOR_BUY,CARS,"Paulus Totok Lusida, bukan pengendali",6 April 2022,high,labels_batch_002.json
+619,OTHER,,,,high,labels_batch_002.json
+620,OUTSIDE_INVESTOR_BUY,NATO,PT Wasa Lestari Buana,11 April 2022,medium,labels_batch_002.json
+621,INSIDER_BUY,TSPC,"PT Bogamulia Nagadi, pengendali Tempo Scan Pacific","28-31 Maret 2022 dan 1, 4, 5 April 2022",high,labels_batch_002.json
+622,OTHER,,,,high,labels_batch_002.json
+623,OUTSIDE_INVESTOR_BUY,BBYB,PT Akulaku Silvrr Indonesia,13-14 April 2022,medium,labels_batch_002.json
+624,OTHER,,,,high,labels_batch_002.json
+625,INSIDER_BUY,CCSI,"Peter Djatmiko, direktur utama dan pemegang saham pengendali",18 April 2022,high,labels_batch_002.json
+626,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+627,SELL,YELO,,April 2022,high,labels_batch_002.json
+628,BUYBACK,GOTO,GOTO via CGS CIMB Sekuritas (stabilisasi harga IPO),21 April 2022,low,labels_batch_002.json
+629,INSIDER_BUY,PEHA,"Masrizal A. Syarief, komisaris Phapros",18-20 April 2022,high,labels_batch_002.json
+630,COMPANY_ACQUIRES_STAKE,SILO,PT Lippo Karawaci Tbk (LPKR),29 Maret - 18 April 2022,medium,labels_batch_002.json
+631,OUTSIDE_INVESTOR_BUY,BUMI,NBS Clients (badan hukum Swiss),21 April 2022,medium,labels_batch_002.json
+632,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+633,OTHER,,,,low,labels_batch_002.json
+634,OTHER,,,,high,labels_batch_002.json
+635,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+636,INSIDER_BUY,DMAS,"Muktar Widjaja, presiden komisaris Puradelta Lestari",20-25 April 2022,high,labels_batch_002.json
+637,OTHER,,,,low,labels_batch_002.json
+638,MARKET_FLOW,,investor asing (net buy),,high,labels_batch_002.json
+639,OTHER,,,,high,labels_batch_002.json
+640,OTHER,,,,high,labels_batch_002.json
+641,OTHER,,,,high,labels_batch_002.json
+642,INSIDER_BUY,DMAS,"Muktar Widjaja, putra pendiri Grup Sinar Mas",20-25 April 2022,medium,labels_batch_002.json
+643,COMPANY_ACQUIRES_STAKE,,PT Vale Indonesia (INCO) bersama Huayou,,low,labels_batch_002.json
+644,INSIDER_BUY,AMAR,"Tolaram Group Inc, pengendali Bank Amar",22 April 2022,high,labels_batch_002.json
+645,COMPANY_ACQUIRES_STAKE,,"Stanmore SMC Holdings, entitas anak Dian Swastatika (DSSA)",3 Mei 2022,high,labels_batch_002.json
+646,INSIDER_BUY,SMDR,"Bani Maulana Mulia, direktur utama Samudera Indonesia",28 April 2022,high,labels_batch_002.json
+647,OTHER,,,,high,labels_batch_002.json
+648,INSIDER_BUY,MTMH,"Clement Zichri Ang dan Felix Vincent Ang, pengurus teras",21-22 April 2022,high,labels_batch_002.json
+649,INSIDER_BUY,RISE,Belinda Natalia (direktur utama) dan Caroline Novilia T (direktur),27 April 2022,high,labels_batch_002.json
+650,COMPANY_ACQUIRES_STAKE,,PT Telkom Indonesia (TLKM),28 April 2022,medium,labels_batch_002.json
+651,INSIDER_BUY,BSDE,"PT Paraga Artamida, pengendali Bumi Serpong Damai",27 April 2022,high,labels_batch_002.json
+652,OTHER,,,,high,labels_batch_003.json
+653,COMPANY_ACQUIRES_STAKE,TBIG,Bersama Digital Infrastructure Asia Pte Ltd (kaitan Saratoga di judul),22 dan 26 April 2022,low,labels_batch_003.json
+654,INSIDER_BUY,HRME,Pengendali Menteng Heritage Realty,,high,labels_batch_003.json
+655,COMPANY_ACQUIRES_STAKE,,"Pamapersada Nusantara (PAMA), anak usaha United Tractors",27 April 2022,high,labels_batch_003.json
+656,OTHER,,,,high,labels_batch_003.json
+657,INSIDER_BUY,BBCA,"Santoso, salah satu direksi Bank Central Asia",9 Mei 2022,high,labels_batch_003.json
+658,COMPANY_ACQUIRES_STAKE,,Dharma Polimetal (DRMA) menambah modal anak usaha Dharma Precision Parts,12 Mei 2022,high,labels_batch_003.json
+659,OTHER,,,,high,labels_batch_003.json
+660,INSIDER_BUY,BBCA,"John Kosasih dan Subur Tan, direksi Bank BCA",9 Mei 2022,high,labels_batch_003.json
+661,OTHER,,,,high,labels_batch_003.json
+662,INSIDER_BUY,BBCA,"Frengky Chandra Kusuma, direktur Bank BCA",10 Mei 2022,high,labels_batch_003.json
+663,OUTSIDE_INVESTOR_BUY,LUCY,"PT Delta Wibawa Bersama, pemegang saham (peran tidak disebut)",27 April 2022,medium,labels_batch_003.json
+664,OTHER,,,,high,labels_batch_003.json
+665,MARKET_FLOW,,,,high,labels_batch_003.json
+666,INSIDER_BUY,BUDI,"PT Budi Delta Swakarya, pemegang saham pengendali",12 Mei 2022,high,labels_batch_003.json
+667,INSIDER_BUY,BAUT,"Simon Hendiawan, direktur utama Mitra Angkasa Sejahtera","12, 13 dan 20 April 2022",high,labels_batch_003.json
+668,OTHER,,,,high,labels_batch_003.json
+669,OTHER,,,,high,labels_batch_003.json
+670,INSIDER_BUY,BBCA,Vera Eve Lim (jabatan tidak disebut dalam teks),10 dan 12 Mei 2022,low,labels_batch_003.json
+671,MARKET_FLOW,,,,high,labels_batch_003.json
+672,OTHER,,,,medium,labels_batch_003.json
+673,INSIDER_BUY,SILO,"PT Megapratama Karya Persada, pemegang 49,83%, anak usaha Lippo Karawaci","12, 13, 17 dan 18 Mei 2022",medium,labels_batch_003.json
+674,OTHER,,,,high,labels_batch_003.json
+675,COMPANY_ACQUIRES_STAKE,,Merdeka Copper Gold (MDKA) lewat Batutua Tambang Abadi (BTA),17 Mei 2022,high,labels_batch_003.json
+676,INSIDER_BUY,RDTX,"Turniady Widjaja, pengendali (pemegang saham utama) Roda Vivatex",,high,labels_batch_003.json
+677,OTHER,,,,high,labels_batch_003.json
+678,OTHER,,,,high,labels_batch_003.json
+679,OTHER,,,,high,labels_batch_003.json
+680,MARKET_FLOW,,,,high,labels_batch_003.json
+681,INSIDER_BUY,AKRA,"Haryanto Adikoesoemo, presiden direktur dan pemegang saham pengendali","20, 24 dan 25 Mei 2022",high,labels_batch_003.json
+682,INSIDER_BUY,PEHA,"Masrizal A. Syarief, komisaris Phapros",23 dan 25 Mei 2022,high,labels_batch_003.json
+683,INSIDER_BUY,BBCA,"Santoso dan John Kosasih, direksi Bank Central Asia",24 Mei 2022,high,labels_batch_003.json
+684,OTHER,,,,high,labels_batch_003.json
+685,INSIDER_BUY,BBCA,"Gregory Hendra Lembong, direksi Bank Central Asia",25 Mei 2022,high,labels_batch_003.json
+686,SELL,IPPE,,23-24 Mei 2022,high,labels_batch_003.json
+687,COMPANY_ACQUIRES_STAKE,BMAS,KasikorBank (KBank) lewat Kasikorn Vision Company Limited,30 Mei 2022,medium,labels_batch_003.json
+688,OTHER,,,,high,labels_batch_003.json
+689,MARKET_FLOW,,,,high,labels_batch_003.json
+690,INSIDER_BUY,AVIA,"Ruslan Tanoko, wakil direktur utama, lewat PT Sensasi Istana Warna",23 Mei 2022,high,labels_batch_003.json
+691,INSIDER_BUY,BIRD,"Adrianto Djokosoetono, wakil direktur utama Blue Bird",23-24 Mei 2022,high,labels_batch_003.json
+692,INSIDER_BUY,BSDE,"PT Paraga Artamida, salah satu pengendali",30 Mei 2022,high,labels_batch_003.json
+693,INSIDER_BUY,AKRA,"Haryanto Adikoesoemo, presiden direktur AKR Corporindo","27, 30 dan 31 Mei 2022",high,labels_batch_003.json
+694,OTHER,,,,high,labels_batch_003.json
+695,INSIDER_BUY,BSDE,"Muktar Widjaja, komisaris Bumi Serpong Damai",25 Mei 2022,high,labels_batch_003.json
+696,OPTION_OR_RIGHTS_EXERCISE,WEHA,"Panorama Sentrawisata (PANR), pemegang 44,91%, akan melaksanakan HMETD",,medium,labels_batch_003.json
+697,INSIDER_BUY,PEHA,"Masrizal A. Syarief, komisaris Phapros","27, 30 dan 31 Mei 2022",high,labels_batch_003.json
+698,MARKET_FLOW,,,,high,labels_batch_003.json
+699,INSIDER_BUY,LPKR,"PT Megapratama Karya Persada, pengendali Lippo Karawaci",9-27 Mei 2022,high,labels_batch_003.json
+700,INSIDER_BUY,BYAN,"Dato' Low Tuck Kwong, pengendali dan direktur utama",3 Juni 2022,high,labels_batch_003.json
+701,SELL,BTPS,,10 dan 11 Mei 2022,high,labels_batch_003.json
+702,OTHER,,,,medium,labels_batch_003.json
+703,INSIDER_BUY,BUKA,"PT Kreatif Media Karya, pengendali Bukalapak",6 Juni 2022,high,labels_batch_003.json
+704,OTHER,,,,high,labels_batch_003.json
+705,INSIDER_BUY,AMAR,"Tolaram Group Inc, pengendali",25 Mei dan 6 Juni 2022,high,labels_batch_003.json
+706,OUTSIDE_INVESTOR_BUY,BUMI,"Watiga Trust Ltd, perusahaan investasi asal Singapura",3 Juni 2022,high,labels_batch_003.json
+707,COMPANY_ACQUIRES_STAKE,BBYB,"Akulaku, platform pinjaman online",,low,labels_batch_003.json
+708,MARKET_FLOW,,,,high,labels_batch_003.json
+709,OTHER,,,,high,labels_batch_003.json
+710,SELL,AMAR,,7 Juni 2022,high,labels_batch_003.json
+711,COMPANY_ACQUIRES_STAKE,BANK,"Sumber Alfaria Trijaya (AMRT), pengelola Alfamart",,medium,labels_batch_003.json
+712,OTHER,,,,medium,labels_batch_003.json
+713,MARKET_FLOW,,,,high,labels_batch_003.json
+714,COMPANY_ACQUIRES_STAKE,,Jasnita Telekomindo (JAST),7 Juni 2022,medium,labels_batch_003.json
+715,OTHER,,,,high,labels_batch_003.json
+716,INSIDER_BUY,BBYB,"Akulaku Silvrr Indonesia, pengendali","17, 18 dan 23 Mei 2022",high,labels_batch_003.json
+717,COMPANY_ACQUIRES_STAKE,HEAL,Astra International (ASII),9 Juni 2022,medium,labels_batch_003.json
+718,INSIDER_BUY,BSDE,"PT Paraga Artamida, pemegang 33,46% (peran pengendali tidak disebut)",10 Juni 2022,medium,labels_batch_003.json
+719,OUTSIDE_INVESTOR_BUY,ENRG,"PT Bakrie Capital Indonesia, entitas Bakrie Group",9 Juni 2022,low,labels_batch_003.json
+720,OTHER,,,,high,labels_batch_003.json
+721,OTHER,,,,high,labels_batch_003.json
+722,INSIDER_BUY,BUKA,"Teddy Nuryanto Oetomo, direktur Bukalapak",9 Juni 2022,high,labels_batch_003.json
+723,MARKET_FLOW,,,,high,labels_batch_003.json
+724,INSIDER_BUY,BJTM,"Tonny Prasetyo, Ordinato Sigit Cahyono (direktur), Heru Cahyono (komisaris)",14 Juni 2022,high,labels_batch_003.json
+725,MARKET_FLOW,,,,high,labels_batch_003.json
+726,INSIDER_BUY,MCOL,"Eddy Sugianto, komisaris Prima Andalan Mandiri",2-9 Juni 2022,high,labels_batch_003.json
+727,INSIDER_BUY,BUKA,"Adi Wardhana Sariaatmadja, komisaris Bukalapak",13 Juni 2022,high,labels_batch_003.json
+728,INSIDER_BUY,SMDR,"Bani Maulana Mulia, direktur utama Samudera Indonesia",13 Juni 2022,high,labels_batch_003.json
+729,INSIDER_BUY,AKRA,"Soegiarto Adikoesoemo, pengendali dan komisaris",13-15 Juni 2022,high,labels_batch_003.json
+730,COMPANY_ACQUIRES_STAKE,,Digital Mediatama Maxima (DMMX),,high,labels_batch_003.json
+731,COMPANY_ACQUIRES_STAKE,HEAL,Astra International (ASII),7-15 Juni 2022,medium,labels_batch_003.json
+732,OTHER,,,,high,labels_batch_003.json
+733,INSIDER_BUY,PEHA,"Masrizal A. Syarief, komisaris Phapros",15-17 Juni 2022,high,labels_batch_003.json
+734,INSIDER_BUY,BYAN,"Sejumlah direktur Bayan, termasuk Oliver Khaw Har Heng, Russel John Neil",,high,labels_batch_003.json
+735,INSIDER_BUY,PNLF,"Paninvest (PNIN), pemegang 62,48% PNLF",9 Juni 2022,medium,labels_batch_003.json
+736,OTHER,,,,high,labels_batch_003.json
+737,OTHER,,,,high,labels_batch_003.json
+738,INSIDER_BUY,SGER,"Venkateswaran Venkatraman, direksi Sumber Global Energy",17 Mei 2022,high,labels_batch_003.json
+739,INSIDER_BUY,HRME,"PT Wijaya Wisesa Realty, pemegang saham pengendali",14 dan 15 Juni 2022,high,labels_batch_003.json
+740,INSIDER_BUY,PEHA,"Masrizal A. Syarief, komisaris Phapros","15, 16 dan 17 Juni 2022",high,labels_batch_003.json
+741,OUTSIDE_INVESTOR_BUY,BULL,PT Trukindo Persada Sejahtera (peran tidak disebut),13 dan 16 Juni 2022,low,labels_batch_003.json
+742,OTHER,,,,high,labels_batch_003.json
+743,INSIDER_BUY,AKRA,"Soegiarto Adikoesoemo, presiden komisaris dan pemilik",16-17 Juni 2022,high,labels_batch_003.json
+744,OTHER,,,,high,labels_batch_003.json
+745,INSIDER_BUY,WGSH,"Erwin Senjaya Hartanto, komisaris Wira Global Solusi",15-20 Juni 2022,high,labels_batch_003.json
+746,OTHER,,,,high,labels_batch_003.json
+747,OTHER,,,,high,labels_batch_003.json
+748,INSIDER_BUY,CITA,"Harita Jayaraya, pengendali",31 Mei hingga Juni 2022,high,labels_batch_003.json
+749,INSIDER_BUY,BBCA,"Lianawaty Suwono, direktur Bank Central Asia",15 Juni 2022,high,labels_batch_003.json
+750,INSIDER_BUY,BCIP,"PT Bumi Citra Investindo, pemegang saham pengendali","10, 13 dan 22 Juni 2022",high,labels_batch_003.json
+751,INSIDER_BUY,CMRY,"Farell Grandisuri Sutantio, direktur utama Cisarua Mountain Dairy",20 Juni 2022,high,labels_batch_003.json
+752,OTHER,,,,high,labels_batch_003.json
+753,INSIDER_BUY,SMGR,"Aulia Mulki Oemar, direktur Semen Indonesia",15 dan 21 Juni 2022,high,labels_batch_003.json
+754,INSIDER_BUY,AMAR,"Tolaram Group Inc, pemegang saham mayoritas 56,98%",22 Juni 2022,medium,labels_batch_003.json
+755,OTHER,,,,high,labels_batch_003.json
+756,OUTSIDE_INVESTOR_BUY,BMTR,"Lo Kheng Hong, investor kawakan",27 Mei 2022,high,labels_batch_003.json
+757,INSIDER_BUY,BSDE,"Muktar Widjaja, komisaris utama Bumi Serpong Damai",14-22 Juni 2022,high,labels_batch_003.json
+758,INSIDER_BUY,WMUU,"Wahyu Andi Susilo, direktur keuangan Widodo Makmur Unggas",23 Juni 2022,high,labels_batch_003.json
+759,OTHER,,,,high,labels_batch_003.json
+760,OUTSIDE_INVESTOR_BUY,BULL,PT Trukindo Persada Sejahtera (peran tidak disebut),23 Juni 2022,low,labels_batch_003.json
+761,OTHER,,,,medium,labels_batch_003.json
+762,INSIDER_BUY,BSDE,"PT Paraga Artamida, pemegang saham pengendali",24 Juni 2022,high,labels_batch_003.json
+763,MARKET_FLOW,,,,high,labels_batch_003.json
+764,OUTSIDE_INVESTOR_BUY,ENRG,PT Bakrie Kalila Investment (peran tidak disebut),16 dan 27 Juni 2022,low,labels_batch_003.json
+765,OTHER,,,,high,labels_batch_003.json
+766,OTHER,,,,high,labels_batch_003.json
+767,OUTSIDE_INVESTOR_BUY,JAYA,"Prima Globalindo Logistik (PPGL), investor korporasi",28 Juni 2022,medium,labels_batch_003.json
+768,OTHER,,,,high,labels_batch_003.json
+769,SELL,BYAN,,,high,labels_batch_003.json
+770,OTHER,,,,high,labels_batch_003.json
+771,SELL,NFCX,,21 Juni 2022,low,labels_batch_003.json
+772,OUTSIDE_INVESTOR_BUY,NATO,PT Wasa Lestari Buana (peran tidak disebut),30 Juni 2022,low,labels_batch_003.json
+773,OTHER,,,,medium,labels_batch_003.json
+774,OTHER,,,,high,labels_batch_003.json
+775,INSIDER_BUY,AKRA,"Soegiarto Adikoesoemo, presiden komisaris dan pemilik",30 Juni dan 1 Juli 2022,high,labels_batch_003.json
+776,OTHER,,,,high,labels_batch_003.json
+777,INSIDER_BUY,SILO,"PT Megapratama Karya Persada, pemegang saham pengendali",24-30 Juni 2022,high,labels_batch_003.json
+778,OTHER,,,,high,labels_batch_003.json
+779,INSIDER_BUY,SKBM,"Oei Harry Lukmito, direksi dan pengendali",30 Juni 2022,medium,labels_batch_003.json
+780,INSIDER_BUY,BSDE,"Muktar Widjaja, komisaris utama Bumi Serpong Damai",23 Juni 2022,high,labels_batch_003.json
+781,INSIDER_BUY,RDTX,"Sutiadi Widjaja, pemegang saham lebih dari 5 persen",,low,labels_batch_003.json
+782,OPTION_OR_RIGHTS_EXERCISE,SRTG,"Direktur Saratoga: Michael Soeryadjaya, Lany Djuwita Wong, Devin Wirawan",1 Juli 2022,high,labels_batch_003.json
+783,INSIDER_BUY,BSDE,"PT Paraga Artamida, pemegang 33,75% (peran pengendali tidak disebut)",30 Juni 2022,medium,labels_batch_003.json
+784,INSIDER_BUY,PNLF,"PT Paninvest (PNIN), pengendali Panin Financial",27 Juni - 5 Juli 2022,high,labels_batch_003.json
+785,INSIDER_BUY,AKRA,"Soegiarto Adikoesoemo (presiden komisaris), Haryanto Adikoesoemo (presiden direktur)",4 Juli 2022,high,labels_batch_003.json
+786,OTHER,,,,high,labels_batch_003.json
+787,OTHER,,,,high,labels_batch_003.json
+788,INSIDER_BUY,SMDR,"Bani Maulana Mulia, bos Samudera Indonesia",20 dan 23 Juni 2022,high,labels_batch_003.json
+789,OTHER,,,,medium,labels_batch_003.json
+790,INSIDER_BUY,BCIP,"PT Bumi Citra Investindo, pemegang saham pengendali",27-29 Juni 2022,high,labels_batch_003.json
+791,OTHER,,,,high,labels_batch_003.json
+792,INSIDER_BUY,AMAR,"Tolaram Group Inc, pengendali",7 Juli 2022,high,labels_batch_003.json
+793,INSIDER_BUY,BSDE,PT Paraga Artamida (pengendali) dan Muktar Widjaja (komisaris utama),7 Juli 2022,high,labels_batch_003.json
+794,INSIDER_BUY,ESTA,"PT Esta Utama Corpora, pengendali",23 Juni 2022,medium,labels_batch_003.json
+795,OPTION_OR_RIGHTS_EXERCISE,LPKR,"Empat direktur Lippo Karawaci, dipimpin John Riady",5 Juli 2022,medium,labels_batch_003.json
+796,INSIDER_BUY,AKRA,"Jimmy Tandyo, petinggi AKR Corporindo",6-7 Juli 2022,high,labels_batch_003.json
+797,COMPANY_ACQUIRES_STAKE,,Tourindo Guide Indonesia (PGJO),,high,labels_batch_003.json
+798,OTHER,,,,high,labels_batch_003.json
+799,OTHER,,,,high,labels_batch_003.json
+800,INSIDER_BUY,TSPC,"PT Bogamulia Nagadi, pengendali",14 Juni 2022,high,labels_batch_003.json
+801,OTHER,,,,high,labels_batch_003.json
+802,OTHER,,,,high,labels_batch_003.json
+803,OTHER,,,,high,labels_batch_003.json
+804,INSIDER_BUY,PEHA,"Masrizal A. Syarief, komisaris Phapros",11-13 Juli 2022,high,labels_batch_003.json
+805,OTHER,,,,high,labels_batch_003.json
+806,INSIDER_BUY,BOLA,"Pieter Tanuri, pemegang saham pengendali","4, 8 dan 13 Juli 2022",high,labels_batch_003.json
+807,OUTSIDE_INVESTOR_BUY,KEJU,Pelican Company Limited (berbasis Kepulauan Cayman),8 Juli 2022,medium,labels_batch_003.json
+808,COMPANY_ACQUIRES_STAKE,,"Waskita Toll Road (WTR), anak usaha Waskita Karya",,medium,labels_batch_003.json
+809,INSIDER_BUY,LTLS,"PT Caturkarsa Megatunggal, pemegang saham pengendali",8 Juli 2022,high,labels_batch_003.json
+810,OTHER,,,,medium,labels_batch_003.json
+811,INSIDER_BUY,BBCA,"Santoso, direktur Bank Central Asia",13 Juli 2022,high,labels_batch_003.json
+812,INSIDER_BUY,PNLF,"Paninvest (PNIN), pengendali Panin Financial",6-14 Juli 2022,high,labels_batch_003.json
+813,INSIDER_BUY,WGSH,"Thea Sherina Kartarahardja, komisaris Wira Global Solusi",21-30 Juni 2022,high,labels_batch_003.json
+814,OTHER,,,,medium,labels_batch_003.json
+815,OTHER,,,,high,labels_batch_003.json
+816,OUTSIDE_INVESTOR_BUY,NATO,PT Wasa Lestari Buana (peran tidak disebut),15 Juli 2022,low,labels_batch_003.json
+817,OTHER,,,,high,labels_batch_003.json
+818,INSIDER_BUY,MCOL,"Eddy Sugianto, komisaris utama Prima Andalan Mandiri",12 Juli 2022,high,labels_batch_003.json
+819,INSIDER_BUY,PEHA,"Masrizal A. Syarief, komisaris Phapros",18-19 Juli 2022,high,labels_batch_003.json
+820,OTHER,,,,high,labels_batch_003.json
+821,INSIDER_BUY,FREN,"Andrijanto Muljono dan Robin Mailoa, direksi Smartfren",20 Juli 2022,medium,labels_batch_003.json
+822,OUTSIDE_INVESTOR_BUY,BUMI,"NBS Clients, investor asing (Zurich, Swiss)",,high,labels_batch_003.json
+823,OTHER,,,,high,labels_batch_003.json
+824,INSIDER_BUY,PNLF,"PT Paninvest (PNIN), pemegang saham pengendali",15-20 Juli 2022,high,labels_batch_003.json
+825,COMPANY_ACQUIRES_STAKE,MDKA,Saratoga Investama Sedaya (SRTG),15-20 Juli 2022,medium,labels_batch_003.json
+826,SELL,TOYS,,"7, 11 dan 12 Juli 2022",high,labels_batch_003.json
+827,OTHER,,,,high,labels_batch_003.json
+828,OTHER,,,,high,labels_batch_003.json
+829,OTHER,,,,high,labels_batch_003.json
+830,OUTSIDE_INVESTOR_BUY,BUMI,"NBS Clients (Zurich, Swiss)",20 Juli 2022,high,labels_batch_003.json
+831,INSIDER_BUY,SMDR,"Bani Maulana Mulia, direktur utama Samudera Indonesia",21 Juli 2022,high,labels_batch_003.json
+832,OTHER,,,,high,labels_batch_003.json
+833,OTHER,,,,high,labels_batch_003.json
+834,OTHER,,,,high,labels_batch_003.json
+835,OUTSIDE_INVESTOR_BUY,BUMI,NBS Clients,,high,labels_batch_003.json
+836,OTHER,,,,high,labels_batch_003.json
+837,OTHER,,,,high,labels_batch_003.json
+838,INSIDER_BUY,PNLF,"PT Paninvest (PNIN), pemegang saham pengendali",29 Juli 2022,high,labels_batch_003.json
+839,OUTSIDE_INVESTOR_BUY,IBST,Dian Swastatika Sentosa (DSSA) bersama entitas usaha,1 Agustus 2022,medium,labels_batch_003.json
+840,OTHER,,,,high,labels_batch_003.json
+841,OTHER,,,,high,labels_batch_003.json
+842,INSIDER_BUY,SMDR,"Bani Maulana Mulia, direktur utama Samudera Indonesia",29 Juli 2022,high,labels_batch_003.json
+843,OTHER,,,,medium,labels_batch_003.json
+844,INSIDER_BUY,IKAI,"Teuku Johas Raffli, direksi Intikeramik Alamasri",1 Agustus 2022,high,labels_batch_003.json
+845,INSIDER_BUY,BMRI,Lima komisaris dan 12 direksi Bank Mandiri,29 Juli 2022,medium,labels_batch_003.json
+846,OTHER,,,,medium,labels_batch_003.json
+847,OUTSIDE_INVESTOR_BUY,BIPI,PT Indotambang Perkasa (peran tidak disebut),28 dan 29 Juli 2022,low,labels_batch_003.json
+848,COMPANY_ACQUIRES_STAKE,,Bukaka Teknik Utama (BUKK),28 Juli 2022,medium,labels_batch_003.json
+849,OPTION_OR_RIGHTS_EXERCISE,BBNI,"14 pengurus teras (11 direksi, 3 komisaris), program remunerasi",29 Juli 2022,high,labels_batch_003.json
+850,OUTSIDE_INVESTOR_BUY,IPPE,Asep Sulaeman Sabanda (peran tidak disebut),28 Juli 2022,medium,labels_batch_003.json
+851,INSIDER_BUY,ACES,"Suharno, direktur Ace Hardware Indonesia",5 Agustus 2022,high,labels_batch_003.json
+852,INSIDER_BUY,LPGI,Controlling shareholder PT Inti Anugerah Pratama and PT Star Pacific (LPLI),,high,labels_batch_004.json
+853,OTHER,,,,high,labels_batch_004.json
+854,OTHER,,TOWR subsidiaries BIT Teknologi Nusantara and Iforte Solusi Infotek,4 Agustus 2022,medium,labels_batch_004.json
+855,INSIDER_BUY,SIDO,"Irwan Hidayat, Direktur Utama (president director)",3 Agustus 2022,high,labels_batch_004.json
+856,INSIDER_BUY,BTEL,"PT Biofuel Indo Sumatra, Bakrie Group entity (affiliated transaction)",5 Agustus 2022,medium,labels_batch_004.json
+857,OTHER,,,,medium,labels_batch_004.json
+858,OUTSIDE_INVESTOR_BUY,BULL,PT Danatama Kapital Investama (5.48% holder),8 Agustus 2022,medium,labels_batch_004.json
+859,OTHER,,PWON subsidiary PT Jakarta Investindo Indonesia (JII),,low,labels_batch_004.json
+860,OUTSIDE_INVESTOR_BUY,CASH,"Andri Wijono Sutiono, individual investor",4 Juli 2022 hingga 3 Agustus 2022,medium,labels_batch_004.json
+861,COMPANY_ACQUIRES_STAKE,,MGRO via subsidiary PT Mutiara Unggul Lestari,8 Agustus 2022,high,labels_batch_004.json
+862,COMPANY_ACQUIRES_STAKE,,"Stanmore Resources and Dampier Coal, subsidiaries of DSSA",,high,labels_batch_004.json
+863,OUTSIDE_INVESTOR_BUY,IPAC,"APAC Investment 2 Pte Ltd, new controller buying from Realti Indo Mandiri",11 Agustus 2022,medium,labels_batch_004.json
+864,OTHER,,,,high,labels_batch_004.json
+865,INSIDER_BUY,BYAN,"Dato' Low Tuck Kwong, boss and 61.02% controlling shareholder",8 Agustus 2022,high,labels_batch_004.json
+866,OTHER,,,,high,labels_batch_004.json
+867,INSIDER_BUY,ENRG,"Bakrie Kalila Investment, strengthening dominant stake",10 Agustus 2022,medium,labels_batch_004.json
+868,OTHER,,PT Centratama Telekomunikasi Indonesia (CENT),12 Agustus 2022,medium,labels_batch_004.json
+869,OTHER,,,,medium,labels_batch_004.json
+870,OTHER,,"Centratama Menara Indonesia (CMI), subsidiary of CENT",,medium,labels_batch_004.json
+871,OTHER,,,,high,labels_batch_004.json
+872,INSIDER_BUY,AMAR,"Tolaram Group Inc, majority holder (66.29% after purchase)",18 Agustus 2022,medium,labels_batch_004.json
+873,OTHER,,,,high,labels_batch_004.json
+874,INSIDER_BUY,IDEA,"Eko Desriyanto, CEO of Idea Indonesia Akademi","8, 9, 10, 12, 15, 16 dan 18 Agustus 2022",high,labels_batch_004.json
+875,INSIDER_BUY,AKRA,"Haryanto Adikoesoemo, Direktur Utama (boss) of AKR Corporindo",16 dan 18 Agustus 2022,high,labels_batch_004.json
+876,INSIDER_BUY,PEHA,"Masrizal A. Syarief, Komisaris of Phapros",22 Agustus 2022,high,labels_batch_004.json
+877,OUTSIDE_INVESTOR_BUY,HEAL,"Astra International (ASII), corporate investor, 5.88% holder",16-18 Agustus 2022,medium,labels_batch_004.json
+878,OUTSIDE_INVESTOR_BUY,TEBE,"South Bay Capital Pte Ltd, new 8.89% holder",19 Agustus 2022,high,labels_batch_004.json
+879,INSIDER_BUY,PTRO,"PT Caraka Reksa Optima, new controlling shareholder (tender offer)",,medium,labels_batch_004.json
+880,OTHER,,,,high,labels_batch_004.json
+881,INSIDER_BUY,EAST,"Khalid Bin Omar Abdat, controlling shareholder","15, 16 dan 18 Agustus 2022",high,labels_batch_004.json
+882,OTHER,,Subsidiary PT Universal Joyo Lestari (UJL) of UFOE,,medium,labels_batch_004.json
+883,OUTSIDE_INVESTOR_BUY,TEBE,"South Bay Capital Ltd, new 8.89% holder",19 Agustus 2022,high,labels_batch_004.json
+884,OUTSIDE_INVESTOR_BUY,HEAL,"Astra International (ASII), corporate investor",8 hingga 25 Agustus 2022,medium,labels_batch_004.json
+885,INSIDER_BUY,MCAS,"Diaz FM Hendropriyono, independent commissioner",16 Agustus 2022,high,labels_batch_004.json
+886,OUTSIDE_INVESTOR_BUY,BUMI,"NBS Clients, Zurich-based foreign investor (6.87% holder)",23 Agustus 2022,high,labels_batch_004.json
+887,OTHER,,,,high,labels_batch_004.json
+888,INSIDER_BUY,SQMI,"Dato' Sri Chong Thim Pheng, director",23 dan 25 Agustus 2022,high,labels_batch_004.json
+889,OUTSIDE_INVESTOR_BUY,BUMI,"NBS Clients, Zurich-based foreign investor (9.22% holder)",25 Agustus 2022,high,labels_batch_004.json
+890,INSIDER_BUY,BKDP,Two commissioners: Endang Lestari Pujiastuti and Leotine Ierma Agustina S,11 Agustus 2022,high,labels_batch_004.json
+891,OTHER,,,,high,labels_batch_004.json
+892,INSIDER_BUY,AKRA,"Haryanto Adikoesoemo, Direktur Utama of AKR Corporindo",22-26 Agustus 2022,high,labels_batch_004.json
+893,OUTSIDE_INVESTOR_BUY,DMMX,PT Sicepat Ekspres Indonesia (6.91% holder),29 Agustus 2022,medium,labels_batch_004.json
+894,OUTSIDE_INVESTOR_BUY,BULL,PT Danatama Kapital Investama (5.86% holder),29 Agustus 2022,medium,labels_batch_004.json
+895,COMPANY_ACQUIRES_STAKE,,"Waskita Toll Road (WTR), subsidiary of WSKT",30 Agustus 2022,low,labels_batch_004.json
+896,COMPANY_ACQUIRES_STAKE,GEMS,ABM Investama (ABMM) via subsidiary PT Radhika Jananta Raya,31 Agustus 2022,high,labels_batch_004.json
+897,OTHER,,,,high,labels_batch_004.json
+898,OUTSIDE_INVESTOR_BUY,CASH,"Hasim Sutiono, individual investor (16.41% holder)",16 Agustus 2022,medium,labels_batch_004.json
+899,INSIDER_BUY,BSDE,"Paraga Artamida, 34.03% holder (repeat buyer)",,medium,labels_batch_004.json
+900,INSIDER_BUY,BUAH,"Renny Lauren, Direktur Utama of Segar Kumala Indonesia",19 Agustus 2022 dan 29 Agustus 2022,high,labels_batch_004.json
+901,OTHER,,,,high,labels_batch_004.json
+902,INSIDER_BUY,AKRA,"Hariyanto Adikoesoemo, Direktur Utama of AKR Corporindo",29 Agustus 2022 hingga 2 September 2022,high,labels_batch_004.json
+903,OUTSIDE_INVESTOR_BUY,BUMI,"NBS Clients, Zurich-based foreign investor (9.26% holder)",26 Agustus 2022,high,labels_batch_004.json
+904,OTHER,,,,high,labels_batch_004.json
+905,OTHER,,,,high,labels_batch_004.json
+906,OUTSIDE_INVESTOR_BUY,CASH,"Andri Wijono Sutiono, individual investor (16.63% holder)","8, 9, 11, 15 dan 16 Agustus 2022",medium,labels_batch_004.json
+907,OUTSIDE_INVESTOR_BUY,MTWI,"Batavia Prosperindo Internasional (BPII), corporate investor",2 September 2022,medium,labels_batch_004.json
+908,OTHER,,,,high,labels_batch_004.json
+909,OUTSIDE_INVESTOR_BUY,LINK,"Morgan Stanley, London-based institution (5.0076% holder)",23 Agustus 2022,high,labels_batch_004.json
+910,INSIDER_BUY,ADMR,"Wito Krisnahadi, director of Adaro Minerals",29 Agustus 2022,medium,labels_batch_004.json
+911,INSIDER_BUY,PEHA,"Masrizal A. Syarief, Komisaris of Phapros",29 dan 31 Agustus 2022,high,labels_batch_004.json
+912,OTHER,,,,high,labels_batch_004.json
+913,OTHER,,,,high,labels_batch_004.json
+914,OTHER,,,,high,labels_batch_004.json
+915,COMPANY_ACQUIRES_STAKE,,"AXIO (Tera Data Indonusa), capital injection into subsidiary IPI",31 Agustus 2022,low,labels_batch_004.json
+916,OTHER,,,,high,labels_batch_004.json
+917,INSIDER_BUY,WGSH,"PT Walden Global Services, controlling shareholder",5 September 2022,high,labels_batch_004.json
+918,INSIDER_BUY,PANI,"PT Multi Artha Pratama (MAP), Agung Sedayu entity, 88.07% holder",,medium,labels_batch_004.json
+919,OTHER,,,,high,labels_batch_004.json
+920,INSIDER_BUY,BBHI,"Ali Gunawan, Komisaris of Allo Bank Indonesia",29 Agustus 2022,high,labels_batch_004.json
+921,OUTSIDE_INVESTOR_BUY,SMDR,"Bani Maulana Mulia, individual (role not stated)",31 Agustus 2022 dan 8 September 2022,low,labels_batch_004.json
+922,OUTSIDE_INVESTOR_BUY,VICO,"Bank Victoria International (BVIC), 16% holder after transfer",30 Agustus 2022,medium,labels_batch_004.json
+923,OTHER,,,,high,labels_batch_004.json
+924,OTHER,,,,high,labels_batch_004.json
+925,OTHER,,,,high,labels_batch_004.json
+926,INSIDER_BUY,SDMU,"Tjoe Mien Sasminto, controller and senior management",6 September 2022,high,labels_batch_004.json
+927,INSIDER_BUY,BSDE,"Paraga Artamida, controlling shareholder",8 September 2022,high,labels_batch_004.json
+928,INSIDER_BUY,AKRA,"Haryanto Adikoesoemo, CEO of AKR Corporindo","7, 8 dan 9 September 2022",high,labels_batch_004.json
+929,OTHER,,,,medium,labels_batch_004.json
+930,OTHER,,"Golden Prima Maritim (GPM), subsidiary of Sillo Maritime Perdana",14 September 2022,medium,labels_batch_004.json
+931,OUTSIDE_INVESTOR_BUY,GEMS,Unnamed big investor via Mandiri Sekuritas negotiated trade,15 September 2022,low,labels_batch_004.json
+932,INSIDER_BUY,TCID,"Mandom Corporation, controlling shareholder",13 September 2022,high,labels_batch_004.json
+933,OTHER,,,,high,labels_batch_004.json
+934,OPTION_OR_RIGHTS_EXERCISE,BACA,"PT Capital Global Investama (CGInvestama), controlling shareholder",,medium,labels_batch_004.json
+935,OTHER,,,,high,labels_batch_004.json
+936,OTHER,,,,high,labels_batch_004.json
+937,INSIDER_BUY,LPPF,"Terence Donald O'Connor, Wakil Direktur Utama",12-16 September 2022,high,labels_batch_004.json
+938,OUTSIDE_INVESTOR_BUY,CASH,"Hasim Sutiono, Baracoal boss, individual investor","22 Agustus, 31 Agustus dan 8 September 2022",medium,labels_batch_004.json
+939,OTHER,,,,high,labels_batch_004.json
+940,COMPANY_ACQUIRES_STAKE,,"Sedaya Multi Investama, subsidiary of Astra International (ASII)",16 September 2022,high,labels_batch_004.json
+941,OTHER,,Bank Syariah Indonesia (BRIS),19 September 2022,medium,labels_batch_004.json
+942,INSIDER_BUY,ZBRA,"Gary Judianto Tanoesoedibjo, member of board of directors",12 September 2022,high,labels_batch_004.json
+943,INSIDER_BUY,LPPF,"Terence Donald O'Connor, Wakil Direktur Utama",19 September 2022,high,labels_batch_004.json
+944,INSIDER_BUY,AMIN,"Lai Kien Hsin, director",16 Agustus 2022,high,labels_batch_004.json
+945,OTHER,,,,high,labels_batch_004.json
+946,SELL,GEMS,,15 September 2022,high,labels_batch_004.json
+947,OTHER,,,,high,labels_batch_004.json
+948,DENIAL_OR_RUMOR,HEAL,"Astra International (ASII), possible further purchase",,medium,labels_batch_004.json
+949,OTHER,,,,high,labels_batch_004.json
+950,OUTSIDE_INVESTOR_BUY,HEAL,"Astra International (ASII), corporate investor (7.45% holder)",16 September 2022,medium,labels_batch_004.json
+951,OTHER,,Rohartindo Nusantara Luas (TOOL),,medium,labels_batch_004.json
+952,COMPANY_ACQUIRES_STAKE,SMBR,"Semen Indonesia (SMGR), via state capital participation share transfer",21 September 2022,high,labels_batch_004.json
+953,OTHER,,,,high,labels_batch_004.json
+954,INSIDER_BUY,CRAB,"Budi Satria Tardy, Komisaris of Toba Surimi Industries",,high,labels_batch_004.json
+955,INSIDER_BUY,AMAR,"Tolaram Group Inc, majority holder (59.49%)",,medium,labels_batch_004.json
+956,INSIDER_BUY,CLEO,"Melisa Patricia, wakil direktur utama (indirect holding)",19 September 2022,high,labels_batch_004.json
+957,OUTSIDE_INVESTOR_BUY,MARK,PT Dyna Capital Indo (20.66% holder),23 September 2022,medium,labels_batch_004.json
+958,OTHER,,Rohartindo Nusantara Luas (TOOL),21 September 2022,medium,labels_batch_004.json
+959,INSIDER_BUY,BBHI,"Ali Gunawan, Komisaris of Allo Bank Indonesia",19 hingga 21 September 2022,high,labels_batch_004.json
+960,OUTSIDE_INVESTOR_BUY,BULL,"PT Trukindo Persada Sejahtera, existing shareholder (5.02%)",,medium,labels_batch_004.json
+961,OUTSIDE_INVESTOR_BUY,MSIN,"Global Mediacom (BMTR), corporate investor (9.92% holder)",,medium,labels_batch_004.json
+962,OTHER,,,,high,labels_batch_004.json
+963,OPTION_OR_RIGHTS_EXERCISE,BRIS,"Bank Mandiri (BMRI), 50.83% holder, taking up rights issue",,medium,labels_batch_004.json
+964,OUTSIDE_INVESTOR_BUY,VICO,"Chemical Asia Corporation Pte Ltd, Singapore-based company",22 September 2022,high,labels_batch_004.json
+965,OUTSIDE_INVESTOR_BUY,MINA,"Happy Hapsoro via PT Basis Utama Prima, becoming majority holder",19 September 2022,medium,labels_batch_004.json
+966,INSIDER_BUY,JAYA,"Jap Astrid Patricia, Komisaris Utama of Armada Berjaya Trans",28 September 2022,high,labels_batch_004.json
+967,OUTSIDE_INVESTOR_BUY,,"PT Adiprotek Envirodunia, strategic investor in JGLE subsidiary Jungleland Asia",,low,labels_batch_004.json
+968,INSIDER_BUY,PEHA,"Masrizal A. Syarief, Komisaris of Phapros",30 September 2022,high,labels_batch_004.json
+969,OTHER,,,,high,labels_batch_004.json
+970,INSIDER_BUY,PTRO,"PT Caraka Reksa Optima, controlling shareholder (89.80%)",29 September 2022,high,labels_batch_004.json
+971,INSIDER_BUY,SRTG,"PT Unitras Pertama, major holder raising stake to 32.72%",30 September 2022,low,labels_batch_004.json
+972,INSIDER_BUY,BSDE,"Paraga Artamida, 34.3% holder (repeat buyer)",21-30 September 2022,medium,labels_batch_004.json
+973,OTHER,,,,high,labels_batch_004.json
+974,OUTSIDE_INVESTOR_BUY,SQMI,"Dato' Sri Chong Thim Pheng, shareholder above 5 percent",29 dan 30 September 2022,low,labels_batch_004.json
+975,INSIDER_BUY,PWON,"Pakuwon Arthaniaga, controlling shareholder",,high,labels_batch_004.json
+976,OPTION_OR_RIGHTS_EXERCISE,BNBA,Main shareholders Surya Husada Investment and Dana Graha Agung,,medium,labels_batch_004.json
+977,OTHER,,Habco Trans Maritima (HATM),3 Oktober 2022,medium,labels_batch_004.json
+978,OUTSIDE_INVESTOR_BUY,ARTO,"GIC Private Limited, Singapore sovereign wealth fund (8.18% holder)",,high,labels_batch_004.json
+979,OTHER,,,,high,labels_batch_004.json
+980,INSIDER_BUY,INDS,"PT Indoprima Investama, controlling shareholder, via PT Prima Graha Hiburan",29 September 2022,high,labels_batch_004.json
+981,COMPANY_ACQUIRES_STAKE,,"Dampier Coal, subsidiary of DSSA",7 Oktober 2022,high,labels_batch_004.json
+982,OUTSIDE_INVESTOR_BUY,PBRX,Burlingham International Ltd (investor buying from Ganda Sawit Utama),26 September 2022,medium,labels_batch_004.json
+983,INSIDER_BUY,LINK,"Axiata Investments Sdn Bhd, controlling shareholder",,high,labels_batch_004.json
+984,OUTSIDE_INVESTOR_BUY,MTWI,"Batavia Prosperindo (BPFI), corporate investor ahead of rights issue",,medium,labels_batch_004.json
+985,OUTSIDE_INVESTOR_BUY,AHAP,"Sendra Gunawan, individual investor (12.23% holder)",,medium,labels_batch_004.json
+986,INSIDER_BUY,IMPC,"Janto Salim, Direktur of Impack Pratama Industri",29 September 2022,high,labels_batch_004.json
+987,INSIDER_BUY,INTA,"Petrus Halim, boss and CEO of Intraco Penta",,high,labels_batch_004.json
+988,OUTSIDE_INVESTOR_BUY,IPPE,"Asep Sulaeman Sabanda, Subang businessman","16, 19 dan 26 September 2022",medium,labels_batch_004.json
+989,INSIDER_BUY,WEHA,"Andrianto Putera Tirtawisata, Direktur Utama of WEHA Transportasi",21 dan 22 September 2022,high,labels_batch_004.json
+990,INSIDER_BUY,COAL,"Edward Manurung, Direktur of Black Diamond Resources",20 September 2022,high,labels_batch_004.json
+991,INSIDER_BUY,STAA,Mosfly Ang (Direktur Utama) and Go Kok Siang (Direktur),10 Oktober 2023,medium,labels_batch_004.json
+992,INSIDER_BUY,GEMA,"Pulung Peranginangin, Komisaris Utama of Gema Grahasarana",10 Oktober 2022,high,labels_batch_004.json
+993,INSIDER_BUY,IDEA,"Eko Desriyanto, Direktur Utama of Idea Indonesia Akademi",14 September hingga 20 September 2022,high,labels_batch_004.json
+994,INSIDER_BUY,BSDE,"Paraga Artamida, 34.43% holder (repeat buyer)",12 Oktober 2022,medium,labels_batch_004.json
+995,OUTSIDE_INVESTOR_BUY,CASH,"Hasim Sutiono, Baracoal boss, individual investor",,medium,labels_batch_004.json
+996,OUTSIDE_INVESTOR_BUY,PALM,"Provident Capital Indonesia, investor above 5 percent",12 Oktober 2022,medium,labels_batch_004.json
+997,OUTSIDE_INVESTOR_BUY,VICO,Chemical Asia Corporation Pte Ltd (16.67% holder),,medium,labels_batch_004.json
+998,OTHER,,,,high,labels_batch_004.json
+999,COMPANY_ACQUIRES_STAKE,,"Mega Perintis (ZONE), capital injection into subsidiary Mega Putra Garment",,low,labels_batch_004.json
+1000,INSIDER_BUY,PEHA,"Masrizal A. Syarief, Komisaris of Phapros",13 dan 14 Oktober 2022,high,labels_batch_004.json
+1001,COMPANY_ACQUIRES_STAKE,,"Waskita Karya (WSKT), capital injection into subsidiary Waskita Toll Road",,low,labels_batch_004.json
+1002,OUTSIDE_INVESTOR_BUY,BIPI,PT Indotambang Perkasa (23.57% holder),14 Oktober 2022,medium,labels_batch_004.json
+1003,COMPANY_ACQUIRES_STAKE,,"Pinago Utama (PNGO), capital increase in subsidiary Musi Andalan Sumatera",17 Oktober 2022,low,labels_batch_004.json
+1004,INSIDER_BUY,DMMX,"Hartono Franscesco, commissioner of Digital Mediatama Maxima",14 Oktober 2022,high,labels_batch_004.json
+1005,INSIDER_BUY,PEHA,"Masrizal A. Syarief, Komisaris of Phapros",17 Oktober 2022,high,labels_batch_004.json
+1006,INSIDER_BUY,DMMX,"Hartono Franscesco, commissioner (also sold PEGE shares)",14 Oktober 2022,medium,labels_batch_004.json
+1007,OUTSIDE_INVESTOR_BUY,ENRG,"PT CGS-CIMB Sekuritas Indonesia, securities firm (5.57% holder)",18 Oktober 2022,medium,labels_batch_004.json
+1008,OUTSIDE_INVESTOR_BUY,SPTO,Fidelity Funds (6.84% holder),,high,labels_batch_004.json
+1009,OTHER,,,,high,labels_batch_004.json
+1010,OUTSIDE_INVESTOR_BUY,CAKK,"Hermanto Tanoko (Tancorp), tycoon becoming controller",19 Oktober 2022,medium,labels_batch_004.json
+1011,INSIDER_BUY,PEHA,"Masrizal A. Syarief, Komisaris of Phapros",19 dan 20 Oktober 2022,high,labels_batch_004.json
+1012,INSIDER_BUY,BUAH,"Toni Soegiarto, Direktur of Segar Kumala Indonesia",20 Oktober 2022,high,labels_batch_004.json
+1013,OTHER,,,,high,labels_batch_004.json
+1014,OPTION_OR_RIGHTS_EXERCISE,DNAR,"APRO Financial Co Ltd, 91.99% holder, exercised rights issue",19 Oktober 2022,high,labels_batch_004.json
+1015,OTHER,,,,high,labels_batch_004.json
+1016,OPTION_OR_RIGHTS_EXERCISE,MTWI,"Batavia Prosperindo (BPII), planning to take up rights issue",,medium,labels_batch_004.json
+1017,INSIDER_BUY,GSMF,"Equity Global International Ltd, controlling shareholder",,high,labels_batch_004.json
+1018,OUTSIDE_INVESTOR_BUY,MIRA,"Irene Thesman, individual investor, first purchase",,medium,labels_batch_004.json
+1019,COMPANY_ACQUIRES_STAKE,,"Kirana Megatara (KMTR), capital injection into subsidiaries",,low,labels_batch_004.json
+1020,INSIDER_BUY,CEKA,"Hairuddin Halim, director of Wilmar Cahaya Indonesia",20 Oktober 2022,high,labels_batch_004.json
+1021,INSIDER_BUY,RIGS,"Stefano Katianda, Direktur of Rig Tenders",24 Oktober 2022,high,labels_batch_004.json
+1022,INSIDER_BUY,BSDE,"Paraga Artamida, 34.49% holder (repeat buyer)",21 Oktober 2022,medium,labels_batch_004.json
+1023,INSIDER_BUY,ESTI,"PT Cahaya Interkontinental, controlling shareholder",24 Oktober 2022,high,labels_batch_004.json
+1024,INSIDER_BUY,INOV,"Jung Hyo Choi, Komisaris of Inocycle Technology Group",21 Oktober 2022,high,labels_batch_004.json
+1025,INSIDER_BUY,BUAH,"Renny Lauren, Direktur Utama of Segar Kumala Indonesia",25 Oktober 2022,high,labels_batch_004.json
+1026,OUTSIDE_INVESTOR_BUY,KIOS,PT Gemilang Lintang Nusantara (6.28% holder),,medium,labels_batch_004.json
+1027,OUTSIDE_INVESTOR_BUY,BGTG,"Equity Global International Ltd, Hong Kong investment firm",,high,labels_batch_004.json
+1028,OUTSIDE_INVESTOR_BUY,BMSR,Chemical Asia Corporation Pte Ltd (7.06% holder),,high,labels_batch_004.json
+1029,INSIDER_BUY,GEMA,"Pulung Peranginangin, Komisaris Utama of Gema Grahasarana",21 Oktober 2022,high,labels_batch_004.json
+1030,COMPANY_ACQUIRES_STAKE,,"Puradelta Lestari (DMAS), capital injection into Panahome Deltamas",24 Oktober 2022,low,labels_batch_004.json
+1031,OTHER,,,,high,labels_batch_004.json
+1032,INSIDER_BUY,GSMF,"Equity Global International Ltd, controlling shareholder",17 Oktober 2022,high,labels_batch_004.json
+1033,OUTSIDE_INVESTOR_BUY,BGTG,"Equity Global International Ltd, Hong Kong investment firm",,high,labels_batch_004.json
+1034,OUTSIDE_INVESTOR_BUY,AMAR,Bank of Singapore Limited (12.05% holder),,high,labels_batch_004.json
+1035,INSIDER_BUY,TRUK,"Budi Gunawan, Direktur Utama of Guna Timur Raya",27 Oktober 2022,high,labels_batch_004.json
+1036,COMPANY_ACQUIRES_STAKE,ITMA,"Astrindo Nusantara Infrastruktur (BIPI), raising stake to 41.90%",26 Oktober 2022,medium,labels_batch_004.json
+1037,OUTSIDE_INVESTOR_BUY,BGTG,"Equity Global International Ltd, Hong Kong investment firm",26 Agustus 2022,medium,labels_batch_004.json
+1038,OTHER,,,,high,labels_batch_004.json
+1039,OTHER,,,,high,labels_batch_004.json
+1040,INSIDER_BUY,BIRD,"Sigit Priawan Djokosoetono, Direktur Utama of Blue Bird",25 hingga 31 Oktober 2022,high,labels_batch_004.json
+1041,OTHER,,,,high,labels_batch_004.json
+1042,INSIDER_BUY,DNET,"Hannawell Group Limited, 39.35% holder",,medium,labels_batch_004.json
+1043,OTHER,,,,high,labels_batch_004.json
+1044,OTHER,,,,high,labels_batch_004.json
+1045,OPTION_OR_RIGHTS_EXERCISE,DNAR,"APRO Financial Co Ltd, standby buyer of unsubscribed rights shares",1 November 2022,high,labels_batch_004.json
+1046,INSIDER_BUY,OMRE,"Anthoni Salim via First Pacific Capital Group Ltd, 78.24% holder",,high,labels_batch_004.json
+1047,OTHER,,,,high,labels_batch_004.json
+1048,INSIDER_BUY,IMPC,"Janto Salim, Direktur of Impack Pratama Industri",27 hingga 28 Oktober 2022,high,labels_batch_004.json
+1049,INSIDER_BUY,BSDE,"Paraga Artamida, controlling shareholder",28 Oktober 2022,high,labels_batch_004.json
+1050,OTHER,,,,high,labels_batch_004.json
+1051,INSIDER_BUY,PNGO,"Hasan Tantri, Komisaris and controlling shareholder",1 November 2022,high,labels_batch_004.json
+1052,INSIDER_BUY,MICE,"Budiman Gitaloka, director of Multi Indocitra",2 hingga 3 November 2022,high,labels_batch_005.json
+1053,INSIDER_BUY,BCAP,"MNC Asia Holding (BHIT), dominant shareholder of BCAP",,medium,labels_batch_005.json
+1054,OTHER,,,,high,labels_batch_005.json
+1055,INSIDER_BUY,BMRI,"Sigit Prastowo, director of Bank Mandiri",28 Oktober 2022 dan 3 November 2022,high,labels_batch_005.json
+1056,INSIDER_BUY,DNAR,"APRO Financial Co Ltd, Korean investor holding 93.40%",2 November 2022,low,labels_batch_005.json
+1057,OPTION_OR_RIGHTS_EXERCISE,OASA,"ILR, expected 42.45% holder after rights issue",,low,labels_batch_005.json
+1058,OTHER,,,,high,labels_batch_005.json
+1059,OUTSIDE_INVESTOR_BUY,VICO,"Chemical Asia Corporation, Singapore-based corporate investor",,medium,labels_batch_005.json
+1060,INSIDER_BUY,CEKA,"Hairuddin Halim, director of Wilmar Cahaya Indonesia",3 November 2021,high,labels_batch_005.json
+1061,INSIDER_BUY,PNGO,"Wilson Sutantio, president commissioner of Pinago Utama",3 November 2022,high,labels_batch_005.json
+1062,OTHER,,,,high,labels_batch_005.json
+1063,INSIDER_BUY,BIPI,"Indotambang Perkasa, existing holder keeping its control of BIPI",,medium,labels_batch_005.json
+1064,OTHER,,,,high,labels_batch_005.json
+1065,OTHER,,,,medium,labels_batch_005.json
+1066,OTHER,,,,high,labels_batch_005.json
+1067,OTHER,,,,high,labels_batch_005.json
+1068,OTHER,,,,high,labels_batch_005.json
+1069,INSIDER_BUY,TOTL,"Moeljati Soetrisno, director of Total Bangun Persada",8 November 2022,high,labels_batch_005.json
+1070,OTHER,,,,high,labels_batch_005.json
+1071,OTHER,,,,high,labels_batch_005.json
+1072,OTHER,,,,high,labels_batch_005.json
+1073,OUTSIDE_INVESTOR_BUY,IPPE,"Asep Sulaeman Sabanda, wealthy individual investor from Subang holding 11.60%",,medium,labels_batch_005.json
+1074,OTHER,,,,high,labels_batch_005.json
+1075,INSIDER_BUY,PEHA,"Masrizal A. Syarief, commissioner of Phapros",8 November 2022,high,labels_batch_005.json
+1076,INSIDER_BUY,TAMA,"Kathrin Widjaja, president director and controller of Lancartama Sejati",2 dan 7 November 2022,high,labels_batch_005.json
+1077,OTHER,,,,high,labels_batch_005.json
+1078,OTHER,,,,medium,labels_batch_005.json
+1079,INSIDER_BUY,WINS,"Three executives: Sugiman Layanto (CEO, controller), Janto Lili, Nelly Layanto",7 - 8 November 2022,high,labels_batch_005.json
+1080,MARKET_FLOW,,,,medium,labels_batch_005.json
+1081,INSIDER_BUY,BSDE,"Paraga Artamida, corporate shareholder holding 34.61% of Bumi Serpong Damai",2-8 November 2022,low,labels_batch_005.json
+1082,OTHER,,,,high,labels_batch_005.json
+1083,INSIDER_BUY,BELI,"Honky Harjo, deputy president commissioner of Blibli",8 November 2022,high,labels_batch_005.json
+1084,INSIDER_BUY,LPPF,"Auric Digital Retail Pte Ltd, controlling shareholder (Lippo Group)",3 November 2022 dan 4 November 2022,high,labels_batch_005.json
+1085,OTHER,,,,high,labels_batch_005.json
+1086,INSIDER_BUY,HOKI,"Elly Tjandra, commissioner of Buyung Poetra Sembada",14 November 2022,high,labels_batch_005.json
+1087,OTHER,,,,high,labels_batch_005.json
+1088,OUTSIDE_INVESTOR_BUY,IATA,"Oxley Capital, Tempus Eternity, Scotts Capital and other foreign investors",,high,labels_batch_005.json
+1089,OUTSIDE_INVESTOR_BUY,SNLK,"Unilink Ventures Inc, shareholder holding 34.8%",14 dan 15 November 2022,low,labels_batch_005.json
+1090,OTHER,,,,high,labels_batch_005.json
+1091,INSIDER_BUY,BELI,"Honky Harjo, deputy president commissioner of Global Digital Niaga",11 November 2022,high,labels_batch_005.json
+1092,OTHER,,,,high,labels_batch_005.json
+1093,OUTSIDE_INVESTOR_BUY,SOTS,"Indjun, new investor taking a 14.4% stake",15 November 2022,medium,labels_batch_005.json
+1094,INSIDER_BUY,TAMA,"Kathrin Widjaja, president director of Lancartama Sejati",11 November 2022,high,labels_batch_005.json
+1095,INSIDER_BUY,BMRI,"Sigit Prastowo, director of Bank Mandiri",16 November 2022,high,labels_batch_005.json
+1096,MARKET_FLOW,,,,high,labels_batch_005.json
+1097,INSIDER_BUY,BMRI,"Timothy Utama, director of Bank Mandiri",16 November 2022,high,labels_batch_005.json
+1098,OTHER,,,,high,labels_batch_005.json
+1099,INSIDER_BUY,RIGS,"Ratna Sari Suhartono, commissioner of Rig Tenders",10 Oktober 2022,high,labels_batch_005.json
+1100,OUTSIDE_INVESTOR_BUY,BPII,"Malacca Trust Pte Ltd, raising stake from 34.46% to 86.50%",,low,labels_batch_005.json
+1101,OUTSIDE_INVESTOR_BUY,SINI,"PT Autum Prima Indonesia, new 30% shareholder",17 November 2022,medium,labels_batch_005.json
+1102,MARKET_FLOW,,,,medium,labels_batch_005.json
+1103,OTHER,,,,high,labels_batch_005.json
+1104,OTHER,,,,high,labels_batch_005.json
+1105,INSIDER_BUY,PEHA,"Masrizal A. Syarief, commissioner of Phapros",17 November 2022,high,labels_batch_005.json
+1106,INSIDER_BUY,BELI,"Honky Harjo, Djarum director and deputy president commissioner of Blibli",,high,labels_batch_005.json
+1107,SELL,BBNI,,16 November 2022,high,labels_batch_005.json
+1108,INSIDER_BUY,BMRI,"Timothy Utama, director of Bank Mandiri",16 November 2022,high,labels_batch_005.json
+1109,OUTSIDE_INVESTOR_BUY,SSMS,"Putra Borneo Agro Lestari, corporate shareholder",,medium,labels_batch_005.json
+1110,INSIDER_BUY,INOV,"Jung Hyo Choi, president commissioner of Inocycle Technology Group",16-17 November 2022,high,labels_batch_005.json
+1111,OTHER,,,,high,labels_batch_005.json
+1112,OPTION_OR_RIGHTS_EXERCISE,WIFI,"PT Investasi Sukses Bersama (ISB), controlling shareholder, took all placement shares",,low,labels_batch_005.json
+1113,OTHER,,,,high,labels_batch_005.json
+1114,INSIDER_BUY,BELI,"Honky Harjo, Djarum director and deputy president commissioner of Blibli",18 dan 21 November 2022,high,labels_batch_005.json
+1115,OTHER,,,,high,labels_batch_005.json
+1116,OUTSIDE_INVESTOR_BUY,KKGI,"Morgan Stanley and Co International Plc, UK institution, now 33.47%",,high,labels_batch_005.json
+1117,OUTSIDE_INVESTOR_BUY,BEBS,"Asep Sulaeman Sabanda, wealthy individual investor from Subang",,medium,labels_batch_005.json
+1118,SELL,BPII,,18 November 2022,medium,labels_batch_005.json
+1119,INSIDER_BUY,LPPF,"Auric Digital Retail Pte Ltd, Singapore-based buyer tied to Lippo Group","21, 22, dan 23 November 2022",medium,labels_batch_005.json
+1120,OTHER,,,,high,labels_batch_005.json
+1121,INSIDER_BUY,BELI,"Honky Harjo, Djarum director and deputy president commissioner of Blibli",23 November 2022,high,labels_batch_005.json
+1122,OUTSIDE_INVESTOR_BUY,BUAH,"PT Tebar Jala Korpora, new 5.12% shareholder",,medium,labels_batch_005.json
+1123,INSIDER_BUY,BSDE,"Paraga Artamida, controller of Bumi Serpong Damai",23 November 2022,high,labels_batch_005.json
+1124,COMPANY_ACQUIRES_STAKE,,"Indika Energy (INDY), buying from ST International (Samtan)",23 November 2022,high,labels_batch_005.json
+1125,COMPANY_ACQUIRES_STAKE,MORA,"Smartfren Telecom (FREN), in talks with MORA controller",,medium,labels_batch_005.json
+1126,OUTSIDE_INVESTOR_BUY,BBYB,"Gozco Capital, corporate investor now holding 14.34%",24 November 2022 dan 25 November 2022,medium,labels_batch_005.json
+1127,OUTSIDE_INVESTOR_BUY,SNLK,"Unilink Ventures Inc, foreign investor and existing shareholder",25 November 2022,medium,labels_batch_005.json
+1128,OTHER,,,,medium,labels_batch_005.json
+1129,INSIDER_BUY,BMAS,"Kasikorn Vision Financial Company Pte Ltd, dominant shareholder, now 62.41%",,low,labels_batch_005.json
+1130,OTHER,SOHO,"Fraburg Pty Limited (Australia), vehicle for Tan Kin Nio internal restructuring",24 November 2022,low,labels_batch_005.json
+1131,INSIDER_BUY,ABDA,"Aseana Insurance Pte Ltd, controller of Asuransi Bina Dana Arta",,high,labels_batch_005.json
+1132,INSIDER_BUY,BELI,"Honky Harjo, Djarum director and deputy president commissioner of Blibli","24, 25 dan 28 November 2022",high,labels_batch_005.json
+1133,OUTSIDE_INVESTOR_BUY,BUAH,"PT Tebar Jala Korpora, non-controlling shareholder buying 5.58%",29 November 2022,high,labels_batch_005.json
+1134,OTHER,,,,high,labels_batch_005.json
+1135,INSIDER_BUY,SRTG,"Edwin Soeryadjaya, president commissioner of Saratoga",30 November 2022,high,labels_batch_005.json
+1136,INSIDER_BUY,IPAC,"APAC Investment 2 Pte Ltd, controlling shareholder, via mandatory tender offer",28 November 2022,medium,labels_batch_005.json
+1137,OUTSIDE_INVESTOR_BUY,PDPP,"Sugianto Kusuma (Aguan), founder of Agung Sedayu Group, now 5%",23 November 2022,medium,labels_batch_005.json
+1138,OTHER,,,,high,labels_batch_005.json
+1139,INSIDER_BUY,BYAN,"Low Tuck Kwong, big boss of Bayan Resources, now 60.93%",,high,labels_batch_005.json
+1140,OTHER,,,,high,labels_batch_005.json
+1141,INSIDER_BUY,BELI,"Honky Harjo, Djarum director and deputy president commissioner of Blibli",1 Desember 2022,high,labels_batch_005.json
+1142,OTHER,,,,high,labels_batch_005.json
+1143,INSIDER_BUY,TRUK,"PT Guna Makmur Raya, controlling shareholder of Guna Timur Raya",1 Desember 2022,high,labels_batch_005.json
+1144,INSIDER_BUY,BSDE,"Paraga Artamida, controller of Bumi Serpong Damai",30 November 2022,high,labels_batch_005.json
+1145,OUTSIDE_INVESTOR_BUY,BUMI,"Chengdong Investment Corp, Beijing-based investor, now 10.68%",,high,labels_batch_005.json
+1146,COMPANY_ACQUIRES_STAKE,,United Tractors (UNTR) via subsidiary Danusa Tambang Nusantara,3 Desember 2022,high,labels_batch_005.json
+1147,INSIDER_BUY,PNGO,"Hasan Tantri, commissioner and controller of Pinago Utama",2 November 2022,high,labels_batch_005.json
+1148,SELL,BNBR,,,medium,labels_batch_005.json
+1149,OTHER,,,,high,labels_batch_005.json
+1150,COMPANY_ACQUIRES_STAKE,,"Bukit Asam (PTBA), wants 51% of Kohong Telakon block",,low,labels_batch_005.json
+1151,INSIDER_BUY,BRNA,"PT Dwi Satrya Utama, controlling shareholder of Berlina",25 November 2022,high,labels_batch_005.json
+1152,OTHER,,,,high,labels_batch_005.json
+1153,INSIDER_BUY,BELI,"Honky Harjo, Djarum boss and deputy president commissioner of Blibli",2 Desember 2022 dan 5 Desember 2022,high,labels_batch_005.json
+1154,MARKET_FLOW,,,,high,labels_batch_005.json
+1155,INSIDER_BUY,BELI,"Honky Harjo, Djarum boss and deputy president commissioner of Blibli",6 Desember 2022,high,labels_batch_005.json
+1156,INSIDER_BUY,WGSH,"PT Walden Global Services, controlling shareholder of Wira Global Solusi",30 November 2022 hingga 6 Desember 2022,high,labels_batch_005.json
+1157,OUTSIDE_INVESTOR_BUY,MIRA,"PT FAC Sekuritas Indonesia, securities firm, now 13.07%",,high,labels_batch_005.json
+1158,COMPANY_ACQUIRES_STAKE,,"Blibli (BELI) via subsidiary Global Tiket Network, founding Malaysian entity",7 Desember 2022,low,labels_batch_005.json
+1159,INSIDER_BUY,AMAR,"Tolaram Group Inc, dominant shareholder of Bank Amar",5 dan 8 Desember 2022,medium,labels_batch_005.json
+1160,OTHER,,,,high,labels_batch_005.json
+1161,OTHER,,,,high,labels_batch_005.json
+1162,OTHER,,,,medium,labels_batch_005.json
+1163,OUTSIDE_INVESTOR_BUY,UNSP,"Anargya Superfund Equity Growth, equity mutual fund, now 5.373%",,high,labels_batch_005.json
+1164,INSIDER_BUY,VICO,Gratamulia Pratama (controller) and Chemical Asia Corporation (shareholder),,medium,labels_batch_005.json
+1165,OUTSIDE_INVESTOR_BUY,DIVA,"Soteria Wicaksana Investama (SWI), corporate shareholder holding 17.14%",30 November 2022,low,labels_batch_005.json
+1166,INSIDER_BUY,AMAR,"Tolaram (controller), president director Vishal Tulsian, director Eka Banyuaji",5 Desember 2022 dan 8 Desember 2022,high,labels_batch_005.json
+1167,OUTSIDE_INVESTOR_BUY,BMTR,"Lo Kheng Hong, well-known Indonesian investor",,high,labels_batch_005.json
+1168,OPTION_OR_RIGHTS_EXERCISE,BELI,"Employees, directors and commissioners exercising MESOP options at Rp432",15 hingga 21 Desember 2022,high,labels_batch_005.json
+1169,INSIDER_BUY,AMAR,"Tolaram Group Inc, controller of Bank Amar, now 67.27%",,high,labels_batch_005.json
+1170,OPTION_OR_RIGHTS_EXERCISE,BELI,Management and employees exercising MESOP phase I options at Rp432,15 sampai 21 Desember 2022,high,labels_batch_005.json
+1171,SELL,GPRA,,,medium,labels_batch_005.json
+1172,INSIDER_BUY,HEAL,Hasmoro (president director) and Aristo Setiawidjaja (director) of Medikaloka Hermina,1 September 2022 dan 16 September 2022,high,labels_batch_005.json
+1173,COMPANY_ACQUIRES_STAKE,,"AKR Corporindo (AKRA), parent injecting capital into subsidiary Akrida",12 Desember 2022,medium,labels_batch_005.json
+1174,INSIDER_BUY,BMRI,"Ahmad Siddik Badruddin, senior figure (pentolan) of Bank Mandiri",9 Desember 2022,high,labels_batch_005.json
+1175,OTHER,,,,high,labels_batch_005.json
+1176,OUTSIDE_INVESTOR_BUY,CASH,"Hasim Sutiono, individual shareholder now holding 19.16%",5 Desember 2022,medium,labels_batch_005.json
+1177,INSIDER_BUY,BNBA,Commissioner Rachmat Mulia S. and several directors of Bank Bumi Arta,"6, 7, dan 8 Desember 2022",medium,labels_batch_005.json
+1178,COMPANY_ACQUIRES_STAKE,SMBR,"Semen Indonesia (SMGR), integrating Semen Baturaja via rights issue",,medium,labels_batch_005.json
+1179,INSIDER_BUY,BSDE,"Paraga Artamida, dominant shareholder of Bumi Serpong Damai",14 Desember 2022,medium,labels_batch_005.json
+1180,INSIDER_BUY,ARKO,"PT Arkora Bakti Indonesia, controlling shareholder and parent of Arkora Hydro",8 - 9 Desember 2022,high,labels_batch_005.json
+1181,OUTSIDE_INVESTOR_BUY,BULL,"Maju Karya Mandiri (MMI), new above-5% shareholder",7 Desember 2022,medium,labels_batch_005.json
+1182,OPTION_OR_RIGHTS_EXERCISE,AMAR,"Tolaram Group Inc, controller, additional order in rights issue",16 Desember 2022,high,labels_batch_005.json
+1183,INSIDER_BUY,IMPC,"Sugiarto Romeli, director of Impack Pratama Industri",15 Desember 2022,high,labels_batch_005.json
+1184,INSIDER_BUY,BYAN,"Low Tuck Kwong, majority holder (60.94%) of Bayan Resources",16 Desember 2022,high,labels_batch_005.json
+1185,INSIDER_BUY,TFAS,"PT Soteria Wicaksana Investama, controller of Telefast Indonesia",19 Desember 2022,high,labels_batch_005.json
+1186,OPTION_OR_RIGHTS_EXERCISE,BNBA,"Controllers, shareholders and standby buyers incl. Dana Graha Agung",,high,labels_batch_005.json
+1187,OUTSIDE_INVESTOR_BUY,BBYB,"Gozco Capital, corporate investor now holding 12.40%",7 Desember 2022,medium,labels_batch_005.json
+1188,OTHER,,,,high,labels_batch_005.json
+1189,INSIDER_BUY,BMRI,"Timothy Utama, senior management (pengurus teras) of Bank Mandiri",15 Desember 2022,high,labels_batch_005.json
+1190,OPTION_OR_RIGHTS_EXERCISE,BRIS,"Bank Mandiri (BMRI), parent taking full rights in BSI rights issue",19 Desember 2022,medium,labels_batch_005.json
+1191,OTHER,,,,high,labels_batch_005.json
+1192,OTHER,,,,high,labels_batch_005.json
+1193,INSIDER_BUY,TUGU,"Tatang Nurhidayat, president director of Asuransi Tugu Pratama",13 Desember 2022 hingga 16 Desember 2022,high,labels_batch_005.json
+1194,OTHER,,,,high,labels_batch_005.json
+1195,INSIDER_BUY,SGER,"PT Sumbermas Global Energy, controller of Sumber Global Energy",15 Desember 2022,high,labels_batch_005.json
+1196,SELL,BBYB,,8 Desember 2022,high,labels_batch_005.json
+1197,OTHER,,,,low,labels_batch_005.json
+1198,INSIDER_BUY,ISAT,"Muhammad Buldansyah, director and chief regulatory officer of Indosat",12 Desember 2022,high,labels_batch_005.json
+1199,OTHER,,,,high,labels_batch_005.json
+1200,INSIDER_BUY,MPMX,"Tossin Himawan, commissioner of Mitra Pinasthika Mustika",21 Desember 2022,high,labels_batch_005.json
+1201,OTHER,,,,medium,labels_batch_005.json
+1202,OUTSIDE_INVESTOR_BUY,APIC,"Kingwood Union Corporation, BVI company, new 5.69% shareholder",,high,labels_batch_005.json
+1203,INSIDER_BUY,AMRT,"Sigmantara Alfindo, majority shareholder (53.19%) of Sumber Alfaria Trijaya",,medium,labels_batch_005.json
+1204,INSIDER_BUY,IDEA,"Eko Desriyanto, founder and president director of Idea Indonesia Akademi",21-23 Desember 2022,high,labels_batch_005.json
+1205,INSIDER_BUY,BYAN,"Low Tuck Kwong, bigwig (pentolan) and 60.94% holder of Bayan Resources",23 Desember 2022,high,labels_batch_005.json
+1206,OTHER,,,,high,labels_batch_005.json
+1207,INSIDER_BUY,BBTN,"Jasmin, director of distribution and funding at Bank BTN","14, 15, 16, 19, 20, 21 dan 22 Desember 2022",high,labels_batch_005.json
+1208,INSIDER_BUY,BSDE,"Paraga Artamida, corporate shareholder holding 35.67% of Bumi Serpong Damai",21 Desember 2022,low,labels_batch_005.json
+1209,OUTSIDE_INVESTOR_BUY,SULI,"SAS Global Jaya (SGJ), corporate shareholder now holding 12.55%",23 Desember 2022,medium,labels_batch_005.json
+1210,INSIDER_BUY,CAKK,"Tancorp Bangun Indonesia, majority shareholder (62.55%) of Cahayaputra Asa Keramik",23 Desember 2022,medium,labels_batch_005.json
+1211,INSIDER_BUY,AMAR,"Tolaram Group Inc, controlling party of Bank Amar, now 69.76%",,high,labels_batch_005.json
+1212,OPTION_OR_RIGHTS_EXERCISE,EXCL,"Axiata Investment (Indonesia) Sdn Bhd (AII), 65.86% shareholder and XL executives",20 Desember 2022,medium,labels_batch_005.json
+1213,OPTION_OR_RIGHTS_EXERCISE,BELI,Management and employees exercising MESOP phase I options at Rp432,15 Desember 2022 sampai 21 Desember 2022,high,labels_batch_005.json
+1214,INSIDER_BUY,MCOR,"You Wennan, director of Bank China Construction Bank Indonesia",28 Desember 2022,medium,labels_batch_005.json
+1215,INSIDER_BUY,UNSP,"Bakrie Capital Indonesia (BCI), Bakrie group holding with 14.645%",27 Desember 2022,medium,labels_batch_005.json
+1216,INSIDER_BUY,CAKK,"Tancorp Bangun Indonesia, majority holder completing tender offer, now 62.55%",22 November 2022 sampai 21 Desember 2022,medium,labels_batch_005.json
+1217,OUTSIDE_INVESTOR_BUY,PGUN,"PT Baramega Citra Mulia Persada, new 5.23% shareholder",28 Desember 2022,high,labels_batch_005.json
+1218,COMPANY_ACQUIRES_STAKE,,"Barito Pacific (BRPT) via Star Energy Group Holdings, buying from EGCO",,high,labels_batch_005.json
+1219,OTHER,,,,high,labels_batch_005.json
+1220,OPTION_OR_RIGHTS_EXERCISE,BRIS,"Bank Mandiri (BMRI), parent taking unexercised rights in BSI rights issue",,medium,labels_batch_005.json
+1221,OTHER,,,,high,labels_batch_005.json
+1222,INSIDER_BUY,AMAR,"Tolaram Group Inc, controlling party of Bank Amar, now 70.09%",,high,labels_batch_005.json
+1223,INSIDER_BUY,BABP,"MNC Kapital Indonesia (BCAP), major shareholder raising stake to 49.17%",,low,labels_batch_005.json
+1224,INSIDER_BUY,BMRI,"Riduan, senior figure (pentolan) of Bank Mandiri",28 Desember 2022,high,labels_batch_005.json
+1225,OTHER,,,,high,labels_batch_005.json
+1226,OUTSIDE_INVESTOR_BUY,OASA,"Fersindo Nusa Jaya, corporate shareholder now holding 5.64%",28 Desember 2022,medium,labels_batch_005.json
+1227,OTHER,,,,medium,labels_batch_005.json
+1228,OPTION_OR_RIGHTS_EXERCISE,BRIS,"Commissioner Sutanto and directors Moh Adib and Ngatari, via HMETD",22 Desember 2022 dan 28 Desember 2022,high,labels_batch_005.json
+1229,OUTSIDE_INVESTOR_BUY,PGUN,"PT Baramega Citra Mulia Persada, corporate shareholder now holding 9.20%",,medium,labels_batch_005.json
+1230,OUTSIDE_INVESTOR_BUY,RONY,"Meepok Holding Pte Ltd, Singapore company, new 19.40% shareholder",,medium,labels_batch_005.json
+1231,COMPANY_ACQUIRES_STAKE,ITMA,"Astrindo Nusantara Infrastruktur (BIPI), raising ITMA stake from 11.87% to 41.90%",,medium,labels_batch_005.json
+1232,OUTSIDE_INVESTOR_BUY,BOGA,"Suge Talesta Guna (STU), new 5.19% shareholder",,high,labels_batch_005.json
+1233,INSIDER_BUY,WINS,"John Slack, commissioner of Wintermar Offshore Marine",6 Desember 2022,high,labels_batch_005.json
+1234,INSIDER_BUY,KMDS,"Dion Amaury, director of Kurniamitra Duta Sentosa",29 Desember 2022,high,labels_batch_005.json
+1235,OUTSIDE_INVESTOR_BUY,AMRT,"Morgan Stanley & Co. International plc, institution now holding 8.81%",9 Desember 2022,high,labels_batch_005.json
+1236,OUTSIDE_INVESTOR_BUY,DIVA,"PT Soteria Wicaksana Investama, shareholder of Distribusi Voucher Nusantara",30 Desember 2022,low,labels_batch_005.json
+1237,COMPANY_ACQUIRES_STAKE,,"Jasnita Telekomindo (JAST), buying from Innovax Systems and UBM Engineering Service",29 Desember 2022,high,labels_batch_005.json
+1238,OTHER,,,,high,labels_batch_005.json
+1239,INSIDER_BUY,PEHA,"Masrizal A. Syarief, commissioner of Phapros (not controller)",30 Desember 2022,high,labels_batch_005.json
+1240,INSIDER_BUY,BYAN,"Low Tuck Kwong, boss of Bayan Resources, 60.94% holder",30 Desember 2022,high,labels_batch_005.json
+1241,OPTION_OR_RIGHTS_EXERCISE,MTWI,"Batavia Prosperindo Internasional (BPII), 88.71% holder taking up rights issue",,medium,labels_batch_005.json
+1242,INSIDER_BUY,GLVA,"Oki Widjaja, president director and controller of Galva Technologies",29 Desember 2022 hingga 4 Januari 2023,high,labels_batch_005.json
+1243,INSIDER_BUY,RDTX,"Turniady Widjaja, one of the controlling shareholders of Roda Vivatex",2 hingga 3 Januari 2023,high,labels_batch_005.json
+1244,OUTSIDE_INVESTOR_BUY,MDKA,"UOB Kay Hian Pte Ltd, Singapore securities firm, new 5.60% holder",,high,labels_batch_005.json
+1245,OUTSIDE_INVESTOR_BUY,DYAN,"Yulie Sekuritas Indonesia, securities firm, new 7% holder",,high,labels_batch_005.json
+1246,OTHER,,,,high,labels_batch_005.json
+1247,INSIDER_BUY,BSDE,"Paraga Artamida, controller of Bumi Serpong Damai",29 Desember 2022,high,labels_batch_005.json
+1248,OTHER,,,,high,labels_batch_005.json
+1249,OUTSIDE_INVESTOR_BUY,ELIT,"Hotman Paris Hutapea, well-known lawyer, 5% holder",,high,labels_batch_005.json
+1250,OPTION_OR_RIGHTS_EXERCISE,EXCL,"Axiata Investment (Indonesia) Sdn Bhd, controller acting as standby buyer",30 Desember 2022,high,labels_batch_005.json
+1251,OPTION_OR_RIGHTS_EXERCISE,BBTN,"Taspen, institutional investor now holding 5.14%",,medium,labels_batch_005.json
+1252,OPTION_OR_RIGHTS_EXERCISE,TOBA,"Directors incl. Dicky Yordan and Pandu Sjahrir, via MESOP",,high,labels_batch_006.json
+1253,OPTION_OR_RIGHTS_EXERCISE,SMGR,"Agung Wiharto, director of Semen Indonesia (SIG), via rights issue",22 Desember 2022,high,labels_batch_006.json
+1254,OUTSIDE_INVESTOR_BUY,PGUN,"Baramega Citra Mulia Persada, corporate shareholder (9.2% after)",2 Januari 2023,medium,labels_batch_006.json
+1255,OUTSIDE_INVESTOR_BUY,BBHI,"Ali Gunawan, boss of Bank Panin",26 Desember 2022,medium,labels_batch_006.json
+1256,OUTSIDE_INVESTOR_BUY,KIOS,"Investasi Sukses Bersama (ISB), now 7.53% shareholder",,medium,labels_batch_006.json
+1257,INSIDER_BUY,TALF,"Samuel Sofyan Tika, director and controlling shareholder",23 Desember 2022,high,labels_batch_006.json
+1258,OPTION_OR_RIGHTS_EXERCISE,GOTO,"Wei-Jye Jacky Lo, finance director, via ESOP",15 Desember 2022,high,labels_batch_006.json
+1259,OPTION_OR_RIGHTS_EXERCISE,BBTN,"Taspen, institution, participating in the rights issue",,medium,labels_batch_006.json
+1260,OPTION_OR_RIGHTS_EXERCISE,EXCL,"Axiata Investments (Indonesia), controlling shareholder, standby buyer in rights issue",30 Desember 2022,high,labels_batch_006.json
+1261,OPTION_OR_RIGHTS_EXERCISE,PBRX,"Trisetijo Manunggal Utama, controlling shareholder, standby buyer in rights issue",,medium,labels_batch_006.json
+1262,INSIDER_BUY,BULL,"Kevin Wong, director of Buana Lintas Lautan",16 Desember 2022,high,labels_batch_006.json
+1263,OUTSIDE_INVESTOR_BUY,RDTX,"Turniady Widjaja, non-controlling shareholder",5 dan 6 Januari 2023,medium,labels_batch_006.json
+1264,OUTSIDE_INVESTOR_BUY,WMPP,"Tumiyana, shareholder with 21.63% after purchase",,medium,labels_batch_006.json
+1265,INSIDER_BUY,BBRI,Two directors: Viviana Dyah Ayu R. K. and Amam Sukriyanto,5 dan 10 Januari 2023,high,labels_batch_006.json
+1266,OTHER,,,,high,labels_batch_006.json
+1267,OUTSIDE_INVESTOR_BUY,BINO,"Handy Purnomo Soetedjo, shareholder of Perma Plasindo",3 Januari 2023,medium,labels_batch_006.json
+1268,INSIDER_BUY,BBCA,"John Kosasih, senior official (petinggi) of Bank Central Asia",5 Januari 2023,medium,labels_batch_006.json
+1269,OUTSIDE_INVESTOR_BUY,WMUU,"Tumiyana via Widodo Makmur Perkasa (WMPP), 29.69% holder",,low,labels_batch_006.json
+1270,COMPANY_ACQUIRES_STAKE,,"Sunindo Pratama (SUNI), listed company, buying from Sunda Optima Pipe",10 Januari 2023,high,labels_batch_006.json
+1271,INSIDER_BUY,DOID,"Indra Dammen Kanoena, director of Delta Dunia Makmur",12 dan 28 Desember 2022,high,labels_batch_006.json
+1272,OUTSIDE_INVESTOR_BUY,MMLP,Provident Investasi Bersama via Suwarna Arta Mandiri (SAM),5 Januari 2023,medium,labels_batch_006.json
+1273,OUTSIDE_INVESTOR_BUY,APIC,"Tunas Persada Cemerlang (TPC), now 5.40% shareholder",29 dan 30 Desember 2022,medium,labels_batch_006.json
+1274,INSIDER_BUY,AVIA,"Ruslan Tanoko, deputy president director, via Sensasi Istana Warna",5 Januari 2023,high,labels_batch_006.json
+1275,OUTSIDE_INVESTOR_BUY,BTEK,"Credit Suisse AG Singapore Trust, new investor (13.03%)",,medium,labels_batch_006.json
+1276,INSIDER_BUY,AVIA,Tancorp Global Sentosa (controlling shareholder) and a senior AVIA official,2 dan 3 Januari 2023,high,labels_batch_006.json
+1277,OTHER,,,,medium,labels_batch_006.json
+1278,INSIDER_BUY,HRUM,"Ray Antonio Gunara, president director of Harum Energy",6 Januari 2023,high,labels_batch_006.json
+1279,OTHER,,,,high,labels_batch_006.json
+1280,OTHER,,,,high,labels_batch_006.json
+1281,OTHER,,,,high,labels_batch_006.json
+1282,OUTSIDE_INVESTOR_BUY,SSMS,"Putra Borneo Agro Lestari, 10.12% shareholder, repeat buyer",,medium,labels_batch_006.json
+1283,INSIDER_BUY,PRAY,"Yos Effendi Susanto, commissioner of Famon Awal Bros Sedaya",26-30 Desember 2022 dan 2-3 Januari 2023,high,labels_batch_006.json
+1284,INSIDER_BUY,SMDR,"Bani Maulana, head of management (boss) of Samudera Indonesia",6 Januari 2023,high,labels_batch_006.json
+1285,OUTSIDE_INVESTOR_BUY,RDTX,"Turniady and Sutiady Widjaja, two brothers (Widjaja family), shareholders",13 dan 16 Januari 2023,low,labels_batch_006.json
+1286,COMPANY_ACQUIRES_STAKE,,"Energi Baru TBS (EBT), subsidiary of TBS Energi Utama (TOBA)",,medium,labels_batch_006.json
+1287,INSIDER_BUY,BYAN,"Dato' Low Tuck Kwong, boss of Bayan Resources",,high,labels_batch_006.json
+1288,OTHER,,,,high,labels_batch_006.json
+1289,INSIDER_BUY,IDPR,"Manuel Djunako, president commissioner and controller",13 dan 16 Januari 2023,high,labels_batch_006.json
+1290,OTHER,,,,high,labels_batch_006.json
+1291,OUTSIDE_INVESTOR_BUY,WIFI,"Investasi Sukses Bersama (ISB), 49.4% shareholder",13 Januari 2023,low,labels_batch_006.json
+1292,OTHER,,,,high,labels_batch_006.json
+1293,OUTSIDE_INVESTOR_BUY,BSML,"Belvin Tannadi, influencer, shareholder above 5%",17 Januari 2023,high,labels_batch_006.json
+1294,OUTSIDE_INVESTOR_BUY,RELI,"Asia Kapital Properti (AKP), new 5.04% shareholder",,medium,labels_batch_006.json
+1295,OTHER,,,,high,labels_batch_006.json
+1296,OUTSIDE_INVESTOR_BUY,BINO,"Handy Purnomo Soetedjo, former owner of Inter Milan, 5.99% holder",19 Desember 2022,medium,labels_batch_006.json
+1297,OTHER,,,,high,labels_batch_006.json
+1298,OTHER,,,,high,labels_batch_006.json
+1299,OTHER,,,,high,labels_batch_006.json
+1300,INSIDER_BUY,SMDR,"Bani Maulana Mulia, president director of Samudera Indonesia",20 Januari 2023,high,labels_batch_006.json
+1301,INSIDER_BUY,PEVE,"Tancorp Mega Buana, controlling shareholder of Penta Valent",25 Januari 2023,high,labels_batch_006.json
+1302,INSIDER_BUY,BYAN,"Dato' Low Tuck Kwong, boss of Bayan Resources (60.96% holder)",20 Januari 2023,high,labels_batch_006.json
+1303,OTHER,,,,high,labels_batch_006.json
+1304,OUTSIDE_INVESTOR_BUY,PNGO,"Wilson Sutantio, shareholder with 22.75%",20 Januari 2023,medium,labels_batch_006.json
+1305,OUTSIDE_INVESTOR_BUY,INVS,"Bank CIMB Niaga (BNGA), now 8.96% holder, absorbing Green Pine's shares",,high,labels_batch_006.json
+1306,INSIDER_BUY,LPPF,"Auric Digital Retail Pte Ltd, controlling shareholder",,high,labels_batch_006.json
+1307,INSIDER_BUY,LPPF,"Auric Digital Retail Pte Ltd, controlling shareholder",13-26 Januari 2023,high,labels_batch_006.json
+1308,INSIDER_BUY,HEAL,Hasmoro (president director) and Aristo Setiawidjaja (director) of Hermina,27 Januari 2023,high,labels_batch_006.json
+1309,OUTSIDE_INVESTOR_BUY,MDLN,"Panin Sekuritas (PANS), securities firm, now 8.20% holder",24 dan 26 Januari 2023,high,labels_batch_006.json
+1310,OPTION_OR_RIGHTS_EXERCISE,PBRX,"PT Ganda Sawit Utama, new holder above 5% after the rights issue",26 Januari 2023,medium,labels_batch_006.json
+1311,OTHER,,,,high,labels_batch_006.json
+1312,INSIDER_BUY,URBN,"Yongky Wijaya, commissioner of Urban Jakarta Propertindo",25 Januari 2023,high,labels_batch_006.json
+1313,OTHER,,,,high,labels_batch_006.json
+1314,OTHER,,,,high,labels_batch_006.json
+1315,INSIDER_BUY,BYAN,"Dato' Low Tuck Kwong, CEO and boss of Bayan Resources",27 Januari 2023,high,labels_batch_006.json
+1316,INSIDER_BUY,URBN,"Yongky Wijaya, president commissioner of Urban Jakarta Propertindo",25 Januari 2023,high,labels_batch_006.json
+1317,OUTSIDE_INVESTOR_BUY,SOSS,"PT Mitra Sentral Lestari, new 5.65% shareholder",,medium,labels_batch_006.json
+1318,COMPANY_ACQUIRES_STAKE,,"Logindo Samudramakmur (LEAD), listed company, holding 99.9% of new subsidiary DMM",,high,labels_batch_006.json
+1319,OUTSIDE_INVESTOR_BUY,BPTR,"Oscarmas, new 10% shareholder",26 Januari 2023,medium,labels_batch_006.json
+1320,INSIDER_BUY,BPTR,"Paulus Handigdo, president director of Batavia Prosperindo Trans",30 Januari 2023,high,labels_batch_006.json
+1321,INSIDER_BUY,PEHA,"Masrizal A. Syarief, commissioner of Phapros (10.095% holder)",30 Januari 2023,high,labels_batch_006.json
+1322,OUTSIDE_INVESTOR_BUY,DIVA,"PT Soteria Wicaksana Investama, shareholder of DIVA",31 Januari 2023,medium,labels_batch_006.json
+1323,SELL,DRMA,,27 Januari 2023,medium,labels_batch_006.json
+1324,SELL,,"Nur Rochmat, unaffiliated third party",31 Januari 2023,high,labels_batch_006.json
+1325,INSIDER_BUY,CAKK,"Johan Silitonga, president director of Cahayaputra Asa Keramik",30 Januari 2023,high,labels_batch_006.json
+1326,OTHER,,,,high,labels_batch_006.json
+1327,OTHER,,,,high,labels_batch_006.json
+1328,OTHER,,,,high,labels_batch_006.json
+1329,OTHER,,,,high,labels_batch_006.json
+1330,INSIDER_BUY,KBAG,"Visi Kota Indonesia (VKI), controlling shareholder of Karya Bersama Anugerah",31 Januari 2023,high,labels_batch_006.json
+1331,BUYBACK,BBRI,"Bank Rakyat Indonesia (BRI) itself, share buyback",,high,labels_batch_006.json
+1332,OUTSIDE_INVESTOR_BUY,SQMI,"Dato' Sri Chong Thim Pheng, shareholder with 6.75%",30 Januari 2023,medium,labels_batch_006.json
+1333,INSIDER_BUY,BBKP,"Henry Sawali, director of Bank KB Bukopin",1 Februari 2023,high,labels_batch_006.json
+1334,INSIDER_BUY,CAKK,"Johan Silitonga, president director of Cahayaputra Asa Keramik",1-2 Februari 2023,high,labels_batch_006.json
+1335,INSIDER_BUY,BSDE,"Paraga Artamida, controlling shareholder of Bumi Serpong Damai",26 Januari 2023,high,labels_batch_006.json
+1336,INSIDER_BUY,BYAN,"Dato' Low Tuck Kwong, CEO and boss of Bayan Resources",3 Februari 2023,high,labels_batch_006.json
+1337,OUTSIDE_INVESTOR_BUY,SDRA,"PT Apramesis Meta Investama, new investor with 6.78%",,high,labels_batch_006.json
+1338,INSIDER_BUY,CASH,"Andri Wijono Sutiono, one of the controllers of Cashlez",14 Desember 2022 sampai 27 Januari 2023,high,labels_batch_006.json
+1339,OUTSIDE_INVESTOR_BUY,HELI,"PT Anugerah Bumiputra, 17.62% holder (third largest)",,medium,labels_batch_006.json
+1340,OUTSIDE_INVESTOR_BUY,ZBRA,"Maybank Sekuritas Indonesia, securities firm, now 14.75% holder",2 Februari 2023,high,labels_batch_006.json
+1341,OUTSIDE_INVESTOR_BUY,KIOS,"Investasi Sukses Bersama (ISB), shareholder now above 5% (5.34%)",3 Februari 2023,medium,labels_batch_006.json
+1342,INSIDER_BUY,BYAN,"Lim Chai Hock, director of Bayan Resources",30-31 Januari 2023 dan 1-8 Februari 2023,high,labels_batch_006.json
+1343,OTHER,,,,high,labels_batch_006.json
+1344,INSIDER_BUY,BIPI,"Indotambang Perkasa, controlling shareholder of Astrindo Nusantara",8 Februari 2023,high,labels_batch_006.json
+1345,INSIDER_BUY,PEHA,"Masrizal A. Syarief, commissioner of Phapros",7 Februari 2023,high,labels_batch_006.json
+1346,OPTION_OR_RIGHTS_EXERCISE,SILO,"Mona Kartikasari Jonathan, via employee stock option program (MESOP)",31 Januari 2023,high,labels_batch_006.json
+1347,OTHER,,,,high,labels_batch_006.json
+1348,OTHER,,,,high,labels_batch_006.json
+1349,INSIDER_BUY,WIRG,"Andreyanto Toemali, commissioner of WIR Asia",4 Januari 2023 dan 10 Februari 2023,high,labels_batch_006.json
+1350,OUTSIDE_INVESTOR_BUY,GPRA,"Citra Abadi Kota Persada, new 5.85% shareholder",,medium,labels_batch_006.json
+1351,INSIDER_BUY,AKRA,"Haryanto Adikoesoemo, president director of AKR Corporindo",3 Februari 2023,high,labels_batch_006.json
+1352,OTHER,,,,high,labels_batch_006.json
+1353,COMPANY_ACQUIRES_STAKE,,"TBS Energi Utama (TOBA), subscribing new shares of subsidiary Toba Bumi",,medium,labels_batch_006.json
+1354,DENIAL_OR_RUMOR,MMIX,"Alfamart group, rumoured buyer of 5-10%",,high,labels_batch_006.json
+1355,INSIDER_BUY,BYAN,"Dato' Low Tuck Kwong, boss of Bayan Resources",10 Februari 2023,high,labels_batch_006.json
+1356,OUTSIDE_INVESTOR_BUY,PANR,"Ramajanto Tirtawisata, an investor of the company",6 sampai 13 Februari 2023,medium,labels_batch_006.json
+1357,INSIDER_BUY,PEHA,"Masrizal A. Syarief, commissioner of Phapros",14 Februari 2023,high,labels_batch_006.json
+1358,INSIDER_BUY,VAST,"Trisna Wisanta, director and corporate secretary of Vastland Indonesia",8 Februari 2023,high,labels_batch_006.json
+1359,COMPANY_ACQUIRES_STAKE,,"Astrindo Nusantara Infrastruktur (BIPI), acquiring PTT Mining Ltd (PTTML)",,high,labels_batch_006.json
+1360,OUTSIDE_INVESTOR_BUY,DEWI,"Rakhmat Damdami, investor, now 5.22% holder",13 Februari 2023,high,labels_batch_006.json
+1361,DENIAL_OR_RUMOR,MMIX,"Alfamart (AMRT), denying plan to take 5-10%",,high,labels_batch_006.json
+1362,OTHER,,,,high,labels_batch_006.json
+1363,INSIDER_BUY,ESSA,"Garibaldi (Boy) Thohir, controlling shareholder of Surya Esa Perkasa",16 Februari 2023,medium,labels_batch_006.json
+1364,OUTSIDE_INVESTOR_BUY,WMUU,"Widodo Makmur Perkasa (WMPP), 30.01% shareholder",17 Februari 2023,low,labels_batch_006.json
+1365,OUTSIDE_INVESTOR_BUY,MARK,"PT Dyna Capital Indo, shareholder above 5%",17 Februari 2023,medium,labels_batch_006.json
+1366,OTHER,,,,high,labels_batch_006.json
+1367,OUTSIDE_INVESTOR_BUY,ELIT,"Thomas Irawan Tjahjono, an individual investor (4.78% after)",,medium,labels_batch_006.json
+1368,OUTSIDE_INVESTOR_BUY,BMTR,"MNC Asia Holding (BHIT), now 29.18% holder",,low,labels_batch_006.json
+1369,OUTSIDE_INVESTOR_BUY,LUCK,"Serial System International Pte Ltd, Singapore company, 15.9% holder",21 Februari 2023,medium,labels_batch_006.json
+1370,INSIDER_BUY,AVIA,"Tancorp Global Sentosa (TGS), one of the controllers of Avia Avian","14, 15, 16, 17, 20, dan 21 Februari 2023",high,labels_batch_006.json
+1371,OUTSIDE_INVESTOR_BUY,BISI,"UBS AG Singapore, new 5% shareholder",17 Februari 2023,high,labels_batch_006.json
+1372,OUTSIDE_INVESTOR_BUY,KAEF,Indonesia Investment Authority (INA) and Silk Road Fund (SRF),,medium,labels_batch_006.json
+1373,INSIDER_BUY,KKGI,"Hendro Martowardojo, president commissioner of Resource Alam Indonesia",20 Februari 2023,high,labels_batch_006.json
+1374,OUTSIDE_INVESTOR_BUY,PGEO,"Masdar Indonesia Solar Holdings RSC Limited, new 15% holder",,high,labels_batch_006.json
+1375,OTHER,,,,high,labels_batch_006.json
+1376,INSIDER_BUY,CLEO,"Belinda Natalia, CEO of Sariguna Primatirta","15, 17, dan 21 Februari 2023",high,labels_batch_006.json
+1377,INSIDER_BUY,BBRI,"Agus Winardono, director of Bank Rakyat Indonesia",16 Februari 2023,medium,labels_batch_006.json
+1378,OUTSIDE_INVESTOR_BUY,BEEF,"Delta Investama Indonesia, new 14.81% holder",23 Februari 2023,medium,labels_batch_006.json
+1379,OPTION_OR_RIGHTS_EXERCISE,BBRI,"Agus Winardono, human capital director, under OJK remuneration rule",,medium,labels_batch_006.json
+1380,OTHER,,,,high,labels_batch_006.json
+1381,OTHER,,,,high,labels_batch_006.json
+1382,OUTSIDE_INVESTOR_BUY,FUTR,"Solusi Teknologi Tepat, new 6.01% shareholder",,medium,labels_batch_006.json
+1383,INSIDER_BUY,HEAL,"Aristo Setiawidjaja, director of Medikaloka Hermina",1 Februari 2023 hingga 27 Februari 2023,high,labels_batch_006.json
+1384,OUTSIDE_INVESTOR_BUY,PRAY,"Archipelago Investment Pte Ltd (Singapore), new 27.15% holder",,high,labels_batch_006.json
+1385,INSIDER_BUY,LPPF,"Auric Digital Retail Pte Ltd, controlling shareholder",27 Februari 2023,high,labels_batch_006.json
+1386,OTHER,,,,high,labels_batch_006.json
+1387,OUTSIDE_INVESTOR_BUY,ZINC,"PT Sarana Inti Selaras, shareholder (9.78% after)",14 Februari 2023,medium,labels_batch_006.json
+1388,OUTSIDE_INVESTOR_BUY,DIVA,"Soetaria Wicaksana Investama (SWI), 18.82% shareholder",28 Februari 2023,medium,labels_batch_006.json
+1389,INSIDER_BUY,BYAN,"Dato' Low Tuck Kwong, boss of Bayan Resources",27 Februari 2023,high,labels_batch_006.json
+1390,OUTSIDE_INVESTOR_BUY,APEX,"HSBC Bank Plc, holder of mandatory convertible bonds (OWK)",,low,labels_batch_006.json
+1391,INSIDER_BUY,TBIG,"Bersama Digital Asia Infrastructure Asia Pte Ltd, controlling shareholder",,high,labels_batch_006.json
+1392,OTHER,,,,high,labels_batch_006.json
+1393,OUTSIDE_INVESTOR_BUY,BULL,"Trukindo Persada Sejahtera, now 5.76% shareholder",28 Februari 2023,medium,labels_batch_006.json
+1394,OUTSIDE_INVESTOR_BUY,BDKR,"Infinite Fund Management Pty Ltd (Australia), new 5% holder",2 Maret 2023,high,labels_batch_006.json
+1395,OUTSIDE_INVESTOR_BUY,ELIT,"Thomas Irawan Tjahjono, individual shareholder, now 5.55%",16-28 Februari 2023,medium,labels_batch_006.json
+1396,OUTSIDE_INVESTOR_BUY,PRAY,"Archipelago Investment Pte Ltd, acting for the Singapore government",27 Februari 2023,high,labels_batch_006.json
+1397,OTHER,,,,high,labels_batch_006.json
+1398,INSIDER_BUY,BBKP,"Woo Yeul Lee, president director of Bank KB Bukopin",1 Maret 2023,high,labels_batch_006.json
+1399,OTHER,,,,high,labels_batch_006.json
+1400,COMPANY_ACQUIRES_STAKE,,"Surya Esa Perkasa (ESSA), subscribing new shares of subsidiary Sepchem",2 Maret 2023,high,labels_batch_006.json
+1401,COMPANY_ACQUIRES_STAKE,,"Surya Esa Perkasa (ESSA), listed company, raising stake in PAU to 70%",,high,labels_batch_006.json
+1402,INSIDER_BUY,BYAN,"Dato' Low Tuck Kwong, boss of Bayan Resources",7 Maret 2023,high,labels_batch_006.json
+1403,OUTSIDE_INVESTOR_BUY,RAJA,"Sentosa Bersama Mitra (SBM), corporate shareholder","24, 27, 28 Februari 2023 dan 3 Maret 2023",medium,labels_batch_006.json
+1404,INSIDER_BUY,PANR,"Ramajanto Tirtawisata, deputy president director of Panorama Sentrawisata",28 Februari 2023,high,labels_batch_006.json
+1405,OPTION_OR_RIGHTS_EXERCISE,SILO,"Meng Kuan Phua and Grace F Indradjaja, directors of Siloam, via MESOP",3 Februari 2023 dan 23 Februari 2023,high,labels_batch_006.json
+1406,INSIDER_BUY,SHIP,"Bank Julius Baer Singapore, presented as new controller (36.77%)",,low,labels_batch_006.json
+1407,INSIDER_BUY,OASA,"Cinta Laura Kiehl, commissioner of Maharaksa Biru Energi",6 Maret 2023,high,labels_batch_006.json
+1408,OUTSIDE_INVESTOR_BUY,SMKM,"Zareen Kapital Investama, now 19.95% holder",7 Maret 2023,medium,labels_batch_006.json
+1409,OUTSIDE_INVESTOR_BUY,ITIC,"Ann Jessica Chan, Singapore citizen, investor, new 5.02% holder",7 Maret 2023,high,labels_batch_006.json
+1410,INSIDER_BUY,IMPC,"Janto Salim, director of Impack Pratama Industri",8 Maret 2023,high,labels_batch_006.json
+1411,OUTSIDE_INVESTOR_BUY,BMTR,"Lo Kheng Hong, seasoned investor",7 Maret 2023,high,labels_batch_006.json
+1412,OTHER,,,,high,labels_batch_006.json
+1413,OUTSIDE_INVESTOR_BUY,TRON,"Eastern Ideal Holding Ltd (British Virgin Islands), new 5.65% holder",8 Maret 2023,medium,labels_batch_006.json
+1414,OTHER,,,,high,labels_batch_006.json
+1415,OUTSIDE_INVESTOR_BUY,WMUU,"Bayu Berlian Makmur (BBM), corporate shareholder, now 8.21%",,medium,labels_batch_006.json
+1416,INSIDER_BUY,PEHA,"Masrizal A. Syarief, commissioner of Phapros",8 Maret 2023,high,labels_batch_006.json
+1417,INSIDER_BUY,BYAN,"Dato' Low Tuck Kwong, controller and president director of Bayan Resources",8 sampai 14 Maret 2023,high,labels_batch_006.json
+1418,OTHER,,,,medium,labels_batch_006.json
+1419,OUTSIDE_INVESTOR_BUY,WMUU,"Maybank Sekuritas Indonesia, securities firm, own account, now 10.24%",,low,labels_batch_006.json
+1420,INSIDER_BUY,DMMX,"Suryandy Jahja, president commissioner of Digital Mediatama Maxima",10 Maret 2023,high,labels_batch_006.json
+1421,INSIDER_BUY,AKRA,"Haryanto Adikoesoemo, president director and controller of AKR Corporindo",10 Maret 2023,high,labels_batch_006.json
+1422,OTHER,,,,high,labels_batch_006.json
+1423,OTHER,,,,high,labels_batch_006.json
+1424,INSIDER_BUY,KKGI,"Hendro Martowardojo, president commissioner of Resource Alam Indonesia",14 Maret 2023,high,labels_batch_006.json
+1425,OTHER,,,,high,labels_batch_006.json
+1426,OTHER,,,,high,labels_batch_006.json
+1427,OTHER,,,,high,labels_batch_006.json
+1428,OTHER,,,,high,labels_batch_006.json
+1429,INSIDER_BUY,BSDE,"Paraga Artamida, controlling shareholder of Bumi Serpong Damai",16 Maret 2023,high,labels_batch_006.json
+1430,INSIDER_BUY,PEVE,"Franxiscus Afat Adinata Nursalim, director of Penta Valent",8-14 Maret 2023,high,labels_batch_006.json
+1431,OUTSIDE_INVESTOR_BUY,PEHA,"Masrizal A. Syarief, individual (role not stated in the text)",14 dan 16 Maret 2023,low,labels_batch_006.json
+1432,INSIDER_BUY,NTBK,"Bambang Susilo, president director and controlling shareholder",22 Desember 2022,high,labels_batch_006.json
+1433,INSIDER_BUY,WMUU,"Widodo Makmur Perkasa (WMPP), controller, and Maybank Sekuritas Indonesia",16 Maret 2023,medium,labels_batch_006.json
+1434,OUTSIDE_INVESTOR_BUY,RAJA,"PT Sentosa Bersama Mitra (SBM), now 32.75% holder",6 hingga 10 Maret 2023,low,labels_batch_006.json
+1435,INSIDER_BUY,BBCA,"Rudy Susanto, director of Bank Central Asia",17 Maret 2023,high,labels_batch_006.json
+1436,DENIAL_OR_RUMOR,LAJU,"Marina Budiman (DCII owner) and Alfa Group businesspeople, rumoured",,high,labels_batch_006.json
+1437,INSIDER_BUY,BBYB,"Akulaku Silvrr Indonesia, controlling shareholder of Bank Neo",17 Maret 2023,high,labels_batch_006.json
+1438,OTHER,,,,high,labels_batch_006.json
+1439,INSIDER_BUY,LPPF,"Terence Donald O'Connor, independent deputy president director",7 Maret 2023,high,labels_batch_006.json
+1440,OUTSIDE_INVESTOR_BUY,ENRG,"CGS-CIMB Sekuritas Indonesia, securities firm, own account, now 5.70%",17 Maret 2023,high,labels_batch_006.json
+1441,OTHER,,,,high,labels_batch_006.json
+1442,OUTSIDE_INVESTOR_BUY,WMUU,"KB Valbury Sekuritas, securities firm, now 6.77%",20 Maret 2023,low,labels_batch_006.json
+1443,INSIDER_BUY,BYAN,"Dato' Low Tuck Kwong, boss of Bayan Resources",21 Maret 2023,high,labels_batch_006.json
+1444,INSIDER_BUY,MITI,"PT Inti Bina Utama (IBU), new controller, via mandatory tender offer",,medium,labels_batch_006.json
+1445,OTHER,,,,high,labels_batch_006.json
+1446,OTHER,,,,high,labels_batch_006.json
+1447,OTHER,,,,high,labels_batch_006.json
+1448,INSIDER_BUY,ZATA,"Lembur Sadaya Investama (LSI), controller of Bersamaan Zatta Jaya",21 Maret 2021,medium,labels_batch_006.json
+1449,OTHER,,,,high,labels_batch_006.json
+1450,OUTSIDE_INVESTOR_BUY,ENRG,"CGS-CIMB Sekuritas Indonesia, securities firm, own account, now 6.02%",21 Maret 2023,high,labels_batch_006.json
+1451,OTHER,,,,high,labels_batch_006.json
+1452,INSIDER_BUY,NFCX,"MCAS (M Cash Integrasi), pemegang saham pengendali NFCX",14-21 Maret 2023,high,labels_batch_007.json
+1453,INSIDER_BUY,AMMS,"Hartono Limmantoro, Direktur Utama (CEO) AMMS",17 Maret 2023,high,labels_batch_007.json
+1454,OUTSIDE_INVESTOR_BUY,SBAT,"Madik Bujung, individu, pemegang saham di atas 5%",13-20 Maret 2023,high,labels_batch_007.json
+1455,OTHER,,,,high,labels_batch_007.json
+1456,INSIDER_BUY,AVIA,"PT Wira Laju Rejeki, pemegang saham pengendali AVIA",16 Februari - 20 Maret 2023,high,labels_batch_007.json
+1457,INSIDER_BUY,BBCA,"Dirut Jahja Setiaatmadja, Komisaris Tonny Kusnadi, tiga direktur BCA",24-27 Maret 2023,high,labels_batch_007.json
+1458,INSIDER_BUY,OASA,"Noor Romawibowo D, direktur Maharaksa Biru Energi",24 Maret 2023,high,labels_batch_007.json
+1459,OTHER,,,,high,labels_batch_007.json
+1460,OTHER,,,,high,labels_batch_007.json
+1461,OTHER,,,,high,labels_batch_007.json
+1462,OTHER,,,,high,labels_batch_007.json
+1463,OUTSIDE_INVESTOR_BUY,TBIG,"Wahana Anugerah Sejahtera (WAS), pemegang saham korporasi",28 Maret 2023,medium,labels_batch_007.json
+1464,INSIDER_BUY,NELY,"Fredyanto Parlindungan, Direktur Independen NELY",7-24 Maret 2023,high,labels_batch_007.json
+1465,INSIDER_BUY,BBCA,Satu komisaris dan empat direksi Bank BCA,27 Maret 2023,high,labels_batch_007.json
+1466,OTHER,,,,high,labels_batch_007.json
+1467,OTHER,,,,high,labels_batch_007.json
+1468,INSIDER_BUY,CAKK,"Johan Silitonga, Direktur Utama CAKK",20 dan 21 Maret 2023,high,labels_batch_007.json
+1469,OTHER,,,,high,labels_batch_007.json
+1470,OTHER,,,,high,labels_batch_007.json
+1471,INSIDER_BUY,DUTI,"Bumi Serpong Damai (BSDE), pengendali Duta Pertiwi",24 Maret 2023,high,labels_batch_007.json
+1472,OTHER,,,,high,labels_batch_007.json
+1473,OTHER,,,,high,labels_batch_007.json
+1474,OTHER,,,,high,labels_batch_007.json
+1475,INSIDER_BUY,DILD,"Utama Gondokusumo, Wakil Direktur Utama, putra pendiri Intiland",28 Maret 2023,medium,labels_batch_007.json
+1476,OTHER,,,,high,labels_batch_007.json
+1477,OTHER,,,,high,labels_batch_007.json
+1478,OUTSIDE_INVESTOR_BUY,TFAS,"Distribusi Voucher Nusantara (Ultra Voucher), pemegang saham TFAS",30 Maret 2023,medium,labels_batch_007.json
+1479,OUTSIDE_INVESTOR_BUY,IMPC,"PT Harimas Tunggal Perkasa, disebut bukan pengendali",3 dan 4 April 2023,high,labels_batch_007.json
+1480,OTHER,,,,medium,labels_batch_007.json
+1481,OUTSIDE_INVESTOR_BUY,BNBR,"Kingswood Union Corporation (KUC), perusahaan berbasis British Virgin Islands",,high,labels_batch_007.json
+1482,INSIDER_BUY,GEMA,"Pulung Peranginangin, Komisaris GEMA",4 April 2023,high,labels_batch_007.json
+1483,INSIDER_BUY,BGTG,"Mahesh Ajit Ranade, Wakil Presiden Direktur Bank Ganesha",17 Maret - 4 April 2023,high,labels_batch_007.json
+1484,OTHER,,,,high,labels_batch_007.json
+1485,OTHER,,,,high,labels_batch_007.json
+1486,INSIDER_BUY,ZATA,"Lembur Sadaya Investama (LSI), perusahaan Sultan Subang Asep Sulaeman Sabanda",6 April 2023,medium,labels_batch_007.json
+1487,OTHER,,,,high,labels_batch_007.json
+1488,OUTSIDE_INVESTOR_BUY,RONY,"Meepok Holdings Pte Ltd, perusahaan Singapura, pemegang di atas 5%",27 Desember 2023,medium,labels_batch_007.json
+1489,INSIDER_BUY,ZATA,"Lembur Sadaya Investama (LSI), pengendali, perusahaan Sultan Subang",6 April 2023,high,labels_batch_007.json
+1490,INSIDER_BUY,AMAR,"Tolaram Group Inc, pengendali Bank Amar",10 April 2023,high,labels_batch_007.json
+1491,OUTSIDE_INVESTOR_BUY,RAJA,"Zeze Ajuwel Tambang (ZAT), perusahaan pemegang 5,11% saham RAJA",12 April 2023,low,labels_batch_007.json
+1492,INSIDER_BUY,EAST,"Khalid Bin Omar Abdat, Presiden Direktur dan pemegang saham pengendali",12 dan 13 April 2023,high,labels_batch_007.json
+1493,OUTSIDE_INVESTOR_BUY,GOOD,"Hormel Foods International Corporation, pemegang 30,17% saham GOOD",12 April 2023,medium,labels_batch_007.json
+1494,OTHER,,,,high,labels_batch_007.json
+1495,OTHER,,,,high,labels_batch_007.json
+1496,INSIDER_BUY,BCIP,"Edward Halim, Direktur Utama BCIP, lewat PT Benteng Terang Sejahtera",4-12 April 2023,high,labels_batch_007.json
+1497,OTHER,,,,high,labels_batch_007.json
+1498,INSIDER_BUY,BJBR,"Tiga direktur BJBR: Konsumer dan Ritel, Kepatuhan, Keuangan",13 April 2023,high,labels_batch_007.json
+1499,OTHER,,,,high,labels_batch_007.json
+1500,OTHER,,,,high,labels_batch_007.json
+1501,OUTSIDE_INVESTOR_BUY,AGII,"Matrix Company Limited, perusahaan investasi didanai dana kelolaan CVC",11 April 2023,medium,labels_batch_007.json
+1502,COMPANY_ACQUIRES_STAKE,,United Tractors (UNTR) dan anak usaha PAMA,12 April 2023,high,labels_batch_007.json
+1503,INSIDER_BUY,GPRA,"PT Abadimukti Gunalestari, pemegang saham pengendali GPRA",5-11 April 2023,high,labels_batch_007.json
+1504,INSIDER_BUY,OASA,"Chandra Devikemalawaty, direksi dan Corporate Secretary OASA",28 Maret 2023,high,labels_batch_007.json
+1505,INSIDER_BUY,BBYB,"Akulaku Silvrr, pengendali Bank Neo Commerce",10-13 April 2023,high,labels_batch_007.json
+1506,OTHER,,,,high,labels_batch_007.json
+1507,OTHER,,,,high,labels_batch_007.json
+1508,INSIDER_BUY,DMMX,"Hartono Francesco, Komisaris Digital Mediatama Maxima",14 dan 17 April 2023,high,labels_batch_007.json
+1509,OPTION_OR_RIGHTS_EXERCISE,BIPI,"PT Indotambang Perkasa, pengendali utama BIPI (private placement)",5 Mei 2023,medium,labels_batch_007.json
+1510,INSIDER_BUY,JAST,"Samsul Effendi dan David Yamanto, Direktur JAST",13 dan 14 April 2023,high,labels_batch_007.json
+1511,OTHER,,,,high,labels_batch_007.json
+1512,OTHER,,,,high,labels_batch_007.json
+1513,OTHER,,,,high,labels_batch_007.json
+1514,OTHER,,,,high,labels_batch_007.json
+1515,OTHER,,,,high,labels_batch_007.json
+1516,INSIDER_BUY,SMDR,"Bani Maulana Mulia, Direktur Utama Samudera Indonesia",28 April 2023,high,labels_batch_007.json
+1517,OTHER,,,,high,labels_batch_007.json
+1518,COMPANY_ACQUIRES_STAKE,,"Adi Sarana Armada (ASSA) lewat anak usaha ASI, bersama Triputra Group",,medium,labels_batch_007.json
+1519,INSIDER_BUY,BBYB,"Akulaku Silvrr, pengendali Bank Neo Commerce",18 April - 2 Mei 2023,high,labels_batch_007.json
+1520,OTHER,,,,high,labels_batch_007.json
+1521,INSIDER_BUY,WINS,"Sugiman Layanto, Direktur Utama Wintermar Offshore Marine",3 Mei 2023,high,labels_batch_007.json
+1522,OTHER,,,,high,labels_batch_007.json
+1523,OTHER,,,,high,labels_batch_007.json
+1524,OUTSIDE_INVESTOR_BUY,AWAN,"DB AG SG SES CLT A/C For SGMC VCC, perusahaan Singapura",18 April 2023,high,labels_batch_007.json
+1525,INSIDER_BUY,WMPP,"Tumiyana, orang nomor satu Widodo Makmur Perkasa",3 Mei 2023,high,labels_batch_007.json
+1526,INSIDER_BUY,WINS,"Janto Lili, Direktur Wintermar Offshore Marine",4 Mei 2023,high,labels_batch_007.json
+1527,INSIDER_BUY,SOUL,"Ardianto Wibowo, Direktur Utama dan pengendali SOUL",18 dan 26 April 2023,high,labels_batch_007.json
+1528,OTHER,,,,high,labels_batch_007.json
+1529,OTHER,,,,high,labels_batch_007.json
+1530,OUTSIDE_INVESTOR_BUY,MBMA,"Merdeka Energi Nusantara, pemegang 49,46% saham MBMA",3 dan 4 Mei 2023,low,labels_batch_007.json
+1531,OUTSIDE_INVESTOR_BUY,KKGI,"Energy Collier Private Ltd, perusahaan Singapura",5 Mei 2023,medium,labels_batch_007.json
+1532,OUTSIDE_INVESTOR_BUY,JAYA,"Prima Globalindo Logistik (PPGL), pemegang 40,75% saham JAYA",5 dan 8 Mei 2023,low,labels_batch_007.json
+1533,OUTSIDE_INVESTOR_BUY,MOLI,"PT Sejahtera Investama Indah, pemegang saham MOLI",18 April 2023,medium,labels_batch_007.json
+1534,INSIDER_BUY,TRUK,"Carolina Kusuma, Direktur Guna Timur Raya",9 Mei 2023,high,labels_batch_007.json
+1535,INSIDER_BUY,KDTN,"PT Putrasakti Mandiri, pemegang saham pengendali KDTN",2-5 Mei 2023,high,labels_batch_007.json
+1536,OUTSIDE_INVESTOR_BUY,MBMA,"Merdeka Energi Nusantara, pemegang 49,56% saham MBMA",9 Mei 2023,low,labels_batch_007.json
+1537,OUTSIDE_INVESTOR_BUY,SAME,"Elang Mahkota Teknologi (EMTK), induk SCTV dan Indosiar",8 dan 9 Mei 2023,low,labels_batch_007.json
+1538,INSIDER_BUY,MTEL,"Agus Winarno, Direktur Bisnis Dayamitra Telekomunikasi",28 April 2023,high,labels_batch_007.json
+1539,OTHER,,,,medium,labels_batch_007.json
+1540,INSIDER_BUY,SAME,"Elang Mahkota Teknologi (EMTK), induk usaha SAME",,high,labels_batch_007.json
+1541,OTHER,,,,high,labels_batch_007.json
+1542,INSIDER_BUY,ENAK,"Barokah Melayu Foods Pte Ltd, pemegang saham mayoritas ENAK",9 Mei 2023,medium,labels_batch_007.json
+1543,OUTSIDE_INVESTOR_BUY,SMKM,"Zareen Kapital Investama, pemegang 16,43% saham SMKM",5 Mei 2023,low,labels_batch_007.json
+1544,OTHER,,,,high,labels_batch_007.json
+1545,INSIDER_BUY,BVIC,"Victoria Investama (VICO), pengendali Bank Victoria International",4 Mei 2023,high,labels_batch_007.json
+1546,OTHER,,,,high,labels_batch_007.json
+1547,OTHER,,,,high,labels_batch_007.json
+1548,OTHER,,,,high,labels_batch_007.json
+1549,OUTSIDE_INVESTOR_BUY,MBMA,"Merdeka Energi Nusantara, pemegang 49,59% saham MBMA",9 Mei 2023,low,labels_batch_007.json
+1550,OUTSIDE_INVESTOR_BUY,MDKA,"Saratoga Investama Sedaya (SRTG), pemegang sekitar 18% saham MDKA",,medium,labels_batch_007.json
+1551,INSIDER_BUY,WIRG,"Andreyanto Toemali, Komisaris WIR Asia",9 Mei 2023,high,labels_batch_007.json
+1552,INSIDER_BUY,BOSS,"Widodo Nurly Sumady, Direktur Borneo Olah Sarana Sukses",11 April 2023,high,labels_batch_007.json
+1553,INSIDER_BUY,BJBR,"Muhadi, Komisaris Bank BJB",11 dan 15 Mei 2023,high,labels_batch_007.json
+1554,OUTSIDE_INVESTOR_BUY,KKGI,"Dunway Holding Ltd dan Sejahtera Jaya Cita, dua pemodal",11 Mei 2023,high,labels_batch_007.json
+1555,OTHER,,,,high,labels_batch_007.json
+1556,INSIDER_BUY,BBHI,"Ganda Raharja Rusli, Direktur Allo Bank Indonesia",15 Mei 2023,high,labels_batch_007.json
+1557,INSIDER_BUY,BBYB,"Akulaku Silvrr, pengendali Bank Neo Commerce",10-15 Mei 2023,high,labels_batch_007.json
+1558,OTHER,,,,high,labels_batch_007.json
+1559,OTHER,,,,high,labels_batch_007.json
+1560,INSIDER_BUY,EXCL,CEO Dian Siswarini dan empat direktur XL Axiata,11 Mei 2023,high,labels_batch_007.json
+1561,INSIDER_BUY,EXCL,"David Arcelus Oses, Direktur XL Axiata",11-16 Mei 2023,high,labels_batch_007.json
+1562,OTHER,,,,high,labels_batch_007.json
+1563,OTHER,,,,high,labels_batch_007.json
+1564,INSIDER_BUY,ADMR,"Chia Ah Hoo, Komisaris dan pemegang saham Adaro Minerals",15 dan 16 Mei 2023,high,labels_batch_007.json
+1565,OTHER,,,,high,labels_batch_007.json
+1566,OUTSIDE_INVESTOR_BUY,TAYS,"Lidya Anwar, individu, pemegang di atas 5% saham TAYS",28 April 2023,medium,labels_batch_007.json
+1567,INSIDER_BUY,AMAR,"Tolaram Group Inc, pengendali Bank Amar",15 dan 16 Mei 2023,high,labels_batch_007.json
+1568,OUTSIDE_INVESTOR_BUY,MDKA,"Saratoga Investama Sedaya (SRTG), pemegang sekitar 18% saham MDKA",17 Mei 2023,medium,labels_batch_007.json
+1569,OTHER,,,,high,labels_batch_007.json
+1570,INSIDER_BUY,WIRG,"Andreyanto Toemali, Komisaris WIR Asia",18 November 2022,medium,labels_batch_007.json
+1571,INSIDER_BUY,KDTN,"Putrasakti Mandiri, pengendali Puri Sentul Permai",16 Mei 2023,high,labels_batch_007.json
+1572,INSIDER_BUY,GEMA,"Pulung Peranginangin, Komisaris Utama GEMA",19 dan 23 Mei 2023,high,labels_batch_007.json
+1573,INSIDER_BUY,BBYB,"Akulaku Silvrr Indonesia, pengendali Bank Neo Commerce",16-24 Mei 2023,high,labels_batch_007.json
+1574,OUTSIDE_INVESTOR_BUY,WGSH,"Lawrence Tjandra, individu, pemegang baru di atas 5%",15 dan 16 Mei 2023,high,labels_batch_007.json
+1575,INSIDER_BUY,SAME,"Elang Mahkota Teknologi (EMTK), pengendali Sarana Meditama",16-25 Mei 2023,high,labels_batch_007.json
+1576,OPTION_OR_RIGHTS_EXERCISE,TOBA,"Lima direksi TBS Energi Utama, dipimpin Pandu Patria Sjahrir",19 Mei 2023,medium,labels_batch_007.json
+1577,INSIDER_BUY,AKRA,"Haryanto Adikoesoemo, Presiden Direktur dan pengendali AKRA",24 Mei 2023,high,labels_batch_007.json
+1578,OUTSIDE_INVESTOR_BUY,MDKA,"Saratoga Investama Sedaya (SRTG), emiten portofolio investasi",24 dan 25 Mei 2023,medium,labels_batch_007.json
+1579,COMPANY_ACQUIRES_STAKE,,Gihon Telekomunikasi Indonesia (GHON),26 Mei 2023,high,labels_batch_007.json
+1580,OTHER,,,,high,labels_batch_007.json
+1581,OPTION_OR_RIGHTS_EXERCISE,BBKP,"Enam direksi Bank KB Bukopin, dipimpin Woo Yeul Lee",,high,labels_batch_007.json
+1582,OTHER,,,,high,labels_batch_007.json
+1583,OTHER,,,,high,labels_batch_007.json
+1584,OTHER,,,,high,labels_batch_007.json
+1585,OTHER,,,,high,labels_batch_007.json
+1586,OTHER,,,,high,labels_batch_007.json
+1587,OTHER,,,,high,labels_batch_007.json
+1588,INSIDER_BUY,OASA,"Hariyadi B Sukamdani, Komisaris Utama Maharaksa Biru Energi",24 Mei 2023,high,labels_batch_007.json
+1589,INSIDER_BUY,BGTG,"Mahesh Ajit Ranade, Wakil Presiden Direktur Bank Ganesha",30 Mei 2023,high,labels_batch_007.json
+1590,INSIDER_BUY,BRPT,"Prajogo Pangestu, komisaris dan pengendali Barito Pacific",24 Mei 2023,high,labels_batch_007.json
+1591,OTHER,,,,medium,labels_batch_007.json
+1592,INSIDER_BUY,BJTM,"Busrul Iman, Direktur Utama Bank Jatim",26 Mei 2023,medium,labels_batch_007.json
+1593,OUTSIDE_INVESTOR_BUY,BULL,"Danatama Kapital Investama, pemegang sekitar 6,43% saham BULL",26 Mei - 5 Juni 2023,high,labels_batch_007.json
+1594,OTHER,,,,high,labels_batch_007.json
+1595,INSIDER_BUY,BJTM,Enam direksi dan satu komisaris Bank Jatim,26 Mei 2023,high,labels_batch_007.json
+1596,OUTSIDE_INVESTOR_BUY,ENRG,"CGS-CIMB Sekuritas, perusahaan sekuritas",31 Mei 2023,high,labels_batch_007.json
+1597,OTHER,,,,high,labels_batch_007.json
+1598,BUYBACK,TPMA,"Trans Power Marine (TPMA), membeli kembali sahamnya sendiri",,high,labels_batch_007.json
+1599,OPTION_OR_RIGHTS_EXERCISE,GOTO,"Wei-Jye Jacky Lo, direktur GoTo, eksekusi opsi saham",31 Mei 2023,high,labels_batch_007.json
+1600,OTHER,,,,high,labels_batch_007.json
+1601,INSIDER_BUY,BYAN,"Dato Low Tuck Kwong, bos besar Bayan Resources",9 Juni 2023,high,labels_batch_007.json
+1602,OUTSIDE_INVESTOR_BUY,BIPI,"CGS-CIMB Securities (Singapore) Pte Ltd, perusahaan sekuritas",6 dan 7 Juni 2023,high,labels_batch_007.json
+1603,INSIDER_BUY,BMRI,"Timothy Utama, Direktur Bank Mandiri",27 April 2023,high,labels_batch_007.json
+1604,OTHER,,,,medium,labels_batch_007.json
+1605,OTHER,,,,high,labels_batch_007.json
+1606,INSIDER_BUY,AKRA,"Haryanto Adikoesoemo, Presiden Direktur AKRA","5, 8 dan 9 Juni 2023",high,labels_batch_007.json
+1607,OTHER,,,,high,labels_batch_007.json
+1608,INSIDER_BUY,EAST,"Khalid Bin Omar Abdat, Presiden Direktur dan pengendali Eastparc Hotel",9 Juni 2023,high,labels_batch_007.json
+1609,INSIDER_BUY,HRTA,"Ong Deny dan Cuncun Muliawan, Direktur Hartadinata Abadi",9 Juni 2023,high,labels_batch_007.json
+1610,INSIDER_BUY,HRTA,Terang Anugrah Abadi (pengendali) dan Sandra Sunanto (Direktur Utama),9 Juni 2023,high,labels_batch_007.json
+1611,INSIDER_BUY,BIRD,"Adrianto Djokosoetono, Wakil Direktur Utama Blue Bird",12 Juni 2023,high,labels_batch_007.json
+1612,COMPANY_ACQUIRES_STAKE,,Chandra Asri Petrochemical (TPIA) lewat anak usaha Krakatau Daya Listrik,,medium,labels_batch_007.json
+1613,SELL,ENRG,Trimegah Sekuritas (TRIM) per judul; penjual Bakrie Kalila Investment,,medium,labels_batch_007.json
+1614,INSIDER_BUY,KRYA,"Bangun Karya Artha Lestari (pengendali), Dirut Dharmo Budiono, Direktur Brigitta",7-12 Juni 2023,high,labels_batch_007.json
+1615,INSIDER_BUY,SMKL,"Satyamitra Investindo Pratama dan Lawan Inti Cemerlang, dua pengendali",9 dan 12 Juni 2023,high,labels_batch_007.json
+1616,OTHER,,,,high,labels_batch_007.json
+1617,OTHER,,,,high,labels_batch_007.json
+1618,OTHER,,,,high,labels_batch_007.json
+1619,OUTSIDE_INVESTOR_BUY,INPP,"Truth Wealth Management VCC, perusahaan Singapura",12 Juni 2023,high,labels_batch_007.json
+1620,OTHER,,,,high,labels_batch_007.json
+1621,INSIDER_BUY,SRTG,"Edwin Soeryadjaya, Presiden Komisaris Saratoga",15 Juni 2023,high,labels_batch_007.json
+1622,INSIDER_BUY,CAKK,"Johan Silitonga, Direktur Utama Cahayaputra Asa Keramik",12-16 Juni 2023,high,labels_batch_007.json
+1623,INSIDER_BUY,HRTA,"Terang Anugerah Abadi, pengendali Hartadinata Abadi",9 dan 15 Juni 2023,high,labels_batch_007.json
+1624,COMPANY_ACQUIRES_STAKE,,Triputra Agro Persada (TAPG) lewat anak usaha Agro Multi Persada,16 Juni 2023,low,labels_batch_007.json
+1625,INSIDER_BUY,HEAL,"Aristo Setiawidjaja, Direktur Medikaloka Hermina","6, 7 dan 16 Juni 2023",high,labels_batch_007.json
+1626,OTHER,,,,high,labels_batch_007.json
+1627,OTHER,,,,high,labels_batch_007.json
+1628,OTHER,VIVA,"UBS Group AG, mengambil alih saham Credit Suisse Group AG (merger)",,medium,labels_batch_007.json
+1629,OUTSIDE_INVESTOR_BUY,MMLP,Provident Investasi Bersama (PALM) lewat anak usaha Suwarna Arta Mandiri,13 Juni 2023,low,labels_batch_007.json
+1630,INSIDER_BUY,TALF,"Samuel Sofyan Tika, Direktur Tunas Alfin",16 Juni 2023,high,labels_batch_007.json
+1631,INSIDER_BUY,PEHA,"Masrizal A Syarief, Komisaris Phapros","16, 19 dan 20 Juni 2023",high,labels_batch_007.json
+1632,OTHER,,,,high,labels_batch_007.json
+1633,INSIDER_BUY,BIRD,Seorang direktur Blue Bird (nama tidak terlihat di teks),,medium,labels_batch_007.json
+1634,INSIDER_BUY,SAME,"Elang Mahkota (EMTK), pengendali Sarana Meditama",26 Mei - 21 Juni 2023,high,labels_batch_007.json
+1635,OTHER,,,,high,labels_batch_007.json
+1636,OUTSIDE_INVESTOR_BUY,TAXI,"Asiantrust Arya Nusantara, pemegang sekitar 6,41% saham TAXI",,high,labels_batch_007.json
+1637,OTHER,,,,high,labels_batch_007.json
+1638,OTHER,,,,high,labels_batch_007.json
+1639,OTHER,,,,high,labels_batch_007.json
+1640,INSIDER_BUY,SRSN,"Mulyadi Utomo Budhi Moeljono, direktur Indo Acidatama",20 Juni 2023,high,labels_batch_007.json
+1641,OTHER,,,,high,labels_batch_007.json
+1642,COMPANY_ACQUIRES_STAKE,,Pelayaran Nasional Ekalya Purnamasari (ELPI),,low,labels_batch_007.json
+1643,INSIDER_BUY,KRYA,"Bangun Karya Artha Lestari, pemegang saham pengendali KRYA",23-26 Juni 2023,high,labels_batch_007.json
+1644,SELL,,"Global Investama Andalan (GIA), pihak terafiliasi BELI",,high,labels_batch_007.json
+1645,OTHER,,,,high,labels_batch_007.json
+1646,OTHER,,,,high,labels_batch_007.json
+1647,OUTSIDE_INVESTOR_BUY,BEBS,"Asep Sulaeman (Sultan Subang), pemegang 5,84% saham BEBS",26 Juni 2023,medium,labels_batch_007.json
+1648,OTHER,,,,high,labels_batch_007.json
+1649,OUTSIDE_INVESTOR_BUY,MDKA,"Saratoga Investama Sedaya (SRTG), pemegang sekitar 18,57% saham MDKA",26 Juni 2023,low,labels_batch_007.json
+1650,OTHER,,,,high,labels_batch_007.json
+1651,OUTSIDE_INVESTOR_BUY,SQMI,"Dato' Sri Chong Thim Pheng, individu",20 dan 22 Juni 2023,medium,labels_batch_007.json
+1652,OTHER,,,,high,labels_batch_008.json
+1653,OTHER,,,,high,labels_batch_008.json
+1654,INSIDER_BUY,EAST,"Khalid Bin Omar Abdat, president director and controlling shareholder",4 Juli 2023,high,labels_batch_008.json
+1655,OUTSIDE_INVESTOR_BUY,NSSS,Samuel Sekuritas (securities firm),26 Juni 2023,high,labels_batch_008.json
+1656,INSIDER_BUY,PEHA,"Masrizal A. Syarief, commissioner",4 Juli 2023,high,labels_batch_008.json
+1657,INSIDER_BUY,EAST,"Khalid Bin Omar Abdat, president director and controlling shareholder",5 Juli 2023,high,labels_batch_008.json
+1658,COMPANY_ACQUIRES_STAKE,MSIN,"Global Mediacom (BMTR), MNC Group company",4 Juli 2023,medium,labels_batch_008.json
+1659,OPTION_OR_RIGHTS_EXERCISE,SRTG,"Three directors: Michael W.P Soeryadjaya, Lany Djuwita Wong, Devin Wirawan",3 Juli 2023,medium,labels_batch_008.json
+1660,OUTSIDE_INVESTOR_BUY,BGTG,"Equity Global International Ltd (Hong Kong), described as company affiliate",5 Juli 2023,medium,labels_batch_008.json
+1661,COMPANY_ACQUIRES_STAKE,,Barito Pacific (BRPT) via subsidiary Barito Renewable Energy,,high,labels_batch_008.json
+1662,OUTSIDE_INVESTOR_BUY,KPIG,"MNC Sekuritas, MNC Group securities firm; shares came from controller BHIT",,low,labels_batch_008.json
+1663,INSIDER_BUY,BCAP,"MNC Asia Holding (BHIT), MNC Group company, headline says increasingly dominant",5 Juli 2023,low,labels_batch_008.json
+1664,INSIDER_BUY,AKRA,"Jimmy Tandyo, director",27 Juni 2023,high,labels_batch_008.json
+1665,INSIDER_BUY,UFOE,"Henry Budiono, director",27 Juni 2023,high,labels_batch_008.json
+1666,OTHER,,,,high,labels_batch_008.json
+1667,INSIDER_BUY,YELO,"PT Artalindo Semesta Nusantara, controlling shareholder",24 Mei 2023,high,labels_batch_008.json
+1668,INSIDER_BUY,EAST,"Khalid Bin Omar Abdat, president director and controlling shareholder",10 Juli 2023,high,labels_batch_008.json
+1669,INSIDER_BUY,BVIC,"Victoria Investama (VICO), controlling shareholder",20 Juni 2023,high,labels_batch_008.json
+1670,OUTSIDE_INVESTOR_BUY,BIPI,"BNP Paribas (account for third parties), London-based institution",7 Juli 2023,high,labels_batch_008.json
+1671,OUTSIDE_INVESTOR_BUY,BEBS,"Asep Sulaeman Sabanda, 'Sultan Subang', Islamic boarding school caretaker",7 Juli 2023,medium,labels_batch_008.json
+1672,OUTSIDE_INVESTOR_BUY,BGTG,"Equity Global International Ltd (Hong Kong), described as company affiliate",7 Juli 2023,medium,labels_batch_008.json
+1673,INSIDER_BUY,EAST,"Khalid Bin Omar Abdat, president director and controlling shareholder",11 Juli 2023,high,labels_batch_008.json
+1674,OTHER,,,,medium,labels_batch_008.json
+1675,OUTSIDE_INVESTOR_BUY,LPLI,"PT Sanggraha Nusa Raya, new 5.76% shareholder",4 Juli 2023,high,labels_batch_008.json
+1676,SELL,NSSS,,10 dan 11 Juli 2023,high,labels_batch_008.json
+1677,OTHER,,,,high,labels_batch_008.json
+1678,OTHER,,,,high,labels_batch_008.json
+1679,OUTSIDE_INVESTOR_BUY,BGTG,"Equity Global International Ltd (Hong Kong), described as company affiliate",11 Juli 2023,medium,labels_batch_008.json
+1680,OTHER,,,,high,labels_batch_008.json
+1681,OTHER,,,,low,labels_batch_008.json
+1682,INSIDER_BUY,APEX,"Aserra Capital, holding 68.52% (majority) after the purchase",5 Juli 2023,medium,labels_batch_008.json
+1683,OUTSIDE_INVESTOR_BUY,BGTG,Equity Global International Ltd (Hong Kong company),"3, 5 dan 7 Juli 2023",high,labels_batch_008.json
+1684,OUTSIDE_INVESTOR_BUY,WIRG,"Tri Ramadi, individual, first-time buyer, no role stated",11 Juli 2023,medium,labels_batch_008.json
+1685,OUTSIDE_INVESTOR_BUY,GRPM,"Hendriyanto Liem, individual, new 5.23% shareholder",10 Juli 2023,high,labels_batch_008.json
+1686,OTHER,,,,high,labels_batch_008.json
+1687,INSIDER_BUY,MEDC,"Roberto Lorato, Italian 'bos' of the company",12 Juli 2023,high,labels_batch_008.json
+1688,INSIDER_BUY,AKRA,"Arthakencana Rayatama, described as one of the controllers",5 dan 6 Juli 2023,high,labels_batch_008.json
+1689,OUTSIDE_INVESTOR_BUY,BGTG,"Equity Global International Ltd (EGIL), Hong Kong investor",3-7 Juli 2023,high,labels_batch_008.json
+1690,INSIDER_BUY,BMTR,"MNC Asia Holding (BHIT), MNC Group company, headline says strengthening dominance",13 Juli 2023,low,labels_batch_008.json
+1691,INSIDER_BUY,MEDC,"Amri Siahaan, director",14 Juli 2023,high,labels_batch_008.json
+1692,INSIDER_BUY,IDEA,"Eko Desriyanto, president director",26 Juni hingga 12 Juli 2023,high,labels_batch_008.json
+1693,OTHER,,,,low,labels_batch_008.json
+1694,OTHER,,,,high,labels_batch_008.json
+1695,INSIDER_BUY,MAPA,Commissioners Susiana Latif and Virendra Prakash Sharma,14 Juli 2023,high,labels_batch_008.json
+1696,INSIDER_BUY,SMDR,"Bani Maulana Mulia, president director",14 Juli 2023,high,labels_batch_008.json
+1697,OTHER,,,,high,labels_batch_008.json
+1698,INSIDER_BUY,IPTV,"Global Mediacom (BMTR), holding 58% (majority) after the purchase",17 Juli 2023,low,labels_batch_008.json
+1699,SELL,TOBA,,mulai 12 Mei 2023 (10 transaksi),high,labels_batch_008.json
+1700,INSIDER_BUY,DRMA,"Noel Aelyo Laras Kusuma Negara, commissioner",17 Juli 2023,high,labels_batch_008.json
+1701,INSIDER_BUY,UFOE,"Pudji Hartanto (president commissioner, controller), Henry Budiono (director)",13 Juli 2023,high,labels_batch_008.json
+1702,INSIDER_BUY,BOLA,"Pieter Tanuri, ex-Multistrada boss, dominant holder with 40.97%",20 Juli 2023,medium,labels_batch_008.json
+1703,OUTSIDE_INVESTOR_BUY,CSAP,DBS Bank Ltd S/A Albizia Asean Opportunities Fund (fund),20 Juli 2023,high,labels_batch_008.json
+1704,INSIDER_BUY,IDEA,"Eko Desriyanto, CEO",20 Juli 2023,high,labels_batch_008.json
+1705,OTHER,,,,high,labels_batch_008.json
+1706,OTHER,,,,high,labels_batch_008.json
+1707,OUTSIDE_INVESTOR_BUY,PTRO,"Sentosa Bersama Mitra (SBM), linked to Megawati's son-in-law",18 Juli 2023,high,labels_batch_008.json
+1708,OUTSIDE_INVESTOR_BUY,IMAS,"Trimegah Sekuritas Indonesia (TRIM), securities firm of Boy Thohir",21 Juli 2023,high,labels_batch_008.json
+1709,INSIDER_BUY,MIKA,"Rustiyan Oen, president director (stated purpose: internal restructuring)",17 Juli 2023,medium,labels_batch_008.json
+1710,INSIDER_BUY,JRPT,"Jaya Jasa Niaga (JJN), controlled by the same party as JRPT",mulai 10 Agustus 2023 (rencana),medium,labels_batch_008.json
+1711,INSIDER_BUY,IDEA,"Eko Desriyanto, CEO",14 dan 21 Juli 2023,high,labels_batch_008.json
+1712,OUTSIDE_INVESTOR_BUY,VOKS,"Hengtong Optic-Electric International Co Ltd, existing 30.08% holder, foreign investor",,medium,labels_batch_008.json
+1713,OTHER,,,,high,labels_batch_008.json
+1714,INSIDER_BUY,BMRI,Five commissioners and 11 directors of Bank Mandiri,17 Juli 2023,low,labels_batch_008.json
+1715,OTHER,,,,high,labels_batch_008.json
+1716,INSIDER_BUY,IDEA,"Eko Desriyanto, president director",18 hingga 21 Juli 2023,high,labels_batch_008.json
+1717,OTHER,,,,high,labels_batch_008.json
+1718,OTHER,,,,high,labels_batch_008.json
+1719,OTHER,,,,high,labels_batch_008.json
+1720,OTHER,,,,high,labels_batch_008.json
+1721,OTHER,,,,high,labels_batch_008.json
+1722,OTHER,,,,high,labels_batch_008.json
+1723,COMPANY_ACQUIRES_STAKE,,"Sinar Mas Multiartha (SMMA), buying all shares from Itochu Corporation",,high,labels_batch_008.json
+1724,OTHER,,,,high,labels_batch_008.json
+1725,OTHER,,,,high,labels_batch_008.json
+1726,OPTION_OR_RIGHTS_EXERCISE,ASSA,"IFC (International Finance Corporation), converting convertible bonds",27 Juli 2023 (akhir masa konversi),medium,labels_batch_008.json
+1727,INSIDER_BUY,IDPR,"Febyan, president director",18 hingga 31 Juli 2023,high,labels_batch_008.json
+1728,OTHER,,,,high,labels_batch_008.json
+1729,OTHER,,,,high,labels_batch_008.json
+1730,OTHER,,,,high,labels_batch_008.json
+1731,INSIDER_BUY,IDEA,"Eko Desriyanto, president director and controlling shareholder",14 hingga 24 Juli 2023,high,labels_batch_008.json
+1732,OTHER,,,,high,labels_batch_008.json
+1733,OTHER,,,,high,labels_batch_008.json
+1734,OTHER,,,,high,labels_batch_008.json
+1735,OTHER,,,,high,labels_batch_008.json
+1736,INSIDER_BUY,KRYA,"Hok Gwan (Dharmo Budiono), president director",3 Agustus 2023,high,labels_batch_008.json
+1737,INSIDER_BUY,SFAN,"Ivo Rustandi, president director",27 Juli - 3 Agustus 2023,high,labels_batch_008.json
+1738,OUTSIDE_INVESTOR_BUY,BNBR,"Trimegah Sekuritas Indonesia (TRIM), securities firm of Boy Thohir",3 Agustus 2023,high,labels_batch_008.json
+1739,OTHER,,,,high,labels_batch_008.json
+1740,OTHER,,,,high,labels_batch_008.json
+1741,OTHER,,,,high,labels_batch_008.json
+1742,INSIDER_BUY,ACST,"Karya Supra Perkasa (KSP), controlling shareholder",4 dan 7 Agustus 2023,high,labels_batch_008.json
+1743,OUTSIDE_INVESTOR_BUY,MOLI,"Sejahtera Investama Indah, 5.41% shareholder",8 Agustus 2023,medium,labels_batch_008.json
+1744,SELL,SGER,,1 Agustus 2023,high,labels_batch_008.json
+1745,INSIDER_BUY,BMRI,"Agus Dwi Handaya, compliance and HR director of Bank Mandiri",4 Agustus 2023,high,labels_batch_008.json
+1746,OTHER,,,,high,labels_batch_008.json
+1747,INSIDER_BUY,BEBS,"H Soewarso, commissioner",5 Juli 2023,high,labels_batch_008.json
+1748,INSIDER_BUY,BMRI,"Timothy Utama, Bank Mandiri senior management",4 Agustus 2023,high,labels_batch_008.json
+1749,OTHER,,,,low,labels_batch_008.json
+1750,INSIDER_BUY,DEWI,"Henry Saputra, director",17 Juli 2023,high,labels_batch_008.json
+1751,INSIDER_BUY,UFOE,"Henry Budiono, operations director",3 Agustus 2023,high,labels_batch_008.json
+1752,SELL,NELY,,2 hingga 5 Agustus 2023,high,labels_batch_008.json
+1753,OTHER,,,,high,labels_batch_008.json
+1754,INSIDER_BUY,WGSH,"Walden Global Service, described as the controller",8 Agustus 2023,high,labels_batch_008.json
+1755,INSIDER_BUY,BOLA,"Yohanes Ade Bunian M, director and corporate secretary",2 Agustus 2023,high,labels_batch_008.json
+1756,OTHER,,,,high,labels_batch_008.json
+1757,COMPANY_ACQUIRES_STAKE,,Astra International (ASII) via Astra Digital Mobil and Astra Digital Internasional,,high,labels_batch_008.json
+1758,INSIDER_BUY,HEAL,"Hasmoro, president director","6, 7 dan 10 Juli 2023",high,labels_batch_008.json
+1759,INSIDER_BUY,SAME,"Elang Mahkota Teknologi (EMTK), controlling shareholder",23 Juni hingga 9 Agustus 2023,high,labels_batch_008.json
+1760,OTHER,,,,high,labels_batch_008.json
+1761,OUTSIDE_INVESTOR_BUY,NOBU,"Prima Cakrawala Sentosa (PCS), 16.44% shareholder",9 Agustus 2023,medium,labels_batch_008.json
+1762,INSIDER_BUY,SRTG,"Edwin Soeryadjaya, president commissioner and controller, via Trimitra Utama Selaras",11 Agustus 2023,high,labels_batch_008.json
+1763,INSIDER_BUY,GEMA,"Pulung Peranginangin, president director",14 Agustus 2023,high,labels_batch_008.json
+1764,INSIDER_BUY,KDTN,"PT Putrasakti Mandiri, controlling shareholder","21 Juli, 7 sampai 9 Agustus 2023",high,labels_batch_008.json
+1765,OTHER,,,,high,labels_batch_008.json
+1766,INSIDER_BUY,GRIA,"Khufran Hakim Noor, president director and controller",8 Agustus 2023,high,labels_batch_008.json
+1767,INSIDER_BUY,IDPR,"Febyan, president director and controller",11 Agustus 2023,high,labels_batch_008.json
+1768,OTHER,,,,high,labels_batch_008.json
+1769,INSIDER_BUY,BMRI,"Sigit Prastowo, director of Bank Mandiri",14 dan 15 Agustus 2023,high,labels_batch_008.json
+1770,COMPANY_ACQUIRES_STAKE,ITMA,"Astrindo Nusantara Infrastruktur (BIPI), via transfer without cash flow",10 Agustus 2023,low,labels_batch_008.json
+1771,OTHER,,,,high,labels_batch_008.json
+1772,OPTION_OR_RIGHTS_EXERCISE,BBNI,"Commissioners and directors of Bank BNI, under OJK remuneration rule",14 Agustus 2023,medium,labels_batch_008.json
+1773,INSIDER_BUY,AKRA,"PT Arthakencana Rayatama, controlling shareholder",,high,labels_batch_008.json
+1774,INSIDER_BUY,BRIS,Four commissioners and eight directors of BSI,9 Agustus 2023,low,labels_batch_008.json
+1775,INSIDER_BUY,DRMA,"Noel Aelyo Laras Kusuma Negara, commissioner",15 Agustus 2023,high,labels_batch_008.json
+1776,INSIDER_BUY,UFOE,"Henry Budiono, operations director",9 Agustus 2023,high,labels_batch_008.json
+1777,OUTSIDE_INVESTOR_BUY,JAYA,"Prima Globalindo Logistik (PPGL), stated non-controlling shareholder",16 Agustus 2023,medium,labels_batch_008.json
+1778,OTHER,,,,high,labels_batch_008.json
+1779,INSIDER_BUY,KRYA,"Brigitta Notoatmodjo, director",18 Agustus 2023,high,labels_batch_008.json
+1780,OTHER,,,,high,labels_batch_008.json
+1781,OTHER,,,,high,labels_batch_008.json
+1782,INSIDER_BUY,GRPM,"Agus Susanto, president director and controller",21 Agustus 2023,high,labels_batch_008.json
+1783,INSIDER_BUY,BRPT,"Prajogo Pangestu, controller of Barito Pacific",,high,labels_batch_008.json
+1784,INSIDER_BUY,ASRI,"Manunggal Prime Development, controlling shareholder",18 Agustus 2023,high,labels_batch_008.json
+1785,INSIDER_BUY,PEHA,"Masrizal A. Syarief, commissioner",21 dan 22 Agustus 2023,high,labels_batch_008.json
+1786,INSIDER_BUY,BSDE,"PT Paraga Artamida, controlling shareholder",18 Agustus 2023,high,labels_batch_008.json
+1787,SELL,GOTO,,21 Agustus 2023,medium,labels_batch_008.json
+1788,INSIDER_BUY,BYAN,"Dato Low Tuck Kwong, described as the controller",22 Agustus 2023,high,labels_batch_008.json
+1789,OUTSIDE_INVESTOR_BUY,VTNY,"SBI Holdings, Inc., foreign corporate investor",16 Agustus 2023,medium,labels_batch_008.json
+1790,OTHER,,,,high,labels_batch_008.json
+1791,INSIDER_BUY,DRMA,"Noel Aelyo Laras Kusuma Negara, commissioner",21 Agustus 2023,high,labels_batch_008.json
+1792,INSIDER_BUY,PTRO,"Romo Nitiyudo Wachjo, commissioner (title says repo)",10 Agustus 2023,medium,labels_batch_008.json
+1793,INSIDER_BUY,BMRI,"Timothy Utama, Bank Mandiri senior management",15 Agustus 2023,high,labels_batch_008.json
+1794,INSIDER_BUY,UFOE,"Poedji Harixon, president director",18 Agustus 2023,high,labels_batch_008.json
+1795,INSIDER_BUY,DKFT,"Jinsheng Mining, described as the controller",22 Agustus 2023,high,labels_batch_008.json
+1796,INSIDER_BUY,AKRA,"Arthakencana Rayatama, described as one of the controllers",18 dan 21 Agustus 2023,high,labels_batch_008.json
+1797,INSIDER_BUY,GOTO,"Patrick Walujo, president director",21-23 Agustus 2023,high,labels_batch_008.json
+1798,INSIDER_BUY,TPIA,"Raymond, director",24 Agustus 2023,high,labels_batch_008.json
+1799,INSIDER_BUY,BRNA,"Dwi Satrya Utama, controlling shareholder of Berlina",24 Agustus 2023,high,labels_batch_008.json
+1800,INSIDER_BUY,HALO,"Juliana, director",24 dan 25 Agustus 2023,high,labels_batch_008.json
+1801,INSIDER_BUY,BRNA,"Dwi Satrya Utama, controlling shareholder of Berlina",24 Agustus 2023,high,labels_batch_008.json
+1802,INSIDER_BUY,BTON,"Gwie Gunadi Gunawan, president director",25 Agustus 2023,high,labels_batch_008.json
+1803,INSIDER_BUY,WGSH,"Walden Global Services, described as the controller",24 Agustus 2023,high,labels_batch_008.json
+1804,INSIDER_BUY,LPKR,"Phua Meng Kuan, director",24 Agustus 2023,high,labels_batch_008.json
+1805,OUTSIDE_INVESTOR_BUY,AKPI,"PT Tiara Intimahkota, shareholder holding 36%, not called controller",25 Agustus 2023,low,labels_batch_008.json
+1806,BUYBACK,ULTJ,"Ultra Jaya Milk Industry (ULTJ), the company itself",,medium,labels_batch_008.json
+1807,OTHER,,,,high,labels_batch_008.json
+1808,OUTSIDE_INVESTOR_BUY,IKAI,"Virenthy Maksud, individual investor, now 5.49% holder",28 Agustus 2023,high,labels_batch_008.json
+1809,OTHER,,,,high,labels_batch_008.json
+1810,INSIDER_BUY,HALO,"Juliana, director",29 Agustus 2023,high,labels_batch_008.json
+1811,INSIDER_BUY,BTON,"Dwie Gunato Gunawan, commissioner",29 Agustus 2023,high,labels_batch_008.json
+1812,INSIDER_BUY,INCO,"Abu Ashar, director of Vale Indonesia",25 Agustus 2023,high,labels_batch_008.json
+1813,OTHER,,,,high,labels_batch_008.json
+1814,INSIDER_BUY,BRPT,"Prajogo Pangestu, president commissioner and controlling shareholder","22, 23 dan 30 Agustus 2023",high,labels_batch_008.json
+1815,OTHER,,,,high,labels_batch_008.json
+1816,OTHER,,,,high,labels_batch_008.json
+1817,OTHER,,,,high,labels_batch_008.json
+1818,OTHER,,,,high,labels_batch_008.json
+1819,INSIDER_BUY,DRMA,"Noel Aelyo Laras Kusuma Negara, commissioner",31 Agustus 2023,high,labels_batch_008.json
+1820,INSIDER_BUY,IMPC,"Janto Salim, described as a company leader (pentolan)",24 dan 31 Agustus 2023,high,labels_batch_008.json
+1821,INSIDER_BUY,SSIA,"Three directors: Johannes Suriadjaja, Sonny Satia Negara, The Jok Tung",25 Agustus 2023,high,labels_batch_008.json
+1822,INSIDER_BUY,TRIM,"Philmon Samuel Tanuri, president director, son of founder Pieter Tanuri",29 Agustus dan 4 September 2023,high,labels_batch_008.json
+1823,INSIDER_BUY,PEHA,"Masrizal A. Syarief, commissioner",31 Agustus 2023,high,labels_batch_008.json
+1824,INSIDER_BUY,DRMA,"Noel Aelyo Laras Kusuma Negara, commissioner",1 dan 4 September 2023,high,labels_batch_008.json
+1825,INSIDER_BUY,GOTO,"Pablo Malay, director (bought at stated price Rp2 per share)",1 September 2023,low,labels_batch_008.json
+1826,COMPANY_ACQUIRES_STAKE,,"Midi Utama Indonesia (MIDI), 70% owner of subsidiary LWS",5 September 2023,medium,labels_batch_008.json
+1827,OUTSIDE_INVESTOR_BUY,KPIG,"MNC Sekuritas, securities firm nurtured by Hary Tanoesoedibjo",1 September 2023,low,labels_batch_008.json
+1828,COMPANY_ACQUIRES_STAKE,,"Era Digital Media (AWAN), capital injection into subsidiary Eranyacloud",30 Agustus 2023,medium,labels_batch_008.json
+1829,OTHER,,,,high,labels_batch_008.json
+1830,OTHER,,,,high,labels_batch_008.json
+1831,OTHER,,,,high,labels_batch_008.json
+1832,INSIDER_BUY,BCAP,"MNC Asia Holding (BHIT), described as the controller",5 September 2023,high,labels_batch_008.json
+1833,OUTSIDE_INVESTOR_BUY,ESTA,"Yeti Sopandi, new investor, took 12% from the controller",5 September 2023,high,labels_batch_008.json
+1834,OTHER,,,,high,labels_batch_008.json
+1835,INSIDER_BUY,IDPR,"Febyan, president director and controller",5 September 2023,high,labels_batch_008.json
+1836,OUTSIDE_INVESTOR_BUY,CASH,"Hasim Sutiono, individual, 23.19% holder, no role stated",5 September 2023,medium,labels_batch_008.json
+1837,INSIDER_BUY,NFCX,"M Cash Integrasi (MCAS), described as the controller",8 September 2023,high,labels_batch_008.json
+1838,INSIDER_BUY,TBIG,"Bersama Digital Infrastructure Asia Pte Ltd, controlling shareholder",7 September 2023,high,labels_batch_008.json
+1839,SELL,MAPA,,4 September 2023,high,labels_batch_008.json
+1840,OTHER,,,,high,labels_batch_008.json
+1841,OTHER,,,,high,labels_batch_008.json
+1842,MARKET_FLOW,ARTO,"Foreign investors, net buy Rp9.1 billion last week",,medium,labels_batch_008.json
+1843,INSIDER_BUY,HALO,"Juliana, director",6 September 2023,high,labels_batch_008.json
+1844,COMPANY_ACQUIRES_STAKE,,"Surya Fajar Capital (SFAN), 92.5% owner of subsidiary SFUND",,medium,labels_batch_008.json
+1845,OTHER,,,,medium,labels_batch_008.json
+1846,INSIDER_BUY,CAKK,"Johan Silitonga, president director",24 hingga 29 Agustus 2023,high,labels_batch_008.json
+1847,OTHER,,,,high,labels_batch_008.json
+1848,OTHER,,,,high,labels_batch_008.json
+1849,INSIDER_BUY,CMRY,Bambang Sutantio (president commissioner) and Farell Grandisuri (director),6 September 2023,high,labels_batch_008.json
+1850,OTHER,,,,high,labels_batch_008.json
+1851,COMPANY_ACQUIRES_STAKE,,Harum Energy (HRUM) via subsidiary Harum Nickel Perkasa,13 September 2023,high,labels_batch_008.json
+1852,OTHER,,,,high,labels_batch_009.json
+1853,OTHER,,,,high,labels_batch_009.json
+1854,BUYBACK,DSSA,"The company itself (DSSA), via share buyback",13 September 2023,high,labels_batch_009.json
+1855,INSIDER_BUY,BNBR,"Biofuel Indo Sumatra, described as pengendali (controller)",12 September 2023,high,labels_batch_009.json
+1856,INSIDER_BUY,CAKK,"Johan Silitonga, Direktur Utama CAKK",11 September 2023,high,labels_batch_009.json
+1857,OTHER,,,,medium,labels_batch_009.json
+1858,INSIDER_BUY,IKBI,"Satoshi Nishikawa, Direktur Utama IKBI",6 September 2023,high,labels_batch_009.json
+1859,OUTSIDE_INVESTOR_BUY,CASH,"Hasim Sutiono, individual shareholder, no insider role stated",5 September 2023,medium,labels_batch_009.json
+1860,INSIDER_BUY,BSDE,"PT Paraga Artamida, pengendali (controller) of BSDE",13 September 2023,high,labels_batch_009.json
+1861,OTHER,,,,high,labels_batch_009.json
+1862,INSIDER_BUY,BRPT,"Prajogo Pangestu, one of the richest Indonesians; headline: makin dominan",5 dan 6 September 2023,low,labels_batch_009.json
+1863,INSIDER_BUY,SAME,"Elang Mahkota Teknologi (EMTK), holder of 77.64% of SAME",13 dan 14 September 2023,medium,labels_batch_009.json
+1864,COMPANY_ACQUIRES_STAKE,,"Singaraja Putra (SINI), buying DDS shares from Barito Energy",15 September 2023,high,labels_batch_009.json
+1865,INSIDER_BUY,SOCI,"Soechi Group, pengendali (controller) of Soechi Lines",15 September 2023,high,labels_batch_009.json
+1866,OUTSIDE_INVESTOR_BUY,WMPP,"Tumiyana, individual, no insider role stated",15 September 2023,medium,labels_batch_009.json
+1867,INSIDER_BUY,MBMA,"Merdeka Energi Nusantara, holder of 50.03% of MBMA",15 September 2023,medium,labels_batch_009.json
+1868,OUTSIDE_INVESTOR_BUY,BNBR,"Biofuel Indo Sumatra, shareholder (11.18%) of BNBR",,medium,labels_batch_009.json
+1869,INSIDER_BUY,HEAL,"Hasmoro, CEO of Medikaloka Hermina","1, 4 dan 5 September 2023",high,labels_batch_009.json
+1870,OTHER,,,,high,labels_batch_009.json
+1871,OTHER,,,,high,labels_batch_009.json
+1872,INSIDER_BUY,DKFT,"Jinsheng Mining, pengendali (controller) of Central Omega",15 September 2023,high,labels_batch_009.json
+1873,INSIDER_BUY,BWPT,"Henderi Djunaidi, Direktur Utama BWPT",19 September 2023,high,labels_batch_009.json
+1874,OUTSIDE_INVESTOR_BUY,BNBR,"Biofuel Indo Sumatra, shareholder (11.18%) of BNBR",,medium,labels_batch_009.json
+1875,INSIDER_BUY,HEAL,"Aristo Setiawidjaja, director of Medikaloka Hermina","15, 18 dan 19 September 2023",high,labels_batch_009.json
+1876,OTHER,,,,high,labels_batch_009.json
+1877,OUTSIDE_INVESTOR_BUY,MDKA,"Saratoga Investama (SRTG), corporate holder of about 18.6% of MDKA",19 September 2023,medium,labels_batch_009.json
+1878,BUYBACK,DGIK,"The company itself (DGIK), via share buyback",mulai 19 Juni 2023 (periode 3 bulan),high,labels_batch_009.json
+1879,INSIDER_BUY,TPIA,"Erwin Ciputra, Direktur Utama TPIA",18 September 2023,high,labels_batch_009.json
+1880,INSIDER_BUY,TRIM,"Philmon Samuel Tanuri, Direktur Utama TRIM",19 dan 20 September 2023,high,labels_batch_009.json
+1881,OUTSIDE_INVESTOR_BUY,OASA,"AND Indonesia Kapital, shareholder above 5% of OASA",21 September 2023,medium,labels_batch_009.json
+1882,INSIDER_BUY,SMDR,"Bani Maulana Mulia, Direktur Utama SMDR",20 September 2023,high,labels_batch_009.json
+1883,INSIDER_BUY,HATM,"Habco Primatama, pengendali (controller) of HATM",21 September 2023,high,labels_batch_009.json
+1884,INSIDER_BUY,NSSS,"Kurniadi Patriawan, Direktur NSSS",22 September 2023,high,labels_batch_009.json
+1885,INSIDER_BUY,CASH,"Andri Wijono Sutiono, pengendali (controller) of Cashlez",21 September 2023,high,labels_batch_009.json
+1886,INSIDER_BUY,TALF,"PT Proinvestindo, pemegang saham pengendali TALF",21 September 2023,high,labels_batch_009.json
+1887,INSIDER_BUY,BSDE,"PT Paraga Artamida, pengendali (controller) of BSDE",22 September 2023,high,labels_batch_009.json
+1888,MARKET_FLOW,,,,medium,labels_batch_009.json
+1889,OTHER,,,,high,labels_batch_009.json
+1890,OUTSIDE_INVESTOR_BUY,OASA,"AND Indonesia Kapital, investment vehicle, 5.24% holder of OASA",,medium,labels_batch_009.json
+1891,COMPANY_ACQUIRES_STAKE,,"PTPP, raising stake in PT PPSB via debt-to-equity swap",,medium,labels_batch_009.json
+1892,INSIDER_BUY,NSSS,"Miniwati Kasmita, Direktur NSSS",20 September 2023,high,labels_batch_009.json
+1893,OUTSIDE_INVESTOR_BUY,NSSS,"Nusantara Makmur Lestari (NML), shareholder with 9.74% of NSSS",15 September 2023,medium,labels_batch_009.json
+1894,INSIDER_BUY,NICK,"PT Indovest Central, pemegang saham pengendali NICK",20 September 2023,high,labels_batch_009.json
+1895,OTHER,,,,high,labels_batch_009.json
+1896,OTHER,,,,high,labels_batch_009.json
+1897,OTHER,,,,high,labels_batch_009.json
+1898,INSIDER_BUY,DILD,"CGS-CIMB Sekuritas, described as one of DILD's pengendali",25 September 2023,medium,labels_batch_009.json
+1899,OTHER,,,,high,labels_batch_009.json
+1900,INSIDER_BUY,PANR,"Budijanto Tirtawisata, CEO of Panorama Sentrawisata","25, 26, 27 dan 29 September 2023",high,labels_batch_009.json
+1901,INSIDER_BUY,MPRO,"Jonathan Tahir, 34.22% holder of the Sri Dato Tahir family issuer",19 September 2023,medium,labels_batch_009.json
+1902,OTHER,,,,high,labels_batch_009.json
+1903,OTHER,,,,high,labels_batch_009.json
+1904,SELL,CPRO,,25 September 2023,high,labels_batch_009.json
+1905,OTHER,,,,high,labels_batch_009.json
+1906,OTHER,,,,high,labels_batch_009.json
+1907,INSIDER_BUY,MAHA,"Yenny Hamidah Koean, Direktur Utama MAHA",3 Oktober 2023,high,labels_batch_009.json
+1908,OUTSIDE_INVESTOR_BUY,LAPD,"Jucy Juliana, indirect shareholder (>5%) via Keraton Investments",1 Agustus 2023,medium,labels_batch_009.json
+1909,INSIDER_BUY,AKRA,"Soegiarto Adikoesoemo, komisaris and pengendali of AKRA",25 dan 26 September 2023,high,labels_batch_009.json
+1910,OTHER,,,,high,labels_batch_009.json
+1911,OTHER,,,,high,labels_batch_009.json
+1912,COMPANY_ACQUIRES_STAKE,,"Digital Mediatama Maxima (DMMX), buying 25% of its subsidiary",22 September 2023,high,labels_batch_009.json
+1913,OUTSIDE_INVESTOR_BUY,VTNY,"SBI Holdings Inc, corporate investor holding 0.59% of VTNY",29 September 2023,high,labels_batch_009.json
+1914,OTHER,,,,high,labels_batch_009.json
+1915,INSIDER_BUY,BSDE,"Paraga Arta Mida, pengendali (controller) of BSDE",5 Oktober 2023,high,labels_batch_009.json
+1916,INSIDER_BUY,MAHA,"Yenny Hamidah Koean, CEO of Mandiri Herindo",5 Oktober 2023,high,labels_batch_009.json
+1917,OTHER,,,,high,labels_batch_009.json
+1918,INSIDER_BUY,ARCI,"Rajawali Corpora, pengendali (controller) of Archi Indonesia",5 Oktober 2023,high,labels_batch_009.json
+1919,OTHER,,,,high,labels_batch_009.json
+1920,OTHER,,,,high,labels_batch_009.json
+1921,INSIDER_BUY,DRMA,"Noel Aelyo Laras Kusuma Negara, komisaris of Dharma Polimetal",4 Oktober 2023,high,labels_batch_009.json
+1922,COMPANY_ACQUIRES_STAKE,,"Tourindo Guide Indonesia (PGJO), buying subsidiary shares from Adi Putera Widjaja",9 Oktober 2023,high,labels_batch_009.json
+1923,INSIDER_BUY,SAME,"Elang Mahkota Teknologi (EMTK), pemegang saham pengendali SAME",3 Agustus hingga 9 Oktober 2023,high,labels_batch_009.json
+1924,OTHER,,,,high,labels_batch_009.json
+1925,OTHER,,,,high,labels_batch_009.json
+1926,INSIDER_BUY,PEHA,"Masrizal A. Syarief, Komisaris Phapros",12 Oktober 2023,high,labels_batch_009.json
+1927,OUTSIDE_INVESTOR_BUY,BULL,"Maju Karya Mandiri Indonesia, holder of 5.45% of BULL",11 Oktober 2023,medium,labels_batch_009.json
+1928,INSIDER_BUY,AKRA,"Arthakencana Rayatama, pengendali (controller) of AKR Corporindo",9 Oktober 2023,high,labels_batch_009.json
+1929,INSIDER_BUY,SRAJ,"Jonathan Tahir, komisaris utama of SRAJ",15 September 2023,high,labels_batch_009.json
+1930,OTHER,SMMA,,12 Oktober 2023,medium,labels_batch_009.json
+1931,OPTION_OR_RIGHTS_EXERCISE,AMMN,"Arief Widyawan Sidarto, director, via MESOP stock option program",11 Oktober 2023,high,labels_batch_009.json
+1932,COMPANY_ACQUIRES_STAKE,,"AKR Corporindo (AKRA), capital injection into subsidiary AKR Sea Transport",12 Oktober 2023,low,labels_batch_009.json
+1933,INSIDER_BUY,AKRA,"Soegiarto Adikoesoemo, Presiden Komisaris AKRA",3 Oktober 2023,high,labels_batch_009.json
+1934,OPTION_OR_RIGHTS_EXERCISE,AMMN,"Three foreign directors, via MSOP management stock option program",,high,labels_batch_009.json
+1935,INSIDER_BUY,GOTO,"Patrick Walujo, CEO of GoTo",16 Oktober 2023,high,labels_batch_009.json
+1936,INSIDER_BUY,HEAL,"Hasmoro, Direktur Utama Medikaloka Hermina",3 dan 4 Oktober 2023,high,labels_batch_009.json
+1937,OUTSIDE_INVESTOR_BUY,NAYZ,"PT Asia Intrainvesta, new investor with 15.69% of NAYZ",11 Oktober 2023,high,labels_batch_009.json
+1938,OTHER,,,,medium,labels_batch_009.json
+1939,OTHER,,,,high,labels_batch_009.json
+1940,INSIDER_BUY,BSML,"Goldfive Investment Capital, pengendali (controller) of BSML",17 Oktober 2023,high,labels_batch_009.json
+1941,INSIDER_BUY,MICE,"Anthony Honoris, Direktur Utama MICE",19 Oktober 2023,high,labels_batch_009.json
+1942,INSIDER_BUY,AMAR,"Tolaram Pte Ltd, pengendali (controller) of Bank Amar","11, 12 dan 13 Oktober 2023",high,labels_batch_009.json
+1943,OUTSIDE_INVESTOR_BUY,TECH,"Phillip Securities Pte Ltd, securities firm, now holding 24.91%",19 Oktober 2023,medium,labels_batch_009.json
+1944,INSIDER_BUY,BSML,"PT Goldfive Investment Capital, pemegang saham pengendali BSML",19 Oktober 2023,high,labels_batch_009.json
+1945,OUTSIDE_INVESTOR_BUY,MAHA,"Diah Asriningpuri Sugianto, shareholder now holding 7.53% of MAHA",19 dan 20 Oktober 2023,medium,labels_batch_009.json
+1946,OTHER,,,,high,labels_batch_009.json
+1947,INSIDER_BUY,BSDE,"Paraga Arta Mida, pengendali (controller) of BSDE",20 Oktober 2023,high,labels_batch_009.json
+1948,INSIDER_BUY,HATM,"Habco Primatama, pengendali (controller) of Habco Trans Maritima",20 Oktober 2023,high,labels_batch_009.json
+1949,OUTSIDE_INVESTOR_BUY,BIPI,"Morgan Stanley and Co International Plc, now holding 5.80%",23 Oktober 2023,high,labels_batch_009.json
+1950,OTHER,,,,high,labels_batch_009.json
+1951,OTHER,,,,high,labels_batch_009.json
+1952,INSIDER_BUY,TBLA,"Sungai Budi, pengendali (controller) of Tunas Baru Lampung",bertahap mulai 13 Oktober 2023,high,labels_batch_009.json
+1953,OUTSIDE_INVESTOR_BUY,MAHA,"Diah Asriningpuri Sugianto, shareholder of MAHA",23 dan 25 Oktober 2023,low,labels_batch_009.json
+1954,INSIDER_BUY,IPCM,"Shanti Puruhita, Direktur Utama IPCM",24 Oktober 2023,high,labels_batch_009.json
+1955,INSIDER_BUY,DMMX,"Hartono Franscesco, Komisaris DMMX",26 Oktober 2023,high,labels_batch_009.json
+1956,INSIDER_BUY,TRJA,"Damai Investama Sukses, pengendali (controller) of Transkon Jaya","24, 25 dan 26 Oktober 2023",high,labels_batch_009.json
+1957,OTHER,,,,high,labels_batch_009.json
+1958,OTHER,,,,high,labels_batch_009.json
+1959,OTHER,,,,medium,labels_batch_009.json
+1960,INSIDER_BUY,JSMR,Subakti Syukur (Direktur Utama) and Raja Erizman (Komisaris) of JSMR,26 Oktober 2023,high,labels_batch_009.json
+1961,OTHER,,,,high,labels_batch_009.json
+1962,INSIDER_BUY,BABY,"Blooming Years Pte. Ltd., pemegang saham pengendali BABY",27 dan 30 Oktober 2023,high,labels_batch_009.json
+1963,INSIDER_BUY,BRPT,"Prajogo Pangestu, pemilik and Komisaris Utama of BRPT",19 dan 25 Oktober 2023,high,labels_batch_009.json
+1964,OTHER,,,,high,labels_batch_009.json
+1965,OTHER,,,,high,labels_batch_009.json
+1966,OTHER,,,,high,labels_batch_009.json
+1967,MARKET_FLOW,TUGU,"Foreign investors, aggregate net buy in TUGU",,medium,labels_batch_009.json
+1968,INSIDER_BUY,IDPR,"Febyan, Direktur Utama and pengendali of IDPR",1 November 2023,high,labels_batch_009.json
+1969,OTHER,,,,high,labels_batch_009.json
+1970,OTHER,,,,high,labels_batch_009.json
+1971,INSIDER_BUY,GEMA,"Dedy Rochimat, Komisaris Utama GEMA",27 Oktober 2023,high,labels_batch_009.json
+1972,OTHER,,,,high,labels_batch_009.json
+1973,OUTSIDE_INVESTOR_BUY,MPMX,"Edwin Soeryadjaya, son of Astra founder, tiny holder of MPMX",1 November 2023,medium,labels_batch_009.json
+1974,INSIDER_BUY,JSMR,"Subakti Syukur, Direktur Utama JSMR",31 Oktober hingga 2 November 2023,high,labels_batch_009.json
+1975,INSIDER_BUY,BRMS,"Bumi Resources (BUMI), described as pengendali (controller) of BRMS",3 November 2023,medium,labels_batch_009.json
+1976,INSIDER_BUY,SRTG,"Edwin Soeryadjaya, pengendali (controller) of Saratoga",3 November 2023,high,labels_batch_009.json
+1977,INSIDER_BUY,BMRI,"Three Bank Mandiri directors: Timothy Utama, Sigit Prastowo, Riduan",31 Oktober 2023,high,labels_batch_009.json
+1978,INSIDER_BUY,IDPR,"Febyan, Direktur Utama and pengendali of IDPR",2 dan 3 November 2023,high,labels_batch_009.json
+1979,INSIDER_BUY,AVIA,"Ruslan Tanoko, director of AVIA, a company he controls",2 November 2023,high,labels_batch_009.json
+1980,INSIDER_BUY,INKP,"APP Purinusa Ekapersada, pengendali (controller) of Indah Kiat",18 dan 31 Oktober 2023,high,labels_batch_009.json
+1981,INSIDER_BUY,CHIP,"Ardarini, Direktur Utama Pelita Teknologi Global",3 November 2023,high,labels_batch_009.json
+1982,INSIDER_BUY,AMAR,"Tolaram Pte Ltd, pengendali (controller) of Bank Amar",3 November 2023,high,labels_batch_009.json
+1983,MARKET_FLOW,,,,medium,labels_batch_009.json
+1984,INSIDER_BUY,BABY,"Blooming Years Pte. Ltd., pemegang saham pengendali BABY",8 dan 9 November 2023,high,labels_batch_009.json
+1985,INSIDER_BUY,BABY,"Blooming Years Pte Ltd, pengendali (controller) of Multitrend Indo",8 dan 9 November 2023,high,labels_batch_009.json
+1986,COMPANY_ACQUIRES_STAKE,,"United Tractors (UNTR), raising stake in PT Karya Supra Perkasa",,high,labels_batch_009.json
+1987,INSIDER_BUY,GOTO,"Pablo Malay, director of GoTo, Australian citizen",2 November 2023,low,labels_batch_009.json
+1988,OTHER,,,,high,labels_batch_009.json
+1989,INSIDER_BUY,GRPM,"Agus Susanto, Direktur Utama Graha Prima Mentari",8 dan 9 November 2023,high,labels_batch_009.json
+1990,INSIDER_BUY,BSDE,"Paraga Arta Mida, pengendali (controller) of BSDE",1 November 2023,high,labels_batch_009.json
+1991,INSIDER_BUY,SRTG,"Edwin Soeryadjaya, pengendali and komisaris of Saratoga",3 dan 6 November 2023,high,labels_batch_009.json
+1992,OTHER,,,,high,labels_batch_009.json
+1993,OTHER,,,,medium,labels_batch_009.json
+1994,OTHER,,,,high,labels_batch_009.json
+1995,OTHER,,,,high,labels_batch_009.json
+1996,INSIDER_BUY,TRJA,"PT Damai Investama Sukses, pemegang saham pengendali TRJA",7 dan 10 November 2023,high,labels_batch_009.json
+1997,OTHER,,,,high,labels_batch_009.json
+1998,OUTSIDE_INVESTOR_BUY,SMDM,"Top Global Ltd, corporate investor buying about 3% of SMDM",8 November 2023,medium,labels_batch_009.json
+1999,OUTSIDE_INVESTOR_BUY,ULTJ,"Maybank Sekuritas Indonesia, securities firm, now above 5%",9 November 2023,medium,labels_batch_009.json
+2000,OPTION_OR_RIGHTS_EXERCISE,AMMN,"Alexander Gibb, director of AMMN, taking up new shares",9 November 2023,medium,labels_batch_009.json
+2001,INSIDER_BUY,TUGU,"Tatang Nurhidayat, Direktur Utama TUGU",6 hingga 9 November 2023,high,labels_batch_009.json
+2002,OTHER,,,,high,labels_batch_009.json
+2003,OTHER,,,,high,labels_batch_009.json
+2004,INSIDER_BUY,IPCM,"Shanti Puruhita, Direktur Utama IPCM",14 dan 15 November 2023,high,labels_batch_009.json
+2005,INSIDER_BUY,PTRO,"Caraka Reksa Optima, described as pengendali (controller) of Petrosea",6 November 2023,high,labels_batch_009.json
+2006,COMPANY_ACQUIRES_STAKE,,"JSPT, buying 30% of PT Wynncor Bali from JC Hotels",,high,labels_batch_009.json
+2007,OTHER,,,,high,labels_batch_009.json
+2008,INSIDER_BUY,TRJA,"Damai Investama Sukses, pengendali (controller) of Transkon Jaya",15 November 2023,high,labels_batch_009.json
+2009,OUTSIDE_INVESTOR_BUY,SQMI,"Dato Sri Chong Thim Pheng, individual investor",15 dan 16 November 2023,medium,labels_batch_009.json
+2010,INSIDER_BUY,AKRA,"Haryanto Adikoesoemo, Presiden Direktur and pengendali of AKRA",9 dan 15 November 2023,high,labels_batch_009.json
+2011,INSIDER_BUY,TUGU,"Tatang Nurhidayat, Direktur Utama TUGU",10 November 2023,high,labels_batch_009.json
+2012,OPTION_OR_RIGHTS_EXERCISE,BMAS,"Kasikorn Vision Financial (KV Financial), controller, taking unsubscribed new shares",15 November 2023,medium,labels_batch_009.json
+2013,OTHER,,,,high,labels_batch_009.json
+2014,OUTSIDE_INVESTOR_BUY,SRTG,"Edwin Soeryadjaya, son of late Astra founder, large individual holder",20 November 2023,low,labels_batch_009.json
+2015,OTHER,,,,high,labels_batch_009.json
+2016,OTHER,,,,high,labels_batch_009.json
+2017,INSIDER_BUY,HATM,"Habco Primatama, pengendali (controller) of Habco Trans Maritima",20 November 2023,high,labels_batch_009.json
+2018,INSIDER_BUY,BMRI,"Riduan, a director of Bank Mandiri",17 November 2023,high,labels_batch_009.json
+2019,COMPANY_ACQUIRES_STAKE,,"Venteny Fortuna (VTNY), capital injection to take 51% of Lahan Sikam",,high,labels_batch_009.json
+2020,OUTSIDE_INVESTOR_BUY,MDLN,"Panin Sekuritas (PANS), securities firm, now holding 12.96% of MDLN",20 November 2023,medium,labels_batch_009.json
+2021,INSIDER_BUY,TRJA,"Damai Investama Sukses, pengendali (controller) of Transkon Jaya",17 November 2023,high,labels_batch_009.json
+2022,OUTSIDE_INVESTOR_BUY,BIPI,"CGS-CIMB Securities Pte Ltd, Singapore firm, now holding 8.84%",23 November 2023,high,labels_batch_009.json
+2023,INSIDER_BUY,AKRA,"Haryanto Adikoesoemo, CEO and pengendali of AKRA",mulai 16 November 2023 (lima kali transaksi),high,labels_batch_009.json
+2024,OTHER,,,,high,labels_batch_009.json
+2025,SELL,,"Evans Indonesia, buying ABK and NAS shares from PSGO",23 November 2023,high,labels_batch_009.json
+2026,INSIDER_BUY,BMRI,"Riduan, Direktur Bank Mandiri",24 November 2023,high,labels_batch_009.json
+2027,COMPANY_ACQUIRES_STAKE,,"Strait Pristine Resources (BPII subsidiary), adding capital to Sweet Greens",28 November 2023,medium,labels_batch_009.json
+2028,OTHER,,,,high,labels_batch_009.json
+2029,OTHER,,,,high,labels_batch_009.json
+2030,INSIDER_BUY,TRJA,"Damai Investama Sukses, pengendali (controller) of Transkon Jaya","7, 10, 15, 17 dan 23 November 2023",high,labels_batch_009.json
+2031,OTHER,,,,high,labels_batch_009.json
+2032,OTHER,,,,high,labels_batch_009.json
+2033,OUTSIDE_INVESTOR_BUY,MBMA,"Provident Investasi Bersama (PALM) via Alam Permai, 7.39% holder",24 November 2023,medium,labels_batch_009.json
+2034,OTHER,,,,high,labels_batch_009.json
+2035,INSIDER_BUY,BMRI,"Susana Indah Kris Indriati, Direktur Corporate Banking BMRI",29 November 2023,high,labels_batch_009.json
+2036,OUTSIDE_INVESTOR_BUY,SQMI,"Dato' Sri Chong Thim Pheng, former director who resigned January 2023",29 November 2023,low,labels_batch_009.json
+2037,COMPANY_ACQUIRES_STAKE,,"Indocement (INTP), buying 100% of PT Semen Grobogan",30 November 2023,high,labels_batch_009.json
+2038,INSIDER_BUY,JSMR,"Jasa Marga directors and commissioners, including CEO Subakti Syukur",27 dan 28 November 2023,high,labels_batch_009.json
+2039,OTHER,,,,high,labels_batch_009.json
+2040,OTHER,,,,medium,labels_batch_009.json
+2041,INSIDER_BUY,HOKI,"Sukarto Bujung, Direktur Utama and founder of HOKI",30 November 2023,high,labels_batch_009.json
+2042,OUTSIDE_INVESTOR_BUY,GJTL,"Lo Kheng Hong, veteran investor",1 Desember 2023,high,labels_batch_009.json
+2043,OTHER,,,,high,labels_batch_009.json
+2044,INSIDER_BUY,TMAS,"Temas Lestari, pengendali (controller) of Temas",5 Desember 2023,high,labels_batch_009.json
+2045,OTHER,,,,high,labels_batch_009.json
+2046,OPTION_OR_RIGHTS_EXERCISE,BELI,Management and employees through MESOP program,15 hingga 21 Desember 2023,medium,labels_batch_009.json
+2047,OUTSIDE_INVESTOR_BUY,CPIN,"UBS AG Singapore, now holding above 5%",4 Desember 2023,high,labels_batch_009.json
+2048,INSIDER_BUY,UFOE,"Pudji Harianto, Komisaris Utama UFOE",4 Desember 2023,high,labels_batch_009.json
+2049,OTHER,,,,high,labels_batch_009.json
+2050,INSIDER_BUY,ASLC,"Kazuhiro Shioyama, director of Autopedia Sukses Lestari",29 November 2023,high,labels_batch_009.json
+2051,OUTSIDE_INVESTOR_BUY,MTLA,"Yulie Sekuritas Indonesia (YULE), securities firm, now holding 6.16%",28 November 2023,medium,labels_batch_009.json
+2052,INSIDER_BUY,AKRA,"Arthakencana Rayatama, pengendali AKR Corporindo","1, 4, 5 dan 6 Desember 2023",high,labels_batch_010.json
+2053,OTHER,,,,high,labels_batch_010.json
+2054,INSIDER_BUY,SKRN,"PT Sumi Traktor Perkasa, pemegang saham pengendali SKRN",8 Desember 2023,high,labels_batch_010.json
+2055,INSIDER_BUY,SMGR,"Tiga pengurus utama SIG: Donny Arsal (Dirut), Agung Wiharto, Yosviandri",30 November 2023,medium,labels_batch_010.json
+2056,INSIDER_BUY,MCAS,"Direksi perseroan MCAS (nama terpotong, diawali Surya)",,high,labels_batch_010.json
+2057,OTHER,INTP,"Heidelberg Materials AG, parent buying from 100%-owned Birchwood",,low,labels_batch_010.json
+2058,INSIDER_BUY,MMIX,"Mengky Mangarek, Direktur Utama Multi Medika Internasional",7 Desember 2023,high,labels_batch_010.json
+2059,SELL,TIRA,,12 Desember 2023,high,labels_batch_010.json
+2060,OTHER,,,,high,labels_batch_010.json
+2061,INSIDER_BUY,TPIA,"Raymond, Direktur Chandra Asri Petrochemical",11 Desember 2023,high,labels_batch_010.json
+2062,OTHER,,,,high,labels_batch_010.json
+2063,OUTSIDE_INVESTOR_BUY,ENRG,"Trimegah Sekuritas Indonesia (TRIM), securities firm of Boy Thohir",11 Desember 2023,high,labels_batch_010.json
+2064,OTHER,,,,high,labels_batch_010.json
+2065,INSIDER_BUY,GOTO,"Patrick Walujo, CEO Goto Group",13 Desember 2023,high,labels_batch_010.json
+2066,INSIDER_BUY,IPCC,"Sugeng Mulyadi, Direktur Utama Indonesia Kendaraan Terminal",12 Desember 2023,high,labels_batch_010.json
+2067,INSIDER_BUY,KUAS,"Josef Kandiawan, Direktur Utama Ace Oldfields",14 Desember 2023,high,labels_batch_010.json
+2068,INSIDER_BUY,MGRO,"PT Mahkota Global Investama, pemegang saham pengendali MGRO",12 Desember 2023,high,labels_batch_010.json
+2069,COMPANY_ACQUIRES_STAKE,,"PT Ciputra Development Tbk (CTRA), buying subsidiary SACS shares",6 Desember 2023,high,labels_batch_010.json
+2070,INSIDER_BUY,VTNY,"SBI Holdings, Inc, pengendali tidak langsung Venteny Fortuna",13 Desember 2023,medium,labels_batch_010.json
+2071,INSIDER_BUY,PANI,"Multi Artha Pratama, pengendali PANI (Aguan-Salim Group)",14 Desember 2023,high,labels_batch_010.json
+2072,INSIDER_BUY,MTEL,"Theodorus Ardi Hartoko, CEO Mitratel",13 Desember 2023,high,labels_batch_010.json
+2073,INSIDER_BUY,SOSS,"PT ALSOK BASS Indonesia Security Services, pemegang saham pengendali SOSS",,medium,labels_batch_010.json
+2074,INSIDER_BUY,EDGE,"Digital Edge (HK) Ltd, pengendali, via Digital Edge (HK) SPVI Limited",15 Desember 2023,high,labels_batch_010.json
+2075,COMPANY_ACQUIRES_STAKE,,"PT Multisarana Intan Eduka Tbk (MSIE), buying 99,97 persen of SKN",18 Desember 2023,high,labels_batch_010.json
+2076,INSIDER_BUY,PSGO,"PT Jalinankasih Sesama, pengendali Palma Serasih",18 Desember 2023,high,labels_batch_010.json
+2077,OUTSIDE_INVESTOR_BUY,MTLA,"Magnus Jaya, investor individu beralamat di Bandung","5, 6, 7 dan 14 Desember 2023",high,labels_batch_010.json
+2078,OTHER,,,,high,labels_batch_010.json
+2079,OTHER,,,,medium,labels_batch_010.json
+2080,OUTSIDE_INVESTOR_BUY,NATO,"Suge Talesta Guna (STG), pemegang sekitar 5,01 persen",12 dan 18 Desember 2023,medium,labels_batch_010.json
+2081,OUTSIDE_INVESTOR_BUY,MDKA,"Garibaldi (Boy) Thohir, kakak Menteri BUMN Erick Thohir",19 Desember 2023,high,labels_batch_010.json
+2082,OTHER,,,,high,labels_batch_010.json
+2083,COMPANY_ACQUIRES_STAKE,,"Golden Energy Mines (GEMS), parent injecting capital into subsidiary KMS",18 Desember 2023,medium,labels_batch_010.json
+2084,INSIDER_BUY,MTEL,"Hendra Purnama, direktur investasi Mitratel",18 Desember 2023,high,labels_batch_010.json
+2085,INSIDER_BUY,IRRA,"PT Global Dinamika Kencana, pemegang saham pengendali IRRA",20 Desember 2023,high,labels_batch_010.json
+2086,OUTSIDE_INVESTOR_BUY,MEDC,"Roberto Lorato, warga Italia (peran tidak disebut)",18 Desember 2023,medium,labels_batch_010.json
+2087,COMPANY_ACQUIRES_STAKE,,United Tractors (UNTR) via controlled subsidiary Energia Prima Nusantara (EPN),,high,labels_batch_010.json
+2088,INSIDER_BUY,IPCC,"Dua direksi IPCC, termasuk Direktur Utama Sugeng Mulyadi",,high,labels_batch_010.json
+2089,OUTSIDE_INVESTOR_BUY,ENRG,"Trimegah Sekuritas (TRIM), securities firm of Boy Thohir",21 Desember 2023,high,labels_batch_010.json
+2090,INSIDER_BUY,AKRA,"Arthakencana Rayatama, pengendali AKR Corporindo","18, 19 dan 21 Desember 2023",high,labels_batch_010.json
+2091,OPTION_OR_RIGHTS_EXERCISE,EMTK,"Enam pengurus utama EMTK, dipimpin CEO Alvin W Sariaatmadja",19 Desember 2023,high,labels_batch_010.json
+2092,OPTION_OR_RIGHTS_EXERCISE,BELI,Peserta MESOP I Tahap II (manajemen dan karyawan),15-21 Desember 2023,high,labels_batch_010.json
+2093,OPTION_OR_RIGHTS_EXERCISE,GOTO,"Wei-Jye Jacky Lo, direktur Goto Group",18 Desember 2023,high,labels_batch_010.json
+2094,OUTSIDE_INVESTOR_BUY,VTNY,"SBI Holdings, Inc, pemegang sekitar 1,01 persen",19 Desember 2023,medium,labels_batch_010.json
+2095,OTHER,,,,high,labels_batch_010.json
+2096,OUTSIDE_INVESTOR_BUY,KPIG,"MNC Sekuritas, broker besutan Hary Tanoesoedibjo",21 Desember 2023,low,labels_batch_010.json
+2097,OTHER,,,,high,labels_batch_010.json
+2098,COMPANY_ACQUIRES_STAKE,VOKS,"Hengtong Optic-Electric International Co Ltd, jadi pengendali VOKS",22 Desember 2023,medium,labels_batch_010.json
+2099,OTHER,,,,high,labels_batch_010.json
+2100,INSIDER_BUY,BUKK,"Tiga pengurus: Achmad Kalla, Solihin Jusuf Kalla, Suhaeli Kalla",22 Desember 2023,medium,labels_batch_010.json
+2101,COMPANY_ACQUIRES_STAKE,,Garudafood Putra Putri Jaya Tbk (GOOD),,high,labels_batch_010.json
+2102,OUTSIDE_INVESTOR_BUY,MDKA,"Saratoga Investama Sedaya (SRTG), emiten Edwin Soeryadjaya",22 Desember 2023,medium,labels_batch_010.json
+2103,OTHER,,,,high,labels_batch_010.json
+2104,INSIDER_BUY,TUGU,"Tatang Nurhidayat, Direktur Utama Asuransi Tugu Pratama Indonesia",19 dan 22 Desember 2023,high,labels_batch_010.json
+2105,OTHER,,,,high,labels_batch_010.json
+2106,OTHER,,,,high,labels_batch_010.json
+2107,OUTSIDE_INVESTOR_BUY,ESSA,"Garibaldi (Boy) Thohir, kakak Menteri BUMN Erick Thohir",22 Desember 2023,high,labels_batch_010.json
+2108,OTHER,,,,high,labels_batch_010.json
+2109,OPTION_OR_RIGHTS_EXERCISE,SCMA,"Enam direksi SCMA, termasuk CEO Sutanto Hartono (MESOP)",27 Desember 2023,high,labels_batch_010.json
+2110,OTHER,,,,high,labels_batch_010.json
+2111,INSIDER_BUY,DIGI,"Suwarjono, CEO Arkadia Digital Media (Suara.com)",22 Desember 2023,high,labels_batch_010.json
