@@ -1,0 +1,3826 @@
+{
+"fetched_at": "20261021T182032Z",
+"source": "https://data.binance.vision/data/spot/daily/aggTrades",
+"events_source": "research/BINANCE_ANN_1M/results/events.csv + feasibility/events.csv",
+"events_csv_sha256": "be597e0079f23eaaf42e9718b319b9e2f9da731f5b63bd57bd91f1e09d4b1ff1",
+"feasibility_events_sha256": "42e8b4584ae43b3bfde9688fe7a8625486651505fd3e708c401cb709ef230743",
+"window_ms": [
+-120000,
+3900000
+],
+"series": [
+{
+"row": 0,
+"event_key": "19547|XMR",
+"token": "XMR",
+"pair": "XMRUSDT",
+"kind": "event",
+"T": 1580631153000,
+"t_event_ms": 1580631153000,
+"trades": 1129,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/XMRUSDT/XMRUSDT-aggTrades-2020-02-02.zip",
+"bytes": 237494,
+"sha256": "19139d68210e56468f7cf7b209a396fe7bc101e0dc87bb441d939e10b29bbfe2"
+}
+]
+},
+{
+"row": 1,
+"event_key": "19547|XMR",
+"token": "XMR",
+"pair": "XMRUSDT",
+"kind": "placebo",
+"T": 1580544753000,
+"t_event_ms": 1580631153000,
+"trades": 660,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/XMRUSDT/XMRUSDT-aggTrades-2020-02-01.zip",
+"bytes": 147876,
+"sha256": "a023732af584f4939222f4c119545b44183863a24dbb8afbaf9a8ebb1fec674d"
+}
+]
+},
+{
+"row": 2,
+"event_key": "19543|DASH",
+"token": "DASH",
+"pair": "DASHUSDT",
+"kind": "event",
+"T": 1580722089000,
+"t_event_ms": 1580722089000,
+"trades": 2432,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/DASHUSDT/DASHUSDT-aggTrades-2020-02-03.zip",
+"bytes": 273270,
+"sha256": "c7e238e1a94c46ec8ce72c21269f74754e6d18962c39777343f9fc5974719a51"
+}
+]
+},
+{
+"row": 3,
+"event_key": "19543|DASH",
+"token": "DASH",
+"pair": "DASHUSDT",
+"kind": "placebo",
+"T": 1580635689000,
+"t_event_ms": 1580722089000,
+"trades": 1361,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/DASHUSDT/DASHUSDT-aggTrades-2020-02-02.zip",
+"bytes": 299325,
+"sha256": "1e51a41abd5386d339fb695e4b6c4729ba6e599688161fd2a2771a61d671c264"
+}
+]
+},
+{
+"row": 4,
+"event_key": "19539|ZEC",
+"token": "ZEC",
+"pair": "ZECUSDT",
+"kind": "event",
+"T": 1580800357000,
+"t_event_ms": 1580800357000,
+"trades": 2538,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ZECUSDT/ZECUSDT-aggTrades-2020-02-04.zip",
+"bytes": 400850,
+"sha256": "78b46ad77fce14ebe713eddd58666470cd7ceda9b92be959e4c68236bb7669da"
+}
+]
+},
+{
+"row": 5,
+"event_key": "19539|ZEC",
+"token": "ZEC",
+"pair": "ZECUSDT",
+"kind": "placebo",
+"T": 1580713957000,
+"t_event_ms": 1580800357000,
+"trades": 495,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ZECUSDT/ZECUSDT-aggTrades-2020-02-03.zip",
+"bytes": 277964,
+"sha256": "138ea734f5e902418d698d52e0e8d68231f434661406a4d2cf668b27ef89c092"
+}
+]
+},
+{
+"row": 6,
+"event_key": "19527|ATOM",
+"token": "ATOM",
+"pair": "ATOMUSDT",
+"kind": "event",
+"T": 1580974001000,
+"t_event_ms": 1580974001000,
+"trades": 2861,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ATOMUSDT/ATOMUSDT-aggTrades-2020-02-06.zip",
+"bytes": 260529,
+"sha256": "ecf3b14ed133e3e1bb183e8c5861469eb448e1b91ed7d3cd77525628be1459fe"
+}
+]
+},
+{
+"row": 7,
+"event_key": "19527|ATOM",
+"token": "ATOM",
+"pair": "ATOMUSDT",
+"kind": "placebo",
+"T": 1580887601000,
+"t_event_ms": 1580974001000,
+"trades": 472,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ATOMUSDT/ATOMUSDT-aggTrades-2020-02-05.zip",
+"bytes": 232227,
+"sha256": "6d45b06fc146e7cc33d893d117817b2588564ba260bac667077c902d16bc1b92"
+}
+]
+},
+{
+"row": 8,
+"event_key": "19523|BNB",
+"token": "BNB",
+"pair": "BNBUSDT",
+"kind": "event",
+"T": 1581072201000,
+"t_event_ms": 1581072201000,
+"trades": 13290,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/BNBUSDT/BNBUSDT-aggTrades-2020-02-07.zip",
+"bytes": 1810416,
+"sha256": "ceb8ca037e2dcdee90d58e9959baf02676e44e18923b2668c84c2343085bed67"
+}
+]
+},
+{
+"row": 9,
+"event_key": "19523|BNB",
+"token": "BNB",
+"pair": "BNBUSDT",
+"kind": "placebo",
+"T": 1580985801000,
+"t_event_ms": 1581072201000,
+"trades": 6520,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/BNBUSDT/BNBUSDT-aggTrades-2020-02-06.zip",
+"bytes": 1702356,
+"sha256": "4c20e4f12a3840d121c617a67db7c2e53dfd944b8799b0b67c4012b59d37fb61"
+}
+]
+},
+{
+"row": 10,
+"event_key": "19519|ONT",
+"token": "ONT",
+"pair": "ONTUSDT",
+"kind": "event",
+"T": 1581325348000,
+"t_event_ms": 1581325348000,
+"trades": 7841,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ONTUSDT/ONTUSDT-aggTrades-2020-02-10.zip",
+"bytes": 694486,
+"sha256": "4f1ae25c37e32d457b61d40db974e39ecccd41461abf5ebb5fbd36cc37e26369"
+}
+]
+},
+{
+"row": 11,
+"event_key": "19519|ONT",
+"token": "ONT",
+"pair": "ONTUSDT",
+"kind": "placebo",
+"T": 1581238948000,
+"t_event_ms": 1581325348000,
+"trades": 1098,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ONTUSDT/ONTUSDT-aggTrades-2020-02-09.zip",
+"bytes": 367952,
+"sha256": "20116f836e5fe0c8defa2acfe6f755e67cc11fee8ef1c8627e088a99cea6745a"
+}
+]
+},
+{
+"row": 12,
+"event_key": "19505|BAT",
+"token": "BAT",
+"pair": "BATUSDT",
+"kind": "event",
+"T": 1581498048000,
+"t_event_ms": 1581498048000,
+"trades": 3693,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/BATUSDT/BATUSDT-aggTrades-2020-02-12.zip",
+"bytes": 275719,
+"sha256": "140c0a94a83db4b0194a0b00f63f65039a07e52e2f26d1b3383cd3951ab1522f"
+}
+]
+},
+{
+"row": 13,
+"event_key": "19505|BAT",
+"token": "BAT",
+"pair": "BATUSDT",
+"kind": "placebo",
+"T": 1581411648000,
+"t_event_ms": 1581498048000,
+"trades": 916,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/BATUSDT/BATUSDT-aggTrades-2020-02-11.zip",
+"bytes": 327257,
+"sha256": "6ac366b28b6e39c7023ac3dcc77a27b2df31beac89441f4a497f603da2e3a346"
+}
+]
+},
+{
+"row": 14,
+"event_key": "19503|VET",
+"token": "VET",
+"pair": "VETUSDT",
+"kind": "event",
+"T": 1581573695000,
+"t_event_ms": 1581573695000,
+"trades": 6916,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/VETUSDT/VETUSDT-aggTrades-2020-02-13.zip",
+"bytes": 839356,
+"sha256": "568bb02ccfbdbed73abaff6923d286a664b4715dfbae3863879ab12539d7cee2"
+}
+]
+},
+{
+"row": 15,
+"event_key": "19503|VET",
+"token": "VET",
+"pair": "VETUSDT",
+"kind": "placebo",
+"T": 1581487295000,
+"t_event_ms": 1581573695000,
+"trades": 1842,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/VETUSDT/VETUSDT-aggTrades-2020-02-12.zip",
+"bytes": 747096,
+"sha256": "fb97c3bc16d470652008be99092a579d98c885d24e946775eb0cd6ffd7bec1e8"
+}
+]
+},
+{
+"row": 16,
+"event_key": "19496|NEO",
+"token": "NEO",
+"pair": "NEOUSDT",
+"kind": "event",
+"T": 1581843564000,
+"t_event_ms": 1581843564000,
+"trades": 2141,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/NEOUSDT/NEOUSDT-aggTrades-2020-02-16.zip",
+"bytes": 553181,
+"sha256": "28c8a0538290aa6640a7431ec34cf0bfb12ebc7bbf5aaf915bed10676c7e4d72"
+}
+]
+},
+{
+"row": 17,
+"event_key": "19496|NEO",
+"token": "NEO",
+"pair": "NEOUSDT",
+"kind": "placebo",
+"T": 1581757164000,
+"t_event_ms": 1581843564000,
+"trades": 818,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/NEOUSDT/NEOUSDT-aggTrades-2020-02-15.zip",
+"bytes": 486551,
+"sha256": "261beabfadc1ff6e8e8f4d4e0c424e08121ab8705678b3a5fcdbc4a0f92dfb64"
+}
+]
+},
+{
+"row": 18,
+"event_key": "19490|QTUM",
+"token": "QTUM",
+"pair": "QTUMUSDT",
+"kind": "event",
+"T": 1582104660000,
+"t_event_ms": 1582104660000,
+"trades": 4298,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/QTUMUSDT/QTUMUSDT-aggTrades-2020-02-19.zip",
+"bytes": 350713,
+"sha256": "c8d5f91acdb45f518982714c2aec377ade9187c561f588154cf7e3ad2a398904"
+}
+]
+},
+{
+"row": 19,
+"event_key": "19490|QTUM",
+"token": "QTUM",
+"pair": "QTUMUSDT",
+"kind": "placebo",
+"T": 1582018260000,
+"t_event_ms": 1582104660000,
+"trades": 1556,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/QTUMUSDT/QTUMUSDT-aggTrades-2020-02-18.zip",
+"bytes": 480050,
+"sha256": "828e78db10fc37e0a2c5bd80e5bada5eb09096b86ec0744df2913825db8c245d"
+}
+]
+},
+{
+"row": 20,
+"event_key": "19485|IOST",
+"token": "IOST",
+"pair": "IOSTUSDT",
+"kind": "event",
+"T": 1582189431000,
+"t_event_ms": 1582189431000,
+"trades": 2709,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/IOSTUSDT/IOSTUSDT-aggTrades-2020-02-20.zip",
+"bytes": 424729,
+"sha256": "a3d619952fe2cd179444746dfe22629e23bf231f81500db54b46ce24fcf3a5ae"
+}
+]
+},
+{
+"row": 21,
+"event_key": "19485|IOST",
+"token": "IOST",
+"pair": "IOSTUSDT",
+"kind": "placebo",
+"T": 1582103031000,
+"t_event_ms": 1582189431000,
+"trades": 488,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/IOSTUSDT/IOSTUSDT-aggTrades-2020-02-19.zip",
+"bytes": 269744,
+"sha256": "c700c927c1464155364e35c7b2584bef461d007763621f419d6cfa75ae6087ee"
+}
+]
+},
+{
+"row": 22,
+"event_key": "27713|ALGO",
+"token": "ALGO",
+"pair": "ALGOUSDT",
+"kind": "event",
+"T": 1592208441000,
+"t_event_ms": 1592208441000,
+"trades": 2302,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ALGOUSDT/ALGOUSDT-aggTrades-2020-06-15.zip",
+"bytes": 184823,
+"sha256": "1e02b814d41ebac84fbc8ccd3b7bba88d80c6a999ff44c395eb9a183efe3e0b5"
+}
+]
+},
+{
+"row": 23,
+"event_key": "27713|ALGO",
+"token": "ALGO",
+"pair": "ALGOUSDT",
+"kind": "placebo",
+"T": 1592122041000,
+"t_event_ms": 1592208441000,
+"trades": 488,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ALGOUSDT/ALGOUSDT-aggTrades-2020-06-14.zip",
+"bytes": 147310,
+"sha256": "f665354f225a17781a950df2bb6306efe7d3b03e2222b24009e533a52c4d8592"
+}
+]
+},
+{
+"row": 24,
+"event_key": "27764|ZIL",
+"token": "ZIL",
+"pair": "ZILUSDT",
+"kind": "event",
+"T": 1592374808000,
+"t_event_ms": 1592374808000,
+"trades": 2902,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ZILUSDT/ZILUSDT-aggTrades-2020-06-17.zip",
+"bytes": 449966,
+"sha256": "1960f339c405944305fdaf4fe660c4c4610f57d2acdb5f8768e21c303580d4cf"
+}
+]
+},
+{
+"row": 25,
+"event_key": "27764|ZIL",
+"token": "ZIL",
+"pair": "ZILUSDT",
+"kind": "placebo",
+"T": 1592288408000,
+"t_event_ms": 1592374808000,
+"trades": 2695,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ZILUSDT/ZILUSDT-aggTrades-2020-06-16.zip",
+"bytes": 531801,
+"sha256": "4131886a985353a8c0c13c17ad557b03556d08eb3864d472f92805dfc8c213de"
+}
+]
+},
+{
+"row": 26,
+"event_key": "27988|ZRX",
+"token": "ZRX",
+"pair": "ZRXUSDT",
+"kind": "event",
+"T": 1592896034000,
+"t_event_ms": 1592896034000,
+"trades": 1191,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ZRXUSDT/ZRXUSDT-aggTrades-2020-06-23.zip",
+"bytes": 117162,
+"sha256": "98ed203e8c91960f31bd36f2d4e5c9cb6689d3107385f221d29ff99cfa7dce0b"
+}
+]
+},
+{
+"row": 27,
+"event_key": "27988|ZRX",
+"token": "ZRX",
+"pair": "ZRXUSDT",
+"kind": "placebo",
+"T": 1592809634000,
+"t_event_ms": 1592896034000,
+"trades": 258,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ZRXUSDT/ZRXUSDT-aggTrades-2020-06-22.zip",
+"bytes": 124725,
+"sha256": "b4a69693f07e0d6b128487b838b2ced839c683fb034211c7848fb194eb4b4891"
+}
+]
+},
+{
+"row": 28,
+"event_key": "29020|LEND",
+"token": "LEND",
+"pair": "LENDUSDT",
+"kind": "event",
+"T": 1595395727182,
+"t_event_ms": 1595395727182,
+"trades": 3999,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/LENDUSDT/LENDUSDT-aggTrades-2020-07-22.zip",
+"bytes": 332222,
+"sha256": "bfe387102a1e5bfe7bed8700f94ec39147bf291f759e0dfad12a5101da3771b9"
+}
+]
+},
+{
+"row": 29,
+"event_key": "29020|LEND",
+"token": "LEND",
+"pair": "LENDUSDT",
+"kind": "placebo",
+"T": 1595309327182,
+"t_event_ms": 1595395727182,
+"trades": 1153,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/LENDUSDT/LENDUSDT-aggTrades-2020-07-21.zip",
+"bytes": 434426,
+"sha256": "47373c85d862abc69f615a4aaf1ce282221ca76e47cdc8b013b43086ebdd3794"
+}
+]
+},
+{
+"row": 30,
+"event_key": "29208|KAVA",
+"token": "KAVA",
+"pair": "KAVAUSDT",
+"kind": "event",
+"T": 1595827610441,
+"t_event_ms": 1595827610441,
+"trades": 3466,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/KAVAUSDT/KAVAUSDT-aggTrades-2020-07-27.zip",
+"bytes": 750568,
+"sha256": "3e928ec0020edc46250c75bb6d8273d590623120f4927ccf9f41ff14346f1acf"
+}
+]
+},
+{
+"row": 31,
+"event_key": "29208|KAVA",
+"token": "KAVA",
+"pair": "KAVAUSDT",
+"kind": "placebo",
+"T": 1595741210441,
+"t_event_ms": 1595827610441,
+"trades": 1361,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/KAVAUSDT/KAVAUSDT-aggTrades-2020-07-26.zip",
+"bytes": 457727,
+"sha256": "abb37e893f309899712b7d920e6cee7d61302cfa08f3d4a889d30b37ed704fb8"
+}
+]
+},
+{
+"row": 32,
+"event_key": "29271|BAND",
+"token": "BAND",
+"pair": "BANDUSDT",
+"kind": "event",
+"T": 1595923209869,
+"t_event_ms": 1595923209869,
+"trades": 3416,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/BANDUSDT/BANDUSDT-aggTrades-2020-07-28.zip",
+"bytes": 597569,
+"sha256": "b84fb46c78db4543ad02387ffb789dc7bedb58da78e1280f66c97d13a7781f98"
+}
+]
+},
+{
+"row": 33,
+"event_key": "29271|BAND",
+"token": "BAND",
+"pair": "BANDUSDT",
+"kind": "placebo",
+"T": 1595836809869,
+"t_event_ms": 1595923209869,
+"trades": 2238,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/BANDUSDT/BANDUSDT-aggTrades-2020-07-27.zip",
+"bytes": 588489,
+"sha256": "0cc7ef5fafab73f25dcf60b433573595e36b9a8bf2b7ea0797f731ac678a201b"
+}
+]
+},
+{
+"row": 34,
+"event_key": "29384|RLC",
+"token": "RLC",
+"pair": "RLCUSDT",
+"kind": "event",
+"T": 1596092407757,
+"t_event_ms": 1596092407757,
+"trades": 1844,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/RLCUSDT/RLCUSDT-aggTrades-2020-07-30.zip",
+"bytes": 194265,
+"sha256": "30bf2453872b51ba62d836ace1fcaf4708a44fccec412006b380882b8c18273a"
+}
+]
+},
+{
+"row": 35,
+"event_key": "29384|RLC",
+"token": "RLC",
+"pair": "RLCUSDT",
+"kind": "placebo",
+"T": 1596006007757,
+"t_event_ms": 1596092407757,
+"trades": 363,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/RLCUSDT/RLCUSDT-aggTrades-2020-07-29.zip",
+"bytes": 136629,
+"sha256": "9d01843782397770d838bbaf08126b18b4334068623574e543b70fb07217f70b"
+}
+]
+},
+{
+"row": 36,
+"event_key": "29816|WAVES",
+"token": "WAVES",
+"pair": "WAVESUSDT",
+"kind": "event",
+"T": 1597133467160,
+"t_event_ms": 1597133467160,
+"trades": 1522,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/WAVESUSDT/WAVESUSDT-aggTrades-2020-08-11.zip",
+"bytes": 187865,
+"sha256": "b9f8e504f2cfe16ed7adf72a456889455820d2173f08f0baef416d27737ed28a"
+}
+]
+},
+{
+"row": 37,
+"event_key": "29816|WAVES",
+"token": "WAVES",
+"pair": "WAVESUSDT",
+"kind": "placebo",
+"T": 1597047067160,
+"t_event_ms": 1597133467160,
+"trades": 1679,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/WAVESUSDT/WAVESUSDT-aggTrades-2020-08-10.zip",
+"bytes": 268880,
+"sha256": "2bb84064557764a5bc343379ad13171efb7ec3d9b848af155ebf8c13b0273c25"
+}
+]
+},
+{
+"row": 38,
+"event_key": "29959|SNX",
+"token": "SNX",
+"pair": "SNXUSDT",
+"kind": "event",
+"T": 1597291208336,
+"t_event_ms": 1597291208336,
+"trades": 1865,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/SNXUSDT/SNXUSDT-aggTrades-2020-08-13.zip",
+"bytes": 484765,
+"sha256": "b1d51af66faf9bdc5f4b55ff76d915db67e3f792f9a7b24c220164e51bb6a9cf"
+}
+]
+},
+{
+"row": 39,
+"event_key": "29959|SNX",
+"token": "SNX",
+"pair": "SNXUSDT",
+"kind": "placebo",
+"T": 1597204808336,
+"t_event_ms": 1597291208336,
+"trades": 1304,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/SNXUSDT/SNXUSDT-aggTrades-2020-08-12.zip",
+"bytes": 444078,
+"sha256": "07c727a5fe62802c77a6ba192c54033defcc2d4567e0a3b650e47bd6d8953bd4"
+}
+]
+},
+{
+"row": 40,
+"event_key": "31842|ICX",
+"token": "ICX",
+"pair": "ICXUSDT",
+"kind": "event",
+"T": 1600058576320,
+"t_event_ms": 1600058576320,
+"trades": 588,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ICXUSDT/ICXUSDT-aggTrades-2020-09-14.zip",
+"bytes": 265206,
+"sha256": "5b877722c74ae88f9ee4a0630bcbcc39cd17ad6d2e45a936ea820adc88570679"
+}
+]
+},
+{
+"row": 41,
+"event_key": "31842|ICX",
+"token": "ICX",
+"pair": "ICXUSDT",
+"kind": "placebo",
+"T": 1599972176320,
+"t_event_ms": 1600058576320,
+"trades": 417,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ICXUSDT/ICXUSDT-aggTrades-2020-09-13.zip",
+"bytes": 170430,
+"sha256": "079e7cc1aa4cf71dd5753266c20cfb4e35f133b046d63d84811154edc5b30bff"
+}
+]
+},
+{
+"row": 42,
+"event_key": "31842|SOL",
+"token": "SOL",
+"pair": "SOLUSDT",
+"kind": "event",
+"T": 1600058576320,
+"t_event_ms": 1600058576320,
+"trades": 974,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/SOLUSDT/SOLUSDT-aggTrades-2020-09-14.zip",
+"bytes": 678676,
+"sha256": "2cde325091c7a5d20917942410eccc9382d602cc1406399c3270ac5777be5157"
+}
+]
+},
+{
+"row": 43,
+"event_key": "31842|SOL",
+"token": "SOL",
+"pair": "SOLUSDT",
+"kind": "placebo",
+"T": 1599972176320,
+"t_event_ms": 1600058576320,
+"trades": 1373,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/SOLUSDT/SOLUSDT-aggTrades-2020-09-13.zip",
+"bytes": 381786,
+"sha256": "41f6355176fe8bd85299860782c5ffe0ac3e497235cc348b1001036dcdf5d25a"
+}
+]
+},
+{
+"row": 44,
+"event_key": "31938|STORJ",
+"token": "STORJ",
+"pair": "STORJUSDT",
+"kind": "event",
+"T": 1600156333385,
+"t_event_ms": 1600156333385,
+"trades": 980,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/STORJUSDT/STORJUSDT-aggTrades-2020-09-15.zip",
+"bytes": 117045,
+"sha256": "f442a86263d70ca2ba84af097067d92a48a901d26724835e82bd6ca1398df525"
+}
+]
+},
+{
+"row": 45,
+"event_key": "31938|STORJ",
+"token": "STORJ",
+"pair": "STORJUSDT",
+"kind": "placebo",
+"T": 1600069933385,
+"t_event_ms": 1600156333385,
+"trades": 207,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/STORJUSDT/STORJUSDT-aggTrades-2020-09-14.zip",
+"bytes": 98770,
+"sha256": "bd029eb06949491f5334452d7b4c98d771ccf6a2ce521e9e3846d5b9338fef9b"
+}
+]
+},
+{
+"row": 46,
+"event_key": "32023|BLZ",
+"token": "BLZ",
+"pair": "BLZUSDT",
+"kind": "event",
+"T": 1600244353396,
+"t_event_ms": 1600244353396,
+"trades": 716,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/BLZUSDT/BLZUSDT-aggTrades-2020-09-16.zip",
+"bytes": 75171,
+"sha256": "dfe3df476912d12fbc41fc05f13644478e4e4027f937c7228d05f4c9f66891a8"
+}
+]
+},
+{
+"row": 47,
+"event_key": "32023|BLZ",
+"token": "BLZ",
+"pair": "BLZUSDT",
+"kind": "placebo",
+"T": 1600157953396,
+"t_event_ms": 1600244353396,
+"trades": 223,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/BLZUSDT/BLZUSDT-aggTrades-2020-09-15.zip",
+"bytes": 107067,
+"sha256": "c2eed5347f0d4efd1372c66fe3fb04f6af382d91d1af0531329d5af3d6a0b679"
+}
+]
+},
+{
+"row": 48,
+"event_key": "32516|FTM",
+"token": "FTM",
+"pair": "FTMUSDT",
+"kind": "event",
+"T": 1600843256658,
+"t_event_ms": 1600843256658,
+"trades": 2555,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/FTMUSDT/FTMUSDT-aggTrades-2020-09-23.zip",
+"bytes": 408322,
+"sha256": "1db6da011e7feaf558791832ee64ba011cf4e00d517c0be4c7f1f186d63bb7d6"
+}
+]
+},
+{
+"row": 49,
+"event_key": "32516|FTM",
+"token": "FTM",
+"pair": "FTMUSDT",
+"kind": "placebo",
+"T": 1600756856658,
+"t_event_ms": 1600843256658,
+"trades": 4820,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/FTMUSDT/FTMUSDT-aggTrades-2020-09-22.zip",
+"bytes": 549204,
+"sha256": "afa05d6e9e022870f9cb3af55bb0ae96997e55fa638db458dbb46ed9689d41f2"
+}
+]
+},
+{
+"row": 50,
+"event_key": "33389|TOMO",
+"token": "TOMO",
+"pair": "TOMOUSDT",
+"kind": "event",
+"T": 1602313480820,
+"t_event_ms": 1602313480820,
+"trades": 1374,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/TOMOUSDT/TOMOUSDT-aggTrades-2020-10-10.zip",
+"bytes": 141835,
+"sha256": "ba18e397b293a1cd9522c788e4199d2a4a12d9129ea9cab371b9550e1915f98b"
+}
+]
+},
+{
+"row": 51,
+"event_key": "33389|TOMO",
+"token": "TOMO",
+"pair": "TOMOUSDT",
+"kind": "placebo",
+"T": 1602227080820,
+"t_event_ms": 1602313480820,
+"trades": 338,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/TOMOUSDT/TOMOUSDT-aggTrades-2020-10-09.zip",
+"bytes": 136103,
+"sha256": "de03f4b332714b5fb3244835f9603286cc2a29106319dd37979793fecb4e1d0b"
+}
+]
+},
+{
+"row": 52,
+"event_key": "33434|REN",
+"token": "REN",
+"pair": "RENUSDT",
+"kind": "event",
+"T": 1602475232728,
+"t_event_ms": 1602475232728,
+"trades": 1900,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/RENUSDT/RENUSDT-aggTrades-2020-10-12.zip",
+"bytes": 938883,
+"sha256": "a31940b236225bfa608bbb6c15e668f1f1f018f01bf4877cd6f9c9292a9302d9"
+}
+]
+},
+{
+"row": 53,
+"event_key": "33434|REN",
+"token": "REN",
+"pair": "RENUSDT",
+"kind": "placebo",
+"T": 1602388832728,
+"t_event_ms": 1602475232728,
+"trades": 1293,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/RENUSDT/RENUSDT-aggTrades-2020-10-11.zip",
+"bytes": 1231531,
+"sha256": "6396ddc146954ed7cb7649d2b9b6fbfe35a08f039765071a6c283aa9d504a66a"
+}
+]
+},
+{
+"row": 54,
+"event_key": "33988|LRC",
+"token": "LRC",
+"pair": "LRCUSDT",
+"kind": "event",
+"T": 1603076454799,
+"t_event_ms": 1603076454799,
+"trades": 414,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/LRCUSDT/LRCUSDT-aggTrades-2020-10-19.zip",
+"bytes": 311289,
+"sha256": "21c2ce4788f30211c80a4a3a73c91dc7cd0f54dd15ce7ce4cf3cd6d1a8836ee8"
+}
+]
+},
+{
+"row": 55,
+"event_key": "33988|LRC",
+"token": "LRC",
+"pair": "LRCUSDT",
+"kind": "placebo",
+"T": 1602990054799,
+"t_event_ms": 1603076454799,
+"trades": 184,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/LRCUSDT/LRCUSDT-aggTrades-2020-10-18.zip",
+"bytes": 47421,
+"sha256": "c8462107a3a1863f09f3300d084d935ecb783361e8b7a41a549d373cfdeca312"
+}
+]
+},
+{
+"row": 56,
+"event_key": "33988|RSR",
+"token": "RSR",
+"pair": "RSRUSDT",
+"kind": "event",
+"T": 1603076454799,
+"t_event_ms": 1603076454799,
+"trades": 509,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/RSRUSDT/RSRUSDT-aggTrades-2020-10-19.zip",
+"bytes": 256036,
+"sha256": "eeaf3a8c07a379d20855adc540c97b825b66c6f2eb30ed789f54da915896029a"
+}
+]
+},
+{
+"row": 57,
+"event_key": "33988|RSR",
+"token": "RSR",
+"pair": "RSRUSDT",
+"kind": "placebo",
+"T": 1602990054799,
+"t_event_ms": 1603076454799,
+"trades": 513,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/RSRUSDT/RSRUSDT-aggTrades-2020-10-18.zip",
+"bytes": 177649,
+"sha256": "e8d338c0ebe1ee8847d242c35e5c088643a1e4f0c313b997fb4d1f6e9504cadf"
+}
+]
+},
+{
+"row": 58,
+"event_key": "34214|MATIC",
+"token": "MATIC",
+"pair": "MATICUSDT",
+"kind": "event",
+"T": 1603260797148,
+"t_event_ms": 1603260797148,
+"trades": 583,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/MATICUSDT/MATICUSDT-aggTrades-2020-10-21.zip",
+"bytes": 119863,
+"sha256": "fe132f0f369941e59d82d5ec2c3e7caa46682f31c27439a4759b160c0d03528c"
+}
+]
+},
+{
+"row": 59,
+"event_key": "34214|MATIC",
+"token": "MATIC",
+"pair": "MATICUSDT",
+"kind": "placebo",
+"T": 1603174397148,
+"t_event_ms": 1603260797148,
+"trades": 153,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/MATICUSDT/MATICUSDT-aggTrades-2020-10-20.zip",
+"bytes": 86088,
+"sha256": "2621dec1c9353ffd198e654e9b7016bef200011657399d43ae7a9a6e5fd072a0"
+}
+]
+},
+{
+"row": 60,
+"event_key": "35124|OCEAN",
+"token": "OCEAN",
+"pair": "OCEANUSDT",
+"kind": "event",
+"T": 1604290737127,
+"t_event_ms": 1604290737127,
+"trades": 1010,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/OCEANUSDT/OCEANUSDT-aggTrades-2020-11-02.zip",
+"bytes": 287903,
+"sha256": "4b9cbc879b47c2ba733931d4e8c78a32fb3b4c2cf30c0d2d279bcc1cfe5c9f27"
+}
+]
+},
+{
+"row": 61,
+"event_key": "35124|OCEAN",
+"token": "OCEAN",
+"pair": "OCEANUSDT",
+"kind": "placebo",
+"T": 1604204337127,
+"t_event_ms": 1604290737127,
+"trades": 238,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/OCEANUSDT/OCEANUSDT-aggTrades-2020-11-01.zip",
+"bytes": 222224,
+"sha256": "f060b2c3e6e12a4e1f2132de8329ec45878a7cc7b80477ad1a914ef6c62fdf97"
+}
+]
+},
+{
+"row": 62,
+"event_key": "38867|ALPHA",
+"token": "ALPHA",
+"pair": "ALPHAUSDT",
+"kind": "event",
+"T": 1606100635049,
+"t_event_ms": 1606100635049,
+"trades": 3572,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ALPHAUSDT/ALPHAUSDT-aggTrades-2020-11-23.zip",
+"bytes": 1024328,
+"sha256": "9ceb0e8a07e9a0398eb10171fcc7c21580ee0fee6dcc3e52f9a6d2061f0f2a87"
+}
+]
+},
+{
+"row": 63,
+"event_key": "38867|ALPHA",
+"token": "ALPHA",
+"pair": "ALPHAUSDT",
+"kind": "placebo",
+"T": 1606014235049,
+"t_event_ms": 1606100635049,
+"trades": 3363,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ALPHAUSDT/ALPHAUSDT-aggTrades-2020-11-22.zip",
+"bytes": 723239,
+"sha256": "b7d17be606cbbd9eb83daa6d048e5475fc4b130a1b8d868ef97dfe7d2aa798bf"
+}
+]
+},
+{
+"row": 64,
+"event_key": "44143|CHZ",
+"token": "CHZ",
+"pair": "CHZUSDT",
+"kind": "event",
+"T": 1611196604753,
+"t_event_ms": 1611196604753,
+"trades": 1122,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/CHZUSDT/CHZUSDT-aggTrades-2021-01-21.zip",
+"bytes": 579761,
+"sha256": "19d86c9d60737fcce4fba3df3b4bc747ff1ee701de4d797affe12cc3749b673e"
+}
+]
+},
+{
+"row": 65,
+"event_key": "44143|CHZ",
+"token": "CHZ",
+"pair": "CHZUSDT",
+"kind": "placebo",
+"T": 1611110204753,
+"t_event_ms": 1611196604753,
+"trades": 1165,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/CHZUSDT/CHZUSDT-aggTrades-2021-01-20.zip",
+"bytes": 654594,
+"sha256": "20413d97e04ce0e08d3f91ba74d100ffa3407dc8a8fda512a64e64bb1ad727e0"
+}
+]
+},
+{
+"row": 66,
+"event_key": "44382|ANKR",
+"token": "ANKR",
+"pair": "ANKRUSDT",
+"kind": "event",
+"T": 1611550798162,
+"t_event_ms": 1611550798162,
+"trades": 2024,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ANKRUSDT/ANKRUSDT-aggTrades-2021-01-25.zip",
+"bytes": 284844,
+"sha256": "e785aedff825e72cc9849daf3798719b1e55468522e9765f7cdb18349caba4e0"
+}
+]
+},
+{
+"row": 67,
+"event_key": "44382|ANKR",
+"token": "ANKR",
+"pair": "ANKRUSDT",
+"kind": "placebo",
+"T": 1611464398162,
+"t_event_ms": 1611550798162,
+"trades": 606,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ANKRUSDT/ANKRUSDT-aggTrades-2021-01-24.zip",
+"bytes": 332713,
+"sha256": "37c5ee6e91bf0d52f0e5c2c82cc7f3d783372c29e124c1856910aba9a171ee33"
+}
+]
+},
+{
+"row": 68,
+"event_key": "44382|SAND",
+"token": "SAND",
+"pair": "SANDUSDT",
+"kind": "event",
+"T": 1611550798162,
+"t_event_ms": 1611550798162,
+"trades": 1625,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/SANDUSDT/SANDUSDT-aggTrades-2021-01-25.zip",
+"bytes": 384441,
+"sha256": "ad776940ecc74c2e6956d530e224a8f3b26b45f9b6c6ba1ce89e3735130f2288"
+}
+]
+},
+{
+"row": 69,
+"event_key": "44382|SAND",
+"token": "SAND",
+"pair": "SANDUSDT",
+"kind": "placebo",
+"T": 1611464398162,
+"t_event_ms": 1611550798162,
+"trades": 1340,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/SANDUSDT/SANDUSDT-aggTrades-2021-01-24.zip",
+"bytes": 245835,
+"sha256": "5dd077a61a41f48069a3f3ce85ce377954d38826d2f4934a6f48534414e14a03"
+}
+]
+},
+{
+"row": 70,
+"event_key": "44879|LUNA",
+"token": "LUNA",
+"pair": "LUNAUSDT",
+"kind": "event",
+"T": 1611815345827,
+"t_event_ms": 1611815345827,
+"trades": 8694,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/LUNAUSDT/LUNAUSDT-aggTrades-2021-01-28.zip",
+"bytes": 2941773,
+"sha256": "6ff41506e1e08f0fc0e8acd41827f63bf0bc92e6c20e2ee2ce9486d0eb7a6b0b"
+}
+]
+},
+{
+"row": 71,
+"event_key": "44879|LUNA",
+"token": "LUNA",
+"pair": "LUNAUSDT",
+"kind": "placebo",
+"T": 1611728945827,
+"t_event_ms": 1611815345827,
+"trades": 1786,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/LUNAUSDT/LUNAUSDT-aggTrades-2021-01-27.zip",
+"bytes": 1316359,
+"sha256": "3e9a1622d6aea6ece4f850de1c15bc85b90f8905e0aabf4b5d7af218a5796b16"
+}
+]
+},
+{
+"row": 72,
+"event_key": "46144|UNFI",
+"token": "UNFI",
+"pair": "UNFIUSDT",
+"kind": "event",
+"T": 1613620415263,
+"t_event_ms": 1613620415263,
+"trades": 3705,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/UNFIUSDT/UNFIUSDT-aggTrades-2021-02-18.zip",
+"bytes": 790299,
+"sha256": "be6f3605f65f5280c89bec9fb1402bacc4222c2e0cdc2f774beb54acc0a35584"
+}
+]
+},
+{
+"row": 73,
+"event_key": "46144|UNFI",
+"token": "UNFI",
+"pair": "UNFIUSDT",
+"kind": "placebo",
+"T": 1613534015263,
+"t_event_ms": 1613620415263,
+"trades": 822,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/UNFIUSDT/UNFIUSDT-aggTrades-2021-02-17.zip",
+"bytes": 844442,
+"sha256": "09ec47ee43027a4c1e3850ef6ca626a5196fc30ce49996654f9c167d2351cc58"
+}
+]
+},
+{
+"row": 74,
+"event_key": "46293|REEF",
+"token": "REEF",
+"pair": "REEFUSDT",
+"kind": "event",
+"T": 1613962969237,
+"t_event_ms": 1613962969237,
+"trades": 12779,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/REEFUSDT/REEFUSDT-aggTrades-2021-02-22.zip",
+"bytes": 6093431,
+"sha256": "226d25b1b13717f75e691589b6508f2e7d8453839730596aee3ef77b72c1d08c"
+}
+]
+},
+{
+"row": 75,
+"event_key": "46293|REEF",
+"token": "REEF",
+"pair": "REEFUSDT",
+"kind": "placebo",
+"T": 1613876569237,
+"t_event_ms": 1613962969237,
+"trades": 4350,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/REEFUSDT/REEFUSDT-aggTrades-2021-02-21.zip",
+"bytes": 2686750,
+"sha256": "c87080262ca31033ad246a27ff76cf0c6bd7852d3b4945204f6a334234aa10b9"
+}
+]
+},
+{
+"row": 76,
+"event_key": "46293|RVN",
+"token": "RVN",
+"pair": "RVNUSDT",
+"kind": "event",
+"T": 1613962969237,
+"t_event_ms": 1613962969237,
+"trades": 6084,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/RVNUSDT/RVNUSDT-aggTrades-2021-02-22.zip",
+"bytes": 3365235,
+"sha256": "6073620afa04c88625fe05ea76f2e05ddcaf61909d1c3073c25aab9c0d56dcc5"
+}
+]
+},
+{
+"row": 77,
+"event_key": "46293|RVN",
+"token": "RVN",
+"pair": "RVNUSDT",
+"kind": "placebo",
+"T": 1613876569237,
+"t_event_ms": 1613962969237,
+"trades": 8759,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/RVNUSDT/RVNUSDT-aggTrades-2021-02-21.zip",
+"bytes": 4830082,
+"sha256": "17dc038d7f447faa0e111808d2f7d2eec527fcff877e51029ea32abe942f6a8c"
+}
+]
+},
+{
+"row": 78,
+"event_key": "48647|BTCST",
+"token": "BTCST",
+"pair": "BTCSTUSDT",
+"kind": "event",
+"T": 1614739258666,
+"t_event_ms": 1614739258666,
+"trades": 1446,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/BTCSTUSDT/BTCSTUSDT-aggTrades-2021-03-03.zip",
+"bytes": 502230,
+"sha256": "8cecbd5afe62d64403d893c2e2e0eba3dd5ffb8b1f54e648127de84bde2ad723"
+}
+]
+},
+{
+"row": 79,
+"event_key": "48647|BTCST",
+"token": "BTCST",
+"pair": "BTCSTUSDT",
+"kind": "placebo",
+"T": 1614652858666,
+"t_event_ms": 1614739258666,
+"trades": 1091,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/BTCSTUSDT/BTCSTUSDT-aggTrades-2021-03-02.zip",
+"bytes": 470981,
+"sha256": "0e5751bf874858bc36e0663551bd8155a4439e29d45821d3c229cdda4953beb4"
+}
+]
+},
+{
+"row": 80,
+"event_key": "48647|XEM",
+"token": "XEM",
+"pair": "XEMUSDT",
+"kind": "event",
+"T": 1614739258666,
+"t_event_ms": 1614739258666,
+"trades": 15481,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/XEMUSDT/XEMUSDT-aggTrades-2021-03-03.zip",
+"bytes": 3587528,
+"sha256": "75c14ba1d64e0475811fc044ef201573475b1ce7a0b00f0ce2b0dc819acc9586"
+}
+]
+},
+{
+"row": 81,
+"event_key": "48647|XEM",
+"token": "XEM",
+"pair": "XEMUSDT",
+"kind": "placebo",
+"T": 1614652858666,
+"t_event_ms": 1614739258666,
+"trades": 3391,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/XEMUSDT/XEMUSDT-aggTrades-2021-03-02.zip",
+"bytes": 2748118,
+"sha256": "678ecdc4a0f1381e43368fff570cc07697ccd5bfe1cbec5e8ffc0f31c362cd99"
+}
+]
+},
+{
+"row": 82,
+"event_key": "49014|COTI",
+"token": "COTI",
+"pair": "COTIUSDT",
+"kind": "event",
+"T": 1615276082978,
+"t_event_ms": 1615276082978,
+"trades": 14638,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/COTIUSDT/COTIUSDT-aggTrades-2021-03-09.zip",
+"bytes": 4169685,
+"sha256": "9c65b29784f3372d29470f840be5bdc2f8f6b2c277c8285e6e72ee1ebdb8fad3"
+}
+]
+},
+{
+"row": 83,
+"event_key": "49014|COTI",
+"token": "COTI",
+"pair": "COTIUSDT",
+"kind": "placebo",
+"T": 1615189682978,
+"t_event_ms": 1615276082978,
+"trades": 57652,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/COTIUSDT/COTIUSDT-aggTrades-2021-03-08.zip",
+"bytes": 5828035,
+"sha256": "dacef778b38488608ffd603512eb4e649b6fb68235778be7ad2406d5cc261e1f"
+}
+]
+},
+{
+"row": 84,
+"event_key": "49268|CHR",
+"token": "CHR",
+"pair": "CHRUSDT",
+"kind": "event",
+"T": 1615521115937,
+"t_event_ms": 1615521115937,
+"trades": 12507,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/CHRUSDT/CHRUSDT-aggTrades-2021-03-12.zip",
+"bytes": 11544664,
+"sha256": "be1ce72fabf6cb11df710dd188c8ec5ca56f94441d45762c116b50ca4238a7e5"
+}
+]
+},
+{
+"row": 85,
+"event_key": "49268|CHR",
+"token": "CHR",
+"pair": "CHRUSDT",
+"kind": "placebo",
+"T": 1615434715937,
+"t_event_ms": 1615521115937,
+"trades": 20555,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/CHRUSDT/CHRUSDT-aggTrades-2021-03-11.zip",
+"bytes": 15322389,
+"sha256": "2bb7a52101f77bcdc133c2ace8811755660d884a9c5519a92cb558506867bc6e"
+}
+]
+},
+{
+"row": 86,
+"event_key": "49785|ONE",
+"token": "ONE",
+"pair": "ONEUSDT",
+"kind": "event",
+"T": 1615965562517,
+"t_event_ms": 1615965562517,
+"trades": 8826,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ONEUSDT/ONEUSDT-aggTrades-2021-03-17.zip",
+"bytes": 2485978,
+"sha256": "2d7e7a7b897b403faa2f9fff5208b67ba15f026fc71448681834e14b15ec730a"
+}
+]
+},
+{
+"row": 87,
+"event_key": "49785|ONE",
+"token": "ONE",
+"pair": "ONEUSDT",
+"kind": "placebo",
+"T": 1615879162517,
+"t_event_ms": 1615965562517,
+"trades": 7736,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ONEUSDT/ONEUSDT-aggTrades-2021-03-16.zip",
+"bytes": 3628777,
+"sha256": "6c70d789e3b2d0d4ec9a786d667fc4e180f29b7e89c6818af6426b0753b303ee"
+}
+]
+},
+{
+"row": 88,
+"event_key": "50259|DENT",
+"token": "DENT",
+"pair": "DENTUSDT",
+"kind": "event",
+"T": 1616553690512,
+"t_event_ms": 1616553690512,
+"trades": 26754,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/DENTUSDT/DENTUSDT-aggTrades-2021-03-24.zip",
+"bytes": 10285307,
+"sha256": "535b54bd520556128ac37ab78350dda64f9901ae06f80d450700a7646b9c5370"
+}
+]
+},
+{
+"row": 89,
+"event_key": "50259|DENT",
+"token": "DENT",
+"pair": "DENTUSDT",
+"kind": "placebo",
+"T": 1616467290512,
+"t_event_ms": 1616553690512,
+"trades": 38090,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/DENTUSDT/DENTUSDT-aggTrades-2021-03-23.zip",
+"bytes": 13979855,
+"sha256": "3f8651a49d18889374080166010f42ef7e0346c0300dfa9bdf50250a8102e58f"
+}
+]
+},
+{
+"row": 90,
+"event_key": "50688|MTL",
+"token": "MTL",
+"pair": "MTLUSDT",
+"kind": "event",
+"T": 1617164142982,
+"t_event_ms": 1617164142982,
+"trades": 8253,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/MTLUSDT/MTLUSDT-aggTrades-2021-03-31.zip",
+"bytes": 4110858,
+"sha256": "9a1e68f4855d96229c4dfbfdb61609f80ddf332adabf409cbc7bb7770cd938a2"
+}
+]
+},
+{
+"row": 91,
+"event_key": "50688|MTL",
+"token": "MTL",
+"pair": "MTLUSDT",
+"kind": "placebo",
+"T": 1617077742982,
+"t_event_ms": 1617164142982,
+"trades": 15570,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/MTLUSDT/MTLUSDT-aggTrades-2021-03-30.zip",
+"bytes": 13398031,
+"sha256": "68317310ab2676d9473e9ce10e0bfc6465eb510be22b7067e61deddb5cb04340"
+}
+]
+},
+{
+"row": 92,
+"event_key": "50787|OGN",
+"token": "OGN",
+"pair": "OGNUSDT",
+"kind": "event",
+"T": 1617252390607,
+"t_event_ms": 1617252390607,
+"trades": 7181,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/OGNUSDT/OGNUSDT-aggTrades-2021-04-01.zip",
+"bytes": 1632474,
+"sha256": "fe608d93c4a59b76c8a2cbdc3dec32c452530e5e8c62128fd5749f7c3859014e"
+}
+]
+},
+{
+"row": 93,
+"event_key": "50787|OGN",
+"token": "OGN",
+"pair": "OGNUSDT",
+"kind": "placebo",
+"T": 1617165990607,
+"t_event_ms": 1617252390607,
+"trades": 7248,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/OGNUSDT/OGNUSDT-aggTrades-2021-03-31.zip",
+"bytes": 2224389,
+"sha256": "0be80bed37f3da64d26058cc476b5578838716b3d6476d9617ae2675071acf70"
+}
+]
+},
+{
+"row": 94,
+"event_key": "51544|NKN",
+"token": "NKN",
+"pair": "NKNUSDT",
+"kind": "event",
+"T": 1617938822400,
+"t_event_ms": 1617938822400,
+"trades": 14932,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/NKNUSDT/NKNUSDT-aggTrades-2021-04-09.zip",
+"bytes": 17374269,
+"sha256": "ca7f48d81d6166fd558d1d5ee77650ba2b2d130bbc4b06c87783c7e8274c3fa1"
+}
+]
+},
+{
+"row": 95,
+"event_key": "51544|NKN",
+"token": "NKN",
+"pair": "NKNUSDT",
+"kind": "placebo",
+"T": 1617852422400,
+"t_event_ms": 1617938822400,
+"trades": 15433,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/NKNUSDT/NKNUSDT-aggTrades-2021-04-08.zip",
+"bytes": 7036836,
+"sha256": "e34a569aad943f6fb2904aaa44f2e0d48ac45ed787aea300a83277b29428c267"
+}
+]
+},
+{
+"row": 96,
+"event_key": "52660|DGB",
+"token": "DGB",
+"pair": "DGBUSDT",
+"kind": "event",
+"T": 1618902207579,
+"t_event_ms": 1618902207579,
+"trades": 5139,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/DGBUSDT/DGBUSDT-aggTrades-2021-04-20.zip",
+"bytes": 1254655,
+"sha256": "90e4c53d13933a950a576a6e1397737805f510545a7102df319515ada4aa317a"
+}
+]
+},
+{
+"row": 97,
+"event_key": "52660|DGB",
+"token": "DGB",
+"pair": "DGBUSDT",
+"kind": "placebo",
+"T": 1618815807579,
+"t_event_ms": 1618902207579,
+"trades": 9672,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/DGBUSDT/DGBUSDT-aggTrades-2021-04-19.zip",
+"bytes": 2144739,
+"sha256": "99c70cdfc7bc7d7a6fedfcd6581aeae128b30e854583afa6d217b77a6a1af28b"
+}
+]
+},
+{
+"row": 98,
+"event_key": "68760|AR",
+"token": "AR",
+"pair": "ARUSDT",
+"kind": "event",
+"T": 1632473600386,
+"t_event_ms": 1632473600386,
+"trades": 12190,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ARUSDT/ARUSDT-aggTrades-2021-09-24.zip",
+"bytes": 987195,
+"sha256": "bb3a8b7645d6235bb101ddd80b291a6f9191009fa8435785012f2773dc842d01"
+}
+]
+},
+{
+"row": 99,
+"event_key": "68760|AR",
+"token": "AR",
+"pair": "ARUSDT",
+"kind": "placebo",
+"T": 1632387200386,
+"t_event_ms": 1632473600386,
+"trades": 1994,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ARUSDT/ARUSDT-aggTrades-2021-09-23.zip",
+"bytes": 1188663,
+"sha256": "f6960ffe4905f07a827ac2a9a7ed7563294fc0e0ceeb23d5bae855b4cc4eac5c"
+}
+]
+},
+{
+"row": 100,
+"event_key": "68760|CELO",
+"token": "CELO",
+"pair": "CELOUSDT",
+"kind": "event",
+"T": 1632473600386,
+"t_event_ms": 1632473600386,
+"trades": 31424,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/CELOUSDT/CELOUSDT-aggTrades-2021-09-24.zip",
+"bytes": 5446788,
+"sha256": "6ca8c53850b2030b2ab5112c7f3f0ee242452d4d4ddd7310e81d30ac4a86513f"
+}
+]
+},
+{
+"row": 101,
+"event_key": "68760|CELO",
+"token": "CELO",
+"pair": "CELOUSDT",
+"kind": "placebo",
+"T": 1632387200386,
+"t_event_ms": 1632473600386,
+"trades": 8177,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/CELOUSDT/CELOUSDT-aggTrades-2021-09-23.zip",
+"bytes": 2931490,
+"sha256": "d541c61f41c719560af0d15850e4b3e15e881707d2a1d1b106fb3c5cccdfbbbc"
+}
+]
+},
+{
+"row": 102,
+"event_key": "69861|KLAY",
+"token": "KLAY",
+"pair": "KLAYUSDT",
+"kind": "event",
+"T": 1633919423571,
+"t_event_ms": 1633919423571,
+"trades": 2083,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/KLAYUSDT/KLAYUSDT-aggTrades-2021-10-11.zip",
+"bytes": 579797,
+"sha256": "4ab8965229643bab71405518134c3dea5f92c9e6c147c216b46a646c5c8dfef2"
+}
+]
+},
+{
+"row": 103,
+"event_key": "69861|KLAY",
+"token": "KLAY",
+"pair": "KLAYUSDT",
+"kind": "placebo",
+"T": 1633833023571,
+"t_event_ms": 1633919423571,
+"trades": 3968,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/KLAYUSDT/KLAYUSDT-aggTrades-2021-10-10.zip",
+"bytes": 1331373,
+"sha256": "3fe9d373b9e7b16d4c2873515665d2be9bf6174d8f856122b55f9f0a4dbe69da"
+}
+]
+},
+{
+"row": 104,
+"event_key": "70643|ARPA",
+"token": "ARPA",
+"pair": "ARPAUSDT",
+"kind": "event",
+"T": 1634530840863,
+"t_event_ms": 1634530840863,
+"trades": 4401,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ARPAUSDT/ARPAUSDT-aggTrades-2021-10-18.zip",
+"bytes": 5051888,
+"sha256": "1773cc90769063939695ee197342484021a541f435b73de8d9f0213521b29028"
+}
+]
+},
+{
+"row": 105,
+"event_key": "70643|ARPA",
+"token": "ARPA",
+"pair": "ARPAUSDT",
+"kind": "placebo",
+"T": 1634444440863,
+"t_event_ms": 1634530840863,
+"trades": 1028,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ARPAUSDT/ARPAUSDT-aggTrades-2021-10-17.zip",
+"bytes": 583707,
+"sha256": "53c3d4cc7eac75fc4673cb9e3c38ed3a6a623823554c5d3d95fe22078f5252b8"
+}
+]
+},
+{
+"row": 106,
+"event_key": "70643|NU",
+"token": "NU",
+"pair": "NUUSDT",
+"kind": "event",
+"T": 1634530840863,
+"t_event_ms": 1634530840863,
+"trades": 4951,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/NUUSDT/NUUSDT-aggTrades-2021-10-18.zip",
+"bytes": 1619841,
+"sha256": "af06c4df0c83f2e1e246ece3420e7e093ec03932a8404e4c753f3d1aa8052190"
+}
+]
+},
+{
+"row": 107,
+"event_key": "70643|NU",
+"token": "NU",
+"pair": "NUUSDT",
+"kind": "placebo",
+"T": 1634444440863,
+"t_event_ms": 1634530840863,
+"trades": 10742,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/NUUSDT/NUUSDT-aggTrades-2021-10-17.zip",
+"bytes": 3917881,
+"sha256": "e913fab9e512ccf029552584e1fe5373b1d80aac1363d086022bb2fcebda78cc"
+}
+]
+},
+{
+"row": 108,
+"event_key": "71467|CTSI",
+"token": "CTSI",
+"pair": "CTSIUSDT",
+"kind": "event",
+"T": 1635129503763,
+"t_event_ms": 1635129503763,
+"trades": 938,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/CTSIUSDT/CTSIUSDT-aggTrades-2021-10-25.zip",
+"bytes": 2548747,
+"sha256": "e20aaef7170ecd2520d9dccafbe429fae78444c06a6f8127845759f62ede2131"
+}
+]
+},
+{
+"row": 109,
+"event_key": "71467|CTSI",
+"token": "CTSI",
+"pair": "CTSIUSDT",
+"kind": "placebo",
+"T": 1635043103763,
+"t_event_ms": 1635129503763,
+"trades": 442,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/CTSIUSDT/CTSIUSDT-aggTrades-2021-10-24.zip",
+"bytes": 352890,
+"sha256": "4d12bfed67a8917003704db586c112738f2f187eb71c700a769570118ec50f6a"
+}
+]
+},
+{
+"row": 110,
+"event_key": "73148|LPT",
+"token": "LPT",
+"pair": "LPTUSDT",
+"kind": "event",
+"T": 1636515996878,
+"t_event_ms": 1636515996878,
+"trades": 9286,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/LPTUSDT/LPTUSDT-aggTrades-2021-11-10.zip",
+"bytes": 4011358,
+"sha256": "ed558b30ccada1c00e3ee1cb41621bf9f10dd0dc804f5368db11f25c09133f23"
+}
+]
+},
+{
+"row": 111,
+"event_key": "73148|LPT",
+"token": "LPT",
+"pair": "LPTUSDT",
+"kind": "placebo",
+"T": 1636429596878,
+"t_event_ms": 1636515996878,
+"trades": 34456,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/LPTUSDT/LPTUSDT-aggTrades-2021-11-09.zip",
+"bytes": 12450942,
+"sha256": "69fc4afd13d268b4fe38d832d726bb2b1140b7c886d4551bccd26aec16dbe868"
+}
+]
+},
+{
+"row": 112,
+"event_key": "78263|ANT",
+"token": "ANT",
+"pair": "ANTUSDT",
+"kind": "event",
+"T": 1640316664860,
+"t_event_ms": 1640316664860,
+"trades": 29101,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ANTUSDT/ANTUSDT-aggTrades-2021-12-24.zip",
+"bytes": 7483401,
+"sha256": "04b51ec6c7c0e7ad6fd0f451833ec209504091daf34b478b883f422f3410aad5"
+}
+]
+},
+{
+"row": 113,
+"event_key": "78263|ANT",
+"token": "ANT",
+"pair": "ANTUSDT",
+"kind": "placebo",
+"T": 1640230264860,
+"t_event_ms": 1640316664860,
+"trades": 8263,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ANTUSDT/ANTUSDT-aggTrades-2021-12-23.zip",
+"bytes": 6836841,
+"sha256": "735c67ad0ec00e2036c108c7b6d500a3552991ee93ce7b5979edc25da3a2de4d"
+}
+]
+},
+{
+"row": 114,
+"event_key": "78561|ROSE",
+"token": "ROSE",
+"pair": "ROSEUSDT",
+"kind": "event",
+"T": 1640775587721,
+"t_event_ms": 1640775587721,
+"trades": 14744,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ROSEUSDT/ROSEUSDT-aggTrades-2021-12-29.zip",
+"bytes": 5445375,
+"sha256": "c9ca47690995be7bd613c13aae9fbe833e3e2dd8fc1328a869c0bec1005c8bc4"
+}
+]
+},
+{
+"row": 115,
+"event_key": "78561|ROSE",
+"token": "ROSE",
+"pair": "ROSEUSDT",
+"kind": "placebo",
+"T": 1640689187721,
+"t_event_ms": 1640775587721,
+"trades": 9591,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ROSEUSDT/ROSEUSDT-aggTrades-2021-12-28.zip",
+"bytes": 2702265,
+"sha256": "23fb1030bbec501e13be20069b93974782e105dadcbe8274d8ad7d1c3a9d6332"
+}
+]
+},
+{
+"row": 116,
+"event_key": "79045|DUSK",
+"token": "DUSK",
+"pair": "DUSKUSDT",
+"kind": "event",
+"T": 1641443265141,
+"t_event_ms": 1641443265141,
+"trades": 3486,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/DUSKUSDT/DUSKUSDT-aggTrades-2022-01-06.zip",
+"bytes": 1741915,
+"sha256": "a055f24ec6669a97c73846a5c64c76b4a12b0016c4eca4e16a07da0f1c1b7d03"
+}
+]
+},
+{
+"row": 117,
+"event_key": "79045|DUSK",
+"token": "DUSK",
+"pair": "DUSKUSDT",
+"kind": "placebo",
+"T": 1641356865141,
+"t_event_ms": 1641443265141,
+"trades": 1875,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/DUSKUSDT/DUSKUSDT-aggTrades-2022-01-05.zip",
+"bytes": 1384615,
+"sha256": "16d06ff87b01fb2a2ce217378175fdd69787b30bcdecaa5034b0044fe73082c2"
+}
+]
+},
+{
+"row": 118,
+"event_key": "81986|FLOW",
+"token": "FLOW",
+"pair": "FLOWUSDT",
+"kind": "event",
+"T": 1644393004206,
+"t_event_ms": 1644393004206,
+"trades": 2567,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/FLOWUSDT/FLOWUSDT-aggTrades-2022-02-09.zip",
+"bytes": 1125908,
+"sha256": "75f35b86944ae65f9a017e8635237bd570107673f38f152460fe3cdea713c1ee"
+}
+]
+},
+{
+"row": 119,
+"event_key": "81986|FLOW",
+"token": "FLOW",
+"pair": "FLOWUSDT",
+"kind": "placebo",
+"T": 1644306604206,
+"t_event_ms": 1644393004206,
+"trades": 3001,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/FLOWUSDT/FLOWUSDT-aggTrades-2022-02-08.zip",
+"bytes": 558065,
+"sha256": "ceea5508cb3949052dca574c1df6cb309ad0ee87880427b8581c1550b95c48fb"
+}
+]
+},
+{
+"row": 120,
+"event_key": "82060|IMX",
+"token": "IMX",
+"pair": "IMXUSDT",
+"kind": "event",
+"T": 1644455657178,
+"t_event_ms": 1644455657178,
+"trades": 976,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/IMXUSDT/IMXUSDT-aggTrades-2022-02-10.zip",
+"bytes": 455704,
+"sha256": "3222373ea23e954568edbc9bfebeb9a08f173b093b6a9b1d3d75a59d4185332b"
+}
+]
+},
+{
+"row": 121,
+"event_key": "82060|IMX",
+"token": "IMX",
+"pair": "IMXUSDT",
+"kind": "placebo",
+"T": 1644369257178,
+"t_event_ms": 1644455657178,
+"trades": 1579,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/IMXUSDT/IMXUSDT-aggTrades-2022-02-09.zip",
+"bytes": 429206,
+"sha256": "9db55a48000d28cc74b34feb8ff8990338ead3b34c58418cf799f4e0587fcc0c"
+}
+]
+},
+{
+"row": 122,
+"event_key": "83198|API3",
+"token": "API3",
+"pair": "API3USDT",
+"kind": "event",
+"T": 1645417723129,
+"t_event_ms": 1645417723129,
+"trades": 3883,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/API3USDT/API3USDT-aggTrades-2022-02-21.zip",
+"bytes": 877769,
+"sha256": "ba2ce3d17eab031b31cf00271838203820f7e5bc324c0f91e8a31f6d5ebbf8df"
+}
+]
+},
+{
+"row": 123,
+"event_key": "83198|API3",
+"token": "API3",
+"pair": "API3USDT",
+"kind": "placebo",
+"T": 1645331323129,
+"t_event_ms": 1645417723129,
+"trades": 7374,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/API3USDT/API3USDT-aggTrades-2022-02-20.zip",
+"bytes": 2740482,
+"sha256": "59589cc5dba9e7fc7db5473043263ebd215ccfc947dfcc4f1fe5483bb4370c25"
+}
+]
+},
+{
+"row": 124,
+"event_key": "84192|ANC",
+"token": "ANC",
+"pair": "ANCUSDT",
+"kind": "event",
+"T": 1646632541556,
+"t_event_ms": 1646632541556,
+"trades": 14623,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ANCUSDT/ANCUSDT-aggTrades-2022-03-07.zip",
+"bytes": 1928729,
+"sha256": "6506df0700b728e8ccd00a28e9029938956be417fd322a6746c089753d8baf81"
+}
+]
+},
+{
+"row": 125,
+"event_key": "84192|ANC",
+"token": "ANC",
+"pair": "ANCUSDT",
+"kind": "placebo",
+"T": 1646546141556,
+"t_event_ms": 1646632541556,
+"trades": 14266,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ANCUSDT/ANCUSDT-aggTrades-2022-03-06.zip",
+"bytes": 3020813,
+"sha256": "67a36c3c960444933e2e2254c1be6f8b2fc519c59c5dbb42e6e0abce131d21e5"
+}
+]
+},
+{
+"row": 126,
+"event_key": "87277|BNX",
+"token": "BNX",
+"pair": "BNXUSDT",
+"kind": "event",
+"T": 1648697457847,
+"t_event_ms": 1648697457847,
+"trades": 5234,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/BNXUSDT/BNXUSDT-aggTrades-2022-03-31.zip",
+"bytes": 417397,
+"sha256": "0276b27c035a44fc6a955185c4383df06d86da58e284bcc3e1e37a7b388c1ea1"
+}
+]
+},
+{
+"row": 127,
+"event_key": "87277|BNX",
+"token": "BNX",
+"pair": "BNXUSDT",
+"kind": "placebo",
+"T": 1648611057847,
+"t_event_ms": 1648697457847,
+"trades": 155,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/BNXUSDT/BNXUSDT-aggTrades-2022-03-30.zip",
+"bytes": 67561,
+"sha256": "4f146ce8c4168c7ebb494da06375182cd8f70d55edc73caff82f4cbfa4248c16"
+}
+]
+},
+{
+"row": 128,
+"event_key": "88201|WOO",
+"token": "WOO",
+"pair": "WOOUSDT",
+"kind": "event",
+"T": 1649304062794,
+"t_event_ms": 1649304062794,
+"trades": 6377,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/WOOUSDT/WOOUSDT-aggTrades-2022-04-07.zip",
+"bytes": 554438,
+"sha256": "83bd6a5360a94c8d1d2945e836e9d1f634c6336028fbb354aaf58ab7654282cb"
+}
+]
+},
+{
+"row": 129,
+"event_key": "88201|WOO",
+"token": "WOO",
+"pair": "WOOUSDT",
+"kind": "placebo",
+"T": 1649217662794,
+"t_event_ms": 1649304062794,
+"trades": 437,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/WOOUSDT/WOOUSDT-aggTrades-2022-04-06.zip",
+"bytes": 269164,
+"sha256": "c071a8a0d4bfd395e32f4b1a3728bee4ad00ad020edd0d8224607d670c2c2241"
+}
+]
+},
+{
+"row": 130,
+"event_key": "89377|JASMY",
+"token": "JASMY",
+"pair": "JASMYUSDT",
+"kind": "event",
+"T": 1650337201630,
+"t_event_ms": 1650337201630,
+"trades": 10247,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/JASMYUSDT/JASMYUSDT-aggTrades-2022-04-19.zip",
+"bytes": 2046426,
+"sha256": "619148404c507e16a4b54ea789217389730aa098e6de2da831bf3e782b0b4cf5"
+}
+]
+},
+{
+"row": 131,
+"event_key": "89377|JASMY",
+"token": "JASMY",
+"pair": "JASMYUSDT",
+"kind": "placebo",
+"T": 1650250801630,
+"t_event_ms": 1650337201630,
+"trades": 605,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/JASMYUSDT/JASMYUSDT-aggTrades-2022-04-18.zip",
+"bytes": 637543,
+"sha256": "a5c5e5787f77b8beb54fa243448ffa0f36554eff434cd4945456b86aadfb3742"
+}
+]
+},
+{
+"row": 132,
+"event_key": "90345|DAR",
+"token": "DAR",
+"pair": "DARUSDT",
+"kind": "event",
+"T": 1651143335256,
+"t_event_ms": 1651143335256,
+"trades": 173161,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/DARUSDT/DARUSDT-aggTrades-2022-04-28.zip",
+"bytes": 13927921,
+"sha256": "e40c73677369ab4501c4b4770f83d10c401e9ce89183a56a6bc30d2a4c1ca0db"
+}
+]
+},
+{
+"row": 133,
+"event_key": "90345|DAR",
+"token": "DAR",
+"pair": "DARUSDT",
+"kind": "placebo",
+"T": 1651056935256,
+"t_event_ms": 1651143335256,
+"trades": 3182,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/DARUSDT/DARUSDT-aggTrades-2022-04-27.zip",
+"bytes": 805532,
+"sha256": "0973c2a8f6d850d9a65d6cf84a48ac127bfc19a2992ea7ed76f87df71f3be8cd"
+}
+]
+},
+{
+"row": 134,
+"event_key": "100063|INJ",
+"token": "INJ",
+"pair": "INJUSDT",
+"kind": "event",
+"T": 1660632311350,
+"t_event_ms": 1660632311350,
+"trades": 18103,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/INJUSDT/INJUSDT-aggTrades-2022-08-16.zip",
+"bytes": 798435,
+"sha256": "bc858d82afd520fca92d33be99add6caf96df035e9f2b68241f436fee25c30f1"
+}
+]
+},
+{
+"row": 135,
+"event_key": "100063|INJ",
+"token": "INJ",
+"pair": "INJUSDT",
+"kind": "placebo",
+"T": 1660545911350,
+"t_event_ms": 1660632311350,
+"trades": 529,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/INJUSDT/INJUSDT-aggTrades-2022-08-15.zip",
+"bytes": 156753,
+"sha256": "b27d83c242542922192d4e3819d0f4869cb2040de2c981ffd2e95fe9564279cd"
+}
+]
+},
+{
+"row": 136,
+"event_key": "101828|SPELL",
+"token": "SPELL",
+"pair": "SPELLUSDT",
+"kind": "event",
+"T": 1662430503943,
+"t_event_ms": 1662430503943,
+"trades": 19468,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/SPELLUSDT/SPELLUSDT-aggTrades-2022-09-06.zip",
+"bytes": 1663946,
+"sha256": "59f44a729f09497b53a4743876f7084547b487780c92275b400c9d916fd58474"
+}
+]
+},
+{
+"row": 137,
+"event_key": "101828|SPELL",
+"token": "SPELL",
+"pair": "SPELLUSDT",
+"kind": "placebo",
+"T": 1662344103943,
+"t_event_ms": 1662430503943,
+"trades": 268,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/SPELLUSDT/SPELLUSDT-aggTrades-2022-09-05.zip",
+"bytes": 167800,
+"sha256": "79061a74ed1e5412b23afcd55a27e477e957d085494af1eb7730f351e9c3799a"
+}
+]
+},
+{
+"row": 138,
+"event_key": "121727|CVX",
+"token": "CVX",
+"pair": "CVXUSDT",
+"kind": "event",
+"T": 1663752003073,
+"t_event_ms": 1663752003073,
+"trades": 4816,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/CVXUSDT/CVXUSDT-aggTrades-2022-09-21.zip",
+"bytes": 227462,
+"sha256": "12ded8c404dc1d7660e621005f29281a9223f388f7bba834bb107389a3264553"
+}
+]
+},
+{
+"row": 139,
+"event_key": "121727|CVX",
+"token": "CVX",
+"pair": "CVXUSDT",
+"kind": "placebo",
+"T": 1663665603073,
+"t_event_ms": 1663752003073,
+"trades": 372,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/CVXUSDT/CVXUSDT-aggTrades-2022-09-20.zip",
+"bytes": 130995,
+"sha256": "5f24724a49fde6f30fbb7fec5466bb9ae7af77dbfe2cb3a12278452bfe0ffcd1"
+}
+]
+},
+{
+"row": 140,
+"event_key": "121727|LDO",
+"token": "LDO",
+"pair": "LDOUSDT",
+"kind": "event",
+"T": 1663752003073,
+"t_event_ms": 1663752003073,
+"trades": 4823,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/LDOUSDT/LDOUSDT-aggTrades-2022-09-21.zip",
+"bytes": 763748,
+"sha256": "6be3614059ff085ba8062e0eefcc0767884272aff9c2b108ca21c65b2e6b0111"
+}
+]
+},
+{
+"row": 141,
+"event_key": "121727|LDO",
+"token": "LDO",
+"pair": "LDOUSDT",
+"kind": "placebo",
+"T": 1663665603073,
+"t_event_ms": 1663752003073,
+"trades": 2044,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/LDOUSDT/LDOUSDT-aggTrades-2022-09-20.zip",
+"bytes": 674680,
+"sha256": "d10ece0aad3f3cbabee76bca5ee83a133460d7b8348ea52f11d4bd471d74c30a"
+}
+]
+},
+{
+"row": 142,
+"event_key": "126099|QNT",
+"token": "QNT",
+"pair": "QNTUSDT",
+"kind": "event",
+"T": 1666072804317,
+"t_event_ms": 1666072804317,
+"trades": 6349,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/QNTUSDT/QNTUSDT-aggTrades-2022-10-18.zip",
+"bytes": 889186,
+"sha256": "095943243f53351da3e462d30dbda2e2283bbc3bf0d709ee1013d782c23b979f"
+}
+]
+},
+{
+"row": 143,
+"event_key": "126099|QNT",
+"token": "QNT",
+"pair": "QNTUSDT",
+"kind": "placebo",
+"T": 1665986404317,
+"t_event_ms": 1666072804317,
+"trades": 19712,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/QNTUSDT/QNTUSDT-aggTrades-2022-10-17.zip",
+"bytes": 2334596,
+"sha256": "7d99ea7dcf2aae042856d1828fb0b0b069bc9a6485a03e9b3afb50bc9a065fd8"
+}
+]
+},
+{
+"row": 144,
+"event_key": "146750|FET",
+"token": "FET",
+"pair": "FETUSDT",
+"kind": "event",
+"T": 1673589605774,
+"t_event_ms": 1673589605774,
+"trades": 22447,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/FETUSDT/FETUSDT-aggTrades-2023-01-13.zip",
+"bytes": 1800152,
+"sha256": "4cdaaf568ed9faeb9afd03a763b01a43dccf57cb27a632838dc653f4cbca57d8"
+}
+]
+},
+{
+"row": 145,
+"event_key": "146750|FET",
+"token": "FET",
+"pair": "FETUSDT",
+"kind": "placebo",
+"T": 1673503205774,
+"t_event_ms": 1673589605774,
+"trades": 1928,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/FETUSDT/FETUSDT-aggTrades-2023-01-12.zip",
+"bytes": 1402809,
+"sha256": "4b0d6ac807def550ada26ee7f10e3a6fb8d326dc699ecf5512cf2ec66a902c6b"
+}
+]
+},
+{
+"row": 146,
+"event_key": "147421|HOOK",
+"token": "HOOK",
+"pair": "HOOKUSDT",
+"kind": "event",
+"T": 1674188403181,
+"t_event_ms": 1674188403181,
+"trades": 25830,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/HOOKUSDT/HOOKUSDT-aggTrades-2023-01-20.zip",
+"bytes": 2164032,
+"sha256": "cc1db14b6f10ef153a64f164486072e2d0fb1b5570ac667a9a7497257d88d65b"
+}
+]
+},
+{
+"row": 147,
+"event_key": "147421|HOOK",
+"token": "HOOK",
+"pair": "HOOKUSDT",
+"kind": "placebo",
+"T": 1674102003181,
+"t_event_ms": 1674188403181,
+"trades": 798,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/HOOKUSDT/HOOKUSDT-aggTrades-2023-01-19.zip",
+"bytes": 411365,
+"sha256": "2ab6df93b3e9308dbbff9e26dc1a5a14eaec1346baf07afae0e0d66cffcc0a78"
+}
+]
+},
+{
+"row": 148,
+"event_key": "147554|MAGIC",
+"token": "MAGIC",
+"pair": "MAGICUSDT",
+"kind": "event",
+"T": 1674462607907,
+"t_event_ms": 1674462607907,
+"trades": 29955,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/MAGICUSDT/MAGICUSDT-aggTrades-2023-01-23.zip",
+"bytes": 1616808,
+"sha256": "084c6e2d6f0000ec40358708dcf092fe416a494c620cae69d9316fc4e443665c"
+}
+]
+},
+{
+"row": 149,
+"event_key": "147554|MAGIC",
+"token": "MAGIC",
+"pair": "MAGICUSDT",
+"kind": "placebo",
+"T": 1674376207907,
+"t_event_ms": 1674462607907,
+"trades": 4769,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/MAGICUSDT/MAGICUSDT-aggTrades-2023-01-22.zip",
+"bytes": 1834232,
+"sha256": "8b53624abac4c1e8d170fe76222aea0d48dd2397ea145123710daaed49669765"
+}
+]
+},
+{
+"row": 150,
+"event_key": "148144|RNDR",
+"token": "RNDR",
+"pair": "RNDRUSDT",
+"kind": "event",
+"T": 1675313403726,
+"t_event_ms": 1675313403726,
+"trades": 16506,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/RNDRUSDT/RNDRUSDT-aggTrades-2023-02-02.zip",
+"bytes": 1040155,
+"sha256": "da3c71a63612a394c21879170f93656d0b6ce1de9920d25c7e21ac937e904384"
+}
+]
+},
+{
+"row": 151,
+"event_key": "148144|RNDR",
+"token": "RNDR",
+"pair": "RNDRUSDT",
+"kind": "placebo",
+"T": 1675227003726,
+"t_event_ms": 1675313403726,
+"trades": 2865,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/RNDRUSDT/RNDRUSDT-aggTrades-2023-02-01.zip",
+"bytes": 1493442,
+"sha256": "9d1c851c406526558d567b4273ff4a30a7be6392837ce02856ec4e0f71e396b4"
+}
+]
+},
+{
+"row": 152,
+"event_key": "148274|HIGH",
+"token": "HIGH",
+"pair": "HIGHUSDT",
+"kind": "event",
+"T": 1675408255005,
+"t_event_ms": 1675408255005,
+"trades": 20298,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/HIGHUSDT/HIGHUSDT-aggTrades-2023-02-03.zip",
+"bytes": 1570921,
+"sha256": "5a43c679eea60c80bdd051334631d624fb9e0e5b83a4242ac150d0608a38d25d"
+}
+]
+},
+{
+"row": 153,
+"event_key": "148274|HIGH",
+"token": "HIGH",
+"pair": "HIGHUSDT",
+"kind": "placebo",
+"T": 1675321855005,
+"t_event_ms": 1675408255005,
+"trades": 9600,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/HIGHUSDT/HIGHUSDT-aggTrades-2023-02-02.zip",
+"bytes": 2495625,
+"sha256": "fd836840fbccfa90ae9fde1c2ecd2784b1c1d2153f43e4764560bf0223037321"
+}
+]
+},
+{
+"row": 154,
+"event_key": "148274|MINA",
+"token": "MINA",
+"pair": "MINAUSDT",
+"kind": "event",
+"T": 1675408255005,
+"t_event_ms": 1675408255005,
+"trades": 12528,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/MINAUSDT/MINAUSDT-aggTrades-2023-02-03.zip",
+"bytes": 731505,
+"sha256": "329b69cbd8dec2587b9e1f84292cb78e59c02e13058a99d40e345098774aa2f6"
+}
+]
+},
+{
+"row": 155,
+"event_key": "148274|MINA",
+"token": "MINA",
+"pair": "MINAUSDT",
+"kind": "placebo",
+"T": 1675321855005,
+"t_event_ms": 1675408255005,
+"trades": 2063,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/MINAUSDT/MINAUSDT-aggTrades-2023-02-02.zip",
+"bytes": 703578,
+"sha256": "19c52e7a7e95621d8e886bd0ea7fe7f23394639ab481f0301684614fbb3dd551"
+}
+]
+},
+{
+"row": 156,
+"event_key": "149398|ASTR",
+"token": "ASTR",
+"pair": "ASTRUSDT",
+"kind": "event",
+"T": 1676282412174,
+"t_event_ms": 1676282412174,
+"trades": 10739,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ASTRUSDT/ASTRUSDT-aggTrades-2023-02-13.zip",
+"bytes": 371937,
+"sha256": "d6dd0e1d703410c0e073e05cb0761d2b0c4634eec1853ef79a10cb153939283d"
+}
+]
+},
+{
+"row": 157,
+"event_key": "149398|ASTR",
+"token": "ASTR",
+"pair": "ASTRUSDT",
+"kind": "placebo",
+"T": 1676196012174,
+"t_event_ms": 1676282412174,
+"trades": 532,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ASTRUSDT/ASTRUSDT-aggTrades-2023-02-12.zip",
+"bytes": 196595,
+"sha256": "aa416687fa030f5700c9850dcd8026913100fa7463fca0b52880eec55a60441c"
+}
+]
+},
+{
+"row": 158,
+"event_key": "149644|PHB",
+"token": "PHB",
+"pair": "PHBUSDT",
+"kind": "event",
+"T": 1676458803763,
+"t_event_ms": 1676458803763,
+"trades": 14574,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/PHBUSDT/PHBUSDT-aggTrades-2023-02-15.zip",
+"bytes": 605870,
+"sha256": "59316c57483e4e1943054547478d9967887035748049065ac87e2fbcfb94e9a3"
+}
+]
+},
+{
+"row": 159,
+"event_key": "149644|PHB",
+"token": "PHB",
+"pair": "PHBUSDT",
+"kind": "placebo",
+"T": 1676372403763,
+"t_event_ms": 1676458803763,
+"trades": 1553,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/PHBUSDT/PHBUSDT-aggTrades-2023-02-14.zip",
+"bytes": 275164,
+"sha256": "b6842ce6fc56aabb7caa99cb18622d7fb7242c9628174aad8b7b71e66248d016"
+}
+]
+},
+{
+"row": 160,
+"event_key": "149763|GMX",
+"token": "GMX",
+"pair": "GMXUSDT",
+"kind": "event",
+"T": 1676547005690,
+"t_event_ms": 1676547005690,
+"trades": 14390,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/GMXUSDT/GMXUSDT-aggTrades-2023-02-16.zip",
+"bytes": 962903,
+"sha256": "e32757abb72bf3550e0fbdb84c817c73a3595d0781a5a25ab7e461e7737a535a"
+}
+]
+},
+{
+"row": 161,
+"event_key": "149763|GMX",
+"token": "GMX",
+"pair": "GMXUSDT",
+"kind": "placebo",
+"T": 1676460605690,
+"t_event_ms": 1676547005690,
+"trades": 3222,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/GMXUSDT/GMXUSDT-aggTrades-2023-02-15.zip",
+"bytes": 701993,
+"sha256": "0eef33ba3798c0d2cd4797a795a1ab2947dcc4580403b2479f4ebfbd17249ae8"
+}
+]
+},
+{
+"row": 162,
+"event_key": "150004|CFX",
+"token": "CFX",
+"pair": "CFXUSDT",
+"kind": "event",
+"T": 1676871342290,
+"t_event_ms": 1676871342290,
+"trades": 21281,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/CFXUSDT/CFXUSDT-aggTrades-2023-02-20.zip",
+"bytes": 7463630,
+"sha256": "801018125b76a35c68a39b4e671ffdac025ffb184b713a4a2e3c553ed6763bea"
+}
+]
+},
+{
+"row": 163,
+"event_key": "150004|CFX",
+"token": "CFX",
+"pair": "CFXUSDT",
+"kind": "placebo",
+"T": 1676784942290,
+"t_event_ms": 1676871342290,
+"trades": 19071,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/CFXUSDT/CFXUSDT-aggTrades-2023-02-19.zip",
+"bytes": 4607840,
+"sha256": "480f08c5853be653667d3c39625dcfa45abd1ec2ac6d4d7e2d98f58e21c1c807"
+}
+]
+},
+{
+"row": 164,
+"event_key": "150170|COCOS",
+"token": "COCOS",
+"pair": "COCOSUSDT",
+"kind": "event",
+"T": 1676947519933,
+"t_event_ms": 1676947519933,
+"trades": 19144,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/COCOSUSDT/COCOSUSDT-aggTrades-2023-02-21.zip",
+"bytes": 3513088,
+"sha256": "339e128459885897dbfd5ff2e95580015ed79ebaf4034685d8d23cb7b2341fde"
+}
+]
+},
+{
+"row": 165,
+"event_key": "150170|COCOS",
+"token": "COCOS",
+"pair": "COCOSUSDT",
+"kind": "placebo",
+"T": 1676861119933,
+"t_event_ms": 1676947519933,
+"trades": 5135,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/COCOSUSDT/COCOSUSDT-aggTrades-2023-02-20.zip",
+"bytes": 2920893,
+"sha256": "063d9e4029427012550c2b25397a116bb080611239206402f9bd5dbc181daab1"
+}
+]
+},
+{
+"row": 166,
+"event_key": "150170|STX",
+"token": "STX",
+"pair": "STXUSDT",
+"kind": "event",
+"T": 1676947519933,
+"t_event_ms": 1676947519933,
+"trades": 24421,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/STXUSDT/STXUSDT-aggTrades-2023-02-21.zip",
+"bytes": 2499285,
+"sha256": "b8a6cb43f4a189da0ac4baa28f143cede5afde367e8d1745d84b45e771ad2a7e"
+}
+]
+},
+{
+"row": 167,
+"event_key": "150170|STX",
+"token": "STX",
+"pair": "STXUSDT",
+"kind": "placebo",
+"T": 1676861119933,
+"t_event_ms": 1676947519933,
+"trades": 15188,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/STXUSDT/STXUSDT-aggTrades-2023-02-20.zip",
+"bytes": 4256733,
+"sha256": "a05a2513a9ca8b415c04b8bd5d57a45cd49392732f0f46d287ea6aa70b6369c2"
+}
+]
+},
+{
+"row": 168,
+"event_key": "150331|ACH",
+"token": "ACH",
+"pair": "ACHUSDT",
+"kind": "event",
+"T": 1677034817321,
+"t_event_ms": 1677034817321,
+"trades": 18235,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ACHUSDT/ACHUSDT-aggTrades-2023-02-22.zip",
+"bytes": 3375163,
+"sha256": "ae7e530411b2c71b4bce8c1996a7e42233f4761e914f0633e20b7047291cc9f1"
+}
+]
+},
+{
+"row": 169,
+"event_key": "150331|ACH",
+"token": "ACH",
+"pair": "ACHUSDT",
+"kind": "placebo",
+"T": 1676948417321,
+"t_event_ms": 1677034817321,
+"trades": 10693,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ACHUSDT/ACHUSDT-aggTrades-2023-02-21.zip",
+"bytes": 3440546,
+"sha256": "10178d8ac0811ff90b7c0cf685fae24e1829daa628f22d743be1b279b728f8ef"
+}
+]
+},
+{
+"row": 170,
+"event_key": "150801|CKB",
+"token": "CKB",
+"pair": "CKBUSDT",
+"kind": "event",
+"T": 1677492001679,
+"t_event_ms": 1677492001679,
+"trades": 7657,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/CKBUSDT/CKBUSDT-aggTrades-2023-02-27.zip",
+"bytes": 370472,
+"sha256": "49d0a72739ce74a4745aa1849e82f985c4554aba88a0cc1e575d1b5df815029f"
+}
+]
+},
+{
+"row": 171,
+"event_key": "150801|CKB",
+"token": "CKB",
+"pair": "CKBUSDT",
+"kind": "placebo",
+"T": 1677405601679,
+"t_event_ms": 1677492001679,
+"trades": 326,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/CKBUSDT/CKBUSDT-aggTrades-2023-02-26.zip",
+"bytes": 159061,
+"sha256": "a42698e6a79c239d3eca78330c7cc4530e1dddbd6f4a5062006e20a72f52e285"
+}
+]
+},
+{
+"row": 172,
+"event_key": "151454|PERP",
+"token": "PERP",
+"pair": "PERPUSDT",
+"kind": "event",
+"T": 1677834510093,
+"t_event_ms": 1677834510093,
+"trades": 16094,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/PERPUSDT/PERPUSDT-aggTrades-2023-03-03.zip",
+"bytes": 1368809,
+"sha256": "457638ad4716927f0745ef0592b2f21dc7600dbc0a3e1702a4975db3ebfe3680"
+}
+]
+},
+{
+"row": 173,
+"event_key": "151454|PERP",
+"token": "PERP",
+"pair": "PERPUSDT",
+"kind": "placebo",
+"T": 1677748110093,
+"t_event_ms": 1677834510093,
+"trades": 5259,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/PERPUSDT/PERPUSDT-aggTrades-2023-03-02.zip",
+"bytes": 3169351,
+"sha256": "e9599c4c9a88eed62852fc27fb63ad7ea0d3342278f2eee4f06e6ad71849618a"
+}
+]
+},
+{
+"row": 174,
+"event_key": "151501|TRU",
+"token": "TRU",
+"pair": "TRUUSDT",
+"kind": "event",
+"T": 1678071991007,
+"t_event_ms": 1678071991007,
+"trades": 11941,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/TRUUSDT/TRUUSDT-aggTrades-2023-03-06.zip",
+"bytes": 1601624,
+"sha256": "26aa69d39fa0414cd4817c6f15453cb22c8f70e1459272375213db7e28acf14d"
+}
+]
+},
+{
+"row": 175,
+"event_key": "151501|TRU",
+"token": "TRU",
+"pair": "TRUUSDT",
+"kind": "placebo",
+"T": 1677985591007,
+"t_event_ms": 1678071991007,
+"trades": 13078,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/TRUUSDT/TRUUSDT-aggTrades-2023-03-05.zip",
+"bytes": 2354875,
+"sha256": "0d76aac275c766988f750863188c9429e94309f97667f8e0ec37778673a8d131"
+}
+]
+},
+{
+"row": 176,
+"event_key": "154814|JOE",
+"token": "JOE",
+"pair": "JOEUSDT",
+"kind": "event",
+"T": 1679990405272,
+"t_event_ms": 1679990405272,
+"trades": 28662,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/JOEUSDT/JOEUSDT-aggTrades-2023-03-28.zip",
+"bytes": 2710850,
+"sha256": "db35e0da45deeeb80d05383eb552b28bd8142c54190d665ac838676083ac7c6a"
+}
+]
+},
+{
+"row": 177,
+"event_key": "154814|JOE",
+"token": "JOE",
+"pair": "JOEUSDT",
+"kind": "placebo",
+"T": 1679904005272,
+"t_event_ms": 1679990405272,
+"trades": 4259,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/JOEUSDT/JOEUSDT-aggTrades-2023-03-27.zip",
+"bytes": 2601523,
+"sha256": "a50d03d8232c0852c8200166bc49b8dd30e293276d9bc2fd90fa80b23806ba75"
+}
+]
+},
+{
+"row": 178,
+"event_key": "155271|LEVER",
+"token": "LEVER",
+"pair": "LEVERUSDT",
+"kind": "event",
+"T": 1680087603472,
+"t_event_ms": 1680087603472,
+"trades": 11172,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/LEVERUSDT/LEVERUSDT-aggTrades-2023-03-29.zip",
+"bytes": 499245,
+"sha256": "9f3ac6098a3a04d6fac8f75946fc6fca4f2408cc6dc7818f09355c5d68690f5b"
+}
+]
+},
+{
+"row": 179,
+"event_key": "155271|LEVER",
+"token": "LEVER",
+"pair": "LEVERUSDT",
+"kind": "placebo",
+"T": 1680001203472,
+"t_event_ms": 1680087603472,
+"trades": 245,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/LEVERUSDT/LEVERUSDT-aggTrades-2023-03-28.zip",
+"bytes": 85316,
+"sha256": "97941ee5803d0f7e264942614fa07bd18e24b6f44cab7b949a90a20e3ee1cdbe"
+}
+]
+},
+{
+"row": 180,
+"event_key": "156498|HFT",
+"token": "HFT",
+"pair": "HFTUSDT",
+"kind": "event",
+"T": 1680682504912,
+"t_event_ms": 1680682504912,
+"trades": 17231,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/HFTUSDT/HFTUSDT-aggTrades-2023-04-05.zip",
+"bytes": 1157299,
+"sha256": "f87f1aeaa99b99a27cd6650ebf3bef37b536a59ab0eb77b44f3253adf5361952"
+}
+]
+},
+{
+"row": 181,
+"event_key": "156498|HFT",
+"token": "HFT",
+"pair": "HFTUSDT",
+"kind": "placebo",
+"T": 1680596104912,
+"t_event_ms": 1680682504912,
+"trades": 572,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/HFTUSDT/HFTUSDT-aggTrades-2023-04-04.zip",
+"bytes": 268388,
+"sha256": "db910ea5afa865385b51a03aa8dea8a5d1986a0d260a5cdbbbcf5e42ab8f422a"
+}
+]
+},
+{
+"row": 182,
+"event_key": "160899|RAD",
+"token": "RAD",
+"pair": "RADUSDT",
+"kind": "event",
+"T": 1683615009386,
+"t_event_ms": 1683615009386,
+"trades": 11648,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/RADUSDT/RADUSDT-aggTrades-2023-05-09.zip",
+"bytes": 970803,
+"sha256": "2355234d5bf8f4f361a97fb2d36059b1eb5092857684c00a505a71c9218c9459"
+}
+]
+},
+{
+"row": 183,
+"event_key": "160899|RAD",
+"token": "RAD",
+"pair": "RADUSDT",
+"kind": "placebo",
+"T": 1683528609386,
+"t_event_ms": 1683615009386,
+"trades": 16129,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/RADUSDT/RADUSDT-aggTrades-2023-05-08.zip",
+"bytes": 2436163,
+"sha256": "0b45b9fdd65967aa3497a472db5ce368058200fcf14303d03c471b38ef7ff28c"
+}
+]
+},
+{
+"row": 184,
+"event_key": "160973|UMA",
+"token": "UMA",
+"pair": "UMAUSDT",
+"kind": "event",
+"T": 1683630617763,
+"t_event_ms": 1683630617763,
+"trades": 13229,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/UMAUSDT/UMAUSDT-aggTrades-2023-05-09.zip",
+"bytes": 1151758,
+"sha256": "d90f23a36e74c0f74c9ad4e2f4bccb870f88f4777bc51cd4ae8edfc6fe6a71f7"
+}
+]
+},
+{
+"row": 185,
+"event_key": "160973|UMA",
+"token": "UMA",
+"pair": "UMAUSDT",
+"kind": "placebo",
+"T": 1683544217763,
+"t_event_ms": 1683630617763,
+"trades": 2133,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/UMAUSDT/UMAUSDT-aggTrades-2023-05-08.zip",
+"bytes": 986756,
+"sha256": "147b792aa9d8179e3d3217d17e586b73736914d95cc85b3952265817af6da844"
+}
+]
+},
+{
+"row": 186,
+"event_key": "163438|KEY",
+"token": "KEY",
+"pair": "KEYUSDT",
+"kind": "event",
+"T": 1684838742835,
+"t_event_ms": 1684838742835,
+"trades": 18739,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/KEYUSDT/KEYUSDT-aggTrades-2023-05-23.zip",
+"bytes": 2670130,
+"sha256": "f8ac3b9877afb8d5dd29d5d3fd3035e7985847020371c97c1dda649ad8bd6815"
+}
+]
+},
+{
+"row": 187,
+"event_key": "163438|KEY",
+"token": "KEY",
+"pair": "KEYUSDT",
+"kind": "placebo",
+"T": 1684752342835,
+"t_event_ms": 1684838742835,
+"trades": 873,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/KEYUSDT/KEYUSDT-aggTrades-2023-05-22.zip",
+"bytes": 1117060,
+"sha256": "a7ae7e6064e357cca5bb8fcd457e1089205c57e702d0b9add91282eebfb61854"
+}
+]
+},
+{
+"row": 188,
+"event_key": "167756|MDT",
+"token": "MDT",
+"pair": "MDTUSDT",
+"kind": "event",
+"T": 1688022100973,
+"t_event_ms": 1688022100973,
+"trades": 17461,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/MDTUSDT/MDTUSDT-aggTrades-2023-06-29.zip",
+"bytes": 1325928,
+"sha256": "a75c6bfbd95a1547c9a1fcd8f987058437bd1df93563d63b33558031759fd5bd"
+}
+]
+},
+{
+"row": 189,
+"event_key": "167756|MDT",
+"token": "MDT",
+"pair": "MDTUSDT",
+"kind": "placebo",
+"T": 1687935700973,
+"t_event_ms": 1688022100973,
+"trades": 1792,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/MDTUSDT/MDTUSDT-aggTrades-2023-06-28.zip",
+"bytes": 197000,
+"sha256": "eb7cf8ec73b5602cb8e9eb064e1e18fc433d1ab7c692255f653618411cf95cae"
+}
+]
+},
+{
+"row": 190,
+"event_key": "172146|AGLD",
+"token": "AGLD",
+"pair": "AGLDUSDT",
+"kind": "event",
+"T": 1690540819158,
+"t_event_ms": 1690540819158,
+"trades": 5077,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/AGLDUSDT/AGLDUSDT-aggTrades-2023-07-28.zip",
+"bytes": 360564,
+"sha256": "6ea5fb6e7da0c94879fa883c86865d5b54fc93d34e67417196c3c776ac2227c5"
+}
+]
+},
+{
+"row": 191,
+"event_key": "172146|AGLD",
+"token": "AGLD",
+"pair": "AGLDUSDT",
+"kind": "placebo",
+"T": 1690454419158,
+"t_event_ms": 1690540819158,
+"trades": 1145,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/AGLDUSDT/AGLDUSDT-aggTrades-2023-07-27.zip",
+"bytes": 398021,
+"sha256": "d59d7bef67e01b30e948eadb8440f6f4171541c7c98205b6a78c3e403976b41f"
+}
+]
+},
+{
+"row": 192,
+"event_key": "173121|YGG",
+"token": "YGG",
+"pair": "YGGUSDT",
+"kind": "event",
+"T": 1691152225448,
+"t_event_ms": 1691152225448,
+"trades": 17761,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/YGGUSDT/YGGUSDT-aggTrades-2023-08-04.zip",
+"bytes": 3318241,
+"sha256": "cbe98826ac7e852e8ed3416094694d16e54e147aeda5f618f2e970ba06705300"
+}
+]
+},
+{
+"row": 193,
+"event_key": "173121|YGG",
+"token": "YGG",
+"pair": "YGGUSDT",
+"kind": "placebo",
+"T": 1691065825448,
+"t_event_ms": 1691152225448,
+"trades": 2932,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/YGGUSDT/YGGUSDT-aggTrades-2023-08-03.zip",
+"bytes": 990783,
+"sha256": "c97a2e6ef7e18fbde9b67b768cfa28c94729a0395658c949fb3585c333237f78"
+}
+]
+},
+{
+"row": 194,
+"event_key": "177142|HIFI",
+"token": "HIFI",
+"pair": "HIFIUSDT",
+"kind": "event",
+"T": 1694836831060,
+"t_event_ms": 1694836831060,
+"trades": 30445,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/HIFIUSDT/HIFIUSDT-aggTrades-2023-09-16.zip",
+"bytes": 11379488,
+"sha256": "d44373599cc7c69e75612ca5a83a17d659e144d0d1630e54cdb5857309a3724b"
+}
+]
+},
+{
+"row": 195,
+"event_key": "177142|HIFI",
+"token": "HIFI",
+"pair": "HIFIUSDT",
+"kind": "placebo",
+"T": 1694750431060,
+"t_event_ms": 1694836831060,
+"trades": 30919,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/HIFIUSDT/HIFIUSDT-aggTrades-2023-09-15.zip",
+"bytes": 7841258,
+"sha256": "9868eefd8ec9ca68fec34845456e782869ced8494dde2b367a5df4a8dae206ca"
+}
+]
+},
+{
+"row": 196,
+"event_key": "179392|LOOM",
+"token": "LOOM",
+"pair": "LOOMUSDT",
+"kind": "event",
+"T": 1696997177546,
+"t_event_ms": 1696997177546,
+"trades": 25574,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/LOOMUSDT/LOOMUSDT-aggTrades-2023-10-11.zip",
+"bytes": 2623252,
+"sha256": "f387e652489d141f5b207429190671db3a5ceda607d8c3ab110ae7c7f84a6039"
+}
+]
+},
+{
+"row": 197,
+"event_key": "179392|LOOM",
+"token": "LOOM",
+"pair": "LOOMUSDT",
+"kind": "placebo",
+"T": 1696910777546,
+"t_event_ms": 1696997177546,
+"trades": 8737,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/LOOMUSDT/LOOMUSDT-aggTrades-2023-10-10.zip",
+"bytes": 2302640,
+"sha256": "654079fcc46b01cda57436673e483688903d2086ef42a83fa8df0e7ed0cef155"
+}
+]
+},
+{
+"row": 198,
+"event_key": "180152|STPT",
+"token": "STPT",
+"pair": "STPTUSDT",
+"kind": "event",
+"T": 1697606833266,
+"t_event_ms": 1697606833266,
+"trades": 27596,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/STPTUSDT/STPTUSDT-aggTrades-2023-10-18.zip",
+"bytes": 3364728,
+"sha256": "453726cbbf11700a9b8cd141fbee9b4dea560d62c2e427ace51a5d426ae0a4f2"
+}
+]
+},
+{
+"row": 199,
+"event_key": "180152|STPT",
+"token": "STPT",
+"pair": "STPTUSDT",
+"kind": "placebo",
+"T": 1697520433266,
+"t_event_ms": 1697606833266,
+"trades": 3359,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/STPTUSDT/STPTUSDT-aggTrades-2023-10-17.zip",
+"bytes": 1088604,
+"sha256": "aae39752d9b35aa8cb87c9cf8711bde043cc373e47224d6e3d0ae9c65e1eb65c"
+}
+]
+},
+{
+"row": 200,
+"event_key": "181213|POWR",
+"token": "POWR",
+"pair": "POWRUSDT",
+"kind": "event",
+"T": 1698321002985,
+"t_event_ms": 1698321002985,
+"trades": 37135,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/POWRUSDT/POWRUSDT-aggTrades-2023-10-26.zip",
+"bytes": 1968995,
+"sha256": "7e2438e5fe25deb8d6790e841ecb932cf28eff93d22e9c7f675131cdd18ba5f5"
+}
+]
+},
+{
+"row": 201,
+"event_key": "181213|POWR",
+"token": "POWR",
+"pair": "POWRUSDT",
+"kind": "placebo",
+"T": 1698234602985,
+"t_event_ms": 1698321002985,
+"trades": 8840,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/POWRUSDT/POWRUSDT-aggTrades-2023-10-25.zip",
+"bytes": 2110310,
+"sha256": "0175909988cf9cf0ccf72954e114e861023f8dba1a8f01fb8857fabf24046992"
+}
+]
+},
+{
+"row": 202,
+"event_key": "181791|CAKE",
+"token": "CAKE",
+"pair": "CAKEUSDT",
+"kind": "event",
+"T": 1698910232851,
+"t_event_ms": 1698910232851,
+"trades": 24656,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/CAKEUSDT/CAKEUSDT-aggTrades-2023-11-02.zip",
+"bytes": 3126970,
+"sha256": "554e5c6afcbb840014aca706928cf55aeae50d19a207d168c88ef1dfb23fafff"
+}
+]
+},
+{
+"row": 203,
+"event_key": "181791|CAKE",
+"token": "CAKE",
+"pair": "CAKEUSDT",
+"kind": "placebo",
+"T": 1698823832851,
+"t_event_ms": 1698910232851,
+"trades": 296,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/CAKEUSDT/CAKEUSDT-aggTrades-2023-11-01.zip",
+"bytes": 311563,
+"sha256": "3033383e01bbea3e6c2377fd0df36c6105b91ed3437fe93e46a363a82a3e775f"
+}
+]
+},
+{
+"row": 204,
+"event_key": "181878|TWT",
+"token": "TWT",
+"pair": "TWTUSDT",
+"kind": "event",
+"T": 1698988203438,
+"t_event_ms": 1698988203438,
+"trades": 25018,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/TWTUSDT/TWTUSDT-aggTrades-2023-11-03.zip",
+"bytes": 1376477,
+"sha256": "5b1980b438b3432bb0bd560586dd7e460bd0550837d825abc30f78fb01c2726f"
+}
+]
+},
+{
+"row": 205,
+"event_key": "181878|TWT",
+"token": "TWT",
+"pair": "TWTUSDT",
+"kind": "placebo",
+"T": 1698901803438,
+"t_event_ms": 1698988203438,
+"trades": 497,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/TWTUSDT/TWTUSDT-aggTrades-2023-11-02.zip",
+"bytes": 493067,
+"sha256": "70da7e6c2e94790b86c689050dd8414f4b20f3d7ad6cf226478d7e12147ec6ee"
+}
+]
+},
+{
+"row": 206,
+"event_key": "182420|STEEM",
+"token": "STEEM",
+"pair": "STEEMUSDT",
+"kind": "event",
+"T": 1699431187566,
+"t_event_ms": 1699431187566,
+"trades": 21914,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/STEEMUSDT/STEEMUSDT-aggTrades-2023-11-08.zip",
+"bytes": 2006251,
+"sha256": "13d013ae8e405f7cb6dd1ac4d81d5d041a41003e733f12f1fafeeee2c2ba39b6"
+}
+]
+},
+{
+"row": 207,
+"event_key": "182420|STEEM",
+"token": "STEEM",
+"pair": "STEEMUSDT",
+"kind": "placebo",
+"T": 1699344787566,
+"t_event_ms": 1699431187566,
+"trades": 260,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/STEEMUSDT/STEEMUSDT-aggTrades-2023-11-07.zip",
+"bytes": 308379,
+"sha256": "e5f45d9e272a0fb19a6cc9484c0a8247609677b86978413dee6246b8e8e4cd22"
+}
+]
+},
+{
+"row": 208,
+"event_key": "182569|BADGER",
+"token": "BADGER",
+"pair": "BADGERUSDT",
+"kind": "event",
+"T": 1699503088430,
+"t_event_ms": 1699503088430,
+"trades": 36636,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/BADGERUSDT/BADGERUSDT-aggTrades-2023-11-09.zip",
+"bytes": 6751858,
+"sha256": "112899b6c8f0ebba236b4dac194d1343ad289493503029fae1d984eaafa60fbd"
+}
+]
+},
+{
+"row": 209,
+"event_key": "182569|BADGER",
+"token": "BADGER",
+"pair": "BADGERUSDT",
+"kind": "placebo",
+"T": 1699416688430,
+"t_event_ms": 1699503088430,
+"trades": 1887,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/BADGERUSDT/BADGERUSDT-aggTrades-2023-11-08.zip",
+"bytes": 609591,
+"sha256": "da194c144b2a97212923e192d33a669fe5a947ca494a7f31e488bbe645122c9b"
+}
+]
+},
+{
+"row": 210,
+"event_key": "182707|ILV",
+"token": "ILV",
+"pair": "ILVUSDT",
+"kind": "event",
+"T": 1699613867763,
+"t_event_ms": 1699613867763,
+"trades": 25015,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ILVUSDT/ILVUSDT-aggTrades-2023-11-10.zip",
+"bytes": 1661894,
+"sha256": "56efb5cb1800eb2274ca69814848bf41b78e73e66a2437eff78b13aa67ca1c4e"
+}
+]
+},
+{
+"row": 211,
+"event_key": "182707|ILV",
+"token": "ILV",
+"pair": "ILVUSDT",
+"kind": "placebo",
+"T": 1699527467763,
+"t_event_ms": 1699613867763,
+"trades": 4451,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ILVUSDT/ILVUSDT-aggTrades-2023-11-09.zip",
+"bytes": 1465082,
+"sha256": "c0955898030eaddd4fb083d7e60ef25bb95ef92610d7da40644a1f16c7886612"
+}
+]
+},
+{
+"row": 212,
+"event_key": "182837|NTRN",
+"token": "NTRN",
+"pair": "NTRNUSDT",
+"kind": "event",
+"T": 1699929174947,
+"t_event_ms": 1699929174947,
+"trades": 20757,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/NTRNUSDT/NTRNUSDT-aggTrades-2023-11-14.zip",
+"bytes": 3726149,
+"sha256": "a45a49fe4f5878a8c5932ce5f565eb3f2acc94e250f79c6b630912889848595d"
+}
+]
+},
+{
+"row": 213,
+"event_key": "182837|NTRN",
+"token": "NTRN",
+"pair": "NTRNUSDT",
+"kind": "placebo",
+"T": 1699842774947,
+"t_event_ms": 1699929174947,
+"trades": 10979,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/NTRNUSDT/NTRNUSDT-aggTrades-2023-11-13.zip",
+"bytes": 2131102,
+"sha256": "d35366c4d621bafc684db5a5c1c8fcbbaf1c64ce94b21f747dc581b49acc7894"
+}
+]
+},
+{
+"row": 214,
+"event_key": "182945|MBL",
+"token": "MBL",
+"pair": "MBLUSDT",
+"kind": "event",
+"T": 1699956293099,
+"t_event_ms": 1699956293099,
+"trades": 31582,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/MBLUSDT/MBLUSDT-aggTrades-2023-11-14.zip",
+"bytes": 2794674,
+"sha256": "ec59c6217c11ed9fa70c5a8691fa0933ae799cbacec1aa6bf184d31f6689167d"
+}
+]
+},
+{
+"row": 215,
+"event_key": "182945|MBL",
+"token": "MBL",
+"pair": "MBLUSDT",
+"kind": "placebo",
+"T": 1699869893099,
+"t_event_ms": 1699956293099,
+"trades": 10206,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/MBLUSDT/MBLUSDT-aggTrades-2023-11-13.zip",
+"bytes": 2512441,
+"sha256": "7f9b19c4dc5760fe70b44255e1fd2cc58b5a6758fdc7f2ecb4a6a10925e79fec"
+}
+]
+},
+{
+"row": 216,
+"event_key": "184139|USTC",
+"token": "USTC",
+"pair": "USTCUSDT",
+"kind": "event",
+"T": 1701066903333,
+"t_event_ms": 1701066903333,
+"trades": 327543,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/USTCUSDT/USTCUSDT-aggTrades-2023-11-27.zip",
+"bytes": 38999693,
+"sha256": "7e40f59137d194d9d0650356481e25dbec51414c478a9810b72e2dc9e9bf130c"
+}
+]
+},
+{
+"row": 217,
+"event_key": "184139|USTC",
+"token": "USTC",
+"pair": "USTCUSDT",
+"kind": "placebo",
+"T": 1700980503333,
+"t_event_ms": 1701066903333,
+"trades": 10015,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/USTCUSDT/USTCUSDT-aggTrades-2023-11-26.zip",
+"bytes": 15016572,
+"sha256": "457bc4dbbb1b7d587bb43b7f8120fc14d9c89e51977614eb2cb3bc29e8f727dd"
+}
+]
+},
+{
+"row": 218,
+"event_key": "184205|ONG",
+"token": "ONG",
+"pair": "ONGUSDT",
+"kind": "event",
+"T": 1701081932675,
+"t_event_ms": 1701081932675,
+"trades": 36441,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ONGUSDT/ONGUSDT-aggTrades-2023-11-27.zip",
+"bytes": 1929860,
+"sha256": "d7e9fd69635837b8a5f188a80b88fb23178816acdc9c52ba3b81ea4f6840829c"
+}
+]
+},
+{
+"row": 219,
+"event_key": "184205|ONG",
+"token": "ONG",
+"pair": "ONGUSDT",
+"kind": "placebo",
+"T": 1700995532675,
+"t_event_ms": 1701081932675,
+"trades": 1632,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/ONGUSDT/ONGUSDT-aggTrades-2023-11-26.zip",
+"bytes": 482492,
+"sha256": "81cc77706122155022c5d84d6cec6fa10fd4a58df92b22d60998359efcff437c"
+}
+]
+},
+{
+"row": 220,
+"event_key": "186301|AUCTION",
+"token": "AUCTION",
+"pair": "AUCTIONUSDT",
+"kind": "event",
+"T": 1702632304955,
+"t_event_ms": 1702632304955,
+"trades": 28805,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/AUCTIONUSDT/AUCTIONUSDT-aggTrades-2023-12-15.zip",
+"bytes": 3201058,
+"sha256": "a13f535ae10a2d7bedc7bf34476302b481de8c5bdc65afff6d8719ee7bf5eb11"
+}
+]
+},
+{
+"row": 221,
+"event_key": "186301|AUCTION",
+"token": "AUCTION",
+"pair": "AUCTIONUSDT",
+"kind": "placebo",
+"T": 1702545904955,
+"t_event_ms": 1702632304955,
+"trades": 11767,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/AUCTIONUSDT/AUCTIONUSDT-aggTrades-2023-12-14.zip",
+"bytes": 2836033,
+"sha256": "251f8af7e5ce3d1a6c8d137264a1eff73b3a2ca5f3212daca92de9555dd862a1"
+}
+]
+},
+{
+"row": 222,
+"event_key": "187023|MOVR",
+"token": "MOVR",
+"pair": "MOVRUSDT",
+"kind": "event",
+"T": 1703575533016,
+"t_event_ms": 1703575533016,
+"trades": 58956,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/MOVRUSDT/MOVRUSDT-aggTrades-2023-12-26.zip",
+"bytes": 5269180,
+"sha256": "e808f1a994bcf5487be98c6681a2640c08f9a0555c2aff46f3ac0a4efafa27b2"
+}
+]
+},
+{
+"row": 223,
+"event_key": "187023|MOVR",
+"token": "MOVR",
+"pair": "MOVRUSDT",
+"kind": "placebo",
+"T": 1703489133016,
+"t_event_ms": 1703575533016,
+"trades": 40206,
+"zips": [
+{
+"url": "https://data.binance.vision/data/spot/daily/aggTrades/MOVRUSDT/MOVRUSDT-aggTrades-2023-12-25.zip",
+"bytes": 9470855,
+"sha256": "df850487c492e8dc49938020988b20fbf1ceb1a81105f18a6be4a88ddaa0023f"
+}
+]
+}
+],
+"npz": {
+"path": "research/BINANCE_ANN_1S/ticks/ticks.npz",
+"sha256": "609ec5c94e9085050c3d6a9212fec514275dff4f0138b041abfcf3d0001efc0a",
+"bytes": 14372134
+}
+}
