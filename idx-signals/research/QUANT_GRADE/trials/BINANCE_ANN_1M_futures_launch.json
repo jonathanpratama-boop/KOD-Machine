@@ -1,0 +1,13 @@
+{
+ "id": "BINANCE_ANN_1M_futures_launch",
+ "experiment": "BINANCE_ANN_1M",
+ "date": "2026-10-21",
+ "hypothesis": "entering at the close of the announcement minute of a Binance futures-perpetual launch (token already on spot) and holding 60 minutes beats matched altcoins after a 0.4% round trip (Binance spot, 112 valid events 2020-2023)",
+ "one_sided_p": 0.1803,
+ "p_source": "research/BINANCE_ANN_1M/results/RESULT.json primary_d0_h60.t (day-cluster bootstrap), normal one-sided",
+ "variants_searched": 20,
+ "outcome": "FAIL (all four gates)",
+ "note": "Mean excess +0.53% (t 0.91); delayed 5 min: -0.16% (t -0.36); net after 0.4% round trip -0.02%. The whole move happens inside the announcement minute: +3.28% excess in that one bar, flat afterwards (+3.79% at 60 min, +4.17% at 24 h), no pre-announcement drift (the published time is accurate to the minute). A reaction exists and is large; an entry after the minute misses it. 20 grid cells reported; the best (entry in the announcement minute, 15-minute hold) has t 2.1.",
+ "counted": true,
+ "registered": "2026-10-21"
+}

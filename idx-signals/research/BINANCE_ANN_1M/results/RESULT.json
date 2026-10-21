@@ -1,0 +1,74 @@
+{
+ "experiment": "BINANCE_ANN_1M",
+ "protocol": "research/BINANCE_ANN_1M/PROTOCOL.md",
+ "label": "historical research only; never prospective performance",
+ "inputs": {
+  "minutes_npz_sha256": "a630fad6686332c0b4f31d32b5660a6e9aa235b8b84cdc4b64e016a602f3a838",
+  "events_csv_sha256": "42e8b4584ae43b3bfde9688fe7a8625486651505fd3e708c401cb709ef230743",
+  "panel_manifest": "binance-20261008T003333Z.jsonl"
+ },
+ "events": {
+  "eligible": 115,
+  "quality_ok": 112,
+  "valid": 112,
+  "in_primary_spec": 112,
+  "in_delayed_spec": 112
+ },
+ "primary_d0_h60": {
+  "n": 112,
+  "clusters": 99,
+  "mean": 0.005265794724357104,
+  "se": 0.005759428106210926,
+  "t": 0.9142912503202373,
+  "lo95": -0.006212368458241289,
+  "hi95": 0.016455754630730676,
+  "share_positive": 0.49107142857142855,
+  "mean_gross": 0.003847940570428389,
+  "mean_net": -0.00015205942957161292,
+  "winsorised_mean_net": 0.00123156147231861,
+  "p_one_sided": 0.1802819134617439
+ },
+ "delayed_d4_h60": {
+  "n": 112,
+  "clusters": 99,
+  "mean": -0.0015676921123109785,
+  "se": 0.0042979315652170455,
+  "t": -0.36475501960018064,
+  "lo95": -0.010090585461363785,
+  "hi95": 0.006805272998754935,
+  "share_positive": 0.45535714285714285
+ },
+ "years_primary": {
+  "2020": {
+   "n": 32,
+   "mean_excess": 0.009648437154942482
+  },
+  "2021": {
+   "n": 26,
+   "mean_excess": 0.00611912828375722
+  },
+  "2022": {
+   "n": 14,
+   "mean_excess": 0.022437187028528826
+  },
+  "2023": {
+   "n": 40,
+   "mean_excess": -0.004804973340181375
+  }
+ },
+ "path_excess_m0": 0.03280728653041598,
+ "path_excess_m60": 0.03788575263479534,
+ "pre_announcement_excess_m60_to_m1": 0.0036441199203294207,
+ "announcement_minute_excess": 0.03280728653041597,
+ "leak_flag": false,
+ "priced_within_minute_flag": true,
+ "gates": {
+  "G1_excess_t_ge_3": false,
+  "G2_net_and_winsorised_net_gt_0": false,
+  "G3_excess_gt_0_in_each_year_with_20_events": false,
+  "G4_delayed_5min_excess_gt_0": false
+ },
+ "verdict": "FAIL",
+ "reading": "FAIL: priced inside the announcement minute; an obtainable entry is later than the move",
+ "variants_reported": 20
+}
