@@ -1,0 +1,145 @@
+{
+ "experiment": "IDX_INSIDER_NEWS",
+ "protocol": "research/IDX_INSIDER_NEWS/PROTOCOL.md",
+ "label": "historical research only; never prospective performance; news-posting times, not official filing times",
+ "inputs": {
+  "events_csv": "bb28119fa7653da8baf3523157fd9378ef9c8f7a40b61fef1822958fd301c9dd",
+  "panel": "9d3a0718c95f9e885c4f8310cf68bf5e75021c366c454f73389d7fae75c02877",
+  "registry": "659da375e4586deab958e22dc242d7be6966ebc226bfefe8ce7ce85eb51f1e6c"
+ },
+ "window": [
+  "2021-01-22",
+  "2023-12-29"
+ ],
+ "events": {
+  "in_table": 689,
+  "mapped_to_panel": 689,
+  "status_counts": {
+   "EXITED": 370,
+   "SKIP_OVERLAP": 188,
+   "SKIP_LIQUIDITY": 100,
+   "SKIP_CAPACITY_UNKNOWN": 15,
+   "SKIP_ARA_LOCK": 8,
+   "SKIP_NOT_TRADED": 7,
+   "INCOMPLETE": 1
+  },
+  "filled_and_scored": 295
+ },
+ "primary_hold_20": {
+  "n": 295,
+  "mean_net": 0.02304100726600908,
+  "winsorised_net": 0.020210456466870058,
+  "median_net": -0.006856095167593446,
+  "hit_rate": 0.4542372881355932,
+  "mean_control": -0.006079047272257869,
+  "mean_excess": 0.029120054538266955,
+  "t_excess": 2.777043562451257,
+  "lo95_excess": 0.008849547225703412,
+  "hi95_excess": 0.05018192976077158,
+  "share_excess_positive": 0.5457627118644067,
+  "clusters": 240,
+  "mean_net_extra_cost": 0.013041007266009081
+ },
+ "years_primary": {
+  "2021": {
+   "n": 41,
+   "mean_excess": 0.06526788804672831
+  },
+  "2022": {
+   "n": 111,
+   "mean_excess": 0.03186152267315104
+  },
+  "2023": {
+   "n": 143,
+   "mean_excess": 0.016627997637434434
+  }
+ },
+ "gates": {
+  "G1_excess_t_ge_3": false,
+  "G2_net_and_winsorised_net_gt_0": true,
+  "G3_excess_gt_0_in_each_year_with_20_events": true,
+  "G4_net_gt_0_with_extra_0.5pct_per_side": true
+ },
+ "verdict": "FAIL",
+ "p_one_sided": 0.00274279131496568,
+ "variants_reported": 3,
+ "grid": [
+  {
+   "hold": 5,
+   "mapped": 689,
+   "status": {
+    "EXITED": 470,
+    "SKIP_LIQUIDITY": 101,
+    "SKIP_OVERLAP": 88,
+    "SKIP_CAPACITY_UNKNOWN": 15,
+    "SKIP_ARA_LOCK": 8,
+    "SKIP_NOT_TRADED": 7
+   },
+   "n": 386,
+   "mean_net": 0.000860164715221689,
+   "winsorised_net": 0.0009964321961211638,
+   "median_net": -0.003994008986520248,
+   "hit_rate": 0.45595854922279794,
+   "mean_control": -0.006429580824898552,
+   "mean_excess": 0.007289745540120241,
+   "t_excess": 1.7098328053214404,
+   "lo95_excess": -0.0009389536439272358,
+   "hi95_excess": 0.015881901023738203,
+   "share_excess_positive": 0.533678756476684,
+   "clusters": 295,
+   "mean_net_extra_cost": -0.009139835284778311
+  },
+  {
+   "hold": 20,
+   "mapped": 689,
+   "status": {
+    "EXITED": 370,
+    "SKIP_OVERLAP": 188,
+    "SKIP_LIQUIDITY": 100,
+    "SKIP_CAPACITY_UNKNOWN": 15,
+    "SKIP_ARA_LOCK": 8,
+    "SKIP_NOT_TRADED": 7,
+    "INCOMPLETE": 1
+   },
+   "n": 295,
+   "mean_net": 0.02304100726600908,
+   "winsorised_net": 0.020210456466870058,
+   "median_net": -0.006856095167593446,
+   "hit_rate": 0.4542372881355932,
+   "mean_control": -0.006079047272257869,
+   "mean_excess": 0.029120054538266955,
+   "t_excess": 2.777043562451257,
+   "lo95_excess": 0.008849547225703412,
+   "hi95_excess": 0.05018192976077158,
+   "share_excess_positive": 0.5457627118644067,
+   "clusters": 240,
+   "mean_net_extra_cost": 0.013041007266009081
+  },
+  {
+   "hold": 60,
+   "mapped": 689,
+   "status": {
+    "SKIP_OVERLAP": 278,
+    "EXITED": 268,
+    "SKIP_LIQUIDITY": 93,
+    "INCOMPLETE": 20,
+    "SKIP_CAPACITY_UNKNOWN": 15,
+    "SKIP_ARA_LOCK": 8,
+    "SKIP_NOT_TRADED": 7
+   },
+   "n": 198,
+   "mean_net": 0.04551134493310538,
+   "winsorised_net": 0.020710745352483583,
+   "median_net": -0.022731800550366832,
+   "hit_rate": 0.41919191919191917,
+   "mean_control": -0.02253845105271012,
+   "mean_excess": 0.06804979598581551,
+   "t_excess": 2.0744544327114034,
+   "lo95_excess": 0.01081763001219224,
+   "hi95_excess": 0.13973170430340282,
+   "share_excess_positive": 0.5505050505050505,
+   "clusters": 173,
+   "mean_net_extra_cost": 0.03551134493310538
+  }
+ ]
+}
