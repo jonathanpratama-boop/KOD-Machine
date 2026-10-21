@@ -1,0 +1,147 @@
+{
+ "trials_counted": 23,
+ "trials_with_p_value": 20,
+ "total_variants_looked_at": 331,
+ "table": [
+  {
+   "id": "BINANCE_ANN_1S_futures_launch_seconds",
+   "raw_p": 0.0002,
+   "holm_p": 0.004,
+   "bh_q": 0.004
+  },
+  {
+   "id": "IDX_INSIDER_NEWS_insider_buy_news_hold20",
+   "raw_p": 0.00105,
+   "holm_p": 0.0199,
+   "bh_q": 0.0105
+  },
+  {
+   "id": "E5_idx_ranking",
+   "raw_p": 0.074,
+   "holm_p": 1.0,
+   "bh_q": 0.4933
+  },
+  {
+   "id": "E8_crypto_spillover",
+   "raw_p": 0.1155,
+   "holm_p": 1.0,
+   "bh_q": 0.5775
+  },
+  {
+   "id": "E9_catalyst_split",
+   "raw_p": 0.1593,
+   "holm_p": 1.0,
+   "bh_q": 0.601
+  },
+  {
+   "id": "BINANCE_ANN_1M_futures_launch",
+   "raw_p": 0.1803,
+   "holm_p": 1.0,
+   "bh_q": 0.601
+  },
+  {
+   "id": "QUANT_ENGINE_2005_2019_combined_IC",
+   "raw_p": 0.2312,
+   "holm_p": 1.0,
+   "bh_q": 0.6178
+  },
+  {
+   "id": "E10_guidance_raise",
+   "raw_p": 0.2471,
+   "holm_p": 1.0,
+   "bh_q": 0.6178
+  },
+  {
+   "id": "REVERSAL_1M_strev_2005_2019",
+   "raw_p": 0.2928,
+   "holm_p": 1.0,
+   "bh_q": 0.64
+  },
+  {
+   "id": "E6_crypto_pressure",
+   "raw_p": 0.32,
+   "holm_p": 1.0,
+   "bh_q": 0.64
+  },
+  {
+   "id": "E5_crypto_ranking",
+   "raw_p": 0.42,
+   "holm_p": 1.0,
+   "bh_q": 0.7636
+  },
+  {
+   "id": "E2_us_validation",
+   "raw_p": 0.6218905,
+   "holm_p": 1.0,
+   "bh_q": 0.9598
+  },
+  {
+   "id": "LOWVOL_2005_2019_H2_momentum",
+   "raw_p": 0.6399,
+   "holm_p": 1.0,
+   "bh_q": 0.9598
+  },
+  {
+   "id": "LOWVOL_2005_2019_H1_lowvol",
+   "raw_p": 0.7566,
+   "holm_p": 1.0,
+   "bh_q": 0.9598
+  },
+  {
+   "id": "EXIT_ATR_v1",
+   "raw_p": 0.7829,
+   "holm_p": 1.0,
+   "bh_q": 0.9598
+  },
+  {
+   "id": "LOWVOL_2005_2019_H3_avoid_wildest",
+   "raw_p": 0.8071,
+   "holm_p": 1.0,
+   "bh_q": 0.9598
+  },
+  {
+   "id": "E7_crypto_funding",
+   "raw_p": 0.8581,
+   "holm_p": 1.0,
+   "bh_q": 0.9598
+  },
+  {
+   "id": "US_breakout_v1",
+   "raw_p": 0.8638,
+   "holm_p": 1.0,
+   "bh_q": 0.9598
+  },
+  {
+   "id": "E1_idx_validation",
+   "raw_p": 1.0,
+   "holm_p": 1.0,
+   "bh_q": 1.0
+  },
+  {
+   "id": "E2_crypto_validation",
+   "raw_p": 1.0,
+   "holm_p": 1.0,
+   "bh_q": 1.0
+  }
+ ],
+ "smallest_raw_p": 0.0002,
+ "smallest_holm_p": 0.004,
+ "any_significant_after_holm_5pct": true,
+ "expected_best_z_from_pure_noise": {
+  "over_hypotheses": 1.93,
+  "over_all_variants": 2.9
+ },
+ "hurdle_z_bonferroni_5pct": {
+  "next_test_given_hypotheses": 2.87,
+  "next_test_given_all_variants": 3.61
+ },
+ "project_hurdle_t_for_next_primary_test": 3.0,
+ "rule": "a future primary result must reach this t (and be pre-registered, run once, and added to trials/ first); where the search space is large (many plans or models), use the all-variants hurdle instead",
+ "caveats": [
+  "p-values for E7-E9, EXIT-ATR and US breakout are derived from published 95% intervals by normal approximation",
+  "experiments are correlated (shared data, reruns), so the effective number of tests is below the count",
+  "E3 and E4 searched 108 and 144 variants but recorded no p-values: they raise the search-level bar only",
+  "p-values are for the claimed positive effect, one-sided"
+ ],
+ "computed": "2026-10-21T19:50:10+00:00"
+}
