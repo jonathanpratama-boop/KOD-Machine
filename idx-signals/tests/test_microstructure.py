@@ -228,6 +228,23 @@ class SidecarTests(unittest.TestCase):
             self.assertEqual(self.run_scan(), [])
         self.assertEqual(paper.ledger_lines(self.sidecar), [])
 
+    def test_one_failing_candidate_keeps_the_others(self):
+        second = dict(paper.ledger_lines(self.ledger)[1])
+        second.update(decision_id=self.scan_id + "-DEF", instrument={"pair": "DEFUSDT", "ticker": "DEF"})
+        paper.append([second], path=self.ledger)
+        real = ms.take_book
+
+        def flaky(decision, sidecar=ms.SIDECAR, now=None):
+            if decision["decision_id"].endswith("ABC"):
+                raise OSError("disk full")
+            return real(decision, sidecar, now)
+
+        with mock.patch.object(ms, "take_book", flaky):
+            written = self.run_scan(timelines=False)
+        recs = paper.ledger_lines(self.sidecar)
+        self.assertEqual([r["decision_id"][-3:] for r in recs], ["DEF"])
+        self.assertIn(self.sidecar, written)
+
     def test_only_crypto_scans(self):
         with self.assertRaises(ValueError):
             ms.scan_decisions("SCAN-2026-10-20-F1_ARA", self.ledger)

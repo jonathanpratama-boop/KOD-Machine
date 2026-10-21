@@ -352,18 +352,18 @@ def run_for_scan(scan_id: str, books: bool = True, timelines: bool = True, ledge
     done, written = sidecar_keys(sidecar), set()
     decisions = scan_decisions(scan_id, ledger)
     before = len(paper.ledger_lines(sidecar))
-    if books:
-        for d in decisions:
-            if ("BOOK", d["decision_id"]) not in done:
-                rec = take_book(d, sidecar)
-                if rec:
-                    written.add(PKG_ROOT / rec["raw"]["path"])
-    if timelines:
-        for d in decisions:
-            if ("TIMELINE", d["decision_id"]) not in done:
-                rec = take_timeline(d, sidecar, now)
-                if rec:
-                    written.add(PKG_ROOT / rec["raw"]["path"])
+    for kind, wanted, take in (("BOOK", books, lambda d: take_book(d, sidecar)),
+                               ("TIMELINE", timelines, lambda d: take_timeline(d, sidecar, now))):
+        for d in decisions if wanted else []:
+            if (kind, d["decision_id"]) in done:
+                continue
+            try:                                   # one candidate's failure must not lose the others' records
+                rec = take(d)
+            except Exception as exc:  # noqa: BLE001
+                print(f"microstructure: {kind} for {d['decision_id']} failed: {exc}")
+                rec = None
+            if rec:
+                written.add(PKG_ROOT / rec["raw"]["path"])
     if len(paper.ledger_lines(sidecar)) > before:
         written.add(sidecar)
     return sorted(written)
