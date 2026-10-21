@@ -1,0 +1,11 @@
+{
+ "fetched_at": "20261021T174923Z",
+ "source": "https://www.binance.com/bapi/composite/v1/public/cms/article/list/query?type=1&catalogId=48&pageNo=N&pageSize=50",
+ "catalog": "New Cryptocurrency Listing (48)",
+ "reported_total": 2286,
+ "rows": 2286,
+ "first_release": "2017-07-21T00:06:19+00:00",
+ "last_release": "2026-10-21T03:31:11.286000+00:00",
+ "file": "research/BINANCE_ANN_1M/announcements.csv.gz",
+ "sha256": "766da636a68e9301cdf5cca93e7e9963fd8f4cec2b3321d189694f969a784761"
+}
