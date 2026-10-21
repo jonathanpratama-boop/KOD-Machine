@@ -1,0 +1,29 @@
+{
+ "events_in_table": 689,
+ "tickers_in_table": 229,
+ "events_by_year": {
+  "2021": 91,
+  "2022": 285,
+  "2023": 313
+ },
+ "mapped_to_panel": 689,
+ "not_in_panel": 0,
+ "status_counts": {
+  "EXITED": 370,
+  "SKIP_OVERLAP": 188,
+  "SKIP_LIQUIDITY": 100,
+  "SKIP_CAPACITY_UNKNOWN": 15,
+  "SKIP_ARA_LOCK": 8,
+  "SKIP_NOT_TRADED": 7,
+  "INCOMPLETE": 1
+ },
+ "scored_with_control": 322,
+ "scored_by_year": {
+  "2021": 44,
+  "2022": 126,
+  "2023": 152
+ },
+ "distinct_posting_days_scored": 257,
+ "go_rule": "scored events >= 100 (fixed before this run)",
+ "go": true
+}
