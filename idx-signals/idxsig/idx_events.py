@@ -60,6 +60,7 @@ def evaluable_matrix(m: Market, min_history: int = MIN_HISTORY) -> np.ndarray:
 class Prepared:
     m: Market                    # the window, with the corporate-action registry when one is given
     feats: dict                  # matching features for the window (computed on the whole panel, then windowed)
+    evaluable: np.ndarray        # who can be a control at each session of the window (history counted on the whole panel)
     lo: int
     hi: int
 
@@ -71,7 +72,7 @@ def prepare(df: pd.DataFrame, registry: pd.DataFrame | None, start: str, end: st
         full = full.with_registry(registry)
     lo, hi = full.bounds(start, end)
     feats = {k: v[:, lo:hi] for k, v in controls.features(full, controls_version, band_edges).items()}
-    return Prepared(full.slice(lo, hi), feats, lo, hi)
+    return Prepared(full.slice(lo, hi), feats, evaluable_matrix(full)[:, lo:hi], lo, hi)
 
 
 def run_events(prep: Prepared, events: pd.DataFrame, cfg: ExecConfig, draws: int = 200, seed: int = 20261007,
@@ -100,16 +101,19 @@ def run_events(prep: Prepared, events: pd.DataFrame, cfg: ExecConfig, draws: int
     control_mean = np.full(len(ev), np.nan)
     control_n = np.zeros(len(ev), dtype=int)
     level = np.full(len(ev), -1)
-    if len(a_sig):
-        matched, lvl = controls.matched_draws(evaluable_matrix(m), prep.feats, a_tick, a_sig, draws,
+    drawable = keep.copy()                                       # an event needs at least one other name that could be bought
+    drawable[keep] = prep.evaluable[:, a_sig].sum(axis=0) >= 2
+    if drawable.any():
+        d_tick, d_sig = tick_idx[drawable], sig_idx[drawable]
+        matched, lvl = controls.matched_draws(prep.evaluable, prep.feats, d_tick, d_sig, draws,
                                               np.random.default_rng(seed + 1), controls_version)
-        out = execute(m, matched.ravel(), np.broadcast_to(a_sig, matched.shape).ravel(), cfg)
+        out = execute(m, matched.ravel(), np.broadcast_to(d_sig, matched.shape).ravel(), cfg)
         net = out["net_return"].reshape(draws, -1)
         scored = np.isin(out["status"], SCORED).reshape(draws, -1)
         with np.errstate(invalid="ignore"):
-            control_mean[keep] = np.where(scored, net, np.nan).sum(0) / np.where(scored.sum(0) > 0, scored.sum(0), np.nan)
-        control_n[keep] = scored.sum(0)
-        level[keep] = lvl
+            control_mean[drawable] = np.where(scored, net, np.nan).sum(0) / np.where(scored.sum(0) > 0, scored.sum(0), np.nan)
+        control_n[drawable] = scored.sum(0)
+        level[drawable] = lvl
     day = lambda idx: np.where(idx >= 0, m.dates[np.maximum(idx, 0)].astype(str), "")  # noqa: E731
     status = np.where(skipped, "SKIP_OVERLAP", np.array(STATUS)[trades["status"]])
     scored_ev = np.isin(trades["status"], SCORED) & ~skipped

@@ -90,6 +90,24 @@ class RunEventsTests(unittest.TestCase):
         self.assertTrue(np.isnan(res.net_return.iloc[0]))
         self.assertEqual(len(ie.filled(res)), 0)
 
+    def test_history_is_counted_on_the_whole_panel_not_the_window(self):
+        dates = self.dates
+        prep = ie.prepare(self.df, self.reg, str(dates[80]), str(dates[-1]))      # the window starts at session 80
+        self.assertGreater(prep.evaluable[:, 0].sum(), 20)                         # names with 80 sessions of history already
+        ev = self.events([("S030", 85)])
+        res = ie.run_events(prep, pd.DataFrame([{"ticker": "S030", "posted_wib": f"{dates[85]}T16:00:00+07:00"}]), self.cfg, draws=20)
+        self.assertGreater(res.control_n.iloc[0], 0)
+
+    def test_an_event_with_no_possible_control_does_not_stop_the_run(self):
+        dates = self.dates
+        early = pd.DataFrame([{"ticker": "S003", "posted_wib": f"{dates[10]}T16:00:00+07:00"},      # nobody has 60 sessions yet
+                              {"ticker": "S003", "posted_wib": f"{dates[90]}T16:00:00+07:00"}])
+        res = ie.run_events(self.prep, early, self.cfg, draws=20)
+        self.assertEqual(len(res), 2)
+        self.assertEqual(res.control_n.iloc[0], 0)
+        self.assertTrue(np.isnan(res.excess.iloc[0]))
+        self.assertGreater(res.control_n.iloc[1], 0)
+
     def test_same_seed_same_controls(self):
         ev = self.events([(f"S{i:03d}", 70 + 4 * i) for i in range(5)])
         a = ie.run_events(self.prep, ev, self.cfg, draws=30, seed=5)
