@@ -124,7 +124,16 @@ def main(argv=None) -> int:
     for p_ in (p_ps, p_sc):
         p_.add_argument("--market", choices=("IDX", "US", "CRYPTO"), default="IDX")
     sub.add_parser("paper-verify", help="check the paper ledger's hash chain and timestamp tokens")
-    p_gp2 = sub.add_parser("guidance-paper", help="forward paper test of revenue guidance raises (dry run unless "
+    p_ms = sub.add_parser("micro-snapshot", help="side-car for a crypto scan: Binance book cost now and, once the day's "
+                                                 "path exists, 1-minute timelines (read only; changes no rule or ledger)")
+    p_ms.add_argument("--scan-id", help="crypto scan id (default: the latest crypto scan with candidates)")
+    p_ms.add_argument("--no-book", action="store_true", help="timelines only (rebuild history)")
+    p_ms.add_argument("--commit", action="store_true")
+    p_mc = sub.add_parser("micro-catch-up", help="build the missing 1-minute timelines of crypto candidates whose day is "
+                                                 "over by 26 h (also rebuilds history)")
+    p_mc.add_argument("--commit", action="store_true")
+    sub.add_parser("micro-report", help="statistics of the microstructure side-car and its integrity check")
+    p_gp2 =sub.add_parser("guidance-paper", help="forward paper test of revenue guidance raises (dry run unless "
                                                   "E10 passed and --record; never an order)")
     p_gp2.add_argument("--day", help="filing day to scan, YYYY-MM-DD (default: yesterday)")
     p_gp2.add_argument("--bootstrap", action="store_true", help="rebuild the guidance state from the 200 days before")
@@ -438,6 +447,8 @@ def main(argv=None) -> int:
                       f"data not yet updated); nothing recorded")
                 return 0
             written = paper.record_scan(out, stamper)
+            if mk == "CRYPTO" and os.environ.get("IDXSIG_MICRO", "1") != "0":
+                written = [*written, *_micro_sidecar(out["scan"]["scan_id"])]
             print(json.dumps({k: out["scan"][k] for k in ("scan_id", "session", "result", "candidates_ranked")}, indent=2))
             for dcs in out["decisions"]:
                 print(f"  #{dcs['rank']} {dcs['instrument']['ticker']}: {dcs['decision']} ({dcs['reason']})")
@@ -478,6 +489,31 @@ def main(argv=None) -> int:
         for p_ in problems:
             print(f"  {p_}")
         return 1 if problems else 0
+    elif args.cmd in ("micro-snapshot", "micro-catch-up", "micro-report"):
+        import os
+
+        from . import microstructure, paper
+
+        if args.cmd == "micro-report":
+            problems = microstructure.verify()
+            print(json.dumps(microstructure.summarize(), indent=1))
+            print("micro-report integrity: " + ("OK" if not problems else f"{len(problems)} problems"))
+            for p_ in problems:
+                print(f"  {p_}")
+            return 1 if problems else 0
+        if args.cmd == "micro-snapshot":
+            scan_id = args.scan_id or (microstructure.crypto_scans() or [(None, None)])[-1][0]
+            if scan_id is None:
+                print("no crypto scan with candidates in the ledger")
+                return 0
+            files = microstructure.run_for_scan(scan_id, books=not args.no_book, timelines=False)
+            message = f"microstructure side-car: book for {scan_id}"
+        else:
+            files = microstructure.catch_up()
+            message = "microstructure side-car: timelines"
+        print(f"wrote {len(files)} file(s)")
+        if args.commit and files:
+            print(paper.commit_and_push(files, message, os.environ.get("IDXSIG_COMMIT_TRAILER", "")))
     elif args.cmd == "guidance-paper":
         import os
         from datetime import date, datetime, timedelta, timezone
@@ -513,6 +549,19 @@ def main(argv=None) -> int:
             print(f"  {p}")
         return 1 if problems else 0
     return 0
+
+
+def _micro_sidecar(scan_id: str) -> list:
+    """Book cost for the new crypto scan's candidates, then the timelines that are due (idxsig.microstructure). Read
+    only: it changes no rule and no ledger line, and a failure here must never stop the paper cycle."""
+    try:
+        from . import microstructure
+
+        files = [*microstructure.run_for_scan(scan_id, timelines=False), *microstructure.catch_up()]
+        return list(dict.fromkeys(files))
+    except Exception as exc:  # noqa: BLE001
+        print(f"warning: microstructure side-car skipped: {exc}", file=sys.stderr)
+        return []
 
 
 if __name__ == "__main__":

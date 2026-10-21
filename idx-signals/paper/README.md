@@ -72,3 +72,17 @@ unverified; `RATIO_CONFIRMED` is diagnostic only. New repair panels reject v1 sc
 coverage files; recheck their evidence first. The conservative parser can miss valid events
 with unsupported wording, which need further evidence review. Earlier outcomes and research
 artifacts retain their original versions; corrections are new records.
+
+## Crypto microstructure side-car (`paper/microstructure/`, `idxsig.microstructure`)
+
+Added 2026-10-21. It measures what the frozen crypto cycle assumes, for the same candidates, and **never feeds a
+decision**: it reads the ledger, changes no rule, no policy field and no ledger line. `IDXSIG_MICRO=0` switches it off.
+- `BOOK` (forward only): right after each crypto scan, the Binance spot order book (1000 levels a side, from
+  data-api.binance.vision) for every candidate: spread, depth within 1/2/5% of the mid, the average price of a market buy and
+  sell of USD 100 / 1,000 / 10,000 and of the plan's own position sizes. The fee is recorded apart from the slippage. A book
+  counts as "at decision time" only if taken within 900 s of the decision.
+- `TIMELINE`: the candidate's 1-minute bars for the signal day plus the next 24 h, built 26 h after the day ended (history is
+  rebuilt with `micro-catch-up`, flagged `retrospective`): the minute the close first crossed +10/20/30%, the peak, the give-back,
+  the last hour, the path after the close. Descriptive; the candidates are the ledger's own, so it adds no independent sample.
+- Records are hash-chained in `crypto.jsonl` (the ledger's mechanism); raw responses/bars sit in `raw/` with their sha256 in
+  the record. `python3 -m idxsig micro-report` prints the statistics and checks every hash.
