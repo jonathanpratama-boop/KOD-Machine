@@ -67,6 +67,7 @@ class Prepared:
 
 def prepare(df: pd.DataFrame, registry: pd.DataFrame | None, start: str, end: str, controls_version: str = "v2",
             band_edges: tuple = (200, 5000), price_limits: bool = True) -> Prepared:
+    df = df[df["date"] <= pd.Timestamp(end)]                     # nothing after the window is ever loaded into the market
     full = Market.from_panel(df, price_limits=price_limits)
     if registry is not None:
         full = full.with_registry(registry)

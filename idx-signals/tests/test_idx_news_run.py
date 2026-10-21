@@ -11,7 +11,7 @@ import pandas as pd
 
 from tests.support import random_walk_panel, synthetic_registry
 
-spec = importlib.util.spec_from_file_location("idxnews_run", Path(__file__).resolve().parents[1] / "research" / "IDX_INSIDER_NEWS" / "run.py")
+spec = importlib.util.spec_from_file_location("idxnews_run", Path(__file__).resolve().parents[1] / "research" / "IDX_INSIDER_NEWS" / "run_v2.py")
 run = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(run)
 
