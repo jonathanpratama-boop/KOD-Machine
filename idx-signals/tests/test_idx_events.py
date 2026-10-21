@@ -108,6 +108,21 @@ class RunEventsTests(unittest.TestCase):
         self.assertTrue(np.isnan(res.excess.iloc[0]))
         self.assertGreater(res.control_n.iloc[1], 0)
 
+    def test_the_mean_is_over_the_scored_draws_only(self):
+        nan = np.nan
+        net = np.array([[0.1, 0.2, nan], [nan, 0.4, nan], [0.3, nan, nan]])
+        scored = np.array([[True, True, False], [False, True, False], [True, False, False]])
+        np.testing.assert_allclose(ie.mean_over_scored(net, scored), [0.2, 0.3, nan])
+
+    def test_unbuyable_control_draws_do_not_erase_the_control_mean(self):
+        cfg = ExecConfig(holding_days=20, ca_mode="registry", max_participation=0.05)      # a tight cap leaves some draws unbuyable
+        res = ie.run_events(self.prep, self.events([(f"S{i:03d}", 70 + 4 * i) for i in range(8, 30)]), cfg, draws=40)
+        ex = res[res.status == "EXITED"]
+        partial = ex[(ex.control_n > 0) & (ex.control_n < 40)]
+        self.assertGreater(len(partial), 0)                                                # the case this test is about exists
+        self.assertTrue(ex[ex.control_n > 0].control_mean.notna().all())
+        self.assertEqual(len(ie.filled(res)), int((ex.control_n > 0).sum()))
+
     def test_same_seed_same_controls(self):
         ev = self.events([(f"S{i:03d}", 70 + 4 * i) for i in range(5)])
         a = ie.run_events(self.prep, ev, self.cfg, draws=30, seed=5)

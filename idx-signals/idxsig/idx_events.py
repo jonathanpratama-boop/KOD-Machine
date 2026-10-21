@@ -76,6 +76,13 @@ def prepare(df: pd.DataFrame, registry: pd.DataFrame | None, start: str, end: st
     return Prepared(full.slice(lo, hi), feats, evaluable_matrix(full)[:, lo:hi], lo, hi)
 
 
+def mean_over_scored(net: np.ndarray, scored: np.ndarray) -> np.ndarray:
+    """Per event (column), the mean of `net` over its scored draws (rows); NaN where an event has no scored draw. A draw that could not
+    be bought contributes nothing (an earlier version summed NaN for it, which erased the whole event's control mean)."""
+    n = scored.sum(0)
+    return np.where(n > 0, np.where(scored, net, 0.0).sum(0) / np.maximum(n, 1), np.nan)
+
+
 def run_events(prep: Prepared, events: pd.DataFrame, cfg: ExecConfig, draws: int = 200, seed: int = 20261007,
                controls_version: str = "v2", overlap: str = "skip") -> pd.DataFrame:
     """One row per mapped event: its execution, the mean of its matched controls under the same plan, and the excess.
@@ -110,9 +117,8 @@ def run_events(prep: Prepared, events: pd.DataFrame, cfg: ExecConfig, draws: int
                                               np.random.default_rng(seed + 1), controls_version)
         out = execute(m, matched.ravel(), np.broadcast_to(d_sig, matched.shape).ravel(), cfg)
         net = out["net_return"].reshape(draws, -1)
-        scored = np.isin(out["status"], SCORED).reshape(draws, -1)
-        with np.errstate(invalid="ignore"):
-            control_mean[drawable] = np.where(scored, net, np.nan).sum(0) / np.where(scored.sum(0) > 0, scored.sum(0), np.nan)
+        scored = np.isin(out["status"], SCORED).reshape(draws, -1) & np.isfinite(net)
+        control_mean[drawable] = mean_over_scored(net, scored)
         control_n[drawable] = scored.sum(0)
         level[drawable] = lvl
     day = lambda idx: np.where(idx >= 0, m.dates[np.maximum(idx, 0)].astype(str), "")  # noqa: E731
