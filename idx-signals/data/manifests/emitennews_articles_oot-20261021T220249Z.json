@@ -1,0 +1,11 @@
+{
+ "fetched_at": "20261021T220249Z",
+ "seconds": 709,
+ "candidates": 1099,
+ "failed": 0,
+ "without_posting_time": 0,
+ "without_body": 0,
+ "file": "research/IDX_INSIDER_NEWS_OOT/articles.csv.gz",
+ "sha256": "837e23b8ccd326415841a40f378bb3fadb9de9449edff3cf675c6e0e850ca9e4",
+ "candidate_rule": "test 23's fetch_articles.candidates() on this index (BROAD words in the slug and a four-letter ticker code among the slug words)"
+}
