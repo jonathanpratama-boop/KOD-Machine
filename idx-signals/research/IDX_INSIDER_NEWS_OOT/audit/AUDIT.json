@@ -1,0 +1,33 @@
+{
+ "items": 90,
+ "reviewers": [
+  {
+   "reviewer": "answers_A",
+   "labelled_insider_buy": 45,
+   "confirmed_with_same_ticker": 44,
+   "precision": 0.9777777777777777,
+   "class_confirmed_only": 0.9777777777777777,
+   "missed_share_among_others": 0.0,
+   "kappa_vs_labeller": 0.9349005424954794,
+   "wrong_items": [
+    10
+   ]
+  },
+  {
+   "reviewer": "answers_B",
+   "labelled_insider_buy": 45,
+   "confirmed_with_same_ticker": 44,
+   "precision": 0.9777777777777777,
+   "class_confirmed_only": 0.9777777777777777,
+   "missed_share_among_others": 0.0,
+   "kappa_vs_labeller": 0.9349005424954794,
+   "wrong_items": [
+    10
+   ]
+  }
+ ],
+ "go_precision_threshold": 0.85,
+ "kappa_between_reviewers": 1.0,
+ "lower_precision": 0.9777777777777777,
+ "audit_go": true
+}
