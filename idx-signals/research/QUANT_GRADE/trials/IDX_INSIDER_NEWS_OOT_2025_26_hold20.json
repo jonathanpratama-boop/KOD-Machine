@@ -1,0 +1,13 @@
+{
+ "id": "IDX_INSIDER_NEWS_OOT_2025_26_hold20",
+ "experiment": "IDX_INSIDER_NEWS_OOT",
+ "date": "2026-10-21",
+ "hypothesis": "replication of test 23 on unseen data: buying an IDX stock at the first obtainable close after EmitenNews reports a director, commissioner or controlling-shareholder purchase of its shares, holding 20 sessions, beats matched random entries after IDX fees, lots, locks and a capacity cap (221 events scored of 361 audited, posted 2025-03-03 to 2026-09-07, TIER_3 Yahoo prices)",
+ "one_sided_p": 0.886,
+ "p_source": "research/IDX_INSIDER_NEWS_OOT/results/RESULT.json p_one_sided (day-cluster bootstrap t -1.21), normal one-sided",
+ "variants_searched": 3,
+ "outcome": "FAIL (all four gates; reading NO_SIGN_IT_PERSISTED), historical",
+ "note": "Hold 20: 221 events on 173 days; net +0.11% per event (median -1.4%, hit rate 42.5%), matched controls +2.63%, excess -2.52% (95% interval -6.3% to +1.9%), t -1.21. By half-year the excess was +1.9%, -2.6%, -3.5%, -6.1% (n 41, 91, 57, 32), continuing the decline of test 23 (+5.6%, +3.2%, +1.6% by year). Holds 5 and 60: excess +0.1% (t 0.2) and +1.8% (t 0.3). Pooled with test 23 (descriptive, 84% of the weight on test 23): +1.9%, t 2.3. Read by the protocol's rule: test 23 is a decayed effect or a false positive; its 2021-2023 PASS stands as recorded and is not confirmed. Limits: TIER_3 prices are survivor-only Yahoo data, the controls cannot match on market cap there, the clock is the news site's; power at 221 events was about 77% if the true excess equalled test 23's estimate and about 32% if it was half of it. No follow-up without new data.",
+ "counted": true,
+ "registered": "2026-10-21"
+}

@@ -1,0 +1,191 @@
+{
+ "experiment": "IDX_INSIDER_NEWS_OOT",
+ "protocol": "research/IDX_INSIDER_NEWS_OOT/PROTOCOL.md",
+ "label": "historical research only; never prospective performance; news-posting times, not official filing times; TIER_3 (Yahoo, survivor-only) prices",
+ "inputs": {
+  "events_csv": "8ecf705a1326c3abf9c868cbc5cb5d2b4d19dac48925e7e87dc7ffc9085f2982",
+  "panel": "9d3a0718c95f9e885c4f8310cf68bf5e75021c366c454f73389d7fae75c02877",
+  "registry": "659da375e4586deab958e22dc242d7be6966ebc226bfefe8ce7ce85eb51f1e6c"
+ },
+ "window": [
+  "2025-02-24",
+  "2026-10-06"
+ ],
+ "events_window": [
+  "2025-03-03",
+  "2026-09-07"
+ ],
+ "events": {
+  "in_table": 361,
+  "mapped_to_panel": 361,
+  "status_counts": {
+   "EXITED": 221,
+   "SKIP_OVERLAP": 91,
+   "SKIP_LIQUIDITY": 34,
+   "SKIP_ARA_LOCK": 9,
+   "SKIP_CAPACITY_UNKNOWN": 3,
+   "SKIP_NOT_TRADED": 3
+  },
+  "filled_and_scored": 221
+ },
+ "primary_hold_20": {
+  "n": 221,
+  "mean_net": 0.0010896647017689227,
+  "winsorised_net": -0.011060484400531503,
+  "median_net": -0.01436907139291066,
+  "hit_rate": 0.4253393665158371,
+  "mean_control": 0.026257386046565655,
+  "mean_excess": -0.025167721344796726,
+  "t_excess": -1.2064692491804874,
+  "lo95_excess": -0.06255027660829175,
+  "hi95_excess": 0.019277105912188498,
+  "share_excess_positive": 0.3665158371040724,
+  "clusters": 173,
+  "mean_net_extra_cost": -0.008910335298231077
+ },
+ "years_primary": {
+  "2025": {
+   "n": 132,
+   "mean_excess": -0.012392964931505122
+  },
+  "2026": {
+   "n": 89,
+   "mean_excess": -0.044114551081364056
+  }
+ },
+ "half_years_primary": {
+  "2025H1": {
+   "n": 41,
+   "mean_net": 0.04922875251909485,
+   "mean_excess": 0.01861980152583468
+  },
+  "2025H2": {
+   "n": 91,
+   "mean_net": 0.0432077882691877,
+   "mean_excess": -0.026365749818878015
+  },
+  "2026H1": {
+   "n": 57,
+   "mean_net": -0.09759345939568263,
+   "mean_excess": -0.03485813425086639
+  },
+  "2026H2": {
+   "n": 32,
+   "mean_net": -0.0045826406604415025,
+   "mean_excess": -0.060602543560688046
+  }
+ },
+ "tail_primary": {
+  "top5_share_of_total_excess": -1.0694552247776563,
+  "top20_share_of_total_excess": -1.667580163987055,
+  "mean_excess_without_top10": -0.0610345978800584,
+  "median_excess": -0.03242634620922877,
+  "share_excess_positive": 0.3665158371040724
+ },
+ "discovery_hold_20": {
+  "n": 370,
+  "mean_net": 0.01940551095712112,
+  "mean_excess": 0.028102637492688064,
+  "t_excess": 3.074621282275197,
+  "lo95_excess": 0.010431748898937577,
+  "hi95_excess": 0.04636813315587544
+ },
+ "pooled_with_discovery": {
+  "mean_excess": 0.019489470817707077,
+  "se": 0.008393656781001766,
+  "t": 2.321928490311829,
+  "weights": {
+   "discovery": 0.8383122084599108,
+   "out_of_time": 0.16168779154008914
+  }
+ },
+ "gates": {
+  "G1_excess_t_ge_1.65": false,
+  "G2_net_and_winsorised_net_gt_0": false,
+  "G3_excess_gt_0_in_each_year_with_20_events": false,
+  "G4_net_gt_0_with_extra_0.5pct_per_side": false
+ },
+ "verdict": "FAIL",
+ "reading": "NO_SIGN_IT_PERSISTED",
+ "p_one_sided": 0.8861816954874193,
+ "variants_reported": 3,
+ "grid": [
+  {
+   "hold": 5,
+   "mapped": 361,
+   "status": {
+    "EXITED": 264,
+    "SKIP_OVERLAP": 45,
+    "SKIP_LIQUIDITY": 36,
+    "SKIP_ARA_LOCK": 10,
+    "SKIP_CAPACITY_UNKNOWN": 3,
+    "SKIP_NOT_TRADED": 3
+   },
+   "n": 264,
+   "mean_net": 0.0016884522424193773,
+   "winsorised_net": 0.0027097773513103133,
+   "median_net": -0.003994008986520303,
+   "hit_rate": 0.4431818181818182,
+   "mean_control": 0.0002640969247978535,
+   "mean_excess": 0.001424355317621525,
+   "t_excess": 0.19086592555744422,
+   "lo95_excess": -0.012888213193088938,
+   "hi95_excess": 0.01611768516878337,
+   "share_excess_positive": 0.4356060606060606,
+   "clusters": 196,
+   "mean_net_extra_cost": -0.008311547757580622
+  },
+  {
+   "hold": 20,
+   "mapped": 361,
+   "status": {
+    "EXITED": 221,
+    "SKIP_OVERLAP": 91,
+    "SKIP_LIQUIDITY": 34,
+    "SKIP_ARA_LOCK": 9,
+    "SKIP_CAPACITY_UNKNOWN": 3,
+    "SKIP_NOT_TRADED": 3
+   },
+   "n": 221,
+   "mean_net": 0.0010896647017689227,
+   "winsorised_net": -0.011060484400531503,
+   "median_net": -0.01436907139291066,
+   "hit_rate": 0.4253393665158371,
+   "mean_control": 0.026257386046565655,
+   "mean_excess": -0.025167721344796726,
+   "t_excess": -1.2064692491804874,
+   "lo95_excess": -0.06255027660829175,
+   "hi95_excess": 0.019277105912188498,
+   "share_excess_positive": 0.3665158371040724,
+   "clusters": 173,
+   "mean_net_extra_cost": -0.008910335298231077
+  },
+  {
+   "hold": 60,
+   "mapped": 361,
+   "status": {
+    "EXITED": 162,
+    "SKIP_OVERLAP": 129,
+    "SKIP_LIQUIDITY": 34,
+    "INCOMPLETE": 20,
+    "SKIP_ARA_LOCK": 9,
+    "SKIP_CAPACITY_UNKNOWN": 3,
+    "SKIP_NOT_TRADED": 3,
+    "CORP_ACTION_UNRESOLVED": 1
+   },
+   "n": 162,
+   "mean_net": 0.11709254080706841,
+   "winsorised_net": 0.08711612688014843,
+   "median_net": -0.02766611763082183,
+   "hit_rate": 0.4567901234567901,
+   "mean_control": 0.09896713604652696,
+   "mean_excess": 0.01812540476054145,
+   "t_excess": 0.2666712799690223,
+   "lo95_excess": -0.0945325538272469,
+   "hi95_excess": 0.16882578078631647,
+   "share_excess_positive": 0.36419753086419754,
+   "clusters": 126,
+   "mean_net_extra_cost": 0.10709254080706841
+  }
+ ]
+}
