@@ -1,0 +1,16 @@
+{
+ "fetched_at": "20261021T001132Z",
+ "source": "https://mba.tuck.dartmouth.edu/pages/faculty/ken.french/ftp/F-F_ST_Reversal_Factor_CSV.zip",
+ "units": "monthly returns as fractions",
+ "zip": {
+  "bytes": 5573,
+  "sha256": "06c0d46d819f51f060a149b9f613aed3a8d8fea7da3fc6bbae7e14dbd048119e"
+ },
+ "parsed": {
+  "path": "data/raw/french/strev_monthly.csv.gz",
+  "rows": 1207,
+  "first": "1926-02",
+  "last": "2026-08",
+  "sha256": "2a4b78ab66d27bd38d58c4fcd9a874bf2a134a0f7b95d4ee84ec1ac9ed548c3f"
+ }
+}
