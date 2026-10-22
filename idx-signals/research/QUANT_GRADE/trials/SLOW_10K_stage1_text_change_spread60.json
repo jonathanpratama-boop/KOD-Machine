@@ -1,0 +1,13 @@
+{
+ "id": "SLOW_10K_stage1_text_change_spread60",
+ "experiment": "SLOW_10K",
+ "date": "2026-10-22",
+ "hypothesis": "US 10-K filers whose text changed least from last year's 10-K (Q5: cosine similarity at or above the trailing 80th percentile) beat those whose text changed most (Q1: at or below the 20th) by at least 3% over 60 sessions, after matched random entries, bought at the open after the EDGAR filing date, 2021-2022 filings (1,316 Q5 and 1,032 Q1 scored), survivor-only prices",
+ "one_sided_p": 0.301,
+ "p_source": "research/SLOW_10K/results_stage1/RESULT.json p_one_sided (week-cluster bootstrap t 0.52), normal one-sided",
+ "variants_searched": 3,
+ "outcome": "FAIL (G1 and G2 fail; G3 and G4 hold), reading NO_LARGE_EFFECT; Stage 2 not run",
+ "note": "Spread Q5 - Q1 at 60 sessions +1.00% (95% interval -2.4% to +5.2%, standard error 1.9%, t 0.52), so this sample could only have seen a spread above about 5%. Excess by quintile is not monotonic (Q1 -0.5%, Q2 -0.1%, Q3 +2.6%, Q4 +1.1%, Q5 +0.5%). Descriptive hold 20: spread -0.2%. Descriptive hold 120 (the best of three descriptive holds, not a gate): Q1 -2.0%, Q5 +2.5%, spread +4.5% (t 1.83), in the direction of the published result, a lean without the size or the independence to count. Prices are survivor-only (failed changers are missing), which biases against the short leg. Counted as test 25: PROTOCOL.md said 26 because it assumed the Binance holdout would be counted; that test was not run. Independent check: verify_v2.py, 5,593 trades recomputed from the panel, no mismatch.",
+ "counted": true,
+ "registered": "2026-10-22"
+}
