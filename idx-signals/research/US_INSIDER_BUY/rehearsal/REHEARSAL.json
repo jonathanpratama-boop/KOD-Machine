@@ -1,0 +1,37 @@
+{
+ "placebo_events": 2500,
+ "scored": 1953,
+ "status_counts": {
+  "EXITED": 1954,
+  "SKIP_OVERLAP": 332,
+  "SKIP_LIQUIDITY": 139,
+  "SKIP_NOT_TRADED": 75
+ },
+ "trades_recomputed_by_hold": {
+  "20": 1988,
+  "60": 1954,
+  "120": 1905
+ },
+ "max_abs_net_return_difference": 8.881784197001252e-16,
+ "verifier_mismatches": [],
+ "n_mismatches": 0,
+ "placebo_excess": {
+  "n": 1953,
+  "mean": -0.012601508523486639,
+  "se": 0.005564933662716757,
+  "t": -2.2644490100416905,
+  "lo95": -0.023344527583814622,
+  "hi95": -0.0016240659308850583,
+  "winsorised_mean": -0.016224140990707906,
+  "median": -0.015362442769073635
+ },
+ "gates": {
+  "G1_excess_t_ge_3": false,
+  "G2_excess_ge_2pct_and_winsorised_ge_1pct": false,
+  "G3_excess_gt_0_in_2021_and_2022": false,
+  "G4_excess_gt_0_at_holds_20_and_120": false
+ },
+ "verdict": "FAIL",
+ "seconds": 34,
+ "machinery_ok": true
+}
