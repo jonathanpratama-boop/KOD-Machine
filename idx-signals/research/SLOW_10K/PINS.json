@@ -1,0 +1,20 @@
+{
+ "events_csv": "e1d5cda0acc4de1760565c7d3a71cf1b3a15fdb14217ef946b2c836ec8508eba",
+ "similarity_csv": "1d5b2789c75eed94c734ae084c5b274799c1d9ff68be30877934e60134191445",
+ "filings_csv": "37668196009e183b0c8f4721b2a486898cc6762b1f1c8ac813f5513e47ee6440",
+ "panel": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b",
+ "code": {
+  "idxsig/event_study.py": "7de0d1ea92dbed9794fce11384aeac1f7f8d2fc279e8f09dafd7d282019c0a4e",
+  "idxsig/idx_events.py": "18498f1a31219fd2b954537d989d33851f990a856b7bacadddbdd01fd9197111",
+  "idxsig/execution.py": "8949da97745896cb9ccf305d3e4e76cec9b41ee1e05aad2729ac3b228ea9bb98",
+  "idxsig/controls.py": "5e3e8e7a1a26df43801b0b859d298f3f646bf01e09946130b625763f27d8d361",
+  "idxsig/market.py": "b956576fec19dbac3164bd8181e63f6b579d138aa42016d11af35103832c6d9f",
+  "idxsig/profiles.py": "8adcfb8138e363c531bafd8e5b8462a108e0fe89363261e59481b31668d05b26",
+  "idxsig/backtest.py": "da2fd808b9f372ca5fa83de42b437ec2bb7b9029ea345873bd3ccc7931329597",
+  "idxsig/global_panel.py": "9b94fbab1fb769c39d03840edd5eb8dc974c2b0f92917a97a857ad671b35b4db",
+  "research/SLOW_10K/tenk_lib.py": "fcd0cb12510e7a4823a21a7451e4d0c709dd5ac4bcabcd57330af868d12d4127",
+  "research/SLOW_10K/tenk_buckets.py": "0cd6664dc4a4477b89ce67cb65b80a03e4eab41d862492cf44d80e81c10afc39",
+  "research/SLOW_10K/tenk_stats.py": "938e7f0fbe20c208589a82876ce18c3ce4973159ed261623a63f48fe5807f9fb",
+  "research/SLOW_10K/build_events.py": "26a4d8ecd93402d68b79318bb81c39d9c7211036d29402a2f6bd375610c83440"
+ }
+}

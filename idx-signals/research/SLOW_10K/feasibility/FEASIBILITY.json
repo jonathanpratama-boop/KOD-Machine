@@ -1,0 +1,46 @@
+{
+ "events_stage1": 5915,
+ "events_stage2": 3176,
+ "stage1_by_bucket": {
+  "MID": 3401,
+  "Q1": 1138,
+  "Q5": 1376
+ },
+ "mapped_to_panel": 5915,
+ "not_in_panel": 0,
+ "status_counts_by_bucket": {
+  "MID": {
+   "EXITED": 3244,
+   "SKIP_LIQUIDITY": 117,
+   "SKIP_NOT_TRADED": 40
+  },
+  "Q1": {
+   "EXITED": 1033,
+   "SKIP_LIQUIDITY": 65,
+   "SKIP_NOT_TRADED": 40
+  },
+  "Q5": {
+   "EXITED": 1316,
+   "SKIP_LIQUIDITY": 39,
+   "SKIP_NOT_TRADED": 20,
+   "SKIP_LOT": 1
+  }
+ },
+ "exited_by_bucket": {
+  "MID": 3244,
+  "Q1": 1033,
+  "Q5": 1316
+ },
+ "exited_by_bucket_and_entry_year": {
+  "MID|2021": 1696,
+  "MID|2022": 1548,
+  "Q1|2021": 513,
+  "Q1|2022": 520,
+  "Q5|2021": 490,
+  "Q5|2022": 825,
+  "Q5|2023": 1
+ },
+ "exited_without_any_scored_control_draw": 4,
+ "go_rule": "EXITED events >= 1000 in each of Q1 and Q5 at hold 60 (fixed in PROTOCOL.md before this run)",
+ "go": true
+}
