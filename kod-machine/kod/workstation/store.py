@@ -276,7 +276,7 @@ class Store:
     def events(self, security_id=None):
         with self._connection() as db:
             where, args = ("WHERE security_id=?", (security_id,)) if security_id else ("", ())
-            return [self._row(r) for r in db.execute(f"SELECT * FROM events {where} ORDER BY COALESCE(published_at,observed_at) DESC,id", args)]
+            return [self._row(r) for r in db.execute(f"SELECT * FROM events {where} ORDER BY COALESCE(published_at,json_extract(metadata,'$.publication_date'),observed_at) DESC,id", args)]
 
     def save_note(self, security_id, current_document_id, comparison_document_id, result, markdown, as_of, mode):
         self.get_security(security_id)

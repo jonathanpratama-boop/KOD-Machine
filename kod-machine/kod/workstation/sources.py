@@ -25,6 +25,10 @@ _rate_lock = threading.Lock()
 _last_start = 0.0
 
 
+SUBMISSIONS_DATE_BASIS = ("SEC filing date only (submissions feed). Its acceptanceDateTime is not used: it runs hours late against "
+                         "filings' own headers. Import the exhibit to read the exact acceptance time.")
+
+
 class SourceUnavailable(ValueError):
     """A failed/not-configured source, not a successfully empty feed."""
 
@@ -177,15 +181,21 @@ def normalize_submissions(raw: bytes, expected_cik: str) -> list[dict]:
                 raise SourceUnavailable("SEC filing identity has an unsupported format.")
             accepted = recent.get("acceptanceDateTime", [])
             value = accepted[i] if i < len(accepted) else None
-            published = acceptance_time(value)
+            filing_date = recent["filingDate"][i]
+            if not isinstance(filing_date, str) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", filing_date):
+                raise SourceUnavailable("SEC filing date has an unsupported format.")
             cik = str(int(expected_cik))
             url = f"https://www.sec.gov/Archives/edgar/data/{cik}/{accession.replace('-', '')}/{filename}"
-            out.append({"external_id": accession, "form": form, "title": f"{form} · {recent['filingDate'][i]}",
-                        "source_url": url, "published_at": published,
-                        "published_basis": "SEC acceptance; explicit source offset" if value and re.search(r"(Z|[+-]\d\d:\d\d)$", value)
-                        else "SEC acceptance; New York clock converted to UTC" if published else "unknown",
+            # The feed's acceptanceDateTime is not used as a publication time. On the eight
+            # 2024 earnings filings in examples/earnings_demo it ran 4-5 hours later than each
+            # filing's own SGML header (the New York offset applied twice), which moves
+            # after-close filings to the next day. The filing date is kept at date precision;
+            # importing the exhibit fetches the header for an exact acceptance time.
+            out.append({"external_id": accession, "form": form, "title": f"{form} · {filing_date}",
+                        "source_url": url, "published_at": filing_date,
+                        "published_basis": SUBMISSIONS_DATE_BASIS,
                         "metadata": {"filing_date": recent["filingDate"][i], "primary_document": filename,
-                                     "acceptance_raw": value, "association": "verified_from_filing_metadata",
+                                     "acceptance_raw": value, "acceptance_raw_used": False, "association": "verified_from_filing_metadata",
                                      "items": recent.get("items", [])[i] if i < len(recent.get("items", [])) else "",
                                      "coverage": "SEC recent submissions only; older-history chunks not fetched"}})
         return out

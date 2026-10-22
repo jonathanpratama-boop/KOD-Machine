@@ -84,14 +84,38 @@ class SourceTests(unittest.TestCase):
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["external_id"], "0000320193-24-000120")
         self.assertIn("/320193/000032019324000120/a8-k.htm", rows[0]["source_url"])
-        self.assertEqual(rows[0]["published_at"], "2024-10-31T20:30:25Z")
+        self.assertEqual(rows[0]["published_at"], "2024-10-31")                     # date precision only; see below
         with self.assertRaisesRegex(sources.SourceUnavailable, "CIK"):
             sources.normalize_submissions(submissions(), "2488")
 
-    def test_missing_acceptance_remains_unknown(self):
+    def test_missing_acceptance_still_gives_only_the_filing_date(self):
         row = sources.normalize_submissions(submissions(stamp=None), "320193")[0]
-        self.assertIsNone(row["published_at"])
-        self.assertEqual(row["published_basis"], "unknown")
+        self.assertEqual(row["published_at"], "2024-10-31")
+        self.assertEqual(row["published_basis"], sources.SUBMISSIONS_DATE_BASIS)
+
+    def test_feed_acceptance_time_is_not_trusted_because_it_runs_hours_late(self):
+        # Real values for NVIDIA's Q3 FY2025 8-K (0001045810-24-000315): the feed says
+        # 2024-11-21T02:21:20Z; the filing's own header says 16:21:20 New York (21:21:20Z) on
+        # 2024-11-20. Trusting the feed would move the filing to the next day.
+        body = json.loads(submissions(cik=1045810, stamp="2024-11-21T02:21:20.000Z"))
+        recent = body["filings"]["recent"]
+        recent["accessionNumber"][0], recent["filingDate"][0] = "0001045810-24-000315", "2024-11-20"
+        row = sources.normalize_submissions(json.dumps(body).encode(), "1045810")[0]
+        self.assertEqual(row["published_at"], "2024-11-20")
+        self.assertEqual(row["metadata"]["acceptance_raw"], "2024-11-21T02:21:20.000Z")
+        self.assertFalse(row["metadata"]["acceptance_raw_used"])
+        with tempfile.TemporaryDirectory() as d:
+            store = Store(d)
+            sec = store.upsert_security("NVDA", "NVIDIA Corporation", "1045810")
+            event = store.save_event(sec["id"], observed_at="2026-10-22T00:00:00Z", **row)
+            self.assertIsNone(event["published_at"])                                  # never upgraded to a false precise time
+            self.assertEqual(event["metadata"]["publication_date"], "2024-11-20")
+
+    def test_bad_filing_date_is_a_failed_refresh(self):
+        body = json.loads(submissions())
+        body["filings"]["recent"]["filingDate"][0] = "31/10/2024"
+        with self.assertRaisesRegex(sources.SourceUnavailable, "filing date"):
+            sources.normalize_submissions(json.dumps(body).encode(), "320193")
 
     def test_bad_column_alignment_is_not_empty_feed(self):
         body = json.loads(submissions())

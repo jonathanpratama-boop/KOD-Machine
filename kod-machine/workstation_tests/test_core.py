@@ -143,6 +143,14 @@ class CoreJourneyTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.service.generate_note(unknown["id"], document["id"], as_of=CUTOFF)
 
+    def test_sec_header_from_another_filing_cannot_supply_the_publication_time(self):
+        url = "https://www.sec.gov/Archives/edgar/data/1234/000000123424000315/q3pr.htm"
+        other = b"<ACCESSION-NUMBER>0000001234-24-000262\nCENTRAL INDEX KEY: 0000001234\n<ACCEPTANCE-DATETIME>20240828162116"
+        with self.assertRaisesRegex(ValueError, "different filing"):
+            self.ingest(source_url=url, published_at=None, sec_headers=other)
+        own = other.replace(b"24-000262", b"24-000315").replace(b"20240828", b"20241120")
+        self.assertEqual(self.ingest(source_url=url, published_at=None, sec_headers=own, retrieved_at=NOW)["published_at"], "2024-11-20T21:21:16Z")
+
     def test_fact_evidence_uses_actual_stored_document_and_version_identity(self):
         note = self.note()
         evidence = note["result"]["facts"][0]["evidence"]

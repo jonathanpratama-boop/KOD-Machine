@@ -246,3 +246,22 @@ class WebTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class DateOnlyEventTests(unittest.TestCase):
+    def test_inbox_and_timeline_show_a_filing_date_as_date_only_and_sort_by_it(self):
+        with tempfile.TemporaryDirectory() as d:
+            service = ResearchService(Store(Path(d) / "w"), clock=lambda: NOW)
+            store = service.store
+            sec = store.upsert_security("NVDA", "NVIDIA Corporation", "1045810")
+            for acc, day in (("0001045810-24-000262", "2024-08-28"), ("0001045810-24-000315", "2024-11-20")):
+                store.save_event(sec["id"], acc, "8-K", f"8-K · {day}", "https://www.sec.gov/Archives/edgar/data/1045810/x/y.htm",
+                                 published_at=day, published_basis="SEC filing date only", observed_at=NOW)
+            self.assertEqual([e["external_id"] for e in store.events(sec["id"])], ["0001045810-24-000315", "0001045810-24-000262"])
+            client = TestClient(create_app(Path(d) / "w", offline=True, service=service, testing=True))
+            inbox = client.get("/").text
+            self.assertIn("2024-11-20 (date only)", inbox)
+            self.assertLess(inbox.index("2024-11-20 (date only)"), inbox.index("2024-08-28 (date only)"))
+            self.assertIn("2024-11-20 (date only)", client.get("/company/" + sec["id"]).text)
+            self.assertNotIn("2024-08-28 (date only)", client.get("/?after=2024-09-01").text)
+            client.close()

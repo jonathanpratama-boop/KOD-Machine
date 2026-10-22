@@ -120,6 +120,18 @@ def _number(value):
         return str(value)
 
 
+def _available_key(row):
+    """Sort/filter key: a precise publication time, else a date-only publication, else nothing."""
+    return row.get("published_at") or (row.get("metadata") or {}).get("publication_date") or ""
+
+
+def _available(row):
+    if row.get("published_at"):
+        return _display_time(row["published_at"])
+    day = (row.get("metadata") or {}).get("publication_date")
+    return f"{day} (date only)" if day else "Unknown"
+
+
 def _unit(fact):
     unit = fact.get("unit", "unknown")
     cur = fact.get("currency")
@@ -141,7 +153,7 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
     signing_key = secrets.token_bytes(32)
     templates = Jinja2Templates(directory=str(ASSETS / "templates"))
     templates.env.filters.update(moment=_display_time, number=_number)
-    templates.env.globals.update(metric=lambda key: METRICS.get(key, str(key).replace("_", " ").title()), unit=_unit, safe_url=safe_url)
+    templates.env.globals.update(available=_available, metric=lambda key: METRICS.get(key, str(key).replace("_", " ").title()), unit=_unit, safe_url=safe_url)
     markdown = MarkdownIt("commonmark", {"html": False, "linkify": False}).disable("image")
     app.mount("/static", StaticFiles(directory=str(ASSETS / "static")), name="static")
 
@@ -203,9 +215,9 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
                 rows.append({**doc, "kind": "RELEASE", "title": doc["filename"], "status": doc["extraction_status"], "company": by_id.get(doc["security_id"]), "document_id": doc["id"]})
         rows = [r for r in rows if (not category or r["kind"] == category) and (not status or r["status"] == status)
                 and (not q or q.lower() in (r.get("title", "") + " " + str(r.get("company", {}))).lower())
-                and (not after or (r.get("published_at") or "")[:10] >= after)
-                and (not before or bool(r.get("published_at")) and r["published_at"][:10] <= before)]
-        rows.sort(key=lambda r: (r.get("published_at") or "", r.get("observed_at") or ""), reverse=True)
+                and (not after or _available_key(r)[:10] >= after)
+                and (not before or bool(_available_key(r)) and _available_key(r)[:10] <= before)]
+        rows.sort(key=lambda r: (_available_key(r), r.get("observed_at") or ""), reverse=True)
         return render(request, "inbox.html", page="inbox", rows=rows[:250], total=len(rows), notes=store.notes(), selected=security, category=category, selected_status=status, q=q[:200], after=after, before=before)
 
     @app.post("/watchlist")

@@ -38,6 +38,11 @@ class ResearchService:
                 claimed.append(int(match.group(1)))
         if len(set(claimed)) > 1:
             raise ValueError("SEC source URL and header CIK disagree")
+        if headers:
+            folder = re.search(r"^/Archives/edgar/data/\d+/(\d{10})(\d{2})(\d{6})/", parts.path) if parts.hostname in ("www.sec.gov", "sec.gov") else None
+            stated = re.search(r"ACCESSION-NUMBER>\s*(\d{10}-\d{2}-\d{6})", headers.decode("utf-8", "replace"))
+            if folder and stated and "-".join(folder.groups()) != stated.group(1):
+                raise ValueError("the SEC header belongs to a different filing (accession " + stated.group(1) + ") than the source URL")
         if security["cik"] and claimed and int(security["cik"]) != claimed[0]:
             raise ValueError("source CIK does not match the selected company")
 
