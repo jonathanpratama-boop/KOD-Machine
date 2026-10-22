@@ -1,0 +1,13 @@
+{
+ "id": "US_INSIDER_BUY_stage1_excess_hold60",
+ "experiment": "US_INSIDER_BUY",
+ "date": "2026-10-22",
+ "hypothesis": "US stocks whose officers or directors report an open-market purchase of at least USD 50,000 on Form 4 (first filing per issuer in 90 days) beat matched random entries by at least 2% over 60 sessions, bought at the open after the filing date, 2021-2022 filings (2,964 scored), survivor-only prices",
+ "one_sided_p": 0.0020,
+ "p_source": "research/US_INSIDER_BUY/results_stage1/RESULT.json p_one_sided (week-cluster bootstrap t 2.87), normal one-sided",
+ "variants_searched": 8,
+ "outcome": "FAIL (G1 and G2 fail; G3 and G4 hold), reading LEAN_WITHOUT_SIZE; Stage 2 not run",
+ "note": "Mean excess at 60 sessions +1.80% (95% interval +0.6% to +3.1%, standard error 0.63%, t 2.87), winsorised +1.13%, median +0.24%: just under both the t >= 3.0 hurdle and the 2% size gate. Positive in 2021 (+1.4%) and 2022 (+2.1%) and at holds 20 (+1.0%, t 2.83) and 120 (+1.8%, t 2.01). Descriptive splits, not gates: top-executive buyers +3.4% (n 834, t 2.3), others +1.2%; size 50-100k +2.2%, 100-500k +3.0%, 500k+ -0.8%. Prices are survivor-only, which biases a long-event result upward, so this is a lean at best, not a lead. A process slip (a staged edit of a committed file, no effect on the result) is recorded in ADDENDUM_2. Independent check: verify.py, 8,400 trades recomputed from the panel across three holds, no mismatch.",
+ "counted": true,
+ "registered": "2026-10-22"
+}

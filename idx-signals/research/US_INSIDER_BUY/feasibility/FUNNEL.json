@@ -1,0 +1,17 @@
+{
+ "purchase_lines": 92366,
+ "purchase_filings": 16642,
+ "purchase_filings_from_chain_start": 16642,
+ "with_panel_ticker": 11544,
+ "events_all_dates": 5163,
+ "events_by_stage": {
+  "1": 3066,
+  "2": 1124
+ },
+ "events_by_stage_and_role": {
+  "1|top_exec=False": 2194,
+  "1|top_exec=True": 872,
+  "2|top_exec=False": 746,
+  "2|top_exec=True": 378
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "events_csv": "ebf19aced826db03d7c6ecd12a757ce9bd43c8d9a7a525167fa655f14c14028f",
+ "form4_csv": "61c6cd5b579372c65b4016165d72b80dd059ffa2f492b657097588248643667d",
+ "filings_csv": "37668196009e183b0c8f4721b2a486898cc6762b1f1c8ac813f5513e47ee6440",
+ "panel": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b",
+ "code": {
+  "idxsig/event_study.py": "7de0d1ea92dbed9794fce11384aeac1f7f8d2fc279e8f09dafd7d282019c0a4e",
+  "idxsig/idx_events.py": "18498f1a31219fd2b954537d989d33851f990a856b7bacadddbdd01fd9197111",
+  "idxsig/execution.py": "8949da97745896cb9ccf305d3e4e76cec9b41ee1e05aad2729ac3b228ea9bb98",
+  "idxsig/controls.py": "5e3e8e7a1a26df43801b0b859d298f3f646bf01e09946130b625763f27d8d361",
+  "idxsig/market.py": "b956576fec19dbac3164bd8181e63f6b579d138aa42016d11af35103832c6d9f",
+  "idxsig/profiles.py": "8adcfb8138e363c531bafd8e5b8462a108e0fe89363261e59481b31668d05b26",
+  "idxsig/backtest.py": "da2fd808b9f372ca5fa83de42b437ec2bb7b9029ea345873bd3ccc7931329597",
+  "idxsig/global_panel.py": "9b94fbab1fb769c39d03840edd5eb8dc974c2b0f92917a97a857ad671b35b4db",
+  "research/US_INSIDER_BUY/ib_lib.py": "4d05c4f7b0b8a3159fe4df637bfeac8bf32009cb6d57ef3f10b6d085f9a927ad",
+  "research/US_INSIDER_BUY/ib_stats.py": "ce6264f227e59c62ddf722d427016f24dd2ff7c1bfc982872095fda2624b0bcf",
+  "research/US_INSIDER_BUY/build_events.py": "4435b2a9389b293567edf5c54c809d8081ce9d6aef4870bc3c0040e95ff7ac28",
+  "research/US_INSIDER_BUY/run.py": "edfffb07f7cad0436f4aab1bede3791158bafde8d0693793e8c39cf9c4bb5daf"
+ }
+}

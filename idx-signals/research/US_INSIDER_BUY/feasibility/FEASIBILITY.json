@@ -1,0 +1,40 @@
+{
+ "events_stage1": 3066,
+ "events_stage2": 1124,
+ "mapped_to_panel": 3066,
+ "not_in_panel": 0,
+ "status_counts": {
+  "EXITED": 2965,
+  "SKIP_LIQUIDITY": 70,
+  "SKIP_NOT_TRADED": 31
+ },
+ "exited": 2965,
+ "exited_without_any_scored_control_draw": 1,
+ "scored": 2964,
+ "scored_by_entry_year": {
+  "2021": 1368,
+  "2022": 1595,
+  "2023": 1
+ },
+ "scored_by_top_exec": {
+  "False": 2130,
+  "True": 834
+ },
+ "scored_by_size": {
+  "50-100k": 882,
+  "100-500k": 1320,
+  "500k+": 762
+ },
+ "go_rule": "scored (EXITED with a scored control draw) >= 1500 at hold 60 and >= 300 in each of 2021 and 2022 (fixed in PROTOCOL.md before this run)",
+ "go": true,
+ "go_detail": {
+  "scored": 2964,
+  "per_year": {
+   "2021": 1368,
+   "2022": 1595
+  },
+  "need_total": 1500,
+  "need_per_year": 300
+ },
+ "seconds": 15
+}
