@@ -1,0 +1,66 @@
+{
+ "1.01": {
+  "events": 8655,
+  "scored_hold20": 7851,
+  "testable": true,
+  "scored_2021": 4398,
+  "scored_2022": 3441
+ },
+ "1.02": {
+  "events": 1004,
+  "scored_hold20": 940,
+  "testable": true,
+  "scored_2021": 537,
+  "scored_2022": 402
+ },
+ "2.02": {
+  "events": 24199,
+  "scored_hold20": 23197,
+  "testable": true,
+  "scored_2021": 11334,
+  "scored_2022": 11862
+ },
+ "2.03": {
+  "events": 3931,
+  "scored_hold20": 3715,
+  "testable": true,
+  "scored_2021": 2040,
+  "scored_2022": 1672
+ },
+ "3.02": {
+  "events": 1942,
+  "scored_hold20": 1558,
+  "testable": true,
+  "scored_2021": 951,
+  "scored_2022": 604
+ },
+ "5.02": {
+  "events": 12266,
+  "scored_hold20": 11603,
+  "testable": true,
+  "scored_2021": 5789,
+  "scored_2022": 5797
+ },
+ "5.07": {
+  "events": 6587,
+  "scored_hold20": 6213,
+  "testable": true,
+  "scored_2021": 3003,
+  "scored_2022": 3205
+ },
+ "7.01": {
+  "events": 14356,
+  "scored_hold20": 13605,
+  "testable": true,
+  "scored_2021": 6856,
+  "scored_2022": 6743
+ },
+ "8.01": {
+  "events": 12829,
+  "scored_hold20": 11849,
+  "testable": true,
+  "scored_2021": 6418,
+  "scored_2022": 5419
+ },
+ "go": true
+}
