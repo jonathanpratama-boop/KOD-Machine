@@ -1,0 +1,1131 @@
+{
+  "schema_version": "KOD-EARNINGS-NOTE-v1",
+  "research_only": true,
+  "entry_permission": false,
+  "company": "Microsoft Corporation",
+  "ticker": "MSFT",
+  "venue": "XNAS",
+  "event": "EARNINGS_ANNOUNCEMENT",
+  "period": "quarter ended 2024-09-30",
+  "as_of": "2024-10-30T22:00:00Z",
+  "mode": "public",
+  "cutoff": {
+    "current_release_eligible": true,
+    "excluded": {}
+  },
+  "sources": [
+    {
+      "role": "current",
+      "name": "msft-ex99_1.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+      "sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+      "bytes": 451325,
+      "published_at": "2024-10-30T20:04:07Z",
+      "published_basis": "SEC acceptance time from the filing's own header (New York clock converted to UTC)",
+      "observed_at": "2026-10-22T15:22:44Z",
+      "observed_basis": "retrieval time supplied by the user"
+    },
+    {
+      "role": "comparison",
+      "name": "msft-ex99_1.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024087835/msft-ex99_1.htm",
+      "sha256": "33a611b91bc16a9bc532a8dee7775012c37d302d1e1d392d3c03827cee5acaad",
+      "bytes": 688043,
+      "published_at": "2024-07-30T20:03:22Z",
+      "published_basis": "SEC acceptance time from the filing's own header (New York clock converted to UTC)",
+      "observed_at": "2026-10-22T15:22:45Z",
+      "observed_basis": "retrieval time supplied by the user"
+    }
+  ],
+  "bundle_sha256": "4da5e18324102257ffc807421ff9935f4df32c020e411ae043a993fabe1f8f5c",
+  "workbench_report": {
+    "schema_version": "KOD-WORKBENCH-REPORT-v1",
+    "research_only": true,
+    "entry_permission": false,
+    "input_bundle_sha256": "4da5e18324102257ffc807421ff9935f4df32c020e411ae043a993fabe1f8f5c",
+    "synthetic": false,
+    "mode": "public",
+    "availability_basis": "HISTORICAL_RECONSTRUCTION_PUBLICATION_ONLY",
+    "as_of": "2024-10-30T22:00:00Z",
+    "query": "",
+    "security_id": "MSFT.XNAS",
+    "coverage": {
+      "scope": "INPUT_BUNDLE_ONLY",
+      "securities_input": 1,
+      "documents_input": 2,
+      "documents_eligible": 2,
+      "documents_excluded": 0,
+      "eligible_events": 2,
+      "search_events_total": 2,
+      "primary_events_total": 2
+    },
+    "excluded_documents": [],
+    "search_results": [
+      {
+        "card_id": "WB-e74f2e028b4777ca62d4",
+        "event_id": "MSFT-quarter-ended-2024-09-30-earnings",
+        "security_ids": [
+          "MSFT.XNAS"
+        ],
+        "securities": [
+          {
+            "security_id": "MSFT.XNAS",
+            "issuer_id": "Microsoft Corporation",
+            "ticker": "MSFT",
+            "venue": "XNAS",
+            "currency": "USD"
+          }
+        ],
+        "title": "Microsoft Cloud Strength Drives First Quarter Results",
+        "preview": "EX-99.1 2 msft-ex99_1.htm EX-99.1 EX-99.1\nExhibit 99.1\nMicrosoft Cloud Strength Drives First Quarter Results\nREDMOND, Wash. — October 30, 2024 — Microsoft Corp. today announced the following results for the quarter ended September 30, 2024, as compared to the corresponding period",
+        "preview_type": "EXTRACTIVE_PREVIEW",
+        "relevance_score": 0.0,
+        "latest_publication_at": "2024-10-30T20:04:07Z",
+        "document_count": 1,
+        "unique_content_count": 1,
+        "duplicate_count": 0,
+        "declared_source_families": [
+          "issuer-earnings-release"
+        ],
+        "source_lineage_unknown_count": 0,
+        "citations": [
+          {
+            "document_id": "current-release",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+            "publisher": "Microsoft Corporation",
+            "source_kind": "PRIMARY",
+            "source_family": "issuer-earnings-release",
+            "content_sha256": "2126026dad228b80f3c31e25d04b63330a46d5611b6d972285f1c4f97d85b3ea",
+            "normalized_sha256": "f130ac3e0a47760e644b1ee385b38ff0009d18812bbe0588e0ade2cfe0b72583",
+            "replaces_document_id": null,
+            "published_at": "2024-10-30T20:04:07Z",
+            "observed_at": "2026-10-22T15:22:44Z",
+            "current": true,
+            "content_hash_basis": "SUPPLIED_TITLE_AND_TEXT"
+          }
+        ],
+        "current_document_ids": [
+          "current-release"
+        ],
+        "superseded_document_ids": [],
+        "corrections": [],
+        "comparisons": [
+          {
+            "metric": "eps_diluted [GAAP]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "2.99",
+                "source_quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "eps_diluted [GAAP]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "3.3",
+                "source_quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "22291",
+                "source_quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "24667",
+                "source_quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "26895",
+                "source_quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "30552",
+                "source_quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "56517",
+                "source_quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "65585",
+                "source_quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "card_id": "WB-46bf912dc526c825baa7",
+        "event_id": "MSFT-quarter-ended-2024-06-30-earnings",
+        "security_ids": [
+          "MSFT.XNAS"
+        ],
+        "securities": [
+          {
+            "security_id": "MSFT.XNAS",
+            "issuer_id": "Microsoft Corporation",
+            "ticker": "MSFT",
+            "venue": "XNAS",
+            "currency": "USD"
+          }
+        ],
+        "title": "Microsoft Cloud Strength Drives Fourth Quarter Results",
+        "preview": "EX-99.1 2 msft-ex99_1.htm EX-99.1 EX-99.1\nExhibit 99.1\nMicrosoft Cloud Strength Drives Fourth Quarter Results\nREDMOND, Wash. — July 30, 2024 — Microsoft Corp. today announced the following results for the quarter ended June 30, 2024, as compared to the corresponding period of las",
+        "preview_type": "EXTRACTIVE_PREVIEW",
+        "relevance_score": 0.0,
+        "latest_publication_at": "2024-07-30T20:03:22Z",
+        "document_count": 1,
+        "unique_content_count": 1,
+        "duplicate_count": 0,
+        "declared_source_families": [
+          "issuer-earnings-release"
+        ],
+        "source_lineage_unknown_count": 0,
+        "citations": [
+          {
+            "document_id": "comparison-release",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024087835/msft-ex99_1.htm",
+            "publisher": "Microsoft Corporation",
+            "source_kind": "PRIMARY",
+            "source_family": "issuer-earnings-release",
+            "content_sha256": "01fa9bbcf5739d47e6677af7ddffee4ae12e555f1f771522003358f5f50bc9a7",
+            "normalized_sha256": "f09b1487cc861a4b7be0a8c8d8b3bd031040bb3edbf984b8b5e6c3c5e3b14727",
+            "replaces_document_id": null,
+            "published_at": "2024-07-30T20:03:22Z",
+            "observed_at": "2026-10-22T15:22:45Z",
+            "current": true,
+            "content_hash_basis": "SUPPLIED_TITLE_AND_TEXT"
+          }
+        ],
+        "current_document_ids": [
+          "comparison-release"
+        ],
+        "superseded_document_ids": [],
+        "corrections": [],
+        "comparisons": []
+      }
+    ],
+    "primary_disclosures": [
+      {
+        "card_id": "WB-e74f2e028b4777ca62d4",
+        "event_id": "MSFT-quarter-ended-2024-09-30-earnings",
+        "security_ids": [
+          "MSFT.XNAS"
+        ],
+        "securities": [
+          {
+            "security_id": "MSFT.XNAS",
+            "issuer_id": "Microsoft Corporation",
+            "ticker": "MSFT",
+            "venue": "XNAS",
+            "currency": "USD"
+          }
+        ],
+        "title": "Microsoft Cloud Strength Drives First Quarter Results",
+        "preview": "EX-99.1 2 msft-ex99_1.htm EX-99.1 EX-99.1\nExhibit 99.1\nMicrosoft Cloud Strength Drives First Quarter Results\nREDMOND, Wash. — October 30, 2024 — Microsoft Corp. today announced the following results for the quarter ended September 30, 2024, as compared to the corresponding period",
+        "preview_type": "EXTRACTIVE_PREVIEW",
+        "relevance_score": 0.0,
+        "latest_publication_at": "2024-10-30T20:04:07Z",
+        "document_count": 1,
+        "unique_content_count": 1,
+        "duplicate_count": 0,
+        "declared_source_families": [
+          "issuer-earnings-release"
+        ],
+        "source_lineage_unknown_count": 0,
+        "citations": [
+          {
+            "document_id": "current-release",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+            "publisher": "Microsoft Corporation",
+            "source_kind": "PRIMARY",
+            "source_family": "issuer-earnings-release",
+            "content_sha256": "2126026dad228b80f3c31e25d04b63330a46d5611b6d972285f1c4f97d85b3ea",
+            "normalized_sha256": "f130ac3e0a47760e644b1ee385b38ff0009d18812bbe0588e0ade2cfe0b72583",
+            "replaces_document_id": null,
+            "published_at": "2024-10-30T20:04:07Z",
+            "observed_at": "2026-10-22T15:22:44Z",
+            "current": true,
+            "content_hash_basis": "SUPPLIED_TITLE_AND_TEXT"
+          }
+        ],
+        "current_document_ids": [
+          "current-release"
+        ],
+        "superseded_document_ids": [],
+        "corrections": [],
+        "comparisons": [
+          {
+            "metric": "eps_diluted [GAAP]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "2.99",
+                "source_quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "eps_diluted [GAAP]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "3.3",
+                "source_quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "22291",
+                "source_quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "24667",
+                "source_quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "26895",
+                "source_quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "30552",
+                "source_quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "56517",
+                "source_quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "65585",
+                "source_quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "card_id": "WB-46bf912dc526c825baa7",
+        "event_id": "MSFT-quarter-ended-2024-06-30-earnings",
+        "security_ids": [
+          "MSFT.XNAS"
+        ],
+        "securities": [
+          {
+            "security_id": "MSFT.XNAS",
+            "issuer_id": "Microsoft Corporation",
+            "ticker": "MSFT",
+            "venue": "XNAS",
+            "currency": "USD"
+          }
+        ],
+        "title": "Microsoft Cloud Strength Drives Fourth Quarter Results",
+        "preview": "EX-99.1 2 msft-ex99_1.htm EX-99.1 EX-99.1\nExhibit 99.1\nMicrosoft Cloud Strength Drives Fourth Quarter Results\nREDMOND, Wash. — July 30, 2024 — Microsoft Corp. today announced the following results for the quarter ended June 30, 2024, as compared to the corresponding period of las",
+        "preview_type": "EXTRACTIVE_PREVIEW",
+        "relevance_score": 0.0,
+        "latest_publication_at": "2024-07-30T20:03:22Z",
+        "document_count": 1,
+        "unique_content_count": 1,
+        "duplicate_count": 0,
+        "declared_source_families": [
+          "issuer-earnings-release"
+        ],
+        "source_lineage_unknown_count": 0,
+        "citations": [
+          {
+            "document_id": "comparison-release",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024087835/msft-ex99_1.htm",
+            "publisher": "Microsoft Corporation",
+            "source_kind": "PRIMARY",
+            "source_family": "issuer-earnings-release",
+            "content_sha256": "01fa9bbcf5739d47e6677af7ddffee4ae12e555f1f771522003358f5f50bc9a7",
+            "normalized_sha256": "f09b1487cc861a4b7be0a8c8d8b3bd031040bb3edbf984b8b5e6c3c5e3b14727",
+            "replaces_document_id": null,
+            "published_at": "2024-07-30T20:03:22Z",
+            "observed_at": "2026-10-22T15:22:45Z",
+            "current": true,
+            "content_hash_basis": "SUPPLIED_TITLE_AND_TEXT"
+          }
+        ],
+        "current_document_ids": [
+          "comparison-release"
+        ],
+        "superseded_document_ids": [],
+        "corrections": [],
+        "comparisons": []
+      }
+    ],
+    "warnings": [
+      "HISTORICAL_RECONSTRUCTION: observation cutoff is not enforced; this report does not show what the system knew then.",
+      "INPUT_BUNDLE_ONLY: counts describe the supplied bundle, not completed market/source coverage.",
+      "Mappings, timestamps, quotations and source families are supplied assertions; no source or historical-content verification is performed.",
+      "Declared source families and publisher diversity do not prove independent corroboration.",
+      "Relevance scores rank research attention, not expected returns or entry eligibility."
+    ]
+  },
+  "issues": [
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 4",
+      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 5",
+      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 7",
+      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read"
+    },
+    {
+      "code": "NO_OUTLOOK_FOUND",
+      "where": "text",
+      "detail": "no sentence of the form 'outlook for the <n>th quarter of fiscal <year>' was found; no guidance extracted"
+    }
+  ],
+  "headline": {
+    "paragraph": "REDMOND, Wash. — October 30, 2024 — Microsoft Corp. today announced the following results for the quarter ended September 30, 2024, as compared to the corresponding period of last fiscal year:",
+    "quarter_ended": {
+      "quarter": null,
+      "date": "2024-09-30",
+      "quote": "quarter ended September 30, 2024"
+    },
+    "fiscal_quarter_title": null,
+    "revenue_headline": {
+      "value": "65.6",
+      "scale": "billion",
+      "quote": "Revenue was $65.6 billion"
+    },
+    "eps_headline": {},
+    "checks": [
+      {
+        "check": "headline revenue vs table revenue",
+        "ok": true,
+        "headline": "Revenue was $65.6 billion",
+        "table_value_millions": "65585"
+      }
+    ]
+  },
+  "facts": [
+    {
+      "metric": "revenue",
+      "basis": "GAAP",
+      "period": "quarter ended 2024-09-30",
+      "value": "65585",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 9,
+        "label": "2024 As Reported (GAAP)",
+        "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": "2024-09-30",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "GAAP",
+      "period": "quarter ended 2024-09-30",
+      "value": "30552",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 9,
+        "label": "2024 As Reported (GAAP)",
+        "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": "2024-09-30",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "net_income",
+      "basis": "GAAP",
+      "period": "quarter ended 2024-09-30",
+      "value": "24667",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 9,
+        "label": "2024 As Reported (GAAP)",
+        "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": "2024-09-30",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "eps_diluted",
+      "basis": "GAAP",
+      "period": "quarter ended 2024-09-30",
+      "value": "3.3",
+      "unit": "per_share",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 9,
+        "label": "2024 As Reported (GAAP)",
+        "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": "2024-09-30",
+      "period_kind": "quarter"
+    }
+  ],
+  "other_period_figures": [
+    {
+      "metric": "revenue",
+      "basis": "GAAP",
+      "period": "quarter ended 2023-09-30",
+      "value": "56517",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 8,
+        "label": "2023 As Reported (GAAP)",
+        "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": "2023-09-30",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "GAAP",
+      "period": "quarter ended 2023-09-30",
+      "value": "26895",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 8,
+        "label": "2023 As Reported (GAAP)",
+        "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": "2023-09-30",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "net_income",
+      "basis": "GAAP",
+      "period": "quarter ended 2023-09-30",
+      "value": "22291",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 8,
+        "label": "2023 As Reported (GAAP)",
+        "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": "2023-09-30",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "eps_diluted",
+      "basis": "GAAP",
+      "period": "quarter ended 2023-09-30",
+      "value": "2.99",
+      "unit": "per_share",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 8,
+        "label": "2023 As Reported (GAAP)",
+        "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": "2023-09-30",
+      "period_kind": "quarter"
+    }
+  ],
+  "prior_period": [
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "eps_diluted",
+      "basis": "GAAP",
+      "unit": "per_share",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-30",
+      "prior_period": "quarter ended 2023-09-30",
+      "actual": "3.3",
+      "prior_actual": "2.99",
+      "difference": "0.31",
+      "difference_unit": "per_share",
+      "difference_pct": "10.37",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 9,
+          "label": "2024 As Reported (GAAP)",
+          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+        },
+        {
+          "table": 1,
+          "row": 8,
+          "label": "2023 As Reported (GAAP)",
+          "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": null
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "net_income",
+      "basis": "GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-30",
+      "prior_period": "quarter ended 2023-09-30",
+      "actual": "24667",
+      "prior_actual": "22291",
+      "difference": "2376",
+      "difference_unit": "millions",
+      "difference_pct": "10.66",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 9,
+          "label": "2024 As Reported (GAAP)",
+          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+        },
+        {
+          "table": 1,
+          "row": 8,
+          "label": "2023 As Reported (GAAP)",
+          "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": null
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "operating_income",
+      "basis": "GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-30",
+      "prior_period": "quarter ended 2023-09-30",
+      "actual": "30552",
+      "prior_actual": "26895",
+      "difference": "3657",
+      "difference_unit": "millions",
+      "difference_pct": "13.6",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 9,
+          "label": "2024 As Reported (GAAP)",
+          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+        },
+        {
+          "table": 1,
+          "row": 8,
+          "label": "2023 As Reported (GAAP)",
+          "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": null
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "revenue",
+      "basis": "GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-30",
+      "prior_period": "quarter ended 2023-09-30",
+      "actual": "65585",
+      "prior_actual": "56517",
+      "difference": "9068",
+      "difference_unit": "millions",
+      "difference_pct": "16.04",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 9,
+          "label": "2024 As Reported (GAAP)",
+          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+        },
+        {
+          "table": 1,
+          "row": 8,
+          "label": "2023 As Reported (GAAP)",
+          "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": null
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "eps_diluted",
+      "basis": "GAAP",
+      "unit": "per_share",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-30",
+      "prior_period": "quarter ended 2024-06-30",
+      "actual": "3.3",
+      "prior_actual": "2.95",
+      "difference": "0.35",
+      "difference_unit": "per_share",
+      "difference_pct": "11.86",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 9,
+          "label": "2024 As Reported (GAAP)",
+          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+        },
+        {
+          "table": 2,
+          "row": 9,
+          "label": "2024 As Reported (GAAP)",
+          "quote": "2024 As Reported (GAAP) | $64,727 | $27,925 | $22,036 | $2.95"
+        }
+      ],
+      "source": "figure from the comparison release (not printed in the current release)",
+      "printed_change_check": null
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "net_income",
+      "basis": "GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-30",
+      "prior_period": "quarter ended 2024-06-30",
+      "actual": "24667",
+      "prior_actual": "22036",
+      "difference": "2631",
+      "difference_unit": "millions",
+      "difference_pct": "11.94",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 9,
+          "label": "2024 As Reported (GAAP)",
+          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+        },
+        {
+          "table": 2,
+          "row": 9,
+          "label": "2024 As Reported (GAAP)",
+          "quote": "2024 As Reported (GAAP) | $64,727 | $27,925 | $22,036 | $2.95"
+        }
+      ],
+      "source": "figure from the comparison release (not printed in the current release)",
+      "printed_change_check": null
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "operating_income",
+      "basis": "GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-30",
+      "prior_period": "quarter ended 2024-06-30",
+      "actual": "30552",
+      "prior_actual": "27925",
+      "difference": "2627",
+      "difference_unit": "millions",
+      "difference_pct": "9.41",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 9,
+          "label": "2024 As Reported (GAAP)",
+          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+        },
+        {
+          "table": 2,
+          "row": 9,
+          "label": "2024 As Reported (GAAP)",
+          "quote": "2024 As Reported (GAAP) | $64,727 | $27,925 | $22,036 | $2.95"
+        }
+      ],
+      "source": "figure from the comparison release (not printed in the current release)",
+      "printed_change_check": null
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "revenue",
+      "basis": "GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-30",
+      "prior_period": "quarter ended 2024-06-30",
+      "actual": "65585",
+      "prior_actual": "64727",
+      "difference": "858",
+      "difference_unit": "millions",
+      "difference_pct": "1.33",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 9,
+          "label": "2024 As Reported (GAAP)",
+          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+        },
+        {
+          "table": 2,
+          "row": 9,
+          "label": "2024 As Reported (GAAP)",
+          "quote": "2024 As Reported (GAAP) | $64,727 | $27,925 | $22,036 | $2.95"
+        }
+      ],
+      "source": "figure from the comparison release (not printed in the current release)",
+      "printed_change_check": null
+    }
+  ],
+  "guidance_comparisons": [],
+  "guidance_not_compared": [],
+  "consistency_with_comparison": [],
+  "comparison_issues": [
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 6",
+      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 7",
+      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 9",
+      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read"
+    },
+    {
+      "code": "NO_OUTLOOK_FOUND",
+      "where": "text",
+      "detail": "no sentence of the form 'outlook for the <n>th quarter of fiscal <year>' was found; no guidance extracted"
+    }
+  ],
+  "next_guidance": [],
+  "consensus": []
+}

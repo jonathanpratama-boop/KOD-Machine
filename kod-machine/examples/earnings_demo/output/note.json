@@ -1930,7 +1930,23 @@
       "Relevance scores rank research attention, not expected returns or entry eligibility."
     ]
   },
-  "issues": [],
+  "issues": [
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 4",
+      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 6",
+      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 8",
+      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them (5 dated columns under 2 duration headings); their values are not read"
+    }
+  ],
   "headline": {
     "paragraph": "SANTA CLARA, Calif.—Nov. 20, 2024―NVIDIA (NASDAQ: NVDA) today reported revenue for the third quarter ended October 27, 2024, of $35.1 billion, up 17% from the previous quarter and up 94% from a year ago.",
     "quarter_ended": {
@@ -1946,7 +1962,7 @@
     "revenue_headline": {
       "value": "35.1",
       "scale": "billion",
-      "quote": "reported revenue for the third quarter ended October 27, 2024, of $35.1 billion"
+      "quote": "revenue of $35.1 billion"
     },
     "eps_headline": {
       "GAAP": {
@@ -1962,7 +1978,7 @@
       {
         "check": "headline revenue vs table revenue",
         "ok": true,
-        "headline": "reported revenue for the third quarter ended October 27, 2024, of $35.1 billion",
+        "headline": "revenue of $35.1 billion",
         "table_value_millions": "35082"
       },
       {
@@ -1984,7 +2000,6 @@
       "metric": "revenue",
       "basis": "GAAP",
       "period": "Q3 FY25",
-      "column": 0,
       "value": "35082",
       "unit": "millions",
       "currency": "USD",
@@ -1997,13 +2012,14 @@
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
-      ]
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
     },
     {
       "metric": "gross_margin",
       "basis": "GAAP",
       "period": "Q3 FY25",
-      "column": 0,
       "value": "74.6",
       "unit": "percent",
       "currency": null,
@@ -2014,13 +2030,14 @@
         "quote": "Gross margin | 74.6% | 75.1% | 74.0% | Down 0.5 pts | Up 0.6 pts"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
-      "flags": []
+      "flags": [],
+      "period_end": null,
+      "period_kind": "quarter"
     },
     {
       "metric": "operating_expenses",
       "basis": "GAAP",
       "period": "Q3 FY25",
-      "column": 0,
       "value": "4287",
       "unit": "millions",
       "currency": "USD",
@@ -2033,13 +2050,14 @@
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
-      ]
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
     },
     {
       "metric": "operating_income",
       "basis": "GAAP",
       "period": "Q3 FY25",
-      "column": 0,
       "value": "21869",
       "unit": "millions",
       "currency": "USD",
@@ -2052,13 +2070,14 @@
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
-      ]
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
     },
     {
       "metric": "net_income",
       "basis": "GAAP",
       "period": "Q3 FY25",
-      "column": 0,
       "value": "19309",
       "unit": "millions",
       "currency": "USD",
@@ -2071,13 +2090,14 @@
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
-      ]
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
     },
     {
       "metric": "eps_diluted",
       "basis": "GAAP",
       "period": "Q3 FY25",
-      "column": 0,
       "value": "0.78",
       "unit": "per_share",
       "currency": "USD",
@@ -2090,13 +2110,14 @@
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
-      ]
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
     },
     {
       "metric": "revenue",
       "basis": "NON-GAAP",
       "period": "Q3 FY25",
-      "column": 0,
       "value": "35082",
       "unit": "millions",
       "currency": "USD",
@@ -2109,13 +2130,14 @@
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
-      ]
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
     },
     {
       "metric": "gross_margin",
       "basis": "NON-GAAP",
       "period": "Q3 FY25",
-      "column": 0,
       "value": "75",
       "unit": "percent",
       "currency": null,
@@ -2126,13 +2148,14 @@
         "quote": "Gross margin | 75.0% | 75.7% | 75.0% | Down 0.7 pts | --"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
-      "flags": []
+      "flags": [],
+      "period_end": null,
+      "period_kind": "quarter"
     },
     {
       "metric": "operating_expenses",
       "basis": "NON-GAAP",
       "period": "Q3 FY25",
-      "column": 0,
       "value": "3046",
       "unit": "millions",
       "currency": "USD",
@@ -2145,13 +2168,14 @@
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
-      ]
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
     },
     {
       "metric": "operating_income",
       "basis": "NON-GAAP",
       "period": "Q3 FY25",
-      "column": 0,
       "value": "23276",
       "unit": "millions",
       "currency": "USD",
@@ -2164,13 +2188,14 @@
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
-      ]
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
     },
     {
       "metric": "net_income",
       "basis": "NON-GAAP",
       "period": "Q3 FY25",
-      "column": 0,
       "value": "20010",
       "unit": "millions",
       "currency": "USD",
@@ -2183,13 +2208,14 @@
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
-      ]
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
     },
     {
       "metric": "eps_diluted",
       "basis": "NON-GAAP",
       "period": "Q3 FY25",
-      "column": 0,
       "value": "0.81",
       "unit": "per_share",
       "currency": "USD",
@@ -2202,7 +2228,483 @@
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
-      ]
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    }
+  ],
+  "other_period_figures": [
+    {
+      "metric": "revenue",
+      "basis": "GAAP",
+      "period": "Q2 FY25",
+      "value": "30040",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 4,
+        "label": "Revenue",
+        "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "revenue",
+      "basis": "GAAP",
+      "period": "Q3 FY24",
+      "value": "18120",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 4,
+        "label": "Revenue",
+        "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "gross_margin",
+      "basis": "GAAP",
+      "period": "Q2 FY25",
+      "value": "75.1",
+      "unit": "percent",
+      "currency": null,
+      "evidence": {
+        "table": 1,
+        "row": 5,
+        "label": "Gross margin",
+        "quote": "Gross margin | 74.6% | 75.1% | 74.0% | Down 0.5 pts | Up 0.6 pts"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "gross_margin",
+      "basis": "GAAP",
+      "period": "Q3 FY24",
+      "value": "74",
+      "unit": "percent",
+      "currency": null,
+      "evidence": {
+        "table": 1,
+        "row": 5,
+        "label": "Gross margin",
+        "quote": "Gross margin | 74.6% | 75.1% | 74.0% | Down 0.5 pts | Up 0.6 pts"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "GAAP",
+      "period": "Q2 FY25",
+      "value": "3932",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 6,
+        "label": "Operating expenses",
+        "quote": "Operating expenses | $4,287 | $3,932 | $2,983 | Up 9% | Up 44%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "GAAP",
+      "period": "Q3 FY24",
+      "value": "2983",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 6,
+        "label": "Operating expenses",
+        "quote": "Operating expenses | $4,287 | $3,932 | $2,983 | Up 9% | Up 44%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "GAAP",
+      "period": "Q2 FY25",
+      "value": "18642",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 7,
+        "label": "Operating income",
+        "quote": "Operating income | $21,869 | $18,642 | $10,417 | Up 17% | Up 110%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "GAAP",
+      "period": "Q3 FY24",
+      "value": "10417",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 7,
+        "label": "Operating income",
+        "quote": "Operating income | $21,869 | $18,642 | $10,417 | Up 17% | Up 110%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "net_income",
+      "basis": "GAAP",
+      "period": "Q2 FY25",
+      "value": "16599",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 8,
+        "label": "Net income",
+        "quote": "Net income | $19,309 | $16,599 | $9,243 | Up 16% | Up 109%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "net_income",
+      "basis": "GAAP",
+      "period": "Q3 FY24",
+      "value": "9243",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 8,
+        "label": "Net income",
+        "quote": "Net income | $19,309 | $16,599 | $9,243 | Up 16% | Up 109%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "eps_diluted",
+      "basis": "GAAP",
+      "period": "Q2 FY25",
+      "value": "0.67",
+      "unit": "per_share",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 9,
+        "label": "Diluted earnings per share*",
+        "quote": "Diluted earnings per share* | $0.78 | $0.67 | $0.37 | Up 16% | Up 111%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "eps_diluted",
+      "basis": "GAAP",
+      "period": "Q3 FY24",
+      "value": "0.37",
+      "unit": "per_share",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 9,
+        "label": "Diluted earnings per share*",
+        "quote": "Diluted earnings per share* | $0.78 | $0.67 | $0.37 | Up 16% | Up 111%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "revenue",
+      "basis": "NON-GAAP",
+      "period": "Q2 FY25",
+      "value": "30040",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 4,
+        "label": "Revenue",
+        "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "revenue",
+      "basis": "NON-GAAP",
+      "period": "Q3 FY24",
+      "value": "18120",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 4,
+        "label": "Revenue",
+        "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "gross_margin",
+      "basis": "NON-GAAP",
+      "period": "Q2 FY25",
+      "value": "75.7",
+      "unit": "percent",
+      "currency": null,
+      "evidence": {
+        "table": 2,
+        "row": 5,
+        "label": "Gross margin",
+        "quote": "Gross margin | 75.0% | 75.7% | 75.0% | Down 0.7 pts | --"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "gross_margin",
+      "basis": "NON-GAAP",
+      "period": "Q3 FY24",
+      "value": "75",
+      "unit": "percent",
+      "currency": null,
+      "evidence": {
+        "table": 2,
+        "row": 5,
+        "label": "Gross margin",
+        "quote": "Gross margin | 75.0% | 75.7% | 75.0% | Down 0.7 pts | --"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "NON-GAAP",
+      "period": "Q2 FY25",
+      "value": "2792",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 6,
+        "label": "Operating expenses",
+        "quote": "Operating expenses | $3,046 | $2,792 | $2,026 | Up 9% | Up 50%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "NON-GAAP",
+      "period": "Q3 FY24",
+      "value": "2026",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 6,
+        "label": "Operating expenses",
+        "quote": "Operating expenses | $3,046 | $2,792 | $2,026 | Up 9% | Up 50%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "NON-GAAP",
+      "period": "Q2 FY25",
+      "value": "19937",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 7,
+        "label": "Operating income",
+        "quote": "Operating income | $23,276 | $19,937 | $11,557 | Up 17% | Up 101%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "NON-GAAP",
+      "period": "Q3 FY24",
+      "value": "11557",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 7,
+        "label": "Operating income",
+        "quote": "Operating income | $23,276 | $19,937 | $11,557 | Up 17% | Up 101%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "net_income",
+      "basis": "NON-GAAP",
+      "period": "Q2 FY25",
+      "value": "16952",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 8,
+        "label": "Net income",
+        "quote": "Net income | $20,010 | $16,952 | $10,020 | Up 18% | Up 100%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "net_income",
+      "basis": "NON-GAAP",
+      "period": "Q3 FY24",
+      "value": "10020",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 8,
+        "label": "Net income",
+        "quote": "Net income | $20,010 | $16,952 | $10,020 | Up 18% | Up 100%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "eps_diluted",
+      "basis": "NON-GAAP",
+      "period": "Q2 FY25",
+      "value": "0.68",
+      "unit": "per_share",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 9,
+        "label": "Diluted earnings per share*",
+        "quote": "Diluted earnings per share* | $0.81 | $0.68 | $0.40 | Up 19% | Up 103%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "eps_diluted",
+      "basis": "NON-GAAP",
+      "period": "Q3 FY24",
+      "value": "0.4",
+      "unit": "per_share",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 9,
+        "label": "Diluted earnings per share*",
+        "quote": "Diluted earnings per share* | $0.81 | $0.68 | $0.40 | Up 19% | Up 103%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
     }
   ],
   "prior_period": [
@@ -3241,7 +3743,23 @@
       "agrees": true
     }
   ],
-  "comparison_issues": [],
+  "comparison_issues": [
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 4",
+      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 6",
+      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 8",
+      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them (5 dated columns under 2 duration headings); their values are not read"
+    }
+  ],
   "next_guidance": [
     {
       "metric": "revenue",

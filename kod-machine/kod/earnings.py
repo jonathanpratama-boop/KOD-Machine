@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import argparse
 import html
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from decimal import Decimal, InvalidOperation
 from html.parser import HTMLParser
 import json
@@ -31,7 +31,6 @@ from .workbench import _decimal_string
 
 SCHEMA = "KOD-EARNINGS-NOTE-v1"
 LOCAL_URL = "https://example.invalid/local-file/"
-PERIOD_RE = re.compile(r"^Q([1-4])\s*(?:FY|fy)?\s*'?(\d{2}|\d{4})$")
 ORDINALS = {"first": 1, "second": 2, "third": 3, "fourth": 4}
 SCALES = {"thousands": 1000, "millions": 10**6, "billions": 10**9}
 
@@ -143,23 +142,77 @@ def read_document(raw: bytes, name: str = "document") -> dict:
             if merged:
                 rows.append({"row": r + 1, "cells": merged, "line": " | ".join(merged)})
         if rows:
-            tables.append({"table": len(tables) + 1, "rows": rows})
+            tables.append({"table": len(tables) + 1, "first_line": len(lines), "rows": rows})
             lines.extend(row["line"] for row in rows)
     return {"name": name, "raw_sha256": sha256_bytes(bytes(raw)), "bytes": len(raw), "lines": lines, "text": "\n".join(lines), "tables": tables}
 
 
 # ---------------------------------------------------------------- figures
 
-def normalize_period(label: str):
-    m = PERIOD_RE.match(label.strip())
+PERIOD_RE = re.compile(r"^Q([1-4])\s*(FY|fy)?\s*'?(\d{2}|\d{4})$")
+CHANGE_RE = re.compile(r"^(y/y|q/q|yoy|qoq|% ?change|change)$", re.I)
+DATE_RE = re.compile(r"^([A-Za-z]{3,9})\.?\s*(\d{1,2}),\s*(\d{4})$")
+MONTHS = {m: i for i, m in enumerate(("jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"), 1)}
+DURATIONS = {"three": "quarter", "six": "6 months", "nine": "9 months", "twelve": "12 months", "year": "12 months"}
+DUR_RE = re.compile(r"\b(?:(three|six|nine|twelve)\s+months|(?:fiscal\s+)?(year))\s+ended\b", re.I)
+BASIS_RE = re.compile(r"^(non-gaap|gaap)\b", re.I)
+
+
+def qn_period(text: str):
+    m = PERIOD_RE.match(text.strip())
     if not m:
         return None
-    year = m.group(2)[-2:]
-    return f"Q{m.group(1)} FY{year}", int(m.group(1)), int(year)
+    year = m.group(3)
+    label = f"Q{m.group(1)} FY{year[-2:]}" if m.group(2) else f"Q{m.group(1)} {year}"
+    return {"label": label, "kind": "quarter", "q": int(m.group(1)), "yy": int(year[-2:]), "end": None}
+
+
+def normalize_period(label: str):
+    """Kept for callers that only need (label, quarter, two-digit year) of a 'Qn FYyy' / 'Qn yyyy' label."""
+    p = qn_period(label)
+    return (p["label"], p["q"], p["yy"]) if p else None
+
+
+def parse_date(text: str):
+    m = DATE_RE.match(text.strip())
+    month = MONTHS.get(m.group(1)[:3].lower()) if m else None
+    if not m or month is None:
+        return None
+    try:
+        return date(int(m.group(3)), month, int(m.group(2)))
+    except ValueError:
+        return None
+
+
+def duration_of(text: str):
+    m = DUR_RE.search(text or "")
+    return DURATIONS[(m.group(1) or m.group(2)).lower()] if m else None
+
+
+def dated_period(kind: str, end: date):
+    return {"label": f"{kind} ended {end.isoformat()}", "kind": kind, "q": None, "yy": None, "end": end}
+
+
+def relation(cur: dict, other: dict):
+    """How `other` relates to `cur`: YEAR_OVER_YEAR, SEQUENTIAL, OTHER, or None when the two are not comparable (different duration kinds or label styles)."""
+    if cur["kind"] != other["kind"]:
+        return None
+    if cur["end"] and other["end"]:
+        days = (cur["end"] - other["end"]).days
+        if 350 <= days <= 380:
+            return "YEAR_OVER_YEAR"
+        return "SEQUENTIAL" if cur["kind"] == "quarter" and 75 <= days <= 105 else "OTHER"
+    if cur["q"] and other["q"]:
+        if other["q"] == cur["q"] and other["yy"] == cur["yy"] - 1:
+            return "YEAR_OVER_YEAR"
+        if (cur["q"] > 1 and other["q"] == cur["q"] - 1 and other["yy"] == cur["yy"]) or (cur["q"] == 1 and other["q"] == 4 and other["yy"] == cur["yy"] - 1):
+            return "SEQUENTIAL"
+        return "OTHER"
+    return None
 
 
 def parse_number(cell: str):
-    """('12,345', 'USD'|None, 'percent'|None) from '$12,345', '(1,234)', '74.6%'; None if the cell is not a plain number."""
+    """(Decimal, '$'|None, 'percent'|None) from '$12,345', '(1,234)', '74.6%'; None if the cell is not a plain number."""
     text = cell.strip()
     neg = text.startswith("(") and text.rstrip("%").endswith(")")
     text = text.strip("()")
@@ -180,111 +233,276 @@ METRICS = (
     ("net_income", re.compile(r"^net income$")),
     ("eps_diluted", re.compile(r"^(diluted (earnings|eps)( per (common )?share)?|(earnings|net income) per diluted share|diluted net income per share)$")),
 )
-
-
-def metric_for(label: str):
-    clean = re.sub(r"[*†‡]+$", "", label.strip().lower()).strip()
-    for name, pattern in METRICS:
-        if pattern.match(clean):
-            return name
-    return None
+COMPACT = {"revenue": "revenue", "operatingincome": "operating_income", "netincome": "net_income", "dilutedearningspershare": "eps_diluted"}
+SCALE_WORDS = {"m": "millions", "million": "millions", "millions": "millions", "thousand": "thousands", "thousands": "thousands", "billion": "billions", "billions": "billions"}
 
 
 def unit_scale(text: str):
-    m = re.search(r"in (thousands|millions|billions)", text, re.I)
-    return m.group(1).lower() if m else None
+    m = re.search(r"\bin\s+(thousands|millions|billions)\b", text or "", re.I) or re.search(r"\(\s*\$\s*(m)\s*\)", text or "", re.I)
+    return SCALE_WORDS[m.group(1).lower()] if m else None
+
+
+def metric_for(label: str, section: str | None = None):
+    """(metric, basis-from-label or None, scale-from-label or None), or None. Footnote marks, '(1)', '($M)' and a leading GAAP / Non-GAAP are read off the label first."""
+    s = re.sub(r"[*†‡]+$", "", label.strip())
+    s = re.sub(r"\s*\(\d+\)$", "", s)
+    scale = None
+    m = re.search(r"\(\s*\$?\s*(?:in\s+)?(m|millions?|thousands?|billions?)\s*\)", s, re.I)
+    if m:
+        scale = SCALE_WORDS[m.group(1).lower()]
+        s = (s[:m.start()] + s[m.end():]).strip()
+    basis = None
+    m = BASIS_RE.match(s)
+    if m:
+        basis = "NON-GAAP" if m.group(1).lower().startswith("non") else "GAAP"
+        s = s[m.end():].strip()
+    s = s.lower()
+    if s == "diluted" and section and "per share" in section and "shares used" not in section and "weighted" not in section:
+        return "eps_diluted", basis, scale
+    for name, pattern in METRICS:
+        if pattern.match(s):
+            return name, basis, scale
+    return None
+
+
+def _basis_in(lines):
+    for line in reversed(lines):
+        m = BASIS_RE.match(line.strip())
+        if m and len(line) < 80:
+            return "NON-GAAP" if m.group(1).lower().startswith("non") else "GAAP"
+    return None
+
+
+def _month_day(text: str):
+    m = re.search(r"([A-Za-z]{3,9})\.?\s+(\d{1,2}),?\s*$", text.strip())
+    month = MONTHS.get(m.group(1)[:3].lower()) if m else None
+    return (month, int(m.group(2))) if m else None
 
 
 def extract_table_facts(doc: dict, currency_override: str | None = None) -> tuple[list, list]:
-    """Facts from period-labelled summary tables. Returns (facts, issues). A fact has one value in one period column, with its table row as evidence."""
+    """Facts from tables whose columns are periods (a 'Qn FYyy' / 'Qn yyyy' label, or a date under a 'Three/Twelve Months Ended' heading, or a year under 'Three Months Ended <Month day>,')
+    and from tables with the periods down the rows (metric names across the top). One value, one period, one basis per fact; the table row is the evidence. Column meaning always
+    comes from the header cells, aligned one to one with the row's values; a row whose value count differs is skipped and listed. Returns (facts, issues)."""
     facts, issues = [], []
+    lines = doc["lines"]
     for table in doc["tables"]:
-        basis, periods, scale, per_share_note = "UNSTATED", None, None, False
+        ctx = lines[max(0, table["first_line"] - 4):table["first_line"]]
+        basis = _basis_in(ctx) or "UNSTATED"
+        scale = unit_scale(" ".join(ctx[-3:]))
+        section, groups, columns, transposed, skipped, unknown_cols, groups_unclear = None, [], None, None, 0, False, None
+        table_dollar = any("$" in c for r in table["rows"] for c in r["cells"])
         for row in table["rows"]:
             cells = row["cells"]
-            if len(cells) == 1 and re.fullmatch(r"(non-gaap|gaap)", cells[0].strip(), re.I):
-                basis = "NON-GAAP" if cells[0].lower().startswith("non") else "GAAP"
+            where = f"table {table['table']} row {row['row']}"
+            if len(cells) == 1:
+                t = cells[0]
+                if BASIS_RE.match(t) and len(t) < 40:
+                    basis = "NON-GAAP" if t.lower().startswith("non") else "GAAP"
+                elif duration_of(t):
+                    groups = [t]
+                elif t.endswith(":"):
+                    section = t.rstrip(":").strip().lower()
+                elif unit_scale(t):
+                    scale = unit_scale(t)
                 continue
-            labels = [normalize_period(c) for c in cells[1:]]
-            hits = [l for l in labels if l]
-            if len(hits) >= 2:
-                periods = [l[0] for l in hits]
-                scale = unit_scale(cells[0])
-                first = cells[0].lower()
-                per_share_note = "per share" in first
-                if re.search(r"non-gaap", first):
-                    basis = "NON-GAAP"
-                elif re.search(r"\bgaap\b", first):
-                    basis = "GAAP"
-                if scale is None and "$" in cells[0]:
-                    issues.append({"code": "UNIT_SCALE_UNSTATED", "where": f"table {table['table']}", "detail": "the header gives no 'in millions/thousands'; dollar amounts are treated as unscaled and flagged"})
+            if all(duration_of(c) for c in cells):
+                groups = cells
                 continue
-            if not periods:
+            kinds = [None if CHANGE_RE.match(c) is None and qn_period(c) is None and parse_date(c) is None and not re.fullmatch(r"\d{4}", c) else c for c in cells]
+            body = cells if kinds[0] is not None else cells[1:]
+            head_ok = sum(k is not None for k in (kinds if kinds[0] is not None else kinds[1:])) >= 2 and all(k is not None for k in (kinds if kinds[0] is not None else kinds[1:]))
+            compact = [COMPACT.get(re.sub(r"\W", "", c.lower())) for c in cells[1:]]
+            if head_ok:
+                if kinds[0] is None:
+                    scale = unit_scale(cells[0]) or scale
+                    b = BASIS_RE.match(cells[0].strip())
+                    if b or re.search(r"\bgaap\b", cells[0], re.I):
+                        basis = "NON-GAAP" if re.search(r"non-gaap", cells[0], re.I) else "GAAP"
+                n_dates = sum(1 for c in body if parse_date(c) or re.fullmatch(r"\d{4}", c))
+                size = None
+                if groups and n_dates:
+                    size = n_dates if len(groups) == 1 else (n_dates // len(groups) if n_dates % len(groups) == 0 else None)
+                    if size is None:
+                        groups_unclear = f"{n_dates} dated columns under {len(groups)} duration headings"
+                columns, seen = [], 0
+                for c in body:
+                    if CHANGE_RE.match(c):
+                        columns.append({"type": "change", "label": c.upper()})
+                    elif qn_period(c):
+                        columns.append({"type": "period", "period": qn_period(c)})
+                    else:
+                        d = parse_date(c)
+                        year_only = re.fullmatch(r"\d{4}", c) is not None
+                        gtext = groups[min(seen // size, len(groups) - 1)] if (groups and size) else None
+                        kind = duration_of(gtext) if gtext else None
+                        if year_only and gtext and _month_day(gtext):
+                            month, day = _month_day(gtext)
+                            try:
+                                d = date(int(c), month, day)
+                            except ValueError:
+                                d = None
+                        seen += 1
+                        if d is not None and kind:
+                            columns.append({"type": "period", "period": dated_period(kind, d)})
+                        else:
+                            columns.append({"type": "unknown", "label": c})
+                transposed = None
                 continue
-            metric = metric_for(cells[0])
-            if metric is None:
+            if sum(m is not None for m in compact) >= 2 and groups and _month_day(groups[0]):
+                transposed = compact
+                scale = unit_scale(cells[0]) or scale
+                columns = None
                 continue
-            values = []
-            for cell in cells[1:1 + len(periods)]:
-                values.append(parse_number(cell))
-            if any(v is None for v in values):
-                issues.append({"code": "UNREADABLE_ROW", "where": f"table {table['table']} row {row['row']}", "detail": f"'{cells[0]}': a value cell in a period column is not a plain number; row skipped"})
+            if transposed:
+                m = re.fullmatch(r"(\d{4}) As (?:Reported|Adjusted) \((Non-)?GAAP\)", cells[0].strip())
+                if not m:
+                    continue
+                month, day = _month_day(groups[0])
+                kind = duration_of(groups[0])
+                period = dated_period(kind, date(int(m.group(1)), month, day))
+                row_basis = "NON-GAAP" if m.group(2) else "GAAP"
+                for metric, cell in zip(transposed, cells[1:]):
+                    if metric is None:
+                        continue
+                    num = parse_number(cell)
+                    if num is None:
+                        issues.append({"code": "UNREADABLE_ROW", "where": where, "detail": f"'{metric}' value '{cell}' is not a plain number; skipped"})
+                        continue
+                    facts.append(_fact(metric, row_basis, period, num, scale, None, table, row, cells[0], {}, currency_override, table_dollar))
                 continue
-            printed_changes = cells[1 + len(periods):]
-            for idx, (value, cur, pct) in enumerate(values):
-                if metric == "gross_margin":
-                    if pct != "percent":
-                        issues.append({"code": "UNIT_AMBIGUOUS", "where": f"table {table['table']} row {row['row']}", "detail": "gross margin without a % sign; not extracted"})
-                        break
-                    unit, currency = "percent", None
-                elif metric == "eps_diluted":
-                    unit, currency = "per_share", ("USD" if cur else None)
-                else:
-                    unit = f"millions" if scale == "millions" else (f"{scale}" if scale else "unscaled")
-                    currency = "USD" if cur else None
-                if currency_override and currency:
-                    currency = currency_override
-                flags = []
-                if currency == "USD" and not currency_override:
-                    flags.append("CURRENCY_ASSUMED_USD_FROM_$_SIGN")
-                if unit == "unscaled":
-                    flags.append("UNIT_SCALE_UNKNOWN")
-                facts.append({"metric": metric, "basis": basis, "period": periods[idx], "column": idx, "value": _decimal_string(value), "unit": unit, "currency": currency,
-                              "evidence": {"table": table["table"], "row": row["row"], "label": cells[0], "quote": row["line"]},
-                              "printed_changes": printed_changes, "method": "TABLE_ROW_LABEL_MATCH", "flags": flags})
-    return facts, issues
+            if columns is None:
+                continue
+            found = metric_for(cells[0], section)
+            if found is None:
+                continue
+            metric, label_basis, label_scale = found
+            values = cells[1:]
+            if len(values) != len(columns):
+                skipped += 1
+                continue
+            nums, bad = [], False
+            unknown_cols = unknown_cols or any(c["type"] == "unknown" for c in columns)
+            for col, cell in zip(columns, values):
+                if col["type"] != "period":
+                    nums.append(None)
+                    continue
+                num = parse_number(cell)
+                if num is None:
+                    bad = True
+                    break
+                nums.append(num)
+            if bad:
+                issues.append({"code": "UNREADABLE_ROW", "where": where, "detail": f"'{cells[0]}': a value in a period column is not a plain number; row skipped"})
+                continue
+            printed = {col["label"]: cell for col, cell in zip(columns, values) if col["type"] == "change"}
+            for col, num in zip(columns, nums):
+                if num is None:
+                    continue
+                if metric == "gross_margin" and num[2] != "percent":
+                    issues.append({"code": "UNIT_AMBIGUOUS", "where": where, "detail": "gross margin without a % sign (a dollar amount?); not extracted"})
+                    break
+                if metric == "eps_diluted" and num[1] is None:
+                    issues.append({"code": "UNIT_AMBIGUOUS", "where": where, "detail": f"'{cells[0]}' has no $ sign (a share count?); not read as earnings per share"})
+                    break
+                facts.append(_fact(metric, label_basis or basis, col["period"], num, label_scale or scale, label_scale, table, row, cells[0], printed, currency_override, table_dollar))
+        if unknown_cols:
+            issues.append({"code": "COLUMN_DURATION_UNKNOWN", "where": f"table {table['table']}", "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them" + (f" ({groups_unclear})" if groups_unclear else "") + "; their values are not read"})
+        if any("UNIT_SCALE_UNKNOWN" in f["flags"] and f["evidence"]["table"] == table["table"] for f in facts):
+            issues.append({"code": "UNIT_SCALE_UNSTATED", "where": f"table {table['table']}", "detail": "no 'in millions/thousands' statement found for this table; amounts are kept unscaled and flagged"})
+        if skipped:
+            issues.append({"code": "COLUMN_COUNT_MISMATCH", "where": f"table {table['table']}", "detail": f"{skipped} recognised row(s) skipped because their value count differs from the header columns"})
+    return _dedupe(facts, issues), issues
+
+
+def _fact(metric, basis, period, num, scale, label_scale, table, row, label, printed, currency_override, table_dollar=False):
+    value, cur, pct = num
+    cur = cur or ("$" if (table_dollar and metric not in ("gross_margin", "eps_diluted")) else None)
+    if metric == "gross_margin":
+        unit, currency = "percent", None
+    elif metric == "eps_diluted":
+        unit, currency = "per_share", ("USD" if cur else None)
+    else:
+        unit, currency = (scale if scale else "unscaled"), ("USD" if cur else None)
+    if currency_override and currency:
+        currency = currency_override
+    flags = []
+    if currency == "USD" and not currency_override:
+        flags.append("CURRENCY_ASSUMED_USD_FROM_$_SIGN")
+    if unit == "unscaled":
+        flags.append("UNIT_SCALE_UNKNOWN")
+    if basis == "UNSTATED":
+        flags.append("BASIS_NOT_STATED")
+    return {"metric": metric, "basis": basis, "period": period["label"], "period_info": period, "value": _decimal_string(value), "unit": unit, "currency": currency,
+            "evidence": {"table": table["table"], "row": row["row"], "label": label, "quote": row["line"]}, "printed_changes": printed, "method": "TABLE_ROW_LABEL_MATCH", "flags": flags}
+
+
+def _dedupe(facts, issues):
+    """The same metric, basis and period printed in several tables is one fact (first table kept; others listed as `also_in`); differing values are a conflict, both kept."""
+    out, index = [], {}
+    for f in facts:
+        key = (f["metric"], f["basis"], f["period"])
+        first = index.get(key)
+        if first is None:
+            index[key] = f
+            out.append(f)
+        elif first["value"] == f["value"]:
+            first.setdefault("also_in", []).append(f["evidence"])
+            for k, v in f["printed_changes"].items():
+                first["printed_changes"].setdefault(k, v)
+        else:
+            f["flags"].append("CONFLICTS_WITH_EARLIER_TABLE")
+            first["flags"].append("CONFLICTS_WITH_LATER_TABLE")
+            issues.append({"code": "FIGURE_CONFLICT", "where": f"{f['metric']} {f['basis']} {f['period']}", "detail": f"table {first['evidence']['table']} says {first['value']}, table {f['evidence']['table']} says {f['value']}; both kept, nothing averaged"})
+            out.append(f)
+    return out
+
+
+def choose_current(facts: list, head: dict):
+    """The period the release is about: the quarter whose end date the headline states, else the first quarter-period column of the first recognised table. None if there is none."""
+    quarters = [f for f in facts if f["period_info"]["kind"] == "quarter"]
+    if head.get("quarter_ended") and head["quarter_ended"].get("date"):
+        want = date.fromisoformat(head["quarter_ended"]["date"])
+        hit = [f for f in quarters if f["period_info"]["end"] == want]
+        if hit:
+            return hit[0]["period"]
+    return quarters[0]["period"] if quarters else None
 
 
 def headline_checks(doc: dict, facts: list) -> dict:
-    """Reads the release's headline sentence(s) and checks them against the table; returns period identity and agreement flags."""
-    text = " ".join(doc["lines"][:60])
-    para = next((l for l in doc["lines"][:60] if re.search(r"\breported\b", l) and re.search(r"quarter ended", l)), None)
+    """Reads the release's headline sentence(s); returns the period it states and whether its figures agree with the tables. Called before the current period is chosen, so checks run against
+    every period's facts with the stated end date, else the first column."""
+    text = " ".join(doc["lines"][:70])
+    para = next((l for l in doc["lines"][:70] if re.search(r"quarter ended", l) and re.search(r"revenue|net sales|results", l, re.I)), None)
     out = {"paragraph": para[:900] if para else None, "quarter_ended": None, "fiscal_quarter_title": None, "revenue_headline": None, "eps_headline": {}, "checks": []}
-    m = re.search(r"(first|second|third|fourth) quarter ended ([A-Z][a-z]+ \d{1,2}, \d{4})", text)
+    m = re.search(r"(?:(first|second|third|fourth)\s+)?quarter ended ([A-Z][a-z]+ \d{1,2}, \d{4})", text)
     if m:
-        out["quarter_ended"] = {"quarter": ORDINALS[m.group(1)], "date": datetime.strptime(m.group(2), "%B %d, %Y").date().isoformat(), "quote": m.group(0)}
+        out["quarter_ended"] = {"quarter": ORDINALS[m.group(1)] if m.group(1) else None, "date": datetime.strptime(m.group(2), "%B %d, %Y").date().isoformat(), "quote": m.group(0)}
     m = re.search(r"(First|Second|Third|Fourth) Quarter Fiscal (\d{4})", text)
     if m:
         out["fiscal_quarter_title"] = {"quarter": ORDINALS[m.group(1).lower()], "fiscal_year": int(m.group(2)), "quote": m.group(0)}
-    m = re.search(r"reported revenue[^$]{0,80}?of \$(\d[\d,]*(?:\.\d+)?) (billion|million)", text)
+    m = re.search(r"[Rr]evenue(?: for the [^$]{0,70}?)?,? (?:of|was|were) \$(\d[\d,]*(?:\.\d+)?) (billion|million)", text)
     if m:
         out["revenue_headline"] = {"value": m.group(1), "scale": m.group(2), "quote": m.group(0)}
     for m in re.finditer(r"(Non-GAAP|GAAP) earnings per diluted share (?:was|were|of) \$(\d+(?:\.\d+)?)", text):
         out["eps_headline"][m.group(1).upper()] = {"value": m.group(2), "quote": m.group(0)}
-    current = [f for f in facts if f["column"] == 0]
-    rev = [f for f in current if f["metric"] == "revenue"]
+    m = re.search(r"(?<!GAAP )diluted earnings per share (?:of|was) \$(\d+(?:\.\d+)?)", text)
+    if m and not out["eps_headline"]:
+        out["eps_headline"]["UNSTATED"] = {"value": m.group(1), "quote": m.group(0)}
+    current = choose_current(facts, out)
+    cur = [f for f in facts if f["period"] == current] if current else []
+    rev = [f for f in cur if f["metric"] == "revenue" and f["unit"] == "millions"]
     if out["revenue_headline"] and rev:
         h = Decimal(out["revenue_headline"]["value"].replace(",", ""))
         decimals = len(out["revenue_headline"]["value"].split(".")[1]) if "." in out["revenue_headline"]["value"] else 0
         factor = {"billion": Decimal(1000), "million": Decimal(1)}[out["revenue_headline"]["scale"]]
-        table_value = Decimal(rev[0]["value"])
         tolerance = factor * Decimal(5) / (Decimal(10) ** (decimals + 1))
-        ok = abs(table_value - h * factor) <= tolerance
+        ok = abs(Decimal(rev[0]["value"]) - h * factor) <= tolerance
         out["checks"].append({"check": "headline revenue vs table revenue", "ok": bool(ok), "headline": out["revenue_headline"]["quote"], "table_value_millions": rev[0]["value"]})
     for basis, h in out["eps_headline"].items():
-        match = [f for f in current if f["metric"] == "eps_diluted" and f["basis"] == basis]
+        match = [f for f in cur if f["metric"] == "eps_diluted" and (basis == "UNSTATED" or f["basis"] == basis)]
         if match:
-            out["checks"].append({"check": f"headline {basis} diluted EPS vs table", "ok": Decimal(h["value"]) == Decimal(match[0]["value"]), "headline": h["quote"], "table_value": match[0]["value"]})
+            out["checks"].append({"check": f"headline {basis} diluted EPS vs table", "ok": any(Decimal(h["value"]) == Decimal(f["value"]) for f in match), "headline": h["quote"],
+                                  "table_value": ", ".join(f["value"] for f in match)})
     return out
 
 
@@ -306,9 +524,34 @@ def _money(token: str, scale: str | None):
     return v, "unscaled"
 
 
+AMD_REV = re.compile(r"[Ff]or the (first|second|third|fourth) quarter of (fiscal )?(\d{4}),? [A-Za-z]+ expects revenue to be approximately \$(\d[\d,]*(?:\.\d+)?) (billion|million), plus or minus \$(\d[\d,]*(?:\.\d+)?) (billion|million)")
+AMD_GM = re.compile(r"(Non-GAAP|GAAP) gross margin is expected to be approximately (\d+(?:\.\d+)?)%")
+
+
+def _amd_style(doc: dict) -> list:
+    """'For the fourth quarter of 2024, AMD expects revenue to be approximately $7.5 billion, plus or minus $300 million.' and '<basis> gross margin is expected to be approximately 54%'."""
+    items = []
+    for line in doc["lines"]:
+        m = AMD_REV.search(line)
+        if not m:
+            continue
+        label = f"Q{ORDINALS[m.group(1).lower()]} FY{m.group(3)[-2:]}" if m.group(2) else f"Q{ORDINALS[m.group(1).lower()]} {m.group(3)}"
+        mid, _ = _money("$" + m.group(4), m.group(5))
+        band, _ = _money("$" + m.group(6), m.group(7))
+        items.append({"metric": "revenue", "basis": "UNSTATED", "target_period": label, "unit": "millions", "currency": "USD", "midpoint": _decimal_string(mid), "low": _decimal_string(mid - band),
+                      "high": _decimal_string(mid + band), "band": f"plus or minus {_decimal_string(band)} million", "conversion": "billion to million x1000" if "billion" in (m.group(5), m.group(7)) else None,
+                      "quote": m.group(0), "method": "OUTLOOK_REGEX"})
+        for g in AMD_GM.finditer(line):
+            items.append({"metric": "gross_margin", "basis": "NON-GAAP" if g.group(1).lower().startswith("non") else "GAAP", "target_period": label, "unit": "percent", "currency": None,
+                          "midpoint": _decimal_string(Decimal(g.group(2))), "low": None, "high": None, "band": "point estimate (approximately)", "conversion": None, "quote": g.group(0), "method": "OUTLOOK_REGEX"})
+    return items
+
+
 def extract_guidance(doc: dict) -> tuple[list, list]:
-    """The company's own outlook for the next period: revenue (plus or minus a percentage) and 'GAAP and non-GAAP X are expected to be A and B, respectively' bullets."""
-    items, issues = [], []
+    """The company's own outlook for the next period: revenue (plus or minus a percentage or amount) and 'GAAP and non-GAAP X are expected to be A and B, respectively' bullets."""
+    items, issues = _amd_style(doc), []
+    if items:
+        return items, issues
     target = None
     for i, line in enumerate(doc["lines"]):
         m = re.search(r"outlook for the (first|second|third|fourth) quarter of fiscal (\d{4})", line, re.I)
@@ -356,45 +599,45 @@ def _fmt(value, places=1):
     return "unknown" if value is None else f"{value:+.{places}f}"
 
 
-def prior_period_comparisons(facts: list, current_period: str) -> list:
-    """ACTUAL vs PRIOR-PERIOD ACTUAL, read from the comparative columns printed in the same release; each is checked against the change the release itself prints."""
-    cp = normalize_period(current_period)
-    by_key = {}
-    for f in facts:
-        by_key.setdefault((f["metric"], f["basis"]), {})[f["column"]] = f
+def _prior_row(cur, prior, rel, source, check_printed):
+    a, b = Decimal(cur["value"]), Decimal(prior["value"])
+    diff = a - b
+    row = {"label": "ACTUAL vs PRIOR-PERIOD ACTUAL", "relation": rel, "metric": cur["metric"], "basis": cur["basis"], "unit": cur["unit"], "currency": cur["currency"],
+           "current_period": cur["period"], "prior_period": prior["period"], "actual": cur["value"], "prior_actual": prior["value"], "difference": _decimal_string(diff),
+           "difference_unit": "percentage points" if cur["unit"] == "percent" else cur["unit"],
+           "difference_pct": None if cur["unit"] == "percent" or _pct(diff, b) is None else _decimal_string(round(_pct(diff, b), 2)),
+           "evidence": [cur["evidence"], prior["evidence"]], "source": source, "printed_change_check": None}
+    printed = cur["printed_changes"].get({"YEAR_OVER_YEAR": "Y/Y", "SEQUENTIAL": "Q/Q"}.get(rel, "")) if check_printed else None
+    m = re.fullmatch(r"(Up|Down)\s+([\d.]+)\s*%", printed or "")
+    if m and row["difference_pct"] is not None:
+        shown = Decimal(m.group(2)) * (1 if m.group(1) == "Up" else -1)
+        row["printed_change_check"] = {"printed": printed, "agrees": bool(abs(Decimal(row["difference_pct"]) - shown) <= Decimal("0.5"))}
+    elif printed and cur["unit"] == "percent":
+        m2 = re.fullmatch(r"(Up|Down)\s+([\d.]+)\s*(?:pts?|ppts?)", printed)
+        if m2:
+            shown = Decimal(m2.group(2)) * (1 if m2.group(1) == "Up" else -1)
+            row["printed_change_check"] = {"printed": printed, "agrees": bool(abs(diff - shown) <= Decimal("0.5"))}
+    return row
+
+
+def prior_period_comparisons(facts: list, current_period: str, earlier_facts: list | None = None, earlier_current: str | None = None) -> list:
+    """ACTUAL vs PRIOR-PERIOD ACTUAL. Comparative columns printed in the same release (same duration kind only) are checked against the change the release itself prints. If an earlier release is
+    supplied, its own current-period figures fill a SEQUENTIAL comparison the release does not print, labelled with that source."""
     out = []
-    for (metric, basis), cols in sorted(by_key.items()):
-        cur = cols.get(0)
-        if cur is None or cur["period"] != current_period:
-            continue
-        for idx, prior in sorted(cols.items()):
-            if idx == 0:
-                continue
-            pp = normalize_period(prior["period"])
-            relation = "OTHER"
-            if pp and cp:
-                if pp[1] == cp[1] and pp[2] == cp[2] - 1:
-                    relation = "YEAR_OVER_YEAR"
-                elif (cp[1] > 1 and pp[1] == cp[1] - 1 and pp[2] == cp[2]) or (cp[1] == 1 and pp[1] == 4 and pp[2] == cp[2] - 1):
-                    relation = "SEQUENTIAL"
-            a, b = Decimal(cur["value"]), Decimal(prior["value"])
-            diff = a - b
-            row = {"label": "ACTUAL vs PRIOR-PERIOD ACTUAL", "relation": relation, "metric": metric, "basis": basis, "unit": cur["unit"], "currency": cur["currency"],
-                   "current_period": cur["period"], "prior_period": prior["period"], "actual": cur["value"], "prior_actual": prior["value"], "difference": _decimal_string(diff),
-                   "difference_unit": "percentage points" if cur["unit"] == "percent" else cur["unit"],
-                   "difference_pct": None if cur["unit"] == "percent" or _pct(diff, b) is None else _decimal_string(round(_pct(diff, b), 2)),
-                   "evidence": [cur["evidence"], prior["evidence"]], "source": "comparative column printed in the current release", "printed_change_check": None}
-            printed = cur["printed_changes"][idx - 1] if idx - 1 < len(cur["printed_changes"]) else None
-            m = re.fullmatch(r"(Up|Down)\s+([\d.]+)\s*%", printed or "")
-            if m and row["difference_pct"] is not None:
-                shown = Decimal(m.group(2)) * (1 if m.group(1) == "Up" else -1)
-                row["printed_change_check"] = {"printed": printed, "agrees": bool(abs(Decimal(row["difference_pct"]) - shown) <= Decimal("0.5"))}
-            elif printed and cur["unit"] == "percent":
-                m2 = re.fullmatch(r"(Up|Down)\s+([\d.]+)\s*pts", printed)
-                if m2:
-                    shown = Decimal(m2.group(2)) * (1 if m2.group(1) == "Up" else -1)
-                    row["printed_change_check"] = {"printed": printed, "agrees": bool(abs(diff - shown) <= Decimal("0.05"))}
-            out.append(row)
+    current = sorted((f for f in facts if f["period"] == current_period), key=lambda f: (f["metric"], f["basis"]))
+    for cur in current:
+        for prior in facts:
+            if prior["metric"] == cur["metric"] and prior["basis"] == cur["basis"] and prior["period"] != current_period:
+                rel = relation(cur["period_info"], prior["period_info"])
+                if rel is not None:
+                    out.append(_prior_row(cur, prior, rel, "comparative column printed in the current release", True))
+    if earlier_facts and earlier_current:
+        have = {(r["metric"], r["basis"], r["relation"]) for r in out}
+        for cur in current:
+            for prior in earlier_facts:
+                if prior["period"] == earlier_current and prior["metric"] == cur["metric"] and prior["basis"] == cur["basis"] and prior["unit"] == cur["unit"] and prior["currency"] == cur["currency"]:
+                    if relation(cur["period_info"], prior["period_info"]) == "SEQUENTIAL" and (cur["metric"], cur["basis"], "SEQUENTIAL") not in have:
+                        out.append(_prior_row(cur, prior, "SEQUENTIAL", "figure from the comparison release (not printed in the current release)", False))
     return out
 
 
@@ -403,7 +646,7 @@ def guidance_comparisons(facts: list, current_period: str, guidance: list, guida
     rows, withheld = [], []
     if guidance_doc is None:
         return rows, [{"reason": "no comparison document supplied; earlier company guidance for this period is unknown"}]
-    current = {(f["metric"], f["basis"]): f for f in facts if f["column"] == 0 and f["period"] == current_period}
+    current = {(f["metric"], f["basis"]): f for f in facts if f["period"] == current_period}
     for g in guidance:
         if g["target_period"] != current_period:
             withheld.append({"metric": g["metric"], "reason": f"the comparison document's outlook is for {g['target_period']}, not {current_period}"})
@@ -479,7 +722,7 @@ def build_bundle(company, ticker, venue, docs, consensus_docs, current_period, c
         entry = {"document_id": d["document_id"], "event_id": d["event_id"], "security_ids": [sec_id], "source_kind": "PRIMARY", "publisher": company, "source_url": d["source_url"],
                  "source_family": "issuer-earnings-release", "published_at": d["published_at"], "observed_at": d["observed_at"], "title": d["title"], "text": d["text"], "observations": []}
         for f in d.get("facts", []):
-            role = "ACTUAL" if f["column"] == 0 else "PRIOR"
+            role = "ACTUAL" if f["period"] == current_period else "PRIOR"
             entry["observations"].append({"metric": f"{f['metric']} [{f['basis']}]", "role": role, "value": f["value"], "unit": f["unit"], "currency": f["currency"], "period": f["period"],
                                           "source_quote": f["evidence"]["quote"]})
         bundle["documents"].append(entry)
@@ -513,38 +756,35 @@ def load_consensus(path: str, sec_id: str, event_id: str) -> list:
 def analyse(company, ticker, venue, primary, comparison, as_of, mode, consensus_path=None, currency_override=None):
     """primary / comparison: dicts with doc (read_document), source_url, published_at, observed_at, title. Returns the structured result (also the JSON companion)."""
     facts, issues = extract_table_facts(primary["doc"], currency_override)
-    if not facts:
-        raise EarningsError(f"{primary['doc']['name']}: no earnings summary table with period-labelled columns (for example 'Q3 FY25  Q2 FY25  Q3 FY24') and recognised rows (revenue, "
-                            "net income, diluted EPS) was found. This first version supports an official earnings press release in HTML; for SEC filers, use the 8-K Exhibit 99.1 .htm file")
     head = headline_checks(primary["doc"], facts)
-    current_labels = [f["period"] for f in facts if f["column"] == 0]
-    current_period = current_labels[0]
-    if len(set(current_labels)) > 1:
-        issues.append({"code": "CURRENT_PERIOD_AMBIGUOUS", "where": "tables", "detail": f"first columns carry different period labels: {sorted(set(current_labels))}"})
-    cp = normalize_period(current_period)
+    current_period = choose_current(facts, head)
+    if current_period is None:
+        raise EarningsError(f"{primary['doc']['name']}: no earnings summary table with period-labelled columns (for example 'Q3 FY25  Q2 FY25' or 'Three Months Ended' over dated columns) and "
+                            "recognised rows (revenue, net income, diluted EPS) was found. This version supports an official earnings press release in HTML; for SEC filers, use the 8-K Exhibit 99.1 .htm file")
+    cp = qn_period(current_period)
     for key in ("quarter_ended", "fiscal_quarter_title"):
         h = head[key]
-        if h and cp and h["quarter"] != cp[1]:
+        if h and h.get("quarter") and cp and h["quarter"] != cp["q"]:
             issues.append({"code": "PERIOD_MISMATCH", "where": key, "detail": f"table column says {current_period}, the text says quarter {h['quarter']} ({h['quote']})"})
-    if head["fiscal_quarter_title"] and cp and head["fiscal_quarter_title"]["fiscal_year"] % 100 != cp[2]:
-        issues.append({"code": "PERIOD_MISMATCH", "where": "fiscal_quarter_title", "detail": f"table says FY{cp[2]}, title says fiscal {head['fiscal_quarter_title']['fiscal_year']}"})
+    if head["fiscal_quarter_title"] and cp and head["fiscal_quarter_title"]["fiscal_year"] % 100 != cp["yy"]:
+        issues.append({"code": "PERIOD_MISMATCH", "where": "fiscal_quarter_title", "detail": f"table says year {cp['yy']}, title says fiscal {head['fiscal_quarter_title']['fiscal_year']}"})
     for chk in head["checks"]:
         if not chk["ok"]:
             issues.append({"code": "HEADLINE_TABLE_CONFLICT", "where": chk["check"], "detail": f"{chk['headline']} disagrees with the table; both are kept, nothing is averaged"})
     guidance_next, g_issues = extract_guidance(primary["doc"])
     issues += g_issues
-    comp_facts, comp_guidance, comp_issues = [], [], []
+    comp_facts, comp_guidance, comp_issues, comp_current = [], [], [], None
     if comparison:
         comp_facts, ci = extract_table_facts(comparison["doc"], currency_override)
+        comp_current = choose_current(comp_facts, headline_checks(comparison["doc"], comp_facts))
         cg, gi = extract_guidance(comparison["doc"])
         comp_guidance, comp_issues = cg, ci + gi
     event_id = f"{ticker}-{current_period.replace(' ', '-')}-earnings"
     currency = next((f["currency"] for f in facts if f["currency"]), None)
     docs = [{"document_id": "current-release", "event_id": event_id, **{k: primary[k] for k in ("source_url", "published_at", "observed_at", "title")}, "text": primary["doc"]["text"], "facts": facts}]
     if comparison:
-        prior_period = next((f["period"] for f in comp_facts if f["column"] == 0), "unknown-period")
-        docs.append({"document_id": "comparison-release", "event_id": f"{ticker}-{prior_period.replace(' ', '-')}-earnings", **{k: comparison[k] for k in ("source_url", "published_at", "observed_at", "title")},
-                     "text": comparison["doc"]["text"], "facts": []})
+        docs.append({"document_id": "comparison-release", "event_id": f"{ticker}-{(comp_current or 'unknown-period').replace(' ', '-')}-earnings",
+                     **{k: comparison[k] for k in ("source_url", "published_at", "observed_at", "title")}, "text": comparison["doc"]["text"], "facts": []})
     sec_id = f"{ticker}.{venue}"
     consensus_docs = load_consensus(consensus_path, sec_id, event_id) if consensus_path else []
     bundle = build_bundle(company, ticker, venue, docs, consensus_docs, current_period, currency)
@@ -560,11 +800,20 @@ def analyse(company, ticker, venue, primary, comparison, as_of, mode, consensus_
         result["sources"].append({"role": "comparison", "name": comparison["doc"]["name"], "source_url": comparison["source_url"], "sha256": comparison["doc"]["raw_sha256"], "bytes": comparison["doc"]["bytes"],
                                   "published_at": comparison["published_at"], "published_basis": comparison["published_basis"], "observed_at": comparison["observed_at"], "observed_basis": comparison["observed_basis"]})
     if not cutoff_ok:
-        result.update(facts=[], prior_period=[], guidance_comparisons=[], guidance_not_compared=[{"reason": "current release is not eligible at the information cutoff: " + ", ".join(excluded["current-release"])}], next_guidance=[], consensus=[])
+        result.update(facts=[], prior_period=[], guidance_comparisons=[], guidance_not_compared=[{"reason": "current release is not eligible at the information cutoff: " + ", ".join(excluded["current-release"])}],
+                      next_guidance=[], consensus=[], consistency_with_comparison=[])
         return result
-    result["facts"] = [{k: v for k, v in f.items() if k != "printed_changes"} for f in facts if f["column"] == 0]
-    result["prior_period"] = prior_period_comparisons(facts, current_period)
+
+    def public(f):
+        out = {k: v for k, v in f.items() if k not in ("printed_changes", "period_info")}
+        out["period_end"] = f["period_info"]["end"].isoformat() if f["period_info"]["end"] else None
+        out["period_kind"] = f["period_info"]["kind"]
+        return out
+
+    result["facts"] = [public(f) for f in facts if f["period"] == current_period]
+    result["other_period_figures"] = [public(f) for f in facts if f["period"] != current_period]
     comp_ok = comparison is not None and "comparison-release" not in excluded
+    result["prior_period"] = prior_period_comparisons(facts, current_period, comp_facts if comp_ok else None, comp_current if comp_ok else None)
     if comparison and not comp_ok:
         gcomp, gwith = [], [{"reason": "comparison document is not eligible at the information cutoff: " + ", ".join(excluded["comparison-release"])}]
     else:
@@ -573,18 +822,17 @@ def analyse(company, ticker, venue, primary, comparison, as_of, mode, consensus_
             gcomp, gwith = [], gwith + [{"reason": "the comparison document must be published strictly before the current release; its publication time is unknown or not earlier"}]
     result["guidance_comparisons"], result["guidance_not_compared"] = gcomp, gwith
     result["consistency_with_comparison"] = []
-    if comp_ok:
-        earlier = {(f["metric"], f["basis"], f["period"]): f for f in comp_facts if f["column"] == 0}
+    if comp_ok and comp_current:
+        earlier = {(f["metric"], f["basis"], f["period"]): f for f in comp_facts if f["period"] == comp_current}
         for f in facts:
-            e = earlier.get((f["metric"], f["basis"], f["period"])) if f["column"] > 0 else None
+            e = earlier.get((f["metric"], f["basis"], f["period"])) if f["period"] != current_period else None
             if e is not None and e["unit"] == f["unit"] and e["currency"] == f["currency"]:
                 result["consistency_with_comparison"].append({"metric": f["metric"], "basis": f["basis"], "period": f["period"], "earlier_release": e["value"], "printed_now": f["value"],
                                                               "agrees": Decimal(e["value"]) == Decimal(f["value"])})
     result["comparison_issues"] = comp_issues
     result["next_guidance"] = guidance_next
-    cards = report["search_results"]
     consensus = []
-    for card in cards:
+    for card in report["search_results"]:
         if card["event_id"] == event_id:
             consensus = [c for c in card["comparisons"] if any(e["role"] == "CONSENSUS" for e in c["evidence"])]
     result["consensus"] = consensus
@@ -787,8 +1035,10 @@ def render_note(result):
         add("")
         for chk in result["headline"]["checks"]:
             add(f"- Check: {_md(chk['check'])}: {'consistent' if chk['ok'] else 'CONFLICT'}.")
-        for i in result["issues"] + result.get("comparison_issues", []):
+        for i in result["issues"]:
             add(f"- {_md(i['code'])} ({_md(i['where'])}): {_md(i['detail'])}")
+        for i in result.get("comparison_issues", []):
+            add(f"- Comparison document: {_md(i['code'])} ({_md(i['where'])}): {_md(i['detail'])}")
         cons = result["consistency_with_comparison"]
         if cons:
             bad = [c for c in cons if not c["agrees"]]

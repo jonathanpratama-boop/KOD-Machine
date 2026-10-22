@@ -99,6 +99,12 @@ Calculations are the differences above. **Interpretation: none offered.** This t
 - Check: headline revenue vs table revenue: consistent.
 - Check: headline GAAP diluted EPS vs table: consistent.
 - Check: headline NON-GAAP diluted EPS vs table: consistent.
+- COLUMN\_DURATION\_UNKNOWN (table 4): some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read
+- COLUMN\_DURATION\_UNKNOWN (table 6): some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read
+- COLUMN\_DURATION\_UNKNOWN (table 8): some dated columns have no 'Three/Twelve Months Ended' heading above them (5 dated columns under 2 duration headings); their values are not read
+- Comparison document: COLUMN\_DURATION\_UNKNOWN (table 4): some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read
+- Comparison document: COLUMN\_DURATION\_UNKNOWN (table 6): some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read
+- Comparison document: COLUMN\_DURATION\_UNKNOWN (table 8): some dated columns have no 'Three/Twelve Months Ended' heading above them (5 dated columns under 2 duration headings); their values are not read
 - Prior-period figures printed in the current release vs the earlier release: 12 of 12 agree.
 - Currency is read from the "$" sign and assumed to be US dollars unless the user overrode it; confirm in the filing.
 - Only the summary table and the outlook bullets are read. Segment results, reconciliations and management commentary are not extracted.

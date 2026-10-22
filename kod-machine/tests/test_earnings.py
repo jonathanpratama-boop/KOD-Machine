@@ -1,4 +1,5 @@
 import hashlib
+from decimal import Decimal
 import io
 import json
 import re
@@ -90,6 +91,100 @@ class RealDemoTests(unittest.TestCase):
             self.assertNotIn(f" {word} ", note.lower().replace("buy/sell", ""))
 
 
+MORE = DEMO / "more"
+
+
+def load_more(ticker):
+    d = MORE / ticker
+    src = json.loads((d / "SOURCES.json").read_text())
+    for s in src:
+        assert hashlib.sha256((d / s["file"]).read_bytes()).hexdigest() == s["sha256"], s["file"]
+    url = {s["role"]: s["url"] for s in src if s["kind"] == "release"}
+    got = {}
+    for role in ("cur", "pri"):
+        got[role] = earnings.prepare_source(str(d / f"{role}.htm"), url[role], sec_headers=str(d / f"{role}_headers.html"), retrieved_at=next(s for s in src if s["role"] == role)["retrieved_at_utc_file_mtime"])
+    return got
+
+
+class OtherLayoutTests(unittest.TestCase):
+    """Three real releases with other table layouts (frozen under examples/earnings_demo/more/): AMD (headers without a label cell, change columns between periods, basis in a heading
+    above the table), Apple (dated columns under 'Three/Twelve Months Ended', no basis stated), Microsoft (periods down the rows, metrics across the top)."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.res = {t: run(*(lambda d: (d["cur"], d["pri"]))(load_more(t)), as_of="2026-10-22T20:00:00Z", mode="observed") for t in ("amd", "aapl", "msft")}
+
+    def value(self, t, metric, basis):
+        return next(f["value"] for f in self.res[t]["facts"] if f["metric"] == metric and f["basis"] == basis)
+
+    def test_amd_columns_are_labelled_by_their_headers_not_by_position(self):
+        r = self.res["amd"]
+        self.assertEqual(r["period"], "Q3 2024")                                              # the first version printed "Q3 FY23" here
+        self.assertEqual((self.value("amd", "revenue", "GAAP"), self.value("amd", "eps_diluted", "GAAP"), self.value("amd", "eps_diluted", "NON-GAAP")), ("6819", "0.47", "0.92"))
+        yoy = next(p for p in r["prior_period"] if p["metric"] == "revenue" and p["basis"] == "GAAP" and p["relation"] == "YEAR_OVER_YEAR")
+        seq = next(p for p in r["prior_period"] if p["metric"] == "revenue" and p["basis"] == "GAAP" and p["relation"] == "SEQUENTIAL")
+        self.assertEqual((yoy["prior_period"], yoy["prior_actual"], seq["prior_period"], seq["prior_actual"]), ("Q3 2023", "5800", "Q2 2024", "5835"))
+        self.assertTrue(all(p["printed_change_check"]["agrees"] for p in r["prior_period"] if p["printed_change_check"]))
+
+    def test_amd_basis_comes_from_the_heading_above_the_table(self):
+        self.assertEqual((self.value("amd", "gross_margin", "GAAP"), self.value("amd", "gross_margin", "NON-GAAP")), ("50", "54"))
+
+    def test_amd_earlier_outlook_is_compared_with_the_right_basis(self):
+        g = {(x["metric"], x["basis"]): x for x in self.res["amd"]["guidance_comparisons"]}
+        rev = next(v for k, v in g.items() if k[0] == "revenue")
+        self.assertEqual((rev["guidance_low"], rev["guidance_high"], rev["position"]), ("6400", "7000", "WITHIN_RANGE"))
+        self.assertEqual(g[("gross_margin", "NON-GAAP")]["guidance_midpoint"], "53.5")
+        self.assertNotIn(("gross_margin", "GAAP"), g)
+
+    def test_apple_dated_columns_use_the_duration_heading_and_never_mix_quarter_with_year(self):
+        r = self.res["aapl"]
+        self.assertEqual(r["period"], "quarter ended 2024-09-28")
+        self.assertEqual((self.value("aapl", "revenue", "UNSTATED"), self.value("aapl", "net_income", "UNSTATED"), self.value("aapl", "eps_diluted", "UNSTATED")), ("94930", "14736", "0.97"))
+        self.assertTrue(all(p["prior_period"].startswith("quarter ended") for p in r["prior_period"]))
+        self.assertIn("12 months ended 2024-09-28", {f["period"] for f in r["other_period_figures"]})
+        self.assertIn("BASIS_NOT_STATED", next(f for f in r["facts"] if f["metric"] == "revenue")["flags"])
+
+    def test_apple_share_count_is_not_read_as_earnings_per_share(self):
+        eps = [f for f in self.res["aapl"]["facts"] + self.res["aapl"]["other_period_figures"] if f["metric"] == "eps_diluted"]
+        self.assertTrue(eps and all(Decimal(f["value"]) < 100 for f in eps))
+        self.assertNotIn("FIGURE_CONFLICT", {i["code"] for i in self.res["aapl"]["issues"]})
+
+    def test_apple_dollar_sign_on_the_first_row_only_still_gives_a_currency(self):
+        self.assertEqual(next(f for f in self.res["aapl"]["facts"] if f["metric"] == "revenue")["currency"], "USD")
+
+    def test_sequential_comparison_can_come_from_the_earlier_release_and_says_so(self):
+        seq = [p for p in self.res["aapl"]["prior_period"] if p["relation"] == "SEQUENTIAL" and p["metric"] == "revenue"]
+        self.assertEqual((seq[0]["prior_period"], seq[0]["prior_actual"]), ("quarter ended 2024-06-29", "85777"))
+        self.assertIn("comparison release", seq[0]["source"])
+        self.assertIsNone(seq[0]["printed_change_check"])
+
+    def test_microsoft_periods_down_the_rows_and_metrics_across_the_top(self):
+        r = self.res["msft"]
+        self.assertEqual(r["period"], "quarter ended 2024-09-30")
+        self.assertEqual((self.value("msft", "revenue", "GAAP"), self.value("msft", "operating_income", "GAAP"), self.value("msft", "net_income", "GAAP"), self.value("msft", "eps_diluted", "GAAP")),
+                         ("65585", "30552", "24667", "3.3"))
+        yoy = next(p for p in r["prior_period"] if p["metric"] == "revenue" and p["relation"] == "YEAR_OVER_YEAR")
+        self.assertEqual((yoy["prior_period"], yoy["prior_actual"]), ("quarter ended 2023-09-30", "56517"))
+
+    def test_no_guidance_is_invented_where_the_release_gives_none(self):
+        for t in ("aapl", "msft"):
+            self.assertEqual(self.res[t]["guidance_comparisons"], [])
+            self.assertEqual(self.res[t]["next_guidance"], [])
+            self.assertIn("CONSENSUS UNKNOWN", earnings.render_note(self.res[t]))
+
+    def test_every_evidence_quote_is_in_the_document_text(self):
+        for t in ("amd", "aapl", "msft"):
+            src = load_more(t)["cur"]["doc"]["text"]
+            for f in self.res[t]["facts"] + self.res[t]["other_period_figures"]:
+                self.assertIn(f["evidence"]["quote"], src)
+
+    def test_rows_with_a_different_value_count_are_skipped_and_listed(self):
+        raw = release().replace(b"<td>$90</td><td>Up 10%</td></tr>\n<tr><td>Gross", b"</tr>\n<tr><td>Gross")
+        res = run(source(raw))
+        self.assertIn("COLUMN_COUNT_MISMATCH", {i["code"] for i in res["issues"]})
+        self.assertNotIn("revenue", {f["metric"] for f in res["facts"]})
+
+
 class ExtractionTests(unittest.TestCase):
     def test_normal_synthetic_release(self):
         res = run(source(release()))
@@ -112,7 +207,7 @@ class ExtractionTests(unittest.TestCase):
     def test_gross_margin_without_percent_sign_is_not_extracted(self):
         raw = release().replace(b"<td>50.0</td><td>%</td>", b"<td>50.0</td>")
         res = run(source(raw))
-        self.assertNotIn("gross_margin", {f["metric"] for f in res["facts"] if f["column"] == 0})
+        self.assertNotIn("gross_margin", {f["metric"] for f in res["facts"]})
         self.assertIn("UNIT_AMBIGUOUS", {i["code"] for i in res["issues"]})
 
     def test_missing_unit_scale_is_flagged(self):

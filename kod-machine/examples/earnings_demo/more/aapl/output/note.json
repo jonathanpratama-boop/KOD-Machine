@@ -1,0 +1,2073 @@
+{
+  "schema_version": "KOD-EARNINGS-NOTE-v1",
+  "research_only": true,
+  "entry_permission": false,
+  "company": "Apple Inc.",
+  "ticker": "AAPL",
+  "venue": "XNAS",
+  "event": "EARNINGS_ANNOUNCEMENT",
+  "period": "quarter ended 2024-09-28",
+  "as_of": "2024-10-31T22:00:00Z",
+  "mode": "public",
+  "cutoff": {
+    "current_release_eligible": true,
+    "excluded": {}
+  },
+  "sources": [
+    {
+      "role": "current",
+      "name": "a8-kex991q4202409282024.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+      "sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+      "bytes": 198506,
+      "published_at": "2024-10-31T20:30:25Z",
+      "published_basis": "SEC acceptance time from the filing's own header (New York clock converted to UTC)",
+      "observed_at": "2026-10-22T15:22:42Z",
+      "observed_basis": "retrieval time supplied by the user"
+    },
+    {
+      "role": "comparison",
+      "name": "a8-kex991q3202406292024.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000080/a8-kex991q3202406292024.htm",
+      "sha256": "c569f3ee34b7a62ddbd0ba769719105a516c96b44b5832829310fb19a78ead74",
+      "bytes": 168531,
+      "published_at": "2024-08-01T20:30:26Z",
+      "published_basis": "SEC acceptance time from the filing's own header (New York clock converted to UTC)",
+      "observed_at": "2026-10-22T15:22:43Z",
+      "observed_basis": "retrieval time supplied by the user"
+    }
+  ],
+  "bundle_sha256": "8c4bfb12ac2a31f535b42cd68b63a8ba649a7afc258acd7107fd4626f49f9254",
+  "workbench_report": {
+    "schema_version": "KOD-WORKBENCH-REPORT-v1",
+    "research_only": true,
+    "entry_permission": false,
+    "input_bundle_sha256": "8c4bfb12ac2a31f535b42cd68b63a8ba649a7afc258acd7107fd4626f49f9254",
+    "synthetic": false,
+    "mode": "public",
+    "availability_basis": "HISTORICAL_RECONSTRUCTION_PUBLICATION_ONLY",
+    "as_of": "2024-10-31T22:00:00Z",
+    "query": "",
+    "security_id": "AAPL.XNAS",
+    "coverage": {
+      "scope": "INPUT_BUNDLE_ONLY",
+      "securities_input": 1,
+      "documents_input": 2,
+      "documents_eligible": 2,
+      "documents_excluded": 0,
+      "eligible_events": 2,
+      "search_events_total": 2,
+      "primary_events_total": 2
+    },
+    "excluded_documents": [],
+    "search_results": [
+      {
+        "card_id": "WB-05d9347ff17c9ed5321b",
+        "event_id": "AAPL-quarter-ended-2024-09-28-earnings",
+        "security_ids": [
+          "AAPL.XNAS"
+        ],
+        "securities": [
+          {
+            "security_id": "AAPL.XNAS",
+            "issuer_id": "Apple Inc.",
+            "ticker": "AAPL",
+            "venue": "XNAS",
+            "currency": "USD"
+          }
+        ],
+        "title": "Apple reports fourth quarter results",
+        "preview": "EX-99.1 2 a8-kex991q4202409282024.htm EX-99.1 Document\nExhibit 99.1\nApple reports fourth quarter results\niPhone drives record September quarter revenue\nServices revenue reaches new all-time high\nCUPERTINO, CALIFORNIA — Apple® today announced financial results for its fiscal 2024 ",
+        "preview_type": "EXTRACTIVE_PREVIEW",
+        "relevance_score": 0.0,
+        "latest_publication_at": "2024-10-31T20:30:25Z",
+        "document_count": 1,
+        "unique_content_count": 1,
+        "duplicate_count": 0,
+        "declared_source_families": [
+          "issuer-earnings-release"
+        ],
+        "source_lineage_unknown_count": 0,
+        "citations": [
+          {
+            "document_id": "current-release",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+            "publisher": "Apple Inc.",
+            "source_kind": "PRIMARY",
+            "source_family": "issuer-earnings-release",
+            "content_sha256": "406ca06b46cff640204c05bb63a9cbe3cc077296c8f98d6f96d2de2abb15c95b",
+            "normalized_sha256": "611252fbfc13aec82462d5d98234a40e817afb52e54cbdff83da917136d9a0ca",
+            "replaces_document_id": null,
+            "published_at": "2024-10-31T20:30:25Z",
+            "observed_at": "2026-10-22T15:22:42Z",
+            "current": true,
+            "content_hash_basis": "SUPPLIED_TITLE_AND_TEXT"
+          }
+        ],
+        "current_document_ids": [
+          "current-release"
+        ],
+        "superseded_document_ids": [],
+        "corrections": [],
+        "comparisons": [
+          {
+            "metric": "eps_diluted [UNSTATED]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "12 months ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "6.13",
+                "source_quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "eps_diluted [UNSTATED]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "12 months ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "6.08",
+                "source_quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "eps_diluted [UNSTATED]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1.46",
+                "source_quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "eps_diluted [UNSTATED]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "0.97",
+                "source_quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "12 months ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "96995",
+                "source_quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "12 months ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "93736",
+                "source_quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "22956",
+                "source_quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "14736",
+                "source_quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "12 months ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "54847",
+                "source_quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "12 months ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "57467",
+                "source_quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "13458",
+                "source_quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "14288",
+                "source_quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "12 months ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "114301",
+                "source_quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "12 months ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "123216",
+                "source_quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "26969",
+                "source_quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "29591",
+                "source_quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "12 months ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "383285",
+                "source_quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "12 months ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "391035",
+                "source_quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "89498",
+                "source_quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "94930",
+                "source_quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "card_id": "WB-712a381ab36aa313602e",
+        "event_id": "AAPL-quarter-ended-2024-06-29-earnings",
+        "security_ids": [
+          "AAPL.XNAS"
+        ],
+        "securities": [
+          {
+            "security_id": "AAPL.XNAS",
+            "issuer_id": "Apple Inc.",
+            "ticker": "AAPL",
+            "venue": "XNAS",
+            "currency": "USD"
+          }
+        ],
+        "title": "Apple reports third quarter results",
+        "preview": "EX-99.1 2 a8-kex991q3202406292024.htm EX-99.1 Document\nExhibit 99.1\nApple reports third quarter results\nJune quarter records for Revenue and EPS\nServices revenue reaches new all-time high\nCUPERTINO, CALIFORNIA — Apple® today announced financial results for its fiscal 2024 third q",
+        "preview_type": "EXTRACTIVE_PREVIEW",
+        "relevance_score": 0.0,
+        "latest_publication_at": "2024-08-01T20:30:26Z",
+        "document_count": 1,
+        "unique_content_count": 1,
+        "duplicate_count": 0,
+        "declared_source_families": [
+          "issuer-earnings-release"
+        ],
+        "source_lineage_unknown_count": 0,
+        "citations": [
+          {
+            "document_id": "comparison-release",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000080/a8-kex991q3202406292024.htm",
+            "publisher": "Apple Inc.",
+            "source_kind": "PRIMARY",
+            "source_family": "issuer-earnings-release",
+            "content_sha256": "140cc09b075903ecb18324f83e976a44ff35ae1fa9d427a43ed725cb42fb39df",
+            "normalized_sha256": "1d93129663b2c83f176ee62d6a6070de67683241029a8956b95a8394ec74c4e2",
+            "replaces_document_id": null,
+            "published_at": "2024-08-01T20:30:26Z",
+            "observed_at": "2026-10-22T15:22:43Z",
+            "current": true,
+            "content_hash_basis": "SUPPLIED_TITLE_AND_TEXT"
+          }
+        ],
+        "current_document_ids": [
+          "comparison-release"
+        ],
+        "superseded_document_ids": [],
+        "corrections": [],
+        "comparisons": []
+      }
+    ],
+    "primary_disclosures": [
+      {
+        "card_id": "WB-05d9347ff17c9ed5321b",
+        "event_id": "AAPL-quarter-ended-2024-09-28-earnings",
+        "security_ids": [
+          "AAPL.XNAS"
+        ],
+        "securities": [
+          {
+            "security_id": "AAPL.XNAS",
+            "issuer_id": "Apple Inc.",
+            "ticker": "AAPL",
+            "venue": "XNAS",
+            "currency": "USD"
+          }
+        ],
+        "title": "Apple reports fourth quarter results",
+        "preview": "EX-99.1 2 a8-kex991q4202409282024.htm EX-99.1 Document\nExhibit 99.1\nApple reports fourth quarter results\niPhone drives record September quarter revenue\nServices revenue reaches new all-time high\nCUPERTINO, CALIFORNIA — Apple® today announced financial results for its fiscal 2024 ",
+        "preview_type": "EXTRACTIVE_PREVIEW",
+        "relevance_score": 0.0,
+        "latest_publication_at": "2024-10-31T20:30:25Z",
+        "document_count": 1,
+        "unique_content_count": 1,
+        "duplicate_count": 0,
+        "declared_source_families": [
+          "issuer-earnings-release"
+        ],
+        "source_lineage_unknown_count": 0,
+        "citations": [
+          {
+            "document_id": "current-release",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+            "publisher": "Apple Inc.",
+            "source_kind": "PRIMARY",
+            "source_family": "issuer-earnings-release",
+            "content_sha256": "406ca06b46cff640204c05bb63a9cbe3cc077296c8f98d6f96d2de2abb15c95b",
+            "normalized_sha256": "611252fbfc13aec82462d5d98234a40e817afb52e54cbdff83da917136d9a0ca",
+            "replaces_document_id": null,
+            "published_at": "2024-10-31T20:30:25Z",
+            "observed_at": "2026-10-22T15:22:42Z",
+            "current": true,
+            "content_hash_basis": "SUPPLIED_TITLE_AND_TEXT"
+          }
+        ],
+        "current_document_ids": [
+          "current-release"
+        ],
+        "superseded_document_ids": [],
+        "corrections": [],
+        "comparisons": [
+          {
+            "metric": "eps_diluted [UNSTATED]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "12 months ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "6.13",
+                "source_quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "eps_diluted [UNSTATED]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "12 months ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "6.08",
+                "source_quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "eps_diluted [UNSTATED]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1.46",
+                "source_quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "eps_diluted [UNSTATED]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "0.97",
+                "source_quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "12 months ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "96995",
+                "source_quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "12 months ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "93736",
+                "source_quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "22956",
+                "source_quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "14736",
+                "source_quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "12 months ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "54847",
+                "source_quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "12 months ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "57467",
+                "source_quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "13458",
+                "source_quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "14288",
+                "source_quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "12 months ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "114301",
+                "source_quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "12 months ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "123216",
+                "source_quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "26969",
+                "source_quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "29591",
+                "source_quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "12 months ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "383285",
+                "source_quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "12 months ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "391035",
+                "source_quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "89498",
+                "source_quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "94930",
+                "source_quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285",
+                "published_at": "2024-10-31T20:30:25Z"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "card_id": "WB-712a381ab36aa313602e",
+        "event_id": "AAPL-quarter-ended-2024-06-29-earnings",
+        "security_ids": [
+          "AAPL.XNAS"
+        ],
+        "securities": [
+          {
+            "security_id": "AAPL.XNAS",
+            "issuer_id": "Apple Inc.",
+            "ticker": "AAPL",
+            "venue": "XNAS",
+            "currency": "USD"
+          }
+        ],
+        "title": "Apple reports third quarter results",
+        "preview": "EX-99.1 2 a8-kex991q3202406292024.htm EX-99.1 Document\nExhibit 99.1\nApple reports third quarter results\nJune quarter records for Revenue and EPS\nServices revenue reaches new all-time high\nCUPERTINO, CALIFORNIA — Apple® today announced financial results for its fiscal 2024 third q",
+        "preview_type": "EXTRACTIVE_PREVIEW",
+        "relevance_score": 0.0,
+        "latest_publication_at": "2024-08-01T20:30:26Z",
+        "document_count": 1,
+        "unique_content_count": 1,
+        "duplicate_count": 0,
+        "declared_source_families": [
+          "issuer-earnings-release"
+        ],
+        "source_lineage_unknown_count": 0,
+        "citations": [
+          {
+            "document_id": "comparison-release",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000080/a8-kex991q3202406292024.htm",
+            "publisher": "Apple Inc.",
+            "source_kind": "PRIMARY",
+            "source_family": "issuer-earnings-release",
+            "content_sha256": "140cc09b075903ecb18324f83e976a44ff35ae1fa9d427a43ed725cb42fb39df",
+            "normalized_sha256": "1d93129663b2c83f176ee62d6a6070de67683241029a8956b95a8394ec74c4e2",
+            "replaces_document_id": null,
+            "published_at": "2024-08-01T20:30:26Z",
+            "observed_at": "2026-10-22T15:22:43Z",
+            "current": true,
+            "content_hash_basis": "SUPPLIED_TITLE_AND_TEXT"
+          }
+        ],
+        "current_document_ids": [
+          "comparison-release"
+        ],
+        "superseded_document_ids": [],
+        "corrections": [],
+        "comparisons": []
+      }
+    ],
+    "warnings": [
+      "HISTORICAL_RECONSTRUCTION: observation cutoff is not enforced; this report does not show what the system knew then.",
+      "INPUT_BUNDLE_ONLY: counts describe the supplied bundle, not completed market/source coverage.",
+      "Mappings, timestamps, quotations and source families are supplied assertions; no source or historical-content verification is performed.",
+      "Declared source families and publisher diversity do not prove independent corroboration.",
+      "Relevance scores rank research attention, not expected returns or entry eligibility."
+    ]
+  },
+  "issues": [
+    {
+      "code": "UNIT_AMBIGUOUS",
+      "where": "table 1 row 12",
+      "detail": "gross margin without a % sign (a dollar amount?); not extracted"
+    },
+    {
+      "code": "COLUMN_COUNT_MISMATCH",
+      "where": "table 4",
+      "detail": "2 recognised row(s) skipped because their value count differs from the header columns"
+    },
+    {
+      "code": "NO_OUTLOOK_FOUND",
+      "where": "text",
+      "detail": "no sentence of the form 'outlook for the <n>th quarter of fiscal <year>' was found; no guidance extracted"
+    }
+  ],
+  "headline": {
+    "paragraph": "CUPERTINO, CALIFORNIA — Apple® today announced financial results for its fiscal 2024 fourth quarter ended September 28, 2024. The Company posted quarterly revenue of $94.9 billion, up 6 percent year over year, and quarterly diluted earnings per share of $0.97. Diluted earnings per share was $1.64,1 up 12 percent year over year when excluding the one-time charge recognized during the fourth quarter of 2024 related to the impact of the reversal of the European General Court’s State Aid decision.",
+    "quarter_ended": {
+      "quarter": 4,
+      "date": "2024-09-28",
+      "quote": "fourth quarter ended September 28, 2024"
+    },
+    "fiscal_quarter_title": null,
+    "revenue_headline": {
+      "value": "94.9",
+      "scale": "billion",
+      "quote": "revenue of $94.9 billion"
+    },
+    "eps_headline": {
+      "UNSTATED": {
+        "value": "0.97",
+        "quote": "diluted earnings per share of $0.97"
+      }
+    },
+    "checks": [
+      {
+        "check": "headline revenue vs table revenue",
+        "ok": true,
+        "headline": "revenue of $94.9 billion",
+        "table_value_millions": "94930"
+      },
+      {
+        "check": "headline UNSTATED diluted EPS vs table",
+        "ok": true,
+        "headline": "diluted earnings per share of $0.97",
+        "table_value": "0.97"
+      }
+    ]
+  },
+  "facts": [
+    {
+      "metric": "revenue",
+      "basis": "UNSTATED",
+      "period": "quarter ended 2024-09-28",
+      "value": "94930",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 7,
+        "label": "Total net sales (1)",
+        "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "also_in": [
+        {
+          "table": 1,
+          "row": 38,
+          "label": "Total net sales",
+          "quote": "Total net sales | $94,930 | $89,498 | $391,035 | $383,285"
+        },
+        {
+          "table": 1,
+          "row": 46,
+          "label": "Total net sales",
+          "quote": "Total net sales | $94,930 | $89,498 | $391,035 | $383,285"
+        }
+      ],
+      "period_end": "2024-09-28",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "UNSTATED",
+      "period": "quarter ended 2024-09-28",
+      "value": "14288",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 17,
+        "label": "Total operating expenses",
+        "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2024-09-28",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "UNSTATED",
+      "period": "quarter ended 2024-09-28",
+      "value": "29591",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 19,
+        "label": "Operating income",
+        "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2024-09-28",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "net_income",
+      "basis": "UNSTATED",
+      "period": "quarter ended 2024-09-28",
+      "value": "14736",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 23,
+        "label": "Net income",
+        "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2024-09-28",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "eps_diluted",
+      "basis": "UNSTATED",
+      "period": "quarter ended 2024-09-28",
+      "value": "0.97",
+      "unit": "per_share",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 27,
+        "label": "Diluted",
+        "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2024-09-28",
+      "period_kind": "quarter"
+    }
+  ],
+  "other_period_figures": [
+    {
+      "metric": "revenue",
+      "basis": "UNSTATED",
+      "period": "quarter ended 2023-09-30",
+      "value": "89498",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 7,
+        "label": "Total net sales (1)",
+        "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "also_in": [
+        {
+          "table": 1,
+          "row": 38,
+          "label": "Total net sales",
+          "quote": "Total net sales | $94,930 | $89,498 | $391,035 | $383,285"
+        },
+        {
+          "table": 1,
+          "row": 46,
+          "label": "Total net sales",
+          "quote": "Total net sales | $94,930 | $89,498 | $391,035 | $383,285"
+        }
+      ],
+      "period_end": "2023-09-30",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "revenue",
+      "basis": "UNSTATED",
+      "period": "12 months ended 2024-09-28",
+      "value": "391035",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 7,
+        "label": "Total net sales (1)",
+        "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "also_in": [
+        {
+          "table": 1,
+          "row": 38,
+          "label": "Total net sales",
+          "quote": "Total net sales | $94,930 | $89,498 | $391,035 | $383,285"
+        },
+        {
+          "table": 1,
+          "row": 46,
+          "label": "Total net sales",
+          "quote": "Total net sales | $94,930 | $89,498 | $391,035 | $383,285"
+        }
+      ],
+      "period_end": "2024-09-28",
+      "period_kind": "12 months"
+    },
+    {
+      "metric": "revenue",
+      "basis": "UNSTATED",
+      "period": "12 months ended 2023-09-30",
+      "value": "383285",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 7,
+        "label": "Total net sales (1)",
+        "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "also_in": [
+        {
+          "table": 1,
+          "row": 38,
+          "label": "Total net sales",
+          "quote": "Total net sales | $94,930 | $89,498 | $391,035 | $383,285"
+        },
+        {
+          "table": 1,
+          "row": 46,
+          "label": "Total net sales",
+          "quote": "Total net sales | $94,930 | $89,498 | $391,035 | $383,285"
+        }
+      ],
+      "period_end": "2023-09-30",
+      "period_kind": "12 months"
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "UNSTATED",
+      "period": "quarter ended 2023-09-30",
+      "value": "13458",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 17,
+        "label": "Total operating expenses",
+        "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2023-09-30",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "UNSTATED",
+      "period": "12 months ended 2024-09-28",
+      "value": "57467",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 17,
+        "label": "Total operating expenses",
+        "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2024-09-28",
+      "period_kind": "12 months"
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "UNSTATED",
+      "period": "12 months ended 2023-09-30",
+      "value": "54847",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 17,
+        "label": "Total operating expenses",
+        "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2023-09-30",
+      "period_kind": "12 months"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "UNSTATED",
+      "period": "quarter ended 2023-09-30",
+      "value": "26969",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 19,
+        "label": "Operating income",
+        "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2023-09-30",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "UNSTATED",
+      "period": "12 months ended 2024-09-28",
+      "value": "123216",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 19,
+        "label": "Operating income",
+        "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2024-09-28",
+      "period_kind": "12 months"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "UNSTATED",
+      "period": "12 months ended 2023-09-30",
+      "value": "114301",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 19,
+        "label": "Operating income",
+        "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2023-09-30",
+      "period_kind": "12 months"
+    },
+    {
+      "metric": "net_income",
+      "basis": "UNSTATED",
+      "period": "quarter ended 2023-09-30",
+      "value": "22956",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 23,
+        "label": "Net income",
+        "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2023-09-30",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "net_income",
+      "basis": "UNSTATED",
+      "period": "12 months ended 2024-09-28",
+      "value": "93736",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 23,
+        "label": "Net income",
+        "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "also_in": [
+        {
+          "table": 3,
+          "row": 7,
+          "label": "Net income",
+          "quote": "Net income | 93,736 | 96,995"
+        }
+      ],
+      "period_end": "2024-09-28",
+      "period_kind": "12 months"
+    },
+    {
+      "metric": "net_income",
+      "basis": "UNSTATED",
+      "period": "12 months ended 2023-09-30",
+      "value": "96995",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 23,
+        "label": "Net income",
+        "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "also_in": [
+        {
+          "table": 3,
+          "row": 7,
+          "label": "Net income",
+          "quote": "Net income | 93,736 | 96,995"
+        }
+      ],
+      "period_end": "2023-09-30",
+      "period_kind": "12 months"
+    },
+    {
+      "metric": "eps_diluted",
+      "basis": "UNSTATED",
+      "period": "quarter ended 2023-09-30",
+      "value": "1.46",
+      "unit": "per_share",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 27,
+        "label": "Diluted",
+        "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2023-09-30",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "eps_diluted",
+      "basis": "UNSTATED",
+      "period": "12 months ended 2024-09-28",
+      "value": "6.08",
+      "unit": "per_share",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 27,
+        "label": "Diluted",
+        "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2024-09-28",
+      "period_kind": "12 months"
+    },
+    {
+      "metric": "eps_diluted",
+      "basis": "UNSTATED",
+      "period": "12 months ended 2023-09-30",
+      "value": "6.13",
+      "unit": "per_share",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 27,
+        "label": "Diluted",
+        "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2023-09-30",
+      "period_kind": "12 months"
+    }
+  ],
+  "prior_period": [
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "eps_diluted",
+      "basis": "UNSTATED",
+      "unit": "per_share",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-28",
+      "prior_period": "quarter ended 2023-09-30",
+      "actual": "0.97",
+      "prior_actual": "1.46",
+      "difference": "-0.49",
+      "difference_unit": "per_share",
+      "difference_pct": "-33.56",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 27,
+          "label": "Diluted",
+          "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13"
+        },
+        {
+          "table": 1,
+          "row": 27,
+          "label": "Diluted",
+          "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": null
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "net_income",
+      "basis": "UNSTATED",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-28",
+      "prior_period": "quarter ended 2023-09-30",
+      "actual": "14736",
+      "prior_actual": "22956",
+      "difference": "-8220",
+      "difference_unit": "millions",
+      "difference_pct": "-35.81",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 23,
+          "label": "Net income",
+          "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995"
+        },
+        {
+          "table": 1,
+          "row": 23,
+          "label": "Net income",
+          "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": null
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "operating_expenses",
+      "basis": "UNSTATED",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-28",
+      "prior_period": "quarter ended 2023-09-30",
+      "actual": "14288",
+      "prior_actual": "13458",
+      "difference": "830",
+      "difference_unit": "millions",
+      "difference_pct": "6.17",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 17,
+          "label": "Total operating expenses",
+          "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847"
+        },
+        {
+          "table": 1,
+          "row": 17,
+          "label": "Total operating expenses",
+          "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": null
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "operating_income",
+      "basis": "UNSTATED",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-28",
+      "prior_period": "quarter ended 2023-09-30",
+      "actual": "29591",
+      "prior_actual": "26969",
+      "difference": "2622",
+      "difference_unit": "millions",
+      "difference_pct": "9.72",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 19,
+          "label": "Operating income",
+          "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301"
+        },
+        {
+          "table": 1,
+          "row": 19,
+          "label": "Operating income",
+          "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": null
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "revenue",
+      "basis": "UNSTATED",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-28",
+      "prior_period": "quarter ended 2023-09-30",
+      "actual": "94930",
+      "prior_actual": "89498",
+      "difference": "5432",
+      "difference_unit": "millions",
+      "difference_pct": "6.07",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 7,
+          "label": "Total net sales (1)",
+          "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285"
+        },
+        {
+          "table": 1,
+          "row": 7,
+          "label": "Total net sales (1)",
+          "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": null
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "eps_diluted",
+      "basis": "UNSTATED",
+      "unit": "per_share",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-28",
+      "prior_period": "quarter ended 2024-06-29",
+      "actual": "0.97",
+      "prior_actual": "1.4",
+      "difference": "-0.43",
+      "difference_unit": "per_share",
+      "difference_pct": "-30.71",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 27,
+          "label": "Diluted",
+          "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13"
+        },
+        {
+          "table": 1,
+          "row": 27,
+          "label": "Diluted",
+          "quote": "Diluted | $1.40 | $1.26 | $5.11 | $4.67"
+        }
+      ],
+      "source": "figure from the comparison release (not printed in the current release)",
+      "printed_change_check": null
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "net_income",
+      "basis": "UNSTATED",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-28",
+      "prior_period": "quarter ended 2024-06-29",
+      "actual": "14736",
+      "prior_actual": "21448",
+      "difference": "-6712",
+      "difference_unit": "millions",
+      "difference_pct": "-31.29",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 23,
+          "label": "Net income",
+          "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995"
+        },
+        {
+          "table": 1,
+          "row": 23,
+          "label": "Net income",
+          "quote": "Net income | $21,448 | $19,881 | $79,000 | $74,039"
+        }
+      ],
+      "source": "figure from the comparison release (not printed in the current release)",
+      "printed_change_check": null
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "operating_expenses",
+      "basis": "UNSTATED",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-28",
+      "prior_period": "quarter ended 2024-06-29",
+      "actual": "14288",
+      "prior_actual": "14326",
+      "difference": "-38",
+      "difference_unit": "millions",
+      "difference_pct": "-0.27",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 17,
+          "label": "Total operating expenses",
+          "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847"
+        },
+        {
+          "table": 1,
+          "row": 17,
+          "label": "Total operating expenses",
+          "quote": "Total operating expenses | 14,326 | 13,415 | 43,179 | 41,389"
+        }
+      ],
+      "source": "figure from the comparison release (not printed in the current release)",
+      "printed_change_check": null
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "operating_income",
+      "basis": "UNSTATED",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-28",
+      "prior_period": "quarter ended 2024-06-29",
+      "actual": "29591",
+      "prior_actual": "25352",
+      "difference": "4239",
+      "difference_unit": "millions",
+      "difference_pct": "16.72",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 19,
+          "label": "Operating income",
+          "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301"
+        },
+        {
+          "table": 1,
+          "row": 19,
+          "label": "Operating income",
+          "quote": "Operating income | 25,352 | 22,998 | 93,625 | 87,332"
+        }
+      ],
+      "source": "figure from the comparison release (not printed in the current release)",
+      "printed_change_check": null
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "revenue",
+      "basis": "UNSTATED",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-28",
+      "prior_period": "quarter ended 2024-06-29",
+      "actual": "94930",
+      "prior_actual": "85777",
+      "difference": "9153",
+      "difference_unit": "millions",
+      "difference_pct": "10.67",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 7,
+          "label": "Total net sales (1)",
+          "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285"
+        },
+        {
+          "table": 1,
+          "row": 7,
+          "label": "Total net sales (1)",
+          "quote": "Total net sales (1) | 85,777 | 81,797 | 296,105 | 293,787"
+        }
+      ],
+      "source": "figure from the comparison release (not printed in the current release)",
+      "printed_change_check": null
+    }
+  ],
+  "guidance_comparisons": [],
+  "guidance_not_compared": [],
+  "consistency_with_comparison": [],
+  "comparison_issues": [
+    {
+      "code": "UNIT_AMBIGUOUS",
+      "where": "table 1 row 12",
+      "detail": "gross margin without a % sign (a dollar amount?); not extracted"
+    },
+    {
+      "code": "NO_OUTLOOK_FOUND",
+      "where": "text",
+      "detail": "no sentence of the form 'outlook for the <n>th quarter of fiscal <year>' was found; no guidance extracted"
+    }
+  ],
+  "next_guidance": [],
+  "consensus": []
+}

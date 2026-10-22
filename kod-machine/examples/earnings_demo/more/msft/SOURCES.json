@@ -1,0 +1,42 @@
+[
+ {
+  "role": "cur",
+  "kind": "release",
+  "url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+  "file": "cur.htm",
+  "bytes": 451325,
+  "sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+  "retrieved_at_utc_file_mtime": "2026-10-22T15:22:44Z",
+  "http_status": 200
+ },
+ {
+  "role": "cur",
+  "kind": "headers",
+  "url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/0000950170-24-118955-index-headers.html",
+  "file": "cur_headers.html",
+  "bytes": 4903,
+  "sha256": "1138b0e8d8d24fac424d1c357599673dd5dce396a0244fc128f15a080c70c4d9",
+  "retrieved_at_utc_file_mtime": "2026-10-22T15:22:44Z",
+  "http_status": 200
+ },
+ {
+  "role": "pri",
+  "kind": "release",
+  "url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024087835/msft-ex99_1.htm",
+  "file": "pri.htm",
+  "bytes": 688043,
+  "sha256": "33a611b91bc16a9bc532a8dee7775012c37d302d1e1d392d3c03827cee5acaad",
+  "retrieved_at_utc_file_mtime": "2026-10-22T15:22:45Z",
+  "http_status": 200
+ },
+ {
+  "role": "pri",
+  "kind": "headers",
+  "url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024087835/0000950170-24-087835-index-headers.html",
+  "file": "pri_headers.html",
+  "bytes": 4903,
+  "sha256": "cca8009f32725888935005362a7f4b7dbaa3456f1ae2eb7f953564dd3f37fec7",
+  "retrieved_at_utc_file_mtime": "2026-10-22T15:22:45Z",
+  "http_status": 200
+ }
+]
