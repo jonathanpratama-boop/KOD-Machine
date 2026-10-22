@@ -7,6 +7,13 @@ bundle, builds source-linked event views at an explicit information cutoff, and 
 compatible reported and consensus figures. Run `python3 -m kod.workbench --help`.
 It is read-only and remains separate from the ledger, frozen cards and calibration.
 
+The optional [KOD Workstation](WORKSTATION.md) adds a local, single-user interface:
+watchlist, SEC filing inbox, source-linked earnings notes, annotation history and
+backup/restore. It uses a separate SQLite database under `runtime/workstation/`.
+Start its four-company historical offline demo after installing its optional dependencies:
+`python3 -m kod.workstation demo --serve`.
+See [source coverage and limits](DATA_SOURCES.md) and [build status](WORKSTATION_PROGRESS.md).
+
 KOD sits beside ASTRA (`Moonshot-Scanner`, branch `claude/loving-gauss-1o1ldm`).
 It does not edit COMPRESSION, IGNITION, or EQ_GAP, and it does not join the
 authoritative v1 pilot cohort.

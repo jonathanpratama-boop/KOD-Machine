@@ -21,7 +21,7 @@ import os
 from pathlib import Path
 import re
 import sys
-from urllib.parse import urlsplit
+from urllib.parse import quote, urlsplit
 import urllib.request
 from zoneinfo import ZoneInfo
 
@@ -30,6 +30,7 @@ from . import workbench
 from .workbench import _decimal_string
 
 SCHEMA = "KOD-EARNINGS-NOTE-v1"
+PARSER_VERSION = "KOD-EARNINGS-PARSER-v2"
 LOCAL_URL = "https://example.invalid/local-file/"
 ORDINALS = {"first": 1, "second": 2, "third": 3, "fourth": 4}
 SCALES = {"thousands": 1000, "millions": 10**6, "billions": 10**9}
@@ -357,6 +358,12 @@ def extract_table_facts(doc: dict, currency_override: str | None = None) -> tupl
                 m = re.fullmatch(r"(\d{4}) As (?:Reported|Adjusted) \((Non-)?GAAP\)", cells[0].strip())
                 if not m:
                     continue
+                # merge_cells removes presentation blanks. A missing/empty cell
+                # must never move the following values under different metrics.
+                # Refuse the whole ambiguous row before zip can truncate it.
+                if len(cells) - 1 != len(transposed):
+                    skipped += 1
+                    continue
                 month, day = _month_day(groups[0])
                 kind = duration_of(groups[0])
                 period = dated_period(kind, date(int(m.group(1)), month, day))
@@ -433,14 +440,68 @@ def _fact(metric, basis, period, num, scale, label_scale, table, row, label, pri
     if basis == "UNSTATED":
         flags.append("BASIS_NOT_STATED")
     return {"metric": metric, "basis": basis, "period": period["label"], "period_info": period, "value": _decimal_string(value), "unit": unit, "currency": currency,
-            "evidence": {"table": table["table"], "row": row["row"], "label": label, "quote": row["line"]}, "printed_changes": printed, "method": "TABLE_ROW_LABEL_MATCH", "flags": flags}
+            "evidence": {"table": table["table"], "row": row["row"], "label": label, "quote": row["line"], "unit": unit, "currency": currency}, "printed_changes": printed, "method": "TABLE_ROW_LABEL_MATCH", "flags": flags}
+
+
+def _fact_key(f):
+    """A financial value is meaningful only inside its full compatible group."""
+    return f["metric"], f["basis"], f["period"], f["unit"], f["currency"]
+
+
+def _fact_groups(facts):
+    groups = {}
+    for f in facts:
+        groups.setdefault(_fact_key(f), []).append(f)
+    return groups
+
+
+def _ambiguous_fact_keys(facts):
+    return {key for key, group in _fact_groups(facts).items() if len({Decimal(f["value"]) for f in group}) > 1}
+
+
+def _unambiguous_facts(facts):
+    """One value per compatible group; conflicts are never resolved by order."""
+    return [group[0] for group in _fact_groups(facts).values() if len({Decimal(f["value"]) for f in group}) == 1]
+
+
+def _guidance_groups(items):
+    groups = {}
+    for g in items:
+        key = g["metric"], g["basis"], g["target_period"], g["unit"], g["currency"]
+        groups.setdefault(key, []).append(g)
+    return groups
+
+
+def _guidance_values(g):
+    return tuple(Decimal(g[k]) if g[k] is not None else None for k in ("midpoint", "low", "high"))
+
+
+def _unambiguous_guidance(items):
+    return [group[0] for group in _guidance_groups(items).values() if len({_guidance_values(g) for g in group}) == 1]
+
+
+def _guidance_conflict_issues(items):
+    return [{"code": "GUIDANCE_CONFLICT", "where": f"{key[0]} {key[1]} {key[2]}",
+             "detail": "conflicting guidance values/ranges; no range selected: " + " ; ".join(g["quote"] for g in group)}
+            for key, group in _guidance_groups(items).items() if len({_guidance_values(g) for g in group}) > 1]
+
+
+def _attach_source(facts, source, role):
+    """Retain document/version identity alongside exact table evidence."""
+    identity = {"document_id": source.get("document_id", f"{role}-release"), "document_role": role,
+                "source_version_id": source.get("source_version_id", source["doc"]["raw_sha256"]),
+                "document_sha256": source["doc"]["raw_sha256"], "source_url": source["source_url"], "document_name": source["doc"]["name"]}
+    for fact in facts:
+        fact["evidence"].update(identity)
+        for evidence in fact.get("also_in", []):
+            evidence.update(identity)
 
 
 def _dedupe(facts, issues):
-    """The same metric, basis and period printed in several tables is one fact (first table kept; others listed as `also_in`); differing values are a conflict, both kept."""
+    """Deduplicate only fully compatible facts; keep all conflicting values."""
     out, index = [], {}
     for f in facts:
-        key = (f["metric"], f["basis"], f["period"])
+        key = _fact_key(f)
         first = index.get(key)
         if first is None:
             index[key] = f
@@ -465,6 +526,8 @@ def choose_current(facts: list, head: dict):
         hit = [f for f in quarters if f["period_info"]["end"] == want]
         if hit:
             return hit[0]["period"]
+        if any(f["period_info"]["end"] is not None for f in quarters):
+            return None  # a malformed current row must not relabel last year
     return quarters[0]["period"] if quarters else None
 
 
@@ -489,7 +552,7 @@ def headline_checks(doc: dict, facts: list) -> dict:
     if m and not out["eps_headline"]:
         out["eps_headline"]["UNSTATED"] = {"value": m.group(1), "quote": m.group(0)}
     current = choose_current(facts, out)
-    cur = [f for f in facts if f["period"] == current] if current else []
+    cur = _unambiguous_facts([f for f in facts if f["period"] == current]) if current else []
     rev = [f for f in cur if f["metric"] == "revenue" and f["unit"] == "millions"]
     if out["revenue_headline"] and rev:
         h = Decimal(out["revenue_headline"]["value"].replace(",", ""))
@@ -551,7 +614,7 @@ def extract_guidance(doc: dict) -> tuple[list, list]:
     """The company's own outlook for the next period: revenue (plus or minus a percentage or amount) and 'GAAP and non-GAAP X are expected to be A and B, respectively' bullets."""
     items, issues = _amd_style(doc), []
     if items:
-        return items, issues
+        return items, _guidance_conflict_issues(items)
     target = None
     for i, line in enumerate(doc["lines"]):
         m = re.search(r"outlook for the (first|second|third|fourth) quarter of fiscal (\d{4})", line, re.I)
@@ -586,6 +649,7 @@ def extract_guidance(doc: dict) -> tuple[list, list]:
                               "conversion": "billion to million x1000" if scale == "billion" else None, "quote": m.group(0), "method": "OUTLOOK_REGEX"})
     if not items:
         issues.append({"code": "NO_GUIDANCE_PARSED", "where": "outlook", "detail": "an outlook section exists but none of its sentences matched the supported wording"})
+    issues.extend(_guidance_conflict_issues(items))
     return items, issues
 
 
@@ -624,20 +688,30 @@ def prior_period_comparisons(facts: list, current_period: str, earlier_facts: li
     """ACTUAL vs PRIOR-PERIOD ACTUAL. Comparative columns printed in the same release (same duration kind only) are checked against the change the release itself prints. If an earlier release is
     supplied, its own current-period figures fill a SEQUENTIAL comparison the release does not print, labelled with that source."""
     out = []
-    current = sorted((f for f in facts if f["period"] == current_period), key=lambda f: (f["metric"], f["basis"]))
+    ambiguous = _ambiguous_fact_keys(facts)
+    resolved = _unambiguous_facts(facts)
+    current = sorted((f for f in resolved if f["period"] == current_period), key=lambda f: (f["metric"], f["basis"], f["unit"], f["currency"] or ""))
+    blocked_relations = set()
     for cur in current:
         for prior in facts:
-            if prior["metric"] == cur["metric"] and prior["basis"] == cur["basis"] and prior["period"] != current_period:
+            if (prior["metric"] == cur["metric"] and prior["basis"] == cur["basis"] and prior["period"] != current_period
+                    and prior["unit"] == cur["unit"] and prior["currency"] == cur["currency"]):
                 rel = relation(cur["period_info"], prior["period_info"])
+                if _fact_key(prior) in ambiguous:
+                    blocked_relations.add((_fact_key(cur), rel))
+                    continue
                 if rel is not None:
                     out.append(_prior_row(cur, prior, rel, "comparative column printed in the current release", True))
     if earlier_facts and earlier_current:
-        have = {(r["metric"], r["basis"], r["relation"]) for r in out}
+        have = {(r["metric"], r["basis"], r["unit"], r["currency"], r["relation"]) for r in out}
         for cur in current:
-            for prior in earlier_facts:
+            for prior in _unambiguous_facts(earlier_facts):
                 if prior["period"] == earlier_current and prior["metric"] == cur["metric"] and prior["basis"] == cur["basis"] and prior["unit"] == cur["unit"] and prior["currency"] == cur["currency"]:
-                    if relation(cur["period_info"], prior["period_info"]) == "SEQUENTIAL" and (cur["metric"], cur["basis"], "SEQUENTIAL") not in have:
+                    ident = cur["metric"], cur["basis"], cur["unit"], cur["currency"], "SEQUENTIAL"
+                    if (relation(cur["period_info"], prior["period_info"]) == "SEQUENTIAL" and ident not in have
+                            and (_fact_key(cur), "SEQUENTIAL") not in blocked_relations):
                         out.append(_prior_row(cur, prior, "SEQUENTIAL", "figure from the comparison release (not printed in the current release)", False))
+                        have.add(ident)
     return out
 
 
@@ -646,15 +720,31 @@ def guidance_comparisons(facts: list, current_period: str, guidance: list, guida
     rows, withheld = [], []
     if guidance_doc is None:
         return rows, [{"reason": "no comparison document supplied; earlier company guidance for this period is unknown"}]
-    current = {(f["metric"], f["basis"]): f for f in facts if f["period"] == current_period}
-    for g in guidance:
+    current = [f for f in facts if f["period"] == current_period]
+    ambiguous = _ambiguous_fact_keys(current)
+    for group in _guidance_groups(guidance).values():
+        g = group[0]
         if g["target_period"] != current_period:
             withheld.append({"metric": g["metric"], "reason": f"the comparison document's outlook is for {g['target_period']}, not {current_period}"})
             continue
-        candidates = [current[k] for k in current if k[0] == g["metric"] and (g["basis"] == "UNSTATED" or k[1] == g["basis"])]
+        if len({_guidance_values(item) for item in group}) != 1:
+            withheld.append({"metric": g["metric"], "basis": g["basis"], "status": "DATA_CONFLICT",
+                             "reason": "conflicting earlier guidance values/ranges; comparison withheld",
+                             "guidance_evidence": [item["quote"] for item in group]})
+            continue
+        candidates = [f for f in current if f["metric"] == g["metric"] and (g["basis"] == "UNSTATED" or f["basis"] == g["basis"])]
         if not candidates:
             withheld.append({"metric": g["metric"], "basis": g["basis"], "reason": "the current release has no matching reported figure"})
             continue
+        if any(_fact_key(f) in ambiguous for f in candidates):
+            withheld.append({"metric": g["metric"], "basis": g["basis"], "status": "DATA_CONFLICT",
+                             "reason": "conflicting current actuals; comparison withheld", "actual_evidence": [f["evidence"] for f in candidates]})
+            continue
+        compatible = [f for f in candidates if f["unit"] == g["unit"] and f["currency"] == g["currency"]]
+        if not compatible:
+            withheld.append({"metric": g["metric"], "reason": "unit or currency mismatch between actual and guidance; no conversion supported"})
+            continue
+        candidates = _unambiguous_facts(compatible)
         # revenue is printed under both GAAP and non-GAAP; the same value is compared once and the duplicate listed
         act = candidates[0]
         same_basis = " and ".join(sorted({c["basis"] for c in candidates})) + (" (identical)" if len(candidates) > 1 else "")
@@ -756,6 +846,7 @@ def load_consensus(path: str, sec_id: str, event_id: str) -> list:
 def analyse(company, ticker, venue, primary, comparison, as_of, mode, consensus_path=None, currency_override=None):
     """primary / comparison: dicts with doc (read_document), source_url, published_at, observed_at, title. Returns the structured result (also the JSON companion)."""
     facts, issues = extract_table_facts(primary["doc"], currency_override)
+    _attach_source(facts, primary, "current")
     head = headline_checks(primary["doc"], facts)
     current_period = choose_current(facts, head)
     if current_period is None:
@@ -776,6 +867,7 @@ def analyse(company, ticker, venue, primary, comparison, as_of, mode, consensus_
     comp_facts, comp_guidance, comp_issues, comp_current = [], [], [], None
     if comparison:
         comp_facts, ci = extract_table_facts(comparison["doc"], currency_override)
+        _attach_source(comp_facts, comparison, "comparison")
         comp_current = choose_current(comp_facts, headline_checks(comparison["doc"], comp_facts))
         cg, gi = extract_guidance(comparison["doc"])
         comp_guidance, comp_issues = cg, ci + gi
@@ -791,7 +883,7 @@ def analyse(company, ticker, venue, primary, comparison, as_of, mode, consensus_
     report = workbench.build_report(bundle, as_of, query="", security_id=sec_id, limit=50, mode=mode)
     excluded = {row["document_id"]: row["reasons"] for row in report["excluded_documents"]}
     cutoff_ok = "current-release" not in excluded
-    result = {"schema_version": SCHEMA, "research_only": True, "entry_permission": False, "company": company, "ticker": ticker, "venue": venue, "event": "EARNINGS_ANNOUNCEMENT",
+    result = {"schema_version": SCHEMA, "parser_version": PARSER_VERSION, "research_only": True, "entry_permission": False, "company": company, "ticker": ticker, "venue": venue, "event": "EARNINGS_ANNOUNCEMENT",
               "period": current_period, "as_of": report["as_of"], "mode": mode, "cutoff": {"current_release_eligible": cutoff_ok, "excluded": excluded},
               "sources": [{"role": "current", "name": primary["doc"]["name"], "source_url": primary["source_url"], "sha256": primary["doc"]["raw_sha256"], "bytes": primary["doc"]["bytes"],
                            "published_at": primary["published_at"], "published_basis": primary["published_basis"], "observed_at": primary["observed_at"], "observed_basis": primary["observed_basis"]}],
@@ -802,6 +894,10 @@ def analyse(company, ticker, venue, primary, comparison, as_of, mode, consensus_
     if not cutoff_ok:
         result.update(facts=[], prior_period=[], guidance_comparisons=[], guidance_not_compared=[{"reason": "current release is not eligible at the information cutoff: " + ", ".join(excluded["current-release"])}],
                       next_guidance=[], consensus=[], consistency_with_comparison=[])
+        # The report is a cutoff-specific read model, not a copy of the private
+        # parser state. Even hidden headline/check/issue fields can leak values.
+        result["headline"] = {"paragraph": None, "quarter_ended": None, "fiscal_quarter_title": None, "revenue_headline": None, "eps_headline": {}, "checks": []}
+        result["issues"] = []
         return result
 
     def public(f):
@@ -823,13 +919,13 @@ def analyse(company, ticker, venue, primary, comparison, as_of, mode, consensus_
     result["guidance_comparisons"], result["guidance_not_compared"] = gcomp, gwith
     result["consistency_with_comparison"] = []
     if comp_ok and comp_current:
-        earlier = {(f["metric"], f["basis"], f["period"]): f for f in comp_facts if f["period"] == comp_current}
-        for f in facts:
-            e = earlier.get((f["metric"], f["basis"], f["period"])) if f["period"] != current_period else None
-            if e is not None and e["unit"] == f["unit"] and e["currency"] == f["currency"]:
+        earlier = {_fact_key(f): f for f in _unambiguous_facts(comp_facts) if f["period"] == comp_current}
+        for f in _unambiguous_facts(facts):
+            e = earlier.get(_fact_key(f)) if f["period"] != current_period else None
+            if e is not None:
                 result["consistency_with_comparison"].append({"metric": f["metric"], "basis": f["basis"], "period": f["period"], "earlier_release": e["value"], "printed_now": f["value"],
                                                               "agrees": Decimal(e["value"]) == Decimal(f["value"])})
-    result["comparison_issues"] = comp_issues
+    result["comparison_issues"] = comp_issues if comp_ok else []
     result["next_guidance"] = guidance_next
     consensus = []
     for card in report["search_results"]:
@@ -909,7 +1005,7 @@ def _unit(unit, currency):
 def _link(url, label):
     if urlsplit(url).hostname and urlsplit(url).hostname.endswith("example.invalid"):
         return _md(label) + " (local file; no public URL supplied)"
-    return f"[{_md(label)}](<{url.replace(' ', '%20').replace('>', '%3E').replace('<', '%3C')}>)"
+    return f"[{_md(label)}](<{quote(url, safe=':/?&=#%+@,;!$()*-._~')}>)"
 
 
 def _row(*cells):
@@ -920,6 +1016,20 @@ def _ref(ev):
     return f"table {ev['table']}, row {ev['row']}"
 
 
+def _comparison_source(row):
+    refs = [_md(row["source"])]
+    for label, ev in zip(("actual", "prior"), row["evidence"]):
+        name = f"{label}: {ev.get('document_role', 'source')} release, {_ref(ev)}"
+        # Autolinks keep the label escaped while permitting deliberate source
+        # navigation; untrusted Markdown link syntax is never copied through.
+        if ev.get("source_url"):
+            url = quote(ev["source_url"], safe=":/?&=#%+@,;!$()*-._~")
+            refs.append(f"{_md(name)} <{url}>")
+        else:
+            refs.append(_md(name))
+    return "; ".join(refs)
+
+
 def questions(result):
     q = []
     if not result["consensus"]:
@@ -927,18 +1037,28 @@ def questions(result):
     for g in result["guidance_comparisons"]:
         if g["position"] in ("ABOVE_RANGE", "BELOW_RANGE"):
             q.append(f"{NAMES[g['metric']]} ({g['basis']}) was {g['position'].replace('_', ' ').lower().replace(' range', ' the range')} the company guided earlier. What explains the gap? The release's own commentary is not extracted; read it.")
-    gaap = {f["metric"]: Decimal(f["value"]) for f in result["facts"] if f["basis"] == "GAAP"}
-    non = {f["metric"]: Decimal(f["value"]) for f in result["facts"] if f["basis"] == "NON-GAAP"}
-    if "eps_diluted" in gaap and "eps_diluted" in non and gaap["eps_diluted"] != non["eps_diluted"]:
-        q.append(f"Non-GAAP diluted EPS differs from GAAP by {_decimal_string(non['eps_diluted'] - gaap['eps_diluted'])}. Which reconciling items account for it? (The release's reconciliation tables are not extracted.)")
+    def one_actual(metric, basis=None):
+        candidates = [f for f in result["facts"] if f["metric"] == metric and (basis is None or f["basis"] == basis)]
+        if _ambiguous_fact_keys(candidates):
+            return None
+        values = {(Decimal(f["value"]), f["unit"], f["currency"], f["period"]) for f in candidates}
+        return candidates[0] if len(values) == 1 else None
+
+    gaap, non = one_actual("eps_diluted", "GAAP"), one_actual("eps_diluted", "NON-GAAP")
+    if (gaap and non and gaap["unit"] == non["unit"] and gaap["currency"] == non["currency"]
+            and Decimal(gaap["value"]) != Decimal(non["value"])):
+        q.append(f"Non-GAAP diluted EPS differs from GAAP by {_decimal_string(Decimal(non['value']) - Decimal(gaap['value']))}. Which reconciling items account for it? (The release's reconciliation tables are not extracted.)")
     for p in result["prior_period"]:
         if p["relation"] == "SEQUENTIAL" and p["unit"] == "percent" and Decimal(p["difference"]) < 0 and p["basis"] == "GAAP":
             q.append(f"{NAMES[p['metric']]} (GAAP) fell {_decimal_string(abs(Decimal(p['difference'])))} percentage points from the previous quarter. Does the company explain it in the supplied sources?")
     if result["next_guidance"]:
-        rev = next((g for g in result["next_guidance"] if g["metric"] == "revenue"), None)
-        cur = next((f for f in result["facts"] if f["metric"] == "revenue"), None)
-        if rev and cur and rev["unit"] == cur["unit"]:
-            q.append(f"The company guides {rev['target_period']} revenue at a midpoint of {rev['midpoint']} ({_unit(rev['unit'], rev['currency'])}), {_fmt(round(_pct(Decimal(rev['midpoint']) - Decimal(cur['value']), Decimal(cur['value'])), 1))}% against the quarter just reported. How does that compare with consensus once available?")
+        revenues = [g for g in _unambiguous_guidance(result["next_guidance"]) if g["metric"] == "revenue"]
+        rev = revenues[0] if len(revenues) == 1 else None
+        cur = one_actual("revenue")
+        if rev and cur and rev["unit"] == cur["unit"] and rev["currency"] == cur["currency"]:
+            change = _pct(Decimal(rev["midpoint"]) - Decimal(cur["value"]), Decimal(cur["value"]))
+            if change is not None:
+                q.append(f"The company guides {rev['target_period']} revenue at a midpoint of {rev['midpoint']} ({_unit(rev['unit'], rev['currency'])}), {_fmt(round(change, 1))}% against the quarter just reported. How does that compare with consensus once available?")
     for i in result["issues"]:
         if i["code"] in ("HEADLINE_TABLE_CONFLICT", "PERIOD_MISMATCH", "CURRENT_PERIOD_AMBIGUOUS"):
             q.append(f"Resolve before relying on the figures: {i['detail']}.")
@@ -983,15 +1103,15 @@ def render_note(result):
         add("")
         add("### A. Actual vs prior-period actual")
         add("")
-        add("Calculation from the comparative columns printed in the same release. The prior figure is the company's reported number for that period, not an expectation.")
+        add("Calculation from the current release's comparative columns or the explicitly identified earlier release. Each row identifies both sources; the prior actual is a reported number, not an expectation.")
         add("")
         if result["prior_period"]:
-            add("| Metric | Basis | Unit | Current | Prior period | Prior actual | Difference | Change % | Relation | Agrees with the release's printed change |")
-            add("|---|---|---|---|---|---|---|---|---|---|")
+            add("| Metric | Basis | Unit | Current | Prior period | Prior actual | Difference | Change % | Relation | Agrees with the release's printed change | Source |")
+            add("|---|---|---|---|---|---|---|---|---|---|---|")
             for p in result["prior_period"]:
                 chk = p["printed_change_check"]
                 add(_row(NAMES[p["metric"]], p["basis"], _unit(p["unit"], p["currency"]), p["actual"], p["prior_period"], p["prior_actual"], f"{p['difference']} {p['difference_unit'] if p['unit']=='percent' else ''}".strip(), p["difference_pct"] or "n/a", p["relation"],
-                         "not checked" if chk is None else f"{'yes' if chk['agrees'] else 'NO'} (printed: {chk['printed']})"))
+                         "not checked" if chk is None else f"{'yes' if chk['agrees'] else 'NO'} (printed: {chk['printed']})") + " " + _comparison_source(p) + " |")
         else:
             add("No comparative columns were extracted.")
         add("")
@@ -1110,3 +1230,4 @@ def main(argv=None):
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

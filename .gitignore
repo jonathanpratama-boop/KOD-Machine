@@ -10,3 +10,8 @@ kod-machine/var/*.db
 # idx-signals/data/manifests/ are committed instead.
 idx-signals/data/raw/
 idx-signals/data/panel/
+
+# Local analyst workstation state is separate from the frozen research ledger.
+runtime/
+kod-machine/.venv/
+.venv-workstation/

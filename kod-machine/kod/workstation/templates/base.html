@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{% block title %}KOD Workstation{% endblock %}</title>
+  <link rel="stylesheet" href="/static/workstation.css">
+  <link rel="icon" href="/static/kod.svg" type="image/svg+xml">
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<aside class="sidebar">
+  <a class="brand" href="/" aria-label="KOD Workstation home"><span class="brand-mark">K</span><span>KOD<span class="brand-sub">WORKSTATION</span></span></a>
+  <div class="sidebar-label">Research desk</div>
+  <nav aria-label="Main navigation">
+    <a href="/" {% if page == 'inbox' %}aria-current="page"{% endif %}><span class="nav-icon">▤</span> Event inbox</a>
+    <a href="/health" {% if page == 'health' %}aria-current="page"{% endif %}><span class="nav-icon">◉</span> Data &amp; health</a>
+  </nav>
+  <div class="sidebar-label watch-label">Watchlist <span>{{ securities|length }}</span></div>
+  <nav class="watchlist" aria-label="Company watchlist">
+  {% for security in securities %}
+    <a href="/company/{{ security.id }}" {% if company is defined and company.id == security.id %}aria-current="page"{% endif %}><span class="ticker-mark">{{ security.ticker[:2] }}</span><span><b>{{ security.ticker }}</b><small>{{ security.name }}</small></span></a>
+  {% else %}<p class="sidebar-empty">Add your first company from the inbox.</p>{% endfor %}
+  </nav>
+  <div class="sidebar-footer"><span class="status-dot {% if offline %}quiet{% endif %}"></span>{{ 'Offline · saved evidence' if offline else 'Local research workspace' }}<small>Research aid · No order execution</small></div>
+</aside>
+<div class="app-shell">
+  <header class="topbar"><span>Independent research, connected to evidence.</span><span class="environment">{{ 'OFFLINE' if offline else 'LOCAL' }} <span class="tiny-dot"></span> SINGLE USER</span></header>
+  <main id="main">
+  {% if message %}<div class="notice" role="status">{{ message }}</div>{% endif %}
+  {% block content %}{% endblock %}
+  </main>
+  <footer class="page-footer"><span>KOD / Analyst workstation v1</span><span>Sources first. Interpretation stays yours.</span></footer>
+</div>
+</body>
+</html>

@@ -9,6 +9,22 @@ permissions:
   actions: read  # KOD reads GitHub's own workflow-run records as server-side timestamp receipts
 
 jobs:
+  workstation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python3 -m pip install -r kod-machine/requirements-workstation.txt
+      - name: Optional workstation integration, recovery, source-boundary and web tests
+        working-directory: kod-machine
+        run: python3 -m unittest discover -s workstation_tests -v
+      - name: Four preserved real-company releases replay offline
+        working-directory: kod-machine
+        run: python3 -m kod.workstation demo --data-dir "$RUNNER_TEMP/kod-workstation-demo"
   checks:
     runs-on: ubuntu-latest
     steps:
