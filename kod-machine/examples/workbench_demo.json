@@ -1,0 +1,57 @@
+{
+  "schema_version": "KOD-WORKBENCH-v1",
+  "synthetic": true,
+  "securities": [
+    {"security_id": "SYN-DEMO-US", "issuer_id": "SYN-ISSUER-US", "ticker": "DEMO", "venue": "SYN-US", "currency": "USD"},
+    {"security_id": "SYN-DEMO-ID", "issuer_id": "SYN-ISSUER-ID", "ticker": "DEMO", "venue": "SYN-IDX", "currency": "IDR"}
+  ],
+  "documents": [
+    {
+      "document_id": "earnings-original", "event_id": "SYN-US-Q3", "security_ids": ["SYN-DEMO-US"],
+      "source_kind": "PRIMARY", "publisher": "Synthetic issuer", "source_url": "https://example.invalid/issuer/q3",
+      "source_family": "synthetic-issuer-release", "published_at": "2026-10-22T07:00:00Z", "observed_at": "2026-10-22T07:02:00Z",
+      "title": "Synthetic issuer reports quarterly revenue", "text": "Quarterly revenue was 120 million USD. These figures are invented for the demonstration.",
+      "observations": [{"metric": "revenue", "role": "ACTUAL", "value": "120", "unit": "million", "currency": "USD", "period": "2026-Q3", "source_quote": "Quarterly revenue was 120 million USD."}]
+    },
+    {
+      "document_id": "earnings-reprint", "event_id": "SYN-US-Q3", "security_ids": ["SYN-DEMO-US"],
+      "source_kind": "SECONDARY", "publisher": "Synthetic wire", "source_url": "https://example.invalid/wire/q3",
+      "source_family": "synthetic-issuer-release", "published_at": "2026-10-22T07:05:00Z", "observed_at": "2026-10-22T07:06:00Z",
+      "title": "Synthetic issuer reports quarterly revenue", "text": "Quarterly revenue was 120 million USD. These figures are invented for the demonstration.",
+      "observations": [{"metric": "revenue", "role": "ACTUAL", "value": "120", "unit": "million", "currency": "USD", "period": "2026-Q3", "source_quote": "Quarterly revenue was 120 million USD."}]
+    },
+    {
+      "document_id": "prior-consensus", "event_id": "SYN-US-Q3", "security_ids": ["SYN-DEMO-US"],
+      "source_kind": "SECONDARY", "publisher": "Synthetic estimate provider", "source_url": "https://example.invalid/estimates/q3",
+      "source_family": "synthetic-estimates", "published_at": "2026-10-21T15:00:00Z", "observed_at": "2026-10-21T15:01:00Z",
+      "title": "Synthetic quarterly revenue consensus", "text": "Revenue consensus is 130 million USD. This is an invented pre-release estimate.",
+      "observations": [{"metric": "revenue", "role": "CONSENSUS", "value": "130", "unit": "million", "currency": "USD", "period": "2026-Q3", "source_quote": "Revenue consensus is 130 million USD."}]
+    },
+    {
+      "document_id": "earnings-amendment", "event_id": "SYN-US-Q3", "security_ids": ["SYN-DEMO-US"],
+      "source_kind": "PRIMARY", "publisher": "Synthetic issuer", "source_url": "https://example.invalid/issuer/q3-correction",
+      "source_family": "synthetic-issuer-release", "published_at": "2026-10-22T09:00:00Z", "observed_at": "2026-10-22T09:01:00Z",
+      "title": "Synthetic issuer corrects quarterly revenue", "text": "Corrected revenue was 125 million USD. This amendment is unavailable before 09:00 UTC.",
+      "replaces_document_id": "earnings-original",
+      "observations": [{"metric": "revenue", "role": "ACTUAL", "value": "125", "unit": "million", "currency": "USD", "period": "2026-Q3", "source_quote": "Corrected revenue was 125 million USD."}]
+    },
+    {
+      "document_id": "small-financing", "event_id": "SYN-ID-FINANCING", "security_ids": ["SYN-DEMO-ID"],
+      "source_kind": "PRIMARY", "publisher": "Synthetic exchange", "source_url": "https://example.invalid/exchange/financing",
+      "source_family": "synthetic-id-disclosure", "published_at": "2026-10-22T06:30:00Z", "observed_at": "2026-10-22T06:32:00Z",
+      "title": "Synthetic financing announcement", "text": "The issuer announced financing. The terms and economic significance have not been assessed."
+    },
+    {
+      "document_id": "late-observation", "event_id": "SYN-ID-OTHER", "security_ids": ["SYN-DEMO-ID"],
+      "source_kind": "PRIMARY", "publisher": "Synthetic exchange", "source_url": "https://example.invalid/exchange/old-notice",
+      "source_family": "synthetic-id-other", "published_at": "2026-10-21T06:30:00Z", "observed_at": "2026-10-22T10:00:00Z",
+      "title": "Synthetic historical notice retrieved later", "text": "A historical publication date does not establish that this system had the notice at an earlier cutoff."
+    },
+    {
+      "document_id": "unknown-publication", "event_id": "SYN-ID-UNDATED", "security_ids": ["SYN-DEMO-ID"],
+      "source_kind": "SECONDARY", "publisher": "Synthetic website", "source_url": "https://example.invalid/undated",
+      "source_family": null, "published_at": null, "observed_at": "2026-10-22T06:00:00Z",
+      "title": "Synthetic undated article", "text": "Publication time is unknown and must not be filled in from observation time."
+    }
+  ]
+}

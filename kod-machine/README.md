@@ -2,6 +2,11 @@
 
 Forensic lab for market repricing. Research only. No entry permission.
 
+The optional [analyst evidence workbench](WORKBENCH.md) searches a supplied document
+bundle, builds source-linked event views at an explicit information cutoff, and compares
+compatible reported and consensus figures. Run `python3 -m kod.workbench --help`.
+It is read-only and remains separate from the ledger, frozen cards and calibration.
+
 KOD sits beside ASTRA (`Moonshot-Scanner`, branch `claude/loving-gauss-1o1ldm`).
 It does not edit COMPRESSION, IGNITION, or EQ_GAP, and it does not join the
 authoritative v1 pilot cohort.
@@ -284,6 +289,10 @@ registry, cards and detectors above, change none of them, and never count toward
   2025-03-12 07:00 CET on Nasdaq Copenhagen before the open (+37.9% on the session).
   19 evidence objects, card `KOD-R-ZEAL-20250312` (KOD-DET-v0: no substantive signal).
   Conclusion: NO_ACTIONABLE_EDGE_ESTABLISHED (`05_findings/FINDINGS.md`).
+
+## Earnings research note
+
+`python3 -m kod.earnings` turns an official earnings press release (HTML) into a source-linked Markdown note: extracted figures with their exact table rows, prior-period, earlier-guidance and (if supplied) consensus comparisons kept apart, `CONSENSUS UNKNOWN` otherwise, and questions for the analyst. Optional, read-only, standard library only. See `EARNINGS.md` and the frozen real example in `examples/earnings_demo/`.
 
 ## Doctrine
 
