@@ -2,6 +2,11 @@
 
 Forensic lab for market repricing. Research only. No entry permission.
 
+The optional [analyst evidence workbench](WORKBENCH.md) searches a supplied document
+bundle, builds source-linked event views at an explicit information cutoff, and compares
+compatible reported and consensus figures. Run `python3 -m kod.workbench --help`.
+It is read-only and remains separate from the ledger, frozen cards and calibration.
+
 KOD sits beside ASTRA (`Moonshot-Scanner`, branch `claude/loving-gauss-1o1ldm`).
 It does not edit COMPRESSION, IGNITION, or EQ_GAP, and it does not join the
 authoritative v1 pilot cohort.
