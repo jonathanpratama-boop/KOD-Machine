@@ -1,0 +1,32 @@
+{
+ "placebo_events": 2500,
+ "scored": 1953,
+ "status_counts": {
+  "EXITED": 1954,
+  "SKIP_OVERLAP": 332,
+  "SKIP_LIQUIDITY": 139,
+  "SKIP_NOT_TRADED": 75
+ },
+ "trades_recomputed": 1954,
+ "max_abs_net_return_difference": 8.881784197001252e-16,
+ "verifier_mismatches": [],
+ "n_mismatches": 0,
+ "placebo_spread": {
+  "n5": 431,
+  "n1": 398,
+  "spread": -0.003642828086541215,
+  "se": 0.01799624497010131,
+  "t": -0.20242156586517657,
+  "lo95": -0.03918786015453606,
+  "hi95": 0.031038469226999182
+ },
+ "gates": {
+  "G1_spread_t_ge_3": false,
+  "G2_spread_ge_3pct": false,
+  "G3_spread_gt_0_in_2021_and_2022": false,
+  "G4_shuffled_labels_all_abs_t_lt_3": true
+ },
+ "verdict": "FAIL",
+ "seconds": 30,
+ "machinery_ok": true
+}
