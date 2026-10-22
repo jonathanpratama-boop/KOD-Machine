@@ -72,5 +72,27 @@ class GuardTests(unittest.TestCase):
                 hc.require_pinned_code()
 
 
+class TokenParsingTests(unittest.TestCase):
+    def setUp(self):
+        self.ev = load("events_v2")
+        self.fm = self.ev.load(self.ev.M1 / "feasibility.py", "ann1m_feasibility_test")
+
+    def parse(self, title):
+        return self.ev.fixed_tokens(self.fm, title)
+
+    def test_contract_symbols_become_base_tokens(self):
+        self.assertEqual(self.parse("Binance Futures Will Launch USDⓈ-Margined NIGHTUSDT Perpetual Contract (2025-12-10)"), ["NIGHT"])
+        self.assertEqual(self.parse("Binance Futures Will Launch USDⓈ-Margined SLERFUSDT and SCRTUSDT Perpetual Contracts With up to 75x Leverage"), ["SLERF", "SCRT"])
+        self.assertEqual(self.parse("Binance Futures Will Launch USDⓈ-Margined PAXGUSDT Perpetual Contract"), ["PAXG"])
+
+    def test_base_tokens_and_unrecoverable_titles_are_unchanged(self):
+        self.assertEqual(self.parse("Binance Futures Will Launch USDⓈ-M GLM Perpetual Contract With Up to 50x Leverage"), ["GLM"])
+        self.assertEqual(self.parse("Binance Futures Will Launch Multiple USDⓈ-Margined Equity Perpetual Contracts (2026-02-09)"), [])
+        self.assertEqual(self.ev.base_token("USDT"), "USDT")
+        self.assertEqual(self.ev.base_token("BTCUSD1"), "BTCUSD1")
+        self.assertEqual(self.ev.base_token("ABUSDT"), "AB")               # a two-character base is kept as a base
+        self.assertEqual(self.ev.base_token("AUSDT"), "AUSDT")             # a one-character base is not stripped
+
+
 if __name__ == "__main__":
     unittest.main()
