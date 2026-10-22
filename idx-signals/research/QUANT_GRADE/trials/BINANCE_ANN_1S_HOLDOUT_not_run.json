@@ -1,0 +1,13 @@
+{
+ "id": "BINANCE_ANN_1S_HOLDOUT_not_run",
+ "experiment": "BINANCE_ANN_1S_HOLDOUT",
+ "date": "2026-10-22",
+ "hypothesis": "out-of-time confirmation of test 22 (2 s capture of Binance futures-launch announcements) on events announced 2024-01-01..2026-09-30",
+ "one_sided_p": null,
+ "p_source": null,
+ "variants_searched": 0,
+ "outcome": "NOT RUN: GO rule 1 failed (29 eligible events after the parser correction, 9 before; 40 required); no trade-level 2024+ data was opened",
+ "note": "The event type shrank from about 29 a year in 2020-23 to 25 in 2024, 4 in 2025 and 0 in 2026 (through September): Binance now launches perpetuals mostly for new tokens with no spot history or pre-market. Test 22's PASS is neither confirmed nor refuted. Owner cannot use Binance (restricted). See research/BINANCE_ANN_1S_HOLDOUT/OUTCOME.md.",
+ "counted": false,
+ "registered": "2026-10-22"
+}
