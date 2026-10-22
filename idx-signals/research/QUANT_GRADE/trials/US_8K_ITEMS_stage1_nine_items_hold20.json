@@ -1,0 +1,13 @@
+{
+ "id": "US_8K_ITEMS_stage1_nine_items_hold20",
+ "experiment": "US_8K_ITEMS",
+ "date": "2026-10-22",
+ "hypothesis": "For some 8-K item type among nine (1.01, 1.02, 2.02, 2.03, 3.02, 5.02, 5.07, 7.01, 8.01), US stocks beat matched random entries by at least 1% over 20 sessions (t >= 3.6), bought at the open after the EDGAR filing date, 2021-2022 filings, survivor-only prices",
+ "one_sided_p": 0.0386,
+ "p_source": "smallest positive-item one-sided p: 2.03, bootstrap t 1.77 (normal one-sided); 27 variants (9 items x 3 holds) counted",
+ "variants_searched": 27,
+ "outcome": "FAIL: no item passed; reading: no 8-K item is a usable long signal at this entry",
+ "note": "Scored events at hold 20 per item: 1.01 7,851; 1.02 940; 2.02 23,197; 2.03 3,715; 3.02 1,558; 5.02 11,603; 5.07 6,213; 7.01 13,605; 8.01 11,849. Largest positive means: 2.02 +1.1% (t 1.4), 2.03 +0.5% (t 1.8). Only item 3.02 (unregistered equity sales, mostly dilutive financings) is significant, and negative: -2.8% at 20 sessions (t -4.3), -5.5% at 60 (t -3.1); a reason to avoid such names, not a long signal (survivor-only prices make the true figure worse). Stage 2 not run. Independent check: verify.py, every EXITED trade of every item and hold recomputed from the panel, no mismatch.",
+ "counted": true,
+ "registered": "2026-10-22"
+}
