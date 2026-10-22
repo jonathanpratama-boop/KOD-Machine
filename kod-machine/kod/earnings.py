@@ -1,0 +1,862 @@
+"""Earnings-release research note: one supported document in, a source-linked Markdown note out.
+
+First supported workflow: an official earnings press release in HTML (for example an SEC 8-K Exhibit 99.1) whose summary table has period-labelled columns such as
+"Q3 FY25  Q2 FY25  Q3 FY24". The program extracts figures with the exact table row as evidence, reads the company's own outlook, builds a KOD-WORKBENCH-v1 bundle
+(so the workbench's cutoff, citation and consensus rules apply), and writes a research note. It reads supplied files (or one public URL), writes only the files you ask for,
+never opens the KOD database, ledger or registry, and grants no entry permission.
+
+Three comparisons are kept apart and always labelled: ACTUAL vs PRIOR-PERIOD ACTUAL, ACTUAL vs EARLIER COMPANY GUIDANCE, ACTUAL vs CONSENSUS (unknown unless a dated
+consensus document is supplied). Nothing is guessed: an unreadable or ambiguous field stays unknown and is listed.
+"""
+
+from __future__ import annotations
+
+import argparse
+import html
+from datetime import datetime, timezone
+from decimal import Decimal, InvalidOperation
+from html.parser import HTMLParser
+import json
+import os
+from pathlib import Path
+import re
+import sys
+from urllib.parse import urlsplit
+import urllib.request
+from zoneinfo import ZoneInfo
+
+from .hashing import fmt_ts, parse_ts, sha256_bytes, sha256_text, utc_now
+from . import workbench
+from .workbench import _decimal_string
+
+SCHEMA = "KOD-EARNINGS-NOTE-v1"
+LOCAL_URL = "https://example.invalid/local-file/"
+PERIOD_RE = re.compile(r"^Q([1-4])\s*(?:FY|fy)?\s*'?(\d{2}|\d{4})$")
+ORDINALS = {"first": 1, "second": 2, "third": 3, "fourth": 4}
+SCALES = {"thousands": 1000, "millions": 10**6, "billions": 10**9}
+
+
+def _md(value):
+    """Escape untrusted text for Markdown: HTML-significant characters become entities, Markdown syntax characters are backslash-escaped, newlines are flattened."""
+    text = html.escape(str(value), quote=False).replace("\r", " ").replace("\n", " ")
+    return re.sub(r"([\\`*_\[\]|])", r"\\\1", text)
+
+
+class EarningsError(ValueError):
+    """A problem the user can fix; the message says how."""
+
+
+# ---------------------------------------------------------------- document reading
+
+class _Page(HTMLParser):
+    BLOCKS = {"p", "div", "br", "li", "h1", "h2", "h3", "h4", "h5", "h6", "tr", "table", "ul", "ol"}
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.skip, self.buf, self.blocks = 0, [], []
+        self.tables, self.stack, self.row, self.cell = [], [], None, None
+
+    def _flush(self):
+        text = " ".join("".join(self.buf).split())
+        self.buf = []
+        if text and not self.stack:
+            self.blocks.append(("p", text))
+
+    def handle_starttag(self, tag, attrs):
+        if tag in ("script", "style"):
+            self.skip += 1
+            return
+        if tag == "table":
+            self._flush()
+            self.stack.append([])
+        elif tag == "tr" and self.stack:
+            self.row = []
+        elif tag in ("td", "th") and self.stack:
+            self.cell = []
+        elif tag in self.BLOCKS:
+            self._flush()
+
+    def handle_endtag(self, tag):
+        if tag in ("script", "style"):
+            self.skip = max(0, self.skip - 1)
+        elif tag in ("td", "th") and self.cell is not None and self.row is not None:
+            self.row.append(" ".join("".join(self.cell).split()))
+            self.cell = None
+        elif tag == "tr" and self.row is not None and self.stack:
+            self.stack[-1].append(self.row)
+            self.row = None
+        elif tag == "table" and self.stack:
+            self.tables.append(self.stack.pop())
+            self.blocks.append(("t", len(self.tables) - 1))
+        elif tag in self.BLOCKS:
+            self._flush()
+
+    def handle_data(self, data):
+        if self.skip:
+            return
+        if self.cell is not None:
+            self.cell.append(data)
+        elif not self.stack:
+            self.buf.append(data)
+
+
+def merge_cells(cells):
+    """Drop empty cells; attach a lone '$' to the next cell and a lone '%' or ')' to the previous one."""
+    out, pending = [], ""
+    for cell in cells:
+        cell = cell.strip()
+        if not cell:
+            continue
+        if cell in ("$", "US$"):
+            pending = "$"
+        elif cell in ("%", ")", "%)") and out:
+            out[-1] += cell
+        else:
+            out.append(pending + cell)
+            pending = ""
+    return out
+
+
+def read_document(raw: bytes, name: str = "document") -> dict:
+    """Parse an HTML earnings release into plain text lines and merged table rows. The returned `text` is what the workbench bundle carries and where evidence quotes are found."""
+    if not isinstance(raw, (bytes, bytearray)) or not raw.strip():
+        raise EarningsError(f"{name}: empty file; provide an official earnings press release in HTML")
+    if raw[:5] == b"%PDF-":
+        raise EarningsError(f"{name}: PDF is not supported yet; provide the HTML earnings release (for SEC filers, the 8-K Exhibit 99.1 .htm file)")
+    html_text = bytes(raw).decode("utf-8", "replace")
+    if not re.search(r"<(html|table|p|div|body)\b", html_text, re.I):
+        raise EarningsError(f"{name}: not HTML; provide the official earnings release as an .htm/.html file")
+    page = _Page()
+    try:
+        page.feed(html_text)
+        page.close()
+    except Exception as exc:  # malformed markup from an untrusted source
+        raise EarningsError(f"{name}: the HTML could not be read ({type(exc).__name__}); provide the official release file") from exc
+    lines, tables = [], []
+    for kind, item in page.blocks:
+        if kind == "p":
+            lines.append(item)
+            continue
+        rows = []
+        for r, row in enumerate(page.tables[item]):
+            merged = merge_cells(row)
+            if merged:
+                rows.append({"row": r + 1, "cells": merged, "line": " | ".join(merged)})
+        if rows:
+            tables.append({"table": len(tables) + 1, "rows": rows})
+            lines.extend(row["line"] for row in rows)
+    return {"name": name, "raw_sha256": sha256_bytes(bytes(raw)), "bytes": len(raw), "lines": lines, "text": "\n".join(lines), "tables": tables}
+
+
+# ---------------------------------------------------------------- figures
+
+def normalize_period(label: str):
+    m = PERIOD_RE.match(label.strip())
+    if not m:
+        return None
+    year = m.group(2)[-2:]
+    return f"Q{m.group(1)} FY{year}", int(m.group(1)), int(year)
+
+
+def parse_number(cell: str):
+    """('12,345', 'USD'|None, 'percent'|None) from '$12,345', '(1,234)', '74.6%'; None if the cell is not a plain number."""
+    text = cell.strip()
+    neg = text.startswith("(") and text.rstrip("%").endswith(")")
+    text = text.strip("()")
+    currency = "$" if text.startswith("$") else None
+    text = text.lstrip("$").strip()
+    percent = text.endswith("%")
+    text = text.rstrip("%").replace(",", "").strip()
+    if not re.fullmatch(r"\d+(\.\d+)?", text):
+        return None
+    return Decimal(("-" if neg else "") + text), currency, ("percent" if percent else None)
+
+
+METRICS = (
+    ("revenue", re.compile(r"^(total )?(net )?(revenues?|sales)$")),
+    ("gross_margin", re.compile(r"^gross (profit )?margin$")),
+    ("operating_expenses", re.compile(r"^(total )?operating expenses$")),
+    ("operating_income", re.compile(r"^(income from operations|operating income)$")),
+    ("net_income", re.compile(r"^net income$")),
+    ("eps_diluted", re.compile(r"^(diluted (earnings|eps)( per (common )?share)?|(earnings|net income) per diluted share|diluted net income per share)$")),
+)
+
+
+def metric_for(label: str):
+    clean = re.sub(r"[*†‡]+$", "", label.strip().lower()).strip()
+    for name, pattern in METRICS:
+        if pattern.match(clean):
+            return name
+    return None
+
+
+def unit_scale(text: str):
+    m = re.search(r"in (thousands|millions|billions)", text, re.I)
+    return m.group(1).lower() if m else None
+
+
+def extract_table_facts(doc: dict, currency_override: str | None = None) -> tuple[list, list]:
+    """Facts from period-labelled summary tables. Returns (facts, issues). A fact has one value in one period column, with its table row as evidence."""
+    facts, issues = [], []
+    for table in doc["tables"]:
+        basis, periods, scale, per_share_note = "UNSTATED", None, None, False
+        for row in table["rows"]:
+            cells = row["cells"]
+            if len(cells) == 1 and re.fullmatch(r"(non-gaap|gaap)", cells[0].strip(), re.I):
+                basis = "NON-GAAP" if cells[0].lower().startswith("non") else "GAAP"
+                continue
+            labels = [normalize_period(c) for c in cells[1:]]
+            hits = [l for l in labels if l]
+            if len(hits) >= 2:
+                periods = [l[0] for l in hits]
+                scale = unit_scale(cells[0])
+                first = cells[0].lower()
+                per_share_note = "per share" in first
+                if re.search(r"non-gaap", first):
+                    basis = "NON-GAAP"
+                elif re.search(r"\bgaap\b", first):
+                    basis = "GAAP"
+                if scale is None and "$" in cells[0]:
+                    issues.append({"code": "UNIT_SCALE_UNSTATED", "where": f"table {table['table']}", "detail": "the header gives no 'in millions/thousands'; dollar amounts are treated as unscaled and flagged"})
+                continue
+            if not periods:
+                continue
+            metric = metric_for(cells[0])
+            if metric is None:
+                continue
+            values = []
+            for cell in cells[1:1 + len(periods)]:
+                values.append(parse_number(cell))
+            if any(v is None for v in values):
+                issues.append({"code": "UNREADABLE_ROW", "where": f"table {table['table']} row {row['row']}", "detail": f"'{cells[0]}': a value cell in a period column is not a plain number; row skipped"})
+                continue
+            printed_changes = cells[1 + len(periods):]
+            for idx, (value, cur, pct) in enumerate(values):
+                if metric == "gross_margin":
+                    if pct != "percent":
+                        issues.append({"code": "UNIT_AMBIGUOUS", "where": f"table {table['table']} row {row['row']}", "detail": "gross margin without a % sign; not extracted"})
+                        break
+                    unit, currency = "percent", None
+                elif metric == "eps_diluted":
+                    unit, currency = "per_share", ("USD" if cur else None)
+                else:
+                    unit = f"millions" if scale == "millions" else (f"{scale}" if scale else "unscaled")
+                    currency = "USD" if cur else None
+                if currency_override and currency:
+                    currency = currency_override
+                flags = []
+                if currency == "USD" and not currency_override:
+                    flags.append("CURRENCY_ASSUMED_USD_FROM_$_SIGN")
+                if unit == "unscaled":
+                    flags.append("UNIT_SCALE_UNKNOWN")
+                facts.append({"metric": metric, "basis": basis, "period": periods[idx], "column": idx, "value": _decimal_string(value), "unit": unit, "currency": currency,
+                              "evidence": {"table": table["table"], "row": row["row"], "label": cells[0], "quote": row["line"]},
+                              "printed_changes": printed_changes, "method": "TABLE_ROW_LABEL_MATCH", "flags": flags})
+    return facts, issues
+
+
+def headline_checks(doc: dict, facts: list) -> dict:
+    """Reads the release's headline sentence(s) and checks them against the table; returns period identity and agreement flags."""
+    text = " ".join(doc["lines"][:60])
+    para = next((l for l in doc["lines"][:60] if re.search(r"\breported\b", l) and re.search(r"quarter ended", l)), None)
+    out = {"paragraph": para[:900] if para else None, "quarter_ended": None, "fiscal_quarter_title": None, "revenue_headline": None, "eps_headline": {}, "checks": []}
+    m = re.search(r"(first|second|third|fourth) quarter ended ([A-Z][a-z]+ \d{1,2}, \d{4})", text)
+    if m:
+        out["quarter_ended"] = {"quarter": ORDINALS[m.group(1)], "date": datetime.strptime(m.group(2), "%B %d, %Y").date().isoformat(), "quote": m.group(0)}
+    m = re.search(r"(First|Second|Third|Fourth) Quarter Fiscal (\d{4})", text)
+    if m:
+        out["fiscal_quarter_title"] = {"quarter": ORDINALS[m.group(1).lower()], "fiscal_year": int(m.group(2)), "quote": m.group(0)}
+    m = re.search(r"reported revenue[^$]{0,80}?of \$(\d[\d,]*(?:\.\d+)?) (billion|million)", text)
+    if m:
+        out["revenue_headline"] = {"value": m.group(1), "scale": m.group(2), "quote": m.group(0)}
+    for m in re.finditer(r"(Non-GAAP|GAAP) earnings per diluted share (?:was|were|of) \$(\d+(?:\.\d+)?)", text):
+        out["eps_headline"][m.group(1).upper()] = {"value": m.group(2), "quote": m.group(0)}
+    current = [f for f in facts if f["column"] == 0]
+    rev = [f for f in current if f["metric"] == "revenue"]
+    if out["revenue_headline"] and rev:
+        h = Decimal(out["revenue_headline"]["value"].replace(",", ""))
+        decimals = len(out["revenue_headline"]["value"].split(".")[1]) if "." in out["revenue_headline"]["value"] else 0
+        factor = {"billion": Decimal(1000), "million": Decimal(1)}[out["revenue_headline"]["scale"]]
+        table_value = Decimal(rev[0]["value"])
+        tolerance = factor * Decimal(5) / (Decimal(10) ** (decimals + 1))
+        ok = abs(table_value - h * factor) <= tolerance
+        out["checks"].append({"check": "headline revenue vs table revenue", "ok": bool(ok), "headline": out["revenue_headline"]["quote"], "table_value_millions": rev[0]["value"]})
+    for basis, h in out["eps_headline"].items():
+        match = [f for f in current if f["metric"] == "eps_diluted" and f["basis"] == basis]
+        if match:
+            out["checks"].append({"check": f"headline {basis} diluted EPS vs table", "ok": Decimal(h["value"]) == Decimal(match[0]["value"]), "headline": h["quote"], "table_value": match[0]["value"]})
+    return out
+
+
+# ---------------------------------------------------------------- guidance
+
+PAIR = re.compile(r"(?:GAAP and non-GAAP) ([a-z ]+?) (?:are|is) expected to be (?:approximately )?(\$?[\d.,]+%?)(?: (billion|million))? and (\$?[\d.,]+%?)(?: (billion|million))?, respectively(?:, plus or minus ([\d.]+) basis points)?")
+SINGLE_REV = re.compile(r"Revenue is expected to be (approximately )?\$(\d[\d,]*(?:\.\d+)?) (billion|million)(?:, plus or minus (\d+(?:\.\d+)?)%)?")
+
+
+def _money(token: str, scale: str | None):
+    t = token.lstrip("$").rstrip("%").replace(",", "")
+    v = Decimal(t)
+    if token.endswith("%"):
+        return v, "percent"
+    if scale == "billion":
+        return v * 1000, "millions"
+    if scale == "million":
+        return v, "millions"
+    return v, "unscaled"
+
+
+def extract_guidance(doc: dict) -> tuple[list, list]:
+    """The company's own outlook for the next period: revenue (plus or minus a percentage) and 'GAAP and non-GAAP X are expected to be A and B, respectively' bullets."""
+    items, issues = [], []
+    target = None
+    for i, line in enumerate(doc["lines"]):
+        m = re.search(r"outlook for the (first|second|third|fourth) quarter of fiscal (\d{4})", line, re.I)
+        if m:
+            target = (f"Q{ORDINALS[m.group(1).lower()]} FY{m.group(2)[-2:]}", i)
+            break
+    if target is None:
+        return [], [{"code": "NO_OUTLOOK_FOUND", "where": "text", "detail": "no sentence of the form 'outlook for the <n>th quarter of fiscal <year>' was found; no guidance extracted"}]
+    for line in doc["lines"][target[1]:target[1] + 16]:
+        m = SINGLE_REV.search(line)
+        if m:
+            mid, unit = _money("$" + m.group(2), m.group(3))
+            band = Decimal(m.group(4)) if m.group(4) else None
+            low = mid * (1 - band / 100) if band is not None else None
+            high = mid * (1 + band / 100) if band is not None else None
+            items.append({"metric": "revenue", "basis": "UNSTATED", "target_period": target[0], "unit": unit, "currency": "USD", "midpoint": _decimal_string(mid),
+                          "low": _decimal_string(low) if low is not None else None, "high": _decimal_string(high) if high is not None else None,
+                          "band": f"plus or minus {m.group(4)}%" if band is not None else "point estimate" + (" (approximately)" if m.group(1) else ""),
+                          "conversion": "billion to million x1000" if m.group(3) == "billion" else None, "quote": m.group(0), "method": "OUTLOOK_REGEX"})
+            continue
+        for m in PAIR.finditer(line):
+            name = {"gross margins": "gross_margin", "operating expenses": "operating_expenses"}.get(m.group(1).strip())
+            if name is None:
+                issues.append({"code": "GUIDANCE_ITEM_NOT_PARSED", "where": "outlook", "detail": f"'{m.group(1)}' guidance is not a supported metric; listed in the source only"})
+                continue
+            for basis, tok, scale in (("GAAP", m.group(2), m.group(3)), ("NON-GAAP", m.group(4), m.group(5))):
+                mid, unit = _money(tok, scale)
+                band = Decimal(m.group(6)) / 100 if (m.group(6) and unit == "percent") else None
+                items.append({"metric": name, "basis": basis, "target_period": target[0], "unit": unit, "currency": None if unit == "percent" else "USD", "midpoint": _decimal_string(mid),
+                              "low": _decimal_string(mid - band) if band is not None else None, "high": _decimal_string(mid + band) if band is not None else None,
+                              "band": f"plus or minus {m.group(6)} basis points" if band is not None else "point estimate (approximately)" if "approximately" in m.group(0) else "point estimate",
+                              "conversion": "billion to million x1000" if scale == "billion" else None, "quote": m.group(0), "method": "OUTLOOK_REGEX"})
+    if not items:
+        issues.append({"code": "NO_GUIDANCE_PARSED", "where": "outlook", "detail": "an outlook section exists but none of its sentences matched the supported wording"})
+    return items, issues
+
+
+# ---------------------------------------------------------------- comparisons
+
+def _pct(diff: Decimal, base: Decimal):
+    return None if base == 0 else (100 * diff / abs(base))
+
+
+def _fmt(value, places=1):
+    return "unknown" if value is None else f"{value:+.{places}f}"
+
+
+def prior_period_comparisons(facts: list, current_period: str) -> list:
+    """ACTUAL vs PRIOR-PERIOD ACTUAL, read from the comparative columns printed in the same release; each is checked against the change the release itself prints."""
+    cp = normalize_period(current_period)
+    by_key = {}
+    for f in facts:
+        by_key.setdefault((f["metric"], f["basis"]), {})[f["column"]] = f
+    out = []
+    for (metric, basis), cols in sorted(by_key.items()):
+        cur = cols.get(0)
+        if cur is None or cur["period"] != current_period:
+            continue
+        for idx, prior in sorted(cols.items()):
+            if idx == 0:
+                continue
+            pp = normalize_period(prior["period"])
+            relation = "OTHER"
+            if pp and cp:
+                if pp[1] == cp[1] and pp[2] == cp[2] - 1:
+                    relation = "YEAR_OVER_YEAR"
+                elif (cp[1] > 1 and pp[1] == cp[1] - 1 and pp[2] == cp[2]) or (cp[1] == 1 and pp[1] == 4 and pp[2] == cp[2] - 1):
+                    relation = "SEQUENTIAL"
+            a, b = Decimal(cur["value"]), Decimal(prior["value"])
+            diff = a - b
+            row = {"label": "ACTUAL vs PRIOR-PERIOD ACTUAL", "relation": relation, "metric": metric, "basis": basis, "unit": cur["unit"], "currency": cur["currency"],
+                   "current_period": cur["period"], "prior_period": prior["period"], "actual": cur["value"], "prior_actual": prior["value"], "difference": _decimal_string(diff),
+                   "difference_unit": "percentage points" if cur["unit"] == "percent" else cur["unit"],
+                   "difference_pct": None if cur["unit"] == "percent" or _pct(diff, b) is None else _decimal_string(round(_pct(diff, b), 2)),
+                   "evidence": [cur["evidence"], prior["evidence"]], "source": "comparative column printed in the current release", "printed_change_check": None}
+            printed = cur["printed_changes"][idx - 1] if idx - 1 < len(cur["printed_changes"]) else None
+            m = re.fullmatch(r"(Up|Down)\s+([\d.]+)\s*%", printed or "")
+            if m and row["difference_pct"] is not None:
+                shown = Decimal(m.group(2)) * (1 if m.group(1) == "Up" else -1)
+                row["printed_change_check"] = {"printed": printed, "agrees": bool(abs(Decimal(row["difference_pct"]) - shown) <= Decimal("0.5"))}
+            elif printed and cur["unit"] == "percent":
+                m2 = re.fullmatch(r"(Up|Down)\s+([\d.]+)\s*pts", printed)
+                if m2:
+                    shown = Decimal(m2.group(2)) * (1 if m2.group(1) == "Up" else -1)
+                    row["printed_change_check"] = {"printed": printed, "agrees": bool(abs(diff - shown) <= Decimal("0.05"))}
+            out.append(row)
+    return out
+
+
+def guidance_comparisons(facts: list, current_period: str, guidance: list, guidance_doc: dict | None) -> tuple[list, list]:
+    """ACTUAL vs the company's EARLIER guidance for the same period. Compared only when metric, basis (or unstated), period, unit and currency agree."""
+    rows, withheld = [], []
+    if guidance_doc is None:
+        return rows, [{"reason": "no comparison document supplied; earlier company guidance for this period is unknown"}]
+    current = {(f["metric"], f["basis"]): f for f in facts if f["column"] == 0 and f["period"] == current_period}
+    for g in guidance:
+        if g["target_period"] != current_period:
+            withheld.append({"metric": g["metric"], "reason": f"the comparison document's outlook is for {g['target_period']}, not {current_period}"})
+            continue
+        candidates = [current[k] for k in current if k[0] == g["metric"] and (g["basis"] == "UNSTATED" or k[1] == g["basis"])]
+        if not candidates:
+            withheld.append({"metric": g["metric"], "basis": g["basis"], "reason": "the current release has no matching reported figure"})
+            continue
+        # revenue is printed under both GAAP and non-GAAP; the same value is compared once and the duplicate listed
+        act = candidates[0]
+        same_basis = " and ".join(sorted({c["basis"] for c in candidates})) + (" (identical)" if len(candidates) > 1 else "")
+        if len({c["value"] for c in candidates}) > 1:
+            withheld.append({"metric": g["metric"], "reason": "the current release reports different values for this metric under different bases and the guidance states no basis"})
+            continue
+        if act["unit"] != g["unit"] or (act["currency"] or None) != (g["currency"] or None):
+            withheld.append({"metric": g["metric"], "reason": f"unit or currency mismatch (reported {act['unit']}/{act['currency']}, guidance {g['unit']}/{g['currency']}); no conversion supported"})
+            continue
+        a, mid = Decimal(act["value"]), Decimal(g["midpoint"])
+        low = Decimal(g["low"]) if g["low"] is not None else None
+        high = Decimal(g["high"]) if g["high"] is not None else None
+        position = "NO_RANGE_GIVEN" if low is None else "ABOVE_RANGE" if a > high else "BELOW_RANGE" if a < low else "WITHIN_RANGE"
+        rows.append({"label": "ACTUAL vs EARLIER COMPANY GUIDANCE", "metric": g["metric"], "basis": same_basis if g["basis"] == "UNSTATED" else g["basis"], "period": current_period,
+                     "unit": g["unit"], "actual": act["value"], "guidance_midpoint": g["midpoint"], "guidance_low": g["low"], "guidance_high": g["high"], "guidance_band": g["band"],
+                     "difference_vs_midpoint": _decimal_string(a - mid), "difference_unit": "percentage points" if g["unit"] == "percent" else g["unit"],
+                     "difference_pct": None if g["unit"] == "percent" or _pct(a - mid, mid) is None else _decimal_string(round(_pct(a - mid, mid), 2)),
+                     "position": position, "conversion": g["conversion"], "guidance_quote": g["quote"], "actual_evidence": act["evidence"]})
+    return rows, withheld
+
+
+# ---------------------------------------------------------------- time and sources
+
+def sec_acceptance(headers_html: str) -> str | None:
+    """The filing's own SGML-header acceptance time (New York clock, YYYYMMDDHHMMSS) as a UTC ISO timestamp."""
+    m = re.search(r"ACCEPTANCE-DATETIME>\s*(\d{14})", headers_html or "")
+    if not m:
+        return None
+    ny = datetime.strptime(m.group(1), "%Y%m%d%H%M%S").replace(tzinfo=ZoneInfo("America/New_York"))
+    return fmt_ts(ny)
+
+
+def fetch_url(url: str, contact: str | None = None) -> bytes:
+    parts = urlsplit(url)
+    if parts.scheme != "https" or not parts.hostname:
+        raise EarningsError("only https URLs are fetched; or download the file and pass its path")
+    agent = "KOD-Machine research"
+    if parts.hostname.endswith("sec.gov"):
+        contact = contact or os.environ.get("KOD_SEC_CONTACT", "").strip()
+        if "@" not in (contact or ""):
+            raise EarningsError("sec.gov requires a contact in the request: set KOD_SEC_CONTACT to your email address (it is sent in the User-Agent and never stored)")
+        agent += " " + contact
+    request = urllib.request.Request(url, headers={"User-Agent": agent})
+    try:
+        with urllib.request.urlopen(request, timeout=60) as response:
+            return response.read(40_000_000)
+    except Exception as exc:
+        raise EarningsError(f"could not fetch {url}: {type(exc).__name__}; download the file manually and pass its path") from exc
+
+
+def sec_headers_url(url: str) -> str | None:
+    m = re.match(r"(https://www\.sec\.gov/Archives/edgar/data/\d+/)(\d{10})(\d{2})(\d{6})/", url)
+    return f"{m.group(1)}{m.group(2)}{m.group(3)}{m.group(4)}/{m.group(2)}-{m.group(3)}-{m.group(4)}-index-headers.html" if m else None
+
+
+# ---------------------------------------------------------------- bundle and report
+
+def build_bundle(company, ticker, venue, docs, consensus_docs, current_period, currency):
+    """A KOD-WORKBENCH-v1 bundle. docs: list of dicts (role current|comparison) with parsed fields. Observations are the current release's reported figures (ACTUAL for the current
+    period column, PRIOR for earlier columns, kept apart) and any supplied consensus."""
+    sec_id = f"{ticker}.{venue}"
+    bundle = {"schema_version": workbench.SCHEMA, "synthetic": False,
+              "securities": [{"security_id": sec_id, "issuer_id": company, "ticker": ticker, "venue": venue, "currency": currency or "UNKNOWN"}], "documents": []}
+    for d in docs:
+        entry = {"document_id": d["document_id"], "event_id": d["event_id"], "security_ids": [sec_id], "source_kind": "PRIMARY", "publisher": company, "source_url": d["source_url"],
+                 "source_family": "issuer-earnings-release", "published_at": d["published_at"], "observed_at": d["observed_at"], "title": d["title"], "text": d["text"], "observations": []}
+        for f in d.get("facts", []):
+            role = "ACTUAL" if f["column"] == 0 else "PRIOR"
+            entry["observations"].append({"metric": f"{f['metric']} [{f['basis']}]", "role": role, "value": f["value"], "unit": f["unit"], "currency": f["currency"], "period": f["period"],
+                                          "source_quote": f["evidence"]["quote"]})
+        bundle["documents"].append(entry)
+    for c in consensus_docs:
+        bundle["documents"].append(c)
+    return bundle
+
+
+def load_consensus(path: str, sec_id: str, event_id: str) -> list:
+    """Optional consensus file: a JSON list of {metric, basis, period, value, unit, currency, published_at, observed_at, source_url, publisher, text, quote}. Each becomes a
+    CONSENSUS observation in a SECONDARY document; the workbench then applies its own compatibility and ordering rules."""
+    try:
+        rows = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        raise EarningsError(f"consensus file unreadable: {exc}") from exc
+    if not isinstance(rows, list):
+        raise EarningsError("consensus file must be a JSON list of estimate objects")
+    out = []
+    for i, r in enumerate(rows):
+        try:
+            out.append({"document_id": f"consensus-{i + 1}", "event_id": event_id, "security_ids": [sec_id], "source_kind": "SECONDARY", "publisher": r["publisher"],
+                        "source_url": r["source_url"], "source_family": None, "published_at": r["published_at"], "observed_at": r.get("observed_at"),
+                        "title": f"Consensus estimate: {r['metric']} {r['period']}", "text": r["text"],
+                        "observations": [{"metric": f"{r['metric']} [{r.get('basis', 'UNSTATED')}]", "role": "CONSENSUS", "value": str(r["value"]), "unit": r["unit"],
+                                          "currency": r.get("currency"), "period": r["period"], "source_quote": r["quote"]}]})
+        except KeyError as exc:
+            raise EarningsError(f"consensus entry {i + 1}: missing field {exc}") from exc
+    return out
+
+
+def analyse(company, ticker, venue, primary, comparison, as_of, mode, consensus_path=None, currency_override=None):
+    """primary / comparison: dicts with doc (read_document), source_url, published_at, observed_at, title. Returns the structured result (also the JSON companion)."""
+    facts, issues = extract_table_facts(primary["doc"], currency_override)
+    if not facts:
+        raise EarningsError(f"{primary['doc']['name']}: no earnings summary table with period-labelled columns (for example 'Q3 FY25  Q2 FY25  Q3 FY24') and recognised rows (revenue, "
+                            "net income, diluted EPS) was found. This first version supports an official earnings press release in HTML; for SEC filers, use the 8-K Exhibit 99.1 .htm file")
+    head = headline_checks(primary["doc"], facts)
+    current_labels = [f["period"] for f in facts if f["column"] == 0]
+    current_period = current_labels[0]
+    if len(set(current_labels)) > 1:
+        issues.append({"code": "CURRENT_PERIOD_AMBIGUOUS", "where": "tables", "detail": f"first columns carry different period labels: {sorted(set(current_labels))}"})
+    cp = normalize_period(current_period)
+    for key in ("quarter_ended", "fiscal_quarter_title"):
+        h = head[key]
+        if h and cp and h["quarter"] != cp[1]:
+            issues.append({"code": "PERIOD_MISMATCH", "where": key, "detail": f"table column says {current_period}, the text says quarter {h['quarter']} ({h['quote']})"})
+    if head["fiscal_quarter_title"] and cp and head["fiscal_quarter_title"]["fiscal_year"] % 100 != cp[2]:
+        issues.append({"code": "PERIOD_MISMATCH", "where": "fiscal_quarter_title", "detail": f"table says FY{cp[2]}, title says fiscal {head['fiscal_quarter_title']['fiscal_year']}"})
+    for chk in head["checks"]:
+        if not chk["ok"]:
+            issues.append({"code": "HEADLINE_TABLE_CONFLICT", "where": chk["check"], "detail": f"{chk['headline']} disagrees with the table; both are kept, nothing is averaged"})
+    guidance_next, g_issues = extract_guidance(primary["doc"])
+    issues += g_issues
+    comp_facts, comp_guidance, comp_issues = [], [], []
+    if comparison:
+        comp_facts, ci = extract_table_facts(comparison["doc"], currency_override)
+        cg, gi = extract_guidance(comparison["doc"])
+        comp_guidance, comp_issues = cg, ci + gi
+    event_id = f"{ticker}-{current_period.replace(' ', '-')}-earnings"
+    currency = next((f["currency"] for f in facts if f["currency"]), None)
+    docs = [{"document_id": "current-release", "event_id": event_id, **{k: primary[k] for k in ("source_url", "published_at", "observed_at", "title")}, "text": primary["doc"]["text"], "facts": facts}]
+    if comparison:
+        prior_period = next((f["period"] for f in comp_facts if f["column"] == 0), "unknown-period")
+        docs.append({"document_id": "comparison-release", "event_id": f"{ticker}-{prior_period.replace(' ', '-')}-earnings", **{k: comparison[k] for k in ("source_url", "published_at", "observed_at", "title")},
+                     "text": comparison["doc"]["text"], "facts": []})
+    sec_id = f"{ticker}.{venue}"
+    consensus_docs = load_consensus(consensus_path, sec_id, event_id) if consensus_path else []
+    bundle = build_bundle(company, ticker, venue, docs, consensus_docs, current_period, currency)
+    report = workbench.build_report(bundle, as_of, query="", security_id=sec_id, limit=50, mode=mode)
+    excluded = {row["document_id"]: row["reasons"] for row in report["excluded_documents"]}
+    cutoff_ok = "current-release" not in excluded
+    result = {"schema_version": SCHEMA, "research_only": True, "entry_permission": False, "company": company, "ticker": ticker, "venue": venue, "event": "EARNINGS_ANNOUNCEMENT",
+              "period": current_period, "as_of": report["as_of"], "mode": mode, "cutoff": {"current_release_eligible": cutoff_ok, "excluded": excluded},
+              "sources": [{"role": "current", "name": primary["doc"]["name"], "source_url": primary["source_url"], "sha256": primary["doc"]["raw_sha256"], "bytes": primary["doc"]["bytes"],
+                           "published_at": primary["published_at"], "published_basis": primary["published_basis"], "observed_at": primary["observed_at"], "observed_basis": primary["observed_basis"]}],
+              "bundle_sha256": report["input_bundle_sha256"], "workbench_report": report, "issues": issues, "headline": head}
+    if comparison:
+        result["sources"].append({"role": "comparison", "name": comparison["doc"]["name"], "source_url": comparison["source_url"], "sha256": comparison["doc"]["raw_sha256"], "bytes": comparison["doc"]["bytes"],
+                                  "published_at": comparison["published_at"], "published_basis": comparison["published_basis"], "observed_at": comparison["observed_at"], "observed_basis": comparison["observed_basis"]})
+    if not cutoff_ok:
+        result.update(facts=[], prior_period=[], guidance_comparisons=[], guidance_not_compared=[{"reason": "current release is not eligible at the information cutoff: " + ", ".join(excluded["current-release"])}], next_guidance=[], consensus=[])
+        return result
+    result["facts"] = [{k: v for k, v in f.items() if k != "printed_changes"} for f in facts if f["column"] == 0]
+    result["prior_period"] = prior_period_comparisons(facts, current_period)
+    comp_ok = comparison is not None and "comparison-release" not in excluded
+    if comparison and not comp_ok:
+        gcomp, gwith = [], [{"reason": "comparison document is not eligible at the information cutoff: " + ", ".join(excluded["comparison-release"])}]
+    else:
+        gcomp, gwith = guidance_comparisons(facts, current_period, comp_guidance if comp_ok else [], comparison if comp_ok else None)
+        if comp_ok and not (comparison["published_at"] and primary["published_at"] and parse_ts(comparison["published_at"]) < parse_ts(primary["published_at"])):
+            gcomp, gwith = [], gwith + [{"reason": "the comparison document must be published strictly before the current release; its publication time is unknown or not earlier"}]
+    result["guidance_comparisons"], result["guidance_not_compared"] = gcomp, gwith
+    result["consistency_with_comparison"] = []
+    if comp_ok:
+        earlier = {(f["metric"], f["basis"], f["period"]): f for f in comp_facts if f["column"] == 0}
+        for f in facts:
+            e = earlier.get((f["metric"], f["basis"], f["period"])) if f["column"] > 0 else None
+            if e is not None and e["unit"] == f["unit"] and e["currency"] == f["currency"]:
+                result["consistency_with_comparison"].append({"metric": f["metric"], "basis": f["basis"], "period": f["period"], "earlier_release": e["value"], "printed_now": f["value"],
+                                                              "agrees": Decimal(e["value"]) == Decimal(f["value"])})
+    result["comparison_issues"] = comp_issues
+    result["next_guidance"] = guidance_next
+    cards = report["search_results"]
+    consensus = []
+    for card in cards:
+        if card["event_id"] == event_id:
+            consensus = [c for c in card["comparisons"] if any(e["role"] == "CONSENSUS" for e in c["evidence"])]
+    result["consensus"] = consensus
+    return result
+
+
+# ---------------------------------------------------------------- inputs
+
+def prepare_source(ref, source_url=None, published_at=None, sec_headers=None, retrieved_at=None, now=None, contact=None, save_dir=None):
+    """Load one document from a local path or an https URL and settle its identity and times without guessing.
+
+    publication time: --published-at, else the SEC header acceptance time (a file given with --sec-headers, or fetched next to a sec.gov URL), else UNKNOWN (never the download time).
+    observation time: the recorded retrieval time if given, else the moment this program loaded the file (a local file's real earlier retrieval is unknown)."""
+    now = now or utc_now()
+    is_url = isinstance(ref, str) and ref.startswith(("http://", "https://"))
+    headers_text = None
+    if is_url:
+        raw = fetch_url(ref, contact)
+        observed, observed_basis = now, "fetched by this run"
+        url = ref
+        hurl = sec_headers_url(ref)
+        if published_at is None and sec_headers is None and hurl:
+            headers_text = fetch_url(hurl, contact).decode("utf-8", "replace")
+        if save_dir:
+            Path(save_dir).mkdir(parents=True, exist_ok=True)
+            (Path(save_dir) / Path(urlsplit(ref).path).name).write_bytes(raw)
+    else:
+        path = Path(ref)
+        try:
+            raw = path.read_bytes()
+        except OSError as exc:
+            raise EarningsError(f"cannot read {ref}: {exc.strerror or exc}") from exc
+        url = source_url or LOCAL_URL + path.name
+        if retrieved_at:
+            try:
+                observed, observed_basis = fmt_ts(parse_ts(retrieved_at)), "retrieval time supplied by the user"
+            except ValueError as exc:
+                raise EarningsError(f"--retrieved-at: {exc}") from exc
+        else:
+            observed, observed_basis = now, "local file loaded by this run (its earlier retrieval time is unknown)"
+    if published_at:
+        try:
+            published, basis = fmt_ts(parse_ts(published_at)), "publication time supplied by the user"
+        except ValueError as exc:
+            raise EarningsError(f"--published-at: {exc}") from exc
+    else:
+        if sec_headers:
+            try:
+                headers_text = Path(sec_headers).read_text(encoding="utf-8", errors="replace")
+            except OSError as exc:
+                raise EarningsError(f"cannot read SEC header file: {exc.strerror or exc}") from exc
+        published = sec_acceptance(headers_text) if headers_text else None
+        basis = "SEC acceptance time from the filing's own header (New York clock converted to UTC)" if published else "UNKNOWN: no publication time was supplied or found; download time is not substituted"
+    doc = read_document(raw, Path(urlsplit(url).path).name or "document")
+    m = re.search(r"<title>(.*?)</title>", raw.decode("utf-8", "replace"), re.I | re.S)
+    title = next((l for l in doc["lines"] if re.search(r"announces|reports|results", l, re.I)), None) or (" ".join(m.group(1).split()) if m else doc["name"])
+    return {"doc": doc, "source_url": url, "published_at": published, "published_basis": basis, "observed_at": observed, "observed_basis": observed_basis, "title": title[:200]}
+
+
+# ---------------------------------------------------------------- note
+
+NAMES = {"revenue": "Revenue", "gross_margin": "Gross margin", "operating_expenses": "Operating expenses", "operating_income": "Operating income", "net_income": "Net income",
+         "eps_diluted": "Diluted EPS"}
+
+
+def _unit(unit, currency):
+    if unit == "percent":
+        return "%"
+    if unit == "per_share":
+        return f"{currency or '?'} per share"
+    return f"{currency or '?'} {unit}"
+
+
+def _link(url, label):
+    if urlsplit(url).hostname and urlsplit(url).hostname.endswith("example.invalid"):
+        return _md(label) + " (local file; no public URL supplied)"
+    return f"[{_md(label)}](<{url.replace(' ', '%20').replace('>', '%3E').replace('<', '%3C')}>)"
+
+
+def _row(*cells):
+    return "| " + " | ".join(_md(c) for c in cells) + " |"
+
+
+def _ref(ev):
+    return f"table {ev['table']}, row {ev['row']}"
+
+
+def questions(result):
+    q = []
+    if not result["consensus"]:
+        q.append("Obtain a dated pre-release consensus for revenue and diluted EPS (same basis, period and currency, published before the release) before judging the result against expectations.")
+    for g in result["guidance_comparisons"]:
+        if g["position"] in ("ABOVE_RANGE", "BELOW_RANGE"):
+            q.append(f"{NAMES[g['metric']]} ({g['basis']}) was {g['position'].replace('_', ' ').lower().replace(' range', ' the range')} the company guided earlier. What explains the gap? The release's own commentary is not extracted; read it.")
+    gaap = {f["metric"]: Decimal(f["value"]) for f in result["facts"] if f["basis"] == "GAAP"}
+    non = {f["metric"]: Decimal(f["value"]) for f in result["facts"] if f["basis"] == "NON-GAAP"}
+    if "eps_diluted" in gaap and "eps_diluted" in non and gaap["eps_diluted"] != non["eps_diluted"]:
+        q.append(f"Non-GAAP diluted EPS differs from GAAP by {_decimal_string(non['eps_diluted'] - gaap['eps_diluted'])}. Which reconciling items account for it? (The release's reconciliation tables are not extracted.)")
+    for p in result["prior_period"]:
+        if p["relation"] == "SEQUENTIAL" and p["unit"] == "percent" and Decimal(p["difference"]) < 0 and p["basis"] == "GAAP":
+            q.append(f"{NAMES[p['metric']]} (GAAP) fell {_decimal_string(abs(Decimal(p['difference'])))} percentage points from the previous quarter. Does the company explain it in the supplied sources?")
+    if result["next_guidance"]:
+        rev = next((g for g in result["next_guidance"] if g["metric"] == "revenue"), None)
+        cur = next((f for f in result["facts"] if f["metric"] == "revenue"), None)
+        if rev and cur and rev["unit"] == cur["unit"]:
+            q.append(f"The company guides {rev['target_period']} revenue at a midpoint of {rev['midpoint']} ({_unit(rev['unit'], rev['currency'])}), {_fmt(round(_pct(Decimal(rev['midpoint']) - Decimal(cur['value']), Decimal(cur['value'])), 1))}% against the quarter just reported. How does that compare with consensus once available?")
+    for i in result["issues"]:
+        if i["code"] in ("HEADLINE_TABLE_CONFLICT", "PERIOD_MISMATCH", "CURRENT_PERIOD_AMBIGUOUS"):
+            q.append(f"Resolve before relying on the figures: {i['detail']}.")
+    return q
+
+
+def render_note(result):
+    L = []
+    add = L.append
+    add(f"# Earnings research note: {_md(result['company'])} ({_md(result['ticker'])}), {_md(result['period'])}")
+    add("")
+    add("> Research aid only. Not a recommendation, forecast or entry permission. It opened no case, wrote no ledger and placed no order.")
+    add("")
+    add(f"- **Event:** earnings announcement (official release)  \n- **Reporting period:** {_md(result['period'])}  \n- **Information cutoff:** {_md(result['as_of'])} (mode: {_md(result['mode'])})")
+    if result["mode"] == "public":
+        add("- **Historical reconstruction:** documents are admitted by their publication time only. This does not show what KOD possessed at the cutoff; the files were retrieved later (see Sources).")
+    add("")
+    if not result["cutoff"]["current_release_eligible"]:
+        add("## Result withheld by the information cutoff")
+        add("")
+        add(f"The current release is not available at the cutoff: {_md(', '.join(result['cutoff']['excluded']['current-release']))}. No figures are shown, because a point-in-time note must not use information from after its cutoff.")
+        add("")
+    else:
+        h = result["headline"]
+        add("## What the source says")
+        add("")
+        add("Reported facts, quoted from the release (not paraphrased):")
+        add("")
+        if h["paragraph"]:
+            add("> " + _md(h["paragraph"]))
+        else:
+            add("No headline paragraph matched the supported wording ('reported ... quarter ended ...'); see the figures below.")
+        add("")
+        add("## Reported figures (current period)")
+        add("")
+        add("| Metric | Basis | Period | Value | Unit | Evidence (exact table row) | Method / flags |")
+        add("|---|---|---|---|---|---|---|")
+        for f in result["facts"]:
+            add(_row(NAMES[f["metric"]], f["basis"], f["period"], f["value"], _unit(f["unit"], f["currency"]), f"{_ref(f['evidence'])}: {f['evidence']['quote']}", f["method"] + ("; " + ", ".join(f["flags"]) if f["flags"] else "")))
+        add("")
+        add("## Comparisons (three different things, never mixed)")
+        add("")
+        add("### A. Actual vs prior-period actual")
+        add("")
+        add("Calculation from the comparative columns printed in the same release. The prior figure is the company's reported number for that period, not an expectation.")
+        add("")
+        if result["prior_period"]:
+            add("| Metric | Basis | Unit | Current | Prior period | Prior actual | Difference | Change % | Relation | Agrees with the release's printed change |")
+            add("|---|---|---|---|---|---|---|---|---|---|")
+            for p in result["prior_period"]:
+                chk = p["printed_change_check"]
+                add(_row(NAMES[p["metric"]], p["basis"], _unit(p["unit"], p["currency"]), p["actual"], p["prior_period"], p["prior_actual"], f"{p['difference']} {p['difference_unit'] if p['unit']=='percent' else ''}".strip(), p["difference_pct"] or "n/a", p["relation"],
+                         "not checked" if chk is None else f"{'yes' if chk['agrees'] else 'NO'} (printed: {chk['printed']})"))
+        else:
+            add("No comparative columns were extracted.")
+        add("")
+        add("### B. Actual vs earlier company guidance")
+        add("")
+        if result["guidance_comparisons"]:
+            add("Guidance is the company's own outlook issued before the period, taken from the comparison document.")
+            add("")
+            add("| Metric | Basis | Unit | Actual | Guided midpoint | Guided range | Difference vs midpoint | Diff % | Position | Guidance quote |")
+            add("|---|---|---|---|---|---|---|---|---|---|")
+            for g in result["guidance_comparisons"]:
+                rng = f"{g['guidance_low']} to {g['guidance_high']}" if g["guidance_low"] else g["guidance_band"]
+                add(_row(NAMES[g["metric"]], g["basis"], _unit(g["unit"], "USD" if g["unit"] != "percent" else None), g["actual"], g["guidance_midpoint"], rng, g["difference_vs_midpoint"], g["difference_pct"] or "n/a", g["position"], g["guidance_quote"]))
+            add("")
+        for w in result["guidance_not_compared"]:
+            add(f"- Not compared: {_md(w.get('metric', 'all'))}: {_md(w['reason'])}")
+        add("")
+        add("### C. Actual vs consensus")
+        add("")
+        if not result["consensus"]:
+            add("**CONSENSUS UNKNOWN.** No dated analyst consensus was supplied, and none is invented. No surprise is calculated.")
+        else:
+            for c in result["consensus"]:
+                add(f"- {_md(c['metric'])} / {_md(c['period'])}: {_md(c['status'])}; actual={_md(c['actual'])}, consensus={_md(c['consensus'])}, difference={_md(c['difference'])}, percentage={_md(c['difference_pct'])}" + (f" ({_md(c['reason'])})" if c["reason"] else ""))
+        add("")
+        add("## Company outlook given in this release (reported, not our forecast)")
+        add("")
+        if result["next_guidance"]:
+            add("| Metric | Basis | Target period | Midpoint | Range | Quote |")
+            add("|---|---|---|---|---|---|")
+            for g in result["next_guidance"]:
+                add(_row(NAMES[g["metric"]], g["basis"], g["target_period"], f"{g['midpoint']} ({_unit(g['unit'], g['currency'])})", f"{g['low']} to {g['high']}" if g["low"] else g["band"], g["quote"]))
+        else:
+            add("No outlook figures were extracted.")
+        add("")
+        add("## Calculations and interpretation")
+        add("")
+        add("Calculations are the differences above. **Interpretation: none offered.** This tool does not judge materiality, management intent, market expectations, price reaction or valuation.")
+        add("")
+        add("## Conflicts, unknowns and limitations")
+        add("")
+        for chk in result["headline"]["checks"]:
+            add(f"- Check: {_md(chk['check'])}: {'consistent' if chk['ok'] else 'CONFLICT'}.")
+        for i in result["issues"] + result.get("comparison_issues", []):
+            add(f"- {_md(i['code'])} ({_md(i['where'])}): {_md(i['detail'])}")
+        cons = result["consistency_with_comparison"]
+        if cons:
+            bad = [c for c in cons if not c["agrees"]]
+            add(f"- Prior-period figures printed in the current release vs the earlier release: {len(cons) - len(bad)} of {len(cons)} agree." + ("" if not bad else " DIFFERENT: " + "; ".join(_md(f"{c['metric']} {c['basis']} {c['period']}: earlier {c['earlier_release']}, now {c['printed_now']}") for c in bad)))
+        add("- Currency is read from the \"$\" sign and assumed to be US dollars unless the user overrode it; confirm in the filing.")
+        add("- Only the summary table and the outlook bullets are read. Segment results, reconciliations and management commentary are not extracted.")
+        add("- Supplied times and quotes are assertions; the tool does not authenticate the source or prove historical availability.")
+        add("")
+        add("## Questions for the analyst")
+        add("")
+        for n, text in enumerate(questions(result), 1):
+            add(f"{n}. {_md(text)}")
+        add("")
+    add("## Sources and times")
+    add("")
+    add("| Role | Document | SHA-256 of the file | Published (UTC) | Basis | Retrieved/observed | Basis |")
+    add("|---|---|---|---|---|---|---|")
+    for s in result["sources"]:
+        add(_row(s["role"], s["name"], s["sha256"], s["published_at"] or "UNKNOWN", s["published_basis"], s["observed_at"], s["observed_basis"]))
+    add("")
+    for s in result["sources"]:
+        add(f"- {_md(s['role'])}: {_link(s['source_url'], s['source_url'])}")
+    add("")
+    add(f"Workbench bundle SHA-256: `{result['bundle_sha256']}`. Generated by `kod.earnings` ({SCHEMA}).")
+    return "\n".join(L) + "\n"
+
+
+# ---------------------------------------------------------------- command
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(prog="python3 -m kod.earnings", description="Turn an official earnings press release (HTML) into a source-linked research note.")
+    ap.add_argument("--company", required=True, help="company name as it should appear in the note")
+    ap.add_argument("--ticker", required=True)
+    ap.add_argument("--venue", default="UNSPECIFIED", help="listing venue code (default UNSPECIFIED)")
+    ap.add_argument("--document", required=True, help="local .htm file or https URL of the earnings release")
+    ap.add_argument("--source-url", help="public URL of a local --document (shown as its citation)")
+    ap.add_argument("--published-at", help="timezone-aware ISO publication time (otherwise read from SEC headers, else unknown)")
+    ap.add_argument("--sec-headers", help="the filing's *-index-headers.html (gives the SEC acceptance time)")
+    ap.add_argument("--retrieved-at", help="when the local file was actually downloaded (never backdate)")
+    ap.add_argument("--comparison-document", help="an earlier release whose outlook covers this period")
+    ap.add_argument("--comparison-source-url")
+    ap.add_argument("--comparison-published-at")
+    ap.add_argument("--comparison-sec-headers")
+    ap.add_argument("--comparison-retrieved-at")
+    ap.add_argument("--consensus", help="optional JSON list of dated consensus estimates (see EARNINGS.md)")
+    ap.add_argument("--as-of", help="information cutoff, timezone-aware ISO (default: now)")
+    ap.add_argument("--mode", choices=("observed", "public"), default="observed", help="observed: also require retrieval before the cutoff; public: historical reconstruction by publication time")
+    ap.add_argument("--currency", help="override the assumed currency of '$' amounts, e.g. CAD")
+    ap.add_argument("--out-dir", help="output directory (default earnings_note_<ticker>)")
+    args = ap.parse_args(argv)
+    try:
+        now = utc_now()
+        out = Path(args.out_dir or f"earnings_note_{re.sub(r'[^A-Za-z0-9_-]', '_', args.ticker)}")
+        primary = prepare_source(args.document, args.source_url, args.published_at, args.sec_headers, args.retrieved_at, now, save_dir=out / "sources")
+        comparison = None
+        if args.comparison_document:
+            comparison = prepare_source(args.comparison_document, args.comparison_source_url, args.comparison_published_at, args.comparison_sec_headers, args.comparison_retrieved_at, now,
+                                        save_dir=out / "sources")
+        result = analyse(args.company, args.ticker, args.venue, primary, comparison, args.as_of or now, args.mode, args.consensus, args.currency)
+        out.mkdir(parents=True, exist_ok=True)
+        (out / "note.md").write_text(render_note(result), encoding="utf-8")
+        (out / "note.json").write_text(json.dumps(result, indent=2, ensure_ascii=False, allow_nan=False) + "\n", encoding="utf-8")
+    except (EarningsError, ValueError, InvalidOperation) as exc:
+        print(f"earnings note error: {exc}", file=sys.stderr)
+        return 2
+    print(f"wrote {out / 'note.md'} and {out / 'note.json'}")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

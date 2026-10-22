@@ -290,6 +290,10 @@ registry, cards and detectors above, change none of them, and never count toward
   19 evidence objects, card `KOD-R-ZEAL-20250312` (KOD-DET-v0: no substantive signal).
   Conclusion: NO_ACTIONABLE_EDGE_ESTABLISHED (`05_findings/FINDINGS.md`).
 
+## Earnings research note
+
+`python3 -m kod.earnings` turns an official earnings press release (HTML) into a source-linked Markdown note: extracted figures with their exact table rows, prior-period, earlier-guidance and (if supplied) consensus comparisons kept apart, `CONSENSUS UNKNOWN` otherwise, and questions for the analyst. Optional, read-only, standard library only. See `EARNINGS.md` and the frozen real example in `examples/earnings_demo/`.
+
 ## Doctrine
 
 `doctrine/KOD_DOCTRINE_v0.md` is hashed into every case. Edit it and the hash
