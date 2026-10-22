@@ -1,0 +1,12 @@
+{
+ "fetched_at": "20261022T055611Z",
+ "seconds": 3270,
+ "filings": 15412,
+ "downloaded_ok": 15411,
+ "with_similarity": 11781,
+ "failed": 1,
+ "file": "research/SLOW_10K/similarity.csv.gz",
+ "sha256": "1d5b2789c75eed94c734ae084c5b274799c1d9ff68be30877934e60134191445",
+ "filings_file_sha256": "37668196009e183b0c8f4721b2a486898cc6762b1f1c8ac813f5513e47ee6440",
+ "feature": "tenk_lib.tf_from_html + cosine (see PROTOCOL.md)"
+}
