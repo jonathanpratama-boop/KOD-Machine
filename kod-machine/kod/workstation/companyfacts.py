@@ -25,7 +25,7 @@ from .identity import METRIC_VERSION
 
 PROVIDER = "sec_companyfacts"
 MAPPING_VERSION = "KOD-COMPANYFACTS-MAP-v1"
-PARSER_VERSION = "KOD-COMPANYFACTS-READER-v1"
+PARSER_VERSION = "KOD-COMPANYFACTS-READER-v2"  # v2: JSON pointers escaped per RFC 6901 (unit keys such as USD/shares)
 
 # (taxonomy, tag) -> canonical metric. Reviewed one by one; alternatives that mean something different are deliberately absent (for example LongTermDebt,
 # which includes the current portion, is not mapped to long_term_debt, which is the noncurrent amount).
@@ -52,6 +52,29 @@ CURRENCY_CODE = re.compile(r"^[A-Z]{3}$")
 
 # Business types the first operating-company model does not support (SEC SIC codes): banks and credit institutions, insurance, real-estate investment trusts.
 FINANCIAL_SIC = ((6000, 6199, "bank or credit institution"), (6300, 6411, "insurance"), (6798, 6798, "real estate investment trust"))
+
+
+def json_pointer(*tokens) -> str:
+    """An RFC 6901 JSON pointer: '~' is written '~0' and '/' is written '~1' inside each token (a unit key such as 'USD/shares' contains a slash)."""
+    return "".join("/" + str(t).replace("~", "~0").replace("/", "~1") for t in tokens)
+
+
+def resolve_pointer(document, pointer: str):
+    """The value an RFC 6901 pointer designates in a parsed JSON document; KeyError/IndexError when it designates nothing."""
+    node = document
+    if pointer == "":
+        return node
+    if not pointer.startswith("/"):
+        raise KeyError(pointer)
+    for token in pointer[1:].split("/"):
+        token = token.replace("~1", "/").replace("~0", "~")
+        if isinstance(node, list):
+            if not token.isdigit():
+                raise KeyError(token)
+            node = node[int(token)]
+        else:
+            node = node[token]
+    return node
 
 
 class CompanyFactsError(ValueError):
@@ -114,7 +137,7 @@ def observation_rows(data: dict, document: dict, security_id: str, issuer_id: st
                 continue
             unit, currency, scale = interpreted
             for index, e in enumerate(entries):
-                pointer = f"/facts/{taxonomy}/{tag}/units/{unit_key}/{index}"
+                pointer = json_pointer("facts", taxonomy, tag, "units", unit_key, index)
                 try:
                     end, start, val, accn, form, filed = e["end"], e.get("start"), e["val"], e["accn"], e["form"], e["filed"]
                 except (KeyError, TypeError):

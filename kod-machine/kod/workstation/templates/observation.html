@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Evidence · KOD{% endblock %}
+{% block content %}
+<div class="breadcrumbs"><a href="/">Event inbox</a>{% if company %}<span>/</span><a href="/company/{{ company.id }}">{{ company.ticker }}</a>{% endif %}<span>/</span>Evidence</div>
+<div class="page-heading"><div><div class="eyebrow">RECORDED OBSERVATION</div><h1 class="lighter-title">{{ metric_label(o.metric) }} · {{ o.period.label }}</h1>
+<div class="identity-line"><span>{{ o.provider|replace('_', ' ') }}</span><span>{{ o.taxonomy }}:{{ o.concept }}</span><span>{{ o.basis }}</span><span class="hash">{{ o.id }}</span></div></div></div>
+<div class="metric-cards"><div><span>Value (base units)</span><strong>{{ o.value|number }}</strong><small>as printed: {{ o.raw_value }}{% if o.scale and o.scale != 1 %} × {{ o.scale|number }}{% endif %} · {{ o.unit }} {{ o.currency or '' }}</small></div>
+<div><span>Availability</span><strong>{{ o.published_at|moment if o.published_at else (o.publication_date ~ ' (date only)' if o.publication_date else 'Unknown') }}</strong><small>{{ o.publication_basis }}</small></div>
+<div><span>Observed by this workspace</span><strong>{{ o.observed_at|moment }}</strong><small>recorded {{ o.recorded_at|moment }} · {{ o.parser_version }} · {{ o.mapping_version }}</small></div></div>
+<section class="panel"><div class="panel-heading"><div><h2>Source</h2><p>{% if o.accession %}{{ o.form }} accession {{ o.accession }}, filed {{ o.filed }}{% if o.amendment %} (amendment){% endif %}.{% endif %} The source bytes are preserved with SHA-256 {{ o.source_sha256 }}.</p></div>{% if o.source_document_id %}<a class="button secondary" href="/source/{{ o.source_document_id }}" target="_blank" rel="noopener">Read saved source ↗</a>{% endif %}</div>
+{% if o.provider == 'sec_companyfacts' %}<div class="dossier-facts"><p><b>JSON pointer</b> <code>{{ o.evidence.json_pointer }}</code>{% if o.evidence.also_at %} (also at {{ o.evidence.also_at|join(', ') }}){% endif %}</p>
+<p><b>Pointer check</b> {% if pointer_check %}the preserved response holds this value at this pointer{% elif pointer_check == False %}the preserved response could not be read at this pointer{% else %}not checked{% endif %}</p>
+<p><b>Note</b> {{ o.evidence.note }}. This is an observation from the SEC API response, not a verification against the filing document itself.</p></div>
+{% if source_entry %}<pre class="evidence-block">{{ source_entry }}</pre>{% endif %}
+{% else %}<div class="dossier-facts"><p><b>Table row</b> {{ o.evidence.label }} (table {{ o.evidence.table }}, row {{ o.evidence.row }}, {{ o.evidence.alignment }})</p>{% if o.evidence.quote %}<blockquote class="evidence-quote">{{ o.evidence.quote }}</blockquote>{% endif %}</div>{% endif %}
+{% if o.flags %}<ul class="issue-list">{% for f in o.flags %}<li><b>{{ f|replace('_', ' ') }}</b></li>{% endfor %}</ul>{% endif %}
+<details class="full-note"><summary>Full evidence record</summary><pre class="evidence-block">{{ evidence }}</pre></details></section>
+{% endblock %}

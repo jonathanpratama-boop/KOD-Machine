@@ -51,9 +51,10 @@ def _compatible(a: ResolvedFigure, b: ResolvedFigure) -> list:
     return reasons
 
 
-def quarterly(figures: list, metric: str) -> list:
+def quarterly(figures: list, metric: str, check=None) -> list:
     """Discrete quarters for one metric from resolved duration figures (one basis/unit/currency group per call is the caller's choice; mixed groups are
-    never combined). Returns Quarter records sorted by end date."""
+    never combined). Returns Quarter records sorted by end date. `check(shorter, longer)` may return reasons the two year-to-date figures must not be
+    differenced (for example, one was restated and the other was not: different accounting vintages)."""
     own = [f for f in figures if f.metric == metric and f.period.start_date and f.period.end_date]
     quarters = {}
     for f in own:
@@ -73,7 +74,7 @@ def quarterly(figures: list, metric: str) -> list:
             q_end = longer.period.end_date
             if duration_kind(q_start, q_end) != "quarter" or (q_start, q_end) in quarters:
                 continue
-            reasons = _compatible(shorter, longer)
+            reasons = _compatible(shorter, longer) + (list(check(shorter, longer)) if check else [])
             inputs = tuple(("year_to_date_" + role, "observation", oid) for role, f in (("longer", longer), ("shorter", shorter)) for oid in f.observation_ids)
             if shorter.status != "ok" or longer.status != "ok":
                 calc = CalculationResult("quarter_from_ytd_difference", "ytd-difference-v1", "conflicted", None, longer.unit, inputs, (),

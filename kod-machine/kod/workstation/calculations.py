@@ -51,11 +51,12 @@ def _inputs(**figures):
     return tuple((role, "observation", oid) for role, f in figures.items() if f is not None for oid in f.observation_ids)
 
 
-def _blocked(formula, version, unit, figures, extra=()):
-    """The status for missing or conflicted inputs, or None when every input is usable."""
+def _blocked(formula, version, unit, figures, extra=(), names=None):
+    """The status for missing or conflicted inputs, or None when every input is usable. `names` gives the metric each role stands for, for the message."""
     missing = [role for role, f in figures.items() if f is None]
     if missing:
-        return CalculationResult(formula, version, "missing", None, unit, _inputs(**figures), (), tuple(f"no eligible {r} figure" for r in missing) + tuple(extra))
+        return CalculationResult(formula, version, "missing", None, unit, _inputs(**figures), (),
+                                 tuple(f"no eligible {(names or {}).get(r, r)} figure" for r in missing) + tuple(extra))
     conflicted = [role for role, f in figures.items() if f.status != "ok"]
     if conflicted:
         return CalculationResult(formula, version, "conflicted", None, unit, _inputs(**figures), (),
@@ -125,7 +126,8 @@ def growth(current: ResolvedFigure | None, prior: ResolvedFigure | None, version
 def ratio(numerator: ResolvedFigure | None, denominator: ResolvedFigure | None, formula: str, numerator_metrics: tuple, denominator_metric: str,
           version: str, nonpositive_base: str) -> CalculationResult:
     unit = "percent"
-    blocked = _blocked(formula, version, unit, {"numerator": numerator, "denominator": denominator})
+    names = {"numerator": "/".join(m.replace("_", " ") for m in numerator_metrics), "denominator": denominator_metric.replace("_", " ")}
+    blocked = _blocked(formula, version, unit, {"numerator": numerator, "denominator": denominator}, names=names)
     if blocked:
         return blocked
     reasons = []
@@ -175,12 +177,38 @@ def cfo_minus_capex(operating_cash_flow: ResolvedFigure | None, capex: ResolvedF
                              {"currency": capex.currency})
 
 
-def point_change(current: CalculationResult | None, prior: CalculationResult | None, formula="point_change", version="point-change-v1") -> CalculationResult:
-    """The change of a percentage between two calculations, in percentage points (never percent growth)."""
+def share_change(current: ResolvedFigure | None, prior: ResolvedFigure | None, version="share-change-v1") -> CalculationResult:
+    """Percentage change of one share-count measure between a period and a genuinely earlier comparable one. Weighted-average diluted shares are compared
+    only with weighted-average diluted shares of the same duration; they are never mixed with period-end shares outstanding."""
+    unit = "percent"
+    blocked = _blocked("share_change", version, unit, {"current": current, "prior": prior})
+    if blocked:
+        return blocked
+    reasons = []
+    if current.metric != prior.metric or current.metric not in ("diluted_shares", "shares_outstanding"):
+        reasons.append("needs the same share-count measure on both sides (weighted-average diluted shares or shares outstanding, never mixed)")
+    if current.unit != "shares" or prior.unit != "shares":
+        reasons.append(f"units are not share counts ({current.unit} vs {prior.unit})")
+    reasons += _earlier_comparable(current, prior)
+    inputs = _inputs(current=current, prior=prior)
+    if reasons:
+        return CalculationResult("share_change", version, "incompatible", None, unit, inputs, (), tuple(reasons))
+    if prior.value <= 0:
+        return CalculationResult("share_change", version, "not_applicable", None, unit, inputs, (), ("the earlier share count is zero or negative",))
+    with localcontext() as ctx:
+        ctx.prec = PRECISION
+        value = (current.value - prior.value) * 100 / prior.value
+    return CalculationResult("share_change", version, "ok", value, unit, inputs, (), (), {"current": str(current.value), "prior": str(prior.value)})
+
+
+def point_change(current: CalculationResult | None, prior: CalculationResult | None, formula="point_change", version="point-change-v1",
+                 policy: AsOfPolicy | None = None) -> CalculationResult:
+    """The change of a percentage between two calculations, in percentage points (never percent growth). Pass the cutoff policy the inputs are recorded
+    under, so the input IDs are the IDs they are recorded with."""
     unit = "percentage points"
     if current is None or prior is None:
         return CalculationResult(formula, version, "missing", None, unit, (), (), ("an input calculation is missing",))
-    inputs = (("current", "calculation", calculation_id(current)), ("prior", "calculation", calculation_id(prior)))
+    inputs = (("current", "calculation", calculation_id(current, policy)), ("prior", "calculation", calculation_id(prior, policy)))
     if current.status != "ok" or prior.status != "ok":
         return CalculationResult(formula, version, current.status if current.status != "ok" else prior.status, None, unit, inputs, (),
                                  ("an input calculation is not available: " + "; ".join(current.reasons + prior.reasons),))

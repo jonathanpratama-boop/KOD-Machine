@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}{{ company.ticker }} dossier · KOD{% endblock %}
+{% block content %}
+<div class="breadcrumbs"><a href="/">Event inbox</a><span>/</span><a href="/company/{{ company.id }}">{{ company.ticker }}</a><span>/</span>Dossier</div>
+<div class="page-heading"><div><div class="eyebrow">COMPANY DOSSIER</div><h1>{{ company.ticker }}<span class="title-dot">.</span></h1><p>{{ company.name }}</p>
+<div class="identity-line"><span>CIK {{ company.cik or 'not supplied' }}</span><span>Cutoff {{ d.policy.cutoff|moment }}</span><span>{{ d.policy.mode }} mode</span><span>{{ policy_name }} policy</span><span>{{ d.view|replace('_', ' ') }} view</span></div></div>
+<div class="button-group"><a class="button secondary" href="/company/{{ company.id }}/dossier.md?{{ query }}{% if d.question %}&amp;question={{ d.question|urlencode }}{% endif %}">↓ Markdown</a><a class="button secondary" href="/company/{{ company.id }}/dossier.json?{{ query }}{% if d.question %}&amp;question={{ d.question|urlencode }}{% endif %}">↓ JSON</a></div></div>
+
+<form class="filter-bar panel" method="get" action="/company/{{ company.id }}/dossier" aria-label="Information cutoff">
+<label class="search-label">Question <input name="question" value="{{ d.question or '' }}" maxlength="400" placeholder="What are you trying to decide? (optional)"></label>
+<label class="date-label">Cutoff <input name="as_of" value="{{ d.policy.cutoff }}" maxlength="40"></label>
+<label>Mode <select name="mode"><option value="observed" {% if d.policy.mode == 'observed' %}selected{% endif %}>Observed</option><option value="public" {% if d.policy.mode == 'public' %}selected{% endif %}>Public reconstruction</option></select></label>
+<label>Availability <select name="policy"><option value="day-end" {% if policy_name == 'day-end' %}selected{% endif %}>Filing dates count from day end</option><option value="strict" {% if policy_name == 'strict' %}selected{% endif %}>Exact times only</option></select></label>
+<label>View <select name="view"><option value="as_reported" {% if d.view == 'as_reported' %}selected{% endif %}>As first reported</option><option value="latest" {% if d.view == 'latest' %}selected{% endif %}>Latest known</option></select></label>
+<button class="button" type="submit">Apply</button></form>
+
+{% set cov = d.coverage %}
+<section class="panel"><div class="panel-heading"><div><h2>Question, cutoff and coverage</h2><p>{{ cov.scope_note }}</p></div>
+{% if cov.business_type.supported == False %}<span class="badge amber">Business type not modelled</span>{% elif cov.business_type.supported %}<span class="badge green">Operating company</span>{% else %}<span class="badge neutral">Business type unknown</span>{% endif %}</div>
+<div class="dossier-facts">
+{% if d.question %}<p><b>Question</b> {{ d.question }}</p>{% endif %}
+<p><b>Eligible observations</b> {{ cov.eligible_observations }}{% for provider, n in cov.by_provider|dictsort %} · {{ provider|replace('_', ' ') }} {{ n }}{% endfor %}</p>
+<p><b>Availability rule</b> {{ cov.policy_note }}</p>
+<p><b>Eligible releases</b> {{ cov.releases.eligible }}</p>
+<p><b>Absent metrics</b> {% for m in cov.absent_metrics %}{{ metric_label(m) }}{% if not loop.last %}, {% endif %}{% else %}none{% endfor %}</p>
+{% if cov.business_type.reason %}<p><b>Business type</b> {{ cov.business_type.reason }}{% if cov.business_type.source %} ({{ cov.business_type.source }}){% endif %}</p>{% endif %}
+</div></section>
+
+<section class="panel"><div class="panel-heading"><div><h2>Supported changes</h2><p>From a fixed catalog, in a fixed order. Each opens its formula and inputs.</p></div><span class="badge neutral">{{ d.supported_changes|length }} of {{ d.changes|length }}</span></div>
+{% if d.supported_changes %}<div class="metric-cards change-cards">{% for key in d.supported_changes %}{% set c = changes[key] %}
+<a href="/company/{{ company.id }}/dossier/calculation/{{ c.calculation_id }}?{{ query }}"><span>{{ c.label }}</span><strong>{{ show(c.value, c.unit) }}</strong><small>{{ c.periods }}{% if c.comparison_basis %} · {{ c.comparison_basis }}{% endif %}{% if c.derived_inputs %} · uses a derived quarter{% endif %}{% if c.note %} · {{ c.note }}{% endif %}</small></a>{% endfor %}</div>
+{% else %}<div class="empty-state compact"><h3>No supported change at this cutoff</h3><p>The eligible evidence does not allow any comparison in the catalog. The reasons are listed below.</p></div>{% endif %}
+{% set unavailable = d.changes|rejectattr('status', 'equalto', 'ok')|list %}
+{% if unavailable %}<ul class="issue-list">{% for c in unavailable %}<li><b>{{ c.label }} · {{ c.status|replace('_', ' ') }}</b><span>{{ c.reasons|join('; ') }}</span></li>{% endfor %}</ul>{% endif %}
+</section>
+
+<div class="bottom-grid">
+<section class="panel"><div class="panel-heading"><div><h2>Thesis conditions needing review</h2><p>Structured conditions you record are evaluated against this dossier.</p></div></div>
+<div class="empty-state compact"><h3>No structured thesis conditions recorded</h3><p>Free-text annotations on notes stay available. Structured conditions are not part of this view yet.</p></div></section>
+<section class="panel"><div class="panel-heading"><div><h2>Scenario summary</h2><p>Explicit assumptions only; history never becomes a hidden forecast.</p></div></div>
+<div class="empty-state compact"><h3>No scenario saved</h3><p>No driver model has been saved for this company.</p></div></section>
+</div>
+
+<section class="panel"><div class="panel-heading"><div><h2>Conflicts, revisions and research questions</h2><p>What blocks or qualifies a conclusion. Questions state no cause and recommend nothing.</p></div></div>
+{% if d.questions %}<ol class="question-list">{% for q in d.questions %}<li>{{ q.text }}</li>{% endfor %}</ol>{% endif %}
+{% if d.conflicts or d.revisions %}<ul class="issue-list">
+{% for c in d.conflicts[:30] %}<li><b>{{ c.label }} · {{ c.period }} · {{ c.kind|replace('_', ' ') }}</b><span>{{ c.detail }}</span></li>{% endfor %}
+{% for r in d.revisions|sort(attribute='end', reverse=True) %}{% if loop.index <= 30 %}<li><b>{{ r.label }} · {{ r.period }} · revised</b><span>first {{ r.first }}, later {{ r.later }} ({{ r.form }} filed {{ r.filed }})</span></li>{% endif %}{% endfor %}
+</ul>{% if d.conflicts|length > 30 or d.revisions|length > 30 %}<p class="panel-footnote">Showing the 30 most recent of each; the JSON export lists all {{ d.conflicts|length }} conflicts and {{ d.revisions|length }} revisions.</p>{% endif %}
+{% else %}<p class="panel-footnote">No conflicts or revisions beyond rounding among the eligible disclosures.</p>{% endif %}
+</section>
+
+{% for title, table, note in (('Filed history: quarters', quarterly, 'Three-month figures as filed; d = derived from two year-to-date figures (both inputs recorded). Per-share amounts and share counts are never derived.'), ('Filed history: fiscal years', annual, 'Twelve-month figures as filed.'), ('Balances', balances, 'Amounts at a date; never summed.')) %}
+<section class="panel"><div class="panel-heading"><div><h2>{{ title }}</h2><p>{{ note }} Currency amounts and share counts in millions.</p></div></div>
+{% if table.rows %}<div class="table-wrap"><table class="dossier-table"><thead><tr><th scope="col">Metric</th>{% for end in table.columns %}<th scope="col" class="numeric">{{ end }}</th>{% endfor %}{% if title == 'Filed history: quarters' %}<th scope="col" class="numeric">Trailing 4Q</th>{% endif %}</tr></thead><tbody>
+{% for row in table.rows %}<tr><th scope="row">{{ row.label }}{% for n in row.notes %}<small class="row-note">{{ n }}</small>{% endfor %}</th>
+{% for end in table.columns %}{% set cell = row.cells.get(end) %}<td class="numeric">{% if cell %}{% if cell.calculation_id %}<a class="cell-link" href="/company/{{ company.id }}/dossier/calculation/{{ cell.calculation_id }}?{{ query }}">{{ show(cell.value, row.unit, row.currency) }}<sup class="derived-mark" title="{{ cell.reasons|join('; ') }}">d</sup></a>{% elif cell.observation_ids %}<a class="cell-link" href="/observation/{{ cell.observation_ids[0] }}?{{ query }}">{{ show(cell.value, row.unit, row.currency) }}</a>{% else %}{{ show(cell.value, row.unit, row.currency) }}{% endif %}{% if cell.status not in ('reported', 'derived') %}<small class="cell-status">{{ cell.status|replace('_', ' ') }}</small>{% endif %}{% if cell.revisions %}<small class="cell-status">revised later</small>{% endif %}{% else %}<span class="cell-empty">—</span>{% endif %}</td>{% endfor %}
+{% if title == 'Filed history: quarters' %}<td class="numeric">{% if row.ttm %}{% set t = d.calculations[row.ttm] %}<a class="cell-link" href="/company/{{ company.id }}/dossier/calculation/{{ row.ttm }}?{{ query }}">{% if t.status == 'ok' %}{{ show(t.value, row.unit, row.currency) }}{% else %}{{ t.status|replace('_', ' ') }}{% endif %}</a>{% else %}<span class="cell-empty">n/a</span>{% endif %}</td>{% endif %}</tr>{% endfor %}
+</tbody></table></div>{% else %}<div class="empty-state compact"><h3>No eligible figures</h3><p>Nothing in this group is eligible at the selected cutoff.</p></div>{% endif %}
+</section>{% endfor %}
+
+<section class="panel"><div class="panel-heading"><div><h2>Latest release figures and reconciliation</h2><p>Release tables are kept apart from the filed series and compared with the filing where periods, units and currency match.</p></div></div>
+{% if d.release.figures %}<div class="table-wrap"><table><thead><tr><th>Metric</th><th>Basis</th><th>Period</th><th class="numeric">Value</th><th>Filing check</th></tr></thead><tbody>
+{% for f in d.release.figures %}{% set rec = d.release.reconciliation|selectattr('release_observation', 'equalto', f.observation_ids[0])|list %}<tr><td><a class="cell-link" href="/observation/{{ f.observation_ids[0] }}?{{ query }}">{{ f.label }}</a></td><td>{{ f.basis }}</td><td>{{ f.period }}</td><td class="numeric">{{ show(f.value, f.unit, f.currency) }}</td><td>{% if rec %}{{ rec[0].status|replace('_', ' ') }}{% if rec[0].reason %}<small class="cell-status">{{ rec[0].reason }}</small>{% endif %}{% else %}—{% endif %}</td></tr>{% endfor %}
+</tbody></table></div>{% else %}<div class="empty-state compact"><h3>No eligible release figures</h3><p>Preserve a supported release and make sure its availability precedes the cutoff.</p></div>{% endif %}
+</section>
+
+<section class="panel"><details class="full-note"><summary>Filing chronology ({{ d.chronology|length }} filings behind the eligible figures)</summary>
+<div class="table-wrap"><table><thead><tr><th>Filed</th><th>Form</th><th>Accession</th><th class="numeric">Observations</th><th>Submissions feed acceptance (raw, not used)</th></tr></thead><tbody>
+{% for f in d.chronology|reverse %}<tr><td>{{ f.filed }}</td><td>{{ f.form }}{% if f.amendment %} <span class="badge amber">amendment</span>{% endif %}</td><td class="hash">{{ f.accession }}</td><td class="numeric">{{ f.observations }}</td><td class="hash">{{ f.submissions_acceptance_raw or '—' }}</td></tr>{% endfor %}
+</tbody></table></div></details></section>
+<p class="panel-footnote">Interpretation, materiality and any decision are yours. No price, valuation or recommendation is implied. {{ d.schema }}.</p>
+{% endblock %}

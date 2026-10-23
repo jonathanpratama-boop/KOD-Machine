@@ -58,14 +58,16 @@ class ImportTests(CompanyFactsCase):
         data = json.loads(fixture("NVDA"))
         everything = FinancialRepository(self.store).all_for(sec["id"])
         self.assertEqual(len(everything), coverage["observations"])
-        for o in everything[:400]:
-            node = data
-            for part in o.evidence["json_pointer"].strip("/").split("/"):
-                node = node[int(part)] if isinstance(node, list) else node[part]
+        units = set()
+        for o in everything:
+            node = companyfacts.resolve_pointer(data, o.evidence["json_pointer"])
+            units.add(o.unit)
             self.assertEqual(Decimal(str(node["val"])), o.value)
             self.assertEqual((node["accn"], node["form"], node["filed"]), (o.accession, o.form, o.filed))
             self.assertEqual(o.publication_date, node["filed"])
             self.assertIsNone(o.published_at)                              # a filing date is never turned into a precise time
+        self.assertEqual(units, {"currency", "currency/share", "shares"})   # every unit kind, including the per-share key 'USD/shares'
+        self.assertEqual(companyfacts.json_pointer("units", "USD/shares", 0), "/units/USD~1shares/0")
         # Importing the same response again records nothing new.
         self.assertEqual(self.service.import_companyfacts(sec["id"], fixture("NVDA"), "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json",
                                                           observed_at=OBSERVED["NVDA"])["added"], 0)

@@ -24,6 +24,9 @@ def main(argv=None) -> int:
         ("backup", "Create a consistent backup in a new directory"),
         ("restore", "Restore a backup into a new data directory"),
         ("reindex", "Record financial observations for preserved releases that have none from this parser version"),
+        ("import-companyfacts", "Import a preserved SEC companyfacts response (and optionally the submissions response) for a watchlist company"),
+        ("dossier", "Print a company dossier (Markdown or JSON) at an information cutoff"),
+        ("search", "Search preserved sources eligible at an information cutoff"),
     ):
         parser = sub.add_parser(name, help=help_text)
         parser.add_argument("--data-dir", type=Path, default=default_data_dir())
@@ -35,6 +38,28 @@ def main(argv=None) -> int:
             parser.add_argument("--port", type=int, default=8765)
         if name == "refresh":
             parser.add_argument("--ticker", help="Optional one existing watchlist ticker")
+        if name in ("dossier", "search"):
+            parser.add_argument("--as-of", help="information cutoff (timezone-aware ISO time); default now")
+            parser.add_argument("--mode", choices=("observed", "public"), default="observed")
+            parser.add_argument("--policy", choices=("day-end", "strict"), default="day-end",
+                                help="day-end: a filing date counts from the end of that day (New York); strict: exact times only")
+        if name == "dossier":
+            parser.add_argument("--ticker", required=True)
+            parser.add_argument("--view", choices=("as_reported", "latest"), default="as_reported")
+            parser.add_argument("--question")
+            parser.add_argument("--format", choices=("md", "json"), default="md")
+        if name == "search":
+            parser.add_argument("query")
+            parser.add_argument("--ticker")
+            parser.add_argument("--period", help="a release's reported period label, e.g. 'Q3 FY25'")
+            parser.add_argument("--limit", type=int, default=10)
+        if name == "import-companyfacts":
+            parser.add_argument("--ticker", required=True, help="an existing watchlist ticker with a CIK")
+            parser.add_argument("--companyfacts", type=Path, required=True, help="saved response (.json or .json.gz)")
+            parser.add_argument("--source-url", required=True, help="the data.sec.gov URL it was retrieved from")
+            parser.add_argument("--observed-at", required=True, help="when it was actually retrieved (timezone-aware ISO time); never backdate")
+            parser.add_argument("--submissions", type=Path)
+            parser.add_argument("--submissions-url")
         if name == "backup":
             parser.add_argument("--to", type=Path, required=True)
         if name == "restore":
@@ -56,6 +81,8 @@ def main(argv=None) -> int:
             done = service.index_documents()
             print(json.dumps(done))
             return 0 if not done["skipped"] else 2
+        if args.command in ("dossier", "search", "import-companyfacts"):
+            return _research_command(args, store, service)
         if args.command == "backup":
             print("Backup created:", store.backup(args.to))
         elif args.command == "refresh":
@@ -94,6 +121,46 @@ def main(argv=None) -> int:
     except (ValueError, OSError) as exc:
         print("workstation error:", str(exc), file=sys.stderr)
         return 2
+
+
+def _security(store, ticker):
+    found = [s for s in store.securities() if s["ticker"] == ticker.upper()]
+    if len(found) != 1:
+        raise ValueError(f"no single watchlist company with ticker {ticker.upper()}")
+    return found[0]
+
+
+def _read(path: Path) -> bytes:
+    import gzip
+    raw = path.read_bytes()
+    return gzip.decompress(raw) if path.suffix == ".gz" else raw
+
+
+def _research_command(args, store, service) -> int:
+    from .policy import DAY_END, STRICT, AsOfPolicy
+    from .domain import timestamp
+    if args.command == "import-companyfacts":
+        sec = _security(store, args.ticker)
+        coverage = service.import_companyfacts(sec["id"], _read(args.companyfacts), args.source_url, observed_at=args.observed_at,
+                                               submissions=_read(args.submissions) if args.submissions else None, submissions_url=args.submissions_url)
+        print(json.dumps({k: coverage[k] for k in ("observations", "added", "absent_metrics", "unmapped_units", "business_type")}, indent=1))
+        return 0
+    policy = AsOfPolicy.parse(timestamp(args.as_of or service.clock()), args.mode, {"day-end": DAY_END, "strict": STRICT}[args.policy])
+    if args.command == "dossier":
+        from . import dossier
+        d = dossier.build(service, _security(store, args.ticker)["id"], policy, args.view, args.question)
+        print(json.dumps(d, indent=1, ensure_ascii=False) if args.format == "json" else dossier.render_markdown(d))
+        return 0
+    from . import search
+    result = search.search(store, service.archive, args.query, policy, [_security(store, args.ticker)["id"]] if args.ticker else None, args.period,
+                           limit=args.limit)
+    cov = result["coverage"]
+    print(f"{cov['matches']} matches in {cov['documents_searched']} eligible sources at {policy.as_dict()['cutoff']} ({policy.mode}, {policy.policy_version}); "
+          f"excluded {cov['excluded'] or 'none'}")
+    for r in result["results"]:
+        print(f"- [{r['ticker']} {r['period'] or 'period unresolved'} · {r['filename']} · passage {r['passage_index']} · score {r['score']:.2f}] "
+              + "".join(s["text"] for s in r["snippet"]))
+    return 0
 
 
 if __name__ == "__main__":

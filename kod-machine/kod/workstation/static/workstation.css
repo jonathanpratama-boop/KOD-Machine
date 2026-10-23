@@ -11,3 +11,16 @@
 .quiet-card p,.editorial-card>p,.empty-state p,.builder-footer p,.consensus-panel p{color:#6e805f}
 .comparison-source,.date-cell small{color:#728168}.field-help,.source-line{font-size:10px}.badge{font-size:9px}th{color:#68775e;font-size:10px}td{font-size:12px}.metric-cards small{color:#6e825e}.metric-cards span{color:#5f7950}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* Dossier, evidence and search (v2). */
+.filter-bar.panel{border-radius:8px;margin-bottom:22px}.filter-bar label{display:flex;flex-direction:column;gap:4px;font-size:9px;color:#68775e}
+.dossier-facts{padding:0 25px 20px;font-size:12px;line-height:1.8}.dossier-facts p{margin:4px 0}.dossier-facts b{display:inline-block;min-width:190px;font-weight:550;color:#4f6247}
+.change-cards{padding:0 25px 20px;margin:0}.change-cards>a{display:block;background:#eaf0e2;border:1px solid #dae4ce;border-radius:7px;padding:18px}.change-cards>a:hover{border-color:#9ab585}
+.change-cards>a span{font-size:10px;color:#5f7950}.change-cards>a strong{display:block;font-size:26px;letter-spacing:-.6px;font-weight:500;line-height:1.25;margin:8px 0;color:#3c5e36;font-variant-numeric:tabular-nums}.change-cards>a small{font-size:10px;color:#6e825e;line-height:1.6;display:block}
+.dossier-table th[scope=row]{font-size:11px;text-transform:none;letter-spacing:0;color:var(--ink);background:#fff;white-space:normal;min-width:170px}.dossier-table td{white-space:nowrap;padding:12px 14px}
+.cell-link{text-decoration:underline;text-decoration-color:#c8d6b8;text-underline-offset:3px}.derived-mark{font-size:8px;color:var(--amber);margin-left:2px}.cell-status{display:block;font-size:9px;color:var(--amber);font-family:var(--sans);white-space:normal}.cell-empty{color:#b5bdad}
+.row-note{display:block;font-size:9px;color:var(--amber);font-weight:400;max-width:260px;margin-top:4px}
+.evidence-block{margin:0 25px 20px;padding:14px;background:#f6f9f0;border:1px solid var(--line);border-radius:5px;font-family:var(--mono);font-size:10px;white-space:pre-wrap;overflow-wrap:anywhere;max-height:420px;overflow:auto}
+.search-results{list-style:none;margin:0;padding:0}.search-results>li{padding:18px 25px;border-top:1px solid #edf0e7}.snippet{margin:0 0 8px;font-size:12px;line-height:1.8;overflow-wrap:anywhere}
+mark{background:#e7efc9;color:var(--ink);padding:0 2px;border-radius:2px}
+.passage-context{padding:22px 25px}.context-line{color:#7c8a73;font-size:12px;line-height:1.8;overflow-wrap:anywhere}.focus-line{font-size:13px;line-height:1.9;border-left:3px solid #9ab585;padding:8px 14px;background:#f6f9f0;overflow-wrap:anywhere}
+@media(max-width:720px){.dossier-facts b{display:block;min-width:0}.change-cards{padding:0 20px 18px}.filter-bar label{flex:1 1 100%}}

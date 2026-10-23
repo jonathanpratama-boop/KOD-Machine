@@ -1,6 +1,7 @@
 """Local, single-user research interface. Network access is explicit and optional."""
 from __future__ import annotations
 
+from decimal import Decimal
 import hashlib
 import hmac
 import json
@@ -18,6 +19,11 @@ from markdown_it import MarkdownIt
 from starlette.concurrency import run_in_threadpool
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 
+from . import dossier as dossier_model
+from . import search as archive
+from .domain import timestamp
+from .financials import FinancialRepository
+from .policy import DAY_END, STRICT, AsOfPolicy, eligibility
 from .services import ResearchService
 from .store import Store
 
@@ -142,6 +148,29 @@ def _unit(fact):
     return f"{cur or '?'} {unit}"
 
 
+POLICIES = {"day-end": DAY_END, "strict": STRICT}
+
+
+def _policy(clock, as_of="", mode="", policy=""):
+    """The information-time policy from query parameters: cutoff (default now), observed/public mode (default observed), strict/day-end (default day-end,
+    which admits date-only filing availability from the end of the filing day)."""
+    try:
+        cutoff = timestamp(as_of.strip() or clock())
+        mode = mode or "observed"
+        if mode not in ("observed", "public"):
+            raise ValueError("Choose observed or public mode.")
+        if (policy or "day-end") not in POLICIES:
+            raise ValueError("Choose the strict or day-end availability policy.")
+        return AsOfPolicy.parse(cutoff, mode, POLICIES[policy or "day-end"])
+    except ValueError as exc:
+        raise HTTPException(400, "Invalid information cutoff: " + _error(exc))
+
+
+def _policy_query(policy):
+    name = next(k for k, v in POLICIES.items() if v == policy.policy_version)
+    return urlencode({"as_of": policy.as_dict()["cutoff"], "mode": policy.mode, "policy": name})
+
+
 def create_app(data_dir, offline=False, service=None, *, testing=False):
     """Build an app with explicit runtime state; no import-time IO or collection."""
     app = FastAPI(title="KOD Workstation", docs_url=None, redoc_url=None)
@@ -153,6 +182,7 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
     signing_key = secrets.token_bytes(32)
     templates = Jinja2Templates(directory=str(ASSETS / "templates"))
     templates.env.filters.update(moment=_display_time, number=_number)
+    templates.env.globals.update(show=dossier_model.display, metric_label=lambda m: dossier_model.LABELS.get(m, str(m).replace("_", " ")))
     templates.env.globals.update(available=_available, metric=lambda key: METRICS.get(key, str(key).replace("_", " ").title()), unit=_unit, safe_url=safe_url)
     markdown = MarkdownIt("commonmark", {"html": False, "linkify": False}).disable("image")
     app.mount("/static", StaticFiles(directory=str(ASSETS / "static")), name="static")
@@ -416,6 +446,93 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
         except (ValueError, KeyError):
             raise HTTPException(404, "Source not found or its stored hash could not be verified.")
         return PlainTextResponse(raw.decode("utf-8", "replace"), headers={"Cache-Control": "no-store", "Content-Disposition": "inline"})
+
+    def build_dossier(security_id, request, as_of="", mode="", policy="", view="", question=""):
+        security_or_404(security_id)
+        if view not in ("", "as_reported", "latest"):
+            raise HTTPException(400, "Choose the as-reported or latest view.")
+        chosen = _policy(app.state.service.clock, as_of, mode, policy)
+        try:
+            question = _text(question, 400) or None
+        except ValueError as exc:
+            raise HTTPException(400, _error(exc))
+        return dossier_model.build(app.state.service, security_id, chosen, view or "as_reported", question), chosen
+
+    @app.get("/company/{security_id}/dossier", response_class=HTMLResponse)
+    def company_dossier(security_id: str, request: Request, as_of: str = "", mode: str = "", policy: str = "", view: str = "", question: str = ""):
+        d, chosen = build_dossier(security_id, request, as_of, mode, policy, view, question)
+        query = _policy_query(chosen) + "&" + urlencode({"view": d["view"]})
+        return render(request, "dossier.html", page="dossier", company=app.state.store.get_security(security_id), d=d, query=query,
+                      quarterly=dossier_model.history_table(d, "quarterly"), annual=dossier_model.history_table(d, "annual"),
+                      balances=dossier_model.history_table(d, "instant"), changes={c["key"]: c for c in d["changes"]},
+                      policy_name=next(k for k, v in POLICIES.items() if v == chosen.policy_version))
+
+    @app.get("/company/{security_id}/dossier.json")
+    def dossier_json(security_id: str, request: Request, as_of: str = "", mode: str = "", policy: str = "", view: str = "", question: str = ""):
+        d, _ = build_dossier(security_id, request, as_of, mode, policy, view, question)
+        return Response(json.dumps({**d, "entry_permission": False}, indent=2, ensure_ascii=False, allow_nan=False), media_type="application/json",
+                        headers={"Content-Disposition": 'attachment; filename="kod-dossier.json"', "Cache-Control": "no-store"})
+
+    @app.get("/company/{security_id}/dossier.md")
+    def dossier_markdown(security_id: str, request: Request, as_of: str = "", mode: str = "", policy: str = "", view: str = "", question: str = ""):
+        d, _ = build_dossier(security_id, request, as_of, mode, policy, view, question)
+        return Response(dossier_model.render_markdown(d), media_type="text/markdown",
+                        headers={"Content-Disposition": 'attachment; filename="kod-dossier.md"', "Cache-Control": "no-store"})
+
+    @app.get("/company/{security_id}/dossier/calculation/{calc_id}", response_class=HTMLResponse)
+    def calculation_page(security_id: str, calc_id: str, request: Request, as_of: str = "", mode: str = "", policy: str = "", view: str = ""):
+        d, chosen = build_dossier(security_id, request, as_of, mode, policy, view)
+        record = d["calculations"].get(calc_id)
+        if record is None:
+            raise HTTPException(404, "This calculation is not part of the dossier at the selected cutoff and view.")
+        return render(request, "calculation.html", page="dossier", company=app.state.store.get_security(security_id), d=d, calc=record,
+                      query=_policy_query(chosen) + "&" + urlencode({"view": d["view"]}))
+
+    @app.get("/observation/{observation_id}", response_class=HTMLResponse)
+    def observation_page(observation_id: str, request: Request, as_of: str = "", mode: str = "", policy: str = ""):
+        found = FinancialRepository(app.state.store)._query("o.id=?", (observation_id,))
+        if not found:
+            raise HTTPException(404, "Observation not found.")
+        o = found[0]
+        chosen = _policy(app.state.service.clock, as_of, mode, policy) if as_of else None
+        if chosen is not None and not eligibility(o.availability(), chosen)[0]:
+            raise HTTPException(404, "This observation is not eligible at the selected cutoff.")
+        security_id = o.security_id
+        source_entry, check = None, None
+        if o.provider == "sec_companyfacts" and o.source_document_id:
+            try:
+                from .companyfacts import resolve_pointer
+                node = resolve_pointer(json.loads(app.state.store.raw(o.source_document_id), parse_float=Decimal, parse_int=Decimal), o.evidence["json_pointer"])
+                source_entry = node
+                check = Decimal(str(node.get("val"))) == o.value
+            except (ValueError, KeyError, IndexError, TypeError, ArithmeticError):
+                source_entry, check = None, False
+        return render(request, "observation.html", page="dossier", o=o, company=app.state.store.get_security(security_id) if security_id else None,
+                      source_entry=json.dumps(source_entry, indent=1, default=str) if source_entry is not None else None, pointer_check=check,
+                      evidence=json.dumps(o.evidence, indent=1, ensure_ascii=False))
+
+    @app.get("/search", response_class=HTMLResponse)
+    def search_page(request: Request, q: str = "", company: str = "", period: str = "", source: str = "", as_of: str = "", mode: str = "", policy: str = ""):
+        chosen = _policy(app.state.service.clock, as_of, mode, policy)
+        if company:
+            security_or_404(company)
+        try:
+            result = archive.search(app.state.store, app.state.service.archive, q[:archive.MAX_QUERY], chosen, [company] if company else None,
+                                    period.strip()[:60] or None, [source] if source else None) if q.strip() else None
+        except ValueError as exc:
+            raise HTTPException(400, _error(exc))
+        return render(request, "search.html", page="search", result=result, q=q[:archive.MAX_QUERY], selected=company, period=period[:60], source=source,
+                      source_types=archive.SOURCE_TYPES, policy=chosen, policy_name=next(k for k, v in POLICIES.items() if v == chosen.policy_version),
+                      query=_policy_query(chosen))
+
+    @app.get("/source/{document_id}/passage/{index}", response_class=HTMLResponse)
+    def passage_page(document_id: str, index: int, request: Request, as_of: str = "", mode: str = "", policy: str = ""):
+        chosen = _policy(app.state.service.clock, as_of, mode, policy) if as_of else None
+        try:
+            context = archive.passage_context(app.state.store, app.state.service.archive, document_id, index, chosen)
+        except (ValueError, KeyError) as exc:
+            raise HTTPException(404, _error(exc))
+        return render(request, "passage.html", page="search", ctx=context, company=app.state.store.get_security(context["document"]["security_id"]))
 
     @app.get("/health", response_class=HTMLResponse)
     def health(request: Request):

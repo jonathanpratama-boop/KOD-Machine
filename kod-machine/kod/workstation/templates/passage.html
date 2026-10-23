@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Passage · KOD{% endblock %}
+{% block content %}
+{% set doc = ctx.document %}
+<div class="breadcrumbs"><a href="/">Event inbox</a><span>/</span><a href="/company/{{ company.id }}">{{ company.ticker }}</a><span>/</span><a href="/search">Archive search</a><span>/</span>Passage</div>
+<div class="page-heading"><div><div class="eyebrow">PASSAGE {{ ctx.passage.index + 1 }} OF {{ ctx.count }}</div><h1 class="lighter-title">{{ doc.filename }}</h1>
+<div class="identity-line"><span>{{ company.ticker }}</span><span>{{ doc.metadata.period or 'period unresolved' }}</span><span>available {{ doc.published_at|moment if doc.published_at else 'unknown' }}</span><span>observed {{ doc.observed_at|moment }}</span><span class="hash">SHA-256 {{ doc.sha256 }}</span></div></div>
+<a class="button secondary" href="/source/{{ doc.id }}" target="_blank" rel="noopener">Read saved source ↗</a></div>
+<section class="panel passage-context">{% for p in ctx.before %}<p class="context-line">{{ p.text }}</p>{% endfor %}<p class="focus-line">{{ ctx.passage.text }}</p>{% for p in ctx.after %}<p class="context-line">{{ p.text }}</p>{% endfor %}
+<p class="panel-footnote">Text lines {{ ctx.passage.line_start }}–{{ ctx.passage.line_end }} of the parsed document · {{ ctx.index_version }} · passage SHA-256 {{ ctx.passage.sha256 }}</p></section>
+{% endblock %}

@@ -16,6 +16,7 @@ from ..hashing import utc_now
 import json
 
 from . import companyfacts, financials
+from .search import ArchiveIndex
 from .domain import APP_VERSION, MAX_DOCUMENT_BYTES, association as valid_association, publication, source_url as valid_url, timestamp
 from .store import Store
 
@@ -25,6 +26,7 @@ class ResearchService:
         self.store = store
         self.clock = clock
         self.parser_sha256 = hashlib.sha256(Path(earnings.__file__).read_bytes()).hexdigest()
+        self.archive = ArchiveIndex(store)
 
     @staticmethod
     def _validate_identity(security, url, headers=None):

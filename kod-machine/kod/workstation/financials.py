@@ -259,6 +259,18 @@ def resolve(observations: list, policy: AsOfPolicy, view: str = "as_reported") -
     return sorted(out, key=lambda r: (r.metric, r.period.end_date or r.period.instant_date or "", r.period.kind, r.basis))
 
 
+def rounding_tolerance(value: Decimal) -> Decimal:
+    """Half a unit of the precision a disclosed value appears to carry: trailing zeros of a whole amount (capped at millions, the coarsest scale filings use)
+    or its decimal places. A later filing that shows 4,130,000,000 where an earlier one showed 4,130,162,000 is a rounding difference, not a revision."""
+    exponent = value.normalize().as_tuple().exponent if value else 0
+    exponent = min(max(exponent, -6), 6) if isinstance(exponent, int) else 0
+    return Decimal(5) * (Decimal(10) ** exponent) / 10
+
+
+def same_within_rounding(a: Decimal, b: Decimal) -> bool:
+    return abs(a - b) <= max(rounding_tolerance(a), rounding_tolerance(b))
+
+
 def _printed_tolerance(observation) -> Decimal:
     """Half a unit of the last printed digit, in base units: '35082' in millions -> 500,000; '0.78' per share -> 0.005."""
     raw = observation.raw_value.replace(",", "")
