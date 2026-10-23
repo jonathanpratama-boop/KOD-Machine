@@ -26,7 +26,10 @@ def parse_ts(text: str) -> datetime:
     moment = datetime.fromisoformat(text.strip().replace("Z", "+00:00"))
     if moment.tzinfo is None:
         raise ValueError(f"timestamp has no timezone: {text!r}")
-    return moment.astimezone(timezone.utc)
+    try:
+        return moment.astimezone(timezone.utc)
+    except OverflowError as exc:            # e.g. 0001-01-01T00:00:00+01:00 has no UTC representation
+        raise ValueError(f"timestamp out of range: {text!r}") from exc
 
 
 def canonical(obj) -> str:

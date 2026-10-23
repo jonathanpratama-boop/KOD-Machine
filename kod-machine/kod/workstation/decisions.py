@@ -224,25 +224,26 @@ def render_markdown(stored: dict) -> str:
     """The packet as text, from the stored JSON only."""
     body = stored["packet"]
     dec = body["decision"]
-    lines = [f"# Decision packet: {body['dossier']['company']['ticker']}", "",
-             f"Recorded {dec['recorded_at']} by {dec['author']} · cutoff {body['policy']['cutoff']} ({body['policy']['mode']}, {body['policy']['policy_version']}) · "
+    md = dossier_model.md_text
+    lines = [f"# Decision packet: {md(body['dossier']['company']['ticker'])}", "",
+             f"Recorded {dec['recorded_at']} by {md(dec['author'])} · cutoff {body['policy']['cutoff']} ({body['policy']['mode']}, {body['policy']['policy_version']}) · "
              f"{body['view'].replace('_', ' ')} view · {body['schema']} · SHA-256 {stored['packet_sha256']}", "",
-             f"**Question:** {body['question']}", "", f"**Choice:** {dec['choice']}", "", "**Rationale:**", "", dec["rationale"], ""]
+             f"**Question:** {md(body['question'])}", "", f"**Choice:** {md(dec['choice'])}", "", "**Rationale:**", "", md(dec["rationale"], single_line=False), ""]
     if dec.get("hindsight_note"):
         lines += [f"> Note: {dec['hindsight_note']}.", ""]
     if dec.get("review_date") or dec.get("review_condition"):
-        lines += [f"**Review:** {dec.get('review_date') or 'no date'} · {dec.get('review_condition') or 'no condition'}", ""]
+        lines += [f"**Review:** {md(dec.get('review_date') or 'no date')} · {md(dec.get('review_condition') or 'no condition')}", ""]
     if dec.get("resolution_rule"):
-        lines += [f"**Resolution rule:** {dec['resolution_rule']}", ""]
+        lines += [f"**Resolution rule:** {md(dec['resolution_rule'])}", ""]
     lines += ["## Thesis conditions at the cutoff", ""]
     for t in body["theses"]:
-        lines.append(f"### {t['thesis']['title']} (version {t['version']['version']})")
+        lines.append(f"### {md(t['thesis']['title'])} (version {t['version']['version']})")
         lines.append("")
-        lines.append(t["version"]["statement"])
+        lines.append(md(t["version"]["statement"], single_line=False))
         lines.append("")
         for e in t["evaluations"]:
             condition = next(c for c in t["version"]["conditions"] if c["id"] == e["condition_id"])
-            lines.append(f"- **{e['status'].replace('_', ' ')}** — {e['label']} [{thesis.describe(condition['expression'])}]")
+            lines.append(f"- **{e['status'].replace('_', ' ')}** — {md(e['label'])} [{md(thesis.describe(condition['expression']))}]")
             for step in e["trace"]:
                 lines.append(f"  - {step['left']['label']} = {thesis.shown(step['left'])} {step['op']} {step['right']['label']} = {thesis.shown(step['right'])}"
                              f" → {step['result'].replace('_', ' ')}" + (f" ({step['reason']})" if step.get("reason") else ""))
@@ -256,7 +257,7 @@ def render_markdown(stored: dict) -> str:
         lines += ["- No thesis was current at this cutoff.", ""]
     lines += ["## Scenario assumption versions", ""]
     for v in body["assumption_versions"].values():
-        lines.append(f"- {v['scenario']} '{v['name']}' v{v['version']} saved {v['created_at']}: {v['rationale']}")
+        lines.append(f"- {v['scenario']} '{md(v['name'])}' v{v['version']} saved {v['created_at']}: {md(v['rationale'])}")
     if not body["assumption_versions"]:
         lines.append("- None saved by this cutoff.")
     lines += ["", f"Evidence: {len(body['evidence_ids'])} observations; {len(body['calculation_ids'])} calculations; {len(body['unresolved'])} open conflicts.", "",

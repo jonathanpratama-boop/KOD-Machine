@@ -14,13 +14,12 @@ from __future__ import annotations
 
 from collections import Counter
 import hashlib
-import re
 
 from .. import earnings
-from ..workbench import _tokens, bm25
+from ..workbench import TOKEN, _tokens, bm25
 from .policy import AsOfPolicy, eligibility
 
-PASSAGE_VERSION = "KOD-PASSAGES-v1"
+PASSAGE_VERSION = "KOD-PASSAGES-v2"  # v2: a short line always joins the next; line ranges end at the last line used
 RANKING = "BM25 (k1 1.2, b 0.75) over distinct eligible passages; ranks reading order for this query, not importance or expected return"
 SOURCE_TYPES = {"release": "Earnings releases and exhibits", "other_html": "Other preserved HTML"}
 MERGE_BELOW, MERGE_UP_TO = 12, 60
@@ -39,35 +38,34 @@ def source_type(doc: dict) -> str | None:
 
 
 def passages(raw: bytes, filename: str) -> list[dict]:
-    """Deterministic passages: each text line of the document (paragraphs and table rows); a line shorter than MERGE_BELOW tokens is joined to the next."""
+    """Deterministic passages: each text line of the document (paragraphs and table rows); a passage closes once it has MERGE_BELOW tokens, so a short
+    line (a heading, a label) always stays with the line that follows it. line_start/line_end are the first and last lines whose text is in the passage."""
     try:
         lines = earnings.read_document(raw, filename)["lines"]
     except (earnings.EarningsError, ValueError):
         return []
-    out, buffer, start = [], [], 0
-    count = 0
+    out, buffer, start, last, count = [], [], 0, 0, 0
 
-    def flush(end):
+    def flush():
         nonlocal buffer, count
-        if buffer:
-            text = " ".join(buffer).strip()
-            if text:
-                out.append({"index": len(out), "text": text, "line_start": start, "line_end": end,
-                            "sha256": hashlib.sha256(" ".join(text.split()).casefold().encode()).hexdigest()})
+        text = " ".join(buffer).strip()
+        if text:
+            out.append({"index": len(out), "text": text, "line_start": start, "line_end": last,
+                        "sha256": hashlib.sha256(" ".join(text.split()).casefold().encode()).hexdigest()})
         buffer, count = [], 0
 
     for i, line in enumerate(lines):
         n = len(_tokens(line))
         if not n:
             continue
-        # A short line (a heading, a label) is kept with the line that follows it; a passage closes once it has MERGE_BELOW tokens.
-        if buffer and (count >= MERGE_BELOW or count + n > MERGE_UP_TO + MERGE_BELOW):
-            flush(i - 1)
+        if buffer and count >= MERGE_BELOW:
+            flush()
         if not buffer:
             start = i
         buffer.append(line.strip())
+        last = i
         count += n
-    flush(len(lines) - 1)
+    flush()
     return out
 
 
@@ -88,25 +86,26 @@ class ArchiveIndex:
 
 
 def _snippet(text: str, terms: set) -> list[dict]:
-    """Up to SNIPPET characters around the first matching term, as segments [{'text', 'match'}] for escaped rendering."""
-    lower = text.casefold()
-    first = min((m.start() for t in terms for m in re.finditer(r"\b" + re.escape(t) + r"\b", lower)), default=0)
+    """Up to SNIPPET characters around the first matching word, as segments [{'text', 'match'}] for escaped rendering. Matches are whole words of the
+    full passage, found with the same tokenizer and case folding as the ranking, and are highlighted only when they lie wholly inside the window."""
+    spans = [(m.start(), m.end()) for m in TOKEN.finditer(text) if m.group().casefold() in terms]
+    first = spans[0][0] if spans else 0
     begin = max(0, first - SNIPPET // 3)
-    window = text[begin:begin + SNIPPET]
-    prefix, suffix = ("…" if begin else ""), ("…" if begin + SNIPPET < len(text) else "")
-    pattern = re.compile(r"\b(" + "|".join(re.escape(t) for t in sorted(terms, key=len, reverse=True)) + r")\b", re.I) if terms else None
-    segments, pos = [], 0
-    if prefix:
-        segments.append({"text": prefix, "match": False})
-    for m in (pattern.finditer(window) if pattern else []):
-        if m.start() > pos:
-            segments.append({"text": window[pos:m.start()], "match": False})
-        segments.append({"text": m.group(0), "match": True})
-        pos = m.end()
-    if pos < len(window):
-        segments.append({"text": window[pos:], "match": False})
-    if suffix:
-        segments.append({"text": suffix, "match": False})
+    end = min(len(text), begin + SNIPPET)
+    segments, pos = [], begin
+    if begin:
+        segments.append({"text": "…", "match": False})
+    for a, b in spans:
+        if a < begin or b > end:
+            continue
+        if a > pos:
+            segments.append({"text": text[pos:a], "match": False})
+        segments.append({"text": text[a:b], "match": True})
+        pos = b
+    if pos < end:
+        segments.append({"text": text[pos:end], "match": False})
+    if end < len(text):
+        segments.append({"text": "…", "match": False})
     return segments
 
 
@@ -132,7 +131,10 @@ def search(store, index: ArchiveIndex, query: str, policy: AsOfPolicy, security_
         if not eligibility(_availability(doc), policy)[0]:
             continue
         kind = source_type(doc)
-        if kind is None or (wanted and doc["security_id"] not in wanted):
+        if kind is None:
+            continue
+        if wanted and doc["security_id"] not in wanted:
+            excluded["outside_company_filter"] += 1
             continue
         if source_types and kind not in source_types:
             excluded["outside_source_type_filter"] += 1
@@ -169,13 +171,18 @@ def search(store, index: ArchiveIndex, query: str, policy: AsOfPolicy, security_
     for key in hits[:limit]:
         doc, kind, p = occurrences[key][0]
         sec = securities.get(doc["security_id"]) or store.get_security(doc["security_id"])
+        others, seen = [], {doc["id"]}
+        for d, _, q in occurrences[key][1:]:
+            if d["id"] not in seen:
+                seen.add(d["id"])
+                others.append({"document_id": d["id"], "passage_index": q["index"], "filename": d["filename"]})
         results.append({
             "score": round(scores[key], 6), "text": p["text"], "snippet": _snippet(p["text"], terms), "passage_sha256": key,
             "document_id": doc["id"], "passage_index": p["index"], "filename": doc["filename"], "source_type": kind, "source_url": doc["source_url"],
             "document_sha256": doc["sha256"], "ticker": sec["ticker"], "security_id": doc["security_id"],
             "period": (doc.get("metadata") or {}).get("period"), "published_at": doc.get("published_at"),
             "publication_date": (doc.get("metadata") or {}).get("publication_date"), "observed_at": doc.get("observed_at"),
-            "also_in": [{"document_id": d["id"], "passage_index": q["index"], "filename": d["filename"]} for d, _, q in occurrences[key][1:]]})
+            "also_in": others, "repeated_at": [q["index"] for d, _, q in occurrences[key][1:] if d["id"] == doc["id"]]})
     return {"query": query, "policy": policy.as_dict(), "index_version": PASSAGE_VERSION, "ranking": RANKING,
             "filters": {"security_ids": sorted(wanted) if wanted else [], "period": period or None, "source_types": sorted(source_types or [])},
             "coverage": {"documents_searched": len(eligible), "excluded": dict(excluded), "passages": total,

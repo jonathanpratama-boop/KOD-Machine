@@ -286,7 +286,7 @@ def _policy(clock, as_of="", mode="", policy=""):
         if (policy or "day-end") not in POLICIES:
             raise ValueError("Choose the strict or day-end availability policy.")
         return AsOfPolicy.parse(cutoff, mode, POLICIES[policy or "day-end"])
-    except ValueError as exc:
+    except (ValueError, OverflowError) as exc:
         raise HTTPException(400, "Invalid information cutoff: " + _error(exc))
 
 

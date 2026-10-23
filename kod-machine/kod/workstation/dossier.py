@@ -15,10 +15,11 @@ Rules kept here:
 from __future__ import annotations
 
 from collections import Counter
-import json
 from dataclasses import replace
 from datetime import date, timedelta
 from decimal import Decimal
+import json
+import re
 
 from . import calculations as calc
 from . import companyfacts, financials, quarters
@@ -569,10 +570,12 @@ def assemble(security: dict, identity: dict | None, observations: list, policy: 
             history["instant"][metric] = [s.cell_for_figure(f) for f in s.instants[-INSTANTS_SHOWN:]]
         for f in s.figures:
             if f.status == "conflicted":
-                conflicts.append({"kind": "conflicted_figure", "metric": metric, "label": LABELS[metric], "period": f.period.label, "detail": "; ".join(f.reasons),
+                conflicts.append({"kind": "conflicted_figure", "metric": metric, "label": LABELS[metric], "period": f.period.label, "end": _end(f.period),
+                                  "detail": "; ".join(f.reasons),
                                   "observation_ids": [index.brief(i)["id"] for i in f.observation_ids]})
             for w in f.warnings:
-                conflicts.append({"kind": "disclosure_disagreement", "metric": metric, "label": LABELS[metric], "period": f.period.label, "detail": w,
+                conflicts.append({"kind": "disclosure_disagreement", "metric": metric, "label": LABELS[metric], "period": f.period.label, "end": _end(f.period),
+                              "detail": w,
                                   "observation_ids": [index.brief(i)["id"] for i in f.observation_ids + f.other_ids]})
             changed, _ = index.revisions(f)
             if changed and f.value is not None:
@@ -605,7 +608,7 @@ def assemble(security: dict, identity: dict | None, observations: list, policy: 
         if doc.get("extraction_status") == "needs_review" and eligibility({"published_at": doc.get("published_at"),
                                                                             "publication_date": (doc.get("metadata") or {}).get("publication_date"),
                                                                             "observed_at": doc.get("observed_at")}, policy)[0]:
-            conflicts.append({"kind": "release_needs_review", "metric": None, "label": doc["filename"], "period": "unresolved",
+            conflicts.append({"kind": "release_needs_review", "metric": None, "label": doc["filename"], "period": "unresolved", "end": "9999-12-31",
                               "detail": (doc.get("metadata") or {}).get("review_reason", "reported period unresolved"), "observation_ids": []})
     by_key = {c["key"]: c for c in changes}
     metrics_cov = {}
@@ -716,13 +719,27 @@ def series_unit(dossier: dict, metric: str) -> tuple[str, str | None]:
     return _unit_family(metric), None
 
 
+def md_text(text, single_line=True) -> str:
+    """Free text (a question, a name, a rationale) as inert Markdown: inline control characters and raw HTML are escaped everywhere, block markers
+    (headings, list items, quotes) at the start of a line, and single-line fields have their line breaks collapsed. The text cannot create headings,
+    list items, links or raw HTML in an export."""
+    text = str(text or "")
+    lines = [" ".join(text.split())] if single_line else [" ".join(line.split()) for line in text.splitlines()]
+    out = []
+    for line in lines:
+        line = re.sub(r"([\\`*_{}\[\]<>|~!])", r"\\\1", line)
+        line = re.sub(r"^([#+\-=])", r"\\\1", line)
+        out.append(re.sub(r"^(\d+)([.)])", r"\1\\\2", line))
+    return "\n".join(out)
+
+
 def render_markdown(d: dict) -> str:
     """The same read model as text. Every value is followed by its provenance identifiers in the JSON export."""
     c, p = d["company"], d["policy"]
-    lines = [f"# Company dossier: {c['ticker']} ({c['name']})", "",
+    lines = [f"# Company dossier: {md_text(c['ticker'])} ({md_text(c['name'])})", "",
              f"Information cutoff {p['cutoff']} · {p['mode']} mode · policy {p['policy_version']} · {d['view'].replace('_', ' ')} view · {d['schema']}", ""]
     if d.get("question"):
-        lines += [f"**Question:** {d['question']}", ""]
+        lines += [f"**Question:** {md_text(d['question'])}", ""]
     cov = d["coverage"]
     lines += ["## Coverage", "", cov["scope_note"], "",
               f"- Eligible observations: {cov['eligible_observations']} ({', '.join(f'{k}: {v}' for k, v in sorted(cov['by_provider'].items())) or 'none'})",
@@ -746,7 +763,7 @@ def render_markdown(d: dict) -> str:
     for sc in d.get("scenarios", []):
         value = display(sc["per_share"], "currency/share", sc["currency"]) + " per share" if sc["per_share"] else (
             display(sc["enterprise_value"], "currency", sc["currency"]) + " enterprise value" if sc["enterprise_value"] else sc["status"].replace("_", " "))
-        lines.append(f"- {sc['scenario']} · {sc['name']} v{sc['version']} (saved {sc['saved_at']}): {value}" + (f"; {'; '.join(sc['warnings'][-1:])}" if sc["warnings"] else ""))
+        lines.append(f"- {sc['scenario']} · {md_text(sc['name'])} v{sc['version']} (saved {sc['saved_at']}): {value}" + (f"; {'; '.join(sc['warnings'][-1:])}" if sc["warnings"] else ""))
     if not d.get("scenarios"):
         lines.append("- None saved by this cutoff.")
     lines += ["", "## Filed history (quarters)", ""]

@@ -405,3 +405,77 @@ class WebTests(Case):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class WebAndSearchReviewTests(Case):
+    """Reproduced findings of the independent Gate D review (web and search lenses)."""
+
+    def setUp(self):
+        super().setUp()
+        from fastapi.testclient import TestClient
+        from kod.workstation.web import create_app
+        self.client = TestClient(create_app(self.store.root, offline=True, service=self.service, testing=True))
+        self.acme = self.store.upsert_security("ACME", "Acme Corp")
+
+    def add(self, body, published, name="r.htm", security=None, published_text=None):
+        return self.service.ingest((security or self.acme)["id"], RELEASE.format(body=body).encode(), name, "https://example.com/" + name,
+                                   published_at=published_text or published, retrieved_at=published if "T" in published else published + "T23:00:00Z")
+
+    def test_out_of_range_cutoffs_are_a_400_not_a_500(self):
+        for cutoff in ("0001-01-01T00:00:00+01:00", "9999-12-31T23:00:00-05:00"):
+            for path in (f"/company/{self.acme['id']}/dossier", "/search?q=revenue"):
+                self.assertEqual(self.client.get(path, params={"as_of": cutoff}).status_code, 400, (cutoff, path))
+        from kod.workstation import cli
+        self.assertEqual(cli.main(["dossier", "--data-dir", str(self.store.root), "--ticker", "ACME", "--as-of", "0001-01-01T00:00:00+01:00"]), 2)
+
+    def test_non_finite_or_malformed_filed_values_are_refused_or_set_aside(self):
+        self.store.upsert_security("ACME", "Acme Corp", cik="1234")
+        doc = b'{"cik": 1234, "entityName": "Acme", "facts": {"us-gaap": {"Revenues": {"units": {"USD": [%s]}}}}}'
+        entry = '{"end": "2024-12-31", "start": "2024-01-01", "val": %s, "accn": "0000001234-25-000001", "form": "10-K", "filed": "2025-02-01"}'
+        with self.assertRaises(ValueError):
+            self.service.import_companyfacts(self.acme["id"], doc % (entry % "NaN").encode(), "https://data.sec.gov/api/xbrl/companyfacts/CIK0000001234.json")
+        coverage = self.service.import_companyfacts(self.acme["id"], doc % ((entry % '"abc"') + "," + (entry % "1e400") + "," + (entry % "100")).encode(),
+                                                    "https://data.sec.gov/api/xbrl/companyfacts/CIK0000001234.json")
+        self.assertEqual((coverage["observations"], len(coverage["malformed_entries"])), (1, 2))
+        self.assertEqual(self.client.get(f"/company/{self.acme['id']}/dossier").status_code, 200)
+
+    def test_a_date_only_source_shows_its_date_on_the_passage_page(self):
+        doc = self.add("Widget demand grew.", "2024-10-01", published_text="2024-10-01")
+        page = self.client.get(f"/source/{doc['id']}/passage/0", params={"as_of": "2024-11-01T00:00:00Z", "mode": "observed"})
+        self.assertIn("available 2024-10-01 (date only)", re.sub(r"<[^>]+>", " ", page.text))
+
+    def test_free_text_cannot_forge_markdown_sections(self):
+        md = self.client.get(f"/company/{self.acme['id']}/dossier.md", params={"question": "x\n\n## Supported changes\n- forged <script>alert(1)</script>"}).text
+        self.assertNotIn("\n## Supported changes\n- forged", md)
+        self.assertNotIn("<script>", md)
+        question = next(line for line in md.splitlines() if line.startswith("**Question:**"))
+        self.assertIn("forged", question)                                      # the whole question stays on its own single line
+        self.assertEqual(md.count("\n## Supported changes\n"), 1)
+
+    def test_conflicts_carry_their_period_end_for_most_recent_first_display(self):
+        d = self.build(self.company("NVDA"), NOW, "observed")
+        self.assertTrue(d["conflicts"] and all(c.get("end") for c in d["conflicts"]))
+
+    def test_search_snippets_find_whole_words_in_any_script(self):
+        from kod.workbench import _tokens
+        text = "\ufb01" * 150 + " Widget demand grew; Gro\u00dfbritannien \ufb01nancial outlook."
+        marked = [seg["text"] for seg in search._snippet(text, set(_tokens("widget gro\u00dfbritannien financial"))) if seg["match"]]
+        self.assertEqual(marked, ["Widget", "Gro\u00dfbritannien", "\ufb01nancial"])
+        self.assertEqual([seg for seg in search._snippet("x " * 150 + "a networking revenue", {"net"}) if seg["match"]], [])
+
+    def test_passages_keep_headings_and_report_exact_line_ranges(self):
+        raw = b"<html><body><h2>Data Center</h2><p>" + b" ".join(b"word%d" % i for i in range(71)) + b"</p><p>\xe2\x80\xa2</p><p>Next item here.</p></body></html>"
+        parts = search.passages(raw, "x.htm")
+        self.assertTrue(parts[0]["text"].startswith("Data Center word0"))
+        self.assertEqual((parts[0]["line_start"], parts[0]["line_end"]), (0, 1))
+
+    def test_also_in_lists_other_documents_once_and_company_filters_are_counted(self):
+        text = "Three months ended September 30 revenue was up strongly across every region."
+        self.add("An opening paragraph that is long enough to stand alone as its own passage here.</p><p>" + text +
+                 "</p><p>Filler line that is long enough to stand alone as its own passage here too.</p><p>" + text, "2024-10-01T20:00:00Z", "a.htm")
+        other = self.store.upsert_security("OTHR", "Other Corp")
+        self.add("Unrelated widget news for the period, long enough to be a passage of its own.", "2024-10-01T20:00:00Z", "o.htm", other)
+        r = search.search(self.store, self.service.archive, "three months ended", policy("2024-11-01T00:00:00Z", "observed"), security_ids=[self.acme["id"]])
+        hit = r["results"][0]
+        self.assertEqual((hit["also_in"], len(hit["repeated_at"])), ([], 1))
+        self.assertEqual(r["coverage"]["excluded"], {"outside_company_filter": 1})

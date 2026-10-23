@@ -47,7 +47,7 @@
 <section class="panel"><div class="panel-heading"><div><h2>Conflicts, revisions and research questions</h2><p>What blocks or qualifies a conclusion. Questions state no cause and recommend nothing.</p></div></div>
 {% if d.questions %}<ol class="question-list">{% for q in d.questions %}<li>{{ q.text }}</li>{% endfor %}</ol>{% endif %}
 {% if d.conflicts or d.revisions %}<ul class="issue-list">
-{% for c in d.conflicts[:30] %}<li><b>{{ c.label }} · {{ c.period }} · {{ c.kind|replace('_', ' ') }}</b><span>{{ c.detail }}</span></li>{% endfor %}
+{% for c in d.conflicts|sort(attribute='end', reverse=True) %}{% if loop.index <= 30 %}<li><b>{{ c.label }} · {{ c.period }} · {{ c.kind|replace('_', ' ') }}</b><span>{{ c.detail }}</span></li>{% endif %}{% endfor %}
 {% for r in d.revisions|sort(attribute='end', reverse=True) %}{% if loop.index <= 30 %}<li><b>{{ r.label }} · {{ r.period }} · revised</b><span>first {{ r.first }}, later {{ r.later }} ({{ r.form }} filed {{ r.filed }})</span></li>{% endif %}{% endfor %}
 </ul>{% if d.conflicts|length > 30 or d.revisions|length > 30 %}<p class="panel-footnote">Showing the 30 most recent of each; the JSON export lists all {{ d.conflicts|length }} conflicts and {{ d.revisions|length }} revisions.</p>{% endif %}
 {% else %}<p class="panel-footnote">No conflicts or revisions beyond rounding among the eligible disclosures.</p>{% endif %}

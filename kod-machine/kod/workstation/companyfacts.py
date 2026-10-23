@@ -14,6 +14,7 @@ Rules kept here:
 """
 from __future__ import annotations
 
+from datetime import date
 from decimal import Decimal
 import json
 import re
@@ -87,9 +88,11 @@ class CompanyFactsError(ValueError):
 
 def parse(raw: bytes) -> dict:
     """Decimal-exact JSON: numbers are read from their text, never through binary floats."""
+    def refuse(name):
+        raise CompanyFactsError(f"companyfacts response contains the non-JSON number {name}")
     try:
-        data = json.loads(raw, parse_float=Decimal, parse_int=Decimal)
-    except (ValueError, UnicodeDecodeError) as exc:
+        data = json.loads(raw, parse_float=Decimal, parse_int=Decimal, parse_constant=refuse)
+    except (ValueError, UnicodeDecodeError, ArithmeticError) as exc:
         raise CompanyFactsError("companyfacts response is not valid JSON") from exc
     if not isinstance(data, dict) or not isinstance(data.get("facts"), dict) or "cik" not in data:
         raise CompanyFactsError("companyfacts response has no 'cik' and 'facts'")
@@ -144,7 +147,13 @@ def observation_rows(data: dict, document: dict, security_id: str, issuer_id: st
                 pointer = json_pointer("facts", taxonomy, tag, "units", unit_key, index)
                 try:
                     end, start, val, accn, form, filed = e["end"], e.get("start"), e["val"], e["accn"], e["form"], e["filed"]
-                except (KeyError, TypeError):
+                    if not isinstance(val, Decimal) or not val.is_finite() or abs(val) >= Decimal(10) ** 18:
+                        raise TypeError("value is not a finite number of a plausible magnitude")
+                    if not all(isinstance(x, str) for x in (end, accn, form, filed)) or (start is not None and not isinstance(start, str)):
+                        raise TypeError("dates and filing fields must be text")
+                    duration_kind(start, end) if start else date.fromisoformat(end)
+                    date.fromisoformat(filed)
+                except (KeyError, TypeError, ValueError):
                     coverage.setdefault("malformed_entries", []).append(pointer)
                     continue
                 if start:

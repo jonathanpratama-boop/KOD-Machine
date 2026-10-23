@@ -15,7 +15,7 @@ from unittest import mock
 from kod import earnings
 from kod.workstation import calculations, financials, migrations
 from kod.workstation.financials import FinancialRepository, Period, ResolvedFigure
-from kod.workstation.policy import DAY_END, STRICT, AsOfPolicy, eligibility
+from kod.workstation.policy import DAY_END, AsOfPolicy, eligibility
 from kod.workstation.services import ResearchService
 from kod.workstation.store import DB_NAME, SCHEMA_VERSION, Store
 
