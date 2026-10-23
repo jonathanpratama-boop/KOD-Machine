@@ -315,12 +315,14 @@ def _changes(series: dict, policy: AsOfPolicy, index: _Index, view: str, busines
         m_now = calc.operating_margin(cur_op, cur_rev)
         m_then = calc.operating_margin(ago_op, ago_rev) if ago_op is not None and ago_rev is not None else \
             _missing("operating_margin", "no comparable year-ago operating income and revenue: " + (op_how if ago_op is None else how), "percent")
+        margin_ids = []
         for r_, lab in ((m_now, f"Operating margin, quarter ended {end}"), (m_then, "Operating margin, year-ago quarter")):
             rec = _calc_dict(r_, policy, index, lab)
             records[rec["id"]] = rec
+            margin_ids.append(rec["id"])
         add("operating_margin_yoy", calc.point_change(m_now, m_then, policy=policy), when,
             {"current_margin": None if m_now.value is None else str(m_now.value), "prior_margin": None if m_then.value is None else str(m_then.value),
-             **notes(cur_op, ago_op, cur_rev, ago_rev, basis=op_how)})
+             "current_margin_calculation_id": margin_ids[0], "prior_margin_calculation_id": margin_ids[1], **notes(cur_op, ago_op, cur_rev, ago_rev, basis=op_how)})
         result, cur, prior, how = pair_result("net_income", end, calc.growth)
         add("net_income_yoy", result, when, notes(cur, prior, basis=how))
         if series["eps_diluted"].quarter(end) is None or series["eps_diluted"].figure(end) is None:
@@ -406,7 +408,7 @@ def _pp(value):
 
 
 def assemble(security: dict, identity: dict | None, observations: list, policy: AsOfPolicy, view: str = "as_reported", submissions: dict | None = None,
-             submissions_observed_at: str | None = None, documents: list | None = None, question: str | None = None) -> dict:
+             submissions_observed_at: str | None = None, documents: list | None = None, question: str | None = None, scenarios: list | None = None) -> dict:
     """The dossier from every recorded observation of the company (pure). Eligibility is applied here first; nothing ineligible contributes a value."""
     if view not in ("as_reported", "latest"):
         raise ValueError("view must be as_reported or latest")
@@ -505,6 +507,7 @@ def assemble(security: dict, identity: dict | None, observations: list, policy: 
         "conflicts": conflicts,
         "questions": _questions(by_key, revised, release["reconciliation"], conflicts),
         "chronology": companyfacts.filing_chronology([o for o in eligible if o.provider == FILINGS], submissions),
+        "scenarios": scenarios or [],
         "calculations": records,
         "observations": index.used,
     }
@@ -519,7 +522,28 @@ def build(service, security_id: str, policy: AsOfPolicy, view: str = "as_reporte
     subs_doc = next((d for d in docs if d["metadata"].get("kind") == "SEC submissions response"), None)
     submissions = service.latest_submissions(security_id) if subs_doc else None
     return assemble(security, store.identity(security_id), repo.all_for(security_id), policy, view, submissions,
-                    subs_doc["observed_at"] if subs_doc else None, docs, question)
+                    subs_doc["observed_at"] if subs_doc else None, docs, question, scenario_summaries(service, security_id, policy, submissions))
+
+
+def scenario_summaries(service, security_id: str, policy: AsOfPolicy, submissions: dict | None) -> list:
+    """For each assumption set, the latest version saved at or before the cutoff (a scenario written later is hindsight, so it is absent), run without
+    recording: status, value, and what is missing for a per-share value."""
+    from . import model, scenarios
+    cutoff = policy.as_dict()["cutoff"]
+    business = companyfacts.business_type(submissions)
+    out = []
+    for s in scenarios.assumption_sets(service, security_id):
+        versions = [v for v in scenarios.history(service, s["id"]) if v["created_at"] <= cutoff]
+        if not versions:
+            continue
+        v = versions[0]
+        valuation = model.run(model.validate(v["assumptions"]), business)
+        out.append({"set_id": s["id"], "version_id": v["id"], "scenario": s["scenario"], "name": s["name"], "version": v["version"], "saved_at": v["created_at"],
+                    "status": valuation.status, "per_share": None if valuation.per_share is None else str(valuation.per_share),
+                    "enterprise_value": None if valuation.enterprise_value is None else str(valuation.enterprise_value),
+                    "currency": v["assumptions"].get("currency"), "warnings": list(valuation.warnings), "limitations": list(valuation.limitations),
+                    "rationale": v["rationale"]})
+    return out
 
 
 # ---- presentation helpers shared by the page and the Markdown export ----
@@ -577,6 +601,13 @@ def render_markdown(d: dict) -> str:
     if unavailable:
         lines += ["", "Not available:", ""]
         lines += [f"- {ch['label']}: {ch['status'].replace('_', ' ')} — {'; '.join(ch['reasons'])}" for ch in unavailable]
+    lines += ["", "## Scenarios saved by this cutoff", ""]
+    for sc in d.get("scenarios", []):
+        value = display(sc["per_share"], "currency/share", sc["currency"]) + " per share" if sc["per_share"] else (
+            display(sc["enterprise_value"], "currency", sc["currency"]) + " enterprise value" if sc["enterprise_value"] else sc["status"].replace("_", " "))
+        lines.append(f"- {sc['scenario']} · {sc['name']} v{sc['version']} (saved {sc['saved_at']}): {value}" + (f"; {'; '.join(sc['warnings'][-1:])}" if sc["warnings"] else ""))
+    if not d.get("scenarios"):
+        lines.append("- None saved by this cutoff.")
     lines += ["", "## Filed history (quarters)", ""]
     for metric, cells in d["history"]["quarterly"].items():
         unit, cur = series_unit(d, metric)

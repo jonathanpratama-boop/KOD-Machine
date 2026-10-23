@@ -160,6 +160,79 @@ CREATE INDEX analyst_records_subject ON analyst_records(subject_kind, subject_id
 """
 
 
+V3_DDL = """
+CREATE TABLE assumption_sets (
+ id TEXT PRIMARY KEY, security_id TEXT NOT NULL REFERENCES securities(id), model TEXT NOT NULL,
+ scenario TEXT NOT NULL CHECK(scenario IN ('bear','base','bull')), name TEXT NOT NULL,
+ created_at TEXT NOT NULL, author TEXT NOT NULL, UNIQUE(security_id, model, scenario, name)
+);
+CREATE TABLE assumption_versions (
+ id TEXT PRIMARY KEY, assumption_id TEXT NOT NULL REFERENCES assumption_sets(id), version INTEGER NOT NULL CHECK(version >= 1),
+ assumptions TEXT NOT NULL, rationale TEXT NOT NULL, author TEXT NOT NULL, created_at TEXT NOT NULL,
+ supersedes TEXT REFERENCES assumption_versions(id), UNIQUE(assumption_id, version)
+);
+CREATE INDEX assumption_versions_set ON assumption_versions(assumption_id, version DESC);
+CREATE TRIGGER assumption_versions_no_update BEFORE UPDATE ON assumption_versions
+BEGIN SELECT RAISE(ABORT, 'assumption versions are immutable; save a new version'); END;
+CREATE TRIGGER assumption_versions_no_delete BEFORE DELETE ON assumption_versions
+BEGIN SELECT RAISE(ABORT, 'assumption versions are immutable; save a new version'); END;
+CREATE TABLE price_imports (
+ id TEXT PRIMARY KEY, security_id TEXT NOT NULL REFERENCES securities(id), document_id TEXT REFERENCES documents(id),
+ source_kind TEXT NOT NULL CHECK(source_kind IN ('manual','csv')), meta TEXT NOT NULL, coverage TEXT NOT NULL,
+ rows INTEGER NOT NULL, created_at TEXT NOT NULL
+);
+CREATE TABLE price_observations (
+ id TEXT PRIMARY KEY, security_id TEXT NOT NULL REFERENCES securities(id), observed_on TEXT NOT NULL,
+ session TEXT NOT NULL, timezone TEXT NOT NULL, currency TEXT NOT NULL,
+ open TEXT, high TEXT, low TEXT, close TEXT NOT NULL, volume TEXT,
+ adjustment TEXT NOT NULL CHECK(adjustment IN ('raw','split_adjusted','total_return')), source TEXT NOT NULL,
+ source_kind TEXT NOT NULL CHECK(source_kind IN ('manual','csv')), feed_coverage TEXT NOT NULL,
+ published_at TEXT NOT NULL, publication_basis TEXT NOT NULL, observed_at TEXT NOT NULL, recorded_at TEXT NOT NULL,
+ import_id TEXT REFERENCES price_imports(id)
+);
+CREATE INDEX price_observations_security ON price_observations(security_id, observed_on);
+CREATE TRIGGER price_observations_no_update BEFORE UPDATE ON price_observations
+BEGIN SELECT RAISE(ABORT, 'price observations are immutable; record a new observation instead'); END;
+CREATE TRIGGER price_observations_no_delete BEFORE DELETE ON price_observations
+BEGIN SELECT RAISE(ABORT, 'price observations are immutable; record a new observation instead'); END;
+"""
+
+
+V4_DDL = """
+CREATE TABLE theses (
+ id TEXT PRIMARY KEY, security_id TEXT NOT NULL REFERENCES securities(id), title TEXT NOT NULL,
+ created_at TEXT NOT NULL, author TEXT NOT NULL, UNIQUE(security_id, title)
+);
+CREATE TABLE thesis_versions (
+ id TEXT PRIMARY KEY, thesis_id TEXT NOT NULL REFERENCES theses(id), version INTEGER NOT NULL CHECK(version >= 1),
+ statement TEXT NOT NULL, conditions TEXT NOT NULL, rationale TEXT NOT NULL, author TEXT NOT NULL, created_at TEXT NOT NULL,
+ supersedes TEXT REFERENCES thesis_versions(id), UNIQUE(thesis_id, version)
+);
+CREATE TRIGGER thesis_versions_no_update BEFORE UPDATE ON thesis_versions
+BEGIN SELECT RAISE(ABORT, 'thesis versions are immutable; save a new version'); END;
+CREATE TRIGGER thesis_versions_no_delete BEFORE DELETE ON thesis_versions
+BEGIN SELECT RAISE(ABORT, 'thesis versions are immutable; save a new version'); END;
+CREATE TABLE thesis_reviews (
+ id TEXT PRIMARY KEY, thesis_version_id TEXT NOT NULL REFERENCES thesis_versions(id), condition_id TEXT NOT NULL,
+ status TEXT NOT NULL CHECK(status IN ('triggered','not_triggered','unresolved')), policy TEXT NOT NULL, view TEXT NOT NULL,
+ trace TEXT NOT NULL, created_at TEXT NOT NULL
+);
+CREATE INDEX thesis_reviews_version ON thesis_reviews(thesis_version_id, created_at DESC);
+CREATE TRIGGER thesis_reviews_no_update BEFORE UPDATE ON thesis_reviews
+BEGIN SELECT RAISE(ABORT, 'recorded reviews are immutable'); END;
+CREATE TABLE decision_packets (
+ id TEXT PRIMARY KEY, security_id TEXT NOT NULL REFERENCES securities(id), question TEXT NOT NULL, policy TEXT NOT NULL, view TEXT NOT NULL,
+ thesis_version_id TEXT REFERENCES thesis_versions(id), choice TEXT NOT NULL, rationale TEXT NOT NULL, review_date TEXT, review_condition TEXT,
+ resolution_rule TEXT, packet TEXT NOT NULL, packet_sha256 TEXT NOT NULL, author TEXT NOT NULL, created_at TEXT NOT NULL
+);
+CREATE INDEX decision_packets_security ON decision_packets(security_id, created_at DESC);
+CREATE TRIGGER decision_packets_no_update BEFORE UPDATE ON decision_packets
+BEGIN SELECT RAISE(ABORT, 'decision packets are immutable; record a new decision'); END;
+CREATE TRIGGER decision_packets_no_delete BEFORE DELETE ON decision_packets
+BEGIN SELECT RAISE(ABORT, 'decision packets are immutable; record a new decision'); END;
+"""
+
+
 class MigrationError(RuntimeError):
     """A migration failed and was rolled back, or the database cannot be migrated by this code."""
 
@@ -184,6 +257,8 @@ def _backfill_v2(db, now):
 MIGRATIONS = (
     Migration(1, "v1 workstation: securities, evidence objects, documents, events, notes, annotations, jobs", V1_DDL),
     Migration(2, "identity, immutable financial observations, periods, metric definitions, calculation lineage, analyst records", V2_DDL, _backfill_v2),
+    Migration(3, "versioned scenario assumptions and immutable dated price observations", V3_DDL),
+    Migration(4, "structured thesis versions, recorded condition reviews and immutable decision packets", V4_DDL),
 )
 LATEST = MIGRATIONS[-1].version
 

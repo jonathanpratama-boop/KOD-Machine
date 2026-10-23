@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}{{ company.ticker }} model · KOD{% endblock %}
+{% block content %}
+<div class="breadcrumbs"><a href="/">Event inbox</a><span>/</span><a href="/company/{{ company.id }}">{{ company.ticker }}</a><span>/</span>Driver model</div>
+<div class="page-heading"><div><div class="eyebrow">SCENARIOS · {{ model_name }}</div><h1>{{ company.ticker }}<span class="title-dot">.</span></h1><p>One transparent annual free-cash-flow model. Every input is an assumption you state, version and justify.</p></div>
+<div class="button-group"><a class="button secondary" href="/company/{{ company.id }}/dossier">Dossier</a><a class="button secondary" href="/company/{{ company.id }}/prices">Prices</a></div></div>
+{% if business.supported == False %}<div class="context-banner"><strong>Model not applicable</strong><span>{{ business.reason }}. Assumptions can be recorded, but this operating-company model produces no value for it.</span></div>
+{% elif business.supported is none %}<div class="context-banner"><strong>Business type not established</strong><span>No SEC submissions response is preserved for this company, so it is not known whether the operating-company model fits.</span></div>{% endif %}
+<section class="panel"><div class="panel-heading"><div><h2>Saved scenarios</h2><p>Bear, base and bull are labels, not probabilities. The latest version of each set is shown.</p></div><span class="badge neutral">{{ sets|length }} SETS</span></div>
+{% if sets %}<div class="table-wrap"><table><thead><tr><th>Scenario</th><th>Set</th><th>Version</th><th class="numeric">Value per share</th><th class="numeric">Enterprise value</th><th>Status</th><th>Saved</th></tr></thead><tbody>
+{% for s in sets %}{% set r = results[s.latest_id] %}<tr><td><b>{{ s.scenario }}</b></td><td>{{ s.name }}</td><td>v{{ s.latest_version }}</td>
+<td class="numeric">{{ show(r.valuation.per_share, 'currency/share') if r.valuation.per_share is not none else '—' }}</td><td class="numeric">{{ show(r.valuation.enterprise_value, 'currency') if r.valuation.enterprise_value is not none else '—' }}</td>
+<td>{{ r.valuation.status|replace('_', ' ') }}</td><td>{{ s.latest_at|moment }}</td><td><a class="text-link" href="/company/{{ company.id }}/model/version/{{ s.latest_id }}">Open →</a></td></tr>{% endfor %}
+</tbody></table></div>{% else %}<div class="empty-state compact"><h3>No scenario saved yet</h3><p>Write your assumptions below. History can suggest starting values; it never fills a forecast for you.</p></div>{% endif %}</section>
+
+<div class="workspace-grid"><div class="workspace-main">
+<section class="panel"><div class="panel-heading"><div><h2>{% if prefill %}New version{% else %}New assumption set{% endif %}</h2><p>Rates in percent; one value applies to every year, or give one per year separated by commas. Amounts and share counts in millions.</p></div></div>
+<form class="stack-form" method="post" action="/company/{{ company.id }}/model/assumptions"><input type="hidden" name="csrf" value="{{ csrf }}">
+<div class="form-grid"><label>Scenario<select name="scenario">{% for sc in ('bear', 'base', 'bull') %}<option value="{{ sc }}" {% if sc == scenario %}selected{% endif %}>{{ sc }}</option>{% endfor %}</select></label>
+<label>Set name<input name="name" value="{{ set_name }}" maxlength="80" required></label></div>
+<div class="form-grid"><label>Forecast years<input name="horizon_years" type="number" min="1" max="30" value="{{ prefill.horizon_years or 5 }}" required></label>
+<label>Currency<input name="currency" value="{{ prefill.currency or 'USD' }}" maxlength="3" pattern="[A-Za-z]{3}" required></label></div>
+<div class="form-grid"><label>Valuation date<input name="valuation_date" value="{{ prefill.valuation_date or '' }}" placeholder="YYYY-MM-DD" maxlength="10" required></label>
+<label>Base fiscal year end<input name="base_fiscal_year_end" value="{{ prefill.base_fiscal_year_end or '' }}" placeholder="YYYY-MM-DD" maxlength="10" required></label></div>
+<label>Base revenue (millions)<input name="base_revenue" value="{{ prefill.base_revenue or '' }}" maxlength="30" required></label>
+{% for name in ('revenue_growth', 'operating_margin', 'cash_tax_rate', 'depreciation_rate', 'capex_rate', 'nwc_rate') %}<label>{{ labels[name] }} (%)<input name="{{ name }}" value="{{ prefill[name] or '' }}" maxlength="200" required></label>{% endfor %}
+<div class="form-grid">{% for name in ('discount_rate', 'terminal_growth', 'terminal_roic') %}<label>{{ labels[name] }} (%)<input name="{{ name }}" value="{{ prefill[name] or '' }}" maxlength="20" required></label>{% endfor %}</div>
+<details class="advanced" open><summary>Bridge to equity and share count</summary>
+<div class="form-grid">{% for name in ('cash', 'debt', 'other_senior_claims', 'other_adjustments') %}<label>{{ name|replace('_', ' ')|capitalize }} (millions)<input name="{{ name }}" value="{{ prefill[name] or '' }}" maxlength="30"></label>{% endfor %}</div>
+<div class="form-grid"><label>Bridge balance-sheet date<input name="bridge_as_of" value="{{ prefill.bridge_as_of or '' }}" placeholder="YYYY-MM-DD" maxlength="10"></label>
+<label>Share count (millions)<input name="share_count" value="{{ prefill.share_count or '' }}" maxlength="30"></label></div>
+<div class="form-grid"><label>Share count date<input name="share_count_as_of" value="{{ prefill.share_count_as_of or '' }}" placeholder="YYYY-MM-DD" maxlength="10"></label>
+<label>Share count basis<input name="share_count_basis" value="{{ prefill.share_count_basis or '' }}" maxlength="300" placeholder="e.g. diluted shares outstanding at the valuation date"></label></div>
+<p class="field-help">Without cash, debt, other senior claims, a bridge date and a selected share count, the result is an enterprise value only. Historical weighted-average diluted shares are not used automatically.</p></details>
+<details class="advanced" open><summary>Declared treatments</summary><div class="form-grid">{% for name, allowed in treatments.items() %}<label>{{ name|replace('_', ' ')|capitalize }}<select name="treatment_{{ name }}" required><option value="">Choose…</option>{% for opt in allowed %}<option value="{{ opt }}" {% if prefill['treatment_' ~ name] == opt %}selected{% endif %}>{{ opt|replace('_', ' ') }}</option>{% endfor %}</select></label>{% endfor %}</div></details>
+<input type="hidden" name="cited_observations" value="{{ prefill.cited_observations or '' }}">
+<label>Rationale<textarea name="rationale" maxlength="4000" required placeholder="Why these assumptions? What evidence or view supports them?"></textarea></label>
+<button class="button" type="submit">Validate &amp; save version →</button></form></section>
+</div><aside class="workspace-aside">
+<section class="panel"><div class="panel-heading"><div><h2>History as reference</h2><p>{{ reference.note }}</p></div></div>
+{% if reference['values'] %}<ul class="issue-list">{% for k, v in reference['values']|dictsort %}<li><b>{{ k|replace('_', ' ') }}</b><span>{{ v.value }}{% if v.fiscal_year_end %} · FY ended {{ v.fiscal_year_end }}{% endif %}{% if v.note %} · {{ v.note }}{% endif %}{% if v.observation_ids %} · <a class="cell-link" href="/observation/{{ v.observation_ids[0] }}">evidence</a>{% endif %}</span></li>{% endfor %}</ul>
+<p class="panel-footnote"><a class="text-link" href="/company/{{ company.id }}/model?start=history">Start a form from these values →</a> You still choose every forecast rate.</p>{% else %}<p class="panel-footnote">No eligible filed history.</p>{% endif %}</section>
+<section class="quiet-card"><h3>What the model is</h3><p>Revenue grows by your rates; EBIT is revenue times margin; tax applies to positive EBIT; FCFF = NOPAT + D&amp;A − capex − working-capital investment; value-driver perpetuity with discount rate above terminal growth.</p><p>Banks, insurers and REITs are outside it.</p></section>
+</aside></div>
+{% endblock %}

@@ -35,10 +35,13 @@
 </section>
 
 <div class="bottom-grid">
-<section class="panel"><div class="panel-heading"><div><h2>Thesis conditions needing review</h2><p>Structured conditions you record are evaluated against this dossier.</p></div></div>
-<div class="empty-state compact"><h3>No structured thesis conditions recorded</h3><p>Free-text annotations on notes stay available. Structured conditions are not part of this view yet.</p></div></section>
-<section class="panel"><div class="panel-heading"><div><h2>Scenario summary</h2><p>Explicit assumptions only; history never becomes a hidden forecast.</p></div></div>
-<div class="empty-state compact"><h3>No scenario saved</h3><p>No driver model has been saved for this company.</p></div></section>
+<section class="panel"><div class="panel-heading"><div><h2>Thesis conditions needing review</h2><p>Evaluated against this dossier; a data gap is unresolved, not false.</p></div><a class="button secondary" href="/company/{{ company.id }}/thesis?{{ query }}">Thesis</a></div>
+{% set evaluations = review.theses|map(attribute='evaluations')|sum(start=[]) %}
+{% if evaluations %}<ul class="issue-list">{% for status in ('triggered', 'unresolved', 'not_triggered') %}{% for e in evaluations if e.status == status %}<li><b>{{ e.status|replace('_', ' ') }} · {{ e.label }}</b><span>thesis version {{ e.thesis_version }}{% for step in e.trace[:2] %} · {{ step.left.label }} = {{ shown(step.left) }}{% endfor %}</span></li>{% endfor %}{% endfor %}</ul>
+{% else %}<div class="empty-state compact"><h3>No thesis current at this cutoff</h3><p>Write structured conditions on the thesis page. Free-text annotations on notes stay available.</p></div>{% endif %}</section>
+<section class="panel"><div class="panel-heading"><div><h2>Scenario summary</h2><p>Explicit assumptions only, as saved by this cutoff; history never becomes a hidden forecast.</p></div><a class="button secondary" href="/company/{{ company.id }}/model">Model</a></div>
+{% if d.scenarios %}<ul class="issue-list">{% for sc in d.scenarios %}<li><b>{{ sc.scenario }} · {{ sc.name }} v{{ sc.version }} · {{ sc.status|replace('_', ' ') }}</b><span>{% if sc.per_share %}{{ show(sc.per_share, 'currency/share', sc.currency) }} per share{% elif sc.enterprise_value %}{{ show(sc.enterprise_value, 'currency', sc.currency) }} enterprise value{% endif %}{% if sc.warnings %} · {{ sc.warnings[-1] }}{% endif %} · <a class="cell-link" href="/company/{{ company.id }}/model/version/{{ sc.version_id }}">open</a></span></li>{% endfor %}</ul>
+{% else %}<div class="empty-state compact"><h3>No scenario saved by this cutoff</h3><p>Record explicit assumptions in the driver model.</p></div>{% endif %}</section>
 </div>
 
 <section class="panel"><div class="panel-heading"><div><h2>Conflicts, revisions and research questions</h2><p>What blocks or qualifies a conclusion. Questions state no cause and recommend nothing.</p></div></div>
@@ -69,5 +72,13 @@
 <div class="table-wrap"><table><thead><tr><th>Filed</th><th>Form</th><th>Accession</th><th class="numeric">Observations</th><th>Submissions feed acceptance (raw, not used)</th></tr></thead><tbody>
 {% for f in d.chronology|reverse %}<tr><td>{{ f.filed }}</td><td>{{ f.form }}{% if f.amendment %} <span class="badge amber">amendment</span>{% endif %}</td><td class="hash">{{ f.accession }}</td><td class="numeric">{{ f.observations }}</td><td class="hash">{{ f.submissions_acceptance_raw or '—' }}</td></tr>{% endfor %}
 </tbody></table></div></details></section>
+<section class="panel"><div class="panel-heading"><div><h2>Record a decision</h2><p>Freezes this dossier at this cutoff, the current thesis and its evaluations, the scenario assumptions and your reasoning. It can be reopened and reproduced, never edited.</p></div></div>
+<form class="stack-form" method="post" action="/company/{{ company.id }}/decisions"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="as_of" value="{{ d.policy.cutoff }}"><input type="hidden" name="mode" value="{{ d.policy.mode }}"><input type="hidden" name="policy" value="{{ policy_name }}"><input type="hidden" name="view" value="{{ d.view }}">
+<label>Question<input name="question" value="{{ d.question or '' }}" maxlength="400" required></label><label>Your choice<input name="choice" maxlength="200" required placeholder="e.g. keep watching; research margins further; no position"></label>
+<label>Rationale<textarea name="rationale" maxlength="8000" required></textarea></label>
+<div class="form-grid"><label>Thesis version<select name="thesis_version_id"><option value="">none</option>{% for t in review.theses %}<option value="{{ t.version.id }}" selected>{{ t.thesis.title }} v{{ t.version.version }}</option>{% endfor %}</select></label><label>Review date <span class="optional">optional</span><input name="review_date" placeholder="YYYY-MM-DD" maxlength="10"></label></div>
+<label>Review condition <span class="optional">optional</span><input name="review_condition" maxlength="1000"></label><label>Forecast resolution rule <span class="optional">optional</span><input name="resolution_rule" maxlength="2000" placeholder="event, deadline and the source that will resolve it"></label>
+<button class="button" type="submit">Record decision packet →</button></form>
+{% if packets %}<ul class="issue-list">{% for p in packets %}<li><b>{{ p.created_at|moment }} · {{ p.choice }}</b><span>{{ p.question }} · <a class="cell-link" href="/packet/{{ p.id }}">open packet</a></span></li>{% endfor %}</ul>{% endif %}</section>
 <p class="panel-footnote">Interpretation, materiality and any decision are yours. No price, valuation or recommendation is implied. {{ d.schema }}.</p>
 {% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}{{ company.ticker }} prices · KOD{% endblock %}
+{% block content %}
+<div class="breadcrumbs"><a href="/">Event inbox</a><span>/</span><a href="/company/{{ company.id }}">{{ company.ticker }}</a><span>/</span>Prices</div>
+<div class="page-heading"><div><div class="eyebrow">PRICE OBSERVATIONS</div><h1>{{ company.ticker }}<span class="title-dot">.</span></h1><p>Dated prices you record or import, with their conventions. No feed, scraper or broker is connected.</p></div>
+<a class="button secondary" href="/company/{{ company.id }}/model">Driver model</a></div>
+<div class="workspace-grid"><div class="workspace-main">
+<section class="panel"><div class="panel-heading"><div><h2>Recorded prices</h2><p>A daily close counts from the end of its trading day in its timezone. Recorded prices are never edited.</p></div><span class="badge neutral">{{ rows|length }} SHOWN</span></div>
+{% if rows %}<div class="table-wrap"><table><thead><tr><th>Date</th><th class="numeric">Close</th><th class="numeric">Open</th><th class="numeric">High</th><th class="numeric">Low</th><th class="numeric">Volume</th><th>Convention</th><th>Source</th><th>Recorded</th></tr></thead><tbody>
+{% for r in rows %}<tr><td>{{ r.observed_on }}</td><td class="numeric">{{ r.close }} {{ r.currency }}</td><td class="numeric">{{ r.open or '—' }}</td><td class="numeric">{{ r.high or '—' }}</td><td class="numeric">{{ r.low or '—' }}</td><td class="numeric">{{ r.volume or 'missing' }}</td><td>{{ r.adjustment|replace('_', ' ') }} · {{ r.session|replace('_', ' ') }} · {{ r.timezone }}</td><td>{{ r.source }}<small class="cell-status">{{ r.feed_coverage }} · {{ r.source_kind }}</small></td><td>{{ r.observed_at|moment }}</td></tr>{% endfor %}
+</tbody></table></div>{% else %}<div class="empty-state compact"><h3>No prices recorded</h3><p>Scenarios can run without prices; price context and reverse valuation against a price need one.</p></div>{% endif %}</section>
+</div><aside class="workspace-aside">
+{% macro conventions() %}<div class="form-grid"><label>Currency<input name="currency" value="USD" maxlength="3" required></label><label>Timezone<input name="timezone" value="America/New_York" maxlength="60" required></label></div>
+<div class="form-grid"><label>Adjustment<select name="adjustment">{% for a in adjustments %}<option value="{{ a }}">{{ a|replace('_', ' ') }}</option>{% endfor %}</select></label><label>Session<select name="session">{% for s in sessions %}<option value="{{ s }}">{{ s|replace('_', ' ') }}</option>{% endfor %}</select></label></div>
+<label>Source<input name="source" maxlength="300" required placeholder="where the number comes from"></label><label>Feed coverage<input name="feed_coverage" maxlength="300" required placeholder="e.g. one listing, closes only, delayed"></label>{% endmacro %}
+<section class="panel"><div class="panel-heading"><div><h2>Record a price</h2></div></div><form class="stack-form" method="post" action="/company/{{ company.id }}/prices/manual"><input type="hidden" name="csrf" value="{{ csrf }}">
+<div class="form-grid"><label>Date<input name="date" placeholder="YYYY-MM-DD" maxlength="10" required></label><label>Price<input name="close" maxlength="30" required></label></div>
+<label>Quote time <span class="optional">manual quote only</span><input name="at" maxlength="40" placeholder="2024-11-29T15:30:00-05:00"></label>{{ conventions() }}<button class="button" type="submit">Record price</button></form></section>
+<section class="panel"><div class="panel-heading"><div><h2>Import a CSV</h2><p>Header: date, close and optionally open, high, low, volume. One bad row rejects the whole file.</p></div></div><form class="stack-form" method="post" action="/company/{{ company.id }}/prices/import" enctype="multipart/form-data"><input type="hidden" name="csrf" value="{{ csrf }}">
+<label>CSV file<input class="file-input" type="file" name="file" accept=".csv,text/csv" required></label>{{ conventions() }}<button class="button" type="submit">Validate &amp; import</button></form></section>
+</aside></div>
+{% endblock %}

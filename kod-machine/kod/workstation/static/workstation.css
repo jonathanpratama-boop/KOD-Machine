@@ -24,3 +24,5 @@
 mark{background:#e7efc9;color:var(--ink);padding:0 2px;border-radius:2px}
 .passage-context{padding:22px 25px}.context-line{color:#7c8a73;font-size:12px;line-height:1.8;overflow-wrap:anywhere}.focus-line{font-size:13px;line-height:1.9;border-left:3px solid #9ab585;padding:8px 14px;background:#f6f9f0;overflow-wrap:anywhere}
 @media(max-width:720px){.dossier-facts b{display:block;min-width:0}.change-cards{padding:0 20px 18px}.filter-bar label{flex:1 1 100%}}
+.trace-line{display:block;font-size:10px;color:#687b5c;margin-top:4px;overflow-wrap:anywhere}.condition-row{border:1px solid var(--line);border-radius:5px;padding:12px;display:flex;flex-direction:column;gap:10px}.condition-row legend{font-size:10px;color:#6c7b63;padding:0 4px}
+.mono-input{font-family:var(--mono);font-size:10px!important;min-height:140px!important}
