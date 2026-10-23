@@ -60,7 +60,7 @@ def _blocked(formula, version, unit, figures, extra=(), names=None):
     conflicted = [role for role, f in figures.items() if f.status != "ok"]
     if conflicted:
         return CalculationResult(formula, version, "conflicted", None, unit, _inputs(**figures), (),
-                                 tuple(f"the {r} figure is conflicted: {'; '.join(figures[r].reasons)}" for r in conflicted))
+                                 tuple(f"the {(names or {}).get(r, r)} figure is {figures[r].status}: {'; '.join(figures[r].reasons)}" for r in conflicted))
     return None
 
 

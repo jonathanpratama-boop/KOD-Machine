@@ -632,9 +632,15 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
                 check = Decimal(str(node.get("val"))) == o.value
             except (ValueError, KeyError, IndexError, TypeError, ArithmeticError):
                 source_entry, check = None, False
+        evidence = dict(o.evidence)
+        if chosen is not None:
+            # The SEC assigns 'frame' from the latest filing in the snapshot (possibly after the cutoff): not shown in a cutoff-bound view.
+            evidence.pop("frame", None)
+            if isinstance(source_entry, dict):
+                source_entry = {k: v for k, v in source_entry.items() if k != "frame"}
         return render(request, "observation.html", page="dossier", o=o, company=app.state.store.get_security(security_id) if security_id else None,
                       source_entry=json.dumps(source_entry, indent=1, default=str) if source_entry is not None else None, pointer_check=check,
-                      evidence=json.dumps(o.evidence, indent=1, ensure_ascii=False))
+                      evidence=json.dumps(evidence, indent=1, ensure_ascii=False))
 
     @app.get("/search", response_class=HTMLResponse)
     def search_page(request: Request, q: str = "", company: str = "", period: str = "", source: str = "", as_of: str = "", mode: str = "", policy: str = ""):

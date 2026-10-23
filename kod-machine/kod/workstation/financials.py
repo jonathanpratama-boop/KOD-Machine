@@ -96,7 +96,9 @@ class FinancialObservation:
     flags: tuple
 
     def availability(self) -> dict:
-        return {"published_at": self.published_at, "publication_date": self.publication_date, "observed_at": self.observed_at}
+        """For eligibility. 'observed_at' is when this installation held this interpretation: the later of the source's observation and the
+        observation's own recording (a re-read after a parser or mapping upgrade was not held before it was recorded)."""
+        return {"published_at": self.published_at, "publication_date": self.publication_date, "observed_at": max(self.observed_at, self.recorded_at)}
 
     def comparable_key(self) -> tuple:
         """Two observations may stand for the same figure only if all of these agree."""
@@ -184,16 +186,17 @@ class FinancialRepository:
                                   ORDER BY o.metric, p.end_date, p.instant_date, o.recorded_at, o.id""", args).fetchall()
         return [_from_row(r) for r in rows]
 
-    def all_for(self, security_id: str, metric: str | None = None) -> list:
-        """Every recorded observation, eligible or not: for provenance views and tests only. Analysis must use observations()."""
-        issuer = self.issuer_of(security_id)
+    def all_for(self, security_id: str, metric: str | None = None, identity_as_of: str | None = None) -> list:
+        """Every recorded observation, eligible or not: for provenance views and tests only. Analysis must use observations(). With identity_as_of,
+        the issuer link is the one recorded by then (an association recorded later does not pull another listing's filings into an earlier view)."""
+        issuer = self.issuer_of(security_id, identity_as_of)
         where = "(o.security_id=? OR (o.issuer_id IS NOT NULL AND o.issuer_id=?))" + (" AND o.metric=?" if metric else "")
         return self._query(where, (security_id, issuer, metric) if metric else (security_id, issuer))
 
-    def issuer_of(self, security_id: str):
+    def issuer_of(self, security_id: str, as_of: str | None = None):
         from . import identity as identity_model
         with self.store._connection() as db:
-            found = identity_model.current(db, security_id)
+            found = identity_model.current(db, security_id, as_of)
         return found["issuer_id"] if found else None
 
     def observations(self, security_id: str, metric: str | None, policy: AsOfPolicy) -> list:
@@ -259,22 +262,27 @@ def resolve(observations: list, policy: AsOfPolicy, view: str = "as_reported") -
     return sorted(out, key=lambda r: (r.metric, r.period.end_date or r.period.instant_date or "", r.period.kind, r.basis))
 
 
-def rounding_tolerance(value: Decimal) -> Decimal:
+def rounding_tolerance(value: Decimal, unit: str | None = None) -> Decimal:
     """Half a unit of the precision a disclosed value appears to carry: trailing zeros of a whole amount (capped at millions, the coarsest scale filings use)
-    or its decimal places. A later filing that shows 4,130,000,000 where an earlier one showed 4,130,162,000 is a rounding difference, not a revision."""
+    or its decimal places. A later filing that shows 4,130,000,000 where an earlier one showed 4,130,162,000 is a rounding difference, not a revision.
+    Per-share amounts are printed to the cent, so their precision is at least two decimals even when a trailing zero was dropped (0.40 stored as 0.4)."""
     exponent = value.normalize().as_tuple().exponent if value else 0
     exponent = min(max(exponent, -6), 6) if isinstance(exponent, int) else 0
+    if unit == "currency/share":
+        exponent = min(exponent, -2)
     return Decimal(5) * (Decimal(10) ** exponent) / 10
 
 
-def same_within_rounding(a: Decimal, b: Decimal) -> bool:
-    return abs(a - b) <= max(rounding_tolerance(a), rounding_tolerance(b))
+def same_within_rounding(a: Decimal, b: Decimal, unit: str | None = None) -> bool:
+    return abs(a - b) <= max(rounding_tolerance(a, unit), rounding_tolerance(b, unit))
 
 
 def _printed_tolerance(observation) -> Decimal:
     """Half a unit of the last printed digit, in base units: '35082' in millions -> 500,000; '0.78' per share -> 0.005."""
     raw = observation.raw_value.replace(",", "")
     decimals = len(raw.split(".")[1]) if "." in raw else 0
+    if observation.unit == "currency/share":
+        decimals = max(decimals, 2)          # printed to the cent; a dropped trailing zero does not widen the tolerance
     return Decimal(5) * (observation.scale or 1) / (Decimal(10) ** (decimals + 1))
 
 

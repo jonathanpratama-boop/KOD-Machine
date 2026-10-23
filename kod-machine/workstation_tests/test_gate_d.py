@@ -195,6 +195,103 @@ class CutoffInvarianceTests(Case):
         self.assertGreater(self.build(nvda, "2025-06-01T00:00:00Z", "public")["coverage"]["eligible_observations"], 0)
 
 
+class ReviewRegressionTests(Case):
+    """Reproduced findings of the independent Gate D review (semantics and information-time lenses)."""
+
+    def cell(self, d, group, metric, end):
+        return next((c for c in d["history"][group].get(metric, []) if c["period"]["end"] == end), None)
+
+    def test_a_longer_filing_that_restates_the_shorter_period_blocks_the_difference(self):
+        d = self.build(self.company("NVDA"), "2017-01-01T00:00:00Z")
+        c = self.cell(d, "quarterly", "operating_cash_flow", "2016-10-30")       # 951m (Q3 10-Q) minus 493m (Q2 10-Q) would mix vintages: the Q3 10-Q shows 519m
+        self.assertEqual((c["status"], c["value"]), ("not_derivable", None))
+        self.assertIn("re-presents the shorter period at 519000000", c["reasons"][0])
+
+    def test_negatively_tagged_capex_is_never_differenced(self):
+        d = self.build(self.company("TXN"), "2010-03-01T00:00:00Z")
+        c = self.cell(d, "quarterly", "capex", "2009-12-31")                     # would have been 753m - (-317m) = 1,070m
+        self.assertEqual(c["status"], "not_derivable")
+        self.assertIn("CAPEX_NEGATIVE_AS_REPORTED", c["flags"])
+
+    def test_likely_scale_errors_are_not_used(self):
+        d = self.build(self.company("PLUG"), "2013-05-01T00:00:00Z")
+        self.assertEqual(self.cell(d, "quarterly", "revenue", "2012-12-31")["status"], "suspect")    # 5,696 in a thousands-scaled table, untagged
+        margin = self.change(d, "operating_margin_yoy")
+        self.assertGreater(float(margin["value"]), -1000)                          # not the -110,788 pp built on the mis-scaled revenue
+
+    def test_the_latest_view_names_the_filing_of_the_revised_value(self):
+        d = self.build(self.company("AAPL"), "2010-02-01T00:00:00Z", view="latest")
+        r = next(r for r in d["revisions"] if r["label"] == "Net income" and r["period"].endswith("2009-09-26"))
+        self.assertEqual((r["first"], r["later"], r["form"], r["filed"]), ("5704000000", "8235000000", "10-K/A", "2010-01-25"))
+
+    def test_no_false_statement_about_a_banks_net_income(self):
+        d = self.build(self.company("JPM"), NOW, "observed")
+        self.assertFalse([q for q in d["questions"] if "zero or negative" in q["text"]])
+
+    def test_per_share_precision_is_at_least_a_cent(self):
+        self.assertFalse(financials.same_within_rounding(Decimal("0.4"), Decimal("0.41"), "currency/share"))
+        self.assertTrue(financials.same_within_rounding(Decimal("0.4"), Decimal("0.404"), "currency/share"))
+        d = self.build(self.company("NVDA"), "2017-01-01T00:00:00Z")
+        q2 = self.cell(d, "quarterly", "eps_diluted", "2016-07-31")                # 0.40 restated to 0.41 (ASU 2016-09)
+        self.assertEqual([r["value"] for r in q2["revisions"]], ["0.41"])
+
+    def test_each_series_is_compared_at_the_latest_quarter_or_marked_missing(self):
+        d = self.build(self.company("JPM"), "2024-09-01T00:00:00Z")
+        self.assertEqual(d["latest_quarter_end"], "2024-06-30")                  # JPM stopped tagging quarterly revenue after 2014
+        self.assertEqual(self.change(d, "net_income_yoy")["status"], "ok")
+        rev = self.change(d, "revenue_yoy")
+        self.assertEqual(rev["status"], "missing")
+        self.assertIn("its latest quarter ends 2014-12-31", rev["reasons"][0])
+
+    def test_different_revenue_line_items_are_not_revisions_of_each_other(self):
+        d = self.build(self.company("COST"), "2015-06-01T00:00:00Z", view="latest")
+        fy = self.cell(d, "annual", "revenue", "2014-08-31")
+        self.assertEqual((fy["value"], fy["revisions"]), ("112640000000", []))    # total revenue; net sales (110,212m) is a different line item
+        self.assertFalse([r for r in d["revisions"] if r["label"] == "Revenue" and r["period"].endswith("2014-08-31")])
+
+    def test_quarter_on_quarter_is_withheld_across_a_basis_change(self):
+        d = self.build(self.company("MSFT"), "2017-11-20T00:00:00Z")             # ASC 606 adopted with full retrospective restatement
+        qoq = self.change(d, "revenue_qoq")
+        self.assertEqual(qoq["status"], "incompatible")
+        self.assertIn("basis change", qoq["reasons"][0])
+        self.assertEqual(self.change(d, "revenue_yoy")["status"], "ok")
+
+    def test_unequal_period_lengths_are_noted(self):
+        d = self.build(self.company("AAPL"), "2024-03-01T00:00:00Z")             # a 13-week quarter against a 14-week one
+        self.assertIn("91 vs 98 days", self.change(d, "revenue_yoy")["duration_note"])
+
+    def test_later_metadata_and_reinterpretations_leave_an_earlier_observed_view_unchanged(self):
+        jpm = self.store.upsert_security("JPM", "JPM", cik=CIKS["JPM"])
+        facts = SOURCES[("JPM", "companyfacts")]
+        self.service.import_companyfacts(jpm["id"], gzip.decompress((CF / facts["fixture"]).read_bytes()), facts["url"], observed_at=facts["observed_at"])
+        cutoff = "2026-10-23T08:00:00Z"
+        before = json.dumps(self.build(jpm, cutoff, "observed"), sort_keys=True)
+        subs = SOURCES[("JPM", "submissions")]                                    # a submissions response downloaded after the cutoff
+        self.service.import_companyfacts(jpm["id"], gzip.decompress((CF / facts["fixture"]).read_bytes()), facts["url"], observed_at="2026-10-23T11:00:00Z",
+                                         submissions=gzip.decompress((CF / subs["fixture"]).read_bytes()), submissions_url=subs["url"])
+        self.assertEqual(json.dumps(self.build(jpm, cutoff, "observed"), sort_keys=True), before)
+        self.assertIs(self.build(jpm, NOW, "observed")["coverage"]["business_type"]["supported"], False)
+
+    def test_an_issuer_link_recorded_later_does_not_pull_filings_into_an_earlier_observed_view(self):
+        import kod.workstation.store as store_module
+        self.company("AAPL")
+        original = store_module.utc_now
+        self.addCleanup(setattr, store_module, "utc_now", original)
+        store_module.utc_now = lambda: "2026-10-23T10:00:00Z"
+        listing = self.store.upsert_security("AAPL", "Apple listing without CIK", venue="XFRA")
+        before = json.dumps(self.build(listing, "2026-10-23T11:00:00Z", "observed"), sort_keys=True)
+        store_module.utc_now = lambda: "2026-10-23T12:30:00Z"                   # the CIK, and so the issuer link, is recorded after the cutoff
+        self.store.upsert_security("AAPL", "Apple listing without CIK", cik=CIKS["AAPL"], venue="XFRA")
+        after = self.build(listing, "2026-10-23T11:00:00Z", "observed")
+        self.assertEqual(json.dumps(after, sort_keys=True), before)
+        self.assertEqual((after["coverage"]["eligible_observations"], after["company"]["cik"]), (0, None))
+        self.assertGreater(self.build(listing, "2026-10-23T13:00:00Z", "observed")["coverage"]["eligible_observations"], 0)
+
+    def test_snapshot_frames_are_not_exported_at_a_cutoff(self):
+        d = self.build(self.company("NVDA"), "2024-09-01T00:00:00Z")
+        self.assertFalse([o for o in d["observations"].values() if "frame" in o["evidence"]])
+
+
 RELEASE = """<html><body><h1>Acme Reports Third Quarter 2024 Results</h1><p>{body}</p><p>GAAP</p><p>Amounts in millions</p><table>
 <tr><td></td><td>Q3 2024</td><td>Q3 2023</td></tr><tr><td>Revenue</td><td>$120</td><td>$100</td></tr></table></body></html>"""
 

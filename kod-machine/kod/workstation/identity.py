@@ -74,10 +74,11 @@ def backfill(db, now):
         ensure_identity(db, row, now, basis="migrated from the v1 securities row")
 
 
-def current(db, security_id) -> dict | None:
+def current(db, security_id, as_of: str | None = None) -> dict | None:
+    """The latest identity mapping of a listing, or the latest recorded at or before `as_of`."""
     row = db.execute("""SELECT si.*, i.name AS issuer_name, i.cik, i.association AS issuer_association, l.venue, l.trading_currency
                         FROM security_identity si JOIN issuers i ON i.id=si.issuer_id JOIN listings l ON l.id=si.listing_id
-                        WHERE si.security_id=? ORDER BY si.id DESC LIMIT 1""", (security_id,)).fetchone()
+                        WHERE si.security_id=? AND (? IS NULL OR si.recorded_at<=?) ORDER BY si.id DESC LIMIT 1""", (security_id, as_of, as_of)).fetchone()
     if row is None:
         return None
     out = dict(row)

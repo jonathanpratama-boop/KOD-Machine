@@ -15,6 +15,8 @@ Rules kept here:
 from __future__ import annotations
 
 from collections import Counter
+import json
+from dataclasses import replace
 from datetime import date, timedelta
 from decimal import Decimal
 
@@ -74,7 +76,9 @@ class _Index:
             "id": o.id, "provider": o.provider, "metric": o.metric, "concept": f"{o.taxonomy}:{o.concept}", "value": str(o.value), "raw_value": o.raw_value,
             "unit": o.unit, "scale": o.scale, "currency": o.currency, "basis": o.basis, "period": _period_dict(o.period), "accession": o.accession, "form": o.form,
             "filed": o.filed, "published_at": o.published_at, "publication_date": o.publication_date, "publication_basis": o.publication_basis,
-            "observed_at": o.observed_at, "source_document_id": o.source_document_id, "evidence": o.evidence, "flags": list(o.flags),
+            "observed_at": o.observed_at, "source_document_id": o.source_document_id,
+            # 'frame' is assigned by the SEC from the latest filing in the snapshot, i.e. possibly after the cutoff; it is not cutoff-safe and is left out.
+            "evidence": {k: v for k, v in o.evidence.items() if k != "frame"}, "flags": list(o.flags),
             "parser_version": o.parser_version, "mapping_version": o.mapping_version}
         return self.used[oid]
 
@@ -89,7 +93,7 @@ class _Index:
             o = self.by_id[oid]
             if figure.value is not None and o.value == figure.value:
                 continue
-            if figure.value is not None and financials.same_within_rounding(o.value, figure.value):
+            if figure.value is not None and financials.same_within_rounding(o.value, figure.value, o.unit):
                 rounding += 1
                 continue
             self.brief(oid)
@@ -100,7 +104,14 @@ class _Index:
         """The selected value differs beyond rounding from the earliest eligible disclosure of the same figure (a restated or corrected value)."""
         group = [self.by_id[i] for i in figure.observation_ids + figure.other_ids]
         first = min(group, key=lambda o: (o.filed or o.published_at or "", o.observed_at))
-        return figure.value is not None and not financials.same_within_rounding(first.value, figure.value)
+        return figure.value is not None and not financials.same_within_rounding(first.value, figure.value, first.unit)
+
+    def first_disclosure(self, ids):
+        group = [self.by_id[i] for i in ids if i in self.by_id]
+        return min(group, key=lambda o: (o.filed or o.published_at or "", o.observed_at)) if group else None
+
+    def flags(self, ids) -> list:
+        return sorted({fl for i in ids if i in self.by_id for fl in self.by_id[i].flags})
 
 
 def _main_group(figures: list, family: str) -> tuple[list, list, tuple | None]:
@@ -143,23 +154,65 @@ class _Series:
         self.figures, self.other_groups, key = _main_group([f for f in figures if f.metric == metric], self.family)
         self.obs = [o for o in eligible if o.metric == metric and o.provider == FILINGS and (o.unit, o.currency, o.basis, o.context) == key] if key else []
         self.kind = KINDS.get(metric)
-        self.not_derived = []
+        self.figures = [self._screen(f) for f in self.figures]
         if self.kind == "instant":
             self.quarters = []
             self.instants = sorted((f for f in self.figures if f.period.kind == "instant"), key=lambda f: f.period.instant_date)
         else:
-            self.quarters = quarters.quarterly(self.figures, metric, self._vintage_check)
+            self.quarters = self._quarters()
             self.instants = []
         self.annual = sorted((f for f in self.figures if f.period.kind == "12 months"), key=lambda f: f.period.end_date)
         self.template = self.figures[0] if self.figures else None
 
-    def _vintage_check(self, shorter, longer) -> list:
-        """Two year-to-date figures are differenced only if they belong to the same accounting vintage: when either selected value was restated (it differs
-        beyond rounding from its first disclosure) and they come from different filings, the difference could mix restated and unrestated amounts."""
+    @staticmethod
+    def _screen(f: ResolvedFigure) -> ResolvedFigure:
+        """A figure whose disclosures differ by a factor of 100 or more is a likely scale error in some filing: it is not used until resolved."""
+        if f.status == "ok" and any("factor of 100" in w for w in f.warnings):
+            return replace(f, status="suspect", value=None, reasons=f.reasons + ("disclosures differ by a factor of 100 or more (a likely scale error); not used",))
+        return f
+
+    def _quarters(self):
+        """Quarters, with every reported quarter cross-checked against the year-to-date difference for the same period when both exist: a factor of 100
+        or more marks the reported figure suspect, and the quarters are rebuilt without it."""
+        for _ in range(3):
+            alternatives = {}
+            built = quarters.quarterly(self.figures, self.metric, self._derivation_check, alternatives)
+            suspects = set()
+            for q in built:
+                alt = alternatives.get((q.start, q.end))
+                if q.status == "reported" and alt and q.value:
+                    ratio = abs(q.value / alt)
+                    if ratio >= 100 or ratio <= Decimal("0.01"):
+                        suspects.add(q.figure.period.id)
+            if not suspects:
+                return built
+            self.figures = [replace(f, status="suspect", value=None, reasons=f.reasons + (
+                "the reported quarter differs from the year-to-date difference for the same period by a factor of 100 or more (a likely scale error); not used",))
+                            if f.period.id in suspects and f.status == "ok" else f for f in self.figures]
+        return built
+
+    def _derivation_check(self, shorter, longer) -> list:
+        """Reasons two year-to-date figures must not be differenced: a capital-expenditure input tagged with a negative sign; a restated input paired with
+        an unrestated one from another filing; or a longer figure whose own filing re-presents the shorter period at a different value (the difference
+        would mix accounting vintages)."""
+        reasons = []
+        flagged = [i for f in (shorter, longer) for i in f.observation_ids if "CAPEX_NEGATIVE_AS_REPORTED" in self.index.by_id[i].flags]
+        signs = {v > 0 for v in (shorter.value, longer.value) if v is not None and v != 0}
+        if flagged or (self.metric == "capex" and len(signs) > 1):
+            reasons.append("a year-to-date capital expenditure figure carries a negative sign in its filing; differencing would give a wrong quarter")
+        if shorter.value is None or longer.value is None:
+            return reasons
         restated = [f for f in (shorter, longer) if self.index.differs_from_first(f)]
         if restated and set(self.index.accessions(shorter.observation_ids)) != set(self.index.accessions(longer.observation_ids)):
-            return ["a year-to-date input was restated in a later filing and the other was not re-disclosed with it; the difference could mix accounting vintages"]
-        return []
+            reasons.append("a year-to-date input was restated in a later filing and the other was not re-disclosed with it; the difference could mix accounting vintages")
+        for a in self.index.accessions(longer.observation_ids):
+            same = [o for o in self.obs if o.accession == a and o.period.id == shorter.period.id]
+            changed = next((o for o in same if not financials.same_within_rounding(o.value, shorter.value, o.unit)), None)
+            if changed is not None:
+                reasons.append(f"the filing of the longer figure ({a}) re-presents the shorter period at {changed.value}, not {shorter.value}; the difference would "
+                               "mix accounting vintages")
+                break
+        return reasons
 
     def quarter(self, end: str):
         return next((q for q in self.quarters if q.end == end), None)
@@ -223,7 +276,7 @@ class _Series:
         revisions, rounding = self.index.revisions(f)
         return {"period": _period_dict(f.period), "value": None if f.value is None else str(f.value), "status": "reported" if f.status == "ok" else f.status,
                 "observation_ids": list(f.observation_ids), "calculation_id": None, "revisions": revisions, "rounding_differences": rounding,
-                "warnings": list(f.warnings), "reasons": list(f.reasons)}
+                "warnings": list(f.warnings), "reasons": list(f.reasons), "flags": self.index.flags(f.observation_ids)}
 
     def cell_for_quarter(self, q: quarters.Quarter, policy) -> tuple[dict, dict | None]:
         if q.figure is not None:
@@ -233,7 +286,7 @@ class _Series:
         record = _calc_dict(q.calculation, policy, self.index, f"{LABELS.get(self.metric, self.metric)}, quarter {q.start} to {q.end}")
         cell = {"period": _period_dict(make_period("quarter", start=q.start, end=q.end)), "value": None if q.value is None else str(q.value),
                 "status": q.status, "observation_ids": list(q.input_ids), "calculation_id": record["id"], "revisions": [], "rounding_differences": 0,
-                "warnings": [], "reasons": list(q.reasons)}
+                "warnings": [], "reasons": list(q.reasons), "flags": self.index.flags(q.input_ids)}
         return cell, record
 
     def split_notes(self) -> list:
@@ -279,10 +332,19 @@ def _missing(formula, reason, unit="percent", figures=()):
     return calc.CalculationResult(formula, f"{formula}-v1", "missing", None, unit, inputs, (), (reason,))
 
 
+def _duration_note(cur, prior):
+    if cur is None or prior is None or not cur.period.duration_days or not prior.period.duration_days:
+        return None
+    if abs(cur.period.duration_days - prior.period.duration_days) > 3:
+        return f"the periods differ in length ({cur.period.duration_days} vs {prior.period.duration_days} days); not like for like"
+    return None
+
+
 def _changes(series: dict, policy: AsOfPolicy, index: _Index, view: str, business: dict | None = None) -> tuple[list, dict, str | None]:
-    revenue = series["revenue"]
-    usable = [q for q in revenue.quarters if q.value is not None]
-    latest = usable[-1] if usable else None
+    """The change catalog at the latest quarter any core series (revenue, net income, diluted EPS) reaches. A series that stops earlier makes its own
+    changes missing with that reason, rather than moving every change back to a stale quarter."""
+    core = [q for m in ("revenue", "net_income", "eps_diluted") for q in series[m].quarters if q.value is not None]
+    latest = max(core, key=lambda q: q.end) if core else None
     out, records = [], {}
 
     def add(key, result: calc.CalculationResult, periods: str, extra=None):
@@ -290,31 +352,52 @@ def _changes(series: dict, policy: AsOfPolicy, index: _Index, view: str, busines
         record = _calc_dict(result, policy, index, label)
         records[record["id"]] = record
         out.append({"key": key, "label": label, "measure": measure, "periods": periods, "status": result.status,
-                    "value": record["value"], "unit": result.unit, "calculation_id": record["id"], "reasons": list(result.reasons), **(extra or {})})
+                    "value": record["value"], "unit": result.unit, "calculation_id": record["id"], "reasons": list(result.reasons),
+                    **{k: v for k, v in (extra or {}).items() if v}})
 
-    def notes(*figures, basis=None):
+    def notes(*figures, basis=None, pair=None):
         derived = [r for f in figures if f is not None for r in f.reasons if r.startswith("derived")]
-        return {k: v for k, v in (("derived_inputs", derived), ("comparison_basis", basis)) if v}
+        return {"derived_inputs": derived, "comparison_basis": basis, "duration_note": _duration_note(*pair) if pair else None}
 
-    def pair_result(metric, end, fn):
-        cur, prior, how = series[metric].comparable_pair(end)
-        if cur is not None and prior is None:
-            return _missing("growth" if fn is calc.growth else "share_change", how, figures=(cur,)), cur, prior, how
-        return fn(cur, prior), cur, prior, how
+    def last_of(metric):
+        usable = [q.end for q in series[metric].quarters if q.value is not None]
+        return usable[-1] if usable else None
+
+    def absent(metric, end):
+        return f"no eligible {LABELS[metric].lower()} for the quarter ended {end}" + (f" (its latest quarter ends {last_of(metric)})" if last_of(metric) else "")
+
+    def yoy(key, metric, end, fn, extra=None):
+        s = series[metric]
+        formula = "growth" if fn is calc.growth else "share_change"
+        q = s.quarter(end)
+        if q is None:
+            reason = absent(metric, end) + ("; " + quarters.not_derivable_reason(metric) if quarters.not_derivable_reason(metric) else "")
+            add(key, _missing(formula, reason), f"quarter ended {end} vs year-ago quarter", extra)
+            return None, None, None
+        cur, prior, how = s.comparable_pair(end)
+        if cur is None:
+            add(key, _missing(formula, f"the quarter ended {end} is {q.status.replace('_', ' ')}: " + "; ".join(q.reasons)), f"quarter ended {end} vs year-ago quarter",
+                extra)
+            return None, None, None
+        result = fn(cur, prior) if prior is not None else _missing(formula, how, figures=(cur,))
+        add(key, result, f"quarter ended {end} vs year-ago quarter", {**notes(cur, prior, basis=how, pair=(cur, prior)), **(extra or {})})
+        return cur, prior, how
 
     if latest is None:
         for key in QUARTER_KEYS:
-            add(key, _missing(key, "no eligible quarterly revenue in the filed history"), "")
+            add(key, _missing(key, "no eligible quarterly revenue, net income or diluted EPS in the filed history"), "")
     else:
         end = latest.end
         when = f"quarter ended {end} vs year-ago quarter"
-        result, cur_rev, ago_rev, how = pair_result("revenue", end, calc.growth)
-        add("revenue_yoy", result, when, notes(cur_rev, ago_rev, basis=how))
+        cur_rev, ago_rev, how = yoy("revenue_yoy", "revenue", end, calc.growth)
         # Operating margin: both sides from the same presentation as revenue.
-        cur_op, ago_op, op_how = series["operating_income"].comparable_pair(end)
-        m_now = calc.operating_margin(cur_op, cur_rev)
-        m_then = calc.operating_margin(ago_op, ago_rev) if ago_op is not None and ago_rev is not None else \
-            _missing("operating_margin", "no comparable year-ago operating income and revenue: " + (op_how if ago_op is None else how), "percent")
+        cur_op, ago_op, op_how = series["operating_income"].comparable_pair(end) if series["operating_income"].quarter(end) else (None, None, absent("operating_income", end))
+        if cur_rev is None:
+            m_now = m_then = _missing("operating_margin", absent("revenue", end))
+        else:
+            m_now = calc.operating_margin(cur_op, cur_rev) if cur_op is not None else _missing("operating_margin", op_how)
+            m_then = calc.operating_margin(ago_op, ago_rev) if ago_op is not None and ago_rev is not None else \
+                _missing("operating_margin", "no comparable year-ago operating income and revenue: " + (op_how if ago_op is None else how or "no year-ago revenue"))
         margin_ids = []
         for r_, lab in ((m_now, f"Operating margin, quarter ended {end}"), (m_then, "Operating margin, year-ago quarter")):
             rec = _calc_dict(r_, policy, index, lab)
@@ -322,26 +405,34 @@ def _changes(series: dict, policy: AsOfPolicy, index: _Index, view: str, busines
             margin_ids.append(rec["id"])
         add("operating_margin_yoy", calc.point_change(m_now, m_then, policy=policy), when,
             {"current_margin": None if m_now.value is None else str(m_now.value), "prior_margin": None if m_then.value is None else str(m_then.value),
-             "current_margin_calculation_id": margin_ids[0], "prior_margin_calculation_id": margin_ids[1], **notes(cur_op, ago_op, cur_rev, ago_rev, basis=op_how)})
-        result, cur, prior, how = pair_result("net_income", end, calc.growth)
-        add("net_income_yoy", result, when, notes(cur, prior, basis=how))
-        if series["eps_diluted"].quarter(end) is None or series["eps_diluted"].figure(end) is None:
-            add("eps_diluted_yoy", _missing("growth", "no reported diluted EPS for the latest quarter; " + quarters.not_derivable_reason("eps_diluted")), when)
+             "current_margin_calculation_id": margin_ids[0], "prior_margin_calculation_id": margin_ids[1],
+             **notes(cur_op, ago_op, cur_rev, ago_rev, basis=op_how, pair=(cur_op, ago_op))})
+        yoy("net_income_yoy", "net_income", end, calc.growth)
+        yoy("eps_diluted_yoy", "eps_diluted", end, calc.growth)
+        # Quarter over quarter: withheld when the current filing restates comparatives (a basis change between the two quarters).
+        qoq_when = f"quarter ended {end} vs previous quarter"
+        if cur_rev is None:
+            add("revenue_qoq", _missing("growth", absent("revenue", end)), qoq_when)
         else:
-            result, cur, prior, how = pair_result("eps_diluted", end, calc.growth)
-            add("eps_diluted_yoy", result, when, notes(cur, prior, basis=how))
-        prev = revenue.previous(latest.start)
-        prev_fig = _figure_from_quarter(prev, revenue.template, view) if prev else None
-        add("revenue_qoq", calc.growth(cur_rev, prev_fig) if prev_fig else _missing("growth", "no previous contiguous revenue quarter", figures=(cur_rev,)),
-            f"quarter ended {end} vs previous quarter", notes(cur_rev, prev_fig, basis="previous quarter's " + view.replace("_", "-") + " disclosure"))
-        if series["diluted_shares"].quarter(end) is None:
-            add("diluted_shares_yoy", _missing("share_change", "no reported weighted-average diluted shares for the latest quarter; " +
-                                               quarters.not_derivable_reason("diluted_shares")), when)
-        else:
-            result, cur, prior, how = pair_result("diluted_shares", end, calc.share_change)
-            add("diluted_shares_yoy", result, when, {"note": "weighted-average diluted shares for each quarter; not period-end shares outstanding",
-                                                     **notes(cur, prior, basis=how)})
-    years = [f.period.end_date for f in series["revenue"].annual]
+            prev = series["revenue"].previous(series["revenue"].quarter(end).start)
+            prev_fig = _figure_from_quarter(prev, series["revenue"].template, view) if prev else None
+            restated = None
+            if ago_rev is not None and how and "same filing" in how:
+                first = index.first_disclosure([o.id for o in series["revenue"].obs if o.period.id == ago_rev.period.id])
+                if first is not None and ago_rev.value is not None and not financials.same_within_rounding(first.value, ago_rev.value, first.unit):
+                    restated = f"the current filing re-presents the year-ago quarter at {ago_rev.value} (first reported {first.value}): a basis change, so the " \
+                               "previous quarter's own disclosure is on the earlier basis"
+            if prev_fig is None:
+                result = _missing("growth", "no previous contiguous revenue quarter", figures=(cur_rev,))
+            elif restated:
+                result = calc.CalculationResult("growth", "growth-v1", "incompatible", None, "percent", calc._inputs(current=cur_rev, prior=prev_fig), (), (restated,))
+            else:
+                result = calc.growth(cur_rev, prev_fig)
+            add("revenue_qoq", result, qoq_when, notes(cur_rev, prev_fig, basis="previous quarter's " + view.replace("_", "-") + " disclosure",
+                                                       pair=(cur_rev, prev_fig)))
+        yoy("diluted_shares_yoy", "diluted_shares", end, calc.share_change,
+            {"note": "weighted-average diluted shares for each quarter; not period-end shares outstanding"})
+    years = [f.period.end_date for f in series["revenue"].annual if f.value is not None]
     fy = years[-1] if years else None
 
     def annual(metric):
@@ -377,7 +468,7 @@ def _questions(changes: dict, revised: list, reconciliation: list, conflicts: li
     if cc and cc["status"] == "ok":
         out.append({"text": f"Cash from operations was {_pct(cc['value'], signed=False)} of net income in the latest fiscal year. Which working-capital, "
                             "non-cash and timing items explain the difference from 100%?", "cites": [cc["calculation_id"]]})
-    elif cc and cc["status"] == "not_applicable":
+    elif cc and cc["status"] == "not_applicable" and any("zero or negative" in r for r in cc["reasons"]):
         out.append({"text": "Net income was zero or negative in the latest fiscal year, so cash conversion is not meaningful. How did operating cash flow behave?",
                     "cites": [cc["calculation_id"]]})
     sh = changes.get("diluted_shares_yoy")
@@ -407,12 +498,44 @@ def _pp(value):
     return f"{Decimal(value).quantize(Decimal('0.1')):+} percentage points"
 
 
+def _one_interpretation(observations: list) -> list:
+    """Within one preserved source, use one interpretation: the parser/mapping version recorded last among those eligible. A source re-read by a newer
+    parser does not corroborate or conflict with its own earlier reading."""
+    groups = {}
+    for o in observations:
+        groups.setdefault(o.source_document_id, {}).setdefault((o.parser_version, o.mapping_version), []).append(o)
+    keep = set()
+    for versions in groups.values():
+        chosen = max(versions.values(), key=lambda g: (min(o.recorded_at for o in g), min(o.id for o in g)))
+        keep.update(o.id for o in chosen)
+    return [o for o in observations if o.id in keep]
+
+
+def _concept_precedence(observations: list) -> list:
+    """For filed facts, keep per metric and period only the first concept present in companyfacts.CONCEPT_PRECEDENCE (different line items mapped to one
+    metric are not treated as revisions or conflicts of each other)."""
+    best = {}
+    for o in observations:
+        order = companyfacts.CONCEPT_PRECEDENCE.get(o.metric)
+        if o.provider == FILINGS and order and o.concept in order:
+            key = (o.metric, o.period.id)
+            best[key] = min(best.get(key, len(order)), order.index(o.concept))
+    out = []
+    for o in observations:
+        order = companyfacts.CONCEPT_PRECEDENCE.get(o.metric)
+        if o.provider == FILINGS and order and o.concept in order and order.index(o.concept) != best[(o.metric, o.period.id)]:
+            continue
+        out.append(o)
+    return out
+
+
 def assemble(security: dict, identity: dict | None, observations: list, policy: AsOfPolicy, view: str = "as_reported", submissions: dict | None = None,
              submissions_observed_at: str | None = None, documents: list | None = None, question: str | None = None, scenarios: list | None = None) -> dict:
     """The dossier from every recorded observation of the company (pure). Eligibility is applied here first; nothing ineligible contributes a value."""
     if view not in ("as_reported", "latest"):
         raise ValueError("view must be as_reported or latest")
-    eligible = [o for o in observations if eligibility(o.availability(), policy)[0]]
+    eligible = _one_interpretation([o for o in observations if eligibility(o.availability(), policy)[0]])
+    eligible = _concept_precedence(eligible)
     index = _Index(eligible)
     filings = financials.resolve([o for o in eligible if o.provider == FILINGS], policy, view)
     releases = financials.resolve([o for o in eligible if o.provider == RELEASES], policy, view)
@@ -453,10 +576,17 @@ def assemble(security: dict, identity: dict | None, observations: list, policy: 
                                   "observation_ids": [index.brief(i)["id"] for i in f.observation_ids + f.other_ids]})
             changed, _ = index.revisions(f)
             if changed and f.value is not None:
-                later = changed[-1] if view == "as_reported" else changed[0]
-                revised.append({"metric": metric, "label": LABELS[metric], "period": f.period.label, "end": _end(f.period),
-                                "first": str(f.value) if view == "as_reported" else later["value"], "later": later["value"] if view == "as_reported" else str(f.value),
-                                "form": later["form"], "filed": later["filed"], "observation_ids": list(f.observation_ids) + [later["observation_id"]]})
+                if view == "as_reported":
+                    # The selected figure is the first disclosure; the revision is the latest differing one.
+                    other = changed[-1]
+                    first, later, source = str(f.value), other["value"], other
+                else:
+                    # The selected figure is the latest disclosure; name the filing that disclosed it, not the one that first reported the old value.
+                    other = changed[0]
+                    own = index.first_disclosure(f.observation_ids)
+                    first, later, source = other["value"], str(f.value), {"form": own.form, "filed": own.filed, "observation_id": own.id}
+                revised.append({"metric": metric, "label": LABELS[metric], "period": f.period.label, "end": _end(f.period), "first": first, "later": later,
+                                "form": source["form"], "filed": source["filed"], "observation_ids": list(f.observation_ids) + [other["observation_id"]]})
     release_figs = [f for f in releases if f.period.kind == "quarter"]
     latest_release_end = max((f.period.end_date for f in release_figs if f.period.end_date), default=None)
     release_shown = [f for f in release_figs if f.period.end_date == latest_release_end] if latest_release_end else []
@@ -519,9 +649,20 @@ def build(service, security_id: str, policy: AsOfPolicy, view: str = "as_reporte
     security = store.get_security(security_id)
     repo = financials.FinancialRepository(store)
     docs = store.documents(security_id)
-    subs_doc = next((d for d in docs if d["metadata"].get("kind") == "SEC submissions response"), None)
-    submissions = service.latest_submissions(security_id) if subs_doc else None
-    return assemble(security, store.identity(security_id), repo.all_for(security_id), policy, view, submissions,
+    cutoff = policy.as_dict()["cutoff"]
+    # The submissions response (business classification, raw acceptance times) and the issuer mapping are chosen so that nothing recorded later changes
+    # an earlier view: in observed mode the latest held by the cutoff; in public mode the earliest preserved (labelled current metadata at that time).
+    subs = sorted((d for d in docs if d["metadata"].get("kind") == "SEC submissions response"), key=lambda d: (d["observed_at"], d["id"]))
+    if policy.mode == "observed":
+        subs = [d for d in subs if d["observed_at"] <= cutoff][-1:]
+    subs_doc = subs[0] if subs else None
+    submissions = json.loads(store.raw(subs_doc["id"])) if subs_doc else None
+    identity_as_of = cutoff if policy.mode == "observed" else None
+    from . import identity as identity_model
+    with store._connection() as db:
+        ident = identity_model.current(db, security_id, identity_as_of)
+    shown_security = {**security, "cik": (ident or {}).get("cik") if policy.mode == "observed" else security.get("cik")}
+    return assemble(shown_security, ident, repo.all_for(security_id, identity_as_of=identity_as_of), policy, view, submissions,
                     subs_doc["observed_at"] if subs_doc else None, docs, question, scenario_summaries(service, security_id, policy, submissions))
 
 

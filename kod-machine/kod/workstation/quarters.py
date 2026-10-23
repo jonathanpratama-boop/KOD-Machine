@@ -51,7 +51,7 @@ def _compatible(a: ResolvedFigure, b: ResolvedFigure) -> list:
     return reasons
 
 
-def quarterly(figures: list, metric: str, check=None) -> list:
+def quarterly(figures: list, metric: str, check=None, alternatives: dict | None = None) -> list:
     """Discrete quarters for one metric from resolved duration figures (one basis/unit/currency group per call is the caller's choice; mixed groups are
     never combined). Returns Quarter records sorted by end date. `check(shorter, longer)` may return reasons the two year-to-date figures must not be
     differenced (for example, one was restated and the other was not: different accounting vintages)."""
@@ -60,7 +60,7 @@ def quarterly(figures: list, metric: str, check=None) -> list:
     for f in own:
         if f.period.kind == "quarter":
             key = (f.period.start_date, f.period.end_date)
-            quarters[key] = Quarter(*key, f.value, "reported" if f.status == "ok" else "conflicted", f, None, f.reasons)
+            quarters[key] = Quarter(*key, f.value, "reported" if f.status == "ok" else f.status, f, None, f.reasons)
     if metric not in ADDITIVE:
         return sorted(quarters.values(), key=lambda q: q.end)
     by_start = {}
@@ -72,13 +72,19 @@ def quarterly(figures: list, metric: str, check=None) -> list:
         for shorter, longer in zip(group, group[1:]):
             q_start = (_day(shorter.period.end_date) + timedelta(days=1)).isoformat()
             q_end = longer.period.end_date
-            if duration_kind(q_start, q_end) != "quarter" or (q_start, q_end) in quarters:
+            if duration_kind(q_start, q_end) != "quarter":
+                continue
+            if (q_start, q_end) in quarters:
+                # Already reported. The year-to-date difference is still offered to the caller (to cross-check the reported figure's scale).
+                if alternatives is not None and shorter.status == "ok" and longer.status == "ok" and not _compatible(shorter, longer):
+                    alternatives[(q_start, q_end)] = longer.value - shorter.value
                 continue
             reasons = _compatible(shorter, longer) + (list(check(shorter, longer)) if check else [])
             inputs = tuple(("year_to_date_" + role, "observation", oid) for role, f in (("longer", longer), ("shorter", shorter)) for oid in f.observation_ids)
             if shorter.status != "ok" or longer.status != "ok":
+                bad = shorter.status if shorter.status != "ok" else longer.status
                 calc = CalculationResult("quarter_from_ytd_difference", "ytd-difference-v1", "conflicted", None, longer.unit, inputs, (),
-                                         ("a year-to-date input is conflicted",))
+                                         (f"a year-to-date input is {bad}",))
                 quarters[(q_start, q_end)] = Quarter(q_start, q_end, None, "conflicted", None, calc, calc.reasons)
                 continue
             if reasons:

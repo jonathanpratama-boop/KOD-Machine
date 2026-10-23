@@ -48,6 +48,10 @@ CONCEPTS = {
     ("us-gaap", "LongTermDebtNoncurrent"): "long_term_debt",
     ("dei", "EntityCommonStockSharesOutstanding"): "shares_outstanding",
 }
+# When one filing period carries several concepts mapped to one metric, they are different line items (Costco reported net sales as SalesRevenueNet and
+# total revenue including membership fees as Revenues). Only the first concept present for that period, in this order, is used; the others are not
+# compared with it as if they were revisions.
+CONCEPT_PRECEDENCE = {"revenue": ("Revenues", "RevenueFromContractWithCustomerExcludingAssessedTax", "SalesRevenueNet")}
 CURRENCY_CODE = re.compile(r"^[A-Z]{3}$")
 
 # Business types the first operating-company model does not support (SEC SIC codes): banks and credit institutions, insurance, real-estate investment trusts.
