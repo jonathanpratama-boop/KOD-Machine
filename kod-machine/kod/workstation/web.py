@@ -81,7 +81,9 @@ class LocalBoundary:
             if message["type"] == "http.response.start":
                 message.setdefault("headers", []).extend([
                     (b"x-content-type-options", b"nosniff"),
-                    (b"referrer-policy", b"no-referrer"),
+                    # 'same-origin', not 'no-referrer': under no-referrer a browser sends "Origin: null" on its own form posts, which the Origin check
+                    # above (rightly) refuses. Cross-site requests still carry no referrer.
+                    (b"referrer-policy", b"same-origin"),
                     (b"x-frame-options", b"DENY"),
                     (b"content-security-policy", b"default-src 'self'; style-src 'self'; img-src 'self' data:; script-src 'none'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'self'"),
                 ])

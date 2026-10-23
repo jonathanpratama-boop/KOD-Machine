@@ -117,7 +117,17 @@ class WebTests(unittest.TestCase):
         token = self.token()
         cross = self.client.post("/watchlist", data={"csrf": token, "ticker": "EVIL", "name": "Bad"}, headers={"Origin": "https://evil.example"})
         self.assertEqual(cross.status_code, 403)
+        opaque = self.client.post("/watchlist", data={"csrf": token, "ticker": "EVIL", "name": "Bad"}, headers={"Origin": "null"})
+        self.assertEqual(opaque.status_code, 403)                     # an opaque origin (sandboxed frame, data: URL) stays refused
         self.assertFalse(self.service.store.securities())
+
+    def test_the_referrer_policy_lets_a_browser_send_its_own_origin(self):
+        # Under 'no-referrer' browsers send "Origin: null" on same-origin form posts, which the Origin check refuses: every form would fail in a real
+        # browser (found by the browser journey). 'same-origin' keeps referrers off cross-site requests.
+        self.assertEqual(self.client.get("/").headers["referrer-policy"], "same-origin")
+        same = self.client.post("/watchlist", data={"csrf": self.token(), "ticker": "OKAY", "name": "Fine Corp"}, headers={"Origin": "http://testserver"},
+                                follow_redirects=False)
+        self.assertEqual(same.status_code, 303)
 
     def test_default_app_rejects_untrusted_host(self):
         client = TestClient(create_app(self.root, offline=True), base_url="http://attacker.example")
