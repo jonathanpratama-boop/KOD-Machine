@@ -7,6 +7,7 @@
 <div class="metric-cards"><div><span>Result</span><strong>{% if calc.status == 'ok' %}{{ show(calc.value, calc.unit) }}{% else %}{{ calc.status|replace('_', ' ') }}{% endif %}</strong><small>exact value {{ calc.value or 'none' }} {{ calc.unit }}</small></div>
 <div><span>Status</span><strong>{{ calc.status|replace('_', ' ') }}</strong><small>{{ calc.reasons|join('; ') or 'all inputs usable' }}</small></div>
 <div><span>Inputs</span><strong>{{ calc.inputs|length }}</strong><small>recorded observations and calculations</small></div></div>
+{% if change and (change.comparison_basis or change.duration_note) %}<p class="panel-footnote">{{ change.comparison_basis or '' }}{% if change.comparison_basis and change.duration_note %} · {% endif %}{{ change.duration_note or '' }}</p>{% endif %}
 {% if calc.detail %}<section class="panel"><div class="panel-heading"><div><h2>Formula detail</h2></div></div><ul class="issue-list">{% for k, v in calc.detail|dictsort %}<li><b>{{ k|replace('_', ' ') }}</b><span>{{ v if v is string else v|join(', ') if v is iterable and v is not mapping else v }}</span></li>{% endfor %}</ul></section>{% endif %}
 <section class="panel"><div class="panel-heading"><div><h2>Inputs</h2><p>Each input opens its source evidence (an exact table cell or a JSON pointer into the preserved SEC response).</p></div></div>
 <div class="table-wrap"><table><thead><tr><th>Role</th><th>Kind</th><th>Figure</th><th class="numeric">Value</th><th>Source</th></tr></thead><tbody>

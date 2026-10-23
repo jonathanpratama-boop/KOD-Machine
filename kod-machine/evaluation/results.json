@@ -1,0 +1,813 @@
+{
+ "schema": "KOD-ANALYST-EVAL-RESULTS-v1",
+ "tasks_file_sha256": "4c59bf899fe9314cde754c40149d16eb05bb2d2a4ce5eee6c18ff4ed0810b81b",
+ "runs": 2,
+ "answer_hashes": [
+  "212f54bf9bf87015fe508b68dd0f010c7d229960cbf9486c3aa47d37129ad588",
+  "212f54bf9bf87015fe508b68dd0f010c7d229960cbf9486c3aa47d37129ad588"
+ ],
+ "reproducible": true,
+ "results": [
+  {
+   "id": "T1-TXN-quarter-change",
+   "type": 1,
+   "real": true,
+   "overlaps_development": false,
+   "seconds": 0.153,
+   "passed": true,
+   "counts": {
+    "correct": 10,
+    "allowed_unavailable": 0,
+    "missed": 0,
+    "material_error": 0
+   },
+   "checks": [
+    {
+     "check": "2024-11-01 public as_reported: latest quarter",
+     "outcome": "correct",
+     "expected": "2024-09-30",
+     "got": "2024-09-30"
+    },
+    {
+     "check": "2024-11-01 public as_reported: quarterly revenue 2024-09-30",
+     "outcome": "correct",
+     "expected": "4151000000",
+     "got": "4151000000"
+    },
+    {
+     "check": "2024-11-01 public as_reported: quarterly revenue 2023-09-30",
+     "outcome": "correct",
+     "expected": "4532000000",
+     "got": "4532000000"
+    },
+    {
+     "check": "2024-11-01 public as_reported: revenue_yoy",
+     "outcome": "correct",
+     "expected": "-8.40688",
+     "got": "-8.406884377758164165931156222"
+    },
+    {
+     "check": "2024-11-01 public as_reported: revenue_yoy comparison basis",
+     "outcome": "correct",
+     "expected": "same filing",
+     "got": "year-ago quarter as presented in the same filing (0000097476-24-000042)"
+    },
+    {
+     "check": "2024-11-01 public as_reported: operating_margin_yoy",
+     "outcome": "correct",
+     "expected": "-4.31081",
+     "got": "-4.31081058956433471405884182"
+    },
+    {
+     "check": "2024-11-01 public as_reported: net_income_yoy",
+     "outcome": "correct",
+     "expected": "-20.30427",
+     "got": "-20.30427150380339379754242247"
+    },
+    {
+     "check": "2024-11-01 public as_reported: eps_diluted_yoy",
+     "outcome": "correct",
+     "expected": "-20.54054",
+     "got": "-20.54054054054054054054054054"
+    },
+    {
+     "check": "2024-11-01 public as_reported: revenue_qoq",
+     "outcome": "correct",
+     "expected": "8.60806",
+     "got": "8.608058608058608058608058608"
+    },
+    {
+     "check": "2024-11-01 public as_reported: citations resolve to the preserved response (20 observations)",
+     "outcome": "correct",
+     "expected": "all resolve",
+     "got": 20
+    }
+   ],
+   "citations_checked": 20
+  },
+  {
+   "id": "T2-COST-profit-and-cash",
+   "type": 2,
+   "real": true,
+   "overlaps_development": false,
+   "seconds": 0.227,
+   "passed": true,
+   "counts": {
+    "correct": 7,
+    "allowed_unavailable": 0,
+    "missed": 0,
+    "material_error": 0
+   },
+   "checks": [
+    {
+     "check": "2024-11-15 public as_reported: annual revenue 2024-09-01",
+     "outcome": "correct",
+     "expected": "254453000000",
+     "got": "254453000000"
+    },
+    {
+     "check": "2024-11-15 public as_reported: annual operating_income 2024-09-01",
+     "outcome": "correct",
+     "expected": "9285000000",
+     "got": "9285000000"
+    },
+    {
+     "check": "2024-11-15 public as_reported: annual operating_cash_flow 2024-09-01",
+     "outcome": "correct",
+     "expected": "11339000000",
+     "got": "11339000000"
+    },
+    {
+     "check": "2024-11-15 public as_reported: cash_conversion_fy",
+     "outcome": "correct",
+     "expected": "153.91611",
+     "got": "153.9161123931043844169947061"
+    },
+    {
+     "check": "2024-11-15 public as_reported: capex_intensity_fy",
+     "outcome": "correct",
+     "expected": "1.85103",
+     "got": "1.851029463201455671577855242"
+    },
+    {
+     "check": "2024-11-15 public as_reported: cfo_minus_capex_fy",
+     "outcome": "correct",
+     "expected": "6629000000",
+     "got": "6629000000"
+    },
+    {
+     "check": "2024-11-15 public as_reported: citations resolve to the preserved response (25 observations)",
+     "outcome": "correct",
+     "expected": "all resolve",
+     "got": 25
+    }
+   ],
+   "citations_checked": 25
+  },
+  {
+   "id": "T3-TXN-actual-vs-outlook",
+   "type": 3,
+   "real": true,
+   "overlaps_development": false,
+   "seconds": 0.117,
+   "passed": false,
+   "counts": {
+    "correct": 2,
+    "allowed_unavailable": 0,
+    "missed": 4,
+    "material_error": 0
+   },
+   "checks": [
+    {
+     "check": "reported period",
+     "outcome": "correct",
+     "expected": [
+      "Q3 2024",
+      "quarter ended 2024-09-30"
+     ],
+     "got": "Q3 2024"
+    },
+    {
+     "check": "actual revenue",
+     "outcome": "correct",
+     "expected": "4151000000",
+     "got": [
+      "4.151E+9"
+     ]
+    },
+    {
+     "check": "actual eps_diluted",
+     "outcome": "missed",
+     "expected": "1.47",
+     "got": null
+    },
+    {
+     "check": "outlook revenue",
+     "outcome": "missed",
+     "expected": {
+      "metric": "revenue",
+      "low_amount": "3940000000",
+      "high_amount": "4260000000",
+      "position": "WITHIN_RANGE"
+     },
+     "got": []
+    },
+    {
+     "check": "outlook eps_diluted",
+     "outcome": "missed",
+     "expected": {
+      "metric": "eps_diluted",
+      "low_amount": "1.24",
+      "high_amount": "1.48",
+      "position": "WITHIN_RANGE"
+     },
+     "got": []
+    },
+    {
+     "check": "the excluded-items caveat is visible in the note",
+     "outcome": "missed",
+     "expected": "3-cent benefit",
+     "got": "absent from the rendered note"
+    }
+   ]
+  },
+  {
+   "id": "T4a-NVDA-capex-coverage",
+   "type": 4,
+   "real": true,
+   "overlaps_development": true,
+   "seconds": 0.156,
+   "passed": true,
+   "counts": {
+    "correct": 6,
+    "allowed_unavailable": 0,
+    "missed": 0,
+    "material_error": 0
+   },
+   "checks": [
+    {
+     "check": "2025-03-01 public as_reported: capex_intensity_fy",
+     "outcome": "correct",
+     "expected": "missing",
+     "got": "missing"
+    },
+    {
+     "check": "2025-03-01 public as_reported: capex_intensity_fy reason",
+     "outcome": "correct",
+     "expected": "capex",
+     "got": "no eligible capex figure"
+    },
+    {
+     "check": "2025-03-01 public as_reported: cfo_minus_capex_fy",
+     "outcome": "correct",
+     "expected": "missing",
+     "got": "missing"
+    },
+    {
+     "check": "2025-03-01 public as_reported: cfo_minus_capex_fy reason",
+     "outcome": "correct",
+     "expected": "capex",
+     "got": "no eligible capex figure"
+    },
+    {
+     "check": "2025-03-01 public as_reported: cash_conversion_fy",
+     "outcome": "correct",
+     "expected": "87.93771",
+     "got": "87.93770581778265642151481888"
+    },
+    {
+     "check": "2025-03-01 public as_reported: citations resolve to the preserved response (21 observations)",
+     "outcome": "correct",
+     "expected": "all resolve",
+     "got": 21
+    }
+   ],
+   "citations_checked": 21
+  },
+  {
+   "id": "T4b-JPM-revenue-coverage",
+   "type": 4,
+   "real": true,
+   "overlaps_development": true,
+   "seconds": 0.128,
+   "passed": true,
+   "counts": {
+    "correct": 6,
+    "allowed_unavailable": 0,
+    "missed": 0,
+    "material_error": 0
+   },
+   "checks": [
+    {
+     "check": "2025-08-15 public as_reported: latest quarter",
+     "outcome": "correct",
+     "expected": "2025-06-30",
+     "got": "2025-06-30"
+    },
+    {
+     "check": "2025-08-15 public as_reported: revenue_yoy",
+     "outcome": "correct",
+     "expected": "missing",
+     "got": "missing"
+    },
+    {
+     "check": "2025-08-15 public as_reported: revenue_yoy reason",
+     "outcome": "correct",
+     "expected": "2014-12-31",
+     "got": "no eligible revenue for the quarter ended 2025-06-30 (its latest quarter ends 2014-12-31)"
+    },
+    {
+     "check": "2025-08-15 public as_reported: net_income_yoy",
+     "outcome": "correct",
+     "expected": "-17.42245",
+     "got": "-17.42244751776957408121659596"
+    },
+    {
+     "check": "2025-08-15 public as_reported: net_income_yoy comparison basis",
+     "outcome": "correct",
+     "expected": "same filing",
+     "got": "year-ago quarter as presented in the same filing (0000019617-25-000615)"
+    },
+    {
+     "check": "2025-08-15 public as_reported: citations resolve to the preserved response (6 observations)",
+     "outcome": "correct",
+     "expected": "all resolve",
+     "got": 6
+    }
+   ],
+   "citations_checked": 6
+  },
+  {
+   "id": "T4c-COST-unequal-quarters",
+   "type": 1,
+   "real": true,
+   "overlaps_development": true,
+   "seconds": 0.223,
+   "passed": true,
+   "counts": {
+    "correct": 7,
+    "allowed_unavailable": 0,
+    "missed": 0,
+    "material_error": 0
+   },
+   "checks": [
+    {
+     "check": "2024-11-15 public as_reported: latest quarter",
+     "outcome": "correct",
+     "expected": "2024-09-01",
+     "got": "2024-09-01"
+    },
+    {
+     "check": "2024-11-15 public as_reported: quarterly revenue 2024-09-01",
+     "outcome": "correct",
+     "expected": "79697000000",
+     "got": "79697000000"
+    },
+    {
+     "check": "2024-11-15 public as_reported: revenue_yoy",
+     "outcome": "correct",
+     "expected": "0.96024",
+     "got": "0.9602351182558684553896046314"
+    },
+    {
+     "check": "2024-11-15 public as_reported: revenue_yoy period-length note",
+     "outcome": "correct",
+     "expected": "112 vs 119 days",
+     "got": "the periods differ in length (112 vs 119 days); not like for like "
+    },
+    {
+     "check": "2024-11-15 public as_reported: revenue_qoq",
+     "outcome": "correct",
+     "expected": "36.19927",
+     "got": "36.19926514568913953687088781"
+    },
+    {
+     "check": "2024-11-15 public as_reported: revenue_qoq period-length note",
+     "outcome": "correct",
+     "expected": "112 vs 84 days",
+     "got": "the periods differ in length (112 vs 84 days); not like for like "
+    },
+    {
+     "check": "2024-11-15 public as_reported: citations resolve to the preserved response (25 observations)",
+     "outcome": "correct",
+     "expected": "all resolve",
+     "got": 25
+    }
+   ],
+   "citations_checked": 25
+  },
+  {
+   "id": "T5-TXN-assumption-to-review",
+   "type": 5,
+   "real": true,
+   "overlaps_development": false,
+   "seconds": 0.407,
+   "passed": true,
+   "counts": {
+    "correct": 7,
+    "allowed_unavailable": 0,
+    "missed": 0,
+    "material_error": 0
+   },
+   "checks": [
+    {
+     "check": "condition before the revision",
+     "outcome": "correct",
+     "expected": "not_triggered",
+     "got": "not_triggered"
+    },
+    {
+     "check": "condition after the revision",
+     "outcome": "correct",
+     "expected": "triggered",
+     "got": "triggered"
+    },
+    {
+     "check": "trace names the changed assumption",
+     "outcome": "correct",
+     "expected": [
+      {
+       "assumption": "operating_margin",
+       "from": "0.40",
+       "to": "0.30"
+      }
+     ],
+     "got": [
+      {
+       "assumption": "operating_margin",
+       "from": "0.40",
+       "to": "0.30"
+      }
+     ]
+    },
+    {
+     "check": "per-share value before (hand-computed expectation)",
+     "outcome": "correct",
+     "expected": "85.81",
+     "got": "85.81468829019585395677434154429875"
+    },
+    {
+     "check": "per-share value before (independent re-implementation of MODEL.md)",
+     "outcome": "correct",
+     "expected": 85.814688,
+     "got": "85.81468829019585395677434154429875"
+    },
+    {
+     "check": "per-share value after (hand-computed expectation)",
+     "outcome": "correct",
+     "expected": "61.27",
+     "got": "61.26540682378747484980396666305837"
+    },
+    {
+     "check": "per-share value after (independent re-implementation of MODEL.md)",
+     "outcome": "correct",
+     "expected": 61.265407,
+     "got": "61.26540682378747484980396666305837"
+    }
+   ]
+  },
+  {
+   "id": "T6-COST-reopen-decision",
+   "type": 6,
+   "real": true,
+   "overlaps_development": false,
+   "seconds": 1.805,
+   "passed": true,
+   "counts": {
+    "correct": 8,
+    "allowed_unavailable": 0,
+    "missed": 0,
+    "material_error": 0
+   },
+   "checks": [
+    {
+     "check": "packet reproduces when reopened",
+     "outcome": "correct",
+     "expected": true,
+     "got": null
+    },
+    {
+     "check": "packet still reproduces after the later amendment",
+     "outcome": "correct",
+     "expected": true,
+     "got": true
+    },
+    {
+     "check": "dossier at the packet's cutoff unchanged",
+     "outcome": "correct",
+     "expected": true,
+     "got": null
+    },
+    {
+     "check": "stored packet hash verifies",
+     "outcome": "correct",
+     "expected": "90a92a44ccd569efbe3ffd9ef191a57d07ec56091b9f69305da9a85274921a3e",
+     "got": "90a92a44ccd569efbe3ffd9ef191a57d07ec56091b9f69305da9a85274921a3e"
+    },
+    {
+     "check": "2025-03-10 latest: FY2024 revenue",
+     "outcome": "correct",
+     "expected": "999999000000",
+     "got": "999999000000"
+    },
+    {
+     "check": "2025-03-10 as_reported: FY2024 revenue",
+     "outcome": "correct",
+     "expected": "254453000000",
+     "got": "254453000000"
+    },
+    {
+     "check": "2025-03-10 as_reported: FY2024 revenue lists the amendment",
+     "outcome": "correct",
+     "expected": {
+      "value": "999999000000",
+      "form": "10-K/A"
+     },
+     "got": [
+      [
+       "999999000000",
+       "10-K/A"
+      ]
+     ]
+    },
+    {
+     "check": "2025-06-01 latest: FY2024 revenue",
+     "outcome": "correct",
+     "expected": "254453000000",
+     "got": "254453000000"
+    }
+   ]
+  },
+  {
+   "id": "T7-JPM-restatement",
+   "type": 4,
+   "real": true,
+   "overlaps_development": true,
+   "seconds": 0.308,
+   "passed": true,
+   "counts": {
+    "correct": 10,
+    "allowed_unavailable": 0,
+    "missed": 0,
+    "material_error": 0
+   },
+   "checks": [
+    {
+     "check": "2012-09-01 public as_reported: quarterly net_income 2012-03-31",
+     "outcome": "correct",
+     "expected": "5383000000",
+     "got": "5383000000"
+    },
+    {
+     "check": "2012-09-01 public as_reported: quarterly net_income 2012-03-31 revision",
+     "outcome": "correct",
+     "expected": {
+      "value": "4924000000",
+      "form": "10-Q/A"
+     },
+     "got": [
+      [
+       "4924000000",
+       "10-Q/A"
+      ]
+     ]
+    },
+    {
+     "check": "2012-09-01 public as_reported: quarterly eps_diluted 2012-03-31",
+     "outcome": "correct",
+     "expected": "1.31",
+     "got": "1.31"
+    },
+    {
+     "check": "2012-09-01 public as_reported: quarterly eps_diluted 2012-03-31 revision",
+     "outcome": "correct",
+     "expected": {
+      "value": "1.19",
+      "form": "10-Q/A"
+     },
+     "got": [
+      [
+       "1.19",
+       "10-Q/A"
+      ]
+     ]
+    },
+    {
+     "check": "2012-09-01 public as_reported: citations resolve to the preserved response (10 observations)",
+     "outcome": "correct",
+     "expected": "all resolve",
+     "got": 10
+    },
+    {
+     "check": "2012-09-01 public latest: quarterly net_income 2012-03-31",
+     "outcome": "correct",
+     "expected": "4924000000",
+     "got": "4924000000"
+    },
+    {
+     "check": "2012-09-01 public latest: citations resolve to the preserved response (10 observations)",
+     "outcome": "correct",
+     "expected": "all resolve",
+     "got": 10
+    },
+    {
+     "check": "2012-08-01 public latest: quarterly net_income 2012-03-31",
+     "outcome": "correct",
+     "expected": "5383000000",
+     "got": "5383000000"
+    },
+    {
+     "check": "2012-08-01 public latest: quarterly net_income 2012-03-31 shows no later revision",
+     "outcome": "correct",
+     "expected": [],
+     "got": []
+    },
+    {
+     "check": "2012-08-01 public latest: citations resolve to the preserved response (11 observations)",
+     "outcome": "correct",
+     "expected": "all resolve",
+     "got": 11
+    }
+   ],
+   "citations_checked": 31
+  },
+  {
+   "id": "T8-JPM-unsupported-business",
+   "type": 4,
+   "real": true,
+   "overlaps_development": true,
+   "seconds": 0.109,
+   "passed": true,
+   "counts": {
+    "correct": 5,
+    "allowed_unavailable": 0,
+    "missed": 0,
+    "material_error": 0
+   },
+   "checks": [
+    {
+     "check": "business type supported",
+     "outcome": "correct",
+     "expected": false,
+     "got": false
+    },
+    {
+     "check": "cash_conversion_fy",
+     "outcome": "correct",
+     "expected": "not_applicable",
+     "got": "not_applicable"
+    },
+    {
+     "check": "capex_intensity_fy",
+     "outcome": "correct",
+     "expected": "not_applicable",
+     "got": "not_applicable"
+    },
+    {
+     "check": "cfo_minus_capex_fy",
+     "outcome": "correct",
+     "expected": "not_applicable",
+     "got": "not_applicable"
+    },
+    {
+     "check": "driver model",
+     "outcome": "correct",
+     "expected": "not_applicable",
+     "got": "not_applicable"
+    }
+   ]
+  },
+  {
+   "id": "T9-AAPL-split",
+   "type": 1,
+   "real": true,
+   "overlaps_development": true,
+   "seconds": 0.166,
+   "passed": true,
+   "counts": {
+    "correct": 6,
+    "allowed_unavailable": 0,
+    "missed": 0,
+    "material_error": 0
+   },
+   "checks": [
+    {
+     "check": "2021-02-15 public as_reported: latest quarter",
+     "outcome": "correct",
+     "expected": "2020-12-26",
+     "got": "2020-12-26"
+    },
+    {
+     "check": "2021-02-15 public as_reported: eps_diluted_yoy",
+     "outcome": "correct",
+     "expected": "34.4",
+     "got": "34.4"
+    },
+    {
+     "check": "2021-02-15 public as_reported: eps_diluted_yoy comparison basis",
+     "outcome": "correct",
+     "expected": "same filing",
+     "got": "year-ago quarter as presented in the same filing (0000320193-21-000010)"
+    },
+    {
+     "check": "2021-02-15 public as_reported: diluted_shares_yoy",
+     "outcome": "correct",
+     "expected": "-3.95506",
+     "got": "-3.955059531943830925047943372"
+    },
+    {
+     "check": "2021-02-15 public as_reported: diluted_shares_yoy comparison basis",
+     "outcome": "correct",
+     "expected": "same filing",
+     "got": "year-ago quarter as presented in the same filing (0000320193-21-000010)"
+    },
+    {
+     "check": "2021-02-15 public as_reported: citations resolve to the preserved response (20 observations)",
+     "outcome": "correct",
+     "expected": "all resolve",
+     "got": 20
+    }
+   ],
+   "citations_checked": 20
+  },
+  {
+   "id": "H1-dated-ascending-columns-CAD-thousands",
+   "type": 1,
+   "real": false,
+   "overlaps_development": false,
+   "seconds": 0.003,
+   "passed": true,
+   "counts": {
+    "correct": 7,
+    "allowed_unavailable": 0,
+    "missed": 0,
+    "material_error": 0
+   },
+   "checks": [
+    {
+     "check": "reported period",
+     "outcome": "correct",
+     "expected": [
+      "Q2 2025",
+      "quarter ended 2025-06-30"
+     ],
+     "got": "quarter ended 2025-06-30"
+    },
+    {
+     "check": "actual revenue",
+     "outcome": "correct",
+     "expected": "97433000",
+     "got": [
+      "9.7433E+7"
+     ]
+    },
+    {
+     "check": "currency of revenue",
+     "outcome": "correct",
+     "expected": "CAD",
+     "got": [
+      "CAD"
+     ]
+    },
+    {
+     "check": "actual net_income",
+     "outcome": "correct",
+     "expected": "9955000",
+     "got": [
+      "9.955E+6"
+     ]
+    },
+    {
+     "check": "currency of net_income",
+     "outcome": "correct",
+     "expected": "CAD",
+     "got": [
+      "CAD"
+     ]
+    },
+    {
+     "check": "actual eps_diluted",
+     "outcome": "correct",
+     "expected": "0.39",
+     "got": [
+      "0.39"
+     ]
+    },
+    {
+     "check": "year_over_year revenue",
+     "outcome": "correct",
+     "expected": "85210000",
+     "got": "85210000"
+    }
+   ]
+  },
+  {
+   "id": "H2-no-period-stated",
+   "type": 1,
+   "real": false,
+   "overlaps_development": true,
+   "seconds": 0.001,
+   "passed": true,
+   "counts": {
+    "correct": 2,
+    "allowed_unavailable": 0,
+    "missed": 0,
+    "material_error": 0
+   },
+   "checks": [
+    {
+     "check": "result status",
+     "outcome": "correct",
+     "expected": "PERIOD_UNRESOLVED",
+     "got": "PERIOD_UNRESOLVED"
+    },
+    {
+     "check": "figures withheld",
+     "outcome": "correct",
+     "expected": 0,
+     "got": 0
+    }
+   ]
+  }
+ ]
+}

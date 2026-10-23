@@ -29,6 +29,9 @@ jobs:
       - name: Four preserved real-company releases replay offline
         working-directory: kod-machine
         run: python3 -m kod.workstation demo --data-dir "$RUNNER_TEMP/kod-workstation-demo"
+      - name: Analyst-task evaluation (fails on a material error or answers that differ between two fresh runs)
+        working-directory: kod-machine
+        run: python3 evaluation/run_eval.py --runs 2
   checks:
     runs-on: ubuntu-latest
     steps:

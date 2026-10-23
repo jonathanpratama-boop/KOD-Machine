@@ -3,7 +3,9 @@
 - A quarter reported as a three-month figure is used as reported.
 - A missing quarter may be derived as the difference of two year-to-date figures with the same start date (6M - 3M, 9M - 6M, 12M - 9M) only for an additive
   flow (catalog `additive`), with the same basis, unit, scale, currency and context, and only when both inputs are usable. The derivation is a calculation with
-  both inputs recorded and is labelled as derived.
+  both inputs recorded and is labelled as derived. Fiscal calendars counted in weeks are included: year-to-date periods of whole weeks (Costco's 24 and 36
+  weeks) are inputs, and a fourth quarter of 15 to 18 weeks (a 52/53-week year minus 36 weeks) is a quarter; its unequal length is shown wherever it is
+  compared.
 - Per-share amounts, share counts and ratios are never derived by subtraction (Q4 diluted EPS is not annual EPS minus nine-month EPS), and instants are never
   summed.
 - TTM is the sum of four contiguous, non-overlapping quarters of an additive flow; a gap or overlap leaves it unavailable.
@@ -19,6 +21,21 @@ from .financials import ResolvedFigure, duration_kind
 from .identity import METRIC_CATALOG_V1
 
 ADDITIVE = {m for m, _, kind, additive, *_ in METRIC_CATALOG_V1 if kind == "flow" and additive}
+STANDARD = ("quarter", "6 months", "9 months", "12 months")
+
+
+def _year_to_date(f) -> bool:
+    """A standard year-to-date length, or a whole number of weeks between 16 and 40 (fiscal calendars counted in weeks)."""
+    days = f.period.duration_days
+    return f.period.kind in STANDARD or (days is not None and days % 7 == 0 and 112 <= days <= 280)
+
+
+def _fiscal_quarter(q_start: str, q_end: str, longer) -> bool:
+    """A standard quarter, or a long fourth quarter: 15 to 18 weeks ending a fiscal year."""
+    if duration_kind(q_start, q_end) == "quarter":
+        return True
+    days = (_day(q_end) - _day(q_start)).days + 1
+    return longer.period.kind == "12 months" and 105 <= days <= 126
 KIND = {m: kind for m, _, kind, *_ in METRIC_CATALOG_V1}
 
 
@@ -65,14 +82,14 @@ def quarterly(figures: list, metric: str, check=None, alternatives: dict | None 
         return sorted(quarters.values(), key=lambda q: q.end)
     by_start = {}
     for f in own:
-        if f.period.kind in ("quarter", "6 months", "9 months", "12 months"):
+        if _year_to_date(f):
             by_start.setdefault(f.period.start_date, []).append(f)
     for start, group in by_start.items():
         group.sort(key=lambda f: f.period.end_date)
         for shorter, longer in zip(group, group[1:]):
             q_start = (_day(shorter.period.end_date) + timedelta(days=1)).isoformat()
             q_end = longer.period.end_date
-            if duration_kind(q_start, q_end) != "quarter":
+            if not _fiscal_quarter(q_start, q_end, longer):
                 continue
             if (q_start, q_end) in quarters:
                 # Already reported. The year-to-date difference is still offered to the caller (to cross-check the reported figure's scale).

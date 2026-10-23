@@ -612,7 +612,8 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
         record = d["calculations"].get(calc_id)
         if record is None:
             raise HTTPException(404, "This calculation is not part of the dossier at the selected cutoff and view.")
-        return render(request, "calculation.html", page="dossier", company=app.state.store.get_security(security_id), d=d, calc=record,
+        change = next((c for c in d["changes"] if c.get("calculation_id") == calc_id), None)
+        return render(request, "calculation.html", page="dossier", company=app.state.store.get_security(security_id), d=d, calc=record, change=change,
                       query=_policy_query(chosen) + "&" + urlencode({"view": d["view"]}))
 
     @app.get("/observation/{observation_id}", response_class=HTMLResponse)

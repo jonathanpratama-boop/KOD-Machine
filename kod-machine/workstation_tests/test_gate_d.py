@@ -257,8 +257,36 @@ class ReviewRegressionTests(Case):
         self.assertEqual(self.change(d, "revenue_yoy")["status"], "ok")
 
     def test_unequal_period_lengths_are_noted(self):
-        d = self.build(self.company("AAPL"), "2024-03-01T00:00:00Z")             # a 13-week quarter against a 14-week one
-        self.assertIn("91 vs 98 days", self.change(d, "revenue_yoy")["duration_note"])
+        aapl = self.company("AAPL")
+        d = self.build(aapl, "2024-03-01T00:00:00Z")                             # a 13-week quarter against a 14-week one
+        change = self.change(d, "revenue_yoy")
+        self.assertIn("91 vs 98 days", change["duration_note"])
+        self.assertIn("91 vs 98 days", dossier.render_markdown(d))               # shown wherever the change is shown, not only in the JSON
+        from fastapi.testclient import TestClient
+        from kod.workstation.web import create_app
+        client = TestClient(create_app(self.store.root, offline=True, service=self.service, testing=True))
+        query = {"as_of": "2024-03-01T00:00:00Z", "mode": "public"}
+        self.assertIn("91 vs 98 days", client.get(f"/company/{aapl['id']}/dossier", params=query).text)
+        self.assertIn("91 vs 98 days", client.get(f"/company/{aapl['id']}/dossier/calculation/{change['calculation_id']}", params=query).text)
+
+    def test_a_sixteen_week_fourth_quarter_is_derived_and_its_length_shown(self):
+        # Found by the analyst-task evaluation (evaluation/REPORT.md): Costco's 24- and 36-week year-to-date figures were not used, so its 16-week
+        # fourth quarter was never derived and the dossier compared the third quarter as if it were the latest.
+        d = self.build(self.company("COST"), "2024-11-15T00:00:00Z")
+        self.assertEqual(d["latest_quarter_end"], "2024-09-01")
+        q4 = self.cell(d, "quarterly", "revenue", "2024-09-01")
+        self.assertEqual((q4["status"], q4["value"]), ("derived", "79697000000"))       # 254,453m (52 weeks) - 174,756m (36 weeks)
+        yoy, qoq = self.change(d, "revenue_yoy"), self.change(d, "revenue_qoq")
+        self.assertAlmostEqual(float(yoy["value"]), (79697 / 78939 - 1) * 100, places=6)  # against 242,290m - 163,351m, both from the same two filings
+        self.assertIn("112 vs 119 days", yoy["duration_note"])
+        self.assertIn("112 vs 84 days", qoq["duration_note"])
+        self.assertIsNone(self.cell(d, "quarterly", "revenue", "2024-07-01"))
+
+    def test_a_derived_capex_quarter_is_never_negative(self):
+        d = self.build(self.company("PLUG"), "2013-06-01T00:00:00Z")
+        c = self.cell(d, "quarterly", "capex", "2012-12-31")                     # the 10-K's annual capex is below the 10-Q's nine months
+        self.assertEqual((c["status"], c["value"]), ("not_derivable", None))
+        self.assertIn("negative capital expenditure", c["reasons"][0])
 
     def test_later_metadata_and_reinterpretations_leave_an_earlier_observed_view_unchanged(self):
         jpm = self.store.upsert_security("JPM", "JPM", cik=CIKS["JPM"])

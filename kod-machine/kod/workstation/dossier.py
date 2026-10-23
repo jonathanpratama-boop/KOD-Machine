@@ -203,6 +203,9 @@ class _Series:
             reasons.append("a year-to-date capital expenditure figure carries a negative sign in its filing; differencing would give a wrong quarter")
         if shorter.value is None or longer.value is None:
             return reasons
+        if self.metric == "capex" and not reasons and longer.value < shorter.value:
+            reasons.append(f"the difference would be a negative capital expenditure ({longer.value} minus {shorter.value}); the year-to-date figures are not "
+                           "on one basis")
         restated = [f for f in (shorter, longer) if self.index.differs_from_first(f)]
         if restated and set(self.index.accessions(shorter.observation_ids)) != set(self.index.accessions(longer.observation_ids)):
             reasons.append("a year-to-date input was restated in a later filing and the other was not re-disclosed with it; the difference could mix accounting vintages")
@@ -752,7 +755,8 @@ def render_markdown(d: dict) -> str:
     shown = [ch for ch in d["changes"] if ch["key"] in d["supported_changes"]]
     for ch in shown:
         lines.append(f"- **{ch['label']}**: {display(ch['value'], ch['unit'], None) if ch['unit'] != 'currency' else display(ch['value'], 'currency')} "
-                     f"({ch['periods']}; calculation `{ch['calculation_id']}`)" + (" — uses a derived quarter" if ch.get("derived_inputs") else ""))
+                     f"({ch['periods']}; calculation `{ch['calculation_id']}`)" + (" — uses a derived quarter" if ch.get("derived_inputs") else "")
+                     + (f" — {ch['duration_note']}" if ch.get("duration_note") else ""))
     if not shown:
         lines.append("- None: the eligible evidence supports no change in the catalog.")
     unavailable = [ch for ch in d["changes"] if ch["status"] != "ok"]
