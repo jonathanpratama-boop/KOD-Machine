@@ -128,7 +128,7 @@
    "type": 3,
    "kind": "guidance",
    "real": true,
-   "overlaps_development": null,
+   "overlaps_development": "release reader v4 (KOD-EARNINGS-PARSER-v4): T3's misses (the outlook sentence, the income statement's caption-dated column, the guidance caveat) led to repairs, tested in tests/test_earnings_reader_v2.py; a regression check since then",
    "question": "How did Texas Instruments' third-quarter 2024 revenue and EPS compare with the outlook it published with its second-quarter results?",
    "company": "TXN",
    "fixtures": "fixtures/txn",

@@ -254,3 +254,12 @@ class ObservedNameTests(Case):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class NoteOrderTests(Case):
+    def test_the_later_of_two_notes_saved_in_one_second_is_listed_first(self):
+        # Ties were broken by note id, a content hash, so 'latest' depended on the content; insertion order decides now.
+        sec = self.company("TXN")
+        doc = self.store.documents(sec["id"])[0]["id"]
+        ids = [self.store.save_note(sec["id"], doc, None, {"n": i}, f"note {i}", NOW, "public")["id"] for i in range(6)]
+        self.assertEqual([n["id"] for n in self.store.notes(sec["id"])], list(reversed(ids)))

@@ -1,10 +1,10 @@
 {
  "schema": "KOD-ANALYST-EVAL-RESULTS-v2",
- "tasks_file_sha256": "752d60a017f9b469d3897999cde1f74678a9239a7f3d18da23f25557ff7e9355",
+ "tasks_file_sha256": "4ee17587d51a1e7eb6e80a004de45753a99737fdd92139ac4ead7c89a8a4e245",
  "runs": 2,
  "answer_hashes": [
-  "6370ddb60f77bc6cc41e5ba238da1029b5250214f709806b889dd1f6a62f05f1",
-  "6370ddb60f77bc6cc41e5ba238da1029b5250214f709806b889dd1f6a62f05f1"
+  "19517a3372a53f2fa68f3261dea6f3b9573cd3d8ae1bfc0251d531fd6aa066f1",
+  "19517a3372a53f2fa68f3261dea6f3b9573cd3d8ae1bfc0251d531fd6aa066f1"
  ],
  "reproducible": true,
  "results": [
@@ -13,7 +13,7 @@
    "type": 1,
    "real": true,
    "overlaps_development": false,
-   "seconds": 0.208,
+   "seconds": 0.133,
    "passed": true,
    "counts": {
     "correct": 10,
@@ -93,7 +93,7 @@
    "type": 2,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.214,
+   "seconds": 0.152,
    "passed": true,
    "counts": {
     "correct": 7,
@@ -154,13 +154,13 @@
    "id": "T3-TXN-actual-vs-outlook",
    "type": 3,
    "real": true,
-   "overlaps_development": false,
-   "seconds": 0.104,
-   "passed": false,
+   "overlaps_development": true,
+   "seconds": 0.09,
+   "passed": true,
    "counts": {
-    "correct": 3,
+    "correct": 8,
     "allowed_unavailable": 0,
-    "missed": 4,
+    "missed": 0,
     "material_error": 0
    },
    "checks": [
@@ -196,44 +196,79 @@
     },
     {
      "check": "actual eps_diluted",
-     "outcome": "missed",
+     "outcome": "correct",
      "expected": "1.47",
-     "got": null
+     "got": {
+      "values": [
+       "1.47"
+      ],
+      "periods": [
+       "Q3 2024"
+      ]
+     }
     },
     {
-     "check": "outlook revenue",
-     "outcome": "missed",
-     "expected": {
-      "metric": "revenue",
-      "low_amount": "3940000000",
-      "high_amount": "4260000000",
-      "position": "WITHIN_RANGE",
-      "actual_amount": "4151000000"
-     },
-     "got": []
+     "check": "actual eps_diluted currency",
+     "outcome": "correct",
+     "expected": "USD",
+     "got": [
+      "USD"
+     ]
     },
     {
-     "check": "outlook eps_diluted",
-     "outcome": "missed",
-     "expected": {
-      "metric": "eps_diluted",
-      "low_amount": "1.24",
-      "high_amount": "1.48",
-      "position": "WITHIN_RANGE",
-      "actual_amount": "1.47"
-     },
-     "got": []
+     "check": "outlook revenue range, actual and position",
+     "outcome": "correct",
+     "expected": [
+      "3940000000",
+      "4260000000",
+      "WITHIN_RANGE",
+      "4151000000",
+      "Q3 2024",
+      "USD"
+     ],
+     "got": [
+      [
+       "3940000000",
+       "4260000000",
+       "WITHIN_RANGE",
+       "4151000000",
+       "Q3 2024",
+       "USD"
+      ]
+     ]
+    },
+    {
+     "check": "outlook eps_diluted range, actual and position",
+     "outcome": "correct",
+     "expected": [
+      "1.24",
+      "1.48",
+      "WITHIN_RANGE",
+      "1.47",
+      "Q3 2024",
+      "USD"
+     ],
+     "got": [
+      [
+       "1.24",
+       "1.48",
+       "WITHIN_RANGE",
+       "1.47",
+       "Q3 2024",
+       "USD"
+      ]
+     ]
     },
     {
      "check": "the excluded-items caveat is visible in the note",
-     "outcome": "missed",
+     "outcome": "correct",
      "expected": "3-cent benefit",
-     "got": "absent from the rendered note"
+     "got": "present"
     }
    ],
    "output_sha256": [
-    "3cc420210b01fe6d2da6dd9d4d4c93221da3e82cb9a0a67a19733cabc0853dee",
-    "f5ed7d7699391624b607a0d37e5c65c5c3cf72901616fe563f17b8cefd504dd2"
+    "58aa1971ae6e47fa3306304de7e2836d4fecbfe231743f69c9fbfd5f4bb90f1b",
+    "6071bcbd050fdd0da44d4f52f419c40072e4d6611f6ff7707e235c3a544b2f84"
    ]
   },
   {
@@ -241,7 +276,7 @@
    "type": 4,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.19,
+   "seconds": 0.152,
    "passed": false,
    "counts": {
     "correct": 2,
@@ -287,7 +322,7 @@
    "type": 4,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.103,
+   "seconds": 0.091,
    "passed": false,
    "counts": {
     "correct": 4,
@@ -345,7 +380,7 @@
    "type": 1,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.204,
+   "seconds": 0.191,
    "passed": true,
    "counts": {
     "correct": 7,
@@ -413,7 +448,7 @@
    "type": 5,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.369,
+   "seconds": 0.293,
    "passed": true,
    "counts": {
     "correct": 7,
@@ -487,7 +522,7 @@
    "type": 6,
    "real": true,
    "overlaps_development": true,
-   "seconds": 1.918,
+   "seconds": 1.393,
    "passed": true,
    "counts": {
     "correct": 9,
@@ -579,7 +614,7 @@
    "type": 4,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.256,
+   "seconds": 0.21,
    "passed": true,
    "counts": {
     "correct": 10,
@@ -677,7 +712,7 @@
    "type": 4,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.12,
+   "seconds": 0.091,
    "passed": true,
    "counts": {
     "correct": 5,
@@ -726,7 +761,7 @@
    "type": 1,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.191,
+   "seconds": 0.138,
    "passed": true,
    "counts": {
     "correct": 6,
@@ -782,7 +817,7 @@
    "type": 1,
    "real": false,
    "overlaps_development": true,
-   "seconds": 0.003,
+   "seconds": 0.005,
    "passed": true,
    "counts": {
     "correct": 9,
@@ -881,7 +916,7 @@
     }
    ],
    "output_sha256": [
-    "3f4295da5501dd962718a22b3ece1cf5618615cf15f5bf3a5d5971745e2304c3"
+    "5716c898e624ff8ae8cee535547b0e256a5be29d61e44093084bd4ba941f3623"
    ]
   },
   {
@@ -936,8 +971,8 @@
     }
    ],
    "output_sha256": [
-    "ff02a25582979fbc8e609bce68bd1158db7b3f0ecec810e3fbc736f899994cec",
-    "500e41e98aca9ef87cf8c10661397ea4c08b546ab600893b86b6aaf2543f8f33"
+    "b2bca9a992e782aa926c3a2789d2c2d823e0daa2824783f65162d90fe290f73d",
+    "12932b49a9fb70210eda5178952bcc652fb2dadd7631b5c2a35b9d792b0fc5c3"
    ]
   }
  ]

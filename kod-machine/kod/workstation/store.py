@@ -139,7 +139,7 @@ class Store:
             sql, args = "SELECT * FROM analyst_records WHERE subject_kind=? AND subject_id=?", [subject_kind, subject_id]
             if record_type:
                 sql, args = sql + " AND record_type=?", args + [record_type]
-            return [dict(r) for r in db.execute(sql + " ORDER BY created_at DESC, rowid DESC", args)]
+            return [dict(r) for r in db.execute(sql + " ORDER BY created_at DESC,id", args)]
 
     def securities(self):
         with self._connection() as db:
@@ -281,7 +281,7 @@ class Store:
     def notes(self, security_id=None):
         with self._connection() as db:
             where, args = ("WHERE security_id=?", (security_id,)) if security_id else ("", ())
-            return [self._row(r) for r in db.execute(f"SELECT * FROM notes {where} ORDER BY created_at DESC,id", args)]
+            return [self._row(r) for r in db.execute(f"SELECT * FROM notes {where} ORDER BY created_at DESC, rowid DESC", args)]  # the same second: the later insert first
 
     def note(self, note_id):
         with self._connection() as db:
