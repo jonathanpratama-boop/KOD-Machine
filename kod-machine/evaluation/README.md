@@ -13,7 +13,9 @@ The run fails (exit status 1) in any of these cases:
 - a material error;
 - outputs that differ between two fresh runs;
 - a task without checks;
-- a regression against the recorded baseline `results.json`: a check that was correct or allowed there and is not now.
+- a regression against the recorded baseline `results.json`: a check that was correct or allowed there and is not now;
+- a missing baseline, unless `--no-baseline` is given;
+- an expectation key the runner does not know (a misspelling would otherwise skip its check).
 
 CI runs it in the workstation job.
 
@@ -74,7 +76,6 @@ The runner also checks three things beyond the stated values:
 
 A check may name the statuses KOD may withhold with (`allowed_statuses`) and, where it matters, the words the reason must contain (`reason_contains`).
 Withholding for another reason is a material error. Any other withholding is a miss. Examples:
-- JPMorgan's operating margin: a bank reports no operating income.
 - Costco's quarter-on-quarter growth across a 16-week and a 12-week quarter: withheld, provided the reason names the lengths.
 - Every operating-company ratio for a bank (T8), which must be "not applicable", with a reason naming the bank.
 
@@ -82,12 +83,14 @@ Withholding for another reason is a material error. Any other withholding is a m
 
 - **correct**
 - **allowed_unavailable:** withheld, with a status and reason the task allows.
-- **missed:** withheld or not found, where the documents hold an answer.
+- **missed:** withheld or not found, where the documents hold an answer. Withholding with another unavailable status than the expected one (for example "missing" where "not applicable" is
+  expected) is also a miss.
 - **material_error:** any of these:
   - a wrong value or status presented as an answer;
   - an answer given where none should be;
   - a withholding for a reason other than the allowed one;
   - a citation that does not resolve;
+  - a cell or change listed twice for one period;
   - a task that crashed or has no checks.
 
 A task passes when every check is correct or allowed unavailable. The runner records the time each task takes.

@@ -2,7 +2,7 @@
 {% block title %}{{ company.ticker }} dossier · KOD{% endblock %}
 {% block content %}
 <div class="breadcrumbs"><a href="/">Event inbox</a><span>/</span><a href="/company/{{ company.id }}">{{ company.ticker }}</a><span>/</span>Dossier</div>
-<div class="page-heading"><div><div class="eyebrow">COMPANY DOSSIER</div><h1>{{ company.ticker }}<span class="title-dot">.</span></h1><p>{{ company.name }}</p>
+<div class="page-heading"><div><div class="eyebrow">COMPANY DOSSIER</div><h1>{{ company.ticker }}<span class="title-dot">.</span></h1><p>{{ d.company.name or "name not recorded by this cutoff" }}</p>
 <div class="identity-line"><span>CIK {{ company.cik or 'not supplied' }}</span><span>Cutoff {{ d.policy.cutoff|moment }}</span><span>{{ d.policy.mode }} mode</span><span>{{ policy_name }} policy</span><span>{{ d.view|replace('_', ' ') }} view</span></div></div>
 <div class="button-group"><a class="button secondary" href="/company/{{ company.id }}/dossier.md?{{ query }}{% if d.question %}&amp;question={{ d.question|urlencode }}{% endif %}">↓ Markdown</a><a class="button secondary" href="/company/{{ company.id }}/dossier.json?{{ query }}{% if d.question %}&amp;question={{ d.question|urlencode }}{% endif %}">↓ JSON</a></div></div>
 

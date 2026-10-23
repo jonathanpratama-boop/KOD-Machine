@@ -238,19 +238,14 @@
         "basis_contains": "presented in the same filing"
        },
        "operating_margin_yoy": {
-        "status": "not_applicable",
-        "allowed_statuses": [
-         "missing"
-        ]
+        "status": "not_applicable"
        }
       }
      }
     }
    ],
-   "allowed_unavailable": [
-    "operating_margin_yoy: a bank reports no operating income"
-   ],
-   "note": "The first draft expected revenue_yoy 'missing' (an expectation error). KOD answering 'missing' is now a miss: a coverage gap of KOD's concept mapping."
+   "allowed_unavailable": [],
+   "note": "The first draft expected revenue_yoy 'missing' (an expectation error). KOD answering 'missing' is now a miss: a coverage gap of KOD's concept mapping. The operating margin was first allowed to be 'missing' for any reason; KOD withholds it for a revenue gap, not because the company is a bank, so that is now a miss."
   },
   {
    "id": "T4c-COST-unequal-quarters",

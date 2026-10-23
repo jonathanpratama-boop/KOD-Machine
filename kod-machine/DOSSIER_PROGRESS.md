@@ -65,7 +65,8 @@ Demo notes regenerated (`examples/earnings_demo/output`, `more/*/output`). Seman
   - release reconciliation, revisions beyond rounding, conflicts, research questions and the filing chronology;
   - a catalog of nine changes, each with a recorded calculation.
 - Comparisons:
-  - The year-ago figure is the one presented in the same filing, or for a derived quarter in the same two filings.
+  - The year-ago figure is the one presented in the same filing (for a derived quarter, the same two filings) where one exists; otherwise the latest
+    comparable figure, with the basis labelled "not presented in the current filing".
   - Per-share and share-count changes are withheld without one.
   - No derivation across accounting vintages, from negatively tagged capex, or giving a negative capex.
   - Scale errors (100x) are marked suspect and not used.
@@ -121,9 +122,10 @@ Demo notes regenerated (`examples/earnings_demo/output`, `more/*/output`). Seman
 - Results, with the same task file and runner for both runs (see `evaluation/REPORT.md`):
   - **Code at `2307e86`:** 8 of 13 tasks; 6 material errors, all in Costco's 16-week quarter.
   - **This branch:** 9 of 13 tasks; 0 material errors.
-- The 9 remaining misses are all withheld answers:
+- The 10 remaining misses are all withheld answers:
   - TI's release: an outlook phrasing, a caption-only column period, a guidance caveat.
-  - Two XBRL concepts KOD does not map: NVIDIA's capex as `PaymentsToAcquireProductiveAssets`, bank net revenue as `RevenuesNetOfInterestExpense`.
+  - Two XBRL concepts KOD does not map: NVIDIA's capex as `PaymentsToAcquireProductiveAssets`, bank net revenue as `RevenuesNetOfInterestExpense`
+    (which also leaves JPMorgan's operating margin withheld for a revenue gap rather than as not applicable).
   - KOD's rule that the reported period must be stated or recorded (H2).
 - An independent four-lens review of this gate (expectations, runner, code, docs; each finding verified by a separate agent) confirmed 40 of its 44
   findings and refuted 4. All confirmed findings are fixed except one low-severity point: the TI caveat check accepts the phrase anywhere in the note. The fixes
@@ -142,6 +144,11 @@ Demo notes regenerated (`examples/earnings_demo/output`, `more/*/output`). Seman
     all eight companies at 185 cutoffs is now identical);
   - price reverts, and intraday quotes overriding closes;
   - refresh wording, concept-note wording, and the identity time on the wall clock.
+- A third review round (all three lenses finished) found that the second round's duplicate-quarter rule removed genuine reported quarters (TI, Costco,
+  Apple, JPMorgan, Plug Power and NVIDIA in 2009–2012). It is fixed with regression tests (`Round3Tests`), together with the observed-mode HTML
+  subtitle, the refresh message, and runner gaps (misspelled keys, duplicate rows, a missing baseline, one-run reproducibility, the T4b reason).
+  Left open and listed in the report: a false length note from one mis-tagged Costco 10-Q, and narrower runner points (citations do not check
+  non-SEC inputs or units; reason checks are substrings).
 - Migration and restore drill (`workstation_tests/migration_drill.py`) on a real populated v1 workspace, run through the command line. It checks:
   - upgrade v1 → v4 with a safety copy;
   - v1 records unchanged and still rendering;
@@ -159,22 +166,23 @@ Demo notes regenerated (`examples/earnings_demo/output`, `more/*/output`). Seman
 
 ## Checks at this checkpoint
 
-Run on commit `59c0dab` (2026-10-23):
+Run on the code of the commit that adds this table (2026-10-23):
 
 | Command (directory) | Result |
 | --- | --- |
 | `python3 tools/check_append_only.py --all` (root) | Append-only: OK |
 | `python3 -m unittest` (kod-machine) | 254 tests OK |
 | `python3 -m kod verify` (kod-machine) | OK. Three warnings that cases KOD-R-NVDA-20230524, KOD-R-SMCI-202408 and KOD-S-PIPELINE-001 have no external timestamp; identical at the base `0281272` (the gate A–C checkpoint listed two of them) |
-| `python3 -m unittest discover -s workstation_tests -v` (kod-machine) | 189 tests OK |
+| `python3 -m unittest discover -s workstation_tests -v` (kod-machine) | 207 tests OK |
 | `python3 -m unittest` (idx-signals) | 435 tests OK |
 | `python3 -m idxsig rules` / `verify-runs` (idx-signals) | OK (USER_RULE pending, unchanged) / verify-runs: OK |
 | `python3 -m pip_audit -r kod-machine/requirements-workstation.txt --progress-spinner off` (pip-audit 2.10.1) | No known vulnerabilities found |
 | `python3 -m kod.workstation demo --data-dir <fresh>` | 4 historical notes replayed; schema v0 → v4 |
-| `python3 evaluation/run_eval.py --runs 2` | 12 of 13 tasks; 0 material errors; 148 citations; both runs identical |
+| `python3 evaluation/run_eval.py --runs 2` | 9 of 13 tasks; checks 81 correct, 1 allowed unavailable, 10 missed, 0 material errors; 106 distinct citations; both runs identical (`6370ddb6…`); 0 regressions |
 | `workstation_tests/migration_drill.py` on the populated v1 workspace | 21 of 21 checks |
-| `workstation_tests/browser_journey.py` (Chromium 1194) | 21 of 21 steps |
-| Before/after sweep of the quarter change: 8 companies × 68 cutoffs × 2 views | Differences only in Costco (its week-based quarters now derived) and Plug Power capex (negative derived quarters now refused); the other six companies are identical |
+| `workstation_tests/browser_journey.py` (Chromium 1194) | passed: 0 failures, 0 console errors, 0 layout problems |
+| Before/after sweep of the quarter change against `2307e86`: 8 companies × 68 cutoffs × 2 views | Differences only in Costco (its week-based quarters); the other seven companies are identical |
+| Full-versus-truncated fixture sweep (information time), 8 companies | 185 cutoffs, 0 differences |
 
 ## Decisions
 

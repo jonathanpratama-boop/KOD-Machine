@@ -1,11 +1,11 @@
 # Analyst-task evaluation: report of 23 October 2026
 
-The task set and scoring rules are described in [README.md](README.md). Both measurements below use the same task file (SHA-256 `c1f780e8…`) and the
+The task set and scoring rules are described in [README.md](README.md). Both measurements below use the same task file (SHA-256 `752d60a0…`) and the
 same runner. Each was run twice on fresh workspaces, and in each case the two runs produced identical outputs:
 
 - **Before the repairs:** the code as it stood when the evaluation was first written (commit `2307e86`). Its output hash is not quoted: that code recorded issuer identities on the wall clock, so its outputs vary
   with the time of day. Its scores do not.
-- **After the repairs:** this branch. Answer hash `fda06b70…`, identical across separate processes and hash seeds; the full record is in
+- **After the repairs:** this branch. Answer hash `6370ddb6…`, identical across separate processes and hash seeds; the full record is in
   `results.json`.
 
 ## Result
@@ -14,7 +14,7 @@ same runner. Each was run twice on fresh workspaces, and in each case the two ru
 |---|---|---|
 | Tasks passed | 8 of 13 | 9 of 13 |
 | The 2 tasks overlapping no development test (T1, T3) | 1 of 2 | 1 of 2 |
-| Checks: correct / allowed unavailable / missed / material errors | 75 / 1 / 10 / 6 | 81 / 2 / 9 / 0 |
+| Checks: correct / allowed unavailable / missed / material errors | 75 / 0 / 11 / 6 | 81 / 1 / 10 / 0 |
 | Distinct cited observations resolved in the verified SEC responses | 108, all match | 106, all match |
 | Time to answer all 13 tasks (one run) | about 4 s | about 4 s |
 
@@ -29,7 +29,7 @@ answer; no wrong number or status is shown.
 | T2 Costco FY2024 profit and cash | correct | Revenue 254,453m. Operating income 9,285m. Cash from operations 153.9% of net income. Capex 1.85% of revenue. Cash from operations minus capex 6,629m. |
 | T3 TXN Q3 2024 vs its outlook | **4 missed** | The period, revenue 4,151m and its currency are correct. Missed: diluted EPS (its column period is stated only in a caption), both outlook comparisons (the outlook sentence is in a form KOD does not read), and the caveat that EPS included 3 cents outside the original guidance. |
 | T4a NVIDIA capex | **2 missed** | Cash conversion of 87.94% is correct. Capex intensity (2.48%) and cash from operations minus capex (60,853m) are reported missing, because NVIDIA tags capex as `PaymentsToAcquireProductiveAssets`, which KOD does not map. |
-| T4b JPMorgan revenue | **1 missed** | Net income −17.42% is correct, from the same 10-Q. Revenue −10.53% is reported missing, because JPMorgan tags quarterly net revenue as `RevenuesNetOfInterestExpense`, which KOD does not map. The operating margin is withheld, which is allowed for a bank. |
+| T4b JPMorgan revenue | **2 missed** | Net income −17.42% is correct, from the same 10-Q. Revenue −10.53% is reported missing, because JPMorgan tags quarterly net revenue as `RevenuesNetOfInterestExpense`, which KOD does not map. The operating margin is withheld, but for that revenue gap rather than because a bank reports no operating income, so it counts as a miss. |
 | T4c Costco 16-week quarter | correct (repaired; a regression check now) | Q4 FY2024 revenue 79,697m, derived. +0.96% against the 17-week year-ago quarter, shown with "112 vs 119 days; not like for like". Quarter on quarter (16 against 12 weeks) is withheld, with the lengths named. |
 | T5 TXN assumption to review | correct | Not triggered at 89.76 per share; triggered at 65.22 after the margin cut. The trace names `operating_margin 0.40 → 0.30`. The runner's separate implementation agrees. |
 | T6 Costco decision reopened | correct | The packet reproduces before and after the synthetic amendment, its SHA-256 verifies, and the dossier at its cutoff is unchanged. At 10 March 2025 the latest view shows the amendment. At 1 June 2025 it shows the 10-Q that re-presented 254,453m, and lists the amendment as a revision. |
@@ -53,8 +53,9 @@ has a regression test in `workstation_tests/test_gate_d.py` or `workstation_test
 **Comparisons:**
 
 - Quarter-on-quarter growth across quarters whose lengths differ by more than 15% is withheld, with the lengths named.
-- The period-length note, a new note when the two sides use different XBRL concepts, and the comparison basis now appear wherever the change appears:
-  the dossier page, the calculation page, the Markdown export, thesis condition traces and the decision packet.
+- The period-length note and a new note when the two sides use different XBRL concepts now appear wherever the change appears: the dossier page,
+  the calculation page, the Markdown export, thesis condition traces and the decision packet. The comparison basis appears on the dossier page, the
+  calculation page and the Markdown export, not in thesis traces or packets.
 
 **Other findings of the review:**
 
@@ -79,6 +80,17 @@ has a regression test in `workstation_tests/test_gate_d.py` or `workstation_test
 - The issuer identity was recorded on the wall clock, which made the evaluation's outputs depend on the time of day. It is now recorded on the
   caller's clock.
 
+**A third review round:**
+
+- The duplicate-quarter rule of the second round treated a six- or nine-month gap between year-to-date periods as a quarter that "replaced" a reported
+  one, and removed genuine reported quarters with nothing in their place. Texas Instruments' quarter-on-quarter growth at November 2009 (+17.22%),
+  Costco's diluted EPS and share-count changes at August 2010, and changes for Apple, JPMorgan, Plug Power and NVIDIA in 2009–2012 became "missing".
+  Now only quarter-length spans count as supported, and a reported quarter is removed only when a supported reported quarter or, for an additive
+  flow, a derived one takes its place. A sweep of all eight companies at 68 cutoffs in both views against `2307e86` differs only for Costco, and the
+  full-versus-truncated sweep is still identical.
+- The HTML dossier's subtitle used the current name in observed mode; it now uses the name recorded by the cutoff.
+- The refresh failure message no longer says downloaded bytes were kept when none were saved.
+
 ## Changes to the task set
 
 Each change corrects an error in an expectation or a check. None was made to match KOD's output.
@@ -93,6 +105,7 @@ Each change corrects an error in an expectation or a check. None was made to mat
 | H2 | Expected `PERIOD_UNRESOLVED`, described as a release stating no period | The column labels and the year-ago sentence identify Q2 2025. Expected Q2 2025, with a check of the analyst's period record | review |
 | T2, T5, T6, H1, H2 | Not marked as overlapping | Marked, naming the development tests | review |
 | T3, T4c, H1, T6 | Weaker checks | Guidance actuals, period and currency; all rows must agree; "not like for like" required; H1 growth; T6 revision listed | review |
+| T4b | The operating margin allowed to be "missing" for any reason | No longer allowed: KOD withholds it for a revenue gap, not for the bank reason, so it is a miss (also in the measurement of `2307e86`) | third review |
 
 The runner was also strengthened after the review:
 - Allowed outcomes are named per check, and the reason is checked.
@@ -101,7 +114,10 @@ The runner was also strengthened after the review:
 - Reproducibility hashes every output.
 - A task without checks fails.
 - The model check implements the full formula.
-- CI fails on regressions against `results.json`.
+- CI fails on regressions against `results.json`, and a missing baseline fails unless `--no-baseline` is given.
+- Misspelled expectation keys are refused, and a cell or change listed twice is a material error.
+- A withholding with a different unavailable status than expected is a miss.
+- One run reports reproducibility as not compared.
 
 The first draft's runner also counted history cells reported as `reported` or `derived` as missing; that was fixed before either measurement above.
 
@@ -122,7 +138,10 @@ These are the next acceptance work (see `DOSSIER_PROGRESS.md`). They are left un
 3. **A fallback basis label (Costco, fiscal 2018).** Concept precedence keeps one revenue concept per period across filings. The year-ago fourth
    quarter therefore comes from the 2017 10-K's `Revenues`, labelled "not presented in the current filing", although the 2018 10-K presents it under
    `RevenueFromContractWithCustomerExcludingAssessedTax`. The value is right; the label is wrong.
-4. **Stated-period rule (H2).** KOD will not infer the reported quarter from column labels. Whether it should, when a year-ago sentence corroborates them,
+4. **A mis-tagged 10-Q (Costco, June 2010).** It tags both quarter starts a week early. The current quarter is now derived (84 days), but the year-ago
+   quarter cannot be (its year-to-date periods start on different days), so the change carries a "84 vs 92 days; not like for like" note although both
+   quarters are 12 weeks. The value is right; the note is wrong.
+5. **Stated-period rule (H2).** KOD will not infer the reported quarter from column labels. Whether it should, when a year-ago sentence corroborates them,
    is an owner decision.
 
 ## What this evaluation does not show

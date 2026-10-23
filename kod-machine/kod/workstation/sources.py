@@ -303,7 +303,7 @@ def refresh_companyfacts(service, security_id: str, client=None) -> dict:
             raise SourceUnavailable(str(exc)) from exc
         raise
     except Exception as exc:              # a response of an unexpected shape: a failed job with the error type, never a traceback or an empty success
-        message = (f"the SEC companyfacts response could not be read ({type(exc).__name__}); the downloaded bytes are kept as evidence but no "
-                   "financial observation was recorded from them")
+        message = (f"the SEC companyfacts response could not be read ({type(exc).__name__}); no financial observation "
+                   "was recorded from it")
         store.record_job("sec-companyfacts", security_id, "failed", message, started_at=started, finished_at=service.clock())
         raise SourceUnavailable(message) from exc

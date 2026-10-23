@@ -78,10 +78,11 @@ def _compatible(a: ResolvedFigure, b: ResolvedFigure) -> list:
     return reasons
 
 
-def _one_quarter_per_end(quarters: dict, own: list) -> None:
+def _one_quarter_per_end(quarters: dict, own: list, additive: bool) -> None:
     """Two reported quarters ending on one date (a mis-tagged start): keep one, chosen only from the dates of the eligible figures, so the choice never
-    depends on how many other filings exist. First the quarter the year-to-date periods support (any duration metric; values are not differenced
-    here); otherwise the one contiguous with the previous quarter; otherwise the later start."""
+    depends on how many other filings exist. A reported quarter is removed only when a replacement exists: another reported quarter for that end that
+    the year-to-date periods support, or (for an additive flow) the quarter those periods will derive. Without either, both stay unless one is
+    contiguous with the previous quarter or has the later start."""
     starts = {}
     for f in own:
         if _year_to_date(f):
@@ -89,26 +90,33 @@ def _one_quarter_per_end(quarters: dict, own: list) -> None:
     derivable = set()
     for start, ends in starts.items():
         ends = sorted(ends)
-        derivable |= {((_day(a) + timedelta(days=1)).isoformat(), b) for a, b in zip(ends, ends[1:])}
-        if len(ends) > 1:                        # a fiscal year's start (it has a year-to-date series): its first quarter
-            derivable.add((start, ends[0]))
+        for a, b in zip(ends, ends[1:]):
+            q = ((_day(a) + timedelta(days=1)).isoformat(), b)
+            if duration_kind(*q) == "quarter" or (105 <= (_day(b) - _day(q[0])).days + 1 <= 126 and any(
+                    f.period.kind == "12 months" and f.period.start_date == start and f.period.end_date == b for f in own)):
+                derivable.add(q)
+        if len(ends) > 1 and duration_kind(start, ends[0]) == "quarter":
+            derivable.add((start, ends[0]))           # a fiscal year's first quarter
     by_end = {}
     for key in quarters:
         by_end.setdefault(key[1], []).append(key)
-    derivable_ends = {k[1] for k in derivable}
     for end, keys in by_end.items():
-        if end in derivable_ends and any(k not in derivable for k in keys):
-            for k in keys:                        # contradicted by the year-to-date periods: gives way (to the supported or the derived quarter)
+        supported = [k for k in keys if k in derivable]
+        will_derive = additive and any(k[1] == end and k not in quarters for k in derivable)
+        if supported or will_derive:
+            for k in keys:
                 if k not in derivable:
                     del quarters[k]
-            continue
+            if will_derive and not supported:
+                continue
+            keys = supported
         if len(keys) > 1:
-            contiguous = [k for k in keys if (_day(k[0]) - timedelta(days=1)).isoformat() in {e for _, e in quarters}]
+            ends = {e for _, e in quarters}
+            contiguous = [k for k in keys if (_day(k[0]) - timedelta(days=1)).isoformat() in ends]
             keep = max(contiguous or keys, key=lambda k: k[0])
             for k in keys:
                 if k != keep:
                     del quarters[k]
-
 
 def quarterly(figures: list, metric: str, check=None, alternatives: dict | None = None) -> list:
     """Discrete quarters for one metric from resolved duration figures (one basis/unit/currency group per call is the caller's choice; mixed groups are
@@ -122,7 +130,7 @@ def quarterly(figures: list, metric: str, check=None, alternatives: dict | None 
         if f.period.kind == "quarter" or (long_quarter(f.period) and f.period.end_date in year_ends):
             key = (f.period.start_date, f.period.end_date)
             quarters[key] = Quarter(*key, f.value, "reported" if f.status == "ok" else f.status, f, None, f.reasons)
-    _one_quarter_per_end(quarters, own)
+    _one_quarter_per_end(quarters, own, metric in ADDITIVE)
     reported_ends = {end for _, end in quarters}
     if metric not in ADDITIVE:
         return sorted(quarters.values(), key=lambda q: q.end)

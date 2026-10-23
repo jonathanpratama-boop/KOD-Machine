@@ -157,6 +157,28 @@ class Round2Tests(Case):
         self.assertEqual(scenarios.price_at(self.service, sec["id"], policy("2026-10-22T00:00:00Z", "observed"))["close"], "200.00")
 
 
+class Round3Tests(Case):
+    """Findings of the third review round: resolving duplicate quarters must not remove a genuine reported quarter."""
+
+    def test_a_six_month_gap_is_not_treated_as_a_quarter_that_replaces_a_reported_one(self):
+        d = dossier.build(self.service, self.company("TXN")["id"], policy("2009-11-15T00:00:00Z"))
+        qoq = self.change(d, "revenue_qoq")
+        self.assertEqual(qoq["status"], "ok")
+        self.assertAlmostEqual(float(qoq["value"]), 17.2161172, places=6)
+
+    def test_a_non_additive_quarter_without_a_replacement_is_kept(self):
+        d = dossier.build(self.service, self.company("COST")["id"], policy("2010-08-15T00:00:00Z"))
+        eps, shares = self.change(d, "eps_diluted_yoy"), self.change(d, "diluted_shares_yoy")
+        self.assertEqual((eps["status"], shares["status"]), ("ok", "ok"))
+        self.assertAlmostEqual(float(eps["value"]), (0.68 / 0.48 - 1) * 100, places=6)
+        self.assertAlmostEqual(float(shares["value"]), 1.907740, places=5)
+
+    def test_a_reported_fourth_quarter_stays_once_the_next_10_k_is_filed(self):
+        d = dossier.build(self.service, self.company("COST")["id"], policy("2010-11-15T00:00:00Z"))
+        [q4] = self.cells(d, "quarterly", "revenue", "2009-08-30")
+        self.assertEqual((q4["status"], q4["value"], q4["period"]["start"]), ("reported", "22378000000", "2009-05-11"))
+
+
 class RefreshTests(Case):
     def client(self, body):
         import httpx
@@ -167,7 +189,7 @@ class RefreshTests(Case):
         from kod.workstation import sources
         txn = self.store.upsert_security("TXN", "Texas Instruments", cik=CIKS["TXN"])
         for body in (b'{"cik": null, "facts": {}}', b'{"cik": 97476, "facts": {"us-gaap": "x"}}'):
-            with self.assertRaisesRegex(sources.SourceUnavailable, "kept as evidence but no financial observation was recorded"):
+            with self.assertRaisesRegex(sources.SourceUnavailable, "could not be read .*no financial observation was recorded"):
                 sources.refresh_companyfacts(self.service, txn["id"], client=self.client(body))
             self.assertEqual(self.store.jobs()[0]["status"], "failed")
             self.assertFalse(financials.FinancialRepository(self.store).all_for(txn["id"]))

@@ -120,7 +120,7 @@ class AssumptionToReviewTests(Case):
         first = decisions.review(self.service, self.sec["id"], self.at("2026-10-23T09:00:00Z"))
         before = {e["condition_id"]: e for e in first["theses"][0]["evaluations"]}
         self.assertEqual(before["base_value"]["status"], "not_triggered")
-        self.assertEqual(before["capex"]["status"], "unresolved")                         # NVIDIA's capex concept is absent: a gap, not 'false'
+        self.assertEqual(before["capex"]["status"], "unresolved")                         # no capex KOD maps at this cutoff: a gap, not 'false'
         self.at("2026-10-23T10:00:00Z")
         scenarios.save_assumptions(self.service, self.sec["id"], "base", {**ASSUMPTIONS, "operating_margin": "0.40"}, "margin compression")
         after = decisions.review(self.service, self.sec["id"], self.at("2026-10-23T11:00:00Z"))

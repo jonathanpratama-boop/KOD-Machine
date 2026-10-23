@@ -1,10 +1,10 @@
 {
  "schema": "KOD-ANALYST-EVAL-RESULTS-v2",
- "tasks_file_sha256": "c1f780e817daf89f412832d35c0f074e00b30cf29dbfc94249dbd3b8d8927c39",
+ "tasks_file_sha256": "752d60a017f9b469d3897999cde1f74678a9239a7f3d18da23f25557ff7e9355",
  "runs": 2,
  "answer_hashes": [
-  "fda06b7080fc85d845f7148d7981e1a55ca8c7af97b77a2f3a8590e1185443c9",
-  "fda06b7080fc85d845f7148d7981e1a55ca8c7af97b77a2f3a8590e1185443c9"
+  "6370ddb60f77bc6cc41e5ba238da1029b5250214f709806b889dd1f6a62f05f1",
+  "6370ddb60f77bc6cc41e5ba238da1029b5250214f709806b889dd1f6a62f05f1"
  ],
  "reproducible": true,
  "results": [
@@ -13,7 +13,7 @@
    "type": 1,
    "real": true,
    "overlaps_development": false,
-   "seconds": 0.218,
+   "seconds": 0.208,
    "passed": true,
    "counts": {
     "correct": 10,
@@ -77,14 +77,14 @@
      "got": "8.608058608058608058608058608"
     },
     {
-     "check": "2024-11-01 public as_reported: citations resolve (15 distinct observations, 20 references)",
+     "check": "2024-11-01 public as_reported: citations resolve",
      "outcome": "correct",
      "expected": "all resolve",
-     "got": "15 distinct"
+     "got": "15 distinct observations, 20 references"
     }
    ],
    "output_sha256": [
-    "ddb96401552c1523f7d1154ca14e63be720e688aaa3b1a1736d918141a3521c0"
+    "43ccb79ac12967da3e04183919cd016b53b07ad1f3d6a7a484c6c1ee3e76cc61"
    ],
    "citations_checked": 15
   },
@@ -93,7 +93,7 @@
    "type": 2,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.272,
+   "seconds": 0.214,
    "passed": true,
    "counts": {
     "correct": 7,
@@ -139,14 +139,14 @@
      "got": "6629000000"
     },
     {
-     "check": "2024-11-15 public as_reported: citations resolve (14 distinct observations, 22 references)",
+     "check": "2024-11-15 public as_reported: citations resolve",
      "outcome": "correct",
      "expected": "all resolve",
-     "got": "14 distinct"
+     "got": "14 distinct observations, 22 references"
     }
    ],
    "output_sha256": [
-    "bfbc42fb5d799743e1c9e0d1ce7ad95844cfb16a2c4554ddf4b79cdc4d471e9e"
+    "f3f3446022076c62ff17c30fd419a7aacbb2f17850249f92d4c56990ea4e6be7"
    ],
    "citations_checked": 14
   },
@@ -155,7 +155,7 @@
    "type": 3,
    "real": true,
    "overlaps_development": false,
-   "seconds": 0.134,
+   "seconds": 0.104,
    "passed": false,
    "counts": {
     "correct": 3,
@@ -241,7 +241,7 @@
    "type": 4,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.189,
+   "seconds": 0.19,
    "passed": false,
    "counts": {
     "correct": 2,
@@ -271,14 +271,14 @@
      "got": "87.93770581778265642151481888"
     },
     {
-     "check": "2025-03-01 public as_reported: citations resolve (14 distinct observations, 21 references)",
+     "check": "2025-03-01 public as_reported: citations resolve",
      "outcome": "correct",
      "expected": "all resolve",
-     "got": "14 distinct"
+     "got": "14 distinct observations, 21 references"
     }
    ],
    "output_sha256": [
-    "81e682e535566fc0a74328eb8554f062ea198b9bb6770c2246d06feb9d57e425"
+    "b395e386ecc8980ccb35e263b5771fe2a7fa63a70cf514d0b835cdf340e0ea9a"
    ],
    "citations_checked": 14
   },
@@ -287,12 +287,12 @@
    "type": 4,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.114,
+   "seconds": 0.103,
    "passed": false,
    "counts": {
     "correct": 4,
-    "allowed_unavailable": 1,
-    "missed": 1,
+    "allowed_unavailable": 0,
+    "missed": 2,
     "material_error": 0
    },
    "checks": [
@@ -323,19 +323,20 @@
     },
     {
      "check": "2025-08-15 public as_reported: operating_margin_yoy",
-     "outcome": "allowed_unavailable",
+     "outcome": "missed",
      "expected": "not_applicable",
-     "got": "missing"
+     "got": "missing",
+     "note": "an input calculation is not available: no eligible revenue for the quarter ended 2025-06-30 (its latest quarter ends 2014-12-31); no eligible revenue for the quarter ended 2025-06-30 (its latest quart"
     },
     {
-     "check": "2025-08-15 public as_reported: citations resolve (6 distinct observations, 6 references)",
+     "check": "2025-08-15 public as_reported: citations resolve",
      "outcome": "correct",
      "expected": "all resolve",
-     "got": "6 distinct"
+     "got": "6 distinct observations, 6 references"
     }
    ],
    "output_sha256": [
-    "b1000443a5c0385b49616c659318c2c2f42e5711240df2ccd91194cd9ec00a47"
+    "9d072d928fef254b282aa58ab6a7a3aacec428683aff3e6f947463bf5b0d3545"
    ],
    "citations_checked": 6
   },
@@ -344,7 +345,7 @@
    "type": 1,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.203,
+   "seconds": 0.204,
    "passed": true,
    "counts": {
     "correct": 7,
@@ -396,14 +397,14 @@
      "got": "the periods differ in length (112 vs 84 days); not like for like the two quarters differ in length (112 vs 84 days); quarter-on-quarter growth would mostly measure the extra weeks"
     },
     {
-     "check": "2024-11-15 public as_reported: citations resolve (14 distinct observations, 22 references)",
+     "check": "2024-11-15 public as_reported: citations resolve",
      "outcome": "correct",
      "expected": "all resolve",
-     "got": "14 distinct"
+     "got": "14 distinct observations, 22 references"
     }
    ],
    "output_sha256": [
-    "bfbc42fb5d799743e1c9e0d1ce7ad95844cfb16a2c4554ddf4b79cdc4d471e9e"
+    "f3f3446022076c62ff17c30fd419a7aacbb2f17850249f92d4c56990ea4e6be7"
    ],
    "citations_checked": 14
   },
@@ -412,7 +413,7 @@
    "type": 5,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.394,
+   "seconds": 0.369,
    "passed": true,
    "counts": {
     "correct": 7,
@@ -477,8 +478,8 @@
     }
    ],
    "output_sha256": [
-    "0d83fa84dc6ea4711f5d1d14849e5b8443072e3cfc418ef57f555b2d1b8f750f",
-    "f2a28e9b1688c7438bb15e0794147e515f89657ae4d6e9357c1010c2f4a7ece6"
+    "50fc110210fe6b06d8e5188a1d7903d2b069299fd24c43195846b64ac15351d3",
+    "ca832b7aceaa9e4a65895375d9abd9dd49da6ab785b5f12ddf066011952bbd2f"
    ]
   },
   {
@@ -486,7 +487,7 @@
    "type": 6,
    "real": true,
    "overlaps_development": true,
-   "seconds": 1.855,
+   "seconds": 1.918,
    "passed": true,
    "counts": {
     "correct": 9,
@@ -516,8 +517,8 @@
     {
      "check": "stored packet hash verifies",
      "outcome": "correct",
-     "expected": "de85360752949750ab5d3c05a11c8c93abfefe6051fef76d62c6ad9899c692f1",
-     "got": "de85360752949750ab5d3c05a11c8c93abfefe6051fef76d62c6ad9899c692f1"
+     "expected": "cf8f75fad08a34153b71f47101e478c80c54e621f647993c9a94749beca9a090",
+     "got": "cf8f75fad08a34153b71f47101e478c80c54e621f647993c9a94749beca9a090"
     },
     {
      "check": "2025-03-10 latest: FY2024 revenue",
@@ -567,10 +568,10 @@
     }
    ],
    "output_sha256": [
-    "f953c606f4a50853324dfebcdff7083b571a253af5d89f4cf6c72d1410e6abdb",
-    "e3865b85c060bd0f6b326906c24814965af0b16e6f5415420e4efbf8f1fbaad8",
-    "9a97b36a95ee312b477dc293a9ce2a83219072236a48f8a7eb64207b8c58cb15",
-    "5d8be8aa50b69b94b028639dd39a4276a8e76a3db1e3d3255fc399aa28bdd879"
+    "cb54ac59e10640b9ea7b55c0039a8dbf41bc54ab306fe4c79e44fade44f45c6c",
+    "75d20b4f98c66f73fc12e2fd591dc92d6e1f3c21acb75516cbfe7185a0dc3307",
+    "3a812a1883c2f1d62b8acaa01a682a3321a7684b9332328b0a5a90e07696b934",
+    "b04cba300a85e9b8b68380dfe1a5e527585ee157c457c6d9862dbfd4fbf9ae1c"
    ]
   },
   {
@@ -578,7 +579,7 @@
    "type": 4,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.252,
+   "seconds": 0.256,
    "passed": true,
    "counts": {
     "correct": 10,
@@ -628,10 +629,10 @@
      ]
     },
     {
-     "check": "2012-09-01 public as_reported: citations resolve (9 distinct observations, 10 references)",
+     "check": "2012-09-01 public as_reported: citations resolve",
      "outcome": "correct",
      "expected": "all resolve",
-     "got": "9 distinct"
+     "got": "9 distinct observations, 10 references"
     },
     {
      "check": "2012-09-01 public latest: quarterly net_income 2012-03-31",
@@ -640,10 +641,10 @@
      "got": "4924000000"
     },
     {
-     "check": "2012-09-01 public latest: citations resolve (9 distinct observations, 10 references)",
+     "check": "2012-09-01 public latest: citations resolve",
      "outcome": "correct",
      "expected": "all resolve",
-     "got": "9 distinct"
+     "got": "9 distinct observations, 10 references"
     },
     {
      "check": "2012-08-01 public latest: quarterly net_income 2012-03-31",
@@ -658,16 +659,16 @@
      "got": []
     },
     {
-     "check": "2012-08-01 public latest: citations resolve (10 distinct observations, 11 references)",
+     "check": "2012-08-01 public latest: citations resolve",
      "outcome": "correct",
      "expected": "all resolve",
-     "got": "10 distinct"
+     "got": "10 distinct observations, 11 references"
     }
    ],
    "output_sha256": [
-    "be71407e330f1a24a15737927a07ed27040c683570375750503d890829ed39df",
-    "28486c6fa0cb26251a01aa7af26577ce7cc46a21a34eeacdac6805a1af2edcac",
-    "76ef8598bf833f69e6cc79b4adbc527847ed4b84baca1058019077dd3a2b9389"
+    "9374fc4097a8f5ed082d48114e15230058fbb42c748dd3200ae8adbb7805eb54",
+    "a126c23202d4c1a5a8140e3b701e663ddda91f05d198fd5bf7eb74f6e153ba73",
+    "0269615b098d64f1dd8fa3269db49c26e19a4a48a4d8c09fd5b2ed5f109859c2"
    ],
    "citations_checked": 28
   },
@@ -676,7 +677,7 @@
    "type": 4,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.116,
+   "seconds": 0.12,
    "passed": true,
    "counts": {
     "correct": 5,
@@ -717,7 +718,7 @@
     }
    ],
    "output_sha256": [
-    "b1000443a5c0385b49616c659318c2c2f42e5711240df2ccd91194cd9ec00a47"
+    "9d072d928fef254b282aa58ab6a7a3aacec428683aff3e6f947463bf5b0d3545"
    ]
   },
   {
@@ -725,7 +726,7 @@
    "type": 1,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.182,
+   "seconds": 0.191,
    "passed": true,
    "counts": {
     "correct": 6,
@@ -765,14 +766,14 @@
      "got": "year-ago quarter as presented in the same filing (0000320193-21-000010)"
     },
     {
-     "check": "2021-02-15 public as_reported: citations resolve (15 distinct observations, 20 references)",
+     "check": "2021-02-15 public as_reported: citations resolve",
      "outcome": "correct",
      "expected": "all resolve",
-     "got": "15 distinct"
+     "got": "15 distinct observations, 20 references"
     }
    ],
    "output_sha256": [
-    "d67c6fbb463a61f48c3a6cff3f09ad39eacfae04f4ce6827b2f9f4e9e740c5db"
+    "ffbc07545d6e015d4631f9e3e178079db71d803bf76c1e0946b7175715b508c6"
    ],
    "citations_checked": 15
   },
@@ -888,7 +889,7 @@
    "type": 1,
    "real": false,
    "overlaps_development": true,
-   "seconds": 0.003,
+   "seconds": 0.002,
    "passed": false,
    "counts": {
     "correct": 2,

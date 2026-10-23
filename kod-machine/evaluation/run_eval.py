@@ -110,7 +110,7 @@ class Checks:
             self._withheld(name, expected, got, allowed, reason, reason_contains)
         elif expected in UNAVAILABLE and got == "ok":
             self.add(name, "material_error", expected, got, "a value was presented where none should be")
-        elif expected == "ok" and got in UNAVAILABLE:
+        elif got in UNAVAILABLE and (expected == "ok" or expected in UNAVAILABLE):     # withheld, but not with the status the documents call for
             self.add(name, "missed", expected, got, (reason or "")[:200] or None)
         else:
             self.add(name, "material_error", expected, got)
@@ -143,8 +143,23 @@ def import_company(service, ticker, stored_sha):
     return sec
 
 
+CELL_KEYS = {"group", "metric", "end", "value", "revision", "no_revisions"}
+CHANGE_KEYS = {"status", "value", "tolerance", "allowed_statuses", "reason_contains", "basis_contains", "duration_contains"}
+
+
+def known_keys(where, expect, allowed):
+    """A misspelled expectation key would silently skip its check; refuse it instead (the task then fails as crashed)."""
+    unknown = set(expect) - allowed
+    if unknown:
+        raise ValueError(f"{where}: unknown expectation keys {sorted(unknown)}")
+
+
 def cell(d, group, metric, end):
     return next((c for c in d["history"][group].get(metric, []) if c["period"]["end"] == end), None)
+
+
+def count_cells(d, group, metric, end):
+    return sum(1 for c in d["history"][group].get(metric, []) if c["period"]["end"] == end)
 
 
 def cell_status(c):
@@ -210,13 +225,14 @@ def check_citations(service, d, checks, label, stored_sha):
                     ("end", entry.get("end") == (period.get("end") or period.get("instant"))), ("start", entry.get("start") == period.get("start"))) if not ok]
                 if problems:
                     bad.append((o["id"], "differs in " + ", ".join(problems)))
-    name = f"{label}: citations resolve ({len(distinct)} distinct observations, {references} references)"
+    name = f"{label}: citations resolve"                 # counts go in the result, so a change in them is not read as a different check
     if bad:
         checks.add(name, "material_error", "all resolve", bad[:5])
     elif supported and not distinct and not other:
         checks.add(name, "material_error", "supported changes cite verifiable observations", "none")
     else:
-        checks.add(name, "correct", "all resolve", f"{len(distinct)} distinct" + (f"; {other} non-SEC inputs not checked here" if other else ""))
+        checks.add(name, "correct", "all resolve", f"{len(distinct)} distinct observations, {references} references"
+                   + (f"; {other} non-SEC inputs not checked here" if other else ""))
     return len(distinct)
 
 
@@ -230,8 +246,11 @@ def run_dossier(service, task, secs, checks, stored_sha):
         if "latest_quarter_end" in e:
             checks.status(f"{label}: latest quarter", e["latest_quarter_end"], d.get("latest_quarter_end"))
         for c in e.get("cells", []):
+            known_keys(label, c, CELL_KEYS)
             got = cell(d, c["group"], c["metric"], c["end"])
             name = f"{label}: {c['group']} {c['metric']} {c['end']}"
+            if count_cells(d, c["group"], c["metric"], c["end"]) > 1:
+                checks.add(name + " listed once", "material_error", 1, count_cells(d, c["group"], c["metric"], c["end"]))
             checks.number(name, c["value"], got and got["value"], "0", cell_status(got), reason="; ".join((got or {}).get("reasons", [])))
             revs = (got or {}).get("revisions", [])
             if "revision" in c:
@@ -240,8 +259,11 @@ def run_dossier(service, task, secs, checks, stored_sha):
             if c.get("no_revisions"):
                 checks.add(name + " shows no later revision", "material_error" if revs else "correct", [], [(r["value"], r["form"]) for r in revs])
         for key, x in e.get("changes", {}).items():
+            known_keys(f"{label} {key}", x, CHANGE_KEYS)
             ch = change(d, key)
             name = f"{label}: {key}"
+            if sum(1 for c in d["changes"] if c["key"] == key) > 1:
+                checks.add(name + " listed once", "material_error", 1, sum(1 for c in d["changes"] if c["key"] == key))
             if ch is None:
                 checks.add(name, "missed", x, "not in the dossier")
                 continue
@@ -545,7 +567,8 @@ def summary_markdown(results, hashes, regressed=None):
               f"Checks: {sum(total.values())}; correct {total['correct']}, allowed unavailable {total['allowed_unavailable']}, missed {total['missed']}, "
               f"material errors {total['material_error']}.",
               f"Citations: {sum(r.get('citations_checked', 0) for r in results)} distinct observations (counted per build) resolved against the verified preserved responses.",
-              f"Reproducibility: {len(hashes)} run(s) on fresh workspaces; output hashes {'identical' if len(set(hashes)) == 1 else 'DIFFERENT'} ({hashes[0][:16]}…)."]
+              f"Reproducibility: {len(hashes)} run(s) on fresh workspaces; output hashes "
+              f"{'not compared (one run)' if len(hashes) == 1 else 'identical' if len(set(hashes)) == 1 else 'DIFFERENT'} ({hashes[0][:16]}…)."]
     if regressed is not None:
         lines.append(f"Regressions against the baseline: {len(regressed)}." + "".join(f"\n- {x}" for x in regressed))
     for r in results:
@@ -567,14 +590,17 @@ def main(argv=None):
     hashes = [answers_hash(r) for r in runs]
     results = runs[0]
     regressed = None
-    if not args.no_baseline and args.baseline.exists():
+    if not args.no_baseline:
+        if not args.baseline.exists():                   # a missing baseline must not silently turn the regression gate off
+            print(f"no baseline at {args.baseline}; pass --no-baseline to run without one", file=sys.stderr)
+            return 1
         regressed = regressions(results, json.loads(args.baseline.read_text()))
     report = {"schema": "KOD-ANALYST-EVAL-RESULTS-v2", "tasks_file_sha256": hashlib.sha256((HERE / "tasks.json").read_bytes()).hexdigest(),
-              "runs": len(runs), "answer_hashes": hashes, "reproducible": len(set(hashes)) == 1, "results": results}
+              "runs": len(runs), "answer_hashes": hashes, "reproducible": None if len(runs) == 1 else len(set(hashes)) == 1, "results": results}
     if args.out:
         args.out.write_text(json.dumps(report, indent=1, default=str) + "\n")
     print(summary_markdown(results, hashes, regressed))
-    failed = any(r["counts"]["material_error"] for r in results) or not report["reproducible"] or bool(regressed)
+    failed = any(r["counts"]["material_error"] for r in results) or report["reproducible"] is False or bool(regressed)
     return 1 if failed else 0
 
 
