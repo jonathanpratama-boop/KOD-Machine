@@ -1,0 +1,38 @@
+[
+ {
+  "role": "current",
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+  "file": "current_q3fy25pr.htm",
+  "bytes": 360090,
+  "sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+  "retrieved_at": "2026-10-22T14:40:11Z",
+  "http_status": 200
+ },
+ {
+  "role": "current",
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/0001045810-24-000315-index-headers.html",
+  "file": "current_0001045810-24-000315-index-headers.html",
+  "bytes": 6296,
+  "sha256": "f7c83fda519c98d2fd198ec9442b056ad6273386cfc6c63761896b7377b4a1ca",
+  "retrieved_at": "2026-10-22T14:40:12Z",
+  "http_status": 200
+ },
+ {
+  "role": "prior",
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000262/q2fy25pr.htm",
+  "file": "prior_q2fy25pr.htm",
+  "bytes": 365628,
+  "sha256": "c62a56e9c22743b38e5f54a075d586e47ef28b216c0e515697d0e247590145ff",
+  "retrieved_at": "2026-10-22T14:40:12Z",
+  "http_status": 200
+ },
+ {
+  "role": "prior",
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000262/0001045810-24-000262-index-headers.html",
+  "file": "prior_0001045810-24-000262-index-headers.html",
+  "bytes": 6325,
+  "sha256": "b32c1c54fcdeabc9f1379e8434e1e4565c2a81359aaa707dc2532284a113a36a",
+  "retrieved_at": "2026-10-22T14:40:12Z",
+  "http_status": 200
+ }
+]

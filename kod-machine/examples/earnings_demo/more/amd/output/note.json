@@ -1,0 +1,5147 @@
+{
+  "schema_version": "KOD-EARNINGS-NOTE-v1",
+  "research_only": true,
+  "entry_permission": false,
+  "company": "Advanced Micro Devices, Inc.",
+  "ticker": "AMD",
+  "venue": "XNAS",
+  "event": "EARNINGS_ANNOUNCEMENT",
+  "period": "Q3 2024",
+  "as_of": "2024-10-29T22:00:00Z",
+  "mode": "public",
+  "cutoff": {
+    "current_release_eligible": true,
+    "excluded": {}
+  },
+  "sources": [
+    {
+      "role": "current",
+      "name": "q32024991.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm",
+      "sha256": "c65139f630ce54d6ba5ef5be035ffd7b61bd201550bdb29fbfdf3ef816e6fd89",
+      "bytes": 415793,
+      "published_at": "2024-10-29T20:16:49Z",
+      "published_basis": "SEC acceptance time from the filing's own header (New York clock converted to UTC)",
+      "observed_at": "2026-10-22T15:22:46Z",
+      "observed_basis": "retrieval time supplied by the user"
+    },
+    {
+      "role": "comparison",
+      "name": "q22024991.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248824000121/q22024991.htm",
+      "sha256": "e59007d5df0ad9fb9d996ed23c00d9ed3c127f6923bb7c6de14a7197502be5d0",
+      "bytes": 411942,
+      "published_at": "2024-07-30T20:17:15Z",
+      "published_basis": "SEC acceptance time from the filing's own header (New York clock converted to UTC)",
+      "observed_at": "2026-10-22T15:22:47Z",
+      "observed_basis": "retrieval time supplied by the user"
+    }
+  ],
+  "bundle_sha256": "e0c34545d112bbe0feddccecc4691f27a69ea245f201ab353d83047d7e311ba6",
+  "workbench_report": {
+    "schema_version": "KOD-WORKBENCH-REPORT-v1",
+    "research_only": true,
+    "entry_permission": false,
+    "input_bundle_sha256": "e0c34545d112bbe0feddccecc4691f27a69ea245f201ab353d83047d7e311ba6",
+    "synthetic": false,
+    "mode": "public",
+    "availability_basis": "HISTORICAL_RECONSTRUCTION_PUBLICATION_ONLY",
+    "as_of": "2024-10-29T22:00:00Z",
+    "query": "",
+    "security_id": "AMD.XNAS",
+    "coverage": {
+      "scope": "INPUT_BUNDLE_ONLY",
+      "securities_input": 1,
+      "documents_input": 2,
+      "documents_eligible": 2,
+      "documents_excluded": 0,
+      "eligible_events": 2,
+      "search_events_total": 2,
+      "primary_events_total": 2
+    },
+    "excluded_documents": [],
+    "search_results": [
+      {
+        "card_id": "WB-6bd265c4ac3dc0573763",
+        "event_id": "AMD-Q3-2024-earnings",
+        "security_ids": [
+          "AMD.XNAS"
+        ],
+        "securities": [
+          {
+            "security_id": "AMD.XNAS",
+            "issuer_id": "Advanced Micro Devices, Inc.",
+            "ticker": "AMD",
+            "venue": "XNAS",
+            "currency": "USD"
+          }
+        ],
+        "title": "AMD Reports Third Quarter 2024 Financial Results",
+        "preview": "EX-99.1 2 q32024991.htm EX-99.1 Document\nNEWS RELEASE\nMedia Contact:\nDrew Prairie\nAMD Communications\n512-602-4425\ndrew.prairie@amd.com\nInvestor Contact:\nMitch Haws\nAMD Investor Relations\n408-749-3124\nmitch.haws@amd.com\nAMD Reports Third Quarter 2024 Financial Results\nSANTA CLARA,",
+        "preview_type": "EXTRACTIVE_PREVIEW",
+        "relevance_score": 0.0,
+        "latest_publication_at": "2024-10-29T20:16:49Z",
+        "document_count": 1,
+        "unique_content_count": 1,
+        "duplicate_count": 0,
+        "declared_source_families": [
+          "issuer-earnings-release"
+        ],
+        "source_lineage_unknown_count": 0,
+        "citations": [
+          {
+            "document_id": "current-release",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm",
+            "publisher": "Advanced Micro Devices, Inc.",
+            "source_kind": "PRIMARY",
+            "source_family": "issuer-earnings-release",
+            "content_sha256": "5b633e92ed8d7248a9de90d4b488d1adf69d70b9b27952e6470d6577c8271553",
+            "normalized_sha256": "4193f83e182f721b2aa8ac39d5934ddc17125054e767ddf80f344f001f311db3",
+            "replaces_document_id": null,
+            "published_at": "2024-10-29T20:16:49Z",
+            "observed_at": "2026-10-22T15:22:46Z",
+            "current": true,
+            "content_hash_basis": "SUPPLIED_TITLE_AND_TEXT"
+          }
+        ],
+        "current_document_ids": [
+          "current-release"
+        ],
+        "superseded_document_ids": [],
+        "corrections": [],
+        "comparisons": [
+          {
+            "metric": "eps_diluted [GAAP]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "0.16",
+                "source_quote": "Diluted earnings per share | $0.47 | $0.18 | Up 161% | $0.16 | Up 194%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "eps_diluted [GAAP]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "0.18",
+                "source_quote": "Diluted earnings per share | $0.47 | $0.18 | Up 161% | $0.16 | Up 194%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "eps_diluted [GAAP]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "0.47",
+                "source_quote": "Diluted earnings per share | $0.47 | $0.18 | Up 161% | $0.16 | Up 194%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "eps_diluted [NON-GAAP]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "0.69",
+                "source_quote": "Diluted earnings per share | $0.92 | $0.70 | Up 31% | $0.69 | Up 33%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "eps_diluted [NON-GAAP]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "0.7",
+                "source_quote": "Diluted earnings per share | $0.92 | $0.70 | Up 31% | $0.69 | Up 33%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "eps_diluted [NON-GAAP]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "0.92",
+                "source_quote": "Diluted earnings per share | $0.92 | $0.70 | Up 31% | $0.69 | Up 33%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "49",
+                "source_quote": "Gross margin | 50% | 47% | Up 3 ppts | 49% | Up 1 ppt",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "47",
+                "source_quote": "Gross margin | 50% | 47% | Up 3 ppts | 49% | Up 1 ppt",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "50",
+                "source_quote": "Gross margin | 50% | 47% | Up 3 ppts | 49% | Up 1 ppt",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "47",
+                "source_quote": "GAAP gross margin | 50% | 49% | 47%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "quarter ended 2024-06-29",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "49",
+                "source_quote": "GAAP gross margin | 50% | 49% | 47%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "50",
+                "source_quote": "GAAP gross margin | 50% | 49% | 47%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [NON-GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "53",
+                "source_quote": "Gross margin | 54% | 51% | Up 3 ppts | 53% | Up 1 ppt",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [NON-GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "51",
+                "source_quote": "Gross margin | 54% | 51% | Up 3 ppts | 53% | Up 1 ppt",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [NON-GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "54",
+                "source_quote": "Gross margin | 54% | 51% | Up 3 ppts | 53% | Up 1 ppt",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [NON-GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "51",
+                "source_quote": "Non-GAAP gross margin | 54% | 53% | 51%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [NON-GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "quarter ended 2024-06-29",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "53",
+                "source_quote": "Non-GAAP gross margin | 54% | 53% | 51%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [NON-GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "54",
+                "source_quote": "Non-GAAP gross margin | 54% | 53% | 51%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "265",
+                "source_quote": "Net income ($M) | $771 | $299 | Up 158% | $265 | Up 191%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "299",
+                "source_quote": "Net income ($M) | $771 | $299 | Up 158% | $265 | Up 191%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "771",
+                "source_quote": "Net income ($M) | $771 | $299 | Up 158% | $265 | Up 191%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1126",
+                "source_quote": "Net income ($M) | $1,504 | $1,135 | Up 33% | $1,126 | Up 34%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1135",
+                "source_quote": "Net income ($M) | $1,504 | $1,135 | Up 33% | $1,126 | Up 34%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "1504",
+                "source_quote": "Net income ($M) | $1,504 | $1,135 | Up 33% | $1,126 | Up 34%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [UNSTATED]",
+            "unit": "unscaled",
+            "currency": "USD",
+            "period": "9 months ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "187",
+                "source_quote": "Net income | $771 | $299 | $1,159 | $187",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [UNSTATED]",
+            "unit": "unscaled",
+            "currency": "USD",
+            "period": "9 months ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1159",
+                "source_quote": "Net income | $771 | $299 | $1,159 | $187",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [UNSTATED]",
+            "unit": "unscaled",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "299",
+                "source_quote": "Net income | $771 | $299 | $1,159 | $187",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [UNSTATED]",
+            "unit": "unscaled",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "771",
+                "source_quote": "Net income | $771 | $299 | $1,159 | $187",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "2605",
+                "source_quote": "Operating expenses ($M) | $2,709 | $2,533 | Up 7% | $2,605 | Up 4%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "2533",
+                "source_quote": "Operating expenses ($M) | $2,709 | $2,533 | Up 7% | $2,605 | Up 4%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "2709",
+                "source_quote": "Operating expenses ($M) | $2,709 | $2,533 | Up 7% | $2,605 | Up 4%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "2533",
+                "source_quote": "GAAP operating expenses | $2,709 | $2,605 | $2,533",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-06-29",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "2605",
+                "source_quote": "GAAP operating expenses | $2,709 | $2,605 | $2,533",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "2709",
+                "source_quote": "GAAP operating expenses | $2,709 | $2,605 | $2,533",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1847",
+                "source_quote": "Operating expenses ($M) | $1,956 | $1,697 | Up 15% | $1,847 | Up 6%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1697",
+                "source_quote": "Operating expenses ($M) | $1,956 | $1,697 | Up 15% | $1,847 | Up 6%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "1956",
+                "source_quote": "Operating expenses ($M) | $1,956 | $1,697 | Up 15% | $1,847 | Up 6%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1697",
+                "source_quote": "Non-GAAP operating expenses | $1,956 | $1,847 | $1,697",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-06-29",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1847",
+                "source_quote": "Non-GAAP operating expenses | $1,956 | $1,847 | $1,697",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1956",
+                "source_quote": "Non-GAAP operating expenses | $1,956 | $1,847 | $1,697",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "269",
+                "source_quote": "Operating income ($M) | $724 | $224 | Up 223% | $269 | Up 169%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "224",
+                "source_quote": "Operating income ($M) | $724 | $224 | Up 223% | $269 | Up 169%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "724",
+                "source_quote": "Operating income ($M) | $724 | $224 | Up 223% | $269 | Up 169%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "224",
+                "source_quote": "GAAP operating income | $724 | $269 | $224",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-06-29",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "269",
+                "source_quote": "GAAP operating income | $724 | $269 | $224",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "724",
+                "source_quote": "GAAP operating income | $724 | $269 | $224",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1264",
+                "source_quote": "Operating income ($M) | $1,715 | $1,276 | Up 34% | $1,264 | Up 36%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1276",
+                "source_quote": "Operating income ($M) | $1,715 | $1,276 | Up 34% | $1,264 | Up 36%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "1715",
+                "source_quote": "Operating income ($M) | $1,715 | $1,276 | Up 34% | $1,264 | Up 36%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1276",
+                "source_quote": "Non-GAAP operating income | $1,715 | $1,264 | $1,276",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-06-29",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1264",
+                "source_quote": "Non-GAAP operating income | $1,715 | $1,264 | $1,276",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1715",
+                "source_quote": "Non-GAAP operating income | $1,715 | $1,264 | $1,276",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "5835",
+                "source_quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "5800",
+                "source_quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "6819",
+                "source_quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "5835",
+                "source_quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "5800",
+                "source_quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "6819",
+                "source_quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "card_id": "WB-0665fe41c334eae40e76",
+        "event_id": "AMD-Q2-2024-earnings",
+        "security_ids": [
+          "AMD.XNAS"
+        ],
+        "securities": [
+          {
+            "security_id": "AMD.XNAS",
+            "issuer_id": "Advanced Micro Devices, Inc.",
+            "ticker": "AMD",
+            "venue": "XNAS",
+            "currency": "USD"
+          }
+        ],
+        "title": "AMD Reports Second Quarter 2024 Financial Results",
+        "preview": "EX-99.1 2 q22024991.htm EX-99.1 Document\nNEWS RELEASE\nMedia Contact:\nDrew Prairie\nAMD Communications\n512-602-4425\ndrew.prairie@amd.com\nInvestor Contact:\nMitch Haws\nAMD Investor Relations\n408-749-3124\nmitch.haws@amd.com\nAMD Reports Second Quarter 2024 Financial Results\nSANTA CLARA",
+        "preview_type": "EXTRACTIVE_PREVIEW",
+        "relevance_score": 0.0,
+        "latest_publication_at": "2024-07-30T20:17:15Z",
+        "document_count": 1,
+        "unique_content_count": 1,
+        "duplicate_count": 0,
+        "declared_source_families": [
+          "issuer-earnings-release"
+        ],
+        "source_lineage_unknown_count": 0,
+        "citations": [
+          {
+            "document_id": "comparison-release",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248824000121/q22024991.htm",
+            "publisher": "Advanced Micro Devices, Inc.",
+            "source_kind": "PRIMARY",
+            "source_family": "issuer-earnings-release",
+            "content_sha256": "0ce027d96a062ace4ddf7ab996cd5ba857db03f168c5799cc5ab3b3ac78eb17f",
+            "normalized_sha256": "e64754c0ecf37a3ab2baa850c2f06e26226d81696c6f68ca91160ce233e6e720",
+            "replaces_document_id": null,
+            "published_at": "2024-07-30T20:17:15Z",
+            "observed_at": "2026-10-22T15:22:47Z",
+            "current": true,
+            "content_hash_basis": "SUPPLIED_TITLE_AND_TEXT"
+          }
+        ],
+        "current_document_ids": [
+          "comparison-release"
+        ],
+        "superseded_document_ids": [],
+        "corrections": [],
+        "comparisons": []
+      }
+    ],
+    "primary_disclosures": [
+      {
+        "card_id": "WB-6bd265c4ac3dc0573763",
+        "event_id": "AMD-Q3-2024-earnings",
+        "security_ids": [
+          "AMD.XNAS"
+        ],
+        "securities": [
+          {
+            "security_id": "AMD.XNAS",
+            "issuer_id": "Advanced Micro Devices, Inc.",
+            "ticker": "AMD",
+            "venue": "XNAS",
+            "currency": "USD"
+          }
+        ],
+        "title": "AMD Reports Third Quarter 2024 Financial Results",
+        "preview": "EX-99.1 2 q32024991.htm EX-99.1 Document\nNEWS RELEASE\nMedia Contact:\nDrew Prairie\nAMD Communications\n512-602-4425\ndrew.prairie@amd.com\nInvestor Contact:\nMitch Haws\nAMD Investor Relations\n408-749-3124\nmitch.haws@amd.com\nAMD Reports Third Quarter 2024 Financial Results\nSANTA CLARA,",
+        "preview_type": "EXTRACTIVE_PREVIEW",
+        "relevance_score": 0.0,
+        "latest_publication_at": "2024-10-29T20:16:49Z",
+        "document_count": 1,
+        "unique_content_count": 1,
+        "duplicate_count": 0,
+        "declared_source_families": [
+          "issuer-earnings-release"
+        ],
+        "source_lineage_unknown_count": 0,
+        "citations": [
+          {
+            "document_id": "current-release",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm",
+            "publisher": "Advanced Micro Devices, Inc.",
+            "source_kind": "PRIMARY",
+            "source_family": "issuer-earnings-release",
+            "content_sha256": "5b633e92ed8d7248a9de90d4b488d1adf69d70b9b27952e6470d6577c8271553",
+            "normalized_sha256": "4193f83e182f721b2aa8ac39d5934ddc17125054e767ddf80f344f001f311db3",
+            "replaces_document_id": null,
+            "published_at": "2024-10-29T20:16:49Z",
+            "observed_at": "2026-10-22T15:22:46Z",
+            "current": true,
+            "content_hash_basis": "SUPPLIED_TITLE_AND_TEXT"
+          }
+        ],
+        "current_document_ids": [
+          "current-release"
+        ],
+        "superseded_document_ids": [],
+        "corrections": [],
+        "comparisons": [
+          {
+            "metric": "eps_diluted [GAAP]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "0.16",
+                "source_quote": "Diluted earnings per share | $0.47 | $0.18 | Up 161% | $0.16 | Up 194%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "eps_diluted [GAAP]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "0.18",
+                "source_quote": "Diluted earnings per share | $0.47 | $0.18 | Up 161% | $0.16 | Up 194%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "eps_diluted [GAAP]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "0.47",
+                "source_quote": "Diluted earnings per share | $0.47 | $0.18 | Up 161% | $0.16 | Up 194%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "eps_diluted [NON-GAAP]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "0.69",
+                "source_quote": "Diluted earnings per share | $0.92 | $0.70 | Up 31% | $0.69 | Up 33%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "eps_diluted [NON-GAAP]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "0.7",
+                "source_quote": "Diluted earnings per share | $0.92 | $0.70 | Up 31% | $0.69 | Up 33%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "eps_diluted [NON-GAAP]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "0.92",
+                "source_quote": "Diluted earnings per share | $0.92 | $0.70 | Up 31% | $0.69 | Up 33%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "49",
+                "source_quote": "Gross margin | 50% | 47% | Up 3 ppts | 49% | Up 1 ppt",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "47",
+                "source_quote": "Gross margin | 50% | 47% | Up 3 ppts | 49% | Up 1 ppt",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "50",
+                "source_quote": "Gross margin | 50% | 47% | Up 3 ppts | 49% | Up 1 ppt",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "47",
+                "source_quote": "GAAP gross margin | 50% | 49% | 47%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "quarter ended 2024-06-29",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "49",
+                "source_quote": "GAAP gross margin | 50% | 49% | 47%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "50",
+                "source_quote": "GAAP gross margin | 50% | 49% | 47%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [NON-GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "53",
+                "source_quote": "Gross margin | 54% | 51% | Up 3 ppts | 53% | Up 1 ppt",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [NON-GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "51",
+                "source_quote": "Gross margin | 54% | 51% | Up 3 ppts | 53% | Up 1 ppt",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [NON-GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "54",
+                "source_quote": "Gross margin | 54% | 51% | Up 3 ppts | 53% | Up 1 ppt",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [NON-GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "51",
+                "source_quote": "Non-GAAP gross margin | 54% | 53% | 51%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [NON-GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "quarter ended 2024-06-29",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "53",
+                "source_quote": "Non-GAAP gross margin | 54% | 53% | 51%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "gross_margin [NON-GAAP]",
+            "unit": "percent",
+            "currency": null,
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "54",
+                "source_quote": "Non-GAAP gross margin | 54% | 53% | 51%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "265",
+                "source_quote": "Net income ($M) | $771 | $299 | Up 158% | $265 | Up 191%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "299",
+                "source_quote": "Net income ($M) | $771 | $299 | Up 158% | $265 | Up 191%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "771",
+                "source_quote": "Net income ($M) | $771 | $299 | Up 158% | $265 | Up 191%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1126",
+                "source_quote": "Net income ($M) | $1,504 | $1,135 | Up 33% | $1,126 | Up 34%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1135",
+                "source_quote": "Net income ($M) | $1,504 | $1,135 | Up 33% | $1,126 | Up 34%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "1504",
+                "source_quote": "Net income ($M) | $1,504 | $1,135 | Up 33% | $1,126 | Up 34%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [UNSTATED]",
+            "unit": "unscaled",
+            "currency": "USD",
+            "period": "9 months ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "187",
+                "source_quote": "Net income | $771 | $299 | $1,159 | $187",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [UNSTATED]",
+            "unit": "unscaled",
+            "currency": "USD",
+            "period": "9 months ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1159",
+                "source_quote": "Net income | $771 | $299 | $1,159 | $187",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [UNSTATED]",
+            "unit": "unscaled",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "299",
+                "source_quote": "Net income | $771 | $299 | $1,159 | $187",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [UNSTATED]",
+            "unit": "unscaled",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "771",
+                "source_quote": "Net income | $771 | $299 | $1,159 | $187",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "2605",
+                "source_quote": "Operating expenses ($M) | $2,709 | $2,533 | Up 7% | $2,605 | Up 4%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "2533",
+                "source_quote": "Operating expenses ($M) | $2,709 | $2,533 | Up 7% | $2,605 | Up 4%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "2709",
+                "source_quote": "Operating expenses ($M) | $2,709 | $2,533 | Up 7% | $2,605 | Up 4%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "2533",
+                "source_quote": "GAAP operating expenses | $2,709 | $2,605 | $2,533",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-06-29",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "2605",
+                "source_quote": "GAAP operating expenses | $2,709 | $2,605 | $2,533",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "2709",
+                "source_quote": "GAAP operating expenses | $2,709 | $2,605 | $2,533",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1847",
+                "source_quote": "Operating expenses ($M) | $1,956 | $1,697 | Up 15% | $1,847 | Up 6%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1697",
+                "source_quote": "Operating expenses ($M) | $1,956 | $1,697 | Up 15% | $1,847 | Up 6%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "1956",
+                "source_quote": "Operating expenses ($M) | $1,956 | $1,697 | Up 15% | $1,847 | Up 6%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1697",
+                "source_quote": "Non-GAAP operating expenses | $1,956 | $1,847 | $1,697",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-06-29",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1847",
+                "source_quote": "Non-GAAP operating expenses | $1,956 | $1,847 | $1,697",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_expenses [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1956",
+                "source_quote": "Non-GAAP operating expenses | $1,956 | $1,847 | $1,697",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "269",
+                "source_quote": "Operating income ($M) | $724 | $224 | Up 223% | $269 | Up 169%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "224",
+                "source_quote": "Operating income ($M) | $724 | $224 | Up 223% | $269 | Up 169%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "724",
+                "source_quote": "Operating income ($M) | $724 | $224 | Up 223% | $269 | Up 169%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "224",
+                "source_quote": "GAAP operating income | $724 | $269 | $224",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-06-29",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "269",
+                "source_quote": "GAAP operating income | $724 | $269 | $224",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "724",
+                "source_quote": "GAAP operating income | $724 | $269 | $224",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1264",
+                "source_quote": "Operating income ($M) | $1,715 | $1,276 | Up 34% | $1,264 | Up 36%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1276",
+                "source_quote": "Operating income ($M) | $1,715 | $1,276 | Up 34% | $1,264 | Up 36%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "1715",
+                "source_quote": "Operating income ($M) | $1,715 | $1,276 | Up 34% | $1,264 | Up 36%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1276",
+                "source_quote": "Non-GAAP operating income | $1,715 | $1,264 | $1,276",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-06-29",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1264",
+                "source_quote": "Non-GAAP operating income | $1,715 | $1,264 | $1,276",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-28",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "1715",
+                "source_quote": "Non-GAAP operating income | $1,715 | $1,264 | $1,276",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "5835",
+                "source_quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "5800",
+                "source_quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "6819",
+                "source_quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q2 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "5835",
+                "source_quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2023",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "5800",
+                "source_quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [NON-GAAP]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "Q3 2024",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "6819",
+                "source_quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%",
+                "published_at": "2024-10-29T20:16:49Z"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "card_id": "WB-0665fe41c334eae40e76",
+        "event_id": "AMD-Q2-2024-earnings",
+        "security_ids": [
+          "AMD.XNAS"
+        ],
+        "securities": [
+          {
+            "security_id": "AMD.XNAS",
+            "issuer_id": "Advanced Micro Devices, Inc.",
+            "ticker": "AMD",
+            "venue": "XNAS",
+            "currency": "USD"
+          }
+        ],
+        "title": "AMD Reports Second Quarter 2024 Financial Results",
+        "preview": "EX-99.1 2 q22024991.htm EX-99.1 Document\nNEWS RELEASE\nMedia Contact:\nDrew Prairie\nAMD Communications\n512-602-4425\ndrew.prairie@amd.com\nInvestor Contact:\nMitch Haws\nAMD Investor Relations\n408-749-3124\nmitch.haws@amd.com\nAMD Reports Second Quarter 2024 Financial Results\nSANTA CLARA",
+        "preview_type": "EXTRACTIVE_PREVIEW",
+        "relevance_score": 0.0,
+        "latest_publication_at": "2024-07-30T20:17:15Z",
+        "document_count": 1,
+        "unique_content_count": 1,
+        "duplicate_count": 0,
+        "declared_source_families": [
+          "issuer-earnings-release"
+        ],
+        "source_lineage_unknown_count": 0,
+        "citations": [
+          {
+            "document_id": "comparison-release",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248824000121/q22024991.htm",
+            "publisher": "Advanced Micro Devices, Inc.",
+            "source_kind": "PRIMARY",
+            "source_family": "issuer-earnings-release",
+            "content_sha256": "0ce027d96a062ace4ddf7ab996cd5ba857db03f168c5799cc5ab3b3ac78eb17f",
+            "normalized_sha256": "e64754c0ecf37a3ab2baa850c2f06e26226d81696c6f68ca91160ce233e6e720",
+            "replaces_document_id": null,
+            "published_at": "2024-07-30T20:17:15Z",
+            "observed_at": "2026-10-22T15:22:47Z",
+            "current": true,
+            "content_hash_basis": "SUPPLIED_TITLE_AND_TEXT"
+          }
+        ],
+        "current_document_ids": [
+          "comparison-release"
+        ],
+        "superseded_document_ids": [],
+        "corrections": [],
+        "comparisons": []
+      }
+    ],
+    "warnings": [
+      "HISTORICAL_RECONSTRUCTION: observation cutoff is not enforced; this report does not show what the system knew then.",
+      "INPUT_BUNDLE_ONLY: counts describe the supplied bundle, not completed market/source coverage.",
+      "Mappings, timestamps, quotations and source families are supplied assertions; no source or historical-content verification is performed.",
+      "Declared source families and publisher diversity do not prove independent corroboration.",
+      "Relevance scores rank research attention, not expected returns or entry eligibility."
+    ]
+  },
+  "issues": [
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 7",
+      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them (5 dated columns under 2 duration headings); their values are not read"
+    },
+    {
+      "code": "UNIT_SCALE_UNSTATED",
+      "where": "table 9",
+      "detail": "no 'in millions/thousands' statement found for this table; amounts are kept unscaled and flagged"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 10",
+      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them (5 dated columns under 2 duration headings); their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 13",
+      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them (5 dated columns under 2 duration headings); their values are not read"
+    }
+  ],
+  "headline": {
+    "paragraph": null,
+    "quarter_ended": null,
+    "fiscal_quarter_title": null,
+    "revenue_headline": {
+      "value": "6.8",
+      "scale": "billion",
+      "quote": "revenue for the third quarter of 2024 of $6.8 billion"
+    },
+    "eps_headline": {
+      "UNSTATED": {
+        "value": "0.47",
+        "quote": "diluted earnings per share of $0.47"
+      }
+    },
+    "checks": [
+      {
+        "check": "headline revenue vs table revenue",
+        "ok": true,
+        "headline": "revenue for the third quarter of 2024 of $6.8 billion",
+        "table_value_millions": "6819"
+      },
+      {
+        "check": "headline UNSTATED diluted EPS vs table",
+        "ok": true,
+        "headline": "diluted earnings per share of $0.47",
+        "table_value": "0.47, 0.92"
+      }
+    ]
+  },
+  "facts": [
+    {
+      "metric": "revenue",
+      "basis": "GAAP",
+      "period": "Q3 2024",
+      "value": "6819",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 3,
+        "label": "Revenue ($M)",
+        "quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "gross_margin",
+      "basis": "GAAP",
+      "period": "Q3 2024",
+      "value": "50",
+      "unit": "percent",
+      "currency": null,
+      "evidence": {
+        "table": 1,
+        "row": 5,
+        "label": "Gross margin",
+        "quote": "Gross margin | 50% | 47% | Up 3 ppts | 49% | Up 1 ppt"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "GAAP",
+      "period": "Q3 2024",
+      "value": "2709",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 6,
+        "label": "Operating expenses ($M)",
+        "quote": "Operating expenses ($M) | $2,709 | $2,533 | Up 7% | $2,605 | Up 4%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "GAAP",
+      "period": "Q3 2024",
+      "value": "724",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 7,
+        "label": "Operating income ($M)",
+        "quote": "Operating income ($M) | $724 | $224 | Up 223% | $269 | Up 169%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "net_income",
+      "basis": "GAAP",
+      "period": "Q3 2024",
+      "value": "771",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 9,
+        "label": "Net income ($M)",
+        "quote": "Net income ($M) | $771 | $299 | Up 158% | $265 | Up 191%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "eps_diluted",
+      "basis": "GAAP",
+      "period": "Q3 2024",
+      "value": "0.47",
+      "unit": "per_share",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 10,
+        "label": "Diluted earnings per share",
+        "quote": "Diluted earnings per share | $0.47 | $0.18 | Up 161% | $0.16 | Up 194%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "revenue",
+      "basis": "NON-GAAP",
+      "period": "Q3 2024",
+      "value": "6819",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 3,
+        "label": "Revenue ($M)",
+        "quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "gross_margin",
+      "basis": "NON-GAAP",
+      "period": "Q3 2024",
+      "value": "54",
+      "unit": "percent",
+      "currency": null,
+      "evidence": {
+        "table": 2,
+        "row": 5,
+        "label": "Gross margin",
+        "quote": "Gross margin | 54% | 51% | Up 3 ppts | 53% | Up 1 ppt"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "NON-GAAP",
+      "period": "Q3 2024",
+      "value": "1956",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 6,
+        "label": "Operating expenses ($M)",
+        "quote": "Operating expenses ($M) | $1,956 | $1,697 | Up 15% | $1,847 | Up 6%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "NON-GAAP",
+      "period": "Q3 2024",
+      "value": "1715",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 7,
+        "label": "Operating income ($M)",
+        "quote": "Operating income ($M) | $1,715 | $1,276 | Up 34% | $1,264 | Up 36%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "net_income",
+      "basis": "NON-GAAP",
+      "period": "Q3 2024",
+      "value": "1504",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 9,
+        "label": "Net income ($M)",
+        "quote": "Net income ($M) | $1,504 | $1,135 | Up 33% | $1,126 | Up 34%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "eps_diluted",
+      "basis": "NON-GAAP",
+      "period": "Q3 2024",
+      "value": "0.92",
+      "unit": "per_share",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 10,
+        "label": "Diluted earnings per share",
+        "quote": "Diluted earnings per share | $0.92 | $0.70 | Up 31% | $0.69 | Up 33%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    }
+  ],
+  "other_period_figures": [
+    {
+      "metric": "revenue",
+      "basis": "GAAP",
+      "period": "Q3 2023",
+      "value": "5800",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 3,
+        "label": "Revenue ($M)",
+        "quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "revenue",
+      "basis": "GAAP",
+      "period": "Q2 2024",
+      "value": "5835",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 3,
+        "label": "Revenue ($M)",
+        "quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "gross_margin",
+      "basis": "GAAP",
+      "period": "Q3 2023",
+      "value": "47",
+      "unit": "percent",
+      "currency": null,
+      "evidence": {
+        "table": 1,
+        "row": 5,
+        "label": "Gross margin",
+        "quote": "Gross margin | 50% | 47% | Up 3 ppts | 49% | Up 1 ppt"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "gross_margin",
+      "basis": "GAAP",
+      "period": "Q2 2024",
+      "value": "49",
+      "unit": "percent",
+      "currency": null,
+      "evidence": {
+        "table": 1,
+        "row": 5,
+        "label": "Gross margin",
+        "quote": "Gross margin | 50% | 47% | Up 3 ppts | 49% | Up 1 ppt"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "GAAP",
+      "period": "Q3 2023",
+      "value": "2533",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 6,
+        "label": "Operating expenses ($M)",
+        "quote": "Operating expenses ($M) | $2,709 | $2,533 | Up 7% | $2,605 | Up 4%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "GAAP",
+      "period": "Q2 2024",
+      "value": "2605",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 6,
+        "label": "Operating expenses ($M)",
+        "quote": "Operating expenses ($M) | $2,709 | $2,533 | Up 7% | $2,605 | Up 4%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "GAAP",
+      "period": "Q3 2023",
+      "value": "224",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 7,
+        "label": "Operating income ($M)",
+        "quote": "Operating income ($M) | $724 | $224 | Up 223% | $269 | Up 169%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "GAAP",
+      "period": "Q2 2024",
+      "value": "269",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 7,
+        "label": "Operating income ($M)",
+        "quote": "Operating income ($M) | $724 | $224 | Up 223% | $269 | Up 169%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "net_income",
+      "basis": "GAAP",
+      "period": "Q3 2023",
+      "value": "299",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 9,
+        "label": "Net income ($M)",
+        "quote": "Net income ($M) | $771 | $299 | Up 158% | $265 | Up 191%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "net_income",
+      "basis": "GAAP",
+      "period": "Q2 2024",
+      "value": "265",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 9,
+        "label": "Net income ($M)",
+        "quote": "Net income ($M) | $771 | $299 | Up 158% | $265 | Up 191%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "eps_diluted",
+      "basis": "GAAP",
+      "period": "Q3 2023",
+      "value": "0.18",
+      "unit": "per_share",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 10,
+        "label": "Diluted earnings per share",
+        "quote": "Diluted earnings per share | $0.47 | $0.18 | Up 161% | $0.16 | Up 194%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "eps_diluted",
+      "basis": "GAAP",
+      "period": "Q2 2024",
+      "value": "0.16",
+      "unit": "per_share",
+      "currency": "USD",
+      "evidence": {
+        "table": 1,
+        "row": 10,
+        "label": "Diluted earnings per share",
+        "quote": "Diluted earnings per share | $0.47 | $0.18 | Up 161% | $0.16 | Up 194%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "revenue",
+      "basis": "NON-GAAP",
+      "period": "Q3 2023",
+      "value": "5800",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 3,
+        "label": "Revenue ($M)",
+        "quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "revenue",
+      "basis": "NON-GAAP",
+      "period": "Q2 2024",
+      "value": "5835",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 3,
+        "label": "Revenue ($M)",
+        "quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "gross_margin",
+      "basis": "NON-GAAP",
+      "period": "Q3 2023",
+      "value": "51",
+      "unit": "percent",
+      "currency": null,
+      "evidence": {
+        "table": 2,
+        "row": 5,
+        "label": "Gross margin",
+        "quote": "Gross margin | 54% | 51% | Up 3 ppts | 53% | Up 1 ppt"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "gross_margin",
+      "basis": "NON-GAAP",
+      "period": "Q2 2024",
+      "value": "53",
+      "unit": "percent",
+      "currency": null,
+      "evidence": {
+        "table": 2,
+        "row": 5,
+        "label": "Gross margin",
+        "quote": "Gross margin | 54% | 51% | Up 3 ppts | 53% | Up 1 ppt"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "NON-GAAP",
+      "period": "Q3 2023",
+      "value": "1697",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 6,
+        "label": "Operating expenses ($M)",
+        "quote": "Operating expenses ($M) | $1,956 | $1,697 | Up 15% | $1,847 | Up 6%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "NON-GAAP",
+      "period": "Q2 2024",
+      "value": "1847",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 6,
+        "label": "Operating expenses ($M)",
+        "quote": "Operating expenses ($M) | $1,956 | $1,697 | Up 15% | $1,847 | Up 6%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "NON-GAAP",
+      "period": "Q3 2023",
+      "value": "1276",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 7,
+        "label": "Operating income ($M)",
+        "quote": "Operating income ($M) | $1,715 | $1,276 | Up 34% | $1,264 | Up 36%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "NON-GAAP",
+      "period": "Q2 2024",
+      "value": "1264",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 7,
+        "label": "Operating income ($M)",
+        "quote": "Operating income ($M) | $1,715 | $1,276 | Up 34% | $1,264 | Up 36%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "net_income",
+      "basis": "NON-GAAP",
+      "period": "Q3 2023",
+      "value": "1135",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 9,
+        "label": "Net income ($M)",
+        "quote": "Net income ($M) | $1,504 | $1,135 | Up 33% | $1,126 | Up 34%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "net_income",
+      "basis": "NON-GAAP",
+      "period": "Q2 2024",
+      "value": "1126",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 9,
+        "label": "Net income ($M)",
+        "quote": "Net income ($M) | $1,504 | $1,135 | Up 33% | $1,126 | Up 34%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "eps_diluted",
+      "basis": "NON-GAAP",
+      "period": "Q3 2023",
+      "value": "0.7",
+      "unit": "per_share",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 10,
+        "label": "Diluted earnings per share",
+        "quote": "Diluted earnings per share | $0.92 | $0.70 | Up 31% | $0.69 | Up 33%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "eps_diluted",
+      "basis": "NON-GAAP",
+      "period": "Q2 2024",
+      "value": "0.69",
+      "unit": "per_share",
+      "currency": "USD",
+      "evidence": {
+        "table": 2,
+        "row": 10,
+        "label": "Diluted earnings per share",
+        "quote": "Diluted earnings per share | $0.92 | $0.70 | Up 31% | $0.69 | Up 33%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": null,
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "gross_margin",
+      "basis": "GAAP",
+      "period": "quarter ended 2024-09-28",
+      "value": "50",
+      "unit": "percent",
+      "currency": null,
+      "evidence": {
+        "table": 3,
+        "row": 7,
+        "label": "GAAP gross margin",
+        "quote": "GAAP gross margin | 50% | 49% | 47%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [],
+      "period_end": "2024-09-28",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "gross_margin",
+      "basis": "GAAP",
+      "period": "quarter ended 2024-06-29",
+      "value": "49",
+      "unit": "percent",
+      "currency": null,
+      "evidence": {
+        "table": 3,
+        "row": 7,
+        "label": "GAAP gross margin",
+        "quote": "GAAP gross margin | 50% | 49% | 47%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [],
+      "period_end": "2024-06-29",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "gross_margin",
+      "basis": "GAAP",
+      "period": "quarter ended 2023-09-30",
+      "value": "47",
+      "unit": "percent",
+      "currency": null,
+      "evidence": {
+        "table": 3,
+        "row": 7,
+        "label": "GAAP gross margin",
+        "quote": "GAAP gross margin | 50% | 49% | 47%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [],
+      "period_end": "2023-09-30",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "gross_margin",
+      "basis": "NON-GAAP",
+      "period": "quarter ended 2024-09-28",
+      "value": "54",
+      "unit": "percent",
+      "currency": null,
+      "evidence": {
+        "table": 3,
+        "row": 12,
+        "label": "Non-GAAP gross margin",
+        "quote": "Non-GAAP gross margin | 54% | 53% | 51%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [],
+      "period_end": "2024-09-28",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "gross_margin",
+      "basis": "NON-GAAP",
+      "period": "quarter ended 2024-06-29",
+      "value": "53",
+      "unit": "percent",
+      "currency": null,
+      "evidence": {
+        "table": 3,
+        "row": 12,
+        "label": "Non-GAAP gross margin",
+        "quote": "Non-GAAP gross margin | 54% | 53% | 51%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [],
+      "period_end": "2024-06-29",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "gross_margin",
+      "basis": "NON-GAAP",
+      "period": "quarter ended 2023-09-30",
+      "value": "51",
+      "unit": "percent",
+      "currency": null,
+      "evidence": {
+        "table": 3,
+        "row": 12,
+        "label": "Non-GAAP gross margin",
+        "quote": "Non-GAAP gross margin | 54% | 53% | 51%"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [],
+      "period_end": "2023-09-30",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "GAAP",
+      "period": "quarter ended 2024-09-28",
+      "value": "2709",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 3,
+        "row": 14,
+        "label": "GAAP operating expenses",
+        "quote": "GAAP operating expenses | $2,709 | $2,605 | $2,533"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": "2024-09-28",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "GAAP",
+      "period": "quarter ended 2024-06-29",
+      "value": "2605",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 3,
+        "row": 14,
+        "label": "GAAP operating expenses",
+        "quote": "GAAP operating expenses | $2,709 | $2,605 | $2,533"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": "2024-06-29",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "GAAP",
+      "period": "quarter ended 2023-09-30",
+      "value": "2533",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 3,
+        "row": 14,
+        "label": "GAAP operating expenses",
+        "quote": "GAAP operating expenses | $2,709 | $2,605 | $2,533"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": "2023-09-30",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "NON-GAAP",
+      "period": "quarter ended 2024-09-28",
+      "value": "1956",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 3,
+        "row": 19,
+        "label": "Non-GAAP operating expenses",
+        "quote": "Non-GAAP operating expenses | $1,956 | $1,847 | $1,697"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": "2024-09-28",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "NON-GAAP",
+      "period": "quarter ended 2024-06-29",
+      "value": "1847",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 3,
+        "row": 19,
+        "label": "Non-GAAP operating expenses",
+        "quote": "Non-GAAP operating expenses | $1,956 | $1,847 | $1,697"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": "2024-06-29",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "NON-GAAP",
+      "period": "quarter ended 2023-09-30",
+      "value": "1697",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 3,
+        "row": 19,
+        "label": "Non-GAAP operating expenses",
+        "quote": "Non-GAAP operating expenses | $1,956 | $1,847 | $1,697"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": "2023-09-30",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "GAAP",
+      "period": "quarter ended 2024-09-28",
+      "value": "724",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 3,
+        "row": 22,
+        "label": "GAAP operating income",
+        "quote": "GAAP operating income | $724 | $269 | $224"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": "2024-09-28",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "GAAP",
+      "period": "quarter ended 2024-06-29",
+      "value": "269",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 3,
+        "row": 22,
+        "label": "GAAP operating income",
+        "quote": "GAAP operating income | $724 | $269 | $224"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": "2024-06-29",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "GAAP",
+      "period": "quarter ended 2023-09-30",
+      "value": "224",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 3,
+        "row": 22,
+        "label": "GAAP operating income",
+        "quote": "GAAP operating income | $724 | $269 | $224"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": "2023-09-30",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "NON-GAAP",
+      "period": "quarter ended 2024-09-28",
+      "value": "1715",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 3,
+        "row": 27,
+        "label": "Non-GAAP operating income",
+        "quote": "Non-GAAP operating income | $1,715 | $1,264 | $1,276"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": "2024-09-28",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "NON-GAAP",
+      "period": "quarter ended 2024-06-29",
+      "value": "1264",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 3,
+        "row": 27,
+        "label": "Non-GAAP operating income",
+        "quote": "Non-GAAP operating income | $1,715 | $1,264 | $1,276"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": "2024-06-29",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "NON-GAAP",
+      "period": "quarter ended 2023-09-30",
+      "value": "1276",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 3,
+        "row": 27,
+        "label": "Non-GAAP operating income",
+        "quote": "Non-GAAP operating income | $1,715 | $1,264 | $1,276"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
+      ],
+      "period_end": "2023-09-30",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "net_income",
+      "basis": "UNSTATED",
+      "period": "quarter ended 2024-09-28",
+      "value": "771",
+      "unit": "unscaled",
+      "currency": "USD",
+      "evidence": {
+        "table": 9,
+        "row": 5,
+        "label": "Net income",
+        "quote": "Net income | $771 | $299 | $1,159 | $187"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "UNIT_SCALE_UNKNOWN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2024-09-28",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "net_income",
+      "basis": "UNSTATED",
+      "period": "quarter ended 2023-09-30",
+      "value": "299",
+      "unit": "unscaled",
+      "currency": "USD",
+      "evidence": {
+        "table": 9,
+        "row": 5,
+        "label": "Net income",
+        "quote": "Net income | $771 | $299 | $1,159 | $187"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "UNIT_SCALE_UNKNOWN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2023-09-30",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "net_income",
+      "basis": "UNSTATED",
+      "period": "9 months ended 2024-09-28",
+      "value": "1159",
+      "unit": "unscaled",
+      "currency": "USD",
+      "evidence": {
+        "table": 9,
+        "row": 5,
+        "label": "Net income",
+        "quote": "Net income | $771 | $299 | $1,159 | $187"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "UNIT_SCALE_UNKNOWN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2024-09-28",
+      "period_kind": "9 months"
+    },
+    {
+      "metric": "net_income",
+      "basis": "UNSTATED",
+      "period": "9 months ended 2023-09-30",
+      "value": "187",
+      "unit": "unscaled",
+      "currency": "USD",
+      "evidence": {
+        "table": 9,
+        "row": 5,
+        "label": "Net income",
+        "quote": "Net income | $771 | $299 | $1,159 | $187"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "UNIT_SCALE_UNKNOWN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2023-09-30",
+      "period_kind": "9 months"
+    }
+  ],
+  "prior_period": [
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "eps_diluted",
+      "basis": "GAAP",
+      "unit": "per_share",
+      "currency": "USD",
+      "current_period": "Q3 2024",
+      "prior_period": "Q3 2023",
+      "actual": "0.47",
+      "prior_actual": "0.18",
+      "difference": "0.29",
+      "difference_unit": "per_share",
+      "difference_pct": "161.11",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 10,
+          "label": "Diluted earnings per share",
+          "quote": "Diluted earnings per share | $0.47 | $0.18 | Up 161% | $0.16 | Up 194%"
+        },
+        {
+          "table": 1,
+          "row": 10,
+          "label": "Diluted earnings per share",
+          "quote": "Diluted earnings per share | $0.47 | $0.18 | Up 161% | $0.16 | Up 194%"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 161%",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "eps_diluted",
+      "basis": "GAAP",
+      "unit": "per_share",
+      "currency": "USD",
+      "current_period": "Q3 2024",
+      "prior_period": "Q2 2024",
+      "actual": "0.47",
+      "prior_actual": "0.16",
+      "difference": "0.31",
+      "difference_unit": "per_share",
+      "difference_pct": "193.75",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 10,
+          "label": "Diluted earnings per share",
+          "quote": "Diluted earnings per share | $0.47 | $0.18 | Up 161% | $0.16 | Up 194%"
+        },
+        {
+          "table": 1,
+          "row": 10,
+          "label": "Diluted earnings per share",
+          "quote": "Diluted earnings per share | $0.47 | $0.18 | Up 161% | $0.16 | Up 194%"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 194%",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "eps_diluted",
+      "basis": "NON-GAAP",
+      "unit": "per_share",
+      "currency": "USD",
+      "current_period": "Q3 2024",
+      "prior_period": "Q3 2023",
+      "actual": "0.92",
+      "prior_actual": "0.7",
+      "difference": "0.22",
+      "difference_unit": "per_share",
+      "difference_pct": "31.43",
+      "evidence": [
+        {
+          "table": 2,
+          "row": 10,
+          "label": "Diluted earnings per share",
+          "quote": "Diluted earnings per share | $0.92 | $0.70 | Up 31% | $0.69 | Up 33%"
+        },
+        {
+          "table": 2,
+          "row": 10,
+          "label": "Diluted earnings per share",
+          "quote": "Diluted earnings per share | $0.92 | $0.70 | Up 31% | $0.69 | Up 33%"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 31%",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "eps_diluted",
+      "basis": "NON-GAAP",
+      "unit": "per_share",
+      "currency": "USD",
+      "current_period": "Q3 2024",
+      "prior_period": "Q2 2024",
+      "actual": "0.92",
+      "prior_actual": "0.69",
+      "difference": "0.23",
+      "difference_unit": "per_share",
+      "difference_pct": "33.33",
+      "evidence": [
+        {
+          "table": 2,
+          "row": 10,
+          "label": "Diluted earnings per share",
+          "quote": "Diluted earnings per share | $0.92 | $0.70 | Up 31% | $0.69 | Up 33%"
+        },
+        {
+          "table": 2,
+          "row": 10,
+          "label": "Diluted earnings per share",
+          "quote": "Diluted earnings per share | $0.92 | $0.70 | Up 31% | $0.69 | Up 33%"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 33%",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "gross_margin",
+      "basis": "GAAP",
+      "unit": "percent",
+      "currency": null,
+      "current_period": "Q3 2024",
+      "prior_period": "Q3 2023",
+      "actual": "50",
+      "prior_actual": "47",
+      "difference": "3",
+      "difference_unit": "percentage points",
+      "difference_pct": null,
+      "evidence": [
+        {
+          "table": 1,
+          "row": 5,
+          "label": "Gross margin",
+          "quote": "Gross margin | 50% | 47% | Up 3 ppts | 49% | Up 1 ppt"
+        },
+        {
+          "table": 1,
+          "row": 5,
+          "label": "Gross margin",
+          "quote": "Gross margin | 50% | 47% | Up 3 ppts | 49% | Up 1 ppt"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 3 ppts",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "gross_margin",
+      "basis": "GAAP",
+      "unit": "percent",
+      "currency": null,
+      "current_period": "Q3 2024",
+      "prior_period": "Q2 2024",
+      "actual": "50",
+      "prior_actual": "49",
+      "difference": "1",
+      "difference_unit": "percentage points",
+      "difference_pct": null,
+      "evidence": [
+        {
+          "table": 1,
+          "row": 5,
+          "label": "Gross margin",
+          "quote": "Gross margin | 50% | 47% | Up 3 ppts | 49% | Up 1 ppt"
+        },
+        {
+          "table": 1,
+          "row": 5,
+          "label": "Gross margin",
+          "quote": "Gross margin | 50% | 47% | Up 3 ppts | 49% | Up 1 ppt"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 1 ppt",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "gross_margin",
+      "basis": "NON-GAAP",
+      "unit": "percent",
+      "currency": null,
+      "current_period": "Q3 2024",
+      "prior_period": "Q3 2023",
+      "actual": "54",
+      "prior_actual": "51",
+      "difference": "3",
+      "difference_unit": "percentage points",
+      "difference_pct": null,
+      "evidence": [
+        {
+          "table": 2,
+          "row": 5,
+          "label": "Gross margin",
+          "quote": "Gross margin | 54% | 51% | Up 3 ppts | 53% | Up 1 ppt"
+        },
+        {
+          "table": 2,
+          "row": 5,
+          "label": "Gross margin",
+          "quote": "Gross margin | 54% | 51% | Up 3 ppts | 53% | Up 1 ppt"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 3 ppts",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "gross_margin",
+      "basis": "NON-GAAP",
+      "unit": "percent",
+      "currency": null,
+      "current_period": "Q3 2024",
+      "prior_period": "Q2 2024",
+      "actual": "54",
+      "prior_actual": "53",
+      "difference": "1",
+      "difference_unit": "percentage points",
+      "difference_pct": null,
+      "evidence": [
+        {
+          "table": 2,
+          "row": 5,
+          "label": "Gross margin",
+          "quote": "Gross margin | 54% | 51% | Up 3 ppts | 53% | Up 1 ppt"
+        },
+        {
+          "table": 2,
+          "row": 5,
+          "label": "Gross margin",
+          "quote": "Gross margin | 54% | 51% | Up 3 ppts | 53% | Up 1 ppt"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 1 ppt",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "net_income",
+      "basis": "GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "Q3 2024",
+      "prior_period": "Q3 2023",
+      "actual": "771",
+      "prior_actual": "299",
+      "difference": "472",
+      "difference_unit": "millions",
+      "difference_pct": "157.86",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 9,
+          "label": "Net income ($M)",
+          "quote": "Net income ($M) | $771 | $299 | Up 158% | $265 | Up 191%"
+        },
+        {
+          "table": 1,
+          "row": 9,
+          "label": "Net income ($M)",
+          "quote": "Net income ($M) | $771 | $299 | Up 158% | $265 | Up 191%"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 158%",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "net_income",
+      "basis": "GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "Q3 2024",
+      "prior_period": "Q2 2024",
+      "actual": "771",
+      "prior_actual": "265",
+      "difference": "506",
+      "difference_unit": "millions",
+      "difference_pct": "190.94",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 9,
+          "label": "Net income ($M)",
+          "quote": "Net income ($M) | $771 | $299 | Up 158% | $265 | Up 191%"
+        },
+        {
+          "table": 1,
+          "row": 9,
+          "label": "Net income ($M)",
+          "quote": "Net income ($M) | $771 | $299 | Up 158% | $265 | Up 191%"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 191%",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "net_income",
+      "basis": "NON-GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "Q3 2024",
+      "prior_period": "Q3 2023",
+      "actual": "1504",
+      "prior_actual": "1135",
+      "difference": "369",
+      "difference_unit": "millions",
+      "difference_pct": "32.51",
+      "evidence": [
+        {
+          "table": 2,
+          "row": 9,
+          "label": "Net income ($M)",
+          "quote": "Net income ($M) | $1,504 | $1,135 | Up 33% | $1,126 | Up 34%"
+        },
+        {
+          "table": 2,
+          "row": 9,
+          "label": "Net income ($M)",
+          "quote": "Net income ($M) | $1,504 | $1,135 | Up 33% | $1,126 | Up 34%"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 33%",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "net_income",
+      "basis": "NON-GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "Q3 2024",
+      "prior_period": "Q2 2024",
+      "actual": "1504",
+      "prior_actual": "1126",
+      "difference": "378",
+      "difference_unit": "millions",
+      "difference_pct": "33.57",
+      "evidence": [
+        {
+          "table": 2,
+          "row": 9,
+          "label": "Net income ($M)",
+          "quote": "Net income ($M) | $1,504 | $1,135 | Up 33% | $1,126 | Up 34%"
+        },
+        {
+          "table": 2,
+          "row": 9,
+          "label": "Net income ($M)",
+          "quote": "Net income ($M) | $1,504 | $1,135 | Up 33% | $1,126 | Up 34%"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 34%",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "operating_expenses",
+      "basis": "GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "Q3 2024",
+      "prior_period": "Q3 2023",
+      "actual": "2709",
+      "prior_actual": "2533",
+      "difference": "176",
+      "difference_unit": "millions",
+      "difference_pct": "6.95",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 6,
+          "label": "Operating expenses ($M)",
+          "quote": "Operating expenses ($M) | $2,709 | $2,533 | Up 7% | $2,605 | Up 4%"
+        },
+        {
+          "table": 1,
+          "row": 6,
+          "label": "Operating expenses ($M)",
+          "quote": "Operating expenses ($M) | $2,709 | $2,533 | Up 7% | $2,605 | Up 4%"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 7%",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "operating_expenses",
+      "basis": "GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "Q3 2024",
+      "prior_period": "Q2 2024",
+      "actual": "2709",
+      "prior_actual": "2605",
+      "difference": "104",
+      "difference_unit": "millions",
+      "difference_pct": "3.99",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 6,
+          "label": "Operating expenses ($M)",
+          "quote": "Operating expenses ($M) | $2,709 | $2,533 | Up 7% | $2,605 | Up 4%"
+        },
+        {
+          "table": 1,
+          "row": 6,
+          "label": "Operating expenses ($M)",
+          "quote": "Operating expenses ($M) | $2,709 | $2,533 | Up 7% | $2,605 | Up 4%"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 4%",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "operating_expenses",
+      "basis": "NON-GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "Q3 2024",
+      "prior_period": "Q3 2023",
+      "actual": "1956",
+      "prior_actual": "1697",
+      "difference": "259",
+      "difference_unit": "millions",
+      "difference_pct": "15.26",
+      "evidence": [
+        {
+          "table": 2,
+          "row": 6,
+          "label": "Operating expenses ($M)",
+          "quote": "Operating expenses ($M) | $1,956 | $1,697 | Up 15% | $1,847 | Up 6%"
+        },
+        {
+          "table": 2,
+          "row": 6,
+          "label": "Operating expenses ($M)",
+          "quote": "Operating expenses ($M) | $1,956 | $1,697 | Up 15% | $1,847 | Up 6%"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 15%",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "operating_expenses",
+      "basis": "NON-GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "Q3 2024",
+      "prior_period": "Q2 2024",
+      "actual": "1956",
+      "prior_actual": "1847",
+      "difference": "109",
+      "difference_unit": "millions",
+      "difference_pct": "5.9",
+      "evidence": [
+        {
+          "table": 2,
+          "row": 6,
+          "label": "Operating expenses ($M)",
+          "quote": "Operating expenses ($M) | $1,956 | $1,697 | Up 15% | $1,847 | Up 6%"
+        },
+        {
+          "table": 2,
+          "row": 6,
+          "label": "Operating expenses ($M)",
+          "quote": "Operating expenses ($M) | $1,956 | $1,697 | Up 15% | $1,847 | Up 6%"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 6%",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "operating_income",
+      "basis": "GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "Q3 2024",
+      "prior_period": "Q3 2023",
+      "actual": "724",
+      "prior_actual": "224",
+      "difference": "500",
+      "difference_unit": "millions",
+      "difference_pct": "223.21",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 7,
+          "label": "Operating income ($M)",
+          "quote": "Operating income ($M) | $724 | $224 | Up 223% | $269 | Up 169%"
+        },
+        {
+          "table": 1,
+          "row": 7,
+          "label": "Operating income ($M)",
+          "quote": "Operating income ($M) | $724 | $224 | Up 223% | $269 | Up 169%"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 223%",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "operating_income",
+      "basis": "GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "Q3 2024",
+      "prior_period": "Q2 2024",
+      "actual": "724",
+      "prior_actual": "269",
+      "difference": "455",
+      "difference_unit": "millions",
+      "difference_pct": "169.14",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 7,
+          "label": "Operating income ($M)",
+          "quote": "Operating income ($M) | $724 | $224 | Up 223% | $269 | Up 169%"
+        },
+        {
+          "table": 1,
+          "row": 7,
+          "label": "Operating income ($M)",
+          "quote": "Operating income ($M) | $724 | $224 | Up 223% | $269 | Up 169%"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 169%",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "operating_income",
+      "basis": "NON-GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "Q3 2024",
+      "prior_period": "Q3 2023",
+      "actual": "1715",
+      "prior_actual": "1276",
+      "difference": "439",
+      "difference_unit": "millions",
+      "difference_pct": "34.4",
+      "evidence": [
+        {
+          "table": 2,
+          "row": 7,
+          "label": "Operating income ($M)",
+          "quote": "Operating income ($M) | $1,715 | $1,276 | Up 34% | $1,264 | Up 36%"
+        },
+        {
+          "table": 2,
+          "row": 7,
+          "label": "Operating income ($M)",
+          "quote": "Operating income ($M) | $1,715 | $1,276 | Up 34% | $1,264 | Up 36%"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 34%",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "operating_income",
+      "basis": "NON-GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "Q3 2024",
+      "prior_period": "Q2 2024",
+      "actual": "1715",
+      "prior_actual": "1264",
+      "difference": "451",
+      "difference_unit": "millions",
+      "difference_pct": "35.68",
+      "evidence": [
+        {
+          "table": 2,
+          "row": 7,
+          "label": "Operating income ($M)",
+          "quote": "Operating income ($M) | $1,715 | $1,276 | Up 34% | $1,264 | Up 36%"
+        },
+        {
+          "table": 2,
+          "row": 7,
+          "label": "Operating income ($M)",
+          "quote": "Operating income ($M) | $1,715 | $1,276 | Up 34% | $1,264 | Up 36%"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 36%",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "revenue",
+      "basis": "GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "Q3 2024",
+      "prior_period": "Q3 2023",
+      "actual": "6819",
+      "prior_actual": "5800",
+      "difference": "1019",
+      "difference_unit": "millions",
+      "difference_pct": "17.57",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 3,
+          "label": "Revenue ($M)",
+          "quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%"
+        },
+        {
+          "table": 1,
+          "row": 3,
+          "label": "Revenue ($M)",
+          "quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 18%",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "revenue",
+      "basis": "GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "Q3 2024",
+      "prior_period": "Q2 2024",
+      "actual": "6819",
+      "prior_actual": "5835",
+      "difference": "984",
+      "difference_unit": "millions",
+      "difference_pct": "16.86",
+      "evidence": [
+        {
+          "table": 1,
+          "row": 3,
+          "label": "Revenue ($M)",
+          "quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%"
+        },
+        {
+          "table": 1,
+          "row": 3,
+          "label": "Revenue ($M)",
+          "quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 17%",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "revenue",
+      "basis": "NON-GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "Q3 2024",
+      "prior_period": "Q3 2023",
+      "actual": "6819",
+      "prior_actual": "5800",
+      "difference": "1019",
+      "difference_unit": "millions",
+      "difference_pct": "17.57",
+      "evidence": [
+        {
+          "table": 2,
+          "row": 3,
+          "label": "Revenue ($M)",
+          "quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%"
+        },
+        {
+          "table": 2,
+          "row": 3,
+          "label": "Revenue ($M)",
+          "quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 18%",
+        "agrees": true
+      }
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "revenue",
+      "basis": "NON-GAAP",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "Q3 2024",
+      "prior_period": "Q2 2024",
+      "actual": "6819",
+      "prior_actual": "5835",
+      "difference": "984",
+      "difference_unit": "millions",
+      "difference_pct": "16.86",
+      "evidence": [
+        {
+          "table": 2,
+          "row": 3,
+          "label": "Revenue ($M)",
+          "quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%"
+        },
+        {
+          "table": 2,
+          "row": 3,
+          "label": "Revenue ($M)",
+          "quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": {
+        "printed": "Up 17%",
+        "agrees": true
+      }
+    }
+  ],
+  "guidance_comparisons": [
+    {
+      "label": "ACTUAL vs EARLIER COMPANY GUIDANCE",
+      "metric": "revenue",
+      "basis": "GAAP and NON-GAAP (identical)",
+      "period": "Q3 2024",
+      "unit": "millions",
+      "actual": "6819",
+      "guidance_midpoint": "6700",
+      "guidance_low": "6400",
+      "guidance_high": "7000",
+      "guidance_band": "plus or minus 300 million",
+      "difference_vs_midpoint": "119",
+      "difference_unit": "millions",
+      "difference_pct": "1.78",
+      "position": "WITHIN_RANGE",
+      "conversion": "billion to million x1000",
+      "guidance_quote": "For the third quarter of 2024, AMD expects revenue to be approximately $6.7 billion, plus or minus $300 million",
+      "actual_evidence": {
+        "table": 1,
+        "row": 3,
+        "label": "Revenue ($M)",
+        "quote": "Revenue ($M) | $6,819 | $5,800 | Up 18% | $5,835 | Up 17%"
+      }
+    },
+    {
+      "label": "ACTUAL vs EARLIER COMPANY GUIDANCE",
+      "metric": "gross_margin",
+      "basis": "NON-GAAP",
+      "period": "Q3 2024",
+      "unit": "percent",
+      "actual": "54",
+      "guidance_midpoint": "53.5",
+      "guidance_low": null,
+      "guidance_high": null,
+      "guidance_band": "point estimate (approximately)",
+      "difference_vs_midpoint": "0.5",
+      "difference_unit": "percentage points",
+      "difference_pct": null,
+      "position": "NO_RANGE_GIVEN",
+      "conversion": null,
+      "guidance_quote": "Non-GAAP gross margin is expected to be approximately 53.5%",
+      "actual_evidence": {
+        "table": 2,
+        "row": 5,
+        "label": "Gross margin",
+        "quote": "Gross margin | 54% | 51% | Up 3 ppts | 53% | Up 1 ppt"
+      }
+    }
+  ],
+  "guidance_not_compared": [],
+  "consistency_with_comparison": [
+    {
+      "metric": "revenue",
+      "basis": "GAAP",
+      "period": "Q2 2024",
+      "earlier_release": "5835",
+      "printed_now": "5835",
+      "agrees": true
+    },
+    {
+      "metric": "gross_margin",
+      "basis": "GAAP",
+      "period": "Q2 2024",
+      "earlier_release": "49",
+      "printed_now": "49",
+      "agrees": true
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "GAAP",
+      "period": "Q2 2024",
+      "earlier_release": "2605",
+      "printed_now": "2605",
+      "agrees": true
+    },
+    {
+      "metric": "net_income",
+      "basis": "GAAP",
+      "period": "Q2 2024",
+      "earlier_release": "265",
+      "printed_now": "265",
+      "agrees": true
+    },
+    {
+      "metric": "eps_diluted",
+      "basis": "GAAP",
+      "period": "Q2 2024",
+      "earlier_release": "0.16",
+      "printed_now": "0.16",
+      "agrees": true
+    },
+    {
+      "metric": "revenue",
+      "basis": "NON-GAAP",
+      "period": "Q2 2024",
+      "earlier_release": "5835",
+      "printed_now": "5835",
+      "agrees": true
+    },
+    {
+      "metric": "gross_margin",
+      "basis": "NON-GAAP",
+      "period": "Q2 2024",
+      "earlier_release": "53",
+      "printed_now": "53",
+      "agrees": true
+    },
+    {
+      "metric": "operating_expenses",
+      "basis": "NON-GAAP",
+      "period": "Q2 2024",
+      "earlier_release": "1847",
+      "printed_now": "1847",
+      "agrees": true
+    },
+    {
+      "metric": "operating_income",
+      "basis": "NON-GAAP",
+      "period": "Q2 2024",
+      "earlier_release": "1264",
+      "printed_now": "1264",
+      "agrees": true
+    },
+    {
+      "metric": "net_income",
+      "basis": "NON-GAAP",
+      "period": "Q2 2024",
+      "earlier_release": "1126",
+      "printed_now": "1126",
+      "agrees": true
+    },
+    {
+      "metric": "eps_diluted",
+      "basis": "NON-GAAP",
+      "period": "Q2 2024",
+      "earlier_release": "0.69",
+      "printed_now": "0.69",
+      "agrees": true
+    }
+  ],
+  "comparison_issues": [
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 7",
+      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them (5 dated columns under 2 duration headings); their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 10",
+      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them (5 dated columns under 2 duration headings); their values are not read"
+    }
+  ],
+  "next_guidance": [
+    {
+      "metric": "revenue",
+      "basis": "UNSTATED",
+      "target_period": "Q4 2024",
+      "unit": "millions",
+      "currency": "USD",
+      "midpoint": "7500",
+      "low": "7200",
+      "high": "7800",
+      "band": "plus or minus 300 million",
+      "conversion": "billion to million x1000",
+      "quote": "For the fourth quarter of 2024, AMD expects revenue to be approximately $7.5 billion, plus or minus $300 million",
+      "method": "OUTLOOK_REGEX"
+    },
+    {
+      "metric": "gross_margin",
+      "basis": "NON-GAAP",
+      "target_period": "Q4 2024",
+      "unit": "percent",
+      "currency": null,
+      "midpoint": "54",
+      "low": null,
+      "high": null,
+      "band": "point estimate (approximately)",
+      "conversion": null,
+      "quote": "Non-GAAP gross margin is expected to be approximately 54%",
+      "method": "OUTLOOK_REGEX"
+    }
+  ],
+  "consensus": []
+}

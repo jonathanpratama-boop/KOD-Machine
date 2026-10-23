@@ -1,0 +1,42 @@
+[
+ {
+  "role": "cur",
+  "kind": "release",
+  "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm",
+  "file": "cur.htm",
+  "bytes": 415793,
+  "sha256": "c65139f630ce54d6ba5ef5be035ffd7b61bd201550bdb29fbfdf3ef816e6fd89",
+  "retrieved_at_utc_file_mtime": "2026-10-22T15:22:46Z",
+  "http_status": 200
+ },
+ {
+  "role": "cur",
+  "kind": "headers",
+  "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/0000002488-24-000161-index-headers.html",
+  "file": "cur_headers.html",
+  "bytes": 12754,
+  "sha256": "f7cfe1972c49075b4102bf5355c55c8ba5121af16be34dd2a0ec94fa642bb245",
+  "retrieved_at_utc_file_mtime": "2026-10-22T15:22:46Z",
+  "http_status": 200
+ },
+ {
+  "role": "pri",
+  "kind": "release",
+  "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248824000121/q22024991.htm",
+  "file": "pri.htm",
+  "bytes": 411942,
+  "sha256": "e59007d5df0ad9fb9d996ed23c00d9ed3c127f6923bb7c6de14a7197502be5d0",
+  "retrieved_at_utc_file_mtime": "2026-10-22T15:22:47Z",
+  "http_status": 200
+ },
+ {
+  "role": "pri",
+  "kind": "headers",
+  "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248824000121/0000002488-24-000121-index-headers.html",
+  "file": "pri_headers.html",
+  "bytes": 12754,
+  "sha256": "42a8662f99443aeef9f33ff3a35303004d74b8f88d4e3ae288fe14263abbfa8b",
+  "retrieved_at_utc_file_mtime": "2026-10-22T15:22:47Z",
+  "http_status": 200
+ }
+]
