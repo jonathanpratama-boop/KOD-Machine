@@ -78,6 +78,38 @@ def _compatible(a: ResolvedFigure, b: ResolvedFigure) -> list:
     return reasons
 
 
+def _one_quarter_per_end(quarters: dict, own: list) -> None:
+    """Two reported quarters ending on one date (a mis-tagged start): keep one, chosen only from the dates of the eligible figures, so the choice never
+    depends on how many other filings exist. First the quarter the year-to-date periods support (any duration metric; values are not differenced
+    here); otherwise the one contiguous with the previous quarter; otherwise the later start."""
+    starts = {}
+    for f in own:
+        if _year_to_date(f):
+            starts.setdefault(f.period.start_date, set()).add(f.period.end_date)
+    derivable = set()
+    for start, ends in starts.items():
+        ends = sorted(ends)
+        derivable |= {((_day(a) + timedelta(days=1)).isoformat(), b) for a, b in zip(ends, ends[1:])}
+        if len(ends) > 1:                        # a fiscal year's start (it has a year-to-date series): its first quarter
+            derivable.add((start, ends[0]))
+    by_end = {}
+    for key in quarters:
+        by_end.setdefault(key[1], []).append(key)
+    derivable_ends = {k[1] for k in derivable}
+    for end, keys in by_end.items():
+        if end in derivable_ends and any(k not in derivable for k in keys):
+            for k in keys:                        # contradicted by the year-to-date periods: gives way (to the supported or the derived quarter)
+                if k not in derivable:
+                    del quarters[k]
+            continue
+        if len(keys) > 1:
+            contiguous = [k for k in keys if (_day(k[0]) - timedelta(days=1)).isoformat() in {e for _, e in quarters}]
+            keep = max(contiguous or keys, key=lambda k: k[0])
+            for k in keys:
+                if k != keep:
+                    del quarters[k]
+
+
 def quarterly(figures: list, metric: str, check=None, alternatives: dict | None = None) -> list:
     """Discrete quarters for one metric from resolved duration figures (one basis/unit/currency group per call is the caller's choice; mixed groups are
     never combined). Returns Quarter records sorted by end date. `check(shorter, longer)` may return reasons the two year-to-date figures must not be
@@ -90,6 +122,7 @@ def quarterly(figures: list, metric: str, check=None, alternatives: dict | None 
         if f.period.kind == "quarter" or (long_quarter(f.period) and f.period.end_date in year_ends):
             key = (f.period.start_date, f.period.end_date)
             quarters[key] = Quarter(*key, f.value, "reported" if f.status == "ok" else f.status, f, None, f.reasons)
+    _one_quarter_per_end(quarters, own)
     reported_ends = {end for _, end in quarters}
     if metric not in ADDITIVE:
         return sorted(quarters.values(), key=lambda q: q.end)

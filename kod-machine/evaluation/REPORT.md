@@ -3,8 +3,10 @@
 The task set and scoring rules are described in [README.md](README.md). Both measurements below use the same task file (SHA-256 `c1f780e8…`) and the
 same runner. Each was run twice on fresh workspaces, and in each case the two runs produced identical outputs:
 
-- **Before the repairs:** the code as it stood when the evaluation was first written (commit `2307e86`). Answer hash `c46dbbd6…`.
-- **After the repairs:** this branch. Answer hash `4fae5caf…`; the full record is in `results.json`.
+- **Before the repairs:** the code as it stood when the evaluation was first written (commit `2307e86`). Its output hash is not quoted: that code recorded issuer identities on the wall clock, so its outputs vary
+  with the time of day. Its scores do not.
+- **After the repairs:** this branch. Answer hash `fda06b70…`, identical across separate processes and hash seeds; the full record is in
+  `results.json`.
 
 ## Result
 
@@ -63,6 +65,20 @@ has a regression test in `workstation_tests/test_gate_d.py` or `workstation_test
 - The last-year-growth suggestion lacked its observations.
 - A later rename of the watchlist entry changed an earlier observed-mode dossier. It no longer does.
 
+**A second review round:**
+
+- Costco's reported 16- against 17-week fourth quarters were refused as different period kinds. They now compare, with the length note; the values
+  match the raw filings (fiscal 2012–2018).
+- Two reported quarters with one end date (a mis-tagged start in one 10-Q) were chosen by input order. Information time was affected: an earlier
+  view could differ depending on whether later filings were held. The quarter the year-to-date periods support is now kept. A full-versus-truncated
+  fixture sweep of all eight companies (185 cutoffs) gives identical results.
+- A price correction could not be reverted, and a later-recorded intraday quote replaced the day's close. Corrections now apply within one series;
+  across series, the later-published price is used.
+- The refresh failure message said nothing was recorded, although the downloaded bytes are kept. The wording is now accurate.
+- The concept note's wording was imprecise; it now names the current and prior concepts.
+- The issuer identity was recorded on the wall clock, which made the evaluation's outputs depend on the time of day. It is now recorded on the
+  caller's clock.
+
 ## Changes to the task set
 
 Each change corrects an error in an expectation or a check. None was made to match KOD's output.
@@ -103,7 +119,10 @@ These are the next acceptance work (see `DOSSIER_PROGRESS.md`). They are left un
    - The first can include intangibles.
    - The second must not be mixed with `Revenues` inside one derived quarter.
    - The trimmed fixtures must be rebuilt from the full responses.
-3. **Stated-period rule (H2).** KOD will not infer the reported quarter from column labels. Whether it should, when a year-ago sentence corroborates them,
+3. **A fallback basis label (Costco, fiscal 2018).** Concept precedence keeps one revenue concept per period across filings. The year-ago fourth
+   quarter therefore comes from the 2017 10-K's `Revenues`, labelled "not presented in the current filing", although the 2018 10-K presents it under
+   `RevenueFromContractWithCustomerExcludingAssessedTax`. The value is right; the label is wrong.
+4. **Stated-period rule (H2).** KOD will not infer the reported quarter from column labels. Whether it should, when a year-ago sentence corroborates them,
    is an owner decision.
 
 ## What this evaluation does not show

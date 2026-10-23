@@ -131,7 +131,10 @@ def fixture_bytes(path: Path, sha256: str) -> bytes:
 
 
 def import_company(service, ticker, stored_sha):
-    sec = service.store.upsert_security(ticker, ticker, cik=CIKS[ticker])
+    try:
+        sec = service.store.upsert_security(ticker, ticker, cik=CIKS[ticker], now=service.clock())     # identity recorded on the run's fixed clock
+    except TypeError:                                    # code from before upsert_security took a time (used to measure earlier commits)
+        sec = service.store.upsert_security(ticker, ticker, cik=CIKS[ticker])
     facts, subs = SOURCES[(ticker, "companyfacts")], SOURCES[(ticker, "submissions")]
     raw_facts = gzip.decompress(fixture_bytes(CF / facts["fixture"], facts["fixture_sha256"]))
     raw_subs = gzip.decompress(fixture_bytes(CF / subs["fixture"], subs["fixture_sha256"]))

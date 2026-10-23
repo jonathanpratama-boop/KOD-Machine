@@ -136,6 +136,12 @@ Demo notes regenerated (`examples/earnings_demo/output`, `more/*/output`). Seman
   - **Doc overstatements.**
 
   Regression tests are in `workstation_tests/test_review_g.py`.
+- A second review round, whose run was cut short (one of three lenses finished), found more issues, each fixed with a test:
+  - reported 16- against 17-week Costco quarters refused as different kinds;
+  - duplicate reported quarters chosen by input order, which made an earlier view depend on later filings (a full-versus-truncated fixture sweep of
+    all eight companies at 185 cutoffs is now identical);
+  - price reverts, and intraday quotes overriding closes;
+  - refresh wording, concept-note wording, and the identity time on the wall clock.
 - Migration and restore drill (`workstation_tests/migration_drill.py`) on a real populated v1 workspace, run through the command line. It checks:
   - upgrade v1 → v4 with a safety copy;
   - v1 records unchanged and still rendering;

@@ -368,7 +368,8 @@ def _changes(series: dict, policy: AsOfPolicy, index: _Index, view: str, busines
         derived = [r for f in figures if f is not None for r in f.reasons if r.startswith("derived")]
         concept_note = None
         if pair and all(f is not None for f in pair) and concepts(pair[0]) and concepts(pair[1]) and concepts(pair[0]) != concepts(pair[1]):
-            concept_note = f"the two sides are tagged with different XBRL concepts ({', '.join(concepts(pair[0]))} vs {', '.join(concepts(pair[1]))})"
+            concept_note = (f"the compared figures draw on different XBRL concepts (current: {', '.join(concepts(pair[0]))}; "
+                            f"prior: {', '.join(concepts(pair[1]))})")
         return {"derived_inputs": derived, "comparison_basis": basis, "duration_note": _duration_note(*pair) if pair else None, "concept_note": concept_note}
 
     def last_of(metric):

@@ -162,7 +162,18 @@ def record_prices(service, security_id: str, parsed: dict, source_kind: str, doc
                                                                                canonical(parsed["coverage"]), len(rows), now))
         before = db.total_changes
         for r in rows:
-            db.execute(f"INSERT OR IGNORE INTO price_observations({','.join(cols)}) VALUES ({','.join('?' * len(cols))})", tuple(r[c] for c in cols))
+            inserted = db.execute(f"INSERT OR IGNORE INTO price_observations({','.join(cols)}) VALUES ({','.join('?' * len(cols))})",
+                                  tuple(r[c] for c in cols)).rowcount
+            if not inserted:
+                # The same price was recorded before. If a different price for the same day and series has been recorded since, this import reverts to
+                # it: record it again (a new row) so the most recently recorded price is the one the user imported last.
+                latest = db.execute("SELECT id FROM price_observations WHERE security_id=? AND observed_on=? AND session=? AND source=? AND adjustment=? "
+                                    "ORDER BY recorded_at DESC, id LIMIT 1", (security_id, r["observed_on"], r["session"], r["source"], r["adjustment"])).fetchone()
+                if latest is not None and latest["id"] != r["id"] and not db.execute(
+                        "SELECT 1 FROM price_observations WHERE id=? AND recorded_at>=(SELECT recorded_at FROM price_observations WHERE id=?)",
+                        (r["id"], latest["id"])).fetchone():
+                    again = {**r, "id": identity("price", r["id"], "re-recorded", now)}
+                    db.execute(f"INSERT OR IGNORE INTO price_observations({','.join(cols)}) VALUES ({','.join('?' * len(cols))})", tuple(again[c] for c in cols))
         added = db.total_changes - before
     return {"import_id": import_id, "rows": len(rows), "added": added, "coverage": parsed["coverage"], "meta": parsed["meta"]}
 
@@ -198,14 +209,19 @@ def price(service, price_id: str) -> dict:
 
 def price_at(service, security_id: str, policy: AsOfPolicy, adjustment: str = "raw") -> dict | None:
     """The most recent price of the given convention that is eligible at the cutoff (published by it; in observed mode also recorded by it). For one
-    trading day with several prices (a correction is a new import), the most recently recorded eligible one is used."""
+    trading day: within one series (session and source) the most recently recorded price is used, since a correction is a new import; across series
+    (a close and an earlier intraday quote) the one published latest is used."""
     with service.store._connection() as db:
-        rows = [dict(r) for r in db.execute("SELECT * FROM price_observations WHERE security_id=? AND adjustment=? "
-                                            "ORDER BY observed_on DESC, recorded_at DESC, published_at DESC, id", (security_id, adjustment))]
-    for r in rows:
-        if eligibility({"published_at": r["published_at"], "observed_at": r["observed_at"]}, policy)[0]:
-            return r
-    return None
+        rows = [dict(r) for r in db.execute("SELECT * FROM price_observations WHERE security_id=? AND adjustment=? ORDER BY observed_on DESC",
+                                            (security_id, adjustment))]
+    eligible = [r for r in rows if eligibility({"published_at": r["published_at"], "observed_at": r["observed_at"]}, policy)[0]]
+    if not eligible:
+        return None
+    day = [r for r in eligible if r["observed_on"] == eligible[0]["observed_on"]]
+    latest_per_series = {}
+    for r in sorted(day, key=lambda r: (r["recorded_at"], r["id"]), reverse=True):
+        latest_per_series.setdefault((r["session"], r["source"]), r)
+    return max(latest_per_series.values(), key=lambda r: (r["published_at"], r["recorded_at"], r["id"]))
 
 
 def market_context(version: dict, a: model.Assumptions, valuation: model.Valuation, price_row: dict | None) -> dict:

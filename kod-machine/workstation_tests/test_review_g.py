@@ -7,7 +7,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from kod.workstation import decisions, dossier, model, scenarios, thesis
+from kod.workstation import decisions, dossier, financials, model, scenarios, thesis
 from kod.workstation.policy import DAY_END, AsOfPolicy
 from kod.workstation.services import ResearchService
 from kod.workstation.store import Store
@@ -39,7 +39,7 @@ class Case(unittest.TestCase):
         self.service = ResearchService(self.store, clock=lambda: self.now[0])
 
     def company(self, ticker):
-        sec = self.store.upsert_security(ticker, ticker, cik=CIKS[ticker])
+        sec = self.store.upsert_security(ticker, ticker, cik=CIKS[ticker], now=self.now[0])
         facts, subs = SOURCES[(ticker, "companyfacts")], SOURCES[(ticker, "submissions")]
         self.service.import_companyfacts(sec["id"], gzip.decompress((CF / facts["fixture"]).read_bytes()), facts["url"], observed_at=facts["observed_at"],
                                          submissions=gzip.decompress((CF / subs["fixture"]).read_bytes()), submissions_url=subs["url"])
@@ -97,6 +97,66 @@ class WeekBasedQuarterTests(Case):
         self.assertIn("different XBRL concepts", text)
 
 
+class Round2Tests(Case):
+    """Findings of the second review round."""
+
+    def test_reported_sixteen_and_seventeen_week_quarters_compare_with_a_note(self):
+        d = dossier.build(self.service, self.company("COST")["id"], policy("2013-11-15T00:00:00Z"))
+        yoy = self.change(d, "revenue_yoy")
+        self.assertEqual(yoy["status"], "ok")
+        self.assertAlmostEqual(float(yoy["value"]), (32487 / 32218 - 1) * 100, places=6)     # 10-K 0001445305-13-002422: 112 against 119 days
+        self.assertIn("112 vs 119 days", yoy["duration_note"])
+        self.assertIn("presented in the same filing (0001445305-13-002422)", yoy["comparison_basis"])
+
+    def test_a_mis_tagged_duplicate_quarter_is_resolved_the_same_way_at_any_later_date(self):
+        d = dossier.build(self.service, self.company("COST")["id"], policy("2010-10-19T00:00:00Z"))
+        cells = self.cells(d, "quarterly", "revenue", "2010-05-09")
+        self.assertEqual([c["period"]["start"] for c in cells], ["2010-02-15"])               # not the 91-day period one 10-Q mis-tagged
+
+    def test_an_earlier_view_is_the_same_whether_or_not_later_filings_exist(self):
+        full = json.loads(gzip.decompress((CF / "COST" / "companyfacts.json.gz").read_bytes()))
+        subs = gzip.decompress((CF / "COST" / "submissions.json.gz").read_bytes())
+
+        def view(facts, ticker, cutoff):
+            sec = self.store.upsert_security(ticker, ticker, cik=CIKS["COST"], venue={"COST": "XNAS", "COSTX": "XNYS"}[ticker], now=NOW)
+            if not self.store.documents(sec["id"]):
+                self.service.import_companyfacts(sec["id"], json.dumps(facts).encode(), SOURCES[("COST", "companyfacts")]["url"],
+                                                 observed_at=NOW, submissions=subs, submissions_url=SOURCES[("COST", "submissions")]["url"])
+            d = dossier.build(self.service, sec["id"], policy(cutoff))
+            cells = {g: {m: [(c["period"]["start"], c["period"]["end"], c["value"], c["status"]) for c in v] for m, v in d["history"][g].items()}
+                     for g in ("quarterly", "annual")}
+            return cells, [(c["key"], c["status"], c["value"], c.get("duration_note")) for c in d["changes"]]
+        for cutoff in ("2010-10-20T00:00:00Z", "2011-06-11T00:00:00Z", "2012-03-17T00:00:00Z"):
+            cut = json.loads(json.dumps(full))
+            for concept in cut["facts"]["us-gaap"].values():
+                for unit in concept["units"]:
+                    concept["units"][unit] = [e for e in concept["units"][unit] if e["filed"] < cutoff[:10]]
+            self.store = Store(Path(tempfile.mkdtemp()) / "a")
+            self.service = ResearchService(self.store, clock=lambda: NOW)
+            later = view(full, "COST", cutoff)
+            only_before = view(cut, "COSTX", cutoff)
+            self.assertEqual(later, only_before, cutoff)
+
+    META = {"currency": "USD", "timezone": "America/New_York", "adjustment": "raw", "session": "regular_close", "source": "test", "feed_coverage": "one listing"}
+
+    def test_reverting_a_price_correction_is_recorded_and_used(self):
+        sec = self.store.upsert_security("TXN", "Texas Instruments", cik=CIKS["TXN"], now=NOW)
+        for day, close in (("2026-10-20", "200.00"), ("2026-10-21", "210.00"), ("2026-10-22", "200.00")):
+            self.now[0] = f"{day}T00:00:00Z"
+            scenarios.import_price_csv(self.service, sec["id"], f"date,close\n2026-10-16,{close}\n".encode(), f"{day}.csv", self.META)
+        self.assertEqual(scenarios.price_at(self.service, sec["id"], policy("2026-10-23T00:00:00Z", "observed"))["close"], "200.00")
+        self.assertEqual(scenarios.price_at(self.service, sec["id"], policy("2026-10-21T12:00:00Z", "observed"))["close"], "210.00")
+
+    def test_a_later_recorded_intraday_quote_does_not_replace_the_close(self):
+        sec = self.store.upsert_security("TXN", "Texas Instruments", cik=CIKS["TXN"], now=NOW)
+        self.now[0] = "2026-10-20T00:00:00Z"
+        scenarios.import_price_csv(self.service, sec["id"], b"date,close\n2026-10-16,200.00\n", "c.csv", self.META)
+        self.now[0] = "2026-10-21T00:00:00Z"
+        scenarios.add_manual_price(self.service, sec["id"], "2026-10-16", "185.00", {**self.META, "session": "manual_quote", "source": "desk"},
+                                   at="2026-10-16T18:00:00Z")
+        self.assertEqual(scenarios.price_at(self.service, sec["id"], policy("2026-10-22T00:00:00Z", "observed"))["close"], "200.00")
+
+
 class RefreshTests(Case):
     def client(self, body):
         import httpx
@@ -107,9 +167,10 @@ class RefreshTests(Case):
         from kod.workstation import sources
         txn = self.store.upsert_security("TXN", "Texas Instruments", cik=CIKS["TXN"])
         for body in (b'{"cik": null, "facts": {}}', b'{"cik": 97476, "facts": {"us-gaap": "x"}}'):
-            with self.assertRaises(sources.SourceUnavailable):
+            with self.assertRaisesRegex(sources.SourceUnavailable, "kept as evidence but no financial observation was recorded"):
                 sources.refresh_companyfacts(self.service, txn["id"], client=self.client(body))
             self.assertEqual(self.store.jobs()[0]["status"], "failed")
+            self.assertFalse(financials.FinancialRepository(self.store).all_for(txn["id"]))
 
     def test_one_refresh_records_one_job(self):
         import httpx
@@ -128,17 +189,13 @@ class ModelAndPriceTests(Case):
 
     def test_a_price_correction_for_the_same_day_is_used_once_recorded(self):
         sec = self.store.upsert_security("TXN", "Texas Instruments", cik=CIKS["TXN"])
-        for close in ("200.00", "199.50", "210.00", "207.00"):          # in the review, these corrections lost to 200.00 by id order
+        for day, close in (("2026-10-13", "199.50"), ("2026-10-14", "210.00"), ("2026-10-15", "207.00")):   # in the review these lost by id order
             self.now[0] = "2026-10-20T00:00:00Z"
-            scenarios.import_price_csv(self.service, sec["id"], b"date,close\n2026-10-16,200.00\n", "a.csv", self.META)
-            if close == "200.00":
-                continue
-            self.now[0] = f"2026-10-2{3 if close != '207.00' else 4}T00:00:00Z"
-            scenarios.import_price_csv(self.service, sec["id"], f"date,close\n2026-10-16,{close}\n".encode(), "b.csv", self.META)
-            got = scenarios.price_at(self.service, sec["id"], policy("2026-10-25T00:00:00Z", "observed"))
-            self.assertEqual(got["close"], close)
-            before = scenarios.price_at(self.service, sec["id"], policy("2026-10-21T00:00:00Z", "observed"))
-            self.assertEqual(before["close"], "200.00")                         # not yet recorded at that cutoff
+            scenarios.import_price_csv(self.service, sec["id"], f"date,close\n{day},200.00\n".encode(), f"a{day}.csv", self.META)
+            self.now[0] = "2026-10-23T00:00:00Z"
+            scenarios.import_price_csv(self.service, sec["id"], f"date,close\n{day},{close}\n".encode(), f"b{day}.csv", self.META)
+            self.assertEqual(scenarios.price_at(self.service, sec["id"], policy("2026-10-25T00:00:00Z", "observed"))["close"], close)
+            self.assertEqual(scenarios.price_at(self.service, sec["id"], policy("2026-10-21T00:00:00Z", "observed"))["close"], "200.00")  # not yet recorded
 
     def test_reverse_valuation_reports_solved_only_within_its_tolerance(self):
         a = model.validate({**TXN_CASE, "terminal_growth": "0.0199"})
@@ -162,13 +219,15 @@ class ModelAndPriceTests(Case):
 
 class ObservedNameTests(Case):
     def test_a_later_rename_does_not_reach_an_earlier_observed_view(self):
+        self.now[0] = "2026-10-23T11:00:00Z"
         txn = self.company("TXN")
         cutoff = policy("2026-10-23T12:00:00Z", "observed")
         before = json.dumps(dossier.build(self.service, txn["id"], cutoff), sort_keys=True)
-        self.store.upsert_security("TXN", "TI (renamed later)", cik=CIKS["TXN"])
+        self.store.upsert_security("TXN", "TI (renamed later)", cik=CIKS["TXN"], now="2026-10-24T00:00:00Z")
         after = dossier.build(self.service, txn["id"], cutoff)
         self.assertEqual(json.dumps(after, sort_keys=True), before)
         self.assertNotIn("renamed later", dossier.render_markdown(after))
+        self.assertEqual(after["company"]["name"], "TXN")                      # the name recorded with the identity held by the cutoff
 
 
 if __name__ == "__main__":

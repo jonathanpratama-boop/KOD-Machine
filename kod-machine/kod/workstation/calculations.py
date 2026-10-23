@@ -86,9 +86,17 @@ def _same_period(a: ResolvedFigure, b: ResolvedFigure) -> list:
     return [] if a.period.id == b.period.id else [f"periods differ ({a.period.label} vs {b.period.label})"]
 
 
+def _kind(period) -> str:
+    """A week-based fiscal quarter of 15-18 weeks (Costco's fourth quarter) compares as a quarter; its length difference is noted by the caller."""
+    days = period.duration_days
+    if period.kind != "quarter" and days is not None and days % 7 == 0 and 105 <= days <= 126:
+        return "quarter"
+    return period.kind
+
+
 def _earlier_comparable(cur: ResolvedFigure, prior: ResolvedFigure) -> list:
     pc, pp = cur.period, prior.period
-    if pc.kind != pp.kind:
+    if _kind(pc) != _kind(pp):
         return [f"duration kinds differ ({pc.kind} vs {pp.kind})"]
     if pc.end_date and pp.end_date:
         return [] if pp.end_date < pc.end_date else ["the comparison period is not earlier"]

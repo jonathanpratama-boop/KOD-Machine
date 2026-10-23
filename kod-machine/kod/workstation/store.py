@@ -82,7 +82,9 @@ class Store:
                 data[field] = json.loads(data[field])
         return data
 
-    def upsert_security(self, ticker, name, cik=None, venue="XNAS", currency="USD", association="user_asserted"):
+    def upsert_security(self, ticker, name, cik=None, venue="XNAS", currency="USD", association="user_asserted", now=None):
+        """Add or update a watchlist listing; `now` (default the wall clock) is when the listing and its identity mapping are recorded."""
+        now = timestamp(now) if now else utc_now()
         sec = Security(ticker, name, cik, venue, currency, association).validated()
         with self._connection() as db:
             previous = db.execute("SELECT * FROM securities WHERE ticker=? AND venue=?", (sec.ticker, sec.venue)).fetchone()
@@ -95,8 +97,8 @@ class Store:
             db.execute("""INSERT INTO securities VALUES (?,?,?,?,?,?,?,?,?)
                 ON CONFLICT(id) DO UPDATE SET name=excluded.name,cik=COALESCE(excluded.cik,securities.cik),
                 currency=excluded.currency,association=excluded.association,watched=1""",
-                (sid, sec.ticker, sec.name, sec.cik, sec.venue, sec.currency, assoc, 1, utc_now()))
-            identity_model.ensure_identity(db, db.execute("SELECT * FROM securities WHERE id=?", (sid,)).fetchone(), utc_now())
+                (sid, sec.ticker, sec.name, sec.cik, sec.venue, sec.currency, assoc, 1, now))
+            identity_model.ensure_identity(db, db.execute("SELECT * FROM securities WHERE id=?", (sid,)).fetchone(), now)
         return self.get_security(sid)
 
     def identity(self, security_id):

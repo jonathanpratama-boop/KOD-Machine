@@ -3,8 +3,8 @@
  "tasks_file_sha256": "c1f780e817daf89f412832d35c0f074e00b30cf29dbfc94249dbd3b8d8927c39",
  "runs": 2,
  "answer_hashes": [
-  "4fae5cafd1056e238e1c6684ab48cda8bd98624ab2e071004397a3e64595394e",
-  "4fae5cafd1056e238e1c6684ab48cda8bd98624ab2e071004397a3e64595394e"
+  "fda06b7080fc85d845f7148d7981e1a55ca8c7af97b77a2f3a8590e1185443c9",
+  "fda06b7080fc85d845f7148d7981e1a55ca8c7af97b77a2f3a8590e1185443c9"
  ],
  "reproducible": true,
  "results": [
@@ -13,7 +13,7 @@
    "type": 1,
    "real": true,
    "overlaps_development": false,
-   "seconds": 0.149,
+   "seconds": 0.218,
    "passed": true,
    "counts": {
     "correct": 10,
@@ -84,7 +84,7 @@
     }
    ],
    "output_sha256": [
-    "43ccb79ac12967da3e04183919cd016b53b07ad1f3d6a7a484c6c1ee3e76cc61"
+    "ddb96401552c1523f7d1154ca14e63be720e688aaa3b1a1736d918141a3521c0"
    ],
    "citations_checked": 15
   },
@@ -93,7 +93,7 @@
    "type": 2,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.197,
+   "seconds": 0.272,
    "passed": true,
    "counts": {
     "correct": 7,
@@ -146,7 +146,7 @@
     }
    ],
    "output_sha256": [
-    "ade20a49071f79db2c72bf34fbe641d0072d313dc883b011a434d93c5be00f72"
+    "bfbc42fb5d799743e1c9e0d1ce7ad95844cfb16a2c4554ddf4b79cdc4d471e9e"
    ],
    "citations_checked": 14
   },
@@ -155,7 +155,7 @@
    "type": 3,
    "real": true,
    "overlaps_development": false,
-   "seconds": 0.12,
+   "seconds": 0.134,
    "passed": false,
    "counts": {
     "correct": 3,
@@ -241,7 +241,7 @@
    "type": 4,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.177,
+   "seconds": 0.189,
    "passed": false,
    "counts": {
     "correct": 2,
@@ -278,7 +278,7 @@
     }
    ],
    "output_sha256": [
-    "b395e386ecc8980ccb35e263b5771fe2a7fa63a70cf514d0b835cdf340e0ea9a"
+    "81e682e535566fc0a74328eb8554f062ea198b9bb6770c2246d06feb9d57e425"
    ],
    "citations_checked": 14
   },
@@ -287,7 +287,7 @@
    "type": 4,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.145,
+   "seconds": 0.114,
    "passed": false,
    "counts": {
     "correct": 4,
@@ -335,7 +335,7 @@
     }
    ],
    "output_sha256": [
-    "9d072d928fef254b282aa58ab6a7a3aacec428683aff3e6f947463bf5b0d3545"
+    "b1000443a5c0385b49616c659318c2c2f42e5711240df2ccd91194cd9ec00a47"
    ],
    "citations_checked": 6
   },
@@ -344,7 +344,7 @@
    "type": 1,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.267,
+   "seconds": 0.203,
    "passed": true,
    "counts": {
     "correct": 7,
@@ -403,7 +403,7 @@
     }
    ],
    "output_sha256": [
-    "ade20a49071f79db2c72bf34fbe641d0072d313dc883b011a434d93c5be00f72"
+    "bfbc42fb5d799743e1c9e0d1ce7ad95844cfb16a2c4554ddf4b79cdc4d471e9e"
    ],
    "citations_checked": 14
   },
@@ -412,7 +412,7 @@
    "type": 5,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.4,
+   "seconds": 0.394,
    "passed": true,
    "counts": {
     "correct": 7,
@@ -477,8 +477,8 @@
     }
    ],
    "output_sha256": [
-    "50fc110210fe6b06d8e5188a1d7903d2b069299fd24c43195846b64ac15351d3",
-    "ca832b7aceaa9e4a65895375d9abd9dd49da6ab785b5f12ddf066011952bbd2f"
+    "0d83fa84dc6ea4711f5d1d14849e5b8443072e3cfc418ef57f555b2d1b8f750f",
+    "f2a28e9b1688c7438bb15e0794147e515f89657ae4d6e9357c1010c2f4a7ece6"
    ]
   },
   {
@@ -486,7 +486,7 @@
    "type": 6,
    "real": true,
    "overlaps_development": true,
-   "seconds": 2.094,
+   "seconds": 1.855,
    "passed": true,
    "counts": {
     "correct": 9,
@@ -516,8 +516,8 @@
     {
      "check": "stored packet hash verifies",
      "outcome": "correct",
-     "expected": "f67c3913a0e9ba3323c93fe6259bf77c87432c72ffb78af34e4ba382435189e3",
-     "got": "f67c3913a0e9ba3323c93fe6259bf77c87432c72ffb78af34e4ba382435189e3"
+     "expected": "de85360752949750ab5d3c05a11c8c93abfefe6051fef76d62c6ad9899c692f1",
+     "got": "de85360752949750ab5d3c05a11c8c93abfefe6051fef76d62c6ad9899c692f1"
     },
     {
      "check": "2025-03-10 latest: FY2024 revenue",
@@ -567,10 +567,10 @@
     }
    ],
    "output_sha256": [
-    "30ce18facc179f521711309afa20948c104fec1242b728a94ed2e13a1b78d410",
-    "4992cc65c1b3eca1a73a88410393872746a0d2e1b287b03f2d6fea4b680b74a2",
-    "66837d0e3d28d6e8f55e497bad5a45259a4ad6f3077e12572aeca59286392971",
-    "3e502eb80483c90b764e790ec9b38739fde1ea09492f69e878f39ffc518fcea0"
+    "f953c606f4a50853324dfebcdff7083b571a253af5d89f4cf6c72d1410e6abdb",
+    "e3865b85c060bd0f6b326906c24814965af0b16e6f5415420e4efbf8f1fbaad8",
+    "9a97b36a95ee312b477dc293a9ce2a83219072236a48f8a7eb64207b8c58cb15",
+    "5d8be8aa50b69b94b028639dd39a4276a8e76a3db1e3d3255fc399aa28bdd879"
    ]
   },
   {
@@ -578,7 +578,7 @@
    "type": 4,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.336,
+   "seconds": 0.252,
    "passed": true,
    "counts": {
     "correct": 10,
@@ -665,9 +665,9 @@
     }
    ],
    "output_sha256": [
-    "9374fc4097a8f5ed082d48114e15230058fbb42c748dd3200ae8adbb7805eb54",
-    "a126c23202d4c1a5a8140e3b701e663ddda91f05d198fd5bf7eb74f6e153ba73",
-    "0269615b098d64f1dd8fa3269db49c26e19a4a48a4d8c09fd5b2ed5f109859c2"
+    "be71407e330f1a24a15737927a07ed27040c683570375750503d890829ed39df",
+    "28486c6fa0cb26251a01aa7af26577ce7cc46a21a34eeacdac6805a1af2edcac",
+    "76ef8598bf833f69e6cc79b4adbc527847ed4b84baca1058019077dd3a2b9389"
    ],
    "citations_checked": 28
   },
@@ -676,7 +676,7 @@
    "type": 4,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.171,
+   "seconds": 0.116,
    "passed": true,
    "counts": {
     "correct": 5,
@@ -717,7 +717,7 @@
     }
    ],
    "output_sha256": [
-    "9d072d928fef254b282aa58ab6a7a3aacec428683aff3e6f947463bf5b0d3545"
+    "b1000443a5c0385b49616c659318c2c2f42e5711240df2ccd91194cd9ec00a47"
    ]
   },
   {
@@ -725,7 +725,7 @@
    "type": 1,
    "real": true,
    "overlaps_development": true,
-   "seconds": 0.259,
+   "seconds": 0.182,
    "passed": true,
    "counts": {
     "correct": 6,
@@ -772,7 +772,7 @@
     }
    ],
    "output_sha256": [
-    "ffbc07545d6e015d4631f9e3e178079db71d803bf76c1e0946b7175715b508c6"
+    "d67c6fbb463a61f48c3a6cff3f09ad39eacfae04f4ce6827b2f9f4e9e740c5db"
    ],
    "citations_checked": 15
   },
@@ -888,7 +888,7 @@
    "type": 1,
    "real": false,
    "overlaps_development": true,
-   "seconds": 0.002,
+   "seconds": 0.003,
    "passed": false,
    "counts": {
     "correct": 2,
