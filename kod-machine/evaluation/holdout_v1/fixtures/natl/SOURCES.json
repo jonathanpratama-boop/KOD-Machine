@@ -1,0 +1,42 @@
+[
+ {
+  "role": "cur",
+  "kind": "release",
+  "url": "https://www.sec.gov/Archives/edgar/data/1974138/000197413826000014/ex-991ncratleosearningsrel.htm",
+  "file": "cur.htm",
+  "bytes": 527089,
+  "sha256": "ab34a017ed566a37e58c943e5f53b3d44e2c962ea6e4ace76bfe1d5854451048",
+  "retrieved_at_utc": "2026-10-23T19:23:47Z",
+  "http_status": 200
+ },
+ {
+  "role": "cur",
+  "kind": "headers",
+  "url": "https://www.sec.gov/Archives/edgar/data/1974138/000197413826000014/0001974138-26-000014-index-headers.html",
+  "file": "cur_headers.html",
+  "bytes": 5822,
+  "sha256": "1824c0ff36873b20027aa5f741b85f3730a4edfb2831ae93713d6b749ecf1737",
+  "retrieved_at_utc": "2026-10-23T19:23:47Z",
+  "http_status": 200
+ },
+ {
+  "role": "pri",
+  "kind": "release",
+  "url": "https://www.sec.gov/Archives/edgar/data/1974138/000197413826000004/ex-991ncratleosearningsrel.htm",
+  "file": "pri.htm",
+  "bytes": 377466,
+  "sha256": "a06f5206f855700768c146d02b7befbb44f07db158ba78160423a2e81114f72e",
+  "retrieved_at_utc": "2026-10-23T19:23:48Z",
+  "http_status": 200
+ },
+ {
+  "role": "pri",
+  "kind": "headers",
+  "url": "https://www.sec.gov/Archives/edgar/data/1974138/000197413826000004/0001974138-26-000004-index-headers.html",
+  "file": "pri_headers.html",
+  "bytes": 5823,
+  "sha256": "c21410907de8a27dcbf4df76fa998c291953064e2e3c8018c89695eebcb0420e",
+  "retrieved_at_utc": "2026-10-23T19:23:48Z",
+  "http_status": 200
+ }
+]
