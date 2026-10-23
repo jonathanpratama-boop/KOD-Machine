@@ -281,6 +281,9 @@ def run_dossier(service, task, secs, checks, stored_sha):
     return {"citations_checked": citations}
 
 
+TASKS_DIR = HERE                                     # the folder task fixtures resolve from (that of --tasks)
+
+
 def amount(value, unit):
     return Decimal(value) * SCALE.get(unit, Decimal(1))
 
@@ -294,7 +297,8 @@ def release_sources(folder):
 
 def check_facts(checks, result, expected_facts, currency=None, prefix="actual"):
     for f in expected_facts:
-        got = [x for x in result["facts"] if x["metric"] == f["metric"]]
+        # a stated basis (GAAP or NON-GAAP) restricts the figures compared; a figure whose basis the release leaves unstated still counts
+        got = [x for x in result["facts"] if x["metric"] == f["metric"] and (not f.get("basis") or x["basis"] in (f["basis"], "UNSTATED"))]
         values = sorted({str(amount(x["value"], x["unit"]).normalize()) for x in got})
         periods = sorted({x["period"] for x in got})
         if not got:
@@ -307,21 +311,79 @@ def check_facts(checks, result, expected_facts, currency=None, prefix="actual"):
             checks.add(f"{prefix} {f['metric']} currency", "correct" if currencies == [currency] else "material_error", currency, currencies)
 
 
+def check_prior(checks, result, expected_prior):
+    for p in expected_prior:
+        rows = [x for x in result["prior_period"] if x["metric"] == p["metric"] and x["relation"] == p["relation"]]
+        name = f"{p['relation'].lower()} {p['metric']}"
+        if not rows:
+            checks.add(name, "missed", p["prior_amount"], None)
+            continue
+        values = sorted({str(amount(x["prior_actual"], x["unit"]).normalize()) for x in rows})
+        checks.add(name, "correct" if values == [str(Decimal(p["prior_amount"]).normalize())] else "material_error", p["prior_amount"], values)
+        if "growth_pct" in p:
+            growth = sorted({x["difference_pct"] for x in rows}, key=str)
+            ok = len(growth) == 1 and growth[0] is not None and abs(Decimal(growth[0]) - Decimal(p["growth_pct"])) <= Decimal(p["growth_tolerance"])
+            checks.add(name + " growth", "correct" if ok else "material_error", p["growth_pct"], growth)
+
+
+RELEASE_EXPECT_KEYS = {"period_in", "currency", "facts", "prior", "guidance", "guidance_absent", "caveat_visible", "analyst_period"}
+FACT_KEYS = {"metric", "amount", "basis"}
+PRIOR_KEYS = {"metric", "relation", "prior_amount", "growth_pct", "growth_tolerance"}
+GUIDANCE_KEYS = {"metric", "low_amount", "high_amount", "position", "actual_amount", "basis"}
+
+
+def check_release_keys(task):
+    e = task["expect"]
+    known_keys(task["id"], e, RELEASE_EXPECT_KEYS)
+    for group, allowed in (("facts", FACT_KEYS), ("prior", PRIOR_KEYS), ("guidance", GUIDANCE_KEYS)):
+        for item in e.get(group, []):
+            known_keys(f"{task['id']} {group}", item, allowed)
+
+
+def refused(checks, e, reason, period_checked=False):
+    """KOD withheld the release's answers (no supported summary table, or no resolved period): every expected answer is missed, none is wrong."""
+    if not period_checked:
+        checks.add("reported period", "missed", e["period_in"], reason[:200])
+    for f in e["facts"]:
+        checks.add(f"actual {f['metric']}", "missed", f["amount"], "release not read")
+    for p in e.get("prior", []):
+        checks.add(f"{p['relation'].lower()} {p['metric']}", "missed", p["prior_amount"], "release not read")
+    for g in e.get("guidance", []):
+        checks.add(f"outlook {g['metric']}", "missed", g, "release not read")
+    if e.get("guidance_absent"):
+        checks.add("no outlook comparison is invented", "correct", [], "release not read")
+    if e.get("caveat_visible"):
+        checks.add("the excluded-items caveat is visible in the note", "missed", e["caveat_visible"], "release not read")
+
+
 def run_guidance(service, task, secs, checks, stored_sha):
-    folder = HERE / task["fixtures"]
+    folder = TASKS_DIR / task["fixtures"]
     src = release_sources(folder)
     docs = {}
     for s in src:
         if s["kind"] == "release":
             headers = next(h for h in src if h["kind"] == "headers" and h["role"] == s["role"])
             docs[s["role"]] = earnings.prepare_source(str(folder / s["file"]), s["url"], sec_headers=str(folder / headers["file"]), retrieved_at=s["retrieved_at_utc"])
-    result = earnings.analyse("Texas Instruments Incorporated", task["company"], "XNAS", docs["cur"], docs["pri"], task["as_of"], task["mode"])
-    checks.output({k: v for k, v in result.items() if k != "workbench_report"})
+    check_release_keys(task)
     e = task["expect"]
+    try:
+        result = earnings.analyse(task.get("company_name", "Texas Instruments Incorporated"), task.get("ticker", task["company"]), task.get("venue", "XNAS"),
+                                  docs["cur"], docs.get("pri"), task["as_of"], task["mode"])
+    except earnings.EarningsError as exc:
+        refused(checks, e, str(exc))
+        return {}
+    checks.output({k: v for k, v in result.items() if k != "workbench_report"})
     checks.add("reported period", "correct" if result["period"] in e["period_in"] else "material_error" if result["period"] else "missed", e["period_in"], result["period"])
+    if result["period"] is None:                  # period withheld: the figures and comparisons are withheld with it
+        refused(checks, e, "period unresolved", period_checked=True)
+        return {}
     check_facts(checks, result, e["facts"], e.get("currency"))
-    for g in e["guidance"]:
-        rows = [x for x in result["guidance_comparisons"] if x["metric"] == g["metric"]]
+    check_prior(checks, result, e.get("prior", []))
+    if e.get("guidance_absent"):
+        rows = result["guidance_comparisons"]
+        checks.add("no outlook comparison is invented", "material_error" if rows else "correct", [], [x["metric"] for x in rows])
+    for g in e.get("guidance", []):
+        rows = [x for x in result["guidance_comparisons"] if x["metric"] == g["metric"] and (not g.get("basis") or g["basis"] in x["basis"])]
         if not rows:
             checks.add(f"outlook {g['metric']}", "missed", g, [x["metric"] for x in result["guidance_comparisons"]] or result.get("guidance_not_compared"))
             continue
@@ -333,8 +395,9 @@ def run_guidance(service, task, secs, checks, stored_sha):
         checks.add(f"outlook {g['metric']} range, actual and position", "correct" if right else "material_error", want, [json.loads(s) for s in seen])
     note = earnings.render_note(result)
     checks.output(note)
-    checks.add("the excluded-items caveat is visible in the note", "correct" if e["caveat_visible"] in note else "missed", e["caveat_visible"],
-               "present" if e["caveat_visible"] in note else "absent from the rendered note")
+    if e.get("caveat_visible"):
+        checks.add("the excluded-items caveat is visible in the note", "correct" if e["caveat_visible"] in note else "missed", e["caveat_visible"],
+                   "present" if e["caveat_visible"] in note else "absent from the rendered note")
     return {}
 
 
@@ -470,24 +533,14 @@ def release_source(task, html):
 
 
 def run_release(service, task, secs, checks):
+    check_release_keys(task)
     result = earnings.analyse("Northwind Ltd.", "NWND", "XTSE", release_source(task, task["html"]), None, task["as_of"], "public")
     checks.output({k: v for k, v in result.items() if k != "workbench_report"})
     e = task["expect"]
     checks.add("reported period", "correct" if result["period"] in e["period_in"] else "material_error" if result["period"] else "missed", e["period_in"],
                result["period"] or result.get("status"))
     check_facts(checks, result, e["facts"], e.get("currency"))
-    for p in e["prior"]:
-        rows = [x for x in result["prior_period"] if x["metric"] == p["metric"] and x["relation"] == p["relation"]]
-        name = f"{p['relation'].lower()} {p['metric']}"
-        if not rows:
-            checks.add(name, "missed", p["prior_amount"], None)
-            continue
-        values = sorted({str(amount(x["prior_actual"], x["unit"]).normalize()) for x in rows})
-        checks.add(name, "correct" if values == [str(Decimal(p["prior_amount"]).normalize())] else "material_error", p["prior_amount"], values)
-        if "growth_pct" in p:
-            growth = sorted({x["difference_pct"] for x in rows}, key=str)
-            ok = len(growth) == 1 and growth[0] is not None and abs(Decimal(growth[0]) - Decimal(p["growth_pct"])) <= Decimal(p["growth_tolerance"])
-            checks.add(name + " growth", "correct" if ok else "material_error", p["growth_pct"], growth)
+    check_prior(checks, result, e["prior"])
     if "analyst_period" in e:
         recorded = earnings.analyse("Northwind Ltd.", "NWND", "XTSE", release_source(task, task["html"]), None, task["as_of"], "public",
                                     period_override=e["analyst_period"])
@@ -584,8 +637,11 @@ def main(argv=None):
     ap.add_argument("--runs", type=int, default=2, help="separate fresh-workspace runs compared for reproducibility (default 2)")
     ap.add_argument("--baseline", type=Path, default=HERE / "results.json", help="recorded results to compare against (default evaluation/results.json)")
     ap.add_argument("--no-baseline", action="store_true", help="do not compare with recorded results")
+    ap.add_argument("--tasks", type=Path, default=HERE / "tasks.json", help="task file (default evaluation/tasks.json); fixtures resolve from its folder")
     args = ap.parse_args(argv)
-    tasks = json.loads((HERE / "tasks.json").read_text())["tasks"]
+    global TASKS_DIR
+    TASKS_DIR = args.tasks.resolve().parent
+    tasks = json.loads(args.tasks.read_text())["tasks"]
     runs = [run_once(tasks) for _ in range(max(1, args.runs))]
     hashes = [answers_hash(r) for r in runs]
     results = runs[0]
@@ -595,7 +651,7 @@ def main(argv=None):
             print(f"no baseline at {args.baseline}; pass --no-baseline to run without one", file=sys.stderr)
             return 1
         regressed = regressions(results, json.loads(args.baseline.read_text()))
-    report = {"schema": "KOD-ANALYST-EVAL-RESULTS-v2", "tasks_file_sha256": hashlib.sha256((HERE / "tasks.json").read_bytes()).hexdigest(),
+    report = {"schema": "KOD-ANALYST-EVAL-RESULTS-v2", "tasks_file_sha256": hashlib.sha256(args.tasks.read_bytes()).hexdigest(),
               "runs": len(runs), "answer_hashes": hashes, "reproducible": None if len(runs) == 1 else len(set(hashes)) == 1, "results": results}
     if args.out:
         args.out.write_text(json.dumps(report, indent=1, default=str) + "\n")
