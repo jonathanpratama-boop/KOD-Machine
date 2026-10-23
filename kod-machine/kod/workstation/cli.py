@@ -38,6 +38,8 @@ def main(argv=None) -> int:
             parser.add_argument("--port", type=int, default=8765)
         if name == "refresh":
             parser.add_argument("--ticker", help="Optional one existing watchlist ticker")
+            parser.add_argument("--filed-history", action="store_true",
+                                help="refresh the SEC companyfacts filed history (and submissions) instead of the recent-filings list")
         if name in ("dossier", "search"):
             parser.add_argument("--as-of", help="information cutoff (timezone-aware ISO time); default now")
             parser.add_argument("--mode", choices=("observed", "public"), default="observed")
@@ -92,7 +94,14 @@ def main(argv=None) -> int:
                 raise ValueError("No matching watchlist company; add one in the application first.")
             success = True
             for security in selected:
-                job = refresh_security(service, security["id"])
+                if args.filed_history:
+                    from .sources import SourceUnavailable, refresh_companyfacts
+                    try:
+                        job = {"status": "success", "message": refresh_companyfacts(service, security["id"])["message"]}
+                    except (SourceUnavailable, ValueError) as exc:
+                        job = {"status": "failed", "message": str(exc)}
+                else:
+                    job = refresh_security(service, security["id"])
                 success = success and job["status"] == "success"
                 print(json.dumps({"ticker": security["ticker"], "status": job["status"], "message": job["message"]}))
             return 0 if success else 2

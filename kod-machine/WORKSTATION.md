@@ -1,6 +1,6 @@
 # KOD Workstation
 
-KOD Workstation is a local, single-user research application around KOD's deterministic earnings-note engine. It preserves source evidence, turns supported earnings releases into cutoff-aware notes, and keeps your annotations separately from extracted facts. It is not a Bloomberg replacement, a live market-data terminal, or a trade-execution system.
+KOD Workstation is a local, single-user research application around KOD's deterministic earnings-note engine. It preserves source evidence, turns supported earnings releases into cutoff-aware notes, builds a company dossier from filed SEC history, and records assumptions, thesis conditions and decisions so that each can be reopened exactly as it was. It keeps your views separate from extracted facts. It is not a live market-data terminal or a trade-execution system, and it covers far less data than a commercial terminal.
 
 ## Requirements and setup
 
@@ -39,13 +39,18 @@ python3 -m kod.workstation demo --serve --data-dir ../runtime/workstation-demo -
 
 The example notes use historical **public reconstruction** cutoffs. The preserved retrieval timestamps are later than the 2024 releases; the demo does not claim that this installation possessed the documents in 2024.
 
-## Four application views
+## Application views
 
 | View | What you can do |
 | --- | --- |
 | Event inbox `/` | Add explicit watchlist identities, inspect saved filing/release events, filter by company, category, status, text and publication date, and open saved notes. Removing a watchlist entry retains its evidence and notes. |
 | Company workspace `/company/{id}` | Inspect identity and filing history, preserve HTML releases, supply optional filing headers, inspect extraction status, and choose parsed releases for a note. Online mode also offers explicit SEC lookup/import/refresh. |
 | Research note `/note/{id}` | Read extracted figures, comparisons, guidance, issues and evidence; record thesis, invalidation and review conditions as versioned user annotations; export Markdown or JSON. |
+| Company dossier `/company/{id}/dossier` | The longitudinal history of filed figures, supported changes with their calculations, revisions and conflicts, research questions and the filing chronology, at a chosen cutoff, mode, policy and view. Every number opens its calculation and its source (a release table cell or a JSON pointer into the preserved SEC response). Export as Markdown or JSON. |
+| Archive search `/search` | Ranked search over the passages of preserved sources eligible at the cutoff, filtered by company, period and source type; each result opens the passage in context. |
+| Driver model `/company/{id}/model` | Save versioned assumption sets (bear/base/bull), run them, open a sensitivity grid, what-if cells and a reverse valuation; enter or import prices. See [MODEL.md](MODEL.md). |
+| Thesis `/company/{id}/thesis` | Save a thesis with structured review conditions and see each condition triggered, not triggered or unresolved at the cutoff, with its trace. |
+| Decisions `/company/{id}/decisions`, `/packet/{id}` | Record a decision packet (question, choice, rationale, review date) that freezes everything it rested on; reopen it and check that it reproduces. |
 | Data and health `/health` | Inspect source coverage, the last attempt and last successful refresh separately, and recent job outcomes. Never checked, not configured, failed and successful-with-no-new-events are different states. |
 
 ### Make a note from your own source
@@ -59,6 +64,80 @@ The example notes use historical **public reconstruction** cutoffs. The preserve
 Observed mode requires both publication/availability and recorded observation by the cutoff. Public mode reconstructs publication availability without claiming historical possession. A missing or ineligible source is withheld, not silently treated as zero. Listing currency is not assumed to be reporting currency; any dollar-sign assumption remains an explicit extraction flag. Analyst consensus is not sourced and stays `CONSENSUS UNKNOWN`.
 
 User annotations are your views, not extracted facts. Saving one creates another annotation version; it does not rewrite the generated note.
+
+## Company decision dossier
+
+### Filed history
+
+The dossier reads SEC companyfacts observations. To load them offline, import a preserved response; the repository holds eight under
+`examples/companyfacts/`, and `SOURCES.json` there records each URL and retrieval time:
+
+```sh
+python3 -m kod.workstation import-companyfacts --data-dir ../runtime/workstation --ticker TXN \
+  --companyfacts examples/companyfacts/TXN/companyfacts.json.gz --source-url https://data.sec.gov/api/xbrl/companyfacts/CIK0000097476.json \
+  --observed-at 2026-10-23T06:09:01Z --submissions examples/companyfacts/TXN/submissions.json.gz \
+  --submissions-url https://data.sec.gov/submissions/CIK0000097476.json
+```
+
+Never give an `--observed-at` earlier than the real retrieval. Online, with `KOD_SEC_CONTACT` set, you can instead use the company page's "Refresh filed
+history" button, or the command line:
+
+```sh
+python3 -m kod.workstation refresh --filed-history --data-dir ../runtime/workstation --ticker TXN
+```
+
+Each refresh makes two SEC requests under the company's refresh lock, and is recorded as a job with its outcome. The demo (`demo`) also imports the
+filed history of NVIDIA, AMD, Apple, Microsoft and JPMorgan from the preserved responses.
+
+### Reading a dossier
+
+```sh
+python3 -m kod.workstation dossier --data-dir ../runtime/workstation --ticker TXN --as-of 2024-11-01T00:00:00Z --mode public
+python3 -m kod.workstation dossier --data-dir ../runtime/workstation --ticker TXN --as-of 2024-11-01T00:00:00Z --mode public --view latest --format json
+python3 -m kod.workstation search --data-dir ../runtime/workstation "data center revenue" --as-of 2024-11-21T00:00:00Z --mode public
+```
+
+**Cutoff and mode.** Observed mode uses only what this workspace held by the cutoff. Public mode reconstructs what had been published, from today's
+archive, without claiming the workspace held it then.
+
+**Policy.** `day-end` admits a filing dated D from midnight New York time after D. `strict` admits only exact times; under it, SEC companyfacts values,
+which carry a filing date only, are never eligible.
+
+**View.**
+- `as_reported`: each figure as first disclosed.
+- `latest`: each figure as most recently disclosed by the cutoff, with every revision listed.
+
+**Supported changes.** A change is shown only on a compatible basis:
+- The year-ago figure is the one presented in the same filing. For a derived quarter, it comes from the same two filings. This keeps stock splits and
+  restatements on both sides.
+- Per-share and share-count changes are withheld without a same-filing comparative.
+- A quarter is never derived across accounting vintages, from a negatively tagged capex figure, or as a negative capex.
+- Figures 100 times away from other disclosures are marked suspect and not used.
+- Periods of unequal length (13 vs 14 weeks, Costco's 16-week fourth quarter) are noted wherever the change is shown.
+- A series that stops earlier than the others is reported missing, with its last quarter named.
+
+What changes over time, and what never does, is set out in [DATA_SOURCES.md](DATA_SOURCES.md) under "Provenance and time semantics".
+
+### Assumptions, theses and decisions
+
+- **Driver model.** Assumption sets, sensitivity grids, reverse valuation and prices are described in [MODEL.md](MODEL.md).
+- **Thesis conditions.** These are typed JSON expressions, built with the form or entered as JSON. They are never evaluated as code.
+  - A comparison has the form `{"op": "<", "left": <operand>, "right": <operand>}`, and comparisons combine with `all`, `any` and `not`.
+  - An operand is a dossier change, the latest operating margin, a catalog metric, a scenario's value, the latest eligible raw close, or a constant with
+    its unit (and currency for money).
+  - Units must match, and nothing is converted.
+  - A missing, conflicted or not-applicable input makes a condition **unresolved**, never false.
+  - The trace of a condition that depends on a scenario names the assumption version, the version it replaced and exactly which assumptions changed.
+- **Decision packets.** A packet freezes, under its SHA-256, everything the decision rested on:
+  - the dossier read model at its cutoff;
+  - the thesis version and its evaluations;
+  - the full assumption versions;
+  - the price used;
+  - the calculation and evidence ids, and the open conflicts.
+
+  It adds your choice, rationale, review date and condition, and an optional resolution rule. A packet recorded after its cutoff carries a hindsight
+  note. Reopening shows the stored packet. "Reproduce" rebuilds it from the workspace and lists any difference; a later filing never changes a packet. The
+  Markdown and JSON exports are made from the stored packet only.
 
 ## Explicit SEC access
 
@@ -78,7 +157,7 @@ python3 -m kod.workstation refresh --data-dir ../runtime/workstation
 
 Refresh collects supported events from the SEC's **recent submissions** response. It does not download all historical filing chunks, find every earnings exhibit, or generate a note automatically. Open the relevant official filing and select/import the desired exhibit yourself. There is no scheduler or background monitoring promise. See [DATA_SOURCES.md](DATA_SOURCES.md) for exact coverage and request boundaries.
 
-Live SEC access has not been independently validated during this build. The source adapter is covered with frozen and injected-transport tests; a successful offline demo is not proof of live connectivity.
+On 23 October 2026 one live filed-history refresh of Texas Instruments through this adapter succeeded: two requests, 1.6 seconds, 2,418 observations recorded, and an observed-mode dossier built from them. That is a single check, not a service-level guarantee. The adapter's tests use frozen responses and injected transports, and a successful offline demo is not proof of live connectivity.
 
 ## Persistence, restart and recovery
 
@@ -123,7 +202,7 @@ The CLI binds to `127.0.0.1` only. The web application checks local Host and mut
 
 These are local-use safeguards, **not** a multi-user security model. There are no user accounts, role-based permissions, tenant isolation, encrypted-at-rest storage or production authentication. Anyone with access to the runtime files or this local process can access the research. Do not expose it through a public host, reverse proxy or tunnel as a company service. Use an appropriate private machine and protect its filesystem and backups.
 
-No orders, brokerage access, paid model calls, valuation conclusions or automated buy/sell recommendations are implemented. Source hashes demonstrate byte integrity, not publisher authenticity or legal redistribution rights. The existing KOD registries, governance checks and historical research are not rewritten by workstation activity.
+No orders, brokerage access, paid model calls or automated buy/sell recommendations are implemented. The driver model shows what your own assumptions imply; it is not a valuation conclusion of KOD's. Source hashes demonstrate byte integrity, not publisher authenticity or legal redistribution rights. The existing KOD registries, governance checks and historical research are not rewritten by workstation activity.
 
 ## Checks
 
@@ -132,6 +211,17 @@ From `kod-machine`, run the optional application's tests and a fresh offline rep
 ```sh
 python3 -m unittest discover -s workstation_tests -v
 python3 -m kod.workstation demo --data-dir ../runtime/workstation-check
+python3 evaluation/run_eval.py --runs 2
+```
+
+`evaluation/run_eval.py` answers the analyst-task set in [evaluation/](evaluation/README.md) and fails on any material error. Two further checks need
+more setup and are not part of CI:
+
+```sh
+# A real browser through the whole journey, at desktop and phone width (needs Playwright for Python and a Chromium build):
+python3 workstation_tests/browser_journey.py --out ../runtime/journey
+# Upgrade, extend, back up and restore a populated version-1 workspace (copied first; the original is never touched):
+python3 workstation_tests/migration_drill.py --v1 <v1 workspace directory> --work <empty directory>
 ```
 
 Use a fresh check directory when independently testing replay or recovery. The repository workflow also runs the legacy tests, append-only checks and `kod verify` in a complete history checkout. See [WORKSTATION_PROGRESS.md](WORKSTATION_PROGRESS.md) for build scope and validation limits.

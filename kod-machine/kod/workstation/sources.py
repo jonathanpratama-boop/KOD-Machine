@@ -276,8 +276,9 @@ def import_url(service, security_id: str, url: str, role="current", published_at
 
 
 def refresh_companyfacts(service, security_id: str, client=None) -> dict:
-    """Explicit, bounded collection of one company's SEC companyfacts and submissions (two requests). A failure is recorded as a failed job, never as an
-    empty success."""
+    """Explicit, bounded collection of one company's SEC companyfacts and submissions (two requests), under the company's refresh lock. The outcome is
+    recorded as a job: success with the number of new observations, or failure with the reason (never an empty success). Returns the coverage report
+    with the job's message; raises SourceUnavailable or ValueError after recording a failure."""
     client = client or SecClient()
     store = service.store
     security = store.get_security(security_id)
@@ -288,9 +289,16 @@ def refresh_companyfacts(service, security_id: str, client=None) -> dict:
         cik = int(security["cik"])
         facts_url = f"https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.json"
         subs_url = f"https://data.sec.gov/submissions/CIK{cik:010d}.json"
-        raw = client.get(facts_url)
-        subs = client.get(subs_url)
-        return service.import_companyfacts(security_id, raw, facts_url, observed_at=service.clock(), submissions=subs, submissions_url=subs_url)
-    except (SourceUnavailable, ValueError) as exc:
+        with _refresh_lock(store.root, security_id):
+            raw = client.get(facts_url)
+            subs = client.get(subs_url)
+            coverage = service.import_companyfacts(security_id, raw, facts_url, observed_at=service.clock(), submissions=subs, submissions_url=subs_url)
+        message = (f"Recorded {coverage['added']} new filed-history observation(s) from SEC companyfacts ({coverage['observations']} in the response). "
+                   "Whole-entity standard-taxonomy facts only.")
+        store.record_job("sec-companyfacts", security_id, "success", message, started_at=started, finished_at=service.clock(), new_count=coverage["added"])
+        return {**coverage, "message": message}
+    except (SourceUnavailable, OSError, ValueError) as exc:
         store.record_job("sec-companyfacts", security_id, "failed", str(exc), started_at=started, finished_at=service.clock())
+        if isinstance(exc, OSError):
+            raise SourceUnavailable(str(exc)) from exc
         raise

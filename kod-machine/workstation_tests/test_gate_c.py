@@ -178,3 +178,51 @@ class ReconciliationTests(CompanyFactsCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class FiledHistoryRefreshTests(CompanyFactsCase):
+    """The explicit live refresh path (two SEC requests under the company's lock), with an injected transport serving the preserved TXN responses."""
+
+    def client(self, status=200):
+        import httpx
+        from kod.workstation import sources
+        self.requested = []
+
+        def respond(request):
+            self.requested.append(request.url.path)
+            if status != 200:
+                return httpx.Response(status)
+            return httpx.Response(200, content=fixture("TXN") if "companyfacts" in request.url.path else fixture("TXN", "submissions"))
+        return sources.SecClient("test@example.com", transport=httpx.MockTransport(respond))
+
+    def test_a_refresh_records_observations_and_a_success_job(self):
+        from kod.workstation import sources
+        txn = self.store.upsert_security("TXN", "Texas Instruments", cik=CIKS["TXN"])
+        first = sources.refresh_companyfacts(self.service, txn["id"], client=self.client())
+        self.assertEqual(self.requested, ["/api/xbrl/companyfacts/CIK0000097476.json", "/submissions/CIK0000097476.json"])
+        self.assertGreater(first["added"], 1000)
+        self.assertIn("new filed-history observation", first["message"])
+        job = self.store.jobs()[0]
+        self.assertEqual((job["provider"], job["status"]), ("sec-companyfacts", "success"))
+        again = sources.refresh_companyfacts(self.service, txn["id"], client=self.client())
+        self.assertEqual(again["added"], 0)                                            # the same response adds nothing
+
+    def test_a_failed_refresh_is_recorded_as_failed_and_changes_nothing(self):
+        from kod.workstation import sources
+        txn = self.store.upsert_security("TXN", "Texas Instruments", cik=CIKS["TXN"])
+        with self.assertRaises(sources.SourceUnavailable):
+            sources.refresh_companyfacts(self.service, txn["id"], client=self.client(status=404))
+        self.assertEqual(self.store.jobs()[0]["status"], "failed")
+        self.assertFalse(FinancialRepository(self.store).all_for(txn["id"]))
+
+    def test_the_command_line_offers_the_filed_history_refresh(self):
+        import contextlib
+        import io
+        from unittest.mock import patch
+        from kod.workstation import cli
+        self.store.upsert_security("TXN", "Texas Instruments", cik=CIKS["TXN"])
+        out = io.StringIO()
+        with patch.dict("os.environ", {}, clear=True), contextlib.redirect_stdout(out):
+            code = cli.main(["refresh", "--filed-history", "--ticker", "TXN", "--data-dir", str(self.store.root)])
+        self.assertEqual(code, 2)                                                          # no KOD_SEC_CONTACT: a failure, reported, not an empty success
+        self.assertIn("KOD_SEC_CONTACT", out.getvalue())

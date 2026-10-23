@@ -489,13 +489,19 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
 
     @app.post("/company/{security_id}/refresh")
     async def refresh(security_id: str, request: Request):
-        await form(request)
+        fields = await form(request)
         security_or_404(security_id)
         if app.state.offline:
             return redirect("/company/" + security_id, "Offline mode: SEC refresh is disabled. Saved sources remain available.")
         try:
-            from .sources import refresh_security
-            result = await run_in_threadpool(refresh_security, app.state.service, security_id)
+            from .sources import SourceUnavailable, refresh_companyfacts, refresh_security
+            if fields.get("what") == "filed_history":
+                try:
+                    result = await run_in_threadpool(refresh_companyfacts, app.state.service, security_id)
+                except SourceUnavailable as exc:
+                    return redirect("/company/" + security_id, "Filed-history refresh failed: " + _error(exc)[:300])
+            else:
+                result = await run_in_threadpool(refresh_security, app.state.service, security_id)
             return redirect("/company/" + security_id, result.get("message", "Refresh finished. Inspect source health for details."))
         except (ValueError, RuntimeError) as exc:
             return redirect("/company/" + security_id, _error(exc))
