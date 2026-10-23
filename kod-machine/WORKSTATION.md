@@ -50,7 +50,7 @@ The example notes use historical **public reconstruction** cutoffs. The preserve
 | Archive search `/search` | Ranked search over the passages of preserved sources eligible at the cutoff, filtered by company, period and source type; each result opens the passage in context. |
 | Driver model `/company/{id}/model` | Save versioned assumption sets (bear/base/bull), run them, open a sensitivity grid, what-if cells and a reverse valuation; enter or import prices. See [MODEL.md](MODEL.md). |
 | Thesis `/company/{id}/thesis` | Save a thesis with structured review conditions and see each condition triggered, not triggered or unresolved at the cutoff, with its trace. |
-| Decisions `/company/{id}/decisions`, `/packet/{id}` | Record a decision packet (question, choice, rationale, review date) that freezes everything it rested on; reopen it and check that it reproduces. |
+| Decision packets `/packet/{id}` | Record a decision packet from the form at the foot of the dossier page (question, choice, rationale, review date); it freezes everything it rested on. Reopen it, check that it reproduces, export it as Markdown or JSON. |
 | Data and health `/health` | Inspect source coverage, the last attempt and last successful refresh separately, and recent job outcomes. Never checked, not configured, failed and successful-with-no-new-events are different states. |
 
 ### Make a note from your own source
@@ -69,24 +69,25 @@ User annotations are your views, not extracted facts. Saving one creates another
 
 ### Filed history
 
-The dossier reads SEC companyfacts observations. To load them offline, import a preserved response; the repository holds eight under
+The dossier reads SEC companyfacts observations. First add the company with its CIK, from the event inbox's watchlist form or the online SEC ticker
+lookup; the command line has no add command. To load filed history offline, import a preserved response. The repository holds eight under
 `examples/companyfacts/`, and `SOURCES.json` there records each URL and retrieval time:
 
 ```sh
 python3 -m kod.workstation import-companyfacts --data-dir ../runtime/workstation --ticker TXN \
   --companyfacts examples/companyfacts/TXN/companyfacts.json.gz --source-url https://data.sec.gov/api/xbrl/companyfacts/CIK0000097476.json \
-  --observed-at 2026-10-23T06:09:01Z --submissions examples/companyfacts/TXN/submissions.json.gz \
+  --observed-at 2026-10-23T06:10:14Z --submissions examples/companyfacts/TXN/submissions.json.gz \
   --submissions-url https://data.sec.gov/submissions/CIK0000097476.json
 ```
 
-Never give an `--observed-at` earlier than the real retrieval. Online, with `KOD_SEC_CONTACT` set, you can instead use the company page's "Refresh filed
-history" button, or the command line:
+One `--observed-at` applies to both responses. Give the later of the two retrieval times (here the submissions response, 06:10:14Z), never an earlier
+one. Online, with `KOD_SEC_CONTACT` set, you can instead use the company page's "Refresh filed history" button, or the command line:
 
 ```sh
 python3 -m kod.workstation refresh --filed-history --data-dir ../runtime/workstation --ticker TXN
 ```
 
-Each refresh makes two SEC requests under the company's refresh lock, and is recorded as a job with its outcome. The demo (`demo`) also imports the
+Each refresh makes two SEC requests under the company's refresh lock and is recorded as one job with its outcome. A failed request or an unreadable response is recorded as failed, not as an empty success. The demo (`demo`) also imports the
 filed history of NVIDIA, AMD, Apple, Microsoft and JPMorgan from the preserved responses.
 
 ### Reading a dossier
@@ -94,7 +95,13 @@ filed history of NVIDIA, AMD, Apple, Microsoft and JPMorgan from the preserved r
 ```sh
 python3 -m kod.workstation dossier --data-dir ../runtime/workstation --ticker TXN --as-of 2024-11-01T00:00:00Z --mode public
 python3 -m kod.workstation dossier --data-dir ../runtime/workstation --ticker TXN --as-of 2024-11-01T00:00:00Z --mode public --view latest --format json
-python3 -m kod.workstation search --data-dir ../runtime/workstation "data center revenue" --as-of 2024-11-21T00:00:00Z --mode public
+```
+
+Archive search reads the text of preserved documents such as earnings releases and saved HTML, not the SEC JSON responses. Try it on the demo
+workspace:
+
+```sh
+python3 -m kod.workstation search --data-dir ../runtime/workstation-demo "data center revenue" --as-of 2024-11-21T00:00:00Z --mode public
 ```
 
 **Cutoff and mode.** Observed mode uses only what this workspace held by the cutoff. Public mode reconstructs what had been published, from today's
@@ -107,13 +114,16 @@ which carry a filing date only, are never eligible.
 - `as_reported`: each figure as first disclosed.
 - `latest`: each figure as most recently disclosed by the cutoff, with every revision listed.
 
-**Supported changes.** A change is shown only on a compatible basis:
-- The year-ago figure is the one presented in the same filing. For a derived quarter, it comes from the same two filings. This keeps stock splits and
-  restatements on both sides.
-- Per-share and share-count changes are withheld without a same-filing comparative.
+**Supported changes.** A change is shown only on a basis that is stated with it:
+- The year-ago figure is taken, when the filing presents it, from the same filing as the current figure; for a derived quarter, from the same two filings.
+  This keeps stock splits and restatements on both sides.
+- Otherwise a flow is compared with the year-ago figure's own disclosure, and the comparison basis says so. Per-share and share-count changes are
+  withheld in that case.
+- If the two sides are tagged with different XBRL concepts, that is noted with the change.
 - A quarter is never derived across accounting vintages, from a negatively tagged capex figure, or as a negative capex.
 - Figures 100 times away from other disclosures are marked suspect and not used.
-- Periods of unequal length (13 vs 14 weeks, Costco's 16-week fourth quarter) are noted wherever the change is shown.
+- Periods of unequal length (13 vs 14 weeks, Costco's 16- against 17-week fourth quarters) are noted wherever the change is shown. Quarter-on-quarter
+  growth across quarters whose lengths differ by more than 15% is withheld.
 - A series that stops earlier than the others is reported missing, with its last quarter named.
 
 What changes over time, and what never does, is set out in [DATA_SOURCES.md](DATA_SOURCES.md) under "Provenance and time semantics".

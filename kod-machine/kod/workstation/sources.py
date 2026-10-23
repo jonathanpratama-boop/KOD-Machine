@@ -292,13 +292,17 @@ def refresh_companyfacts(service, security_id: str, client=None) -> dict:
         with _refresh_lock(store.root, security_id):
             raw = client.get(facts_url)
             subs = client.get(subs_url)
+            # import_companyfacts records the success job itself (one job per refresh).
             coverage = service.import_companyfacts(security_id, raw, facts_url, observed_at=service.clock(), submissions=subs, submissions_url=subs_url)
         message = (f"Recorded {coverage['added']} new filed-history observation(s) from SEC companyfacts ({coverage['observations']} in the response). "
                    "Whole-entity standard-taxonomy facts only.")
-        store.record_job("sec-companyfacts", security_id, "success", message, started_at=started, finished_at=service.clock(), new_count=coverage["added"])
         return {**coverage, "message": message}
     except (SourceUnavailable, OSError, ValueError) as exc:
         store.record_job("sec-companyfacts", security_id, "failed", str(exc), started_at=started, finished_at=service.clock())
         if isinstance(exc, OSError):
             raise SourceUnavailable(str(exc)) from exc
         raise
+    except Exception as exc:              # a response of an unexpected shape: a failed job with the error type, never a traceback or an empty success
+        message = f"the SEC companyfacts response could not be read ({type(exc).__name__}); nothing was recorded from it"
+        store.record_job("sec-companyfacts", security_id, "failed", message, started_at=started, finished_at=service.clock())
+        raise SourceUnavailable(message) from exc

@@ -36,6 +36,16 @@ def _fiscal_quarter(q_start: str, q_end: str, longer) -> bool:
         return True
     days = (_day(q_end) - _day(q_start)).days + 1
     return longer.period.kind == "12 months" and 105 <= days <= 126
+
+
+def long_quarter(period) -> bool:
+    """A whole-week period of 15 to 18 weeks: a week-based fiscal fourth quarter (Costco's 16 or 17 weeks) when it ends a fiscal year."""
+    days = period.duration_days
+    return period.kind != "quarter" and days is not None and days % 7 == 0 and 105 <= days <= 126
+
+
+def quarter_like(period) -> bool:
+    return period.kind == "quarter" or long_quarter(period)
 KIND = {m: kind for m, _, kind, *_ in METRIC_CATALOG_V1}
 
 
@@ -73,11 +83,14 @@ def quarterly(figures: list, metric: str, check=None, alternatives: dict | None 
     never combined). Returns Quarter records sorted by end date. `check(shorter, longer)` may return reasons the two year-to-date figures must not be
     differenced (for example, one was restated and the other was not: different accounting vintages)."""
     own = [f for f in figures if f.metric == metric and f.period.start_date and f.period.end_date]
+    year_ends = {f.period.end_date for f in own if f.period.kind == "12 months"}
     quarters = {}
     for f in own:
-        if f.period.kind == "quarter":
+        # A reported week-based fourth quarter (15-18 weeks ending a fiscal year) is a quarter as reported.
+        if f.period.kind == "quarter" or (long_quarter(f.period) and f.period.end_date in year_ends):
             key = (f.period.start_date, f.period.end_date)
             quarters[key] = Quarter(*key, f.value, "reported" if f.status == "ok" else f.status, f, None, f.reasons)
+    reported_ends = {end for _, end in quarters}
     if metric not in ADDITIVE:
         return sorted(quarters.values(), key=lambda q: q.end)
     by_start = {}
@@ -96,6 +109,8 @@ def quarterly(figures: list, metric: str, check=None, alternatives: dict | None 
                 if alternatives is not None and shorter.status == "ok" and longer.status == "ok" and not _compatible(shorter, longer):
                     alternatives[(q_start, q_end)] = longer.value - shorter.value
                 continue
+            if q_end in reported_ends:
+                continue                  # a reported quarter ends on the same date (with another start): the reported figure is used, never a second one
             reasons = _compatible(shorter, longer) + (list(check(shorter, longer)) if check else [])
             inputs = tuple(("year_to_date_" + role, "observation", oid) for role, f in (("longer", longer), ("shorter", shorter)) for oid in f.observation_ids)
             if shorter.status != "ok" or longer.status != "ok":

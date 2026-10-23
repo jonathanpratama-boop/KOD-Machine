@@ -231,8 +231,10 @@ class _Series:
         return next((q for q in reversed(self.quarters) if _year_before(q.end, end)), None)
 
     def presented(self, accession: str, kind: str, end_before: str, start: str | None = None) -> ResolvedFigure | None:
-        """The figure of `kind` ending one year before `end_before`, as presented in filing `accession` (its comparative column)."""
-        found = [o for o in self.obs if o.accession == accession and o.period.kind == kind and o.period.end_date and _year_before(o.period.end_date, end_before)
+        """The figure of `kind` ending one year before `end_before`, as presented in filing `accession` (its comparative column). Kind 'quarter' also
+        accepts a week-based fourth quarter of 15-18 weeks."""
+        same_kind = quarters.quarter_like if kind == "quarter" else (lambda p: p.kind == kind)
+        found = [o for o in self.obs if o.accession == accession and same_kind(o.period) and o.period.end_date and _year_before(o.period.end_date, end_before)
                  and (start is None or o.period.start_date == start)]
         if not found:
             return None
@@ -359,9 +361,15 @@ def _changes(series: dict, policy: AsOfPolicy, index: _Index, view: str, busines
                     "value": record["value"], "unit": result.unit, "calculation_id": record["id"], "reasons": list(result.reasons),
                     **{k: v for k, v in (extra or {}).items() if v}})
 
+    def concepts(f):
+        return sorted({index.by_id[i].concept for i in f.observation_ids if i in index.by_id}) if f is not None else []
+
     def notes(*figures, basis=None, pair=None):
         derived = [r for f in figures if f is not None for r in f.reasons if r.startswith("derived")]
-        return {"derived_inputs": derived, "comparison_basis": basis, "duration_note": _duration_note(*pair) if pair else None}
+        concept_note = None
+        if pair and all(f is not None for f in pair) and concepts(pair[0]) and concepts(pair[1]) and concepts(pair[0]) != concepts(pair[1]):
+            concept_note = f"the two sides are tagged with different XBRL concepts ({', '.join(concepts(pair[0]))} vs {', '.join(concepts(pair[1]))})"
+        return {"derived_inputs": derived, "comparison_basis": basis, "duration_note": _duration_note(*pair) if pair else None, "concept_note": concept_note}
 
     def last_of(metric):
         usable = [q.end for q in series[metric].quarters if q.value is not None]
@@ -426,8 +434,13 @@ def _changes(series: dict, policy: AsOfPolicy, index: _Index, view: str, busines
                 if first is not None and ago_rev.value is not None and not financials.same_within_rounding(first.value, ago_rev.value, first.unit):
                     restated = f"the current filing re-presents the year-ago quarter at {ago_rev.value} (first reported {first.value}): a basis change, so the " \
                                "previous quarter's own disclosure is on the earlier basis"
+            days = (cur_rev.period.duration_days, prev_fig.period.duration_days) if prev_fig is not None else (None, None)
             if prev_fig is None:
                 result = _missing("growth", "no previous contiguous revenue quarter", figures=(cur_rev,))
+            elif all(days) and max(days) > Decimal("1.15") * min(days):
+                result = calc.CalculationResult("growth", "growth-v1", "incompatible", None, "percent", calc._inputs(current=cur_rev, prior=prev_fig), (),
+                                                (f"the two quarters differ in length ({days[0]} vs {days[1]} days); quarter-on-quarter growth would mostly "
+                                                 "measure the extra weeks",))
             elif restated:
                 result = calc.CalculationResult("growth", "growth-v1", "incompatible", None, "percent", calc._inputs(current=cur_rev, prior=prev_fig), (), (restated,))
             else:
@@ -668,6 +681,9 @@ def build(service, security_id: str, policy: AsOfPolicy, view: str = "as_reporte
     with store._connection() as db:
         ident = identity_model.current(db, security_id, identity_as_of)
     shown_security = {**security, "cik": (ident or {}).get("cik") if policy.mode == "observed" else security.get("cik")}
+    if policy.mode == "observed":
+        # The issuer name as recorded with the identity held by the cutoff; a later rename of the watchlist entry does not reach an earlier view.
+        shown_security["name"] = (ident or {}).get("issuer_name")
     return assemble(shown_security, ident, repo.all_for(security_id, identity_as_of=identity_as_of), policy, view, submissions,
                     subs_doc["observed_at"] if subs_doc else None, docs, question, scenario_summaries(service, security_id, policy, submissions))
 
@@ -739,7 +755,7 @@ def md_text(text, single_line=True) -> str:
 def render_markdown(d: dict) -> str:
     """The same read model as text. Every value is followed by its provenance identifiers in the JSON export."""
     c, p = d["company"], d["policy"]
-    lines = [f"# Company dossier: {md_text(c['ticker'])} ({md_text(c['name'])})", "",
+    lines = [f"# Company dossier: {md_text(c['ticker'])} ({md_text(c['name'] or 'name not recorded by this cutoff')})", "",
              f"Information cutoff {p['cutoff']} · {p['mode']} mode · policy {p['policy_version']} · {d['view'].replace('_', ' ')} view · {d['schema']}", ""]
     if d.get("question"):
         lines += [f"**Question:** {md_text(d['question'])}", ""]
@@ -756,7 +772,7 @@ def render_markdown(d: dict) -> str:
     for ch in shown:
         lines.append(f"- **{ch['label']}**: {display(ch['value'], ch['unit'], None) if ch['unit'] != 'currency' else display(ch['value'], 'currency')} "
                      f"({ch['periods']}; calculation `{ch['calculation_id']}`)" + (" — uses a derived quarter" if ch.get("derived_inputs") else "")
-                     + (f" — {ch['duration_note']}" if ch.get("duration_note") else ""))
+                     + "".join(f" — {md_text(ch[k])}" for k in ("comparison_basis", "duration_note", "concept_note") if ch.get(k)))
     if not shown:
         lines.append("- None: the eligible evidence supports no change in the catalog.")
     unavailable = [ch for ch in d["changes"] if ch["status"] != "ok"]

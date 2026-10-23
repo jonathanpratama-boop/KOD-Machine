@@ -159,9 +159,10 @@ def _resolve(o: dict, d: dict, context: dict) -> dict:
         if unit == "currency":
             rec = d["calculations"].get(c["calculation_id"], {})
             currency = (rec.get("detail") or {}).get("currency")
+        caveats = "; ".join(c[k] for k in ("duration_note", "concept_note") if c.get(k)) or None
         return {"value": Decimal(c["value"]) if c["status"] == "ok" else None, "unit": unit, "currency": currency,
                 "status": "ok" if c["status"] == "ok" else c["status"], "reason": "; ".join(c["reasons"]) or None,
-                "label": f"{c['label']} ({c['periods']})", "sources": {"calculation_id": c["calculation_id"]}}
+                "label": f"{c['label']} ({c['periods']})", "note": caveats, "sources": {"calculation_id": c["calculation_id"]}}
     if kind == "metric":
         group = {"latest_quarter": "quarterly", "latest_fiscal_year": "annual", "latest_balance": "instant"}[o["at"]]
         cells = [cell for cell in d["history"][group].get(o["metric"], []) if cell["value"] is not None]
@@ -222,7 +223,7 @@ def _evaluate(e: dict, d: dict, context: dict, trace: list) -> str:
 
 def _public(r):
     return {"label": r.get("label"), "value": None if r["value"] is None else str(r["value"]), "unit": r.get("unit"), "currency": r.get("currency"),
-            "status": r["status"], "reason": r.get("reason"), "sources": r.get("sources", {})}
+            "status": r["status"], "reason": r.get("reason"), "sources": r.get("sources", {}), **({"note": r["note"]} if r.get("note") else {})}
 
 
 def evaluate(version: dict, d: dict, context: dict | None = None) -> list:

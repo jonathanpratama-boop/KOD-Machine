@@ -246,7 +246,8 @@ def render_markdown(stored: dict) -> str:
             lines.append(f"- **{e['status'].replace('_', ' ')}** — {md(e['label'])} [{md(thesis.describe(condition['expression']))}]")
             for step in e["trace"]:
                 lines.append(f"  - {step['left']['label']} = {thesis.shown(step['left'])} {step['op']} {step['right']['label']} = {thesis.shown(step['right'])}"
-                             f" → {step['result'].replace('_', ' ')}" + (f" ({step['reason']})" if step.get("reason") else ""))
+                             f" → {step['result'].replace('_', ' ')}" + (f" ({step['reason']})" if step.get("reason") else "")
+                             + "".join(f" [{step[side]['note']}]" for side in ("left", "right") if step[side].get("note")))
                 for side in ("left", "right"):
                     at = step[side]["sources"].get("assumption_trace")
                     if at:

@@ -6,7 +6,7 @@ rationale. Filed history can suggest starting values, but never fills a forecast
 
 ## Formula
 
-These quantities are computed in this order, for forecast years t = 1 … N. All rates are fractions, and every quantity is an exact decimal with
+These quantities are computed in this order, for forecast years t = 1 … N. All rates are fractions, and every quantity is computed in decimal arithmetic with
 34 significant digits.
 
 | Quantity | Definition |
@@ -30,7 +30,7 @@ The test `workstation_tests/test_gate_e.py` works an example by hand, year by ye
 
 ## Assumption set
 
-An assumption set is a JSON object, validated completely before it is saved. Every problem is listed at once, and nothing invalid is stored.
+An assumption set is a JSON object, validated completely before it is saved. Every problem is listed at once, and a set that fails these checks is not stored. One limit is checked when the model runs rather than when the set is saved: terminal reinvestment above 100% gives the status `invalid`.
 
 | Field | Meaning and rule |
 |---|---|
@@ -39,8 +39,8 @@ An assumption set is a JSON object, validated completely before it is saved. Eve
 | `currency` | Three-letter code. Nothing is converted between currencies anywhere |
 | `valuation_date` | A date. A bridge or share count dated after it is refused for a per-share value |
 | `revenue_growth`, `operating_margin`, `cash_tax_rate`, `depreciation_rate`, `capex_rate`, `nwc_rate` | Either one value for every year, or a list with exactly one value per year. Ranges: growth −0.95 to 5; margin −2 to 1; tax 0 to 1; D&A 0 to 1; capex 0 to 2; NWC −2 to 2 |
-| `discount_rate`, `terminal_growth`, `terminal_roic` | Discount rate 0.001 to 1; terminal growth −0.5 to 0.2; terminal ROIC 0.001 to 10. The discount rate must exceed terminal growth, and g / terminal ROIC must not exceed 100% |
-| `bridge.cash`, `bridge.debt`, `bridge.other_senior_claims`, `bridge.other_adjustments`, `bridge.as_of` | Nonnegative amounts (the formula applies the sign) and the balance-sheet date |
+| `discount_rate`, `terminal_growth`, `terminal_roic` | Discount rate 0.001 to 1; terminal growth −0.5 to 0.2; terminal ROIC 0.001 to 10. The discount rate must exceed terminal growth (checked when saved). The terminal reinvestment g / terminal ROIC must not exceed 100% (checked when run) |
+| `bridge.cash`, `bridge.debt`, `bridge.other_senior_claims`, `bridge.other_adjustments`, `bridge.as_of` | Cash, debt and other senior claims are nonnegative amounts (the formula applies the sign). `other_adjustments` is signed and added. `as_of` is the balance-sheet date |
 | `shares.count`, `shares.as_of`, `shares.basis` | Positive count, its date, and a stated basis (for example "diluted shares at the valuation date, analyst-reviewed"). The analyst selects the count; KOD never picks it |
 | `treatments` | One declared choice each for stock compensation, leases, convertibles, non-controlling interests and tax losses. "not_modelled" is allowed and stays visible as a limitation |
 | `sources` | Optional observation ids the analyst cites for any input |
@@ -116,8 +116,9 @@ positive target, with everything else fixed.
    - `invalid_bracket`: undefined somewhere in the bracket;
    - `not_monotonic`: a solution would not be unique; sample values are shown;
    - `no_solution`: the target lies outside the range the bracket produces; the range is shown.
-3. **Bisection.** It stops within 0.0001 per share or after 200 iterations (`not_converged`). The result shows the solved level, the residual and a
-   check value.
+3. **Bisection.** It reports `solved` only when the value is within 0.0001 per share of the target, and shows the solved level, the residual and a check
+   value. It reports `not_converged` when the bracket narrows below 10⁻¹² before reaching the tolerance (the value is very steep there) or after 200
+   iterations.
 4. **Other cases.** `ev_only` and `not_applicable` carry through from the model.
 
 The answer is labelled "the level required under this model and these assumptions". It is not a statement of what the market believes.

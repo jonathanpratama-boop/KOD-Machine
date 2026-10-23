@@ -197,10 +197,11 @@ def price(service, price_id: str) -> dict:
 
 
 def price_at(service, security_id: str, policy: AsOfPolicy, adjustment: str = "raw") -> dict | None:
-    """The most recent price of the given convention that is eligible at the cutoff (published by it; in observed mode also recorded by it)."""
+    """The most recent price of the given convention that is eligible at the cutoff (published by it; in observed mode also recorded by it). For one
+    trading day with several prices (a correction is a new import), the most recently recorded eligible one is used."""
     with service.store._connection() as db:
-        rows = [dict(r) for r in db.execute("SELECT * FROM price_observations WHERE security_id=? AND adjustment=? ORDER BY observed_on DESC, published_at DESC, id",
-                                            (security_id, adjustment))]
+        rows = [dict(r) for r in db.execute("SELECT * FROM price_observations WHERE security_id=? AND adjustment=? "
+                                            "ORDER BY observed_on DESC, recorded_at DESC, published_at DESC, id", (security_id, adjustment))]
     for r in rows:
         if eligibility({"published_at": r["published_at"], "observed_at": r["observed_at"]}, policy)[0]:
             return r

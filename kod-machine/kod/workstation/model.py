@@ -392,9 +392,12 @@ def reverse(a: Assumptions, target_per_share: Decimal, parameter: str, bracket: 
         for i in range(1, max_iterations + 1):
             mid = (lo + hi) / 2
             f_mid = value_at(mid) - target
-            if abs(f_mid) <= tolerance or (hi - lo) / 2 < Decimal("1e-12"):
+            if abs(f_mid) <= tolerance:
                 return {**base, "status": "solved", "value": str(mid), "residual": str(f_mid), "iterations": i,
                         "tolerance": str(tolerance), "check": str(value_at(mid))}
+            if (hi - lo) / 2 < Decimal("1e-12"):
+                return {**base, "status": "not_converged", "value": str(mid), "residual": str(f_mid), "iterations": i,
+                        "reasons": [f"the bracket narrowed to {hi - lo} without reaching the tolerance {tolerance} per share; the value is that steep here"]}
             if (f_mid > 0) == (f_lo > 0):
                 lo, f_lo = mid, f_mid
             else:
@@ -423,7 +426,8 @@ def suggest_from_history(dossier: dict) -> dict:
         cells = [c for c in annual.get("revenue", []) if c["value"]]
         if len(cells) >= 2 and Decimal(cells[-2]["value"]) > 0:
             out["values"]["last_year_growth"] = {"value": str((revenue / Decimal(cells[-2]["value"]) - 1).quantize(Decimal("0.0001"))),
-                                                 "fiscal_year_end": rev["period"]["end"], "note": "the last reported year's growth; not a forecast"}
+                                                 "fiscal_year_end": rev["period"]["end"], "note": "the last reported year's growth; not a forecast",
+                                                 "observation_ids": rev["observation_ids"] + cells[-2]["observation_ids"]}
     if ocf:
         out["values"]["operating_cash_flow"] = {"value": ocf["value"], "fiscal_year_end": ocf["period"]["end"], "observation_ids": ocf["observation_ids"]}
     return out
