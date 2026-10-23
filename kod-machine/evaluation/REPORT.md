@@ -8,6 +8,14 @@ same runner. Each was run twice on fresh workspaces, and in each case the two ru
 - **After the repairs:** this branch. Answer hash `6370ddb6…`, identical across separate processes and hash seeds; the full record is in
   `results.json`.
 
+## Update: release reader v4 (later on 23 October 2026)
+
+T3's misses led to the release reader work on branch `claude/kod-release-reader-20261023`. T3 now passes all eight checks, including EPS 1.47, both
+outlook comparisons (revenue and EPS within TI's ranges) and the caveat. It is now marked as overlapping development. On that branch the measurement is
+10 of 13 tasks; checks 86 correct, 1 allowed unavailable, 6 missed, 0 material errors; no regressions. The reader's independent measurement is the
+held-out set in [holdout_v1/REPORT.md](holdout_v1/REPORT.md): six unseen issuers; 28 of 38 expected answers correct, 10 withheld, none wrong.
+The tables below are the measurement on the dossier branch, before that work.
+
 ## Result
 
 | | Before the repairs | After them |
@@ -125,7 +133,7 @@ The first draft's runner also counted history cells reported as `reported` or `d
 
 These are the next acceptance work (see `DOSSIER_PROGRESS.md`). They are left unrepaired here so the next measurement of them stays independent.
 
-1. **Release reader coverage (T3).** These release-reader limits are withheld rather than misread:
+1. **Release reader coverage (T3).** Repaired later by release reader v4 (see the update above). The limits as they were here:
    - A column period stated only in a caption above the table ("… For Three Months Ended September 30, …") is not linked to the columns.
    - The outlook reader does not recognise "TI's third quarter outlook is for revenue in the range of $3.94 billion to $4.26 billion and earnings per share
      between $1.24 and $1.48."

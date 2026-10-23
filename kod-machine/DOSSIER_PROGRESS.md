@@ -164,6 +164,40 @@ Demo notes regenerated (`examples/earnings_demo/output`, `more/*/output`). Seman
 - Live check: one filed-history refresh of TXN through KOD's own SEC adapter on 2026-10-23 (two requests, 2,418 observations). The outputs were not
   committed.
 
+## After Gate G: release reader v4 (branch `claude/kod-release-reader-20261023`)
+
+- **Method.**
+  - A held-out set of six unseen issuers (`evaluation/holdout_v1`) was prepared by a separate agent from a fixed hash rule, then sealed and pushed
+    (`3a2751d`) before any reader change.
+  - The reader was then developed on 41 releases from the other half of the ticker partition.
+  - An adversarial review constructed eight wrong-answer cases against the first version. All were fixed with tests before the held-out set was
+    measured once.
+- **Development set (41 releases), before → after:**
+  - refused 15 → 7;
+  - period unresolved 9 → 0;
+  - net income found 6 → 30;
+  - diluted EPS found 3 → 31.
+- **Held-out set, before → after:**
+  - expected answers correct 15 → 28 of 38;
+  - wrong 2 → 0;
+  - tasks fully answered 0 → 2 of 6.
+  - See [evaluation/holdout_v1/REPORT.md](evaluation/holdout_v1/REPORT.md).
+- **Main evaluation:** 10 of 13 tasks (T3 now passes); 0 material errors; no regressions.
+- **What changed in the reader (`KOD-EARNINGS-PARSER-v4`, `kod/earnings.py`):**
+  - table headings over two rows, month-day rows, captions beside headings, week-based periods, fiscal labels, YTD and change columns;
+  - more scale captions, and a scale taken from a table printing the same figures;
+  - the income statement preferred over segment, region and rounded tables;
+  - more net income and EPS labels, net income attributable to the company, loss signs, per-share tables, 'As Reported (GAAP)' rows;
+  - split parentheses;
+  - period resolution:
+    - 'three and six months ended';
+    - a fiscal quarter dated by the publication date;
+    - fiscal years named without 'fiscal';
+    - filing references ignored;
+    - calendar labels merged with dated columns when their figures agree;
+  - outlook for a named later quarter read from sentences, under strict rules;
+  - guidance caveats shown.
+
 ## Checks at this checkpoint
 
 Run on the code of the commit that adds this table (2026-10-23):
@@ -198,10 +232,12 @@ Run on the code of the commit that adds this table (2026-10-23):
 
 ## Remaining dependencies and open items
 
-- **Next acceptance task.** Extend the release reader to column periods stated in a caption and to "<ordinal> quarter outlook is for …" sentences.
-  Map `PaymentsToAcquireProductiveAssets` as capex and `RevenuesNetOfInterestExpense` as bank net revenue, with the care noted in the evaluation report;
-  this needs the fixtures rebuilt from the full responses. Then measure on a new evaluation set prepared beforehand, with releases from at least five
-  issuers KOD has not seen.
+- **Next acceptance task.**
+  - Work through the held-out set's misses: a release KOD refuses (TDC), net income and EPS rows it does not find (NATL, CBUS), and a quarterly revenue
+    outlook it does not read (CHGG).
+  - Work through the development set's 7 refusals: preliminary announcements, prose-only releases and unusual tables.
+  - Map `PaymentsToAcquireProductiveAssets` as capex and `RevenuesNetOfInterestExpense` as bank net revenue, with the care noted in the evaluation report.
+  - Then prepare a new held-out set first, including fiscal-year companies and a non-US-dollar reporter, and measure once.
 - **Owner decision.** Should KOD infer the reported quarter from column labels when a year-ago sentence corroborates them (evaluation task H2)? It does
   not today.
 - **Live SEC collection.** It was exercised once, for one company (TXN, 2026-10-23).
