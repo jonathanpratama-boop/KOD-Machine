@@ -15,7 +15,7 @@ from urllib.parse import urlsplit
 
 from ..hashing import fmt_ts, parse_ts
 
-APP_VERSION = "KOD-WORKSTATION-v1"
+APP_VERSION = "KOD-WORKSTATION-v2"
 ASSOCIATIONS = frozenset({"verified_from_filing_metadata", "user_asserted", "unresolved"})
 MAX_DOCUMENT_BYTES = 12 * 1024 * 1024
 
@@ -72,6 +72,9 @@ def source_url(value: str) -> str:
         raise ValueError("source URL must be an http(s) citation without credentials")
     if port is not None and port not in (80, 443):
         raise ValueError("source URL uses an unsupported port")
+    from ..earnings import has_dot_segments
+    if has_dot_segments(parts.path):
+        raise ValueError("source URL must not contain '.' or '..' path segments")
     return value
 
 

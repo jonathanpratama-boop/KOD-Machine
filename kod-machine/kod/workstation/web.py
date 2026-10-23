@@ -279,7 +279,7 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
     def company(security_id: str, request: Request):
         sec = security_or_404(security_id)
         docs = app.state.store.documents(security_id)
-        return render(request, "company.html", page="company", company=sec, documents=docs, parsed=[d for d in docs if d.get("extraction_status") == "parsed"], events=app.state.store.events(security_id), notes=app.state.store.notes(security_id))
+        return render(request, "company.html", page="company", company=sec, documents=docs, parsed=[d for d in docs if d.get("extraction_status") in ("parsed", "needs_review")], events=app.state.store.events(security_id), notes=app.state.store.notes(security_id))
 
     @app.post("/company/{security_id}/upload")
     async def upload(security_id: str, request: Request):
@@ -307,7 +307,9 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
                 raise ValueError("Choose current or comparison release.")
             doc = app.state.service.ingest(security_id, raw, filename, url, published_at=_text(fields.get("published_at"), 80) or None, sec_headers=headers,
                                            role=role, association="user_asserted")
-            message = "Source preserved and parsed. You can now generate a research note." if doc["extraction_status"] == "parsed" else "Source preserved, but this layout was not parsed. Supply a supported HTML summary table to extract figures."
+            message = {"parsed": "Source preserved and parsed. You can now generate a research note.",
+                       "needs_review": "Source preserved and its figures were read, but the release does not establish which quarter it reports. Generate a note to see the columns, or record the reported period explicitly."}.get(
+                doc["extraction_status"], "Source preserved, but this layout was not parsed. Supply a supported HTML summary table to extract figures.")
             return redirect("/company/" + security_id, message)
         except ValueError as exc:
             return redirect("/company/" + security_id, _error(exc))
@@ -352,7 +354,9 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
             if mode not in {"observed", "public"}:
                 raise ValueError("Choose observed or public reconstruction mode.")
             saved = app.state.service.generate_note(security_id, _text(fields.get("current_id"), 100), comparison_id=_text(fields.get("comparison_id"), 100) or None,
-                                                   as_of=_text(fields.get("as_of"), 80) or None, mode=mode)
+                                                   as_of=_text(fields.get("as_of"), 80) or None, mode=mode,
+                                                   period=_text(fields.get("period"), 60) or None,
+                                                   reporting_currency=_text(fields.get("reporting_currency"), 3).upper() or None)
             return redirect("/note/" + saved["id"], "Research note saved.")
         except ValueError as exc:
             return redirect("/company/" + security_id, _error(exc))

@@ -17,63 +17,12 @@ import tempfile
 import threading
 
 from ..hashing import utc_now
+from . import financials, identity as identity_model, migrations
 from .domain import APP_VERSION, Security, SourceEnvelope, canonical, identity, publication, source_url, timestamp
 
 
-SCHEMA_VERSION = 1
 DB_NAME = "workstation.sqlite3"
-DDL = """
-CREATE TABLE securities (
- id TEXT PRIMARY KEY, ticker TEXT NOT NULL, name TEXT NOT NULL, cik TEXT,
- venue TEXT NOT NULL, currency TEXT NOT NULL, association TEXT NOT NULL,
- watched INTEGER NOT NULL DEFAULT 1, created_at TEXT NOT NULL,
- UNIQUE(ticker, venue)
-);
-CREATE TABLE objects (sha256 TEXT PRIMARY KEY, bytes INTEGER NOT NULL);
-CREATE TABLE documents (
- id TEXT PRIMARY KEY, security_id TEXT NOT NULL REFERENCES securities(id),
- sha256 TEXT NOT NULL REFERENCES objects(sha256), filename TEXT NOT NULL,
- source_url TEXT NOT NULL, published_at TEXT, published_basis TEXT NOT NULL,
- observed_at TEXT NOT NULL, role TEXT NOT NULL, association TEXT NOT NULL,
- provider TEXT NOT NULL, external_id TEXT, extraction_status TEXT NOT NULL,
- metadata TEXT NOT NULL, created_at TEXT NOT NULL
-);
-CREATE INDEX documents_security ON documents(security_id, observed_at DESC);
-CREATE TABLE observations (
- id INTEGER PRIMARY KEY, document_id TEXT NOT NULL REFERENCES documents(id),
- observed_at TEXT NOT NULL, recorded_at TEXT NOT NULL
-);
-CREATE TABLE events (
- id TEXT PRIMARY KEY, security_id TEXT NOT NULL REFERENCES securities(id),
- external_id TEXT NOT NULL, form TEXT NOT NULL, title TEXT NOT NULL,
- source_url TEXT NOT NULL, published_at TEXT, published_basis TEXT NOT NULL,
- observed_at TEXT NOT NULL, document_id TEXT REFERENCES documents(id), metadata TEXT NOT NULL,
- UNIQUE(security_id, external_id)
-);
-CREATE TABLE event_revisions (
- event_id TEXT NOT NULL REFERENCES events(id), content_sha256 TEXT NOT NULL,
- payload TEXT NOT NULL, recorded_at TEXT NOT NULL, PRIMARY KEY(event_id,content_sha256)
-);
-CREATE INDEX events_security ON events(security_id, published_at DESC);
-CREATE TABLE notes (
- id TEXT PRIMARY KEY, security_id TEXT NOT NULL REFERENCES securities(id),
- current_document_id TEXT NOT NULL REFERENCES documents(id),
- comparison_document_id TEXT REFERENCES documents(id), result TEXT NOT NULL,
- markdown TEXT NOT NULL, as_of TEXT NOT NULL, mode TEXT NOT NULL,
- created_at TEXT NOT NULL, app_version TEXT NOT NULL
-);
-CREATE INDEX notes_security ON notes(security_id, created_at DESC);
-CREATE TABLE annotations (
- id INTEGER PRIMARY KEY, note_id TEXT NOT NULL REFERENCES notes(id), thesis TEXT NOT NULL,
- invalidation TEXT NOT NULL, review_condition TEXT NOT NULL, created_at TEXT NOT NULL,
- author TEXT NOT NULL DEFAULT 'local_user'
-);
-CREATE TABLE jobs (
- id INTEGER PRIMARY KEY, provider TEXT NOT NULL, scope TEXT NOT NULL, status TEXT NOT NULL,
- message TEXT NOT NULL, started_at TEXT NOT NULL, finished_at TEXT, new_count INTEGER NOT NULL
-);
-CREATE INDEX jobs_provider_scope ON jobs(provider,scope,id DESC);
-"""
+SCHEMA_VERSION = migrations.LATEST
 
 
 class Store:
@@ -89,19 +38,12 @@ class Store:
         if self.path.is_symlink():
             raise ValueError("database must not be a symlink")
         self._lock = threading.RLock()
-        with self._connection() as db:
-            db.execute("PRAGMA journal_mode=WAL")
-            # Recheck the schema while holding the writer lock: concurrent first
-            # launches must not both observe version zero and race CREATE TABLE.
-            db.execute("BEGIN IMMEDIATE")
-            version = db.execute("PRAGMA user_version").fetchone()[0]
-            if version > SCHEMA_VERSION:
-                raise ValueError("database schema is newer than this application")
-            if version == 0:
-                for statement in DDL.split(";"):
-                    if statement.strip():
-                        db.execute(statement)
-                db.execute(f"PRAGMA user_version={SCHEMA_VERSION}")
+        # Ordered, transactional migrations; each one re-reads the version under the writer lock, so concurrent first launches cannot race. A failure
+        # leaves the database as it was (see migrations.py); it is never rebuilt.
+        try:
+            self.migration = migrations.ensure_schema(self.path, APP_VERSION)
+        except migrations.MigrationError as exc:
+            raise ValueError(str(exc)) from exc
 
     @staticmethod
     def _validate_root(path):
@@ -154,7 +96,48 @@ class Store:
                 ON CONFLICT(id) DO UPDATE SET name=excluded.name,cik=COALESCE(excluded.cik,securities.cik),
                 currency=excluded.currency,association=excluded.association,watched=1""",
                 (sid, sec.ticker, sec.name, sec.cik, sec.venue, sec.currency, assoc, 1, utc_now()))
+            identity_model.ensure_identity(db, db.execute("SELECT * FROM securities WHERE id=?", (sid,)).fetchone(), utc_now())
         return self.get_security(sid)
+
+    def identity(self, security_id):
+        """The issuer, instrument and listing a security ID maps to, with identifier aliases and their evidence."""
+        self.get_security(security_id)
+        with self._connection() as db:
+            return identity_model.current(db, security_id)
+
+    def record_observations(self, periods, rows) -> int:
+        with self._connection() as db:
+            return financials.insert(db, periods, rows)
+
+    def observation_count(self, document_id, parser_version=None):
+        with self._connection() as db:
+            sql, args = "SELECT COUNT(*) FROM financial_observations WHERE source_document_id=?", [document_id]
+            if parser_version:
+                sql, args = sql + " AND parser_version=?", args + [parser_version]
+            return db.execute(sql, args).fetchone()[0]
+
+    def save_record(self, subject_kind, subject_id, record_type, value, rationale, author="local_user"):
+        """An analyst decision (reported period, reporting currency, metric mapping) as a new version; earlier versions are kept."""
+        if record_type not in ("reported_period", "reporting_currency", "metric_mapping"):
+            raise ValueError("unsupported analyst record type")
+        text, why = str(value).strip(), str(rationale or "").strip()
+        if not text or len(text) > 200 or len(why) > 4000:
+            raise ValueError("an analyst record needs a value of at most 200 characters and a rationale of at most 4,000")
+        with self._connection() as db:
+            previous = db.execute("SELECT id FROM analyst_records WHERE subject_kind=? AND subject_id=? AND record_type=? ORDER BY created_at DESC, rowid DESC LIMIT 1",
+                                  (subject_kind, subject_id, record_type)).fetchone()
+            now = utc_now()
+            rid = identity("rec", subject_kind, subject_id, record_type, text, why, author, now, previous["id"] if previous else None)
+            db.execute("INSERT INTO analyst_records VALUES (?,?,?,?,?,?,?,?,?)", (rid, subject_kind, subject_id, record_type, text, why, author, now,
+                                                                                  previous["id"] if previous else None))
+            return dict(db.execute("SELECT * FROM analyst_records WHERE id=?", (rid,)).fetchone())
+
+    def records(self, subject_kind, subject_id, record_type=None):
+        with self._connection() as db:
+            sql, args = "SELECT * FROM analyst_records WHERE subject_kind=? AND subject_id=?", [subject_kind, subject_id]
+            if record_type:
+                sql, args = sql + " AND record_type=?", args + [record_type]
+            return [dict(r) for r in db.execute(sql + " ORDER BY created_at DESC, rowid DESC", args)]
 
     def securities(self):
         with self._connection() as db:
@@ -396,7 +379,8 @@ class Store:
         if not isinstance(manifest, dict) or not isinstance(manifest.get("files"), dict):
             raise ValueError("backup manifest must contain a files mapping")
         files = manifest["files"]
-        if manifest.get("schema_version") != SCHEMA_VERSION or DB_NAME not in files:
+        version = manifest.get("schema_version")
+        if not isinstance(version, int) or not 1 <= version <= SCHEMA_VERSION or DB_NAME not in files:
             raise ValueError("unsupported or incomplete backup")
         for name, sha in files.items():
             if not isinstance(name, str) or not isinstance(sha, str) or not re.fullmatch(r"[0-9a-f]{64}", sha):
@@ -419,6 +403,8 @@ class Store:
             try:
                 if check.execute("PRAGMA integrity_check").fetchone()[0] != "ok":
                     raise ValueError("backup database integrity check failed")
+                if check.execute("PRAGMA user_version").fetchone()[0] != version:
+                    raise ValueError("backup database schema differs from its manifest")
                 if check.execute("PRAGMA foreign_key_check").fetchone() is not None:
                     raise ValueError("backup database references are invalid")
                 for (sha,) in check.execute("SELECT sha256 FROM objects"):
@@ -428,4 +414,5 @@ class Store:
             finally:
                 check.close()
             os.replace(stage, target)
+        # An older backup is migrated forward in its new directory (with a safety copy beside it); the backup itself is never changed.
         return cls(target)

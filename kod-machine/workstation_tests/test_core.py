@@ -98,7 +98,8 @@ class CoreJourneyTests(unittest.TestCase):
 
     def test_parser_upgrade_can_reparse_previously_unsupported_bytes_without_erasing_old_version(self):
         self.service.parser_sha256 = "1" * 64
-        with mock.patch("kod.workstation.services.earnings.choose_current", return_value=None):
+        # Simulate an earlier parser version that recognised no figures in these bytes.
+        with mock.patch("kod.workstation.services.earnings.extract_table_facts", return_value=([], [])):
             old = self.ingest()
         self.assertEqual(old["extraction_status"], "unsupported")
         self.service.parser_sha256 = "2" * 64

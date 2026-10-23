@@ -38,11 +38,11 @@ def validate_url(url: str, *, check_dns: bool = True) -> str:
         p = urlsplit(url)
         valid = (p.scheme == "https" and p.hostname in ALLOWED_HOSTS
                  and p.port in (None, 443) and not p.username and not p.password
-                 and not p.query and not p.fragment)
+                 and not p.query and not p.fragment and not earnings.has_dot_segments(p.path))
     except ValueError:
         valid = False
     if not valid:
-        raise SourceUnavailable("Use a direct HTTPS SEC URL without credentials, query or fragment; other sources can be uploaded locally.")
+        raise SourceUnavailable("Use a direct HTTPS SEC URL without credentials, query, fragment or '.'/'..' path segments; other sources can be uploaded locally.")
     if check_dns:
         try:
             addresses = socket.getaddrinfo(p.hostname, 443, type=socket.SOCK_STREAM)
@@ -273,3 +273,24 @@ def import_url(service, security_id: str, url: str, role="current", published_at
                           published_at=published_at, sec_headers=headers, role=role, provider="sec",
                           association="user_asserted",
                           external_id=urlsplit(url).path)
+
+
+def refresh_companyfacts(service, security_id: str, client=None) -> dict:
+    """Explicit, bounded collection of one company's SEC companyfacts and submissions (two requests). A failure is recorded as a failed job, never as an
+    empty success."""
+    client = client or SecClient()
+    store = service.store
+    security = store.get_security(security_id)
+    started = service.clock()
+    try:
+        if not security.get("cik"):
+            raise SourceUnavailable("This company has no CIK; resolve it from the SEC ticker list first.")
+        cik = int(security["cik"])
+        facts_url = f"https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.json"
+        subs_url = f"https://data.sec.gov/submissions/CIK{cik:010d}.json"
+        raw = client.get(facts_url)
+        subs = client.get(subs_url)
+        return service.import_companyfacts(security_id, raw, facts_url, observed_at=service.clock(), submissions=subs, submissions_url=subs_url)
+    except (SourceUnavailable, ValueError) as exc:
+        store.record_job("sec-companyfacts", security_id, "failed", str(exc), started_at=started, finished_at=service.clock())
+        raise

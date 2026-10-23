@@ -16,8 +16,9 @@ def tables(*documents):
 
 
 def prior(outlook=""):
-    return source(release(title="Acme Announces Financial Results for Second Quarter Fiscal 2025", headers="Q2 FY25 | Q1 FY25 | Q2 FY24", outlook=outlook),
-                  "prior.htm", "https://example.com/prior.htm", "2024-08-28T21:00:00Z")
+    # The earlier release must describe its own quarter consistently: title and headline both say the second quarter.
+    raw = release(title="Acme Announces Financial Results for Second Quarter Fiscal 2025", headers="Q2 FY25 | Q1 FY25 | Q2 FY24", outlook=outlook)
+    return source(raw.replace(b"third quarter ended October 27, 2024", b"second quarter ended July 28, 2024"), "prior.htm", "https://example.com/prior.htm", "2024-08-28T21:00:00Z")
 
 
 OUTLOOK = '<p>Outlook Acme outlook for the third quarter of fiscal 2025:</p><p>Revenue is expected to be $100 million, plus or minus 5%.</p>'
@@ -35,13 +36,17 @@ def transposed(values):
 
 class EarningsRepairTests(unittest.TestCase):
     def test_transposed_missing_empty_or_extra_values_never_shift_metrics(self):
+        # A short row (a lost cell) or a long one is refused whole: its values could sit under the wrong metrics.
         for values in (("$65,585", "$24,667", "$3.30"),
-                       ("$65,585", "", "$24,667", "$3.30"),
                        ("$65,585", "$30,552", "$24,667", "$3.30", "$999")):
             with self.subTest(values=values):
                 facts, issues = earnings.extract_table_facts(earnings.read_document(transposed(values)))
                 self.assertEqual([f for f in facts if f["period"] == "quarter ended 2024-09-30"], [])
                 self.assertIn("COLUMN_COUNT_MISMATCH", {i["code"] for i in issues})
+        # An explicit blank cell keeps every other value in its own column: the blank metric is simply not reported.
+        facts, _ = earnings.extract_table_facts(earnings.read_document(transposed(("$65,585", "", "$24,667", "$3.30"))))
+        current = {f["metric"]: f["value"] for f in facts if f["period"] == "quarter ended 2024-09-30"}
+        self.assertEqual(current, {"revenue": "65585", "net_income": "24667", "eps_diluted": "3.3"})
 
     def test_valid_transposed_row_retains_all_four_correct_metrics(self):
         facts, _ = earnings.extract_table_facts(earnings.read_document(transposed(("$65,585", "$30,552", "$24,667", "$3.30"))))
@@ -49,8 +54,9 @@ class EarningsRepairTests(unittest.TestCase):
         self.assertEqual(current, {"revenue": "65585", "operating_income": "30552", "net_income": "24667", "eps_diluted": "3.3"})
 
     def test_invalid_current_transposed_row_does_not_relabel_last_year_as_current(self):
-        with self.assertRaises(earnings.EarningsError):
-            run(source(transposed(("$65,585", "$24,667", "$3.30"))))
+        result = run(source(transposed(("$65,585", "$24,667", "$3.30"))))
+        self.assertEqual((result["status"], result["period"], result["facts"], result["prior_period"]), ("PERIOD_UNRESOLVED", None, [], []))
+        self.assertIn("2024-09-30 is not one of the dated quarter columns", result["period_resolution"]["reason"])
 
     def test_current_actual_conflict_blocks_only_affected_calculations_in_both_orders(self):
         for documents in ((release(rev="$110"), release(rev="$90")), (release(rev="$90"), release(rev="$110"))):

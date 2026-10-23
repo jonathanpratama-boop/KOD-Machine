@@ -9,7 +9,7 @@
     <label class="search-label"><span class="sr-only">Search events</span><input name="q" placeholder="Search company or event…" value="{{ q }}" maxlength="200"></label>
     <label><span class="sr-only">Company</span><select name="security"><option value="">All companies</option>{% for sec in securities %}<option value="{{ sec.id }}" {% if sec.id == selected %}selected{% endif %}>{{ sec.ticker }} · {{ sec.venue }}</option>{% endfor %}</select></label>
     <label><span class="sr-only">Category</span><select name="category"><option value="">All categories</option>{% for value in ['RELEASE','8-K','8-K/A','10-Q','10-Q/A','10-K','10-K/A'] %}<option {% if category == value %}selected{% endif %}>{{ value }}</option>{% endfor %}</select></label>
-    <label><span class="sr-only">Extraction status</span><select name="status"><option value="">All statuses</option>{% for value in ['parsed','unsupported','filing','pending'] %}<option {% if selected_status == value %}selected{% endif %}>{{ value }}</option>{% endfor %}</select></label>
+    <label><span class="sr-only">Extraction status</span><select name="status"><option value="">All statuses</option>{% for value in ['parsed','needs_review','unsupported','filing','pending'] %}<option {% if selected_status == value %}selected{% endif %}>{{ value }}</option>{% endfor %}</select></label>
     <label class="date-label">From <input type="date" name="after" value="{{ after }}"></label><label class="date-label">To <input type="date" name="before" value="{{ before }}"></label>
     <button class="button secondary" type="submit">Filter</button>{% if q or selected or category or selected_status or after or before %}<a class="clear-link" href="/">Clear</a>{% endif %}
   </form>

@@ -23,6 +23,7 @@ def main(argv=None) -> int:
         ("refresh", "Explicitly refresh recent SEC filings for the watchlist"),
         ("backup", "Create a consistent backup in a new directory"),
         ("restore", "Restore a backup into a new data directory"),
+        ("reindex", "Record financial observations for preserved releases that have none from this parser version"),
     ):
         parser = sub.add_parser(name, help=help_text)
         parser.add_argument("--data-dir", type=Path, default=default_data_dir())
@@ -47,7 +48,14 @@ def main(argv=None) -> int:
             print("Restored into new directory:", restored.root)
             return 0
         store = Store(args.data_dir)
+        if store.migration["applied"]:
+            print(f"Upgraded the workspace schema from v{store.migration['from']} to v{store.migration['to']}; a copy of the earlier database is at "
+                  f"{store.migration['safety_copy'] or '(new workspace)'}")
         service = ResearchService(store)
+        if args.command == "reindex":
+            done = service.index_documents()
+            print(json.dumps(done))
+            return 0 if not done["skipped"] else 2
         if args.command == "backup":
             print("Backup created:", store.backup(args.to))
         elif args.command == "refresh":

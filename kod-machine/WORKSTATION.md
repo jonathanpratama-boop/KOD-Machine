@@ -92,6 +92,16 @@ python3 -m kod.workstation serve --offline --data-dir ../runtime/workstation
 
 After a server restart, reload old browser forms if their CSRF token has expired. Do not delete the runtime directory to resolve an extraction or network error; saved research remains useful offline.
 
+### Upgrading an existing workspace
+
+Opening a workspace applies its pending schema migrations in order (`kod/workstation/migrations.py`; the version is SQLite's `user_version`). Before migrating a populated database a consistent safety copy is written to `migration-backups/` beside it, each migration runs in its own transaction, and its checksum is recorded. A failed migration rolls back and leaves the workspace at its previous version; nothing is rebuilt or deleted. After upgrading a v1 workspace, record financial observations for its preserved releases:
+
+```sh
+python3 -m kod.workstation reindex --data-dir ../runtime/workstation
+```
+
+Then make a backup and test a restore as below. Existing security IDs, documents, notes and annotation versions keep their IDs; issuer and listing identities are added beside them, and a current ticker is never backdated.
+
 Create a consistent backup with its referenced raw evidence. The destination must not already exist:
 
 ```sh

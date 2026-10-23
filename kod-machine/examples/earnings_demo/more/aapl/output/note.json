@@ -1,5 +1,6 @@
 {
   "schema_version": "KOD-EARNINGS-NOTE-v1",
+  "parser_version": "KOD-EARNINGS-PARSER-v3",
   "research_only": true,
   "entry_permission": false,
   "company": "Apple Inc.",
@@ -37,12 +38,12 @@
       "observed_basis": "retrieval time supplied by the user"
     }
   ],
-  "bundle_sha256": "8c4bfb12ac2a31f535b42cd68b63a8ba649a7afc258acd7107fd4626f49f9254",
+  "bundle_sha256": "efec61a1d871ac7f6f25ecf6fb9522f46e486577a2daf1914e9e90b448617c44",
   "workbench_report": {
     "schema_version": "KOD-WORKBENCH-REPORT-v1",
     "research_only": true,
     "entry_permission": false,
-    "input_bundle_sha256": "8c4bfb12ac2a31f535b42cd68b63a8ba649a7afc258acd7107fd4626f49f9254",
+    "input_bundle_sha256": "efec61a1d871ac7f6f25ecf6fb9522f46e486577a2daf1914e9e90b448617c44",
     "synthetic": false,
     "mode": "public",
     "availability_basis": "HISTORICAL_RECONSTRUCTION_PUBLICATION_ONLY",
@@ -95,8 +96,8 @@
             "publisher": "Apple Inc.",
             "source_kind": "PRIMARY",
             "source_family": "issuer-earnings-release",
-            "content_sha256": "406ca06b46cff640204c05bb63a9cbe3cc077296c8f98d6f96d2de2abb15c95b",
-            "normalized_sha256": "611252fbfc13aec82462d5d98234a40e817afb52e54cbdff83da917136d9a0ca",
+            "content_sha256": "897d76c890afaca716bdf9e78d230459fff747db236b04d5224227e42f7a4718",
+            "normalized_sha256": "3932305626d4ad4a95ccfa0c3213a6b2f5446e7d12a2ffe85ecff34b15272f07",
             "replaces_document_id": null,
             "published_at": "2024-10-31T20:30:25Z",
             "observed_at": "2026-10-22T15:22:42Z",
@@ -110,52 +111,6 @@
         "superseded_document_ids": [],
         "corrections": [],
         "comparisons": [
-          {
-            "metric": "eps_diluted [UNSTATED]",
-            "unit": "per_share",
-            "currency": "USD",
-            "period": "12 months ended 2023-09-30",
-            "status": "INSUFFICIENT_DATA",
-            "actual": null,
-            "consensus": null,
-            "difference": null,
-            "difference_pct": null,
-            "percent_basis": "100*(actual-consensus)/abs(consensus)",
-            "difference_pct_decimal_places": 12,
-            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
-            "evidence": [
-              {
-                "document_id": "current-release",
-                "role": "PRIOR",
-                "value": "6.13",
-                "source_quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
-                "published_at": "2024-10-31T20:30:25Z"
-              }
-            ]
-          },
-          {
-            "metric": "eps_diluted [UNSTATED]",
-            "unit": "per_share",
-            "currency": "USD",
-            "period": "12 months ended 2024-09-28",
-            "status": "INSUFFICIENT_DATA",
-            "actual": null,
-            "consensus": null,
-            "difference": null,
-            "difference_pct": null,
-            "percent_basis": "100*(actual-consensus)/abs(consensus)",
-            "difference_pct_decimal_places": 12,
-            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
-            "evidence": [
-              {
-                "document_id": "current-release",
-                "role": "PRIOR",
-                "value": "6.08",
-                "source_quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
-                "published_at": "2024-10-31T20:30:25Z"
-              }
-            ]
-          },
           {
             "metric": "eps_diluted [UNSTATED]",
             "unit": "per_share",
@@ -198,52 +153,6 @@
                 "role": "ACTUAL",
                 "value": "0.97",
                 "source_quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
-                "published_at": "2024-10-31T20:30:25Z"
-              }
-            ]
-          },
-          {
-            "metric": "net_income [UNSTATED]",
-            "unit": "millions",
-            "currency": "USD",
-            "period": "12 months ended 2023-09-30",
-            "status": "INSUFFICIENT_DATA",
-            "actual": null,
-            "consensus": null,
-            "difference": null,
-            "difference_pct": null,
-            "percent_basis": "100*(actual-consensus)/abs(consensus)",
-            "difference_pct_decimal_places": 12,
-            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
-            "evidence": [
-              {
-                "document_id": "current-release",
-                "role": "PRIOR",
-                "value": "96995",
-                "source_quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995",
-                "published_at": "2024-10-31T20:30:25Z"
-              }
-            ]
-          },
-          {
-            "metric": "net_income [UNSTATED]",
-            "unit": "millions",
-            "currency": "USD",
-            "period": "12 months ended 2024-09-28",
-            "status": "INSUFFICIENT_DATA",
-            "actual": null,
-            "consensus": null,
-            "difference": null,
-            "difference_pct": null,
-            "percent_basis": "100*(actual-consensus)/abs(consensus)",
-            "difference_pct_decimal_places": 12,
-            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
-            "evidence": [
-              {
-                "document_id": "current-release",
-                "role": "PRIOR",
-                "value": "93736",
-                "source_quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995",
                 "published_at": "2024-10-31T20:30:25Z"
               }
             ]
@@ -298,52 +207,6 @@
             "metric": "operating_expenses [UNSTATED]",
             "unit": "millions",
             "currency": "USD",
-            "period": "12 months ended 2023-09-30",
-            "status": "INSUFFICIENT_DATA",
-            "actual": null,
-            "consensus": null,
-            "difference": null,
-            "difference_pct": null,
-            "percent_basis": "100*(actual-consensus)/abs(consensus)",
-            "difference_pct_decimal_places": 12,
-            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
-            "evidence": [
-              {
-                "document_id": "current-release",
-                "role": "PRIOR",
-                "value": "54847",
-                "source_quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847",
-                "published_at": "2024-10-31T20:30:25Z"
-              }
-            ]
-          },
-          {
-            "metric": "operating_expenses [UNSTATED]",
-            "unit": "millions",
-            "currency": "USD",
-            "period": "12 months ended 2024-09-28",
-            "status": "INSUFFICIENT_DATA",
-            "actual": null,
-            "consensus": null,
-            "difference": null,
-            "difference_pct": null,
-            "percent_basis": "100*(actual-consensus)/abs(consensus)",
-            "difference_pct_decimal_places": 12,
-            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
-            "evidence": [
-              {
-                "document_id": "current-release",
-                "role": "PRIOR",
-                "value": "57467",
-                "source_quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847",
-                "published_at": "2024-10-31T20:30:25Z"
-              }
-            ]
-          },
-          {
-            "metric": "operating_expenses [UNSTATED]",
-            "unit": "millions",
-            "currency": "USD",
             "period": "quarter ended 2023-09-30",
             "status": "INSUFFICIENT_DATA",
             "actual": null,
@@ -390,52 +253,6 @@
             "metric": "operating_income [UNSTATED]",
             "unit": "millions",
             "currency": "USD",
-            "period": "12 months ended 2023-09-30",
-            "status": "INSUFFICIENT_DATA",
-            "actual": null,
-            "consensus": null,
-            "difference": null,
-            "difference_pct": null,
-            "percent_basis": "100*(actual-consensus)/abs(consensus)",
-            "difference_pct_decimal_places": 12,
-            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
-            "evidence": [
-              {
-                "document_id": "current-release",
-                "role": "PRIOR",
-                "value": "114301",
-                "source_quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
-                "published_at": "2024-10-31T20:30:25Z"
-              }
-            ]
-          },
-          {
-            "metric": "operating_income [UNSTATED]",
-            "unit": "millions",
-            "currency": "USD",
-            "period": "12 months ended 2024-09-28",
-            "status": "INSUFFICIENT_DATA",
-            "actual": null,
-            "consensus": null,
-            "difference": null,
-            "difference_pct": null,
-            "percent_basis": "100*(actual-consensus)/abs(consensus)",
-            "difference_pct_decimal_places": 12,
-            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
-            "evidence": [
-              {
-                "document_id": "current-release",
-                "role": "PRIOR",
-                "value": "123216",
-                "source_quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
-                "published_at": "2024-10-31T20:30:25Z"
-              }
-            ]
-          },
-          {
-            "metric": "operating_income [UNSTATED]",
-            "unit": "millions",
-            "currency": "USD",
             "period": "quarter ended 2023-09-30",
             "status": "INSUFFICIENT_DATA",
             "actual": null,
@@ -474,52 +291,6 @@
                 "role": "ACTUAL",
                 "value": "29591",
                 "source_quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
-                "published_at": "2024-10-31T20:30:25Z"
-              }
-            ]
-          },
-          {
-            "metric": "revenue [UNSTATED]",
-            "unit": "millions",
-            "currency": "USD",
-            "period": "12 months ended 2023-09-30",
-            "status": "INSUFFICIENT_DATA",
-            "actual": null,
-            "consensus": null,
-            "difference": null,
-            "difference_pct": null,
-            "percent_basis": "100*(actual-consensus)/abs(consensus)",
-            "difference_pct_decimal_places": 12,
-            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
-            "evidence": [
-              {
-                "document_id": "current-release",
-                "role": "PRIOR",
-                "value": "383285",
-                "source_quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285",
-                "published_at": "2024-10-31T20:30:25Z"
-              }
-            ]
-          },
-          {
-            "metric": "revenue [UNSTATED]",
-            "unit": "millions",
-            "currency": "USD",
-            "period": "12 months ended 2024-09-28",
-            "status": "INSUFFICIENT_DATA",
-            "actual": null,
-            "consensus": null,
-            "difference": null,
-            "difference_pct": null,
-            "percent_basis": "100*(actual-consensus)/abs(consensus)",
-            "difference_pct_decimal_places": 12,
-            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
-            "evidence": [
-              {
-                "document_id": "current-release",
-                "role": "PRIOR",
-                "value": "391035",
-                "source_quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285",
                 "published_at": "2024-10-31T20:30:25Z"
               }
             ]
@@ -606,8 +377,8 @@
             "publisher": "Apple Inc.",
             "source_kind": "PRIMARY",
             "source_family": "issuer-earnings-release",
-            "content_sha256": "140cc09b075903ecb18324f83e976a44ff35ae1fa9d427a43ed725cb42fb39df",
-            "normalized_sha256": "1d93129663b2c83f176ee62d6a6070de67683241029a8956b95a8394ec74c4e2",
+            "content_sha256": "4a4c4417eb48f1f84ee042ee8752fcbd912a4bfa95e3b17e0cce3a8ec077c590",
+            "normalized_sha256": "220e8855d7e98ebcb6b178b2b9ee4e3ca2f5e66e3675e48b53f2cb64f3ca2ed2",
             "replaces_document_id": null,
             "published_at": "2024-08-01T20:30:26Z",
             "observed_at": "2026-10-22T15:22:43Z",
@@ -658,8 +429,8 @@
             "publisher": "Apple Inc.",
             "source_kind": "PRIMARY",
             "source_family": "issuer-earnings-release",
-            "content_sha256": "406ca06b46cff640204c05bb63a9cbe3cc077296c8f98d6f96d2de2abb15c95b",
-            "normalized_sha256": "611252fbfc13aec82462d5d98234a40e817afb52e54cbdff83da917136d9a0ca",
+            "content_sha256": "897d76c890afaca716bdf9e78d230459fff747db236b04d5224227e42f7a4718",
+            "normalized_sha256": "3932305626d4ad4a95ccfa0c3213a6b2f5446e7d12a2ffe85ecff34b15272f07",
             "replaces_document_id": null,
             "published_at": "2024-10-31T20:30:25Z",
             "observed_at": "2026-10-22T15:22:42Z",
@@ -673,52 +444,6 @@
         "superseded_document_ids": [],
         "corrections": [],
         "comparisons": [
-          {
-            "metric": "eps_diluted [UNSTATED]",
-            "unit": "per_share",
-            "currency": "USD",
-            "period": "12 months ended 2023-09-30",
-            "status": "INSUFFICIENT_DATA",
-            "actual": null,
-            "consensus": null,
-            "difference": null,
-            "difference_pct": null,
-            "percent_basis": "100*(actual-consensus)/abs(consensus)",
-            "difference_pct_decimal_places": 12,
-            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
-            "evidence": [
-              {
-                "document_id": "current-release",
-                "role": "PRIOR",
-                "value": "6.13",
-                "source_quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
-                "published_at": "2024-10-31T20:30:25Z"
-              }
-            ]
-          },
-          {
-            "metric": "eps_diluted [UNSTATED]",
-            "unit": "per_share",
-            "currency": "USD",
-            "period": "12 months ended 2024-09-28",
-            "status": "INSUFFICIENT_DATA",
-            "actual": null,
-            "consensus": null,
-            "difference": null,
-            "difference_pct": null,
-            "percent_basis": "100*(actual-consensus)/abs(consensus)",
-            "difference_pct_decimal_places": 12,
-            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
-            "evidence": [
-              {
-                "document_id": "current-release",
-                "role": "PRIOR",
-                "value": "6.08",
-                "source_quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
-                "published_at": "2024-10-31T20:30:25Z"
-              }
-            ]
-          },
           {
             "metric": "eps_diluted [UNSTATED]",
             "unit": "per_share",
@@ -761,52 +486,6 @@
                 "role": "ACTUAL",
                 "value": "0.97",
                 "source_quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
-                "published_at": "2024-10-31T20:30:25Z"
-              }
-            ]
-          },
-          {
-            "metric": "net_income [UNSTATED]",
-            "unit": "millions",
-            "currency": "USD",
-            "period": "12 months ended 2023-09-30",
-            "status": "INSUFFICIENT_DATA",
-            "actual": null,
-            "consensus": null,
-            "difference": null,
-            "difference_pct": null,
-            "percent_basis": "100*(actual-consensus)/abs(consensus)",
-            "difference_pct_decimal_places": 12,
-            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
-            "evidence": [
-              {
-                "document_id": "current-release",
-                "role": "PRIOR",
-                "value": "96995",
-                "source_quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995",
-                "published_at": "2024-10-31T20:30:25Z"
-              }
-            ]
-          },
-          {
-            "metric": "net_income [UNSTATED]",
-            "unit": "millions",
-            "currency": "USD",
-            "period": "12 months ended 2024-09-28",
-            "status": "INSUFFICIENT_DATA",
-            "actual": null,
-            "consensus": null,
-            "difference": null,
-            "difference_pct": null,
-            "percent_basis": "100*(actual-consensus)/abs(consensus)",
-            "difference_pct_decimal_places": 12,
-            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
-            "evidence": [
-              {
-                "document_id": "current-release",
-                "role": "PRIOR",
-                "value": "93736",
-                "source_quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995",
                 "published_at": "2024-10-31T20:30:25Z"
               }
             ]
@@ -861,52 +540,6 @@
             "metric": "operating_expenses [UNSTATED]",
             "unit": "millions",
             "currency": "USD",
-            "period": "12 months ended 2023-09-30",
-            "status": "INSUFFICIENT_DATA",
-            "actual": null,
-            "consensus": null,
-            "difference": null,
-            "difference_pct": null,
-            "percent_basis": "100*(actual-consensus)/abs(consensus)",
-            "difference_pct_decimal_places": 12,
-            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
-            "evidence": [
-              {
-                "document_id": "current-release",
-                "role": "PRIOR",
-                "value": "54847",
-                "source_quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847",
-                "published_at": "2024-10-31T20:30:25Z"
-              }
-            ]
-          },
-          {
-            "metric": "operating_expenses [UNSTATED]",
-            "unit": "millions",
-            "currency": "USD",
-            "period": "12 months ended 2024-09-28",
-            "status": "INSUFFICIENT_DATA",
-            "actual": null,
-            "consensus": null,
-            "difference": null,
-            "difference_pct": null,
-            "percent_basis": "100*(actual-consensus)/abs(consensus)",
-            "difference_pct_decimal_places": 12,
-            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
-            "evidence": [
-              {
-                "document_id": "current-release",
-                "role": "PRIOR",
-                "value": "57467",
-                "source_quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847",
-                "published_at": "2024-10-31T20:30:25Z"
-              }
-            ]
-          },
-          {
-            "metric": "operating_expenses [UNSTATED]",
-            "unit": "millions",
-            "currency": "USD",
             "period": "quarter ended 2023-09-30",
             "status": "INSUFFICIENT_DATA",
             "actual": null,
@@ -953,52 +586,6 @@
             "metric": "operating_income [UNSTATED]",
             "unit": "millions",
             "currency": "USD",
-            "period": "12 months ended 2023-09-30",
-            "status": "INSUFFICIENT_DATA",
-            "actual": null,
-            "consensus": null,
-            "difference": null,
-            "difference_pct": null,
-            "percent_basis": "100*(actual-consensus)/abs(consensus)",
-            "difference_pct_decimal_places": 12,
-            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
-            "evidence": [
-              {
-                "document_id": "current-release",
-                "role": "PRIOR",
-                "value": "114301",
-                "source_quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
-                "published_at": "2024-10-31T20:30:25Z"
-              }
-            ]
-          },
-          {
-            "metric": "operating_income [UNSTATED]",
-            "unit": "millions",
-            "currency": "USD",
-            "period": "12 months ended 2024-09-28",
-            "status": "INSUFFICIENT_DATA",
-            "actual": null,
-            "consensus": null,
-            "difference": null,
-            "difference_pct": null,
-            "percent_basis": "100*(actual-consensus)/abs(consensus)",
-            "difference_pct_decimal_places": 12,
-            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
-            "evidence": [
-              {
-                "document_id": "current-release",
-                "role": "PRIOR",
-                "value": "123216",
-                "source_quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
-                "published_at": "2024-10-31T20:30:25Z"
-              }
-            ]
-          },
-          {
-            "metric": "operating_income [UNSTATED]",
-            "unit": "millions",
-            "currency": "USD",
             "period": "quarter ended 2023-09-30",
             "status": "INSUFFICIENT_DATA",
             "actual": null,
@@ -1037,52 +624,6 @@
                 "role": "ACTUAL",
                 "value": "29591",
                 "source_quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
-                "published_at": "2024-10-31T20:30:25Z"
-              }
-            ]
-          },
-          {
-            "metric": "revenue [UNSTATED]",
-            "unit": "millions",
-            "currency": "USD",
-            "period": "12 months ended 2023-09-30",
-            "status": "INSUFFICIENT_DATA",
-            "actual": null,
-            "consensus": null,
-            "difference": null,
-            "difference_pct": null,
-            "percent_basis": "100*(actual-consensus)/abs(consensus)",
-            "difference_pct_decimal_places": 12,
-            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
-            "evidence": [
-              {
-                "document_id": "current-release",
-                "role": "PRIOR",
-                "value": "383285",
-                "source_quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285",
-                "published_at": "2024-10-31T20:30:25Z"
-              }
-            ]
-          },
-          {
-            "metric": "revenue [UNSTATED]",
-            "unit": "millions",
-            "currency": "USD",
-            "period": "12 months ended 2024-09-28",
-            "status": "INSUFFICIENT_DATA",
-            "actual": null,
-            "consensus": null,
-            "difference": null,
-            "difference_pct": null,
-            "percent_basis": "100*(actual-consensus)/abs(consensus)",
-            "difference_pct_decimal_places": 12,
-            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
-            "evidence": [
-              {
-                "document_id": "current-release",
-                "role": "PRIOR",
-                "value": "391035",
-                "source_quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285",
                 "published_at": "2024-10-31T20:30:25Z"
               }
             ]
@@ -1169,8 +710,8 @@
             "publisher": "Apple Inc.",
             "source_kind": "PRIMARY",
             "source_family": "issuer-earnings-release",
-            "content_sha256": "140cc09b075903ecb18324f83e976a44ff35ae1fa9d427a43ed725cb42fb39df",
-            "normalized_sha256": "1d93129663b2c83f176ee62d6a6070de67683241029a8956b95a8394ec74c4e2",
+            "content_sha256": "4a4c4417eb48f1f84ee042ee8752fcbd912a4bfa95e3b17e0cce3a8ec077c590",
+            "normalized_sha256": "220e8855d7e98ebcb6b178b2b9ee4e3ca2f5e66e3675e48b53f2cb64f3ca2ed2",
             "replaces_document_id": null,
             "published_at": "2024-08-01T20:30:26Z",
             "observed_at": "2026-10-22T15:22:43Z",
@@ -1201,9 +742,19 @@
       "detail": "gross margin without a % sign (a dollar amount?); not extracted"
     },
     {
-      "code": "COLUMN_COUNT_MISMATCH",
+      "code": "BREAKDOWN_ROWS_NOT_READ",
+      "where": "table 1",
+      "detail": "2 recognised row(s) below '(1) Net sales by category:' are parts of the company (segments, categories or regions), not the company figure; not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 2",
+      "detail": "dated column(s) September 28, 2024, September 30, 2023: no 'Three/Twelve Months Ended' heading above it; their values are not read"
+    },
+    {
+      "code": "COLUMN_ALIGNMENT_UNCLEAR",
       "where": "table 4",
-      "detail": "2 recognised row(s) skipped because their value count differs from the header columns"
+      "detail": "2 recognised row(s) skipped because their cells do not sit under the header columns"
     },
     {
       "code": "NO_OUTLOOK_FOUND",
@@ -1218,7 +769,28 @@
       "date": "2024-09-28",
       "quote": "fourth quarter ended September 28, 2024"
     },
+    "quarter_ended_all": [
+      {
+        "quarter": 4,
+        "date": "2024-09-28",
+        "quote": "fourth quarter ended September 28, 2024"
+      }
+    ],
     "fiscal_quarter_title": null,
+    "reported_quarter": [
+      {
+        "quarter": 4,
+        "year": 2024,
+        "fiscal": true,
+        "quote": "announced financial results for its fiscal 2024 fourth quarter"
+      },
+      {
+        "quarter": 4,
+        "year": 2024,
+        "fiscal": true,
+        "quote": "results for its fiscal 2024 fourth quarter"
+      }
+    ],
     "revenue_headline": {
       "value": "94.9",
       "scale": "billion",
@@ -1243,7 +815,39 @@
         "headline": "diluted earnings per share of $0.97",
         "table_value": "0.97"
       }
-    ]
+    ],
+    "resolution": {
+      "status": "RESOLVED",
+      "period": "quarter ended 2024-09-28",
+      "end": "2024-09-28",
+      "basis": "RELEASE_STATEMENT",
+      "evidence": [
+        "fourth quarter ended September 28, 2024",
+        "announced financial results for its fiscal 2024 fourth quarter"
+      ],
+      "reason": null,
+      "candidates": [
+        "quarter ended 2023-09-30",
+        "quarter ended 2024-09-28"
+      ],
+      "aliases": []
+    }
+  },
+  "period_resolution": {
+    "status": "RESOLVED",
+    "period": "quarter ended 2024-09-28",
+    "end": "2024-09-28",
+    "basis": "RELEASE_STATEMENT",
+    "evidence": [
+      "fourth quarter ended September 28, 2024",
+      "announced financial results for its fiscal 2024 fourth quarter"
+    ],
+    "aliases": [],
+    "release_reason": null
+  },
+  "analyst_inputs": {
+    "reporting_currency": null,
+    "period": null
   },
   "facts": [
     {
@@ -1257,28 +861,64 @@
         "table": 1,
         "row": 7,
         "label": "Total net sales (1)",
-        "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285"
+        "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 7,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 7,
+            "cell": 2,
+            "columns": [
+              3,
+              5
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 2,
+            "columns": [
+              3,
+              12
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+        "document_name": "a8-kex991q4202409282024.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
         "BASIS_NOT_STATED"
       ],
-      "also_in": [
-        {
-          "table": 1,
-          "row": 38,
-          "label": "Total net sales",
-          "quote": "Total net sales | $94,930 | $89,498 | $391,035 | $383,285"
-        },
-        {
-          "table": 1,
-          "row": 46,
-          "label": "Total net sales",
-          "quote": "Total net sales | $94,930 | $89,498 | $391,035 | $383,285"
-        }
-      ],
       "period_end": "2024-09-28",
+      "period_end_basis": "column heading",
       "period_kind": "quarter"
     },
     {
@@ -1292,7 +932,56 @@
         "table": 1,
         "row": 17,
         "label": "Total operating expenses",
-        "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847"
+        "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 17,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 17,
+            "cell": 2,
+            "columns": [
+              3,
+              5
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 2,
+            "columns": [
+              3,
+              12
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+        "document_name": "a8-kex991q4202409282024.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
@@ -1300,6 +989,7 @@
         "BASIS_NOT_STATED"
       ],
       "period_end": "2024-09-28",
+      "period_end_basis": "column heading",
       "period_kind": "quarter"
     },
     {
@@ -1313,7 +1003,56 @@
         "table": 1,
         "row": 19,
         "label": "Operating income",
-        "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301"
+        "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 19,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 19,
+            "cell": 2,
+            "columns": [
+              3,
+              5
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 2,
+            "columns": [
+              3,
+              12
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+        "document_name": "a8-kex991q4202409282024.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
@@ -1321,6 +1060,7 @@
         "BASIS_NOT_STATED"
       ],
       "period_end": "2024-09-28",
+      "period_end_basis": "column heading",
       "period_kind": "quarter"
     },
     {
@@ -1334,7 +1074,64 @@
         "table": 1,
         "row": 23,
         "label": "Net income",
-        "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995"
+        "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 23,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 23,
+            "cell": 2,
+            "columns": [
+              3,
+              4
+            ]
+          },
+          {
+            "row": 23,
+            "cell": 3,
+            "columns": [
+              4,
+              5
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 2,
+            "columns": [
+              3,
+              12
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+        "document_name": "a8-kex991q4202409282024.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
@@ -1342,6 +1139,7 @@
         "BASIS_NOT_STATED"
       ],
       "period_end": "2024-09-28",
+      "period_end_basis": "column heading",
       "period_kind": "quarter"
     },
     {
@@ -1355,7 +1153,64 @@
         "table": 1,
         "row": 27,
         "label": "Diluted",
-        "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13"
+        "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
+        "unit": "per_share",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 27,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 27,
+            "cell": 2,
+            "columns": [
+              3,
+              4
+            ]
+          },
+          {
+            "row": 27,
+            "cell": 3,
+            "columns": [
+              4,
+              5
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 2,
+            "columns": [
+              3,
+              12
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+        "document_name": "a8-kex991q4202409282024.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
@@ -1363,9 +1218,20 @@
         "BASIS_NOT_STATED"
       ],
       "period_end": "2024-09-28",
+      "period_end_basis": "column heading",
       "period_kind": "quarter"
     }
   ],
+  "reporting_currency": {
+    "currencies": [
+      "USD"
+    ],
+    "bases": [
+      "ASSUMED_FROM_$_SIGN"
+    ],
+    "statements": {},
+    "analyst_override": null
+  },
   "other_period_figures": [
     {
       "metric": "revenue",
@@ -1378,28 +1244,64 @@
         "table": 1,
         "row": 7,
         "label": "Total net sales (1)",
-        "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285"
+        "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 7,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 7,
+            "cell": 5,
+            "columns": [
+              9,
+              11
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 2,
+            "columns": [
+              3,
+              12
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+        "document_name": "a8-kex991q4202409282024.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
         "BASIS_NOT_STATED"
       ],
-      "also_in": [
-        {
-          "table": 1,
-          "row": 38,
-          "label": "Total net sales",
-          "quote": "Total net sales | $94,930 | $89,498 | $391,035 | $383,285"
-        },
-        {
-          "table": 1,
-          "row": 46,
-          "label": "Total net sales",
-          "quote": "Total net sales | $94,930 | $89,498 | $391,035 | $383,285"
-        }
-      ],
       "period_end": "2023-09-30",
+      "period_end_basis": "column heading",
       "period_kind": "quarter"
     },
     {
@@ -1413,28 +1315,64 @@
         "table": 1,
         "row": 7,
         "label": "Total net sales (1)",
-        "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285"
+        "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 7,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 7,
+            "cell": 8,
+            "columns": [
+              15,
+              17
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 4,
+            "columns": [
+              15,
+              24
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 6,
+            "columns": [
+              15,
+              18
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+        "document_name": "a8-kex991q4202409282024.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
         "BASIS_NOT_STATED"
       ],
-      "also_in": [
-        {
-          "table": 1,
-          "row": 38,
-          "label": "Total net sales",
-          "quote": "Total net sales | $94,930 | $89,498 | $391,035 | $383,285"
-        },
-        {
-          "table": 1,
-          "row": 46,
-          "label": "Total net sales",
-          "quote": "Total net sales | $94,930 | $89,498 | $391,035 | $383,285"
-        }
-      ],
       "period_end": "2024-09-28",
+      "period_end_basis": "column heading",
       "period_kind": "12 months"
     },
     {
@@ -1448,28 +1386,64 @@
         "table": 1,
         "row": 7,
         "label": "Total net sales (1)",
-        "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285"
+        "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 7,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 7,
+            "cell": 11,
+            "columns": [
+              21,
+              23
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 4,
+            "columns": [
+              15,
+              24
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 8,
+            "columns": [
+              21,
+              24
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+        "document_name": "a8-kex991q4202409282024.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
         "BASIS_NOT_STATED"
       ],
-      "also_in": [
-        {
-          "table": 1,
-          "row": 38,
-          "label": "Total net sales",
-          "quote": "Total net sales | $94,930 | $89,498 | $391,035 | $383,285"
-        },
-        {
-          "table": 1,
-          "row": 46,
-          "label": "Total net sales",
-          "quote": "Total net sales | $94,930 | $89,498 | $391,035 | $383,285"
-        }
-      ],
       "period_end": "2023-09-30",
+      "period_end_basis": "column heading",
       "period_kind": "12 months"
     },
     {
@@ -1483,7 +1457,56 @@
         "table": 1,
         "row": 17,
         "label": "Total operating expenses",
-        "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847"
+        "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 17,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 17,
+            "cell": 5,
+            "columns": [
+              9,
+              11
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 2,
+            "columns": [
+              3,
+              12
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+        "document_name": "a8-kex991q4202409282024.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
@@ -1491,6 +1514,7 @@
         "BASIS_NOT_STATED"
       ],
       "period_end": "2023-09-30",
+      "period_end_basis": "column heading",
       "period_kind": "quarter"
     },
     {
@@ -1504,7 +1528,56 @@
         "table": 1,
         "row": 17,
         "label": "Total operating expenses",
-        "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847"
+        "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 17,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 17,
+            "cell": 8,
+            "columns": [
+              15,
+              17
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 4,
+            "columns": [
+              15,
+              24
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 6,
+            "columns": [
+              15,
+              18
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+        "document_name": "a8-kex991q4202409282024.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
@@ -1512,6 +1585,7 @@
         "BASIS_NOT_STATED"
       ],
       "period_end": "2024-09-28",
+      "period_end_basis": "column heading",
       "period_kind": "12 months"
     },
     {
@@ -1525,7 +1599,56 @@
         "table": 1,
         "row": 17,
         "label": "Total operating expenses",
-        "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847"
+        "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 17,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 17,
+            "cell": 11,
+            "columns": [
+              21,
+              23
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 4,
+            "columns": [
+              15,
+              24
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 8,
+            "columns": [
+              21,
+              24
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+        "document_name": "a8-kex991q4202409282024.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
@@ -1533,6 +1656,7 @@
         "BASIS_NOT_STATED"
       ],
       "period_end": "2023-09-30",
+      "period_end_basis": "column heading",
       "period_kind": "12 months"
     },
     {
@@ -1546,7 +1670,56 @@
         "table": 1,
         "row": 19,
         "label": "Operating income",
-        "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301"
+        "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 19,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 19,
+            "cell": 5,
+            "columns": [
+              9,
+              11
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 2,
+            "columns": [
+              3,
+              12
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+        "document_name": "a8-kex991q4202409282024.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
@@ -1554,6 +1727,7 @@
         "BASIS_NOT_STATED"
       ],
       "period_end": "2023-09-30",
+      "period_end_basis": "column heading",
       "period_kind": "quarter"
     },
     {
@@ -1567,7 +1741,56 @@
         "table": 1,
         "row": 19,
         "label": "Operating income",
-        "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301"
+        "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 19,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 19,
+            "cell": 8,
+            "columns": [
+              15,
+              17
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 4,
+            "columns": [
+              15,
+              24
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 6,
+            "columns": [
+              15,
+              18
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+        "document_name": "a8-kex991q4202409282024.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
@@ -1575,6 +1798,7 @@
         "BASIS_NOT_STATED"
       ],
       "period_end": "2024-09-28",
+      "period_end_basis": "column heading",
       "period_kind": "12 months"
     },
     {
@@ -1588,7 +1812,56 @@
         "table": 1,
         "row": 19,
         "label": "Operating income",
-        "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301"
+        "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 19,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 19,
+            "cell": 11,
+            "columns": [
+              21,
+              23
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 4,
+            "columns": [
+              15,
+              24
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 8,
+            "columns": [
+              21,
+              24
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+        "document_name": "a8-kex991q4202409282024.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
@@ -1596,6 +1869,7 @@
         "BASIS_NOT_STATED"
       ],
       "period_end": "2023-09-30",
+      "period_end_basis": "column heading",
       "period_kind": "12 months"
     },
     {
@@ -1609,7 +1883,64 @@
         "table": 1,
         "row": 23,
         "label": "Net income",
-        "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995"
+        "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 23,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 23,
+            "cell": 6,
+            "columns": [
+              9,
+              10
+            ]
+          },
+          {
+            "row": 23,
+            "cell": 7,
+            "columns": [
+              10,
+              11
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 2,
+            "columns": [
+              3,
+              12
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+        "document_name": "a8-kex991q4202409282024.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
@@ -1617,6 +1948,7 @@
         "BASIS_NOT_STATED"
       ],
       "period_end": "2023-09-30",
+      "period_end_basis": "column heading",
       "period_kind": "quarter"
     },
     {
@@ -1630,7 +1962,64 @@
         "table": 1,
         "row": 23,
         "label": "Net income",
-        "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995"
+        "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 23,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 23,
+            "cell": 10,
+            "columns": [
+              15,
+              16
+            ]
+          },
+          {
+            "row": 23,
+            "cell": 11,
+            "columns": [
+              16,
+              17
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 4,
+            "columns": [
+              15,
+              24
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 6,
+            "columns": [
+              15,
+              18
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+        "document_name": "a8-kex991q4202409282024.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
@@ -1642,10 +2031,60 @@
           "table": 3,
           "row": 7,
           "label": "Net income",
-          "quote": "Net income | 93,736 | 96,995"
+          "quote": "Net income | 93,736 | 96,995",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 7,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 7,
+              "cell": 2,
+              "columns": [
+                3,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+          "document_name": "a8-kex991q4202409282024.htm"
         }
       ],
       "period_end": "2024-09-28",
+      "period_end_basis": "column heading",
       "period_kind": "12 months"
     },
     {
@@ -1659,7 +2098,64 @@
         "table": 1,
         "row": 23,
         "label": "Net income",
-        "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995"
+        "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 23,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 23,
+            "cell": 14,
+            "columns": [
+              21,
+              22
+            ]
+          },
+          {
+            "row": 23,
+            "cell": 15,
+            "columns": [
+              22,
+              23
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 4,
+            "columns": [
+              15,
+              24
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 8,
+            "columns": [
+              21,
+              24
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+        "document_name": "a8-kex991q4202409282024.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
@@ -1671,10 +2167,60 @@
           "table": 3,
           "row": 7,
           "label": "Net income",
-          "quote": "Net income | 93,736 | 96,995"
+          "quote": "Net income | 93,736 | 96,995",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 7,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 7,
+              "cell": 5,
+              "columns": [
+                9,
+                11
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+          "document_name": "a8-kex991q4202409282024.htm"
         }
       ],
       "period_end": "2023-09-30",
+      "period_end_basis": "column heading",
       "period_kind": "12 months"
     },
     {
@@ -1688,7 +2234,64 @@
         "table": 1,
         "row": 27,
         "label": "Diluted",
-        "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13"
+        "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
+        "unit": "per_share",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 27,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 27,
+            "cell": 6,
+            "columns": [
+              9,
+              10
+            ]
+          },
+          {
+            "row": 27,
+            "cell": 7,
+            "columns": [
+              10,
+              11
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 2,
+            "columns": [
+              3,
+              12
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+        "document_name": "a8-kex991q4202409282024.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
@@ -1696,6 +2299,7 @@
         "BASIS_NOT_STATED"
       ],
       "period_end": "2023-09-30",
+      "period_end_basis": "column heading",
       "period_kind": "quarter"
     },
     {
@@ -1709,7 +2313,64 @@
         "table": 1,
         "row": 27,
         "label": "Diluted",
-        "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13"
+        "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
+        "unit": "per_share",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 27,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 27,
+            "cell": 10,
+            "columns": [
+              15,
+              16
+            ]
+          },
+          {
+            "row": 27,
+            "cell": 11,
+            "columns": [
+              16,
+              17
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 4,
+            "columns": [
+              15,
+              24
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 6,
+            "columns": [
+              15,
+              18
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+        "document_name": "a8-kex991q4202409282024.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
@@ -1717,6 +2378,7 @@
         "BASIS_NOT_STATED"
       ],
       "period_end": "2024-09-28",
+      "period_end_basis": "column heading",
       "period_kind": "12 months"
     },
     {
@@ -1730,7 +2392,64 @@
         "table": 1,
         "row": 27,
         "label": "Diluted",
-        "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13"
+        "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
+        "unit": "per_share",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 27,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 27,
+            "cell": 14,
+            "columns": [
+              21,
+              22
+            ]
+          },
+          {
+            "row": 27,
+            "cell": 15,
+            "columns": [
+              22,
+              23
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 4,
+            "columns": [
+              15,
+              24
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 8,
+            "columns": [
+              21,
+              24
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+        "document_name": "a8-kex991q4202409282024.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
@@ -1738,6 +2457,7 @@
         "BASIS_NOT_STATED"
       ],
       "period_end": "2023-09-30",
+      "period_end_basis": "column heading",
       "period_kind": "12 months"
     }
   ],
@@ -1761,17 +2481,132 @@
           "table": 1,
           "row": 27,
           "label": "Diluted",
-          "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13"
+          "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
+          "unit": "per_share",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 27,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 27,
+              "cell": 2,
+              "columns": [
+                3,
+                4
+              ]
+            },
+            {
+              "row": 27,
+              "cell": 3,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+          "document_name": "a8-kex991q4202409282024.htm"
         },
         {
           "table": 1,
           "row": 27,
           "label": "Diluted",
-          "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13"
+          "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
+          "unit": "per_share",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 27,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 27,
+              "cell": 6,
+              "columns": [
+                9,
+                10
+              ]
+            },
+            {
+              "row": 27,
+              "cell": 7,
+              "columns": [
+                10,
+                11
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+          "document_name": "a8-kex991q4202409282024.htm"
         }
       ],
       "source": "comparative column printed in the current release",
-      "printed_change_check": null
+      "printed_change_check": null,
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -1792,17 +2627,132 @@
           "table": 1,
           "row": 23,
           "label": "Net income",
-          "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995"
+          "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 23,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 23,
+              "cell": 2,
+              "columns": [
+                3,
+                4
+              ]
+            },
+            {
+              "row": 23,
+              "cell": 3,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+          "document_name": "a8-kex991q4202409282024.htm"
         },
         {
           "table": 1,
           "row": 23,
           "label": "Net income",
-          "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995"
+          "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 23,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 23,
+              "cell": 6,
+              "columns": [
+                9,
+                10
+              ]
+            },
+            {
+              "row": 23,
+              "cell": 7,
+              "columns": [
+                10,
+                11
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+          "document_name": "a8-kex991q4202409282024.htm"
         }
       ],
       "source": "comparative column printed in the current release",
-      "printed_change_check": null
+      "printed_change_check": null,
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -1823,17 +2773,116 @@
           "table": 1,
           "row": 17,
           "label": "Total operating expenses",
-          "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847"
+          "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 17,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 17,
+              "cell": 2,
+              "columns": [
+                3,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+          "document_name": "a8-kex991q4202409282024.htm"
         },
         {
           "table": 1,
           "row": 17,
           "label": "Total operating expenses",
-          "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847"
+          "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 17,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 17,
+              "cell": 5,
+              "columns": [
+                9,
+                11
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+          "document_name": "a8-kex991q4202409282024.htm"
         }
       ],
       "source": "comparative column printed in the current release",
-      "printed_change_check": null
+      "printed_change_check": null,
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -1854,17 +2903,116 @@
           "table": 1,
           "row": 19,
           "label": "Operating income",
-          "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301"
+          "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 19,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 19,
+              "cell": 2,
+              "columns": [
+                3,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+          "document_name": "a8-kex991q4202409282024.htm"
         },
         {
           "table": 1,
           "row": 19,
           "label": "Operating income",
-          "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301"
+          "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 19,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 19,
+              "cell": 5,
+              "columns": [
+                9,
+                11
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+          "document_name": "a8-kex991q4202409282024.htm"
         }
       ],
       "source": "comparative column printed in the current release",
-      "printed_change_check": null
+      "printed_change_check": null,
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -1885,17 +3033,116 @@
           "table": 1,
           "row": 7,
           "label": "Total net sales (1)",
-          "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285"
+          "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 7,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 7,
+              "cell": 2,
+              "columns": [
+                3,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+          "document_name": "a8-kex991q4202409282024.htm"
         },
         {
           "table": 1,
           "row": 7,
           "label": "Total net sales (1)",
-          "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285"
+          "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 7,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 7,
+              "cell": 5,
+              "columns": [
+                9,
+                11
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+          "document_name": "a8-kex991q4202409282024.htm"
         }
       ],
       "source": "comparative column printed in the current release",
-      "printed_change_check": null
+      "printed_change_check": null,
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -1916,17 +3163,132 @@
           "table": 1,
           "row": 27,
           "label": "Diluted",
-          "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13"
+          "quote": "Diluted | $0.97 | $1.46 | $6.08 | $6.13",
+          "unit": "per_share",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 27,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 27,
+              "cell": 2,
+              "columns": [
+                3,
+                4
+              ]
+            },
+            {
+              "row": 27,
+              "cell": 3,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+          "document_name": "a8-kex991q4202409282024.htm"
         },
         {
           "table": 1,
           "row": 27,
           "label": "Diluted",
-          "quote": "Diluted | $1.40 | $1.26 | $5.11 | $4.67"
+          "quote": "Diluted | $1.40 | $1.26 | $5.11 | $4.67",
+          "unit": "per_share",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 27,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 27,
+              "cell": 2,
+              "columns": [
+                3,
+                4
+              ]
+            },
+            {
+              "row": 27,
+              "cell": 3,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "comparison-release",
+          "document_role": "comparison",
+          "source_version_id": "c569f3ee34b7a62ddbd0ba769719105a516c96b44b5832829310fb19a78ead74",
+          "document_sha256": "c569f3ee34b7a62ddbd0ba769719105a516c96b44b5832829310fb19a78ead74",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000080/a8-kex991q3202406292024.htm",
+          "document_name": "a8-kex991q3202406292024.htm"
         }
       ],
       "source": "figure from the comparison release (not printed in the current release)",
-      "printed_change_check": null
+      "printed_change_check": null,
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -1947,17 +3309,132 @@
           "table": 1,
           "row": 23,
           "label": "Net income",
-          "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995"
+          "quote": "Net income | $14,736 | $22,956 | $93,736 | $96,995",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 23,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 23,
+              "cell": 2,
+              "columns": [
+                3,
+                4
+              ]
+            },
+            {
+              "row": 23,
+              "cell": 3,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+          "document_name": "a8-kex991q4202409282024.htm"
         },
         {
           "table": 1,
           "row": 23,
           "label": "Net income",
-          "quote": "Net income | $21,448 | $19,881 | $79,000 | $74,039"
+          "quote": "Net income | $21,448 | $19,881 | $79,000 | $74,039",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 23,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 23,
+              "cell": 2,
+              "columns": [
+                3,
+                4
+              ]
+            },
+            {
+              "row": 23,
+              "cell": 3,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "comparison-release",
+          "document_role": "comparison",
+          "source_version_id": "c569f3ee34b7a62ddbd0ba769719105a516c96b44b5832829310fb19a78ead74",
+          "document_sha256": "c569f3ee34b7a62ddbd0ba769719105a516c96b44b5832829310fb19a78ead74",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000080/a8-kex991q3202406292024.htm",
+          "document_name": "a8-kex991q3202406292024.htm"
         }
       ],
       "source": "figure from the comparison release (not printed in the current release)",
-      "printed_change_check": null
+      "printed_change_check": null,
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -1978,17 +3455,116 @@
           "table": 1,
           "row": 17,
           "label": "Total operating expenses",
-          "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847"
+          "quote": "Total operating expenses | 14,288 | 13,458 | 57,467 | 54,847",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 17,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 17,
+              "cell": 2,
+              "columns": [
+                3,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+          "document_name": "a8-kex991q4202409282024.htm"
         },
         {
           "table": 1,
           "row": 17,
           "label": "Total operating expenses",
-          "quote": "Total operating expenses | 14,326 | 13,415 | 43,179 | 41,389"
+          "quote": "Total operating expenses | 14,326 | 13,415 | 43,179 | 41,389",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 17,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 17,
+              "cell": 2,
+              "columns": [
+                3,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "comparison-release",
+          "document_role": "comparison",
+          "source_version_id": "c569f3ee34b7a62ddbd0ba769719105a516c96b44b5832829310fb19a78ead74",
+          "document_sha256": "c569f3ee34b7a62ddbd0ba769719105a516c96b44b5832829310fb19a78ead74",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000080/a8-kex991q3202406292024.htm",
+          "document_name": "a8-kex991q3202406292024.htm"
         }
       ],
       "source": "figure from the comparison release (not printed in the current release)",
-      "printed_change_check": null
+      "printed_change_check": null,
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -2009,17 +3585,116 @@
           "table": 1,
           "row": 19,
           "label": "Operating income",
-          "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301"
+          "quote": "Operating income | 29,591 | 26,969 | 123,216 | 114,301",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 19,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 19,
+              "cell": 2,
+              "columns": [
+                3,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+          "document_name": "a8-kex991q4202409282024.htm"
         },
         {
           "table": 1,
           "row": 19,
           "label": "Operating income",
-          "quote": "Operating income | 25,352 | 22,998 | 93,625 | 87,332"
+          "quote": "Operating income | 25,352 | 22,998 | 93,625 | 87,332",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 19,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 19,
+              "cell": 2,
+              "columns": [
+                3,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "comparison-release",
+          "document_role": "comparison",
+          "source_version_id": "c569f3ee34b7a62ddbd0ba769719105a516c96b44b5832829310fb19a78ead74",
+          "document_sha256": "c569f3ee34b7a62ddbd0ba769719105a516c96b44b5832829310fb19a78ead74",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000080/a8-kex991q3202406292024.htm",
+          "document_name": "a8-kex991q3202406292024.htm"
         }
       ],
       "source": "figure from the comparison release (not printed in the current release)",
-      "printed_change_check": null
+      "printed_change_check": null,
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -2040,17 +3715,116 @@
           "table": 1,
           "row": 7,
           "label": "Total net sales (1)",
-          "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285"
+          "quote": "Total net sales (1) | 94,930 | 89,498 | 391,035 | 383,285",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 7,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 7,
+              "cell": 2,
+              "columns": [
+                3,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "document_sha256": "719bd99ffef311326d3c5f21b4980fd8fba4bb1d35daa696f7372708ad041196",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm",
+          "document_name": "a8-kex991q4202409282024.htm"
         },
         {
           "table": 1,
           "row": 7,
           "label": "Total net sales (1)",
-          "quote": "Total net sales (1) | 85,777 | 81,797 | 296,105 | 293,787"
+          "quote": "Total net sales (1) | 85,777 | 81,797 | 296,105 | 293,787",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 7,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 7,
+              "cell": 2,
+              "columns": [
+                3,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 2,
+              "columns": [
+                3,
+                12
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "comparison-release",
+          "document_role": "comparison",
+          "source_version_id": "c569f3ee34b7a62ddbd0ba769719105a516c96b44b5832829310fb19a78ead74",
+          "document_sha256": "c569f3ee34b7a62ddbd0ba769719105a516c96b44b5832829310fb19a78ead74",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000080/a8-kex991q3202406292024.htm",
+          "document_name": "a8-kex991q3202406292024.htm"
         }
       ],
       "source": "figure from the comparison release (not printed in the current release)",
-      "printed_change_check": null
+      "printed_change_check": null,
+      "currency_assumed": true
     }
   ],
   "guidance_comparisons": [],
@@ -2061,6 +3835,16 @@
       "code": "UNIT_AMBIGUOUS",
       "where": "table 1 row 12",
       "detail": "gross margin without a % sign (a dollar amount?); not extracted"
+    },
+    {
+      "code": "BREAKDOWN_ROWS_NOT_READ",
+      "where": "table 1",
+      "detail": "2 recognised row(s) below '(1) Net sales by category:' are parts of the company (segments, categories or regions), not the company figure; not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 2",
+      "detail": "dated column(s) June 29, 2024, September 30, 2023: no 'Three/Twelve Months Ended' heading above it; their values are not read"
     },
     {
       "code": "NO_OUTLOOK_FOUND",

@@ -1,5 +1,6 @@
 {
   "schema_version": "KOD-EARNINGS-NOTE-v1",
+  "parser_version": "KOD-EARNINGS-PARSER-v3",
   "research_only": true,
   "entry_permission": false,
   "company": "NVIDIA Corporation",
@@ -1934,17 +1935,37 @@
     {
       "code": "COLUMN_DURATION_UNKNOWN",
       "where": "table 4",
-      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read"
+      "detail": "dated column(s) 2024, 2023, 2024, 2023: its heading gives no month and day for the year; their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 5",
+      "detail": "dated column(s) 2024, 2024: no 'Three/Twelve Months Ended' heading above it; their values are not read"
     },
     {
       "code": "COLUMN_DURATION_UNKNOWN",
       "where": "table 6",
-      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read"
+      "detail": "dated column(s) 2024, 2023, 2024, 2023: its heading gives no month and day for the year; their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 7",
+      "detail": "dated column(s) 2024, 2023, 2024, 2023: its heading gives no month and day for the year; their values are not read"
     },
     {
       "code": "COLUMN_DURATION_UNKNOWN",
       "where": "table 8",
-      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them (5 dated columns under 2 duration headings); their values are not read"
+      "detail": "dated column(s) 2024, 2024, 2023, 2024, 2023: its heading gives no month and day for the year; their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 9",
+      "detail": "dated column(s) 2024, 2024, 2023, 2024, 2023: its heading gives no month and day for the year; their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 10",
+      "detail": "dated column(s) 2024, 2024, 2023, 2024, 2023, 2024, 2024, 2023, 2024, 2023: its heading gives no month and day for the year; their values are not read"
     }
   ],
   "headline": {
@@ -1954,11 +1975,32 @@
       "date": "2024-10-27",
       "quote": "third quarter ended October 27, 2024"
     },
+    "quarter_ended_all": [
+      {
+        "quarter": 3,
+        "date": "2024-10-27",
+        "quote": "third quarter ended October 27, 2024"
+      }
+    ],
     "fiscal_quarter_title": {
       "quarter": 3,
       "fiscal_year": 2025,
       "quote": "Third Quarter Fiscal 2025"
     },
+    "reported_quarter": [
+      {
+        "quarter": 3,
+        "year": 2025,
+        "fiscal": true,
+        "quote": "Announces Financial Results for Third Quarter Fiscal 2025"
+      },
+      {
+        "quarter": 3,
+        "year": 2025,
+        "fiscal": true,
+        "quote": "Results for Third Quarter Fiscal 2025"
+      }
+    ],
     "revenue_headline": {
       "value": "35.1",
       "scale": "billion",
@@ -1993,7 +2035,40 @@
         "headline": "Non-GAAP earnings per diluted share was $0.81",
         "table_value": "0.81"
       }
-    ]
+    ],
+    "resolution": {
+      "status": "RESOLVED",
+      "period": "Q3 FY25",
+      "end": "2024-10-27",
+      "basis": "RELEASE_STATEMENT",
+      "evidence": [
+        "third quarter ended October 27, 2024",
+        "Announces Financial Results for Third Quarter Fiscal 2025"
+      ],
+      "reason": null,
+      "candidates": [
+        "Q2 FY25",
+        "Q3 FY24",
+        "Q3 FY25"
+      ],
+      "aliases": []
+    }
+  },
+  "period_resolution": {
+    "status": "RESOLVED",
+    "period": "Q3 FY25",
+    "end": "2024-10-27",
+    "basis": "RELEASE_STATEMENT",
+    "evidence": [
+      "third quarter ended October 27, 2024",
+      "Announces Financial Results for Third Quarter Fiscal 2025"
+    ],
+    "aliases": [],
+    "release_reason": null
+  },
+  "analyst_inputs": {
+    "reporting_currency": null,
+    "period": null
   },
   "facts": [
     {
@@ -2007,13 +2082,55 @@
         "table": 1,
         "row": 4,
         "label": "Revenue",
-        "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%"
+        "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 4,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 4,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
-      "period_end": null,
+      "period_end": "2024-10-27",
+      "period_end_basis": "release statement: third quarter ended October 27, 2024; Announces Financial Results for Third Quarter Fiscal 2025",
       "period_kind": "quarter"
     },
     {
@@ -2027,11 +2144,61 @@
         "table": 1,
         "row": 5,
         "label": "Gross margin",
-        "quote": "Gross margin | 74.6% | 75.1% | 74.0% | Down 0.5 pts | Up 0.6 pts"
+        "quote": "Gross margin | 74.6% | 75.1% | 74.0% | Down 0.5 pts | Up 0.6 pts",
+        "unit": "percent",
+        "currency": null,
+        "currency_basis": null,
+        "currency_quote": null,
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 5,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 5,
+            "cell": 2,
+            "columns": [
+              3,
+              5
+            ]
+          },
+          {
+            "row": 5,
+            "cell": 3,
+            "columns": [
+              5,
+              6
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [],
-      "period_end": null,
+      "period_end": "2024-10-27",
+      "period_end_basis": "release statement: third quarter ended October 27, 2024; Announces Financial Results for Third Quarter Fiscal 2025",
       "period_kind": "quarter"
     },
     {
@@ -2045,13 +2212,55 @@
         "table": 1,
         "row": 6,
         "label": "Operating expenses",
-        "quote": "Operating expenses | $4,287 | $3,932 | $2,983 | Up 9% | Up 44%"
+        "quote": "Operating expenses | $4,287 | $3,932 | $2,983 | Up 9% | Up 44%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 6,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 6,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
-      "period_end": null,
+      "period_end": "2024-10-27",
+      "period_end_basis": "release statement: third quarter ended October 27, 2024; Announces Financial Results for Third Quarter Fiscal 2025",
       "period_kind": "quarter"
     },
     {
@@ -2065,13 +2274,55 @@
         "table": 1,
         "row": 7,
         "label": "Operating income",
-        "quote": "Operating income | $21,869 | $18,642 | $10,417 | Up 17% | Up 110%"
+        "quote": "Operating income | $21,869 | $18,642 | $10,417 | Up 17% | Up 110%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 7,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 7,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
-      "period_end": null,
+      "period_end": "2024-10-27",
+      "period_end_basis": "release statement: third quarter ended October 27, 2024; Announces Financial Results for Third Quarter Fiscal 2025",
       "period_kind": "quarter"
     },
     {
@@ -2085,13 +2336,55 @@
         "table": 1,
         "row": 8,
         "label": "Net income",
-        "quote": "Net income | $19,309 | $16,599 | $9,243 | Up 16% | Up 109%"
+        "quote": "Net income | $19,309 | $16,599 | $9,243 | Up 16% | Up 109%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 8,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 8,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
-      "period_end": null,
+      "period_end": "2024-10-27",
+      "period_end_basis": "release statement: third quarter ended October 27, 2024; Announces Financial Results for Third Quarter Fiscal 2025",
       "period_kind": "quarter"
     },
     {
@@ -2105,13 +2398,55 @@
         "table": 1,
         "row": 9,
         "label": "Diluted earnings per share*",
-        "quote": "Diluted earnings per share* | $0.78 | $0.67 | $0.37 | Up 16% | Up 111%"
+        "quote": "Diluted earnings per share* | $0.78 | $0.67 | $0.37 | Up 16% | Up 111%",
+        "unit": "per_share",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 9,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 9,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
-      "period_end": null,
+      "period_end": "2024-10-27",
+      "period_end_basis": "release statement: third quarter ended October 27, 2024; Announces Financial Results for Third Quarter Fiscal 2025",
       "period_kind": "quarter"
     },
     {
@@ -2125,13 +2460,55 @@
         "table": 2,
         "row": 4,
         "label": "Revenue",
-        "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%"
+        "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 4,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 4,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
-      "period_end": null,
+      "period_end": "2024-10-27",
+      "period_end_basis": "release statement: third quarter ended October 27, 2024; Announces Financial Results for Third Quarter Fiscal 2025",
       "period_kind": "quarter"
     },
     {
@@ -2145,11 +2522,61 @@
         "table": 2,
         "row": 5,
         "label": "Gross margin",
-        "quote": "Gross margin | 75.0% | 75.7% | 75.0% | Down 0.7 pts | --"
+        "quote": "Gross margin | 75.0% | 75.7% | 75.0% | Down 0.7 pts | --",
+        "unit": "percent",
+        "currency": null,
+        "currency_basis": null,
+        "currency_quote": null,
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 5,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 5,
+            "cell": 2,
+            "columns": [
+              3,
+              5
+            ]
+          },
+          {
+            "row": 5,
+            "cell": 3,
+            "columns": [
+              5,
+              6
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [],
-      "period_end": null,
+      "period_end": "2024-10-27",
+      "period_end_basis": "release statement: third quarter ended October 27, 2024; Announces Financial Results for Third Quarter Fiscal 2025",
       "period_kind": "quarter"
     },
     {
@@ -2163,13 +2590,55 @@
         "table": 2,
         "row": 6,
         "label": "Operating expenses",
-        "quote": "Operating expenses | $3,046 | $2,792 | $2,026 | Up 9% | Up 50%"
+        "quote": "Operating expenses | $3,046 | $2,792 | $2,026 | Up 9% | Up 50%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 6,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 6,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
-      "period_end": null,
+      "period_end": "2024-10-27",
+      "period_end_basis": "release statement: third quarter ended October 27, 2024; Announces Financial Results for Third Quarter Fiscal 2025",
       "period_kind": "quarter"
     },
     {
@@ -2183,13 +2652,55 @@
         "table": 2,
         "row": 7,
         "label": "Operating income",
-        "quote": "Operating income | $23,276 | $19,937 | $11,557 | Up 17% | Up 101%"
+        "quote": "Operating income | $23,276 | $19,937 | $11,557 | Up 17% | Up 101%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 7,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 7,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
-      "period_end": null,
+      "period_end": "2024-10-27",
+      "period_end_basis": "release statement: third quarter ended October 27, 2024; Announces Financial Results for Third Quarter Fiscal 2025",
       "period_kind": "quarter"
     },
     {
@@ -2203,13 +2714,55 @@
         "table": 2,
         "row": 8,
         "label": "Net income",
-        "quote": "Net income | $20,010 | $16,952 | $10,020 | Up 18% | Up 100%"
+        "quote": "Net income | $20,010 | $16,952 | $10,020 | Up 18% | Up 100%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 8,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 8,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
-      "period_end": null,
+      "period_end": "2024-10-27",
+      "period_end_basis": "release statement: third quarter ended October 27, 2024; Announces Financial Results for Third Quarter Fiscal 2025",
       "period_kind": "quarter"
     },
     {
@@ -2223,16 +2776,68 @@
         "table": 2,
         "row": 9,
         "label": "Diluted earnings per share*",
-        "quote": "Diluted earnings per share* | $0.81 | $0.68 | $0.40 | Up 19% | Up 103%"
+        "quote": "Diluted earnings per share* | $0.81 | $0.68 | $0.40 | Up 19% | Up 103%",
+        "unit": "per_share",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 9,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 9,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
-      "period_end": null,
+      "period_end": "2024-10-27",
+      "period_end_basis": "release statement: third quarter ended October 27, 2024; Announces Financial Results for Third Quarter Fiscal 2025",
       "period_kind": "quarter"
     }
   ],
+  "reporting_currency": {
+    "currencies": [
+      "USD"
+    ],
+    "bases": [
+      "ASSUMED_FROM_$_SIGN"
+    ],
+    "statements": {},
+    "analyst_override": null
+  },
   "other_period_figures": [
     {
       "metric": "revenue",
@@ -2245,13 +2850,55 @@
         "table": 1,
         "row": 4,
         "label": "Revenue",
-        "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%"
+        "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 4,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 4,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2265,13 +2912,55 @@
         "table": 1,
         "row": 4,
         "label": "Revenue",
-        "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%"
+        "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 4,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 4,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2285,11 +2974,61 @@
         "table": 1,
         "row": 5,
         "label": "Gross margin",
-        "quote": "Gross margin | 74.6% | 75.1% | 74.0% | Down 0.5 pts | Up 0.6 pts"
+        "quote": "Gross margin | 74.6% | 75.1% | 74.0% | Down 0.5 pts | Up 0.6 pts",
+        "unit": "percent",
+        "currency": null,
+        "currency_basis": null,
+        "currency_quote": null,
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 5,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 5,
+            "cell": 4,
+            "columns": [
+              6,
+              8
+            ]
+          },
+          {
+            "row": 5,
+            "cell": 5,
+            "columns": [
+              8,
+              9
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2303,11 +3042,61 @@
         "table": 1,
         "row": 5,
         "label": "Gross margin",
-        "quote": "Gross margin | 74.6% | 75.1% | 74.0% | Down 0.5 pts | Up 0.6 pts"
+        "quote": "Gross margin | 74.6% | 75.1% | 74.0% | Down 0.5 pts | Up 0.6 pts",
+        "unit": "percent",
+        "currency": null,
+        "currency_basis": null,
+        "currency_quote": null,
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 5,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 5,
+            "cell": 6,
+            "columns": [
+              9,
+              11
+            ]
+          },
+          {
+            "row": 5,
+            "cell": 7,
+            "columns": [
+              11,
+              12
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2321,13 +3110,55 @@
         "table": 1,
         "row": 6,
         "label": "Operating expenses",
-        "quote": "Operating expenses | $4,287 | $3,932 | $2,983 | Up 9% | Up 44%"
+        "quote": "Operating expenses | $4,287 | $3,932 | $2,983 | Up 9% | Up 44%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 6,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 6,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2341,13 +3172,55 @@
         "table": 1,
         "row": 6,
         "label": "Operating expenses",
-        "quote": "Operating expenses | $4,287 | $3,932 | $2,983 | Up 9% | Up 44%"
+        "quote": "Operating expenses | $4,287 | $3,932 | $2,983 | Up 9% | Up 44%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 6,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 6,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2361,13 +3234,55 @@
         "table": 1,
         "row": 7,
         "label": "Operating income",
-        "quote": "Operating income | $21,869 | $18,642 | $10,417 | Up 17% | Up 110%"
+        "quote": "Operating income | $21,869 | $18,642 | $10,417 | Up 17% | Up 110%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 7,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 7,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2381,13 +3296,55 @@
         "table": 1,
         "row": 7,
         "label": "Operating income",
-        "quote": "Operating income | $21,869 | $18,642 | $10,417 | Up 17% | Up 110%"
+        "quote": "Operating income | $21,869 | $18,642 | $10,417 | Up 17% | Up 110%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 7,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 7,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2401,13 +3358,55 @@
         "table": 1,
         "row": 8,
         "label": "Net income",
-        "quote": "Net income | $19,309 | $16,599 | $9,243 | Up 16% | Up 109%"
+        "quote": "Net income | $19,309 | $16,599 | $9,243 | Up 16% | Up 109%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 8,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 8,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2421,13 +3420,55 @@
         "table": 1,
         "row": 8,
         "label": "Net income",
-        "quote": "Net income | $19,309 | $16,599 | $9,243 | Up 16% | Up 109%"
+        "quote": "Net income | $19,309 | $16,599 | $9,243 | Up 16% | Up 109%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 8,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 8,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2441,13 +3482,55 @@
         "table": 1,
         "row": 9,
         "label": "Diluted earnings per share*",
-        "quote": "Diluted earnings per share* | $0.78 | $0.67 | $0.37 | Up 16% | Up 111%"
+        "quote": "Diluted earnings per share* | $0.78 | $0.67 | $0.37 | Up 16% | Up 111%",
+        "unit": "per_share",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 9,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 9,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2461,13 +3544,55 @@
         "table": 1,
         "row": 9,
         "label": "Diluted earnings per share*",
-        "quote": "Diluted earnings per share* | $0.78 | $0.67 | $0.37 | Up 16% | Up 111%"
+        "quote": "Diluted earnings per share* | $0.78 | $0.67 | $0.37 | Up 16% | Up 111%",
+        "unit": "per_share",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 9,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 9,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2481,13 +3606,55 @@
         "table": 2,
         "row": 4,
         "label": "Revenue",
-        "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%"
+        "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 4,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 4,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2501,13 +3668,55 @@
         "table": 2,
         "row": 4,
         "label": "Revenue",
-        "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%"
+        "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 4,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 4,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2521,11 +3730,61 @@
         "table": 2,
         "row": 5,
         "label": "Gross margin",
-        "quote": "Gross margin | 75.0% | 75.7% | 75.0% | Down 0.7 pts | --"
+        "quote": "Gross margin | 75.0% | 75.7% | 75.0% | Down 0.7 pts | --",
+        "unit": "percent",
+        "currency": null,
+        "currency_basis": null,
+        "currency_quote": null,
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 5,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 5,
+            "cell": 4,
+            "columns": [
+              6,
+              8
+            ]
+          },
+          {
+            "row": 5,
+            "cell": 5,
+            "columns": [
+              8,
+              9
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2539,11 +3798,61 @@
         "table": 2,
         "row": 5,
         "label": "Gross margin",
-        "quote": "Gross margin | 75.0% | 75.7% | 75.0% | Down 0.7 pts | --"
+        "quote": "Gross margin | 75.0% | 75.7% | 75.0% | Down 0.7 pts | --",
+        "unit": "percent",
+        "currency": null,
+        "currency_basis": null,
+        "currency_quote": null,
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 5,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 5,
+            "cell": 6,
+            "columns": [
+              9,
+              11
+            ]
+          },
+          {
+            "row": 5,
+            "cell": 7,
+            "columns": [
+              11,
+              12
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2557,13 +3866,55 @@
         "table": 2,
         "row": 6,
         "label": "Operating expenses",
-        "quote": "Operating expenses | $3,046 | $2,792 | $2,026 | Up 9% | Up 50%"
+        "quote": "Operating expenses | $3,046 | $2,792 | $2,026 | Up 9% | Up 50%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 6,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 6,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2577,13 +3928,55 @@
         "table": 2,
         "row": 6,
         "label": "Operating expenses",
-        "quote": "Operating expenses | $3,046 | $2,792 | $2,026 | Up 9% | Up 50%"
+        "quote": "Operating expenses | $3,046 | $2,792 | $2,026 | Up 9% | Up 50%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 6,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 6,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2597,13 +3990,55 @@
         "table": 2,
         "row": 7,
         "label": "Operating income",
-        "quote": "Operating income | $23,276 | $19,937 | $11,557 | Up 17% | Up 101%"
+        "quote": "Operating income | $23,276 | $19,937 | $11,557 | Up 17% | Up 101%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 7,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 7,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2617,13 +4052,55 @@
         "table": 2,
         "row": 7,
         "label": "Operating income",
-        "quote": "Operating income | $23,276 | $19,937 | $11,557 | Up 17% | Up 101%"
+        "quote": "Operating income | $23,276 | $19,937 | $11,557 | Up 17% | Up 101%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 7,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 7,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2637,13 +4114,55 @@
         "table": 2,
         "row": 8,
         "label": "Net income",
-        "quote": "Net income | $20,010 | $16,952 | $10,020 | Up 18% | Up 100%"
+        "quote": "Net income | $20,010 | $16,952 | $10,020 | Up 18% | Up 100%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 8,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 8,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2657,13 +4176,55 @@
         "table": 2,
         "row": 8,
         "label": "Net income",
-        "quote": "Net income | $20,010 | $16,952 | $10,020 | Up 18% | Up 100%"
+        "quote": "Net income | $20,010 | $16,952 | $10,020 | Up 18% | Up 100%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 8,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 8,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2677,13 +4238,55 @@
         "table": 2,
         "row": 9,
         "label": "Diluted earnings per share*",
-        "quote": "Diluted earnings per share* | $0.81 | $0.68 | $0.40 | Up 19% | Up 103%"
+        "quote": "Diluted earnings per share* | $0.81 | $0.68 | $0.40 | Up 19% | Up 103%",
+        "unit": "per_share",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 9,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 9,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 3,
+            "columns": [
+              6,
+              9
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     },
     {
@@ -2697,13 +4300,55 @@
         "table": 2,
         "row": 9,
         "label": "Diluted earnings per share*",
-        "quote": "Diluted earnings per share* | $0.81 | $0.68 | $0.40 | Up 19% | Up 103%"
+        "quote": "Diluted earnings per share* | $0.81 | $0.68 | $0.40 | Up 19% | Up 103%",
+        "unit": "per_share",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 9,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 9,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 4,
+            "columns": [
+              9,
+              12
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": null,
+      "period_end_basis": null,
       "period_kind": "quarter"
     }
   ],
@@ -2727,20 +4372,103 @@
           "table": 1,
           "row": 9,
           "label": "Diluted earnings per share*",
-          "quote": "Diluted earnings per share* | $0.78 | $0.67 | $0.37 | Up 16% | Up 111%"
+          "quote": "Diluted earnings per share* | $0.78 | $0.67 | $0.37 | Up 16% | Up 111%",
+          "unit": "per_share",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 9,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 9,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 1,
           "row": 9,
           "label": "Diluted earnings per share*",
-          "quote": "Diluted earnings per share* | $0.78 | $0.67 | $0.37 | Up 16% | Up 111%"
+          "quote": "Diluted earnings per share* | $0.78 | $0.67 | $0.37 | Up 16% | Up 111%",
+          "unit": "per_share",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 9,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 9,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 16%",
         "agrees": true
-      }
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -2761,20 +4489,103 @@
           "table": 1,
           "row": 9,
           "label": "Diluted earnings per share*",
-          "quote": "Diluted earnings per share* | $0.78 | $0.67 | $0.37 | Up 16% | Up 111%"
+          "quote": "Diluted earnings per share* | $0.78 | $0.67 | $0.37 | Up 16% | Up 111%",
+          "unit": "per_share",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 9,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 9,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 1,
           "row": 9,
           "label": "Diluted earnings per share*",
-          "quote": "Diluted earnings per share* | $0.78 | $0.67 | $0.37 | Up 16% | Up 111%"
+          "quote": "Diluted earnings per share* | $0.78 | $0.67 | $0.37 | Up 16% | Up 111%",
+          "unit": "per_share",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 9,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 9,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 111%",
         "agrees": true
-      }
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -2795,20 +4606,103 @@
           "table": 2,
           "row": 9,
           "label": "Diluted earnings per share*",
-          "quote": "Diluted earnings per share* | $0.81 | $0.68 | $0.40 | Up 19% | Up 103%"
+          "quote": "Diluted earnings per share* | $0.81 | $0.68 | $0.40 | Up 19% | Up 103%",
+          "unit": "per_share",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 9,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 9,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 2,
           "row": 9,
           "label": "Diluted earnings per share*",
-          "quote": "Diluted earnings per share* | $0.81 | $0.68 | $0.40 | Up 19% | Up 103%"
+          "quote": "Diluted earnings per share* | $0.81 | $0.68 | $0.40 | Up 19% | Up 103%",
+          "unit": "per_share",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 9,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 9,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 19%",
         "agrees": true
-      }
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -2829,20 +4723,103 @@
           "table": 2,
           "row": 9,
           "label": "Diluted earnings per share*",
-          "quote": "Diluted earnings per share* | $0.81 | $0.68 | $0.40 | Up 19% | Up 103%"
+          "quote": "Diluted earnings per share* | $0.81 | $0.68 | $0.40 | Up 19% | Up 103%",
+          "unit": "per_share",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 9,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 9,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 2,
           "row": 9,
           "label": "Diluted earnings per share*",
-          "quote": "Diluted earnings per share* | $0.81 | $0.68 | $0.40 | Up 19% | Up 103%"
+          "quote": "Diluted earnings per share* | $0.81 | $0.68 | $0.40 | Up 19% | Up 103%",
+          "unit": "per_share",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 9,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 9,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 103%",
         "agrees": true
-      }
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -2863,20 +4840,119 @@
           "table": 1,
           "row": 5,
           "label": "Gross margin",
-          "quote": "Gross margin | 74.6% | 75.1% | 74.0% | Down 0.5 pts | Up 0.6 pts"
+          "quote": "Gross margin | 74.6% | 75.1% | 74.0% | Down 0.5 pts | Up 0.6 pts",
+          "unit": "percent",
+          "currency": null,
+          "currency_basis": null,
+          "currency_quote": null,
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 5,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 5,
+              "cell": 2,
+              "columns": [
+                3,
+                5
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 3,
+              "columns": [
+                5,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 1,
           "row": 5,
           "label": "Gross margin",
-          "quote": "Gross margin | 74.6% | 75.1% | 74.0% | Down 0.5 pts | Up 0.6 pts"
+          "quote": "Gross margin | 74.6% | 75.1% | 74.0% | Down 0.5 pts | Up 0.6 pts",
+          "unit": "percent",
+          "currency": null,
+          "currency_basis": null,
+          "currency_quote": null,
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 5,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 5,
+              "cell": 4,
+              "columns": [
+                6,
+                8
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 5,
+              "columns": [
+                8,
+                9
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Down 0.5 pts",
         "agrees": true
-      }
+      },
+      "currency_assumed": false
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -2897,20 +4973,119 @@
           "table": 1,
           "row": 5,
           "label": "Gross margin",
-          "quote": "Gross margin | 74.6% | 75.1% | 74.0% | Down 0.5 pts | Up 0.6 pts"
+          "quote": "Gross margin | 74.6% | 75.1% | 74.0% | Down 0.5 pts | Up 0.6 pts",
+          "unit": "percent",
+          "currency": null,
+          "currency_basis": null,
+          "currency_quote": null,
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 5,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 5,
+              "cell": 2,
+              "columns": [
+                3,
+                5
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 3,
+              "columns": [
+                5,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 1,
           "row": 5,
           "label": "Gross margin",
-          "quote": "Gross margin | 74.6% | 75.1% | 74.0% | Down 0.5 pts | Up 0.6 pts"
+          "quote": "Gross margin | 74.6% | 75.1% | 74.0% | Down 0.5 pts | Up 0.6 pts",
+          "unit": "percent",
+          "currency": null,
+          "currency_basis": null,
+          "currency_quote": null,
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 5,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 5,
+              "cell": 6,
+              "columns": [
+                9,
+                11
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 7,
+              "columns": [
+                11,
+                12
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 0.6 pts",
         "agrees": true
-      }
+      },
+      "currency_assumed": false
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -2931,20 +5106,119 @@
           "table": 2,
           "row": 5,
           "label": "Gross margin",
-          "quote": "Gross margin | 75.0% | 75.7% | 75.0% | Down 0.7 pts | --"
+          "quote": "Gross margin | 75.0% | 75.7% | 75.0% | Down 0.7 pts | --",
+          "unit": "percent",
+          "currency": null,
+          "currency_basis": null,
+          "currency_quote": null,
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 5,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 5,
+              "cell": 2,
+              "columns": [
+                3,
+                5
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 3,
+              "columns": [
+                5,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 2,
           "row": 5,
           "label": "Gross margin",
-          "quote": "Gross margin | 75.0% | 75.7% | 75.0% | Down 0.7 pts | --"
+          "quote": "Gross margin | 75.0% | 75.7% | 75.0% | Down 0.7 pts | --",
+          "unit": "percent",
+          "currency": null,
+          "currency_basis": null,
+          "currency_quote": null,
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 5,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 5,
+              "cell": 4,
+              "columns": [
+                6,
+                8
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 5,
+              "columns": [
+                8,
+                9
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Down 0.7 pts",
         "agrees": true
-      }
+      },
+      "currency_assumed": false
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -2965,17 +5239,116 @@
           "table": 2,
           "row": 5,
           "label": "Gross margin",
-          "quote": "Gross margin | 75.0% | 75.7% | 75.0% | Down 0.7 pts | --"
+          "quote": "Gross margin | 75.0% | 75.7% | 75.0% | Down 0.7 pts | --",
+          "unit": "percent",
+          "currency": null,
+          "currency_basis": null,
+          "currency_quote": null,
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 5,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 5,
+              "cell": 2,
+              "columns": [
+                3,
+                5
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 3,
+              "columns": [
+                5,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 2,
           "row": 5,
           "label": "Gross margin",
-          "quote": "Gross margin | 75.0% | 75.7% | 75.0% | Down 0.7 pts | --"
+          "quote": "Gross margin | 75.0% | 75.7% | 75.0% | Down 0.7 pts | --",
+          "unit": "percent",
+          "currency": null,
+          "currency_basis": null,
+          "currency_quote": null,
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 5,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 5,
+              "cell": 6,
+              "columns": [
+                9,
+                11
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 7,
+              "columns": [
+                11,
+                12
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
-      "printed_change_check": null
+      "printed_change_check": null,
+      "currency_assumed": false
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -2996,20 +5369,103 @@
           "table": 1,
           "row": 8,
           "label": "Net income",
-          "quote": "Net income | $19,309 | $16,599 | $9,243 | Up 16% | Up 109%"
+          "quote": "Net income | $19,309 | $16,599 | $9,243 | Up 16% | Up 109%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 8,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 8,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 1,
           "row": 8,
           "label": "Net income",
-          "quote": "Net income | $19,309 | $16,599 | $9,243 | Up 16% | Up 109%"
+          "quote": "Net income | $19,309 | $16,599 | $9,243 | Up 16% | Up 109%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 8,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 8,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 16%",
         "agrees": true
-      }
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -3030,20 +5486,103 @@
           "table": 1,
           "row": 8,
           "label": "Net income",
-          "quote": "Net income | $19,309 | $16,599 | $9,243 | Up 16% | Up 109%"
+          "quote": "Net income | $19,309 | $16,599 | $9,243 | Up 16% | Up 109%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 8,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 8,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 1,
           "row": 8,
           "label": "Net income",
-          "quote": "Net income | $19,309 | $16,599 | $9,243 | Up 16% | Up 109%"
+          "quote": "Net income | $19,309 | $16,599 | $9,243 | Up 16% | Up 109%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 8,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 8,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 109%",
         "agrees": true
-      }
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -3064,20 +5603,103 @@
           "table": 2,
           "row": 8,
           "label": "Net income",
-          "quote": "Net income | $20,010 | $16,952 | $10,020 | Up 18% | Up 100%"
+          "quote": "Net income | $20,010 | $16,952 | $10,020 | Up 18% | Up 100%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 8,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 8,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 2,
           "row": 8,
           "label": "Net income",
-          "quote": "Net income | $20,010 | $16,952 | $10,020 | Up 18% | Up 100%"
+          "quote": "Net income | $20,010 | $16,952 | $10,020 | Up 18% | Up 100%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 8,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 8,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 18%",
         "agrees": true
-      }
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -3098,20 +5720,103 @@
           "table": 2,
           "row": 8,
           "label": "Net income",
-          "quote": "Net income | $20,010 | $16,952 | $10,020 | Up 18% | Up 100%"
+          "quote": "Net income | $20,010 | $16,952 | $10,020 | Up 18% | Up 100%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 8,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 8,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 2,
           "row": 8,
           "label": "Net income",
-          "quote": "Net income | $20,010 | $16,952 | $10,020 | Up 18% | Up 100%"
+          "quote": "Net income | $20,010 | $16,952 | $10,020 | Up 18% | Up 100%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 8,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 8,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 100%",
         "agrees": true
-      }
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -3132,20 +5837,103 @@
           "table": 1,
           "row": 6,
           "label": "Operating expenses",
-          "quote": "Operating expenses | $4,287 | $3,932 | $2,983 | Up 9% | Up 44%"
+          "quote": "Operating expenses | $4,287 | $3,932 | $2,983 | Up 9% | Up 44%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 6,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 6,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 1,
           "row": 6,
           "label": "Operating expenses",
-          "quote": "Operating expenses | $4,287 | $3,932 | $2,983 | Up 9% | Up 44%"
+          "quote": "Operating expenses | $4,287 | $3,932 | $2,983 | Up 9% | Up 44%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 6,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 6,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 9%",
         "agrees": true
-      }
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -3166,20 +5954,103 @@
           "table": 1,
           "row": 6,
           "label": "Operating expenses",
-          "quote": "Operating expenses | $4,287 | $3,932 | $2,983 | Up 9% | Up 44%"
+          "quote": "Operating expenses | $4,287 | $3,932 | $2,983 | Up 9% | Up 44%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 6,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 6,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 1,
           "row": 6,
           "label": "Operating expenses",
-          "quote": "Operating expenses | $4,287 | $3,932 | $2,983 | Up 9% | Up 44%"
+          "quote": "Operating expenses | $4,287 | $3,932 | $2,983 | Up 9% | Up 44%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 6,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 6,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 44%",
         "agrees": true
-      }
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -3200,20 +6071,103 @@
           "table": 2,
           "row": 6,
           "label": "Operating expenses",
-          "quote": "Operating expenses | $3,046 | $2,792 | $2,026 | Up 9% | Up 50%"
+          "quote": "Operating expenses | $3,046 | $2,792 | $2,026 | Up 9% | Up 50%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 6,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 6,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 2,
           "row": 6,
           "label": "Operating expenses",
-          "quote": "Operating expenses | $3,046 | $2,792 | $2,026 | Up 9% | Up 50%"
+          "quote": "Operating expenses | $3,046 | $2,792 | $2,026 | Up 9% | Up 50%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 6,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 6,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 9%",
         "agrees": true
-      }
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -3234,20 +6188,103 @@
           "table": 2,
           "row": 6,
           "label": "Operating expenses",
-          "quote": "Operating expenses | $3,046 | $2,792 | $2,026 | Up 9% | Up 50%"
+          "quote": "Operating expenses | $3,046 | $2,792 | $2,026 | Up 9% | Up 50%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 6,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 6,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 2,
           "row": 6,
           "label": "Operating expenses",
-          "quote": "Operating expenses | $3,046 | $2,792 | $2,026 | Up 9% | Up 50%"
+          "quote": "Operating expenses | $3,046 | $2,792 | $2,026 | Up 9% | Up 50%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 6,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 6,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 50%",
         "agrees": true
-      }
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -3268,20 +6305,103 @@
           "table": 1,
           "row": 7,
           "label": "Operating income",
-          "quote": "Operating income | $21,869 | $18,642 | $10,417 | Up 17% | Up 110%"
+          "quote": "Operating income | $21,869 | $18,642 | $10,417 | Up 17% | Up 110%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 7,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 7,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 1,
           "row": 7,
           "label": "Operating income",
-          "quote": "Operating income | $21,869 | $18,642 | $10,417 | Up 17% | Up 110%"
+          "quote": "Operating income | $21,869 | $18,642 | $10,417 | Up 17% | Up 110%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 7,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 7,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 17%",
         "agrees": true
-      }
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -3302,20 +6422,103 @@
           "table": 1,
           "row": 7,
           "label": "Operating income",
-          "quote": "Operating income | $21,869 | $18,642 | $10,417 | Up 17% | Up 110%"
+          "quote": "Operating income | $21,869 | $18,642 | $10,417 | Up 17% | Up 110%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 7,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 7,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 1,
           "row": 7,
           "label": "Operating income",
-          "quote": "Operating income | $21,869 | $18,642 | $10,417 | Up 17% | Up 110%"
+          "quote": "Operating income | $21,869 | $18,642 | $10,417 | Up 17% | Up 110%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 7,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 7,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 110%",
         "agrees": true
-      }
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -3336,20 +6539,103 @@
           "table": 2,
           "row": 7,
           "label": "Operating income",
-          "quote": "Operating income | $23,276 | $19,937 | $11,557 | Up 17% | Up 101%"
+          "quote": "Operating income | $23,276 | $19,937 | $11,557 | Up 17% | Up 101%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 7,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 7,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 2,
           "row": 7,
           "label": "Operating income",
-          "quote": "Operating income | $23,276 | $19,937 | $11,557 | Up 17% | Up 101%"
+          "quote": "Operating income | $23,276 | $19,937 | $11,557 | Up 17% | Up 101%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 7,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 7,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 17%",
         "agrees": true
-      }
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -3370,20 +6656,103 @@
           "table": 2,
           "row": 7,
           "label": "Operating income",
-          "quote": "Operating income | $23,276 | $19,937 | $11,557 | Up 17% | Up 101%"
+          "quote": "Operating income | $23,276 | $19,937 | $11,557 | Up 17% | Up 101%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 7,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 7,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 2,
           "row": 7,
           "label": "Operating income",
-          "quote": "Operating income | $23,276 | $19,937 | $11,557 | Up 17% | Up 101%"
+          "quote": "Operating income | $23,276 | $19,937 | $11,557 | Up 17% | Up 101%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 7,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 7,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 101%",
         "agrees": true
-      }
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -3404,20 +6773,103 @@
           "table": 1,
           "row": 4,
           "label": "Revenue",
-          "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%"
+          "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 4,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 4,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 1,
           "row": 4,
           "label": "Revenue",
-          "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%"
+          "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 4,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 4,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 17%",
         "agrees": true
-      }
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -3438,20 +6890,103 @@
           "table": 1,
           "row": 4,
           "label": "Revenue",
-          "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%"
+          "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 4,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 4,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 1,
           "row": 4,
           "label": "Revenue",
-          "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%"
+          "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 4,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 4,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 94%",
         "agrees": true
-      }
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -3472,20 +7007,103 @@
           "table": 2,
           "row": 4,
           "label": "Revenue",
-          "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%"
+          "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 4,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 4,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 2,
           "row": 4,
           "label": "Revenue",
-          "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%"
+          "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 4,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 4,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                6,
+                9
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 17%",
         "agrees": true
-      }
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -3506,20 +7124,103 @@
           "table": 2,
           "row": 4,
           "label": "Revenue",
-          "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%"
+          "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 4,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 4,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 2,
+              "columns": [
+                3,
+                6
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         },
         {
           "table": 2,
           "row": 4,
           "label": "Revenue",
-          "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%"
+          "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 4,
+              "cell": 1,
+              "columns": [
+                0,
+                3
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 4,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 3,
+              "cell": 4,
+              "columns": [
+                9,
+                12
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+          "document_name": "q3fy25pr.htm"
         }
       ],
       "source": "comparative column printed in the current release",
       "printed_change_check": {
         "printed": "Up 94%",
         "agrees": true
-      }
+      },
+      "currency_assumed": true
     }
   ],
   "guidance_comparisons": [
@@ -3529,6 +7230,7 @@
       "basis": "GAAP and NON-GAAP (identical)",
       "period": "Q3 FY25",
       "unit": "millions",
+      "currency": "USD",
       "actual": "35082",
       "guidance_midpoint": "32500",
       "guidance_low": "31850",
@@ -3544,8 +7246,50 @@
         "table": 1,
         "row": 4,
         "label": "Revenue",
-        "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%"
-      }
+        "quote": "Revenue | $35,082 | $30,040 | $18,120 | Up 17% | Up 94%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 4,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 4,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs EARLIER COMPANY GUIDANCE",
@@ -3553,6 +7297,7 @@
       "basis": "GAAP",
       "period": "Q3 FY25",
       "unit": "percent",
+      "currency": null,
       "actual": "74.6",
       "guidance_midpoint": "74.4",
       "guidance_low": "73.9",
@@ -3568,8 +7313,58 @@
         "table": 1,
         "row": 5,
         "label": "Gross margin",
-        "quote": "Gross margin | 74.6% | 75.1% | 74.0% | Down 0.5 pts | Up 0.6 pts"
-      }
+        "quote": "Gross margin | 74.6% | 75.1% | 74.0% | Down 0.5 pts | Up 0.6 pts",
+        "unit": "percent",
+        "currency": null,
+        "currency_basis": null,
+        "currency_quote": null,
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 5,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 5,
+            "cell": 2,
+            "columns": [
+              3,
+              5
+            ]
+          },
+          {
+            "row": 5,
+            "cell": 3,
+            "columns": [
+              5,
+              6
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
+      },
+      "currency_assumed": false
     },
     {
       "label": "ACTUAL vs EARLIER COMPANY GUIDANCE",
@@ -3577,6 +7372,7 @@
       "basis": "NON-GAAP",
       "period": "Q3 FY25",
       "unit": "percent",
+      "currency": null,
       "actual": "75",
       "guidance_midpoint": "75",
       "guidance_low": "74.5",
@@ -3592,8 +7388,58 @@
         "table": 2,
         "row": 5,
         "label": "Gross margin",
-        "quote": "Gross margin | 75.0% | 75.7% | 75.0% | Down 0.7 pts | --"
-      }
+        "quote": "Gross margin | 75.0% | 75.7% | 75.0% | Down 0.7 pts | --",
+        "unit": "percent",
+        "currency": null,
+        "currency_basis": null,
+        "currency_quote": null,
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 5,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 5,
+            "cell": 2,
+            "columns": [
+              3,
+              5
+            ]
+          },
+          {
+            "row": 5,
+            "cell": 3,
+            "columns": [
+              5,
+              6
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
+      },
+      "currency_assumed": false
     },
     {
       "label": "ACTUAL vs EARLIER COMPANY GUIDANCE",
@@ -3601,6 +7447,7 @@
       "basis": "GAAP",
       "period": "Q3 FY25",
       "unit": "millions",
+      "currency": "USD",
       "actual": "4287",
       "guidance_midpoint": "4300",
       "guidance_low": null,
@@ -3616,8 +7463,50 @@
         "table": 1,
         "row": 6,
         "label": "Operating expenses",
-        "quote": "Operating expenses | $4,287 | $3,932 | $2,983 | Up 9% | Up 44%"
-      }
+        "quote": "Operating expenses | $4,287 | $3,932 | $2,983 | Up 9% | Up 44%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 6,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 6,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
+      },
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs EARLIER COMPANY GUIDANCE",
@@ -3625,6 +7514,7 @@
       "basis": "NON-GAAP",
       "period": "Q3 FY25",
       "unit": "millions",
+      "currency": "USD",
       "actual": "3046",
       "guidance_midpoint": "3000",
       "guidance_low": null,
@@ -3640,8 +7530,50 @@
         "table": 2,
         "row": 6,
         "label": "Operating expenses",
-        "quote": "Operating expenses | $3,046 | $2,792 | $2,026 | Up 9% | Up 50%"
-      }
+        "quote": "Operating expenses | $3,046 | $2,792 | $2,026 | Up 9% | Up 50%",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 6,
+            "cell": 1,
+            "columns": [
+              0,
+              3
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 6,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 3,
+            "cell": 2,
+            "columns": [
+              3,
+              6
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "document_sha256": "91d9376a2c68e137838d3afb84a9cf8709cdd3b98ff42bc6bd61143cba71cc40",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+        "document_name": "q3fy25pr.htm"
+      },
+      "currency_assumed": true
     }
   ],
   "guidance_not_compared": [],
@@ -3747,17 +7679,37 @@
     {
       "code": "COLUMN_DURATION_UNKNOWN",
       "where": "table 4",
-      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read"
+      "detail": "dated column(s) 2024, 2023, 2024, 2023: its heading gives no month and day for the year; their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 5",
+      "detail": "dated column(s) 2024, 2024: no 'Three/Twelve Months Ended' heading above it; their values are not read"
     },
     {
       "code": "COLUMN_DURATION_UNKNOWN",
       "where": "table 6",
-      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read"
+      "detail": "dated column(s) 2024, 2023, 2024, 2023: its heading gives no month and day for the year; their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 7",
+      "detail": "dated column(s) 2024, 2023, 2024, 2023: its heading gives no month and day for the year; their values are not read"
     },
     {
       "code": "COLUMN_DURATION_UNKNOWN",
       "where": "table 8",
-      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them (5 dated columns under 2 duration headings); their values are not read"
+      "detail": "dated column(s) 2024, 2024, 2023, 2024, 2023: its heading gives no month and day for the year; their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 9",
+      "detail": "dated column(s) 2024, 2024, 2023, 2024, 2023: its heading gives no month and day for the year; their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 10",
+      "detail": "dated column(s) 2024, 2024, 2023, 2024, 2023, 2024, 2024, 2023, 2024, 2023: its heading gives no month and day for the year; their values are not read"
     }
   ],
   "next_guidance": [
@@ -3767,6 +7719,7 @@
       "target_period": "Q4 FY25",
       "unit": "millions",
       "currency": "USD",
+      "currency_basis": "ASSUMED_FROM_$_SIGN",
       "midpoint": "37500",
       "low": "36750",
       "high": "38250",
@@ -3781,6 +7734,7 @@
       "target_period": "Q4 FY25",
       "unit": "percent",
       "currency": null,
+      "currency_basis": null,
       "midpoint": "73",
       "low": "72.5",
       "high": "73.5",
@@ -3795,6 +7749,7 @@
       "target_period": "Q4 FY25",
       "unit": "percent",
       "currency": null,
+      "currency_basis": null,
       "midpoint": "73.5",
       "low": "73",
       "high": "74",
@@ -3809,6 +7764,7 @@
       "target_period": "Q4 FY25",
       "unit": "millions",
       "currency": "USD",
+      "currency_basis": "ASSUMED_FROM_$_SIGN",
       "midpoint": "4800",
       "low": null,
       "high": null,
@@ -3823,6 +7779,7 @@
       "target_period": "Q4 FY25",
       "unit": "millions",
       "currency": "USD",
+      "currency_basis": "ASSUMED_FROM_$_SIGN",
       "midpoint": "3400",
       "low": null,
       "high": null,

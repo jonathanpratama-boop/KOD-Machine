@@ -1,0 +1,162 @@
+[
+ {
+  "ticker": "AAPL",
+  "kind": "companyfacts",
+  "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000320193.json",
+  "observed_at": "2026-10-23T06:09:00Z",
+  "full_response_bytes": 3789099,
+  "full_response_sha256": "73a86c6aedc31f77cac2ea4df5f80f0b3bd7e6eb58bb4e01444fbedf3afb9c43",
+  "fixture": "AAPL/companyfacts.json.gz",
+  "fixture_sha256": "2c2d03946c93ba1fa6d77333bab2b2243e2ddfee58c61ab432a23fe2fa284f56"
+ },
+ {
+  "ticker": "AAPL",
+  "kind": "submissions",
+  "url": "https://data.sec.gov/submissions/CIK0000320193.json",
+  "observed_at": "2026-10-23T06:10:13Z",
+  "full_response_bytes": 163917,
+  "full_response_sha256": "47e4383b0133a4146cc631725f9aa28bac6d5679d504f735a78f1a1923c4b622",
+  "fixture": "AAPL/submissions.json.gz",
+  "fixture_sha256": "f229bcd4c65b3f8caa4f9243038709ba50db5c719da7ae4a280907763b15042a"
+ },
+ {
+  "ticker": "AMD",
+  "kind": "companyfacts",
+  "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000002488.json",
+  "observed_at": "2026-10-23T06:08:59Z",
+  "full_response_bytes": 3672449,
+  "full_response_sha256": "21a29c75076d90fced568785d855fc427a15c7458bc0bb153a9dedd88ad3349e",
+  "fixture": "AMD/companyfacts.json.gz",
+  "fixture_sha256": "e80067f3eb8c7f7ea28192aea7aaabc8b87ccaae7247d9172da43d5940a9d005"
+ },
+ {
+  "ticker": "AMD",
+  "kind": "submissions",
+  "url": "https://data.sec.gov/submissions/CIK0000002488.json",
+  "observed_at": "2026-10-23T06:10:12Z",
+  "full_response_bytes": 162189,
+  "full_response_sha256": "ab1f62c1fc1c04ff4022ac902f0184e2bc8d6f5c23d18f9538ab6cf39bc64420",
+  "fixture": "AMD/submissions.json.gz",
+  "fixture_sha256": "265bcae46244441c3de1d967eda6d53feef03ce6a9ae02f01b252e47cc8b4163"
+ },
+ {
+  "ticker": "COST",
+  "kind": "companyfacts",
+  "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000909832.json",
+  "observed_at": "2026-10-23T06:09:02Z",
+  "full_response_bytes": 3694553,
+  "full_response_sha256": "b675ced201b27ede2b0d26ca6fd873befe96a1afa9679339a2d0b964187dcdff",
+  "fixture": "COST/companyfacts.json.gz",
+  "fixture_sha256": "518a255daf30d2a3573aae74711647d00207e483f30bcefc485fa42f11386d59"
+ },
+ {
+  "ticker": "COST",
+  "kind": "submissions",
+  "url": "https://data.sec.gov/submissions/CIK0000909832.json",
+  "observed_at": "2026-10-23T06:10:14Z",
+  "full_response_bytes": 158362,
+  "full_response_sha256": "ddbc474ee1b766ecc36ba39759b1e2910135401dc12c08e93f034c65fc9c15d1",
+  "fixture": "COST/submissions.json.gz",
+  "fixture_sha256": "b096d84d693b2bad72347f5bb43fa008a424a9f8e970a7e2c856c558befa619c"
+ },
+ {
+  "ticker": "JPM",
+  "kind": "companyfacts",
+  "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000019617.json",
+  "observed_at": "2026-10-23T06:09:02Z",
+  "full_response_bytes": 7995471,
+  "full_response_sha256": "4ed3b27dfb13ded21c2b3fda6ed072e2cb28896d0278889bf573435d5c284938",
+  "fixture": "JPM/companyfacts.json.gz",
+  "fixture_sha256": "04a7d79bd7c89e5ea18ffd795c2425adfa4af8af824a9e73c16e87aae7bb0be0"
+ },
+ {
+  "ticker": "JPM",
+  "kind": "submissions",
+  "url": "https://data.sec.gov/submissions/CIK0000019617.json",
+  "observed_at": "2026-10-23T06:10:15Z",
+  "full_response_bytes": 4656066,
+  "full_response_sha256": "78912e328b0c7610d404b266055ded72ce09dc8d425801242b4587e5b391d67c",
+  "fixture": "JPM/submissions.json.gz",
+  "fixture_sha256": "290498d80b87555000c32faa73c6fd260b328a4170e1f717cf41f6ea982501ca"
+ },
+ {
+  "ticker": "MSFT",
+  "kind": "companyfacts",
+  "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000789019.json",
+  "observed_at": "2026-10-23T06:09:00Z",
+  "full_response_bytes": 4888108,
+  "full_response_sha256": "dd0308149a8e96497989ed7c690b5a49a00bef9ceafbb24638bda41e8ae938dd",
+  "fixture": "MSFT/companyfacts.json.gz",
+  "fixture_sha256": "f532ce100930c482f671f61651158e68ec6d9eef262f739aa5fccb4710d1d9d1"
+ },
+ {
+  "ticker": "MSFT",
+  "kind": "submissions",
+  "url": "https://data.sec.gov/submissions/CIK0000789019.json",
+  "observed_at": "2026-10-23T06:10:13Z",
+  "full_response_bytes": 185361,
+  "full_response_sha256": "a9a65d8640cde1fe6fd7cf0219d5b948f431bf4f8b7954de4386d62f7eaa2523",
+  "fixture": "MSFT/submissions.json.gz",
+  "fixture_sha256": "5152f26cb46ae2918ce8ee27219cc525bc39d14aa22dd46e2383673a1c8e4ecb"
+ },
+ {
+  "ticker": "NVDA",
+  "kind": "companyfacts",
+  "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json",
+  "observed_at": "2026-10-23T06:08:58Z",
+  "full_response_bytes": 4092966,
+  "full_response_sha256": "19ef503a5770f5660964b3c3aea6937579d9b359da344afe6a9adf59c63d26ff",
+  "fixture": "NVDA/companyfacts.json.gz",
+  "fixture_sha256": "79e6a15c87ab96bc91c529d45007ec40ffaa53299e206ee4ed0bdf9110ab7827"
+ },
+ {
+  "ticker": "NVDA",
+  "kind": "submissions",
+  "url": "https://data.sec.gov/submissions/CIK0001045810.json",
+  "observed_at": "2026-10-23T06:10:12Z",
+  "full_response_bytes": 159761,
+  "full_response_sha256": "682c49d59116ae49b317eb4adddf3ef9142dfd97f59c5d8e5a5acad7f9058ab4",
+  "fixture": "NVDA/submissions.json.gz",
+  "fixture_sha256": "c0da811acb471e2ebe0570bfcbdaeb5babcbdefd3b5c20884fb0d496735b24cd"
+ },
+ {
+  "ticker": "PLUG",
+  "kind": "companyfacts",
+  "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001093691.json",
+  "observed_at": "2026-10-23T06:09:03Z",
+  "full_response_bytes": 3207738,
+  "full_response_sha256": "693a4f1fb6d5474c0cef2ae383a813e4f7c21076e76c0ef2cd96c185c2696a0b",
+  "fixture": "PLUG/companyfacts.json.gz",
+  "fixture_sha256": "bdd367e7e25781820af49a68f549298a341c5fb3ac73bcc187ad627038d03d7f"
+ },
+ {
+  "ticker": "PLUG",
+  "kind": "submissions",
+  "url": "https://data.sec.gov/submissions/CIK0001093691.json",
+  "observed_at": "2026-10-23T06:10:15Z",
+  "full_response_bytes": 161245,
+  "full_response_sha256": "960f10e30fb7f998dd7a6d18d258e122eeb66fe6f85cd4d3f91a6baec473cd6e",
+  "fixture": "PLUG/submissions.json.gz",
+  "fixture_sha256": "e04da2598f570d09f884e92c3c486e10666bc94d3e16e6f561993a75a2268f93"
+ },
+ {
+  "ticker": "TXN",
+  "kind": "companyfacts",
+  "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000097476.json",
+  "observed_at": "2026-10-23T06:09:01Z",
+  "full_response_bytes": 3650054,
+  "full_response_sha256": "5ee95bf56949988a4beaf0598e3acb0a012867228760cd9462a1c9e72526446f",
+  "fixture": "TXN/companyfacts.json.gz",
+  "fixture_sha256": "e682cfba82f377514cde5f5bcaa655207c1d192ef8282b21aa8cbba8dfd69da6"
+ },
+ {
+  "ticker": "TXN",
+  "kind": "submissions",
+  "url": "https://data.sec.gov/submissions/CIK0000097476.json",
+  "observed_at": "2026-10-23T06:10:14Z",
+  "full_response_bytes": 158543,
+  "full_response_sha256": "acadcf7cf2dbd8f11963760dbc182b1cfd40c3fe0922ef952ff420d5a5358a28",
+  "fixture": "TXN/submissions.json.gz",
+  "fixture_sha256": "6326ced818e9d20cf561312017ede47b1f00d95392233289dead72185b131c6e"
+ }
+]

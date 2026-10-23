@@ -95,6 +95,23 @@ class WebTests(unittest.TestCase):
         self.assertIn("User research annotation", markdown.text)
         self.assertIn("Demand may be improving", markdown.text)
 
+    def test_unresolved_period_is_visible_and_the_analyst_records_it_through_the_form(self):
+        sec = self.company()
+        unstated = release().replace(b"Acme Announces Financial Results for Third Quarter Fiscal 2025", b"Acme financial results").replace(b"for the third quarter ended October 27, 2024", b"for the period")
+        uploaded = self.post(f"/company/{sec['id']}/upload", {"role": "current", "source_url": "https://example.com/r.htm", "published_at": PUB}, files={"document": ("r.htm", unstated, "text/html")})
+        self.assertIn("does not establish which quarter it reports", uploaded.text)
+        page = self.client.get(f"/company/{sec['id']}").text
+        self.assertIn("needs review", page)
+        self.assertIn('name="period"', page)
+        doc = self.service.store.documents(sec["id"])[0]
+        withheld = self.post(f"/company/{sec['id']}/notes", {"current_id": doc["id"], "mode": "observed", "as_of": NOW})
+        self.assertIn("reported period is unresolved", withheld.text)
+        recorded = self.post(f"/company/{sec['id']}/notes", {"current_id": doc["id"], "mode": "observed", "as_of": NOW, "period": "Q3 FY25", "reporting_currency": "usd"})
+        self.assertEqual(recorded.status_code, 200, recorded.text)
+        self.assertIn("chosen by the analyst", recorded.text)
+        latest = self.service.store.notes(sec["id"])[0]
+        self.assertEqual(self.service.store.note(latest["id"])["result"]["analyst_inputs"]["reporting_currency"]["currency"], "USD")
+
     def test_csrf_and_cross_origin_changes_are_refused(self):
         self.assertEqual(self.client.post("/watchlist", data={"ticker": "EVIL", "name": "Bad"}).status_code, 403)
         token = self.token()
