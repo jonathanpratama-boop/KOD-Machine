@@ -1,0 +1,143 @@
+{
+  "code": {
+    "commit": "7e1581cfdce6ce8429fead6c8a78ae926ded4313",
+    "dirty": false
+  },
+  "computed_at": "20261026T202813Z",
+  "markets": {
+    "AU": {
+      "P1_events_with_pool": 298,
+      "P2_events_with_pool": 553,
+      "P3_events_with_pool": 536,
+      "episodes": {
+        "FAST_DOWN": 276,
+        "FAST_UP": 354,
+        "SLOW_DOWN": 664,
+        "SLOW_UP": 629
+      },
+      "panel_manifest": "panel_intl_au-20261026T202615Z.json",
+      "panel_sha256": "5bb24c6ba60b4836b68e84f7404f199bbd343608798b0d1eb06432c46484aff4",
+      "tickers": 386
+    },
+    "DE": {
+      "P1_events_with_pool": 146,
+      "P2_events_with_pool": 448,
+      "P3_events_with_pool": 441,
+      "episodes": {
+        "FAST_DOWN": 150,
+        "FAST_UP": 187,
+        "SLOW_DOWN": 549,
+        "SLOW_UP": 509
+      },
+      "panel_manifest": "panel_intl_de-20261026T202527Z.json",
+      "panel_sha256": "708c1857b5ae6d041084ed85113ef73d839ca531b8df5c766fed86e646dc8190",
+      "tickers": 408
+    },
+    "FR": {
+      "P1_events_with_pool": 288,
+      "P2_events_with_pool": 453,
+      "P3_events_with_pool": 450,
+      "episodes": {
+        "FAST_DOWN": 256,
+        "FAST_UP": 330,
+        "SLOW_DOWN": 586,
+        "SLOW_UP": 491
+      },
+      "panel_manifest": "panel_intl_fr-20261026T202550Z.json",
+      "panel_sha256": "8bc4817ee0b39274c5c66ac36c266a8d9f392c4c3469b87e6adc1b772c35cad2",
+      "tickers": 424
+    },
+    "HK": {
+      "P1_events_with_pool": 143,
+      "P2_events_with_pool": 396,
+      "P3_events_with_pool": 397,
+      "episodes": {
+        "FAST_DOWN": 149,
+        "FAST_UP": 169,
+        "SLOW_DOWN": 458,
+        "SLOW_UP": 440
+      },
+      "panel_manifest": "panel_intl_hk-20261026T202658Z.json",
+      "panel_sha256": "121dc93ce39cb80d395c3108ff527ee8fe591b10966b2166311d4ad21b6bcf50",
+      "tickers": 240
+    },
+    "IT": {
+      "P1_events_with_pool": 43,
+      "P2_events_with_pool": 163,
+      "P3_events_with_pool": 164,
+      "episodes": {
+        "FAST_DOWN": 26,
+        "FAST_UP": 48,
+        "SLOW_DOWN": 141,
+        "SLOW_UP": 171
+      },
+      "panel_manifest": "panel_intl_it-20261026T202723Z.json",
+      "panel_sha256": "5f56ee1ae5f896266d0165ead8ed0e5fef4cf5ca5794a9f66f2b4d2587c3cbf4",
+      "tickers": 178
+    },
+    "JP": {
+      "P1_events_with_pool": 14,
+      "P2_events_with_pool": 116,
+      "P3_events_with_pool": 105,
+      "episodes": {
+        "FAST_DOWN": 9,
+        "FAST_UP": 14,
+        "SLOW_DOWN": 80,
+        "SLOW_UP": 120
+      },
+      "panel_manifest": "panel_intl_jp-20261026T202712Z.json",
+      "panel_sha256": "0be0905c816d4c6578f0bdc61449e3cf318417309918cdb93411a6a039e977cd",
+      "tickers": 227
+    },
+    "NO": {
+      "P1_events_with_pool": 166,
+      "P2_events_with_pool": 312,
+      "P3_events_with_pool": 318,
+      "episodes": {
+        "FAST_DOWN": 183,
+        "FAST_UP": 194,
+        "SLOW_DOWN": 382,
+        "SLOW_UP": 363
+      },
+      "panel_manifest": "panel_intl_no-20261026T202647Z.json",
+      "panel_sha256": "864ab5a980d088067573bdba6d6a9c7cef45966a0f9361c9de86f4d5ac9eb763",
+      "tickers": 235
+    },
+    "SE": {
+      "P1_events_with_pool": 128,
+      "P2_events_with_pool": 298,
+      "P3_events_with_pool": 291,
+      "episodes": {
+        "FAST_DOWN": 132,
+        "FAST_UP": 150,
+        "SLOW_DOWN": 424,
+        "SLOW_UP": 330
+      },
+      "panel_manifest": "panel_intl_se-20261026T202637Z.json",
+      "panel_sha256": "130a4faba082a714b78027f186b1013cc1eb16ebe85e58f7e525118719e7051b",
+      "tickers": 217
+    },
+    "UK": {
+      "P1_events_with_pool": 363,
+      "P2_events_with_pool": 607,
+      "P3_events_with_pool": 587,
+      "episodes": {
+        "FAST_DOWN": 305,
+        "FAST_UP": 403,
+        "SLOW_DOWN": 762,
+        "SLOW_UP": 667
+      },
+      "panel_manifest": "panel_intl_uk-20261026T202501Z.json",
+      "panel_sha256": "7e4e1287cd2bd967886a0f327366224bae8ad5e00af8f17955bccae179d11bbe",
+      "tickers": 536
+    }
+  },
+  "mode": "feasibility",
+  "pooled_primary_events_with_pool": {
+    "P1": 1589,
+    "P2": 3346,
+    "P3": 3289
+  },
+  "protocol_id": "LEAD_LADDER_INTL_v1",
+  "protocol_sha256": "c02802ab5a4ab05c16a59c1df9db63f443a16a116733d3c3c03d8607f9e64f8d"
+}
