@@ -1,0 +1,712 @@
+{
+  "code": {
+    "commit": "55b2bc883cb578d5916463f70452be00761cd09f",
+    "dirty": false
+  },
+  "computed_at": "20261026T172114Z",
+  "markets": {
+    "CRYPTO": {
+      "binary": [
+        "brk60",
+        "ign"
+      ],
+      "counts": [
+        {
+          "eligible_not_extended": 1830,
+          "episodes": 2049,
+          "kind": "FAST_UP",
+          "lead": 0,
+          "with_pool_ge_5": 1829
+        },
+        {
+          "eligible_not_extended": 1754,
+          "episodes": 2049,
+          "kind": "FAST_UP",
+          "lead": 1,
+          "with_pool_ge_5": 1749
+        },
+        {
+          "eligible_not_extended": 1741,
+          "episodes": 2049,
+          "kind": "FAST_UP",
+          "lead": 2,
+          "with_pool_ge_5": 1738
+        },
+        {
+          "eligible_not_extended": 1749,
+          "episodes": 2049,
+          "kind": "FAST_UP",
+          "lead": 3,
+          "with_pool_ge_5": 1747
+        },
+        {
+          "eligible_not_extended": 1776,
+          "episodes": 2049,
+          "kind": "FAST_UP",
+          "lead": 5,
+          "with_pool_ge_5": 1773
+        },
+        {
+          "eligible_not_extended": 1781,
+          "episodes": 2049,
+          "kind": "FAST_UP",
+          "lead": 10,
+          "with_pool_ge_5": 1778
+        },
+        {
+          "eligible_not_extended": 1528,
+          "episodes": 2049,
+          "kind": "FAST_UP",
+          "lead": 20,
+          "with_pool_ge_5": 1521
+        },
+        {
+          "eligible_not_extended": 1584,
+          "episodes": 2851,
+          "kind": "FAST_DOWN",
+          "lead": 0,
+          "with_pool_ge_5": 1583
+        },
+        {
+          "eligible_not_extended": 1907,
+          "episodes": 2851,
+          "kind": "FAST_DOWN",
+          "lead": 1,
+          "with_pool_ge_5": 1905
+        },
+        {
+          "eligible_not_extended": 2007,
+          "episodes": 2851,
+          "kind": "FAST_DOWN",
+          "lead": 2,
+          "with_pool_ge_5": 2003
+        },
+        {
+          "eligible_not_extended": 2008,
+          "episodes": 2851,
+          "kind": "FAST_DOWN",
+          "lead": 3,
+          "with_pool_ge_5": 2004
+        },
+        {
+          "eligible_not_extended": 1977,
+          "episodes": 2851,
+          "kind": "FAST_DOWN",
+          "lead": 5,
+          "with_pool_ge_5": 1972
+        },
+        {
+          "eligible_not_extended": 2041,
+          "episodes": 2851,
+          "kind": "FAST_DOWN",
+          "lead": 10,
+          "with_pool_ge_5": 2033
+        },
+        {
+          "eligible_not_extended": 2189,
+          "episodes": 2851,
+          "kind": "FAST_DOWN",
+          "lead": 20,
+          "with_pool_ge_5": 2187
+        },
+        {
+          "eligible_not_extended": 1418,
+          "episodes": 1589,
+          "kind": "SLOW_UP",
+          "lead": 0,
+          "with_pool_ge_5": 1418
+        },
+        {
+          "eligible_not_extended": 1389,
+          "episodes": 1589,
+          "kind": "SLOW_UP",
+          "lead": 1,
+          "with_pool_ge_5": 1389
+        },
+        {
+          "eligible_not_extended": 1370,
+          "episodes": 1589,
+          "kind": "SLOW_UP",
+          "lead": 2,
+          "with_pool_ge_5": 1370
+        },
+        {
+          "eligible_not_extended": 1366,
+          "episodes": 1589,
+          "kind": "SLOW_UP",
+          "lead": 3,
+          "with_pool_ge_5": 1366
+        },
+        {
+          "eligible_not_extended": 1354,
+          "episodes": 1589,
+          "kind": "SLOW_UP",
+          "lead": 5,
+          "with_pool_ge_5": 1354
+        },
+        {
+          "eligible_not_extended": 1335,
+          "episodes": 1589,
+          "kind": "SLOW_UP",
+          "lead": 10,
+          "with_pool_ge_5": 1335
+        },
+        {
+          "eligible_not_extended": 1256,
+          "episodes": 1589,
+          "kind": "SLOW_UP",
+          "lead": 20,
+          "with_pool_ge_5": 1256
+        },
+        {
+          "eligible_not_extended": 1278,
+          "episodes": 2416,
+          "kind": "SLOW_DOWN",
+          "lead": 0,
+          "with_pool_ge_5": 1278
+        },
+        {
+          "eligible_not_extended": 1576,
+          "episodes": 2416,
+          "kind": "SLOW_DOWN",
+          "lead": 1,
+          "with_pool_ge_5": 1576
+        },
+        {
+          "eligible_not_extended": 1696,
+          "episodes": 2416,
+          "kind": "SLOW_DOWN",
+          "lead": 2,
+          "with_pool_ge_5": 1696
+        },
+        {
+          "eligible_not_extended": 1750,
+          "episodes": 2416,
+          "kind": "SLOW_DOWN",
+          "lead": 3,
+          "with_pool_ge_5": 1750
+        },
+        {
+          "eligible_not_extended": 1777,
+          "episodes": 2416,
+          "kind": "SLOW_DOWN",
+          "lead": 5,
+          "with_pool_ge_5": 1777
+        },
+        {
+          "eligible_not_extended": 1868,
+          "episodes": 2416,
+          "kind": "SLOW_DOWN",
+          "lead": 10,
+          "with_pool_ge_5": 1868
+        },
+        {
+          "eligible_not_extended": 1869,
+          "episodes": 2416,
+          "kind": "SLOW_DOWN",
+          "lead": 20,
+          "with_pool_ge_5": 1869
+        }
+      ],
+      "features": [
+        "ret1",
+        "rel1",
+        "ret5",
+        "ret20",
+        "volr",
+        "valr",
+        "rngr",
+        "cpos",
+        "vol20",
+        "dd60",
+        "up5",
+        "zero20",
+        "age",
+        "logval20",
+        "gap",
+        "brk60",
+        "ign"
+      ],
+      "panel_sha256": "3dc12749c7cce635a68ef4f152ec21c3b3d24eb6b02665c799aa24e513963d7d",
+      "window": [
+        "2020-07-01",
+        "2022-12-31"
+      ],
+      "window_sessions": [
+        "2020-07-01",
+        "2022-12-31"
+      ]
+    },
+    "IDX": {
+      "binary": [
+        "ara",
+        "brk60",
+        "ign"
+      ],
+      "counts": [
+        {
+          "eligible_not_extended": 1017,
+          "episodes": 1113,
+          "kind": "FAST_UP",
+          "lead": 0,
+          "with_pool_ge_5": 1017
+        },
+        {
+          "eligible_not_extended": 988,
+          "episodes": 1113,
+          "kind": "FAST_UP",
+          "lead": 1,
+          "with_pool_ge_5": 988
+        },
+        {
+          "eligible_not_extended": 992,
+          "episodes": 1113,
+          "kind": "FAST_UP",
+          "lead": 2,
+          "with_pool_ge_5": 992
+        },
+        {
+          "eligible_not_extended": 986,
+          "episodes": 1113,
+          "kind": "FAST_UP",
+          "lead": 3,
+          "with_pool_ge_5": 986
+        },
+        {
+          "eligible_not_extended": 998,
+          "episodes": 1113,
+          "kind": "FAST_UP",
+          "lead": 5,
+          "with_pool_ge_5": 998
+        },
+        {
+          "eligible_not_extended": 986,
+          "episodes": 1113,
+          "kind": "FAST_UP",
+          "lead": 10,
+          "with_pool_ge_5": 986
+        },
+        {
+          "eligible_not_extended": 924,
+          "episodes": 1113,
+          "kind": "FAST_UP",
+          "lead": 20,
+          "with_pool_ge_5": 924
+        },
+        {
+          "eligible_not_extended": 201,
+          "episodes": 536,
+          "kind": "FAST_DOWN",
+          "lead": 0,
+          "with_pool_ge_5": 201
+        },
+        {
+          "eligible_not_extended": 262,
+          "episodes": 536,
+          "kind": "FAST_DOWN",
+          "lead": 1,
+          "with_pool_ge_5": 262
+        },
+        {
+          "eligible_not_extended": 308,
+          "episodes": 536,
+          "kind": "FAST_DOWN",
+          "lead": 2,
+          "with_pool_ge_5": 308
+        },
+        {
+          "eligible_not_extended": 338,
+          "episodes": 536,
+          "kind": "FAST_DOWN",
+          "lead": 3,
+          "with_pool_ge_5": 338
+        },
+        {
+          "eligible_not_extended": 357,
+          "episodes": 536,
+          "kind": "FAST_DOWN",
+          "lead": 5,
+          "with_pool_ge_5": 357
+        },
+        {
+          "eligible_not_extended": 414,
+          "episodes": 536,
+          "kind": "FAST_DOWN",
+          "lead": 10,
+          "with_pool_ge_5": 414
+        },
+        {
+          "eligible_not_extended": 419,
+          "episodes": 536,
+          "kind": "FAST_DOWN",
+          "lead": 20,
+          "with_pool_ge_5": 419
+        },
+        {
+          "eligible_not_extended": 581,
+          "episodes": 674,
+          "kind": "SLOW_UP",
+          "lead": 0,
+          "with_pool_ge_5": 581
+        },
+        {
+          "eligible_not_extended": 583,
+          "episodes": 674,
+          "kind": "SLOW_UP",
+          "lead": 1,
+          "with_pool_ge_5": 583
+        },
+        {
+          "eligible_not_extended": 579,
+          "episodes": 674,
+          "kind": "SLOW_UP",
+          "lead": 2,
+          "with_pool_ge_5": 579
+        },
+        {
+          "eligible_not_extended": 575,
+          "episodes": 674,
+          "kind": "SLOW_UP",
+          "lead": 3,
+          "with_pool_ge_5": 575
+        },
+        {
+          "eligible_not_extended": 576,
+          "episodes": 674,
+          "kind": "SLOW_UP",
+          "lead": 5,
+          "with_pool_ge_5": 576
+        },
+        {
+          "eligible_not_extended": 559,
+          "episodes": 674,
+          "kind": "SLOW_UP",
+          "lead": 10,
+          "with_pool_ge_5": 559
+        },
+        {
+          "eligible_not_extended": 524,
+          "episodes": 674,
+          "kind": "SLOW_UP",
+          "lead": 20,
+          "with_pool_ge_5": 524
+        },
+        {
+          "eligible_not_extended": 508,
+          "episodes": 1405,
+          "kind": "SLOW_DOWN",
+          "lead": 0,
+          "with_pool_ge_5": 508
+        },
+        {
+          "eligible_not_extended": 769,
+          "episodes": 1405,
+          "kind": "SLOW_DOWN",
+          "lead": 1,
+          "with_pool_ge_5": 769
+        },
+        {
+          "eligible_not_extended": 885,
+          "episodes": 1405,
+          "kind": "SLOW_DOWN",
+          "lead": 2,
+          "with_pool_ge_5": 885
+        },
+        {
+          "eligible_not_extended": 956,
+          "episodes": 1405,
+          "kind": "SLOW_DOWN",
+          "lead": 3,
+          "with_pool_ge_5": 956
+        },
+        {
+          "eligible_not_extended": 1007,
+          "episodes": 1405,
+          "kind": "SLOW_DOWN",
+          "lead": 5,
+          "with_pool_ge_5": 1007
+        },
+        {
+          "eligible_not_extended": 1102,
+          "episodes": 1405,
+          "kind": "SLOW_DOWN",
+          "lead": 10,
+          "with_pool_ge_5": 1102
+        },
+        {
+          "eligible_not_extended": 1162,
+          "episodes": 1405,
+          "kind": "SLOW_DOWN",
+          "lead": 20,
+          "with_pool_ge_5": 1162
+        }
+      ],
+      "features": [
+        "ret1",
+        "rel1",
+        "ret5",
+        "ret20",
+        "volr",
+        "valr",
+        "freqr",
+        "rngr",
+        "cpos",
+        "vol20",
+        "dd60",
+        "turn",
+        "up5",
+        "zero20",
+        "age",
+        "logval20",
+        "logmcap",
+        "ara",
+        "brk60",
+        "ign"
+      ],
+      "panel_sha256": "9d3a0718c95f9e885c4f8310cf68bf5e75021c366c454f73389d7fae75c02877",
+      "window": [
+        "2021-01-22",
+        "2022-12-30"
+      ],
+      "window_sessions": [
+        "2021-01-22",
+        "2022-12-30"
+      ]
+    },
+    "US": {
+      "binary": [
+        "brk60",
+        "ign"
+      ],
+      "counts": [
+        {
+          "eligible_not_extended": 6135,
+          "episodes": 6675,
+          "kind": "FAST_UP",
+          "lead": 0,
+          "with_pool_ge_5": 6135
+        },
+        {
+          "eligible_not_extended": 5825,
+          "episodes": 6675,
+          "kind": "FAST_UP",
+          "lead": 1,
+          "with_pool_ge_5": 5825
+        },
+        {
+          "eligible_not_extended": 5770,
+          "episodes": 6675,
+          "kind": "FAST_UP",
+          "lead": 2,
+          "with_pool_ge_5": 5770
+        },
+        {
+          "eligible_not_extended": 5831,
+          "episodes": 6675,
+          "kind": "FAST_UP",
+          "lead": 3,
+          "with_pool_ge_5": 5831
+        },
+        {
+          "eligible_not_extended": 5831,
+          "episodes": 6675,
+          "kind": "FAST_UP",
+          "lead": 5,
+          "with_pool_ge_5": 5831
+        },
+        {
+          "eligible_not_extended": 5797,
+          "episodes": 6675,
+          "kind": "FAST_UP",
+          "lead": 10,
+          "with_pool_ge_5": 5797
+        },
+        {
+          "eligible_not_extended": 5371,
+          "episodes": 6675,
+          "kind": "FAST_UP",
+          "lead": 20,
+          "with_pool_ge_5": 5371
+        },
+        {
+          "eligible_not_extended": 4351,
+          "episodes": 7188,
+          "kind": "FAST_DOWN",
+          "lead": 0,
+          "with_pool_ge_5": 4351
+        },
+        {
+          "eligible_not_extended": 5005,
+          "episodes": 7188,
+          "kind": "FAST_DOWN",
+          "lead": 1,
+          "with_pool_ge_5": 5005
+        },
+        {
+          "eligible_not_extended": 5215,
+          "episodes": 7188,
+          "kind": "FAST_DOWN",
+          "lead": 2,
+          "with_pool_ge_5": 5215
+        },
+        {
+          "eligible_not_extended": 5332,
+          "episodes": 7188,
+          "kind": "FAST_DOWN",
+          "lead": 3,
+          "with_pool_ge_5": 5332
+        },
+        {
+          "eligible_not_extended": 5435,
+          "episodes": 7188,
+          "kind": "FAST_DOWN",
+          "lead": 5,
+          "with_pool_ge_5": 5435
+        },
+        {
+          "eligible_not_extended": 5624,
+          "episodes": 7188,
+          "kind": "FAST_DOWN",
+          "lead": 10,
+          "with_pool_ge_5": 5624
+        },
+        {
+          "eligible_not_extended": 5756,
+          "episodes": 7188,
+          "kind": "FAST_DOWN",
+          "lead": 20,
+          "with_pool_ge_5": 5756
+        },
+        {
+          "eligible_not_extended": 8163,
+          "episodes": 8936,
+          "kind": "SLOW_UP",
+          "lead": 0,
+          "with_pool_ge_5": 8163
+        },
+        {
+          "eligible_not_extended": 8118,
+          "episodes": 8936,
+          "kind": "SLOW_UP",
+          "lead": 1,
+          "with_pool_ge_5": 8118
+        },
+        {
+          "eligible_not_extended": 8054,
+          "episodes": 8936,
+          "kind": "SLOW_UP",
+          "lead": 2,
+          "with_pool_ge_5": 8054
+        },
+        {
+          "eligible_not_extended": 7989,
+          "episodes": 8936,
+          "kind": "SLOW_UP",
+          "lead": 3,
+          "with_pool_ge_5": 7989
+        },
+        {
+          "eligible_not_extended": 7966,
+          "episodes": 8936,
+          "kind": "SLOW_UP",
+          "lead": 5,
+          "with_pool_ge_5": 7966
+        },
+        {
+          "eligible_not_extended": 7743,
+          "episodes": 8936,
+          "kind": "SLOW_UP",
+          "lead": 10,
+          "with_pool_ge_5": 7743
+        },
+        {
+          "eligible_not_extended": 7492,
+          "episodes": 8936,
+          "kind": "SLOW_UP",
+          "lead": 20,
+          "with_pool_ge_5": 7492
+        },
+        {
+          "eligible_not_extended": 7421,
+          "episodes": 12070,
+          "kind": "SLOW_DOWN",
+          "lead": 0,
+          "with_pool_ge_5": 7421
+        },
+        {
+          "eligible_not_extended": 8754,
+          "episodes": 12070,
+          "kind": "SLOW_DOWN",
+          "lead": 1,
+          "with_pool_ge_5": 8754
+        },
+        {
+          "eligible_not_extended": 9128,
+          "episodes": 12070,
+          "kind": "SLOW_DOWN",
+          "lead": 2,
+          "with_pool_ge_5": 9128
+        },
+        {
+          "eligible_not_extended": 9354,
+          "episodes": 12070,
+          "kind": "SLOW_DOWN",
+          "lead": 3,
+          "with_pool_ge_5": 9354
+        },
+        {
+          "eligible_not_extended": 9561,
+          "episodes": 12070,
+          "kind": "SLOW_DOWN",
+          "lead": 5,
+          "with_pool_ge_5": 9561
+        },
+        {
+          "eligible_not_extended": 9682,
+          "episodes": 12070,
+          "kind": "SLOW_DOWN",
+          "lead": 10,
+          "with_pool_ge_5": 9682
+        },
+        {
+          "eligible_not_extended": 9940,
+          "episodes": 12070,
+          "kind": "SLOW_DOWN",
+          "lead": 20,
+          "with_pool_ge_5": 9940
+        }
+      ],
+      "features": [
+        "ret1",
+        "rel1",
+        "ret5",
+        "ret20",
+        "volr",
+        "valr",
+        "rngr",
+        "cpos",
+        "vol20",
+        "dd60",
+        "up5",
+        "zero20",
+        "age",
+        "logval20",
+        "gap",
+        "brk60",
+        "ign"
+      ],
+      "panel_sha256": "e5b5267438667a136f4a4cb42c52d6bc98bc80cde6a88c02a27751a4902c9b92",
+      "window": [
+        "2020-07-01",
+        "2022-12-31"
+      ],
+      "window_sessions": [
+        "2020-07-01",
+        "2022-12-30"
+      ]
+    }
+  },
+  "mode": "feasibility",
+  "protocol_id": "LEAD_LADDER_v1",
+  "protocol_sha256": "ab68100daa3d2e0798ac413e55a8af8d234fb02a8d7b5be7d2a42af599e96b64"
+}

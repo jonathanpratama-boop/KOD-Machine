@@ -1,0 +1,167 @@
+{
+  "code": {
+    "commit": "55b2bc883cb578d5916463f70452be00761cd09f",
+    "dirty": false
+  },
+  "computed_at": "20261026T172321Z",
+  "markets": {
+    "CRYPTO": {
+      "binary": [
+        "brk60",
+        "ign"
+      ],
+      "episodes": {
+        "FAST_DOWN": 2851,
+        "FAST_UP": 2049,
+        "SLOW_DOWN": 2416,
+        "SLOW_UP": 1589
+      },
+      "features": [
+        "ret1",
+        "rel1",
+        "ret5",
+        "ret20",
+        "volr",
+        "valr",
+        "rngr",
+        "cpos",
+        "vol20",
+        "dd60",
+        "up5",
+        "zero20",
+        "age",
+        "logval20",
+        "gap",
+        "brk60",
+        "ign"
+      ],
+      "panel_sha256": "3dc12749c7cce635a68ef4f152ec21c3b3d24eb6b02665c799aa24e513963d7d",
+      "rows": 107855,
+      "window": [
+        "2020-07-01",
+        "2022-12-31"
+      ],
+      "window_sessions": [
+        "2020-07-01",
+        "2022-12-31"
+      ]
+    },
+    "IDX": {
+      "binary": [
+        "ara",
+        "brk60",
+        "ign"
+      ],
+      "episodes": {
+        "FAST_DOWN": 536,
+        "FAST_UP": 1113,
+        "SLOW_DOWN": 1405,
+        "SLOW_UP": 674
+      },
+      "features": [
+        "ret1",
+        "rel1",
+        "ret5",
+        "ret20",
+        "volr",
+        "valr",
+        "freqr",
+        "rngr",
+        "cpos",
+        "vol20",
+        "dd60",
+        "turn",
+        "up5",
+        "zero20",
+        "age",
+        "logval20",
+        "logmcap",
+        "ara",
+        "brk60",
+        "ign"
+      ],
+      "panel_sha256": "9d3a0718c95f9e885c4f8310cf68bf5e75021c366c454f73389d7fae75c02877",
+      "rows": 45490,
+      "window": [
+        "2021-01-22",
+        "2022-12-30"
+      ],
+      "window_sessions": [
+        "2021-01-22",
+        "2022-12-30"
+      ]
+    },
+    "US": {
+      "binary": [
+        "brk60",
+        "ign"
+      ],
+      "episodes": {
+        "FAST_DOWN": 7188,
+        "FAST_UP": 6675,
+        "SLOW_DOWN": 12070,
+        "SLOW_UP": 8936
+      },
+      "features": [
+        "ret1",
+        "rel1",
+        "ret5",
+        "ret20",
+        "volr",
+        "valr",
+        "rngr",
+        "cpos",
+        "vol20",
+        "dd60",
+        "up5",
+        "zero20",
+        "age",
+        "logval20",
+        "gap",
+        "brk60",
+        "ign"
+      ],
+      "panel_sha256": "e5b5267438667a136f4a4cb42c52d6bc98bc80cde6a88c02a27751a4902c9b92",
+      "rows": 440176,
+      "window": [
+        "2020-07-01",
+        "2022-12-31"
+      ],
+      "window_sessions": [
+        "2020-07-01",
+        "2022-12-30"
+      ]
+    }
+  },
+  "mode": "placebo",
+  "protocol_id": "LEAD_LADDER_v1",
+  "protocol_sha256": "ab68100daa3d2e0798ac413e55a8af8d234fb02a8d7b5be7d2a42af599e96b64",
+  "result": {
+    "best_cell": null,
+    "cells_gated": 808,
+    "cells_passing": 0,
+    "horizons": {},
+    "movement_only": [
+      {
+        "down_lift": 1.9346039484817021,
+        "feature": "age",
+        "kind": "SLOW_UP",
+        "lead": 3,
+        "lift": 2.198132558942171,
+        "market": "CRYPTO",
+        "tail": "top"
+      },
+      {
+        "down_lift": 2.138254043352608,
+        "feature": "age",
+        "kind": "SLOW_UP",
+        "lead": 20,
+        "lift": 2.1815894152533635,
+        "market": "CRYPTO",
+        "tail": "top"
+      }
+    ],
+    "movement_only_cells": 2,
+    "verdict": "NO_DAYS_AHEAD_LEAD"
+  }
+}
