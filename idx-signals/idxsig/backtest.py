@@ -73,6 +73,9 @@ class RunConfig:
     entry_window: int | None = None
     exit_rule: str | None = None
     holdout_final: bool = False  # the one pre-registered holdout evaluation (see HOLDOUT)
+    # Void rule (idxsig.void): None = off. 0.10 = a session whose level is more than 10% above its prior
+    # 20-session median is not evaluable: no flag there, and the name is not drawn as a control.
+    void_extended: float | None = None
 
 
 # The IDX holdout sealed by research/E1/protocol.json. A DETECTOR run whose window touches it is
@@ -295,6 +298,19 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
         sig[np.isin(m.tickers, quarantined), :] = np.nan  # no signals, not a control: both sides alike
     elif cfg.quarantine != "none":
         raise ValueError(f"unknown quarantine {cfg.quarantine!r}")
+    void_info = None
+    if cfg.void_extended is not None:
+        from . import void
+
+        if not cfg.void_extended > 0:
+            raise ValueError("void_extended must be a positive fraction, for example 0.10")
+        ext = void.extended_market(full_market, threshold=1.0 + cfg.void_extended)[:, lo:hi]
+        void_info = {"threshold": 1.0 + cfg.void_extended, "window": void.DEFAULT_WINDOW,
+                     "min_periods": void.DEFAULT_MIN_PERIODS,
+                     "flags_voided": int((ext & (sig == 1)).sum()),
+                     "rule": "a session whose reference-chain level exceeds the threshold x its median over the "
+                             "20 prior sessions is not evaluable: no flag, and not drawn as a control"}
+        sig[ext] = np.nan
     evaluable = np.isfinite(sig)
     tick_idx, sig_idx = np.nonzero(sig == 1)  # row-major: by ticker, then session
 
@@ -461,6 +477,7 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
         "rule": {"rule_id": rule.rule_id, "version": rule.version, "kind": rule.kind, "text": rule.text,
                  "sha256": rule.sha256, "holding_days": holding},
         "config": {**asdict(cfg), "start": start, "end": end, "holding_days": holding, **plan},
+        **({"void": void_info} if void_info is not None else {}),
         "execution": {
             "price": ("official close; signal at close of s, entry at close of s + entry_lag" if profile.entry == "close"
                       else "signal at close of s, entry at the open of s + entry_lag, exit at a close"),

@@ -108,6 +108,8 @@ def main(argv=None) -> int:
                        help="execution plan exit (default: the rule's frozen plan, else fixed)")
     p_run.add_argument("--holdout-final", action="store_true",
                        help="the one pre-registered IDX holdout evaluation (otherwise the holdout is refused)")
+    p_run.add_argument("--void-extended", type=float, default=None,
+                       help="void rule: drop flags (and controls) on sessions more than this fraction above the prior 20-session median level, e.g. 0.10")
     p_run.add_argument("--quarantine", choices=("none", "unit_schedule"), default="none",
                        help="unit_schedule: leave out names whose split records SEC does not corroborate")
     sub.add_parser("verify-runs", help="check that no past run was edited or removed")
@@ -303,7 +305,7 @@ def main(argv=None) -> int:
             lookahead_cuts=args.lookahead_cuts, controls_version=args.controls_version,
             units=args.units, fill_model=args.fill_model, quarantine=args.quarantine,
             entry_rule=args.entry_rule, entry_window=args.entry_window, exit_rule=args.exit_rule,
-            holdout_final=args.holdout_final,
+            holdout_final=args.holdout_final, void_extended=args.void_extended,
         )
         registry = None
         if args.ca_mode == "registry" and args.market == "IDX":
