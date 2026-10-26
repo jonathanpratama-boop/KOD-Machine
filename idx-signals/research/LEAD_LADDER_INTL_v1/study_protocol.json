@@ -1,0 +1,9 @@
+{
+  "protocol_id": "LEAD_LADDER_INTL_v1-study",
+  "note": "the study market definition idxsig.e1.Study reads for the nine INTL markets: E2's periods and weak-signal list, unchanged",
+  "periods": {"discovery": ["2020-07-01", "2022-12-31"], "validation": ["2023-01-01", "2023-12-31"],
+              "holdout": ["2024-01-01", "2026-12-31"]},
+  "weak_signals": {"id": "E2-SIGNALS-v1",
+                   "continuous": ["ret1", "rel1", "ret5", "ret20", "volr", "valr", "rngr", "cpos", "vol20", "dd60", "up5", "zero20", "age", "logval20", "gap"],
+                   "binary": ["brk60", "ign"]}
+}
