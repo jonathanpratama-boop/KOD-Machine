@@ -1,0 +1,62 @@
+{
+  "code": {
+    "commit": "428d5e82dbb97b2e179354573687973d506b0eac",
+    "dirty": false
+  },
+  "computed_at": "20261026T210038Z",
+  "discovery": {
+    "IDX_HOT_events": {
+      "FAST_DOWN": 536,
+      "FAST_UP": 1113,
+      "SLOW_DOWN": 1405,
+      "SLOW_UP": 674
+    },
+    "IDX_events": {
+      "FAST_DOWN": 536,
+      "FAST_UP": 1113,
+      "SLOW_DOWN": 1405,
+      "SLOW_UP": 674
+    },
+    "eligible_not_extended_name_days": 295988,
+    "feature_coverage": {
+      "bidq1": 1.0,
+      "bidq5": 0.9927,
+      "bidx1": 0.9923,
+      "blk20": 0.9758,
+      "blk5": 0.9808,
+      "fnet20": 0.9758,
+      "fnet5": 0.9808,
+      "fpart20": 0.9758
+    },
+    "hot_name_days": 59387
+  },
+  "mode": "feasibility",
+  "protocol_id": "FLOW_IDX_v1",
+  "protocol_sha256": "ad133adbead7ec1b99e4e874f71eda49c3321062130d7b1a5e0f9791890ad0fe",
+  "validation": {
+    "IDX_HOT_events": {
+      "FAST_DOWN": 312,
+      "FAST_UP": 425,
+      "SLOW_DOWN": 498,
+      "SLOW_UP": 303
+    },
+    "IDX_events": {
+      "FAST_DOWN": 312,
+      "FAST_UP": 425,
+      "SLOW_DOWN": 498,
+      "SLOW_UP": 303
+    },
+    "eligible_not_extended_name_days": 170826,
+    "feature_coverage": {
+      "bidq1": 0.9999,
+      "bidq5": 0.9904,
+      "bidx1": 0.9882,
+      "blk20": 0.97,
+      "blk5": 0.9787,
+      "fnet20": 0.97,
+      "fnet5": 0.9787,
+      "fpart20": 0.97
+    },
+    "hot_name_days": 34258
+  }
+}
