@@ -1,0 +1,18 @@
+{
+  "code": {
+    "commit": "abbec93880278e5f29a78ed4ff62817b1de5cb5e",
+    "dirty": false
+  },
+  "computed_at": "20261026T210447Z",
+  "mode": "stage1",
+  "protocol_id": "FLOW_IDX_v1",
+  "protocol_sha256": "ad133adbead7ec1b99e4e874f71eda49c3321062130d7b1a5e0f9791890ad0fe",
+  "result": {
+    "cells_gated": 256,
+    "frozen": 0,
+    "frozen_cells": [],
+    "movement_only": 4,
+    "passing_G1_G5": 0,
+    "verdict": "NO_FLOW_LEAD"
+  }
+}

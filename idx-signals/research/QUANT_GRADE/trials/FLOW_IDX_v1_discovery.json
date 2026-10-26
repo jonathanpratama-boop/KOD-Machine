@@ -1,0 +1,13 @@
+{
+ "id": "FLOW_IDX_v1_discovery",
+ "experiment": "FLOW_IDX_v1",
+ "date": "2026-10-26",
+ "hypothesis": "foreign net buying, a heavy closing bid queue or block trading in an IDX name leads a +30% fast or slow rise by 3 to 20 sessions (alone or in names that are already volatile), more than it leads falls, in both discovery years",
+ "one_sided_p": null,
+ "p_source": "research/FLOW_IDX_v1/stage1/gates.csv: no cell passes all of G1-G6 (256 cells, z 3.55)",
+ "variants_searched": 256,
+ "outcome": "FAIL (NO_FLOW_LEAD)",
+ "note": "Stage 2 (2023) not run: no frozen cell. Only lifts above 2 are low block share before fast moves, which also precede falls (movement). Closest directional hint: hot names, high foreign participation, slow rises, lift 1.87 vs 1.02 for falls, below the size bar; post hoc, not a result.",
+ "counted": true,
+ "registered": "2026-10-26"
+}
