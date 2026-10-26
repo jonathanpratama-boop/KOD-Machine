@@ -1,0 +1,44 @@
+{
+  "built_at": "2026-10-26T20:26:35Z",
+  "default_start": "2019-05-02",
+  "first_session": "2019-01-02",
+  "format": "panel-global-v2",
+  "inputs": {
+    "yahoo_intl_au-20261026T201837Z.jsonl": {
+      "path": "data/manifests/yahoo_intl_au-20261026T201837Z.jsonl",
+      "sha256": "fd2c01bf14b3c44519869f6dadbc50b76c98344f759eaee8ac57a50a19913c46"
+    }
+  },
+  "known_limitations": [
+    "survivor-only and eToro-selected: the stocks eToro listed on 2026-10-16, with Yahoo history; names delisted earlier are absent",
+    "prices are split-adjusted by the source, not dividend-adjusted",
+    "daily bars only",
+    "no cost model in this panel's profile"
+  ],
+  "last_session": "2026-10-26",
+  "market": "INTL_AU",
+  "panel": "data/panel/panel_intl_au-20261026T202615Z.csv.gz",
+  "qa": {
+    "large_move_policy": "preserve; reversion is not proof of a bad print",
+    "non_session_dates_count": 0,
+    "non_session_dates_dropped": [],
+    "preprocessing_version": "causal-close-v2",
+    "spike_rows_dropped": 0
+  },
+  "quality_tiers": [
+    {
+      "corporate_actions": "split-adjusted by the source",
+      "from": "2019-01-02",
+      "source": "yahoo",
+      "survivorship": "survivor-only and eToro-selected: the stocks eToro listed on 2026-10-16, with Yahoo history; names delisted earlier are absent",
+      "tier": "INTL_AU_SURVIVOR",
+      "to": "2026-10-26"
+    }
+  ],
+  "rows": 721723,
+  "sessions": 1980,
+  "sha256": "5bb24c6ba60b4836b68e84f7404f199bbd343608798b0d1eb06432c46484aff4",
+  "source_boundary": "2026-10-26",
+  "survivorship": "survivor-only and eToro-selected: the stocks eToro listed on 2026-10-16, with Yahoo history; names delisted earlier are absent",
+  "tickers": 386
+}
