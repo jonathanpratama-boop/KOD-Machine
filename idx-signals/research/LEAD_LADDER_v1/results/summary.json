@@ -1,0 +1,738 @@
+{
+  "code": {
+    "commit": "63eeb95b1acab82fc2ea57a950782baad552bcf5",
+    "dirty": false
+  },
+  "computed_at": "20261026T174353Z",
+  "markets": {
+    "CRYPTO": {
+      "binary": [
+        "brk60",
+        "ign"
+      ],
+      "episodes": {
+        "FAST_DOWN": 2851,
+        "FAST_UP": 2049,
+        "SLOW_DOWN": 2416,
+        "SLOW_UP": 1589
+      },
+      "features": [
+        "ret1",
+        "rel1",
+        "ret5",
+        "ret20",
+        "volr",
+        "valr",
+        "rngr",
+        "cpos",
+        "vol20",
+        "dd60",
+        "up5",
+        "zero20",
+        "age",
+        "logval20",
+        "gap",
+        "brk60",
+        "ign"
+      ],
+      "panel_sha256": "3dc12749c7cce635a68ef4f152ec21c3b3d24eb6b02665c799aa24e513963d7d",
+      "rows": 109038,
+      "window": [
+        "2020-07-01",
+        "2022-12-31"
+      ],
+      "window_sessions": [
+        "2020-07-01",
+        "2022-12-31"
+      ]
+    },
+    "IDX": {
+      "binary": [
+        "ara",
+        "brk60",
+        "ign"
+      ],
+      "episodes": {
+        "FAST_DOWN": 536,
+        "FAST_UP": 1113,
+        "SLOW_DOWN": 1405,
+        "SLOW_UP": 674
+      },
+      "features": [
+        "ret1",
+        "rel1",
+        "ret5",
+        "ret20",
+        "volr",
+        "valr",
+        "freqr",
+        "rngr",
+        "cpos",
+        "vol20",
+        "dd60",
+        "turn",
+        "up5",
+        "zero20",
+        "age",
+        "logval20",
+        "logmcap",
+        "ara",
+        "brk60",
+        "ign"
+      ],
+      "panel_sha256": "9d3a0718c95f9e885c4f8310cf68bf5e75021c366c454f73389d7fae75c02877",
+      "rows": 45173,
+      "window": [
+        "2021-01-22",
+        "2022-12-30"
+      ],
+      "window_sessions": [
+        "2021-01-22",
+        "2022-12-30"
+      ]
+    },
+    "US": {
+      "binary": [
+        "brk60",
+        "ign"
+      ],
+      "episodes": {
+        "FAST_DOWN": 7188,
+        "FAST_UP": 6675,
+        "SLOW_DOWN": 12070,
+        "SLOW_UP": 8936
+      },
+      "features": [
+        "ret1",
+        "rel1",
+        "ret5",
+        "ret20",
+        "volr",
+        "valr",
+        "rngr",
+        "cpos",
+        "vol20",
+        "dd60",
+        "up5",
+        "zero20",
+        "age",
+        "logval20",
+        "gap",
+        "brk60",
+        "ign"
+      ],
+      "panel_sha256": "e5b5267438667a136f4a4cb42c52d6bc98bc80cde6a88c02a27751a4902c9b92",
+      "rows": 437834,
+      "window": [
+        "2020-07-01",
+        "2022-12-31"
+      ],
+      "window_sessions": [
+        "2020-07-01",
+        "2022-12-30"
+      ]
+    }
+  },
+  "mode": "run",
+  "protocol_id": "LEAD_LADDER_v1",
+  "protocol_sha256": "ab68100daa3d2e0798ac413e55a8af8d234fb02a8d7b5be7d2a42af599e96b64",
+  "result": {
+    "best_cell": {
+      "feature": "age",
+      "kind": "SLOW_UP",
+      "lead": 10,
+      "lift": 2.0982785402490167,
+      "lower_bound": 1.4484455432318353,
+      "market": "IDX",
+      "tail": "bottom"
+    },
+    "cells_gated": 808,
+    "cells_passing": 6,
+    "horizons": {
+      "CRYPTO|FAST_UP|ret20|bottom": 3,
+      "IDX|SLOW_UP|age|bottom": 10,
+      "IDX|SLOW_UP|up5|bottom": 5,
+      "US|FAST_UP|ret20|bottom": 3
+    },
+    "movement_only": [
+      {
+        "down_lift": 1.6782147824887603,
+        "feature": "ret1",
+        "kind": "FAST_UP",
+        "lead": 3,
+        "lift": 2.0009442901740666,
+        "market": "IDX",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 1.6782147824887603,
+        "feature": "rel1",
+        "kind": "FAST_UP",
+        "lead": 3,
+        "lift": 2.0009442901740666,
+        "market": "IDX",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.446956790267635,
+        "feature": "ret20",
+        "kind": "FAST_UP",
+        "lead": 3,
+        "lift": 2.0576247849919143,
+        "market": "IDX",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.329676090986844,
+        "feature": "cpos",
+        "kind": "FAST_UP",
+        "lead": 3,
+        "lift": 2.7773452459892014,
+        "market": "IDX",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.702260007984336,
+        "feature": "dd60",
+        "kind": "FAST_UP",
+        "lead": 3,
+        "lift": 2.366001275534191,
+        "market": "IDX",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 1.9712645730568679,
+        "feature": "ret1",
+        "kind": "FAST_UP",
+        "lead": 5,
+        "lift": 2.032319175822503,
+        "market": "IDX",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 1.9712645730568679,
+        "feature": "rel1",
+        "kind": "FAST_UP",
+        "lead": 5,
+        "lift": 2.032319175822503,
+        "market": "IDX",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.46125880063082,
+        "feature": "ret20",
+        "kind": "FAST_UP",
+        "lead": 5,
+        "lift": 2.2965856981279833,
+        "market": "IDX",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.146640818152982,
+        "feature": "cpos",
+        "kind": "FAST_UP",
+        "lead": 5,
+        "lift": 2.5696971101390447,
+        "market": "IDX",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.623943152893911,
+        "feature": "dd60",
+        "kind": "FAST_UP",
+        "lead": 5,
+        "lift": 2.4868218001848126,
+        "market": "IDX",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.5262889025436412,
+        "feature": "cpos",
+        "kind": "FAST_UP",
+        "lead": 10,
+        "lift": 2.3205537805838574,
+        "market": "IDX",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.699777054576765,
+        "feature": "vol20",
+        "kind": "FAST_UP",
+        "lead": 10,
+        "lift": 2.2350272848097847,
+        "market": "IDX",
+        "tail": "top"
+      },
+      {
+        "down_lift": 2.683731149647351,
+        "feature": "dd60",
+        "kind": "FAST_UP",
+        "lead": 10,
+        "lift": 2.3607282388034596,
+        "market": "IDX",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.448989438163635,
+        "feature": "ret20",
+        "kind": "FAST_UP",
+        "lead": 20,
+        "lift": 2.12238504008338,
+        "market": "IDX",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.5596096721278854,
+        "feature": "cpos",
+        "kind": "FAST_UP",
+        "lead": 20,
+        "lift": 2.787364248122818,
+        "market": "IDX",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.8736549568800114,
+        "feature": "vol20",
+        "kind": "FAST_UP",
+        "lead": 20,
+        "lift": 2.359356964387397,
+        "market": "IDX",
+        "tail": "top"
+      },
+      {
+        "down_lift": 2.857487557039442,
+        "feature": "dd60",
+        "kind": "FAST_UP",
+        "lead": 20,
+        "lift": 2.4230574795766286,
+        "market": "IDX",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.0476735957605414,
+        "feature": "ret1",
+        "kind": "FAST_UP",
+        "lead": 3,
+        "lift": 2.2588947471024574,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.0476735957605414,
+        "feature": "rel1",
+        "kind": "FAST_UP",
+        "lead": 3,
+        "lift": 2.2588947471024574,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 1.8746005366508232,
+        "feature": "ret5",
+        "kind": "FAST_UP",
+        "lead": 3,
+        "lift": 2.5677252894146707,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.8782805121408357,
+        "feature": "vol20",
+        "kind": "FAST_UP",
+        "lead": 3,
+        "lift": 3.22885611815863,
+        "market": "US",
+        "tail": "top"
+      },
+      {
+        "down_lift": 2.837819060851955,
+        "feature": "dd60",
+        "kind": "FAST_UP",
+        "lead": 3,
+        "lift": 3.699793553553295,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 1.9868491644133428,
+        "feature": "ret1",
+        "kind": "FAST_UP",
+        "lead": 5,
+        "lift": 2.256390197855968,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 1.9868491644133428,
+        "feature": "rel1",
+        "kind": "FAST_UP",
+        "lead": 5,
+        "lift": 2.256390197855968,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 1.9566158475757838,
+        "feature": "ret5",
+        "kind": "FAST_UP",
+        "lead": 5,
+        "lift": 2.552976544141433,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.193364357653046,
+        "feature": "ret20",
+        "kind": "FAST_UP",
+        "lead": 5,
+        "lift": 3.0087419534403708,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.9870186399532628,
+        "feature": "vol20",
+        "kind": "FAST_UP",
+        "lead": 5,
+        "lift": 3.3359398251781656,
+        "market": "US",
+        "tail": "top"
+      },
+      {
+        "down_lift": 2.9185130141094953,
+        "feature": "dd60",
+        "kind": "FAST_UP",
+        "lead": 5,
+        "lift": 3.6685833916434785,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.1823202744356816,
+        "feature": "ret1",
+        "kind": "FAST_UP",
+        "lead": 10,
+        "lift": 2.238280568455575,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.1823202744356816,
+        "feature": "rel1",
+        "kind": "FAST_UP",
+        "lead": 10,
+        "lift": 2.238280568455575,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.2013597366421753,
+        "feature": "ret5",
+        "kind": "FAST_UP",
+        "lead": 10,
+        "lift": 2.5820085119670373,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.4616012222106303,
+        "feature": "ret20",
+        "kind": "FAST_UP",
+        "lead": 10,
+        "lift": 2.8848108586031604,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 3.3950426658034405,
+        "feature": "vol20",
+        "kind": "FAST_UP",
+        "lead": 10,
+        "lift": 3.623222367932898,
+        "market": "US",
+        "tail": "top"
+      },
+      {
+        "down_lift": 3.2490193253387765,
+        "feature": "dd60",
+        "kind": "FAST_UP",
+        "lead": 10,
+        "lift": 3.7005985187801187,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.2109434746948833,
+        "feature": "age",
+        "kind": "FAST_UP",
+        "lead": 10,
+        "lift": 2.020253767591086,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.287310125391336,
+        "feature": "ret1",
+        "kind": "FAST_UP",
+        "lead": 20,
+        "lift": 2.2995709873365398,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.287310125391336,
+        "feature": "rel1",
+        "kind": "FAST_UP",
+        "lead": 20,
+        "lift": 2.2995709873365398,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.5192762881406625,
+        "feature": "ret5",
+        "kind": "FAST_UP",
+        "lead": 20,
+        "lift": 2.558642008862924,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.61779955816468,
+        "feature": "ret20",
+        "kind": "FAST_UP",
+        "lead": 20,
+        "lift": 2.9060694905768445,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 4.044771977115926,
+        "feature": "vol20",
+        "kind": "FAST_UP",
+        "lead": 20,
+        "lift": 3.7854873285298702,
+        "market": "US",
+        "tail": "top"
+      },
+      {
+        "down_lift": 3.614983102605078,
+        "feature": "dd60",
+        "kind": "FAST_UP",
+        "lead": 20,
+        "lift": 3.6878991084280948,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.3399151264415536,
+        "feature": "age",
+        "kind": "FAST_UP",
+        "lead": 20,
+        "lift": 2.095639111073961,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.1410676919731446,
+        "feature": "dd60",
+        "kind": "SLOW_UP",
+        "lead": 3,
+        "lift": 2.0627990794378204,
+        "market": "IDX",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 1.477661624758,
+        "feature": "up5",
+        "kind": "SLOW_UP",
+        "lead": 3,
+        "lift": 2.146704011110671,
+        "market": "IDX",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.3738656949382073,
+        "feature": "vol20",
+        "kind": "SLOW_UP",
+        "lead": 10,
+        "lift": 2.0446837728200418,
+        "market": "IDX",
+        "tail": "top"
+      },
+      {
+        "down_lift": 1.9346039484817021,
+        "feature": "age",
+        "kind": "SLOW_UP",
+        "lead": 3,
+        "lift": 2.625735918422968,
+        "market": "CRYPTO",
+        "tail": "top"
+      },
+      {
+        "down_lift": 2.1376102743604726,
+        "feature": "age",
+        "kind": "SLOW_UP",
+        "lead": 5,
+        "lift": 2.217308266683188,
+        "market": "CRYPTO",
+        "tail": "top"
+      },
+      {
+        "down_lift": 1.3867778939751967,
+        "feature": "up5",
+        "kind": "SLOW_UP",
+        "lead": 20,
+        "lift": 2.025034514699449,
+        "market": "CRYPTO",
+        "tail": "top"
+      },
+      {
+        "down_lift": 2.138254043352608,
+        "feature": "age",
+        "kind": "SLOW_UP",
+        "lead": 20,
+        "lift": 2.547301337077451,
+        "market": "CRYPTO",
+        "tail": "top"
+      },
+      {
+        "down_lift": 1.614634862991174,
+        "feature": "ret5",
+        "kind": "SLOW_UP",
+        "lead": 3,
+        "lift": 2.0581012322347774,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 1.8375215320805816,
+        "feature": "ret20",
+        "kind": "SLOW_UP",
+        "lead": 3,
+        "lift": 2.1402105792728667,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 3.0095203279083713,
+        "feature": "vol20",
+        "kind": "SLOW_UP",
+        "lead": 3,
+        "lift": 2.3764274192550285,
+        "market": "US",
+        "tail": "top"
+      },
+      {
+        "down_lift": 2.5909500458627006,
+        "feature": "dd60",
+        "kind": "SLOW_UP",
+        "lead": 3,
+        "lift": 2.2992945354770447,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 1.7853020469863101,
+        "feature": "ret5",
+        "kind": "SLOW_UP",
+        "lead": 5,
+        "lift": 2.0234276124476365,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 1.9849137315667376,
+        "feature": "ret20",
+        "kind": "SLOW_UP",
+        "lead": 5,
+        "lift": 2.084743139514158,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 3.1007338877990445,
+        "feature": "vol20",
+        "kind": "SLOW_UP",
+        "lead": 5,
+        "lift": 2.4430413820964696,
+        "market": "US",
+        "tail": "top"
+      },
+      {
+        "down_lift": 2.691260941242551,
+        "feature": "dd60",
+        "kind": "SLOW_UP",
+        "lead": 5,
+        "lift": 2.244260516250348,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.2769766647180156,
+        "feature": "ret20",
+        "kind": "SLOW_UP",
+        "lead": 10,
+        "lift": 2.0102883459250873,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 3.2000813068823586,
+        "feature": "vol20",
+        "kind": "SLOW_UP",
+        "lead": 10,
+        "lift": 2.4648852462881,
+        "market": "US",
+        "tail": "top"
+      },
+      {
+        "down_lift": 2.9821690867415676,
+        "feature": "dd60",
+        "kind": "SLOW_UP",
+        "lead": 10,
+        "lift": 2.261582723412903,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.433467642718478,
+        "feature": "ret5",
+        "kind": "SLOW_UP",
+        "lead": 20,
+        "lift": 2.0072454560586617,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 2.633538912501183,
+        "feature": "ret20",
+        "kind": "SLOW_UP",
+        "lead": 20,
+        "lift": 2.0763032877144814,
+        "market": "US",
+        "tail": "bottom"
+      },
+      {
+        "down_lift": 3.4878284429744353,
+        "feature": "vol20",
+        "kind": "SLOW_UP",
+        "lead": 20,
+        "lift": 2.5650785186313816,
+        "market": "US",
+        "tail": "top"
+      },
+      {
+        "down_lift": 3.4260362067800063,
+        "feature": "dd60",
+        "kind": "SLOW_UP",
+        "lead": 20,
+        "lift": 2.3591738745137603,
+        "market": "US",
+        "tail": "bottom"
+      }
+    ],
+    "movement_only_cells": 64,
+    "verdict": "LEAD_FOUND"
+  }
+}
