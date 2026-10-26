@@ -1,0 +1,85 @@
+{
+  "stamp_sec": "20261016T185931Z",
+  "lead": 3,
+  "covered_issuers": 1225,
+  "by_kind": {
+    "FAST_UP": {
+      "control": {
+        "n": 3995,
+        "PRIOR": 0.8213,
+        "LATE": 0.0365,
+        "NONE": 0.1422,
+        "prior_by_form": {
+          "10-Q/10-K": 0.2431,
+          "6-K": 0.1647,
+          "8-K": 0.4541,
+          "FORM 4": 0.3219,
+          "OFFERING": 0.1146,
+          "OTHER": 0.3482,
+          "OWNER 13D/G": 0.1857
+        }
+      },
+      "episode": {
+        "n": 3995,
+        "PRIOR": 0.8263,
+        "LATE": 0.0423,
+        "NONE": 0.1314,
+        "prior_by_form": {
+          "10-Q/10-K": 0.215,
+          "6-K": 0.1615,
+          "8-K": 0.4556,
+          "FORM 4": 0.3076,
+          "OFFERING": 0.1444,
+          "OTHER": 0.3697,
+          "OWNER 13D/G": 0.1975
+        }
+      },
+      "prior_share_difference": {
+        "episode_minus_control": 0.005,
+        "approx_95": [
+          -0.0117,
+          0.0217
+        ]
+      }
+    },
+    "SLOW_UP": {
+      "control": {
+        "n": 3171,
+        "PRIOR": 0.8414,
+        "LATE": 0.0337,
+        "NONE": 0.1249,
+        "prior_by_form": {
+          "10-Q/10-K": 0.2173,
+          "6-K": 0.1517,
+          "8-K": 0.4652,
+          "FORM 4": 0.3721,
+          "OFFERING": 0.1129,
+          "OTHER": 0.3576,
+          "OWNER 13D/G": 0.2021
+        }
+      },
+      "episode": {
+        "n": 3171,
+        "PRIOR": 0.8329,
+        "LATE": 0.0394,
+        "NONE": 0.1277,
+        "prior_by_form": {
+          "10-Q/10-K": 0.2154,
+          "6-K": 0.1463,
+          "8-K": 0.4825,
+          "FORM 4": 0.3879,
+          "OFFERING": 0.122,
+          "OTHER": 0.3813,
+          "OWNER 13D/G": 0.2018
+        }
+      },
+      "prior_share_difference": {
+        "episode_minus_control": -0.0085,
+        "approx_95": [
+          -0.0267,
+          0.0097
+        ]
+      }
+    }
+  }
+}
