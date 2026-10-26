@@ -1,0 +1,39 @@
+{
+  "protocol_id": "LEAD_LADDER_v1",
+  "counted_test": 28,
+  "written": "2026-10-26",
+  "markets": {
+    "IDX": {"study_protocol": "research/E1/protocol.json", "panel_manifest": "panel-20261007T225823Z.json",
+            "panel_sha256": "9d3a0718c95f9e885c4f8310cf68bf5e75021c366c454f73389d7fae75c02877",
+            "window": ["2021-01-22", "2022-12-30"], "can_confirm": true},
+    "CRYPTO": {"study_protocol": "research/E2/protocol.json", "panel_manifest": "panel_crypto-20261008T003354Z.json",
+               "panel_sha256": "3dc12749c7cce635a68ef4f152ec21c3b3d24eb6b02665c799aa24e513963d7d",
+               "window": ["2020-07-01", "2022-12-31"], "can_confirm": true},
+    "US": {"study_protocol": "research/E2/protocol.json", "panel_manifest": "panel_us-20261008T004105Z.json",
+           "panel_sha256": "e5b5267438667a136f4a4cb42c52d6bc98bc80cde6a88c02a27751a4902c9b92",
+           "window": ["2020-07-01", "2022-12-31"], "can_confirm": false}
+  },
+  "kinds": {
+    "FAST_UP": {"horizon": 5, "direction": "up", "threshold": 1.30, "max_day": null},
+    "FAST_DOWN": {"horizon": 5, "direction": "down", "threshold": 1.30, "max_day": null},
+    "SLOW_UP": {"horizon": 20, "direction": "up", "threshold": 1.30, "max_day": 1.15},
+    "SLOW_DOWN": {"horizon": 20, "direction": "down", "threshold": 1.30, "max_day": 1.15}
+  },
+  "pairs": {"FAST_UP": "FAST_DOWN", "SLOW_UP": "SLOW_DOWN"},
+  "separation_sessions": 20,
+  "leads": [0, 1, 2, 3, 5, 10, 20],
+  "gated_leads": [3, 5, 10, 20],
+  "void": {"threshold": 1.10, "window": 20, "min_periods": 10},
+  "min_history": 20,
+  "pool": {"min_size": 5, "buckets": ["price_band", "liquidity", "market_cap"]},
+  "tails": {"top_quantile": 0.90, "bottom_quantile": 0.10},
+  "bootstrap": {"resamples": 2000, "cluster": "iso_week_of_t", "seed": 20261026},
+  "tests_counted": 808,
+  "z_one_sided": 3.84,
+  "gates": {"G1_min_lift": 2.0, "G2_lower_bound_above": 1.0, "G3_min_ratio_to_down": 1.5,
+            "G4_min_lift_each_year": 1.5, "G4_min_events_per_year": 30,
+            "G5_min_events": 100, "G5_min_expected": 10},
+  "verdicts": ["LEAD_FOUND", "LEAD_US_ONLY", "NO_DAYS_AHEAD_LEAD"],
+  "verifier_sample": 300,
+  "placebo_seed": 20261026
+}
