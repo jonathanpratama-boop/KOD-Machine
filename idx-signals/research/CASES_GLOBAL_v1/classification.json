@@ -1,0 +1,240 @@
+[
+ {
+  "market": "US",
+  "ticker": "DOCS",
+  "J": "2022-11-11",
+  "move_pct": 42.0,
+  "class": "TELEGRAPHED",
+  "decided_by": "scheduled earnings date public since 2022-10-20; outcome (a beat) not knowable",
+  "news_timing": "J2_TO_J",
+  "scheduled_event": {
+   "what": "fiscal Q2 2023 earnings after the close on 10 Nov 2022",
+   "date_public_since": "2022-10-20"
+  },
+  "confidence": "high"
+ },
+ {
+  "market": "US",
+  "ticker": "HCM",
+  "J": "2021-06-30",
+  "move_pct": 30.8,
+  "class": "TELEGRAPHED",
+  "decided_by": "Hong Kong listing date public since 2021-06-23 (J-3 is 06-25); outcome not knowable",
+  "news_timing": "J2_TO_J",
+  "scheduled_event": {
+   "what": "HKEX primary listing, first trading day 30 June 2021",
+   "date_public_since": "2021-06-23 (IPO public since 2021-06-18)"
+  },
+  "confidence": "medium"
+ },
+ {
+  "market": "AU",
+  "ticker": "IMM",
+  "J": "2020-12-10",
+  "move_pct": 60.7,
+  "class": "TELEGRAPHED",
+  "decided_by": "trial-data presentation date public since 2020-10-19; outcome not knowable",
+  "news_timing": "J2_TO_J",
+  "scheduled_event": {
+   "what": "AIPAC OS data at SABCS 2020 (released 9-10 Dec, just before the presentation)",
+   "date_public_since": "2020-10-19"
+  },
+  "confidence": "high"
+ },
+ {
+  "market": "CRYPTO",
+  "ticker": "OGN",
+  "J": "2022-03-13",
+  "move_pct": 31.1,
+  "class": "TELEGRAPHED",
+  "decided_by": "airdrop-to-holders proposal public on J-3 (2022-03-10): the one directional early item",
+  "news_timing": "BY_J3",
+  "scheduled_event": {
+   "what": "governance vote on a 1:1 airdrop to OGN holders (17 Mar 2022)",
+   "date_public_since": "proposal public 2022-03-10"
+  },
+  "confidence": "medium"
+ },
+ {
+  "market": "US",
+  "ticker": "USIO",
+  "J": "2020-08-06",
+  "move_pct": 47.9,
+  "class": "NEWS_SHOCK",
+  "decided_by": "company release on J",
+  "news_timing": "J2_TO_J",
+  "scheduled_event": null,
+  "confidence": "high"
+ },
+ {
+  "market": "US",
+  "ticker": "FLNA",
+  "J": "2020-09-14",
+  "move_pct": 156.6,
+  "class": "NEWS_SHOCK",
+  "decided_by": "trial results on J; only the month was guided in advance",
+  "news_timing": "J2_TO_J",
+  "scheduled_event": {
+   "what": "final Phase 2b results, guided to 'September 2020' (month only)",
+   "date_public_since": "2020-08-12"
+  },
+  "confidence": "high"
+ },
+ {
+  "market": "US",
+  "ticker": "QS",
+  "J": "2021-09-21",
+  "move_pct": 30.1,
+  "class": "NEWS_SHOCK",
+  "decided_by": "8-K on J (second automaker)",
+  "news_timing": "J2_TO_J",
+  "scheduled_event": null,
+  "confidence": "high"
+ },
+ {
+  "market": "US",
+  "ticker": "HURA",
+  "J": "2022-11-28",
+  "move_pct": 41.3,
+  "class": "NEWS_SHOCK",
+  "decided_by": "FDA Fast Track on J",
+  "news_timing": "J2_TO_J",
+  "scheduled_event": null,
+  "confidence": "medium"
+ },
+ {
+  "market": "US",
+  "ticker": "TAL",
+  "J": "2022-03-16",
+  "move_pct": 42.8,
+  "class": "NEWS_SHOCK",
+  "decided_by": "market-wide: China policy pledge on J",
+  "news_timing": "J2_TO_J",
+  "scheduled_event": null,
+  "confidence": "high"
+ },
+ {
+  "market": "CRYPTO",
+  "ticker": "XMR",
+  "J": "2021-02-08",
+  "move_pct": 33.5,
+  "class": "NEWS_SHOCK",
+  "decided_by": "market-wide: Tesla BTC purchase on J",
+  "news_timing": "J2_TO_J",
+  "scheduled_event": null,
+  "confidence": "low"
+ },
+ {
+  "market": "CRYPTO",
+  "ticker": "CRV",
+  "J": "2021-12-17",
+  "move_pct": 35.6,
+  "class": "NEWS_SHOCK",
+  "decided_by": "market-wide: post-FOMC rebound",
+  "news_timing": "J2_TO_J",
+  "scheduled_event": {
+   "what": "FOMC decision 15 Dec 2021 (market-wide)",
+   "date_public_since": "not verified"
+  },
+  "confidence": "low"
+ },
+ {
+  "market": "HK",
+  "ticker": "2588",
+  "J": "2020-11-10",
+  "move_pct": 33.0,
+  "class": "NEWS_SHOCK",
+  "decided_by": "market-wide: vaccine news, first HK session after it",
+  "news_timing": "J2_TO_J",
+  "scheduled_event": null,
+  "confidence": "high"
+ },
+ {
+  "market": "CRYPTO",
+  "ticker": "QNT",
+  "J": "2021-09-04",
+  "move_pct": 75.4,
+  "class": "PRICE_BEFORE_NEWS",
+  "decided_by": "rally preceded the 2021-09-07 release announcement",
+  "news_timing": "AFTER_J",
+  "scheduled_event": null,
+  "confidence": "medium"
+ },
+ {
+  "market": "US",
+  "ticker": "AIRG",
+  "J": "2021-01-19",
+  "move_pct": 41.0,
+  "class": "UNEXPLAINED",
+  "decided_by": "no item 13-19 Jan 2021",
+  "news_timing": "NONE_FOUND",
+  "scheduled_event": null,
+  "confidence": "low"
+ },
+ {
+  "market": "US",
+  "ticker": "STIM",
+  "J": "2022-06-03",
+  "move_pct": 30.6,
+  "class": "UNEXPLAINED",
+  "decided_by": "routine releases and filings only",
+  "news_timing": "NONE_FOUND",
+  "scheduled_event": null,
+  "confidence": "low"
+ },
+ {
+  "market": "US",
+  "ticker": "NXPL",
+  "J": "2022-12-20",
+  "move_pct": 35.2,
+  "class": "UNEXPLAINED",
+  "decided_by": "nothing 15-20 Dec; an insider-led placement drew a negative reaction",
+  "news_timing": "NONE_FOUND",
+  "scheduled_event": null,
+  "confidence": "low"
+ },
+ {
+  "market": "CRYPTO",
+  "ticker": "YFI",
+  "J": "2021-04-04",
+  "move_pct": 32.0,
+  "class": "UNEXPLAINED",
+  "decided_by": "weak backdrop only",
+  "news_timing": "BY_J3",
+  "scheduled_event": null,
+  "confidence": "low"
+ },
+ {
+  "market": "FR",
+  "ticker": "ALSPW",
+  "J": "2021-06-09",
+  "move_pct": 46.2,
+  "class": "UNEXPLAINED",
+  "decided_by": "an acquisition MoU 6 sessions earlier with no reaction; not tied by any source",
+  "news_timing": "NONE_FOUND",
+  "scheduled_event": null,
+  "confidence": "low"
+ },
+ {
+  "market": "UK",
+  "ticker": "MTRO",
+  "J": "2020-11-05",
+  "move_pct": 31.0,
+  "class": "UNEXPLAINED",
+  "decided_by": "no dated item; macro possible",
+  "news_timing": "NONE_FOUND",
+  "scheduled_event": null,
+  "confidence": "low"
+ },
+ {
+  "market": "UK",
+  "ticker": "TERN",
+  "J": "2021-03-17",
+  "move_pct": 39.4,
+  "class": "UNEXPLAINED",
+  "decided_by": "no company news; AIM momentum",
+  "news_timing": "NONE_FOUND",
+  "scheduled_event": null,
+  "confidence": "medium"
+ }
+]
