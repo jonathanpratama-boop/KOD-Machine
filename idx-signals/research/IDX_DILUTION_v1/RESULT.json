@@ -1,0 +1,45 @@
+{
+ "experiment": "IDX_DILUTION_v1",
+ "inputs": {
+  "panel_sha256": "9d3a0718c95f9e885c4f8310cf68bf5e75021c366c454f73389d7fae75c02877",
+  "registry_sha256": "659da375e4586deab958e22dc242d7be6966ebc226bfefe8ce7ce85eb51f1e6c"
+ },
+ "events": 33,
+ "holds": {
+  "20": {
+   "n": 15,
+   "mean": -0.022452672592568935,
+   "se": 0.046101774883812424,
+   "t": -0.48702403864395843,
+   "lo95": -0.1028359953038634,
+   "hi95": 0.0773810024778042,
+   "median": -0.04538725297180583,
+   "status": {
+    "EXITED": 15,
+    "SKIP_CAPACITY_UNKNOWN": 9,
+    "SKIP_LIQUIDITY": 7,
+    "SKIP_NOT_TRADED": 2
+   }
+  },
+  "60": {
+   "n": 15,
+   "mean": -0.1370638060827172,
+   "se": 0.0586827152055634,
+   "t": -2.335675941417975,
+   "lo95": -0.23383112173262813,
+   "hi95": -0.0011854549455237633,
+   "median": -0.14795009593198874,
+   "status": {
+    "EXITED": 15,
+    "SKIP_CAPACITY_UNKNOWN": 9,
+    "SKIP_LIQUIDITY": 7,
+    "SKIP_NOT_TRADED": 2
+   }
+  }
+ },
+ "gates": {
+  "G1_mean_le_-2pct": true,
+  "G2_t_le_-1.65": true
+ },
+ "verdict": "PASS"
+}
