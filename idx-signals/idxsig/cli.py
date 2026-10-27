@@ -114,6 +114,13 @@ def main(argv=None) -> int:
                        help="unit_schedule: leave out names whose split records SEC does not corroborate")
     sub.add_parser("verify-runs", help="check that no past run was edited or removed")
     sub.add_parser("e1-discovery", help="experiment E1, discovery period (writes research/E1/discovery/)")
+    p_sn = sub.add_parser("sensors", help="pull free public sensors (Bluesky accounts, StockTwits trending, EDGAR 8-K "
+                                          "keywords, CoinGecko trending, Binance listings) into a hash-chained log; no orders")
+    p_sn.add_argument("action", choices=("pull", "verify"))
+    p_sn.add_argument("--handles", default="unusualwhales.bsky.social", help="Bluesky handles, comma-separated")
+    p_sn.add_argument("--keywords", default=None, help="EDGAR 8-K full-text keywords, comma-separated")
+    p_sn.add_argument("--sources", default=None, help="subset of source names, comma-separated")
+    p_sn.add_argument("--commit", action="store_true", help="RFC 3161-stamp the records, commit and push")
     p_ps = sub.add_parser("paper-scan", help="prospective paper scan of the session that last closed (no orders)")
     p_ps.add_argument("--manifest", help="a recent-bars manifest for the market (default: pull now)")
     p_ps.add_argument("--commit", action="store_true", help="commit the records and push (GitHub receipt)")
@@ -155,6 +162,32 @@ def main(argv=None) -> int:
     p_v.add_argument("--rule", required=True, help="must equal rules/moonshot_e1.SELECTED, committed")
     args = parser.parse_args(argv)
 
+    if args.cmd == "sensors":
+        from . import paper
+        from . import sensors as sensors_mod
+
+        if args.action == "verify":
+            problems = sensors_mod.verify()
+            print("sensors verify: " + ("OK" if not problems else "; ".join(problems[:10])))
+            return 0 if not problems else 1
+        handles = tuple(h for h in args.handles.split(",") if h)
+        keywords = tuple(k.strip() for k in args.keywords.split(",")) if args.keywords else sensors_mod.DEFAULT_KEYWORDS
+        sources = sensors_mod.default_sources(handles, keywords)
+        if args.sources:
+            keep = set(args.sources.split(","))
+            sources = {k: v for k, v in sources.items() if k in keep}
+        stamper = None
+        if args.commit:
+            from kod.timestamp import RFC3161Timestamper
+
+            stamper = RFC3161Timestamper()
+        out = sensors_mod.pull(sources, timestamper=stamper)
+        print(json.dumps({k: out[k] for k in ("stamp", "alerts_new", "counts", "errors", "head")}, indent=1))
+        if args.commit:
+            files = [sensors_mod.LOG, sensors_mod.RAW / out["stamp"].replace("-", "").replace(":", ""), paper.TOKENS]
+            msg = f"sensors pull {out['stamp']}: {out['alerts_new']} new alert(s)"
+            print(paper.commit_and_push(files, msg, os.environ.get("IDXSIG_COMMIT_TRAILER", "")))
+        return 0
     if args.cmd == "fetch-idx-mirror":
         from .sources import idx_mirror
 
