@@ -33,6 +33,8 @@ def fake_fetch(url, user_agent=None, timeout=30):
     if "binance" in url:
         return json.dumps({"data": {"catalogs": [{"catalogName": "New Cryptocurrency Listing", "articles": [
             {"code": "abc123", "title": "Binance Will List Foo (FOO)", "releaseDate": 1761500000000}]}]}}).encode()
+    if "emitennews" in url:
+        return b"<urlset><url><loc>https://www.emitennews.com/news/ptro-rights-issue</loc>\n<lastmod>2000-01-01</lastmod></url></urlset>"
     raise RuntimeError("unknown url")
 
 
@@ -102,3 +104,14 @@ class PullTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def test_emitennews_dilution_filters_words_dates_and_tickers():
+    xml = (b'<urlset><url><loc>https://www.emitennews.com/news/ptro-mau-rights-issue-170-juta-saham</loc><lastmod>2026-10-25</lastmod></url>'
+           b'<url><loc>https://www.emitennews.com/news/ihsg-naik-tipis</loc><lastmod>2026-10-25</lastmod></url>'
+           b'<url><loc>https://www.emitennews.com/news/bipp-setujui-private-placement</loc><lastmod>2026-09-01</lastmod></url></urlset>')
+    xml = xml.replace(b"</loc><lastmod>", b"</loc>\n<lastmod>")
+    alerts, raw = sensors.emitennews_dilution({"PTRO", "BIPP"}, fetcher=lambda url: xml, today="2026-10-27")
+    assert raw == xml
+    assert [a["symbols"] for a in alerts] == [["PTRO"]]
+    assert alerts[0]["extra"]["kind"] == ["rights-issue"]

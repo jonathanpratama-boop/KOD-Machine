@@ -167,12 +167,49 @@ def binance_listings(fetcher=fetch) -> tuple[list[dict], bytes]:
     return alerts, raw
 
 
+DILUTION_WORDS = ("private-placement", "rights-issue", "right-issue", "pmthmetd", "hmetd", "penambahan-modal", "tambah-modal",
+                  "saham-baru", "obligasi-konversi", "waran")
+EN_STOP = {"AKSI"}                                    # ticker codes that are also common Indonesian headline words
+EN_SLUG = re.compile(r"<loc>https://www\.emitennews\.com/news/([^<]+)</loc>\s*<lastmod>([^<]+)</lastmod>")
+
+
+def idx_tickers(root: Path | None = None) -> set[str]:
+    """IDX codes known locally: the pinned mirror's per-ticker files plus data/universe/extra_tickers.csv."""
+    root = root or PKG_ROOT / "data"
+    codes = {f.stem.upper() for f in (root / "raw" / "idx_mirror").glob("*/Saham/Semua/*.csv")}
+    extra = root / "universe" / "extra_tickers.csv"
+    if extra.exists():
+        codes |= {ln.split(",")[0].strip().upper() for ln in extra.read_text().splitlines()[1:] if ln.strip()}
+    return codes
+
+
+def emitennews_dilution(tickers: set[str] | None = None, year: int | None = None, days: int = 7, fetcher=fetch,
+                        today: str | None = None) -> tuple[list[dict], bytes]:
+    """EmitenNews headlines (public sitemap; robots.txt allows it) about new shares: rights issues, private placements, convertible bonds,
+    warrants. Only the last `days` days by the sitemap's lastmod. IDX_DILUTION_v1 found that a listed-share jump of 5% or more was followed by
+    about -14% excess over 60 sessions (2023, n 15); an announcement comes before the listing, so this is a watch flag, not that tested event."""
+    day = today or _utc()[:10]
+    raw = fetcher(f"https://www.emitennews.com/sitemap-{year or int(day[:4])}.xml")
+    codes = idx_tickers() if tickers is None else tickers
+    cutoff = (datetime.fromisoformat(day) - timedelta(days=days)).date().isoformat()
+    alerts = []
+    for slug, lastmod in EN_SLUG.findall(raw.decode("utf-8", "replace")):
+        words = [w for w in DILUTION_WORDS if w in slug]
+        if not words or lastmod[:10] < cutoff:
+            continue
+        syms = sorted({t.upper() for t in slug.split("-") if t.upper() in codes and len(t) == 4 and t.upper() not in EN_STOP})
+        alerts.append({"source_id": slug, "posted_at": lastmod[:10], "symbols": syms, "text": slug.replace("-", " ")[:TEXT_MAX],
+                       "url": f"https://www.emitennews.com/news/{slug}", "extra": {"kind": words, "market": "IDX"}})
+    return alerts, raw
+
+
 def default_sources(handles=DEFAULT_HANDLES, keywords=DEFAULT_KEYWORDS, fetcher=fetch) -> dict:
     src = {f"bluesky:{h}": (lambda h=h: bluesky(h, fetcher=fetcher)) for h in handles}
     src["stocktwits_trending"] = lambda: stocktwits_trending(fetcher=fetcher)
     src["edgar_8k"] = lambda: edgar_8k(keywords, fetcher=fetcher)
     src["coingecko_trending"] = lambda: coingecko_trending(fetcher=fetcher)
     src["binance_listings"] = lambda: binance_listings(fetcher=fetcher)
+    src["emitennews_dilution"] = lambda: emitennews_dilution(fetcher=fetcher)
     return src
 
 
