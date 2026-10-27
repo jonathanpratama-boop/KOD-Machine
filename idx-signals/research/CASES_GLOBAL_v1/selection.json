@@ -1,0 +1,125 @@
+{
+ "seed": 20261027,
+ "cases": [
+  {
+   "market": "US",
+   "ticker": "USIO",
+   "t": 147,
+   "t_date": "2020-08-03"
+  },
+  {
+   "market": "US",
+   "ticker": "FLNA",
+   "t": 171,
+   "t_date": "2020-09-04"
+  },
+  {
+   "market": "US",
+   "ticker": "AIRG",
+   "t": 258,
+   "t_date": "2021-01-11"
+  },
+  {
+   "market": "US",
+   "ticker": "HCM",
+   "t": 371,
+   "t_date": "2021-06-23"
+  },
+  {
+   "market": "US",
+   "ticker": "QS",
+   "t": 432,
+   "t_date": "2021-09-20"
+  },
+  {
+   "market": "US",
+   "ticker": "TAL",
+   "t": 552,
+   "t_date": "2022-03-11"
+  },
+  {
+   "market": "US",
+   "ticker": "STIM",
+   "t": 609,
+   "t_date": "2022-06-02"
+  },
+  {
+   "market": "US",
+   "ticker": "DOCS",
+   "t": 717,
+   "t_date": "2022-11-04"
+  },
+  {
+   "market": "US",
+   "ticker": "HURA",
+   "t": 728,
+   "t_date": "2022-11-21"
+  },
+  {
+   "market": "US",
+   "ticker": "NXPL",
+   "t": 744,
+   "t_date": "2022-12-14"
+  },
+  {
+   "market": "CRYPTO",
+   "ticker": "XMR",
+   "t": 403,
+   "t_date": "2021-02-07"
+  },
+  {
+   "market": "CRYPTO",
+   "ticker": "YFI",
+   "t": 458,
+   "t_date": "2021-04-03"
+  },
+  {
+   "market": "CRYPTO",
+   "ticker": "QNT",
+   "t": 608,
+   "t_date": "2021-08-31"
+  },
+  {
+   "market": "CRYPTO",
+   "ticker": "CRV",
+   "t": 712,
+   "t_date": "2021-12-13"
+  },
+  {
+   "market": "CRYPTO",
+   "ticker": "OGN",
+   "t": 797,
+   "t_date": "2022-03-08"
+  },
+  {
+   "market": "AU",
+   "ticker": "IMM",
+   "t": 346,
+   "t_date": "2020-12-03"
+  },
+  {
+   "market": "FR",
+   "ticker": "ALSPW",
+   "t": 472,
+   "t_date": "2021-06-02"
+  },
+  {
+   "market": "HK",
+   "ticker": "2588",
+   "t": 314,
+   "t_date": "2020-11-03"
+  },
+  {
+   "market": "UK",
+   "ticker": "MTRO",
+   "t": 321,
+   "t_date": "2020-11-02"
+  },
+  {
+   "market": "UK",
+   "ticker": "TERN",
+   "t": 410,
+   "t_date": "2021-03-10"
+  }
+ ]
+}
