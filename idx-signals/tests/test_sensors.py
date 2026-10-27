@@ -114,4 +114,14 @@ def test_emitennews_dilution_filters_words_dates_and_tickers():
     alerts, raw = sensors.emitennews_dilution({"PTRO", "BIPP"}, fetcher=lambda url: xml, today="2026-10-27")
     assert raw == xml
     assert [a["symbols"] for a in alerts] == [["PTRO"]]
-    assert alerts[0]["extra"]["kind"] == ["rights-issue"]
+    assert alerts[0]["extra"]["kind"] == ["rights_issue"]
+
+
+def test_dilution_kinds_match_whole_words_only():
+    assert sensors.dilution_kinds("ptro-mau-rights-issue-170-juta-saham") == ["rights_issue"]
+    assert sensors.dilution_kinds("bipp-kantongi-restu-private-placement-saham-anjlok") == ["private_placement"]
+    assert sensors.dilution_kinds("vico-perkuat-modal-vins-rp13-miliar-lewat-pmthmetd") == ["private_placement"]
+    assert sensors.dilution_kinds("emiten-tambang-iata-hentikan-penawaran-surat-utang-rp500m") == []
+    assert sensors.dilution_kinds("anomali-saham-baru-lepas-suspensi-ini-melesat-ara") == []
+    assert sensors.dilution_kinds("sambut-pemodal-besar-arii-gaspol-penerbitan-10-persen-saham-baru") == ["new_shares"]
+    assert sensors.dilution_kinds("banyak-investor-konversi-waran-jadi-saham-meja") == ["convertible_or_warrant"]
