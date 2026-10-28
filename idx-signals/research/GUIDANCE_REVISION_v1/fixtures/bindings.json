@@ -1,0 +1,84 @@
+{
+  "basis": "HISTORICAL_EXTRACTION_FIXTURE_ONLY; already reviewed 2021 information, not prospective performance",
+  "issuer_cik": 2488,
+  "ticker": "AMD",
+  "sources": {
+    "current": {
+      "path": "fixtures/0000002488-21-000054.txt.gz",
+      "sha256": "6798a36435b061c987b7722618a2d612b40757d8d55d88a1adbf9b668498c064",
+      "gzip_sha256": "d5dfbb6ff3f844d179c0e27af9685c1822e7174cf157c80f13f8673bd2830ed0",
+      "url": "https://www.sec.gov/Archives/edgar/data/2488/0000002488-21-000054.txt",
+      "accession": "0000002488-21-000054"
+    },
+    "preceding_earnings_document": {
+      "path": "fixtures/0000002488-21-000009.txt.gz",
+      "sha256": "ed2df5622e46228886ec03d7e1abbc2c05b5e446772b126cbaf9088da50c614f",
+      "gzip_sha256": "e31fc00b5ff889de1a7580e921e4d6a10f4b5c203495af32a5ffee53508c1519",
+      "url": "https://www.sec.gov/Archives/edgar/data/2488/0000002488-21-000009.txt",
+      "accession": "0000002488-21-000009"
+    }
+  },
+  "original_findings_sha256": "10110704fecd7b9c48b528875e5fb2395a36ef2e52adf8f101461581b3ba278f",
+  "known_classifications": [
+    {
+      "ticker": "AAL",
+      "accession": "0000006201-21-000046",
+      "classification": "QUARTER_ONLY",
+      "reason": "Only Q1 2021 revenue guidance; no numerical full-year revenue forecast in this package."
+    },
+    {
+      "ticker": "MATX",
+      "accession": "0001558370-21-004341",
+      "classification": "NO_NUMERIC_FULL_YEAR_REVENUE",
+      "reason": "Preliminary Q1 earnings and business commentary; no numerical full-year revenue forecast."
+    },
+    {
+      "ticker": "ACU",
+      "accession": "0001564590-21-019268",
+      "classification": "NO_NUMERIC_FULL_YEAR_REVENUE",
+      "reason": "Reported Q1 sales and qualitative optimism for the remaining quarters; no numerical full-year revenue forecast."
+    },
+    {
+      "ticker": "ABT",
+      "accession": "0001104659-21-052205",
+      "classification": "OTHER_METRIC_EPS",
+      "reason": "Full-year adjusted EPS floor of $5.00 reaffirmed. EPS guidance is a different feature."
+    },
+    {
+      "ticker": "AAL",
+      "accession": "0000006201-21-000053",
+      "classification": "QUARTER_ONLY",
+      "reason": "Q2 2021 revenue outlook versus Q2 2019; no numerical full-year revenue forecast."
+    },
+    {
+      "ticker": "AEP",
+      "accession": "0000004904-21-000032",
+      "classification": "OTHER_METRIC_EPS",
+      "reason": "Operating EPS range $4.55-$4.75 reaffirmed; no numerical full-year revenue forecast."
+    },
+    {
+      "ticker": "AXP",
+      "accession": "0000004962-21-000026",
+      "classification": "NO_NUMERIC_FULL_YEAR_REVENUE",
+      "reason": "Historical results and supplemental financial tables; no numerical full-year revenue forecast located in the filed text."
+    },
+    {
+      "ticker": "AMD",
+      "accession": "0000002488-21-000054",
+      "classification": "RAISED_FULL_YEAR_REVENUE",
+      "reason": "Full-year 2021 revenue growth forecast raised from about 37% to about 50% over the same 2020 base."
+    },
+    {
+      "ticker": "MATX",
+      "accession": "0001558370-21-004919",
+      "classification": "NO_NUMERIC_FULL_YEAR_REVENUE",
+      "reason": "Final Q1 results after April 15 preliminary results; no numerical full-year revenue forecast. Same issuer/quarter episode needs duplicate handling."
+    },
+    {
+      "ticker": "HES",
+      "accession": "0001628280-21-007814",
+      "classification": "OTHER_METRIC_PRODUCTION",
+      "reason": "Annual oil-equivalent production forecast lowered; production volumes cannot be substituted for revenue guidance."
+    }
+  ]
+}

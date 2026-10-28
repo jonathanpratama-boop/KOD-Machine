@@ -1,0 +1,65 @@
+{
+  "mode": "HISTORICAL_EXTRACTION_FIXTURE_ONLY",
+  "ticker": "AMD",
+  "prior": {
+    "classification": "NUMERIC_ANNUAL_REVENUE",
+    "issuer_cik": 2488,
+    "fiscal_year": "2021",
+    "metric": "full_year_revenue",
+    "representation": "growth_percent",
+    "currency": "USD",
+    "units": "percent",
+    "scope": "consolidated",
+    "base_period": "2020",
+    "lower": "37",
+    "upper": "37",
+    "document": "q420991.htm",
+    "quote": "For the full year 2021, AMD expects revenue growth of approximately 37 percent over 2020 driven by growth in all businesses.",
+    "forecast_level": "1.37",
+    "accession": "0000002488-21-000009",
+    "accepted_at_utc": "2021-01-26T21:14:58+00:00",
+    "raw_sha256": "ed2df5622e46228886ec03d7e1abbc2c05b5e446772b126cbaf9088da50c614f",
+    "source_span": [
+      10572,
+      10696
+    ],
+    "text_sha256": "5b598d76fec2ec89edd3883d74b9b505ab605bae223a8f2da29aed3136823d98"
+  },
+  "current": {
+    "classification": "NUMERIC_ANNUAL_REVENUE",
+    "issuer_cik": 2488,
+    "fiscal_year": "2021",
+    "metric": "full_year_revenue",
+    "representation": "growth_percent",
+    "currency": "USD",
+    "units": "percent",
+    "scope": "consolidated",
+    "base_period": "2020",
+    "lower": "50",
+    "upper": "50",
+    "document": "q12021991.htm",
+    "quote": "For the full year 2021, AMD now expects revenue growth of approximately 50 percent over 2020 driven by growth in all businesses, up from prior guidance of approximately 37 percent annual growth.",
+    "forecast_level": "1.5",
+    "accession": "0000002488-21-000054",
+    "accepted_at_utc": "2021-04-27T20:12:09+00:00",
+    "raw_sha256": "6798a36435b061c987b7722618a2d612b40757d8d55d88a1adbf9b668498c064",
+    "source_span": [
+      8835,
+      9029
+    ],
+    "text_sha256": "7f89ceca55271a1b19dd70fa0c738c3d73c64cdbf3714cd94b6cae0268e219a5"
+  },
+  "latest_prior_evidence": "The current release explicitly identifies the prior 37% guidance; checked against original prior release.",
+  "feature": {
+    "classification": "RAISED",
+    "forecast_level_change_fraction": "0.094890510948905109489051095",
+    "prior_accession": "0000002488-21-000009",
+    "current_accession": "0000002488-21-000054",
+    "issuer_cik": 2488,
+    "fiscal_year": "2021",
+    "latest_prior_confirmed": true
+  },
+  "investment_returns_computed": false,
+  "prospective_observation": false,
+  "broker_fill_inferred": false
+}

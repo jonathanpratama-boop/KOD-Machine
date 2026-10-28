@@ -1,0 +1,13 @@
+{
+  "created_at_utc": "2026-10-17T07:26:53.056475+00:00",
+  "original_commit": "2afc156b11283485c18d62f759fd97617f4fc97e",
+  "reason": "GitHub CI default calendar range did not cover test dates; request explicit source-to-exit range rather than host-clock defaults.",
+  "policy_changed": false,
+  "original_decision_changed": false,
+  "corrected_files": {
+    "idx-signals/idxsig/guidance.py": "75b06b84c90bc08455c68e61fc66418d1eeb9eec3dcddd9473af04c74c223852",
+    "idx-signals/tests/test_guidance_revision.py": "fb3dec867bb4622987913f5d4a1bdcde0e27414b1c18377def4fc50cbd1da9a8"
+  },
+  "verifier_sha256": "c8114a164e4e5f5be831928b40f395caf389de68a52e03774345a21cbb0445df",
+  "note": "Original freeze and first paper records remain byte-for-byte intact. Use verify_current.py on this corrected head; the original --verify command is for its original commit."
+}

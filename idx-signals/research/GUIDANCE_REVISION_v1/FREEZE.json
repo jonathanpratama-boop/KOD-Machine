@@ -1,0 +1,15 @@
+{
+  "protocol_id": "GUIDANCE-REVISION-v1",
+  "frozen_at_utc": "2026-10-17T07:12:24.970607+00:00",
+  "files": {
+    "PROTOCOL.md": "bf23f4ba9b9d3d1f3cf851cb2fd90e1eb122de62912e58b2ba84101280af1681",
+    "protocol.json": "e841713b4b816ed1cb66018989298588689275d2acbb6d530a9cb89d69419b32"
+  },
+  "current_document_bodies_examined": false,
+  "strategy_returns_computed": false,
+  "historical_fixtures_known": [
+    "ten-announcement-source-sample",
+    "AMD-2021-guidance-37-to-50"
+  ],
+  "note": "Local freeze before current SEC retrieval; not an external timestamp."
+}

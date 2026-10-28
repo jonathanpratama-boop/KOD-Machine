@@ -198,7 +198,10 @@ class CommittedEvidence(unittest.TestCase):
         """The decision gate must read the committed E2 validation and its harness run; if either is
         missed, a decision could be taken on detection alone."""
         for market in ("US", "CRYPTO"):
-            ev = paper.validation_evidence(market)
+            live = paper.validation_evidence(market)  # v4, in force: the latest matching validation run
+            self.assertIsNotNone(live["trading"], market)
+            self.assertGreaterEqual(live["trading"]["p_one_sided"], 0.05)
+            ev = paper.validation_evidence(market, policy=paper.POLICY_ID_V5)
             self.assertIsNotNone(ev, market)
             self.assertEqual(ev["rule"], "G2_RET30")
             self.assertLess(ev["p_one_sided_vs_matched"], 0.05)
