@@ -110,6 +110,28 @@ python3 -m idxsig speculate-score --market <M> --commit  # after paper-score; re
 python3 -m idxsig speculate-report                       # rewrites paper/SPECULATIONS.md
 ```
 
+## Catalyst register (`paper/catalysts.jsonl`, `idxsig.catalysts`, protocol `research/CATALYST_REGISTER_v1/`)
+
+Added 2026-10-28 (`KOD-CATALYST-REGISTER-v1`, the owner's go on `handoff/precatalyst-program/PROGRAM_v1.md`). The
+speculation register run over dated **event lists** instead of scan candidates. **SEC13D** (counted at its looks): every
+original Schedule 13D on EDGAR is listed in a `BATCH` record with a status; each one that passes the issuer rules gets a
+`CATALYST_SET` sealed before the next US open, with the 20-session yardstick plan (`H20`), five matched event-free twins,
+a cone and a coverage class: `FIRE`, or `ABSTAIN` when the issuer filed for dilution in the last 20 sessions, already rose
+15% since the filing, or is worth under USD 50 million. The test runs on FIRE sets only, at 60/120/240 pairs (t at least
+3.75, 3.0, 3.0). **IDX_INDEX** (descriptive): IDX30/LQ45/IDX80 changes from a sourced events file, with a run-up window to the
+rebalancing close and a 20-session window after it. **DILUTION_RECENT** tags are sealed for new US and IDX speculation sets
+before their cutoff (metadata only). It never feeds a decision, reads no holdout, places no order and changes nothing in
+`ledger.jsonl` or `speculations.jsonl`; `paper-verify` checks its chain, cutoffs, batch listings and bindings.
+`paper/CATALYSTS.md` is the derived report. EDGAR needs the declared contact inline (`KOD_SEC_CONTACT=...`), never a file.
+
+```sh
+python3 -m idxsig catalyst-seal --family SEC13D --commit          # after paper-scan --market US, before 09:15 New York
+python3 -m idxsig catalyst-seal --family IDX_INDEX --events research/CATALYST_REGISTER_v1/events/<file> --commit
+python3 -m idxsig catalyst-tag --commit                            # after speculate, before the set's cutoff
+python3 -m idxsig catalyst-score --market <US|IDX> --commit        # after paper-score; reuses its bars
+python3 -m idxsig catalyst-report                                  # rewrites paper/CATALYSTS.md
+```
+
 ## Crypto microstructure side-car (`paper/microstructure/`, `idxsig.microstructure`)
 
 Added 2026-10-21. It measures what the frozen crypto cycle assumes, for the same candidates, and **never feeds a
