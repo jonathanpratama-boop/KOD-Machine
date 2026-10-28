@@ -1,0 +1,29 @@
+{
+  "protocol_id": "FLOW_IDX_v1",
+  "written_before": "stage1/ (the discovery run)",
+  "files": {
+    "idx-signals/research/FLOW_IDX_v1/PROTOCOL.md": "5e14d1d57dc8fe69991f78400062374e046bd14e52ecc9d940374646f0a072fb",
+    "idx-signals/research/FLOW_IDX_v1/protocol.json": "ad133adbead7ec1b99e4e874f71eda49c3321062130d7b1a5e0f9791890ad0fe",
+    "idx-signals/research/FLOW_IDX_v1/run.py": "bf57d7d5e2b9a7ee2e0a3fa288ca9778d276287354584067549038b0dc568d82",
+    "idx-signals/research/FLOW_IDX_v1/verify_v2.py": "3cd50784e898b04528cc153e361b87deed1e13bca24539a88d2490a686239234",
+    "idx-signals/research/LEAD_LADDER_v1/protocol.json": "ab68100daa3d2e0798ac413e55a8af8d234fb02a8d7b5be7d2a42af599e96b64",
+    "idx-signals/research/LEAD_LADDER_v1/verify_v2.py": "9773508e63c075e673b0d404aa0783784c91da7254c0ea80afc3ee5294e60a7d",
+    "idx-signals/idxsig/flow_features.py": "a155dd439c31f5653f39af3db5cbdb988ddeb420bd30bcc8137114f9e8dd20ca",
+    "idx-signals/idxsig/lead_ladder.py": "0250b63a5e3a36eaa68baef3d15234878900df93ae11727ece8befd5ce5d14a2",
+    "idx-signals/idxsig/void.py": "b082ab5b0bf4eedc164e88d7be5590bb1f20c9a69ed6e2764723862a6214406b",
+    "idx-signals/idxsig/e1.py": "910cb623041514c85c0d5a6bce808801d5a5637e59ab527e3bba9b6969a4d215",
+    "idx-signals/idxsig/controls.py": "5e3e8e7a1a26df43801b0b859d298f3f646bf01e09946130b625763f27d8d361",
+    "idx-signals/idxsig/execution.py": "8949da97745896cb9ccf305d3e4e76cec9b41ee1e05aad2729ac3b228ea9bb98",
+    "idx-signals/idxsig/rules/moonshot_e1.py": "425684b7fa2ef1ff05210a1e28df62f904d49131885fc9d0276929579a1928e9",
+    "idx-signals/data/manifests/panel-20261007T225823Z.json": "941cf83715ee69188969e1c5aab4e2b12622a5fb361381e86dffe8e505545a74",
+    "idx-signals/data/manifests/idx_mirror-20261007T180744Z.jsonl": "557cab44eac9b0ad94903159e26de7213dfd958898802730773b27e675c85721"
+  },
+  "verifier": "verify_v2.py (verify.py loaded the wrong run module and checked nothing)",
+  "rehearsal": {
+    "stage1_cells_passing_G1_G5": 0,
+    "validation_cells_passing_G1_G5": 0,
+    "verifier": "VERIFIED (flow features equal to separate per-ticker code; 200 sampled rows per window; every lift)",
+    "max_placebo_lift_gated_cells": 4.484,
+    "median": 1.23
+  }
+}

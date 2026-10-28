@@ -1,0 +1,355 @@
+{
+  "code": {
+    "commit": "842c479f7bf269001839a1740da5f6294f46a1f3",
+    "dirty": false
+  },
+  "computed_at": "20261026T202846Z",
+  "markets": {
+    "AU": {
+      "episodes": {
+        "FAST_DOWN": 276,
+        "FAST_UP": 354,
+        "SLOW_DOWN": 664,
+        "SLOW_UP": 629
+      },
+      "panel_manifest": "panel_intl_au-20261026T202615Z.json",
+      "panel_sha256": "5bb24c6ba60b4836b68e84f7404f199bbd343608798b0d1eb06432c46484aff4",
+      "rows": 24175,
+      "tickers": 386
+    },
+    "DE": {
+      "episodes": {
+        "FAST_DOWN": 150,
+        "FAST_UP": 187,
+        "SLOW_DOWN": 549,
+        "SLOW_UP": 509
+      },
+      "panel_manifest": "panel_intl_de-20261026T202527Z.json",
+      "panel_sha256": "708c1857b5ae6d041084ed85113ef73d839ca531b8df5c766fed86e646dc8190",
+      "rows": 17623,
+      "tickers": 408
+    },
+    "FR": {
+      "episodes": {
+        "FAST_DOWN": 256,
+        "FAST_UP": 330,
+        "SLOW_DOWN": 586,
+        "SLOW_UP": 491
+      },
+      "panel_manifest": "panel_intl_fr-20261026T202550Z.json",
+      "panel_sha256": "8bc4817ee0b39274c5c66ac36c266a8d9f392c4c3469b87e6adc1b772c35cad2",
+      "rows": 21601,
+      "tickers": 424
+    },
+    "HK": {
+      "episodes": {
+        "FAST_DOWN": 149,
+        "FAST_UP": 169,
+        "SLOW_DOWN": 458,
+        "SLOW_UP": 440
+      },
+      "panel_manifest": "panel_intl_hk-20261026T202658Z.json",
+      "panel_sha256": "121dc93ce39cb80d395c3108ff527ee8fe591b10966b2166311d4ad21b6bcf50",
+      "rows": 15865,
+      "tickers": 240
+    },
+    "IT": {
+      "episodes": {
+        "FAST_DOWN": 26,
+        "FAST_UP": 48,
+        "SLOW_DOWN": 141,
+        "SLOW_UP": 171
+      },
+      "panel_manifest": "panel_intl_it-20261026T202723Z.json",
+      "panel_sha256": "5f56ee1ae5f896266d0165ead8ed0e5fef4cf5ca5794a9f66f2b4d2587c3cbf4",
+      "rows": 5144,
+      "tickers": 178
+    },
+    "JP": {
+      "episodes": {
+        "FAST_DOWN": 9,
+        "FAST_UP": 14,
+        "SLOW_DOWN": 80,
+        "SLOW_UP": 120
+      },
+      "panel_manifest": "panel_intl_jp-20261026T202712Z.json",
+      "panel_sha256": "0be0905c816d4c6578f0bdc61449e3cf318417309918cdb93411a6a039e977cd",
+      "rows": 2938,
+      "tickers": 227
+    },
+    "NO": {
+      "episodes": {
+        "FAST_DOWN": 183,
+        "FAST_UP": 194,
+        "SLOW_DOWN": 382,
+        "SLOW_UP": 363
+      },
+      "panel_manifest": "panel_intl_no-20261026T202647Z.json",
+      "panel_sha256": "864ab5a980d088067573bdba6d6a9c7cef45966a0f9361c9de86f4d5ac9eb763",
+      "rows": 14140,
+      "tickers": 235
+    },
+    "SE": {
+      "episodes": {
+        "FAST_DOWN": 132,
+        "FAST_UP": 150,
+        "SLOW_DOWN": 424,
+        "SLOW_UP": 330
+      },
+      "panel_manifest": "panel_intl_se-20261026T202637Z.json",
+      "panel_sha256": "130a4faba082a714b78027f186b1013cc1eb16ebe85e58f7e525118719e7051b",
+      "rows": 13470,
+      "tickers": 217
+    },
+    "UK": {
+      "episodes": {
+        "FAST_DOWN": 305,
+        "FAST_UP": 403,
+        "SLOW_DOWN": 762,
+        "SLOW_UP": 667
+      },
+      "panel_manifest": "panel_intl_uk-20261026T202501Z.json",
+      "panel_sha256": "7e4e1287cd2bd967886a0f327366224bae8ad5e00af8f17955bccae179d11bbe",
+      "rows": 27726,
+      "tickers": 536
+    }
+  },
+  "mode": "placebo",
+  "protocol_id": "LEAD_LADDER_INTL_v1",
+  "protocol_sha256": "c02802ab5a4ab05c16a59c1df9db63f443a16a116733d3c3c03d8607f9e64f8d",
+  "result": {
+    "per_market_primary_descriptive": [
+      {
+        "cell": "P1",
+        "events": 311,
+        "lift": 1.0016712520057593,
+        "market": "AU"
+      },
+      {
+        "cell": "P2",
+        "events": 575,
+        "lift": 1.5351393494182042,
+        "market": "AU"
+      },
+      {
+        "cell": "P3",
+        "events": 566,
+        "lift": 1.2835266384042727,
+        "market": "AU"
+      },
+      {
+        "cell": "P1",
+        "events": 157,
+        "lift": 0.9917880744062978,
+        "market": "DE"
+      },
+      {
+        "cell": "P2",
+        "events": 444,
+        "lift": 1.0928665171903,
+        "market": "DE"
+      },
+      {
+        "cell": "P3",
+        "events": 449,
+        "lift": 1.175908476409361,
+        "market": "DE"
+      },
+      {
+        "cell": "P1",
+        "events": 298,
+        "lift": 1.0202050342036384,
+        "market": "FR"
+      },
+      {
+        "cell": "P2",
+        "events": 442,
+        "lift": 1.5352227678784214,
+        "market": "FR"
+      },
+      {
+        "cell": "P3",
+        "events": 448,
+        "lift": 0.9116702293704623,
+        "market": "FR"
+      },
+      {
+        "cell": "P1",
+        "events": 148,
+        "lift": 1.477774215517076,
+        "market": "HK"
+      },
+      {
+        "cell": "P2",
+        "events": 405,
+        "lift": 2.138890778236145,
+        "market": "HK"
+      },
+      {
+        "cell": "P3",
+        "events": 408,
+        "lift": 1.4050434536267535,
+        "market": "HK"
+      },
+      {
+        "cell": "P1",
+        "events": 42,
+        "lift": 2.055119963854898,
+        "market": "IT"
+      },
+      {
+        "cell": "P2",
+        "events": 162,
+        "lift": 2.065612936902844,
+        "market": "IT"
+      },
+      {
+        "cell": "P3",
+        "events": 163,
+        "lift": 1.0540096462282962,
+        "market": "IT"
+      },
+      {
+        "cell": "P1",
+        "events": 14,
+        "lift": 1.2347784158208066,
+        "market": "JP"
+      },
+      {
+        "cell": "P2",
+        "events": 112,
+        "lift": 1.4593426162632754,
+        "market": "JP"
+      },
+      {
+        "cell": "P3",
+        "events": 114,
+        "lift": 0.0,
+        "market": "JP"
+      },
+      {
+        "cell": "P1",
+        "events": 173,
+        "lift": 0.8347437384685714,
+        "market": "NO"
+      },
+      {
+        "cell": "P2",
+        "events": 324,
+        "lift": 1.81437103649471,
+        "market": "NO"
+      },
+      {
+        "cell": "P3",
+        "events": 322,
+        "lift": 1.211530369363291,
+        "market": "NO"
+      },
+      {
+        "cell": "P1",
+        "events": 135,
+        "lift": 1.2718323925035042,
+        "market": "SE"
+      },
+      {
+        "cell": "P2",
+        "events": 309,
+        "lift": 1.4481854910338074,
+        "market": "SE"
+      },
+      {
+        "cell": "P3",
+        "events": 309,
+        "lift": 1.1566876620891888,
+        "market": "SE"
+      },
+      {
+        "cell": "P1",
+        "events": 368,
+        "lift": 1.0966833211777864,
+        "market": "UK"
+      },
+      {
+        "cell": "P2",
+        "events": 621,
+        "lift": 1.2615060943036032,
+        "market": "UK"
+      },
+      {
+        "cell": "P3",
+        "events": 614,
+        "lift": 0.8992598125231138,
+        "market": "UK"
+      }
+    ],
+    "primary": [
+      {
+        "G1": false,
+        "G2": false,
+        "G3": false,
+        "G4": false,
+        "G5": true,
+        "down_lift": 2.335717080134171,
+        "events": 1646,
+        "expected": 196.32325599015405,
+        "feature": "ret20",
+        "id": "P1",
+        "kind": "FAST_UP",
+        "lead": 3,
+        "lift": 1.105319891449248,
+        "lower_bound": 0.9678237988684996,
+        "movement_only": false,
+        "passes": false,
+        "status": "FAIL",
+        "tail": "bottom"
+      },
+      {
+        "G1": false,
+        "G2": true,
+        "G3": false,
+        "G4": false,
+        "G5": true,
+        "down_lift": 1.4744249986819804,
+        "events": 3394,
+        "expected": 165.44632647044602,
+        "feature": "up5",
+        "id": "P2",
+        "kind": "SLOW_UP",
+        "lead": 5,
+        "lift": 1.5594181237145026,
+        "lower_bound": 1.3720865001060325,
+        "movement_only": false,
+        "passes": false,
+        "status": "FAIL",
+        "tail": "bottom"
+      },
+      {
+        "G1": false,
+        "G2": false,
+        "G3": false,
+        "G4": false,
+        "G5": true,
+        "down_lift": 1.8651890079942315,
+        "events": 3393,
+        "expected": 170.93507478305324,
+        "feature": "age",
+        "id": "P3",
+        "kind": "SLOW_UP",
+        "lead": 10,
+        "lift": 1.1524843584619935,
+        "lower_bound": 0.9826523281780569,
+        "movement_only": false,
+        "passes": false,
+        "status": "FAIL",
+        "tail": "bottom"
+      }
+    ],
+    "secondary": {
+      "cells": 256,
+      "movement_only": 0,
+      "passing": 0,
+      "passing_cells": []
+    },
+    "verdict": "NOT_REPLICATED"
+  }
+}

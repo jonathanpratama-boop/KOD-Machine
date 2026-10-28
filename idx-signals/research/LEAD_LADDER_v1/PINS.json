@@ -1,0 +1,37 @@
+{
+  "protocol_id": "LEAD_LADDER_v1",
+  "written_before": "the recorded run (results/)",
+  "files": {
+    "idx-signals/research/LEAD_LADDER_v1/PROTOCOL.md": "be84da4487f62820b485753b29c97ad97846876c4ad15c9effda859f8bcf2c17",
+    "idx-signals/research/LEAD_LADDER_v1/protocol.json": "ab68100daa3d2e0798ac413e55a8af8d234fb02a8d7b5be7d2a42af599e96b64",
+    "idx-signals/research/LEAD_LADDER_v1/run.py": "ee68639bb732db446bb974fe1fc4c2157683b5233738860a02bacc8437448941",
+    "idx-signals/research/LEAD_LADDER_v1/verify.py": "0d08ac53c1b4255ae584b390e3b91d4bc572131d726d1be052d37aee57320e53",
+    "idx-signals/research/LEAD_LADDER_v1/verify_v2.py": "9773508e63c075e673b0d404aa0783784c91da7254c0ea80afc3ee5294e60a7d",
+    "idx-signals/research/LEAD_LADDER_v1/anatomy.py": "d0a330e321836c45b27ec702ceb8827dc17c73a6fa7fc9892cfe980576c1a9d7",
+    "idx-signals/idxsig/lead_ladder.py": "0250b63a5e3a36eaa68baef3d15234878900df93ae11727ece8befd5ce5d14a2",
+    "idx-signals/idxsig/void.py": "b082ab5b0bf4eedc164e88d7be5590bb1f20c9a69ed6e2764723862a6214406b",
+    "idx-signals/idxsig/e1.py": "910cb623041514c85c0d5a6bce808801d5a5637e59ab527e3bba9b6969a4d215",
+    "idx-signals/idxsig/controls.py": "5e3e8e7a1a26df43801b0b859d298f3f646bf01e09946130b625763f27d8d361",
+    "idx-signals/idxsig/execution.py": "8949da97745896cb9ccf305d3e4e76cec9b41ee1e05aad2729ac3b228ea9bb98",
+    "idx-signals/idxsig/rules/moonshot_g.py": "b050c4d37d9104309b32e70a7e81682ee3029da3a6a0654dae6ac41414abb794",
+    "idx-signals/idxsig/rules/moonshot_e1.py": "425684b7fa2ef1ff05210a1e28df62f904d49131885fc9d0276929579a1928e9",
+    "idx-signals/idxsig/profiles.py": "8adcfb8138e363c531bafd8e5b8462a108e0fe89363261e59481b31668d05b26",
+    "idx-signals/research/E1/protocol.json": "763feb40c69e54f19c598eb43ac71efb589477ad8670645b09dede3d6d6e9404",
+    "idx-signals/research/E2/protocol.json": "c48f3dd80cf99498610c0f977328dbd1c7c6099a9e13a7d5d161e07e21d860a5",
+    "idx-signals/data/manifests/panel-20261007T225823Z.json": "941cf83715ee69188969e1c5aab4e2b12622a5fb361381e86dffe8e505545a74",
+    "idx-signals/data/manifests/panel_crypto-20261008T003354Z.json": "9cf6e5c73bbf8bff56a6b3ed89b337159b0ef7c3270f8d71c358ca6e879d8038",
+    "idx-signals/data/manifests/panel_us-20261008T004105Z.json": "2941b80e4080436fae5f31ad32f65edb3a7c6ea633d8bd3773b535de7455678a"
+  },
+  "panels": {
+    "panel-20261007T225823Z.csv.gz": "9d3a0718c95f9e885c4f8310cf68bf5e75021c366c454f73389d7fae75c02877",
+    "panel_crypto-20261008T003354Z.csv.gz": "3dc12749c7cce635a68ef4f152ec21c3b3d24eb6b02665c799aa24e513963d7d",
+    "panel_us-20261008T004105Z.csv.gz": "e5b5267438667a136f4a4cb42c52d6bc98bc80cde6a88c02a27751a4902c9b92"
+  },
+  "verifier": "verify_v2.py (verify.py crashed on its first run with a shape error in its one-session check; no result; verify_v2.py changes that one line and is the verifier of record)",
+  "rehearsal": {
+    "verdict": "NO_DAYS_AHEAD_LEAD",
+    "cells_passing": 0,
+    "verifier": "verify_v2.py: VERIFIED (300 sampled event rows, 808 gated cells, 0 mismatches)"
+  },
+  "feasibility": "every gated cell has >= 500 events with a pool of >= 5 (feasibility/counts_*.csv); G5 needs 100"
+}

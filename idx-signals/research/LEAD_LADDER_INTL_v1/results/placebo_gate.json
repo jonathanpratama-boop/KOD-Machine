@@ -1,0 +1,31 @@
+{
+  "rule": "ADDENDUM_2: G1-G5 and lift >= 1.5 x rehearsal lift",
+  "primary": [
+    {
+      "id": "P1",
+      "lift": 2.502969939848274,
+      "placebo_lift": 1.105319891449248,
+      "G6": true,
+      "status_G1_G5": "FAIL",
+      "status": "FAIL"
+    },
+    {
+      "id": "P2",
+      "lift": 1.6281980778628622,
+      "placebo_lift": 1.5594181237145026,
+      "G6": false,
+      "status_G1_G5": "FAIL",
+      "status": "FAIL"
+    },
+    {
+      "id": "P3",
+      "lift": 1.4558594049042248,
+      "placebo_lift": 1.1524843584619935,
+      "G6": false,
+      "status_G1_G5": "FAIL",
+      "status": "FAIL"
+    }
+  ],
+  "verdict": "NOT_REPLICATED",
+  "verdict_G1_G5_only": "NOT_REPLICATED"
+}

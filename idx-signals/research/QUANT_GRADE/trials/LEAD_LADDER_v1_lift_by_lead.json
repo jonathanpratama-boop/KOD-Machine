@@ -1,0 +1,13 @@
+{
+ "id": "LEAD_LADDER_v1_lift_by_lead",
+ "experiment": "LEAD_LADDER_v1",
+ "date": "2026-10-26",
+ "hypothesis": "at a lead of 3 or more sessions, some E1/E2 daily-bar feature separates names about to start a +30% fast or slow up-move from matched names (lift >= 2, Bonferroni over 808 cells), more than it separates upcoming falls, in every year (IDX, crypto, US discovery years)",
+ "one_sided_p": 8.0e-15,
+ "p_source": "research/LEAD_LADDER_v1/results/lifts.csv, rule-selected cell IDX SLOW_UP age bottom lead 10: log lift / week-bootstrap se, normal one-sided",
+ "variants_searched": 808,
+ "outcome": "PASS (LEAD_FOUND by the pre-registered rule), separation only: no trading result",
+ "note": "6 of 808 cells pass: IDX SLOW_UP youngest listings (leads 3-10, lift ~2.1 vs ~1.35 for slow falls), IDX SLOW_UP few up-days (lead 5), CRYPTO and US FAST_UP worst 20-session return (lead 3; US survivor-only). Lifts are flat across leads: states, not timing. 64 cells (volatility, drawdown, close position) are movement-only. Base rates 0.2-1.1% per ticker-day, so >97% of flagged days are false. Validation on 2023 is counted test 29 when run.",
+ "counted": true,
+ "registered": "2026-10-26"
+}

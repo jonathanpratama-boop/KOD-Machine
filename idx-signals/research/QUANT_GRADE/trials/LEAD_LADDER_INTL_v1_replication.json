@@ -1,0 +1,13 @@
+{
+ "id": "LEAD_LADDER_INTL_v1_replication",
+ "experiment": "LEAD_LADDER_INTL_v1",
+ "date": "2026-10-26",
+ "hypothesis": "test 28's three directional pre-move cells (beaten-down before fast rises, few up-days and young listings before slow rises) reappear, pooled over the stocks eToro lists on nine non-US exchanges",
+ "one_sided_p": null,
+ "p_source": "research/LEAD_LADDER_INTL_v1/results/placebo_gate.json: no primary cell passes; P1 separates (lift 2.50, placebo 1.11) but fails direction (falls 2.34)",
+ "variants_searched": 3,
+ "outcome": "FAIL (NOT_REPLICATED)",
+ "note": "Survivor-only, eToro-selected. Secondary ladder 0 of 256 pass, 27 movement-only. Test 28 erratum 1: two of its passing cells are partly a pool artifact.",
+ "counted": true,
+ "registered": "2026-10-26"
+}

@@ -1,0 +1,46 @@
+{
+  "built_at": "2026-10-26T20:25:23Z",
+  "default_start": "2019-05-02",
+  "first_session": "2019-01-02",
+  "format": "panel-global-v2",
+  "inputs": {
+    "yahoo_intl_uk-20261026T201249Z.jsonl": {
+      "path": "data/manifests/yahoo_intl_uk-20261026T201249Z.jsonl",
+      "sha256": "fafe48589c0c443142050994e2846340126ae62d9b13caa882c2bed0e295d5bf"
+    }
+  },
+  "known_limitations": [
+    "survivor-only and eToro-selected: the stocks eToro listed on 2026-10-16, with Yahoo history; names delisted earlier are absent",
+    "prices are split-adjusted by the source, not dividend-adjusted",
+    "daily bars only",
+    "no cost model in this panel's profile"
+  ],
+  "last_session": "2026-10-26",
+  "market": "INTL_UK",
+  "panel": "data/panel/panel_intl_uk-20261026T202501Z.csv.gz",
+  "qa": {
+    "large_move_policy": "preserve; reversion is not proof of a bad print",
+    "non_session_dates_count": 1,
+    "non_session_dates_dropped": [
+      "2026-08-31"
+    ],
+    "preprocessing_version": "causal-close-v2",
+    "spike_rows_dropped": 0
+  },
+  "quality_tiers": [
+    {
+      "corporate_actions": "split-adjusted by the source",
+      "from": "2019-01-02",
+      "source": "yahoo",
+      "survivorship": "survivor-only and eToro-selected: the stocks eToro listed on 2026-10-16, with Yahoo history; names delisted earlier are absent",
+      "tier": "INTL_UK_SURVIVOR",
+      "to": "2026-10-26"
+    }
+  ],
+  "rows": 975866,
+  "sessions": 1975,
+  "sha256": "7e4e1287cd2bd967886a0f327366224bae8ad5e00af8f17955bccae179d11bbe",
+  "source_boundary": "2026-10-26",
+  "survivorship": "survivor-only and eToro-selected: the stocks eToro listed on 2026-10-16, with Yahoo history; names delisted earlier are absent",
+  "tickers": 536
+}
