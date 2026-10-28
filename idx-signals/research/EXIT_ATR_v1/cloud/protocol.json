@@ -1,0 +1,141 @@
+{
+ "protocol_id": "KOD-CRYPTO-EXIT-ATR-v1-cloud",
+ "label": "exploratory comparison on previously examined E2 discovery history; E2's original daily panel used (sha256 checked), so the 'content identity unverified' caveat does not apply",
+ "frozen_before_any_exit_return": true,
+ "question": "Does one ATR trailing stop improve net returns of E2 CRYPTO G2_RET30 signals with next-UTC-day-open entries, and is the resulting strategy profitable in this historical test?",
+ "periods": {
+  "discovery": [
+   "2020-07-01",
+   "2022-12-31"
+  ],
+  "not_read": "2023 (examined in E2 validation) and 2024+ (sealed holdout)"
+ },
+ "data": {
+  "panel_manifest": "data/manifests/panel_crypto-20261008T003354Z.json",
+  "hourly_manifest": "data/manifests/binance_1h-20261015T182940Z.jsonl",
+  "last_hour_read": "2022-12-31 23:00"
+ },
+ "entries": {
+  "source": "research/EXIT_ATR_v1/cloud/make_entries.py (Hermes's make_entries.py; output folder only differs)",
+  "e2_config": "results/runs/20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1 settings, window 2020-07-01..2022-12-31",
+  "overlap": "skip, decided by the ORIGINAL exit",
+  "controls": "v2, 200 draws per attempted signal, seed 20261007+1"
+ },
+ "sizing": {
+  "notional_usdt": 5000.0,
+  "max_participation": 0.1,
+  "unit": "whole coins (lot 1)"
+ },
+ "eligibility": {
+  "scored_statuses": [
+   "EXITED",
+   "EXIT_DATA_END"
+  ],
+  "hourly_symbol_and_entry_bar": true,
+  "atr_warmup": "15 consecutive daily bars s-14..s, finite, high>=low>0, close>0, ATR>0",
+  "unit_or_asset_change_exclusion_days": {
+   "COCOS": [
+    "2021-01-19",
+    "2021-01-23"
+   ],
+   "BTCST": [
+    "2021-03-15",
+    "2021-03-19"
+   ],
+   "DREP": [
+    "2021-03-29",
+    "2021-04-02"
+   ],
+   "SUN": [
+    "2021-06-14",
+    "2021-06-18"
+   ],
+   "VIDT": [
+    "2022-10-31",
+    "2022-11-09"
+   ],
+   "LUNA": [
+    "2022-05-13",
+    "2022-05-31"
+   ]
+  },
+  "exclusion_window": "day s-14 through the original exit day",
+  "unresolved_kept": {
+   "UNFI": "2022-06-07"
+  }
+ },
+ "arm_A": "E2 harness 21345b1 original exit: close of entry+5 sessions or first later sellable session; EXIT_DATA_END at the last traded close",
+ "arm_B": {
+  "atr": "mean of 14 true ranges of daily bars s-13..s, first using close of s-14, frozen at entry",
+  "multiplier": 3.0,
+  "initial_stop": "entry - 3*ATR, active from the entry bar",
+  "ratchet": "after each completed hourly bar: highest=max(highest, high) from the entry price; stop=max(stop, highest-3*ATR) active from the next bar",
+  "take_profit": null,
+  "fill": "open<=stop: open; else low<=stop: stop",
+  "window": "entry day 00:00 bar through the 23:00 bar of arm A's exit day",
+  "unstopped": "exit exactly as arm A",
+  "gaps": "hold; no fill or update while missing; gap rule on the next bar",
+  "data_end": "stops checked through the last bar; else arm A's price"
+ },
+ "costs": {
+  "per_side": {
+   "original": 0.002,
+   "primary": 0.003,
+   "stress": 0.004
+  },
+  "formula": "exit*(1-c)/(entry*(1+c))-1, as E2's harness charges fee plus tier"
+ },
+ "statistics": {
+  "cluster": "ISO calendar week of the entry date (UTC)",
+  "resamples": 2000,
+  "seed": 20261016,
+  "interval": "95% percentile; one fixed set of resampled weeks for all metrics"
+ },
+ "sensitivities": [
+  "stress costs 0.4% per side",
+  "original costs 0.2% per side",
+  "conservative gap fills (first bar after a gap fills at its low)",
+  "data-end positions at -100% in both arms",
+  "UNFI excluded"
+ ],
+ "acceptance": {
+  "years": [
+   "2020",
+   "2021",
+   "2022"
+  ],
+  "criteria": [
+   "C1 >= 200 common scored trades",
+   "C2 arm B mean net > 0 in each discovery year (entry year)",
+   "C3 lower 95% bound of arm B mean net > 0",
+   "C4 lower 95% bound of paired improvement > 0",
+   "C5 arm B mean excess over matched controls with the same exit > 0",
+   "C6 arm B mean net > 0 at stress costs"
+  ],
+  "research_positive": "all of C1-C6"
+ },
+ "verdicts": {
+  "Q1": "IMPROVES if C4; DOES_NOT_IMPROVE if paired mean <= 0; else INCONCLUSIVE",
+  "Q2": "PROFITABLE_IN_THIS_HISTORICAL_TEST only if RESEARCH-POSITIVE; UNPROFITABLE if arm B mean net <= 0; else INCONCLUSIVE"
+ },
+ "hashes": {
+  "e2_harness_commit": "21345b1202456b2a0a6b22a7028d338942d0f1fc",
+  "files": {
+   "idxsig/exit_atr.py": "9611218261b12f25b3d12cbe4ba5246edc32da645a3e94158692d468f9fcfdf8",
+   "idxsig/e6.py": "3c8809e85fd295ce55e2dd623d2527533811c633664a4c658634ef890b0a0a7d",
+   "tests/test_exit_atr.py": "ee3a2c6d16d2779cddfaabdbb587f46152e8649dd544a92eb9b05302d58aff92",
+   "research/EXIT_ATR_v1/cloud/make_entries.py": "2d837209a8258c172a99fd8db45ba376743aded3cc9237f09f3fe5038a1f8178",
+   "research/EXIT_ATR_v1/cloud/prepare.py": "887ccc585f8761b9c439c82eaf362a73d0fa3922eb9bd91249589d5d6be48276",
+   "research/EXIT_ATR_v1/cloud/run_comparison.py": "64c8bcebf14e1f51b7b7b226397709d610f42c0d8a5d20866a4ed38e3923548c",
+   "research/EXIT_ATR_v1/cloud/PROTOCOL.md": "a1e22d939cd319cbb7e93609e84a8a16f1af927a64ef52ad73e6f565ed7a97ce",
+   "research/EXIT_ATR_v1/cloud/entries/signals.csv": "c64f1916dfff560c6e012834f2a93ecbb9d64e32e9e12a296ff7f49e948eefd4",
+   "research/EXIT_ATR_v1/cloud/entries/controls.csv.gz": "7c389ae0d82b4f3438f3d767ddc532f9a3324a825367f434f733eb37420442d3",
+   "research/EXIT_ATR_v1/cloud/entries/entries_meta.json": "dfd65ca1a7b90a37a5c754c05e1f758248ca6fe6fbd4677c70002d403f6c8a7d",
+   "research/EXIT_ATR_v1/cloud/eligibility/ELIGIBILITY.json": "d26813756d61d0477be7456c035ae6cc775bba5066ee0622295a9e80c3a1ecc5",
+   "research/EXIT_ATR_v1/cloud/eligibility/eligibility.csv.gz": "17bf7f19310b959ef1789feb23c2e1edb2dacfbe5d7434f0e8bb13372dacb16f",
+   "data/manifests/panel_crypto-20261008T003354Z.json": "9cf6e5c73bbf8bff56a6b3ed89b337159b0ef7c3270f8d71c358ca6e879d8038",
+   "data/manifests/binance_1h-20261015T182940Z.jsonl": "2587a63ce26034e1d54670579f8843150f640407a6df0338f35537bd30d20adf",
+   "data/panel/panel_crypto-20261008T003354Z.csv.gz": "3dc12749c7cce635a68ef4f152ec21c3b3d24eb6b02665c799aa24e513963d7d"
+  }
+ }
+}

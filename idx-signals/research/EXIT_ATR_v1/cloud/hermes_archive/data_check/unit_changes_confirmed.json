@@ -1,0 +1,86 @@
+{
+ "purpose": "EXIT-ATR-v1 classification of every unit-change candidate inside a used window (unit_candidates_in_used_windows.csv). CONFIRMED only with an exchange announcement whose halt/reopen times match the hourly data; heuristic candidates without one remain UNRESOLVED. No return was computed.",
+ "retrieval": "COCOS page fetched directly 2026-10-16T17:40Z; all others 2026-10-17 WIB from the full page text returned by web search for the binance.com URLs listed (VIDT delist time from a verbatim mirror, noted).",
+ "confirmed": [
+  {
+   "symbol": "COCOSUSDT", "type": "REDENOMINATION", "ratio": "1,000 old = 1 new", "ratio_new_per_old": 0.001, "price_factor_new_over_old": 1000,
+   "halt_start_utc": "2021-01-19T02:00:00Z", "trading_resumed_utc": "2021-01-23T02:00:00Z",
+   "hourly_data_check": "last bar before the halt opens 2021-01-19 01:00 (close 0.000695); first bar after opens 2021-01-23 02:00 (open 0.695); 96 missing hours; ratio 1000.0; matches the announced timeline",
+   "source": {"url": "https://www.binance.com/en/support/announcement/detail/f555f8013eff42bc9c91eaa48b9da24b",
+    "title": "Binance Will Support the Cocos-BCX (COCOS) 1,000:1 Redenomination Plan", "published": "2021-01-18 10:19 (page timestamp)", "retrieved_utc": "2026-10-16T17:40Z",
+    "quoted": ["Trading will be halted in all existing COCOS trading pairs (COCOS/BNB and COCOS/USDT) at 2021/01/19 02:00 AM (UTC) and the trading pairs will also subsequently be delisted from the exchange.",
+     "We will take an immediate snapshot of all COCOS balances at the same time (2021/01/19 02:00 AM UTC) and begin swapping the old COCOS tokens with the new COCOS tokens at a ratio of 1,000:1. New COCOS tokens will assume the COCOS ticker.",
+     "Trading will then open for the new COCOS/BNB and COCOS/USDT trading pairs at 2021/01/23 02:00 AM (UTC)."]}
+  },
+  {
+   "symbol": "BTCSTUSDT", "type": "REDENOMINATION", "ratio": "1 old = 10 new", "price_factor_new_over_old": 0.1,
+   "halt_start_utc": "2021-03-15T07:00:00Z", "trading_resumed_utc": "2021-03-19T07:00:00Z",
+   "hourly_data_check": "last bar before halt opens 2021-03-15 06:00; first bar after opens 2021-03-19 07:00; 96 missing hours; ratio 0.0999984",
+   "source": {"url": "https://www.binance.com/en/support/announcement/binance-will-support-the-btc-standard-hashrate-token-btcst-1-10-redenomination-plan-2c08ba9e1a1b409fb6a4a2cb2f5ed58b",
+    "title": "Binance Will Support the BTC Standard Hashrate Token (BTCST) 1:10 Redenomination Plan", "published": "2021-03-11 09:52 (page timestamp)",
+    "quoted": ["Trading will be halted in all existing BTCST trading pairs (BTCST/BTC, BTCST/BUSD and BTCST/USDT) at 2021-03-15 07:00 AM (UTC) and pending trade orders will be cancelled.",
+     "We will then swap the old BTCST tokens with the new BTCST tokens at a ratio of 1:10. New BTCST tokens will assume the BTCST ticker.",
+     "Trading will then open for the new BTCST/BTC, BTCST/BUSD and BTCST/USDT spot trading pairs at 2021-03-19 07:00 AM (UTC)."]}
+  },
+  {
+   "symbol": "DREPUSDT", "type": "REDENOMINATION", "ratio": "100 old = 1 new", "price_factor_new_over_old": 100,
+   "halt_start_utc": "2021-03-29T04:00:00Z", "trading_resumed_utc": "2021-04-02T04:00:00Z",
+   "hourly_data_check": "last bar before halt opens 2021-03-29 03:00; first bar after opens 2021-04-02 04:00; 96 missing hours; ratio 100.0076. The data follow the UPDATED plan, not the original (halt 2021-03-22).",
+   "source": [
+    {"url": "https://www.binance.com/en/support/announcement/detail/51eb4f0351194fab957bb23cc6ee52dd", "title": "Binance Will Support the DREP (DREP) 100:1 Redenomination Plan", "published": "2021-03-19 08:08",
+     "quoted": ["We will swap the old DREP tokens with the new DREP tokens at a ratio of 100:1. New DREP tokens will assume the DREP ticker."]},
+    {"url": "https://www.binance.com/en/support/announcement/detail/a2c87d5944cd4856af5aabd2cb8f68b4", "title": "Updates to the DREP (DREP) 100:1 Redenomination Plan", "published": "2021-03-22 05:00",
+     "quoted": ["Trading will be halted in all existing DREP trading pairs (DREP/BTC and DREP/USDT) at 2021-03-29 04:00 (UTC) and pending orders will be cancelled.",
+      "Trading will then open for the new DREP/BTC and DREP/USDT trading pairs at 2021-04-02 04:00 (UTC)."]},
+    {"url": "https://www.binance.com/en/support/announcement/detail/01c27af4303d4d668c8ab2bbc7c79319", "title": "Binance Has Completed the DREP (DREP) 100:1 Redenomination Plan", "published": "2021-04-02 09:01", "quoted": []}]
+  },
+  {
+   "symbol": "SUNUSDT", "type": "REDENOMINATION", "ratio": "1 old = 1,000 new", "price_factor_new_over_old": 0.001,
+   "halt_start_utc": "2021-06-14T04:00:00Z", "trading_resumed_utc": "2021-06-18T04:00:00Z",
+   "hourly_data_check": "last bar before halt opens 2021-06-14 03:00; first bar after opens 2021-06-18 04:00; 96 missing hours; ratio 0.00099993",
+   "source": {"url": "https://www.binance.com/en/support/announcement/detail/f923f2e4056843a9a9b87beb2aaa2f31",
+    "title": "Binance Will Support the SUN (SUN) Token Migration & Redenomination Plan", "published": "2021-06-08 09:32",
+    "quoted": ["Binance will delist all existing SUN spot trading pairs (SUN/BTC and SUN/USDT) at 2021-06-14 04:00 (UTC) and pending trade orders will be cancelled.",
+     "Binance will recover all SUN balances and begin the distribution of new SUN to all eligible users at a ratio of 1 SUN (Old) = 1,000 SUN (New).",
+     "Trading will then open for SUN/USDT spot trading pair at 2021-06-18 04:00 (UTC). SUN/BTC spot trading pair will not be re-listed."]}
+  },
+  {
+   "symbol": "VIDTUSDT", "type": "REDENOMINATION_TOKEN_SWAP_REBRAND", "ratio": "1 old = 10 new", "price_factor_new_over_old": 0.1,
+   "halt_start_utc": "2022-10-31T03:00:00Z", "trading_resumed_utc": "2022-11-09T08:00:00Z",
+   "hourly_data_check": "missing run starts 2022-10-31 03:00, 221 hours, first bar after opens 2022-11-09 08:00; observed ratio 0.0930. NOT within 5% of 0.1 because the price moved during the 9-day halt: the near-power-of-ten heuristic MISSED this confirmed case.",
+   "source": {"url": "https://binance.com/en/support/announcement/binance-will-support-the-vidt-datalink-vidt-token-swap-redenomination-rebranding-plan-to-vidt-dao-vidt-ef40b40af1944bc9b399ad9c52861a04",
+    "title": "Binance Will Support the VIDT Datalink (VIDT) Token Swap, Redenomination & Rebranding Plan to VIDT DAO (VIDT)", "published": "not shown in the retrieved text",
+    "quoted": ["Binance will recover all VIDT Datalink (VIDT) balances, and begin the distribution of VIDT DAO (VIDT) to all eligible users at a ratio of 1 old VIDT = 10 new VIDT.",
+     "At 2022-11-09 08:00 (UTC), trading will open for VIDT/USDT, VIDT/BUSD, and VIDT/BTC spot trading pairs."],
+    "delist_time_from_mirror": {"url": "https://cryptonews.net/news/market/14591771", "quoted": "At 2022-10-31 03:00 (UTC), Binance will delist all existing VIDT spot trading pairs (VIDT/USDT, VIDT/BUSD, and VIDT/BTC) and cancel all pending VIDT spot trade orders."}}
+  },
+  {
+   "symbol": "LUNAUSDT", "type": "ASSET_CHANGE_TICKER_REUSE",
+   "description": "Terra Classic (old LUNA, renamed LUNC) until the May 2022 halt; Terra 2.0, a different token, trades under LUNA/USDT from 2022-05-31 06:00 UTC. No conversion factor exists (airdrop ratios are distributions, not price equivalence): unit correction impossible, exclusion only.",
+   "trading_resumed_utc": "2022-05-31T06:00:00Z", "halt_start_utc": "data: last old-LUNA bar opens 2022-05-13 00:00; halt start not separately sourced (irrelevant: all windows touching the junction are excluded)",
+   "hourly_data_check": "missing run starts 2022-05-13 01:00, 437 hours, ends exactly at 2022-05-31 06:00; observed ratio 20,000",
+   "source": {"url": "https://www.binance.com/en/support/announcement/detail/d044a6742e484b77a170111460b0eed3",
+    "title": "Binance Will List Terra 2.0 (LUNA) in the Innovation Zone *LUNA (old) Renamed as LUNC", "published": "2022-05-28 11:17",
+    "quoted": ["Binance will list Terra 2.0 (LUNA) in the Innovation Zone and will open trading for LUNA/USDT and LUNA/BUSD trading pairs at 2022-05-31 06:00 (UTC).",
+     "The ticker for Terra Classic, or the LUNA (old) token, has since been renamed as LUNC.",
+     "Note: This announcement was last updated on 2022-05-31 to clarify the presence of Terra Classic (LUNC)'s historical trading data in the Terra 2.0 (LUNA) K-line chart."]}
+  }
+ ],
+ "unresolved": [
+  {"symbol": "UNFIUSDT", "day": "2022-06-07", "ratio_close_vs_prev_close": 5.5209, "status": "UNRESOLVED",
+   "evidence": "no exchange announcement sought or found; no missing hours for UNFI in 2022; no consecutive-hour jump of 5x or more (only the daily close-vs-previous-close test fires). A Binance redenomination requires a trading halt, which did not occur, so the evidence indicates a real price move.",
+   "treatment": "kept unmodified in the main analysis; dropped only in the 'unresolved excluded' sensitivity"}
+ ],
+ "candidates_outside_used_windows": [
+  {"symbol": "LUNAUSDT", "day": "2022-05-11", "ratio": 0.0617, "note": "Terra collapse, real crash"},
+  {"symbol": "LUNAUSDT", "day": "2022-05-12", "ratio": 0.000297, "note": "Terra collapse, real crash; illustrates why a ratio alone cannot confirm a unit change"}
+ ],
+ "e2_discovery_flags_that_are_artefact_triggers": {
+  "flags": ["COCOS 2021-01-23", "DREP 2021-04-02", "LUNA 2022-05-31"],
+  "note": "All three are in E2's 1,394 discovery flags (verified against signal_sets_diff.csv). E2 is frozen and was not altered. The effect on E2's statistics was NOT computed."
+ },
+ "trades_touching_confirmed_events_current_flags": {
+  "signal": 8, "signal_already_atr_invalid": 7, "signal_newly_affected": "COCOS signal 2021-01-15 (hold window runs into the halt)",
+  "control": 214, "note": "from candidate-day flags; the union with the halt-interval overlap flag is recomputed in code at the freeze"
+ }
+}
