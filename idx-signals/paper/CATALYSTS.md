@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-28T13:44:53Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-28T23:03:15Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 0 (none) over 0 signal sessions; events seen: none; coverage gaps 0.
+Sets 2 (FIRE 1, ABSTAIN 1) over 1 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 1, SEALED 2; coverage gaps 0.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -22,6 +22,18 @@ Sets 14 over 1 sessions.
 - RUNUP: paired 0, mean signed diff n/a, share with the flow n/a
 - POST20: paired 0, mean signed diff n/a, share with the flow n/a
 
+## DILUTION_8K (counted at each look; direction -1; `KOD-CATALYST-FAMILY-DILUTION_8K-v1`)
+
+Sets 0 over 0 signal sessions; events seen: none; coverage gaps 0.
+- MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
+- WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
+
+## FORM4 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-FORM4-v1`)
+
+Sets 0 over 0 signal sessions; events seen: none; coverage gaps 0.
+- MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
+- WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
+
 ## Calibration
 
 | Family | Statement | n | Realised | Mean prior | Twins | Brier | Brier at 0.5 |
@@ -32,19 +44,20 @@ Sets 14 over 1 sessions.
 | SEC13D | RUN30_20 | 0 | | | | | |
 | IDX_INDEX | WITH_FLOW_RUNUP | 0 | | | | | |
 | IDX_INDEX | REVERSAL_POST20 | 0 | | | | | |
+| DILUTION_8K | LOSES_TO_TWINS_20 | 0 | | | | | |
+| DILUTION_8K | GAIN0_20 | 0 | | | | | |
+| DILUTION_8K | FADE10_20 | 0 | | | | | |
+| DILUTION_8K | RUN30_20 | 0 | | | | | |
+| FORM4 | BEATS_TWINS_20 | 0 | | | | | |
+| FORM4 | GAIN0_20 | 0 | | | | | |
+| FORM4 | FADE10_20 | 0 | | | | | |
+| FORM4 | RUN30_20 | 0 | | | | | |
 
 ## DILUTION_RECENT tags on Speculation Register sets
 
 0 tags: 0 true, 0 unknown.
 
 ## Latest sets
-
-### IDX_INDEX AALI (ADD IDX80) - effective 2026-11-02, sealed 2026-10-28T10:38:02Z, cutoff 2026-10-29T01:45:00Z
-Set `29d12433e404`, scan `SCAN-2026-10-28-F1_ARA`; signal close 9750 on 2026-10-28; entry: the closing auction of the session after the signal session (2026-10-29). Windows: POST20: entry +2, hold 20; RUNUP: entry +1, hold 1.
-Confidence SINGLE_SOURCE; events file sha256 `39df501b3e5a`.
-Coverage DESCRIPTIVE (not counted).
-Twins (band+liq+mom+dd): BSSR 5150, AADI 11650, INTP 5800, ITMG 24975, PKPK 7250.
-Cone: WITH_FLOW_RUNUP p=0.50; REVERSAL_POST20 p=0.50.
 
 ### IDX_INDEX CUAN (DELETE LQ45, DELETE IDX80) - effective 2026-11-02, sealed 2026-10-28T10:38:02Z, cutoff 2026-10-29T01:45:00Z
 Set `35d548e06a46`, scan `SCAN-2026-10-28-F1_ARA`; signal close 432 on 2026-10-28; entry: the closing auction of the session after the signal session (2026-10-29). Windows: POST20: entry +2, hold 20; RUNUP: entry +1, hold 1.
@@ -136,4 +149,18 @@ Confidence CONFIRMED; events file sha256 `39df501b3e5a`.
 Coverage DESCRIPTIVE (not counted).
 Twins (band+liq+mom+dd): ANTM 2800, SSMS 940, AMMN 3900, ESSA 525, HRUM 725.
 Cone: WITH_FLOW_RUNUP p=0.50; REVERSAL_POST20 p=0.50.
+
+### SEC13D BKU (BankUnited, Inc.) - accepted 2026-10-28T16:24:02-04:00, sealed 2026-10-28T23:03:12Z, cutoff 2026-10-29T13:15:00Z
+Set `dd2d6840461e`, scan `SCAN-US-2026-10-28-G2_RET30`; signal close 42.81 on 2026-10-28; entry: the entry session's opening print (2026-10-29). Windows: H20: entry +1, hold 20.
+Filing `0000921895-26-002864` by HoldCo Asset Management, LP; Item 4 intent words: board, director.
+Coverage **FIRE**; pre-entry move +0.00%, market value USD 3,049.5M, dilution filings 0.
+Twins (band+liq+mom+dd): STRA 77.55, NHC 211.79, BCC 74.56, SLG 48.99, PHIN 57.68.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D SWBI (SMITH & WESSON BRANDS, INC.) - accepted 2026-10-28T17:53:47-04:00, sealed 2026-10-28T23:03:12Z, cutoff 2026-10-29T13:15:00Z
+Set `e13fc212025b`, scan `SCAN-US-2026-10-28-G2_RET30`; signal close 13.89 on 2026-10-28; entry: the entry session's opening print (2026-10-29). Windows: H20: entry +1, hold 20.
+Filing `0001493152-26-049116` by JDH Capital I, L.P.; Item 4 intent words: board, merger, acquisition, director.
+Coverage **ABSTAIN** (DILUTION_RECENT); pre-entry move +0.00%, market value USD 622.8M, dilution filings 1.
+Twins (band+liq+mom+dd): GLSI 18.31, USNA 14.62, FDUS 19.09, TIPT 17.21, AERO 15.21.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
