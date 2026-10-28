@@ -1,0 +1,67 @@
+{
+ "panel_sha256": "9d3a0718c95f9e885c4f8310cf68bf5e75021c366c454f73389d7fae75c02877",
+ "runs": {
+  "C": {
+   "run": "20261009T050040Z_MOONSHOT_E1_D1_v1.1",
+   "entered": 262,
+   "scored": 251,
+   "scored_shares_above_entire_entry_session_volume": 0,
+   "scored_shares_above_10pct_of_entry_session_volume": 4,
+   "median_share_of_entry_session": 0.0007913010678498442,
+   "max_share_of_entry_session": 0.31328623125969324,
+   "avg_net_if_infeasible_above_10pct_removed": -0.03566266838121134,
+   "avg_net_recorded": -0.03635564877843108,
+   "examples_above_10pct": [
+    {
+     "ticker": "ISAP",
+     "signal_date": "2023-11-23",
+     "entry_date": "2023-11-24",
+     "shares": 909000,
+     "entry_session_volume": 2901500.0,
+     "share_of_entry_session": 0.31328623125969324,
+     "net_return": -0.09454000817
+    },
+    {
+     "ticker": "NAYZ",
+     "signal_date": "2023-11-10",
+     "entry_date": "2023-11-13",
+     "shares": 400000,
+     "entry_session_volume": 1486900.0,
+     "share_of_entry_session": 0.2690160737104042,
+     "net_return": -0.1235147279
+    },
+    {
+     "ticker": "ISAP",
+     "signal_date": "2023-12-12",
+     "entry_date": "2023-12-13",
+     "shares": 909000,
+     "entry_session_volume": 6570000.0,
+     "share_of_entry_session": 0.13835616438356163,
+     "net_return": -0.09454000817
+    },
+    {
+     "ticker": "TAMU",
+     "signal_date": "2023-09-07",
+     "entry_date": "2023-09-08",
+     "shares": 1000000,
+     "entry_session_volume": 8462100.0,
+     "share_of_entry_session": 0.11817397572706538,
+     "net_return": -0.003994008987
+    }
+   ]
+  },
+  "A": {
+   "run": "20261008T000401Z_MOONSHOT_E1_D1_v1.1",
+   "entered": 420,
+   "scored": 407,
+   "scored_shares_above_entire_entry_session_volume": 0,
+   "scored_shares_above_10pct_of_entry_session_volume": 0,
+   "median_share_of_entry_session": 0.0028079140272434895,
+   "max_share_of_entry_session": 0.1,
+   "avg_net_if_infeasible_above_10pct_removed": -0.04058989319413317,
+   "avg_net_recorded": -0.04058989319413317,
+   "examples_above_10pct": []
+  }
+ },
+ "note": "Under A the cap is 10% of the entry session's final volume, so no scored A trade can exceed it (a check of the measurement). Under C the entry session is never checked. Removing trades is a descriptive bound, not a rerun: a feasible model would also change the overlap rule and the baselines."
+}

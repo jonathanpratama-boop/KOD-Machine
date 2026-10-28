@@ -23,7 +23,7 @@ class ScorerV2(unittest.TestCase):
         warnings.simplefilter("ignore")
         base = gframe(spike=(7, 70))
         self.decision = paper.scan_frame(base[base["date"] <= base["date"].unique()[70]], DATA, validation=VALIDATED,
-                                         market="US")["decisions"][0]
+                                         market="US", policy=paper.POLICY_ID_V3)["decisions"][0]
         self.ran = gframe(spike=(7, 70), tail=0.03, gap=0.01)
         self.session_after = str(self.ran["date"].unique()[73].date())
 
@@ -117,7 +117,7 @@ class Revisions(unittest.TestCase):
         warnings.simplefilter("ignore")
         base = gframe(spike=(7, 70))
         dec = paper.scan_frame(base[base["date"] <= base["date"].unique()[70]], DATA, validation=VALIDATED,
-                               market="US")["decisions"][0]
+                               market="US", policy=paper.POLICY_ID_V3)["decisions"][0]
         earlier = {"type": "OUTCOME", "decision_id": dec["decision_id"], "record_hash": "a" * 64, "status": "UNSCORABLE"}
         ran = gframe(spike=(7, 70), tail=0.03, gap=0.01)
         appended = []

@@ -55,7 +55,7 @@ class PaperScan(unittest.TestCase):
 
     def test_no_signal_day_is_still_a_record(self):
         """Guards against: quiet days leaving no trace, so the scan history looks better than it was."""
-        out = paper.scan_frame(frame(), DATA)
+        out = paper.scan_frame(frame(), DATA, policy=paper.POLICY_ID_V3)
         self.assertEqual(out["scan"]["result"], "NO SIGNAL")
         self.assertEqual(out["decisions"], [])
         self.assertEqual(out["scan"]["data"]["fresh_for_session"], 60)
@@ -65,12 +65,12 @@ class PaperScan(unittest.TestCase):
         """Guards against: candidates left undecided, BUY without validated evidence, and plans missing
         the trigger, chase limit, invalidation, sizing or maximum loss."""
         df = frame(spike=(7, 79))
-        unvalidated = paper.scan_frame(df, DATA)["decisions"]
+        unvalidated = paper.scan_frame(df, DATA, policy=paper.POLICY_ID_V3)["decisions"]
         self.assertEqual([d["decision"] for d in unvalidated], ["PASS"])
-        passed = paper.scan_frame(df, DATA, validation=DETECTION_ONLY)["decisions"][0]
+        passed = paper.scan_frame(df, DATA, validation=DETECTION_ONLY, policy=paper.POLICY_ID_V3)["decisions"][0]
         self.assertEqual(passed["decision"], "PASS")
         self.assertIn("executable plan", passed["reason"])  # detection alone never buys
-        d = paper.scan_frame(df, DATA, validation=VALIDATED)["decisions"][0]
+        d = paper.scan_frame(df, DATA, validation=VALIDATED, policy=paper.POLICY_ID_V3)["decisions"][0]
         self.assertEqual(d["decision"], "BUY ON TRIGGER")
         self.assertTrue(d["primary"])
         plan = d["plan"]
@@ -91,7 +91,7 @@ class PaperScan(unittest.TestCase):
         sel = (df["ticker"] == "T007") & (df["date"] == last)
         df.loc[sel, "low"] = df.loc[sel, "close"]
         df.loc[sel, "high"] = df.loc[sel, "close"]
-        d = paper.scan_frame(df, DATA, validation=VALIDATED)["decisions"][0]
+        d = paper.scan_frame(df, DATA, validation=VALIDATED, policy=paper.POLICY_ID_V3)["decisions"][0]
         close = d["verified_price"]["close"]
         self.assertLessEqual(d["plan"]["invalidation"], close * 0.95)
         self.assertGreaterEqual(d["plan"]["invalidation"], close * 0.85 - 5)
@@ -99,7 +99,7 @@ class PaperScan(unittest.TestCase):
 
     def test_untradeable_candidate_is_not_executable_with_the_reason(self):
         """Guards against: a plan for a name where no lot fits the liquidity or risk caps."""
-        d = paper.scan_frame(frame(spike=(7, 79), price=200_000, adv_volume=300), DATA, validation=VALIDATED)["decisions"][0]
+        d = paper.scan_frame(frame(spike=(7, 79), price=200_000, adv_volume=300), DATA, validation=VALIDATED, policy=paper.POLICY_ID_V3)["decisions"][0]
         self.assertEqual(d["decision"], "NOT EXECUTABLE")
         self.assertIn("no whole lot fits", d["reason"])
 
@@ -118,14 +118,14 @@ class PaperScan(unittest.TestCase):
     def test_scoring_separates_discovery_from_the_decision(self):
         """Guards against: a rejected name that then ran being scored as a good call (or vice versa)."""
         base = frame(spike=(7, 74), s=75)
-        scan = paper.scan_frame(base, DATA)
+        scan = paper.scan_frame(base, DATA, policy=paper.POLICY_ID_V3)
         passed = scan["decisions"][0]
         self.assertIsNone(paper.score(passed, paper._market(base)))  # window still open
         ran = frame(spike=(7, 74), s=82, tail=0.08)
         out = paper.score(passed, paper._market(ran))
         self.assertTrue(out["discovery"]["E30"])
         self.assertEqual(out["decision_verdict"], "MISSED GAIN (rejected, plan would have profited)")
-        bought = paper.scan_frame(base, DATA, validation=VALIDATED)["decisions"][0]
+        bought = paper.scan_frame(base, DATA, validation=VALIDATED, policy=paper.POLICY_ID_V3)["decisions"][0]
         res = paper.score(bought, paper._market(ran))
         self.assertEqual(res["decision_verdict"], "PROFIT")
         self.assertGreater(res["execution"]["paper_trade"]["net_return"], 0)

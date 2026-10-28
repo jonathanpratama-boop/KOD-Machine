@@ -42,6 +42,25 @@ scored by the harness's execution model so the outcome is what the validation ru
 recorded. No pair has been validated (E3 discovery admitted none), so v4 decides exactly as v3
 did. Decisions keep the policy they were made under.
 
+`PAPER-POLICY-v5` (drafted 2026-10-09 in PR #3 as "v4" and renamed when PR #6's v4 reached the
+base branch first; prospective: decisions already recorded keep their policy) applies
+Jonathan's risk constraint in every market. The invalidation is defined first (the signal session's
+low, floored to the tick). The highest permitted entry follows from it (stop / 0.95, never above the
+signal close x 1.10), so the stop is at most 5% below any accepted fill. Size, costs and caps are
+computed at that permitted entry (hypothetical accounts: $10,000, Rp100m, 10,000 USDT). An entry
+outside the band is rejected, never chased: a $100 signal with a $95 stop accepts an open of at
+most $100, and an open of $110 is rejected. US plans and outcomes run through `idxsig/exec_us.py`
+(EXEC-US-v1, scorer `paper-score-v4`), the same code as the historical replay: entry at the next
+open, a resting stop (filled at the stop, or at the open on a gap through it), a market-on-close
+time exit placed in advance, and costs at each fill's as-traded price. IDX and crypto keep the v3
+entry and close-based exit scoring inside the v5 band (a known limitation). v5 does not use
+v4's E3 rule: while a validated E3 pair exists, the IDX scan fails instead of deciding, because
+v5 does not define how a plan without a chase limit meets the 5% stop rule. Approval is
+`APPROVAL-v2`. Each market's evidence is pinned to one run and its config sha256
+(`paper.APPROVAL_PINS`), so appending a run cannot change it. The pinned run must have tested the
+execution the plans use. It must also beat matched entries at p < 0.05 with a positive average
+net return above the baseline. US has no pin yet, because no evidence run exists under EXEC-US-v1.
+
 Versions behind every call. Each SCAN and DECISION names its detector (rule id, version, module
 SHA-256), policy (id and SHA-256), data manifest (and its SHA-256) and, from 2026-10-08 09:30 UTC,
 its `preprocessing`. The three scans before that field existed used: SCAN-2026-10-07-F1_ARA

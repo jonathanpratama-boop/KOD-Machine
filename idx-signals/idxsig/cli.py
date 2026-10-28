@@ -98,9 +98,10 @@ def main(argv=None) -> int:
     p_run.add_argument("--units", choices=("panel", "as_traded"), default="panel",
                        help="as_traded: sizing, cost tiers and price bands at the price traded that session "
                             "(needs a repair panel with unit_factor)")
-    p_run.add_argument("--fill-model", choices=("A", "B", "C"), default="A",
-                       help="A: original (entry-session final volume, ex post); B: decision-time capacity "
-                            "(open entries); C: FILL-C-v1, decision-time capacity for closing-auction entries")
+    p_run.add_argument("--fill-model", choices=("A", "B", "B2", "C"), default="A",
+                       help="A: original (entry-session final volume, ex post); B: FILL-B-v1 (mixed units, "
+                            "reproduction only); B2: FILL-B-v2 (entry-session units); C: FILL-C-v1, decision-time "
+                            "capacity for IDX closing-auction entries")
     p_run.add_argument("--entry-rule", choices=("fixed", "confirm", "pullback", "unlock"),
                        help="execution plan entry (default: the rule's frozen plan, else fixed)")
     p_run.add_argument("--entry-window", type=int, help="sessions after the signal a conditional entry may trigger")

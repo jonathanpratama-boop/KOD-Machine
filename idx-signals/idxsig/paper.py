@@ -52,7 +52,10 @@ PAPER = PKG_ROOT / "paper"
 LEDGER = PAPER / "ledger.jsonl"
 SCANS = PAPER / "scans"
 TOKENS = PAPER / "timestamps"
-POLICY_ID = "PAPER-POLICY-v4"
+POLICY_ID_V3 = "PAPER-POLICY-v3"
+POLICY_ID_V4 = "PAPER-POLICY-v4"  # PR #6 (2026-10-13): v3 plus the E3 rule for IDX; in force on the base branch first
+POLICY_ID_V5 = "PAPER-POLICY-v5"  # PR #3's policy (the 5% stop rule, EXEC-US-v1, APPROVAL-v2), drafted as "v4"
+POLICY_ID = POLICY_ID_V5  # the policy new decisions are made under (from this release on)
 E3_DIR = PKG_ROOT / "research" / "E3"
 E1_ARGS = ("close", "prev", "high", "low", "volume", "present", "tradeable", "lock_up")
 # v1 (first scan, 2026-10-08): invalidation = max(signal-day low, close x 0.85). On a one-price
@@ -91,12 +94,56 @@ class Policy:
     horizon_sessions: int = 5
     min_validated_lift_p: float = 0.05      # paper BUY needs detection AND the executable plan to beat matched
                                             # random in validation at this level (one-sided)
+
+
+POLICY = Policy()  # PAPER-POLICY-v3: decisions recorded before v4 keep it; `decide(..., policy=POLICY_ID_V3)`
+
+
+@dataclass(frozen=True)
+class PolicyE3(Policy):
+    """PAPER-POLICY-v4 (2026-10-13, PR #6): v3 plus the E3 rule (module docstring). Its record has the
+    same fields and values as the record PR #6 hashed, so decisions recorded under it verify."""
+
     # v4: a validated E3 (detector, plan) pair decides IDX candidates with its own plan (see the module
     # docstring); the plan is scored by the harness's execution model. Without one, D1 and the v3 plan.
     e3_plan_rule: str = "IDX: validated E3 pair decides with its plan, scored by execution.execute; else v3"
 
 
-POLICY = Policy()
+POLICY_E3 = PolicyE3()
+
+
+@dataclass(frozen=True)
+class PolicyV5:
+    """PAPER-POLICY-v5 (2026-10-09; drafted in PR #3 as "PAPER-POLICY-v4" and renamed when PR #6's v4
+    reached the base branch first). Jonathan's risk constraint: the planned stop is at most 5% from
+    the permitted entry price. The invalidation is defined first (the signal session's low, floored
+    to the tick); the highest permitted entry follows from it (stop / 0.95, never above the signal
+    close x 1.10); sizing, costs and caps are computed at that permitted entry, and an entry
+    outside the band is rejected, never chased. US plans and outcomes use exec_us (EXEC-US-v1), the
+    same code as the historical replay. Approval is APPROVAL-v2 (pinned evidence run, positive
+    average net). IDX and crypto keep their v3 entry/exit scoring (see limitations)."""
+
+    equity_idr: float = 100_000_000.0
+    equity_usd: float = 10_000.0
+    equity_usdt: float = 10_000.0
+    risk_fractions: tuple = (0.005, 0.01)   # labelled scenarios; the executed one is the last (1%)
+    max_position_fraction: float = 0.20
+    max_adv_participation: float = 0.10
+    chase_limit: float = 0.10
+    max_stop_distance_from_entry: float = 0.05
+    stop_rule: str = "signal-session low, floored to the tick"
+    fee_buy: float = 0.0015                 # IDX
+    fee_sell: float = 0.0025                # IDX
+    horizon_sessions: int = 5
+    min_validated_lift_p: float = 0.05
+    approval: str = "APPROVAL-v2"
+    us_execution: str = "EXEC-US-v1"
+    e3_rule: str = ("IDX: a validated E3 (detector, plan) pair is not used; while one exists the IDX scan fails, "
+                    "because this policy does not define how a plan without a chase limit meets the 5% stop rule")
+
+
+POLICY_V5 = PolicyV5()
+POLICIES = {POLICY_ID_V3: POLICY, POLICY_ID_V4: POLICY_E3, POLICY_ID_V5: POLICY_V5}
 
 
 def _canonical(obj) -> str:
@@ -113,12 +160,19 @@ def _default(o):
     raise TypeError(type(o))
 
 
-def policy_record() -> dict:
-    return {"policy_id": POLICY_ID, **{k: getattr(POLICY, k) for k in POLICY.__dataclass_fields__}}
+def policy_record(policy_id: str = POLICY_ID) -> dict:
+    pol = POLICIES[policy_id]
+    rec = {"policy_id": policy_id, **{k: getattr(pol, k) for k in pol.__dataclass_fields__}}
+    if policy_id == POLICY_ID_V5:
+        from . import exec_us
+
+        rec["us_exec_spec"] = exec_us.SPEC.record()
+        rec["approval_pins"] = APPROVAL_PINS
+    return rec
 
 
-def policy_sha() -> str:
-    return hashlib.sha256(_canonical(policy_record()).encode()).hexdigest()
+def policy_sha(policy_id: str = POLICY_ID) -> str:
+    return hashlib.sha256(_canonical(policy_record(policy_id)).encode()).hexdigest()
 
 
 def e3_plan() -> dict | None:
@@ -141,10 +195,14 @@ def e3_plan() -> dict | None:
             "detection_path": E3_DIR / "validation" / "detection.json"}
 
 
-def _detector(market: str = "IDX") -> dict:
-    """The frozen decision detector and the benchmark rules logged beside it, per market."""
+def _detector(market: str = "IDX", policy: str = POLICY_ID) -> dict:
+    """The frozen decision detector and the benchmark rules logged beside it, per market. Only
+    PAPER-POLICY-v4 uses a validated E3 pair; v5 refuses to decide IDX while one exists."""
     if market == "IDX":
-        e3 = e3_plan()
+        e3 = e3_plan() if policy in (POLICY_ID_V4, POLICY_ID_V5) else None
+        if e3 is not None and policy == POLICY_ID_V5:
+            raise RuntimeError(f"a validated E3 pair exists ({e3['run_id']}); {POLICY_ID_V5} does not define how "
+                               "its plan meets the 5% stop rule: a new policy version is needed")
         if e3 is not None:
             from .rules import moonshot_e3
 
@@ -162,8 +220,8 @@ def _detector(market: str = "IDX") -> dict:
             "benchmarks": ("G5_IGNITION_D", "G1_RET20_CLOSEHIGH"), "evidence": f"E2 {market} validation, 2023"}
 
 
-def detector_identity(market: str = "IDX") -> dict:
-    det = _detector(market)
+def detector_identity(market: str = "IDX", policy: str = POLICY_ID) -> dict:
+    det = _detector(market, policy)
     return {"rule_id": det["rule_id"], "version": det["version"], "selected": det["selected"],
             "module_sha256": sha256_file(Path(det["module"].__file__)), "benchmarks": list(det["benchmarks"])}
 
@@ -267,9 +325,9 @@ def scan(manifest: Path, now: datetime | None = None, validation: dict | None = 
 
 
 def scan_frame(df: pd.DataFrame, data: dict, now: datetime | None = None, validation: dict | None = None,
-               market: str = "IDX", quotes=None) -> dict:
+               market: str = "IDX", quotes=None, policy: str = POLICY_ID) -> dict:
     """quotes: crypto only, a callable (tickers -> {ticker: (price, time)}) for live prices at decision time."""
-    det = _detector(market)
+    det = _detector(market, policy)
     sel, module = det["selected"], det["module"]
     if sel is None:
         raise RuntimeError(f"no frozen detector for {market}")
@@ -286,11 +344,16 @@ def scan_frame(df: pd.DataFrame, data: dict, now: datetime | None = None, valida
     eligible = view.tradeable[:, d] & (history > MIN_HISTORY)
     value = np.where(view.tradeable, view.value, np.nan)
     adv = pd.DataFrame(value[:, max(0, d - 19): d + 1].T).median().to_numpy()
+    from . import exec_us
+
+    ones = np.ones(view.close.shape[1])
+    cap20 = np.array([exec_us.capacity_shares(view.volume[i], view.present[i], ones, d)
+                      for i in range(len(view.tickers))])  # live data: the latest session's units
     zeros = np.zeros(len(tick), dtype=bool)
     feats = pd.DataFrame({
         "ticker": tick, "session": session, "fresh": fresh, "eligible": eligible,
         "close": view.close[:, d], "previous": view.prev[:, d], "high": view.high[:, d], "low": view.low[:, d],
-        "open": view.open[:, d], "volume": view.volume[:, d], "adv20_value": adv,
+        "open": view.open[:, d], "volume": view.volume[:, d], "adv20_value": adv, "cap20_shares": cap20,
         **{k: f[k][:, d] for k in ("ret1", "rel1", "ret5", "ret20", "volr", "cpos", "dd60")},
         "ara": f["ara"][:, d] if "ara" in f else zeros, "brk60": f["brk60"][:, d],
         **({"gap": f["gap"][:, d]} if "gap" in f else {}),
@@ -305,8 +368,8 @@ def scan_frame(df: pd.DataFrame, data: dict, now: datetime | None = None, valida
               "CRYPTO": f"end of UTC day {session} (bars fetched after 00:00 UTC)"}[market]
     record = {
         "type": "SCAN", "market": market, "scan_id": scan_id, "session": session, "discovered_at": utc_stamp(now),
-        "cutoff": cutoff, "detector": detector_identity(market),
-        "policy": {"policy_id": POLICY_ID, "sha256": policy_sha()}, "preprocessing": PREPROCESSING[market],
+        "cutoff": cutoff, "detector": detector_identity(market, policy),
+        "policy": {"policy_id": policy, "sha256": policy_sha(policy)}, "preprocessing": PREPROCESSING[market],
         "data": {"source": "binance_spot_klines_1d" if market == "CRYPTO" else "yahoo_chart_v8",
                  "manifest": data["manifest"], "manifest_sha256": data["manifest_sha256"],
                  "requested": requested, "http_ok": ok, "fresh_for_session": int(fresh.sum()),
@@ -318,7 +381,7 @@ def scan_frame(df: pd.DataFrame, data: dict, now: datetime | None = None, valida
         "validation_evidence": validation,
     }
     live = quotes(chosen["ticker"].tolist()) if (quotes and market == "CRYPTO" and not chosen.empty) else {}
-    decisions = [decide(row, rank + 1, scan_id, session, now, validation, market, live.get(row.ticker))
+    decisions = [decide(row, rank + 1, scan_id, session, now, validation, market, live.get(row.ticker), policy=policy)
                  for rank, row in enumerate(chosen.itertuples(index=False))]
     primary = next((x for x in decisions if x["decision"] == "BUY ON TRIGGER"), None)
     for x in decisions:
@@ -389,12 +452,24 @@ def _span(decision: dict) -> int:
 
 
 def decide(row, rank: int, scan_id: str, session: str, now: datetime, validation: dict | None,
-           market: str = "IDX", quote=None) -> dict:
+           market: str = "IDX", quote=None, policy: str = POLICY_ID) -> dict:
+    if policy in (POLICY_ID_V3, POLICY_ID_V4):
+        return _decide_v3(row, rank, scan_id, session, now, validation, market, quote, policy_id=policy)
+    if policy != POLICY_ID_V5:
+        raise ValueError(f"unknown policy {policy}")
+    return _decide_v5(row, rank, scan_id, session, now, validation, market, quote)
+
+
+def _decide_v3(row, rank: int, scan_id: str, session: str, now: datetime, validation: dict | None,
+               market: str = "IDX", quote=None, policy_id: str = POLICY_ID_V3) -> dict:
+    """PAPER-POLICY-v3 and v4 (v3 plus the E3 rule; identical while no E3 pair is validated), kept so
+    the decisions recorded under them can be reproduced. Not used for new decisions: the stop could
+    be 5-15% below the signal close and the risk was not recomputed at a higher entry."""
     from .profiles import PROFILES
 
     p = POLICY
     prof = PROFILES[market]
-    det = _detector(market)
+    det = _detector(market, policy_id)
     sel = det["selected"]
     cur = prof.currency.lower()
     sym = {"IDX": "Rp", "US": "$", "CRYPTO": ""}[market]
@@ -575,12 +650,184 @@ def decide(row, rank: int, scan_id: str, session: str, now: datetime, validation
             "would_change_decision": change,
         } if decision != "NOT EXECUTABLE" else {"reason": why, "horizon_sessions": horizon,
                                                 **({"execution_plan": xp} if xp is not None else {})},
-        "policy": {"policy_id": POLICY_ID, "sha256": policy_sha()}, "preprocessing": PREPROCESSING[market],
-        "detector": detector_identity(market),
+        "policy": {"policy_id": policy_id, "sha256": policy_sha(policy_id)}, "preprocessing": PREPROCESSING[market],
+        "detector": detector_identity(market, policy_id),
     }
 
 
+
+def _floor_tick(price: float, market: str) -> float:
+    t = _tick(price, market) if price > 0 else 1e-8
+    return round(math.floor(price / t + 1e-9) * t, 10)
+
+
+def _decide_v5(row, rank: int, scan_id: str, session: str, now: datetime, validation: dict | None,
+               market: str = "IDX", quote=None) -> dict:
+    """PAPER-POLICY-v5 decision: invalidation first, entry band from the 5% rule, size at the
+    permitted entry, APPROVAL-v2. US numbers come from exec_us.make_plan (shared with replay)."""
+    from . import exec_us
+    from .profiles import PROFILES
+
+    p = POLICY_V5
+    prof = PROFILES[market]
+    det = _detector(market, POLICY_ID_V5)
+    sel = det["selected"]
+    cur = prof.currency.lower()
+    sym = {"IDX": "Rp", "US": "$", "CRYPTO": ""}[market]
+    close, low = float(row.close), float(row.low)
+    quote_price = float(quote[0]) if quote else None
+    equity = _equity(market)
+    reasons, exec_plan = [], None
+    if market == "US":
+        scen = []
+        for r in p.risk_fractions:
+            spec = exec_us.ExecSpec(risk_fraction=r)
+            pl = exec_us.make_plan(close, low, float(row.cap20_shares), spec)
+            scen.append({"risk_fraction": r, "shares": pl.get("shares", 0),
+                         "max_planned_loss_usd": pl.get("max_planned_loss_usd"),
+                         "position_at_max_entry_usd": pl.get("position_at_max_entry_usd")})
+        exec_plan = exec_us.make_plan(close, low, float(row.cap20_shares), exec_us.SPEC)
+        stop, max_entry = exec_plan["invalidation"], exec_plan["max_entry"]
+        if exec_plan["status"] != "PLANNED":
+            reasons.append(exec_plan["reason"])
+        costs = [exec_plan.get("cost_in_at_max_entry"), exec_plan.get("cost_out_at_max_entry")]
+        cap_value = None
+    else:
+        stop = _floor_tick(low, market)
+        by_stop = _floor_tick(stop / (1 - p.max_stop_distance_from_entry), market)
+        by_chase = _floor_tick(close * (1 + p.chase_limit), market)
+        max_entry = min(by_stop, by_chase)
+        entry_ref = quote_price if (market == "CRYPTO" and quote_price) else max_entry
+        if market == "IDX":
+            fee_in, fee_out = p.fee_buy, p.fee_sell
+        else:
+            tier = float(prof.per_side_cost(np.array([entry_ref]))[0])
+            fee_in, fee_out = prof.fee_buy + tier, prof.fee_sell + tier
+        costs = [fee_in, fee_out]
+        risk_per_unit = entry_ref - stop + entry_ref * (fee_in + fee_out)
+        adv = float(row.adv20_value) if np.isfinite(row.adv20_value) else 0.0
+        cap_value = min(p.max_position_fraction * equity, p.max_adv_participation * adv)
+        lot = prof.lot_size
+        scen = []
+        for r in p.risk_fractions:
+            units = (r * equity / risk_per_unit) if risk_per_unit > 0 else 0
+            units = min(units, cap_value / entry_ref) if entry_ref > 0 else 0
+            shares = math.floor(units / lot) * lot if market != "CRYPTO" else math.floor(units * 1e6) / 1e6
+            scen.append({"risk_fraction": r, "shares": shares, f"position_{cur}": shares * entry_ref,
+                         f"max_planned_loss_{cur}": round(shares * risk_per_unit, 2)})
+        if not max_entry > stop:
+            reasons.append("no entry price is both above the stop and within the 5% stop rule and the chase limit")
+        elif not scen[-1]["shares"]:
+            reasons.append(f"no {'whole lot' if market == 'IDX' else 'unit'} fits the risk, capital and liquidity "
+                           f"limits at the permitted entry {sym}{max_entry:g}")
+        if market == "IDX" and close < 50:
+            reasons.append("priced below Rp50: special-board / full-call-auction rules, outside the modelled market")
+        if market == "CRYPTO":
+            if quote_price is None:
+                reasons.append("no live quote could be taken at decision time, so there is no verified price to act on")
+            elif quote_price > max_entry:
+                reasons.append(f"the live quote {quote_price:g} is above the permitted entry {max_entry:g}: the stop "
+                               f"at {stop:g} would be {(quote_price - stop) / quote_price:.2%} away (max 5%)")
+            elif quote_price <= stop:
+                reasons.append(f"the live quote {quote_price:g} is at or below the invalidation {stop:g}")
+    ok, why_not = approval(validation, market)
+    if reasons:
+        decision, why = "NOT EXECUTABLE", "; ".join(reasons)
+    elif not ok:
+        decision, why = "PASS", why_not
+    else:
+        decision, why = "BUY ON TRIGGER", "approved evidence run and an executable plan within the 5% stop rule"
+    nxt = _next_session(session, market)
+    base = _decide_v3(row, rank, scan_id, session, now, validation, market, quote)  # shared descriptive fields
+    stop_txt = {"US": "a resting sell-stop at the invalidation from the fill: fills at the stop when the low "
+                      "reaches it, at the open when the session opens below it (EXEC-US-v1)",
+                "IDX": "exit at the first close at or below the invalidation (paper-score-v3, close-based; known "
+                       "limitation, see the milestone notes)",
+                "CRYPTO": "exit at the first daily close at or below the invalidation (paper-score-v3, close-based; "
+                          "known limitation)"}[market]
+    trigger = {"US": f"paper buy {scen[-1]['shares']} shares at the official opening print of {nxt} if it is "
+                     f"<= ${max_entry:g} (5% stop rule) and > ${stop:g}; rejected otherwise, no later fill",
+               "IDX": f"paper buy at the official close of {nxt} if that close is <= Rp{max_entry:g} (5% stop rule) "
+                      f"and > Rp{stop:g}, the name traded, and the close is not locked at ARA",
+               "CRYPTO": f"paper buy at the decision-time quote {quote_price} USDT if <= {max_entry:g} and > {stop:g}"}[market]
+    plan = {
+        "entry_trigger": trigger, "max_entry": max_entry, "max_chase_price": max_entry, "invalidation": stop,
+        "invalidation_first": f"{p.stop_rule}: {stop:g}", "invalidation_rule": stop_txt,
+        "stop_distance_at_max_entry": (max_entry - stop) / max_entry if max_entry > 0 else None,
+        "max_stop_distance_from_entry": p.max_stop_distance_from_entry,
+        "exit": f"close of the {p.horizon_sessions}th session after entry (order placed in advance), or invalidation",
+        "sizing_formula": ("units = min(R x equity / (max_entry - stop + max_entry x costs), 20% x equity / "
+                           "max_entry, 10% x capacity)" + (" with capacity = 20-session median volume in "
+                                                           "signal-session shares (FILL-B-v2)" if market == "US" else
+                                                           " with capacity in traded value / max_entry")),
+        "costs_per_side_at_permitted_entry": costs, "scenarios": scen, "executed_scenario_risk_fraction": p.risk_fractions[-1],
+        f"equity_assumption_{cur}": equity,
+        "equity_note": "hypothetical account; the real budget is unknown, so sizes are labelled scenarios",
+        "horizon_sessions": p.horizon_sessions, "expiry": base["plan"].get("expiry") if "expiry" in base["plan"] else
+        f"{nxt}: outside the band = rejected",
+        "liquidity": ({"capacity_shares_fill_b_v2": float(row.cap20_shares)} if market == "US"
+                      else {f"position_cap_{cur}": cap_value}),
+        "catalyst": "none identified: a tape-only detector (no news or filing was read)",
+        **({"exec_plan": exec_plan} if exec_plan is not None else {}),
+    }
+    out = dict(base)
+    out.update(decision=decision, reason=why,
+               plan=plan if decision != "NOT EXECUTABLE" else {"reason": why, "horizon_sessions": p.horizon_sessions,
+                                                               "invalidation": stop, "max_entry": max_entry,
+                                                               **({"exec_plan": exec_plan} if exec_plan else {})},
+               policy={"policy_id": POLICY_ID, "sha256": policy_sha(POLICY_ID)},
+               approval={"version": APPROVAL_VERSION, "approved": ok, "reason": why_not})
+    return out
+
+
 # ---------------------------------------------------------------------------------- score
+def is_exec_us(decision: dict) -> bool:
+    return (decision.get("market") == "US" and decision.get("policy", {}).get("policy_id") == POLICY_ID_V5
+            and "exec_plan" in (decision.get("plan") or {}))
+
+
+def _score_exec_us(decision: dict, m: Market, price_units: dict | None) -> dict | None:
+    """PAPER-POLICY-v5 US outcome: exec_us.execute on the scoring bars, the same function the
+    historical replay calls. Units: the verified split schedule (price_units), never a price ratio."""
+    from . import exec_us
+    from .price_units import split_conversion_factor
+
+    tickers, dates = list(m.tickers), m.dates.astype(str)
+    t = decision["instrument"]["ticker"]
+    if t not in tickers or decision["signal_session"] not in dates:
+        return None
+    n, d = tickers.index(t), int(np.flatnonzero(dates == decision["signal_session"])[0])
+    if price_units is None:
+        uf = np.ones(len(dates))
+    else:
+        if price_units.get("convention") != "SPLIT_ONLY":
+            raise ValueError("Verified scoring needs split-only units for US")
+        uf = np.array([split_conversion_factor(str(x), price_units["actions"], price_units["adjustment_reference"],
+                                               coverage_complete=price_units.get("coverage_complete", False))
+                       for x in dates])
+    recorded = float(decision["verified_price"]["close"])
+    if not np.isclose(m.close[n, d] * uf[d], recorded, rtol=(price_units or {}).get("rtol", 1e-6), atol=1e-8):
+        raise ValueError("Recorded signal price does not reconcile to verified split schedule")
+    res = exec_us.execute(m.open[n], m.high[n], m.low[n], m.close[n], m.volume[n], m.present[n], uf, d,
+                          decision["plan"]["exec_plan"])
+    if res["status"] == "PENDING":
+        return None
+    fwd = [m.close[n, k] / m.close[n, d] - 1 for k in range(d + 1, min(d + 1 + POLICY_V5.horizon_sessions, len(dates)))
+           if m.present[n, k]]
+    r5max = float(max(fwd)) if fwd else float("nan")
+    filled = res["status"] == "FILLED"
+    if decision["decision"] == "BUY ON TRIGGER":
+        verdict = ("PROFIT" if res["net_return"] > 0 else "LOSS") if filled else f"NOT FILLED ({res['status']})"
+    else:
+        verdict = ("MISSED GAIN (rejected, plan would have profited)" if filled and res["net_return"] > 0
+                   else "CORRECT REJECTION")
+    return {"type": "OUTCOME", "market": "US", "decision_id": decision["decision_id"], "scored_at": utc_stamp(),
+            "discovery": {"r5max_close": r5max, **{f"E{int(x * 100)}": r5max >= x for x in (0.3, 0.5, 1.0)},
+                          "note": "closing prices relative to the signal close; descriptive"},
+            "execution": res, "decision_verdict": verdict,
+            "scoring_version": f"{SCORER_ID_V4} ({res['exec_version']})"}
+
+
 def _score_plan(decision: dict, m: Market, n: int, d: int, level: np.ndarray, discovery: dict, xp: dict,
                 scale: float, verified_units: bool) -> dict | None:
     """An IDX decision made under a validated E3 plan, scored by the harness's own execution model
@@ -641,6 +888,9 @@ def _score_plan(decision: dict, m: Market, n: int, d: int, level: np.ndarray, di
 def score(decision: dict, m: Market, *, price_units: dict | None = None) -> dict | None:
     """Score one decision on bars that now cover its window, or None if the window is still open."""
     from .profiles import PROFILES
+
+    if is_exec_us(decision):
+        return _score_exec_us(decision, m, price_units)
 
     p = POLICY
     market = decision.get("market", "IDX")
@@ -823,9 +1073,48 @@ VALIDATION_WINDOWS = {"IDX": VALIDATION_WINDOW, "US": ("2023-01-01", "2023-12-31
                       "CRYPTO": ("2023-01-01", "2023-12-31")}
 
 
+APPROVAL_VERSION = "APPROVAL-v2"
+# Approval is pinned to one evidence run and its complete configuration (sha256 of summary.json's
+# "config"). Appending another run never changes it; a new pin is a new policy version. US has
+# no pin: no evidence run exists yet under the execution its v5 plans use (EXEC-US-v1).
+APPROVAL_PINS = {
+    "IDX": {"run_id": "20261008T000401Z_MOONSHOT_E1_D1_v1.1",
+            "config_sha256": "34a0d8d719218e1064c199c079bb524f30f4f8443809053389281671740b85db",
+            "execution": "idxsig-harness: entry at the next close, exit at the 5th close, no stop"},
+    "CRYPTO": {"run_id": "20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1",
+               "config_sha256": "86bd8d48ef6c350fdd665b8f69549cabee9e3d2d624ee9e0bd1189d1cfb1c0e4",
+               "execution": "idxsig-harness: entry at the next open, exit at the 5th close, no stop"},
+    "US": None,
+}
+PLAN_EXECUTION = {"US": "EXEC-US-v1", "IDX": "paper-score-v3 with the v5 entry band",
+                  "CRYPTO": "paper-score-v3 with the v5 entry band"}
+
+
+def config_sha256(config: dict) -> str:
+    return hashlib.sha256(json.dumps(config, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+
+
+def _pinned_trading(market: str) -> dict | None:
+    pin = APPROVAL_PINS.get(market)
+    if pin is None:
+        return None
+    index = PKG_ROOT / "results" / "RUNS.jsonl"
+    for line in index.read_text(encoding="utf-8").splitlines() if index.exists() else []:
+        run = json.loads(line)
+        if not run.get("dir", "").endswith(pin["run_id"]):
+            continue
+        summary = json.loads((PKG_ROOT / run["dir"] / "summary.json").read_text(encoding="utf-8"))
+        mr = summary["random_matched"]["avg_net_return"] or {}
+        return {"run_id": summary["run_id"], "config_sha256": config_sha256(summary["config"]),
+                "pinned_config_sha256": pin["config_sha256"], "execution": pin["execution"],
+                "scored_trades": summary["rule_trades"]["scored"], "fill_rate": summary["rule_trades"]["fill_rate"],
+                "avg_net_return": mr.get("observed"), "matched_random_avg_net_return": mr.get("random_mean"),
+                "p_one_sided": mr.get("p_value_one_sided"), "status_counts": summary["rule_trades"]["status_counts"]}
+    return {"run_id": pin["run_id"], "missing": True}
+
+
 def validation_evidence(market: str = "IDX") -> dict | None:
-    """Detection (E1/E2 validation, E30) and trading (idxsig harness over the validation window)
-    evidence for the market's frozen detector."""
+    """Detection evidence (E1/E2 validation, E30) and the trading evidence of the PINNED run only."""
     det = _detector(market)
     e3 = det.get("e3")
     path = (PKG_ROOT / "research" / "E1" / "validation" / "result.json" if market == "IDX"
@@ -842,24 +1131,42 @@ def validation_evidence(market: str = "IDX") -> dict | None:
                                               "lift_vs_base", "lift_vs_matched_random", "p_one_sided_vs_matched")}}
     if e3 is not None:
         out["e3"] = {k: e3[k] for k in ("protocol_id", "plan", "plan_text", "run_id", "result", "result_sha256")}
-    trading = None
-    index = PKG_ROOT / "results" / "RUNS.jsonl"
-    for line in index.read_text(encoding="utf-8").splitlines() if index.exists() else []:
-        run = json.loads(line)
-        if det["rule_id"] not in run.get("dir", ""):
-            continue
-        summary = json.loads((PKG_ROOT / run["dir"] / "summary.json").read_text(encoding="utf-8"))
-        cfg = summary["config"]
-        if (cfg["start"], cfg["end"]) != VALIDATION_WINDOWS[market] or "Selected: " + det["selected"] not in summary["rule"]["text"]:
-            continue
-        mr = summary["random_matched"]["avg_net_return"] or {}
-        trading = {"run_id": summary["run_id"], "scored_trades": summary["rule_trades"]["scored"],
-                   "fill_rate": summary["rule_trades"]["fill_rate"], "avg_net_return": mr.get("observed"),
-                   "matched_random_avg_net_return": mr.get("random_mean"), "p_one_sided": mr.get("p_value_one_sided"),
-                   "status_counts": summary["rule_trades"]["status_counts"],
-                   "plan": summary["execution"].get("plan"), "plan_text": summary["execution"].get("plan_text")}
-    out["trading"] = trading
+    out["trading"] = _pinned_trading(market)
+    out["approval_pin"] = APPROVAL_PINS.get(market)
     return out
+
+
+def approval(validation: dict | None, market: str) -> tuple[bool, str]:
+    """APPROVAL-v2. All must hold: detection beat matched names (p < 0.05, lift > 1); the trading
+    evidence is the pinned run with an unchanged configuration and the execution the plan uses;
+    the plan beat matched random entries (p < 0.05); its average net return is positive AND above
+    the matched baseline. Significance alone cannot approve a losing strategy."""
+    p = POLICY_V5
+    v = validation or {}
+    if not (v.get("p_one_sided_vs_matched") is not None and v["p_one_sided_vs_matched"] < p.min_validated_lift_p
+            and (v.get("lift_vs_matched_random") or 0) > 1):
+        return False, (f"the detector's validation did not beat matched random controls at p < "
+                       f"{p.min_validated_lift_p}; no edge to underwrite a paper position")
+    pin = APPROVAL_PINS.get(market)
+    t = v.get("trading")
+    if pin is None:
+        return False, (f"no evidence run is pinned for {market} plans executed under {PLAN_EXECUTION[market]}; "
+                       "nothing approves a paper position")
+    if not t or t.get("missing"):
+        return False, f"the pinned evidence run {pin['run_id']} is missing"
+    if t.get("config_sha256") != pin["config_sha256"]:
+        return False, f"the pinned evidence run {pin['run_id']} no longer has the pinned configuration"
+    if pin["execution"] != PLAN_EXECUTION[market]:
+        return False, (f"the pinned evidence ({pin['run_id']}: {pin['execution']}) did not test the execution these "
+                       f"plans use ({PLAN_EXECUTION[market]})")
+    avg, base, pval = t.get("avg_net_return"), t.get("matched_random_avg_net_return"), t.get("p_one_sided")
+    if pval is None or pval >= p.min_validated_lift_p:
+        return False, f"the plan did not beat matched random entries (p = {pval})"
+    if avg is None or avg <= 0:
+        return False, f"the plan's average net return {avg} is not positive"
+    if base is not None and avg <= base:
+        return False, f"the plan's average net {avg} does not exceed the matched baseline {base}"
+    return True, "approved"
 
 
 def already_scanned(session: str, market: str = "IDX") -> bool:
@@ -892,6 +1199,7 @@ def record_scan(out: dict, timestamper=None) -> list[Path]:
 
 
 SCORER_ID = "paper-score-v3"
+SCORER_ID_V4 = "paper-score-v4"  # PAPER-POLICY-v5 US decisions: exec_us (EXEC-US-v1), shared with replay
 # v3 (2026-10-08, before any outcome was recorded): market-local event dates and only
 # us-actions-v2 VERIFIED event evidence accepted (ratio-only matches are diagnostic).
 # Units from the provider's split records,
@@ -1004,7 +1312,7 @@ def score_pending(manifest: Path, timestamper=None, market: str = "IDX", verify=
         else:
             out["status"] = "SCORED"
             out.pop("price_scale_note", None)
-        out.update(scorer=SCORER_ID, preprocessing=SCORING_PREPROCESSING[market],
+        out.update(scorer=SCORER_ID_V4 if is_exec_us(r) else SCORER_ID, preprocessing=SCORING_PREPROCESSING[market],
                    units={"actions": (units or {}).get("actions", []), "evidence": evidence,
                           "convention": (units or {}).get("convention")})
         if r["decision_id"] in latest:

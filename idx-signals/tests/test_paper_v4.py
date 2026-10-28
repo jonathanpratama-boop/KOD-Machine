@@ -63,9 +63,9 @@ class V4(unittest.TestCase):
 
     def test_without_a_validated_pair_the_policy_is_v3s(self):
         """Guards against: v4 changing IDX decisions when E3 has not frozen and validated anything."""
-        self.assertEqual(paper.POLICY_ID, "PAPER-POLICY-v4")
+        self.assertEqual(paper.POLICY_ID_V4, "PAPER-POLICY-v4")
         with mock.patch.object(paper, "e3_plan", lambda: None), mock.patch.object(moonshot_e1, "SELECTED", "F3_VOL5_RET10"):
-            d = paper.scan_frame(frame(spike=(7, 79)), DATA, validation=VALIDATED)["decisions"][0]
+            d = paper.scan_frame(frame(spike=(7, 79)), DATA, validation=VALIDATED, policy=paper.POLICY_ID_V4)["decisions"][0]
         self.assertEqual(d["detector"]["rule_id"], "MOONSHOT_E1_D1")
         self.assertNotIn("execution_plan", d["plan"])
         self.assertIsNotNone(d["plan"]["max_chase_price"])
@@ -74,7 +74,7 @@ class V4(unittest.TestCase):
         """Guards against: a validated plan existing while decisions still describe the v3 next-close plan."""
         df = frame(spike=(7, 79))
         close = lock_at_ara(df, "T007", 79)
-        out = paper.scan_frame(df, DATA, validation=VALIDATED)
+        out = paper.scan_frame(df, DATA, validation=VALIDATED, policy=paper.POLICY_ID_V4)
         self.assertEqual(out["scan"]["detector"]["rule_id"], "MOONSHOT_E3_D1")
         self.assertEqual(out["scan"]["detector"]["selected"], "F1_ARA")
         self.assertTrue(out["scan"]["scan_id"].endswith("-F1_ARA"))
@@ -97,7 +97,7 @@ class V4(unittest.TestCase):
         for sc in plan["scenarios"]:
             self.assertLessEqual(sc["max_planned_loss_idr"], sc["risk_budget_idr"] * 1.0001)
             self.assertEqual(sc["shares"] % 100, 0)
-        unvalidated = paper.scan_frame(df, DATA)["decisions"][0]
+        unvalidated = paper.scan_frame(df, DATA, policy=paper.POLICY_ID_V4)["decisions"][0]
         self.assertEqual(unvalidated["decision"], "PASS")
         self.assertEqual(unvalidated["plan"]["execution_plan"], PLAN)
 
@@ -107,7 +107,7 @@ class V4(unittest.TestCase):
         df = frame(spike=(7, 79))
         lock_at_ara(df, "T007", 79)
         with mock.patch.object(paper, "e3_plan", lambda: e3):
-            d = paper.scan_frame(df, DATA, validation=VALIDATED)["decisions"][0]
+            d = paper.scan_frame(df, DATA, validation=VALIDATED, policy=paper.POLICY_ID_V4)["decisions"][0]
         self.assertEqual(d["decision"], "BUY ON TRIGGER")
         self.assertIsNone(d["plan"]["invalidation"])
         self.assertGreater(d["plan"]["sizing_stop"], 0)
@@ -125,7 +125,7 @@ class V4(unittest.TestCase):
         world = self._world() if world is None else world
         dates = sorted(world["date"].unique())
         base = world[world["date"] <= dates[74]].copy()
-        return paper.scan_frame(base, DATA, validation=validation)["decisions"][0]
+        return paper.scan_frame(base, DATA, validation=validation, policy=paper.POLICY_ID_V4)["decisions"][0]
 
     def _bars(self, closes, s=84):
         world = self._world(s=s)
