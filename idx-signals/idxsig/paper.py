@@ -55,7 +55,8 @@ TOKENS = PAPER / "timestamps"
 POLICY_ID_V3 = "PAPER-POLICY-v3"
 POLICY_ID_V4 = "PAPER-POLICY-v4"  # PR #6 (2026-10-13): v3 plus the E3 rule for IDX; in force on the base branch first
 POLICY_ID_V5 = "PAPER-POLICY-v5"  # PR #3's policy (the 5% stop rule, EXEC-US-v1, APPROVAL-v2), drafted as "v4"
-POLICY_ID = POLICY_ID_V5  # the policy new decisions are made under (from this release on)
+POLICY_ID = POLICY_ID_V4  # the policy new decisions are made under. v5 is defined and selectable (policy=POLICY_ID_V5) but
+#   not in force: the owner chose on 2026-10-28 to keep v4 live when PR #3 was consolidated into main.
 E3_DIR = PKG_ROOT / "research" / "E3"
 E1_ARGS = ("close", "prev", "high", "low", "volume", "present", "tradeable", "lock_up")
 # v1 (first scan, 2026-10-08): invalidation = max(signal-day low, close x 0.85). On a one-price
@@ -775,7 +776,7 @@ def _decide_v5(row, rank: int, scan_id: str, session: str, now: datetime, valida
                plan=plan if decision != "NOT EXECUTABLE" else {"reason": why, "horizon_sessions": p.horizon_sessions,
                                                                "invalidation": stop, "max_entry": max_entry,
                                                                **({"exec_plan": exec_plan} if exec_plan else {})},
-               policy={"policy_id": POLICY_ID, "sha256": policy_sha(POLICY_ID)},
+               policy={"policy_id": POLICY_ID_V5, "sha256": policy_sha(POLICY_ID_V5)},
                approval={"version": APPROVAL_VERSION, "approved": ok, "reason": why_not})
     return out
 
@@ -1113,8 +1114,12 @@ def _pinned_trading(market: str) -> dict | None:
     return {"run_id": pin["run_id"], "missing": True}
 
 
-def validation_evidence(market: str = "IDX") -> dict | None:
-    """Detection evidence (E1/E2 validation, E30) and the trading evidence of the PINNED run only."""
+def validation_evidence(market: str = "IDX", policy: str = POLICY_ID) -> dict | None:
+    """Detection evidence (E1/E2 validation, E30) and trading evidence. Under v3/v4 the trading evidence is the
+    latest matching validation run in results/RUNS.jsonl, exactly as those policies recorded it; under v5 it is
+    the PINNED run only (APPROVAL-v2)."""
+    if policy in (POLICY_ID_V3, POLICY_ID_V4):
+        return _validation_evidence_latest(market)
     det = _detector(market)
     e3 = det.get("e3")
     path = (PKG_ROOT / "research" / "E1" / "validation" / "result.json" if market == "IDX"
@@ -1133,6 +1138,45 @@ def validation_evidence(market: str = "IDX") -> dict | None:
         out["e3"] = {k: e3[k] for k in ("protocol_id", "plan", "plan_text", "run_id", "result", "result_sha256")}
     out["trading"] = _pinned_trading(market)
     out["approval_pin"] = APPROVAL_PINS.get(market)
+    return out
+
+
+def _validation_evidence_latest(market: str = "IDX") -> dict | None:
+    """PAPER-POLICY-v3/v4 evidence, unchanged from the base branch: detection (E1/E2 validation, E30) and trading
+    (the latest idxsig harness run over the validation window for the market's frozen detector)."""
+    det = _detector(market, POLICY_ID_V4)
+    e3 = det.get("e3")
+    path = (PKG_ROOT / "research" / "E1" / "validation" / "result.json" if market == "IDX"
+            else PKG_ROOT / "research" / "E2" / market / "validation" / "result.json")
+    if e3 is not None:
+        path = e3["detection_path"]
+    if not path.exists():
+        return None
+    res = json.loads(path.read_text(encoding="utf-8"))
+    if res.get("rule") != det["selected"]:
+        return None
+    out = {"source": rel(path), "source_sha256": sha256_file(path), "rule": res["rule"],
+           **{k: res["E30"].get(k) for k in ("precision", "precision_lo95", "precision_hi95", "base_rate",
+                                              "lift_vs_base", "lift_vs_matched_random", "p_one_sided_vs_matched")}}
+    if e3 is not None:
+        out["e3"] = {k: e3[k] for k in ("protocol_id", "plan", "plan_text", "run_id", "result", "result_sha256")}
+    trading = None
+    index = PKG_ROOT / "results" / "RUNS.jsonl"
+    for line in index.read_text(encoding="utf-8").splitlines() if index.exists() else []:
+        run = json.loads(line)
+        if det["rule_id"] not in run.get("dir", ""):
+            continue
+        summary = json.loads((PKG_ROOT / run["dir"] / "summary.json").read_text(encoding="utf-8"))
+        cfg = summary["config"]
+        if (cfg["start"], cfg["end"]) != VALIDATION_WINDOWS[market] or "Selected: " + det["selected"] not in summary["rule"]["text"]:
+            continue
+        mr = summary["random_matched"]["avg_net_return"] or {}
+        trading = {"run_id": summary["run_id"], "scored_trades": summary["rule_trades"]["scored"],
+                   "fill_rate": summary["rule_trades"]["fill_rate"], "avg_net_return": mr.get("observed"),
+                   "matched_random_avg_net_return": mr.get("random_mean"), "p_one_sided": mr.get("p_value_one_sided"),
+                   "status_counts": summary["rule_trades"]["status_counts"],
+                   "plan": summary["execution"].get("plan"), "plan_text": summary["execution"].get("plan_text")}
+    out["trading"] = trading
     return out
 
 

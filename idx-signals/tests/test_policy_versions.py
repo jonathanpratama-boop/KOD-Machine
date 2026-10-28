@@ -24,7 +24,7 @@ class Versions(unittest.TestCase):
         """Guards against: two different policies recorded under one id."""
         self.assertEqual((paper.POLICY_ID_V3, paper.POLICY_ID_V4, paper.POLICY_ID_V5),
                          ("PAPER-POLICY-v3", "PAPER-POLICY-v4", "PAPER-POLICY-v5"))
-        self.assertEqual(paper.POLICY_ID, paper.POLICY_ID_V5)
+        self.assertEqual(paper.POLICY_ID, paper.POLICY_ID_V4)  # v5 defined, not in force (owner, 2026-10-28)
         self.assertEqual(len({paper.policy_sha(p) for p in paper.POLICIES}), 3)
 
     def test_v5_does_not_decide_idx_while_an_e3_pair_is_validated(self):
@@ -33,7 +33,7 @@ class Versions(unittest.TestCase):
               "plan": {"entry_rule": "confirm", "entry_window": 3, "exit_rule": "stop_ref", "holding_days": 3}}
         with mock.patch.object(paper, "e3_plan", lambda: e3):
             with self.assertRaises(RuntimeError):
-                paper.scan_frame(frame(spike=(7, 79)), DATA, validation=VALIDATED)
+                paper.scan_frame(frame(spike=(7, 79)), DATA, validation=VALIDATED, policy=paper.POLICY_ID_V5)
             v3 = paper.scan_frame(frame(spike=(7, 79)), DATA, validation=VALIDATED, policy=paper.POLICY_ID_V3)
         self.assertEqual(v3["scan"]["detector"]["rule_id"], "MOONSHOT_E1_D1")
 

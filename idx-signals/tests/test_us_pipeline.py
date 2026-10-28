@@ -156,7 +156,7 @@ class FivePercentRule(unittest.TestCase):
         warnings.simplefilter("ignore")
         df = gframe(spike=(7, 79))
         v3 = paper.scan_frame(df, DATA, market="US", policy=paper.POLICY_ID_V3)["decisions"][0]
-        v5 = paper.scan_frame(df, DATA, market="US")["decisions"][0]
+        v5 = paper.scan_frame(df, DATA, market="US", policy=paper.POLICY_ID_V5)["decisions"][0]
         close = v3["verified_price"]["close"]
         self.assertLessEqual(v3["plan"]["invalidation"], close * 0.95)  # v3: 5-15% below the signal close
         self.assertEqual(v5["policy"]["policy_id"], "PAPER-POLICY-v5")
@@ -240,7 +240,7 @@ class SharedExecution(unittest.TestCase):
         warnings.simplefilter("ignore")
         base = gframe(spike=(7, 70), tail=tail, gap=gap)
         cut = base[base["date"] <= base["date"].unique()[70]]
-        dec = paper.scan_frame(cut, DATA, market="US")["decisions"][0]
+        dec = paper.scan_frame(cut, DATA, market="US", policy=paper.POLICY_ID_V5)["decisions"][0]
         return base, dec
 
     def test_identical_inputs_give_identical_paper_and_replay_outcomes(self):
