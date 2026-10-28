@@ -43,6 +43,20 @@ BAND_NAMES = ("<=Rp200", "<=Rp5000", ">Rp5000")
 CONTINUOUS = ("ret1", "rel1", "ret5", "ret20", "volr", "valr", "freqr", "rngr", "cpos", "vol20", "dd60", "turn",
               "up5", "zero20", "age", "logval20", "logmcap")
 BINARY = ("ara", "brk60", "ign")
+# Panel formats a study may need. Resolved in this order: the Study(panel_format=...) keyword, the
+# protocol's per-market entry protocol["markets"][<market>]["panel_format"] (one frozen protocol
+# spanning markets that need different panels, as E5 does), the global protocol["data"]["panel_format"],
+# then the legacy expectation (panel-v2 on IDX, panel-global-v1 elsewhere) as E1 and E2 ran. E1's
+# protocol names panel-v2 globally and has no markets block; E2's markets entries carry no
+# panel_format; the E5 draft's markets entries are strings: all three resolve as before.
+PANEL_FORMATS = ("panel-v2", "panel-global-v1", "panel-global-v2-units")
+# Detection-stage pool keys, in matching priority (relaxed from the last). "v1" is the recorded
+# E1/E2 pool; "v3" adds the volatility quintile ahead of market_cap, as controls v3 orders it.
+POOL_VERSIONS = {
+    "v1": ("price_band", "liquidity", "market_cap"),
+    "v3": ("price_band", "liquidity", "volatility", "market_cap"),
+}
+POOL_UNITS = ("panel", "as_traded")
 
 
 def protocol(path: Path = PROTOCOL) -> tuple[dict, str]:
@@ -74,6 +88,16 @@ def _roll(a, window, min_periods, how, shift=0):
     return out
 
 
+def _dense(m: Market, df: pd.DataFrame, col: str, fill: float) -> np.ndarray:
+    """A panel column as a (ticker x session) array on the market's grid (backtest._dense)."""
+    out = np.full(m.shape, fill, dtype=float)
+    ti = pd.Index(m.tickers).get_indexer(df["ticker"])
+    di = pd.Index(m.dates).get_indexer(df["date"].to_numpy().astype("datetime64[D]"))
+    ok = (ti >= 0) & (di >= 0)
+    out[ti[ok], di[ok]] = df[col].to_numpy(dtype=float)[ok]
+    return out
+
+
 def wilson(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
     if n == 0:
         return (float("nan"), float("nan"))
@@ -84,12 +108,38 @@ def wilson(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
 
 
 class Study:
-    """E1 on IDX by default; E2 passes its protocol, the market profile and detector family."""
+    """E1 on IDX by default; E2 passes its protocol, the market profile and detector family.
+
+    Options added for E5, all opt-in (the defaults reproduce the recorded E1/E2 studies):
+      panel_format=...                  the panel format the study needs (PANEL_FORMATS); overrides
+                                        whatever the protocol declares
+      protocol["markets"][<market>]["panel_format"]
+                                        the format for this study's market, when the protocol spans
+                                        markets on different panels (E5: IDX panel-v2, US
+                                        panel-global-v2-units, CRYPTO panel-global-v1)
+      protocol["data"]["panel_format"]  the format for every market of the protocol; absent, the
+                                        legacy expectation applies
+      pool_units="as_traded"            price bands on the price traded that session (close x the
+                                        panel's unit_factor, Market.with_units), for split-adjusted
+                                        sources; the panel must carry a unit_factor column
+      pool_version="v3"                 the detection pool also matches on the volatility quintile
+                                        (POOL_VERSIONS), relaxed to N_CONTROLS like controls.MIN_POOL
+    When any option departs from the recorded path, summary.json / result.json carry a study_options
+    block (study_options()) so the result directory says which pool its controls were matched on.
+    """
 
     def __init__(self, panel_df: pd.DataFrame, panel_meta: dict, protocol_path: Path = PROTOCOL, profile=None,
-                 family_module=None):
+                 family_module=None, pool_units: str = "panel", pool_version: str = "v1",
+                 panel_format: str | None = None):
         from .profiles import IDX
 
+        if pool_units not in POOL_UNITS:
+            raise ValueError(f"pool_units must be one of {POOL_UNITS}, not {pool_units!r}")
+        if pool_version not in POOL_VERSIONS:
+            raise ValueError(f"pool_version must be one of {tuple(POOL_VERSIONS)}, not {pool_version!r}")
+        self.pool_units = pool_units
+        self.pool_version = pool_version
+        self.pool_keys = POOL_VERSIONS[pool_version]
         proto, self.protocol_sha = protocol(protocol_path)
         self.protocol_id = proto["protocol_id"]
         self.profile = profile or IDX
@@ -97,11 +147,17 @@ class Study:
         self.continuous = tuple(proto["weak_signals"]["continuous"])
         self.binary = tuple(proto["weak_signals"]["binary"])
         self.periods = {k: tuple(v) for k, v in proto["periods"].items()}
-        expected = "panel-v2" if self.profile.market == "IDX" else "panel-global-v1"
+        self.legacy_panel_format = "panel-v2" if self.profile.market == "IDX" else "panel-global-v1"
+        expected = self._declared_panel_format(proto, panel_format)
         if panel_meta.get("format") != expected:
             raise ValueError(f"{self.protocol_id} needs a {expected} panel")
+        self.panel_format = expected
         self.panel_sha = panel_meta["sha256"]
         full = Market.from_panel(panel_df, price_limits=self.profile.price_limits)
+        if "unit_factor" in panel_df:  # carried as backtest.run does; read only under pool_units="as_traded"
+            full = full.with_units(_dense(full, panel_df, "unit_factor", 1.0))
+        elif pool_units == "as_traded":
+            raise ValueError("pool_units='as_traded' needs a panel with a unit_factor column (build-us-repair-panel)")
         # Seal the holdout: nothing after the last validation session exists for this study.
         _, hi = full.bounds(None, self.periods["validation"][1])
         m = full.slice(0, hi)
@@ -148,9 +204,39 @@ class Study:
                 before |= _lagb(q, k)
             self.start[x] = q & ~before
         self._signals()
-        b = controls.features(m, "v2", self.profile.band_edges)
+        b = controls.features(m, "v2", self.profile.band_edges, as_traded=pool_units == "as_traded")
         self.buckets = {k: b[k] for k in ("price_band", "liquidity", "market_cap")}
+        if "volatility" in self.pool_keys:
+            # The quintile of the same 20-session vol the signals report (vol20), ranked per session
+            # among names present at that session (as controls.features masks before ranking).
+            self.buckets["volatility"] = controls._bucket(np.where(m.present, self.sig["vol20"], np.nan), 5)
         self.flags = self.family.family_flags(self.base_feats)
+
+    def study_options(self) -> dict | None:
+        """The E5 options this study runs under, for the stage outputs to self-describe which detection
+        pool its controls were matched on; None on the recorded E1/E2 path (panel units, the v1 pool,
+        the legacy panel format), so E1/E2 re-runs keep their recorded key set."""
+        if (self.pool_units, self.pool_version, self.panel_format) == ("panel", "v1", self.legacy_panel_format):
+            return None
+        return {"panel_format": self.panel_format, "pool_units": self.pool_units,
+                "pool_version": self.pool_version, "pool_keys": list(self.pool_keys)}
+
+    def _declared_panel_format(self, proto: dict, override: str | None) -> str:
+        """The panel format this study needs: the keyword, else the protocol's entry for this market,
+        else its global data.panel_format, else the legacy expectation. Any named format must be known."""
+        legacy = self.legacy_panel_format
+        market = (proto.get("markets") or {}).get(self.profile.market)
+        per_market = market.get("panel_format") if isinstance(market, dict) else None
+        global_ = (proto.get("data") or {}).get("panel_format")
+        for source, declared in (("panel_format=", override),
+                                 (f"{self.protocol_id} markets.{self.profile.market}.panel_format", per_market),
+                                 (f"{self.protocol_id} data.panel_format", global_)):
+            if declared is None:
+                continue
+            if declared not in PANEL_FORMATS:
+                raise ValueError(f"{source} names panel format {declared!r}; known: {PANEL_FORMATS}")
+            return declared
+        return legacy
 
     # ------------------------------------------------------------------ signals
     def _signals(self):
@@ -187,7 +273,9 @@ class Study:
                 "gap": f["gap"] if "gap" in f else np.where(tr & (m.prev > 0) & (m.open > 0), m.open / m.prev - 1, np.nan),
             }
         flags = self.family.family_flags(f)
-        sig["ign"] = flags[next(k for k in flags if "IGNITION" in k)].astype(float)
+        ignition = next((k for k in flags if "IGNITION" in k), None)
+        # A family without an IGNITION member (E5) has no ign signal: unknown everywhere, never a KeyError.
+        sig["ign"] = flags[ignition].astype(float) if ignition is not None else np.full(m.shape, np.nan)
         self.sig = sig
 
     # ------------------------------------------------------------------ helpers
@@ -206,6 +294,10 @@ class Study:
             "r5": float(self.r5[n, d]), "executable_entry": bool(self.executable[n, d]),
             "capturable": float(self.capturable[n, d]),
         }
+        if self.pool_units == "as_traded":  # the price the band was formed on
+            out["close_as_traded"] = float(m.close[n, d] * m.unit_factor[n, d])
+        if "volatility" in self.pool_keys:
+            out["volatility_q"] = int(self.buckets["volatility"][n, d]) + 1
         for x in THRESHOLDS:
             out[label(x)] = bool(self.r5max[n, d] >= x)
         for k in self.continuous + self.binary:
@@ -217,14 +309,14 @@ class Study:
         cand = cand[cand != n]
         if extra is not None:
             cand = cand[extra[cand, d]]
-        keys = ("price_band", "liquidity", "market_cap")
-        for level in range(3, -1, -1):
+        keys = self.pool_keys
+        for level in range(len(keys), -1, -1):
             pool = cand
             for k in keys[:level]:
                 pool = pool[self.buckets[k][pool, d] == self.buckets[k][n, d]]
             if len(pool) >= N_CONTROLS or level == 0:
-                return pool, 3 - level
-        return cand, 3
+                return pool, len(keys) - level
+        return cand, len(keys)
 
     # ------------------------------------------------------------------ discovery
     def base_rates(self, period: str) -> pd.DataFrame:
@@ -437,6 +529,8 @@ def run_discovery(study: Study, out: Path) -> dict:
         "code": code_state(),
         "holdout": "sealed: the study market ends at the last validation session",
     }
+    if (opts := study.study_options()) is not None:  # E5 options only; absent on the recorded E1/E2 path
+        summary["study_options"] = opts
     write_json(out / "summary.json", summary)
     return summary
 
@@ -453,5 +547,7 @@ def run_validation(study: Study, rule: str, out: Path) -> dict:
                    "code": code_state(),
                    "detector_module_sha256": sha256_file(Path(study.family.__file__)), "market": study.profile.market,
                    "computed_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat()})
+    if (opts := study.study_options()) is not None:  # E5 options only; absent on the recorded E1/E2 path
+        result["study_options"] = opts
     write_json(out / "result.json", result)
     return result

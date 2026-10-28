@@ -16,6 +16,12 @@ session from the names where the rule was evaluable:
 Each draw is a portfolio of the rule's size and dates. The rule's average return and hit
 rate are placed in each distribution of draws.
 
+The trades frame also carries, per signal, the mean net return of its own control draws
+(matched_mean_net_return, same_session_mean_net_return), so a paired statistic can be formed:
+paired_excess() takes each scored trade's net return minus its matched-control mean and
+bootstraps the mean excess over signal-session clusters. summary.json and random_draws.csv do
+not change; the columns are additive.
+
 No lookahead, by construction (rules.causal_signals): the signal recorded at session d is
 column d of a call that received only sessions 0..d and the names listed by d, through a
 read-only view without the corporate-action registry, under a source audit and a run-time
@@ -76,6 +82,7 @@ class RunConfig:
     liquidation: float | None = None  # short side: isolated-margin liquidation at this fraction above the entry
     jump_ratio: float | None = None  # trades held across a close/reference ratio beyond this are not scored
     holdout_final: bool = False  # the one pre-registered holdout evaluation (see HOLDOUT)
+    tick_cost: bool = False  # one tick per side added to the costs, rule and baselines alike (research/E5 sensitivity)
 
 
 # The IDX holdout sealed by research/E1/protocol.json. A DETECTOR run whose window touches it is
@@ -237,6 +244,63 @@ def _baseline(m: Market, r_tick: np.ndarray, a_sig: np.ndarray, exec_cfg: ExecCo
     return summary, frame, out
 
 
+def _control_means(raw: dict, key: str, draws: int, attempt: np.ndarray) -> np.ndarray:
+    """Per signal (every signal, in trades-frame order), the mean net return over the draws of
+    baseline `key` that were scored. NaN where no control was drawn (an overlap-skipped signal, or
+    no attempted signal at all) and where none of the draws was scored."""
+    out = np.full(len(attempt), np.nan)
+    if key not in raw or not attempt.any() or draws == 0:
+        return out
+    net = raw[key]["net_return"].reshape(draws, -1)
+    scored = np.isfinite(net)
+    n = scored.sum(axis=0)
+    with np.errstate(invalid="ignore", divide="ignore"):
+        mean = np.where(scored, net, 0.0).sum(axis=0) / n
+    out[attempt] = np.where(n > 0, mean, np.nan)
+    return out
+
+
+def per_signal_excess(trades_df: pd.DataFrame, column: str = "matched_mean_net_return") -> pd.Series:
+    """net_return minus the signal's control mean, aligned to trades_df; NaN where either is missing
+    (an unscored trade, an overlap-skipped signal, a signal none of whose controls was scored)."""
+    net = pd.to_numeric(trades_df["net_return"], errors="coerce").astype(float)
+    ctrl = pd.to_numeric(trades_df[column], errors="coerce").astype(float)
+    return (net - ctrl).where(np.isfinite(net) & np.isfinite(ctrl))
+
+
+def paired_excess(trades_df: pd.DataFrame, resamples: int = 10_000, seed: int = 20261015,
+                  column: str = "matched_mean_net_return", cluster: str = "signal_date") -> dict:
+    """The paired statistic of the E5 protocol: mean per-signal excess over its own controls, with a
+    cluster bootstrap over signal sessions (trades signalled on one session are resampled together,
+    so a day the whole market moved counts once). p is one-sided for mean excess > 0:
+    (1 + resampled means <= 0) / (1 + resamples), the harness's own convention. numpy only."""
+    if resamples < 1:
+        raise ValueError("resamples must be at least 1")
+    excess = per_signal_excess(trades_df, column).to_numpy(dtype=float)
+    ok = np.isfinite(excess)
+    e = excess[ok]
+    keys = trades_df[cluster].to_numpy()[ok]
+    _, inv = np.unique(keys.astype(str), return_inverse=True)
+    k = int(inv.max()) + 1 if len(e) else 0
+    out = {"n": int(len(e)), "n_clusters": k, "cluster": cluster, "column": column,
+           "resamples": int(resamples), "seed": int(seed),
+           "mean_excess": None, "p_one_sided": None, "ci95": None}
+    if not len(e):
+        return out
+    sums = np.bincount(inv, weights=e, minlength=k)
+    counts = np.bincount(inv, minlength=k).astype(float)
+    rng = np.random.default_rng(seed)
+    means = np.empty(resamples)
+    chunk = 1000  # fixed, so the stream (and the result) does not depend on memory
+    for i in range(0, resamples, chunk):
+        idx = rng.integers(0, k, size=(min(chunk, resamples - i), k))
+        means[i:i + len(idx)] = sums[idx].sum(axis=1) / counts[idx].sum(axis=1)
+    out.update({"mean_excess": float(e.mean()),
+                "p_one_sided": float((1 + (means <= 0).sum()) / (1 + resamples)),
+                "ci95": [float(np.percentile(means, 2.5)), float(np.percentile(means, 97.5))]})
+    return out
+
+
 def _dense(m: Market, df: pd.DataFrame, col: str, fill) -> np.ndarray:
     out = np.full(m.shape, fill, dtype=np.asarray(fill).dtype if not isinstance(fill, float) else float)
     ti = pd.Index(m.tickers).get_indexer(df["ticker"])
@@ -289,8 +353,12 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
         fill_model=cfg.fill_model,
         liquidation=cfg.liquidation,
         jump_ratio=cfg.jump_ratio,
+        tick_cost=cfg.tick_cost,
         **plan,
     )
+    if cfg.tick_cost and not idx:
+        raise ValueError("tick_cost is defined for IDX only: market.tick_size is the IDX tick table (research/E5 "
+                         "closing-auction spread sensitivity)")
     start = cfg.start or (FIRST_SNAPSHOT if idx else panel_meta["default_start"])
     end = cfg.end or panel_meta["source_boundary"]
     sealed = HOLDOUT if idx else GLOBAL_HOLDOUT
@@ -467,6 +535,9 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
         "net_return": trades["net_return"],
         **({k: trades[k] for k in ("entry_price_as_traded", "exit_price_as_traded", "shares_as_traded")}
            if "entry_price_as_traded" in trades else {}),
+        # Additive (E5): each signal's own control means, from the draws already executed above.
+        "matched_mean_net_return": _control_means(raw, "random_matched", draws, attempt),
+        "same_session_mean_net_return": _control_means(raw, "random", draws, attempt),
     })
     repair = {}
     if cfg.units != "panel" or cfg.fill_model != "A" or cfg.quarantine != "none" or qa_flag is not None:
@@ -529,6 +600,11 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
                                        "is a redenomination or a bad print, not a trade; such trades are "
                                        "EXCLUDED_DATA_JUMP for the rule and the baselines alike"}}
                if exec_cfg.jump_ratio is not None else {}),
+            **({"tick_cost": {"enabled": True,
+                              "note": "one exchange tick per side (market.tick_size at the price paid and at the "
+                                      "price received) added to the per-side costs, rule and baselines alike "
+                                      "(research/E5 closing-auction spread sensitivity)"}}
+               if exec_cfg.tick_cost else {}),
             "lot_size": profile.lot_size,
             "cost_tiers": [list(t) for t in profile.cost_tiers],
             "fees": {"buy": cfg.fee_buy, "sell": cfg.fee_sell},

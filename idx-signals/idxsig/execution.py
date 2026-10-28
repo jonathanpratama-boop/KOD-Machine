@@ -153,6 +153,10 @@ class ExecConfig:
     # 1/jump_ratio inside (entry, exit] is a redenomination or a bad print, not a trade; the trade is
     # EXCLUDED_DATA_JUMP, for the rule and the random baselines alike. None: no such check.
     jump_ratio: float | None = None
+    # Optional (research/E5 sensitivity): one exchange tick per side (market.tick_size at the price paid and at
+    # the price received) added to the per-side costs, for the rule and the random baselines alike: the
+    # closing-auction spread the flat fee model otherwise lacks. Default off: every recorded run is unchanged.
+    tick_cost: bool = False
 
     @property
     def plan(self) -> dict:
@@ -191,6 +195,24 @@ class Market:
         for name in self.REGISTRY_FIELDS:
             setattr(self, name, arrays.get(name))
         self.registry_counts = arrays.get("registry_counts")
+        # Sessions each name was listed before this market's first session, carried through slice() and
+        # window(), so a rule can count a name's age from its first listed session instead of from the
+        # window start (audit finding B, research/E5/v1.1). Zero where the name lists at or after the first
+        # session, or where the history given starts here (left-censored at the data start: declared, not
+        # invented).
+        lb = arrays.get("listed_before")
+        self.listed_before = (np.zeros(len(self.tickers), dtype=np.int64) if lb is None
+                              else np.asarray(lb, dtype=np.int64).copy())
+        # Names whose listing history before the data start is unknown: present at the data's first session
+        # with no history given before it, so their listing age is only a lower bound (left-censored: declared,
+        # not invented). Derived when the market is built, then carried through slice()/window() beside
+        # listed_before, so a window never turns an unknown history into a known one. Read only by matched
+        # controls v4 (controls._listing_age_v4); no rule sees it.
+        lc = arrays.get("listing_censored")
+        if lc is None:
+            lc = (self.present[:, 0] & (self.listed_before == 0) if self.present.shape[1]
+                  else np.zeros(len(self.tickers), dtype=bool))
+        self.listing_censored = np.asarray(lc, dtype=bool).copy()
 
     @property
     def shape(self):
@@ -215,12 +237,16 @@ class Market:
         opens = dense("open") if "open" in df else np.full(shape, np.nan)
         present = np.zeros(shape, dtype=bool)
         present[ti, di] = True
+        listed_before = None
+        if "sessions_listed_before" in df:  # per name, constant: listing history before this frame's first session
+            per = df.groupby("ticker")["sessions_listed_before"].first().reindex(tickers)
+            listed_before = per.fillna(0).to_numpy(dtype=np.int64)
         return cls.build(tickers, dates, close, prev, high, low, volume, value, present, listed, opens=opens,
-                         price_limits=price_limits)
+                         price_limits=price_limits, listed_before=listed_before)
 
     @classmethod
     def build(cls, tickers, dates, close, prev, high, low, volume, value, present, listed_shares=None,
-              opens=None, price_limits: bool = True) -> "Market":
+              opens=None, price_limits: bool = True, listed_before=None) -> "Market":
         tradeable = present & (np.nan_to_num(volume) > 0) & (np.nan_to_num(close) > 0)
         day_grid = np.broadcast_to(np.asarray(dates, dtype="datetime64[D]"), close.shape)
         ref = np.where(np.isfinite(prev) & (prev > 0), prev, np.nan)
@@ -251,7 +277,7 @@ class Market:
                    split_factor=np.cumprod(np.where(is_split, ca_ratio, 1.0), axis=1),
                    other_ca_count=np.cumsum(reset & ~is_split, axis=1),
                    listed_shares=np.full(close.shape, np.nan) if listed_shares is None else listed_shares,
-                   open=np.full(close.shape, np.nan) if opens is None else opens)
+                   open=np.full(close.shape, np.nan) if opens is None else opens, listed_before=listed_before)
 
     def with_registry(self, registry) -> "Market":
         """A copy with share scaling from a corporate-action registry (ca_mode="registry")."""
@@ -260,7 +286,8 @@ class Market:
         factor, rights, unresolved, counts = scaling_arrays(self, registry)
         arrays = {name: getattr(self, name) for name in self.FIELDS}
         return Market(self.tickers, self.dates, **arrays, reg_factor=factor, reg_rights=rights,
-                      reg_unresolved=unresolved, unit_factor=self.unit_factor, registry_counts=counts)
+                      reg_unresolved=unresolved, unit_factor=self.unit_factor, registry_counts=counts,
+                      listed_before=self.listed_before, listing_censored=self.listing_censored)
 
     def with_units(self, unit_factor: np.ndarray) -> "Market":
         """A copy carrying adjusted -> as-traded price factors (us_actions.unit_factors). Built from
@@ -270,7 +297,8 @@ class Market:
         arrays = {name: getattr(self, name) for name in self.FIELDS}
         extra = {name: getattr(self, name) for name in self.REGISTRY_FIELDS if name != "unit_factor"}
         return Market(self.tickers, self.dates, **arrays, **extra, unit_factor=unit_factor,
-                      registry_counts=self.registry_counts)
+                      registry_counts=self.registry_counts, listed_before=self.listed_before,
+                      listing_censored=self.listing_censored)
 
     def bounds(self, start=None, end=None) -> tuple[int, int]:
         lo = 0 if start is None else int(np.searchsorted(self.dates, np.datetime64(start, "D"), side="left"))
@@ -286,7 +314,14 @@ class Market:
         for name in self.REGISTRY_FIELDS:
             if getattr(self, name) is not None:
                 arrays[name] = getattr(self, name)[:, lo:hi]
-        return Market(self.tickers, self.dates[lo:hi], **arrays, registry_counts=self.registry_counts)
+        # Listing history before the new first session: what was already listed before this market's first
+        # session plus the sessions since each name's first present column that fall before `lo`.
+        ever = self.present.any(axis=1)
+        first = np.where(ever, self.present.argmax(axis=1), 0)
+        first_eff = np.where(self.listed_before > 0, -self.listed_before, first)
+        listed_before = np.where(ever | (self.listed_before > 0), np.maximum(0, lo - first_eff), 0).astype(np.int64)
+        return Market(self.tickers, self.dates[lo:hi], **arrays, registry_counts=self.registry_counts,
+                      listed_before=listed_before, listing_censored=self.listing_censored)
 
     def truncate(self, last: int) -> "Market":
         """Sessions 0..last only. Used to prove a rule never reads ahead."""
@@ -589,6 +624,10 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     f_exit = uf[tick_idx, x] if uf is not None else np.ones(n_trades)
     traded_exit = np.nan_to_num(exit_price) * f_exit  # the sale price, in the exit session's units
     extra_in, extra_out = _tier_costs(traded_entry, cfg.cost_tiers), _tier_costs(traded_exit, cfg.cost_tiers)
+    if cfg.tick_cost:  # one tick per side at the traded prices (zero where no price was paid or received)
+        with np.errstate(divide="ignore", invalid="ignore"):
+            extra_in = extra_in + np.where(traded_entry > 0, market.tick_size(traded_entry) / traded_entry, 0.0)
+            extra_out = extra_out + np.where(traded_exit > 0, market.tick_size(traded_exit) / traded_exit, 0.0)
     with np.errstate(divide="ignore", invalid="ignore"):
         if cfg.side == "long":
             cost = buy_value * (1 + cfg.fees.buy + extra_in)
