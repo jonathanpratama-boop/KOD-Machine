@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Calculation · {{ company.ticker }} · KOD{% endblock %}
+{% block content %}
+<div class="breadcrumbs"><a href="/">Event inbox</a><span>/</span><a href="/company/{{ company.id }}">{{ company.ticker }}</a><span>/</span><a href="/company/{{ company.id }}/dossier?{{ query }}">Dossier</a><span>/</span>Calculation</div>
+<div class="page-heading"><div><div class="eyebrow">CALCULATION LINEAGE</div><h1 class="lighter-title">{{ calc.label }}</h1>
+<div class="identity-line"><span>{{ calc.formula }} · {{ calc.formula_version }}</span><span>Cutoff {{ calc.policy.cutoff|moment }} · {{ calc.policy.mode }} · {{ calc.policy.policy_version }}</span><span class="hash">{{ calc.id }}</span></div></div></div>
+<div class="metric-cards"><div><span>Result</span><strong>{% if calc.status == 'ok' %}{{ show(calc.value, calc.unit) }}{% else %}{{ calc.status|replace('_', ' ') }}{% endif %}</strong><small>exact value {{ calc.value or 'none' }} {{ calc.unit }}</small></div>
+<div><span>Status</span><strong>{{ calc.status|replace('_', ' ') }}</strong><small>{{ calc.reasons|join('; ') or 'all inputs usable' }}</small></div>
+<div><span>Inputs</span><strong>{{ calc.inputs|length }}</strong><small>recorded observations and calculations</small></div></div>
+{% if change %}{% set change_notes = [change.comparison_basis, change.duration_note, change.concept_note]|select|list %}{% if change_notes %}<p class="panel-footnote">{{ change_notes|join(' · ') }}</p>{% endif %}{% endif %}
+{% if calc.detail %}<section class="panel"><div class="panel-heading"><div><h2>Formula detail</h2></div></div><ul class="issue-list">{% for k, v in calc.detail|dictsort %}<li><b>{{ k|replace('_', ' ') }}</b><span>{{ v if v is string else v|join(', ') if v is iterable and v is not mapping else v }}</span></li>{% endfor %}</ul></section>{% endif %}
+<section class="panel"><div class="panel-heading"><div><h2>Inputs</h2><p>Each input opens its source evidence (an exact table cell or a JSON pointer into the preserved SEC response).</p></div></div>
+<div class="table-wrap"><table><thead><tr><th>Role</th><th>Kind</th><th>Figure</th><th class="numeric">Value</th><th>Source</th></tr></thead><tbody>
+{% for i in calc.inputs %}<tr><td>{{ i.role|replace('_', ' ') }}</td><td>{{ i.kind }}</td>
+{% if i.kind == 'observation' and d.observations.get(i.id) %}{% set o = d.observations[i.id] %}<td><a class="cell-link" href="/observation/{{ i.id }}?{{ query }}">{{ metric_label(o.metric) }} · {{ o.basis }}</a><small class="cell-status">{{ o.period.label }} · {{ o.concept }}</small></td><td class="numeric">{{ o.value }} {{ o.currency or '' }}{% if o.unit != 'currency' %} {{ o.unit }}{% endif %}</td><td>{% if o.accession %}{{ o.form }} {{ o.accession }} filed {{ o.filed }}{% else %}{{ o.provider|replace('_', ' ') }}{% endif %}</td>
+{% elif i.kind == 'calculation' and d.calculations.get(i.id) %}{% set c = d.calculations[i.id] %}<td><a class="cell-link" href="/company/{{ company.id }}/dossier/calculation/{{ i.id }}?{{ query }}">{{ c.label }}</a></td><td class="numeric">{{ show(c.value, c.unit) if c.status == 'ok' else c.status }}</td><td>{{ c.formula }} {{ c.formula_version }}</td>
+{% else %}<td class="hash">{{ i.id }}</td><td></td><td></td>{% endif %}</tr>{% endfor %}
+</tbody></table></div></section>
+{% endblock %}

@@ -165,28 +165,34 @@ def _validate(bundle):
     return securities, documents
 
 
-def _scores(documents, query):
-    """BM25 over unique supplied content; repeated copies do not alter corpus statistics."""
-    corpus = {d["normalized_sha256"]: _tokens(d["title"] + " " + d["text"])
-              for d in documents}
+def bm25(corpus, query):
+    """BM25 (k1=1.2, b=0.75) of each corpus entry for the query. `corpus` maps a key (one per unique text) to its tokens; callers that hold repeated copies
+    of one text pass it once, so copies do not alter corpus statistics. Returns key -> score; an empty query scores 0."""
     if not corpus or not query.strip():
-        return {d["document_id"]: 0.0 for d in documents}
+        return {key: 0.0 for key in corpus}
     terms = set(_tokens(query))
     counters = {key: Counter(value) for key, value in corpus.items()}
     average = sum(map(len, corpus.values())) / len(corpus)
     frequency = {term: sum(term in c for c in counters.values()) for term in terms}
     output = {}
-    for doc in documents:
-        key = doc["normalized_sha256"]
-        counter, length, score = counters[key], len(corpus[key]), 0.0
+    for key, tokens in corpus.items():
+        counter, length, score = counters[key], len(tokens), 0.0
         for term in sorted(terms):
             tf = counter[term]
             if not tf:
                 continue
             idf = math.log(1 + (len(corpus) - frequency[term] + .5) / (frequency[term] + .5))
             score += idf * tf * 2.2 / (tf + 1.2 * (.25 + .75 * length / (average or 1)))
-        output[doc["document_id"]] = score
+        output[key] = score
     return output
+
+
+def _scores(documents, query):
+    """BM25 over unique supplied content; repeated copies do not alter corpus statistics."""
+    corpus = {d["normalized_sha256"]: _tokens(d["title"] + " " + d["text"])
+              for d in documents}
+    scores = bm25(corpus, query)
+    return {d["document_id"]: scores[d["normalized_sha256"]] for d in documents}
 
 
 def _comparisons(documents):

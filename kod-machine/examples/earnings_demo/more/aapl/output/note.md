@@ -3,7 +3,7 @@
 > Research aid only. Not a recommendation, forecast or entry permission. It opened no case, wrote no ledger and placed no order.
 
 - **Event:** earnings announcement (official release)  
-- **Reporting period:** quarter ended 2024-09-28  
+- **Reporting period:** quarter ended 2024-09-28, stated by the release: 'fourth quarter ended September 28, 2024'; 'announced financial results for its fiscal 2024 fourth quarter'  
 - **Information cutoff:** 2024-10-31T22:00:00Z (mode: public)
 - **Historical reconstruction:** documents are admitted by their publication time only. This does not show what KOD possessed at the cutoff; the files were retrieved later (see Sources).
 
@@ -27,20 +27,20 @@ Reported facts, quoted from the release (not paraphrased):
 
 ### A. Actual vs prior-period actual
 
-Calculation from the comparative columns printed in the same release. The prior figure is the company's reported number for that period, not an expectation.
+Calculation from the current release's comparative columns or the explicitly identified earlier release. Each row identifies both sources; the prior actual is a reported number, not an expectation.
 
-| Metric | Basis | Unit | Current | Prior period | Prior actual | Difference | Change % | Relation | Agrees with the release's printed change |
-|---|---|---|---|---|---|---|---|---|---|
-| Diluted EPS | UNSTATED | USD per share | 0.97 | quarter ended 2023-09-30 | 1.46 | -0.49 | -33.56 | YEAR\_OVER\_YEAR | not checked |
-| Net income | UNSTATED | USD millions | 14736 | quarter ended 2023-09-30 | 22956 | -8220 | -35.81 | YEAR\_OVER\_YEAR | not checked |
-| Operating expenses | UNSTATED | USD millions | 14288 | quarter ended 2023-09-30 | 13458 | 830 | 6.17 | YEAR\_OVER\_YEAR | not checked |
-| Operating income | UNSTATED | USD millions | 29591 | quarter ended 2023-09-30 | 26969 | 2622 | 9.72 | YEAR\_OVER\_YEAR | not checked |
-| Revenue | UNSTATED | USD millions | 94930 | quarter ended 2023-09-30 | 89498 | 5432 | 6.07 | YEAR\_OVER\_YEAR | not checked |
-| Diluted EPS | UNSTATED | USD per share | 0.97 | quarter ended 2024-06-29 | 1.4 | -0.43 | -30.71 | SEQUENTIAL | not checked |
-| Net income | UNSTATED | USD millions | 14736 | quarter ended 2024-06-29 | 21448 | -6712 | -31.29 | SEQUENTIAL | not checked |
-| Operating expenses | UNSTATED | USD millions | 14288 | quarter ended 2024-06-29 | 14326 | -38 | -0.27 | SEQUENTIAL | not checked |
-| Operating income | UNSTATED | USD millions | 29591 | quarter ended 2024-06-29 | 25352 | 4239 | 16.72 | SEQUENTIAL | not checked |
-| Revenue | UNSTATED | USD millions | 94930 | quarter ended 2024-06-29 | 85777 | 9153 | 10.67 | SEQUENTIAL | not checked |
+| Metric | Basis | Unit | Current | Prior period | Prior actual | Difference | Change % | Relation | Agrees with the release's printed change | Source |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Diluted EPS | UNSTATED | USD per share | 0.97 | quarter ended 2023-09-30 | 1.46 | -0.49 | -33.56 | YEAR\_OVER\_YEAR | not checked | comparative column printed in the current release; actual: current release, table 1, row 27 <https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm>; prior: current release, table 1, row 27 <https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm> |
+| Net income | UNSTATED | USD millions | 14736 | quarter ended 2023-09-30 | 22956 | -8220 | -35.81 | YEAR\_OVER\_YEAR | not checked | comparative column printed in the current release; actual: current release, table 1, row 23 <https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm>; prior: current release, table 1, row 23 <https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm> |
+| Operating expenses | UNSTATED | USD millions | 14288 | quarter ended 2023-09-30 | 13458 | 830 | 6.17 | YEAR\_OVER\_YEAR | not checked | comparative column printed in the current release; actual: current release, table 1, row 17 <https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm>; prior: current release, table 1, row 17 <https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm> |
+| Operating income | UNSTATED | USD millions | 29591 | quarter ended 2023-09-30 | 26969 | 2622 | 9.72 | YEAR\_OVER\_YEAR | not checked | comparative column printed in the current release; actual: current release, table 1, row 19 <https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm>; prior: current release, table 1, row 19 <https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm> |
+| Revenue | UNSTATED | USD millions | 94930 | quarter ended 2023-09-30 | 89498 | 5432 | 6.07 | YEAR\_OVER\_YEAR | not checked | comparative column printed in the current release; actual: current release, table 1, row 7 <https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm>; prior: current release, table 1, row 7 <https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm> |
+| Diluted EPS | UNSTATED | USD per share (assumed) | 0.97 | quarter ended 2024-06-29 | 1.4 | -0.43 | -30.71 | SEQUENTIAL | not checked | figure from the comparison release (not printed in the current release); actual: current release, table 1, row 27 <https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm>; prior: comparison release, table 1, row 27 <https://www.sec.gov/Archives/edgar/data/320193/000032019324000080/a8-kex991q3202406292024.htm> |
+| Net income | UNSTATED | USD millions (assumed) | 14736 | quarter ended 2024-06-29 | 21448 | -6712 | -31.29 | SEQUENTIAL | not checked | figure from the comparison release (not printed in the current release); actual: current release, table 1, row 23 <https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm>; prior: comparison release, table 1, row 23 <https://www.sec.gov/Archives/edgar/data/320193/000032019324000080/a8-kex991q3202406292024.htm> |
+| Operating expenses | UNSTATED | USD millions (assumed) | 14288 | quarter ended 2024-06-29 | 14326 | -38 | -0.27 | SEQUENTIAL | not checked | figure from the comparison release (not printed in the current release); actual: current release, table 1, row 17 <https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm>; prior: comparison release, table 1, row 17 <https://www.sec.gov/Archives/edgar/data/320193/000032019324000080/a8-kex991q3202406292024.htm> |
+| Operating income | UNSTATED | USD millions (assumed) | 29591 | quarter ended 2024-06-29 | 25352 | 4239 | 16.72 | SEQUENTIAL | not checked | figure from the comparison release (not printed in the current release); actual: current release, table 1, row 19 <https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm>; prior: comparison release, table 1, row 19 <https://www.sec.gov/Archives/edgar/data/320193/000032019324000080/a8-kex991q3202406292024.htm> |
+| Revenue | UNSTATED | USD millions (assumed) | 94930 | quarter ended 2024-06-29 | 85777 | 9153 | 10.67 | SEQUENTIAL | not checked | figure from the comparison release (not printed in the current release); actual: current release, table 1, row 7 <https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm>; prior: comparison release, table 1, row 7 <https://www.sec.gov/Archives/edgar/data/320193/000032019324000080/a8-kex991q3202406292024.htm> |
 
 ### B. Actual vs earlier company guidance
 
@@ -62,11 +62,15 @@ Calculations are the differences above. **Interpretation: none offered.** This t
 - Check: headline revenue vs table revenue: consistent.
 - Check: headline UNSTATED diluted EPS vs table: consistent.
 - UNIT\_AMBIGUOUS (table 1 row 12): gross margin without a % sign (a dollar amount?); not extracted
-- COLUMN\_COUNT\_MISMATCH (table 4): 2 recognised row(s) skipped because their value count differs from the header columns
+- BREAKDOWN\_ROWS\_NOT\_READ (table 1): 2 recognised row(s) below '(1) Net sales by category:' are parts of the company (segments, categories or regions), not the company figure; not read
+- COLUMN\_DURATION\_UNKNOWN (table 2): dated column(s) September 28, 2024, September 30, 2023: no 'Three/Twelve Months Ended' heading above it; their values are not read
+- COLUMN\_ALIGNMENT\_UNCLEAR (table 4): 2 recognised row(s) skipped because their cells do not sit under the header columns
 - NO\_OUTLOOK\_FOUND (text): no sentence of the form 'outlook for the &lt;n&gt;th quarter of fiscal &lt;year&gt;' was found; no guidance extracted
 - Comparison document: UNIT\_AMBIGUOUS (table 1 row 12): gross margin without a % sign (a dollar amount?); not extracted
+- Comparison document: BREAKDOWN\_ROWS\_NOT\_READ (table 1): 2 recognised row(s) below '(1) Net sales by category:' are parts of the company (segments, categories or regions), not the company figure; not read
+- Comparison document: COLUMN\_DURATION\_UNKNOWN (table 2): dated column(s) June 29, 2024, September 30, 2023: no 'Three/Twelve Months Ended' heading above it; their values are not read
 - Comparison document: NO\_OUTLOOK\_FOUND (text): no sentence of the form 'outlook for the &lt;n&gt;th quarter of fiscal &lt;year&gt;' was found; no guidance extracted
-- Currency is read from the "$" sign and assumed to be US dollars unless the user overrode it; confirm in the filing.
+- Reporting currency of the current-period figures: USD; assumed from the "$" sign because no currency statement was found (confirm in the filing, or record it explicitly).
 - Only the summary table and the outlook bullets are read. Segment results, reconciliations and management commentary are not extracted.
 - Supplied times and quotes are assertions; the tool does not authenticate the source or prove historical availability.
 
@@ -84,4 +88,4 @@ Calculations are the differences above. **Interpretation: none offered.** This t
 - current: [https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm](<https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/a8-kex991q4202409282024.htm>)
 - comparison: [https://www.sec.gov/Archives/edgar/data/320193/000032019324000080/a8-kex991q3202406292024.htm](<https://www.sec.gov/Archives/edgar/data/320193/000032019324000080/a8-kex991q3202406292024.htm>)
 
-Workbench bundle SHA-256: `8c4bfb12ac2a31f535b42cd68b63a8ba649a7afc258acd7107fd4626f49f9254`. Generated by `kod.earnings` (KOD-EARNINGS-NOTE-v1).
+Workbench bundle SHA-256: `efec61a1d871ac7f6f25ecf6fb9522f46e486577a2daf1914e9e90b448617c44`. Generated by `kod.earnings` (KOD-EARNINGS-NOTE-v1).

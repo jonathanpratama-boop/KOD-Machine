@@ -43,7 +43,9 @@ The files are saved under `<out-dir>/sources/`, the SEC acceptance time is read 
 | `--comparison-document` (+ the same `--comparison-*` options) | an earlier release whose outlook covers this period |
 | `--consensus` | optional JSON list of dated consensus estimates (below) |
 | `--as-of`, `--mode` | information cutoff. `observed` also requires retrieval before the cutoff; `public` is a historical reconstruction by publication time only and is labelled so |
-| `--currency` | override the assumed currency of `$` amounts (otherwise US dollars is assumed from the `$` sign and flagged) |
+| `--currency` | record the reporting currency (ISO 4217 code) where the release does not state it. A statement in the release that contradicts it is reported as a conflict and the affected figures get no currency |
+| `--period` | record the reported quarter (one of the release's own column labels) where the release does not state it. It never overrules the release: a contradicting record withholds the result |
+| `--decision-note` | why the `--currency` / `--period` record is right; kept with the note as the analyst's provenance |
 
 ## What is supported
 
@@ -54,6 +56,14 @@ One document type: an official earnings press release in **HTML** (for SEC filer
 - **Periods down the rows, metrics across the top** (Microsoft's summary: rows `2024 As Reported (GAAP)`, columns Revenue, Operating Income, Net Income, Diluted EPS).
 
 Recognised rows: revenue (net sales), gross margin (%), operating expenses, operating income, net income, diluted EPS. A basis the release does not state is `UNSTATED`, not guessed. The company outlook is read from two wordings: "Revenue is expected to be $X billion, plus or minus Y%" with "GAAP and non-GAAP <gross margins|operating expenses> are expected to be A and B, respectively" (NVIDIA), and "For the <n>th quarter of <year>, <Company> expects revenue to be approximately $X billion, plus or minus $Y million" with "<Non-GAAP|GAAP> gross margin is expected to be approximately Z%" (AMD). An earlier release that is supplied also fills a sequential prior-quarter comparison the current release does not print, labelled with that source. Anything else is left unknown and listed under "Conflicts, unknowns and limitations": PDFs, other table layouts, segment tables, reconciliations and management commentary are not read; unsupported input stops with a message saying what to provide. Rebuild the extra examples with `python3 examples/earnings_demo/more/regenerate.py`.
+
+## How the current period, columns and currency are decided
+
+- **Table geometry.** Each table is laid out as a grid that honours `rowspan`/`colspan`; overlapping or out-of-bounds spans reject the table (listed under limitations), never guessed. A value is read from the column its cell actually occupies, and its evidence names the original cells (`row`, `cell`, covered `columns`) of the value, its header and its row label. A duration heading (`Three Months Ended`, `Years Ended`, `Nine months ended`) applies only to the columns beneath its own span and only within its own header block. Rows of plain counts are never taken as year headers. Percent cells are never amounts. Only span-free tables whose value count matches may fall back to printed order, flagged `ALIGNED_BY_PRINTED_ORDER`.
+- **Current period.** The quarter comes from the release's own statement: a headline such as "Reports Third Quarter 2024 Results" (or a fiscal form such as "Third Quarter Fiscal 2025"), or a "quarter ended <date>" sentence, matched to a column. Year-ago and comparison sentences ("compared with third quarter 2023", "up from ... in the quarter ended September 30, 2023") and future sentences ("fourth quarter results will be released on ...") are ignored. Column order never matters. If the release does not establish the quarter, or its signals conflict, the result is `PERIOD_UNRESOLVED`: no figures, comparisons or guidance are shown until you record `--period`.
+- **Comparisons.** A prior-period comparison needs a period that is genuinely earlier and of the same duration, basis, unit and currency. A future column is never called prior; a quarter is never compared with a year.
+- **Reporting currency.** In order of scope: a currency symbol in the cell (`C$`, `€`, `RMB`), the table's caption or symbols, a document statement ("All amounts are in Canadian dollars"), then your `--currency`. A currency merely mentioned (notes denominated in euros, sales in Canadian dollars) is not a reporting statement. A bare `$` with no statement is assumed USD and flagged `ASSUMED_FROM_$_SIGN`; `¥` alone is ambiguous and leaves the currency unresolved. Figures in different or unknown currencies are never compared. The security's listing currency is never used.
+- **Cutoff.** If the cutoff precedes the release's availability, nothing parsed from it appears, not even its period label.
 
 ## The note
 
@@ -69,4 +79,4 @@ A consensus file is a JSON list of `{"metric": "revenue", "basis": "GAAP", "peri
 
 ## Limits
 
-Times and quotes are assertions: the tool does not authenticate a source or prove what KOD possessed at a past time (a document downloaded today with an older publication date supports a historical reconstruction only). The demonstration is one event; it shows the workflow works on that layout, not that it is faster than other methods or that it predicts anything. Run `python3 -m unittest tests.test_earnings`.
+Times and quotes are assertions: the tool does not authenticate a source or prove what KOD possessed at a past time (a document downloaded today with an older publication date supports a historical reconstruction only). The demonstration is one event; it shows the workflow works on that layout, not that it is faster than other methods or that it predicts anything. Run `python3 -m unittest tests.test_earnings tests.test_earnings_repairs tests.test_earnings_gate_a tests.test_earnings_review`.

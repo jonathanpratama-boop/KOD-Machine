@@ -14,6 +14,7 @@
   <div class="sidebar-label">Research desk</div>
   <nav aria-label="Main navigation">
     <a href="/" {% if page == 'inbox' %}aria-current="page"{% endif %}><span class="nav-icon">▤</span> Event inbox</a>
+    <a href="/search" {% if page == 'search' %}aria-current="page"{% endif %}><span class="nav-icon">⌕</span> Archive search</a>
     <a href="/health" {% if page == 'health' %}aria-current="page"{% endif %}><span class="nav-icon">◉</span> Data &amp; health</a>
   </nav>
   <div class="sidebar-label watch-label">Watchlist <span>{{ securities|length }}</span></div>
@@ -30,7 +31,7 @@
   {% if message %}<div class="notice" role="status">{{ message }}</div>{% endif %}
   {% block content %}{% endblock %}
   </main>
-  <footer class="page-footer"><span>KOD / Analyst workstation v1</span><span>Sources first. Interpretation stays yours.</span></footer>
+  <footer class="page-footer"><span>KOD / Analyst workstation v2</span><span>Sources first. Interpretation stays yours.</span></footer>
 </div>
 </body>
 </html>

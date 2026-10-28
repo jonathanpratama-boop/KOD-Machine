@@ -1,0 +1,445 @@
+{
+ "schema": "KOD-ANALYST-EVAL-RESULTS-v2",
+ "tasks_file_sha256": "7085c3a71e28b12bb31aad806fcb1f5f373a25fc001fd282b16d02b3415ca0db",
+ "runs": 2,
+ "answer_hashes": [
+  "18f1ab6e7955a9653f903b5b4bd9d5855a9ea38a91d11932ee1ad87b3daf9f0f",
+  "18f1ab6e7955a9653f903b5b4bd9d5855a9ea38a91d11932ee1ad87b3daf9f0f"
+ ],
+ "reproducible": true,
+ "results": [
+  {
+   "id": "HO-DRMA",
+   "type": 3,
+   "real": true,
+   "overlaps_development": false,
+   "seconds": 0.059,
+   "passed": false,
+   "counts": {
+    "correct": 2,
+    "allowed_unavailable": 0,
+    "missed": 2,
+    "material_error": 0
+   },
+   "checks": [
+    {
+     "check": "reported period",
+     "outcome": "correct",
+     "expected": [
+      "quarter ended 2026-06-30",
+      "Q2 2026",
+      "Q2 FY26"
+     ],
+     "got": "quarter ended 2026-06-30"
+    },
+    {
+     "check": "actual net_income",
+     "outcome": "missed",
+     "expected": "-2967000",
+     "got": null
+    },
+    {
+     "check": "actual eps_diluted",
+     "outcome": "missed",
+     "expected": "-0.74",
+     "got": null
+    },
+    {
+     "check": "no outlook comparison is invented",
+     "outcome": "correct",
+     "expected": [],
+     "got": []
+    }
+   ],
+   "output_sha256": [
+    "52d036a55243ef408c97d83eed800652a8c39a34ff3008951fd574d7456c5569",
+    "626490d11ff8c4ed7f6fe8ebf64b36343cb66cefbaa221823a3ffb1b7c4602ec"
+   ]
+  },
+  {
+   "id": "HO-CHGG",
+   "type": 3,
+   "real": true,
+   "overlaps_development": false,
+   "seconds": 0.14,
+   "passed": false,
+   "counts": {
+    "correct": 5,
+    "allowed_unavailable": 0,
+    "missed": 3,
+    "material_error": 0
+   },
+   "checks": [
+    {
+     "check": "reported period",
+     "outcome": "correct",
+     "expected": [
+      "quarter ended 2026-06-30",
+      "Q2 2026",
+      "Q2 FY26"
+     ],
+     "got": "quarter ended 2026-06-30"
+    },
+    {
+     "check": "actual revenue",
+     "outcome": "correct",
+     "expected": "51849000",
+     "got": {
+      "values": [
+       "5.1849E+7"
+      ],
+      "periods": [
+       "quarter ended 2026-06-30"
+      ]
+     }
+    },
+    {
+     "check": "actual revenue currency",
+     "outcome": "correct",
+     "expected": "USD",
+     "got": [
+      "USD"
+     ]
+    },
+    {
+     "check": "actual net_income",
+     "outcome": "missed",
+     "expected": "-2951000",
+     "got": null
+    },
+    {
+     "check": "actual eps_diluted",
+     "outcome": "missed",
+     "expected": "-0.03",
+     "got": null
+    },
+    {
+     "check": "year_over_year revenue",
+     "outcome": "correct",
+     "expected": "105120000",
+     "got": [
+      "1.0512E+8"
+     ]
+    },
+    {
+     "check": "year_over_year revenue growth",
+     "outcome": "correct",
+     "expected": "-50.68",
+     "got": [
+      "-50.68"
+     ]
+    },
+    {
+     "check": "outlook revenue",
+     "outcome": "missed",
+     "expected": {
+      "metric": "revenue",
+      "basis": "GAAP",
+      "low_amount": "49000000",
+      "high_amount": "50000000",
+      "position": "ABOVE_RANGE",
+      "actual_amount": "51849000"
+     },
+     "got": []
+    }
+   ],
+   "output_sha256": [
+    "1002d0043007c50c229091f5f9a1c0118ae092dd7bea61fe76922035eb2fcf96",
+    "b7490274aa2f77ee4e69cce5fd54a72abd0ca7b02dd8c33b8c20d952d63b9c6c"
+   ]
+  },
+  {
+   "id": "HO-NATL",
+   "type": 3,
+   "real": true,
+   "overlaps_development": false,
+   "seconds": 0.09,
+   "passed": false,
+   "counts": {
+    "correct": 1,
+    "allowed_unavailable": 0,
+    "missed": 5,
+    "material_error": 0
+   },
+   "checks": [
+    {
+     "check": "reported period",
+     "outcome": "missed",
+     "expected": [
+      "quarter ended 2026-06-30",
+      "Q2 2026",
+      "Q2 FY26"
+     ],
+     "got": "ex-991ncratleosearningsrel.htm: no earnings summary table with period-labelled columns (for example 'Q3 FY25  Q2 FY25' or 'Three Months Ended' over dated columns) and recognised rows (revenue, net inc"
+    },
+    {
+     "check": "actual revenue",
+     "outcome": "missed",
+     "expected": "1103000000",
+     "got": "release not read"
+    },
+    {
+     "check": "actual net_income",
+     "outcome": "missed",
+     "expected": "65000000",
+     "got": "release not read"
+    },
+    {
+     "check": "actual eps_diluted",
+     "outcome": "missed",
+     "expected": "0.86",
+     "got": "release not read"
+    },
+    {
+     "check": "year_over_year revenue",
+     "outcome": "missed",
+     "expected": "1102000000",
+     "got": "release not read"
+    },
+    {
+     "check": "no outlook comparison is invented",
+     "outcome": "correct",
+     "expected": [],
+     "got": "release not read"
+    }
+   ],
+   "output_sha256": []
+  },
+  {
+   "id": "HO-SPIR",
+   "type": 3,
+   "real": true,
+   "overlaps_development": false,
+   "seconds": 0.179,
+   "passed": false,
+   "counts": {
+    "correct": 4,
+    "allowed_unavailable": 0,
+    "missed": 2,
+    "material_error": 2
+   },
+   "checks": [
+    {
+     "check": "reported period",
+     "outcome": "correct",
+     "expected": [
+      "quarter ended 2026-06-30",
+      "Q2 2026",
+      "Q2 FY26"
+     ],
+     "got": "quarter ended 2026-06-30"
+    },
+    {
+     "check": "actual revenue",
+     "outcome": "material_error",
+     "expected": "18048000",
+     "got": {
+      "values": [
+       "1.8048E+7",
+       "18048"
+      ],
+      "periods": [
+       "quarter ended 2026-06-30"
+      ]
+     }
+    },
+    {
+     "check": "actual revenue currency",
+     "outcome": "correct",
+     "expected": "USD",
+     "got": [
+      "USD"
+     ]
+    },
+    {
+     "check": "actual net_income",
+     "outcome": "missed",
+     "expected": "-19969000",
+     "got": null
+    },
+    {
+     "check": "actual eps_diluted",
+     "outcome": "missed",
+     "expected": "-0.52",
+     "got": null
+    },
+    {
+     "check": "year_over_year revenue",
+     "outcome": "material_error",
+     "expected": "19182000",
+     "got": [
+      "1.9182E+7",
+      "19182"
+     ]
+    },
+    {
+     "check": "year_over_year revenue growth",
+     "outcome": "correct",
+     "expected": "-5.91",
+     "got": [
+      "-5.91"
+     ]
+    },
+    {
+     "check": "no outlook comparison is invented",
+     "outcome": "correct",
+     "expected": [],
+     "got": []
+    }
+   ],
+   "output_sha256": [
+    "44fbdda3557ef3bbda783c8a0f6ade97c757ea43603805e0a2addf330a06ffaa",
+    "9a5cd85dea0dba80891149af284c55ce2d1844157a3d202a456d510b6e455954"
+   ]
+  },
+  {
+   "id": "HO-TDC",
+   "type": 3,
+   "real": true,
+   "overlaps_development": false,
+   "seconds": 0.158,
+   "passed": false,
+   "counts": {
+    "correct": 0,
+    "allowed_unavailable": 0,
+    "missed": 6,
+    "material_error": 0
+   },
+   "checks": [
+    {
+     "check": "reported period",
+     "outcome": "missed",
+     "expected": [
+      "quarter ended 2026-06-30",
+      "Q2 2026",
+      "Q2 FY26"
+     ],
+     "got": "tdc06302026exhibit991.htm: no earnings summary table with period-labelled columns (for example 'Q3 FY25  Q2 FY25' or 'Three Months Ended' over dated columns) and recognised rows (revenue, net income, "
+    },
+    {
+     "check": "actual revenue",
+     "outcome": "missed",
+     "expected": "410000000",
+     "got": "release not read"
+    },
+    {
+     "check": "actual net_income",
+     "outcome": "missed",
+     "expected": "46000000",
+     "got": "release not read"
+    },
+    {
+     "check": "actual eps_diluted",
+     "outcome": "missed",
+     "expected": "0.48",
+     "got": "release not read"
+    },
+    {
+     "check": "year_over_year revenue",
+     "outcome": "missed",
+     "expected": "408000000",
+     "got": "release not read"
+    },
+    {
+     "check": "outlook eps_diluted",
+     "outcome": "missed",
+     "expected": {
+      "metric": "eps_diluted",
+      "basis": "GAAP",
+      "low_amount": "0.22",
+      "high_amount": "0.26",
+      "position": "ABOVE_RANGE",
+      "actual_amount": "0.48"
+     },
+     "got": "release not read"
+    }
+   ],
+   "output_sha256": []
+  },
+  {
+   "id": "HO-CBUS",
+   "type": 3,
+   "real": true,
+   "overlaps_development": false,
+   "seconds": 0.113,
+   "passed": false,
+   "counts": {
+    "correct": 6,
+    "allowed_unavailable": 0,
+    "missed": 2,
+    "material_error": 0
+   },
+   "checks": [
+    {
+     "check": "reported period",
+     "outcome": "correct",
+     "expected": [
+      "quarter ended 2026-06-30",
+      "Q2 2026",
+      "Q2 FY26"
+     ],
+     "got": "quarter ended 2026-06-30"
+    },
+    {
+     "check": "actual revenue",
+     "outcome": "correct",
+     "expected": "994000",
+     "got": {
+      "values": [
+       "9.94E+5"
+      ],
+      "periods": [
+       "quarter ended 2026-06-30"
+      ]
+     }
+    },
+    {
+     "check": "actual revenue currency",
+     "outcome": "correct",
+     "expected": "USD",
+     "got": [
+      "USD"
+     ]
+    },
+    {
+     "check": "actual net_income",
+     "outcome": "missed",
+     "expected": "-22145000",
+     "got": null
+    },
+    {
+     "check": "actual eps_diluted",
+     "outcome": "missed",
+     "expected": "-0.29",
+     "got": null
+    },
+    {
+     "check": "year_over_year revenue",
+     "outcome": "correct",
+     "expected": "933000",
+     "got": [
+      "9.33E+5"
+     ]
+    },
+    {
+     "check": "year_over_year revenue growth",
+     "outcome": "correct",
+     "expected": "6.54",
+     "got": [
+      "6.54"
+     ]
+    },
+    {
+     "check": "no outlook comparison is invented",
+     "outcome": "correct",
+     "expected": [],
+     "got": []
+    }
+   ],
+   "output_sha256": [
+    "71718871abf68b9dda0e467d3ce0c5b06b52a0201f2cfc3c9b44a5fcc65fdbd0",
+    "29f5ce067367377da785fbc7ed567460abc76d8fad31da8ae74bc4e98f96d2c8"
+   ]
+  }
+ ]
+}

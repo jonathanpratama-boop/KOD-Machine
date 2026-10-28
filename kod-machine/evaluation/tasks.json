@@ -1,0 +1,621 @@
+{
+ "schema": "KOD-ANALYST-TASKS-v1",
+ "prepared": "2026-10-23",
+ "how_expected_answers_were_made": "Every expected value was read by hand from the raw SEC companyfacts JSON (accession, concept and period cited in 'sources'; the full responses are identified by full_response_sha256 in examples/companyfacts/SOURCES.json, and concepts KOD does not map are cited from them) or from the release text, and the arithmetic was done with Python decimals outside KOD. Expectations were written before the first run; every later change to an expectation corrects an error in the expectation itself and is listed in REPORT.md ('Changes to the task set'). Tasks marked overlaps_development name the development test that exercises the same mechanism; their score is reported separately.",
+ "tasks": [
+  {
+   "id": "T1-TXN-quarter-change",
+   "type": 1,
+   "kind": "dossier",
+   "real": true,
+   "overlaps_development": null,
+   "question": "What were Texas Instruments' current and year-ago quarterly revenue at 1 November 2024, and how did revenue, margin, net income and diluted EPS change on a compatible basis?",
+   "company": "TXN",
+   "sources": "10-Q 0000097476-24-000042 (filed 2024-10-23): RevenueFromContractWithCustomerExcludingAssessedTax 2024-07-01..2024-09-30 = 4,151m and 2023-07-01..2023-09-30 = 4,532m; OperatingIncomeLoss 1,554m / 1,892m; NetIncomeLoss 1,362m / 1,709m; EarningsPerShareDiluted 1.47 / 1.85. 10-Q 0000097476-24-000030 (filed 2024-07-24): revenue 2024-04-01..2024-06-30 = 3,822m.",
+   "builds": [
+    {
+     "cutoff": "2024-11-01T00:00:00Z",
+     "mode": "public",
+     "view": "as_reported",
+     "expect": {
+      "latest_quarter_end": "2024-09-30",
+      "cells": [
+       {
+        "group": "quarterly",
+        "metric": "revenue",
+        "end": "2024-09-30",
+        "value": "4151000000"
+       },
+       {
+        "group": "quarterly",
+        "metric": "revenue",
+        "end": "2023-09-30",
+        "value": "4532000000"
+       }
+      ],
+      "changes": {
+       "revenue_yoy": {
+        "status": "ok",
+        "value": "-8.40688",
+        "tolerance": "0.0001",
+        "basis_contains": "same filing"
+       },
+       "operating_margin_yoy": {
+        "status": "ok",
+        "value": "-4.31081",
+        "tolerance": "0.0001"
+       },
+       "net_income_yoy": {
+        "status": "ok",
+        "value": "-20.30427",
+        "tolerance": "0.0001"
+       },
+       "eps_diluted_yoy": {
+        "status": "ok",
+        "value": "-20.54054",
+        "tolerance": "0.0001"
+       },
+       "revenue_qoq": {
+        "status": "ok",
+        "value": "8.60806",
+        "tolerance": "0.0001"
+       }
+      }
+     }
+    }
+   ],
+   "allowed_unavailable": []
+  },
+  {
+   "id": "T2-COST-profit-and-cash",
+   "type": 2,
+   "kind": "dossier",
+   "real": true,
+   "overlaps_development": "workstation_tests/test_gate_d.py test_a_sixteen_week_fourth_quarter_is_derived_and_its_length_shown builds Costco at the same cutoff from the same 10-K (added with the repair that T4c led to)",
+   "question": "Did Costco's fiscal 2024 revenue translate into operating profit and cash generation, as known on 15 November 2024?",
+   "company": "COST",
+   "sources": "10-K 0000909832-24-000049 (filed 2024-10-09), fiscal year 2023-09-04..2024-09-01: Revenues 254,453m; OperatingIncomeLoss 9,285m; NetIncomeLoss 7,367m; NetCashProvidedByUsedInOperatingActivities 11,339m; PaymentsToAcquirePropertyPlantAndEquipment 4,710m.",
+   "builds": [
+    {
+     "cutoff": "2024-11-15T00:00:00Z",
+     "mode": "public",
+     "view": "as_reported",
+     "expect": {
+      "cells": [
+       {
+        "group": "annual",
+        "metric": "revenue",
+        "end": "2024-09-01",
+        "value": "254453000000"
+       },
+       {
+        "group": "annual",
+        "metric": "operating_income",
+        "end": "2024-09-01",
+        "value": "9285000000"
+       },
+       {
+        "group": "annual",
+        "metric": "operating_cash_flow",
+        "end": "2024-09-01",
+        "value": "11339000000"
+       }
+      ],
+      "changes": {
+       "cash_conversion_fy": {
+        "status": "ok",
+        "value": "153.91611",
+        "tolerance": "0.0001"
+       },
+       "capex_intensity_fy": {
+        "status": "ok",
+        "value": "1.85103",
+        "tolerance": "0.0001"
+       },
+       "cfo_minus_capex_fy": {
+        "status": "ok",
+        "value": "6629000000",
+        "tolerance": "0"
+       }
+      }
+     }
+    }
+   ],
+   "allowed_unavailable": []
+  },
+  {
+   "id": "T3-TXN-actual-vs-outlook",
+   "type": 3,
+   "kind": "guidance",
+   "real": true,
+   "overlaps_development": "release reader v4 (KOD-EARNINGS-PARSER-v4): T3's misses (the outlook sentence, the income statement's caption-dated column, the guidance caveat) led to repairs, tested in tests/test_earnings_reader_v2.py; a regression check since then",
+   "question": "How did Texas Instruments' third-quarter 2024 revenue and EPS compare with the outlook it published with its second-quarter results?",
+   "company": "TXN",
+   "fixtures": "fixtures/txn",
+   "as_of": "2024-10-23T12:00:00Z",
+   "mode": "public",
+   "sources": "Q2 2024 release (EX-99, accession 0000097476-24-000029, fixtures/txn/pri.htm): \"TI's third quarter outlook is for revenue in the range of $3.94 billion to $4.26 billion and earnings per share between $1.24 and $1.48.\" Q3 2024 release (EX-99, accession 0000097476-24-000040, fixtures/txn/cur.htm): revenue $4,151 million, earnings per share $1.47; \"Earnings per share included a 3-cent benefit for items that were not in the company's original guidance.\"",
+   "expect": {
+    "period_in": [
+     "Q3 2024",
+     "quarter ended 2024-09-30"
+    ],
+    "facts": [
+     {
+      "metric": "revenue",
+      "amount": "4151000000"
+     },
+     {
+      "metric": "eps_diluted",
+      "amount": "1.47"
+     }
+    ],
+    "guidance": [
+     {
+      "metric": "revenue",
+      "low_amount": "3940000000",
+      "high_amount": "4260000000",
+      "position": "WITHIN_RANGE",
+      "actual_amount": "4151000000"
+     },
+     {
+      "metric": "eps_diluted",
+      "low_amount": "1.24",
+      "high_amount": "1.48",
+      "position": "WITHIN_RANGE",
+      "actual_amount": "1.47"
+     }
+    ],
+    "caveat_visible": "3-cent benefit",
+    "currency": "USD"
+   },
+   "allowed_unavailable": []
+  },
+  {
+   "id": "T4a-NVDA-capex-coverage",
+   "type": 4,
+   "kind": "dossier",
+   "real": true,
+   "overlaps_development": "workstation_tests/test_gate_f.py (the same capex gap, at another cutoff, leaves a thesis condition unresolved)",
+   "question": "Can NVIDIA's fiscal 2025 capital intensity and cash from operations minus capex be computed from its filings, as known on 1 March 2025?",
+   "company": "NVDA",
+   "sources": "10-K 0001045810-25-000023 (filed 2025-02-26), fiscal year 2024-01-29..2025-01-26: Revenues 130,497m; NetCashProvidedByUsedInOperatingActivities 64,089m; NetIncomeLoss 72,880m; capex tagged as us-gaap:PaymentsToAcquireProductiveAssets 3,236m (NVIDIA moved its capex to this concept with the 10-Q filed 2020-11-18; us-gaap:PaymentsToAcquirePropertyPlantAndEquipment ends with the period ended 2020-07-26). The productive-assets concept is in the full SEC response (full_response_sha256 19ef503a…) but not in the trimmed fixture, because KOD does not map it.",
+   "builds": [
+    {
+     "cutoff": "2025-03-01T00:00:00Z",
+     "mode": "public",
+     "view": "as_reported",
+     "expect": {
+      "changes": {
+       "capex_intensity_fy": {
+        "status": "ok",
+        "value": "2.47975",
+        "tolerance": "0.0001"
+       },
+       "cfo_minus_capex_fy": {
+        "status": "ok",
+        "value": "60853000000",
+        "tolerance": "0"
+       },
+       "cash_conversion_fy": {
+        "status": "ok",
+        "value": "87.93771",
+        "tolerance": "0.0001"
+       }
+      }
+     }
+    }
+   ],
+   "allowed_unavailable": [],
+   "note": "The first draft expected 'missing' here (an expectation error: the filings do carry capex under another concept). KOD answering 'missing' is now a miss: a coverage gap of KOD's concept mapping."
+  },
+  {
+   "id": "T4b-JPM-revenue-coverage",
+   "type": 4,
+   "kind": "dossier",
+   "real": true,
+   "overlaps_development": "workstation_tests/test_gate_d.py test_each_series_is_compared_at_the_latest_quarter_or_marked_missing (same mechanism at 2024-09-01)",
+   "question": "What was JPMorgan's latest-quarter revenue change on 15 August 2025, and its net income change?",
+   "company": "JPM",
+   "sources": "10-Q 0000019617-25-000615 (filed 2025-08-05): us-gaap:RevenuesNetOfInterestExpense 2025-04-01..2025-06-30 = 44,912m and 2024-04-01..2024-06-30 = 50,200m (JPMorgan has tagged quarterly total net revenue with this concept since 2015; us-gaap:Revenues is tagged quarterly only to 2014); NetIncomeLoss 14,987m and 18,149m. The net-revenue concept is in the full SEC response (full_response_sha256 4ed3b27d…) but not in the trimmed fixture, because KOD does not map it.",
+   "builds": [
+    {
+     "cutoff": "2025-08-15T00:00:00Z",
+     "mode": "public",
+     "view": "as_reported",
+     "expect": {
+      "latest_quarter_end": "2025-06-30",
+      "changes": {
+       "revenue_yoy": {
+        "status": "ok",
+        "value": "-10.53386",
+        "tolerance": "0.0001"
+       },
+       "net_income_yoy": {
+        "status": "ok",
+        "value": "-17.42245",
+        "tolerance": "0.0001",
+        "basis_contains": "presented in the same filing"
+       },
+       "operating_margin_yoy": {
+        "status": "not_applicable"
+       }
+      }
+     }
+    }
+   ],
+   "allowed_unavailable": [],
+   "note": "The first draft expected revenue_yoy 'missing' (an expectation error). KOD answering 'missing' is now a miss: a coverage gap of KOD's concept mapping. The operating margin was first allowed to be 'missing' for any reason; KOD withholds it for a revenue gap, not because the company is a bank, so that is now a miss."
+  },
+  {
+   "id": "T4c-COST-unequal-quarters",
+   "type": 1,
+   "kind": "dossier",
+   "real": true,
+   "overlaps_development": "workstation_tests/test_gate_d.py test_unequal_period_lengths_are_noted (Apple 13 vs 14 weeks)",
+   "question": "Costco's fourth fiscal quarter has 16 weeks (17 in a 53-week year). How did fourth-quarter fiscal 2024 revenue compare with the year-ago and previous quarters, and is the comparison like for like?",
+   "company": "COST",
+   "sources": "10-K 0000909832-24-000049: Revenues FY2024 254,453m and FY2023 (53 weeks, 2022-08-29..2023-09-03) 242,290m; 10-Q 0000909832-24-000029 (filed 2024-06-06): 36 weeks to 2024-05-12 = 174,756m, 36 weeks to 2023-05-07 = 163,351m, 12 weeks to 2024-05-12 = 58,515m. Derived Q4 FY2024 = 79,697m (112 days), Q4 FY2023 = 78,939m (119 days).",
+   "builds": [
+    {
+     "cutoff": "2024-11-15T00:00:00Z",
+     "mode": "public",
+     "view": "as_reported",
+     "expect": {
+      "latest_quarter_end": "2024-09-01",
+      "cells": [
+       {
+        "group": "quarterly",
+        "metric": "revenue",
+        "end": "2024-09-01",
+        "value": "79697000000"
+       }
+      ],
+      "changes": {
+       "revenue_yoy": {
+        "status": "ok",
+        "value": "0.96024",
+        "tolerance": "0.0001",
+        "duration_contains": [
+         "112 vs 119 days",
+         "not like for like"
+        ]
+       },
+       "revenue_qoq": {
+        "status": "ok",
+        "value": "36.19927",
+        "tolerance": "0.0001",
+        "duration_contains": [
+         "112 vs 84 days"
+        ],
+        "allowed_statuses": [
+         "incompatible"
+        ],
+        "reason_contains": "112 vs 84 days"
+       }
+      }
+     }
+    }
+   ],
+   "allowed_unavailable": [
+    "revenue_qoq withheld as not like for like (status incompatible), provided the reason names the period lengths"
+   ]
+  },
+  {
+   "id": "T5-TXN-assumption-to-review",
+   "type": 5,
+   "kind": "assumption_to_review",
+   "real": true,
+   "overlaps_development": "workstation_tests/test_gate_f.py test_an_assumption_change_reaches_the_condition_with_the_full_dependency (the same mechanism on NVIDIA)",
+   "question": "If the base-case operating margin is cut from 40% to 30%, does the condition 'review if the base case falls below 75 per share' need review, and which assumption change caused it?",
+   "company": "TXN",
+   "sources": "Illustrative analyst inputs (not facts, not a view): base revenue 15,641m (TXN fiscal 2024, 10-K 0000097476-25-000007), 5 years, growth 5%, margin 40% then 30%, cash tax 13%, D&A 8%, capex 10%, working capital 10% of the revenue change, discount rate 9%, terminal growth 3%, terminal return on new capital 20%; bridge at 2024-12-31 from the same 10-K: cash 7,580m (cash and cash equivalents 3,200m plus short-term investments 4,380m) and debt 13,596m (LongTermDebt, current 750m plus noncurrent 12,846m); 919m diluted shares (FY2024 weighted average). Per share with these inputs, by Decimal arithmetic outside KOD: 89.7646 at 40% and 65.2154 at 30%. The first draft used cash 3,200m and noncurrent debt only, and said 85.84 (an arithmetic slip; 85.81 with those inputs); both corrected, see REPORT.md.",
+   "assumptions": {
+    "horizon_years": 5,
+    "base": {
+     "revenue": "15641000000",
+     "fiscal_year_end": "2024-12-31"
+    },
+    "currency": "USD",
+    "valuation_date": "2025-03-01",
+    "revenue_growth": "0.05",
+    "operating_margin": "0.40",
+    "cash_tax_rate": "0.13",
+    "depreciation_rate": "0.08",
+    "capex_rate": "0.10",
+    "nwc_rate": "0.10",
+    "discount_rate": "0.09",
+    "terminal_growth": "0.03",
+    "terminal_roic": "0.20",
+    "treatments": {
+     "stock_compensation": "expensed_in_margin",
+     "leases": "operating_cost_in_margin",
+     "convertibles": "none_outstanding",
+     "noncontrolling_interests": "none",
+     "tax_losses": "none_material"
+    },
+    "bridge": {
+     "cash": "7580000000",
+     "debt": "13596000000",
+     "other_senior_claims": "0",
+     "as_of": "2024-12-31"
+    },
+    "shares": {
+     "count": "919000000",
+     "as_of": "2024-12-31",
+     "basis": "FY2024 weighted-average diluted shares (10-K); evaluation input"
+    }
+   },
+   "revised": {
+    "operating_margin": "0.30"
+   },
+   "threshold": "75",
+   "expect": {
+    "before": "not_triggered",
+    "after": "triggered",
+    "changed": [
+     {
+      "assumption": "operating_margin",
+      "from": "0.40",
+      "to": "0.30"
+     }
+    ],
+    "per_share_before": "89.76",
+    "per_share_after": "65.22",
+    "per_share_tolerance": "0.01"
+   },
+   "allowed_unavailable": []
+  },
+  {
+   "id": "T6-COST-reopen-decision",
+   "type": 6,
+   "kind": "packet_reproduce",
+   "real": true,
+   "overlaps_development": "workstation_tests/test_gate_f.py test_a_packet_is_frozen_exportable_and_reproducible (the same mechanism on NVIDIA); test_gate_d.py reads Costco at the same cutoff",
+   "question": "Can a decision recorded on Costco at 15 November 2024 be reopened unchanged after a later amendment (hostile, synthetic) restates fiscal 2024 revenue, while a later cutoff does show the amendment?",
+   "company": "COST",
+   "cutoff": "2024-11-15T00:00:00Z",
+   "mode": "public",
+   "sources": "Packet built from the preserved filings. The amendment is a synthetic observation (form 10-K/A, accession 0009999999-25-000001, filed 2025-03-01) restating fiscal 2024 revenue (2023-09-04..2024-09-01) to 999,999m; it exists only in the evaluation workspace.",
+   "later_checks": [
+    {
+     "cutoff": "2025-03-10T00:00:00Z",
+     "view": "latest",
+     "value": "999999000000",
+     "why": "the amendment is the latest disclosure of fiscal 2024 revenue at this cutoff"
+    },
+    {
+     "cutoff": "2025-03-10T00:00:00Z",
+     "view": "as_reported",
+     "value": "254453000000",
+     "revision": {
+      "value": "999999000000",
+      "form": "10-K/A"
+     },
+     "why": "first disclosure, with the amendment listed as a revision"
+    },
+    {
+     "cutoff": "2025-06-01T00:00:00Z",
+     "view": "latest",
+     "value": "254453000000",
+     "why": "Costco's 10-Q filed 2025-03-13 (0000909832-25-000015) re-presents fiscal 2024 revenue at 254,453m after the amendment, so the latest view shows 254,453m and lists the amendment as a revision. The first draft expected 999,999m here (an expectation error, see REPORT.md).",
+     "revision": {
+      "value": "999999000000",
+      "form": "10-K/A"
+     }
+    }
+   ],
+   "expect": {
+    "reproduced_before": true,
+    "reproduced_after": true,
+    "dossier_unchanged_at_cutoff": true
+   },
+   "allowed_unavailable": []
+  },
+  {
+   "id": "T7-JPM-restatement",
+   "type": 4,
+   "kind": "dossier",
+   "real": true,
+   "overlaps_development": "workstation_tests/test_gate_d.py RevisionTests (Apple's 2010 10-K/A); this is a different company, form (10-Q/A) and period",
+   "question": "What net income did JPMorgan first report for the first quarter of 2012, what did the August 2012 amendment change, and what was known before the amendment?",
+   "company": "JPM",
+   "sources": "10-Q 0000019617-12-000213 (filed 2012-05-10): NetIncomeLoss 2012-01-01..2012-03-31 = 5,383m, EPS 1.31; 10-Q/A 0000019617-12-000262 (filed 2012-08-09): 4,924m, EPS 1.19 (restatement of the first quarter).",
+   "builds": [
+    {
+     "cutoff": "2012-09-01T00:00:00Z",
+     "mode": "public",
+     "view": "as_reported",
+     "expect": {
+      "cells": [
+       {
+        "group": "quarterly",
+        "metric": "net_income",
+        "end": "2012-03-31",
+        "value": "5383000000",
+        "revision": {
+         "value": "4924000000",
+         "form": "10-Q/A"
+        }
+       },
+       {
+        "group": "quarterly",
+        "metric": "eps_diluted",
+        "end": "2012-03-31",
+        "value": "1.31",
+        "revision": {
+         "value": "1.19",
+         "form": "10-Q/A"
+        }
+       }
+      ]
+     }
+    },
+    {
+     "cutoff": "2012-09-01T00:00:00Z",
+     "mode": "public",
+     "view": "latest",
+     "expect": {
+      "cells": [
+       {
+        "group": "quarterly",
+        "metric": "net_income",
+        "end": "2012-03-31",
+        "value": "4924000000"
+       }
+      ]
+     }
+    },
+    {
+     "cutoff": "2012-08-01T00:00:00Z",
+     "mode": "public",
+     "view": "latest",
+     "expect": {
+      "cells": [
+       {
+        "group": "quarterly",
+        "metric": "net_income",
+        "end": "2012-03-31",
+        "value": "5383000000",
+        "no_revisions": true
+       }
+      ]
+     }
+    }
+   ],
+   "allowed_unavailable": []
+  },
+  {
+   "id": "T8-JPM-unsupported-business",
+   "type": 4,
+   "kind": "unsupported",
+   "real": true,
+   "overlaps_development": "workstation_tests/test_gate_d.py test_a_bank_gets_no_operating_company_cash_flow_ratios; test_gate_e.py (model not applicable)",
+   "question": "Does the operating-company driver model, or the cash-flow ratios, apply to JPMorgan Chase?",
+   "company": "JPM",
+   "cutoff": "2025-08-15T00:00:00Z",
+   "mode": "public",
+   "sources": "SEC submissions (preserved): SIC 6021, National Commercial Banks.",
+   "expect": {
+    "business_supported": false,
+    "model_status": "not_applicable",
+    "not_applicable_changes": [
+     "cash_conversion_fy",
+     "capex_intensity_fy",
+     "cfo_minus_capex_fy"
+    ]
+   },
+   "allowed_unavailable": [
+    "model",
+    "cash_conversion_fy",
+    "capex_intensity_fy",
+    "cfo_minus_capex_fy"
+   ]
+  },
+  {
+   "id": "T9-AAPL-split",
+   "type": 1,
+   "kind": "dossier",
+   "real": true,
+   "overlaps_development": "workstation_tests/test_gate_d.py test_a_stock_split_never_distorts... (NVIDIA's 2024 split); this is Apple's 4-for-1 split of August 2020",
+   "question": "Apple split its shares 4-for-1 in August 2020. What were diluted EPS growth and the diluted share-count change for the quarter ended 2020-12-26, as known on 15 February 2021?",
+   "company": "AAPL",
+   "sources": "10-Q 0000320193-21-000010 (filed 2021-01-28): EarningsPerShareDiluted 1.68 (2020-09-27..2020-12-26) and 1.25 (split-adjusted, 2019-09-29..2019-12-28); WeightedAverageNumberOfDilutedSharesOutstanding 17,113,688,000 and 17,818,417,000.",
+   "builds": [
+    {
+     "cutoff": "2021-02-15T00:00:00Z",
+     "mode": "public",
+     "view": "as_reported",
+     "expect": {
+      "latest_quarter_end": "2020-12-26",
+      "changes": {
+       "eps_diluted_yoy": {
+        "status": "ok",
+        "value": "34.4",
+        "tolerance": "0.0001",
+        "basis_contains": "same filing"
+       },
+       "diluted_shares_yoy": {
+        "status": "ok",
+        "value": "-3.95506",
+        "tolerance": "0.0001",
+        "basis_contains": "same filing"
+       }
+      }
+     }
+    }
+   ],
+   "allowed_unavailable": []
+  },
+  {
+   "id": "H1-dated-ascending-columns-CAD-thousands",
+   "type": 1,
+   "kind": "release",
+   "real": false,
+   "overlaps_development": "tests/test_earnings_review.py and workstation_tests/test_gate_a.py (ascending columns, spanned duration headings and explicit Canadian dollars, each separately)",
+   "question": "Synthetic hostile release: a second-quarter 2025 table with three- and six-month columns, each in ascending date order, in thousands of Canadian dollars. What were current revenue, its currency and growth?",
+   "html": "<html><body><h1>Northwind Ltd. Reports Second Quarter 2025 Results</h1><p>TORONTO, August 6, 2025 - Northwind Ltd. today reported results for the second quarter ended June 30, 2025. All figures are in Canadian dollars unless otherwise stated.</p><p>Condensed Consolidated Statements of Income (GAAP)</p><p>(In thousands of Canadian dollars, except per share amounts)</p><table><tr><td></td><td colspan=\"2\">Three Months Ended</td><td colspan=\"2\">Six Months Ended</td></tr><tr><td></td><td>June 30, 2024</td><td>June 30, 2025</td><td>June 30, 2024</td><td>June 30, 2025</td></tr><tr><td>Revenue</td><td>$85,210</td><td>$97,433</td><td>$166,904</td><td>$190,118</td></tr><tr><td>Net income</td><td>$7,812</td><td>$9,955</td><td>$14,020</td><td>$18,307</td></tr><tr><td>Diluted earnings per share</td><td>$0.31</td><td>$0.39</td><td>$0.56</td><td>$0.72</td></tr></table></body></html>",
+   "published_at": "2025-08-06T21:00:00Z",
+   "as_of": "2025-08-07T00:00:00Z",
+   "expect": {
+    "period_in": [
+     "Q2 2025",
+     "quarter ended 2025-06-30"
+    ],
+    "currency": "CAD",
+    "facts": [
+     {
+      "metric": "revenue",
+      "amount": "97433000"
+     },
+     {
+      "metric": "net_income",
+      "amount": "9955000"
+     },
+     {
+      "metric": "eps_diluted",
+      "amount": "0.39"
+     }
+    ],
+    "prior": [
+     {
+      "metric": "revenue",
+      "relation": "YEAR_OVER_YEAR",
+      "prior_amount": "85210000",
+      "growth_pct": "14.34",
+      "growth_tolerance": "0.01"
+     }
+    ]
+   },
+   "allowed_unavailable": []
+  },
+  {
+   "id": "H2-no-period-stated",
+   "type": 1,
+   "kind": "release",
+   "real": false,
+   "overlaps_development": "tests/test_earnings_review.py test_a_year_ago_comparison_is_not_the_releases_statement (different wording)",
+   "question": "Synthetic hostile release: the headline states no quarter; the table's columns are labelled 'Q2 2025' and 'Q2 2024', and the text compares revenue with 'the second quarter of 2024'. Which quarter is reported, and what was revenue?",
+   "html": "<html><body><h1>Northwind Ltd. Announces Quarterly Results</h1><p>Revenue rose compared with the second quarter of 2024, when the company reported $85.2 million.</p><p>GAAP</p><p>(In thousands of Canadian dollars)</p><table><tr><td></td><td>Q2 2025</td><td>Q2 2024</td></tr><tr><td>Revenue</td><td>$97,433</td><td>$85,210</td></tr></table></body></html>",
+   "published_at": "2025-08-06T21:00:00Z",
+   "as_of": "2025-08-07T00:00:00Z",
+   "expect": {
+    "period_in": [
+     "Q2 2025",
+     "quarter ended 2025-06-30"
+    ],
+    "currency": "CAD",
+    "facts": [
+     {
+      "metric": "revenue",
+      "amount": "97433000"
+     }
+    ],
+    "prior": [],
+    "analyst_period": "Q2 2025"
+   },
+   "allowed_unavailable": [],
+   "note": "The first draft expected PERIOD_UNRESOLVED, which is KOD's documented rule (a period must be stated by the release or recorded by the analyst), not what a careful analyst concludes from the column labels and the year-ago sentence. KOD withholding is now a miss; the task also checks that the analyst's period record gives the right figure."
+  }
+ ]
+}

@@ -223,9 +223,13 @@ class ExtractionTests(unittest.TestCase):
         self.assertIn("HEADLINE_TABLE_CONFLICT", codes)
         self.assertEqual(next(f for f in res["facts"] if f["metric"] == "revenue")["value"], "250")
 
-    def test_period_text_conflict_is_flagged(self):
+    def test_period_text_conflict_withholds_the_note(self):
+        # The text reports the third quarter; the columns are Q2 FY25, Q1 FY25 and Q2 FY24. No column may be labelled current under a guess.
         res = run(source(release(headers="Q2 FY25 | Q1 FY25 | Q2 FY24")))
-        self.assertIn("PERIOD_MISMATCH", {i["code"] for i in res["issues"]})
+        self.assertEqual((res["status"], res["period"], res["facts"], res["prior_period"]), ("PERIOD_UNRESOLVED", None, [], []))
+        issue = next(i for i in res["issues"] if i["code"] == "PERIOD_UNRESOLVED")
+        self.assertIn("is not one of the quarter columns", issue["detail"])
+        self.assertIn("reported period is unresolved", earnings.render_note(res))
 
     def test_unsupported_inputs_have_actionable_errors(self):
         for raw, hint in ((b"%PDF-1.7 binary", "PDF is not supported"), (b"   ", "empty file"), (b"plain words only", "not HTML"), (b"<html><body><p>hello</p></body></html>", "no earnings summary table")):

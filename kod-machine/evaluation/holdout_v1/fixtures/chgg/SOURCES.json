@@ -1,0 +1,42 @@
+[
+ {
+  "role": "cur",
+  "kind": "release",
+  "url": "https://www.sec.gov/Archives/edgar/data/1364954/000136495426000085/a9901-financialresultsq220.htm",
+  "file": "cur.htm",
+  "bytes": 358755,
+  "sha256": "b2f8e163bd542cdf9a5db2b9aaec059ed9e4d3a6a9fd7805eeaef42e7fa5cdf1",
+  "retrieved_at_utc": "2026-10-23T19:23:45Z",
+  "http_status": 200
+ },
+ {
+  "role": "cur",
+  "kind": "headers",
+  "url": "https://www.sec.gov/Archives/edgar/data/1364954/000136495426000085/0001364954-26-000085-index-headers.html",
+  "file": "cur_headers.html",
+  "bytes": 5720,
+  "sha256": "7c98c0b86b61750cc4e8b1f9d239b75a3a53671490fb4d2d6d511e84d48fe25d",
+  "retrieved_at_utc": "2026-10-23T19:23:45Z",
+  "http_status": 200
+ },
+ {
+  "role": "pri",
+  "kind": "release",
+  "url": "https://www.sec.gov/Archives/edgar/data/1364954/000136495426000045/a9901-financialresultsq120.htm",
+  "file": "pri.htm",
+  "bytes": 259671,
+  "sha256": "c3d4469a77c3c207bec6fb093b1ba596bb20d1863eac6c4ab6c57f8078b0d1f4",
+  "retrieved_at_utc": "2026-10-23T19:23:46Z",
+  "http_status": 200
+ },
+ {
+  "role": "pri",
+  "kind": "headers",
+  "url": "https://www.sec.gov/Archives/edgar/data/1364954/000136495426000045/0001364954-26-000045-index-headers.html",
+  "file": "pri_headers.html",
+  "bytes": 5718,
+  "sha256": "4533be305cd1adea33e81fc0b881ab52599c029b64f4dcb8ecad5506362ce615",
+  "retrieved_at_utc": "2026-10-23T19:23:46Z",
+  "http_status": 200
+ }
+]
