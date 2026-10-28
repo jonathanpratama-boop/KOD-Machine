@@ -20,3 +20,11 @@ The session proposed five ways to get from "built" to "proven" (sample size, not
    never written to a file.
 
 Not changed: PAPER-POLICY-v4, `ledger.jsonl` and every earlier record, and every frozen protocol file.
+
+## Outcome of item 4 (2026-10-28)
+
+The kill test ran once, on code v2 (`KILL_TEST_2020_2022/ADDENDUM_1.md`: review fixes made before the run), and is
+**INCONCLUSIVE**. The GO rule needs 300 scored FIRE events and there were 288 (302 FIRE; 12 skipped for liquidity, 2 not
+traded), so no return was read. The SEC13D family is neither killed nor supported by history; the prospective register
+carries on unchanged. The test is counted (`research/QUANT_GRADE/trials/CATALYST_REGISTER_v1_SEC13D_KILL_TEST_2020_2022.json`)
+and must not be rerun with a lower bar or a wider window.

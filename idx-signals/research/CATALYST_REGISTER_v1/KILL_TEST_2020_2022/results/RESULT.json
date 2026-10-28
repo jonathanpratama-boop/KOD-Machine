@@ -1,0 +1,77 @@
+{
+ "experiment": "KILL_TEST_2020_2022",
+ "protocol": {
+  "id": "KOD-CATALYST-SEC13D-KILL-TEST-2020-2022-v1",
+  "sha256": "d6b844e57c050d4e26fefe09d2ec48bc13dc0e14e18667cae066df26117db2b7"
+ },
+ "label": "historical, one shot; survivor-only prices (can fail, cannot confirm); paper only",
+ "run_at": "2026-10-28T15:14:26Z",
+ "window": [
+  "2020-06-01",
+  "2022-12-30"
+ ],
+ "panel": {
+  "manifest": "data/manifests/panel_us_repair-20261008T114805Z.json",
+  "sha256": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b"
+ },
+ "pins": {
+  "protocol_id": "KOD-CATALYST-SEC13D-KILL-TEST-2020-2022-v1",
+  "panel_sha256": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b",
+  "files": {
+   "research/CATALYST_REGISTER_v1/KILL_TEST_2020_2022/PROTOCOL.md": "d2d4935124a441800dc74652832150f104ee5522f740806d857cc842f1992ffa",
+   "research/CATALYST_REGISTER_v1/KILL_TEST_2020_2022/protocol.json": "d6b844e57c050d4e26fefe09d2ec48bc13dc0e14e18667cae066df26117db2b7",
+   "research/CATALYST_REGISTER_v1/KILL_TEST_2020_2022/kt_lib_v2.py": "6038ee16659c0d52876ca68f849d6e3b8deb23ff801387ac7857a60ff341a21d",
+   "research/CATALYST_REGISTER_v1/KILL_TEST_2020_2022/run_v2.py": "2251640e4296b8048dddf5ce27c76965fe27b8917fb545958f483ee90b995887",
+   "research/CATALYST_REGISTER_v1/KILL_TEST_2020_2022/ADDENDUM_1.md": "5e8bb4938888c92fbba2c5a5a69d1b4575bafb0e7fc82d2322a7328c5249dd09",
+   "research/CATALYST_REGISTER_v1/KILL_TEST_2020_2022/collect.py": "cd03b83e788450af5f527d45c1d690c212d7efea1d786c46bc8d3bdf0845f523",
+   "research/CATALYST_REGISTER_v1/KILL_TEST_2020_2022/events.csv.gz": "8836c3564ba949703a6d2afd4b85a2009a25340b3c7a1c4a2ec8cae593ca1b8a",
+   "data/manifests/panel_us_repair-20261008T114805Z.json": "705ca354492f45d63a2fb15e0b4db1d334c490a9ac8749d606adfc9622d94039",
+   "idxsig/catalysts.py": "d71047de82c46cd6690af6a17163d49b587ba65a0caea9e440421f488c16fe81",
+   "idxsig/catalyst.py": "83194b029e372b6be711722fdcc5f799cc28af0512abeb0a5e3892ec4e0af19d",
+   "idxsig/event_study.py": "7de0d1ea92dbed9794fce11384aeac1f7f8d2fc279e8f09dafd7d282019c0a4e",
+   "idxsig/idx_events.py": "18498f1a31219fd2b954537d989d33851f990a856b7bacadddbdd01fd9197111",
+   "idxsig/execution.py": "04111c66f391a8456d67129bec8e57208a6e3e8d2b9d362033893e542e7636a2",
+   "idxsig/controls.py": "18d84a692640f1508d765f8bd233566fbe2677745c38222aa65c99285859d087",
+   "idxsig/market.py": "b956576fec19dbac3164bd8181e63f6b579d138aa42016d11af35103832c6d9f",
+   "idxsig/profiles.py": "e670d7bff5ef3042d7b7fa4cebf1a8ebe44e25c5dd0c1bc1f89fa7bb36b7f5f9",
+   "idxsig/backtest.py": "5e9bb4849aac69af5bb470d616e27e33bbab5cd7ffc16f9973fda92b48714ae3",
+   "idxsig/global_panel.py": "ecf05a09b6765555a832914f48e0bb1dc0687fafde74b6269297863bdcad3468"
+  }
+ },
+ "funnel": {
+  "filings": 3597,
+  "drops": {
+   "SKIP_NO_HEADER": 0,
+   "SKIP_SEED_ONLY": 267,
+   "SKIP_OUTSIDE_WINDOW": 106,
+   "SKIP_NO_TICKER": 1658,
+   "SKIP_REPEAT_90D": 484,
+   "SKIP_NOT_OPERATING": 233,
+   "SKIP_NO_SIGNAL_BAR": 9
+  },
+  "classified": 840,
+  "FIRE": 302,
+  "ABSTAIN": 538,
+  "rules": {
+   "DILUTION_RECENT": 362,
+   "MOVED_ALREADY": 6,
+   "MICROCAP": 346,
+   "MV_UNKNOWN": 210
+  },
+  "position": {
+   "AFTER": 681,
+   "DURING": 159
+  }
+ },
+ "go": {
+  "scored_fire": 288,
+  "need": 300,
+  "go": false,
+  "status": {
+   "EXITED": 288,
+   "SKIP_LIQUIDITY": 12,
+   "SKIP_NOT_TRADED": 2
+  }
+ },
+ "verdict": "INCONCLUSIVE"
+}

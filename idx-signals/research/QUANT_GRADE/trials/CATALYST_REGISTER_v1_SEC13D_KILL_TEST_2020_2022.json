@@ -1,0 +1,13 @@
+{
+ "id": "CATALYST_REGISTER_v1_SEC13D_KILL_TEST_2020_2022",
+ "experiment": "CATALYST_REGISTER_v1",
+ "date": "2026-10-28",
+ "hypothesis": "kill test: original Schedule 13D filings that the SEC13D abstention rule lets fire (2020-07 to 2022-11 entries) beat matched random entries over 20 sessions, bought at the open of the first session whose 09:15 New York is after acceptance; survivor-only prices (can fail, cannot confirm)",
+ "one_sided_p": null,
+ "variants_searched": 1,
+ "counted": true,
+ "registered": "2026-10-28",
+ "p_source": "none: the GO rule failed, no return was read",
+ "outcome": "INCONCLUSIVE: 288 scored FIRE events, fewer than 300",
+ "note": "research/CATALYST_REGISTER_v1/KILL_TEST_2020_2022/results/RESULT.json; counts only."
+}
