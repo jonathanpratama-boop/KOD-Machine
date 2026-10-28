@@ -741,9 +741,15 @@ def main(argv=None) -> int:
             if batch.get("counts"):
                 print("  not events: " + ", ".join(f"{k} {v}" for k, v in batch["counts"].items()))
             print(f"{args.family}: {len(batch['events'])} new event(s), {len(sets)} set(s) for entry {batch['entry_session']}")
+            side = batch.pop("_side_file", None)  # FORM4: every filing read, bound into the batch by its sha256
             if args.dry_run:
                 print("dry run: nothing appended")
                 return 0
+            if side:
+                side_path = catalysts.PKG_ROOT / side[0]
+                side_path.parent.mkdir(parents=True, exist_ok=True)
+                side_path.write_bytes(side[1])
+                extra.append(side_path)
             if not batch["events"] and args.family == "IDX_INDEX":
                 print("no new event; nothing recorded")
                 return 0

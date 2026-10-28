@@ -4,6 +4,7 @@ guards against."""
 from __future__ import annotations
 
 import importlib.util
+import gzip
 import json
 import tempfile
 import unittest
@@ -201,7 +202,7 @@ class Parsing(unittest.TestCase):
 
 class Batch(unittest.TestCase):
     def setUp(self):
-        warnings.simplefilter("ignore")
+        self.enterContext(warnings.catch_warnings()); warnings.simplefilter("ignore")
 
     def test_every_purchase_event_gets_a_status_and_the_rest_are_counted(self):
         """Guards against: an event dropped without a record, two filings of one issuer on one date sealed twice, an
@@ -213,7 +214,12 @@ class Batch(unittest.TestCase):
         self.assertEqual(batch["counts"], {"SKIP_NOT_PURCHASE": 6, "SKIP_PARSE_FAILED": 1, "SKIP_UNREADABLE": 1})
         self.assertEqual(batch["not_purchase_reasons"], {"NO_PURCHASE_LINE": 3, "NO_OFFICER_OR_DIRECTOR": 1, "PLAN_10B5_1": 1,
                                                          "BELOW_USD_50000": 1})
-        self.assertEqual(batch["unreadable"], [f"{acc(14)}|HTTP 404"])
+        self.assertEqual(batch["unreadable"], [f"{acc(13)}|parse failed", f"{acc(14)}|HTTP 404"])
+        side_rel, side_bytes = batch["_side_file"]
+        rows = gzip.decompress(side_bytes).decode().splitlines()
+        self.assertEqual(len(rows) - 1, 15)  # every Form 4 read has its row, with its XML sha256 when it parsed
+        self.assertEqual((batch["filings_file"]["rows"], batch["filings_file"]["sha256"]), (15, cr._sha(side_bytes)))
+        self.assertTrue(all(len(r.rsplit("|", 1)[1]) == 64 for r in rows[1:] if "SKIP_UNREADABLE" not in r))
         self.assertTrue(batch["coverage_gap"])
         self.assertEqual(batch["filings_xml"]["n"], 13)  # 15 filings, one unreadable, one unparsable
         (d,) = batch["index_dates"]
@@ -284,16 +290,57 @@ class Batch(unittest.TestCase):
         self.assertEqual((b["events"], s), ([], []))  # an empty batch is still recorded
 
 
+class Coverage(unittest.TestCase):
+    def setUp(self):
+        self.enterContext(warnings.catch_warnings()); warnings.simplefilter("ignore")
+
+    def test_no_share_class_of_an_event_issuer_is_its_twin(self):
+        """Guards against: a twin that is the event company under another ticker (GOOG/GOOGL), which would tie the
+        win-rate statement by construction."""
+        routes = world()
+        tmap = json.loads(routes[cr.TICKERS_URL][1])
+        sealed = {s["ticker"] for s in run(world())[1]}
+        ciks = {1000 + int(t[1:]) for t in sealed}
+        extra = {cik: [f"T{40 + 2 * j + (cik % 2):02d}" for j in range(5)] for cik in ciks}
+        for cik, tks in extra.items():
+            tmap["data"] += [[cik, "Co", t, "Nasdaq"] for t in tks]
+        routes[cr.TICKERS_URL] = (200, json.dumps(tmap).encode())
+        _, sets = run(routes)
+        for s in sets:
+            cik = 1000 + int(s["ticker"][1:])
+            self.assertFalse(set(extra.get(cik, [])) & {t["ticker"] for t in s["twins"]}, s["set_id"])
+
+    def test_an_empty_index_stays_pending_and_one_missing_for_days_is_a_recorded_gap(self):
+        """Guards against: a day's Form 4s lost because an empty 200 body was taken as an empty index, or a date EDGAR
+        never publishes (a federal holiday on an NYSE session) requested by every batch forever."""
+        routes = world()
+        routes[f4.index_url(D1)] = (200, b"")
+        batch, sets = run(routes)
+        (d,) = batch["index_dates"]
+        self.assertEqual((d["status"], batch["pending_dates"], sets), ("PENDING", [D1], []))
+        routes[f4.index_url(D1)] = (404, b"")
+        late = datetime(2026, 11, 5, 12, 0, tzinfo=timezone.utc)  # 7 calendar days after D1
+        ledger = [scan_record(session=s) for s in ("2026-10-29", "2026-10-30", "2026-11-02", "2026-11-03", "2026-11-04")]
+        batch2, _ = run(routes, now=late, ledger=ledger)
+        st = {x["date"]: x["status"] for x in batch2["index_dates"]}
+        self.assertEqual(st[D1], "MISSING")
+        self.assertTrue(batch2["coverage_gap"])
+        batch3, _ = run(routes, now=late, ledger=ledger, records=[batch2])
+        self.assertNotIn(D1, {x["date"] for x in batch3["index_dates"]})  # not requested again
+
+
 class Ledger(unittest.TestCase):
     def setUp(self):
-        warnings.simplefilter("ignore")
+        self.enterContext(warnings.catch_warnings()); warnings.simplefilter("ignore")
 
     def test_verify_accepts_the_batch_then_its_sets(self):
         """Guards against: FORM4 records that the register's own verifier rejects (protocol hash, scan binding, listing,
         cutoff)."""
-        batch, sets = run(world())
         scans = [scan_record(session=D1)]
-        with tempfile.TemporaryDirectory() as tmp:
+        with tempfile.TemporaryDirectory(dir=cr.PKG_ROOT) as tmp, mock.patch.object(f4, "SIDE_DIR", Path(tmp)):
+            batch, sets = run(world())
+            side_rel, side_bytes = batch.pop("_side_file")
+            (cr.PKG_ROOT / side_rel).write_bytes(side_bytes)  # as the CLI does before the append
             path = Path(tmp) / "catalysts.jsonl"
             paper.append([batch, *sets], path=path)
             with mock.patch.object(cr, "CAT_LEDGER", path), \
@@ -301,6 +348,8 @@ class Ledger(unittest.TestCase):
                     mock.patch.object(sp, "spec_lines", return_value=[]):
                 self.assertEqual(cr.verify(), [])
                 stats = cr.statistics()
+                (cr.PKG_ROOT / side_rel).write_bytes(side_bytes + b"x")
+                self.assertTrue(any("filings file" in p for p in cr.verify()))
         fam = stats["families"]["FORM4"]
         self.assertEqual((fam["n_sets"], fam["events_seen"]["SEALED"], fam["events_seen"]["SKIP_NOT_PURCHASE"]), (3, 3, 6))
 

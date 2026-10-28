@@ -117,7 +117,7 @@ class Parsing(unittest.TestCase):
 
 class Batch(unittest.TestCase):
     def setUp(self):
-        warnings.simplefilter("ignore")
+        self.enterContext(warnings.catch_warnings()); warnings.simplefilter("ignore")
 
     def test_every_event_gets_a_status_and_every_set_fires_short_side(self):
         """Guards against: an Item 3.02 8-K dropped without a record, a set that abstains, the wrong direction, or a
@@ -185,9 +185,31 @@ class Batch(unittest.TestCase):
         more = ENTRIES + [("8-K", "Alpha Inc", 1000, "Filer", "2026-10-29T18:00:00-04:00", "0000000002-26-000011", ["3.02"])]
         batch3, sets3 = run(routes=world(more), records=[batch, *sets])
         self.assertEqual([(e["accession"][-2:], e["status"]) for e in batch3["events"]], [("11", "SKIP_REPEAT_90D")])
-        self.assertIn("set on the same issuer", batch3["events"][0]["reason"])
+        self.assertIn("earlier Item 3.02 8-K of the issuer", batch3["events"][0]["reason"])
         st = {e["accession"][-2:]: e["status"] for e in run(routes=world(more))[0]["events"]}
         self.assertEqual((st["01"], st["11"]), ("SEALED", "SKIP_REPEAT_90D"))  # the first sealed in a batch wins
+
+    def test_an_earlier_skipped_filing_of_the_issuer_still_makes_the_later_one_a_repeat(self):
+        """Guards against: a second Item 3.02 8-K sealed because the issuer's first one, on the same day, was skipped
+        (here too late for its session) and so never became a set."""
+        later = datetime(2026, 10, 30, 22, 50, tzinfo=timezone.utc)
+        more = ENTRIES + [("8-K", "Alpha Inc", 1000, "Filer", "2026-10-29T17:30:00-04:00", "0000000002-26-000012", ["3.02"])]
+        batch, sets = run(routes=world(more), now=later, session="2026-10-30")
+        st = {e["accession"][-2:]: e["status"] for e in batch["events"]}
+        self.assertEqual((st["01"], st["12"]), ("SKIP_LATE", "SKIP_REPEAT_90D"))
+        self.assertNotIn("CAT-DILUTION_8K-0000000002-26-000012", {s["set_id"] for s in sets})
+
+    def test_no_share_class_of_the_event_company_is_its_twin_and_filers_are_listed_once(self):
+        """Guards against: a twin that is the event company under another ticker (GOOG/GOOGL), or the same filer
+        listed twice when the feed shifts between pages."""
+        routes = world(ENTRIES + [ENTRIES[0]])  # Alpha's entry served twice
+        tmap = json.loads(routes[cr.TICKERS_URL][1])
+        tmap["data"] += [[1000, "Co 0", f"T{i:02d}", "Nasdaq"] for i in (40, 42, 44, 46, 48, 50)]  # Alpha's other classes
+        routes[cr.TICKERS_URL] = (200, json.dumps(tmap).encode())
+        batch, sets = run(routes=routes)
+        alpha = next(s for s in sets if s["ticker"] == "T00")
+        self.assertFalse({"T40", "T42", "T44", "T46", "T48", "T50"} & {t["ticker"] for t in alpha["twins"]})
+        self.assertEqual(len(alpha["event"]["filers"]), 1)
 
     def test_coverage_gaps(self):
         """Guards against: filings between the window start (or the last batch's newest entry) and the oldest entry read
@@ -208,7 +230,7 @@ class Batch(unittest.TestCase):
 
 class Ledger(unittest.TestCase):
     def setUp(self):
-        warnings.simplefilter("ignore")
+        self.enterContext(warnings.catch_warnings()); warnings.simplefilter("ignore")
 
     def test_sets_verify_in_a_ledger_and_resolve_as_losers_to_their_twins(self):
         """Guards against: a set the register's verify() rejects (protocol, scan binding, batch listing, cutoff), or an

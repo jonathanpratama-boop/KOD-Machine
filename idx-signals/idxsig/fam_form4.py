@@ -12,6 +12,7 @@ committed research code is the one definition.
 
 from __future__ import annotations
 
+import gzip
 import hashlib
 import importlib.util
 import re
@@ -23,7 +24,10 @@ import numpy as np
 from . import catalysts as cr
 from . import paper
 from . import speculation as spec
-from .provenance import utc_stamp
+from .provenance import PKG_ROOT, utc_stamp
+
+SIDE_DIR = paper.PAPER / "catalysts_form4"  # one gzip per batch: every Form 4 read, with its status and XML sha256
+MISSING_AFTER_DAYS = 5  # an index still unpublished this many calendar days later is a recorded gap, not retried
 
 FAMILY = "FORM4"
 FORM = "4"  # EDGAR form type exactly '4'; '4/A' is not used
@@ -61,6 +65,11 @@ def index_dates(window_start: str, signal_session: str, covered: set[str]) -> li
 
 
 _INDEX_LINE = re.compile(r"^(?P<form>\S+)\s+(?P<name>.*?)\s+(?P<cik>\d{1,10})\s+(?P<date>\d{8}|\d{4}-\d{2}-\d{2})\s+(?P<file>\S+)\s*$")
+
+
+def has_index_header(body: bytes) -> bool:
+    """A real form.idx has the dashed rule under its column header; an empty or HTML 200 body does not."""
+    return any(ln.startswith("---") for ln in body.decode("latin-1", "replace").splitlines()[:40])
 
 
 def parse_index(body: bytes) -> list[dict]:
@@ -223,16 +232,22 @@ def _count(d: dict, key: str) -> None:
     d[key] = d.get(key, 0) + 1
 
 
-def read_filings(client, dates: list[str]) -> tuple[list[dict], list[dict], dict, dict, list[str], dict]:
+def read_filings(client, dates: list[str], today: str | None = None) -> tuple[list[dict], list[dict], dict, dict, list[str], dict, list[str]]:
     """Read each date's index and its Form 4 filings, one at a time (no body kept past its parse). Returns
-    (index log, purchase filings, counts by status, not-purchase reasons, unreadable accessions, digest of all XML read)."""
-    log, purchases, counts, reasons, unreadable = [], [], {}, {}, []
+    (index log, purchase filings, counts by status, not-purchase reasons, unreadable accessions, digest of all XML
+    read, one 'accession|date|status|reason|xml sha256' row per Form 4 filing read for the batch's side file).
+    An index not yet published is PENDING (read again by the next batch); one still missing MISSING_AFTER_DAYS
+    calendar days later (an EDGAR holiday on an NYSE session) is MISSING: a recorded gap, not retried."""
+    log, purchases, counts, reasons, unreadable, rows_out = [], [], {}, {}, [], []
     digest, n_xml = hashlib.sha256(), 0
+    today = today or datetime.now(timezone.utc).date().isoformat()
     for day in dates:
         url = index_url(day)
         status, body = client.get(url)
-        if status != 200:  # not yet published: left for the next batch
-            log.append({"date": day, "status": "PENDING", "url": url, "http_status": status})
+        if status != 200 or not has_index_header(body):
+            late = (date.fromisoformat(today) - date.fromisoformat(day)).days > MISSING_AFTER_DAYS
+            log.append({"date": day, "status": "MISSING" if late else "PENDING", "url": url, "http_status": status,
+                        **({} if status != 200 else {"reason": "HTTP 200 without the index's header rule"})})
             continue
         rows = parse_index(body)
         filings = form4_filings(rows)
@@ -245,12 +260,15 @@ def read_filings(client, dates: list[str]) -> tuple[list[dict], list[dict], dict
             if st != 200:
                 _count(counts, "SKIP_UNREADABLE")
                 unreadable.append(f"{f['accession']}|HTTP {st}")
+                rows_out.append(f"{f['accession']}|{day}|SKIP_UNREADABLE|HTTP {st}|")
                 continue
             try:
                 xml = form4_xml(text)
                 doc = parse_form4(xml)
-            except ValueError:
+            except ValueError as exc:
                 _count(counts, "SKIP_PARSE_FAILED")
+                unreadable.append(f"{f['accession']}|parse failed")
+                rows_out.append(f"{f['accession']}|{day}|SKIP_PARSE_FAILED|{str(exc)[:80]}|{cr._sha(text)}")
                 continue
             finally:
                 del text
@@ -258,6 +276,7 @@ def read_filings(client, dates: list[str]) -> tuple[list[dict], list[dict], dict
             digest.update(f"{f['accession']} {sha}\n".encode())
             n_xml += 1
             why, summary = purchase_test(doc)
+            rows_out.append(f"{f['accession']}|{day}|{'SKIP_NOT_PURCHASE' if why else 'PURCHASE'}|{why or ''}|{sha}")
             if why:
                 _count(counts, "SKIP_NOT_PURCHASE")
                 _count(reasons, why)
@@ -265,7 +284,7 @@ def read_filings(client, dates: list[str]) -> tuple[list[dict], list[dict], dict
             purchases.append({**summary, "accession": f["accession"], "filing_date": f["date_filed"], "url": furl,
                               "issuer_cik": doc["issuer_cik"], "issuer_name": doc["issuer_name"], "symbol": doc["symbol"],
                               "owners": doc["owners"], "xml_sha256": sha})
-    return log, purchases, counts, reasons, unreadable, {"n": n_xml, "sha256": digest.hexdigest()}
+    return log, purchases, counts, reasons, unreadable, {"n": n_xml, "sha256": digest.hexdigest()}, rows_out
 
 
 def batch(now: datetime, client, ledger: list[dict] | None = None, records: list[dict] | None = None,
@@ -281,9 +300,10 @@ def batch(now: datetime, client, ledger: list[dict] | None = None, records: list
     if scan is None:
         raise RuntimeError(f"no US paper scan for the signal session {signal}; run paper-scan --market US first")
     earlier = [r for r in records if r["type"] == "BATCH" and r["family"] == FAMILY]
-    covered = {d["date"] for b in earlier for d in b["index_dates"] if d["status"] == "READ"}
+    covered = {d["date"] for b in earlier for d in b["index_dates"] if d["status"] in ("READ", "MISSING")}
     dates = index_dates(fam["window_start"], signal, covered)
-    log, purchases, counts, reasons, unreadable, digest = read_filings(client, dates)
+    log, purchases, counts, reasons, unreadable, digest, side_rows = read_filings(
+        client, dates, today=now.astimezone(timezone.utc).date().isoformat())
     events = group_events(purchases)
     status, tm_body = client.get(cr.TICKERS_URL)
     if status != 200:
@@ -296,7 +316,8 @@ def batch(now: datetime, client, ledger: list[dict] | None = None, records: list
         tickers = by_cik.get(ev["issuer_cik"], [])
         ok = [t for t in tickers if t in universe]
         chosen[ev["accession"]] = (tickers, ok[0] if ok else None)
-    excluded = sorted({*scan["candidates_ranked"], *(t for _, t in chosen.values() if t)})
+    # every ticker of an event issuer (all its share classes), so a twin is never the event company itself
+    excluded = sorted({*scan["candidates_ranked"], *(t for tks, _ in chosen.values() for t in tks)})
     sealed = {}
     for r in records:
         if r["type"] == "CATALYST_SET" and r["family"] == FAMILY:
@@ -357,13 +378,20 @@ def batch(now: datetime, client, ledger: list[dict] | None = None, records: list
         raise RuntimeError(f"the entry cutoff {utc_stamp(cutoff)} passed while the batch was built; nothing sealed")
     for s in sets:
         s["sealed_at"] = utc_stamp(sealed_at)
+    # the side file: every Form 4 read with its status and XML sha256 (gzip with a fixed mtime, so its hash is stable)
+    stamp = utc_stamp(sealed_at).replace("-", "").replace(":", "")
+    side_rel = str((SIDE_DIR / f"FORM4-{stamp}.txt.gz").relative_to(PKG_ROOT))
+    side_bytes = gzip.compress(("accession|date|status|reason|xml_sha256\n" + "".join(r + "\n" for r in side_rows)).encode(), mtime=0)
     out = {"type": "BATCH", "register": cr.REGISTER_VERSION, "family": FAMILY, "market": "US",
            "sealed_at": utc_stamp(sealed_at), "window_start": fam["window_start"], "signal_session": signal,
            "entry_session": entry, "entry_cutoff": utc_stamp(cutoff), "scan_id": scan["scan_id"],
            "index_dates": log, "pending_dates": [d["date"] for d in log if d["status"] == "PENDING"],
-           "filings_xml": digest, "unreadable": unreadable, "coverage_gap": bool(unreadable),
+           "missing_dates": [d["date"] for d in log if d["status"] == "MISSING"],
+           "filings_xml": digest, "filings_file": {"path": side_rel, "sha256": cr._sha(side_bytes), "rows": len(side_rows)},
+           "unreadable": unreadable, "coverage_gap": bool(unreadable) or any(d["status"] == "MISSING" for d in log),
            "ticker_map_sha256": cr._sha(tm_body), "events": statuses, "counts": counts,
-           "not_purchase_reasons": reasons, "protocol": {"id": fam["protocol_id"], "sha256": fam_sha}}
+           "not_purchase_reasons": reasons, "protocol": {"id": fam["protocol_id"], "sha256": fam_sha},
+           "_side_file": (side_rel, side_bytes)}  # written by the CLI before the append, then dropped from the record
     return out, sets
 
 

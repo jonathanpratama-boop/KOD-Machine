@@ -62,14 +62,19 @@ def events(entries: list[dict]) -> list[dict]:
             continue
         rec = by_acc.setdefault(e["accession"], {"accession": e["accession"], "accepted": e["accepted"], "url": e["url"],
                                                  "items": e["items"], "filers": [], "others": []})
-        who = {"cik": e["cik"], "name": e["name"]}
-        (rec["filers"] if e["role"].lower() in ISSUER_ROLES else rec["others"]).append({**who, "role": e["role"]})
+        who = {"cik": e["cik"], "name": e["name"], "role": e["role"]}
+        bucket = rec["filers"] if e["role"].lower() in ISSUER_ROLES else rec["others"]
+        if who not in bucket:  # one accession can appear on two pages while the feed shifts
+            bucket.append(who)
     return sorted(by_acc.values(), key=lambda r: (datetime.fromisoformat(r["accepted"]), r["accession"]))
 
 
-def issuer(ev: dict, by_cik: dict[int, list[str]]) -> dict | None:
-    """The issuer: the first Filer entry whose CIK has a ticker, else the first Filer entry (None without one)."""
-    return next((f for f in ev["filers"] if by_cik.get(f["cik"])), ev["filers"][0] if ev["filers"] else None)
+def issuer(ev: dict, by_cik: dict[int, list[str]], universe: set[str] | None = None) -> dict | None:
+    """The issuer: the first Filer entry with a ticker in the universe, else the first with any ticker, else the
+    first Filer entry (None without one); co-registrant filings list several Filers."""
+    universe = universe or set()
+    return next((f for f in ev["filers"] if set(by_cik.get(f["cik"], [])) & universe),
+                next((f for f in ev["filers"] if by_cik.get(f["cik"])), ev["filers"][0] if ev["filers"] else None))
 
 
 def earlier_302(filings: pd.DataFrame, accession: str, day: str, days: int = cr.REPEAT_DAYS) -> list[str]:
@@ -139,21 +144,29 @@ def batch(now: datetime, client, ledger: list[dict] | None = None, records: list
     universe = set(cr._universe(feats)["ticker"])
     chosen = {}
     for ev in evs:
-        who = issuer(ev, by_cik)
+        who = issuer(ev, by_cik, universe)
         tickers = by_cik.get(who["cik"], []) if who else []
         ok = [t for t in tickers if t in universe]
         chosen[ev["accession"]] = (who, tickers, ok[0] if ok else None)
-    excluded = sorted({*scan["candidates_ranked"], *(t for _, _, t in chosen.values() if t)})
-    sealed_issuers: dict[int, datetime] = {}
-    for r in records:
-        if r["type"] == "CATALYST_SET" and r["family"] == FAMILY:
-            sealed_issuers[r["event"]["issuer_cik"]] = datetime.fromisoformat(r["sealed_at"].replace("Z", "+00:00"))
+    # every ticker of an event issuer (all its share classes), so a twin is never the event company itself
+    excluded = sorted({*scan["candidates_ranked"], *(t for _, tks, _ in chosen.values() for t in tks)})
+    # The repeat rule: any earlier Item 3.02 8-K of the issuer seen by this family (whatever its status) in the
+    # 90 days before, plus the issuer's submissions; a skipped earlier filing is still "another 8-K with Item 3.02".
+    seen_issuers: dict[int, datetime] = {}
+    for b in earlier_batches:
+        for e in b["events"]:
+            if e.get("issuer_cik") is not None:
+                t = datetime.fromisoformat(e["accepted"])
+                seen_issuers[e["issuer_cik"]] = max(t, seen_issuers.get(e["issuer_cik"], t))
     statuses, sets = [], []
     today = now.astimezone(cr.NY).date().isoformat()
     for ev in evs:
         acc = ev["accession"]
         accepted = datetime.fromisoformat(ev["accepted"])
         who, tickers, ticker = chosen[acc]
+        prior = seen_issuers.get(who["cik"]) if who else None
+        if who:  # remembered whatever happens next, so a later filing of the issuer is a repeat of this one
+            seen_issuers[who["cik"]] = accepted
         row = {"accession": acc, "issuer_cik": who["cik"] if who else None, "issuer_name": who["name"] if who else None,
                "accepted": ev["accepted"], "items": ev["items"], "tickers": tickers, "ticker": ticker}
 
@@ -173,9 +186,9 @@ def batch(now: datetime, client, ledger: list[dict] | None = None, records: list
         if pos == "LATE":
             skip("SKIP_LATE", f"accepted at or before the close of {cr.us_prev_session(signal)}; the register missed its window")
             continue
-        prior = sealed_issuers.get(who["cik"])
-        if prior is not None and accepted - prior < timedelta(days=cr.REPEAT_DAYS):
-            skip("SKIP_REPEAT_90D", f"a {FAMILY} set on the same issuer was sealed at {utc_stamp(prior)}")
+        if prior is not None and timedelta(0) <= accepted - prior and \
+                accepted.astimezone(cr.NY).date() - prior.astimezone(cr.NY).date() <= timedelta(days=cr.REPEAT_DAYS):
+            skip("SKIP_REPEAT_90D", f"an earlier Item 3.02 8-K of the issuer was accepted {prior.isoformat()}")
             continue
         filings = cr.submissions(client, who["cik"])
         if not cr.is_operating(filings, today):
@@ -207,7 +220,6 @@ def batch(now: datetime, client, ledger: list[dict] | None = None, records: list
             "windows": {fam["plan"]["window"]: {k: fam["plan"][k] for k in ("kind", "entry_window", "holding_sessions")}},
             "plan": fam["plan"]["window"], "protocol": {"id": fam["protocol_id"], "sha256": fam_sha}})
         statuses.append({**row, "status": "SEALED", "set_id": set_id, "coverage": cov["class"]})
-        sealed_issuers[who["cik"]] = accepted  # a second filing of the issuer in this batch is a repeat
     sealed_at = (clock or (lambda: datetime.now(timezone.utc)))()
     if sets and sealed_at >= cutoff:
         raise RuntimeError(f"the entry cutoff {utc_stamp(cutoff)} passed while the batch was built; nothing sealed")

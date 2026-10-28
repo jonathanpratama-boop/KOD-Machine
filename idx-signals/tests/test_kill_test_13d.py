@@ -26,7 +26,7 @@ def _load(name):
     return mod
 
 
-kt = _load("kt_lib")
+kt = _load("kt_lib_v2")  # ADDENDUM_1: v2 supersedes kt_lib.py
 NY = kt.NY
 
 
@@ -182,9 +182,23 @@ class Repeat(unittest.TestCase):
             ("A3", 1, "2020-09-10T10:00:00-04:00"), ("A4", 1, "2021-01-05T10:00:00-05:00"),
             ("B1", 2, "2020-06-20T10:00:00-04:00"), ("B0", 2, "2020-06-20T10:00:00-04:00"),
             ("C1", None, "2020-06-20T10:00:00-04:00")], columns=["accession", "subject_cik", "accepted"])
+        ev["date_filed"] = ev["accepted"].str[:10]
         rep = kt.repeats(ev)
         # A2 within 90 days of A1; A3 is 82 days after A2 (A2 itself dropped, still counts); A4 is 117 days after A3
         self.assertEqual(rep.tolist(), ["", "A1", "A2", "", "B0", "", ""])
+
+    def test_the_90_days_are_calendar_days_on_the_filing_date_as_live(self):
+        """Guards against: a filing exactly 90 calendar days later but later in the day escaping the repeat rule
+        (seconds instead of days), which the live register (catalysts.earlier_13d) would have skipped."""
+        ev = pd.DataFrame([
+            ("A1", 1, "2020-07-01T09:00:00-04:00", "2020-07-01"), ("A2", 1, "2020-09-29T16:00:00-04:00", "2020-09-29"),
+            ("B1", 2, "2020-07-01T09:00:00-04:00", "2020-07-01"), ("B2", 2, "2020-09-30T08:00:00-04:00", "2020-09-30")],
+            columns=["accession", "subject_cik", "accepted", "date_filed"])
+        self.assertEqual(kt.repeats(ev).tolist(), ["", "A1", "", ""])  # 90 days is a repeat, 91 is not
+
+    def test_an_empty_list_passes_the_funnel(self):
+        ev = pd.DataFrame(columns=["accession", "date_filed", "accepted", "subject_cik", "tickers", "dilution", "opforms"])
+        self.assertEqual(len(kt.funnel(ev, sessions(), set())), 0)
 
 
 class Funnel(unittest.TestCase):
@@ -243,6 +257,8 @@ class Statistic(unittest.TestCase):
         self.assertEqual(kt.verdict(300, 0.0), "KILL")
         self.assertEqual(kt.verdict(300, -0.01), "KILL")
         self.assertEqual(kt.verdict(301, 0.0001), "NOT_KILLED")
+        self.assertEqual(kt.verdict(301, float("nan")), "INCONCLUSIVE")
+        self.assertEqual(kt.verdict(301, None), "INCONCLUSIVE")
         res = pd.DataFrame({"status": ["EXITED", "EXITED", "SKIP_OVERLAP", "EXITED"], "control_n": [3, 0, 3, 1],
                             "excess": [0.1, np.nan, np.nan, -0.2]})
         self.assertEqual(len(kt.scored(res)), 2)
@@ -338,7 +354,7 @@ class Collect(unittest.TestCase):
 
 class Runner(unittest.TestCase):
     def test_trial_file_reads_no_return_without_go_and_states_the_verdict_with_it(self):
-        run = _load("run")
+        run = _load("run_v2")
         res = {"verdict": "INCONCLUSIVE", "run_at": "2026-10-29T00:00:00Z", "go": {"scored_fire": 120}}
         t = run.trial(res)
         self.assertIsNone(t["one_sided_p"])

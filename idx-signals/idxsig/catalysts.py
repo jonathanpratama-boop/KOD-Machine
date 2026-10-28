@@ -432,7 +432,8 @@ def sec13d_batch(now: datetime, client, ledger: list[dict] | None = None, record
         tickers = by_cik.get(ev["subject"]["cik"], [])
         ok = [t for t in tickers if t in universe]
         chosen[ev["accession"]] = (tickers, ok[0] if ok else None)
-    excluded = sorted({*scan["candidates_ranked"], *(t for _, t in chosen.values() if t)})
+    # every ticker of an event subject (all its share classes), so a twin is never the event company itself
+    excluded = sorted({*scan["candidates_ranked"], *(t for tks, _ in chosen.values() for t in tks)})
     sealed_subjects = {r["event"]["subject_cik"]: r["event"]["accepted"] for r in records
                        if r["type"] == "CATALYST_SET" and r["family"] == "SEC13D"}
     statuses, sets = [], []
@@ -990,11 +991,16 @@ def card(s: dict) -> str:
                + f"; pre-entry move {_pct(inp.get('pre_entry_move'))}, market value "
                + ("n/a" if inp.get("market_value_usd") is None else f"USD {inp['market_value_usd'] / 1e6:,.1f}M")
                + f", dilution filings {len(inp.get('dilution_filings', []))}.")
-    else:
+    elif s["family"] == "IDX_INDEX":
         head = (f"### IDX_INDEX {s['ticker']} ({', '.join(c['change'] + ' ' + c['index'] for c in ev['changes'])}) - "
                 f"effective {ev['effective']}, sealed {s['sealed_at']}, cutoff {s['entry_cutoff']}")
         what = f"Confidence {ev['confidence']}; events file sha256 `{ev['events_sha256'][:12]}`."
         cls = "Coverage DESCRIPTIVE (not counted)."
+    else:  # a later family without its own card_lines
+        head = (f"### {s['family']} {s['ticker']} - event `{s['event_id']}`, accepted {ev.get('accepted', 'n/a')}, "
+                f"sealed {s['sealed_at']}, cutoff {s['entry_cutoff']}")
+        what = f"Direction {int(s.get('direction', 1)):+d}; protocol `{s['protocol']['id']}`."
+        cls = f"Coverage **{cov['class']}**; pre-entry move {_pct(cov.get('inputs', {}).get('pre_entry_move'))}."
     wins = "; ".join(f"{k}: entry +{w['entry_window']}, hold {w['holding_sessions']}" for k, w in s["windows"].items())
     return "\n".join([
         head, f"Set `{s.get('record_hash', '')[:12]}`, scan `{s['scan_id']}`; signal close {s['signal']['close']:g} on "
@@ -1089,6 +1095,11 @@ def verify() -> list[str]:
         t = r["type"]
         if t == "BATCH":
             listed |= {e.get("set_id") for e in r["events"] if e["status"] == "SEALED"}
+            ff = r.get("filings_file")
+            if ff:
+                path = PKG_ROOT / ff["path"]
+                if not path.exists() or sha256_file(path) != ff["sha256"]:
+                    problems.append(f"batch {r['sealed_at']} ({r['family']}): filings file {ff['path']} missing or changed")
             if r["protocol"]["sha256"] != fam_sha.get(r["family"], proto_sha):
                 problems.append(f"batch {r['sealed_at']}: protocol sha256 differs from protocol.json")
         elif t == "CATALYST_SET":
