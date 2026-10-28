@@ -1,0 +1,372 @@
+{
+  "spec_commit": "6a2ba8f",
+  "perp_manifest": "binance_perp-20261015T191341Z.jsonl",
+  "spot_manifest": "binance_1h-20261015T182940Z.jsonl",
+  "window": [
+    "2021-12-01 00:00:00+00:00",
+    "2022-12-30 23:00:00+00:00"
+  ],
+  "download_failures": 0,
+  "coverage": {
+    "overlap_perps": 290,
+    "with_funding_and_metrics_files": 153,
+    "covered_ge_80pct_metrics": 142,
+    "metrics_completeness_quartiles": [
+      0.0,
+      0.70605,
+      0.9998
+    ],
+    "delisted_before_2023_by_archive": 10,
+    "listed_after_window_start": 159,
+    "non_8h_funding_intervals": 182,
+    "perps_with_2023_files_listed": 236,
+    "note": "listing/delisting dates are archive-derived; 2023 counts are from listings only"
+  },
+  "missingness": {
+    "no_spot_bar_at_T": 611,
+    "no_oi_near_T": 337,
+    "no_oi_near_T_minus_7d": 2736,
+    "fewer_than_3_settlements": 44,
+    "spot_ineligible": 1519,
+    "entry_bar_missing": 0,
+    "window_short": 6
+  },
+  "eligible_observations": 150597,
+  "eligible_by_month": {
+    "2021-12": 8435,
+    "2022-01": 11201,
+    "2022-02": 10220,
+    "2022-03": 11526,
+    "2022-04": 11334,
+    "2022-05": 12095,
+    "2022-06": 11790,
+    "2022-07": 12264,
+    "2022-08": 12392,
+    "2022-09": 12120,
+    "2022-10": 12741,
+    "2022-11": 12383,
+    "2022-12": 12096
+  },
+  "distinct_eligible_contracts_per_settlement": {
+    "min": 1.0,
+    "25%": 122.0,
+    "50%": 131.0,
+    "75%": 134.0,
+    "max": 138.0
+  },
+  "S_primary": {
+    "events_after_debounce": 845,
+    "raw_flags_before_debounce": 2632,
+    "distinct_coins": 135,
+    "months_with_events": 13,
+    "by_month": {
+      "2021-12": 26,
+      "2022-01": 54,
+      "2022-02": 79,
+      "2022-03": 57,
+      "2022-04": 22,
+      "2022-05": 137,
+      "2022-06": 100,
+      "2022-07": 69,
+      "2022-08": 41,
+      "2022-09": 52,
+      "2022-10": 80,
+      "2022-11": 51,
+      "2022-12": 77
+    },
+    "top_coins": {
+      "MTLUSDT": 23,
+      "KAVAUSDT": 20,
+      "REEFUSDT": 18,
+      "WAVESUSDT": 18,
+      "AXSUSDT": 16,
+      "RSRUSDT": 14,
+      "C98USDT": 14,
+      "NKNUSDT": 14,
+      "BALUSDT": 14,
+      "SNXUSDT": 13
+    },
+    "top1_share": 0.027218934911242602,
+    "top5_share": 0.11242603550295859,
+    "effective_coins_1_over_hhi": 94.3354472189193,
+    "distinct_days": 285,
+    "events_per_week": {
+      "mean": 15.363636363636363,
+      "max": 70,
+      "weeks": 55
+    },
+    "capacity_usdt_quartiles_pre_entry": [
+      1459.2521665000002,
+      3624.0382329999998,
+      9571.73266005
+    ],
+    "also_F": "S is a subset of F by construction"
+  },
+  "F_funding_only": {
+    "events_after_debounce": 5048,
+    "raw_flags_before_debounce": 24316,
+    "distinct_coins": 141,
+    "months_with_events": 13,
+    "by_month": {
+      "2021-12": 110,
+      "2022-01": 328,
+      "2022-02": 454,
+      "2022-03": 262,
+      "2022-04": 161,
+      "2022-05": 710,
+      "2022-06": 664,
+      "2022-07": 431,
+      "2022-08": 426,
+      "2022-09": 446,
+      "2022-10": 336,
+      "2022-11": 320,
+      "2022-12": 400
+    },
+    "top_coins": {
+      "AXSUSDT": 124,
+      "DOTUSDT": 99,
+      "KAVAUSDT": 82,
+      "MTLUSDT": 78,
+      "WAVESUSDT": 78,
+      "TRXUSDT": 78,
+      "SNXUSDT": 77,
+      "CRVUSDT": 77,
+      "BALUSDT": 73,
+      "1INCHUSDT": 72
+    },
+    "top1_share": 0.02456418383518225,
+    "top5_share": 0.09132329635499209,
+    "effective_coins_1_over_hhi": 106.97321713431732,
+    "distinct_days": 377,
+    "events_per_week": {
+      "mean": 90.14285714285714,
+      "max": 215,
+      "weeks": 56
+    },
+    "capacity_usdt_quartiles_pre_entry": [
+      1150.22381509875,
+      3326.1552364,
+      10618.71207184075
+    ]
+  },
+  "planning_inputs_unconditional": {
+    "sigma_24h_excess": 0.040607123125303735,
+    "observations": 150597,
+    "rho_same_week_excess": 0.0025923369608934635,
+    "rho_sample": 16575,
+    "note": "excess = coin 24h spot return minus the median over eligible coins at the same settlement; never conditional on F or S"
+  },
+  "sample_size_sensitivity": [
+    {
+      "sigma": 0.0406,
+      "design_effect": 1.0,
+      "delta": 0.0025,
+      "events_needed": 2069
+    },
+    {
+      "sigma": 0.0406,
+      "design_effect": 1.0,
+      "delta": 0.005,
+      "events_needed": 518
+    },
+    {
+      "sigma": 0.0406,
+      "design_effect": 1.0,
+      "delta": 0.01,
+      "events_needed": 130
+    },
+    {
+      "sigma": 0.0406,
+      "design_effect": 1.0,
+      "delta": 0.02,
+      "events_needed": 33
+    },
+    {
+      "sigma": 0.0406,
+      "design_effect": 1.037,
+      "delta": 0.0025,
+      "events_needed": 2146
+    },
+    {
+      "sigma": 0.0406,
+      "design_effect": 1.037,
+      "delta": 0.005,
+      "events_needed": 537
+    },
+    {
+      "sigma": 0.0406,
+      "design_effect": 1.037,
+      "delta": 0.01,
+      "events_needed": 135
+    },
+    {
+      "sigma": 0.0406,
+      "design_effect": 1.037,
+      "delta": 0.02,
+      "events_needed": 34
+    },
+    {
+      "sigma": 0.0406,
+      "design_effect": 2.0,
+      "delta": 0.0025,
+      "events_needed": 4137
+    },
+    {
+      "sigma": 0.0406,
+      "design_effect": 2.0,
+      "delta": 0.005,
+      "events_needed": 1035
+    },
+    {
+      "sigma": 0.0406,
+      "design_effect": 2.0,
+      "delta": 0.01,
+      "events_needed": 259
+    },
+    {
+      "sigma": 0.0406,
+      "design_effect": 2.0,
+      "delta": 0.02,
+      "events_needed": 65
+    },
+    {
+      "sigma": 0.0406,
+      "design_effect": 3.0,
+      "delta": 0.0025,
+      "events_needed": 6206
+    },
+    {
+      "sigma": 0.0406,
+      "design_effect": 3.0,
+      "delta": 0.005,
+      "events_needed": 1552
+    },
+    {
+      "sigma": 0.0406,
+      "design_effect": 3.0,
+      "delta": 0.01,
+      "events_needed": 388
+    },
+    {
+      "sigma": 0.0406,
+      "design_effect": 3.0,
+      "delta": 0.02,
+      "events_needed": 97
+    },
+    {
+      "sigma": 0.0609,
+      "design_effect": 1.0,
+      "delta": 0.0025,
+      "events_needed": 4654
+    },
+    {
+      "sigma": 0.0609,
+      "design_effect": 1.0,
+      "delta": 0.005,
+      "events_needed": 1164
+    },
+    {
+      "sigma": 0.0609,
+      "design_effect": 1.0,
+      "delta": 0.01,
+      "events_needed": 291
+    },
+    {
+      "sigma": 0.0609,
+      "design_effect": 1.0,
+      "delta": 0.02,
+      "events_needed": 73
+    },
+    {
+      "sigma": 0.0609,
+      "design_effect": 1.037,
+      "delta": 0.0025,
+      "events_needed": 4828
+    },
+    {
+      "sigma": 0.0609,
+      "design_effect": 1.037,
+      "delta": 0.005,
+      "events_needed": 1207
+    },
+    {
+      "sigma": 0.0609,
+      "design_effect": 1.037,
+      "delta": 0.01,
+      "events_needed": 302
+    },
+    {
+      "sigma": 0.0609,
+      "design_effect": 1.037,
+      "delta": 0.02,
+      "events_needed": 76
+    },
+    {
+      "sigma": 0.0609,
+      "design_effect": 2.0,
+      "delta": 0.0025,
+      "events_needed": 9308
+    },
+    {
+      "sigma": 0.0609,
+      "design_effect": 2.0,
+      "delta": 0.005,
+      "events_needed": 2327
+    },
+    {
+      "sigma": 0.0609,
+      "design_effect": 2.0,
+      "delta": 0.01,
+      "events_needed": 582
+    },
+    {
+      "sigma": 0.0609,
+      "design_effect": 2.0,
+      "delta": 0.02,
+      "events_needed": 146
+    },
+    {
+      "sigma": 0.0609,
+      "design_effect": 3.0,
+      "delta": 0.0025,
+      "events_needed": 13962
+    },
+    {
+      "sigma": 0.0609,
+      "design_effect": 3.0,
+      "delta": 0.005,
+      "events_needed": 3491
+    },
+    {
+      "sigma": 0.0609,
+      "design_effect": 3.0,
+      "delta": 0.01,
+      "events_needed": 873
+    },
+    {
+      "sigma": 0.0609,
+      "design_effect": 3.0,
+      "delta": 0.02,
+      "events_needed": 219
+    }
+  ],
+  "design_effect_measured": {
+    "events_per_week_S": 15.363636363636363,
+    "rho": 0.0025923369608934635,
+    "DE": 1.0372353854382879
+  },
+  "decision": {
+    "criteria": {
+      "coverage_ge_100_perps": true,
+      "events_cover_delta_1pct": true,
+      "events_cover_delta_2pct": true,
+      "months_ge_10_of_13": true,
+      "top5_le_40pct": true
+    },
+    "events_needed_delta_1pct": 135,
+    "events_needed_delta_2pct": 34,
+    "S_events": 845,
+    "minimum_detectable_effect_24h": 0.003983552648375502,
+    "verdict": "GO"
+  }
+}
