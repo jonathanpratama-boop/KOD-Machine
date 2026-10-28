@@ -1,0 +1,75 @@
+{
+  "protocol_id": "KOD-CRYPTO-E8-v1",
+  "title": "Peer spillover: do closely linked coins that have not moved follow a coin that reprices on its own?",
+  "frozen_before_analysis": true,
+  "frozen_note": "Written after the feasibility check (counts only, FEASIBILITY_AMENDMENT_1.md, feasibility_v1.1/) and before any E8 code computed a forward return, high, low or other outcome.",
+  "stage": "discovery only",
+  "data": {
+    "manifest": "data/manifests/binance_1h-20261015T182940Z.jsonl",
+    "source": "Binance spot 1h klines, USDT pairs, delisted symbols included, checksum-verified",
+    "months_read": ["2020-04", "2022-12"],
+    "never_read": "2023 (inspected in E2 validation, cannot confirm anything new) and 2024 onward (sealed holdout)",
+    "excluded_assets": "stablecoins and leveraged tokens (collection), PAXG and BKRW (amendment 1)"
+  },
+  "signal": {
+    "definition": "research/E8/FEASIBILITY_SPEC.md as amended by FEASIBILITY_AMENDMENT_1.md, implemented in idxsig/e8.py peer_events() at commit bfcf099; IMPLEMENTATION_NOTES.md notes 1-8",
+    "in_words": "leader: eligible coin up >= 25% in 24h, >= 20 points above the market median, on >= 3x its normal daily volume, first crossing in 72h. Peers: up to 3 eligible coins that have not moved (24h residual <= +5 points), not recent leaders, with partial correlation >= 0.20 to the leader over the 30 days before the move. One open event per coin.",
+    "decision_time": "close of hour t (all inputs from bars opening at or before t)",
+    "decision_hours": ["2020-07-01 00:00 UTC", "last hour whose holding window ends by 2022-12-31 23:00 UTC"]
+  },
+  "early_warning_definition": "The warning is issued for a coin whose 24-hour move is at most 5 points above the market median at the decision, i.e. before its own move. It is judged on what happens after the decision only.",
+  "moonshot_definition": {
+    "U20": "max high over bars t+1..t+72 >= 1.20 x entry price",
+    "U30": "max high over bars t+1..t+72 >= 1.30 x entry price (reported, not gated)"
+  },
+  "outcomes": {
+    "entry": "open of bar t+1; no entry bar = NO_ENTRY (counted, unscored)",
+    "R72": "close of bar t+72 / entry - 1, gross; if bar t+72 is absent, the last present close in t+1..t+72, flagged missing_end",
+    "latency_sensitivity": "R72 with entry at the open of bar t+2 and exit at the close of bar t+73 (reported, not gated)"
+  },
+  "comparison": {
+    "id": "E8-MATCH-v1",
+    "pool": "coins eligible at t, not meeting the raw leader condition in t-72..t, residual 24h return <= +5 points (the same not-yet-moved filter), with a defined partial correlation to the event's leader below 0.10, an entry bar at t+1, and not the event coin",
+    "match_on": "liquidity quintile (30-day median daily quote volume) and trailing-volatility quintile (720-bar hourly sd), quintiles computed within the pool at t",
+    "relaxation": "if fewer than 5 pool coins share both quintiles: liquidity only; then the whole pool; level recorded",
+    "draws": "200 with replacement, numpy default_rng(20261016), events in time order",
+    "control_value": "mean over the 200 draws of the same quantity (R72, U20, U30, plan net) from the same entry bar"
+  },
+  "trading_plan": {
+    "id": "E8-PLAN-v1",
+    "side": "long spot, no leverage, one position per event",
+    "entry": "open of bar t+1",
+    "exits": "take profit at +20% (limit), stop at -10%, otherwise the close of bar t+72; bars t+1..t+72 are evaluated in order using high and low",
+    "same_bar_rule": "if a bar reaches both levels the stop is assumed first",
+    "gap_rule": "a bar opening below the stop fills at its open; take profit fills at +20% exactly",
+    "missing_bars": "an absent bar offers no fill; if the coin has no bar after some point in the window, exit at the last present close, flagged",
+    "costs": "fee 0.10% per side (Binance spot taker, no discount); slippage per side 0.10% if 30-day median daily quote volume >= $10M, else 0.20%; net = exit x (1 - fee - slip) / (entry x (1 + fee + slip)) - 1",
+    "win": "net > 0",
+    "size_and_capacity": "notional of 1% of the coin's median hourly quote volume (liquidity / 24 x 1%), reported in USD; portfolio view: 5% of capital per trade, no compounding, no cap on concurrent positions, report maximum concurrent positions and maximum drawdown of cumulative net"
+  },
+  "statistics": {
+    "unit": "peer event",
+    "dependence": "ISO-week cluster bootstrap over decision weeks (idxsig.e6.week_bootstrap, 10,000 resamples, seed 20261015); one-sided p = share of resampled means <= 0",
+    "win_rate_interval": "Wilson 95%"
+  },
+  "gates": {
+    "G0_sample": "at least 300 scored events in at least 50 distinct weeks, and at most 5% of events unscorable (NO_ENTRY or NO_CONTROLS)",
+    "G1_information": "mean excess R72 (event minus control) > 0 with one-sided p < 0.025",
+    "G2_moonshot": "mean of (U20 - control U20 rate) > 0 with one-sided p < 0.025",
+    "G3_trading": "plan mean net > 0 with one-sided p < 0.05, and plan mean net minus control plan mean net > 0",
+    "G4_consistency": "mean excess R72 > 0 in 2021 and in 2022 separately (2020 reported)",
+    "G5_robustness": "mean excess R72 > 0 after dropping the two weeks with the most events"
+  },
+  "decision": {
+    "PASS": "G0 to G5 all hold",
+    "FAIL": "G0 holds and any of G1 to G5 fails",
+    "INCONCLUSIVE": "G0 fails",
+    "high_win_rate_label": "attached to a PASS only if the plan's Wilson 95% lower bound for the win rate exceeds 50%",
+    "after_a_fail": "the result is recorded and E8 stops; no threshold, window, plan or filter is changed and rerun",
+    "after_a_pass": "discovery only. No fresh historical crypto data exists (2023 inspected, 2024+ sealed), so confirmation is prospective paper tracking under this frozen plan, approved separately"
+  },
+  "claims": {
+    "allowed": "whether this exact rule and plan beat matched non-linked coins in 2020-07..2022 Binance spot data under the stated costs",
+    "not_allowed": "prospective performance, results for other markets, horizons, links or plans, or a claim that no spillover exists anywhere if it fails"
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "spec": "research/E8/FEASIBILITY_SPEC.md",
+  "spec_sha256": "0488daaf0fdad67fcdb1a3857b5b33645a57b73d334f521b0db05b51393a6551",
+  "manifest": "binance_1h-20261015T182940Z.jsonl",
+  "manifest_sha256": "2587a63ce26034e1d54670579f8843150f640407a6df0338f35537bd30d20adf",
+  "last_hour_read": "2022-12-31 23:00:00+00:00",
+  "code_commit": "d7d4d1290ca8268d06fb62b64159c1bfb5adc7b0",
+  "started": "2026-10-16T16:13:56+00:00",
+  "decision_hours": [
+    "2020-07-01 00:00:00+00:00",
+    "2022-12-28 23:00:00+00:00"
+  ],
+  "timestamp_checks": {
+    "files": 7938,
+    "symbols": 351,
+    "unit": {
+      "ms": 7938
+    },
+    "bars_read": 5694541,
+    "duplicate_bars": 2232,
+    "nonmonotonic_files": 1,
+    "off_hour_bars": 0
+  },
+  "identity_checks": {
+    "bad_symbol_names": [],
+    "symbols_loaded": 351,
+    "symbols_with_gap_over_7_days": 3,
+    "restarts": [
+      {
+        "symbol": "LUNAUSDT",
+        "longest_gap_days": 17,
+        "restart_day": "2022-05-31"
+      },
+      {
+        "symbol": "NBTUSDT",
+        "longest_gap_days": 18,
+        "restart_day": "2022-10-01"
+      },
+      {
+        "symbol": "VIDTUSDT",
+        "longest_gap_days": 8,
+        "restart_day": "2022-11-09"
+      }
+    ]
+  },
+  "missing_data": {
+    "present_coin_hours_in_period": 5446447,
+    "missing_hour_share_since_first_bar": 0.04577838015690283,
+    "peer_events_without_entry_bar": 0,
+    "peer_events_missing_a_holding_bar": 64
+  },
+  "counts": {
+    "decision_hours": 21864,
+    "eligible_coins_per_hour": {
+      "median": 208.0,
+      "p10": 63.0,
+      "min": 0,
+      "max": 290
+    },
+    "eligible_coin_hours": 4100087,
+    "leader_triggers": 2511,
+    "distinct_leaders": 312,
+    "leaders_with_no_qualifying_peer": 1433,
+    "peer_events": 1687,
+    "peer_events_with_entry_bar": 1687,
+    "distinct_peer_coins": 287,
+    "distinct_weeks": 123,
+    "events_per_year": {
+      "2020": 82,
+      "2021": 910,
+      "2022": 695
+    },
+    "events_per_month_median": 63.5,
+    "link_of_selected_peers": {
+      "p10": 0.2079780416309203,
+      "median": 0.25964622289231937,
+      "p90": 0.4114894188395682
+    },
+    "leaders_per_event": {
+      "1": 1679,
+      "2": 5,
+      "3": 3
+    },
+    "peer_liquidity_usd_per_day": {
+      "median": 7590522.008950001,
+      "p10": 1564626.18198
+    }
+  },
+  "power": {
+    "sigma_72h_rms_from_trailing_vol": 0.15692390780968996,
+    "size_weighted_events_per_week": 19.727919383521044,
+    "mde": {
+      "rho_0.05": {
+        "design_effect": 1.9363959691760524,
+        "n_eff": 871.2061101417331,
+        "mde_72h": 0.014894724057472733
+      },
+      "rho_0.2": {
+        "design_effect": 4.74558387670421,
+        "n_eff": 355.48839591296303,
+        "mde_72h": 0.023317404340233626
+      },
+      "rho_1.0": {
+        "design_effect": 19.727919383521044,
+        "n_eff": 85.51332592169706,
+        "mde_72h": 0.047541843612340984
+      }
+    }
+  },
+  "defects": {
+    "defect_bars": 2232,
+    "defect_share_of_bars": 0.00039195432959390406
+  },
+  "go_conditions": {
+    "peer_events_with_entry_bar >= 600": true,
+    "distinct_weeks >= 80": true,
+    "distinct_peer_coins >= 100": true,
+    "median eligible coins per hour >= 80": true,
+    "timestamp/identity defects < 1%": true,
+    "events missing a holding bar < 5%": true
+  },
+  "decision": "GO",
+  "finished": "2026-10-16T16:15:59+00:00"
+}
