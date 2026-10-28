@@ -1,0 +1,13 @@
+{
+ "id": "CATALYST_REGISTER_v1_SEC13D_registered",
+ "experiment": "CATALYST_REGISTER_v1",
+ "date": "2026-10-28",
+ "hypothesis": "prospective: on original Schedule 13D filings that the pre-registered abstention rule lets fire, the 20-session yardstick plan's net return exceeds the mean of five matched event-free twins' (US); IDX_INDEX and the ABSTAIN sets are descriptive",
+ "one_sided_p": null,
+ "p_source": "no look yet; a verdict is computed only at the pre-declared looks (60, 120, 240 FIRE pairs from >= 15 sessions; t >= 3.75, 3.0, 3.0) and each look adds its own counted trial file CATALYST_REGISTER_v1_SEC13D_FIRE_n<look>.json; the first is the project's test 31",
+ "variants_searched": 0,
+ "outcome": "PENDING (prospective; registered before the first set was sealed)",
+ "note": "research/CATALYST_REGISTER_v1/PROTOCOL.md. No backtest, no holdout. One pre-freeze dry run on real filings of 26-27 October checked the parsing only (nothing appended, no later price read); it led to the operating-issuer rule, recorded in the protocol.",
+ "counted": false,
+ "registered": "2026-10-28"
+}

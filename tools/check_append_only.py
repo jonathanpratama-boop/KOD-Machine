@@ -23,6 +23,7 @@ Append-only logs: the new content must start with the old content, byte for byte
   idx-signals/paper/ledger.jsonl  prospective paper scans, decisions and outcomes
   idx-signals/paper/speculations.jsonl  sealed speculation sets and their resolutions
   idx-signals/paper/sensors/sensors.jsonl  free public sensor alerts
+  idx-signals/paper/catalysts.jsonl  sealed catalyst sets, batches, tags and their resolutions
   kod-machine/registry/opens.jsonl
   kod-machine/registry/scans.jsonl
   kod-machine/registry/receipts.jsonl
@@ -62,6 +63,7 @@ APPEND_ONLY = (
     "idx-signals/paper/ledger.jsonl",
     "idx-signals/paper/speculations.jsonl",
     "idx-signals/paper/sensors/sensors.jsonl",
+    "idx-signals/paper/catalysts.jsonl",
     "kod-machine/registry/opens.jsonl",
     "kod-machine/registry/scans.jsonl",
     "kod-machine/registry/receipts.jsonl",

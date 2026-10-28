@@ -153,6 +153,23 @@ def main(argv=None) -> int:
     p_sr = sub.add_parser("speculate-report", help="write paper/SPECULATIONS.md (statistics, calibration, cards)")
     p_sr.add_argument("--cards", action="store_true", help="also print the latest sealed sets")
     p_sr.add_argument("--commit", action="store_true")
+    p_cs = sub.add_parser("catalyst-seal", help="seal Catalyst Register sets for a family's new events before their entry "
+                                                "cutoff (research/CATALYST_REGISTER_v1)")
+    p_cs.add_argument("--family", choices=("SEC13D", "IDX_INDEX"), required=True)
+    p_cs.add_argument("--events", help="IDX_INDEX: the review's events file (research/CATALYST_REGISTER_v1/events/)")
+    p_cs.add_argument("--dry-run", action="store_true", help="build and print the batch; append nothing")
+    p_cs.add_argument("--commit", action="store_true", help="commit the records and push (GitHub receipt)")
+    p_ct = sub.add_parser("catalyst-tag", help="seal DILUTION_RECENT tags for Speculation Register sets (US, IDX) "
+                                               "before their entry cutoff")
+    p_ct.add_argument("--commit", action="store_true")
+    p_cc = sub.add_parser("catalyst-score", help="resolve Catalyst Register windows that have ended")
+    p_cc.add_argument("--market", choices=("US", "IDX"), required=True)
+    p_cc.add_argument("--manifest", help="a recent-bars manifest for the market (default: the latest one if pulled "
+                                         "within --max-age-hours, else pull now)")
+    p_cc.add_argument("--max-age-hours", type=float, default=8.0)
+    p_cc.add_argument("--commit", action="store_true")
+    p_cr = sub.add_parser("catalyst-report", help="write paper/CATALYSTS.md (statistics, looks, calibration, cards)")
+    p_cr.add_argument("--commit", action="store_true")
     p_ms = sub.add_parser("micro-snapshot", help="side-car for a crypto scan: Binance book cost now and, once the day's "
                                                  "path exists, 1-minute timelines (read only; changes no rule or ledger)")
     p_ms.add_argument("--scan-id", help="crypto scan id (default: the latest crypto scan with candidates)")
@@ -617,9 +634,9 @@ def main(argv=None) -> int:
         if args.commit and written:
             print(paper.commit_and_push([*written, manifest, *extra], message, trailer))
     elif args.cmd == "paper-verify":
-        from . import paper, speculation
+        from . import catalysts, paper, speculation
 
-        problems = paper.verify_all() + speculation.verify()
+        problems = paper.verify_all() + speculation.verify() + catalysts.verify()
         print("paper-verify: " + ("OK" if not problems else f"{len(problems)} problems"))
         for p_ in problems:
             print(f"  {p_}")
@@ -684,6 +701,82 @@ def main(argv=None) -> int:
                 written = [*written, manifest]
         if written:
             written.append(speculation.write_report())
+        if args.commit and written:
+            print(paper.commit_and_push([*written, *extra], message, trailer))
+    elif args.cmd in ("catalyst-seal", "catalyst-tag", "catalyst-score", "catalyst-report"):
+        import os
+        from datetime import datetime, timezone
+
+        from . import catalysts, paper
+
+        trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "")
+        if args.cmd == "catalyst-report":
+            path = catalysts.write_report()
+            print(path.read_text(encoding="utf-8").split("## Latest sets")[0])
+            if args.commit:
+                print(paper.commit_and_push([path], "catalyst register: report", trailer))
+            return 0
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "kod-machine"))
+        from kod.timestamp import RFC3161Timestamper
+
+        now = datetime.now(timezone.utc)
+        extra = []
+        if args.cmd == "catalyst-seal":
+            if args.family == "SEC13D":
+                batch, sets = catalysts.sec13d_batch(now, catalysts.sec_client())
+            else:
+                if not args.events:
+                    print("catalyst-seal --family IDX_INDEX needs --events <file>")
+                    return 2
+                events = Path(args.events).resolve()
+                batch, sets = catalysts.idx_index_batch(events, now)
+                extra.append(events)
+            for e in batch["events"]:
+                print(f"  {e.get('accession') or e.get('event_id')} {e.get('ticker') or '-'}: {e['status']}"
+                      + (f" ({e['reason']})" if e.get("reason") else "") + (f" {e['coverage']}" if e.get("coverage") else ""))
+            for s in sets:
+                print(catalysts.card(s))
+            print(f"{args.family}: {len(batch['events'])} new event(s), {len(sets)} set(s) for entry {batch['entry_session']}")
+            if args.dry_run:
+                print("dry run: nothing appended")
+                return 0
+            if not batch["events"] and args.family == "IDX_INDEX":
+                print("no new event; nothing recorded")
+                return 0
+            written, _ = catalysts.append([batch, *sets], RFC3161Timestamper())
+            message = f"catalyst register: {args.family} batch, {len(sets)} set(s) sealed for entry {batch['entry_session']}"
+        elif args.cmd == "catalyst-tag":
+            todo = catalysts.pending_tags(now)
+            if not todo:
+                print("no Speculation Register set awaiting a DILUTION_RECENT tag before its cutoff; nothing recorded")
+                return 0
+            client = catalysts.sec_client() if any(s["market"] == "US" for s in todo) else None
+            from .sensors import fetch as en_fetch
+
+            tags = catalysts.dilution_tags(now, todo, client, en_fetch=en_fetch)
+            for t in tags:
+                print(f"  {t['set_id']} {t['ticker']}: DILUTION_RECENT={t['value']} ({t['source']}) {t['evidence'][:3]}")
+            written, _ = catalysts.append(tags, RFC3161Timestamper())
+            message = f"catalyst register: {len(tags)} DILUTION_RECENT tag(s)"
+        else:
+            mk = args.market
+            todo = catalysts.due(mk)
+            if not todo:
+                print(f"no {mk} catalyst window can have ended yet; nothing pulled, nothing recorded")
+                return 0
+            manifest, extra = (Path(args.manifest), []) if args.manifest else _recent_manifest(mk, args.max_age_hours)
+            verify = _sec_verifier() if mk == "US" else None
+            written, outcomes = catalysts.resolve_pending(manifest, mk, RFC3161Timestamper(), verify=verify)
+            for o in outcomes:
+                pr = o.get("paired") or {}
+                print(f"  {o['set_id']} {o['window']}: {o['status']} {o.get('reason', '')}"
+                      + (f" net {pr['candidate_net']:+.2%} vs twins {pr['twins_mean_net']:+.2%}" if pr else ""))
+            print(f"resolved {len(outcomes)} of {len(todo)} due (set, window) pair(s)")
+            if written:
+                written = [*written, manifest]
+            message = f"catalyst register: {len(outcomes)} resolution(s) for {mk}"
+        if written:
+            written.append(catalysts.write_report())
         if args.commit and written:
             print(paper.commit_and_push([*written, *extra], message, trailer))
     elif args.cmd in ("micro-snapshot", "micro-catch-up", "micro-report"):
