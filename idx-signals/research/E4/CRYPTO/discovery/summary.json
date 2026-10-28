@@ -1,0 +1,72 @@
+{
+  "admissible": 0,
+  "code": {
+    "commit": "d080112be7b6b4623da72b7603f88e36a4a67f36",
+    "dirty": true
+  },
+  "computed_at": "2026-10-13T21:07:48+00:00",
+  "detector_module_sha256": "8e7df772776705aeb9336ac5c4f8bf7a8db86ce04d6440477885b076e7cb1670",
+  "detectors": [
+    "G2_RET30",
+    "G1_RET20_CLOSEHIGH",
+    "G10_RET15_CLOSEHIGH",
+    "G7_MOMENTUM5_30"
+  ],
+  "freeze": "no admissible plan: SELECTED stays None, MOONSHOT_E4_D1 is not created, the paper policy is unchanged",
+  "holdout": "sealed: never loaded; the study window ends at the validation period",
+  "market": "CRYPTO",
+  "panel_manifest": "panel_crypto-20261013T205803Z.json",
+  "panel_sha256": "1fec989bc929268f290d73ae60e4216f37de866ec30e00fba645b665dc2b6e14",
+  "plans_per_detector": 36,
+  "precondition": {
+    "accepted_deviation": false,
+    "status": "REPRODUCED"
+  },
+  "protocol_id": "KOD-GLOBAL-E4-v1",
+  "protocol_sha256": "96c3809eea5d7bf106cfdff5a6afea5a182cc357fb19b406affe19fcb8c4eec3",
+  "reference_plan": {
+    "attempted": 1257,
+    "avg_net_return": -1.0227812278960875,
+    "avg_net_return_2020": -7.126707651910593e-05,
+    "avg_net_return_2021": -1.731301207587716,
+    "avg_net_return_2022": 0.05875983199817469,
+    "detector": "G2_RET30",
+    "entry_rule": "fixed",
+    "entry_window": 1,
+    "exit_rule": "fixed",
+    "fill_rate": 0.9912490055688147,
+    "filled": 1246,
+    "hit_rate": 0.6511254019292605,
+    "holding_days": 5,
+    "matched_random_avg_net_return": -0.17942434135396038,
+    "matched_random_p2_5": -1.082405583966854,
+    "matched_random_p97_5": -0.027266730548530235,
+    "mean_worst_10": -128.91106946009714,
+    "median_net_return": 0.08731011393248019,
+    "p1_net_return": -1.9126813901934934,
+    "p5_net_return": -0.6307306194907799,
+    "p_one_sided_vs_matched": 0.9353233830845771,
+    "p_one_sided_vs_same_session": 0.900497512437811,
+    "plan_id": "G2_RET30|fixed1|fixed|h5",
+    "rule_sha256": "64cc3f9b51cf03c7b3fbbe46552a4b07b5760c6f322c57fbe911ce2e19cc98a4",
+    "same_session_random_avg_net_return": -0.41808340633188806,
+    "scored": 1244,
+    "scored_2020": 110,
+    "scored_2021": 748,
+    "scored_2022": 386,
+    "share_below_minus_20pct": 0.16237942122186494,
+    "signals": 1495,
+    "status_counts": "{\"EXITED\": 1241, \"EXIT_DATA_END\": 3, \"INCOMPLETE\": 2, \"SKIP_LOT\": 11}",
+    "worst_net_return": -1262.4517184873946
+  },
+  "runs": 144,
+  "runtime": {
+    "numpy": "2.5.4",
+    "pandas": "3.0.6",
+    "python": "3.15.0"
+  },
+  "selected": null,
+  "selected_tuple": null,
+  "side": "short",
+  "stage": "discovery"
+}

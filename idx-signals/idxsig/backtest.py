@@ -38,7 +38,7 @@ import pandas as pd
 from . import controls, quality
 from . import rules as rule_registry
 from .corporate_actions import REGISTRY_VERSION, RegistryMismatch
-from .execution import FIRST_SKIP, SCORED, STATUS, ExecConfig, Market, execute
+from .execution import NEVER_ENTERED, SCORED, STATUS, ExecConfig, Market, execute
 from .market import Fees
 from .rules import LookaheadError
 from .profiles import PROFILES
@@ -72,12 +72,17 @@ class RunConfig:
     entry_rule: str | None = None
     entry_window: int | None = None
     exit_rule: str | None = None
+    side: str | None = None  # "long" / "short" (execution.SIDES); None: the rule's plan, else long
+    liquidation: float | None = None  # short side: isolated-margin liquidation at this fraction above the entry
+    jump_ratio: float | None = None  # trades held across a close/reference ratio beyond this are not scored
     holdout_final: bool = False  # the one pre-registered holdout evaluation (see HOLDOUT)
 
 
 # The IDX holdout sealed by research/E1/protocol.json. A DETECTOR run whose window touches it is
 # refused unless holdout_final is set: that is the single final test, and it is on record as such.
 HOLDOUT = ("2024-01-02", "2025-02-21")
+# The US and crypto holdout sealed by research/E2/protocol.json (2024 onward), the same rule.
+GLOBAL_HOLDOUT = ("2024-01-01", "2099-12-31")
 
 
 class HoldoutSealed(RuntimeError):
@@ -89,7 +94,8 @@ def resolve_plan(cfg: RunConfig, rule) -> dict:
     frozen = dict(getattr(rule, "plan", None) or {})
     return {"entry_rule": cfg.entry_rule or frozen.get("entry_rule", "fixed"),
             "entry_window": cfg.entry_window or frozen.get("entry_window", 1),
-            "exit_rule": cfg.exit_rule or frozen.get("exit_rule", "fixed")}
+            "exit_rule": cfg.exit_rule or frozen.get("exit_rule", "fixed"),
+            "side": cfg.side or frozen.get("side", "long")}
 
 
 ENTRY_TEXT = {
@@ -101,18 +107,49 @@ ENTRY_TEXT = {
     "unlock": "buy at the first traded close in s+1..s+{w} that is not locked at ARA",
 }
 EXIT_TEXT = {
-    "fixed": "sell at the close of the {h}th session after entry",
+    "fixed": "sell at the close of the {h} session after entry",
     "stop_ref": "sell at the first close at or below the signal session's reference price, else at the close of "
-                "the {h}th session after entry",
+                "the {h} session after entry",
     "first_down": "sell at the first close below its own reference price (a down day), else at the close of the "
-                  "{h}th session after entry",
+                  "{h} session after entry",
+}
+OPEN_ENTRY_TEXT = {  # open-entry markets: the condition is the open the entry happens at
+    "long": {"fixed": "buy at the open of session s + {w}",
+             "confirm": "buy at the first open in s+1..s+{w} that is above the signal close",
+             "pullback": "buy at the first open in s+1..s+{w} that is below the signal close"},
+    "short": {"fixed": "sell short at the open of session s + {w}",
+              "confirm": "sell short at the first open in s+1..s+{w} that is below the signal close (the fade "
+                         "has begun)",
+              "pullback": "sell short at the first open in s+1..s+{w} that is above the signal close (into a "
+                          "bounce)"},
+}
+SHORT_EXIT_TEXT = {
+    "fixed": "buy back at the close of the {h} session after entry",
+    "stop_high": "buy back at the first close at or above the signal session's high, else at the close of the "
+                 "{h} session after entry",
+    "first_up": "buy back at the first close above its own reference price (an up day), else at the close of "
+                "the {h} session after entry",
 }
 
 
-def plan_text(plan: dict) -> str:
+def _ordinal(n: int) -> str:
+    n = int(n)
+    suffix = "th" if 10 <= n % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    return f"{n}{suffix}"
+
+
+def plan_text(plan: dict, entry_price: str = "close") -> str:
     """One sentence a decision record can carry: the plan as executed, in exchange terms."""
+    side = plan.get("side", "long")
+    h = _ordinal(plan["holding_days"])
+    if side == "short":
+        return (OPEN_ENTRY_TEXT["short"][plan["entry_rule"]].format(w=plan["entry_window"]) + "; "
+                + SHORT_EXIT_TEXT[plan["exit_rule"]].format(h=h) + "; carry charged per session held")
+    if entry_price == "open":
+        entry = OPEN_ENTRY_TEXT["long"][plan["entry_rule"]].format(w=plan["entry_window"])
+        return entry + "; " + EXIT_TEXT[plan["exit_rule"]].format(h=h)
     return (ENTRY_TEXT[plan["entry_rule"]].format(w=plan["entry_window"]) + "; "
-            + EXIT_TEXT[plan["exit_rule"]].format(h=plan["holding_days"])
+            + EXIT_TEXT[plan["exit_rule"]].format(h=h)
             + "; a sale rolls to the next session where it is possible while locked at ARB or untraded")
 
 
@@ -147,7 +184,7 @@ def signals(rule, m: Market, cuts: int | None) -> tuple[np.ndarray, dict]:
 def _summary_stats(net: np.ndarray, status: np.ndarray) -> dict:
     scored = np.isin(status, SCORED)
     vals = net[scored]
-    entered = status < FIRST_SKIP
+    entered = ~np.isin(status, NEVER_ENTERED)
     return {
         "attempts": int(len(status)),
         "filled": int(entered.sum()),
@@ -233,6 +270,10 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
     profile = PROFILES[cfg.market]
     idx = profile.market == "IDX"
     plan = resolve_plan(cfg, rule)
+    if plan["side"] == "short":
+        if profile.short_carry_per_session is None:
+            raise ValueError(f"no short side is modelled for the {profile.market} profile")
+        plan = {**plan, "carry_per_session": profile.short_carry_per_session}
     exec_cfg = ExecConfig(
         lot_size=profile.lot_size,
         entry_price=profile.entry,
@@ -246,14 +287,17 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
         ca_mode=cfg.ca_mode,
         units=cfg.units,
         fill_model=cfg.fill_model,
+        liquidation=cfg.liquidation,
+        jump_ratio=cfg.jump_ratio,
         **plan,
     )
     start = cfg.start or (FIRST_SNAPSHOT if idx else panel_meta["default_start"])
     end = cfg.end or panel_meta["source_boundary"]
-    if idx and rule.kind == "DETECTOR" and not cfg.holdout_final and end >= HOLDOUT[0] and start <= HOLDOUT[1]:
-        raise HoldoutSealed(f"window {start}..{end} touches the sealed IDX holdout {HOLDOUT[0]}..{HOLDOUT[1]} "
-                            "(research/E1/protocol.json); a detector runs there once, as the pre-registered "
-                            "final test, with holdout_final=True (--holdout-final)")
+    sealed = HOLDOUT if idx else GLOBAL_HOLDOUT
+    if rule.kind == "DETECTOR" and not cfg.holdout_final and end >= sealed[0] and start <= sealed[1]:
+        raise HoldoutSealed(f"window {start}..{end} touches the sealed {profile.market} holdout {sealed[0]}.."
+                            f"{sealed[1]} (research/{'E1' if idx else 'E2'}/protocol.json); a detector runs there "
+                            "once, as the pre-registered final test, with holdout_final=True (--holdout-final)")
     full_market = Market.from_panel(panel_df, price_limits=profile.price_limits)
     if "unit_factor" in panel_df:
         full_market = full_market.with_units(_dense(full_market, panel_df, "unit_factor", 1.0))
@@ -314,6 +358,8 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
     attempt = ~overlap_skipped
     a_tick, a_sig = tick_idx[attempt], sig_idx[attempt]
     rule_stats = _summary_stats(trades["net_return"][attempt], trades["status"][attempt])
+    if exec_cfg.side == "short" and exec_cfg.liquidation is not None:
+        rule_stats["liquidated"] = int(trades["liquidated"][attempt].sum())
 
     draws = cfg.random_draws
     rng = np.random.default_rng(cfg.seed)
@@ -416,6 +462,7 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
         "exit_price": trades["exit_price"],
         "share_factor": trades["share_factor"],
         "rolled_sessions": trades["rolled_sessions"],
+        **({"liquidated": trades["liquidated"]} if exec_cfg.side == "short" else {}),
         "gross_return": trades["gross_return"],
         "net_return": trades["net_return"],
         **({k: trades[k] for k in ("entry_price_as_traded", "exit_price_as_traded", "shares_as_traded")}
@@ -468,7 +515,20 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
             "price": ("official close; signal at close of s, entry at close of s + entry_lag" if profile.entry == "close"
                       else "signal at close of s, entry at the open of s + entry_lag, exit at a close"),
             "plan": exec_cfg.plan,
-            "plan_text": plan_text(exec_cfg.plan),
+            "plan_text": plan_text(exec_cfg.plan, profile.entry),
+            **({"short_side": {"carry_per_session": exec_cfg.carry_per_session, "note": profile.short_note,
+                               "liquidation": exec_cfg.liquidation,
+                               "liquidation_note": ("isolated margin: liquidated at the first session whose high "
+                                                    f"is {exec_cfg.liquidation:.0%} above the entry, losing that "
+                                                    "fraction of the sold notional plus fees and carry"
+                                                    if exec_cfg.liquidation is not None else
+                                                    "none: losses are unbounded")}}
+               if exec_cfg.side == "short" else {}),
+            **({"jump_ratio": {"ratio": exec_cfg.jump_ratio,
+                               "note": "a session whose close/reference ratio is beyond this inside (entry, exit] "
+                                       "is a redenomination or a bad print, not a trade; such trades are "
+                                       "EXCLUDED_DATA_JUMP for the rule and the baselines alike"}}
+               if exec_cfg.jump_ratio is not None else {}),
             "lot_size": profile.lot_size,
             "cost_tiers": [list(t) for t in profile.cost_tiers],
             "fees": {"buy": cfg.fee_buy, "sell": cfg.fee_sell},
