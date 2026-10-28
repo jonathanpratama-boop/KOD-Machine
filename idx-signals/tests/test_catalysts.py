@@ -260,6 +260,18 @@ class SecBatch(unittest.TestCase):
         (batch3, _), _ = self.run_batch(records=[stale])
         self.assertTrue(batch3["feed"]["coverage_gap"])  # the feed no longer reaches back to the last batch
 
+    def test_a_first_batch_that_does_not_reach_the_window_start_or_reads_nothing_records_a_gap(self):
+        """Guards against: filings between the window start and the oldest entry read going unlisted while the
+        batch says nothing was missed (the first batch has no previous batch to compare with)."""
+        routes, shares = sec_world()
+        late_only = [("SCHEDULE 13D", "Alpha Inc", 1000, "Subject", "2026-10-28T10:00:00-04:00", "0000000001-26-000001")]
+        for page0 in (feed(late_only), feed([])):
+            routes[cr.FEED_URL.format(start=0)] = (200, page0)
+            with mock.patch.object(sp, "scan_features", return_value=features()), \
+                    mock.patch.object(cr, "share_points", side_effect=lambda c, cik: shares.get(cik, [])):
+                batch, _ = cr.sec13d_batch(NOW, FakeClient(routes), ledger=[scan_record()], records=[], clock=lambda: NOW)
+            self.assertTrue(batch["feed"]["coverage_gap"])
+
 
 class IdxIndex(unittest.TestCase):
     def events_file(self, tmp: Path, changes) -> Path:
@@ -382,6 +394,11 @@ class Tags(unittest.TestCase):
         self.assertIn("3.02", tags[0]["evidence"][0])
         broken = cr.dilution_tags(early, [specs[1]], None, en_fetch=lambda url: (_ for _ in ()).throw(OSError()), clock=lambda: early)
         self.assertIsNone(broken[0]["value"])
+        no_map = cr.dilution_tags(early, [specs[0]], FakeClient({**routes, cr.TICKERS_URL: (403, b"")}), clock=lambda: early)
+        self.assertEqual((no_map[0]["value"], no_map[0]["source"]), (None, "company_tickers_exchange unavailable (HTTP 403)"))
+        no_subs = cr.dilution_tags(early, [specs[0]], FakeClient({**routes, cr.SUBMISSIONS_URL.format(cik=1001): (503, b"")}),
+                                   clock=lambda: early)
+        self.assertEqual((no_subs[0]["value"], no_subs[0]["source"]), (None, "EDGAR submissions CIK 1001 unavailable"))
         with self.assertRaises(RuntimeError):
             cr.dilution_tags(early, [specs[1]], None, en_fetch=lambda url: sitemap,
                              clock=lambda: datetime(2026, 10, 29, 2, 0, tzinfo=timezone.utc))

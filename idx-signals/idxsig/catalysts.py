@@ -377,7 +377,9 @@ def sec13d_batch(now: datetime, client, ledger: list[dict] | None = None, record
     times = [datetime.fromisoformat(e["accepted"]) for e in entries]
     listed = {e["accession"] for r in earlier_batches for e in r["events"]}
     events = [o for o in originals(entries) if datetime.fromisoformat(o["accepted"]) >= window_start and o["accession"] not in listed]
-    gap = bool(prev_newest is not None and times and min(times) > prev_newest)
+    # A gap: the read never reached back to the previous batch's newest entry (the window start for the first
+    # batch), or it read nothing at all. Missed filings are recorded as a gap, never backfilled.
+    gap = (not times) or min(times) > (prev_newest if prev_newest is not None else window_start)
     status, tm_body = client.get(TICKERS_URL)
     if status != 200:
         raise RuntimeError(f"SEC ticker map: HTTP {status}")
@@ -582,17 +584,23 @@ def pending_tags(now: datetime, specs: list[dict] | None = None, records: list[d
 def dilution_tags(now: datetime, sets: list[dict], client=None, en_fetch=None, clock=None) -> list[dict]:
     proto, proto_sha = protocol()
     today = now.astimezone(NY).date().isoformat()
-    by_ticker, raws, out = None, {}, []
+    by_ticker, map_status, raws, out = None, None, {}, []
     for s in sets:
         evidence, value, source = [], None, None
         if s["market"] == "US":
             if by_ticker is None:
-                st, body = client.get(TICKERS_URL)
-                by_ticker = ticker_maps(body)[1] if st == 200 else {}
+                map_status, body = client.get(TICKERS_URL)
+                by_ticker = ticker_maps(body)[1] if map_status == 200 else {}
             cik = by_ticker.get(s["ticker"])
             filings = submissions(client, cik) if cik is not None else None
-            source = f"EDGAR submissions CIK {cik}" if cik is not None else "no CIK in company_tickers_exchange"
-            if filings is not None:
+            if map_status != 200:  # unknown, and said so: the map was not read, not "no CIK"
+                source = f"company_tickers_exchange unavailable (HTTP {map_status})"
+            elif cik is None:
+                source = "no CIK in company_tickers_exchange"
+            elif filings is None:
+                source = f"EDGAR submissions CIK {cik} unavailable"
+            else:
+                source = f"EDGAR submissions CIK {cik}"
                 evidence = dilution_filings(filings, s["signal_session"], today)
                 value = bool(evidence)
         else:
