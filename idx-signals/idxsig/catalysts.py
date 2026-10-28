@@ -978,7 +978,9 @@ def _pct(x, digits=2):
 
 def card(s: dict) -> str:
     ev, cov = s["event"], s["coverage"]
-    if s["family"] == "SEC13D":
+    if s["family"] in FAMILY_MODULES and hasattr(family_module(s["family"]), "card_lines"):
+        head, what, cls = family_module(s["family"]).card_lines(s)
+    elif s["family"] == "SEC13D":
         head = (f"### SEC13D {s['ticker']} ({ev['subject_name']}) - accepted {ev['accepted']}, sealed {s['sealed_at']}, "
                 f"cutoff {s['entry_cutoff']}")
         what = (f"Filing `{ev['accession']}` by {', '.join(ev['filed_by']) or 'n/a'}; Item 4 intent words: "
