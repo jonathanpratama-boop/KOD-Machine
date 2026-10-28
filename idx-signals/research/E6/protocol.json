@@ -1,0 +1,84 @@
+{
+  "protocol_id": "KOD-CRYPTO-E6-v1",
+  "experiment": "E6-PRESSURE-RESPONSE",
+  "frozen_before_analysis": true,
+  "origin": "Astra's 'market seismograph' proposal (2026-10-15), refined by Claude: information gate before any trade design, a scrambled-flow placebo, week-clustered uncertainty",
+  "question": "When sell-initiated flow loses price impact and buy-initiated flow gains price impact, while participation rises and price is still inside its range, are the next five days better than for matched coins, and is that due to the buy/sell split rather than to volume?",
+  "null_hypothesis": "The pressure-response setup's five-day return does not exceed matched coins', or does not exceed the same rule computed on scrambled flow signs.",
+  "objective_note": "Positive expected profit at obtainable prices is the objective; detecting large moves is reported but is not the objective.",
+  "data": {
+    "source": "data.binance.vision spot monthly 1h klines (research/E6/collect_hourly.py), every file verified against the archive's .CHECKSUM, sha256 per file in data/manifests/binance_1h-<stamp>.jsonl",
+    "fields": "open, high, low, close, base volume, quote volume (USDT), trade count, taker-buy quote volume",
+    "buy_flow": "B_h = taker-buy quote volume of hour h (trades initiated by buyers)",
+    "sell_flow": "S_h = quote volume - taker-buy quote volume (trades initiated by sellers)",
+    "universe": "every USDT symbol directory in the archive, delisted symbols included, minus global_panel.STABLE bases and LEVERAGED tokens",
+    "months_fetched": ["2020-04", "2023-12"],
+    "holdout": "2024-01-01 onward: never listed, fetched or read",
+    "decision_clock": "UTC day d is decided at 00:00 UTC of d+1 from hourly bars closed by then"
+  },
+  "periods": {"warmup": ["2020-04-01", "2020-06-30"], "discovery": ["2020-07-01", "2022-12-31"], "validation": ["2023-01-01", "2023-12-31"], "holdout": ["2024-01-01", "sealed"],
+              "discovery_years_gated": [2021, 2022], "note": "a decision day counts in a period only when its whole 120-hour outcome window also ends inside that period"},
+  "eligibility": {
+    "history": "at least 60 days with 24 hourly bars before d",
+    "complete_day": "24 hourly bars on day d",
+    "liquidity": "median daily quote volume over days d-29..d >= 200,000 USDT",
+    "data_sanity": "no hour in d-36..d with taker-buy quote volume > quote volume, or close <= 0; any such coin-day is excluded and counted"
+  },
+  "features": {
+    "flow": "f_h = (B_h - S_h) / M_d, M_d = median hourly quote volume over the 720 hours ending at the close of d-7 (scale fixed from the baseline window)",
+    "return": "r_h = ln(close_h / close_{h-1})",
+    "impact": "over a window, lambda_plus = sum(r_h for f_h > 0) / sum(f_h for f_h > 0); lambda_minus = sum(r_h for f_h < 0) / sum(f_h for f_h < 0); price move per unit of net buying and of net selling",
+    "windows": "recent = the 168 hours of days d-6..d; baseline = the 720 hours of days d-36..d-7",
+    "defined_iff": "each window has >= 40 hours with f_h > 0 and >= 40 with f_h < 0 (baseline: >= 150 each) and all four lambdas > 0",
+    "absorption_A": "A_d = ln(lambda_plus_recent / lambda_minus_recent) - ln(lambda_plus_base / lambda_minus_base): positive when buying has gained impact relative to selling",
+    "participation_P": "P_d = mean daily quote volume over d-6..d / median daily quote volume over d-36..d-7",
+    "in_range": "close_d <= max(high over d-30..d-1) and close_d / close_{d-7} - 1 in [-0.10, +0.15]",
+    "relative_strength": "close_d / close_{d-7} - 1 minus the median of the same over eligible coins that day >= 0",
+    "breakout": "close_d > max(high over d-30..d-1)"
+  },
+  "arms": {
+    "P1_pressure": {"role": "PRIMARY", "rule": "A_d in the top 5% of that day's eligible coins with A defined, and P_d >= 1.5, and in_range, and relative_strength"},
+    "P2_pressure_then_breakout": {"role": "PRIMARY", "rule": "breakout and P_d >= 1.5 on day d, and the coin was a P1 flag on any of d-10..d-1"},
+    "B0_breakout": {"role": "COMPARATOR", "rule": "breakout and P_d >= 1.5"},
+    "PL_placebo": {"role": "PLACEBO", "rule": "P1's rule with A recomputed after replacing each f_h by |f_h| x s_h, s_h a seeded random sign (numpy default_rng(20261015 + coin index)), volume structure intact, buy/sell information destroyed"},
+    "debounce": "one flag per coin and arm per 5 days: a flag on d blocks d+1..d+5 for that coin and arm",
+    "no_search": "the four rules, 5%, 1.5, the windows and every threshold above are fixed here; nothing is tuned after outcomes are seen"
+  },
+  "outcomes": {
+    "entry_reference": "open of the 01:00 UTC hourly bar of d+1 (one hour of processing delay after the decision)",
+    "R120": "close of the bar 120 hours after entry / entry - 1 (fill-independent five-day return)",
+    "E30": "max high over the 120 hours / entry >= 1.30",
+    "barrier": "+30% reached before -5% within 120 hours, hourly highs and lows; WIN, LOSS, TIMEOUT, or UNRESOLVED when both are touched inside one bar; reported, not gated (research definition, not an execution price)",
+    "missing": "an outcome window with a missing or delisted bar ends at the last available close and is counted and reported separately"
+  },
+  "controls": {
+    "matched": "per flag, 200 draws (seed 20261008) from coins eligible on the same day with the same quintile of 30-day median quote volume and the same quintile of 30-day hourly-return volatility, relaxed to the liquidity quintile alone when fewer than 5 coins match",
+    "statistic": "per flag, outcome minus the mean outcome of its draws; mean excess with a cluster bootstrap over ISO calendar weeks of the decision day (10,000 resamples, seed 20261015), one-sided p",
+    "why_weeks": "five-day outcome windows of adjacent days overlap; clustering by week absorbs most of that overlap (E5 clustered by day, which was anti-conservative); flags in adjacent weeks still overlap at week edges, declared"
+  },
+  "stage_1_information_gate": {
+    "applies_to": ["P1_pressure", "P2_pressure_then_breakout"],
+    "alpha": 0.025,
+    "passes_iff": [
+      "flags >= 200 in discovery",
+      "mean R120 excess over matched controls > 0 with p < 0.025",
+      "mean R120 excess > 0 in 2021 and in 2022",
+      "the arm's excess minus PL_placebo's excess > 0, week-cluster bootstrap p < 0.05 (the split, not the volume, carries the information)"
+    ],
+    "reported_not_gated": ["E30 rate and lift vs matched, with the absolute rate", "barrier outcome shares", "each arm minus B0_breakout", "distinct coins", "missing-window counts"]
+  },
+  "stage_2_execution": {
+    "runs_iff": "the arm passed Stage 1",
+    "plan": "buy at the entry reference; exit at the earlier of +30% (limit at the barrier price), -5% (stop: the stop price, or the bar's open when it opens through the stop), or the 120-hour close; UNRESOLVED bars take the stop",
+    "costs": "0.10% per side (Binance spot taker) plus 0.10% per side slippage sensitivity",
+    "admissible_iff": ["net mean > 0 at 0.10% per side", "net mean excess over matched controls trading the same plan > 0, p < 0.025", "net mean > 0 with the slippage sensitivity", "net mean > 0 in 2021 and 2022"],
+    "capacity_note": "no order-book data: position sizes above about 1% of the entry hour's quote volume are not credible and are not modeled"
+  },
+  "stage_3_validation": {"on": "2023 only, after a separate freeze of the selected arm", "claim_level": "PROVISIONAL: 2023 daily crypto bars were once-seen in E2 and E5; the hourly flow features are new", "holdout": "never"},
+  "consequences": {
+    "stage_1_fails_both": "no information in the buy/sell pressure response at this resolution and these rules; stop this family; next is the perpetual-funding squeeze idea only if the owner wants it, as a new protocol",
+    "stage_1_passes_stage_2_fails": "information without an executable plan at these costs; next is execution design, not rule search",
+    "validation_passes": "prospective paper scoring only; no real orders until >= 100 prospective scored decisions show positive net excess"
+  },
+  "claims": "Historical research on assumed costs and modeled fills from hourly bars; no probability or trade is asserted; nothing grants entry permission; no real orders exist."
+}
