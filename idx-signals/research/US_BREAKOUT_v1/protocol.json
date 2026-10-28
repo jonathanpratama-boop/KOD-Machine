@@ -1,0 +1,93 @@
+{
+ "baseline": {
+  "cell": {
+   "adv_edges_usd": [
+    2000000.0,
+    5000000.0,
+    20000000.0,
+    100000000.0
+   ],
+   "price_edges_usd": [
+    10.0,
+    25.0,
+    100.0
+   ]
+  },
+  "control_invalidation": "close x (level/close) of the matched signal",
+  "controls_per_signal": 10,
+  "pool": "eligible by price and liquidity, 60 traded prior sessions, traded on s, no raw signal",
+  "seed": 20261009
+ },
+ "decision_rule": {
+  "D_positive_and_bootstrap_p_below": 0.05,
+  "D_positive_in": [
+   "S1",
+   "S2"
+  ],
+  "mean_net_positive": true,
+  "min_filled_matched_signal_trades": 200,
+  "otherwise": "no edge established"
+ },
+ "execution": {
+  "contract": "EXEC-US-v2.1",
+  "invalidation": "breakout level as traded, floored to tick",
+  "per_trade_account": "fresh $10,000, one-name market",
+  "spec": {
+   "capacity_window": 20,
+   "chase_limit": 0.1,
+   "contract_version": "EXEC-US-v2.1",
+   "fill_participation": 0.1,
+   "max_hold_sessions": 5,
+   "max_position_fraction": 0.2,
+   "max_stop_distance": 0.05,
+   "plan_participation": 0.1,
+   "risk_fraction": 0.01,
+   "starting_cash_usd": 10000.0,
+   "stop_slippage": 0.0
+  },
+  "spec_sha256": "6f635eac873d1ce278c07035ca30cf9aacbc52a482290a19fc1e05b84158bff2"
+ },
+ "experiment": "US_BREAKOUT_v1",
+ "panel_manifest": "data/manifests/panel_us_repair-20261008T114805Z.json",
+ "pass_consequence": "forward paper scoring only; no approval; no real money",
+ "protocol_version": 1,
+ "sensitivity": {
+  "S1": "remove names without verified split schedule from both arms",
+  "S2": {
+   "spec_sha256": "32dff82aeaa72559706e693895691e5d08e98ad0c85a5df90b12a13847851370",
+   "stop_slippage": 0.01
+  },
+  "S3": {
+   "min_median_traded_value_usd": 5000000
+  }
+ },
+ "signal": {
+  "adv_window": 20,
+  "cooldown_sessions": 5,
+  "lookback_sessions": 60,
+  "min_close_usd": 5.0,
+  "min_median_traded_value_usd": 1000000.0,
+  "requires_traded_prior_sessions": 60,
+  "strict": true
+ },
+ "statistics": {
+  "bootstrap": {
+   "p": "one-sided share D*<=0",
+   "resamples": 2000,
+   "seed": 20261009,
+   "unit": "signal session"
+  },
+  "primary": "D = mean net filled signal trades - cell-weighted mean net filled controls"
+ },
+ "windows": {
+  "not_read": "2024-01-02 onwards",
+  "pipeline_check_only": [
+   "2022-01-03",
+   "2022-03-31"
+  ],
+  "validation": [
+   "2023-01-03",
+   "2023-12-29"
+  ]
+ }
+}
