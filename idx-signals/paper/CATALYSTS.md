@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-28T23:03:20Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-28T23:03:49Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -55,7 +55,7 @@ Sets 0 over 0 signal sessions; events seen: none; coverage gaps 0.
 
 ## DILUTION_RECENT tags on Speculation Register sets
 
-0 tags: 0 true, 0 unknown.
+15 tags: 2 true, 0 unknown.
 
 ## Latest sets
 
