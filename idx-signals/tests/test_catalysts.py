@@ -19,10 +19,35 @@ import pandas as pd
 from idxsig import catalysts as cr
 from idxsig import paper
 from idxsig import speculation as sp
-from test_speculation import build, set_closes, us_market
+from idxsig.execution import Market
 
 SIGNAL = "2026-10-28"
 NOW = datetime(2026, 10, 28, 22, 50, tzinfo=timezone.utc)  # 18:50 New York (EDT): entry 2026-10-29
+
+
+def us_market(n_tickers=8, n_sessions=40, price=25.0, start="2026-10-01") -> tuple[Market, dict]:
+    """Every name trades every session at `price`; opens equal closes. Mutate `a` then build() again."""
+    dates = np.busday_offset(np.datetime64(start, "D"), np.arange(n_sessions), roll="forward")
+    shape = (n_tickers, n_sessions)
+    a = {"close": np.full(shape, price), "prev": np.full(shape, price), "high": np.full(shape, price * 1.01),
+         "low": np.full(shape, price * 0.99), "volume": np.full(shape, 100_000.0), "value": np.full(shape, price * 100_000),
+         "present": np.ones(shape, dtype=bool), "open": np.full(shape, price)}
+    return build(np.array([f"U{i:02d}" for i in range(n_tickers)]), dates, a), a
+
+
+def build(tickers, dates, a) -> Market:
+    a["prev"] = np.concatenate([a["close"][:, :1], a["close"][:, :-1]], axis=1)  # previous = prior close
+    a["value"] = a["close"] * a["volume"]
+    return Market.build(tickers, dates, a["close"], a["prev"], a["high"], a["low"], a["volume"], a["value"], a["present"],
+                        None, opens=a["open"], price_limits=False)
+
+
+def set_closes(a, row, start, closes, opens=None):
+    for k, c in enumerate(closes):
+        a["close"][row, start + k] = c
+        a["high"][row, start + k] = max(c, a["close"][row, start + k - 1]) * 1.001
+        a["low"][row, start + k] = min(c, a["close"][row, start + k - 1]) * 0.999
+        a["open"][row, start + k] = opens[k] if opens is not None else c
 
 
 class FakeClient:
