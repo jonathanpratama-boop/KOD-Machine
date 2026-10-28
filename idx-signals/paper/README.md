@@ -92,6 +92,24 @@ coverage files; recheck their evidence first. The conservative parser can miss v
 with unsupported wording, which need further evidence review. Earlier outcomes and research
 artifacts retain their original versions; corrections are new records.
 
+## Speculation register (`paper/speculations.jsonl`, `idxsig.speculation`, protocol `research/SPECULATION_REGISTER_v1/`)
+
+Added 2026-10-28 (`KOD-SPEC-REGISTER-v1`). Speculative design applied to the ledger: for every candidate of the frozen
+detectors, before its entry, a **speculation set** is sealed (hash-chained, RFC 3161 stamped, pushed) with a cone of dated,
+falsifiable statements about the next 5 and 20 sessions, each with the probability the frozen 2023 evidence gives it; the
+frozen plan (`BASE5`) applied to the candidate and to five matched twins drawn from the scan's own features file; and a tag.
+When the bars arrive, each statement is graded (Brier, beside an uninformed 0.5 and the register's running base rate, and
+beside the twins' rate) and the plan is scored against its twins. It **never feeds a decision**, carries **no variant of a
+retired entry** (owner decisions of 2026-10-17 and 2026-10-22: descriptive logging only), reads no holdout and places no
+order. A set sealed after its entry cutoff is refused; `paper-verify` checks every cutoff, every binding to the ledger and
+the chain. `paper/SPECULATIONS.md` is the derived report (statistics, calibration, the latest sets as cards).
+
+```sh
+python3 -m idxsig speculate --market <M> --commit        # after paper-scan, before the entry cutoff
+python3 -m idxsig speculate-score --market <M> --commit  # after paper-score; reuses its bars (--max-age-hours 8)
+python3 -m idxsig speculate-report                       # rewrites paper/SPECULATIONS.md
+```
+
 ## Crypto microstructure side-car (`paper/microstructure/`, `idxsig.microstructure`)
 
 Added 2026-10-21. It measures what the frozen crypto cycle assumes, for the same candidates, and **never feeds a

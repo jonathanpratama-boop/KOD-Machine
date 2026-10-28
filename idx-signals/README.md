@@ -41,6 +41,9 @@ python3 -m idxsig e1-discovery             # experiment E1 stages (each writes a
 python3 -m idxsig build-global-panel --market US      # US / crypto panels (a new file each time)
 python3 -m idxsig e2-discovery --market US            # experiment E2 stages per market
 python3 -m idxsig run --market US --rule MOONSHOT_E2_US_D1 --start 2023-01-01 --end 2023-12-31
+python3 -m idxsig speculate --market US --commit          # speculation register: seal the cone, plan and twins before the entry
+python3 -m idxsig speculate-score --market US --commit    # grade the statements and score the plan against its twins
+python3 -m idxsig speculate-report                        # paper/SPECULATIONS.md
 python3 -m idxsig run --rule E3_CAND_F7_ARA_VOL3 --start 2021-01-22 --end 2022-12-30 --fill-model C \
     --entry-rule confirm --entry-window 3 --exit-rule stop_ref   # an execution plan (research/E3)
 python3 -m idxsig e3-reproduce                        # experiment E3 precondition, then e3-discovery, e3-validation

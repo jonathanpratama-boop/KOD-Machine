@@ -21,6 +21,7 @@ Append-only logs: the new content must start with the old content, byte for byte
   idx-signals/results/RUNS.jsonl
   idx-signals/data/corporate_actions/manual.csv   primary-source entries (correct by adding a row)
   idx-signals/paper/ledger.jsonl  prospective paper scans, decisions and outcomes
+  idx-signals/paper/speculations.jsonl  sealed speculation sets and their resolutions
   kod-machine/registry/opens.jsonl
   kod-machine/registry/scans.jsonl
   kod-machine/registry/receipts.jsonl
@@ -58,6 +59,7 @@ APPEND_ONLY = (
     "idx-signals/results/RUNS.jsonl",
     "idx-signals/data/corporate_actions/manual.csv",
     "idx-signals/paper/ledger.jsonl",
+    "idx-signals/paper/speculations.jsonl",
     "kod-machine/registry/opens.jsonl",
     "kod-machine/registry/scans.jsonl",
     "kod-machine/registry/receipts.jsonl",

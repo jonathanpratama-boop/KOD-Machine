@@ -131,6 +131,19 @@ def main(argv=None) -> int:
     for p_ in (p_ps, p_sc):
         p_.add_argument("--market", choices=("IDX", "US", "CRYPTO"), default="IDX")
     sub.add_parser("paper-verify", help="check the paper ledger's hash chain and timestamp tokens")
+    p_sp = sub.add_parser("speculate", help="seal speculation sets (cone, plan, twins) for the latest paper decisions, "
+                                            "before their entry cutoff (research/SPECULATION_REGISTER_v1)")
+    p_sp.add_argument("--commit", action="store_true", help="commit the records and push (GitHub receipt)")
+    p_ss = sub.add_parser("speculate-score", help="resolve speculation windows that have ended")
+    p_ss.add_argument("--manifest", help="a recent-bars manifest for the market (default: the latest one if pulled "
+                                         "within --max-age-hours, else pull now)")
+    p_ss.add_argument("--max-age-hours", type=float, default=8.0)
+    p_ss.add_argument("--commit", action="store_true")
+    for p_ in (p_sp, p_ss):
+        p_.add_argument("--market", choices=("IDX", "US", "CRYPTO"), default="IDX")
+    p_sr = sub.add_parser("speculate-report", help="write paper/SPECULATIONS.md (statistics, calibration, cards)")
+    p_sr.add_argument("--cards", action="store_true", help="also print the latest sealed sets")
+    p_sr.add_argument("--commit", action="store_true")
     p_ms = sub.add_parser("micro-snapshot", help="side-car for a crypto scan: Binance book cost now and, once the day's "
                                                  "path exists, 1-minute timelines (read only; changes no rule or ledger)")
     p_ms.add_argument("--scan-id", help="crypto scan id (default: the latest crypto scan with candidates)")
@@ -537,21 +550,7 @@ def main(argv=None) -> int:
                 return 0
             print(f"{len(due)} {mk} decision(s) due: pulling bars")
         if manifest is None:
-            from datetime import date, timedelta
-
-            from .provenance import MANIFESTS
-            from .sources import binance, us_universe, yahoo
-
-            if mk == "IDX":
-                manifest = yahoo.fetch(paper.active_tickers(), days=paper.HISTORY_DAYS, prefix="yahoo_recent")
-            elif mk == "US":
-                tickers, universe = us_universe.fetch()
-                extra.append(MANIFESTS / universe)
-                manifest = yahoo.fetch(tickers, days=paper.HISTORY_DAYS, prefix="yahoo_us_recent", suffix="",
-                                       sleep=0.1, workers=6)
-            else:
-                start = (date.today() - timedelta(days=paper.HISTORY_DAYS)).isoformat()
-                manifest = binance.fetch(start=start, only_trading=True, prefix="binance_recent")
+            manifest, extra = _pull_recent(mk)
         stamper = RFC3161Timestamper()
         trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "")
         if args.cmd == "paper-scan":
@@ -572,21 +571,7 @@ def main(argv=None) -> int:
             if args.rescore and not args.reason:
                 print("error: --rescore needs --reason", file=sys.stderr)
                 return 2
-            verify = None
-            if mk == "US":
-                from . import us_actions
-                from .provenance import RAW, utc_stamp as _stamp
-
-                client = us_actions.SecClient(os.environ.get("IDXSIG_SEC_USER_AGENT", us_actions.DEFAULT_USER_AGENT),
-                                              RAW / "sec" / _stamp().replace("-", "").replace(":", ""))
-                ciks = {}
-
-                def verify(ev):
-                    if not ciks:
-                        ciks.update(us_actions.cik_map(client))
-                    res = us_actions.verify_event(client, ciks, ev.ticker, ev.effective_session, ev.numerator,
-                                                  ev.denominator, ev.kind)
-                    return res["status"], res["evidence"]
+            verify = _sec_verifier() if mk == "US" else None
             written, outcomes = paper.score_pending(manifest, stamper, market=mk, verify=verify,
                                                     rescore={d: args.reason for d in args.rescore})
             n_bad = sum(o.get("status") == "UNSCORABLE" for o in outcomes)
@@ -597,13 +582,75 @@ def main(argv=None) -> int:
         if args.commit and written:
             print(paper.commit_and_push([*written, manifest, *extra], message, trailer))
     elif args.cmd == "paper-verify":
-        from . import paper
+        from . import paper, speculation
 
-        problems = paper.verify_all()
+        problems = paper.verify_all() + speculation.verify()
         print("paper-verify: " + ("OK" if not problems else f"{len(problems)} problems"))
         for p_ in problems:
             print(f"  {p_}")
         return 1 if problems else 0
+    elif args.cmd in ("speculate", "speculate-score", "speculate-report"):
+        import os
+        from datetime import datetime, timezone
+
+        from . import paper, speculation
+
+        trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "")
+        if args.cmd == "speculate-report":
+            path = speculation.write_report()
+            stats = speculation.statistics()
+            for mk, m in stats["markets"].items():
+                v = m["plan"]
+                print(f"{mk}: {m['n_sets']} sets, {m['sessions']} sessions. {speculation.PLAN}: {v['n_paired']} paired, "
+                      f"diff {speculation._pct(v['mean_diff'])}, {v['verdict']}; PATH20 resolved {m['n_path20_resolved']}")
+            if args.cards:
+                for s in [r for r in speculation.spec_lines() if r["type"] == "SPECULATION_SET"][-12:]:
+                    print(speculation.card(s))
+            print(path)
+            if args.commit:
+                print(paper.commit_and_push([path], "speculation register: report", trailer))
+            return 0
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "kod-machine"))
+        from kod.timestamp import RFC3161Timestamper
+
+        mk = args.market
+        stamper = RFC3161Timestamper()
+        if args.cmd == "speculate":
+            now = datetime.now(timezone.utc)
+            pending = speculation.pending_decisions(mk, now)
+            if not pending:
+                print(f"{mk}: no decision awaiting a speculation set before its entry cutoff; nothing recorded")
+                return 0
+            written, sets = speculation.seal(mk, now, stamper, quotes=paper.binance_quotes if mk == "CRYPTO" else None)
+            for s in sets:
+                print(speculation.card(s))
+            print(f"sealed {len(sets)} set(s) for {mk}")
+            message = f"speculation register: {len(sets)} set(s) sealed for {mk} {sets[0]['signal_session']}"
+            extra = []
+        else:
+            todo = speculation.due(mk)
+            if not todo:
+                print(f"no {mk} speculation window can have ended yet; nothing pulled, nothing recorded")
+                return 0
+            manifest, extra = (Path(args.manifest), []) if args.manifest else _recent_manifest(mk, args.max_age_hours)
+            verify = _sec_verifier() if mk == "US" else None
+            written, outcomes = speculation.resolve_pending(manifest, mk, stamper, verify=verify)
+            n_bad = sum(o.get("status") == "UNRESOLVABLE" for o in outcomes)
+            print(f"resolved {len(outcomes) - n_bad} (set, window) pair(s), {n_bad} unresolvable, {len(todo) - len(outcomes)} still open")
+            for o in outcomes:
+                pr = o.get("paired") or {}
+                c = (o.get("candidate") or {}).get("status", "")
+                cone = ", ".join(f"{x['id']}={'?' if x['outcome'] is None else int(x['outcome'])}" for x in o.get("cone", []))
+                print(f"  {o['set_id']} {o['window']}: {o['status']} {c} {o.get('reason', '')}"
+                      + (f" net {pr['candidate_net']:+.2%} vs twins {pr['twins_mean_net']:+.2%}" if pr else "")
+                      + (f" [{cone}]" if cone else ""))
+            message = f"speculation register: {len(outcomes)} resolution(s) for {mk}, {n_bad} unresolvable"
+            if written:
+                written = [*written, manifest]
+        if written:
+            written.append(speculation.write_report())
+        if args.commit and written:
+            print(paper.commit_and_push([*written, *extra], message, trailer))
     elif args.cmd in ("micro-snapshot", "micro-catch-up", "micro-report"):
         import os
 
@@ -664,6 +711,65 @@ def main(argv=None) -> int:
             print(f"  {p}")
         return 1 if problems else 0
     return 0
+
+
+def _pull_recent(mk: str) -> tuple[Path, list]:
+    """The paper cycle's data pull: ~200 days of bars for every active name of the market."""
+    from datetime import date, timedelta
+
+    from . import paper
+    from .provenance import MANIFESTS
+    from .sources import binance, us_universe, yahoo
+
+    extra = []
+    if mk == "IDX":
+        manifest = yahoo.fetch(paper.active_tickers(), days=paper.HISTORY_DAYS, prefix="yahoo_recent")
+    elif mk == "US":
+        tickers, universe = us_universe.fetch()
+        extra.append(MANIFESTS / universe)
+        manifest = yahoo.fetch(tickers, days=paper.HISTORY_DAYS, prefix="yahoo_us_recent", suffix="", sleep=0.1, workers=6)
+    else:
+        start = (date.today() - timedelta(days=paper.HISTORY_DAYS)).isoformat()
+        manifest = binance.fetch(start=start, only_trading=True, prefix="binance_recent")
+    return manifest, extra
+
+
+def _recent_manifest(mk: str, max_age_hours: float) -> tuple[Path, list]:
+    """The latest recent-bars manifest of the market if it was pulled within `max_age_hours`, else a new pull.
+    Lets the speculation register reuse the bars paper-score just pulled instead of pulling them again."""
+    from datetime import datetime, timezone
+
+    from .provenance import latest_manifest
+
+    prefix = {"IDX": "yahoo_recent", "US": "yahoo_us_recent", "CRYPTO": "binance_recent"}[mk]
+    try:
+        latest = latest_manifest(prefix)
+        stamp = datetime.strptime(latest.stem.rsplit("-", 1)[1], "%Y%m%dT%H%M%SZ").replace(tzinfo=timezone.utc)
+        if datetime.now(timezone.utc) - stamp <= __import__("datetime").timedelta(hours=max_age_hours):
+            return latest, []
+    except (FileNotFoundError, ValueError, IndexError):
+        pass
+    return _pull_recent(mk)
+
+
+def _sec_verifier():
+    """A split-event verifier against SEC filings, as paper-score uses (needs IDXSIG_SEC_USER_AGENT)."""
+    import os
+
+    from . import us_actions
+    from .provenance import RAW, utc_stamp as _stamp
+
+    client = us_actions.SecClient(os.environ.get("IDXSIG_SEC_USER_AGENT", us_actions.DEFAULT_USER_AGENT),
+                                  RAW / "sec" / _stamp().replace("-", "").replace(":", ""))
+    ciks = {}
+
+    def verify(ev):
+        if not ciks:
+            ciks.update(us_actions.cik_map(client))
+        res = us_actions.verify_event(client, ciks, ev.ticker, ev.effective_session, ev.numerator, ev.denominator, ev.kind)
+        return res["status"], res["evidence"]
+
+    return verify
 
 
 def _micro_sidecar(scan_id: str) -> list:
