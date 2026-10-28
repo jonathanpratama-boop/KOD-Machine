@@ -117,8 +117,9 @@ speculation register run over dated **event lists** instead of scan candidates. 
 original Schedule 13D on EDGAR is listed in a `BATCH` record with a status; each one that passes the issuer rules gets a
 `CATALYST_SET` sealed before the next US open, with the 20-session yardstick plan (`H20`), five matched event-free twins,
 a cone and a coverage class: `FIRE`, or `ABSTAIN` when the issuer filed for dilution in the last 20 sessions, already rose
-15% since the filing, or is worth under USD 50 million. The test runs on FIRE sets only, at 60/120/240 pairs (t at least
-3.75, 3.0, 3.0). **IDX_INDEX** (descriptive): IDX30/LQ45/IDX80 changes from a sourced events file, with a run-up window to the
+15% since the filing, or is worth under USD 50 million. The test runs on FIRE sets only, with two primaries (mean edge
+over the twins, and the win rate against the twins' median), at 60/120/240 pairs (t at least 3.75, 3.0, 3.0) and then
+480/960/1,920 (t at least 3.0), with a futility stop from 240 (`research/CATALYST_REGISTER_v1/prereg_2.json`). **IDX_INDEX** (descriptive): IDX30/LQ45/IDX80 changes from a sourced events file, with a run-up window to the
 rebalancing close and a 20-session window after it. **DILUTION_RECENT** tags are sealed for new US and IDX speculation sets
 before their cutoff (metadata only). It never feeds a decision, reads no holdout, places no order and changes nothing in
 `ledger.jsonl` or `speculations.jsonl`; `paper-verify` checks its chain, cutoffs, batch listings and bindings.

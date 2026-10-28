@@ -1,0 +1,13 @@
+{
+ "id": "CATALYST_REGISTER_v1_SEC13D_WIN_RATE_registered",
+ "experiment": "CATALYST_REGISTER_v1",
+ "date": "2026-10-28",
+ "hypothesis": "prospective: on FIRE sets of the SEC13D family, the share of sets whose 20-session plan net beats the twins' median net exceeds 0.5 (per-session shares, one-sided t), with a positive mean net after costs",
+ "one_sided_p": null,
+ "p_source": "no look yet; looks at 60, 120, 240, 480, 960, 1920 FIRE pairs (research/CATALYST_REGISTER_v1/prereg_2.json); each look adds a counted file CATALYST_REGISTER_v1_SEC13D_FIRE_WIN_RATE_n<look>.json",
+ "variants_searched": 0,
+ "outcome": "PENDING (prospective; registered before the first SEC13D set was sealed)",
+ "note": "second primary on the same records as CATALYST_REGISTER_v1_SEC13D_registered (MEAN); ADDENDUM_2.md",
+ "counted": false,
+ "registered": "2026-10-28"
+}

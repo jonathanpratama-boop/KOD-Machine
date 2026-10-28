@@ -222,6 +222,7 @@ class SecBatch(unittest.TestCase):
         self.assertEqual(by["T01"]["coverage"]["inputs"]["pre_entry_move"], 0.0)  # accepted after the close
         self.assertEqual(set(by["T04"]["coverage"]["reasons"]), {"MOVED_ALREADY", "MV_UNKNOWN"})
         for s in sets:
+            self.assertEqual(s["preregistration"], {"id": cr.prereg()[0]["id"], "sha256": cr.prereg()[1]})
             self.assertEqual((s["signal_session"], s["entry"]["session"]), (SIGNAL, "2026-10-29"))
             self.assertEqual(s["entry_cutoff"], "2026-10-29T13:15:00Z")
             self.assertEqual(s["windows"], {"H20": {"kind": "plan", "entry_window": 1, "holding_sessions": 20}})
@@ -368,6 +369,37 @@ class Looks(unittest.TestCase):
                           cr.EN_DILUTION_DAYS), (1.15, 50e6, 90, 20, 15, 28))
 
 
+class Preregistration(unittest.TestCase):
+    def test_extended_looks_futility_and_the_positive_net_condition(self):
+        """Guards against: a primary declared eligible with a losing mean net, a failing primary carried on after the
+        240 look, or the extension looks drifting from the frozen pre-registration."""
+        design = cr.prereg()[0]
+        v1 = cr.protocol()[0]["families"]["SEC13D"]["decision_rule"]
+        self.assertEqual(design["looks"]["n"][:3], v1["looks"])
+        self.assertEqual(design["looks"]["t_min"][:3], v1["boundaries"]["t_min"])
+        st = {"n_paired": 70, "n_sessions": 20, "t": 3.5, "p_one_sided": 0.001}
+        self.assertFalse(cr.prereg_verdict(st, 0.02, 0.01)["eligible"])  # 3.5 < 3.75 at the first look
+        self.assertTrue(cr.prereg_verdict({**st, "n_paired": 130}, 0.02, 0.01)["eligible"])
+        self.assertFalse(cr.prereg_verdict({**st, "n_paired": 130}, 0.02, -0.01)["eligible"])  # losing mean net
+        self.assertIn("continues", cr.prereg_verdict({**st, "n_paired": 250, "t": 1.0}, 0.01, 0.01)["verdict"])
+        self.assertIn("futility", cr.prereg_verdict({**st, "n_paired": 250, "t": -1.0}, -0.01, 0.01)["verdict"])
+        self.assertEqual(cr.prereg_verdict({**st, "n_paired": 500, "n_sessions": 20}, 0.01, 0.01)["reached"], 240)  # 480 needs 30 sessions
+        self.assertEqual(cr.prereg_verdict({**st, "n_paired": 2000, "n_sessions": 200, "t": 2.0}, 0.01, 0.01)["verdict"],
+                         "FAIL at the final look")
+
+    def test_win_rate_is_the_session_share_of_sets_beating_the_twins_median(self):
+        """Guards against: the win rate counting sets without a traded twin, or a session with many sets weighing more
+        than one session in the t."""
+        def res(session, outcome, paired=True):
+            return {"status": "RESOLVED", "signal_session": session, "paired": {"diff": 0.0} if paired else None,
+                    "cone": [{"id": "BEATS_TWINS_20", "outcome": outcome}]}
+        rs = [res("2026-11-02", True), res("2026-11-02", True), res("2026-11-02", False), res("2026-11-03", True),
+              res("2026-11-04", False), res("2026-11-05", True, paired=False), res("2026-11-06", None)]
+        w = cr.winrate_statistics(rs)
+        self.assertEqual((w["n_paired"], w["wins"], w["n_sessions"]), (5, 3, 3))
+        self.assertAlmostEqual(w["estimate"], (2 / 3 + 1 + 0) / 3 - 0.5)
+        self.assertAlmostEqual(w["binomial_p_descriptive"], (10 + 5 + 1) / 32)
+
 class Tags(unittest.TestCase):
     def test_dilution_tags_for_us_and_idx_and_only_before_the_cutoff(self):
         """Guards against: a tag computed after the set's entry, a tag on a set sealed before the protocol, or an
@@ -413,8 +445,10 @@ class Verify(unittest.TestCase):
                 "scan_id": scan["scan_id"], "scan_record_hash": scan["record_hash"], "features_sha256": "f" * 64,
                 "windows": {"H20": {}}, "protocol": {"sha256": proto_sha}, "entry_cutoff": "2026-10-29T13:15:00Z"}
         batch = {"type": "BATCH", "family": "SEC13D", "sealed_at": "2026-10-28T22:50:00Z", "protocol": {"sha256": proto_sha},
-                 "feed": {"coverage_gap": False}, "events": [{"status": "SEALED", "set_id": "CAT-1"}]}
+                 "feed": {"coverage_gap": False}, "events": [{"status": "SEALED", "set_id": "CAT-1"},
+                                                             {"status": "SEALED", "set_id": "CAT-3"}]}
         recs = [batch, {**base, "set_id": "CAT-1", "sealed_at": "2026-10-28T22:50:00Z"},
+                {**base, "set_id": "CAT-3", "sealed_at": "2026-10-28T22:50:00Z", "preregistration": {"id": "x", "sha256": "0" * 64}},
                 {**base, "set_id": "CAT-2", "sealed_at": "2026-10-29T13:20:00Z"},
                 {"type": "TAG", "tag": "DILUTION_RECENT", "set_id": "SPEC-A", "set_record_hash": "h1",
                  "sealed_at": "2026-10-29T14:00:00Z", "set_entry_cutoff": "2026-10-29T13:30:00Z"}]
@@ -430,6 +464,7 @@ class Verify(unittest.TestCase):
             self.assertIn("CAT-2: sealed at", joined)
             self.assertIn("CAT-2: not listed as SEALED", joined)
             self.assertIn("SPEC-A: tag sealed at", joined)
+            self.assertIn("CAT-3: preregistration sha256 differs", joined)
             self.assertNotIn("CAT-1:", joined)
             lines = path.read_text().splitlines()
             lines[1] = lines[1].replace('"T00"', '"T99"')

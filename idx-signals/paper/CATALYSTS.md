@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-28T10:38:23Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-28T13:44:53Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -11,7 +11,9 @@ Sets 0 (none) over 0 signal sessions; events seen: none; coverage gaps 0.
 | FIRE | 0 | 0 | n/a | n/a | n/a | n/a |
 | ABSTAIN | 0 | 0 | n/a | n/a | n/a | n/a |
 
-Looks at [60, 120, 240] FIRE pairs (t at least [3.75, 3.0, 3.0]): **accumulating (no look reached)**.
+Primaries (`research/CATALYST_REGISTER_v1/prereg_2.json`), looks at [60, 120, 240, 480, 960, 1920] FIRE pairs, t at least [3.75, 3.0, 3.0, 3.0, 3.0, 3.0]:
+- MEAN (plan net minus twins' mean): **accumulating (no look reached)**
+- WIN_RATE (plan beats twins' median): 0 of 0 (n/a), t n/a: **accumulating (no look reached)**
 
 ## IDX_INDEX (descriptive)
 

@@ -40,6 +40,7 @@ from .provenance import PKG_ROOT, sha256_file, utc_stamp
 
 PROTOCOL_DIR = PKG_ROOT / "research" / "CATALYST_REGISTER_v1"
 PROTOCOL_JSON = PROTOCOL_DIR / "protocol.json"
+PREREG_JSON = PROTOCOL_DIR / "prereg_2.json"  # SEC13D: win-rate primary and extended looks, frozen before any SEC13D set
 EVENTS_DIR = PROTOCOL_DIR / "events"
 CAT_LEDGER = paper.PAPER / "catalysts.jsonl"
 REPORT = paper.PAPER / "CATALYSTS.md"
@@ -72,6 +73,10 @@ RELATIVE = frozenset({"BEATS_TWINS_20", "WITH_FLOW_RUNUP", "REVERSAL_POST20"})
 
 def protocol() -> tuple[dict, str]:
     return json.loads(PROTOCOL_JSON.read_text(encoding="utf-8")), sha256_file(PROTOCOL_JSON)
+
+
+def prereg() -> tuple[dict, str]:
+    return json.loads(PREREG_JSON.read_text(encoding="utf-8")), sha256_file(PREREG_JSON)
 
 
 def cat_lines(path: Path | None = None) -> list[dict]:
@@ -350,6 +355,7 @@ def sec13d_batch(now: datetime, client, ledger: list[dict] | None = None, record
                  clock=None) -> tuple[dict, list[dict]]:
     """Read the feed and build (BATCH, sets) for every new original accepted since the window start."""
     proto, proto_sha = protocol()
+    pre, pre_sha = prereg()
     fam = proto["families"]["SEC13D"]
     ledger = paper.ledger_lines() if ledger is None else ledger
     records = cat_lines() if records is None else records
@@ -458,7 +464,8 @@ def sec13d_batch(now: datetime, client, ledger: list[dict] | None = None, record
             "twins": twins, "twins_match_level": level, "twins_seed": set_seed(set_id), "twins_checked": log,
             "cone": _cone(fam, records, "US", "SEC13D"),
             "windows": {"H20": {k: fam["plan"][k] for k in ("kind", "entry_window", "holding_sessions")}},
-            "plan": "H20", "protocol": {"id": proto["protocol_id"], "sha256": proto_sha}})
+            "plan": "H20", "protocol": {"id": proto["protocol_id"], "sha256": proto_sha},
+            "preregistration": {"id": pre["id"], "sha256": pre_sha}})
         statuses.append({**row, "status": "SEALED", "set_id": set_id, "coverage": cov["class"]})
         sealed_subjects[subj["cik"]] = ev["accepted"]
     sealed_at = (clock or (lambda: datetime.now(timezone.utc)))()
@@ -779,6 +786,59 @@ def look_verdict(st: dict, rule: dict) -> dict:
     return out
 
 
+def _binomial_upper(k: int, n: int) -> float:
+    """Exact one-sided P(X >= k) for X ~ Binomial(n, 0.5)."""
+    return float(sum(math.comb(n, i) for i in range(k, n + 1)) / 2 ** n) if n else float("nan")
+
+
+def winrate_statistics(resolutions: list[dict]) -> dict:
+    """WIN_RATE primary (prereg_2.json): per-session share of sets whose plan net beats the twins' median net."""
+    by_session: dict[str, list[float]] = {}
+    for r in resolutions:
+        if r.get("status") != "RESOLVED" or not r.get("paired"):
+            continue
+        o = next((c["outcome"] for c in r.get("cone", []) if c["id"] == "BEATS_TWINS_20"), None)
+        if o is not None:
+            by_session.setdefault(r["signal_session"], []).append(float(o))
+    shares = np.array([np.mean(v) for _, v in sorted(by_session.items())])
+    n = int(sum(len(v) for v in by_session.values()))
+    k = int(sum(sum(v) for v in by_session.values()))
+    out = {"n_paired": n, "n_sessions": len(shares), "wins": k, "win_rate": k / n if n else None,
+           "estimate": float(shares.mean() - 0.5) if len(shares) else None,
+           "sd_session": float(np.std(shares, ddof=1)) if len(shares) > 1 else None,
+           "t": None, "p_one_sided": None, "binomial_p_descriptive": _binomial_upper(k, n) if n else None}
+    if len(shares) >= 2 and out["sd_session"] and out["sd_session"] > 0:
+        t = float((shares.mean() - 0.5) / (out["sd_session"] / math.sqrt(len(shares))))
+        out["t"], out["p_one_sided"] = t, float(spec.t_sf(t, len(shares) - 1))
+    return out
+
+
+def prereg_verdict(st: dict, estimate: float | None, mean_net: float | None, design: dict | None = None) -> dict:
+    """One primary under prereg_2.json: the look reached, eligibility, futility from the 240 look, FAIL at 1920."""
+    design = design or prereg()[0]
+    looks, t_min, min_s = design["looks"]["n"], design["looks"]["t_min"], design["looks"]["min_sessions"]
+    reached = [i for i, n in enumerate(looks) if st["n_paired"] >= n and st["n_sessions"] >= min_s[i]]
+    k = reached[-1] if reached else None
+    out = {"looks": looks, "t_min": t_min, "reached": looks[k] if k is not None else None,
+           "next": looks[0] if k is None else (looks[k + 1] if k + 1 < len(looks) else None)}
+    if k is None:
+        out["verdict"] = "accumulating (no look reached)"
+        return out
+    eligible = (st.get("t") is not None and st["t"] >= t_min[k] and st.get("p_one_sided") is not None
+                and st["p_one_sided"] < 0.05 and estimate is not None and estimate > 0
+                and mean_net is not None and mean_net > 0)
+    out["eligible"] = eligible
+    if eligible:
+        out["verdict"] = f"ELIGIBLE FOR OWNER REVIEW at the n>={looks[k]} look"
+    elif looks[k] >= 240 and (estimate is None or estimate <= 0):
+        out["verdict"] = f"FAIL (futility) at the n>={looks[k]} look"
+    elif k == len(looks) - 1:
+        out["verdict"] = "FAIL at the final look"
+    else:
+        out["verdict"] = f"not eligible at the n>={looks[k]} look; continues"
+    return out
+
+
 def _calibration(cone_ids: list[str], res: list[dict]) -> dict:
     cal = {}
     for cid in cone_ids:
@@ -811,10 +871,14 @@ def statistics(records: list[dict] | None = None) -> dict:
                "n_resolutions": len(fres), "calibration": _calibration([c["id"] for c in pf["cone"]], fres)}
         if fam == "SEC13D":
             for cls in ("FIRE", "ABSTAIN"):
-                st = spec.plan_statistics([r for r in fres if r["window"] == "H20" and r["coverage"] == cls])
-                if cls == "FIRE":
-                    st["look"] = look_verdict(st, pf["decision_rule"])
+                rs = [r for r in fres if r["window"] == "H20" and r["coverage"] == cls]
+                st = spec.plan_statistics(rs)
+                wr = winrate_statistics(rs)
+                if cls == "FIRE":  # the two primaries of prereg_2.json
+                    st["look"] = prereg_verdict(st, st["mean_diff"], st["mean_net"])
+                    wr["look"] = prereg_verdict(wr, wr["estimate"], st["mean_net"])
                 out[cls] = st
+                out[f"{cls}_WIN_RATE"] = wr
             batches = [r for r in records if r["type"] == "BATCH" and r["family"] == fam]
             counts = {}
             for b in batches:
@@ -888,7 +952,15 @@ def render(stats: dict, records: list[dict]) -> str:
         p_txt = "n/a" if st.get("p_one_sided") is None else f"{st['p_one_sided']:.4f}"
         out.append(f"| {cls} | {st.get('n_paired', 0)} | {st.get('n_sessions', 0)} | {_pct(st.get('mean_net'))} | "
                    f"{_pct(st.get('mean_diff'))} | {t_txt} | {p_txt} |")
-    out += ["", f"Looks at {look.get('looks')} FIRE pairs (t at least {look.get('t_min')}): **{look.get('verdict', 'n/a')}**.", ""]
+    wr = s13.get("FIRE_WIN_RATE", {})
+    wlook = wr.get("look", {})
+    rate = "n/a" if wr.get("win_rate") is None else f"{wr['win_rate']:.1%}"
+    wt = "n/a" if wr.get("t") is None else f"{wr['t']:.2f}"
+    out += ["", "Primaries (`research/CATALYST_REGISTER_v1/prereg_2.json`), looks at "
+            f"{look.get('looks')} FIRE pairs, t at least {look.get('t_min')}:",
+            f"- MEAN (plan net minus twins' mean): **{look.get('verdict', 'n/a')}**",
+            f"- WIN_RATE (plan beats twins' median): {wr.get('wins', 0)} of {wr.get('n_paired', 0)} ({rate}), "
+            f"t {wt}: **{wlook.get('verdict', 'n/a')}**", ""]
     ix = stats["families"].get("IDX_INDEX", {})
     out += ["## IDX_INDEX (descriptive)", "", f"Sets {ix.get('n_sets', 0)} over {ix.get('sessions', 0)} sessions.", ""]
     for wid in ("RUNUP", "POST20"):
@@ -944,6 +1016,8 @@ def verify() -> list[str]:
                 problems.append(f"{sid}: sealed at {r['sealed_at']}, after its cutoff {r['entry_cutoff']}")
             if r["protocol"]["sha256"] != proto_sha:
                 problems.append(f"{sid}: protocol sha256 differs from research/CATALYST_REGISTER_v1/protocol.json")
+            if r.get("preregistration") and r["preregistration"]["sha256"] != prereg()[1]:
+                problems.append(f"{sid}: preregistration sha256 differs from research/CATALYST_REGISTER_v1/prereg_2.json")
             sc = scans.get(r["scan_id"])
             if sc is None or sc["record_hash"] != r["scan_record_hash"] or sc["features_sha256"] != r["features_sha256"]:
                 problems.append(f"{sid}: scan record or features hash does not match the ledger")
