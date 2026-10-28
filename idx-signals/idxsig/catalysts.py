@@ -41,6 +41,8 @@ from .provenance import PKG_ROOT, sha256_file, utc_stamp
 PROTOCOL_DIR = PKG_ROOT / "research" / "CATALYST_REGISTER_v1"
 PROTOCOL_JSON = PROTOCOL_DIR / "protocol.json"
 PREREG_JSON = PROTOCOL_DIR / "prereg_2.json"  # SEC13D: win-rate primary and extended looks, frozen before any SEC13D set
+FAMILY_DIR = PKG_ROOT / "research" / "CATALYST_FAMILIES"  # later families, one frozen protocol.json each
+FAMILY_MODULES = {"DILUTION_8K": "fam_dilution8k", "FORM4": "fam_form4"}
 EVENTS_DIR = PROTOCOL_DIR / "events"
 CAT_LEDGER = paper.PAPER / "catalysts.jsonl"
 REPORT = paper.PAPER / "CATALYSTS.md"
@@ -68,11 +70,29 @@ OPERATING_DAYS = 550
 ORIGINAL_13D = frozenset({"SCHEDULE 13D", "SC 13D"})
 INTENT_WORDS = ("board", "merger", "acquisition", "strategic alternatives", "sale of the", "proxy", "nominate",
                 "director", "change of control", "going private", "take private", "letter")
-RELATIVE = frozenset({"BEATS_TWINS_20", "WITH_FLOW_RUNUP", "REVERSAL_POST20"})
+RELATIVE = frozenset({"BEATS_TWINS_20", "LOSES_TO_TWINS_20", "WITH_FLOW_RUNUP", "REVERSAL_POST20"})
 
 
 def protocol() -> tuple[dict, str]:
     return json.loads(PROTOCOL_JSON.read_text(encoding="utf-8")), sha256_file(PROTOCOL_JSON)
+
+
+def family_protocol(name: str) -> tuple[dict, str]:
+    path = FAMILY_DIR / name / "protocol.json"
+    return json.loads(path.read_text(encoding="utf-8")), sha256_file(path)
+
+
+def extra_families() -> dict[str, tuple[dict, str]]:
+    """The families frozen after protocol.json, each in research/CATALYST_FAMILIES/<name>/protocol.json."""
+    if not FAMILY_DIR.exists():
+        return {}
+    return {d.name: family_protocol(d.name) for d in sorted(FAMILY_DIR.iterdir()) if (d / "protocol.json").exists()}
+
+
+def family_module(name: str):
+    import importlib
+
+    return importlib.import_module(f".{FAMILY_MODULES[name]}", __package__)
 
 
 def prereg() -> tuple[dict, str]:
@@ -327,7 +347,24 @@ def _universe(feats: pd.DataFrame) -> pd.DataFrame:
 
 
 # ------------------------------------------------------------------------------- SEC13D
-def sec13d_twins(feats, ticker, excluded, selected, seed, client, by_ticker, day: str) -> tuple[list[dict], str, list[dict]]:
+def _reject_13d(filings: pd.DataFrame, day: str) -> str | None:
+    if earlier_13d(filings, "", (date.fromisoformat(day) + timedelta(days=1)).isoformat()):
+        return f"an original Schedule 13D in the {REPEAT_DAYS} days before sealing"
+    return None
+
+
+def reject_dilution(filings: pd.DataFrame, day: str) -> str | None:
+    start = (date.fromisoformat(day) - timedelta(days=REPEAT_DAYS)).isoformat()
+    f = filings[(filings["filingDate"] >= start) & (filings["filingDate"] <= day)]
+    if any(e9.is_dilution(r.form, r.items) for r in f.itertuples()):
+        return f"a dilution filing (is_dilution) in the {REPEAT_DAYS} days before sealing"
+    return None
+
+
+def sec13d_twins(feats, ticker, excluded, selected, seed, client, by_ticker, day: str,
+                 reject=_reject_13d) -> tuple[list[dict], str, list[dict]]:
+    """Matched, event-free twins: draw_twins' seeded order, then the first TWINS operating issuers that `reject`
+    (filings, day) -> reason does not exclude (default: an original Schedule 13D in the last 90 days)."""
     pool, level = spec.draw_twins(feats, ticker, excluded, selected, "US", seed, k=10 ** 9)
     twins, log = [], []
     for tw in pool[:TWIN_CHECKS]:
@@ -339,10 +376,8 @@ def sec13d_twins(feats, ticker, excluded, selected, seed, client, by_ticker, day
             reason = "submissions unavailable"
         elif not is_operating(filings, day):
             reason = f"no 10-K, 10-Q, 20-F or 40-F in {OPERATING_DAYS} days, or a fund report: not an operating issuer"
-        elif earlier_13d(filings, "", (date.fromisoformat(day) + timedelta(days=1)).isoformat()):
-            reason = f"an original Schedule 13D in the {REPEAT_DAYS} days before sealing"
         else:
-            reason = None
+            reason = reject(filings, day)
         log.append({"ticker": tw["ticker"], "accepted": reason is None, **({"reason": reason} if reason else {})})
         if reason is None:
             twins.append({**tw, "cik": int(cik)})
@@ -676,6 +711,8 @@ def statement_outcome(sid: str, m, n: int, d: int, result: dict | None, twin_net
         return None
     if sid == "BEATS_TWINS_20":
         return bool(net > float(np.median(twin_nets)))
+    if sid == "LOSES_TO_TWINS_20":
+        return bool(net < float(np.median(twin_nets)))
     if sid == "WITH_FLOW_RUNUP":
         return bool((net - float(np.mean(twin_nets))) * direction > 0)
     if sid == "REVERSAL_POST20":
@@ -791,13 +828,14 @@ def _binomial_upper(k: int, n: int) -> float:
     return float(sum(math.comb(n, i) for i in range(k, n + 1)) / 2 ** n) if n else float("nan")
 
 
-def winrate_statistics(resolutions: list[dict]) -> dict:
-    """WIN_RATE primary (prereg_2.json): per-session share of sets whose plan net beats the twins' median net."""
+def winrate_statistics(resolutions: list[dict], statement: str = "BEATS_TWINS_20") -> dict:
+    """WIN_RATE primary (prereg_2.json; the families' protocols): per-session share of sets for which `statement`
+    holds (default: the plan's net beats the twins' median net)."""
     by_session: dict[str, list[float]] = {}
     for r in resolutions:
         if r.get("status") != "RESOLVED" or not r.get("paired"):
             continue
-        o = next((c["outcome"] for c in r.get("cone", []) if c["id"] == "BEATS_TWINS_20"), None)
+        o = next((c["outcome"] for c in r.get("cone", []) if c["id"] == statement), None)
         if o is not None:
             by_session.setdefault(r["signal_session"], []).append(float(o))
     shares = np.array([np.mean(v) for _, v in sorted(by_session.items())])
@@ -893,12 +931,44 @@ def statistics(records: list[dict] | None = None) -> dict:
                 out[wid] = {"n_paired": len(rs), "mean_signed_diff": float(np.mean(signed)) if signed else None,
                             "share_with_flow": float(np.mean([x > 0 for x in signed])) if signed else None}
         fams[fam] = out
+    for fam, (fs, fsha) in extra_families().items():
+        fams[fam] = family_statistics(fam, fs, fsha, sets, res, records)
     return {"protocol": {"id": proto["protocol_id"], "sha256": proto_sha}, "register": REGISTER_VERSION,
             "generated_at": utc_stamp(), "families": fams,
             "tags": {"DILUTION_RECENT": {
                 "n": sum(r["type"] == "TAG" for r in records),
                 "true": sum(r["type"] == "TAG" and r["value"] is True for r in records),
                 "unknown": sum(r["type"] == "TAG" and r["value"] is None for r in records)}}}
+
+
+def _batch_counts(batches: list[dict]) -> dict:
+    counts: dict[str, int] = {}
+    for b in batches:
+        for e in b.get("events", []):
+            counts[e["status"]] = counts.get(e["status"], 0) + 1
+        for k, v in (b.get("counts") or {}).items():
+            counts[k] = counts.get(k, 0) + int(v)
+    return counts
+
+
+def family_statistics(fam: str, fs: dict, fsha: str, sets: list[dict], res: list[dict], records: list[dict]) -> dict:
+    """A later family's two primaries (its protocol's 'decision'), signed by its direction."""
+    fsets = [s for s in sets if s["family"] == fam]
+    rs = [r for r in res if r["family"] == fam and r["window"] == "H20"]
+    d = int(fs["direction"])
+    signed = [{**r, "paired": {**r["paired"], "diff": r["paired"]["diff"] * d}} if r.get("paired") else r for r in rs]
+    st = spec.plan_statistics(signed)
+    dec = fs["decision"]
+    wr = winrate_statistics(rs, statement=dec["primaries"]["WIN_RATE"]["statement"])
+    net_ok = st["mean_net"] if dec["require_positive_mean_net"] else 1.0  # an avoid family claims no positive net
+    st["look"] = prereg_verdict(st, st["mean_diff"], net_ok, design=dec)
+    wr["look"] = prereg_verdict(wr, wr["estimate"], net_ok, design=dec)
+    batches = [r for r in records if r["type"] == "BATCH" and r["family"] == fam]
+    return {"protocol": {"id": fs["protocol_id"], "sha256": fsha}, "direction": d, "n_sets": len(fsets),
+            "sessions": len({s["signal_session"] for s in fsets}), "n_resolutions": len([r for r in res if r["family"] == fam]),
+            "MEAN": st, "WIN_RATE": wr, "events_seen": _batch_counts(batches),
+            "coverage_gaps": sum(bool((b.get("feed") or b).get("coverage_gap")) for b in batches),
+            "calibration": _calibration([c["id"] for c in fs["cone"]], [r for r in res if r["family"] == fam])}
 
 
 # ------------------------------------------------------------------------------- report
@@ -968,6 +1038,17 @@ def render(stats: dict, records: list[dict]) -> str:
         share = "n/a" if w.get("share_with_flow") is None else f"{w['share_with_flow']:.0%}"
         out.append(f"- {wid}: paired {w.get('n_paired', 0)}, mean signed diff {_pct(w.get('mean_signed_diff'))}, "
                    f"share with the flow {share}")
+    for fam, fsx in stats["families"].items():
+        if "MEAN" not in fsx:
+            continue
+        mean, wr = fsx["MEAN"], fsx["WIN_RATE"]
+        rate = "n/a" if wr.get("win_rate") is None else f"{wr['win_rate']:.1%}"
+        out += ["", f"## {fam} (counted at each look; direction {fsx['direction']:+d}; `{fsx['protocol']['id']}`)", "",
+                f"Sets {fsx['n_sets']} over {fsx['sessions']} signal sessions; events seen: "
+                f"{', '.join(f'{k} {v}' for k, v in fsx['events_seen'].items()) or 'none'}; coverage gaps {fsx['coverage_gaps']}.",
+                f"- MEAN (signed edge over the twins) {_pct(mean.get('mean_diff'))} over {mean.get('n_paired', 0)} pairs: "
+                f"**{mean['look']['verdict']}**",
+                f"- WIN_RATE {wr.get('wins', 0)} of {wr.get('n_paired', 0)} ({rate}): **{wr['look']['verdict']}**"]
     tg = stats["tags"]["DILUTION_RECENT"]
     out += ["", "## Calibration", "", "| Family | Statement | n | Realised | Mean prior | Twins | Brier | Brier at 0.5 |",
             "|---|---|---|---|---|---|---|---|"]
@@ -998,6 +1079,7 @@ def verify() -> list[str]:
         return problems
     problems += [f"catalysts.jsonl: {p}" for p in paper.verify_chain(CAT_LEDGER)]
     _, proto_sha = protocol()
+    fam_sha = {k: v[1] for k, v in extra_families().items()}
     scans = {r["scan_id"]: r for r in paper.ledger_lines() if r["type"] == "SCAN"}
     specs = {r["set_id"]: r for r in spec.spec_lines() if r["type"] == "SPECULATION_SET"}
     sets, listed, tags, seen = {}, set(), set(), set()
@@ -1005,7 +1087,7 @@ def verify() -> list[str]:
         t = r["type"]
         if t == "BATCH":
             listed |= {e.get("set_id") for e in r["events"] if e["status"] == "SEALED"}
-            if r["protocol"]["sha256"] != proto_sha:
+            if r["protocol"]["sha256"] != fam_sha.get(r["family"], proto_sha):
                 problems.append(f"batch {r['sealed_at']}: protocol sha256 differs from protocol.json")
         elif t == "CATALYST_SET":
             sid = r["set_id"]
@@ -1014,8 +1096,8 @@ def verify() -> list[str]:
             sets[sid] = r
             if r["sealed_at"] >= r["entry_cutoff"]:
                 problems.append(f"{sid}: sealed at {r['sealed_at']}, after its cutoff {r['entry_cutoff']}")
-            if r["protocol"]["sha256"] != proto_sha:
-                problems.append(f"{sid}: protocol sha256 differs from research/CATALYST_REGISTER_v1/protocol.json")
+            if r["protocol"]["sha256"] != fam_sha.get(r["family"], proto_sha):
+                problems.append(f"{sid}: protocol sha256 differs from its family's frozen protocol file")
             if r.get("preregistration") and r["preregistration"]["sha256"] != prereg()[1]:
                 problems.append(f"{sid}: preregistration sha256 differs from research/CATALYST_REGISTER_v1/prereg_2.json")
             sc = scans.get(r["scan_id"])

@@ -1,0 +1,16 @@
+{
+ "protocol_id": "KOD-CATALYST-SEC13D-KILL-TEST-2020-2022-v1",
+ "frozen": "2026-10-28",
+ "owner_decision": "2026-10-28: 'merge PR #16 and do 1, 2, 3, 4, 5' (item 4); handoff/decisions/2026-10-28c_proof_program.md",
+ "filings": {"index": "https://www.sec.gov/Archives/edgar/full-index/<YYYY>/QTR<q>/form.idx", "quarters": ["2020Q2", "2020Q3", "2020Q4", "2021Q1", "2021Q2", "2021Q3", "2021Q4", "2022Q1", "2022Q2", "2022Q3", "2022Q4"], "form": "SC 13D", "seed_only_before": "2020-07-01", "entry_from": "2020-07-01", "entry_to": "2022-11-30"},
+ "header": "https://www.sec.gov/Archives/edgar/data/<cik>/<accession without dashes>/<accession>-index-headers.html: ACCEPTANCE-DATETIME (New York) and the SUBJECT COMPANY CENTRAL INDEX KEY",
+ "panel_manifest": "data/manifests/panel_us_repair-20261008T114805Z.json",
+ "panel_sha256": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b",
+ "ticker_map": "https://www.sec.gov/files/company_tickers_exchange.json (fetched at collection, sha256 recorded)",
+ "repeat_days": 90, "operating_days": 550, "dilution_sessions": 20, "moved_already": 1.15, "microcap_usd": 50000000,
+ "plan": {"function": "idxsig.event_study.us_config", "hold": 20},
+ "controls": {"function": "idxsig.event_study.run_events", "version": "v2", "draws": 200, "seed": 20261007, "overlap": "skip"},
+ "statistic": {"sample": "FIRE, status EXITED with at least one scored control", "go_min_scored": 300, "primary": "mean excess, t from 10,000 bootstrap resamples of ISO weeks of the entry session (seed 20261203)"},
+ "verdict": {"KILL": "mean excess <= 0", "NOT_KILLED": "mean excess > 0 (not a confirmation: survivor-only prices)", "INCONCLUSIVE": "fewer than 300 scored FIRE events (no return read)"},
+ "trial_file": "research/QUANT_GRADE/trials/CATALYST_REGISTER_v1_SEC13D_KILL_TEST_2020_2022.json (counted, variants 1)"
+}

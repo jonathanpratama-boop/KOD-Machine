@@ -1,0 +1,125 @@
+{
+ "protocol_id": "KOD-CATALYST-FAMILY-DILUTION_8K-v1",
+ "version": "1.0",
+ "frozen": "2026-10-28",
+ "family": "DILUTION_8K",
+ "market": "US",
+ "counted": true,
+ "owner_decision": "2026-10-28, the owner: 'merge PR #16 and do 1, 2, 3, 4, 5' (item 3: more families in parallel); handoff/decisions/2026-10-28c_proof_program.md",
+ "ledger": "paper/catalysts.jsonl (the Catalyst Register's chain)",
+ "question": "an AVOID flag: after an 8-K reporting unregistered sales of equity (Item 3.02), does the issuer underperform matched twins over the next 20 sessions? Prior evidence: US_8K_ITEMS (counted test 27, survivor-only, 2020-07..2023): Item 3.02 mean 20-session excess -2.82%, t -4.33, n 1,558. Not a short: borrow costs are not free data, so no short return is claimed.",
+ "direction": -1,
+ "event": "an 8-K (EDGAR form type exactly '8-K'; not 8-K/A) whose EDGAR current-feed entry lists 'Item 3.02' in its summary",
+ "source": "EDGAR current-filings Atom feed, https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&type=8-K&company=&dateb=&owner=include&start=<k>&count=100&output=atom (filer entries; <updated> = acceptance time; the summary lists the items); up to 9 pages per batch, stopping at a page older than the window start or the previous batch's newest entry",
+ "window_start": "2026-10-29T00:00:00-04:00",
+ "batches": "as SEC13D: every batch is recorded, also an empty one; every new 8-K with Item 3.02 is listed with a status; a batch whose read does not reach back to the previous batch's newest entry (the window start for the first batch), or reads nothing, records a coverage gap; missed filings are never backfilled",
+ "issuer": {
+  "universe": "a ticker of the issuer CIK (company_tickers_exchange.json, sha256 recorded per batch), the first in SEC order that is fresh and eligible in the US paper scan of the signal session (else SKIP_NOT_IN_UNIVERSE; no ticker: SKIP_NO_TICKER); an operating issuer by catalysts.is_operating (a 10-K, 10-Q, 20-F or 40-F in 550 days, no fund report; else SKIP_NOT_OPERATING)",
+  "repeat": "another 8-K with Item 3.02 from the same issuer in the 90 calendar days before (submissions JSON 'items'), or a set of this family on the same issuer sealed in those days -> SKIP_REPEAT_90D"
+ },
+ "timing": {
+  "entry_session": "the first NYSE session whose 09:15 New York time is after the sealing time (catalysts.NYSE_HOLIDAYS, 2026-2027)",
+  "signal_session": "the NYSE session before the entry session; the US paper scan of that session must exist",
+  "entry_cutoff": "09:15 New York time of the entry session; a set sealed later is refused",
+  "late": "accepted at or before 16:00 New York of the NYSE session before the signal session -> SKIP_LATE"
+ },
+ "plan": {
+  "window": "H20",
+  "kind": "plan",
+  "entry": "the entry session's opening print",
+  "entry_window": 1,
+  "holding_sessions": 20,
+  "exit": "the close of the 20th session after entry",
+  "costs": "the US profile's fees and cost tiers (EXEC-US-v1)",
+  "stop": "none",
+  "role": "a yardstick, not a strategy"
+ },
+ "coverage": "every sealed set is FIRE (no abstention rule; a replication of test 27's event); the pre-entry move (as SEC13D's MOVED_ALREADY input) is recorded, descriptively",
+ "twins": "speculation.draw_twins on the signal session's US features (band, liquidity, momentum, drawdown; fresh, eligible, not flagged), excluding the batch's event tickers and the scan's candidates, permuted with seed int(sha256('KOD-CATALYST-REGISTER-v1:' + set_id)[:8], 16); taken in that order, a name is a twin if it is an operating issuer and has no idxsig.catalyst.is_dilution filing (8-K Item 3.02, 424B, S-1, S-3, F-1, F-3, EFFECT) in the 90 days before sealing; at most 15 checked; the first 5 that pass",
+ "cone": [
+  {
+   "id": "LOSES_TO_TWINS_20",
+   "statement": "the plan's net return is below the twins' median net return",
+   "prior": 0.55,
+   "prior_source": "declared and weak: test 27's mean 20-session excess was -2.82% (t -4.33); its share of negative excess is not on record",
+   "resolves_with": "H20"
+  },
+  {
+   "id": "GAIN0_20",
+   "statement": "the plan's net return after costs is above zero",
+   "prior": "running",
+   "resolves_with": "H20"
+  },
+  {
+   "id": "FADE10_20",
+   "statement": "the plan's net return is at or below -10%",
+   "prior": "running",
+   "resolves_with": "H20"
+  },
+  {
+   "id": "RUN30_20",
+   "statement": "a close in the 20 sessions after the signal session is at least 1.30 x the signal close",
+   "prior": "running",
+   "resolves_with": "H20"
+  }
+ ],
+ "decision": {
+  "sample": "sets of this family, window H20, RESOLVED with a paired difference",
+  "primaries": {
+   "MEAN": {
+    "what": "per-session mean of (twins' mean net - plan net), one-sided t against 0, df = sessions - 1",
+    "signed_by_direction": true,
+    "eligible_extra": "none (an avoid flag; the estimate is the underperformance)"
+   },
+   "WIN_RATE": {
+    "what": "per set, a win is the plan's net below the twins' median net (LOSES_TO_TWINS_20); per-session share of wins, one-sided t against 0.5",
+    "statement": "LOSES_TO_TWINS_20",
+    "eligible_extra": "none"
+   }
+  },
+  "require_positive_mean_net": false,
+  "looks": {
+   "n": [
+    60,
+    120,
+    240,
+    480,
+    960,
+    1920
+   ],
+   "t_min": [
+    3.75,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0
+   ],
+   "min_sessions": [
+    15,
+    15,
+    15,
+    30,
+    60,
+    120
+   ],
+   "source": "the same design as research/CATALYST_REGISTER_v1/prereg_2.json (Lan-DeMets O'Brien-Fleming-type spending at 60/120/240 with the t >= 3.0 floor, then t >= 3.0)"
+  },
+  "at_a_look": {
+   "eligible": "t >= that look's t_min, one-sided p < 0.05, estimate > 0, and the primary's eligible_extra",
+   "futility": "from the 240 look on, a primary whose estimate is <= 0 stops: FAIL (futility)",
+   "fail": "a primary not eligible at the 1920 look fails",
+   "confirmed": "eligible at a look and at the next look",
+   "family": "the family stops when both primaries have stopped"
+  },
+  "counted": "each look adds research/QUANT_GRADE/trials/CATALYST_FAMILY_DILUTION_8K_<MEAN|WIN_RATE>_n<look>.json (counted)",
+  "reading": "ELIGIBLE means an exclusion rule worth the owner's review (avoid these names after an Item 3.02 8-K); it never means a short trade"
+ },
+ "forbidden": [
+  "a backtest of this family (test 27 is the prior evidence; this register is the prospective test)",
+  "reading a sealed holdout",
+  "changing a rule after the first set of this family is sealed (a change is a v2 with its own trial files)",
+  "backfilling",
+  "any order, any short, any change to PAPER-POLICY-v4 or ledger.jsonl"
+ ]
+}

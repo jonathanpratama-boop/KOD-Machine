@@ -155,7 +155,7 @@ def main(argv=None) -> int:
     p_sr.add_argument("--commit", action="store_true")
     p_cs = sub.add_parser("catalyst-seal", help="seal Catalyst Register sets for a family's new events before their entry "
                                                 "cutoff (research/CATALYST_REGISTER_v1)")
-    p_cs.add_argument("--family", choices=("SEC13D", "IDX_INDEX"), required=True)
+    p_cs.add_argument("--family", choices=("SEC13D", "IDX_INDEX", "DILUTION_8K", "FORM4"), required=True)
     p_cs.add_argument("--events", help="IDX_INDEX: the review's events file (research/CATALYST_REGISTER_v1/events/)")
     p_cs.add_argument("--dry-run", action="store_true", help="build and print the batch; append nothing")
     p_cs.add_argument("--commit", action="store_true", help="commit the records and push (GitHub receipt)")
@@ -724,6 +724,8 @@ def main(argv=None) -> int:
         if args.cmd == "catalyst-seal":
             if args.family == "SEC13D":
                 batch, sets = catalysts.sec13d_batch(now, catalysts.sec_client())
+            elif args.family in catalysts.FAMILY_MODULES:  # later families (research/CATALYST_FAMILIES/<family>/)
+                batch, sets = catalysts.family_module(args.family).batch(now, catalysts.sec_client())
             else:
                 if not args.events:
                     print("catalyst-seal --family IDX_INDEX needs --events <file>")
@@ -736,6 +738,8 @@ def main(argv=None) -> int:
                       + (f" ({e['reason']})" if e.get("reason") else "") + (f" {e['coverage']}" if e.get("coverage") else ""))
             for s in sets:
                 print(catalysts.card(s))
+            if batch.get("counts"):
+                print("  not events: " + ", ".join(f"{k} {v}" for k, v in batch["counts"].items()))
             print(f"{args.family}: {len(batch['events'])} new event(s), {len(sets)} set(s) for entry {batch['entry_session']}")
             if args.dry_run:
                 print("dry run: nothing appended")
