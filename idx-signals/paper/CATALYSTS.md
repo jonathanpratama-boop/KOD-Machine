@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-29T10:36:05Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-29T10:36:14Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -24,7 +24,7 @@ Sets 14 over 1 sessions.
 
 ## DILUTION_8K (counted at each look; direction -1; `KOD-CATALYST-FAMILY-DILUTION_8K-v1`)
 
-Sets 0 over 0 signal sessions; events seen: none; coverage gaps 0.
+Sets 1 over 1 signal sessions; events seen: SEALED 1; coverage gaps 0.
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
 
@@ -102,13 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 17 tags: 2 true, 0 unknown.
 
 ## Latest sets
-
-### IDX_INDEX CUAN (DELETE LQ45, DELETE IDX80) - effective 2026-11-02, sealed 2026-10-28T10:38:02Z, cutoff 2026-10-29T01:45:00Z
-Set `CAT-IDX_INDEX-IDX-MAJOR-2026-11-02-CUAN`, scan `SCAN-2026-10-28-F1_ARA`; signal close 432 on 2026-10-28; entry: the closing auction of the session after the signal session (2026-10-29). Windows: POST20: entry +2, hold 20; RUNUP: entry +1, hold 1.
-Confidence SINGLE_SOURCE; events file sha256 `39df501b3e5a`.
-Coverage DESCRIPTIVE (not counted).
-Twins (band+liq+mom+dd): IRSX 226, NICL 232, ARTO 565, EXCL 1690, JARR 2230.
-Cone: WITH_FLOW_RUNUP p=0.50; REVERSAL_POST20 p=0.50.
 
 ### IDX_INDEX ELSA (ADD LQ45) - effective 2026-11-02, sealed 2026-10-28T10:38:02Z, cutoff 2026-10-29T01:45:00Z
 Set `CAT-IDX_INDEX-IDX-MAJOR-2026-11-02-ELSA`, scan `SCAN-2026-10-28-F1_ARA`; signal close 655 on 2026-10-28; entry: the closing auction of the session after the signal session (2026-10-29). Windows: POST20: entry +2, hold 20; RUNUP: entry +1, hold 1.
@@ -207,4 +200,11 @@ Filing `0001493152-26-049116` by JDH Capital I, L.P.; Item 4 intent words: board
 Coverage **ABSTAIN** (DILUTION_RECENT); pre-entry move +0.00%, market value USD 622.8M, dilution filings 1.
 Twins (band+liq+mom+dd): GLSI 18.31, USNA 14.62, FDUS 19.09, TIPT 17.21, AERO 15.21.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### DILUTION_8K FRHC - event `0000924805-26-000055`, accepted 2026-10-29T06:22:36-04:00, sealed 2026-10-29T10:36:13Z, cutoff 2026-10-29T13:15:00Z
+Set `CAT-DILUTION_8K-0000924805-26-000055`, scan `SCAN-US-2026-10-28-G2_RET30`; signal close 175.55 on 2026-10-28; entry: the entry session's opening print (2026-10-29). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move +0.00%.
+Twins (band+liq+mom+dd): MUR 42.99, RTO 22.79, ABM 53.3, CUZ 28.51, ASB 30.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
