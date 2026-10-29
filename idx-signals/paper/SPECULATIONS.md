@@ -1,12 +1,31 @@
 # Speculation Register (KOD-SPEC-REGISTER-v1, protocol sha256 c0ec3bbfa948)
 
-Generated 2026-10-29T00:27:49Z from `paper/speculations.jsonl`: 22 sets sealed, 0 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
+Generated 2026-10-29T10:35:30Z from `paper/speculations.jsonl`: 24 sets sealed, 0 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
 
 Windows: **BASE5**: the frozen plan: the validated harness plan, prospectively, beside twins; **PATH20**: the 20-session price path of the candidate and its twins; no plan.
 
-## IDX: 0 sets over 0 signal sessions
+## IDX: 2 sets over 1 signal sessions (2026-10-29 .. 2026-10-29, 2.00 sets per scan)
 
-No set sealed yet.
+| Plan | Resolved | Traded | Paired | Sessions | Mean net | Median net | Twins net | Diff | t | p | Look | Verdict |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|
+| BASE5 | 0 | 0 | 0 | 0 | n/a | n/a | n/a | n/a | n/a | n/a | - / next 60 | accumulating (no look reached) |
+
+Projection (labelled): sessions of resolved sets needed for t >= 3 if the true paired effect were 2, 5 or 10 points per set, and sessions to the next look at the current candidate rate.
+
+| sd per session (source) | 2pt | 5pt | 10pt | to next look |
+|---|---:|---:|---:|---:|
+| 0.197 (validation trade sd 0.1967 (run 20261009T050040Z_MOONSHOT_E1_D1_v1.1), paired, / sqrt(sets per session)) | 871 | 140 | 35 | 30 |
+
+PATH20 windows resolved: 0.
+
+| Statement | Graded | Realised rate | Twins' rate | Mean prior | Brier (register) | Brier (0.5) | Brier (running) |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| RUN30_5 | 0 | | | | | | |
+| FADE10_5 | 0 | | | | | | |
+| GAIN0_5 | 0 | | | | | | |
+| BEATS_TWINS_5 | 0 | | | | | | |
+| RUN30_20 | 0 | | | | | | |
+| DOUBLE_20 | 0 | | | | | | |
 
 ## US: 20 sets over 2 signal sessions (2026-10-27 .. 2026-10-28, 10.00 sets per scan)
 
@@ -322,6 +341,40 @@ Twins (band+liq+mom+dd): PARTI 0.0388, DODO 0.0244, IO 0.1516, AXL 0.0488, AT 0.
 | RUN30_5: a close in s+1..s+5 is >= 1.30 x the signal close | 0.185 | BASE5 |
 | FADE10_5: the BASE5 net return is <= -0.10 | 0.511 | BASE5 |
 | GAIN0_5: the BASE5 net return is > 0 | 0.314 | BASE5 |
+| BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
+| RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
+| DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
+
+Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); path window PATH20.
+
+### IDX YPAS (2026-10-29) - sealed 2026-10-29T10:35:28Z, cutoff 2026-10-30T01:45:00Z
+Decision `SCAN-2026-10-29-F1_ARA-YPAS` (PASS), bound to ledger record `d71d086097e6`; set `b32758e651be`.
+Signal close 1055 (reference 845.0); entry: the next session's closing auction, if traded and not locked at ARA.
+Tag: 3 flags today vs trailing median 5.5 -> hot_day = False.
+Twins (band+liq+mom+dd): ITMA 1070, SIPD 615, TALF 580, GMTD 820, LION 258.
+
+| Statement | Prior | Resolves with |
+|---|---:|---|
+| RUN30_5: a close in s+1..s+5 is >= 1.30 x the signal close | 0.183 | BASE5 |
+| FADE10_5: the BASE5 net return is <= -0.10 | 0.359 | BASE5 |
+| GAIN0_5: the BASE5 net return is > 0 | 0.311 | BASE5 |
+| BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
+| RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
+| DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
+
+Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); path window PATH20.
+
+### IDX ALKA (2026-10-29) - sealed 2026-10-29T10:35:28Z, cutoff 2026-10-30T01:45:00Z
+Decision `SCAN-2026-10-29-F1_ARA-ALKA` (PASS), bound to ledger record `a1368533b604`; set `96f608acc6a4`.
+Signal close 4420 (reference 3540.0); entry: the next session's closing auction, if traded and not locked at ARA.
+Tag: 3 flags today vs trailing median 5.5 -> hot_day = False.
+Twins (band+liq+mom+dd): NICL 224, KDTN 260, DATA 955, WBSA 474, FILM 322.
+
+| Statement | Prior | Resolves with |
+|---|---:|---|
+| RUN30_5: a close in s+1..s+5 is >= 1.30 x the signal close | 0.183 | BASE5 |
+| FADE10_5: the BASE5 net return is <= -0.10 | 0.359 | BASE5 |
+| GAIN0_5: the BASE5 net return is > 0 | 0.311 | BASE5 |
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
