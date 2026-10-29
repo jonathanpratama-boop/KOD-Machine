@@ -1,6 +1,6 @@
-# LEARNER v2.3: the one live challenger (KOD-LEARNER-v2.3, protocol sha256 2f88cbc9c0b7)
+# LEARNER-v2.4: the one live challenger (KOD-LEARNER-v2.4, protocol sha256 8132768cb6c1)
 
-Generated 2026-10-29T12:46:33Z. Paper only; no orders.
+Generated 2026-10-29T15:48:36Z. Paper only; no orders.
 
 ## The three plain answers
 

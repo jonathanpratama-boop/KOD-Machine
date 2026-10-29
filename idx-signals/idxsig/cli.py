@@ -177,7 +177,7 @@ def main(argv=None) -> int:
     for name in ("learner-report", "learner2-report"):
         p_lr = sub.add_parser(name, help="write paper/LEARNER_V2.md (earned confidence per kind, calls, beliefs)")
         p_lr.add_argument("--commit", action="store_true")
-    p_l3 = sub.add_parser("learner3-forecast", help="LEARNER v2.3 (research/LEARNER_v2/protocol_v2_3.json): the one live "
+    p_l3 = sub.add_parser("learner3-forecast", help="LEARNER v2.4 (research/LEARNER_v2/protocol_v2_4.json): the one live "
                           "challenger's forecast for every US speculation set still before its cutoff")
     p_l3.add_argument("--commit", action="store_true")
     p_l3r = sub.add_parser("learner3-report", help="write paper/LEARNER_V3.md")
@@ -769,7 +769,7 @@ def main(argv=None) -> int:
             path = learner3.write_report()
             print(path.read_text(encoding="utf-8"))
             if args.commit:
-                print(paper.commit_and_push([path], "learner v2.3: report", trailer))
+                print(paper.commit_and_push([path], "learner v2.4: report", trailer))
             return 0
         sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "kod-machine"))
         from kod.timestamp import RFC3161Timestamper
@@ -778,7 +778,7 @@ def main(argv=None) -> int:
         for n in notes:
             print("  " + n)
         if not recs:
-            print("no US speculation set awaiting a v2.3 forecast before its cutoff; nothing recorded")
+            print("no US speculation set awaiting a v2.4 forecast before its cutoff; nothing recorded")
             return 0
         print("  earned confidence: " + ", ".join(f"{k} {v['alpha']:.2f}" for k, v in recs[0]["gate"].items()))
         for r in recs:
@@ -786,7 +786,7 @@ def main(argv=None) -> int:
         written, _ = learner3.append(recs, RFC3161Timestamper())
         written.append(learner3.write_report())
         if args.commit:
-            print(paper.commit_and_push(written, f"learner v2.3: {len(recs)} forecast(s) sealed", trailer))
+            print(paper.commit_and_push(written, f"learner v2.4: {len(recs)} forecast(s) sealed", trailer))
     elif args.cmd in ("catalyst-seal", "catalyst-tag", "catalyst-score", "catalyst-report"):
         import os
         from datetime import datetime, timezone

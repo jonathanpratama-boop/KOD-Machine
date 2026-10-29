@@ -80,10 +80,20 @@ class Features(unittest.TestCase):
         self.assertEqual(f["streak"], 0.2)  # the 1% up day and the spike
         self.assertEqual(f["dist_high120"], 0.0)  # a new high
         self.assertEqual(f["age120"], 1.0)
+        raw = L3.chart_raw(m, 0, d)  # v2.4's chart block: a spike that closes at a new high
+        self.assertGreater(raw["rsi14"], 70)
+        self.assertGreater(raw["stoch_k14"], 0.9)
+        self.assertGreater(raw["bollinger_b"], 1.0)
+        self.assertGreater(raw["macd_hist"], 0.0)
+        for k in L3.CHART:
+            self.assertTrue(-4 <= f[k] <= 4)
         m2 = build(*market(n_sessions=400))
         self.assertEqual(L3.bar_features(m2, np.zeros(m2.shape, dtype=bool), 0, 390)["age120"], 1.0)
         a["present"][0, :d - 50] = False
         self.assertAlmostEqual(L3.bar_features(build(tickers, dates, a), flag, 0, d)["age120"], 51 / 120)
+        a["present"][0, :d - 20] = False  # fewer than 30 sessions: the chart block is missing (0 after scaling)
+        g = L3.bar_features(build(tickers, dates, a), flag, 0, d)
+        self.assertEqual([g[k] for k in L3.CHART], [0.0] * 4)
 
 
 def warm_start(path: Path, n=400, seed=1) -> str:
@@ -182,7 +192,7 @@ class EndToEnd(unittest.TestCase):
     def test_learns_scores_and_verifies(self):
         """Guards against: a forecast that does not reproduce from the ledger states it records; a gate that opens on
         no evidence; a claim read before its look; a verify that misses an edited forecast."""
-        self.recs, self.feats, self.sessions = registers(n_sessions=95)
+        self.recs, self.feats, self.sessions = registers(n_sessions=95, skill=1.2)  # 33 features, 32 of them noise
         lrecs = self.run_days(80)
         self.assertEqual(len(lrecs), 80 * 8)
         asof = f"{self.sessions[80]}T23:05:00Z"

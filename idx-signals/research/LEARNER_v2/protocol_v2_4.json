@@ -1,0 +1,129 @@
+{
+  "protocol_id": "KOD-LEARNER-v2.4",
+  "version": "2.4",
+  "frozen": "2026-10-29, before any set it can forecast existed (the first register v1.1 sets are sealed at the US run of 2026-10-29 22:47 UTC) and before KOD-LEARNER-v2.3 sealed any forecast",
+  "relation_to_v2_2": "a challenger beside KOD-LEARNER-v2.2, which keeps running untouched as monitoring; its own ledger, warm start and claim. v2.2's DUMP10_5 forecasts on the same sets are the comparison",
+  "owner_instruction": "one question, one credible comparison, one prospective result; speedrun",
+  "ledger": "paper/learner_v3.jsonl",
+  "report": "paper/LEARNER_V3.md",
+  "design_evidence": "research/PATH_HISTORY_v1/REPORT.md (one pre-registered look at 14,561 past spikes, fitted to 2022 and scored from 2023 on): the next-session own dump is the best-discriminated dump statement out of time (US AUC 0.627 with the EDGAR and FINRA block) and the fastest to resolve; pumps barely rank; the context prior adds nothing; this headline was chosen there before any live outcome existed; research/TA_HISTORY_v1/REPORT.md (one pre-registered look, rolling origin 2022 and 2023): the chart block adds to both statements (next-session own dump AUC 0.605 -> 0.623, Holm p 0.002; 5-session +0.010, Holm p 0.021), carried by Stochastic %K; the research-backed block (lottery MAX, 52-week high, 12-1 momentum) adds nothing and stays out",
+  "population": {
+    "family": "SPEC_US: the Speculation Register's US sets (a day of +30% or more), read as the learner reads them",
+    "register": "sealed under KOD-SPEC-REGISTER-v1.1 or later (the cone carries DOWN10_1 and FADE10_5)",
+    "when": "every eligible set still before its entry cutoff (13:30 UTC of the entry session) that has no forecast yet, at the US run after the register seals"
+  },
+  "statements": {
+    "NEXT_DUMP10_1": {
+      "headline": true,
+      "base": "DOWN10_1",
+      "window": "NEXT1",
+      "class": "1",
+      "thesis": "it closes at least 10% below the signal close at the next session, when most of its twins do not",
+      "graded": "learner2.own_move of DOWN10_1: false when the close of s+1 is above 0.90x the signal close; true when it is at or below and fewer than half of the graded twins' are; ungraded when it is and no twin was graded"
+    },
+    "DUMP10_5": {
+      "headline": false,
+      "base": "FADE10_5",
+      "window": "BASE5",
+      "class": "5",
+      "thesis": "its 5-session plan ends at least 10% down, when most of its twins do not",
+      "graded": "learner2.own_move of FADE10_5, exactly as v2.2 grades it"
+    },
+    "prior": "p0 = the set's own sealed cone prior for the base statement (FADE10_5: the frozen US prior 0.403; DOWN10_1: the register's running base rate, 0.5 while fewer than 20 resolved)",
+    "reads": "a BACK call on a dump statement reads AVOID the stock; an AVOID call reads the stock holds"
+  },
+  "features": {
+    "P0": "the sealed set's price features as v2.2 reads them (learner2.features, direction +1): s_ret1, s_ret5, s_ret20, s_dd60, log_volr, s_cpos, log_adv",
+    "P1": {
+      "from the scan's committed feature frame": "gap (open over previous close - 1, / 0.30, clipped to +-3), log_price (log10 close - 0.5, clipped), breadth (log1p of the detector's flags that day / 3, 0..2), mkt_ret (median day return of fresh names / 0.03, clipped)",
+      "from the scan's price pull, every lookback inside 120 sessions": "vol20_pre (sd of log returns over the 20 sessions through d-1, at least 15, / 0.10, 0..5), spike_z (the signal-day return over vol20_pre, capped at 50, / 10, 0..5), spikes60 (detector days in the 60 sessions before d, capped at 3, / 3), streak (consecutive up closes ending at d, capped at 10, / 10), dist_high120 (level over its 120-session high - 1, / 0.5, -2..0), age120 (present sessions in the last 120, / 120)"
+    },
+    "E_US": {
+      "EDGAR, filing dates only (research/PATH_HISTORY_v1/ADDENDUM_1.md)": "filing_8k (an 8-K, 8-K/A, 6-K or 6-K/A dated the previous session or d), offering90 (S-1, S-1/A, S-1MEF, F-1, F-1/A, S-3, F-3, S-3ASR, 424B1, 424B3, 424B4 or 424B5 in the 90 days to d), shelf3y (S-3, F-3 or S-3ASR in the 3 years to d), b5_12m (a 424B5 in the 365 days to d), has_edgar",
+      "XBRL frames": "log_shares (log10 of dei:EntityCommonStockSharesOutstanding from the latest calendar quarter that ended at least 120 days before d, - 7.5, clipped; missing when a split falls between that quarter end and d), log_turnover (log10 of the signal day's as-traded volume over those shares + 1.5, clipped), has_shares",
+      "FINRA consolidated daily short-sale files (published about 21:18 UTC, before the US run)": "short_ratio (short volume over total volume on d, (r - 0.4) / 0.2, clipped), short_abn (r minus its median over the previous 20 files, / 0.15, clipped), has_short",
+      "the price pull's split events": "revsplit6m (a split with numerator / denominator <= 2/3 effective in the 180 days to d)"
+    },
+    "missing": "0 after scaling, with the has_ flag",
+    "code": "idxsig/learner3.py: frame_features, bar_features, edgar_features; the warm start used the same functions",
+    "CHART": {
+      "from the scan's price pull, inside the same 120-session window": "rsi14 (Wilder RSI(14) on the chain closes), macd_hist (MACD(12, 26, 9) histogram over the level), stoch_k14 ((close - lowest low) / (highest high - lowest low) over the 14 present sessions ending at d, highs and lows scaled onto the chain), bollinger_b ((close - (MA20 - 2 sd20)) / (4 sd20)); None where fewer than 30 sessions are present",
+      "scale": "(raw - mean) / sd with the frozen mean and sd of the 6,225 warm-start events (features only): rsi14 (66.780278, 16.715989), macd_hist (0.020247, 0.051156), stoch_k14 (0.713125, 0.239647), bollinger_b (1.077134, 0.417362); clipped to +-4; missing is 0",
+      "code": "idxsig/learner3.py chart_raw and bar_features"
+    }
+  },
+  "benchmark": {
+    "features": [
+      "vol20_pre",
+      "spike_z",
+      "s_ret1",
+      "mkt_ret",
+      "breadth"
+    ],
+    "what": "the same model, rows, priors and penalties on volatility and market context only, fitted beside the learner and recorded with every forecast as `bench`: the pre-declared baseline the learner's extra information is measured against"
+  },
+  "warm_start": {
+    "file": "research/LEARNER_v2/warmstart_v4/events_us.csv.gz",
+    "sha256": "e13eae758ee610bc6caec87e65ebdc86924ea17dd3026c6660983075cad68faf",
+    "events": 6225,
+    "source": "the v2.3 warm start's 6,225 events with the chart block added (warmstart_v4/BUILD.json; the 29 v2.3 columns are identical)",
+    "weight": "each statement's history rows share a total weight of at most N_CAP = 300 live outcomes, with their own intercept (hist:path_history_v1)"
+  },
+  "model": {
+    "form": "learner2.Model on the PATH kind: logit p = logit(p0) + intercept[task or history] + (x - centre[task]) . (shared DUMP block + own[task]); the two statements share one DUMP slope block",
+    "penalties": "learner2's: LAMBDA_SHARED 16, LAMBDA_TASK 25, intercept sd 1.5; Laplace covariance; Newton with step-halving, an error on non-convergence",
+    "anchor": "the climatology twin: an intercept-only fit on the same live rows, priors and weights, per statement (learner2.anchor_fit); the forecast is the anchor moved by the set's features measured from the live centre",
+    "centre": "per statement, the mean recorded features of every forecast made so far (learner3.live_centres): features only, no outcome",
+    "training rows": "the learner's own earlier forecasts (their recorded features, hash-chained) joined with the register's resolutions before the forecast time; a set this learner never forecast contributes no row and is listed as due-without-forecast"
+  },
+  "gate": {
+    "claim_gate": "PATH/1: one observation per calendar day of resolution (populated days only), lag 1, learner2's gate (asymptotic confidence sequence with the truncated long-run sd, running maximum, hysteresis on the last 364 daily observations): t_min 30 populated sessions, delta 0.05, t_star 52 weeks (364 daily observations), z_open 1.645, z_stay 0.842, skill_full 0.02",
+    "monitoring_gate": "PATH/5: weekly blocks, lag 1, the same rule; never a claim",
+    "budget": "one gate, one 5% nominal budget; measured false openings under the fair null 0 of 200 two-year runs (upper bound 1.5%; research/PATH_HISTORY_v1/sims/daily_gate.py); the bound is asymptotic and the hysteresis a measured heuristic, not finite-sample protection against every dependence",
+    "alpha": "min(proof, recent lower bound) / mean anchor Brier / skill_full, clipped to 0..1; the published forecast is the anchor moved by alpha times the deviation"
+  },
+  "calls": {
+    "rule": "learner2.call_of: BACK when the deviation is at least 0.4 logit and its 95% lower bound is above zero; AVOID the mirror; live when alpha times the deviation clears the margin, shadow otherwise",
+    "thesis": "sealed with the call; a BACK on NEXT_DUMP10_1 is graded RIGHT only when the stock closed at least 10% lower at the next session and fewer than half of its twins did"
+  },
+  "claim": {
+    "statistic": "AUC of the raw NEXT_DUMP10_1 forecasts over resolved pairs (each set once), standard error from a bootstrap over signal sessions (1000 resamples, seed 20261029), z = (AUC - 0.5) / se",
+    "looks": [
+      250,
+      500,
+      1000
+    ],
+    "z_min": [
+      3.75,
+      3.0,
+      3.0
+    ],
+    "min_sessions": [
+      30,
+      60,
+      120
+    ],
+    "verdict": "SKILL when z >= z_min at a look; not shown otherwise; final at the 1000 look",
+    "secondary": "the Brier gain over the anchor and over the benchmark (daily blocks, long-run se) for both statements; the paired Brier difference against v2.2's DUMP10_5 forecasts on the same sets; hit rates of shadow and live calls; all descriptive",
+    "reporting": "AUC and Brier gain are reported apart and are not interchangeable (research/PATH_HISTORY_v1/ADDENDUM_3.md)",
+    "trial_file": "research/QUANT_GRADE/trials/LEARNER_v2_4_NEXT_DUMP_registered.json (PENDING), counted at the first look reached"
+  },
+  "verify": {
+    "reproduces": "every forecast, field by field, by retraining on exactly the ledger states it records (line counts and last hashes of both registers; the learner's own earlier lines) with the features it recorded",
+    "features": "recomputed from the raw inputs the forecast names (the scan's frame and price pull, the day's EDGAR cache, the FINRA files) wherever they are present; where absent the recorded features are taken as recorded and the count is reported",
+    "binding": "the set's hash, its register version (v1.1 or later), made before the cutoff; an RFC 3161 token's time before the cutoff where a token exists",
+    "coverage": "every eligible set past its cutoff without a forecast is listed"
+  },
+  "routine": "the US run, after `speculate --market US`: `learner3-forecast --commit`; scored by `speculate-score --market US` the next evening; `paper-verify` includes learner3.verify",
+  "never": [
+    "an outcome computed by the learner (the register grades)",
+    "tuning on running numbers",
+    "a holdout read",
+    "a feature from data published after the set's cutoff",
+    "a change to v2.2, its ledger or its forecasts",
+    "orders"
+  ],
+  "forbidden_changes": "any change is a new version with its own addendum; this protocol, the warm start and the feature code are frozen for v2.3",
+  "success_and_failure": "success is a SKILL verdict at a look with a positive Brier gain over the benchmark; failure is no verdict by the final look, which is a result about these features and this question, not a verdict on the goal, and licenses no threshold search",
+  "supersedes": "protocol_v2_3.json (KOD-LEARNER-v2.3), which sealed no forecast: v2.4 is v2.3 with the chart block of research/TA_HISTORY_v1 (ADDENDUM_4.md); everything else is v2.3's"
+}

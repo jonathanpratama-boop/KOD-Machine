@@ -1,4 +1,5 @@
-"""LEARNER v2.3 (KOD-LEARNER-v2.3, research/LEARNER_v2/protocol_v2_3.json): the one live challenger.
+"""LEARNER v2.4 (KOD-LEARNER-v2.4, research/LEARNER_v2/protocol_v2_4.json): the one live challenger. v2.4 is v2.3 with
+the chart block of research/TA_HISTORY_v1 and supersedes it before v2.3 sealed any forecast (ADDENDUM_4.md).
 
 One question, decided from research/PATH_HISTORY_v1 before any live outcome existed: for a US stock that just closed
 30% or more higher (the Speculation Register's SPEC_US sets, sealed under register v1.1 so that the next session's
@@ -55,12 +56,12 @@ from .learner2 import Row, _clip, _logit, _num, _prob, _same, anchor_fit, call_o
 from .provenance import MANIFESTS, PKG_ROOT, RAW, sha256_bytes, sha256_file, utc_stamp
 from .rules import moonshot_g
 
-PROTOCOL_JSON = PKG_ROOT / "research" / "LEARNER_v2" / "protocol_v2_3.json"
-HISTORY = PKG_ROOT / "research" / "LEARNER_v2" / "warmstart_v3" / "events_us.csv.gz"
-HISTORY_SHA256 = "d24f3f2a947f71448c77dc580ab92e2d16ad0e8d2d84b049314dc76686425b69"  # research/LEARNER_v2/warmstart_v3/BUILD.json
+PROTOCOL_JSON = PKG_ROOT / "research" / "LEARNER_v2" / "protocol_v2_4.json"  # supersedes v2.3 (ADDENDUM_4.md)
+HISTORY = PKG_ROOT / "research" / "LEARNER_v2" / "warmstart_v4" / "events_us.csv.gz"
+HISTORY_SHA256 = "e13eae758ee610bc6caec87e65ebdc86924ea17dd3026c6660983075cad68faf"  # research/LEARNER_v2/warmstart_v4/BUILD.json
 LEDGER = paper.PAPER / "learner_v3.jsonl"
 REPORT = paper.PAPER / "LEARNER_V3.md"
-VERSION = "LEARNER-v2.3"
+VERSION = "LEARNER-v2.4"
 RECORD = "LEARNER3_FORECAST"
 FAMILY = "SPEC_US"
 REGISTER_PROTOCOLS = ("KOD-SPEC-REGISTER-v1.1",)  # sets whose cone has the next session's close
@@ -89,7 +90,12 @@ P0 = ("s_ret1", "s_ret5", "s_ret20", "s_dd60", "log_volr", "s_cpos", "log_adv")
 P1 = ("gap", "vol20_pre", "spike_z", "log_price", "spikes60", "streak", "dist_high120", "age120", "breadth", "mkt_ret")
 E_US = ("filing_8k", "offering90", "shelf3y", "b5_12m", "revsplit6m", "short_ratio", "short_abn", "log_turnover",
         "log_shares", "has_edgar", "has_short", "has_shares")
-FEATURES = P0 + P1 + E_US
+CHART = ("rsi14", "macd_hist", "stoch_k14", "bollinger_b")  # v2.4 (research/TA_HISTORY_v1: the block adds)
+# (mean, sd) of each raw chart indicator over the 6,225 warm-start events (features only, no outcome), frozen: a live
+# value is scaled as (raw - mean) / sd, clipped to +-4, so the history rows and the live sets share one scale
+CHART_SCALE = {"rsi14": (66.780278, 16.715989), "macd_hist": (0.020247, 0.051156), "stoch_k14": (0.713125, 0.239647),
+               "bollinger_b": (1.077134, 0.417362)}
+FEATURES = P0 + P1 + E_US + CHART
 BENCH = ("vol20_pre", "spike_z", "s_ret1", "mkt_ret", "breadth")  # the pre-declared volatility-and-context benchmark
 BENCH_IDX = [FEATURES.index(k) for k in BENCH]
 LABELS = {**{k: L2.LABELS[k] for k in P0},
@@ -103,7 +109,8 @@ LABELS = {**{k: L2.LABELS[k] for k in P0},
           "revsplit6m": "a reverse split in the last 6 months", "short_ratio": "FINRA short-sale share of volume that day",
           "short_abn": "that share against its 20-session median", "log_turnover": "volume against shares outstanding",
           "log_shares": "shares outstanding", "has_edgar": "EDGAR filings were read", "has_short": "FINRA data was read",
-          "has_shares": "a share count was found"}
+          "has_shares": "a share count was found", "rsi14": "RSI(14)", "macd_hist": "MACD histogram",
+          "stoch_k14": "close within its 14-session high-low range (Stochastic %K)", "bollinger_b": "Bollinger %B(20, 2)"}
 
 
 def protocol() -> tuple[dict, str]:
@@ -177,9 +184,44 @@ def bar_features(m: Market, flag: np.ndarray, n: int, d: int) -> dict:
             break
     lv = level[:k + 1][present[:k + 1]]
     dist = float(level[k] / lv.max() - 1) if len(lv) and lv.max() > 0 else 0.0
-    return {"vol20_pre": _clip((vol or 0.0) / 0.10, 0, 5), "spike_z": _clip((spike_z or 0.0) / 10.0, 0, 5),
-            "spikes60": min(spikes, 3) / 3.0, "streak": min(streak, 10) / 10.0, "dist_high120": _clip(dist / 0.5, -2, 0),
-            "age120": int(present.sum()) / float(LOOKBACK)}
+    out = {"vol20_pre": _clip((vol or 0.0) / 0.10, 0, 5), "spike_z": _clip((spike_z or 0.0) / 10.0, 0, 5),
+           "spikes60": min(spikes, 3) / 3.0, "streak": min(streak, 10) / 10.0, "dist_high120": _clip(dist / 0.5, -2, 0),
+           "age120": int(present.sum()) / float(LOOKBACK)}
+    raw = chart_raw(m, n, d)
+    for key, v in raw.items():
+        sc = CHART_SCALE.get(key)
+        out[key] = 0.0 if (v is None or sc is None) else _clip((v - sc[0]) / sc[1], -4, 4)
+    return out
+
+
+def chart_raw(m: Market, n: int, d: int) -> dict:
+    """The four chart indicators of TA_HISTORY_v1 at the close of d, on the reference chain, inside the same LOOKBACK
+    window: RSI(14) (Wilder), the MACD(12, 26, 9) histogram over the level, Stochastic %K(14) on highs and lows
+    scaled onto the chain, Bollinger %B(20, 2). None where fewer than 30 sessions are present."""
+    lo = max(0, d - LOOKBACK + 1)
+    present = m.present[n, lo: d + 1]
+    close, prev = m.close[n, lo: d + 1], m.prev[n, lo: d + 1]
+    with np.errstate(divide="ignore", invalid="ignore"):
+        logret = np.where(present & (prev > 0) & (close > 0), np.log(close / prev), 0.0)
+        level = np.exp(np.cumsum(logret))
+        hi = np.where(present & (close > 0), m.high[n, lo: d + 1] / close, np.nan) * level
+        lw = np.where(present & (close > 0), m.low[n, lo: d + 1] / close, np.nan) * level
+    out = dict.fromkeys(CHART)
+    if int(present.sum()) < 30 or not present[-1]:
+        return out
+    c = pd.Series(level[present])
+    diff = c.diff()
+    up = diff.clip(lower=0).ewm(alpha=1 / 14, adjust=False).mean().iloc[-1]
+    dn = (-diff.clip(upper=0)).ewm(alpha=1 / 14, adjust=False).mean().iloc[-1]
+    out["rsi14"] = float(100.0 if dn == 0 else 100 - 100 / (1 + up / dn))
+    macd = c.ewm(span=12, adjust=False).mean() - c.ewm(span=26, adjust=False).mean()
+    out["macd_hist"] = float((macd - macd.ewm(span=9, adjust=False).mean()).iloc[-1] / c.iloc[-1])
+    h14, l14 = hi[present][-14:], lw[present][-14:]
+    span = float(np.nanmax(h14) - np.nanmin(l14)) if np.isfinite(h14).any() and np.isfinite(l14).any() else 0.0
+    out["stoch_k14"] = float((c.iloc[-1] - np.nanmin(l14)) / span) if span > 0 else None
+    ma, sd = float(c.iloc[-20:].mean()), float(c.iloc[-20:].std())
+    out["bollinger_b"] = float((c.iloc[-1] - (ma - 2 * sd)) / (4 * sd)) if sd > 0 else None
+    return out
 
 
 def edgar_features(filings: pd.DataFrame | None, shares: list[dict], short: pd.Series | None, session: str,
@@ -854,7 +896,7 @@ def render(st: dict, lrecs: list[dict] | None = None) -> str:
     c = st["claim"]
     g = st["gates"][CLAIM_GATE]
     h = st["statements"][HEADLINE]
-    out = [f"# LEARNER v2.3: the one live challenger ({st['protocol']['id']}, protocol sha256 {st['protocol']['sha256'][:12]})", "",
+    out = [f"# {VERSION}: the one live challenger ({st['protocol']['id']}, protocol sha256 {st['protocol']['sha256'][:12]})", "",
            f"Generated {st['generated_at']}. Paper only; no orders.", "",
            "## The three plain answers", "",
            "**What are we predicting?** For a US stock that just closed 30% or more higher: will it close at least 10% lower "
