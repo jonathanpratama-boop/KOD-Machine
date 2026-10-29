@@ -213,7 +213,8 @@ def statements(s: dict) -> list[tuple[str, str]]:
     """(statement, the window that resolves it) for a set: its cone; TRIANGULATED where the family has one; each raw
     move's twin-filtered statement (PUMP30_k, PUMP100_k, DUMP10_k); PUMP_AND_DUMP_k where RUN30_k and FADE10_k share a
     window."""
-    out = [(c["id"], c["resolves_with"]) for c in s.get("cone", [])]
+    # only the windows this protocol names (CLASS_OF): a register may add windows later for a later learner version
+    out = [(c["id"], c["resolves_with"]) for c in s.get("cone", []) if c["resolves_with"] in CLASS_OF]
     ids = dict(out)
     tri = TRIANGLES.get(s.get("family"))
     if tri and all(t in ids for t in tri):

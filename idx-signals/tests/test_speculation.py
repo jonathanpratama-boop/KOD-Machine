@@ -266,7 +266,7 @@ class Sealing(unittest.TestCase):
         self.assertEqual(s["scan_record_hash"], scan["record_hash"])
         self.assertEqual(s["entry_cutoff"], "2026-10-28T13:30:00Z")
         self.assertEqual(s["entry"]["basis"], "open")
-        self.assertEqual((s["plan"], s["windows"]), ("BASE5", ["BASE5", "PATH20"]))
+        self.assertEqual((s["plan"], s["windows"]), ("BASE5", ["BASE5", "PATH20", "NEXT1"]))  # v1.1 (ADDENDUM_1)
         cone = {c["id"]: c for c in s["cone"]}
         self.assertAlmostEqual(cone["RUN30_5"]["prior"], 0.15370018975332067)
         self.assertEqual(cone["FADE10_5"]["prior"], 0.403)
@@ -486,3 +486,74 @@ class Protocol(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class NextSession(unittest.TestCase):
+    """v1.1 (research/SPECULATION_REGISTER_v1/ADDENDUM_1.md): the NEXT1 window."""
+
+    def setUp(self):
+        warnings.simplefilter("ignore")
+
+    def make_set(self, m, twins=("U01", "U02", "U03", "U04"), session_index=10):
+        return {"type": "SPECULATION_SET", "market": "US", "set_id": "SPEC-N", "ticker": "U00",
+                "signal_session": str(m.dates[session_index]), "signal": {"close": float(m.close[0, session_index])},
+                "entry": {"basis": "open"}, "windows": ["BASE5", "PATH20", "NEXT1"],
+                "twins": [{"ticker": t, "close": float(m.close[list(m.tickers).index(t), session_index])} for t in twins],
+                "cone": [{"id": c["id"], "prior": 0.4, "resolves_with": c["resolves_with"]} for c in sp.protocol()[0]["cone"]],
+                "protocol": {"id": "KOD-SPEC-REGISTER-v1.1", "sha256": "s"}}
+
+    def test_next1_grades_the_next_close_against_the_twins(self):
+        """Guards against: a next-session statement read on the wrong session, or the twins' median taken from the plan."""
+        m, a = us_market(n_sessions=30)
+        d = 10
+        set_closes(a, 0, d + 1, [22.0])  # -12%
+        set_closes(a, 1, d + 1, [26.0])  # +4%
+        set_closes(a, 2, d + 1, [24.0])  # -4%
+        set_closes(a, 3, d + 1, [25.0])  # 0
+        set_closes(a, 4, d + 1, [25.0])  # 0
+        m = build(m.tickers, m.dates, a)
+        r = sp.resolve_set(self.make_set(m), "NEXT1", m, pd.DataFrame())
+        self.assertEqual((r["status"], r["candidate"]["status"], r["paired"], r["resolver"]), ("RESOLVED", "PATH", None, "spec-resolve-v1.1"))
+        got = {x["id"]: (x["outcome"], x["twins_rate"]) for x in r["cone"]}
+        self.assertEqual(set(got), {"DOWN10_1", "UP10_1", "BEATS_TWINS_1"})
+        self.assertEqual(got["DOWN10_1"], (True, 0.0))
+        self.assertEqual(got["UP10_1"], (False, 0.0))
+        self.assertEqual(got["BEATS_TWINS_1"][0], False)  # -12% is below the twins' median (0%)
+        # each twin against the other three: +4% beats (-4%, 0, 0); -4% does not; 0 does not beat a median of 0
+        self.assertAlmostEqual(got["BEATS_TWINS_1"][1], 1 / 4)
+        self.assertEqual([t["status"] for t in r["twins"]], ["PATH"] * 4)
+        self.assertIsNone(sp.resolve_set(self.make_set(m, session_index=29), "NEXT1", m, pd.DataFrame()))  # s+1 not covered
+
+    def test_next1_is_ungraded_without_a_bar_and_needs_three_twins(self):
+        """Guards against: grading a halted name, or a twins' median from one or two twins."""
+        m, a = us_market(n_sessions=30)
+        d = 10
+        a["present"][0, d + 1] = False
+        m = build(m.tickers, m.dates, a)
+        r = sp.resolve_set(self.make_set(m), "NEXT1", m, pd.DataFrame())
+        self.assertEqual({x["id"]: x["outcome"] for x in r["cone"]}, {"DOWN10_1": None, "UP10_1": None, "BEATS_TWINS_1": None})
+        m, a = us_market(n_sessions=30)
+        set_closes(a, 0, d + 1, [20.0])
+        m = build(m.tickers, m.dates, a)
+        r = sp.resolve_set(self.make_set(m, twins=("U01", "U02")), "NEXT1", m, pd.DataFrame())
+        got = {x["id"]: x["outcome"] for x in r["cone"]}
+        self.assertEqual((got["DOWN10_1"], got["BEATS_TWINS_1"]), (True, None))
+
+    def test_v1_sets_never_open_next1_and_v1_1_sets_do(self):
+        """Guards against: a third window opened on a set sealed under v1, or forgotten on a v1.1 set."""
+        specs = [{"type": "SPECULATION_SET", "market": "US", "set_id": "OLD", "signal_session": "2026-10-27"},
+                 {"type": "SPECULATION_SET", "market": "US", "set_id": "NEW", "signal_session": "2026-10-27",
+                  "windows": ["BASE5", "PATH20", "NEXT1"]}]
+        self.assertEqual(sp.due("US", "2026-10-28", specs), [("NEW", "NEXT1")])
+        self.assertEqual(sp.due("US", "2026-10-27", specs), [])
+        self.assertEqual([w for _, w in sp.due("US", "2026-11-24", specs)], ["BASE5", "PATH20", "BASE5", "PATH20", "NEXT1"])
+
+    def test_v1_1_keeps_v1_windows_and_statements_byte_for_byte(self):
+        """Guards against: a change to BASE5 or PATH20 or a v1 prior slipping in with the new window."""
+        v11, _ = sp.protocol()
+        v1 = json.loads(sp.PROTOCOL_VERSIONS["KOD-SPEC-REGISTER-v1"].read_text())
+        self.assertEqual(v11["protocol_id"], "KOD-SPEC-REGISTER-v1.1")
+        self.assertEqual({k: v11["windows"][k] for k in v1["windows"]}, v1["windows"])
+        self.assertEqual(v11["cone"][:len(v1["cone"])], v1["cone"])
+        self.assertEqual(v11["windows"]["NEXT1"], {"kind": "path", "what": "the next session's close of the candidate and its twins; no plan", "horizon": 1})
+        self.assertEqual(sp.window_length(v11["windows"]["NEXT1"]), 1)

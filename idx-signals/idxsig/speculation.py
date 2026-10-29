@@ -36,12 +36,14 @@ from .profiles import PROFILES
 from .provenance import PKG_ROOT, sha256_file, utc_stamp
 
 PROTOCOL_DIR = PKG_ROOT / "research" / "SPECULATION_REGISTER_v1"
-PROTOCOL_JSON = PROTOCOL_DIR / "protocol.json"
+PROTOCOL_JSON = PROTOCOL_DIR / "protocol_v1_1.json"  # KOD-SPEC-REGISTER-v1.1 (ADDENDUM_1.md); v1 sets keep their own
+PROTOCOL_VERSIONS = {"KOD-SPEC-REGISTER-v1": PROTOCOL_DIR / "protocol.json", "KOD-SPEC-REGISTER-v1.1": PROTOCOL_JSON}
 SPEC_LEDGER = paper.PAPER / "speculations.jsonl"
 REPORT = paper.PAPER / "SPECULATIONS.md"
-REGISTER_VERSION = "spec-register-v1"
-RESOLVER_ID = "spec-resolve-v1"
-WINDOW_ORDER = ("BASE5", "PATH20")
+REGISTER_VERSION = "spec-register-v1.1"
+RESOLVER_ID = "spec-resolve-v1.1"
+WINDOW_ORDER = ("BASE5", "PATH20", "NEXT1")
+V1_WINDOWS = ("BASE5", "PATH20")  # the windows of a set sealed under v1 (no "windows" field, or those two)
 PLAN = "BASE5"
 TWINS = 5
 MIN_POOL = 5
@@ -372,10 +374,29 @@ def path_statement(m, n: int, d: int, horizon: int, multiple: float) -> bool | N
     return bool(len(seg) and seg.max() / level[d] >= multiple)
 
 
-def statement_outcome(sid: str, m, n: int, d: int, result: dict | None, twin_nets: list[float]) -> bool | None:
-    """One statement for one name. `result` is the name's BASE5 simulation (None for a path-only name)."""
+def next_return(m, n: int, d: int) -> float | None:
+    """NEXT1 (v1.1): the s+1 close over the signal close on the reference chain; None without a bar at s+1."""
+    if d + 1 > m.shape[1] - 1 or not m.present[n, d + 1] or not m.present[n, d]:
+        return None
+    level = _level(m, n)
+    return float(level[d + 1] / level[d] - 1)
+
+
+def statement_outcome(sid: str, m, n: int, d: int, result: dict | None, twin_nets: list[float],
+                      twin_r1: list[float] | None = None) -> bool | None:
+    """One statement for one name. `result` is the name's BASE5 simulation (None for a path-only name); `twin_r1` the
+    other names' next-session returns (NEXT1 statements only)."""
     net = (result or {}).get("trade", {}) if result else {}
     net = net.get("net_return") if net else None
+    if sid in ("DOWN10_1", "UP10_1", "BEATS_TWINS_1"):
+        r = next_return(m, n, d)
+        if r is None:
+            return None
+        if sid == "DOWN10_1":
+            return bool(r <= -0.10)
+        if sid == "UP10_1":
+            return bool(r >= 0.10)
+        return None if twin_r1 is None or len(twin_r1) < 3 else bool(r > float(np.median(twin_r1)))
     if sid == "RUN30_5":
         return path_statement(m, n, d, 5, 1.30)
     if sid == "RUN30_20":
@@ -396,11 +417,13 @@ def cone_outcomes(statements: list[dict], window_id: str, m, d: int, candidate: 
     """Grade the statements of `window_id` for the candidate (row, BASE5 result) and each twin (row, result)."""
     n, cres = candidate
     twin_nets = [r["trade"]["net_return"] for _, r in twins if r and r.get("trade")]
+    r1_all = {tn: next_return(m, tn, d) for tn, _ in twins}
+    twin_r1 = [v for v in r1_all.values() if v is not None]
     out = []
     for st in statements:
         if st["resolves_with"] != window_id:
             continue
-        o = statement_outcome(st["id"], m, n, d, cres, twin_nets)
+        o = statement_outcome(st["id"], m, n, d, cres, twin_nets, twin_r1)
         rec = {"id": st["id"], "prior": st["prior"], "outcome": o,
                "brier": None if o is None else float((st["prior"] - float(o)) ** 2)}
         if o is None:
@@ -408,7 +431,8 @@ def cone_outcomes(statements: list[dict], window_id: str, m, d: int, candidate: 
         tw = []
         for tn, tres in twins:
             others = [r["trade"]["net_return"] for k, r in twins if k != tn and r and r.get("trade")]
-            tw.append(statement_outcome(st["id"], m, tn, d, tres, others))
+            tw.append(statement_outcome(st["id"], m, tn, d, tres, others,
+                                        [v for k, v in r1_all.items() if k != tn and v is not None]))
         known = [x for x in tw if x is not None]
         rec["twins_rate"] = float(np.mean(known)) if known else None
         rec["twins_graded"] = len(known)
@@ -428,7 +452,8 @@ def due(market: str, today: str | None = None, specs: list[dict] | None = None) 
             continue
         sig = np.datetime64(s["signal_session"], "D")
         elapsed = int((today - sig).astype(int)) if market == "CRYPTO" else int(np.busday_count(sig, today))
-        for wid, w in windows().items():
+        for wid in s.get("windows", V1_WINDOWS):  # a set's own windows: a v1 set never opens NEXT1
+            w = windows()[wid]
             if (s["set_id"], wid) in done:
                 continue
             if elapsed >= window_length(w) + (1 if market == "CRYPTO" else 0):
@@ -680,6 +705,7 @@ def statistics(specs: list[dict] | None = None, ledger: list[dict] | None = None
                             "sessions_to_next_look": (None if st["look"]["next"] is None or not rate else
                                                       int(math.ceil(max(0, st["look"]["next"] - st["n_paired"]) / rate)))}
         n_path = sum(r["window"] == "PATH20" and r.get("status") == "RESOLVED" for r in mres)
+        n_next = sum(r["window"] == "NEXT1" and r.get("status") == "RESOLVED" for r in mres)
         cone = {}
         for c in proto["cone"]:
             graded = [x for r in mres for x in r.get("cone", []) if x["id"] == c["id"] and x.get("outcome") is not None]
@@ -697,7 +723,7 @@ def statistics(specs: list[dict] | None = None, ledger: list[dict] | None = None
         markets[mk] = {"n_sets": len(msets), "sessions": len(sessions), "first_session": first,
                        "last_session": sessions[-1] if sessions else None, "sets_per_scan": rate,
                        "twins_per_set": float(np.mean([len(s["twins"]) for s in msets])) if msets else None,
-                       "plan": st, "n_path20_resolved": n_path, "cone": cone}
+                       "plan": st, "n_path20_resolved": n_path, "n_next1_resolved": n_next, "cone": cone}
     return {"protocol": {"id": proto["protocol_id"], "sha256": proto_sha}, "register": REGISTER_VERSION,
             "generated_at": utc_stamp(), "n_sets": len(sets), "n_resolutions": len(res), "markets": markets}
 
@@ -721,7 +747,7 @@ def card(s: dict) -> str:
              "", "| Statement | Prior | Resolves with |", "|---|---:|---|"]
     for c in s["cone"]:
         lines.append(f"| {c['id']}: {c['statement']} | {c['prior']:.3f} | {c['resolves_with']} |")
-    lines += ["", f"Plan: {PLAN} ({windows()[PLAN]['what']}); path window PATH20.", ""]
+    lines += ["", f"Plan: {PLAN} ({windows()[PLAN]['what']}); windows {', '.join(s.get('windows', V1_WINDOWS))}.", ""]
     return "\n".join(lines)
 
 
@@ -757,7 +783,7 @@ def render(stats: dict, specs: list[dict] | None = None) -> str:
                 "points per set, and sessions to the next look at the current candidate rate.", "",
                 "| sd per session (source) | 2pt | 5pt | 10pt | to next look |", "|---|---:|---:|---:|---:|",
                 f"| {sd_txt} ({p['sd_source']}) | {s3.get('2pt', 'n/a')} | {s3.get('5pt', 'n/a')} | {s3.get('10pt', 'n/a')} | {nxt} |", "",
-                f"PATH20 windows resolved: {m['n_path20_resolved']}.", "",
+                f"PATH20 windows resolved: {m['n_path20_resolved']}; NEXT1: {m.get('n_next1_resolved', 0)}.", "",
                 "| Statement | Graded | Realised rate | Twins' rate | Mean prior | Brier (register) | Brier (0.5) | Brier (running) |",
                 "|---|---:|---:|---:|---:|---:|---:|---:|"]
         for sid, c in m["cone"].items():
@@ -805,7 +831,7 @@ def verify() -> list[str]:
     if not SPEC_LEDGER.exists():
         return problems
     problems += [f"speculations.jsonl: {p}" for p in paper.verify_chain(SPEC_LEDGER)]
-    _, proto_sha = protocol()
+    proto_shas = {pid: sha256_file(path) for pid, path in PROTOCOL_VERSIONS.items()}
     ledger = paper.ledger_lines()
     decisions = {r["decision_id"]: r for r in ledger if r["type"] == "DECISION"}
     scans = {r["scan_id"]: r for r in ledger if r["type"] == "SCAN"}
@@ -824,8 +850,8 @@ def verify() -> list[str]:
             sc = scans.get(r["scan_id"])
             if sc is None or sc["record_hash"] != r["scan_record_hash"] or sc["features_sha256"] != r["features_sha256"]:
                 problems.append(f"{sid}: scan record or features hash does not match the ledger")
-            if r["protocol"]["sha256"] != proto_sha:
-                problems.append(f"{sid}: protocol sha256 differs from research/SPECULATION_REGISTER_v1/protocol.json")
+            if r["protocol"]["sha256"] != proto_shas.get(r["protocol"].get("id")):
+                problems.append(f"{sid}: protocol sha256 differs from its version's file in research/SPECULATION_REGISTER_v1")
         elif r["type"] == "RESOLUTION":
             key = (r["set_id"], r["window"])
             if r["set_id"] not in sets:

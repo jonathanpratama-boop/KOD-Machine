@@ -560,3 +560,16 @@ class Report(NoHistory):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class RegisterWindows(unittest.TestCase):
+    def test_v2_2_ignores_windows_its_protocol_does_not_name(self):
+        """Guards against: a register version adding a window (NEXT1, v1.1) and the frozen learner silently forecasting
+        and scoring statements outside its protocol."""
+        s = {"family": "SPEC_US", "cone": [{"id": "RUN30_5", "resolves_with": "BASE5"}, {"id": "FADE10_5", "resolves_with": "BASE5"},
+                                           {"id": "DOWN10_1", "resolves_with": "NEXT1"}, {"id": "BEATS_TWINS_1", "resolves_with": "NEXT1"}]}
+        ids = [stmt for stmt, _ in ln.statements(s)]
+        self.assertIn("PUMP30_5", ids)
+        self.assertIn("PUMP_AND_DUMP_5", ids)
+        self.assertNotIn("DOWN10_1", ids)
+        self.assertNotIn("BEATS_TWINS_1", ids)
