@@ -1,6 +1,6 @@
 # Speculation Register (KOD-SPEC-REGISTER-v1, protocol sha256 c0ec3bbfa948)
 
-Generated 2026-10-28T23:03:00Z from `paper/speculations.jsonl`: 21 sets sealed, 0 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
+Generated 2026-10-29T00:27:49Z from `paper/speculations.jsonl`: 22 sets sealed, 0 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
 
 Windows: **BASE5**: the frozen plan: the validated harness plan, prospectively, beside twins; **PATH20**: the 20-session price path of the candidate and its twins; no plan.
 
@@ -31,7 +31,7 @@ PATH20 windows resolved: 0.
 | RUN30_20 | 0 | | | | | | |
 | DOUBLE_20 | 0 | | | | | | |
 
-## CRYPTO: 1 sets over 1 signal sessions (2026-10-27 .. 2026-10-27, 1.00 sets per scan)
+## CRYPTO: 2 sets over 2 signal sessions (2026-10-27 .. 2026-10-28, 1.00 sets per scan)
 
 | Plan | Resolved | Traded | Paired | Sessions | Mean net | Median net | Twins net | Diff | t | p | Look | Verdict |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|
@@ -311,11 +311,11 @@ Twins (band+liq+mom+dd): HMR 1.85, MAMO 1.045, BRLT 1.55, DLTH 4.23, BRIA 1.46.
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); path window PATH20.
 
-### CRYPTO HAEDAL (2026-10-27) - sealed 2026-10-28T00:26:56Z, cutoff 2026-10-28T02:00:00Z
-Decision `SCAN-CRYPTO-2026-10-27-G2_RET30-HAEDAL` (PASS), bound to ledger record `f996464c890d`; set `6aa9edb1877f`.
-Signal close 0.02977 (reference 0.02132); entry: the Binance spot quote taken at sealing time (the harness used the next day's open); quote 0.02808 at 2026-10-28T00:26:57Z.
+### CRYPTO INIT (2026-10-28) - sealed 2026-10-29T00:27:43Z, cutoff 2026-10-29T02:00:00Z
+Decision `SCAN-CRYPTO-2026-10-28-G2_RET30-INIT` (PASS), bound to ledger record `2b3f2537d3da`; set `e67ed656f66a`.
+Signal close 0.22316 (reference 0.16619); entry: the Binance spot quote taken at sealing time (the harness used the next day's open); quote 0.21769 at 2026-10-29T00:27:46Z.
 Tag: 1 flags today vs trailing median 1.0 -> hot_day = False.
-Twins (band+liq+mom+dd): MIRA 0.04579, SOMI 0.1826, SHELL 0.02378, LISTA 0.0797, NEXO 0.802.
+Twins (band+liq+mom+dd): PARTI 0.0388, DODO 0.0244, IO 0.1516, AXL 0.0488, AT 0.1436.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
