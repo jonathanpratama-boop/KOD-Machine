@@ -1,0 +1,12 @@
+{
+ "id": "PATH_HISTORY_v1",
+ "experiment": "PATH_HISTORY_v1",
+ "date": "2026-10-29",
+ "hypothesis": "out of time (fit up to 2022, score 2023 and IDX 2025-2026): among the Speculation Register's own spiking stocks (US and crypto +30% days, IDX ARA closes), a penalised logistic model on free price features (block P1) tells apart the stocks that make their own 5-session dump (DUMP10_5), own 5-session pump (PUMP30_5), own next-session dump (NEXT_DUMP10) and next-session underperformance of their twins (NEXT_LOSES): AUC > 0.5 with a positive Brier gain over the base rate",
+ "one_sided_p": null,
+ "p_source": "pending: research/PATH_HISTORY_v1/results/RESULT.json, cluster bootstrap over signal ISO weeks, Holm over the four primary statements",
+ "variants_searched": 4,
+ "outcome": "PENDING (registered before any outcome was computed)",
+ "counted": true,
+ "registered": "2026-10-29"
+}
