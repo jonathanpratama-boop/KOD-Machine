@@ -36,7 +36,7 @@ import math
 import subprocess
 import sys
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import timedelta, datetime, timezone
 from pathlib import Path
 
 import numpy as np
@@ -325,6 +325,24 @@ def scan(manifest: Path, now: datetime | None = None, validation: dict | None = 
     return scan_frame(df, data, now, validation, market, quotes)
 
 
+# a session's last bar is final only after its market closes, plus a settling margin for the data provider
+SESSION_CLOSE = {"IDX": ("Asia/Jakarta", 16, 30), "US": ("America/New_York", 16, 30), "CRYPTO": ("UTC", 24, 0)}
+
+
+def session_close(market: str, session: str) -> datetime:
+    """When `session`'s bar is final: IDX 16:30 Jakarta and US 16:30 New York (the 16:00 close plus 30 minutes),
+    crypto the end of the UTC day."""
+    from zoneinfo import ZoneInfo
+
+    tz, hh, mm = SESSION_CLOSE[market]
+    day = datetime.fromisoformat(session).replace(tzinfo=ZoneInfo(tz))
+    return day + timedelta(hours=hh, minutes=mm)
+
+
+def session_closed(market: str, session: str, now: datetime) -> bool:
+    return now >= session_close(market, session)
+
+
 def scan_frame(df: pd.DataFrame, data: dict, now: datetime | None = None, validation: dict | None = None,
                market: str = "IDX", quotes=None, policy: str = POLICY_ID) -> dict:
     """quotes: crypto only, a callable (tickers -> {ticker: (price, time)}) for live prices at decision time."""
@@ -336,6 +354,9 @@ def scan_frame(df: pd.DataFrame, data: dict, now: datetime | None = None, valida
     m = _market(df, market)
     d = m.shape[1] - 1
     session = str(m.dates[d])
+    if not session_closed(market, session, now):
+        raise RuntimeError(f"{market} session {session} has not closed at {now.isoformat()} (closes "
+                           f"{session_close(market, session).isoformat()}); a scan now would record a partial bar")
     view = CausalSource(m).view(d)
     f = module.features(*[getattr(view, a) for a in det["args"]])
     flags = module.family_flags(f)
