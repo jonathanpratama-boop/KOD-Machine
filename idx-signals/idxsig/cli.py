@@ -155,7 +155,9 @@ def main(argv=None) -> int:
     p_sr.add_argument("--commit", action="store_true")
     p_cs = sub.add_parser("catalyst-seal", help="seal Catalyst Register sets for a family's new events before their entry "
                                                 "cutoff (research/CATALYST_REGISTER_v1)")
-    p_cs.add_argument("--family", choices=("SEC13D", "IDX_INDEX", "DILUTION_8K", "FORM4"), required=True)
+    p_cs.add_argument("--family", choices=("SEC13D", "SEC13D_V2", "IDX_INDEX", "DILUTION_8K", "FORM4",
+                                                "FORM4_SHARP"), required=True,
+                      help="SEC13D_V2 runs after SEC13D, FORM4_SHARP after FORM4, in the same routine")
     p_cs.add_argument("--events", help="IDX_INDEX: the review's events file (research/CATALYST_REGISTER_v1/events/)")
     p_cs.add_argument("--dry-run", action="store_true", help="build and print the batch; append nothing")
     p_cs.add_argument("--commit", action="store_true", help="commit the records and push (GitHub receipt)")
@@ -771,19 +773,34 @@ def main(argv=None) -> int:
         else:
             mk = args.market
             todo = catalysts.due(mk)
-            if not todo:
+            mech = catalysts.due(mk, mechanism=True)
+            if not todo and not mech:
                 print(f"no {mk} catalyst window can have ended yet; nothing pulled, nothing recorded")
                 return 0
-            manifest, extra = (Path(args.manifest), []) if args.manifest else _recent_manifest(mk, args.max_age_hours)
-            verify = _sec_verifier() if mk == "US" else None
-            written, outcomes = catalysts.resolve_pending(manifest, mk, RFC3161Timestamper(), verify=verify)
-            for o in outcomes:
-                pr = o.get("paired") or {}
-                print(f"  {o['set_id']} {o['window']}: {o['status']} {o.get('reason', '')}"
-                      + (f" net {pr['candidate_net']:+.2%} vs twins {pr['twins_mean_net']:+.2%}" if pr else ""))
-            print(f"resolved {len(outcomes)} of {len(todo)} due (set, window) pair(s)")
-            if written:
-                written = [*written, manifest]
+            written, outcomes = [], []
+            if todo:
+                manifest, extra = (Path(args.manifest), []) if args.manifest else _recent_manifest(mk, args.max_age_hours)
+                verify = _sec_verifier() if mk == "US" else None
+                written, outcomes = catalysts.resolve_pending(manifest, mk, RFC3161Timestamper(), verify=verify)
+                for o in outcomes:
+                    pr = o.get("paired") or {}
+                    print(f"  {o['set_id']} {o['window']}: {o['status']} {o.get('reason', '')}"
+                          + (f" net {pr['candidate_net']:+.2%} vs twins {pr['twins_mean_net']:+.2%}" if pr else ""))
+                print(f"resolved {len(outcomes)} of {len(todo)} due (set, window) pair(s)")
+                if written:
+                    written = [*written, manifest]
+            if mech:  # mechanism statements: EDGAR (with the declared contact) or the register's own batches
+                try:
+                    client = catalysts.sec_client()
+                except RuntimeError:
+                    client = None
+                    print("no SEC contact declared: mechanism statements that need EDGAR stay due")
+                mw, mrecs, waiting = catalysts.resolve_mechanisms(mk, client, RFC3161Timestamper())
+                for o in mrecs:
+                    print(f"  {o['set_id']} {o['window']}: " + ", ".join(f"{c['id']}={c['outcome']}" for c in o["cone"]))
+                print(f"mechanism windows: {len(mrecs)} resolved, {len(waiting)} not gradable yet")
+                written = [*written, *[w for w in mw if w not in written]]
+                outcomes = [*outcomes, *mrecs]
             message = f"catalyst register: {len(outcomes)} resolution(s) for {mk}"
         if written:
             written.append(catalysts.write_report())

@@ -42,7 +42,9 @@ PROTOCOL_DIR = PKG_ROOT / "research" / "CATALYST_REGISTER_v1"
 PROTOCOL_JSON = PROTOCOL_DIR / "protocol.json"
 PREREG_JSON = PROTOCOL_DIR / "prereg_2.json"  # SEC13D: win-rate primary and extended looks, frozen before any SEC13D set
 FAMILY_DIR = PKG_ROOT / "research" / "CATALYST_FAMILIES"  # later families, one frozen protocol.json each
-FAMILY_MODULES = {"DILUTION_8K": "fam_dilution8k", "FORM4": "fam_form4"}
+FAMILY_MODULES = {"DILUTION_8K": "fam_dilution8k", "FORM4": "fam_form4", "SEC13D_V2": "fam_sec13d_v2",
+                  "FORM4_SHARP": "fam_form4_sharp"}
+PARENT_FAMILY = {"SEC13D_V2": "SEC13D", "FORM4_SHARP": "FORM4"}  # child families seal from their parent's sets of the same run
 EVENTS_DIR = PROTOCOL_DIR / "events"
 CAT_LEDGER = paper.PAPER / "catalysts.jsonl"
 REPORT = paper.PAPER / "CATALYSTS.md"
@@ -58,6 +60,7 @@ EN_SITEMAP_URL = "https://www.emitennews.com/sitemap-{year}.xml"
 FEED_PAGES = 5
 TWINS = spec.TWINS
 TWIN_CHECKS = 15
+TWINS_20, TWIN_CHECKS_20 = 20, 40  # the 2026-10-29 families (research/CATALYST_FAMILIES/SEC13D_V2, FORM4_SHARP)
 REPEAT_DAYS = 90
 DILUTION_SESSIONS = 20
 MOVED_ALREADY = 1.15
@@ -71,6 +74,13 @@ ORIGINAL_13D = frozenset({"SCHEDULE 13D", "SC 13D"})
 INTENT_WORDS = ("board", "merger", "acquisition", "strategic alternatives", "sale of the", "proxy", "nominate",
                 "director", "change of control", "going private", "take private", "letter")
 RELATIVE = frozenset({"BEATS_TWINS_20", "LOSES_TO_TWINS_20", "WITH_FLOW_RUNUP", "REVERSAL_POST20"})
+_HORIZON_ID = re.compile(r"^(RUN30|GAIN0|FADE10|BEATS_TWINS|LOSES_TO_TWINS)_(\d+)$")
+
+
+def is_relative(statement_id: str) -> bool:
+    """A statement graded against the twins (no twins-rate of its own)."""
+    m = _HORIZON_ID.match(statement_id)
+    return statement_id in RELATIVE or bool(m and m[1] in ("BEATS_TWINS", "LOSES_TO_TWINS"))
 
 
 def protocol() -> tuple[dict, str]:
@@ -362,12 +372,13 @@ def reject_dilution(filings: pd.DataFrame, day: str) -> str | None:
 
 
 def sec13d_twins(feats, ticker, excluded, selected, seed, client, by_ticker, day: str,
-                 reject=_reject_13d) -> tuple[list[dict], str, list[dict]]:
-    """Matched, event-free twins: draw_twins' seeded order, then the first TWINS operating issuers that `reject`
-    (filings, day) -> reason does not exclude (default: an original Schedule 13D in the last 90 days)."""
+                 reject=_reject_13d, n: int = TWINS, checks: int = TWIN_CHECKS) -> tuple[list[dict], str, list[dict]]:
+    """Matched, event-free twins: draw_twins' seeded order, then the first `n` (TWINS) operating issuers, of at most
+    `checks` examined, that `reject` (filings, day) -> reason does not exclude (default: an original Schedule 13D in
+    the last 90 days)."""
     pool, level = spec.draw_twins(feats, ticker, excluded, selected, "US", seed, k=10 ** 9)
     twins, log = [], []
-    for tw in pool[:TWIN_CHECKS]:
+    for tw in pool[:checks]:
         cik = by_ticker.get(tw["ticker"])
         filings = submissions(client, cik) if cik is not None else None
         if cik is None:
@@ -381,7 +392,7 @@ def sec13d_twins(feats, ticker, excluded, selected, seed, client, by_ticker, day
         log.append({"ticker": tw["ticker"], "accepted": reason is None, **({"reason": reason} if reason else {})})
         if reason is None:
             twins.append({**tw, "cik": int(cik)})
-            if len(twins) == TWINS:
+            if len(twins) == n:
                 break
     return twins, level, log
 
@@ -679,10 +690,21 @@ def append(records: list[dict], timestamper=None) -> tuple[list[Path], list[dict
 
 # ------------------------------------------------------------------------------- resolution
 def window_length(w: dict) -> int:
+    if w.get("kind") == "mechanism":  # sessions after the signal session, plus one for the next morning's index
+        return int(w["sessions"]) + 1 if "sessions" in w else 0
     return int(w["entry_window"]) + int(w["holding_sessions"])
 
 
-def due(market: str, today: str | None = None, records: list[dict] | None = None) -> list[tuple[str, str]]:
+def _mechanism_due(s: dict, w: dict, today_d) -> bool:
+    if "calendar_days" in w:
+        day = np.datetime64(datetime.fromisoformat(s["event"]["accepted"]).astimezone(NY).date().isoformat(), "D")
+        return int((today_d - day).astype(int)) > int(w["calendar_days"])
+    return int(np.busday_count(np.datetime64(s["signal_session"], "D"), today_d)) >= window_length(w)
+
+
+def due(market: str, today: str | None = None, records: list[dict] | None = None,
+        mechanism: bool = False) -> list[tuple[str, str]]:
+    """(set, window) pairs whose window has ended: the price windows, or with `mechanism` the mechanism windows."""
     records = cat_lines() if records is None else records
     today_d = np.datetime64(today or datetime.now(timezone.utc).date().isoformat(), "D")
     done = {(r["set_id"], r["window"]) for r in records if r["type"] == "RESOLUTION"}
@@ -692,27 +714,33 @@ def due(market: str, today: str | None = None, records: list[dict] | None = None
             continue
         elapsed = int(np.busday_count(np.datetime64(s["signal_session"], "D"), today_d))
         for wid, w in s["windows"].items():
-            if (s["set_id"], wid) not in done and elapsed >= window_length(w):
+            if (s["set_id"], wid) in done or (w.get("kind") == "mechanism") != mechanism:
+                continue
+            if (_mechanism_due(s, w, today_d) if mechanism else elapsed >= window_length(w)):
                 out.append((s["set_id"], wid))
     return out
 
 
 def statement_outcome(sid: str, m, n: int, d: int, result: dict | None, twin_nets: list[float], direction: int) -> bool | None:
+    """A price statement's outcome. RUN30_<k>, GAIN0_<k>, FADE10_<k>, BEATS_TWINS_<k>, LOSES_TO_TWINS_<k> are graded
+    on the window that resolves them (k sessions; RUN30 on the path of k sessions after the signal session)."""
     trade = (result or {}).get("trade") if result else None
     net = trade.get("net_return") if trade else None
-    if sid == "RUN30_20":
-        return spec.path_statement(m, n, d, 20, 1.30)
+    hz = _HORIZON_ID.match(sid)
+    kind = hz[1] if hz else None
+    if kind == "RUN30":
+        return spec.path_statement(m, n, d, int(hz[2]), 1.30)
     if net is None:
         return None
-    if sid == "GAIN0_20":
+    if kind == "GAIN0":
         return bool(net > 0)
-    if sid == "FADE10_20":
+    if kind == "FADE10":
         return bool(net <= -0.10)
     if not twin_nets:
         return None
-    if sid == "BEATS_TWINS_20":
+    if kind == "BEATS_TWINS":
         return bool(net > float(np.median(twin_nets)))
-    if sid == "LOSES_TO_TWINS_20":
+    if kind == "LOSES_TO_TWINS":
         return bool(net < float(np.median(twin_nets)))
     if sid == "WITH_FLOW_RUNUP":
         return bool((net - float(np.mean(twin_nets))) * direction > 0)
@@ -733,7 +761,7 @@ def cone_outcomes(s: dict, window_id: str, m, d: int, candidate, twins) -> list[
                "brier": None if o is None else float((st["prior"] - float(o)) ** 2)}
         if o is None:
             rec["note"] = "not graded: no position (or no twin traded)"
-        if st["id"] not in RELATIVE:
+        if not is_relative(st["id"]):
             tw = [statement_outcome(st["id"], m, tn, d, tres, [], 1) for tn, tres in twins]
             known = [x for x in tw if x is not None]
             rec["twins_rate"], rec["twins_graded"] = (float(np.mean(known)) if known else None), len(known)
@@ -804,6 +832,48 @@ def resolve_pending(manifest: Path, market: str, timestamper=None, verify=None) 
     if not out:
         return [], []
     return append(out, timestamper)
+
+
+def resolve_mechanisms(market: str, client=None, timestamper=None, today: str | None = None,
+                       records: list[dict] | None = None) -> tuple[list[Path], list[dict], list[str]]:
+    """Resolve the mechanism windows that have ended (statements graded from EDGAR or from this register's own
+    batches, not from prices) through each family module's resolve_mechanism(set, window, records, client). A window a
+    module cannot grade yet (its source not covered, or no EDGAR client) stays due and is listed in the third value."""
+    records = cat_lines() if records is None else records
+    todo = due(market, today=today, records=records, mechanism=True)
+    sets = {r["set_id"]: r for r in records if r["type"] == "CATALYST_SET"}
+    out, waiting = [], []
+    for set_id, wid in todo:
+        s = sets[set_id]
+        mod = family_module(s["family"]) if s["family"] in FAMILY_MODULES else None
+        rec = mod.resolve_mechanism(s, wid, records, client) if mod and hasattr(mod, "resolve_mechanism") else None
+        if rec is None:
+            waiting.append(f"{set_id}/{wid}")
+            continue
+        out.append(rec)
+    if not out:
+        return [], [], waiting
+    written, stored = append(out, timestamper)
+    return written, stored, waiting
+
+
+def mechanism_record(s: dict, window_id: str, outcomes: dict[str, bool | None], evidence: dict) -> dict:
+    """A RESOLUTION of a mechanism window: the cone statements it resolves, graded, with the evidence read."""
+    cone = []
+    for st in s["cone"]:
+        if st["resolves_with"] != window_id:
+            continue
+        o = outcomes.get(st["id"])
+        rec = {"id": st["id"], "prior": st["prior"], "outcome": o,
+               "brier": None if o is None else float((st["prior"] - float(o)) ** 2)}
+        if o is None:
+            rec["note"] = "not graded: its source was not readable or not covered"
+        cone.append(rec)
+    return {"type": "RESOLUTION", "register": REGISTER_VERSION, "resolver": RESOLVER_ID, "family": s["family"],
+            "market": s["market"], "set_id": s["set_id"], "window": window_id, "ticker": s["ticker"],
+            "signal_session": s["signal_session"], "coverage": s["coverage"]["class"], "direction": s.get("direction", 1),
+            "resolved_at": utc_stamp(), "status": "RESOLVED", "kind": "mechanism", "paired": None,
+            "evidence": evidence, "cone": cone, "protocol": s["protocol"]}
 
 
 # ------------------------------------------------------------------------------- statistics
@@ -955,17 +1025,46 @@ def _batch_counts(batches: list[dict]) -> dict:
 def family_statistics(fam: str, fs: dict, fsha: str, sets: list[dict], res: list[dict], records: list[dict]) -> dict:
     """A later family's two primaries (its protocol's 'decision'), signed by its direction."""
     fsets = [s for s in sets if s["family"] == fam]
-    rs = [r for r in res if r["family"] == fam and r["window"] == "H20"]
-    d = int(fs["direction"])
-    signed = [{**r, "paired": {**r["paired"], "diff": r["paired"]["diff"] * d}} if r.get("paired") else r for r in rs]
-    st = spec.plan_statistics(signed)
     dec = fs["decision"]
+    window, cls = dec.get("window", "H20"), dec.get("coverage_class")
+    d = int(fs["direction"])
+
+    def signed_of(rs):
+        return [{**r, "paired": {**r["paired"], "diff": r["paired"]["diff"] * d}} if r.get("paired") else r for r in rs]
+
+    rs = [r for r in res if r["family"] == fam and r["window"] == window and (cls is None or r.get("coverage") == cls)]
+    st = spec.plan_statistics(signed_of(rs))
     wr = winrate_statistics(rs, statement=dec["primaries"]["WIN_RATE"]["statement"])
     net_ok = st["mean_net"] if dec["require_positive_mean_net"] else 1.0  # an avoid family claims no positive net
     st["look"] = prereg_verdict(st, st["mean_diff"], net_ok, design=dec)
     wr["look"] = prereg_verdict(wr, wr["estimate"], net_ok, design=dec)
     batches = [r for r in records if r["type"] == "BATCH" and r["family"] == fam]
+    descriptive = {}
+    if cls is not None:  # the 2026-10-29 families: the other plan windows and the other class, never counted
+        classes = {}
+        for s in fsets:
+            classes[s["coverage"]["class"]] = classes.get(s["coverage"]["class"], 0) + 1
+        descriptive["classes"] = classes
+        for wid, w in fs.get("windows", {}).items():
+            if w.get("kind") != "plan":
+                continue
+            for c in ("FIRE", "ABSTAIN"):
+                if (wid, c) == (window, cls):
+                    continue
+                sub = [r for r in res if r["family"] == fam and r["window"] == wid and r.get("coverage") == c]
+                descriptive[f"{wid}_{c}"] = spec.plan_statistics(signed_of(sub))
+        descriptive["entry_weeks"] = len({date.fromisoformat(r["signal_session"]).isocalendar()[:2] for r in rs})
+        mod = family_module(fam) if fam in FAMILY_MODULES else None
+        labels = mod.split_labels(fsets) if mod is not None and hasattr(mod, "split_labels") else {}
+        groups: dict[str, list[dict]] = {}
+        for r in res:
+            if r["family"] == fam and r["window"] == window:
+                for name, label in labels.get(r["set_id"], {}).items():
+                    groups.setdefault(f"split {name}={label}", []).append(r)
+        for key in sorted(groups):
+            descriptive[key] = spec.plan_statistics(signed_of(groups[key]))
     return {"protocol": {"id": fs["protocol_id"], "sha256": fsha}, "direction": d, "n_sets": len(fsets),
+            "window": window, "coverage_class": cls, "descriptive": descriptive,
             "sessions": len({s["signal_session"] for s in fsets}), "n_resolutions": len([r for r in res if r["family"] == fam]),
             "MEAN": st, "WIN_RATE": wr, "events_seen": _batch_counts(batches),
             "coverage_gaps": sum(bool((b.get("feed") or b).get("coverage_gap")) for b in batches),
@@ -1003,7 +1102,7 @@ def card(s: dict) -> str:
         cls = f"Coverage **{cov['class']}**; pre-entry move {_pct(cov.get('inputs', {}).get('pre_entry_move'))}."
     wins = "; ".join(f"{k}: entry +{w['entry_window']}, hold {w['holding_sessions']}" for k, w in s["windows"].items())
     return "\n".join([
-        head, f"Set `{s.get('record_hash', '')[:12]}`, scan `{s['scan_id']}`; signal close {s['signal']['close']:g} on "
+        head, f"Set `{s['set_id']}`, scan `{s['scan_id']}`; signal close {s['signal']['close']:g} on "
               f"{s['signal_session']}; entry: {s['entry']['text']} ({s['entry']['session']}). Windows: {wins}.",
         what, cls,
         f"Twins ({s['twins_match_level']}): " + (", ".join(f"{x['ticker']} {x['close']:g}" for x in s["twins"]) or "none") + ".",
@@ -1057,6 +1156,14 @@ def render(stats: dict, records: list[dict]) -> str:
                 f"- MEAN (signed edge over the twins) {_pct(mean.get('mean_diff'))} over {mean.get('n_paired', 0)} pairs: "
                 f"**{mean['look']['verdict']}**",
                 f"- WIN_RATE {wr.get('wins', 0)} of {wr.get('n_paired', 0)} ({rate}): **{wr['look']['verdict']}**"]
+        if fsx.get("coverage_class"):  # the 2026-10-29 families: name the decision sample, then the descriptive ones
+            out.insert(len(out) - 2, f"Decision sample: {fsx['coverage_class']} sets, window {fsx['window']}, "
+                                     f"{fsx['descriptive'].get('entry_weeks', 0)} distinct entry week(s).")
+            classes = fsx["descriptive"].get("classes", {})
+            out.append("- Classes: " + (", ".join(f"{k} {v}" for k, v in classes.items()) or "none"))
+            for key, d in fsx["descriptive"].items():
+                if isinstance(d, dict) and "n_paired" in d:
+                    out.append(f"- Descriptive {key}: {_pct(d.get('mean_diff'))} over {d.get('n_paired', 0)} pairs")
     tg = stats["tags"]["DILUTION_RECENT"]
     out += ["", "## Calibration", "", "| Family | Statement | n | Realised | Mean prior | Twins | Brier | Brier at 0.5 |",
             "|---|---|---|---|---|---|---|---|"]
@@ -1118,6 +1225,12 @@ def verify() -> list[str]:
                 problems.append(f"{sid}: scan record or features hash does not match the ledger")
             if sid not in listed:
                 problems.append(f"{sid}: not listed as SEALED by a batch before it")
+            par = r.get("parent")
+            if r["family"] in PARENT_FAMILY:
+                ps = sets.get(par["set_id"]) if par else None
+                if (ps is None or ps["family"] != PARENT_FAMILY[r["family"]] or ps.get("record_hash") != par["record_hash"]
+                        or ps["signal_session"] != r["signal_session"] or ps["entry"]["session"] != r["entry"]["session"]):
+                    problems.append(f"{sid}: binds no earlier {PARENT_FAMILY[r['family']]} set with that hash and sessions")
             if r["family"] == "IDX_INDEX":
                 path = PKG_ROOT / r["event"]["events_file"]
                 if not path.exists() or sha256_file(path) != r["event"]["events_sha256"]:
