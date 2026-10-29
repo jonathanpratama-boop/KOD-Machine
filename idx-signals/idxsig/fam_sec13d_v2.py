@@ -131,7 +131,8 @@ def batch(now: datetime, client, ledger: list[dict] | None = None, records: list
     # a parent this family already sealed or skipped is final (a recorded skip is not retried)
     done = {e.get("parent_set_id") for r in records if r["type"] == "BATCH" and r["family"] == FAMILY for e in r["events"]}
     done |= {r["parent"]["set_id"] for r in by_id.values() if r["family"] == FAMILY and r.get("parent")}
-    parents = [by_id[e["set_id"]] for e in pb["events"] if e["status"] == "SEALED" and e.get("set_id") in by_id]
+    pbs = [r for r in records if r["type"] == "BATCH" and r["family"] == PARENT and r["entry_session"] == entry]
+    parents = [by_id[e["set_id"]] for b in pbs for e in b["events"] if e["status"] == "SEALED" and e.get("set_id") in by_id]
     parents = [p for p in parents if p["set_id"] not in done
                and datetime.fromisoformat(p["event"]["accepted"]) >= window_start]
     status, tm_body = client.get(cr.TICKERS_URL)
@@ -139,7 +140,7 @@ def batch(now: datetime, client, ledger: list[dict] | None = None, records: list
         raise RuntimeError(f"SEC ticker map: HTTP {status}")
     _, by_ticker = cr.ticker_maps(tm_body)
     feats = spec.scan_features(scan)
-    excluded = sorted({*scan["candidates_ranked"], *(t for e in pb["events"] for t in e.get("tickers") or [])})
+    excluded = sorted({*scan["candidates_ranked"], *(t for b in pbs for e in b["events"] for t in e.get("tickers") or [])})
     today = now.astimezone(cr.NY).date().isoformat()
     statuses, sets = [], []
     for p in parents:

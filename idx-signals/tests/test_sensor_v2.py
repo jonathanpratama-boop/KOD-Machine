@@ -219,6 +219,22 @@ class V2Batch(unittest.TestCase):
             b3, sets3 = v2.batch(NOW, FakeClient(routes), ledger=[scan_record()], records=hashed([*recs, b, *sets]), clock=lambda: NOW)
         self.assertEqual((sets3, b3["events"]), ([], []))
 
+    def test_a_missed_run_is_caught_up_from_an_earlier_parent_batch_of_the_same_entry(self):
+        """Guards against: SEC13D sets of the evening batch lost to SEC13D_V2 because only the morning batch is read."""
+        routes, shares = self.world()
+        client = FakeClient(routes)
+        morning = datetime(2026, 10, 29, 10, 20, tzinfo=timezone.utc)
+        with mock.patch.object(sp, "scan_features", return_value=features()), \
+                mock.patch.object(cr, "share_points", side_effect=lambda c, cik: shares.get(cik, [])):
+            evening, esets = cr.sec13d_batch(NOW, client, ledger=[scan_record()], records=[], clock=lambda: NOW)
+            recs = hashed([evening, *esets])
+            mb, msets = cr.sec13d_batch(morning, client, ledger=[scan_record()], records=recs, clock=lambda: morning)
+            recs = hashed([*recs, mb, *msets])
+            with mock.patch.object(cr, "family_protocol", side_effect=early_v2):
+                _, sets = v2.batch(morning, client, ledger=[scan_record()], records=recs, clock=lambda: morning)
+        self.assertEqual(msets, [])
+        self.assertEqual({s["parent"]["set_id"] for s in sets}, {s["set_id"] for s in esets})
+
     def test_a_missing_primary_document_is_a_recorded_skip(self):
         """Guards against: a v2 set sealed without the cover page it is defined by, or the filing silently dropped."""
         routes, shares = self.world()

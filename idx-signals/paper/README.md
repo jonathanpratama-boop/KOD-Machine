@@ -125,8 +125,21 @@ before their cutoff (metadata only). It never feeds a decision, reads no holdout
 `ledger.jsonl` or `speculations.jsonl`; `paper-verify` checks its chain, cutoffs, batch listings and bindings.
 `paper/CATALYSTS.md` is the derived report. EDGAR needs the declared contact inline (`KOD_SEC_CONTACT=...`), never a file.
 
+Later families, each with its own frozen `research/CATALYST_FAMILIES/<family>/protocol.json` and counted looks:
+**DILUTION_8K** (8-K Item 3.02, the avoid side) and **FORM4** (insider purchases, test 26 replicated) from 2026-10-28;
+from 2026-10-29 two families built from a parent's sets of the same run (`handoff/decisions/2026-10-29_sensor_v2.md`):
+**SEC13D_V2** (SEC13D's filings with the cover-page market value when XBRL has no share count, Item 4 and 5(c) tags,
+20 twins, H20 and H60) and **FORM4_SHARP** (FORM4 events by a top executive or of USD 100-500k, no recent dilution, not a
+routine trader; 20 twins; H60 primary). Their cones carry **mechanism statements** resolved from EDGAR or the register's
+own batches rather than prices (`MECH_13DA_UP_60`: the filer raises its stake within 60 days; `MECH_SECOND_BUY_20`:
+another insider buys within 20 sessions); `catalyst-score` resolves them, EDGAR ones only with the declared contact.
+
 ```sh
 python3 -m idxsig catalyst-seal --family SEC13D --commit          # after paper-scan --market US, before 09:15 New York
+python3 -m idxsig catalyst-seal --family SEC13D_V2 --commit       # right after SEC13D (built from its sets)
+python3 -m idxsig catalyst-seal --family DILUTION_8K --commit
+python3 -m idxsig catalyst-seal --family FORM4 --commit           # mornings: yesterday's EDGAR daily form index
+python3 -m idxsig catalyst-seal --family FORM4_SHARP --commit     # right after FORM4 (built from its sets)
 python3 -m idxsig catalyst-seal --family IDX_INDEX --events research/CATALYST_REGISTER_v1/events/<file> --commit
 python3 -m idxsig catalyst-tag --commit                            # after speculate, before the set's cutoff
 python3 -m idxsig catalyst-score --market <US|IDX> --commit        # after paper-score; reuses its bars
