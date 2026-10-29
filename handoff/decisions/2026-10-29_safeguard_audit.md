@@ -44,6 +44,20 @@ hindering, and the fix is in this commit), or **owner decision** (the cost is re
 | learning only from live outcomes | nothing to learn from until 2026-11-27, little for a year | a pinned warm start: 5,587 events from 2020-2023, with their own intercepts, weighted as 300 live outcomes per kind at most |
 | v2 scored no raw move at all (RUN30, FADE10) | a correct pump or pump-and-dump call could never earn credit. The owner: "I dont care if its gonna be a pump and dump. I just care if it gets it right, and its thesis on even a pump and dump or whatnot is right" | v2.1 (research/LEARNER_v2/ADDENDUM_1.md): the stock's own pump, dump and pump-and-dump are skill statements, each true only when most of its twins did not make the same move. Every call states its thesis and is RIGHT only when all of it came true. The Speculation Register's daily movers are read too |
 
+## Looked protective, wasn't: found by an independent review, fixed in v2.2 (research/LEARNER_v2/ADDENDUM_2.md)
+
+A separate agent was given v2's code and asked to break its guarantees. These were my own safeguards. Each one looked
+right and was not.
+
+| Safeguard as built in v2 | What the review measured | v2.2 |
+|---|---|---|
+| "proven skill stays proven" (running maximum of the confidence bound) | it also stayed open after the skill was gone: in 40-52% of runs once skill fell to zero | the last 52 weeks must still show skill; about 14% at the heaviest overlap tested |
+| a time-uniform bound "valid however often it is checked" | valid only for independent observations; overlapping 20/60-session windows and one-market days split by the second opened it in 55-68% of zero-skill runs | weekly (or 4-weekly) blocks, a gate per horizon, and an overlap-robust standard deviation: 0-7% |
+| "no peeking, provably" | verify trusted the records' own clocks and ignored the fields scoring reads; cherry-picked forecasts passed | each forecast is bound to the exact ledger state it saw, the whole record is recomputed, and the external timestamp must predate the cutoff |
+
+The lesson is general: a safeguard is only as good as the attack it was tested against. Every v2.2 safeguard now has a
+test that reproduces the attack.
+
 ## Hindering, still open: owner decisions
 
 1. **Survivor-only prices** (free Yahoo data). Every historical long-side mean is biased upward: 48% of 13D filings in
