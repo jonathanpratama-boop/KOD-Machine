@@ -1,0 +1,12 @@
+{
+ "id": "CRYPTO_PUMP_HISTORY_v1",
+ "experiment": "CRYPTO_PUMP_HISTORY_v1",
+ "date": "2026-10-29",
+ "hypothesis": "out of time (fit 2018-19 score 2020, fit 2018-20 score 2021-22), a model on size, earlier pumps and the recent tape ranks the pumped Binance BTC pair above a volume-only ranking (top-5 hit rate or mean reciprocal rank), at the end of the previous day or one hour before the pump hour, with a lower Brier score",
+ "one_sided_p": null,
+ "p_source": "pending: research/CRYPTO_PUMP_HISTORY_v1/results/RESULT.json, Holm over four tests",
+ "variants_searched": 4,
+ "outcome": "PENDING (registered before any price was read)",
+ "counted": false,
+ "registered": "2026-10-29"
+}
