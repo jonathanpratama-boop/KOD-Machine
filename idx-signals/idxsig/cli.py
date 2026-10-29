@@ -170,6 +170,11 @@ def main(argv=None) -> int:
                                          "within --max-age-hours, else pull now)")
     p_cc.add_argument("--max-age-hours", type=float, default=8.0)
     p_cc.add_argument("--commit", action="store_true")
+    p_lf = sub.add_parser("learner-forecast", help="LEARNER_v1: seal the learner's forecasts for sets still before their "
+                                                 "cutoff (research/LEARNER_v1)")
+    p_lf.add_argument("--commit", action="store_true")
+    p_lr = sub.add_parser("learner-report", help="write paper/LEARNER.md (earned confidence, Brier, earned vs lucky)")
+    p_lr.add_argument("--commit", action="store_true")
     p_cr = sub.add_parser("catalyst-report", help="write paper/CATALYSTS.md (statistics, looks, calibration, cards)")
     p_cr.add_argument("--commit", action="store_true")
     p_ms = sub.add_parser("micro-snapshot", help="side-car for a crypto scan: Binance book cost now and, once the day's "
@@ -638,7 +643,8 @@ def main(argv=None) -> int:
     elif args.cmd == "paper-verify":
         from . import catalysts, paper, speculation
 
-        problems = paper.verify_all() + speculation.verify() + catalysts.verify()
+        from . import learner
+        problems = paper.verify_all() + speculation.verify() + catalysts.verify() + learner.verify()
         print("paper-verify: " + ("OK" if not problems else f"{len(problems)} problems"))
         for p_ in problems:
             print(f"  {p_}")
@@ -705,6 +711,34 @@ def main(argv=None) -> int:
             written.append(speculation.write_report())
         if args.commit and written:
             print(paper.commit_and_push([*written, *extra], message, trailer))
+    elif args.cmd in ("learner-forecast", "learner-report"):
+        import os
+        from datetime import datetime, timezone
+
+        from . import learner, paper
+
+        trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "")
+        if args.cmd == "learner-report":
+            path = learner.write_report()
+            print(path.read_text(encoding="utf-8"))
+            if args.commit:
+                print(paper.commit_and_push([path], "learner: report", trailer))
+            return 0
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "kod-machine"))
+        from kod.timestamp import RFC3161Timestamper
+
+        recs = learner.forecast_records(datetime.now(timezone.utc))
+        if not recs:
+            print("no sealed set awaiting a learner forecast before its cutoff; nothing recorded")
+            return 0
+        for r in recs:
+            tri = r["forecasts"].get(learner.TRI)
+            print(f"  {r['set_id']}: alpha {r['alpha']:.2f}, trained rows {sum(r['trained']['rows'].values())}"
+                  + (f", TRIANGULATED published {tri['published']:.3f} (prior {tri['prior']:.3f})" if tri else ""))
+        written, _ = learner.append(recs, RFC3161Timestamper())
+        written.append(learner.write_report())
+        if args.commit:
+            print(paper.commit_and_push(written, f"learner: {len(recs)} forecast(s) sealed", trailer))
     elif args.cmd in ("catalyst-seal", "catalyst-tag", "catalyst-score", "catalyst-report"):
         import os
         from datetime import datetime, timezone
