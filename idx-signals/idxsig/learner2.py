@@ -433,12 +433,15 @@ class Model:
     """One kind's penalised logistic model: logit p = logit(p0) + intercept[icpt] + (x - centre[task]) . slope[task],
     slope[task] = shared[share group] + own[task], with the Laplace covariance at the maximum a posteriori."""
 
-    def __init__(self, kind: str, rows: list[Row]):
+    def __init__(self, kind: str, rows: list[Row], share=None):
+        """`share`: the task -> share-group function (share_group here; a later learner version passes its own). The
+        feature dimension is the rows'."""
         self.kind = kind
-        D = len(FEATURES)
+        self.share = share or share_group
+        D = self.D = len(rows[0].x)
         self.tasks = sorted({r.task for r in rows})
         self.icpts = sorted({r.icpt for r in rows})
-        self.group = {t: share_group(t) for t in self.tasks}
+        self.group = {t: self.share(t) for t in self.tasks}
         self.groups = sorted({g for g in self.group.values() if g})
         self.nb = D * len(self.groups)
         T, I = len(self.tasks), len(self.icpts)
@@ -497,11 +500,11 @@ class Model:
         self.n_rows = {t: float(w0[ti == k].sum()) for k, t in enumerate(self.tasks)}
 
     def _gslice(self, grp: str) -> slice:
-        D, k = len(FEATURES), self.groups.index(grp)
+        D, k = self.D, self.groups.index(grp)
         return slice(k * D, (k + 1) * D)
 
     def _linear(self, theta, Z, ti, ii):
-        D, T = len(FEATURES), len(self.tasks)
+        D, T = self.D, len(self.tasks)
         slope = theta[self.nb:self.nb + T * D].reshape(T, D)[ti]
         if self.nb:
             shared = np.array([theta[self._gslice(self.group[t])] if self.group[t] else np.zeros(D) for t in self.tasks])
@@ -510,12 +513,12 @@ class Model:
 
     def slope(self, task: str) -> tuple[np.ndarray, np.ndarray]:
         """The task's slope vector and its covariance (a task the fit has not seen: its group's part, or zero)."""
-        D = len(FEATURES)
+        D = self.D
         sel = []
         if task in self.tasks:
             k = self.tasks.index(task)
             sel.append(np.arange(self.nb + k * D, self.nb + (k + 1) * D))
-        grp = self.group.get(task, share_group(task))
+        grp = self.group.get(task, self.share(task))
         if grp in self.groups:
             g = self._gslice(grp)
             sel.append(np.arange(g.start, g.stop))

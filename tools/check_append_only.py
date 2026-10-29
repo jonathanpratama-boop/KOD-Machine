@@ -68,6 +68,7 @@ APPEND_ONLY = (
     "idx-signals/paper/catalysts.jsonl",
     "idx-signals/paper/learner.jsonl",
     "idx-signals/paper/learner_v2.jsonl",
+    "idx-signals/paper/learner_v3.jsonl",
     "kod-machine/registry/opens.jsonl",
     "kod-machine/registry/scans.jsonl",
     "kod-machine/registry/receipts.jsonl",
