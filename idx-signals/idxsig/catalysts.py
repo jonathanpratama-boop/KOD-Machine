@@ -1134,7 +1134,15 @@ def card(s: dict) -> str:
                 f"sealed {s['sealed_at']}, cutoff {s['entry_cutoff']}")
         what = f"Direction {int(s.get('direction', 1)):+d}; protocol `{s['protocol']['id']}`."
         cls = f"Coverage **{cov['class']}**; pre-entry move {_pct(cov.get('inputs', {}).get('pre_entry_move'))}."
-    wins = "; ".join(f"{k}: entry +{w['entry_window']}, hold {w['holding_sessions']}" for k, w in s["windows"].items())
+    def _win(w: dict) -> str:  # plan windows have entry/hold; event windows (SEC13D_V2's) count sessions or days
+        if "entry_window" in w and "holding_sessions" in w:
+            return f"entry +{w['entry_window']}, hold {w['holding_sessions']}"
+        if "sessions" in w:
+            return f"{w['sessions']} sessions"
+        if "calendar_days" in w:
+            return f"{w['calendar_days']} calendar days"
+        return w.get("kind", "window")
+    wins = "; ".join(f"{k}: {_win(w)}" for k, w in s["windows"].items())
     return "\n".join([
         head, f"Set `{s['set_id']}`, scan `{s['scan_id']}`; signal close {s['signal']['close']:g} on "
               f"{s['signal_session']}; entry: {s['entry']['text']} ({s['entry']['session']}). Windows: {wins}.",

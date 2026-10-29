@@ -481,3 +481,17 @@ def json_lines(path):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class CardWindows(unittest.TestCase):
+    def test_card_describes_event_windows_without_entry_fields(self):
+        from idxsig import catalysts
+        s = {"family": "LATER", "ticker": "X", "event_id": "E1", "sealed_at": "t", "entry_cutoff": "c", "protocol": {"id": "P"},
+             "coverage": {"class": "FIRE", "inputs": {}}, "event": {}, "set_id": "S", "scan_id": "SC",
+             "signal": {"close": 1.0}, "signal_session": "2026-10-29", "entry": {"text": "open", "session": "2026-10-30"},
+             "windows": {"H20": {"kind": "plan", "entry_window": 1, "holding_sessions": 20},
+                         "M90": {"kind": "mechanism", "calendar_days": 90}},
+             "twins_match_level": "band", "twins": [], "cone": []}
+        text = catalysts.card(s)
+        self.assertIn("H20: entry +1, hold 20", text)
+        self.assertIn("M90: 90 calendar days", text)
