@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-29T23:02:18Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-29T23:02:44Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -24,7 +24,7 @@ Sets 14 over 1 sessions.
 
 ## DILUTION_8K (counted at each look; direction -1; `KOD-CATALYST-FAMILY-DILUTION_8K-v1`)
 
-Sets 1 over 1 signal sessions; events seen: SEALED 1; coverage gaps 0.
+Sets 4 over 2 signal sessions; events seen: SEALED 4, SKIP_REPEAT_90D 2, SKIP_NO_TICKER 4, SKIP_NOT_IN_UNIVERSE 2; coverage gaps 0.
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
 
@@ -102,27 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 17 tags: 2 true, 0 unknown.
 
 ## Latest sets
-
-### IDX_INDEX HEAL (DELETE IDX80) - effective 2026-11-02, sealed 2026-10-28T10:38:02Z, cutoff 2026-10-29T01:45:00Z
-Set `CAT-IDX_INDEX-IDX-MAJOR-2026-11-02-HEAL`, scan `SCAN-2026-10-28-F1_ARA`; signal close 545 on 2026-10-28; entry: the closing auction of the session after the signal session (2026-10-29). Windows: POST20: entry +2, hold 20; RUNUP: entry +1, hold 1.
-Confidence SINGLE_SOURCE; events file sha256 `39df501b3e5a`.
-Coverage DESCRIPTIVE (not counted).
-Twins (band+liq+mom): UNSP 276, MSTI 1210, MOLI 364, AVIA 302, MITI 256.
-Cone: WITH_FLOW_RUNUP p=0.50; REVERSAL_POST20 p=0.50.
-
-### IDX_INDEX ISAT (ADD IDX30) - effective 2026-11-02, sealed 2026-10-28T10:38:02Z, cutoff 2026-10-29T01:45:00Z
-Set `CAT-IDX_INDEX-IDX-MAJOR-2026-11-02-ISAT`, scan `SCAN-2026-10-28-F1_ARA`; signal close 1570 on 2026-10-28; entry: the closing auction of the session after the signal session (2026-10-29). Windows: POST20: entry +2, hold 20; RUNUP: entry +1, hold 1.
-Confidence CONFIRMED; events file sha256 `39df501b3e5a`.
-Coverage DESCRIPTIVE (not counted).
-Twins (band+liq+mom+dd): EXCL 1690, EMTK 324, SSIA 1225, ARCI 990, TEBE 1750.
-Cone: WITH_FLOW_RUNUP p=0.50; REVERSAL_POST20 p=0.50.
-
-### IDX_INDEX MIKA (DELETE IDX80) - effective 2026-11-02, sealed 2026-10-28T10:38:02Z, cutoff 2026-10-29T01:45:00Z
-Set `CAT-IDX_INDEX-IDX-MAJOR-2026-11-02-MIKA`, scan `SCAN-2026-10-28-F1_ARA`; signal close 1380 on 2026-10-28; entry: the closing auction of the session after the signal session (2026-10-29). Windows: POST20: entry +2, hold 20; RUNUP: entry +1, hold 1.
-Confidence SINGLE_SOURCE; events file sha256 `39df501b3e5a`.
-Coverage DESCRIPTIVE (not counted).
-Twins (band+liq+mom+dd): FORE 590, ASPI 810, DGWG 268, HBAT 286, NRCA 434.
-Cone: WITH_FLOW_RUNUP p=0.50; REVERSAL_POST20 p=0.50.
 
 ### IDX_INDEX PGEO (DELETE IDX30) - effective 2026-11-02, sealed 2026-10-28T10:38:02Z, cutoff 2026-10-29T01:45:00Z
 Set `CAT-IDX_INDEX-IDX-MAJOR-2026-11-02-PGEO`, scan `SCAN-2026-10-28-F1_ARA`; signal close 990 on 2026-10-28; entry: the closing auction of the session after the signal session (2026-10-29). Windows: POST20: entry +2, hold 20; RUNUP: entry +1, hold 1.
@@ -207,4 +186,25 @@ Filing `0001178913-26-004909` by Moalem Moshe; Item 4 intent words: board, proxy
 Coverage **ABSTAIN** (MICROCAP); pre-entry move -4.74%, market value USD 21.3M, dilution filings 0.
 Twins (band+liq+mom+dd): OPTT 0.4189, TGL 0.2349, QUCY 0.91, ONCY 0.4277, CDT 0.077.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### DILUTION_8K INMB - event `0001213900-26-113535`, accepted 2026-10-29T07:40:32-04:00, sealed 2026-10-29T23:02:41Z, cutoff 2026-10-30T13:15:00Z
+Set `CAT-DILUTION_8K-0001213900-26-113535`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 1.6 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move +4.58%.
+Twins (band+liq+mom+dd): JELD 1.36, VIVO 2.6, BIRD 2.12, LPCN 1.52, RDZN 1.12.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### DILUTION_8K OFAL - event `0001493152-26-049292`, accepted 2026-10-29T16:50:56-04:00, sealed 2026-10-29T23:02:41Z, cutoff 2026-10-30T13:15:00Z
+Set `CAT-DILUTION_8K-0001493152-26-049292`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 0.3098 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move +0.00%.
+Twins (band+liq+mom+dd): BIOX 0.2295, AACG 0.65, MNY 0.5513, AMST 0.5679, LZMH 0.7901.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### DILUTION_8K DFNS - event `0001185185-26-005079`, accepted 2026-10-29T17:27:25-04:00, sealed 2026-10-29T23:02:41Z, cutoff 2026-10-30T13:15:00Z
+Set `CAT-DILUTION_8K-0001185185-26-005079`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 3.66 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move +0.00%.
+Twins (band+liq+mom+dd): CCLD 1.8, XOS 2.65, SPAI 3.39, ALTI 2.56, STEM 2.39.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
