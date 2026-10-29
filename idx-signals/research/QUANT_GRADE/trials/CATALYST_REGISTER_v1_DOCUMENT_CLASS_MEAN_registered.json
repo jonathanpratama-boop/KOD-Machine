@@ -1,0 +1,13 @@
+{
+ "id": "CATALYST_REGISTER_v1_DOCUMENT_CLASS_MEAN_registered",
+ "experiment": "CATALYST_REGISTER_v1",
+ "date": "2026-10-29",
+ "hypothesis": "prospective, pooled: over the FIRE sets of families SEC13D, DILUTION_8K and FORM4 (parents only, one record per set), the per-session mean of direction x (20-session plan net - twins' mean net) exceeds 0 (one-sided t, df = sessions - 1)",
+ "one_sided_p": null,
+ "p_source": "no look yet; looks at 60, 120, 240, 480, 960, 1920 pairs (research/CATALYST_REGISTER_v1/prereg_3_document_class.json); each look adds a counted file CATALYST_REGISTER_v1_DOCUMENT_CLASS_MEAN_n<look>.json",
+ "variants_searched": 0,
+ "outcome": "PENDING (prospective; registered before any RESOLUTION of any counted US family existed)",
+ "note": "a pooled statistic over records the families already produce; the win rate, the split by family and the split by price band are descriptive only (ADDENDUM_3.md)",
+ "counted": false,
+ "registered": "2026-10-29"
+}

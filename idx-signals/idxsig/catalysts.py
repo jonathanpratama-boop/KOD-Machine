@@ -41,6 +41,7 @@ from .provenance import PKG_ROOT, sha256_file, utc_stamp
 PROTOCOL_DIR = PKG_ROOT / "research" / "CATALYST_REGISTER_v1"
 PROTOCOL_JSON = PROTOCOL_DIR / "protocol.json"
 PREREG_JSON = PROTOCOL_DIR / "prereg_2.json"  # SEC13D: win-rate primary and extended looks, frozen before any SEC13D set
+CLASS_JSON = PROTOCOL_DIR / "prereg_3_document_class.json"  # the pooled DOCUMENT_CLASS test, frozen before any resolution
 FAMILY_DIR = PKG_ROOT / "research" / "CATALYST_FAMILIES"  # later families, one frozen protocol.json each
 FAMILY_MODULES = {"DILUTION_8K": "fam_dilution8k", "FORM4": "fam_form4", "SEC13D_V2": "fam_sec13d_v2",
                   "FORM4_SHARP": "fam_form4_sharp"}
@@ -1005,11 +1006,44 @@ def statistics(records: list[dict] | None = None) -> dict:
     for fam, (fs, fsha) in extra_families().items():
         fams[fam] = family_statistics(fam, fs, fsha, sets, res, records)
     return {"protocol": {"id": proto["protocol_id"], "sha256": proto_sha}, "register": REGISTER_VERSION,
-            "generated_at": utc_stamp(), "families": fams,
+            "generated_at": utc_stamp(), "families": fams, "document_class": document_class(records),
             "tags": {"DILUTION_RECENT": {
                 "n": sum(r["type"] == "TAG" for r in records),
                 "true": sum(r["type"] == "TAG" and r["value"] is True for r in records),
                 "unknown": sum(r["type"] == "TAG" and r["value"] is None for r in records)}}}
+
+
+def document_class_design() -> tuple[dict, str]:
+    return json.loads(CLASS_JSON.read_text(encoding="utf-8")), sha256_file(CLASS_JSON)
+
+
+def document_class(records: list[dict] | None = None) -> dict:
+    """The pooled DOCUMENT_CLASS statistic (prereg_3_document_class.json): the latest H20 FIRE resolution of each set
+    of the listed parent families, its paired excess signed by the set's direction, the per-session mean and the
+    pre-registered look verdict; the win rate, the split by family and the split by price band are descriptive."""
+    design, sha = document_class_design()
+    records = cat_lines() if records is None else records
+    fams = list(design["families"])
+    sets = {r["set_id"]: r for r in records if r["type"] == "CATALYST_SET"}
+    latest: dict[str, dict] = {}
+    for r in records:
+        if (r["type"] == "RESOLUTION" and r.get("status") == "RESOLVED" and r.get("paired") and r["family"] in fams
+                and r["window"] == "H20" and r.get("coverage") == "FIRE"):
+            latest[r["set_id"]] = r  # a revision comes later in the chain and replaces the earlier record
+    rs = list(latest.values())
+    signed = [{**r, "paired": {**r["paired"], "diff": r["paired"]["diff"] * int(r.get("direction", 1))}} for r in rs]
+    st = spec.plan_statistics(signed)
+    st["look"] = prereg_verdict(st, st["mean_diff"], 1.0, design=design)  # no mean-net condition for a class with an avoid family
+    wins = [(r["paired"]["candidate_net"] - r["paired"]["twins_median_net"]) * int(r.get("direction", 1)) > 0 for r in rs
+            if r["paired"].get("twins_median_net") is not None]
+    band = {"close_ge_20": [], "close_lt_20": [], "close_unknown": []}
+    for x in signed:
+        close = (sets.get(x["set_id"], {}).get("signal") or {}).get("close")
+        band["close_unknown" if close is None else ("close_ge_20" if float(close) >= 20 else "close_lt_20")].append(x)
+    return {"design": {"id": design["id"], "sha256": sha}, "families": fams, "MEAN": st,
+            "win_rate_descriptive": {"n": len(wins), "wins": int(sum(wins)), "rate": (sum(wins) / len(wins)) if wins else None},
+            "by_family": {f: spec.plan_statistics([x for x in signed if x["family"] == f]) for f in fams},
+            "by_price_band": {k: spec.plan_statistics(v) for k, v in band.items()}}
 
 
 def _batch_counts(batches: list[dict]) -> dict:
@@ -1164,6 +1198,17 @@ def render(stats: dict, records: list[dict]) -> str:
             for key, d in fsx["descriptive"].items():
                 if isinstance(d, dict) and "n_paired" in d:
                     out.append(f"- Descriptive {key}: {_pct(d.get('mean_diff'))} over {d.get('n_paired', 0)} pairs")
+    dc = stats.get("document_class")
+    if dc:
+        m, wr = dc["MEAN"], dc["win_rate_descriptive"]
+        out += ["", f"## DOCUMENT_CLASS (pooled, pre-registered; `{dc['design']['id']}`)", "",
+                f"Families {', '.join(dc['families'])}, parents only, one record per set; the paired excess signed by "
+                f"direction; window H20, FIRE sets.",
+                f"- MEAN (signed edge over the twins) {_pct(m.get('mean_diff'))} over {m.get('n_paired', 0)} pairs in "
+                f"{m.get('n_sessions', 0)} sessions: **{m['look']['verdict']}**",
+                "- Win rate (descriptive, never a primary): " + (f"{wr['wins']} of {wr['n']} ({wr['rate']:.1%})" if wr["rate"] is not None else "none yet"),
+                "- By family: " + ", ".join(f"{f} {v.get('n_paired', 0)} ({_pct(v.get('mean_diff'))})" for f, v in dc["by_family"].items()),
+                "- By price band: " + ", ".join(f"{k} {v.get('n_paired', 0)} ({_pct(v.get('mean_diff'))})" for k, v in dc["by_price_band"].items())]
     tg = stats["tags"]["DILUTION_RECENT"]
     out += ["", "## Calibration", "", "| Family | Statement | n | Realised | Mean prior | Twins | Brier | Brier at 0.5 |",
             "|---|---|---|---|---|---|---|---|"]

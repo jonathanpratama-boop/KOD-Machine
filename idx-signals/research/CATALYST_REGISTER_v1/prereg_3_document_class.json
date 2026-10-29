@@ -1,0 +1,40 @@
+{
+ "id": "KOD-CATALYST-REGISTER-v1-PREREG-3-DOCUMENT-CLASS",
+ "frozen": "2026-10-29",
+ "frozen_before": "any RESOLUTION of any counted US family: the earliest H20 window (BKU, signal session 2026-10-28) ends on 2026-11-27, and no RESOLUTION record existed when this file was committed",
+ "owner_decision": "2026-10-29, the owner: 'I need you to solve the arithmetic problem. Make a solution if there isnt one'; handoff/decisions/2026-10-29_arithmetic.md",
+ "question": "do the lab's directional readings of EDGAR filings, taken as a class, beat matched twins over 20 sessions?",
+ "why": "time to an answer is (t_min x sd / edge)^2 divided by events per year. Each family alone is slow: about 110 FIRE events a year for SEC13D, 780 for DILUTION_8K, 1,500 for FORM4 (research/CATALYST_REGISTER_v1/POWER_v1/POWER.md). Pooled, the class sees about 2,400 a year. At the measured per-set spread of 0.156 (test 26, hold 20) a 1.5% class edge needs about 980 pairs at t >= 3, which the class reaches in about five months; a 1% edge needs about 2,200, about eleven months. It also fails fast: a class estimate at or below zero at the 240 look stops it.",
+ "families": ["SEC13D", "DILUTION_8K", "FORM4"],
+ "excluded": {
+  "SEC13D_V2": "the same filings as SEC13D; counting both would count a filing twice",
+  "FORM4_SHARP": "a subset of FORM4's events",
+  "IDX_INDEX": "descriptive, not counted; a later class version may add counted IDX families"
+ },
+ "one_record_per_set": "the latest RESOLUTION of each (set, H20); a set is never counted twice",
+ "sample": "RESOLUTION records of the listed families, window H20, status RESOLVED with a paired difference, coverage class FIRE",
+ "signed_excess": "direction x (plan net - twins' mean net), the direction the set carries: +1 for SEC13D and FORM4, -1 for DILUTION_8K, so a correct avoid call counts as a positive excess",
+ "primary": {
+  "MEAN": {
+   "what": "per-session mean of the signed excess (sets of one signal session averaged first), one-sided t against 0, df = sessions - 1 (idxsig.speculation.plan_statistics)",
+   "estimate": "mean of the per-session means",
+   "eligible_extra": "none: an avoid family claims no positive net, so the class claim is about the signed excess only"
+  }
+ },
+ "descriptive_only": {
+  "WIN_RATE": "per set, direction x (plan net - twins' median net) > 0; reported beside the mean, never a primary. Test 26's insider-purchase events had a hit rate of 46.5% beside a positive mean excess of 1.0% at 20 sessions: for a right-skewed signal the win rate cannot carry the claim, and a win-rate primary would fail by construction",
+  "by_family": "each family's own pairs, mean signed excess and sessions, so the reader sees which family carries the class",
+  "by_price_band": "signal close at or above USD 20 against below: in test 26 the above-20 half had the same mean excess (1.05% against 1.01%) at 40% of the variance (sd 0.098 against 0.156). Reported, not a rule; a later family version may make it one"
+ },
+ "looks": {"n": [60, 120, 240, 480, 960, 1920], "t_min": [3.75, 3.0, 3.0, 3.0, 3.0, 3.0], "min_sessions": [15, 15, 15, 30, 60, 120], "source": "prereg_2.json; the t >= 3.0 floor is the lab's standing rule and is kept"},
+ "at_a_look": {
+  "eligible": "t >= that look's t_min, one-sided p < 0.05, estimate > 0: ELIGIBLE FOR OWNER REVIEW (never an automatic trade)",
+  "futility": "from the 240 look on, an estimate <= 0 stops the class: FAIL (futility), and the session advises the owner that the filing families as a class have not beaten random on the lab's own readings",
+  "fail": "not eligible at the 1920 look: FAIL",
+  "confirmed": "eligible at a look and at the next look"
+ },
+ "counted": "each look adds research/QUANT_GRADE/trials/CATALYST_REGISTER_v1_DOCUMENT_CLASS_MEAN_n<look>.json (counted)",
+ "what_a_pass_means": "that reading EDGAR filings the way the families read them carries information the twins do not. It does not say which family to trade, and it does not change any family's own counted looks, which continue unchanged",
+ "what_it_does_not_change": "no family protocol, prior, twin draw, resolution or ledger line; this file adds a statistic over records the families already produce",
+ "forbidden": ["changing the family list, the direction, the window, the class or the looks after the first RESOLUTION exists", "counting a child family beside its parent", "any order"]
+}
