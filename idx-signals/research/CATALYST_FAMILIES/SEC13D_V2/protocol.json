@@ -1,0 +1,60 @@
+{
+ "protocol_id": "KOD-CATALYST-FAMILY-SEC13D_V2-v1",
+ "version": "1.0",
+ "frozen": "2026-10-29",
+ "frozen_before": "every filing this family can see: its window opens 2026-10-29T00:00:00-04:00, after this file was committed; no SEC13D_V2 record existed",
+ "family": "SEC13D_V2",
+ "market": "US",
+ "counted": true,
+ "direction": 1,
+ "owner_decision": "2026-10-29, the owner: 'Find a way to implement them' (the session's proposals to make the sensor smarter without new data); handoff/decisions/2026-10-29_sensor_v2.md",
+ "ledger": "paper/catalysts.jsonl (the Catalyst Register's chain)",
+ "question": "the same original Schedule 13D events as family SEC13D, read more fully: does the 20-session plan beat matched twins when the abstention rule knows the issuer's size from the filing's own cover page, and with 20 twins instead of 5?",
+ "relation_to_SEC13D": "SEC13D (research/CATALYST_REGISTER_v1/protocol.json with prereg_2.json) is unchanged and keeps running. SEC13D_V2 is a separate counted family on the same filings: its FIRE class is SEC13D's FIRE class plus the filings SEC13D abstains on only because the XBRL share count is missing (MV_UNKNOWN) when the cover page gives a market value of at least USD 50M. The two families' results are reported side by side and are not independent.",
+ "event": "each SEC13D set (family SEC13D) sealed in the same catalyst-seal run immediately before this family's batch, whose filing was accepted at or after the window start: the same filing, ticker, signal session, entry session, entry cutoff and acceptance position. A filing SEC13D skipped is not an event here.",
+ "window_start": "2026-10-29T00:00:00-04:00",
+ "source": "the filing's structured primary document https://www.sec.gov/Archives/edgar/data/<subject CIK>/<accession without dashes>/primary_doc.xml (sha256 recorded), read once per set; no other new source",
+ "batches": "every batch is recorded, also an empty one: the SEC13D batch it follows, and per SEC13D set SEALED or SKIP_NO_PRIMARY_DOC (the primary document is not HTTP 200)",
+ "coverage": {
+  "rules": {
+   "DILUTION_RECENT": "as SEC13D, the SEC13D set's own input (catalysts.dilution_filings: a dilution filing from the 19th weekday before the signal session through sealing)",
+   "MOVED_ALREADY": "as SEC13D, the SEC13D set's own input (DURING: signal close / previous close >= 1.15; AFTER: none)",
+   "MICROCAP": "market value below USD 50M, market value = shares x the signal close; shares = the SEC13D set's XBRL fact (dei EntityCommonStockSharesOutstanding, latest filed by sealing) when it exists, else the cover page: among reporting persons with percentOfClass > 0, the one with the largest percentOfClass, aggregateAmountOwned / (percentOfClass / 100). Neither: MV_UNKNOWN, which also abstains"
+  },
+  "class": "FIRE when no rule binds, else ABSTAIN with the binding rules as reasons; shares_source records XBRL or COVER_PAGE",
+  "descriptive_tags": {
+   "STRONG_INTENT": "Item 4 (transactionPurpose) contains any of: nominate, proxy, strategic alternatives, sale of the, change of control, take private, going private (lower case, substring); the boilerplate words board, director, merger, acquisition, letter are recorded but do not count",
+   "ITEM5C": "Item 5(c) (transactionDesc): characters, whether it reports no transactions (text matching 'no ' ... 'transaction'), the dollar prices it states (regex \\$\\s?[0-9][0-9,]*\\.?[0-9]*, at most 50), their mean, and signal close / that mean",
+   "POSITION": "DURING or AFTER (accepted during or after the signal session), from SEC13D"
+  }
+ },
+ "twins": "catalysts.sec13d_twins as SEC13D (speculation.draw_twins on the signal session's US features, the same exclusions and seed, an operating issuer with no original Schedule 13D in the 90 days before sealing), taking the first 20 that pass with at most 40 checked; the first 5 are therefore SEC13D's 5 whenever SEC13D found 5 in its first 15 checks",
+ "windows": {
+  "H20": {"kind": "plan", "entry": "the entry session's opening print", "entry_window": 1, "holding_sessions": 20, "exit": "the close of the 20th session after entry", "costs": "the US profile's fees and cost tiers (EXEC-US-v1)", "stop": "none"},
+  "H60": {"kind": "plan", "entry": "the entry session's opening print", "entry_window": 1, "holding_sessions": 60, "exit": "the close of the 60th session after entry", "costs": "as H20", "stop": "none"},
+  "M60": {"kind": "mechanism", "calendar_days": 60, "what": "resolved from EDGAR, not from prices, once 60 calendar days have passed since acceptance"}
+ },
+ "cone": [
+  {"id": "GAIN0_20", "statement": "the H20 plan's net return after costs is above zero", "prior": 0.55, "prior_source": "SEC13D's prior (Brav, Jiang, Partnoy and Thomas 2008, post-filing drift)", "resolves_with": "H20"},
+  {"id": "BEATS_TWINS_20", "statement": "the H20 plan's net return is above the twins' median net return", "prior": 0.5, "prior_source": "the null", "resolves_with": "H20"},
+  {"id": "FADE10_20", "statement": "the H20 plan's net return is at or below -10%", "prior": "running", "resolves_with": "H20"},
+  {"id": "RUN30_20", "statement": "a close in the 20 sessions after the signal session is at least 1.30 x the signal close", "prior": "running", "resolves_with": "H20"},
+  {"id": "GAIN0_60", "statement": "the H60 plan's net return after costs is above zero", "prior": "running", "resolves_with": "H60"},
+  {"id": "BEATS_TWINS_60", "statement": "the H60 plan's net return is above the twins' median net return", "prior": 0.5, "prior_source": "the null", "resolves_with": "H60"},
+  {"id": "MECH_13DA_UP_60", "statement": "within 60 calendar days after acceptance, an amendment (SCHEDULE 13D/A or SC 13D/A) on the subject, filed by a reporting person of the original (a shared reporting person CIK), reports a larger percentOfClass than the original's largest", "prior": "running", "resolves_with": "M60", "how": "the subject's submissions JSON at resolution (forms SCHEDULE 13D/A, SC 13D/A, filing date after the acceptance date and at most 60 calendar days later); each such amendment's primary_doc.xml (at most 10 read, sha256 recorded). No such amendment: false. Submissions unreadable, or an amendment's primary document unreadable when no readable one already makes it true: not graded"}
+ ],
+ "decision": {
+  "sample": "FIRE sets of this family, window H20, RESOLVED with a paired difference",
+  "window": "H20",
+  "coverage_class": "FIRE",
+  "primaries": {
+   "MEAN": {"what": "per-session mean of (plan net - twins' mean net), one-sided t against 0", "signed_by_direction": true, "eligible_extra": "the plan's mean net after costs > 0"},
+   "WIN_RATE": {"what": "per-session share of sets beating the twins' median (BEATS_TWINS_20), one-sided t against 0.5", "statement": "BEATS_TWINS_20", "eligible_extra": "the plan's mean net after costs > 0"}
+  },
+  "require_positive_mean_net": true,
+  "looks": {"n": [60, 120, 240, 480, 960, 1920], "t_min": [3.75, 3.0, 3.0, 3.0, 3.0, 3.0], "min_sessions": [15, 15, 15, 30, 60, 120], "source": "as research/CATALYST_REGISTER_v1/prereg_2.json"},
+  "at_a_look": {"eligible": "t >= that look's t_min, one-sided p < 0.05, estimate > 0, mean net > 0: ELIGIBLE FOR OWNER REVIEW (never an automatic trade)", "futility": "from the 240 look, an estimate <= 0 is FAIL (futility)", "final": "not eligible at 1920: FAIL"},
+  "descriptive_only": ["window H60 with the same two statistics", "the ABSTAIN class", "FIRE sets whose shares came from the cover page", "STRONG_INTENT true vs false", "POSITION DURING vs AFTER", "the cone's calibration, MECH_13DA_UP_60 included"]
+ },
+ "forbidden": ["a backtest of this family", "reading a sealed holdout", "changing a rule after the first set of this family is sealed", "backfilling a filing accepted before the window start", "any order, any change to PAPER-POLICY-v4, ledger.jsonl or family SEC13D"]
+}

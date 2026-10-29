@@ -1,0 +1,65 @@
+{
+ "protocol_id": "KOD-CATALYST-FAMILY-FORM4_SHARP-v1",
+ "version": "1.0",
+ "frozen": "2026-10-29",
+ "frozen_before": "every Form 4 this family can see: FORM4's window opens with filings dated 2026-10-29, whose daily index is first read on 2026-10-30; no FORM4 or FORM4_SHARP record existed when this file was committed",
+ "family": "FORM4_SHARP",
+ "market": "US",
+ "counted": true,
+ "direction": 1,
+ "owner_decision": "2026-10-29, the owner: 'Find a way to implement them' (the session's proposals to make the sensor smarter without new data); handoff/decisions/2026-10-29_sensor_v2.md",
+ "ledger": "paper/catalysts.jsonl (the Catalyst Register's chain)",
+ "question": "the FORM4 events narrowed to where counted test 26 found its edge, and away from where the literature and this lab find none: does the 60-session plan beat 20 matched twins when the buyer is a top executive or buys USD 100k to 500k, the issuer has no recent dilution filing, and the buyer is not a routine trader?",
+ "basis": {
+  "test_26_descriptive_splits": "US_INSIDER_BUY (2021-2022, survivor-only, 60 sessions): top-executive buyers +3.4% (n 834, t 2.3), others +1.2%; purchases of USD 100-500k +3.0%, 50-100k +2.2%, 500k+ -0.8%; 60 sessions was the strongest horizon (+1.80%, t 2.87). These splits were descriptive there and are tested prospectively here, once.",
+  "literature": "Cohen, Malloy and Pomorski 2012 (Journal of Finance): insiders who trade in the same calendar month every year (routine) carry no information; opportunistic insiders predict returns",
+  "lab": "US_8K_ITEMS (counted test 27): Item 3.02 issuers -2.8% at 20 sessions (t -4.3); E9: dilution -10.9% at 20"
+ },
+ "relation_to_FORM4": "FORM4 (research/CATALYST_FAMILIES/FORM4/protocol.json) is unchanged and keeps running as the plain replication. FORM4_SHARP is a separate counted family on a subset of the same events, reported beside it; the two are not independent.",
+ "event": "each FORM4 set sealed in the same catalyst-seal run immediately before this family's batch: the same event (issuer, filing date, accessions), ticker, signal session, entry session and entry cutoff. An event FORM4 skipped is not an event here.",
+ "window_start": "2026-10-29",
+ "source": "each of the event's filings' full text https://www.sec.gov/Archives/<file name> read again (its XML's sha256 must equal the FORM4 set's, else SKIP_XML_CHANGED); the issuer's submissions JSON; each buying owner's submissions JSON https://data.sec.gov/submissions/CIK<owner CIK>.json and at most 3 earlier Form 4 filings per owner and year (sha256 recorded); no other new source",
+ "batches": "every batch is recorded, also an empty one: the FORM4 batch it follows, and per FORM4 set SEALED or a SKIP with its reason",
+ "coverage": {
+  "rules": {
+   "NOT_SHARP": "neither TOP_EXEC (FORM4's tag: an officer title matching research/US_INSIDER_BUY/ib_lib._TOP) nor VALUE_BAND (the event's purchase value at least USD 100,000 and below USD 500,000)",
+   "DILUTION_RECENT": "catalysts.dilution_filings on the issuer's submissions: a dilution filing (idxsig.catalyst.is_dilution) from the 19th weekday before the signal session through sealing; submissions unreadable: the rule binds (unknown abstains)",
+   "ROUTINE": "every buying owner is routine. An owner is routine when, in each of the 3 calendar years before the year of the event's last transaction, the owner's submissions list a Form 4 filed in the same calendar month as that transaction whose XML has a non-derivative line with transaction code P or S (at most 3 filings read per owner and year, earliest first). An owner without a CIK, with unreadable submissions, or with an unreadable filing in a year that is otherwise unmatched, is not routine (recorded as unknown)"
+  },
+  "class": "FIRE when no rule binds, else ABSTAIN with the binding rules as reasons",
+  "descriptive_tags": {
+   "PCT_INCREASE": "per buying owner: shares bought on the event's purchase lines / (sharesOwnedFollowingTransaction of the owner's last purchase line - those shares); the event's maximum; none when the holding after the trade is missing or not larger than the purchase",
+   "inputs_from_FORM4": "total purchase value, number of owners, top executive, lag from the last transaction to the filing"
+  }
+ },
+ "twins": "catalysts.sec13d_twins as FORM4 (speculation.draw_twins on the signal session's US features, the same exclusions and seed, an operating issuer with no original Schedule 13D in the 90 days before sealing), taking the first 20 that pass with at most 40 checked",
+ "windows": {
+  "H20": {"kind": "plan", "entry": "the entry session's opening print", "entry_window": 1, "holding_sessions": 20, "exit": "the close of the 20th session after entry", "costs": "the US profile's fees and cost tiers (EXEC-US-v1)", "stop": "none"},
+  "H60": {"kind": "plan", "entry": "the entry session's opening print", "entry_window": 1, "holding_sessions": 60, "exit": "the close of the 60th session after entry", "costs": "as H20", "stop": "none"},
+  "M20": {"kind": "mechanism", "sessions": 20, "what": "resolved from this register's own later FORM4 batches, not from prices"}
+ },
+ "cone": [
+  {"id": "BEATS_TWINS_60", "statement": "the H60 plan's net return is above the twins' median net return", "prior": 0.5, "prior_source": "the null", "resolves_with": "H60"},
+  {"id": "GAIN0_60", "statement": "the H60 plan's net return after costs is above zero", "prior": "running", "resolves_with": "H60"},
+  {"id": "BEATS_TWINS_20", "statement": "the H20 plan's net return is above the twins' median net return", "prior": 0.5, "prior_source": "the null", "resolves_with": "H20"},
+  {"id": "GAIN0_20", "statement": "the H20 plan's net return after costs is above zero", "prior": "running", "resolves_with": "H20"},
+  {"id": "FADE10_20", "statement": "the H20 plan's net return is at or below -10%", "prior": "running", "resolves_with": "H20"},
+  {"id": "RUN30_20", "statement": "a close in the 20 sessions after the signal session is at least 1.30 x the signal close", "prior": "running", "resolves_with": "H20"},
+  {"id": "MECH_SECOND_BUY_20", "statement": "a later FORM4 batch lists a purchase event (any status) on the same issuer with a filing date after this event's and on or before the 20th NYSE session after the signal session", "prior": "running", "resolves_with": "M20", "how": "from the BATCH records of family FORM4 in paper/catalysts.jsonl; graded once FORM4 batches have READ every NYSE date from the day after the filing date through the 20th session; a date MISSING, or a batch with unreadable filings in that span: not graded"}
+ ],
+ "decision": {
+  "sample": "FIRE sets of this family, window H60, RESOLVED with a paired difference",
+  "window": "H60",
+  "coverage_class": "FIRE",
+  "primaries": {
+   "MEAN": {"what": "per-session mean of (plan net - twins' mean net), one-sided t against 0", "signed_by_direction": true, "eligible_extra": "the plan's mean net after costs > 0"},
+   "WIN_RATE": {"what": "per-session share of sets beating the twins' median (BEATS_TWINS_60), one-sided t against 0.5", "statement": "BEATS_TWINS_60", "eligible_extra": "the plan's mean net after costs > 0"}
+  },
+  "require_positive_mean_net": true,
+  "looks": {"n": [60, 120, 240, 480, 960, 1920], "t_min": [3.75, 3.0, 3.0, 3.0, 3.0, 3.0], "min_sessions": [15, 15, 15, 30, 60, 120], "source": "as research/CATALYST_REGISTER_v1/prereg_2.json"},
+  "at_a_look": {"eligible": "t >= that look's t_min, one-sided p < 0.05, estimate > 0, mean net > 0: ELIGIBLE FOR OWNER REVIEW (never an automatic trade)", "futility": "from the 240 look, an estimate <= 0 is FAIL (futility)", "final": "not eligible at 1920: FAIL"},
+  "overlap_note": "H60 windows of sets on nearby sessions overlap in calendar time; the per-session statistic treats sessions as independent, which overstates t when events cluster. The report states the number of distinct entry weeks beside every look.",
+  "descriptive_only": ["window H20 with the same two statistics", "the ABSTAIN class and each rule's own class", "PCT_INCREASE terciles", "the cone's calibration, MECH_SECOND_BUY_20 included"]
+ },
+ "forbidden": ["a backtest of this family", "reading a sealed holdout", "changing a rule after the first set of this family is sealed", "backfilling", "any order, any change to PAPER-POLICY-v4, ledger.jsonl or family FORM4"]
+}

@@ -1,0 +1,13 @@
+{
+ "id": "CATALYST_FAMILY_FORM4_SHARP_MEAN_registered",
+ "experiment": "CATALYST_FAMILIES/FORM4_SHARP",
+ "date": "2026-10-29",
+ "hypothesis": "prospective: on FIRE sets of FORM4_SHARP (FORM4 events by a top executive or of USD 100-500k, no recent dilution filing, not a routine trader; 20 twins), the per-session mean of the 60-session plan net minus the twins' mean net exceeds 0, with a positive mean net after costs",
+ "one_sided_p": null,
+ "p_source": "no look yet; looks at 60, 120, 240, 480, 960, 1920 FIRE pairs (research/CATALYST_FAMILIES/FORM4_SHARP/protocol.json 'decision'); each look adds a counted file CATALYST_FAMILY_FORM4_SHARP_MEAN_n<look>.json",
+ "variants_searched": 0,
+ "outcome": "PENDING (prospective; registered before the first FORM4_SHARP set was sealed)",
+ "note": "a separate family on the same filings as FORM4, not independent of it; handoff/decisions/2026-10-29_sensor_v2.md",
+ "counted": false,
+ "registered": "2026-10-29"
+}
