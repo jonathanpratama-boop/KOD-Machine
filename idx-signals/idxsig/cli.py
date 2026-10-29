@@ -170,11 +170,13 @@ def main(argv=None) -> int:
                                          "within --max-age-hours, else pull now)")
     p_cc.add_argument("--max-age-hours", type=float, default=8.0)
     p_cc.add_argument("--commit", action="store_true")
-    p_lf = sub.add_parser("learner-forecast", help="LEARNER_v1: seal the learner's forecasts for sets still before their "
-                                                 "cutoff (research/LEARNER_v1)")
-    p_lf.add_argument("--commit", action="store_true")
-    p_lr = sub.add_parser("learner-report", help="write paper/LEARNER.md (earned confidence, Brier, earned vs lucky)")
-    p_lr.add_argument("--commit", action="store_true")
+    for name in ("learner-forecast", "learner2-forecast"):  # LEARNER_v1 is withdrawn: both names seal LEARNER_v2
+        p_lf = sub.add_parser(name, help="LEARNER_v2: seal the learner's forecasts for sets still before their cutoff "
+                                         "(research/LEARNER_v2)")
+        p_lf.add_argument("--commit", action="store_true")
+    for name in ("learner-report", "learner2-report"):
+        p_lr = sub.add_parser(name, help="write paper/LEARNER_V2.md (earned confidence per kind, calls, beliefs)")
+        p_lr.add_argument("--commit", action="store_true")
     p_cr = sub.add_parser("catalyst-report", help="write paper/CATALYSTS.md (statistics, looks, calibration, cards)")
     p_cr.add_argument("--commit", action="store_true")
     p_ms = sub.add_parser("micro-snapshot", help="side-car for a crypto scan: Binance book cost now and, once the day's "
@@ -643,8 +645,9 @@ def main(argv=None) -> int:
     elif args.cmd == "paper-verify":
         from . import catalysts, paper, speculation
 
-        from . import learner
-        problems = paper.verify_all() + speculation.verify() + catalysts.verify() + learner.verify()
+        from . import learner, learner2
+        problems = (paper.verify_all() + speculation.verify() + catalysts.verify() + learner.verify()
+                    + learner2.verify())
         print("paper-verify: " + ("OK" if not problems else f"{len(problems)} problems"))
         for p_ in problems:
             print(f"  {p_}")
@@ -711,34 +714,42 @@ def main(argv=None) -> int:
             written.append(speculation.write_report())
         if args.commit and written:
             print(paper.commit_and_push([*written, *extra], message, trailer))
-    elif args.cmd in ("learner-forecast", "learner-report"):
+    elif args.cmd in ("learner-forecast", "learner-report", "learner2-forecast", "learner2-report"):
         import os
         from datetime import datetime, timezone
 
-        from . import learner, paper
+        from . import learner2, paper
 
         trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "")
-        if args.cmd == "learner-report":
-            path = learner.write_report()
+        if args.cmd.startswith("learner-"):
+            print("LEARNER_v1 is withdrawn (research/LEARNER_v1/ADDENDUM_1.md); running LEARNER_v2")
+        if args.cmd.endswith("-report"):
+            path = learner2.write_report()
             print(path.read_text(encoding="utf-8"))
             if args.commit:
-                print(paper.commit_and_push([path], "learner: report", trailer))
+                print(paper.commit_and_push([path], "learner v2: report", trailer))
             return 0
         sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "kod-machine"))
         from kod.timestamp import RFC3161Timestamper
 
-        recs = learner.forecast_records(datetime.now(timezone.utc))
+        recs = learner2.forecast_records(datetime.now(timezone.utc))
         if not recs:
             print("no sealed set awaiting a learner forecast before its cutoff; nothing recorded")
             return 0
         for r in recs:
-            tri = r["forecasts"].get(learner.TRI)
-            print(f"  {r['set_id']}: alpha {r['alpha']:.2f}, trained rows {sum(r['trained']['rows'].values())}"
-                  + (f", TRIANGULATED published {tri['published']:.3f} (prior {tri['prior']:.3f})" if tri else ""))
-        written, _ = learner.append(recs, RFC3161Timestamper())
-        written.append(learner.write_report())
+            alphas = ", ".join(f"{k} {v['alpha']:.2f}" for k, v in r["gate"].items())
+            print(f"  {r['set_id']} ({r['ticker']}): earned confidence {alphas}")
+            for stmt, fc in r["forecasts"].items():
+                if fc["kind"] == "ABSOLUTE":
+                    continue
+                call = fc["call"]["side"] and f", {'LIVE' if fc['call']['live'] else 'shadow'} {fc['call']['side']} call"
+                why = "; ".join(f"{w['label']} {w['logit']:+.2f}" for w in fc["why"])
+                print(f"    {stmt}: anchor {fc['anchor']:.3f}, learner {fc['raw']:.3f} (90% {fc['raw_90'][0]:.2f}-"
+                      f"{fc['raw_90'][1]:.2f}), published {fc['published']:.3f}{call or ''}" + (f" [{why}]" if why else ""))
+        written, _ = learner2.append(recs, RFC3161Timestamper())
+        written.append(learner2.write_report())
         if args.commit:
-            print(paper.commit_and_push(written, f"learner: {len(recs)} forecast(s) sealed", trailer))
+            print(paper.commit_and_push(written, f"learner v2: {len(recs)} forecast(s) sealed", trailer))
     elif args.cmd in ("catalyst-seal", "catalyst-tag", "catalyst-score", "catalyst-report"):
         import os
         from datetime import datetime, timezone

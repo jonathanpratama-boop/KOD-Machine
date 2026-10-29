@@ -24,7 +24,8 @@ Append-only logs: the new content must start with the old content, byte for byte
   idx-signals/paper/speculations.jsonl  sealed speculation sets and their resolutions
   idx-signals/paper/sensors/sensors.jsonl  free public sensor alerts
   idx-signals/paper/catalysts.jsonl  sealed catalyst sets, batches, tags and their resolutions
-  idx-signals/paper/learner.jsonl  the learner's sealed forecasts (LEARNER_v1)
+  idx-signals/paper/learner.jsonl  the learner's sealed forecasts (LEARNER_v1, withdrawn; kept and verified)
+  idx-signals/paper/learner_v2.jsonl  the learner's sealed forecasts (LEARNER_v2)
   kod-machine/registry/opens.jsonl
   kod-machine/registry/scans.jsonl
   kod-machine/registry/receipts.jsonl
@@ -66,6 +67,7 @@ APPEND_ONLY = (
     "idx-signals/paper/sensors/sensors.jsonl",
     "idx-signals/paper/catalysts.jsonl",
     "idx-signals/paper/learner.jsonl",
+    "idx-signals/paper/learner_v2.jsonl",
     "kod-machine/registry/opens.jsonl",
     "kod-machine/registry/scans.jsonl",
     "kod-machine/registry/receipts.jsonl",

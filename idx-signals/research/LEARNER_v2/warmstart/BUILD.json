@@ -1,0 +1,53 @@
+{
+ "built_by": "research/LEARNER_v2/warmstart/build.py",
+ "panel": {
+  "manifest": "panel_us_repair-20261008T114805Z.json",
+  "sha256": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b"
+ },
+ "inputs": {
+  "research/CATALYST_REGISTER_v1/KILL_TEST_2020_2023/results/events_all.csv": "43665299a59288f7295c58b4a8ee048c658b89516073004c61ad94ea8471af2c",
+  "research/US_INSIDER_BUY/results_stage1/events_hold20.csv": "7daf3c3997bad56f43579e48a10fc4faee321fa0b89d8c8d6042dc85ca5a7fab",
+  "research/US_INSIDER_BUY/results_stage1/events_hold60.csv": "93b9e1de0e1e145261042619e4aae2ebc35f51f3cecb8fa81799a11922488a8e",
+  "research/US_INSIDER_BUY/events.csv": "ebf19aced826db03d7c6ecd12a757ce9bd43c8d9a7a525167fa655f14c14028f",
+  "research/US_INSIDER_BUY/form4_purchases.csv.gz": "61c6cd5b579372c65b4016165d72b80dd059ffa2f492b657097588248643667d",
+  "research/US_8K_ITEMS/results_stage1/events_3.02_hold20.csv": "462a74a6dc321db8b178d4bd9d3c93684ee96dad25d061e789d45392bcb19b34",
+  "research/US_8K_ITEMS/events.csv": "b802d3b211df1798858e3cc5e827fd2862314f61336c996ca000628b79d74005"
+ },
+ "code": {
+  "research/LEARNER_v2/warmstart/build.py": "885d00d8628723181102b102b204a55fa8ce2ef0220a0fb087a2979da3008bcc",
+  "idxsig/rules/moonshot_g.py": "b050c4d37d9104309b32e70a7e81682ee3029da3a6a0654dae6ac41414abb794"
+ },
+ "rows": {
+  "kill13d": 1065,
+  "form4": 2964,
+  "dil302": 1558
+ },
+ "outcomes": {
+  "bt20": {
+   "graded": 4029,
+   "rate": 0.49416728716803177
+  },
+  "bt60": {
+   "graded": 2964,
+   "rate": 0.5077597840755735
+  },
+  "ltt20": {
+   "graded": 1558,
+   "rate": 0.6001283697047497
+  },
+  "second_buy_20": {
+   "graded": 2964,
+   "rate": 0.3775303643724696
+  },
+  "tri60": {
+   "graded": 2964,
+   "rate": 0.1902834008097166
+  }
+ },
+ "signal_dates": [
+  "2020-07-02",
+  "2023-11-28"
+ ],
+ "dropped_not_in_panel": 0,
+ "events_csv_gz": "1eff13dabff91e2a41ae654ba9da645d87c6cf94a7efd67cbbf808d338fc9a13"
+}

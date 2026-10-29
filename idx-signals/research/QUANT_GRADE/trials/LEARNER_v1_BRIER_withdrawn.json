@@ -1,0 +1,12 @@
+{
+ "id": "LEARNER_v1_BRIER_withdrawn",
+ "experiment": "LEARNER_v1",
+ "date": "2026-10-29",
+ "hypothesis": "withdraws LEARNER_v1_BRIER_registered: the claim compared the learner with sealed 0.5 placeholders, which a base-rate learner beats without skill (research/LEARNER_v1/ADDENDUM_1.md)",
+ "one_sided_p": null,
+ "p_source": "no look was ever taken: no outcome existed when the claim was withdrawn",
+ "variants_searched": 0,
+ "outcome": "WITHDRAWN before any outcome (superseded by LEARNER_v2_BRIER_registered)",
+ "counted": false,
+ "registered": "2026-10-29"
+}
