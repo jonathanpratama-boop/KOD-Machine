@@ -1,0 +1,12 @@
+{
+ "id": "TA_HISTORY_v1",
+ "experiment": "TA_HISTORY_v1",
+ "date": "2026-10-29",
+ "hypothesis": "out of time (rolling origin: fit 2020-21 score 2022, fit 2020-22 score 2023), on US stocks that just closed 30% or more higher, the research-backed price indicators (lottery MAX, nearness to the 52-week high, 12-1 momentum) or the popular chart indicators (RSI14, MACD histogram, Stochastic %K, Bollinger %B), added to LEARNER v2.3's features, raise the AUC for the next-session own dump (NEXT_DUMP10_1) or the 5-session own dump (DUMP10_5), with a positive Brier gain",
+ "one_sided_p": null,
+ "p_source": "pending: research/TA_HISTORY_v1/results/RESULT.json, Holm over the four block x statement tests",
+ "variants_searched": 4,
+ "outcome": "PENDING (registered before any indicator was computed)",
+ "counted": false,
+ "registered": "2026-10-29"
+}
