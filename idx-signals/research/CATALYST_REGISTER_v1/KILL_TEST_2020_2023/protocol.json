@@ -1,0 +1,70 @@
+{
+ "protocol_id": "KOD-CATALYST-SEC13D-KILL-TEST-2020-2023-v1",
+ "frozen": "2026-10-29",
+ "owner_decision": "2026-10-29, the owner: 'Commit to it and do it. We need results.' on the session's proposal to finish the kill test with 2023 filings; handoff/decisions/2026-10-29_kill_test_2023.md",
+ "filings": {
+  "index": "https://www.sec.gov/Archives/edgar/full-index/<YYYY>/QTR<q>/form.idx",
+  "quarters": [
+   "2020Q2",
+   "2020Q3",
+   "2020Q4",
+   "2021Q1",
+   "2021Q2",
+   "2021Q3",
+   "2021Q4",
+   "2022Q1",
+   "2022Q2",
+   "2022Q3",
+   "2022Q4",
+   "2023Q1",
+   "2023Q2",
+   "2023Q3",
+   "2023Q4"
+  ],
+  "form": "SC 13D",
+  "seed_only_before": "2020-07-01",
+  "entry_from": "2020-07-01",
+  "entry_to": "2023-11-30",
+  "collection": "collected fresh for every quarter, not spliced onto the 2020-2022 file: the stored evidence of that file is truncated at 2022-12-31. COLLECT.json records the cross-check of the re-collected 2020-2022 rows against the frozen events.csv.gz of KILL_TEST_2020_2022."
+ },
+ "header": "https://www.sec.gov/Archives/edgar/data/<cik>/<accession without dashes>/<accession>-index-headers.html: ACCEPTANCE-DATETIME (New York) and the SUBJECT COMPANY CENTRAL INDEX KEY",
+ "panel_manifest": "data/manifests/panel_us_repair-20261008T114805Z.json",
+ "panel_sha256": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b",
+ "ticker_map": "https://www.sec.gov/files/company_tickers_exchange.json (fetched at collection, sha256 recorded)",
+ "repeat_days": 90,
+ "operating_days": 550,
+ "dilution_sessions": 20,
+ "moved_already": 1.15,
+ "microcap_usd": 50000000,
+ "plan": {
+  "function": "idxsig.event_study.us_config",
+  "hold": 20
+ },
+ "controls": {
+  "function": "idxsig.event_study.run_events",
+  "version": "v2",
+  "draws": 200,
+  "seed": 20261007,
+  "overlap": "skip"
+ },
+ "statistic": {
+  "sample": "FIRE, status EXITED with at least one scored control",
+  "go_min_scored": 300,
+  "primary": "mean excess, t from 10,000 bootstrap resamples of ISO weeks of the entry session (seed 20261203)"
+ },
+ "verdict": {
+  "KILL": "mean excess <= 0",
+  "NOT_KILLED": "mean excess > 0 (not a confirmation: survivor-only prices)",
+  "INCONCLUSIVE": "fewer than 300 scored FIRE events (no return read)"
+ },
+ "trial_file": "research/QUANT_GRADE/trials/CATALYST_REGISTER_v1_SEC13D_KILL_TEST_2020_2023.json (counted, variants 1)",
+ "supersedes": {
+  "protocol_id": "KOD-CATALYST-SEC13D-KILL-TEST-2020-2022-v1",
+  "result": "research/CATALYST_REGISTER_v1/KILL_TEST_2020_2022/results/RESULT.json",
+  "verdict": "INCONCLUSIVE (288 scored FIRE events, fewer than 300); that record stands and is not changed",
+  "why_an_extension_is_allowed": "the 2020-2022 run failed the GO rule on counts, so run_v2.py never computed a return statistic and never wrote events_fire.csv: no return of this test has been read by anyone. Extending the entry window before any outcome is seen is an enrollment extension, not a second look at a result. The bar (300 scored FIRE), the statistic, the plan, the controls, the abstention rules and the verdict rule are all unchanged; only the entry window and the quarters collected differ.",
+  "overrides": "the line 'must not be rerun with a lower bar or a wider window' in the 2026-10-28 outcome section of handoff/decisions/2026-10-28c_proof_program.md, on the owner's explicit instruction. The bar is not lowered."
+ },
+ "window_end": "2023-12-29, the panel's last session; an entry on 2023-11-30 is the last whose 20-session hold ends inside the panel. The sealed US holdout (2024 onward) is never loaded.",
+ "data_is_not_virgin": "2023 is outside the sealed holdout but was used as the validation year of earlier experiments (E2, E5). It is unused by this test: the 2020-2022 run loaded bars only to 2022-12-30. A NOT_KILLED on this window is therefore weaker still; a KILL remains informative."
+}
