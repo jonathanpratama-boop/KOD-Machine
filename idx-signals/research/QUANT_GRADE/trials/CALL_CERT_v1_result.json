@@ -1,0 +1,13 @@
+{
+ "id": "CALL_CERT_v1_result",
+ "experiment": "CALL_CERT_v1",
+ "date": "2026-10-29",
+ "hypothesis": "out of time, Learn then Test certificates on LEARNER v2.4's model (fit 2020-21, certify on 2022; refit through 2022, check on 2023) hold on 2023 for the DUMP call (losing rate <= 0.5) and the SAFE call (losing rate <= half the base rate), for NEXT_DUMP10_1 and DUMP10_5",
+ "one_sided_p": null,
+ "p_source": "research/CALL_CERT_v1/results/RESULT.json (exact binomial, fixed-sequence Learn then Test)",
+ "variants_searched": 4,
+ "outcome": "DUMP on NEXT_DUMP10_1: HOLDS; SAFE on NEXT_DUMP10_1: CANNOT CERTIFY; DUMP on DUMP10_5: CANNOT CERTIFY; SAFE on DUMP10_5: CANNOT CERTIFY",
+ "counted": true,
+ "registered": "2026-10-29",
+ "note": "the result of the PENDING registration CALL_CERT_v1.json: one trial"
+}

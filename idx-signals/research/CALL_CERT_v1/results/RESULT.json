@@ -1,0 +1,165 @@
+{
+ "events": 6225,
+ "protocol": "KOD-CALL-CERT-v1",
+ "tests": {
+  "DUMP on DUMP10_5": {
+   "alpha": 0.5,
+   "base_rate_2022": 0.4260948905109489,
+   "base_rate_2023": 0.4405191059841384,
+   "base_rate_fit_2020_21": 0.42348550100488086,
+   "certified_shares": [],
+   "check_2023": {
+    "calls": 0,
+    "losing_rate": null,
+    "losses": 0,
+    "p_exceeds_alpha": null,
+    "share_of_events": 0.0
+   },
+   "chosen_share_2022": null,
+   "chosen_threshold": null,
+   "delta": 0.05,
+   "n_2022": 1096,
+   "n_2023": 1387,
+   "naive_2023": {
+    "calls": 860,
+    "losing_rate": 0.5011627906976744,
+    "losses": 431,
+    "p_exceeds_alpha": 0.4864001351724533
+   },
+   "naive_threshold": 0.4005349000831996,
+   "sequence_2022": [
+    {
+     "calls": 11,
+     "losses": 4,
+     "p": 0.27441406250000056,
+     "share": 0.01,
+     "threshold": 0.6347718702510203
+    }
+   ],
+   "verdict": "CANNOT CERTIFY"
+  },
+  "DUMP on NEXT_DUMP10_1": {
+   "alpha": 0.5,
+   "base_rate_2022": 0.3502581755593804,
+   "base_rate_2023": 0.3500347947112039,
+   "base_rate_fit_2020_21": 0.33921676778819637,
+   "certified_shares": [
+    0.01
+   ],
+   "check_2023": {
+    "calls": 44,
+    "losing_rate": 0.29545454545454547,
+    "losses": 13,
+    "p_exceeds_alpha": 0.9981711165860361,
+    "share_of_events": 0.030619345859429367
+   },
+   "chosen_share_2022": 0.01,
+   "chosen_threshold": 0.6110563472155744,
+   "delta": 0.05,
+   "n_2022": 1162,
+   "n_2023": 1437,
+   "naive_2023": {
+    "calls": 92,
+    "losing_rate": 0.34782608695652173,
+    "losses": 32,
+    "p_exceeds_alpha": 0.9988426992392873
+   },
+   "naive_threshold": 0.556642887384586,
+   "sequence_2022": [
+    {
+     "calls": 12,
+     "losses": 2,
+     "p": 0.019287109375000014,
+     "share": 0.01,
+     "threshold": 0.6110563472155744
+    },
+    {
+     "calls": 24,
+     "losses": 8,
+     "p": 0.07579481601715093,
+     "share": 0.02,
+     "threshold": 0.5721724972478749
+    }
+   ],
+   "verdict": "HOLDS"
+  },
+  "SAFE on DUMP10_5": {
+   "alpha": 0.21174275050244043,
+   "base_rate_2022": 0.4260948905109489,
+   "base_rate_2023": 0.4405191059841384,
+   "base_rate_fit_2020_21": 0.42348550100488086,
+   "certified_shares": [],
+   "check_2023": {
+    "calls": 0,
+    "losing_rate": null,
+    "losses": 0,
+    "p_exceeds_alpha": null,
+    "share_of_events": 0.0
+   },
+   "chosen_share_2022": null,
+   "chosen_threshold": null,
+   "delta": 0.05,
+   "n_2022": 1096,
+   "n_2023": 1387,
+   "naive_2023": {
+    "calls": 0,
+    "losing_rate": null,
+    "losses": 0,
+    "p_exceeds_alpha": null
+   },
+   "naive_threshold": null,
+   "sequence_2022": [
+    {
+     "calls": 11,
+     "losses": 4,
+     "p": 0.9373667075181267,
+     "share": 0.01,
+     "threshold": 0.8434769894755759
+    }
+   ],
+   "verdict": "CANNOT CERTIFY"
+  },
+  "SAFE on NEXT_DUMP10_1": {
+   "alpha": 0.16960838389409819,
+   "base_rate_2022": 0.3502581755593804,
+   "base_rate_2023": 0.3500347947112039,
+   "base_rate_fit_2020_21": 0.33921676778819637,
+   "certified_shares": [],
+   "check_2023": {
+    "calls": 0,
+    "losing_rate": null,
+    "losses": 0,
+    "p_exceeds_alpha": null,
+    "share_of_events": 0.0
+   },
+   "chosen_share_2022": null,
+   "chosen_threshold": null,
+   "delta": 0.05,
+   "n_2022": 1162,
+   "n_2023": 1437,
+   "naive_2023": {
+    "calls": 8,
+    "losing_rate": 0.5,
+    "losses": 4,
+    "p_exceeds_alpha": 0.03253126883294344
+   },
+   "naive_threshold": 0.870408896135857,
+   "sequence_2022": [
+    {
+     "calls": 12,
+     "losses": 3,
+     "p": 0.8684735040831314,
+     "share": 0.01,
+     "threshold": 0.8822249569800658
+    }
+   ],
+   "verdict": "CANNOT CERTIFY"
+  }
+ },
+ "verdicts": {
+  "DUMP on DUMP10_5": "CANNOT CERTIFY",
+  "DUMP on NEXT_DUMP10_1": "HOLDS",
+  "SAFE on DUMP10_5": "CANNOT CERTIFY",
+  "SAFE on NEXT_DUMP10_1": "CANNOT CERTIFY"
+ }
+}
