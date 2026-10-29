@@ -1,0 +1,209 @@
+{
+ "protocol_id": "KOD-LEARNER-v2.2",
+ "frozen": "2026-10-29",
+ "frozen_before": "every live outcome and every LEARNER_v2 forecast: no RESOLUTION record exists in paper/catalysts.jsonl or paper/speculations.jsonl, and paper/learner_v2.jsonl does not exist. KOD-LEARNER-v2 and v2.1 were frozen the same morning and superseded before either sealed anything (ADDENDUM_1.md, ADDENDUM_2.md). The warm start is unchanged.",
+ "owner_decision": "2026-10-29, the owner: 'Make sure you engineer the self learning properly and make it fool proof. I want you to understand what safeguard is hindering us and what is not. I also want you to make this machine very intelligent.' After: 'The machine should self learn to understand how to triangulate a pre catalyst as accurately as possible and i want the machine to become confident. I also want the machine to detect the catalyst based on accurate predictions, not being lucky that its going up.' Then, after KOD-LEARNER-v2 was frozen: 'I dont care if its gonna be a pump and dump. I just care if it gets it right, and its thesis on even a pump and dump or whatnot is right.'",
+ "supersedes": {
+  "KOD-LEARNER-v2.1": {
+   "file": "research/LEARNER_v2/protocol_v2_1.json",
+   "sha256": "197c59c2c7234c2a1d852dff3cf96447ba0d6d69c90f4072b84ddf3be6a19a15",
+   "sealed_forecasts": 0
+  },
+  "KOD-LEARNER-v2": {
+   "file": "research/LEARNER_v2/protocol.json",
+   "sha256": "ecf24ce1376d0e67e9a008304bdd111313c493ecb5e8aebe98f7de72ed8bfd87",
+   "sealed_forecasts": 0
+  },
+  "KOD-LEARNER-v1": "KOD-LEARNER-v1 (research/LEARNER_v1/ADDENDUM_1.md): its claim is withdrawn before any outcome existed, for the defects listed there; its two sealed forecasts stay in paper/learner.jsonl and keep verifying"
+ },
+ "changes_from_v2_1": [
+  "observations are blocks of resolution weeks (1 week for 5- and 20-session statements, 4 weeks for 60-session ones), counted once the block has ended, each underlying event once per statement over the whole sequence; one gate per kind and horizon class; the confidence sequence and the claim use a truncated, small-sample corrected long-run standard deviation for overlapping windows",
+  "the gate must still see skill in the last 52 weeks: it opens when their one-sided 95% lower bound is above zero and stays open while their 80% bound is, so it closes when the skill fades",
+  "every forecast records the ledger state it was computed from; verify retrains on exactly that state, compares the whole record and checks the external timestamp against the cutoff; coverage of due sets is reported",
+  "a revised resolution replaces the earlier one of the same set and window; Newton steps are damped; forecasts verify would reject are never scored; 'earlier' sets are those sealed earlier, across both registers",
+  "the findings of the independent review of KOD-LEARNER-v2 (2026-10-29) are the reason for each change (ADDENDUM_2.md)"
+ ],
+ "ledger": "paper/learner_v2.jsonl, hash-chained and timestamped like the other ledgers, append-only",
+ "registers": {
+  "catalyst": "paper/catalysts.jsonl: CATALYST_SET and RESOLUTION records of the families SEC13D, SEC13D_V2, DILUTION_8K, FORM4, FORM4_SHARP, IDX_INDEX",
+  "speculation": "paper/speculations.jsonl: each SPECULATION_SET is read as a long call (direction 1) of family SPEC_<market>, with its own cone, twins, cutoff and resolutions; the frozen priors are research/SPECULATION_REGISTER_v1/protocol.json's per-market numbers ('running' is 0.5)"
+ },
+ "statements": {
+  "skill_kinds": {
+   "RELATIVE": "graded against the set's own twins: BEATS_TWINS_<k>, LOSES_TO_TWINS_<k> (the dilution family's call), WITH_FLOW_RUNUP and REVERSAL_POST20 (IDX_INDEX)",
+   "MECHANISM": "the stated catalyst happens: MECH_13DA_UP_60 (SEC13D_V2), MECH_SECOND_BUY_20 (FORM4_SHARP)",
+   "TRIANGULATED": "the mechanism happened AND the stock beat its twins over the window that contains it",
+   "PATH": "the stock's own move, built from a raw move statement and its twins: PUMP30_k = RUN30_k and fewer than half of the twins graded on RUN30_k made it; PUMP100_k = the same for DOUBLE_k; DUMP10_k = the same for FADE10_k; PUMP_AND_DUMP_k = PUMP30_k and DUMP10_k (where RUN30_k and FADE10_k resolve on the same window): it spiked at least 30% above the signal close and the plan still ended at least 10% down, each its own. A move statement is false when the raw move did not happen, true or false by the twins when it did, and ungraded when it did and no twin was graded"
+  },
+  "absolute": "the raw moves GAIN0_k, FADE10_k, RUN30_k, DOUBLE_k: a market-wide move makes them true, so they are forecast with the anchor alone and never scored as skill; their twin-filtered versions are the PATH statements",
+  "base_prior": "the family's frozen prior for the statement; 0.5 where the family protocol says 'running'; TRIANGULATED the product of its two components'; a move statement the prior of its raw move; PUMP_AND_DUMP_k the product of RUN30_k's and FADE10_k's",
+  "own_move_threshold": 0.5
+ },
+ "triangles": {
+  "SEC13D_V2": [
+   "MECH_13DA_UP_60",
+   "BEATS_TWINS_60"
+  ],
+  "FORM4_SHARP": [
+   "MECH_SECOND_BUY_20",
+   "BEATS_TWINS_60"
+  ]
+ },
+ "anchor": {
+  "what": "a climatology twin of the learner, per family and statement: the same logistic fit, the same intercept prior and the same row weights, with an intercept only (offset logit(base prior)). It learns how often each statement comes true; it knows nothing about any set.",
+  "why": "the comparator of LEARNER_v1 was the sealed prior, often a 0.5 placeholder: a learner that only learned base rates would have beaten it without telling any two sets apart"
+ },
+ "model": {
+  "kind": "one penalised logistic model per skill kind, fitted as logit p = logit(base prior) + intercept[statement or history source] + (x - training centre[statement]) . slope[statement], the training centre being the weighted mean of the statement's training rows (else the kind's)",
+  "forecast": "raw = sigmoid(logit(anchor) + (x - live centre[statement]) . slope[statement]), the live centre being the mean features of every live set of that family and statement sealed by the forecast time, resolved or not (features only, no outcome): the learner moves the anchor by the set's own features and nothing else, its average move over the live population is zero by construction, and a shift between history and the live sets cannot move every forecast the same way. The only possible gain is discrimination",
+  "sharing": "RELATIVE statements share one slope vector (RIGHT) plus a deviation each (REVERSAL_POST20, true when the stock goes against the call, has its own slopes only); PATH statements share one vector per move across families and horizons (PUMP for PUMP30 and PUMP100, DUMP, PUMP_AND_DUMP) plus a deviation each; MECHANISM and TRIANGULATED statements have their own slopes",
+  "features": [
+   "s_ret1",
+   "s_ret5",
+   "s_ret20",
+   "s_dd60",
+   "log_volr",
+   "s_cpos",
+   "log_adv",
+   "fire",
+   "dilution_recent",
+   "moved_already",
+   "microcap",
+   "has_mv",
+   "log_mv",
+   "during",
+   "top_exec",
+   "log_value",
+   "owners",
+   "lag",
+   "has_pct",
+   "pct_inc",
+   "strong_intent",
+   "intent_words",
+   "has_stake",
+   "stake",
+   "repeat",
+   "corroborate",
+   "conflict"
+  ],
+  "feature_rules": "only fields sealed in the set (and, for repeat/corroborate/conflict, the sets before it in the ledger). Price features signed by the call's direction: s_ret1 = d x ret1 / 0.10, s_ret5 = d x ret5 / 0.20, s_ret20 = d x ret20 / 0.30, s_dd60 = d x dd60 / 0.30 (clipped to -3..3), s_cpos = d x (cpos - 0.5) x 2; log_volr = ln volr (-3..3); log_adv = log10(20-session median traded value in USD) - 6.5 (-3..3; IDX converted at 16,000 IDR per USD); rule flags as 0/1; log_mv = log10(market value USD) - 9; log_value = log10(purchase USD) - 5; owners = (n - 1) / 4 capped at 1; lag = days / 30 capped at 1; pct_inc = holdings increase / 5 capped at 1; stake = largest cover-page percent / 20 capped at 2; intent_words = Item 4 intent words / 5 capped at 1; repeat, corroborate and conflict = distinct earlier events on the same market and ticker with a signal session in the 90 calendar days up to the set's own (same source group; another group with the same direction; the opposite direction), each / 3 capped at 1; a field the family does not record is 0; for a PATH statement of a short call (DILUTION_8K) the price features are read unsigned, since a move statement is about the price, not the call",
+  "lambda_shared": 16.0,
+  "lambda_task": 25.0,
+  "lambda_own": 16.0,
+  "intercept_prior_sd": 1.5,
+  "fit": "Newton (IRLS) from zero with step-halving (a step that lowers the penalised log-likelihood by more than rounding noise is halved), at most 50 iterations, tolerance 1e-10, an error if it does not converge; Laplace covariance at the maximum a posteriori; the anchor's one-parameter fit the same way",
+  "probability_clip": [
+   0.01,
+   0.99
+  ],
+  "dedupe": "a row's weight is 1 / the number of sets of the same underlying event (a child family's set and its parent's) with the same statement"
+ },
+ "warm_start": {
+  "file": "research/LEARNER_v2/warmstart/events.csv.gz",
+  "sha256": "1eff13dabff91e2a41ae654ba9da645d87c6cf94a7efd67cbbf808d338fc9a13",
+  "built_by": "research/LEARNER_v2/warmstart/build.py (BUILD.json records its inputs' hashes)",
+  "events": "5,587: 1,065 original 13D filings (KILL_TEST_2020_2023), 2,964 insider purchases (US_INSIDER_BUY stage 1), 1,558 Item 3.02 8-Ks (US_8K_ITEMS stage 1); signal dates 2020-07-02..2023-11-28; the sealed US holdout (2024 onward) is never read",
+  "maps_to": {
+   "kill13d bt20": "SEC13D:BEATS_TWINS_20",
+   "form4 bt20": "FORM4:BEATS_TWINS_20",
+   "form4 bt60": "FORM4_SHARP:BEATS_TWINS_60",
+   "dil302 ltt20": "DILUTION_8K:LOSES_TO_TWINS_20",
+   "form4 second_buy_20": "FORM4_SHARP:MECH_SECOND_BUY_20",
+   "form4 tri60": "FORM4_SHARP:TRIANGULATED"
+  },
+  "not_covered": "MECH_13DA_UP_60 and SEC13D_V2's TRIANGULATED start from live outcomes only: before December 2024 a Schedule 13D amendment has no structured cover page, so a stake increase in 2020-2023 cannot be read reliably; the PATH statements also start from live outcomes only (history records no twins' moves)",
+  "own_intercepts": "every history source has its own intercept, so history's base rates (survivor-only prices, controls' mean instead of the twins' median) never reach the live anchor; history informs slopes only",
+  "weight_cap": 300,
+  "weight": "each kind's history rows share a total weight of 300: history counts as much as 300 live outcomes, so the live record outweighs it within about a year"
+ },
+ "outcomes": "the latest RESOLUTION of each (set, window) resolved before the asof time replaces the earlier ones, its graded statements only: an UNRESOLVABLE or ungraded revision clears what it replaces",
+ "earned_confidence": {
+  "rule": "published = sigmoid(logit(anchor) + alpha[kind] x (logit(raw) - logit(anchor))), one alpha per skill kind (RELATIVE, MECHANISM, TRIANGULATED, PATH)",
+  "forward_pairs": "a sealed forecast and one of its skill statements whose outcome resolved after the forecast was made; a duplicate forecast, one bound to no sealed set or one made at or after its set's cutoff is never scored",
+  "observations": "per gate, one per block of resolution weeks that has ended (blocks of 1 week for classes 5 and 20, 4 weeks for class 60, counted from Monday 2000-01-03): the mean of Brier(anchor) - Brier(raw) over the gate's pairs that resolved in it, an underlying event (a child family's set and its parent's) counted once per statement over the whole sequence, where it first resolved. Many sets resolving on one day share one market and make one observation; a block never changes once it has ended",
+  "bound": "the running maximum, from t_min observations on, of the lower edge of the asymptotic confidence sequence for the mean observation (Waudby-Smith, Arbour, Sinha, Kennedy and Ramdas), two-sided level delta, rho tuned for t_star_weeks, with the long-run standard deviation above. Measured on zero-skill noise with the worst overlap of each class, the gate ever opened in 0 to 7% of 400-week runs checked after every observation",
+  "alpha": "0 below t_min observations or while the gate is closed; otherwise min(bound, the recent mean minus z_stay standard errors) / the gate's mean anchor Brier / skill_full, clipped to 0..1",
+  "numbers": {
+   "delta": 0.05,
+   "t_star_weeks": 52,
+   "t_min": 30,
+   "recent_weeks": 52,
+   "recent_min": 8,
+   "z_open": 1.645,
+   "z_stay": 0.842,
+   "skill_full": 0.02
+  },
+  "present": "the last recent_weeks (at least recent_min observations) must show skill: the gate opens when their mean minus z_open long-run standard errors is above zero and stays open while their mean minus z_stay standard errors is. Measured with a 20-session class at heavy overlap: after real skill fell to zero, the gate was open in about 14% of the following weeks (stated, not hidden: overlapping windows make a fading edge slow to tell from a noisy one)",
+  "gates": "one per skill kind and horizon class, the class set by the window that resolves the statement: 5 (BASE5), 20 (H20, PATH20, M20, RUNUP, POST20) and 60 (H60, M60, TRIANGULATED): RELATIVE/5, RELATIVE/20, RELATIVE/60, MECHANISM/20, MECHANISM/60, TRIANGULATED/60, PATH/5, PATH/20; a statement is published with its own gate's alpha",
+  "long_run_sd": "the truncated long-run variance at the gate's lag (1 observation for class 5, 3 for class 20, 2 four-week blocks for class 60: the overlap of their windows), times n / (n - 2 lag - 1) for autocovariances around an estimated mean, never below the plain sample variance. On zero-mean overlapping noise a one-sided 5% test with it rejects 5 to 6% of the time where the Newey-West (Bartlett) version rejects 8 to 17%",
+  "blocks": {
+   "5": [
+    1,
+    1
+   ],
+   "20": [
+    1,
+    3
+   ],
+   "60": [
+    4,
+    2
+   ]
+  }
+ },
+ "calls": {
+  "rule": "BACK when the learner's move from the anchor (logit) is at least margin and the move minus z posterior sd is above 0; AVOID the mirror. A call is LIVE when alpha x the move also clears the margin; otherwise it is a SHADOW call: sealed and scored, not published",
+  "numbers": {
+   "margin": 0.4,
+   "z": 1.645
+  },
+  "scored": "hit rate against the anchor's rate on the same pairs, with a Wilson interval; the paired excess return of the matching window; each BACK on a relative statement classified as earned_catalyst_came, beat_twins_no_catalyst, beat_twins (no mechanism to check), rose_with_market_but_lost_to_twins (a gain the market carried: a miss), or miss",
+  "thesis": "each call records its thesis, the statement in words (an AVOID: 'not: ...'); a BACK is RIGHT when the statement came true, which for TRIANGULATED and PUMP_AND_DUMP_k means every part of it; otherwise PARTLY when some part did, MARKET_MADE_IT when the move happened but most twins made it too (no credit), else WRONG; an AVOID is RIGHT when the statement did not come true"
+ },
+ "timing": "learner2-forecast runs after the catalyst-seal steps and before each set's entry cutoff; one forecast per set; a set past its cutoff is never forecast; a Speculation Register set is forecast before its own entry cutoff; the IDX and crypto routines run it after their own seals, the US routine after its catalyst and speculation seals, so every set is forecast before its cutoff",
+ "claim": {
+  "statistic": "per 4-week block of resolution (pooling every skill kind and class, each underlying event once per statement), the mean Brier(anchor) - Brier(raw); one-sided t against 0 with the long-run standard error at lag 2 blocks (the windows' overlap), so overlapping windows cannot inflate it",
+  "why_raw": "the raw forecast is the learner's own sealed opinion; scoring it tests whether the learning works, whatever the gate allows it to publish",
+  "looks": [
+   60,
+   120,
+   240,
+   480,
+   960,
+   1920
+  ],
+  "t_min": [
+   3.75,
+   3.0,
+   3.0,
+   3.0,
+   3.0,
+   3.0
+  ],
+  "min_sessions": [
+   15,
+   15,
+   15,
+   30,
+   60,
+   120
+  ],
+  "eligible": "t >= that look's t_min and one-sided p < 0.05 with a positive mean: ELIGIBLE FOR OWNER REVIEW",
+  "futility": "from the 240 look, a mean at or below 0 is FAIL (futility): the learner tells sets apart no better than base rates",
+  "trial_file": "research/QUANT_GRADE/trials/LEARNER_v2_2_BRIER_registered.json, a counted file per look",
+  "sessions_are": "4-week blocks: a look's minimum counts blocks of resolution, not signal sessions",
+  "block": [
+   4,
+   2
+  ]
+ },
+ "coverage": "every set whose entry cutoff passed after the learner's first forecast should have a forecast; the report lists the gaps and the forecasts without an external timestamp, so the learner cannot be judged only on the sets it chose",
+ "verify": "paper-verify: the chain; one forecast per set; the protocol and warm-start hashes; the ledger state the forecast records (the line count and last hash of paper/catalysts.jsonl and paper/speculations.jsonl) must be a state the registers passed through; the set must be sealed in that state with the recorded hash and the forecast made before its cutoff; the whole record (every field but the chain's) must be reproduced by retraining on exactly that state, numbers within 2e-6 (twice the 1e-6 rounding of the stored values); and where an RFC 3161 token exists, its time must be before the set's cutoff",
+ "never": [
+  "change a family rule, prior, twin draw, resolution or ledger line",
+  "feed back into any family's sealing (the families stay frozen; the learner sits beside them)",
+  "use an outcome resolved after its forecast, or a price after the signal session",
+  "read the sealed holdouts",
+  "place or simulate an order"
+ ]
+}

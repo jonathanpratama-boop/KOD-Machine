@@ -1,0 +1,12 @@
+{
+ "id": "LEARNER_v2_1_BRIER_superseded",
+ "experiment": "LEARNER_v2.1",
+ "date": "2026-10-29",
+ "hypothesis": "supersedes LEARNER_v2_1_BRIER_registered before any forecast or outcome existed: an independent review showed its per-session statistic is inflated by overlapping windows (t >= 3 in 10-19% of null runs against 0.2% nominal); the claim is re-registered on 4-week blocks with an overlap-robust standard error (research/LEARNER_v2/ADDENDUM_2.md)",
+ "one_sided_p": null,
+ "p_source": "no look was ever taken: nothing was sealed under KOD-LEARNER-v2.1",
+ "variants_searched": 0,
+ "outcome": "SUPERSEDED before any forecast (by LEARNER_v2_2_BRIER_registered)",
+ "counted": false,
+ "registered": "2026-10-29"
+}

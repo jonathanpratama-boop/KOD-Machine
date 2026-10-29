@@ -47,12 +47,12 @@ from . import paper
 from . import speculation as spec
 from .provenance import PKG_ROOT, sha256_file, utc_stamp
 
-PROTOCOL_JSON = PKG_ROOT / "research" / "LEARNER_v2" / "protocol_v2_1.json"
+PROTOCOL_JSON = PKG_ROOT / "research" / "LEARNER_v2" / "protocol_v2_2.json"
 HISTORY = PKG_ROOT / "research" / "LEARNER_v2" / "warmstart" / "events.csv.gz"
 HISTORY_SHA256 = "1eff13dabff91e2a41ae654ba9da645d87c6cf94a7efd67cbbf808d338fc9a13"
 LEDGER = paper.PAPER / "learner_v2.jsonl"
 REPORT = paper.PAPER / "LEARNER_V2.md"
-VERSION = "LEARNER-v2.1"
+VERSION = "LEARNER-v2.2"
 RECORD = "LEARNER2_FORECAST"
 SPEC_FAMILIES = ("SPEC_IDX", "SPEC_US", "SPEC_CRYPTO")  # the Speculation Register's sets, by market
 FAMILIES = ("SEC13D", "SEC13D_V2", "DILUTION_8K", "FORM4", "FORM4_SHARP", "IDX_INDEX", *SPEC_FAMILIES)
@@ -72,7 +72,14 @@ LAMBDA_SHARED, LAMBDA_TASK, LAMBDA_OWN, LAMBDA_ICPT = 16.0, 25.0, 16.0, 1 / 1.5 
 MAX_IT, TOL = 50, 1e-10
 N_CAP = 300  # history's total weight per kind, in live outcomes
 WINDOW_DAYS = 90  # the triangulation counts
-GATE = {"delta": 0.05, "t_star": 250, "t_min": 30, "recent": 120, "skill_full": 0.02}
+GATE = {"delta": 0.05, "t_star_weeks": 52, "t_min": 30, "recent_weeks": 52, "recent_min": 8, "z_open": 1.645,
+        "z_stay": 0.842, "skill_full": 0.02}
+CLASS_OF = {"BASE5": "5", "H20": "20", "PATH20": "20", "M20": "20", "RUNUP": "20", "POST20": "20", "H60": "60", "M60": "60",
+            "TRI": "60"}  # a statement's horizon class, by the window that resolves it
+BLOCKS = {"5": (1, 1), "20": (1, 3), "60": (4, 2)}  # horizon class -> (weeks per observation, lag in observations)
+CLAIM_BLOCK = (4, 2)  # the claim pools every class in 4-week blocks
+EPOCH = date(2000, 1, 3)  # a Monday: blocks of weeks are counted from it
+VERIFY_TOL = 2e-6  # twice the 1e-6 rounding step of the stored numbers
 CALL = {"margin": 0.4, "z": 1.645}
 HIST_TASKS = {  # (source, outcome column) -> (kind, the live statement whose slopes it informs)
     ("kill13d", "bt20"): ("RELATIVE", "SEC13D:BEATS_TWINS_20"),
@@ -285,12 +292,12 @@ def features(s: dict, tri: tuple[int, int, int] = (0, 0, 0)) -> np.ndarray:
 def tri_counts(records: list[dict]) -> dict[str, tuple[int, int, int]]:
     """Per set: distinct earlier events (ledger order) on the same market and ticker with a signal session in the 90
     calendar days up to its own: from its own source (repeat), from another source with the same direction
-    (corroborate) or the opposite (conflict). Only what was sealed before the set, so the value never changes."""
+    (corroborate) or the opposite (conflict). Only sets sealed before it (by sealed_at, across both registers), so the
+    value never changes."""
     seen: dict[tuple[str, str], list[tuple[str, str, int, str]]] = {}
     out = {}
-    for r in records:
-        if r.get("type") != "CATALYST_SET" or r.get("family") not in FAMILIES:
-            continue
+    sets = [r for r in records if r.get("type") == "CATALYST_SET" and r.get("family") in FAMILIES]
+    for r in sorted(sets, key=lambda r: r.get("sealed_at") or ""):  # stable: ties keep ledger order
         key, g, d = event_key(r), GROUP[r["family"]], -1 if int(r.get("direction", 1) or 1) < 0 else 1
         k = (r.get("market", "US"), str(r.get("ticker")))
         lo = (date.fromisoformat(r["signal_session"]) - timedelta(days=WINDOW_DAYS)).isoformat()
@@ -318,13 +325,15 @@ class Row(NamedTuple):
 def outcomes(records: list[dict], asof: str) -> dict[tuple[str, str], tuple]:
     """(set, statement) -> (outcome, resolved_at, the twins' rate of the same statement or None) for every graded
     statement resolved before asof; a later revision of the same (set, window) replaces an earlier one."""
-    out: dict[tuple[str, str], tuple] = {}
+    latest: dict[tuple, dict] = {}
     for r in records:
-        if r.get("type") != "RESOLUTION" or not r.get("cone") or (r.get("resolved_at") or "9") >= asof:
-            continue
-        for c in r["cone"]:
+        if r.get("type") == "RESOLUTION" and (r.get("resolved_at") or "9") < asof:
+            latest[(r["set_id"], r.get("window"))] = r  # an UNRESOLVABLE or ungraded revision clears what it replaces
+    out: dict[tuple[str, str], tuple] = {}
+    for (sid, _), r in latest.items():
+        for c in r.get("cone") or []:
             if c.get("outcome") is not None:
-                out[(r["set_id"], c["id"])] = (bool(c["outcome"]), r["resolved_at"], c.get("twins_rate"))
+                out[(sid, c["id"])] = (bool(c["outcome"]), r["resolved_at"], c.get("twins_rate"))
     return out
 
 
@@ -343,6 +352,8 @@ def outcome_of(outc: dict, set_id: str, family: str, stmt: str) -> tuple[bool, s
     """(outcome, when it became known): a cone statement as graded; TRIANGULATED and PUMP_AND_DUMP_k once both of their
     parts are; a move statement through own_move."""
     m = _PATH_ID.match(stmt)
+    if stmt == TRI and family not in TRIANGLES:
+        return None
     if stmt == TRI or (m and m[1] == "PUMP_AND_DUMP"):
         a, b = (TRIANGLES[family] if stmt == TRI else (None, None))
         oa = outc.get((set_id, a)) if stmt == TRI else own_move(outc, set_id, f"RUN30_{m[2]}")
@@ -448,6 +459,11 @@ class Model:
             groups.setdefault(key, []).append(j)
         groups = {k: np.array(v) for k, v in sorted(groups.items())}
         theta = np.zeros(P)
+
+        def objective(th):
+            eta_ = off + self._linear(th, Z, ti, ii)
+            return float((w0 * (y * eta_ - np.logaddexp(0.0, eta_))).sum() - 0.5 * (lam * th * th).sum())
+
         for _ in range(MAX_IT):
             eta = off + self._linear(theta, Z, ti, ii)
             p = _sigmoid(eta)
@@ -468,9 +484,14 @@ class Model:
                 g[a] += rg.sum()
                 H[a, a] += hg.sum()
             step = np.linalg.solve(H, g)
-            theta = theta + step
             if float(np.max(np.abs(step))) < TOL:
                 break
+            base, t = objective(theta), 1.0
+            while objective(theta + t * step) < base - 1e-10 * (1 + abs(base)) and t > 1e-10:  # step-halving: never
+                t /= 2  # move downhill by more than rounding noise
+            theta = theta + t * step
+        else:
+            raise RuntimeError(f"{kind} model did not converge in {MAX_IT} iterations")
         self.theta, self.cov = theta, np.linalg.inv(H)
         self.n_rows = {t: float(w0[ti == k].sum()) for k, t in enumerate(self.tasks)}
 
@@ -518,14 +539,20 @@ def anchor_fit(rows: list[Row]) -> float:
         return 0.0
     o = np.array([_logit(r.p0) for r in rows])
     w, y = np.array([r.w for r in rows]), np.array([r.y for r in rows])
+    def objective(a_):
+        return float((w * (y * (o + a_) - np.logaddexp(0.0, o + a_))).sum() - 0.5 * LAMBDA_ICPT * a_ * a_)
+
     a = 0.0
     for _ in range(MAX_IT):
         p = _sigmoid(o + a)
         step = float((w * (y - p)).sum() - LAMBDA_ICPT * a) / float((w * p * (1 - p)).sum() + LAMBDA_ICPT)
-        a += step
         if abs(step) < TOL:
-            break
-    return a
+            return a
+        t, base = 1.0, objective(a)
+        while objective(a + t * step) < base - 1e-10 * (1 + abs(base)) and t > 1e-10:
+            t /= 2
+        a += t * step
+    raise RuntimeError(f"anchor did not converge in {MAX_IT} iterations")
 
 
 class State(NamedTuple):
@@ -545,11 +572,8 @@ def train(records: list[dict], asof: str) -> State:
     for r in live:
         by_task.setdefault(r.task, []).append(r)
     anchors = {t: anchor_fit(rs) for t, rs in sorted(by_task.items())}
-    fp = hashlib.sha256(json.dumps({k: None if m is None else [float(f"{v:.6g}") for v in m.theta]
-                                    for k, m in models.items()}, sort_keys=True).encode()).hexdigest()
     info = {"live_rows": {t: round(sum(r.w for r in rs), 4) for t, rs in sorted(by_task.items())},
-            "history_rows": dict(sorted(Counter(r.kind for r in history_rows()).items())),
-            "fingerprint": fp}
+            "history_rows": dict(sorted(Counter(r.kind for r in history_rows()).items()))}
     return State(models, anchors, info)
 
 
@@ -579,10 +603,16 @@ def forward_pairs(records: list[dict], lrecs: list[dict], asof: str) -> list[dic
     """Every (earlier forecast, skill statement) whose outcome resolved after the forecast and before asof, each
     underlying event weighted once per statement."""
     outc = outcomes(records, asof)
-    out = []
+    sets = {r["set_id"]: r for r in records if r.get("type") == "CATALYST_SET"}
+    out, seen = [], set()
     for f in lrecs:
         if f.get("type") != RECORD or f["made_at"] >= asof:
             continue
+        s = sets.get(f["set_id"])
+        if (f["set_id"] in seen or s is None or s.get("record_hash") != f["set_record_hash"]
+                or f["made_at"] >= s["entry_cutoff"]):
+            continue  # a duplicate, unbound or late forecast is never scored
+        seen.add(f["set_id"])
         for stmt, fc in f["forecasts"].items():
             if fc["kind"] not in SKILL_KINDS:
                 continue
@@ -599,60 +629,118 @@ def forward_pairs(records: list[dict], lrecs: list[dict], asof: str) -> list[dic
     return out
 
 
-def observations(pairs: list[dict], key: str = "raw") -> list[tuple[float, float]]:
-    """(weighted mean Brier gain of `key` over the anchor, weighted mean anchor Brier) per (signal session, window,
-    resolution time), in the order they resolved. The weights are counted inside the observation (one underlying event
-    once per statement), so an observation never changes once it exists: a pair resolved later forms a new one."""
-    groups: dict[tuple, list[dict]] = {}
-    for p in pairs:
-        groups.setdefault((p["resolved_at"], p["session"], p["window"]), []).append(p)
-    out = []
-    for k in sorted(groups):
-        ps = groups[k]
-        n = Counter((p["event_key"], p["statement"]) for p in ps)
-        w = [1.0 / n[(p["event_key"], p["statement"])] for p in ps]
-        out.append((sum(wi * ((p["anchor"] - p["y"]) ** 2 - (p[key] - p["y"]) ** 2) for wi, p in zip(w, ps)) / sum(w),
-                    sum(wi * (p["anchor"] - p["y"]) ** 2 for wi, p in zip(w, ps)) / sum(w)))
+def block_of(ts: str, weeks: int) -> int:
+    """The block of `weeks` ISO weeks (counted from EPOCH) that a UTC timestamp falls in."""
+    return (date.fromisoformat(ts[:10]) - EPOCH).days // (7 * weeks)
+
+
+def block_end(block: int, weeks: int) -> str:
+    """The Monday 00:00 UTC that ends a block."""
+    return f"{(EPOCH + timedelta(days=7 * weeks * (block + 1))).isoformat()}T00:00:00Z"
+
+
+def observations(pairs: list[dict], asof: str, weeks: int = 1, key: str = "raw") -> list[tuple[float, float, int]]:
+    """One observation per block of `weeks` ISO weeks of resolution that has ended by asof: the mean Brier gain of `key`
+    over the anchor, the mean anchor Brier and the number of pairs, over the pairs that resolved in it. An underlying
+    event counts once per statement over the whole sequence (where it first resolved), so a parent and its child never
+    count twice, and a block never changes once it has ended. Many sets resolving on one day, which share one market,
+    make one observation, not many."""
+    seen, blocks = set(), {}
+    for p in sorted(pairs, key=lambda p: (p["resolved_at"], p["set_id"], p["statement"])):
+        k = (p["event_key"], p["statement"])
+        if k in seen:
+            continue
+        seen.add(k)
+        b = block_of(p["resolved_at"], weeks)
+        if block_end(b, weeks) <= asof:
+            blocks.setdefault(b, []).append(p)
+    return [(float(np.mean([(p["anchor"] - p["y"]) ** 2 - (p[key] - p["y"]) ** 2 for p in ps])),
+             float(np.mean([(p["anchor"] - p["y"]) ** 2 for p in ps])), len(ps)) for _, ps in sorted(blocks.items())]
+
+
+def long_run_sd(a: np.ndarray, lag: int) -> float:
+    """The standard deviation of a mean's terms when neighbouring observations share up to `lag` steps of overlapping
+    windows: the truncated long-run variance (the exact weights for overlap of that length) with the small-sample
+    correction n / (n - 2 lag - 1) for autocovariances around an estimated mean, never below the plain sample sd.
+    Measured on zero-mean overlapping noise, a one-sided 5% test with it rejects 5 to 6% of the time where the
+    Newey-West (Bartlett) version rejects 8 to 17%."""
+    a = np.asarray(a, dtype=float)
+    n = len(a)
+    if n < 2:
+        return float("nan")
+    c = a - a.mean()
+    s = float(c @ c) / n
+    for k in range(1, min(lag, n - 1) + 1):
+        s += 2 * float(c[k:] @ c[:-k]) / n
+    s *= n / max(n - 2 * lag - 1, 1)
+    return math.sqrt(max(s, float(c @ c) / (n - 1)))
+
+
+def confidence_lowers(d: list[float], lag: int = 0, delta: float = GATE["delta"], t_star: float = 52) -> np.ndarray:
+    """The lower edge of the asymptotic confidence sequence for the mean after each observation (Waudby-Smith et al.,
+    time-uniform central limit theory), with the long-run sd: valid at every t at once, so a weekly look does not
+    inflate the chance that luck clears zero. NaN before two observations."""
+    a = np.asarray(d, dtype=float)
+    rho2 = (-2 * math.log(delta) + math.log(-2 * math.log(delta) + 1)) / t_star
+    out = np.full(len(a), np.nan)
+    for i in range(1, len(a)):
+        t = i + 1
+        sd = long_run_sd(a[:t], lag)
+        out[i] = a[:t].mean() - sd * math.sqrt(2 * (t * rho2 + 1) / (t * t * rho2) * math.log(math.sqrt(t * rho2 + 1) / delta))
     return out
 
 
-def confidence_lowers(d: list[float], delta: float = GATE["delta"], t_star: int = GATE["t_star"]) -> np.ndarray:
-    """The lower edge of the asymptotic confidence sequence for the mean after each observation (Waudby-Smith et al.,
-    time-uniform central limit theory): valid at every t at once, so a daily look does not inflate the chance that
-    luck clears zero. NaN before two observations."""
-    a = np.asarray(d, dtype=float)
-    t = np.arange(1, len(a) + 1, dtype=float)
-    s1, s2 = np.cumsum(a), np.cumsum(a * a)
-    mean = s1 / t
-    sd = np.sqrt(np.clip((s2 - t * mean ** 2) / np.maximum(t - 1, 1), 0, None))
-    rho2 = (-2 * math.log(delta) + math.log(-2 * math.log(delta) + 1)) / t_star
-    radius = sd * np.sqrt(2 * (t * rho2 + 1) / (t * t * rho2) * np.log(np.sqrt(t * rho2 + 1) / delta))
-    return np.where(t >= 2, mean - radius, np.nan)
+def gate_path(d: np.ndarray, weeks: int, lag: int) -> list[tuple[float, bool, float]]:
+    """(proof, open, recent lower bound) after each observation from t_min on, in one causal pass: each step uses only
+    the observations up to it, so the path equals checking the gate every time.
+    Proof: the running maximum of the confidence sequence's lower edge (its running intersection is a confidence
+    sequence too, so luck clears zero at most 5% of the time however often it is checked).
+    Present: the last year (at least recent_min observations) must show skill. The gate opens when their one-sided
+    95% lower bound is above zero and stays open while their 80% bound is, so it closes when the skill fades, and a real
+    but noisy edge does not flicker."""
+    d = np.asarray(d, dtype=float)
+    lowers = confidence_lowers(d, lag, t_star=GATE["t_star_weeks"] / weeks)
+    n_recent = max(GATE["recent_min"], math.ceil(GATE["recent_weeks"] / weeks))
+    best, opened, out = -math.inf, False, []
+    for t in range(GATE["t_min"] - 1, len(d)):
+        best = max(best, float(lowers[t]))
+        rec = d[max(0, t + 1 - n_recent): t + 1]
+        se = long_run_sd(rec, lag) / math.sqrt(len(rec))
+        opened = best > 0 and float(rec.mean() - (GATE["z_stay"] if opened else GATE["z_open"]) * se) > 0
+        out.append((best, opened, float(rec.mean() - GATE["z_stay"] * se)))
+    return out
 
 
-def gate(pairs: list[dict], kind: str) -> tuple[float, dict]:
-    """alpha for one kind. Proof: the running maximum, from t_min observations on, of the confidence sequence's lower
-    edge (the running intersection of a confidence sequence is one too, so the 5% guarantee holds and proven skill
-    stays proven while the bound's own noise wanders). Loss: the recent record, which follows the edge as it decays."""
-    obs = observations([p for p in pairs if p["kind"] == kind])
-    d = [o[0] for o in obs]
-    info = {"observations": len(obs), "mean_gain": float(np.mean(d)) if d else None, "lower": None,
-            "skill_lower": None, "recent_skill": None}
-    if len(obs) < GATE["t_min"]:
+def gate(pairs: list[dict], key: str, asof: str) -> tuple[float, dict]:
+    """alpha for one gate, "KIND/CLASS" (a skill kind and a horizon class), from its observations: 0 below t_min
+    observations or while closed; otherwise min(proof, recent lower bound) / mean anchor Brier / skill_full, clipped to
+    0..1."""
+    kind, cls = key.split("/")
+    weeks, lag = BLOCKS[cls]
+    obs = observations([p for p in pairs if p["kind"] == kind and CLASS_OF.get(p["window"], "20") == cls], asof, weeks)
+    d = np.array([o[0] for o in obs], dtype=float)
+    info = {"observations": len(obs), "mean_gain": float(d.mean()) if len(d) else None, "lower": None,
+            "skill_lower": None, "recent_lower": None, "open": False}
+    if len(d) < GATE["t_min"]:
         return 0.0, info
     b = float(np.mean([o[1] for o in obs]))
-    lower = float(np.max(confidence_lowers(d)[GATE["t_min"] - 1:]))
-    recent = float(np.mean(d[-GATE["recent"]:])) / b if b > 0 else 0.0
-    skill_lower = lower / b if b > 0 else 0.0
-    info.update({"lower": lower, "skill_lower": skill_lower, "recent_skill": recent})
-    if skill_lower <= 0 or recent <= 0:
+    best, opened, recent = gate_path(d, weeks, lag)[-1]
+    info.update({"lower": best, "skill_lower": best / b if b > 0 else None, "recent_lower": recent, "open": opened})
+    if not opened or b <= 0:
         return 0.0, info
-    return float(_clip(min(skill_lower, recent) / GATE["skill_full"], 0.0, 1.0)), info
+    return float(_clip(min(best, recent) / b / GATE["skill_full"], 0.0, 1.0)), info
+
+
+GATES = ("RELATIVE/5", "RELATIVE/20", "RELATIVE/60", "MECHANISM/20", "MECHANISM/60", "TRIANGULATED/60", "PATH/5", "PATH/20")
+
+
+def gate_key(kind: str, window: str) -> str:
+    return f"{kind}/{CLASS_OF.get(window, '20')}"
 
 
 def gates(records: list[dict], lrecs: list[dict], asof: str) -> dict[str, tuple[float, dict]]:
     pairs = forward_pairs(records, lrecs, asof)
-    return {k: gate(pairs, k) for k in SKILL_KINDS}
+    return {k: gate(pairs, k, asof) for k in GATES}
 
 
 # ------------------------------------------------------------------------------- forecasting
@@ -681,7 +769,7 @@ def forecast_set(s: dict, tri: tuple[int, int, int], state: State, gate_alpha: d
         dev, sd, parts = (0.0, 0.0, np.zeros(len(FEATURES))) if m is None else m.deviation(task, xv, centres.get(task))
         raw = _prob(_logit(anchor) + dev)
         dev = _logit(raw) - _logit(anchor)  # after the probability clip
-        alpha = gate_alpha.get(kind, 0.0)
+        alpha = gate_alpha.get(gate_key(kind, window), 0.0)
         order = np.argsort(-np.abs(parts))[:3]
         labels = {**LABELS, **UNSIGNED} if kind == "PATH" else LABELS
         why = [{"feature": FEATURES[j], "label": labels[FEATURES[j]], "logit": round(float(parts[j]), 4)}
@@ -696,10 +784,21 @@ def forecast_set(s: dict, tri: tuple[int, int, int], state: State, gate_alpha: d
     return out, [round(float(v), 6) for v in x]
 
 
+def _head(lines: list[dict]) -> list:
+    """A ledger state: its number of lines and the hash of the last one."""
+    return [len(lines), lines[-1].get("record_hash") if lines else None]
+
+
 def forecast_records(now: datetime, records: list[dict] | None = None, lrecs: list[dict] | None = None) -> list[dict]:
-    """One LEARNER2_FORECAST for every sealed set still before its entry cutoff that has none yet."""
+    """One LEARNER2_FORECAST for every sealed set still before its entry cutoff that has none yet. Each records the
+    ledger state it was computed from, so verify can retrain on exactly that state."""
     proto, sha = protocol()
-    records = all_records() if records is None else records
+    if records is None:
+        cat, spc = cr.cat_lines(), spec.spec_lines()
+        records = [as_set(r) for r in cat] + [as_set(r) for r in spc]
+        inputs = {"catalysts": _head(cat), "speculations": _head(spc)}
+    else:
+        inputs = {"records": _head(records)}
     lrecs = lines() if lrecs is None else lrecs
     asof = utc_stamp(now.astimezone(timezone.utc))
     done = {f["set_id"] for f in lrecs if f.get("type") == RECORD}
@@ -707,20 +806,27 @@ def forecast_records(now: datetime, records: list[dict] | None = None, lrecs: li
             and s["entry_cutoff"] > asof and s["set_id"] not in done]
     if not todo:
         return []
-    return [_record(s, asof, records, lrecs, proto, sha) for s in todo]
+    ctx = _context(records, lrecs, asof)
+    return [_record(s, asof, proto, sha, inputs, ctx) for s in todo]
 
 
-def _record(s, asof, records, lrecs, proto, sha, state=None, g=None) -> dict:
-    state = state or train(records, asof)
-    g = g or gates(records, lrecs, asof)
-    tri = tri_counts(records).get(s["set_id"], (0, 0, 0))
-    fc, x = forecast_set(s, tri, state, {k: v[0] for k, v in g.items()}, live_centres(records, asof))
-    n_res = sum(r.get("type") == "RESOLUTION" and (r.get("resolved_at") or "9") < asof for r in records)
+def _context(records: list[dict], lrecs: list[dict], asof: str) -> dict:
+    """Everything a batch of forecasts at asof shares: the training, the gates, the triangulation counts, the live
+    centres and the number of resolutions seen."""
+    return {"state": train(records, asof), "gates": gates(records, lrecs, asof), "tri": tri_counts(records),
+            "centres": live_centres(records, asof),
+            "n_res": sum(r.get("type") == "RESOLUTION" and (r.get("resolved_at") or "9") < asof for r in records)}
+
+
+def _record(s: dict, asof: str, proto: dict, sha: str, inputs: dict, ctx: dict) -> dict:
+    state, g, n_res = ctx["state"], ctx["gates"], ctx["n_res"]
+    tri = ctx["tri"].get(s["set_id"], (0, 0, 0))
+    fc, x = forecast_set(s, tri, state, {k: v[0] for k, v in g.items()}, ctx["centres"])
     return {"type": RECORD, "learner": VERSION, "protocol": {"id": proto["protocol_id"], "sha256": sha},
             "history": {"file": str(HISTORY.relative_to(PKG_ROOT)), "sha256": HISTORY_SHA256},
             "set_id": s["set_id"], "set_record_hash": s["record_hash"], "event_key": event_key(s), "family": s["family"],
             "market": s.get("market", "US"), "ticker": s.get("ticker"), "signal_session": s["signal_session"],
-            "entry_cutoff": s["entry_cutoff"], "made_at": asof,
+            "entry_cutoff": s["entry_cutoff"], "made_at": asof, "inputs": inputs,
             "training": {"resolutions_before": int(n_res), **state.info},
             "gate": {k: {"alpha": round(v[0], 6), **{kk: (None if vv is None else round(vv, 6) if isinstance(vv, float) else vv)
                                                        for kk, vv in v[1].items()}} for k, v in g.items()},
@@ -838,14 +944,12 @@ def statistics(records: list[dict] | None = None, lrecs: list[dict] | None = Non
         per[":".join(stmt)] = {"n": round(w, 3), "rate": sum(p["w"] * p["y"] for p in ps) / w,
                                **{f"brier_{k}": sum(p["w"] * (p[k] - p["y"]) ** 2 for p in ps) / w
                                   for k in ("anchor", "raw", "published")}}
-    by_session: dict[str, list[tuple[float, float]]] = {}
-    for p in pairs:
-        by_session.setdefault(p["session"], []).append((p["w"], (p["anchor"] - p["y"]) ** 2 - (p["raw"] - p["y"]) ** 2))
-    sm = np.array([sum(w * d for w, d in v) / sum(w for w, _ in v) for _, v in sorted(by_session.items())])
-    claim = {"n_paired": len(pairs), "n_sessions": len(sm), "mean_gain": float(sm.mean()) if len(sm) else None,
-             "t": None, "p_one_sided": None}
-    if len(sm) >= 2 and float(np.std(sm, ddof=1)) > 0:
-        t = float(sm.mean() / (np.std(sm, ddof=1) / math.sqrt(len(sm))))
+    blocks = observations(pairs, asof, CLAIM_BLOCK[0])
+    sm = np.array([o[0] for o in blocks])
+    claim = {"n_paired": int(sum(o[2] for o in blocks)), "n_sessions": len(sm), "unit": "4-week block of resolution",
+             "mean_gain": float(sm.mean()) if len(sm) else None, "t": None, "p_one_sided": None}
+    if len(sm) >= 2 and long_run_sd(sm, CLAIM_BLOCK[1]) > 0:
+        t = float(sm.mean() / (long_run_sd(sm, CLAIM_BLOCK[1]) / math.sqrt(len(sm))))
         claim["t"], claim["p_one_sided"] = t, float(spec.t_sf(t, len(sm) - 1))
     c = proto["claim"]
     design = {"looks": {"n": c["looks"], "t_min": c["t_min"], "min_sessions": c["min_sessions"]}}
@@ -857,8 +961,25 @@ def statistics(records: list[dict] | None = None, lrecs: list[dict] | None = Non
             bins.append({"from": round(float(lo), 1), "n": len(b), "said": float(np.mean([p["raw"] for p in b])),
                          "happened": float(np.mean([p["y"] for p in b]))})
     return {"asof": asof, "forecasts": sum(f.get("type") == RECORD for f in lrecs), "pairs": len(pairs),
-            "gates": {k: gate(pairs, k) for k in SKILL_KINDS}, "claim": claim, "per_statement": per,
-            "calls": call_statistics(pairs, records), "reliability": bins, "beliefs": beliefs(train(records, asof))}
+            "coverage": coverage(records, lrecs, asof), "gates": {k: gate(pairs, k, asof) for k in GATES},
+            "claim": claim, "per_statement": per, "calls": call_statistics(pairs, records), "reliability": bins,
+            "beliefs": beliefs(train(records, asof))}
+
+
+def coverage(records: list[dict], lrecs: list[dict], asof: str) -> dict:
+    """Every set whose cutoff passed after the learner's first forecast should have a forecast; a gap is listed, so a
+    learner cannot be judged only on the sets it chose to forecast. Also the forecasts without an external timestamp."""
+    made = [f for f in lrecs if f.get("type") == RECORD]
+    if not made:
+        return {"due": 0, "forecast": 0, "missing": [], "without_timestamp": 0}
+    start, done = min(f["made_at"] for f in made), {f["set_id"] for f in made}
+    due = [s["set_id"] for s in records if s.get("type") == "CATALYST_SET" and s.get("family") in FAMILIES
+           and start < s["entry_cutoff"] <= asof]
+    missing = sorted(set(due) - done)
+    stamped = sum(any((paper.TOKENS / f"{f['record_hash']}.{a}.tsr").exists() for a in ("freetsa", "sectigo"))
+                  for f in made if f.get("record_hash"))
+    return {"due": len(due), "forecast": len(due) - len(missing), "missing": missing[:20],
+            "without_timestamp": len(made) - stamped}
 
 
 def beliefs(state: State, top: int = 8) -> dict[str, list[dict]]:
@@ -885,19 +1006,24 @@ def _fmt(v) -> str:
 
 def render(st: dict) -> str:
     c = st["claim"]
-    out = ["# Learner v2.1 (LEARNER-v2.1)", "",
+    cv = st["coverage"]
+    out = ["# Learner v2.2 (LEARNER-v2.2)", "",
            "Judged against a climatology twin of itself (how often each statement comes true per family), on skill "
            "statements only: beating the twins, the stated catalyst happening, both, and the stock's own pump, dump or "
            "pump and dump (each only when most of its twins did not make the same move). A call is right only when its "
-           "whole thesis came true. Confidence opens only when a time-uniform lower bound on its forward gain is above "
-           "zero.", "",
+           "whole thesis came true. Confidence opens only when a time-uniform lower bound on its weekly forward gain is "
+           "above zero and the last half-year still shows skill.", "",
            f"- As of {st['asof']}: {st['forecasts']} forecasts sealed, {st['pairs']} forward-scored pairs",
-           f"- Claim (raw beats the anchor, per-session Brier gain): {c['n_paired']} pairs, {c['n_sessions']} sessions, "
-           f"t {None if c['t'] is None else round(c['t'], 2)}: **{c['look']['verdict']}**", "",
-           "| Kind | Earned confidence (alpha) | Observations | Mean gain | Lower bound | Recent skill |", "|---|---|---|---|---|---|"]
+           f"- Coverage: {cv['forecast']} of {cv['due']} sets due since the first forecast"
+           + (f" (missing: {', '.join(cv['missing'])})" if cv["missing"] else "")
+           + f"; forecasts without an external timestamp: {cv['without_timestamp']}",
+           f"- Claim (raw beats the anchor, Brier gain per 4-week block, overlap-robust t): {c['n_paired']} pairs, "
+           f"{c['n_sessions']} blocks, t {None if c['t'] is None else round(c['t'], 2)}: **{c['look']['verdict']}**", "",
+           "| Gate (kind/horizon) | Earned confidence (alpha) | Observations | Mean gain | Proof (lower bound) | Recent lower bound |",
+           "|---|---|---|---|---|---|"]
     for k, (a, info) in st["gates"].items():
         out.append(f"| {k} | {a:.2f} | {info['observations']} | {_fmt(info['mean_gain'])} | {_fmt(info['lower'])} | "
-                   f"{_fmt(info['recent_skill'])} |")
+                   f"{_fmt(info['recent_lower'])} |")
     out += ["", "| Statement | n | Rate | Brier anchor | Brier raw | Brier published |", "|---|---|---|---|---|---|"]
     for k, v in st["per_statement"].items():
         out.append(f"| {k} | {v['n']} | {v['rate']:.2f} | {v['brier_anchor']:.4f} | {v['brier_raw']:.4f} | "
@@ -919,21 +1045,47 @@ def write_report() -> Path:
 
 
 # ------------------------------------------------------------------------------- verify
-def verify(path: Path | None = None, records: list[dict] | None = None, tol: float = 1e-6) -> list[str]:
-    """The chain; one forecast per set, bound to the sealed set, made before its cutoff; and every number reproduced by
-    retraining on the resolutions dated before the forecast (a learner that saw a later outcome cannot pass)."""
+def _same(a, b, tol: float) -> bool:
+    """Equal, with numbers within tol (the stored ones are rounded to 1e-6)."""
+    if isinstance(a, bool) or isinstance(b, bool):
+        return type(a) is type(b) and a == b
+    if isinstance(a, (int, float)) and isinstance(b, (int, float)):
+        return abs(a - b) <= tol
+    if isinstance(a, dict) and isinstance(b, dict):
+        return a.keys() == b.keys() and all(_same(a[k], b[k], tol) for k in a)
+    if isinstance(a, list) and isinstance(b, list):
+        return len(a) == len(b) and all(_same(x, y, tol) for x, y in zip(a, b))
+    return a == b
+
+
+def _timestamp_checker():
+    import sys
+
+    root = str(PKG_ROOT.parent / "kod-machine")
+    if root not in sys.path:
+        sys.path.insert(0, root)
+    try:
+        from kod.timestamp import RFC3161Timestamper
+    except ImportError:
+        return None
+    return RFC3161Timestamper()
+
+
+def verify(path: Path | None = None, records: list[dict] | None = None, tol: float = VERIFY_TOL) -> list[str]:
+    """The chain; one forecast per set; and every forecast reproduced, field by field, by retraining on exactly the
+    ledger state it records (a learner that saw a later outcome, or a record edited afterwards, cannot pass), bound to
+    a set sealed in that state, made before the set's cutoff, and externally timestamped before it where a token
+    exists."""
     path = LEDGER if path is None else path
     if not path.exists():
         return []
     problems = [f"{path.name}: {p}" for p in paper.verify_chain(path)]
     proto, sha = protocol()
-    records = all_records() if records is None else records
-    sets = {r["set_id"]: r for r in records if r.get("type") == "CATALYST_SET"}
+    if records is None:
+        cat, spc = cr.cat_lines(), spec.spec_lines()
     lrecs = paper.ledger_lines(path)
-    seen, trained, gated = set(), {}, {}
-    res = [(r.get("resolved_at") or "9", (r.get("record_hash"), r.get("set_id"), r.get("window"), r.get("resolved_at")))
-           for r in records if r.get("type") == "RESOLUTION"]
-    for f in lrecs:
+    seen, ctxs, checker = set(), {}, None
+    for i, f in enumerate(lrecs):
         if f.get("type") != RECORD:
             problems.append(f"{path.name}: unknown record type {f.get('type')!r}")
             continue
@@ -945,28 +1097,44 @@ def verify(path: Path | None = None, records: list[dict] | None = None, tol: flo
             problems.append(f"{sid}: learner protocol sha256 differs from {PROTOCOL_JSON.relative_to(PKG_ROOT)}")
         if f["history"]["sha256"] != HISTORY_SHA256:
             problems.append(f"{sid}: warm start sha256 differs from the pinned one")
-        s = sets.get(sid)
+        inp = f.get("inputs") or {}
+        if records is None:
+            nc, ns = (inp.get("catalysts") or [None])[0], (inp.get("speculations") or [None])[0]
+            ok = (isinstance(nc, int) and isinstance(ns, int) and nc <= len(cat) and ns <= len(spc)
+                  and _head(cat[:nc]) == inp["catalysts"] and _head(spc[:ns]) == inp["speculations"])
+            prefix = [as_set(r) for r in cat[:nc]] + [as_set(r) for r in spc[:ns]] if ok else None
+        else:
+            n = (inp.get("records") or [None])[0]
+            ok = isinstance(n, int) and n <= len(records) and _head(records[:n]) == inp["records"]
+            prefix = records[:n] if ok else None
+        if prefix is None:
+            problems.append(f"{sid}: the ledger state it records is not a state the registers passed through")
+            continue
+        s = next((r for r in prefix if r.get("type") == "CATALYST_SET" and r["set_id"] == sid), None)
         if s is None or s.get("record_hash") != f["set_record_hash"]:
             problems.append(f"{sid}: forecast binds no sealed set with that hash")
             continue
         if f["made_at"] >= s["entry_cutoff"]:
             problems.append(f"{sid}: forecast made at {f['made_at']}, after the set's cutoff {s['entry_cutoff']}")
-        # the training depends only on the resolutions before the forecast; the gates also on the forecasts before it
-        key = tuple(sorted((h for t, h in res if t < f["made_at"]), key=repr))
-        if key not in trained:
-            trained[key] = train(records, f["made_at"])
-        gkey = (key, sum(x.get("type") == RECORD and x["made_at"] < f["made_at"] for x in lrecs))
-        if gkey not in gated:
-            gated[gkey] = gates(records, lrecs, f["made_at"])
-        state, g = trained[key], gated[gkey]
-        again = _record(s, f["made_at"], records, lrecs, proto, sha, state, g)
-        bad = [stmt for stmt, fc in f["forecasts"].items()
-               if stmt not in again["forecasts"]
-               or any(abs(fc[k] - again["forecasts"][stmt][k]) > tol for k in ("anchor", "raw", "published"))
-               or (fc.get("call") or {}) != (again["forecasts"][stmt].get("call") or {})]
-        if bad or set(again["forecasts"]) != set(f["forecasts"]):
-            problems.append(f"{sid}: forecasts do not reproduce from the resolutions before {f['made_at']} "
-                            f"(possible peeking): {', '.join(bad) or 'statement list'}")
-        if any(abs(f["gate"][k]["alpha"] - again["gate"][k]["alpha"]) > tol for k in SKILL_KINDS):
-            problems.append(f"{sid}: earned confidence does not reproduce from the forecasts and outcomes before it")
+        key = (json.dumps(inp, sort_keys=True), f["made_at"])
+        if key not in ctxs:
+            ctxs[key] = _context(prefix, lrecs[:i], f["made_at"])
+        again = _record(s, f["made_at"], proto, sha, inp, ctxs[key])
+        body = {k: v for k, v in f.items() if k not in ("record_hash", "prev_hash")}
+        diff = [k for k in sorted(set(body) | set(again)) if not _same(body.get(k), again.get(k), tol)]
+        if diff:
+            problems.append(f"{sid}: does not reproduce from the ledger state it records (possible peeking or an "
+                            f"edit): {', '.join(diff)}")
+        tokens = [(a, paper.TOKENS / f"{f.get('record_hash')}.{a}.tsr") for a in ("freetsa", "sectigo")]
+        for a, tok in tokens:
+            if not tok.exists():
+                continue
+            checker = checker or _timestamp_checker()
+            try:
+                when = utc_stamp(checker.verify(a, tok.read_bytes(), f["record_hash"].encode())) if checker else None
+            except Exception:  # noqa: BLE001 - paper.verify_all reports a token that does not verify
+                continue
+            if when and when >= s["entry_cutoff"]:
+                problems.append(f"{sid}: {a} timestamp {when} is not before the set's cutoff {s['entry_cutoff']}")
+            break
     return problems

@@ -120,7 +120,7 @@ class Learning(NoHistory):
         self.assertGreater(te["raw"], te["anchor"] + 0.1)
         self.assertLess(x["raw"], x["anchor"] - 0.1)
         self.assertAlmostEqual((te["raw"] + x["raw"]) / 2, te["anchor"], delta=0.03)  # centred: no base-rate channel
-        self.assertEqual(fs["TE"]["gate"]["RELATIVE"]["alpha"], 0.0)  # no forward record yet
+        self.assertEqual(fs["TE"]["gate"]["RELATIVE/60"]["alpha"], 0.0)  # no forward record yet
         self.assertAlmostEqual(te["published"], te["anchor"])
         self.assertEqual(te["call"], {"side": "BACK", "live": False,  # a shadow call, scored but not published
                                       "thesis": "it beats its twins over 60 sessions"})
@@ -263,6 +263,44 @@ class Moves(NoHistory):
         self.assertEqual(ln.thesis("DUMP10_5", "AVOID"), "not: its 5-session plan loses at least 10%, and most of its twins do not")
 
 
+class Hygiene(NoHistory):
+    def test_a_revision_replaces_what_it_revises(self):
+        """Guards against the review's finding: an UNRESOLVABLE or ungraded revision leaving the stale outcome in."""
+        first = res("A", {"BEATS_TWINS_60": True}, "2026-12-01T00:00:00Z")
+        bad = {"type": "RESOLUTION", "set_id": "A", "window": "H60", "status": "UNRESOLVABLE", "resolved_at": "2026-12-02T00:00:00Z"}
+        self.assertIn(("A", "BEATS_TWINS_60"), ln.outcomes([first], "2027-01-01T00:00:00Z"))
+        self.assertNotIn(("A", "BEATS_TWINS_60"), ln.outcomes([first, bad], "2027-01-01T00:00:00Z"))
+
+    def test_only_valid_forecasts_are_scored(self):
+        """Guards against the review's finding: duplicate, late or unbound forecasts counted in the gate and claim."""
+        recs = world(60) + [cset("A", cutoff="2026-12-10T13:15:00Z", top_exec=True)]
+        (f,) = [f for f in ln.forecast_records(datetime(2026, 12, 10, 12, 0, tzinfo=timezone.utc), recs, [])
+                if f["set_id"] == "A"]
+        later = recs + [res("A", {"BEATS_TWINS_60": True, "GAIN0_60": True}, "2027-03-01T00:00:00Z")]
+        late = {**f, "made_at": "2026-12-11T00:00:00Z"}
+        unbound = {**f, "set_record_hash": "x"}
+        for extra in ([f, f], [late], [unbound]):
+            n = len([p for p in ln.forward_pairs(later, extra, "2027-03-02T00:00:00Z") if p["statement"] == "BEATS_TWINS_60"])
+            self.assertEqual(n, 1 if extra == [f, f] else 0)
+
+    def test_newton_converges_far_from_the_prior(self):
+        """Guards against the review's finding: undamped Newton stuck at a prior far from the data."""
+        for p0, y in ((0.99, 0.0), (0.05, 1.0)):
+            rows = [ln.Row("ABSOLUTE", "T:X", "T:X", np.zeros(3), p0, y, 1.0) for _ in range(200)]
+            p = float(ln._sigmoid(ln._logit(p0) + ln.anchor_fit(rows)))
+            self.assertLess(abs(p - y), 0.05)
+
+    def test_earlier_means_sealed_earlier_across_both_registers(self):
+        """Guards against the review's finding: a speculation set counted as earlier than a catalyst set it followed."""
+        a = cset("A", family="SEC13D", ticker="XYZ", session="2026-11-02", cone=SEC13D_CONE)
+        a["sealed_at"] = "2026-11-03T00:00:00Z"
+        b = ln.as_set({"type": "SPECULATION_SET", "set_id": "SPEC-B", "market": "US", "ticker": "XYZ", "record_hash": "hB",
+                       "signal_session": "2026-11-01", "sealed_at": "2026-11-02T00:00:00Z", "entry_cutoff": "2026-11-02T13:30:00Z",
+                       "signal": {}, "cone": SPEC_CONE})
+        t = ln.tri_counts([a, b])  # the catalyst ledger first, as all_records() reads them
+        self.assertEqual((t["SPEC-B"], t["A"]), ((0, 0, 0), (0, 1, 0)))
+
+
 class Features(unittest.TestCase):
     def test_price_features_are_signed_by_the_calls_direction(self):
         """Guards against: a short call read as if the stock's fall were a move against it."""
@@ -287,55 +325,79 @@ class Features(unittest.TestCase):
 
 
 class Gate(unittest.TestCase):
+    ASOF = "2099-01-05T00:00:00Z"
+
     @staticmethod
     def pairs(q, n, seed, start=0):
+        """One forward pair resolving in each of n consecutive weeks; right with probability q (q 0.55 is no skill)."""
+        from datetime import date, timedelta
         rng = np.random.default_rng(seed)
         out = []
         for i in range(n):
-            y = float(rng.integers(0, 2))
-            right = rng.random() < q
-            out.append({"kind": "RELATIVE", "session": f"s{start + i:05d}", "window": "H20", "event_key": f"e{start + i}",
-                        "statement": "BEATS_TWINS_20",
-                        "resolved_at": f"2027-{start + i:05d}", "w": 1.0, "y": y, "anchor": 0.5,
-                        "raw": 0.5 + (0.1 if right else -0.1) * (2 * y - 1)})
+            y, right = float(rng.integers(0, 2)), rng.random() < q
+            day = date(2027, 1, 6) + timedelta(weeks=start + i)
+            out.append({"kind": "RELATIVE", "session": day.isoformat(), "window": "H20", "event_key": f"e{start + i}",
+                        "statement": "BEATS_TWINS_20", "set_id": f"s{start + i}", "resolved_at": f"{day.isoformat()}T10:00:00Z",
+                        "w": 1.0, "y": y, "anchor": 0.5, "raw": 0.5 + (0.1 if right else -0.1) * (2 * y - 1)})
         return out
 
-    def test_luck_rarely_opens_the_gate_even_when_checked_every_time(self):
-        """Guards against: confidence from a lucky streak, the risk of a gate checked daily for years."""
-        opened = 0
-        for seed in range(40):
-            ps = self.pairs(0.55, 400, seed)  # zero true skill: the mean Brier gain is 0
-            opened += any(ln.gate(ps[:t], "RELATIVE")[0] > 0 for t in range(30, 401, 5))
-        self.assertLessEqual(opened, 4)
+    @staticmethod
+    def overlapping(rng, n, k, mean=0.0):
+        """Weekly gains that share k weeks of windows: each the average of k consecutive shocks."""
+        e = rng.normal(0, 1, n + k)
+        return np.convolve(e, np.ones(k) / k, mode="valid")[:n] * 2 + mean
+
+    def test_luck_rarely_opens_the_gate_even_when_checked_every_week(self):
+        """Guards against: confidence from a lucky streak, the risk of a gate checked every week for years."""
+        rng = np.random.default_rng(0)
+        opened = sum(any(o for _, o, _ in ln.gate_path(rng.normal(0, 1, 400), 1, 3)) for _ in range(40))
+        self.assertLessEqual(opened, 2)
+
+    def test_overlapping_windows_do_not_fake_confidence(self):
+        """Guards against the review's finding: weeks that share a market window counted as independent evidence
+        (zero-skill gains with 4- and 12-week overlap opened the v2 gate in 55% and 68% of runs)."""
+        rng = np.random.default_rng(1)
+        opened20 = sum(any(o for _, o, _ in ln.gate_path(self.overlapping(rng, 400, 4), 1, 3)) for _ in range(40))
+        blocks = lambda x: x[: len(x) // 4 * 4].reshape(-1, 4).mean(1)  # noqa: E731
+        opened60 = sum(any(o for _, o, _ in ln.gate_path(blocks(self.overlapping(rng, 1600, 12)), 4, 2)) for _ in range(40))
+        self.assertLessEqual(opened20, 4)
+        self.assertLessEqual(opened60, 4)
 
     def test_real_skill_opens_it_and_losing_the_skill_closes_it(self):
-        """Guards against: a gate that never opens, or stays open after the edge is gone."""
-        opened = sum(ln.gate(self.pairs(0.65, 400, seed), "RELATIVE")[0] > 0 for seed in range(20))
-        self.assertGreaterEqual(opened, 14)
-        ps = self.pairs(0.65, 400, 7) + self.pairs(0.45, 150, 8, start=400)
-        self.assertEqual(ln.gate(ps, "RELATIVE")[0], 0.0)
+        """Guards against: a gate that never opens, or stays open after the edge is gone (the review measured v2 still
+        open in 40-52% of runs once the skill had fallen to zero)."""
+        rng = np.random.default_rng(2)
+        opened = sum(ln.gate_path(rng.normal(0.5, 1, 200), 1, 3)[-1][1] for _ in range(20))
+        self.assertGreaterEqual(opened, 16)
+        still = sum(ln.gate_path(np.concatenate([rng.normal(0.5, 1, 150), rng.normal(0, 1, 150)]), 1, 3)[-1][1]
+                    for _ in range(20))
+        self.assertLessEqual(still, 4)
+
+    def test_pairs_become_weekly_observations_through_the_gate(self):
+        """Guards against: the pairs-to-gate path not joining up (signature, class routing, alpha)."""
+        a, info = ln.gate(self.pairs(0.9, 60, 3), "RELATIVE/20", self.ASOF)
+        self.assertEqual(info["observations"], 60)
+        self.assertGreater(a, 0.0)
+        self.assertEqual(ln.gate(self.pairs(0.9, 60, 3), "RELATIVE/60", self.ASOF)[1]["observations"], 0)
+        self.assertEqual(ln.gate(self.pairs(1.0, 29, 1), "RELATIVE/20", self.ASOF)[0], 0.0)  # below 30 weeks: shut
 
     def test_an_observation_never_changes_once_it_exists(self):
-        """Guards against: a recorded observation re-weighted when the same filing's other set resolves later, which
-        would rewrite the sequence the confidence bound assumes is fixed."""
+        """Guards against the review's finding: one market day split into many observations by the second it was
+        stamped, a parent and child counted twice when they resolve apart, and a week still filling up counted."""
         a = {"kind": "RELATIVE", "session": "s1", "window": "H20", "event_key": "E", "statement": "BEATS_TWINS_20",
-             "resolved_at": "2027-01-05T00:00:00Z", "y": 1.0, "anchor": 0.5, "raw": 0.7}
-        b = {**a, "event_key": "F", "raw": 0.4, "y": 0.0}
-        first = ln.observations([a, b])
-        late = {**a, "resolved_at": "2027-01-09T00:00:00Z", "raw": 0.2}  # E's other set, resolved later
-        self.assertEqual(ln.observations([a, b, late])[0], first[0])
-        self.assertEqual(len(ln.observations([a, b, late])), 2)
-        same = {**a, "raw": 0.2}  # resolved together: one event, weighted once inside the observation
-        (o,) = ln.observations([a, same])
-        self.assertAlmostEqual(o[0], ((0.25 - 0.09) + (0.25 - 0.64)) / 2)
-
-    def test_below_thirty_observations_it_stays_shut(self):
-        self.assertEqual(ln.gate(self.pairs(1.0, 29, 1), "RELATIVE")[0], 0.0)
+             "set_id": "A", "resolved_at": "2027-01-05T00:00:01Z", "y": 1.0, "anchor": 0.5, "raw": 0.7}
+        b = {**a, "event_key": "F", "set_id": "B", "raw": 0.4, "y": 0.0, "resolved_at": "2027-01-05T00:00:02Z"}
+        (o,) = ln.observations([a, b], "2027-01-11T00:00:00Z")
+        self.assertEqual(o[2], 2)  # two seconds apart, one week: one observation
+        late = {**a, "set_id": "A2", "resolved_at": "2027-01-20T00:00:00Z", "raw": 0.2}  # the same filing's other set
+        obs = ln.observations([a, b, late], "2027-02-01T00:00:00Z")
+        self.assertEqual((len(obs), obs[0]), (1, o))  # counted once, where it first resolved; nothing rewritten
+        self.assertEqual(ln.observations([a, b], "2027-01-08T00:00:00Z"), [])  # that week has not ended
 
 
 class EndToEnd(NoHistory):
     @staticmethod
-    def run_world(skill, days=110, per_day=4, seed=0):
+    def run_world(skill, days=180, per_day=4, seed=0):
         """Sets sealed every weekday, forecast before entry, resolved 28 days later; returns the statistics."""
         from datetime import timedelta
         cone = [{"id": "BEATS_TWINS_20", "prior": 0.5, "resolves_with": "H20"},
@@ -361,20 +423,24 @@ class EndToEnd(NoHistory):
                      for due, sid, beat, gain in pending if due <= now]
             pending = [x for x in pending if x[0] > now]
             lrecs += ln.forecast_records(now, recs, lrecs)
-        return ln.statistics(recs, lrecs, (start + timedelta(days=days + 1)).strftime("%Y-%m-%dT00:00:00Z"))
+        return ln.statistics(recs, lrecs, (start + timedelta(days=days + 7)).strftime("%Y-%m-%dT00:00:00Z")), recs, lrecs
 
     def test_the_loop_rewards_real_discrimination_and_nothing_else(self):
         """Guards against: a learner whose sealed forecasts, resolutions and scoring do not join up, or that is credited
         in a world where nothing predicts the outcome (while every stock rose 70% of the time)."""
-        skilled, blind = self.run_world(0.15), self.run_world(0.0)
-        self.assertGreaterEqual(skilled["gates"]["RELATIVE"][1]["observations"], 30)
+        (skilled, recs, lrecs), (blind, _, _) = self.run_world(0.15), self.run_world(0.0)
+        self.assertGreaterEqual(skilled["gates"]["RELATIVE/20"][1]["observations"], 15)
         bt = skilled["per_statement"]["FORM4:BEATS_TWINS_20"]
         self.assertLess(bt["brier_raw"], bt["brier_anchor"])
-        self.assertGreater(skilled["claim"]["t"], 1.5)
-        self.assertEqual(skilled["calls"], {})  # 240 outcomes: it leans the right way but is not yet sure enough to call
-        self.assertEqual(blind["gates"]["RELATIVE"][0], 0.0)
-        self.assertLess(abs(blind["claim"]["t"]), 2.0)
+        self.assertGreater(skilled["claim"]["mean_gain"], 0.0)
+        self.assertLess(blind["per_statement"]["FORM4:BEATS_TWINS_20"]["brier_anchor"] + 0.002,
+                        blind["per_statement"]["FORM4:BEATS_TWINS_20"]["brier_raw"] + 0.01)
+        self.assertEqual(blind["gates"]["RELATIVE/20"][0], 0.0)
         self.assertEqual({k.split(":")[1] for k in blind["per_statement"]}, {"BEATS_TWINS_20"})  # GAIN0 never scored
+        with tempfile.TemporaryDirectory() as tmp:  # and every one of its forecasts verifies
+            path = Path(tmp) / "learner_v2.jsonl"
+            paper.append(lrecs, path=path)
+            self.assertEqual(ln.verify(path, recs), [])
 
 
 class Calls(unittest.TestCase):
@@ -414,41 +480,64 @@ class History(unittest.TestCase):
                          (ln.LAMBDA_SHARED, ln.LAMBDA_TASK, ln.LAMBDA_OWN))
         self.assertAlmostEqual(m["intercept_prior_sd"], 1.5)
         self.assertEqual(p["earned_confidence"]["numbers"], ln.GATE)
+        self.assertEqual({k: tuple(v) for k, v in p["earned_confidence"]["blocks"].items()}, ln.BLOCKS)
+        self.assertEqual(tuple(p["claim"]["block"]), ln.CLAIM_BLOCK)
         self.assertEqual(p["calls"]["numbers"], ln.CALL)
         self.assertEqual(p["triangles"], {k: list(v) for k, v in ln.TRIANGLES.items()})
-        self.assertEqual(p["protocol_id"], "KOD-LEARNER-v2.1")
+        self.assertEqual(p["protocol_id"], "KOD-LEARNER-v2.2")
         self.assertEqual(p["statements"]["own_move_threshold"], ln.OWN_MOVE)
         self.assertEqual(set(p["statements"]["skill_kinds"]), set(ln.SKILL_KINDS))
 
 
 class Verify(NoHistory):
+    NOW = datetime(2026, 12, 10, 12, 0, tzinfo=timezone.utc)
+
+    def sealed(self, recs):
+        (f,) = [f for f in ln.forecast_records(self.NOW, recs, []) if f["set_id"] == "A"]
+        return f
+
+    def check(self, recs, forecasts):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "learner_v2.jsonl"
+            paper.append(forecasts, path=path)
+            return "\n".join(ln.verify(path, recs))
+
     def test_late_forecasts_wrong_sets_and_peeking_are_caught(self):
         """Guards against: a forecast after the cutoff, bound to an edited set, or trained on later outcomes."""
         recs = world(60, resolved_at="2026-12-05T00:00:00Z") + [cset("A", cutoff="2026-12-10T13:15:00Z", top_exec=True)]
-        now = datetime(2026, 12, 10, 12, 0, tzinfo=timezone.utc)
-        (good,) = [f for f in ln.forecast_records(now, recs, []) if f["set_id"] == "A"]
+        good = self.sealed(recs)
         late = {**good, "set_id": "S1", "set_record_hash": "hS1", "made_at": "2026-12-11T00:00:00Z"}
         wrong = {**good, "set_id": "S2", "set_record_hash": "not-the-hash"}
-        peek = {**good, "set_id": "S3", "set_record_hash": "hS3", "made_at": "2026-12-01T00:00:00Z"}
-        with tempfile.TemporaryDirectory() as tmp:
-            path = Path(tmp) / "learner_v2.jsonl"
-            paper.append([good, late, wrong, peek], path=path)
-            joined = "\n".join(ln.verify(path, recs))
+        peek = {**good, "set_id": "S3", "set_record_hash": "hS3", "made_at": "2026-10-29T00:00:00Z"}
+        joined = self.check(recs, [good, late, wrong, peek])
         self.assertNotIn("A:", joined)
         self.assertIn("S1: forecast made at", joined)
         self.assertIn("S2: forecast binds no sealed set", joined)
-        self.assertIn("S3: forecasts do not reproduce", joined)
+        self.assertIn("S3: does not reproduce", joined)
 
-    def test_an_edited_number_is_caught(self):
-        """Guards against: a sealed forecast whose numbers were changed afterwards to look better."""
+    def test_every_field_scoring_reads_is_bound(self):
+        """Guards against the review's finding: a losing statement relabelled ABSOLUTE, a session moved or a family
+        renamed, each of which v2's verify let through (the last one crashed every later run)."""
         recs = world(60) + [cset("A", cutoff="2026-12-10T13:15:00Z", top_exec=True)]
-        now = datetime(2026, 12, 10, 12, 0, tzinfo=timezone.utc)
-        (f,) = [f for f in ln.forecast_records(now, recs, []) if f["set_id"] == "A"]
-        f["forecasts"]["BEATS_TWINS_60"]["raw"] += 0.01
-        with tempfile.TemporaryDirectory() as tmp:
-            path = Path(tmp) / "learner_v2.jsonl"
-            paper.append([f], path=path)
-            self.assertIn("A: forecasts do not reproduce", "\n".join(ln.verify(path, recs)))
+        f = self.sealed(recs)
+        for edit in (lambda r: r["forecasts"]["BEATS_TWINS_60"].update(kind="ABSOLUTE"),
+                     lambda r: r.update(signal_session="2026-11-02"), lambda r: r.update(family="FORM4"),
+                     lambda r: r["forecasts"]["BEATS_TWINS_60"].update(raw=r["forecasts"]["BEATS_TWINS_60"]["raw"] + 0.01)):
+            g = json.loads(json.dumps(f))
+            edit(g)
+            self.assertIn("A: does not reproduce", self.check(recs, [g]))
+        self.assertEqual(self.check(recs, [f]), "")
+
+    def test_the_forecast_is_bound_to_the_ledger_state_it_saw(self):
+        """Guards against the review's findings: a forecast claiming a ledger state that never existed, and a false
+        alarm on an honest forecast when a resolution stamped before it was appended after it."""
+        recs = world(60) + [cset("A", cutoff="2026-12-10T13:15:00Z", top_exec=True)]
+        f = self.sealed(recs)
+        backdated = recs + [res("S7", {"BEATS_TWINS_60": True}, "2026-12-10T11:59:00Z")]  # appended after the forecast
+        self.assertEqual(self.check(backdated, [f]), "")
+        g = json.loads(json.dumps(f))
+        g["inputs"]["records"][1] = "not-the-head"
+        self.assertIn("A: the ledger state it records", self.check(recs, [g]))
 
 
 class Report(NoHistory):
@@ -457,7 +546,7 @@ class Report(NoHistory):
         st = ln.statistics([], [], "2026-10-30T00:00:00Z")
         self.assertEqual((st["forecasts"], st["pairs"]), (0, 0))
         md = ln.render(st)
-        self.assertIn("| RELATIVE | 0.00 |", md)
+        self.assertIn("| RELATIVE/20 | 0.00 |", md)
         self.assertIn("accumulating", md)
         recs = world(80) + [cset("A", cutoff="2026-12-10T13:15:00Z", top_exec=True)]
         (f,) = [f for f in ln.forecast_records(datetime(2026, 12, 10, 12, 0, tzinfo=timezone.utc), recs, [])
