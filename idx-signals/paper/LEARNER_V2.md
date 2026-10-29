@@ -2,7 +2,7 @@
 
 Judged against a climatology twin of itself (how often each statement comes true per family), on skill statements only: beating the twins, the stated catalyst happening, both, and the stock's own pump, dump or pump and dump (each only when most of its twins did not make the same move). A call is right only when its whole thesis came true. Confidence opens only when a time-uniform lower bound on its weekly forward gain is above zero and the last half-year still shows skill.
 
-- As of 2026-10-29T10:06:28Z: 17 forecasts sealed, 0 forward-scored pairs
+- As of 2026-10-29T10:36:46Z: 20 forecasts sealed, 0 forward-scored pairs
 - Coverage: 0 of 0 sets due since the first forecast; forecasts without an external timestamp: 0
 - Claim (raw beats the anchor, Brier gain per 4-week block, overlap-robust t): 0 pairs, 0 blocks, t None: **accumulating (no look reached)**
 
