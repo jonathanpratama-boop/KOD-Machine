@@ -1,0 +1,13 @@
+{
+ "id": "CRYPTO_PUMP_HISTORY_v1_result",
+ "experiment": "CRYPTO_PUMP_HISTORY_v1",
+ "date": "2026-10-29",
+ "hypothesis": "out of time (fit 2018-19 score 2020, fit 2018-20 score 2021-22), a model on size, earlier pumps and the recent tape ranks the pumped Binance BTC pair above a volume-only ranking (top-5 hit rate or mean reciprocal rank), at the end of the previous day or one hour before the pump hour, with a lower Brier score",
+ "one_sided_p": 0.001999000499750125,
+ "p_source": "research/CRYPTO_PUMP_HISTORY_v1/results/RESULT.json decision (Holm over four; bootstrap over event dates)",
+ "variants_searched": 4,
+ "outcome": "DAILY top5 BEATS VOLUME; DAILY mrr BEATS VOLUME; HOURLY top5 DOES NOT BEAT VOLUME; HOURLY mrr DOES NOT BEAT VOLUME",
+ "counted": true,
+ "registered": "2026-10-29",
+ "note": "the result of the PENDING registration CRYPTO_PUMP_HISTORY_v1.json: one trial"
+}
