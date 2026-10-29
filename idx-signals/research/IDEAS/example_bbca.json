@@ -1,0 +1,4 @@
+[{"name": "BBCA oversold bounce (example)", "market": "IDX", "ticker": "BBCA", "side": "long",
+  "entry": {"type": "rsi_below", "n": 14, "level": 30}, "exit": {"tp": 0.05, "sl": 0.03, "max_hold": 20}},
+ {"name": "BBCA 20/50 golden cross (example)", "market": "IDX", "ticker": "BBCA", "side": "long",
+  "entry": {"type": "ma_cross_up", "fast": 20, "slow": 50}, "exit": {"hold": 20}}]

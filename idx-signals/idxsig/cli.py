@@ -182,6 +182,9 @@ def main(argv=None) -> int:
     p_l3.add_argument("--commit", action="store_true")
     p_l3r = sub.add_parser("learner3-report", help="write paper/LEARNER_V3.md")
     p_l3r.add_argument("--commit", action="store_true")
+    p_ig = sub.add_parser("idea-grade", help="grade a chart idea written as a JSON spec (idxsig/idea_grader.py): random "
+                          "entries, the search family (SPA) and a later period; paper only")
+    p_ig.add_argument("spec", help="path to a JSON spec, or a list of specs")
     p_cc = sub.add_parser("call-cert-report", help="write paper/CALL_CERT.md: certified next-day dump calls beside v2.4 "
                           "(research/CALL_CERT_v1; shadow, changes nothing in v2.4)")
     p_cc.add_argument("--commit", action="store_true")
@@ -790,6 +793,10 @@ def main(argv=None) -> int:
         written.append(learner3.write_report())
         if args.commit:
             print(paper.commit_and_push(written, f"learner v2.4: {len(recs)} forecast(s) sealed", trailer))
+    elif args.cmd == "idea-grade":
+        from . import idea_grader
+
+        print(idea_grader.grade_file(Path(args.spec)))
     elif args.cmd == "call-cert-report":
         import os
 
