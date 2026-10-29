@@ -1,0 +1,18 @@
+{
+ "collected_at": "2026-10-29T18:20:24+00:00",
+ "articles": 199,
+ "labels": 106,
+ "tickers": 95,
+ "by_year": {
+  "2019": 0,
+  "2020": 0,
+  "2021": 18,
+  "2022": 36,
+  "2023": 20,
+  "2024": 10,
+  "2025": 4,
+  "2026": 18
+ },
+ "labels_sha256": "bcaa2be0560ea81e7d43e381f922834036b792f5049d5ae21a31ea891d36637d",
+ "caveat": "the press reports a subset of IDX's UMA notices; a label is a stock named in the headline or URL of an UMA article; the date is the sitemap's (normally the publication date)"
+}
