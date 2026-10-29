@@ -22,6 +22,7 @@ SHARP_CONE = [{"id": "BEATS_TWINS_60", "prior": 0.5, "resolves_with": "H60"},
               {"id": "MECH_SECOND_BUY_20", "prior": 0.5, "resolves_with": "M20"}]
 SEC13D_CONE = [{"id": "GAIN0_20", "prior": 0.55, "resolves_with": "H20"},
                {"id": "BEATS_TWINS_20", "prior": 0.5, "resolves_with": "H20"},
+               {"id": "FADE10_20", "prior": 0.5, "resolves_with": "H20"},
                {"id": "RUN30_20", "prior": 0.5, "resolves_with": "H20"}]
 
 
@@ -121,8 +122,9 @@ class Learning(NoHistory):
         self.assertAlmostEqual((te["raw"] + x["raw"]) / 2, te["anchor"], delta=0.03)  # centred: no base-rate channel
         self.assertEqual(fs["TE"]["gate"]["RELATIVE"]["alpha"], 0.0)  # no forward record yet
         self.assertAlmostEqual(te["published"], te["anchor"])
-        self.assertEqual(te["call"], {"side": "BACK", "live": False})  # a shadow call, scored but not published
-        self.assertEqual(x["call"], {"side": "AVOID", "live": False})
+        self.assertEqual(te["call"], {"side": "BACK", "live": False,  # a shadow call, scored but not published
+                                      "thesis": "it beats its twins over 60 sessions"})
+        self.assertEqual(x["call"], {"side": "AVOID", "live": False, "thesis": "not: it beats its twins over 60 sessions"})
         self.assertEqual(te["why"][0]["feature"], "top_exec")
 
     def test_a_shift_between_history_and_the_live_sets_moves_no_forecast(self):
@@ -168,6 +170,97 @@ class Learning(NoHistory):
         self.assertEqual([(r.y, r.p0) for r in tri], [(0.0, 0.25)])
         recs[2]["cone"][0]["outcome"] = None
         self.assertFalse([r for r in ln.live_rows(recs, "2027-01-01T00:00:00Z") if r.kind == "TRIANGULATED"])
+
+
+SPEC_CONE = [{"id": "RUN30_5", "prior": 0.15, "resolves_with": "BASE5"},
+             {"id": "FADE10_5", "prior": 0.4, "resolves_with": "BASE5"},
+             {"id": "GAIN0_5", "prior": 0.43, "resolves_with": "BASE5"},
+             {"id": "BEATS_TWINS_5", "prior": 0.5, "resolves_with": "BASE5"},
+             {"id": "RUN30_20", "prior": 0.5, "resolves_with": "PATH20"},
+             {"id": "DOUBLE_20", "prior": 0.5, "resolves_with": "PATH20"}]
+
+
+def move(sid, run, run_twins, fade, fade_twins, at="2026-12-01T00:00:00Z", k=5, window="BASE5"):
+    return {"type": "RESOLUTION", "set_id": sid, "window": window, "status": "RESOLVED", "resolved_at": at,
+            "cone": [{"id": f"RUN30_{k}", "prior": 0.5, "outcome": run, "twins_rate": run_twins},
+                     {"id": f"FADE10_{k}", "prior": 0.5, "outcome": fade, "twins_rate": fade_twins}]}
+
+
+class Moves(NoHistory):
+    """v2.1: the owner's "I just care if it gets it right, and its thesis on even a pump and dump or whatnot is
+    right"."""
+
+    def test_a_move_counts_only_when_most_of_the_twins_did_not_make_it(self):
+        """Guards against: a pump the market made credited to the machine."""
+        outc = ln.outcomes([move("A", True, 0.1, False, 0.0), move("B", True, 0.6, False, 0.0),
+                            move("C", False, None, False, None), move("D", True, None, True, 0.2)], "2027-01-01T00:00:00Z")
+        get = lambda sid, st: (ln.outcome_of(outc, sid, "SPEC_US", st) or (None,))[0]  # noqa: E731
+        self.assertEqual([get(x, "PUMP30_5") for x in "ABCD"], [True, False, False, None])
+        self.assertEqual([get(x, "DUMP10_5") for x in "ABCD"], [False, False, False, True])
+
+    def test_a_pump_and_dump_needs_both_moves_to_be_its_own(self):
+        """Guards against: a half-right thesis (it pumped but never dumped, or the dump was a market sell-off) counted
+        as a correct pump-and-dump call."""
+        outc = ln.outcomes([move("A", True, 0.1, True, 0.2), move("B", True, 0.1, False, 0.0),
+                            move("C", True, 0.1, True, 0.7)], "2027-01-01T00:00:00Z")
+        self.assertEqual([ln.outcome_of(outc, x, "SPEC_US", "PUMP_AND_DUMP_5")[0] for x in "ABC"], [True, False, False])
+
+    def test_raw_moves_get_the_anchor_and_their_own_versions_are_learned(self):
+        """Guards against: the raw RUN30/FADE10 (which a market-wide move makes true) scored as skill, or the pump and
+        dump statements left out."""
+        st = dict(ln.statements(cset("P", family="SEC13D", cone=SEC13D_CONE)))
+        self.assertEqual(st["PUMP30_20"], "H20")
+        self.assertIn("DUMP10_20", st)
+        self.assertEqual(st["PUMP_AND_DUMP_20"], "H20")
+        self.assertEqual((ln.kind_of("RUN30_20"), ln.kind_of("PUMP30_20"), ln.kind_of("PUMP_AND_DUMP_5")),
+                         (None, "PATH", "PATH"))
+
+    def test_speculation_sets_are_forecast_with_their_frozen_priors(self):
+        """Guards against: the Speculation Register's movers (where pumps and dumps happen) left out, or priors made
+        up for them."""
+        raw = {"type": "SPECULATION_SET", "set_id": "SPEC-SCAN-US-X", "market": "US", "ticker": "XYZ", "record_hash": "hX",
+               "entry_cutoff": "2026-10-30T13:30:00Z", "signal_session": "2026-10-29", "sealed_at": "2026-10-29T23:00:00Z",
+               "signal": {"close": 5.0, "adv20_value": 1e6, "volr": 20.0, "ret1": 0.4, "cpos": 0.9}, "cone": SPEC_CONE,
+               "twins": []}
+        s = ln.as_set(raw)
+        self.assertEqual((s["type"], s["family"], s["direction"]), ("CATALYST_SET", "SPEC_US", 1))
+        (f,) = ln.forecast_records(datetime(2026, 10, 30, 12, 0, tzinfo=timezone.utc), [s], [])
+        fc = f["forecasts"]
+        self.assertAlmostEqual(fc["PUMP30_5"]["p0"], round(0.15370018975332067, 6))  # the protocol's US number
+        self.assertAlmostEqual(fc["PUMP_AND_DUMP_5"]["p0"], round(0.15370018975332067 * 0.403, 6))
+        self.assertAlmostEqual(fc["PUMP100_20"]["p0"], 0.5)  # DOUBLE_20 is "running"
+        self.assertEqual({k for k, v in fc.items() if v["kind"] == "PATH"},
+                         {"PUMP30_5", "DUMP10_5", "PUMP30_20", "PUMP100_20", "PUMP_AND_DUMP_5"})
+
+    def test_a_short_calls_moves_are_read_on_the_price(self):
+        """Guards against: a stock that fell read as having moved 'up' for a pump statement because the call was short."""
+        x = ln.features(cset("D", family="DILUTION_8K", direction=-1, ret20=-0.3))
+        i = ln.FEATURES.index("s_ret20")
+        self.assertAlmostEqual(ln.view(x, "RELATIVE", -1)[i], 1.0)  # in the call's direction
+        self.assertAlmostEqual(ln.view(x, "PATH", -1)[i], -1.0)  # on the price
+
+    def test_one_pump_model_is_shared_across_families_and_horizons(self):
+        """Guards against: what the machine learns about pumps in one register not reaching the other."""
+        rows = [ln.Row("PATH", "SEC13D:PUMP30_20", "SEC13D:PUMP30_20", np.eye(len(ln.FEATURES))[i % 3], 0.1,
+                       float(i % 3 == 0), 1.0) for i in range(90)]
+        m = ln.Model("PATH", rows)
+        self.assertEqual(m.groups, ["PUMP"])
+        w, _ = m.slope("SPEC_US:PUMP30_5")  # never seen: it inherits the shared PUMP block
+        self.assertGreater(float(np.abs(w).sum()), 0.0)
+        self.assertEqual(float(np.abs(m.slope("SPEC_US:DUMP10_5")[0]).sum()), 0.0)  # a different move: nothing
+
+    def test_theses_are_graded_in_full(self):
+        """Guards against: a call credited when only part of its thesis came true, or when the market made the move."""
+        full = ln.outcomes([move("A", True, 0.1, False, 0.0), move("B", True, 0.8, False, 0.0),
+                            move("C", True, 0.1, True, 0.1)], "2027-01-01T00:00:00Z")
+        pd_ = {"statement": "PUMP_AND_DUMP_5", "family": "SPEC_US"}
+        self.assertEqual(ln.thesis_grade(full, {**pd_, "set_id": "A", "y": 0.0}, "BACK"), "partly")  # pumped, no dump
+        self.assertEqual(ln.thesis_grade(full, {**pd_, "set_id": "C", "y": 1.0}, "BACK"), "right")
+        pump = {"statement": "PUMP30_5", "family": "SPEC_US"}
+        self.assertEqual(ln.thesis_grade(full, {**pump, "set_id": "B", "y": 0.0}, "BACK"), "market_made_it")
+        self.assertEqual(ln.thesis_grade(full, {**pump, "set_id": "A", "y": 1.0}, "AVOID"), "wrong")
+        self.assertEqual(ln.thesis("PUMP_AND_DUMP_5", "BACK")[:16], "a pump and dump:")
+        self.assertEqual(ln.thesis("DUMP10_5", "AVOID"), "not: its 5-session plan loses at least 10%, and most of its twins do not")
 
 
 class Features(unittest.TestCase):
@@ -323,6 +416,9 @@ class History(unittest.TestCase):
         self.assertEqual(p["earned_confidence"]["numbers"], ln.GATE)
         self.assertEqual(p["calls"]["numbers"], ln.CALL)
         self.assertEqual(p["triangles"], {k: list(v) for k, v in ln.TRIANGLES.items()})
+        self.assertEqual(p["protocol_id"], "KOD-LEARNER-v2.1")
+        self.assertEqual(p["statements"]["own_move_threshold"], ln.OWN_MOVE)
+        self.assertEqual(set(p["statements"]["skill_kinds"]), set(ln.SKILL_KINDS))
 
 
 class Verify(NoHistory):

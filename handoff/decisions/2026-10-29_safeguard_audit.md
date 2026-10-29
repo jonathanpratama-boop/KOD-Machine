@@ -42,6 +42,7 @@ hindering, and the fix is in this commit), or **owner decision** (the cost is re
 | a filing sealed by a parent and a child family counted twice | evidence inflated, confidence earned early | each underlying event weighs once per statement |
 | verify compared a hash of weights | a different floating-point library could flag an honest forecast as peeking and turn the routine red | verify reproduces every number within 1e-6 |
 | learning only from live outcomes | nothing to learn from until 2026-11-27, little for a year | a pinned warm start: 5,587 events from 2020-2023, with their own intercepts, weighted as 300 live outcomes per kind at most |
+| v2 scored no raw move at all (RUN30, FADE10) | a correct pump or pump-and-dump call could never earn credit. The owner: "I dont care if its gonna be a pump and dump. I just care if it gets it right, and its thesis on even a pump and dump or whatnot is right" | v2.1 (research/LEARNER_v2/ADDENDUM_1.md): the stock's own pump, dump and pump-and-dump are skill statements, each true only when most of its twins did not make the same move. Every call states its thesis and is RIGHT only when all of it came true. The Speculation Register's daily movers are read too |
 
 ## Hindering, still open: owner decisions
 

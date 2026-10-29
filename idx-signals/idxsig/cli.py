@@ -736,16 +736,19 @@ def main(argv=None) -> int:
         if not recs:
             print("no sealed set awaiting a learner forecast before its cutoff; nothing recorded")
             return 0
+        print("  earned confidence: " + ", ".join(f"{k} {v['alpha']:.2f}" for k, v in recs[0]["gate"].items()))
         for r in recs:
-            alphas = ", ".join(f"{k} {v['alpha']:.2f}" for k, v in r["gate"].items())
-            print(f"  {r['set_id']} ({r['ticker']}): earned confidence {alphas}")
-            for stmt, fc in r["forecasts"].items():
-                if fc["kind"] == "ABSOLUTE":
-                    continue
-                call = fc["call"]["side"] and f", {'LIVE' if fc['call']['live'] else 'shadow'} {fc['call']['side']} call"
+            skill = {k: v for k, v in r["forecasts"].items() if v["kind"] != "ABSOLUTE"}
+            shown = {k: v for k, v in skill.items() if v["call"]["side"] or abs(v["raw"] - v["anchor"]) >= 0.05}
+            print(f"  {r['set_id']} ({r['ticker']}): {len(skill) - len(shown)} of {len(skill)} skill statements within "
+                  "0.05 of their anchors")
+            for stmt, fc in shown.items():
+                c = fc["call"]
                 why = "; ".join(f"{w['label']} {w['logit']:+.2f}" for w in fc["why"])
                 print(f"    {stmt}: anchor {fc['anchor']:.3f}, learner {fc['raw']:.3f} (90% {fc['raw_90'][0]:.2f}-"
-                      f"{fc['raw_90'][1]:.2f}), published {fc['published']:.3f}{call or ''}" + (f" [{why}]" if why else ""))
+                      f"{fc['raw_90'][1]:.2f}), published {fc['published']:.3f}"
+                      + (f"; {'LIVE' if c['live'] else 'shadow'} {c['side']} call: {c['thesis']}" if c["side"] else "")
+                      + (f" [{why}]" if why else ""))
         written, _ = learner2.append(recs, RFC3161Timestamper())
         written.append(learner2.write_report())
         if args.commit:

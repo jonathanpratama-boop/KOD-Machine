@@ -1,13 +1,18 @@
-"""LEARNER_v2 (research/LEARNER_v2/protocol.json): the self-learning layer, rebuilt so that it can only earn credit for
-telling sets apart, never for base rates, the market or luck.
+"""LEARNER_v2.1 (research/LEARNER_v2/protocol_v2_1.json): the self-learning layer, rebuilt so that it can only earn
+credit for telling sets apart, never for base rates, the market or luck; and graded on its thesis, whatever the move.
 
 - Anchor. Every statement is judged against a climatology twin of the learner: the same Bayesian fit with an intercept
   only, so the anchor learns how often each statement comes true for each family. The learner's forecast is the
   anchor moved by the set's own features (centred slopes): its average equals the anchor, so its only possible edge
   is discrimination.
-- Skill statements only. RELATIVE (graded against the twins), MECHANISM (the stated catalyst happens) and
-  TRIANGULATED (both). Absolute statements (GAIN0, FADE10, RUN30), which a rising market makes true, are forecast with
-  the anchor alone and never scored as skill.
+- Skill statements only. RELATIVE (graded against the twins), MECHANISM (the stated catalyst happens), TRIANGULATED
+  (both) and PATH (v2.1, on the owner's "I dont care if its gonna be a pump and dump. I just care if it gets it right,
+  and its thesis on even a pump and dump or whatnot is right"): the stock's own pump (PUMP30_k, PUMP100_k), dump
+  (DUMP10_k) or pump and dump (PUMP_AND_DUMP_k), each true only when fewer than half of its twins made the same move.
+  The raw moves (GAIN0, FADE10, RUN30, DOUBLE), which a market-wide move makes true, get the anchor alone.
+- Theses. Every call states what will happen in words built from its statement; a call is right only when the whole
+  statement came true, and the report shows calls that came partly true and moves the market made too.
+- Two registers: the Catalyst Register's families and the Speculation Register's sets (families SPEC_<market>).
 - One model per kind, hierarchical: RELATIVE statements share one slope vector plus a deviation per statement; the
   mechanism and triangulated statements have their own slopes. Laplace posterior, so every forecast carries an
   uncertainty and a call needs the learner to be sure, not just to lean.
@@ -28,6 +33,7 @@ import gzip
 import hashlib
 import json
 import math
+import re
 from collections import Counter
 from datetime import date, datetime, timedelta, timezone
 from functools import lru_cache
@@ -41,19 +47,24 @@ from . import paper
 from . import speculation as spec
 from .provenance import PKG_ROOT, sha256_file, utc_stamp
 
-PROTOCOL_JSON = PKG_ROOT / "research" / "LEARNER_v2" / "protocol.json"
+PROTOCOL_JSON = PKG_ROOT / "research" / "LEARNER_v2" / "protocol_v2_1.json"
 HISTORY = PKG_ROOT / "research" / "LEARNER_v2" / "warmstart" / "events.csv.gz"
 HISTORY_SHA256 = "1eff13dabff91e2a41ae654ba9da645d87c6cf94a7efd67cbbf808d338fc9a13"
 LEDGER = paper.PAPER / "learner_v2.jsonl"
 REPORT = paper.PAPER / "LEARNER_V2.md"
-VERSION = "LEARNER-v2"
+VERSION = "LEARNER-v2.1"
 RECORD = "LEARNER2_FORECAST"
-FAMILIES = ("SEC13D", "SEC13D_V2", "DILUTION_8K", "FORM4", "FORM4_SHARP", "IDX_INDEX")
+SPEC_FAMILIES = ("SPEC_IDX", "SPEC_US", "SPEC_CRYPTO")  # the Speculation Register's sets, by market
+FAMILIES = ("SEC13D", "SEC13D_V2", "DILUTION_8K", "FORM4", "FORM4_SHARP", "IDX_INDEX", *SPEC_FAMILIES)
 GROUP = {"SEC13D": "13D", "SEC13D_V2": "13D", "FORM4": "F4", "FORM4_SHARP": "F4", "DILUTION_8K": "DIL",
-         "IDX_INDEX": "IDX"}
+         "IDX_INDEX": "IDX", **{f: "SPEC" for f in SPEC_FAMILIES}}
 TRI = "TRIANGULATED"
 TRIANGLES = {"SEC13D_V2": ("MECH_13DA_UP_60", "BEATS_TWINS_60"), "FORM4_SHARP": ("MECH_SECOND_BUY_20", "BEATS_TWINS_60")}
-SKILL_KINDS = ("RELATIVE", "MECHANISM", "TRIANGULATED")
+SKILL_KINDS = ("RELATIVE", "MECHANISM", "TRIANGULATED", "PATH")
+OWN_MOVE = 0.5  # a move is the stock's own when fewer than this share of its twins made the same move
+BASE_OF = {"PUMP30": "RUN30", "PUMP100": "DOUBLE", "DUMP10": "FADE10"}  # each move statement and the raw move it filters
+_PATH_BASE = re.compile(r"^(RUN30|DOUBLE|FADE10)_(\d+)$")
+_PATH_ID = re.compile(r"^(PUMP30|PUMP100|DUMP10|PUMP_AND_DUMP)_(\d+)$")
 NOT_SHARED = frozenset({"REVERSAL_POST20"})  # relative, but true when the stock goes against the call's direction
 FX = {"US": 1.0, "IDX": 1 / 16000.0, "CRYPTO": 1.0}  # to US dollars, for the liquidity and size features
 CLIP = (0.01, 0.99)
@@ -88,6 +99,23 @@ LABELS = {
     "intent_words": "intent words in Item 4", "has_stake": "stake size known", "stake": "stake size (% of class)",
     "repeat": "same-source events on the issuer in 90 days", "corroborate": "other sources agreeing in 90 days",
     "conflict": "other sources disagreeing in 90 days"}
+UNSIGNED = {"s_ret1": "signal-day move", "s_ret5": "5-session move", "s_ret20": "20-session move",
+            "s_dd60": "distance from the 60-session high", "s_cpos": "close near the day's high"}
+_SIGNED = [FEATURES.index(f) for f in UNSIGNED]
+THESIS = {  # what a BACK call says will happen; an AVOID says it will not
+    "BEATS_TWINS": "it beats its twins over {k} sessions",
+    "LOSES_TO_TWINS": "it loses to its twins over {k} sessions",
+    "PUMP30": "it closes at least 30% above the signal close within {k} sessions, and most of its twins do not",
+    "PUMP100": "it closes at twice the signal close or more within {k} sessions, and most of its twins do not",
+    "DUMP10": "its {k}-session plan loses at least 10%, and most of its twins do not",
+    "PUMP_AND_DUMP": ("a pump and dump: it closes at least 30% above the signal close within {k} sessions and its "
+                      "plan still ends at least 10% down, each when most of its twins do not")}
+FIXED_THESIS = {
+    "MECH_SECOND_BUY_20": "another insider buys within 20 sessions",
+    "MECH_13DA_UP_60": "the activist files a 13D amendment raising the stake within 60 days",
+    "WITH_FLOW_RUNUP": "it moves with the index flow before the effective date, against its twins",
+    "REVERSAL_POST20": "it reverses against the index flow in the 20 sessions after, against its twins",
+    "TRIANGULATED": "the stated catalyst comes and it beats its twins"}
 
 
 def protocol() -> tuple[dict, str]:
@@ -97,6 +125,18 @@ def protocol() -> tuple[dict, str]:
 def lines(path: Path | None = None) -> list[dict]:
     p = LEDGER if path is None else path
     return paper.ledger_lines(p) if p.exists() else []
+
+
+def as_set(r: dict) -> dict:
+    """A Speculation Register set read as a set of family SPEC_<market> (a long call); any other record unchanged."""
+    if r.get("type") == "SPECULATION_SET":
+        return {**r, "type": "CATALYST_SET", "family": f"SPEC_{r.get('market', 'US')}", "direction": 1}
+    return r
+
+
+def all_records() -> list[dict]:
+    """What the learner reads: the Catalyst Register, then the Speculation Register (sets and resolutions)."""
+    return [as_set(r) for r in cr.cat_lines()] + [as_set(r) for r in spec.spec_lines()]
 
 
 def _logit(p: float) -> float:
@@ -130,9 +170,11 @@ def kind_of(stmt: str) -> str | None:
         return "TRIANGULATED"
     if stmt.startswith("MECH_"):
         return "MECHANISM"
+    if _PATH_ID.match(stmt):
+        return "PATH"
     if cr.is_relative(stmt):
         return "RELATIVE"
-    return None  # absolute: a rising market makes it true; anchor only
+    return None  # a raw move (GAIN0, FADE10, RUN30, DOUBLE): a market-wide move makes it true; anchor only
 
 
 @lru_cache(maxsize=1)
@@ -140,6 +182,9 @@ def _frozen_priors() -> dict[str, dict]:
     reg, _ = cr.protocol()
     out = {f: {c["id"]: c["prior"] for c in spec_["cone"]} for f, spec_ in reg["families"].items()}
     out.update({f: {c["id"]: c["prior"] for c in p["cone"]} for f, (p, _) in cr.extra_families().items()})
+    sp, _ = spec.protocol()
+    for m in ("IDX", "US", "CRYPTO"):
+        out[f"SPEC_{m}"] = {c["id"]: (c["prior"].get(m) if isinstance(c["prior"], dict) else c["prior"]) for c in sp["cone"]}
     return out
 
 
@@ -148,17 +193,44 @@ def base_prior(family: str, stmt: str) -> float:
     if stmt == TRI:
         a, b = TRIANGLES[family]
         return base_prior(family, a) * base_prior(family, b)
+    m = _PATH_ID.match(stmt)
+    if m and m[1] == "PUMP_AND_DUMP":
+        return base_prior(family, f"RUN30_{m[2]}") * base_prior(family, f"FADE10_{m[2]}")
+    if m:
+        return base_prior(family, f"{BASE_OF[m[1]]}_{m[2]}")
     v = _frozen_priors().get(family, {}).get(stmt)
     return float(v) if isinstance(v, (int, float)) else 0.5
 
 
 def statements(s: dict) -> list[tuple[str, str]]:
-    """(statement, the window that resolves it) for a set, TRIANGULATED last where the family has one."""
+    """(statement, the window that resolves it) for a set: its cone; TRIANGULATED where the family has one; each raw
+    move's twin-filtered statement (PUMP30_k, PUMP100_k, DUMP10_k); PUMP_AND_DUMP_k where RUN30_k and FADE10_k share a
+    window."""
     out = [(c["id"], c["resolves_with"]) for c in s.get("cone", [])]
+    ids = dict(out)
     tri = TRIANGLES.get(s.get("family"))
-    if tri and all(t in {c for c, _ in out} for t in tri):
+    if tri and all(t in ids for t in tri):
         out.append((TRI, "TRI"))
+    moves = [(_PATH_BASE.match(sid), w) for sid, w in ids.items()]
+    out += [(f"{ {v: k for k, v in BASE_OF.items()}[m[1]] }_{m[2]}", w) for m, w in moves if m]
+    out += [(f"PUMP_AND_DUMP_{m[2]}", w) for m, w in moves if m and m[1] == "RUN30" and ids.get(f"FADE10_{m[2]}") == w]
     return out
+
+
+def thesis(stmt: str, side: str) -> str:
+    """The call in words: what a BACK says will happen, or what an AVOID says will not."""
+    m = re.match(r"^(.*)_(\d+)$", stmt)
+    text = FIXED_THESIS.get(stmt) or (THESIS[m[1]].format(k=m[2]) if m and m[1] in THESIS else stmt)
+    return text if side == "BACK" else f"not: {text}"
+
+
+def view(x: np.ndarray, kind: str | None, direction: int) -> np.ndarray:
+    """A move statement (PATH) is about the price, not the call: for a short call its price features are read unsigned."""
+    if kind != "PATH" or direction >= 0:
+        return x
+    y = x.copy()
+    y[_SIGNED] *= -1
+    return y
 
 
 def event_key(s: dict) -> str:
@@ -243,27 +315,45 @@ class Row(NamedTuple):
     w: float
 
 
-def outcomes(records: list[dict], asof: str) -> dict[tuple[str, str], tuple[bool, str]]:
-    """(set, statement) -> (outcome, resolved_at) for every graded statement resolved before asof; a later revision
-    of the same (set, window) replaces an earlier one."""
-    out: dict[tuple[str, str], tuple[bool, str]] = {}
+def outcomes(records: list[dict], asof: str) -> dict[tuple[str, str], tuple]:
+    """(set, statement) -> (outcome, resolved_at, the twins' rate of the same statement or None) for every graded
+    statement resolved before asof; a later revision of the same (set, window) replaces an earlier one."""
+    out: dict[tuple[str, str], tuple] = {}
     for r in records:
         if r.get("type") != "RESOLUTION" or not r.get("cone") or (r.get("resolved_at") or "9") >= asof:
             continue
         for c in r["cone"]:
             if c.get("outcome") is not None:
-                out[(r["set_id"], c["id"])] = (bool(c["outcome"]), r["resolved_at"])
+                out[(r["set_id"], c["id"])] = (bool(c["outcome"]), r["resolved_at"], c.get("twins_rate"))
     return out
 
 
-def outcome_of(outc: dict, set_id: str, family: str, stmt: str) -> tuple[bool, str] | None:
-    if stmt != TRI:
-        return outc.get((set_id, stmt))
-    a, b = TRIANGLES[family]
-    oa, ob = outc.get((set_id, a)), outc.get((set_id, b))
-    if oa is None or ob is None:
+def own_move(outc: dict, set_id: str, base: str) -> tuple[bool, str] | None:
+    """A raw move as the stock's own: false when it did not happen; true when it did and fewer than half of the twins
+    made it; ungraded when it did and no twin was graded."""
+    o = outc.get((set_id, base))
+    if o is None:
         return None
-    return oa[0] and ob[0], max(oa[1], ob[1])
+    if not o[0]:
+        return False, o[1]
+    return None if o[2] is None else (o[2] < OWN_MOVE, o[1])
+
+
+def outcome_of(outc: dict, set_id: str, family: str, stmt: str) -> tuple[bool, str] | None:
+    """(outcome, when it became known): a cone statement as graded; TRIANGULATED and PUMP_AND_DUMP_k once both of their
+    parts are; a move statement through own_move."""
+    m = _PATH_ID.match(stmt)
+    if stmt == TRI or (m and m[1] == "PUMP_AND_DUMP"):
+        a, b = (TRIANGLES[family] if stmt == TRI else (None, None))
+        oa = outc.get((set_id, a)) if stmt == TRI else own_move(outc, set_id, f"RUN30_{m[2]}")
+        ob = outc.get((set_id, b)) if stmt == TRI else own_move(outc, set_id, f"FADE10_{m[2]}")
+        if oa is None or ob is None:
+            return None
+        return oa[0] and ob[0], max(oa[1], ob[1])
+    if m:
+        return own_move(outc, set_id, f"{BASE_OF[m[1]]}_{m[2]}")
+    o = outc.get((set_id, stmt))
+    return None if o is None else (o[0], o[1])
 
 
 def live_rows(records: list[dict], asof: str) -> list[Row]:
@@ -279,9 +369,10 @@ def live_rows(records: list[dict], asof: str) -> list[Row]:
             if o is None:
                 continue
             x = features(s, tri.get(s["set_id"], (0, 0, 0))) if x is None else x
-            raw.append((event_key(s), stmt, Row(kind_of(stmt) or "ABSOLUTE", f"{s['family']}:{stmt}",
-                                                 f"{s['family']}:{stmt}", x, base_prior(s["family"], stmt),
-                                                 float(o[0]), 1.0)))
+            kind = kind_of(stmt)
+            raw.append((event_key(s), stmt, Row(kind or "ABSOLUTE", f"{s['family']}:{stmt}", f"{s['family']}:{stmt}",
+                                                 view(x, kind, int(s.get("direction", 1) or 1)),
+                                                 base_prior(s["family"], stmt), float(o[0]), 1.0)))
     n = Counter((k, st) for k, st, _ in raw)
     return [r._replace(w=1.0 / n[(k, st)]) for k, st, r in raw]
 
@@ -313,18 +404,31 @@ def history_rows() -> tuple[Row, ...]:
 
 
 # ------------------------------------------------------------------------------- the model
+def share_group(task: str) -> str | None:
+    """The slope block a statement shares across families: RIGHT for every relative statement that is true when the
+    call is right (REVERSAL_POST20 excepted); PUMP, DUMP or PUMP_AND_DUMP for the moves; none for the mechanisms and
+    TRIANGULATED, which are different events in each family."""
+    stmt = task.split(":", 1)[1]
+    k = kind_of(stmt)
+    if k == "RELATIVE":
+        return None if stmt in NOT_SHARED else "RIGHT"
+    if k == "PATH":
+        return {"PUMP30": "PUMP", "PUMP100": "PUMP", "DUMP10": "DUMP", "PUMP_AND_DUMP": "PUMP_AND_DUMP"}[_PATH_ID.match(stmt)[1]]
+    return None
+
+
 class Model:
     """One kind's penalised logistic model: logit p = logit(p0) + intercept[icpt] + (x - centre[task]) . slope[task],
-    slope[task] = shared + own[task] (RELATIVE statements other than REVERSAL_POST20 share), with the Laplace
-    covariance at the maximum a posteriori."""
+    slope[task] = shared[share group] + own[task], with the Laplace covariance at the maximum a posteriori."""
 
     def __init__(self, kind: str, rows: list[Row]):
         self.kind = kind
         D = len(FEATURES)
         self.tasks = sorted({r.task for r in rows})
         self.icpts = sorted({r.icpt for r in rows})
-        self.shared = {t: kind == "RELATIVE" and t.split(":", 1)[1] not in NOT_SHARED for t in self.tasks}
-        self.nb = D if any(self.shared.values()) else 0
+        self.group = {t: share_group(t) for t in self.tasks}
+        self.groups = sorted({g for g in self.group.values() if g})
+        self.nb = D * len(self.groups)
         T, I = len(self.tasks), len(self.icpts)
         X = np.array([r.x for r in rows])
         w0 = np.array([r.w for r in rows])
@@ -336,7 +440,7 @@ class Model:
         self.centre = {t: (w0[ti == k, None] * X[ti == k]).sum(0) / w0[ti == k].sum() for k, t in enumerate(self.tasks)}
         Z = X - np.array([self.centre[self.tasks[k]] for k in ti])
         lam = np.concatenate([np.full(self.nb, LAMBDA_SHARED),
-                              *[np.full(D, LAMBDA_TASK if self.shared[t] else LAMBDA_OWN) for t in self.tasks],
+                              *[np.full(D, LAMBDA_TASK if self.group[t] else LAMBDA_OWN) for t in self.tasks],
                               np.full(I, LAMBDA_ICPT)])
         P = len(lam)
         groups = {}
@@ -353,7 +457,8 @@ class Model:
                 Zg, rg, hg = Z[idx], r[idx], h[idx]
                 gz, Szz, Sz = Zg.T @ rg, (Zg * hg[:, None]).T @ Zg, Zg.T @ hg
                 own, a = slice(self.nb + tk * D, self.nb + (tk + 1) * D), self.nb + T * D + ik
-                blocks = [own] + ([slice(0, self.nb)] if self.shared[self.tasks[tk]] and self.nb else [])
+                grp = self.group[self.tasks[tk]]
+                blocks = [own] + ([self._gslice(grp)] if grp else [])
                 for b1 in blocks:
                     g[b1] += gz
                     H[b1, a] += Sz
@@ -369,25 +474,29 @@ class Model:
         self.theta, self.cov = theta, np.linalg.inv(H)
         self.n_rows = {t: float(w0[ti == k].sum()) for k, t in enumerate(self.tasks)}
 
+    def _gslice(self, grp: str) -> slice:
+        D, k = len(FEATURES), self.groups.index(grp)
+        return slice(k * D, (k + 1) * D)
+
     def _linear(self, theta, Z, ti, ii):
         D, T = len(FEATURES), len(self.tasks)
-        own = theta[self.nb:self.nb + T * D].reshape(T, D)
-        slope = own[ti]
+        slope = theta[self.nb:self.nb + T * D].reshape(T, D)[ti]
         if self.nb:
-            share = np.array([self.shared[t] for t in self.tasks])[ti]
-            slope = slope + share[:, None] * theta[:self.nb][None, :]
+            shared = np.array([theta[self._gslice(self.group[t])] if self.group[t] else np.zeros(D) for t in self.tasks])
+            slope = slope + shared[ti]
         return theta[self.nb + T * D:][ii] + np.einsum("ij,ij->i", Z, slope)
 
     def slope(self, task: str) -> tuple[np.ndarray, np.ndarray]:
-        """The task's slope vector and its covariance (a task the fit has not seen: the shared part, or zero)."""
+        """The task's slope vector and its covariance (a task the fit has not seen: its group's part, or zero)."""
         D = len(FEATURES)
         sel = []
         if task in self.tasks:
             k = self.tasks.index(task)
             sel.append(np.arange(self.nb + k * D, self.nb + (k + 1) * D))
-        shared = self.shared.get(task, self.kind == "RELATIVE" and task.split(":", 1)[1] not in NOT_SHARED)
-        if self.nb and shared:
-            sel.append(np.arange(0, self.nb))
+        grp = self.group.get(task, share_group(task))
+        if grp in self.groups:
+            g = self._gslice(grp)
+            sel.append(np.arange(g.start, g.stop))
         if not sel:
             return np.zeros(D), np.zeros((D, D))
         w = sum(self.theta[s] for s in sel)
@@ -457,7 +566,7 @@ def live_centres(records: list[dict], asof: str) -> dict[str, np.ndarray]:
         x = features(s, tri.get(s["set_id"], (0, 0, 0)))
         for stmt, _ in statements(s):
             if kind_of(stmt):
-                acc.setdefault(f"{s['family']}:{stmt}", []).append(x)
+                acc.setdefault(f"{s['family']}:{stmt}", []).append(view(x, kind_of(stmt), int(s.get("direction", 1) or 1)))
     return {t: np.mean(v, axis=0) for t, v in sorted(acc.items())}
 
 
@@ -568,25 +677,29 @@ def forecast_set(s: dict, tri: tuple[int, int, int], state: State, gate_alpha: d
             out[stmt] = {**fc, "raw": round(anchor, 6), "published": round(anchor, 6)}
             continue
         m = state.models.get(kind)
-        dev, sd, parts = (0.0, 0.0, np.zeros(len(FEATURES))) if m is None else m.deviation(task, x, centres.get(task))
+        xv = view(x, kind, int(s.get("direction", 1) or 1))
+        dev, sd, parts = (0.0, 0.0, np.zeros(len(FEATURES))) if m is None else m.deviation(task, xv, centres.get(task))
         raw = _prob(_logit(anchor) + dev)
         dev = _logit(raw) - _logit(anchor)  # after the probability clip
         alpha = gate_alpha.get(kind, 0.0)
         order = np.argsort(-np.abs(parts))[:3]
-        why = [{"feature": FEATURES[j], "label": LABELS[FEATURES[j]], "logit": round(float(parts[j]), 4)}
+        labels = {**LABELS, **UNSIGNED} if kind == "PATH" else LABELS
+        why = [{"feature": FEATURES[j], "label": labels[FEATURES[j]], "logit": round(float(parts[j]), 4)}
                for j in order if abs(parts[j]) >= 0.01]
+        call = call_of(dev, sd, alpha)
+        if call["side"]:
+            call["thesis"] = thesis(stmt, call["side"])
         lo, hi = _prob(_logit(anchor) + dev - CALL["z"] * sd), _prob(_logit(anchor) + dev + CALL["z"] * sd)
         out[stmt] = {**fc, "raw": round(raw, 6), "raw_90": [round(lo, 6), round(hi, 6)], "deviation": round(dev, 6),
                      "sd": round(sd, 6), "alpha": round(alpha, 6),
-                     "published": round(_prob(_logit(anchor) + alpha * dev), 6), "call": call_of(dev, sd, alpha),
-                     "why": why}
+                     "published": round(_prob(_logit(anchor) + alpha * dev), 6), "call": call, "why": why}
     return out, [round(float(v), 6) for v in x]
 
 
 def forecast_records(now: datetime, records: list[dict] | None = None, lrecs: list[dict] | None = None) -> list[dict]:
     """One LEARNER2_FORECAST for every sealed set still before its entry cutoff that has none yet."""
     proto, sha = protocol()
-    records = cr.cat_lines() if records is None else records
+    records = all_records() if records is None else records
     lrecs = lines() if lrecs is None else lrecs
     asof = utc_stamp(now.astimezone(timezone.utc))
     done = {f["set_id"] for f in lrecs if f.get("type") == RECORD}
@@ -631,9 +744,43 @@ def _wilson(k: float, n: float, z: float = 1.96) -> list[float] | None:
     return [round(c - h, 4), round(c + h, 4)]
 
 
+def thesis_parts(full: dict, p: dict) -> list[tuple[str, bool | None]]:
+    """The parts a call's thesis needed: both parts of TRIANGULATED or PUMP_AND_DUMP_k; for a single move, the move
+    itself and that it was the stock's own (most twins did not make it); otherwise the statement."""
+    stmt, sid = p["statement"], p["set_id"]
+    m = _PATH_ID.match(stmt)
+    if stmt == TRI:
+        a, b = TRIANGLES[p["family"]]
+        return [("the catalyst came", (full.get((sid, a)) or (None,))[0]), ("it beat its twins", (full.get((sid, b)) or (None,))[0])]
+    if m and m[1] == "PUMP_AND_DUMP":
+        return [("its own pump", (own_move(full, sid, f"RUN30_{m[2]}") or (None,))[0]),
+                ("its own dump", (own_move(full, sid, f"FADE10_{m[2]}") or (None,))[0])]
+    if m:
+        o = full.get((sid, f"{BASE_OF[m[1]]}_{m[2]}"))
+        return [("the move happened", None if o is None else o[0]),
+                ("most twins did not make it", None if o is None or o[2] is None else o[2] < OWN_MOVE)]
+    return [("the statement", p["y"] == 1.0)]
+
+
+def thesis_grade(full: dict, p: dict, side: str) -> str:
+    """RIGHT when the whole thesis came true (for an AVOID: when the statement did not); PARTLY when some of its parts
+    did; MARKET_MADE_IT when the move happened but most twins made it too (no credit); else WRONG."""
+    if side == "AVOID":
+        return "right" if p["y"] == 0.0 else "wrong"
+    if p["y"] == 1.0:
+        return "right"
+    parts = thesis_parts(full, p)
+    m = _PATH_ID.match(p["statement"])
+    if m and m[1] != "PUMP_AND_DUMP" and parts[0][1] and parts[1][1] is False:
+        return "market_made_it"
+    return "partly" if any(v is True for _, v in parts) else "wrong"
+
+
 def call_statistics(pairs: list[dict], records: list[dict]) -> dict:
     """Calls scored forward: hit rate against the anchor's rate on the same pairs, the paired excess return of the
-    matching window, and why each hit was earned or each miss looked lucky."""
+    matching window, whether each thesis came true in full, partly, or only because the market moved, and why each
+    relative hit was earned or each miss looked lucky."""
+    full = outcomes(records, "9999-12-31T23:59:59Z")
     diff = {(r["set_id"], r["window"]): (r.get("paired") or {}).get("diff") for r in records
             if r.get("type") == "RESOLUTION" and r.get("status") == "RESOLVED"}
     outc = {}
@@ -669,16 +816,18 @@ def call_statistics(pairs: list[dict], records: list[dict]) -> dict:
                         luck["miss"] += 1
                 else:
                     luck["hit" if h else "miss"] += 1
+            grades = Counter(thesis_grade(full, p, side) for p in ps)
             out[f"{mode}_{side}"] = {"n": round(w, 3), "hit_rate": round(hit / w, 4), "anchor_rate": round(base / w, 4),
                                      "lift": round((hit - base) / w, 4), "hit_rate_95": _wilson(hit, w),
                                      "mean_excess_vs_twins": round(float(np.mean(ex)), 5) if ex else None,
-                                     "n_excess": len(ex), "why": dict(sorted(luck.items()))}
+                                     "n_excess": len(ex), "theses": dict(sorted(grades.items())),
+                                     "why": dict(sorted(luck.items()))}
     return out
 
 
 def statistics(records: list[dict] | None = None, lrecs: list[dict] | None = None, asof: str | None = None) -> dict:
     proto, _ = protocol()
-    records = cr.cat_lines() if records is None else records
+    records = all_records() if records is None else records
     lrecs = lines() if lrecs is None else lrecs
     asof = asof or utc_stamp()
     pairs = forward_pairs(records, lrecs, asof)
@@ -713,16 +862,19 @@ def statistics(records: list[dict] | None = None, lrecs: list[dict] | None = Non
 
 
 def beliefs(state: State, top: int = 8) -> dict[str, list[dict]]:
-    """What the learner believes now: each kind's strongest slopes (the shared one for RELATIVE), mean and sd."""
+    """What the learner believes now: the strongest slopes of each shared block (RIGHT, PUMP, DUMP, PUMP_AND_DUMP) and
+    of each statement with slopes of its own, mean and sd."""
     out = {}
     for k, m in state.models.items():
         if m is None:
             continue
-        for name, (w, c) in ([(k, (m.theta[:m.nb], m.cov[:m.nb, :m.nb]))] if m.nb else
-                             [(f"{k} ({t})", m.slope(t)) for t in m.tasks]):
+        labels = {**LABELS, **UNSIGNED} if k == "PATH" else LABELS
+        blocks = [(f"{k} {g} (shared)", (m.theta[m._gslice(g)], m.cov[m._gslice(g), m._gslice(g)])) for g in m.groups]
+        blocks += [(f"{k} ({t})", m.slope(t)) for t in m.tasks if not m.group[t]]
+        for name, (w, c) in blocks:
             sd = np.sqrt(np.clip(np.diag(c), 0, None))
             order = np.argsort(-np.abs(w) / np.where(sd > 0, sd, 1))[:top]
-            out[name] = [{"feature": FEATURES[j], "label": LABELS[FEATURES[j]], "slope": round(float(w[j]), 4),
+            out[name] = [{"feature": FEATURES[j], "label": labels[FEATURES[j]], "slope": round(float(w[j]), 4),
                           "sd": round(float(sd[j]), 4)} for j in order]
     return out
 
@@ -733,10 +885,12 @@ def _fmt(v) -> str:
 
 def render(st: dict) -> str:
     c = st["claim"]
-    out = ["# Learner v2 (LEARNER-v2)", "",
+    out = ["# Learner v2.1 (LEARNER-v2.1)", "",
            "Judged against a climatology twin of itself (how often each statement comes true per family), on skill "
-           "statements only: beating the twins, the stated catalyst happening, and both. Confidence opens only when a "
-           "time-uniform lower bound on its forward gain is above zero.", "",
+           "statements only: beating the twins, the stated catalyst happening, both, and the stock's own pump, dump or "
+           "pump and dump (each only when most of its twins did not make the same move). A call is right only when its "
+           "whole thesis came true. Confidence opens only when a time-uniform lower bound on its forward gain is above "
+           "zero.", "",
            f"- As of {st['asof']}: {st['forecasts']} forecasts sealed, {st['pairs']} forward-scored pairs",
            f"- Claim (raw beats the anchor, per-session Brier gain): {c['n_paired']} pairs, {c['n_sessions']} sessions, "
            f"t {None if c['t'] is None else round(c['t'], 2)}: **{c['look']['verdict']}**", "",
@@ -748,8 +902,9 @@ def render(st: dict) -> str:
     for k, v in st["per_statement"].items():
         out.append(f"| {k} | {v['n']} | {v['rate']:.2f} | {v['brier_anchor']:.4f} | {v['brier_raw']:.4f} | "
                    f"{v['brier_published']:.4f} |")
-    out += ["", "Calls (forward): " + ("; ".join(f"{k} n {v['n']}: hit {v['hit_rate']:.2f} vs anchor {v['anchor_rate']:.2f} "
-                                                f"({v['why']})" for k, v in st["calls"].items()) or "none scored yet")]
+    out += ["", "Calls (forward): " + ("; ".join(f"{k} n {v['n']}: hit {v['hit_rate']:.2f} vs anchor {v['anchor_rate']:.2f}, "
+                                                f"theses {v['theses']} ({v['why']})" for k, v in st["calls"].items())
+                                     or "none scored yet")]
     out += ["", "Reliability (raw): " + ("; ".join(f"{b['from']:.1f}+ n {b['n']}: said {b['said']:.2f}, happened "
                                                     f"{b['happened']:.2f}" for b in st["reliability"]) or "none yet")]
     out += ["", "## What it believes now", ""]
@@ -772,7 +927,7 @@ def verify(path: Path | None = None, records: list[dict] | None = None, tol: flo
         return []
     problems = [f"{path.name}: {p}" for p in paper.verify_chain(path)]
     proto, sha = protocol()
-    records = cr.cat_lines() if records is None else records
+    records = all_records() if records is None else records
     sets = {r["set_id"]: r for r in records if r.get("type") == "CATALYST_SET"}
     lrecs = paper.ledger_lines(path)
     seen, trained, gated = set(), {}, {}
@@ -787,7 +942,7 @@ def verify(path: Path | None = None, records: list[dict] | None = None, tol: flo
             problems.append(f"{sid}: forecast twice")
         seen.add(sid)
         if f["protocol"]["sha256"] != sha:
-            problems.append(f"{sid}: learner protocol sha256 differs from research/LEARNER_v2/protocol.json")
+            problems.append(f"{sid}: learner protocol sha256 differs from {PROTOCOL_JSON.relative_to(PKG_ROOT)}")
         if f["history"]["sha256"] != HISTORY_SHA256:
             problems.append(f"{sid}: warm start sha256 differs from the pinned one")
         s = sets.get(sid)
