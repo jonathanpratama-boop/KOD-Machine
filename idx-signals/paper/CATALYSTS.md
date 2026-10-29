@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-29T10:36:33Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-29T23:02:18Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 2 (FIRE 1, ABSTAIN 1) over 1 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 1, SEALED 2; coverage gaps 0.
+Sets 3 (FIRE 1, ABSTAIN 2) over 2 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 1, SEALED 3; coverage gaps 0.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -103,13 +103,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### IDX_INDEX ELSA (ADD LQ45) - effective 2026-11-02, sealed 2026-10-28T10:38:02Z, cutoff 2026-10-29T01:45:00Z
-Set `CAT-IDX_INDEX-IDX-MAJOR-2026-11-02-ELSA`, scan `SCAN-2026-10-28-F1_ARA`; signal close 655 on 2026-10-28; entry: the closing auction of the session after the signal session (2026-10-29). Windows: POST20: entry +2, hold 20; RUNUP: entry +1, hold 1.
-Confidence SINGLE_SOURCE; events file sha256 `39df501b3e5a`.
-Coverage DESCRIPTIVE (not counted).
-Twins (band+liq+mom+dd): ULTJ 2120, ACES 330, GULA 750, AYAM 492, CLEO 390.
-Cone: WITH_FLOW_RUNUP p=0.50; REVERSAL_POST20 p=0.50.
-
 ### IDX_INDEX HEAL (DELETE IDX80) - effective 2026-11-02, sealed 2026-10-28T10:38:02Z, cutoff 2026-10-29T01:45:00Z
 Set `CAT-IDX_INDEX-IDX-MAJOR-2026-11-02-HEAL`, scan `SCAN-2026-10-28-F1_ARA`; signal close 545 on 2026-10-28; entry: the closing auction of the session after the signal session (2026-10-29). Windows: POST20: entry +2, hold 20; RUNUP: entry +1, hold 1.
 Confidence SINGLE_SOURCE; events file sha256 `39df501b3e5a`.
@@ -207,4 +200,11 @@ Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
 Coverage **FIRE**; pre-entry move +0.00%.
 Twins (band+liq+mom+dd): MUR 42.99, RTO 22.79, ABM 53.3, CUZ 28.51, ASB 30.
 Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D NNOX (Nano-X Imaging Ltd.) - accepted 2026-10-29T14:20:08-04:00, sealed 2026-10-29T23:02:13Z, cutoff 2026-10-30T13:15:00Z
+Set `CAT-SEC13D-0001178913-26-004909`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 0.3058 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20.
+Filing `0001178913-26-004909` by Moalem Moshe; Item 4 intent words: board, proxy, nominate, director.
+Coverage **ABSTAIN** (MICROCAP); pre-entry move -4.74%, market value USD 21.3M, dilution filings 0.
+Twins (band+liq+mom+dd): OPTT 0.4189, TGL 0.2349, QUCY 0.91, ONCY 0.4277, CDT 0.077.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
