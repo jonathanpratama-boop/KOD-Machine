@@ -182,6 +182,9 @@ def main(argv=None) -> int:
     p_l3.add_argument("--commit", action="store_true")
     p_l3r = sub.add_parser("learner3-report", help="write paper/LEARNER_V3.md")
     p_l3r.add_argument("--commit", action="store_true")
+    p_cc = sub.add_parser("call-cert-report", help="write paper/CALL_CERT.md: certified next-day dump calls beside v2.4 "
+                          "(research/CALL_CERT_v1; shadow, changes nothing in v2.4)")
+    p_cc.add_argument("--commit", action="store_true")
     p_cr = sub.add_parser("catalyst-report", help="write paper/CATALYSTS.md (statistics, looks, calibration, cards)")
     p_cr.add_argument("--commit", action="store_true")
     p_ms = sub.add_parser("micro-snapshot", help="side-car for a crypto scan: Binance book cost now and, once the day's "
@@ -787,6 +790,15 @@ def main(argv=None) -> int:
         written.append(learner3.write_report())
         if args.commit:
             print(paper.commit_and_push(written, f"learner v2.4: {len(recs)} forecast(s) sealed", trailer))
+    elif args.cmd == "call-cert-report":
+        import os
+
+        from . import call_cert, paper
+
+        path = call_cert.write_report()
+        print(path.read_text(encoding="utf-8").split("## Live forecasts")[0])
+        if args.commit:
+            print(paper.commit_and_push([path], "certified calls: shadow report", os.environ.get("IDXSIG_COMMIT_TRAILER", "")))
     elif args.cmd in ("catalyst-seal", "catalyst-tag", "catalyst-score", "catalyst-report"):
         import os
         from datetime import datetime, timezone
