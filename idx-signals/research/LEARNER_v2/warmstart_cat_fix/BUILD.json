@@ -1,0 +1,33 @@
+{
+ "built_by": "research/LEARNER_v2/warmstart_cat_fix/build.py",
+ "from": {
+  "warm_start": "1eff13dabff91e2a41ae654ba9da645d87c6cf94a7efd67cbbf808d338fc9a13",
+  "full_13d_collection": "202f50ddd8b26e55df2b26a99d907053fbe886a35a67fabc5006a0e54e95db2a"
+ },
+ "rows": 5587,
+ "pool_13d": {
+  "before_scored_filings": 1188,
+  "after_full_collection_with_ticker": 2750
+ },
+ "rows_changed": 170,
+ "rows_changed_by_source": {
+  "kill13d": 92,
+  "form4": 56,
+  "dil302": 22
+ },
+ "mean_counts": {
+  "repeat_90d": {
+   "before": 0.05852872740289959,
+   "after": 0.08645068909969572
+  },
+  "corroborate_90d": {
+   "before": 0.039735099337748346,
+   "after": 0.05584392339359227
+  },
+  "conflict_90d": {
+   "before": 0.14014676928584213,
+   "after": 0.14515840343654912
+  }
+ },
+ "events_csv_gz": "9443a4abd55cfa97eb222743acfa4a1ea8bd06e70d17b111354429c584327da1"
+}
