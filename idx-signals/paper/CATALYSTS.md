@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-29T23:03:22Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-29T23:06:20Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 0 over 0 signal sessions; events seen: none; coverage gaps 0.
+Sets 1 over 1 signal sessions; events seen: SEALED 1; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: none
+- Classes: ABSTAIN 1
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,13 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 27 tags: 6 true, 0 unknown.
 
 ## Latest sets
-
-### IDX_INDEX PGEO (DELETE IDX30) - effective 2026-11-02, sealed 2026-10-28T10:38:02Z, cutoff 2026-10-29T01:45:00Z
-Set `CAT-IDX_INDEX-IDX-MAJOR-2026-11-02-PGEO`, scan `SCAN-2026-10-28-F1_ARA`; signal close 990 on 2026-10-28; entry: the closing auction of the session after the signal session (2026-10-29). Windows: POST20: entry +2, hold 20; RUNUP: entry +1, hold 1.
-Confidence CONFIRMED; events file sha256 `39df501b3e5a`.
-Coverage DESCRIPTIVE (not counted).
-Twins (band+liq+mom+dd): CMNT 725, CMRY 4150, CTRA 580, HMSP 660, DMAS 210.
-Cone: WITH_FLOW_RUNUP p=0.50; REVERSAL_POST20 p=0.50.
 
 ### IDX_INDEX PTBA (ADD IDX30) - effective 2026-11-02, sealed 2026-10-28T10:38:02Z, cutoff 2026-10-29T01:45:00Z
 Set `CAT-IDX_INDEX-IDX-MAJOR-2026-11-02-PTBA`, scan `SCAN-2026-10-28-F1_ARA`; signal close 3250 on 2026-10-28; entry: the closing auction of the session after the signal session (2026-10-29). Windows: POST20: entry +2, hold 20; RUNUP: entry +1, hold 1.
@@ -207,4 +200,11 @@ Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
 Coverage **FIRE**; pre-entry move +0.00%.
 Twins (band+liq+mom+dd): CCLD 1.8, XOS 2.65, SPAI 3.39, ALTI 2.56, STEM 2.39.
 Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 NNOX (Nano-X Imaging Ltd.) - accepted 2026-10-29T14:20:08-04:00, sealed 2026-10-29T23:06:18Z, cutoff 2026-10-30T13:15:00Z
+Set `CAT-SEC13D_V2-0001178913-26-004909`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 0.3058 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001178913-26-004909` by Moalem Moshe; cover page max 8.49% of class; strong intent: nominate, proxy; Item 5(c): no transactions.
+Coverage **ABSTAIN** (MICROCAP); market value USD 21.3M from XBRL; parent CAT-SEC13D-0001178913-26-004909.
+Twins (band+liq+mom+dd): OPTT 0.4189, TGL 0.2349, QUCY 0.91, ONCY 0.4277, CDT 0.077, ARAI 0.1214, CGC 0.675, LASE 0.74, HUHU 0.509, ALDX 0.6591, CHRS 0.8984, FNUC 0.739, RCT 0.062, GMEX 0.8783, DDC 0.1389, RANI 0.6054, BLNK 0.4122, STEX 0.4396, VCIG 0.196, EONR 0.3622.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
