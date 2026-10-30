@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-30T23:02:23Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-30T23:02:30Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 2 over 1 signal sessions; events seen: SEALED 2; coverage gaps 0.
+Sets 3 over 2 signal sessions; events seen: SEALED 3; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 2
+- Classes: ABSTAIN 2, FIRE 1
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,13 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 30 tags: 6 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4 HBAN (HUNTINGTON BANCSHARES INC /MD/) - filed 2026-10-29, sealed 2026-10-30T11:01:26Z, cutoff 2026-10-30T13:15:00Z
-Set `CAT-FORM4-0001225208-26-008552`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 15.97 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20.
-Form 4 `0001225208-26-008552` (1 filing(s)) by TORGOW GARY (director).
-Coverage **FIRE**; purchases USD 199,834, owners 1, top executive no, lag 2 days.
-Twins (band+liq+mom+dd): OWL 10.41, CPNG 14.57, CAG 14.09, ACI 12.79, JBS 12.16.
-Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
 ### FORM4 XYL (Xylem Inc.) - filed 2026-10-29, sealed 2026-10-30T11:01:26Z, cutoff 2026-10-30T13:15:00Z
 Set `CAT-FORM4-0001524472-26-000150`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 90.76 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20.
@@ -207,4 +200,11 @@ Filing `0002011620-26-000006` by Quint Digital Ltd; Item 4 intent words: board, 
 Coverage **FIRE**; pre-entry move -1.61%, market value USD 136.4M, dilution filings 0.
 Twins (band+liq+mom+dd): AIFU 9.8, LIVE 7.3001, NYC 5.96, FGI 7.91, NXTT 5.3.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 LEE (LEE ENTERPRISES, Inc) - accepted 2026-10-30T12:28:03-04:00, sealed 2026-10-30T23:02:29Z, cutoff 2026-11-02T14:15:00Z
+Set `CAT-SEC13D_V2-0002011620-26-000006`, scan `SCAN-US-2026-10-30-G2_RET30`; signal close 6.12 on 2026-10-30; entry: the entry session's opening print (2026-11-02). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0002011620-26-000006` by Quint Digital Ltd; cover page max 14.4% of class; strong intent: none; Item 5(c): no transactions.
+Coverage **FIRE**; market value USD 136.4M from XBRL; parent CAT-SEC13D-0002011620-26-000006.
+Twins (band+liq+mom+dd): AIFU 9.8, LIVE 7.3001, NYC 5.96, FGI 7.91, NXTT 5.3, VHC 9.48, VMAR 6.26.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
