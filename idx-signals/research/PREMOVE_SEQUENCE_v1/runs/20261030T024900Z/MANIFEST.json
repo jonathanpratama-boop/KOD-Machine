@@ -1,0 +1,33 @@
+{
+  "files": {
+    "REPORT.md": {
+      "bytes": 2566,
+      "sha256": "2c171dfbb73068d4b447a7054f445f5acb972c025d6efd3866440fb44bf69d73"
+    },
+    "SOURCE.json": {
+      "bytes": 509678,
+      "sha256": "8f4efd06d2d819be44de66f9d84ac1d1be6a1aa2cbbbac0a1ea9530a526293d2"
+    },
+    "daily.csv.gz": {
+      "bytes": 7650,
+      "sha256": "0677abaddb49a59dedcdda1c775355f9a76856897d5e7c61d834899e816da4ac"
+    },
+    "forecasts.csv.gz": {
+      "bytes": 12933916,
+      "sha256": "18a7b08bbdce615b801daf551d624e9f67aea4aadb4b54135f044e5304aa6c67"
+    },
+    "models.json": {
+      "bytes": 25507,
+      "sha256": "e6dff0b91e5328b14c9440ef41c1b13f8d5549b6f34c582f643853c94a9844c5"
+    },
+    "shortlists.csv.gz": {
+      "bytes": 1695600,
+      "sha256": "84b377f9b589a63396d67213d8512800d76219cea95bedd8fb0c203f3be860a2"
+    },
+    "summary.json": {
+      "bytes": 9605,
+      "sha256": "7bf727510581d095a259bc99dc0f66e50e798876bdf41e4fa48cd04c1c0c8261"
+    }
+  },
+  "schema": "KOD-PREMOVE-RUN-v1"
+}
