@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-30T11:02:56Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-30T23:02:23Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 4 (FIRE 1, ABSTAIN 3) over 2 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 3, SEALED 4, SKIP_NOT_OPERATING 1; coverage gaps 0.
+Sets 5 (FIRE 2, ABSTAIN 3) over 3 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 3, SEALED 5, SKIP_NOT_OPERATING 2; coverage gaps 0.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -103,13 +103,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### FORM4 PNFP (Pinnacle Financial Partners, Inc.) - filed 2026-10-29, sealed 2026-10-30T11:01:26Z, cutoff 2026-10-30T13:15:00Z
-Set `CAT-FORM4-0001219004-26-000004`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 101.71 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20.
-Form 4 `0001219004-26-000004` (1 filing(s)) by INGRAM DAVID B (director).
-Coverage **FIRE**; purchases USD 991,600, owners 1, top executive no, lag 1 days.
-Twins (band+liq+mom+dd): PAG 212.34, EVRG 85.41, BDX 198.34, EXPD 198.39, PFE 29.95.
-Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
-
 ### FORM4 HBAN (HUNTINGTON BANCSHARES INC /MD/) - filed 2026-10-29, sealed 2026-10-30T11:01:26Z, cutoff 2026-10-30T13:15:00Z
 Set `CAT-FORM4-0001225208-26-008552`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 15.97 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20.
 Form 4 `0001225208-26-008552` (1 filing(s)) by TORGOW GARY (director).
@@ -207,4 +200,11 @@ Form 4 `0001733614-26-000005` by CORNWELL KEVIN L (Chairman, CEO); purchases USD
 Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001733614-26-000005.
 Twins (band+liq+mom+dd): PKX 50.91, GLIBK 21.61, CMCL 21.4, XRN 30.52, ATNI 25.88, IFS 49.35, CWCO 26.76, REX 38.86, CVLG 28.82, CVEO 30.55, PS 49.15, KOP 41.86, HBB 32.51, FLXS 75.57, SII 106.65, MPTI 69.02, WF 67.67, ODC 73.26, NVGS 21.71, HBCP 61.37.
 Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
+
+### SEC13D LEE (LEE ENTERPRISES, Inc) - accepted 2026-10-30T12:28:03-04:00, sealed 2026-10-30T23:02:22Z, cutoff 2026-11-02T14:15:00Z
+Set `CAT-SEC13D-0002011620-26-000006`, scan `SCAN-US-2026-10-30-G2_RET30`; signal close 6.12 on 2026-10-30; entry: the entry session's opening print (2026-11-02). Windows: H20: entry +1, hold 20.
+Filing `0002011620-26-000006` by Quint Digital Ltd; Item 4 intent words: board, acquisition, director.
+Coverage **FIRE**; pre-entry move -1.61%, market value USD 136.4M, dilution filings 0.
+Twins (band+liq+mom+dd): AIFU 9.8, LIVE 7.3001, NYC 5.96, FGI 7.91, NXTT 5.3.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
