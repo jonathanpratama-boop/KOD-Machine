@@ -1,0 +1,13 @@
+{
+ "id": "RECENT_REPLAY_v1_result",
+ "experiment": "RECENT_REPLAY_v1",
+ "date": "2026-10-30",
+ "result_of": "RECENT_REPLAY_v1_registered",
+ "hypothesis": "replayed LEARNER v2.4 raw NEXT_DUMP10_1 forecasts rank next-session own dumpers above the others (protocol_v2_4.json claim)",
+ "one_sided_p": 3.674146118436392e-14,
+ "p_source": "z 7.48 from the session bootstrap se (research/RECENT_REPLAY_v1/results/RESULT.json)",
+ "variants_searched": 0,
+ "outcome": "SKILL at the n>=1000 look (z 7.48 >= 3.0); AUC 0.623 vs benchmark 0.587, 1718 pairs, 146 sessions",
+ "counted": true,
+ "note": "retrospective replay over sealed US 2026-04..10, read once on the owner instruction; not a live record"
+}
