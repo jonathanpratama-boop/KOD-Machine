@@ -1,0 +1,67 @@
+{
+ "study_id": "REPLAY_UNITS_v2_A",
+ "frozen_at": "2026-10-30T11:41:45Z",
+ "supersedes": "research/RECENT_REPLAY_v1 (CORRECTION_1.md)",
+ "range": [
+  "2026-04-01",
+  "2026-10-28"
+ ],
+ "events_in_range_before_outcomes": 1718,
+ "events": "research/REPLAY_UNITS_v2/data/events_A.csv.gz",
+ "manifest": "yahoo_us_replay-20261030T071025Z.jsonl",
+ "units": "as_traded (frame prices x U, volume / U; U from split events effective after the session)",
+ "events_with_later_split": 334,
+ "learner": {
+  "version": "LEARNER-v2.4",
+  "protocol": "research/LEARNER_v2/protocol_v2_4.json",
+  "protocol_sha256": "8132768cb6c16c8a06df94075fba4f37cf4911f260ec5e5379adadfabc456cea",
+  "warm_start_sha256": "e13eae758ee610bc6caec87e65ebdc86924ea17dd3026c6660983075cad68faf",
+  "claim": {
+   "statistic": "AUC of the raw NEXT_DUMP10_1 forecasts over resolved pairs (each set once), standard error from a bootstrap over signal sessions (1000 resamples, seed 20261029), z = (AUC - 0.5) / se",
+   "looks": [
+    250,
+    500,
+    1000
+   ],
+   "z_min": [
+    3.75,
+    3.0,
+    3.0
+   ],
+   "min_sessions": [
+    30,
+    60,
+    120
+   ],
+   "verdict": "SKILL when z >= z_min at a look; not shown otherwise; final at the 1000 look",
+   "secondary": "the Brier gain over the anchor and over the benchmark (daily blocks, long-run se) for both statements; the paired Brier difference against v2.2's DUMP10_5 forecasts on the same sets; hit rates of shadow and live calls; all descriptive",
+   "reporting": "AUC and Brier gain are reported apart and are not interchangeable (research/PATH_HISTORY_v1/ADDENDUM_3.md)",
+   "trial_file": "research/QUANT_GRADE/trials/LEARNER_v2_4_NEXT_DUMP_registered.json (PENDING), counted at the first look reached"
+  }
+ },
+ "statistic": "protocol_v2_4.json 'claim' verbatim; for B also the paper short of short_rules.json (unchanged)",
+ "sealed_data": "US 2024 onward is sealed; A was read once (RECENT_REPLAY_v1) and B once (FRESH_SHORT_v1's replay, no short) with the defective features; this is the corrected read, run once",
+ "known_mismatch": "VALIDATION.json: CAPS and OBAI remain unresolved against the daily pulls",
+ "data_pins": {
+  "research/REPLAY_UNITS_v2/data/events_A.csv.gz": "5ae10d0ecc684df7b31a11cedb24460c41c29a5f094ab0a9efe7a5742e1665d6",
+  "research/REPLAY_UNITS_v2/data/events_A_BUILD.json": "cfb1c457167bb320b7a33b653f45e339df87fc6bde49e5fbf50603ff8780d924",
+  "data/manifests/yahoo_us_replay-20261030T071025Z.jsonl": "fe1ef19e7bb75bdf72a146809d7d298378323fb48d9a4da016a91408de6d069f",
+  "research/REPLAY_UNITS_v2/short_rules.json": "80afd80e591e320f3488393f89631a8b170ecb5f045a824164a3a94a97b41826",
+  "research/LEARNER_v2/warmstart_v4/events_us.csv.gz": "e13eae758ee610bc6caec87e65ebdc86924ea17dd3026c6660983075cad68faf"
+ },
+ "code_pins": {
+  "idxsig/learner3.py": "38951c27b6acd2d7fe9cc19c8a8a500a3ce7809f8aaf4b12823095fe089cfcd8",
+  "idxsig/learner2.py": "671f86848ad5ee0a9bd3488a17b788c3459f5499c82a39386bef2dc611f2b9e6",
+  "idxsig/speculation.py": "3fc543eb3ed1cdc810bac82749dbe9d7cf71115adca538459e7336c009937bd8",
+  "idxsig/paper.py": "c9c017d27f453e232ccc9db1401f9c83da9a544e6ef1422b7e7636f32fdeb624",
+  "idxsig/rules/moonshot_g.py": "b050c4d37d9104309b32e70a7e81682ee3029da3a6a0654dae6ac41414abb794",
+  "idxsig/global_panel.py": "ebe4ef40b1e8bdb55063a2dfd5c9301f228fe3c9122f9a36f5b738f69a0587d7",
+  "idxsig/execution.py": "16c47aab157d55c68f797275eb12f0cfe1336f705ecec082e1b0b52ffaa87112",
+  "idxsig/call_cert.py": "74d8a672ff54cedd33ef8adf3c266fb40f0431200bdc59be0c99eb68a4108c33",
+  "idxsig/risk_control.py": "c05ce112bd4820a9f98db7fc111fb87b80874ded95df0dd2b9bb31926a757368",
+  "research/TA_HISTORY_v1/run.py": "85f637474646ea75789707ac106178914896619d0f255e6237f270e65d3e2837",
+  "research/REPLAY_UNITS_v2/build.py": "8a3078c27dd0cb9cb3453cabf57186285a54ffcb9b3a088055abd5a11ac0c5aa",
+  "research/REPLAY_UNITS_v2/replay.py": "a3194f30e45c6fbeb4b540cb049b3ebb4e7a0864675c3e282a7a78531de326b7",
+  "research/REPLAY_UNITS_v2/short.py": "d14a27299f154239b1de9304166c7aa0bbe5bfcfc388e1892deb7a1c4d335691"
+ }
+}

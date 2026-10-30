@@ -1,0 +1,16 @@
+{
+ "id": "REPLAY_UNITS_v2_registered",
+ "experiment": "REPLAY_UNITS_v2",
+ "date": "2026-10-30",
+ "hypothesis": "corrected (as-traded) replays of LEARNER v2.4: its registered AUC claim on A (2026-04..10, 1718 events) and B (2025-11..2026-03, 1080 events); on B, the redesigned paper short of the certified calls (short_rules.json) is profitable after TYPICAL costs",
+ "one_sided_p": null,
+ "p_source": "research/REPLAY_UNITS_v2/protocol_A.json, protocol_B.json",
+ "variants_searched": 0,
+ "outcome": "PENDING (frozen before the corrected replays read any outcome)",
+ "counted": false,
+ "registered": "2026-10-30",
+ "supersedes": [
+  "RECENT_REPLAY_v1_result",
+  "FRESH_SHORT_v1_registered"
+ ]
+}
