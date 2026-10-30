@@ -1,0 +1,211 @@
+{
+ "study_id": "TUNE_SWEEP_v1",
+ "frozen_at": "2026-10-30T10:34:02Z",
+ "owner_instruction": "2026-10-30: unlimited scenarios, fine-tune on historical results, then minute intervals",
+ "label": "y_NEXT_DUMP10_1",
+ "features": [
+  "s_ret1",
+  "s_ret5",
+  "s_ret20",
+  "s_dd60",
+  "log_volr",
+  "s_cpos",
+  "log_adv",
+  "gap",
+  "vol20_pre",
+  "spike_z",
+  "log_price",
+  "spikes60",
+  "streak",
+  "dist_high120",
+  "age120",
+  "breadth",
+  "mkt_ret",
+  "filing_8k",
+  "offering90",
+  "shelf3y",
+  "b5_12m",
+  "revsplit6m",
+  "short_ratio",
+  "short_abn",
+  "rsi14",
+  "macd_hist",
+  "stoch_k14",
+  "bollinger_b"
+ ],
+ "feature_sets": {
+  "ALL": [
+   "s_ret1",
+   "s_ret5",
+   "s_ret20",
+   "s_dd60",
+   "log_volr",
+   "s_cpos",
+   "log_adv",
+   "gap",
+   "vol20_pre",
+   "spike_z",
+   "log_price",
+   "spikes60",
+   "streak",
+   "dist_high120",
+   "age120",
+   "breadth",
+   "mkt_ret",
+   "filing_8k",
+   "offering90",
+   "shelf3y",
+   "b5_12m",
+   "revsplit6m",
+   "short_ratio",
+   "short_abn",
+   "rsi14",
+   "macd_hist",
+   "stoch_k14",
+   "bollinger_b"
+  ],
+  "P0": [
+   "s_ret1",
+   "s_ret5",
+   "s_ret20",
+   "s_dd60",
+   "log_volr",
+   "s_cpos",
+   "log_adv"
+  ],
+  "P0_P1": [
+   "s_ret1",
+   "s_ret5",
+   "s_ret20",
+   "s_dd60",
+   "log_volr",
+   "s_cpos",
+   "log_adv",
+   "gap",
+   "vol20_pre",
+   "spike_z",
+   "log_price",
+   "spikes60",
+   "streak",
+   "dist_high120",
+   "age120",
+   "breadth",
+   "mkt_ret"
+  ],
+  "P0_P1_E": [
+   "s_ret1",
+   "s_ret5",
+   "s_ret20",
+   "s_dd60",
+   "log_volr",
+   "s_cpos",
+   "log_adv",
+   "gap",
+   "vol20_pre",
+   "spike_z",
+   "log_price",
+   "spikes60",
+   "streak",
+   "dist_high120",
+   "age120",
+   "breadth",
+   "mkt_ret",
+   "filing_8k",
+   "offering90",
+   "shelf3y",
+   "b5_12m",
+   "revsplit6m",
+   "short_ratio",
+   "short_abn"
+  ],
+  "P0_P1_CHART": [
+   "s_ret1",
+   "s_ret5",
+   "s_ret20",
+   "s_dd60",
+   "log_volr",
+   "s_cpos",
+   "log_adv",
+   "gap",
+   "vol20_pre",
+   "spike_z",
+   "log_price",
+   "spikes60",
+   "streak",
+   "dist_high120",
+   "age120",
+   "breadth",
+   "mkt_ret",
+   "rsi14",
+   "macd_hist",
+   "stoch_k14",
+   "bollinger_b"
+  ],
+  "BENCH": [
+   "vol20_pre",
+   "spike_z",
+   "s_ret1",
+   "mkt_ret",
+   "breadth"
+  ]
+ },
+ "excluded_features": {
+  "names": [
+   "has_edgar",
+   "has_shares",
+   "log_shares",
+   "log_turnover",
+   "has_short"
+  ],
+  "why": "defined differently in history and in the confirm sets"
+ },
+ "split": {
+  "TRAIN": [
+   "2020-06-23",
+   "2022-12-31"
+  ],
+  "VALIDATE": [
+   "2023-01-01",
+   "2023-12-31"
+  ],
+  "REFIT_FOR_CONFIRM": [
+   "2020-06-23",
+   "2023-12-31"
+  ],
+  "CONFIRM_A": [
+   "2026-04-01",
+   "2026-10-28"
+  ],
+  "CONFIRM_B": [
+   "2025-11-03",
+   "2026-03-31"
+  ]
+ },
+ "n_scenarios": 1470,
+ "scenarios_sha256": "5e75ea1f42c9b802df5d50bb6f7cfb325f0e18f557dce27d80bc4ca97d35b5d5",
+ "selection": "two candidates, fixed now: (1) BEST = the scenario with the highest VALIDATE AUC (ties: lower id); (2) TOP10 = the mean of the ten highest-VALIDATE-AUC scenarios' probabilities. Both refit on 2020-2023 and score each confirm set once",
+ "baseline": "v2.4 as replayed on the same events (its own raw forecasts, made session by session) and STATIC_V24 = scenario logistic/ALL/l2=1 refit on 2020-2023 (v2.4's features in a fixed model)",
+ "bar": "a candidate IMPROVES on v2.4 on a confirm set when Holm over the two candidates rejects on the one-sided session-bootstrap p of AUC(candidate) - AUC(v2.4 replay) <= 0 at 5% (smaller p tested at 2.5%, the other at 5% only if the first rejects); it BEATS CHANCE when its AUC's z against 0.5 (session bootstrap se, 2000 resamples) is >= 3",
+ "environment": "scikit-learn 1.9.1, lightgbm 4.7.0, scipy 1.18.1, pandas 2.2.3, numpy 2.3.5 (pinned venv)",
+ "bootstrap": {
+  "unit": "signal session",
+  "resamples": 2000,
+  "seed": 20261030
+ },
+ "honesty": [
+  "the VALIDATE leaderboard is optimistic by construction (many scenarios, one period): it is never the reported skill; only the confirm sets are",
+  "CONFIRM_A's labels were read once before (RECENT_REPLAY_v1, v2.4's AUC); no scenario or selection used them; CONFIRM_B has never been read by any study",
+  "no scenario is added, removed or re-tuned after --sweep; a new grid is a new study",
+  "survivorship: history survived to 2026-10-08 (3-6 years), confirm names only 0-12 months",
+  "CHART_SCALE (a fixed linear scaling with +-4 clipping) was computed over all 2020-2023 events, 2023 included; it is v2.4's frozen constant and not re-estimated here",
+  "the grid is 88% LightGBM, so TOP10 is likely near-duplicate LightGBM settings"
+ ],
+ "inputs": {
+  "research/LEARNER_v2/warmstart_v4/events_us.csv.gz": "e13eae758ee610bc6caec87e65ebdc86924ea17dd3026c6660983075cad68faf"
+ },
+ "code": {
+  "idxsig/learner3.py": "38951c27b6acd2d7fe9cc19c8a8a500a3ce7809f8aaf4b12823095fe089cfcd8",
+  "idxsig/learner2.py": "671f86848ad5ee0a9bd3488a17b788c3459f5499c82a39386bef2dc611f2b9e6",
+  "research/TUNE_SWEEP_v1/tune.py": "b4352191b579e4f8e7c220487f5a4164b4c3cc5c0249c99483d49637426be1ba"
+ }
+}
