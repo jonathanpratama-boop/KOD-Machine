@@ -1,6 +1,6 @@
 # Speculation Register (KOD-SPEC-REGISTER-v1.1, protocol sha256 b0e9b6d9b533)
 
-Generated 2026-10-30T23:00:08Z from `paper/speculations.jsonl`: 49 sets sealed, 0 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
+Generated 2026-10-30T23:01:57Z from `paper/speculations.jsonl`: 49 sets sealed, 10 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
 
 Windows: **BASE5**: the frozen plan: the validated harness plan, prospectively, beside twins; **PATH20**: the 20-session price path of the candidate and its twins; no plan; **NEXT1**: the next session's close of the candidate and its twins; no plan.
 
@@ -42,7 +42,7 @@ Projection (labelled): sessions of resolved sets needed for t >= 3 if the true p
 |---|---:|---:|---:|---:|
 | 0.151 (validation trade sd 0.3429 (run 20261008T115656Z_MOONSHOT_E2_US_D1_v1), paired, / sqrt(sets per session)) | 517 | 83 | 21 | 6 |
 
-PATH20 windows resolved: 0; NEXT1: 0.
+PATH20 windows resolved: 0; NEXT1: 9.
 
 | Statement | Graded | Realised rate | Twins' rate | Mean prior | Brier (register) | Brier (0.5) | Brier (running) |
 |---|---:|---:|---:|---:|---:|---:|---:|
@@ -52,9 +52,9 @@ PATH20 windows resolved: 0; NEXT1: 0.
 | BEATS_TWINS_5 | 0 | | | | | | |
 | RUN30_20 | 0 | | | | | | |
 | DOUBLE_20 | 0 | | | | | | |
-| DOWN10_1 | 0 | | | | | | |
-| UP10_1 | 0 | | | | | | |
-| BEATS_TWINS_1 | 0 | | | | | | |
+| DOWN10_1 | 9 | 0.556 | 0.081 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| UP10_1 | 9 | 0.111 | 0.000 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| BEATS_TWINS_1 | 9 | 0.222 | 0.525 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
 
 ## CRYPTO: 3 sets over 3 signal sessions (2026-10-27 .. 2026-10-29, 1.00 sets per scan)
 
@@ -383,4 +383,19 @@ Twins (band): LIFE 9000, INDF 6400, INKP 6575, EMAS 5450, MLBI 6150.
 | BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
+
+## Latest resolutions
+
+| Set | Window | Status | Candidate | Net | Twins mean | Diff | Cone (candidate / twins' rate) |
+|---|---|---|---|---:|---:|---:|---|
+| US-2026-10-29-G2_RET30-INLF | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.20, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
+| US-2026-10-29-G2_RET30-PCLA | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.40 |
+| US-2026-10-29-G2_RET30-SGLY | NEXT1 | UNRESOLVABLE (recorded signal close 0.5049 does not reconcile with the scoring bars (rtol 0.001)) |  | n/a | n/a | n/a |  |
+| US-2026-10-29-G2_RET30-JFIN | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.40 |
+| US-2026-10-29-G2_RET30-BURU | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.33, UP10_1=0/0.00, BEATS_TWINS_1=0 |
+| US-2026-10-29-G2_RET30-ADT | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=1/0.40 |
+| US-2026-10-29-G2_RET30-GKOS | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
+| US-2026-10-29-G2_RET30-XCH | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.20, UP10_1=1/0.00, BEATS_TWINS_1=1/0.60 |
+| US-2026-10-29-G2_RET30-NCPL | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
+| US-2026-10-29-G2_RET30-KPLT | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
 
