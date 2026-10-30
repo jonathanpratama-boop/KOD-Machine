@@ -1,0 +1,26 @@
+[
+  {
+    "id": "sequence",
+    "title": "Pre-move sequence: retrospective model comparison",
+    "path": "idx-signals/research/PREMOVE_SEQUENCE_v1/runs/20261030T024900Z/summary.json",
+    "sha256": "7bf727510581d095a259bc99dc0f66e50e798876bdf41e4fa48cd04c1c0c8261",
+    "commit": "07093260eca6a569a4f169c14bb7d055a8066703",
+    "captured_at": "2026-10-30T17:59:22Z"
+  },
+  {
+    "id": "e6",
+    "title": "E6: pressure-response discovery study",
+    "path": "idx-signals/research/E6/discovery/summary.json",
+    "sha256": "ac612161d111413fbadf287fa6dbde3b939241e049cf35211579d8f09aebfe45",
+    "commit": "07093260eca6a569a4f169c14bb7d055a8066703",
+    "captured_at": "2026-10-30T17:59:22Z"
+  },
+  {
+    "id": "execution",
+    "title": "E4: execution validation",
+    "path": "idx-signals/results/runs/20261013T212610Z_MOONSHOT_E4_D1_v1/summary.json",
+    "sha256": "4a2e954bcd6f93c1570f56f763557a74c868af3d404d67f0e113fd042b5e4916",
+    "commit": "07093260eca6a569a4f169c14bb7d055a8066703",
+    "captured_at": "2026-10-30T17:59:22Z"
+  }
+]

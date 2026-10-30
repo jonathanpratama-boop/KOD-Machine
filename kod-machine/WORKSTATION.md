@@ -43,6 +43,9 @@ The example notes use historical **public reconstruction** cutoffs. The preserve
 
 | View | What you can do |
 | --- | --- |
+| Evidence Workbench `/investigate` | One explicit UTC cutoff across independent ledger cases, observed-mode company dossiers, source search and frozen population research. |
+| Population evidence `/research/{study_id}` | Inspect preserved sequence, E6 discovery and execution studies with denominators, baselines, uncertainty, failed gates and assumptions. No reruns or inferred case membership. |
+| Frozen event replay `/replay` | Choose an immutable ledger case and UTC cutoff, inspect evidence actually available to KOD and its recorded call, then reveal the outcome separately. Read-only; see below. |
 | Event inbox `/` | Add explicit watchlist identities, inspect saved filing/release events, filter by company, category, status, text and publication date, and open saved notes. Removing a watchlist entry retains its evidence and notes. |
 | Company workspace `/company/{id}` | Inspect identity and filing history, preserve HTML releases, supply optional filing headers, inspect extraction status, and choose parsed releases for a note. Online mode also offers explicit SEC lookup/import/refresh. |
 | Research note `/note/{id}` | Read extracted figures, comparisons, guidance, issues and evidence; record thesis, invalidation and review conditions as versioned user annotations; export Markdown or JSON. |
@@ -235,3 +238,81 @@ python3 workstation_tests/migration_drill.py --v1 <v1 workspace directory> --wor
 ```
 
 Use a fresh check directory when independently testing replay or recovery. The repository workflow also runs the legacy tests, append-only checks and `kod verify` in a complete history checkout. See [WORKSTATION_PROGRESS.md](WORKSTATION_PROGRESS.md) for build scope and validation limits.
+
+
+
+## Evidence Workbench: one investigation, separate claims
+
+Open **Evidence Workbench** (`/investigate`) from the existing workstation navigation.
+A single timezone-qualified cutoff travels into three complementary views:
+
+- **Time:** replay a frozen ledger case without displaying a later call or outcome.
+- **Evidence:** choose an explicit company identity and open its existing dossier or source
+  search in strict, observed mode. Supported calculations remain source-linked; missing data
+  stays missing. The company catalog is navigation, not a historical membership assertion.
+- **Population:** inspect a pinned research artifact rather than judging a method from one
+  interesting event. Sequence comparisons show hits, known false alerts, censoring and missed
+  episodes; E6 retains failed discovery gates; the execution study separates hit rate, net
+  return, fills, liquidation and assumed short-side access.
+
+These are not silently joined by ticker. Choosing a company does not establish that a ledger
+case belongs to it, and a population result does not establish that the selected case was in
+that population. The execution study is not a backtest of the sequence model.
+
+### Read-model invariants and limits
+
+The adapters are small read-only modules: `replay.py` owns frozen ledger chronology and
+`research.py` owns pinned research-artifact validation. Existing dossier, search, calculation,
+scenario and decision-packet engines remain in place. There is no new service, model fitting,
+provider request or execution path.
+
+Research computation time and capture time are displayed separately. Historical as-of views
+require both; earlier views contain no metrics, raw results or direct artifact links. Exact
+source bytes are packaged with a SHA-256 manifest and pinned upstream commit. Original
+research files, ledger records and policy thresholds are not edited. These hashes establish
+local consistency, not independent scientific validation or external timestamp authority.
+
+The research adapter does not bundle every original input dataset or execute reproduction
+commands. It exposes this gap alongside the pinned source rather than claiming the result
+was rerun. Raw preserved result fields remain inspectable after availability. See
+[research adapter contracts](RESEARCH_ADAPTER.md) for the packaged studies and validation.
+
+This workbench is research evidence, not a live terminal, a claim of prospective prediction,
+or permission to trade. Responsive layouts are provided, but browser visual validation must
+be performed in an environment where Chromium can run; rendered HTTP and chronology tests
+alone are not a desktop/mobile screenshot review.
+
+## Frozen event replay
+
+Choose **Event replay** in the workstation navigation, or open `/replay`.
+This reads the existing `kod-machine/var/kod.db` ledger in SQLite read-only mode;
+it does not migrate it, write to it, run a detector, contact a provider or place orders.
+The workstation's separate runtime database is unchanged by replay requests.
+
+1. Select a frozen case, then a timezone-aware UTC cutoff or one of its recorded milestones.
+2. Inspect eligible evidence and facts. Publication, retrieval and ledger recording must all
+   precede the cutoff. A published document retrieved later is **not** shown as known to KOD
+   at publication. Unknown chronology is withheld. Facts also need their frozen citations.
+3. Read the original call and hash-bound detector evaluations only once the case was recorded.
+   These are saved outputs, never a recalculation. Legacy cards without hash-bound evaluations
+   show no invented detector results.
+4. Reveal the outcome explicitly. It is absent from the default response and must itself have
+   been recorded by the selected cutoff. Changing case or time returns to the hidden state.
+5. Try a minimum evidence grade in the separate sandbox. This filters the eligible evidence
+   count only; it neither changes the original snapshot nor recalculates its prediction.
+
+### A real preserved example, not a backdated forecast
+
+Select `KOD-R-ZEAL-20250312`. At its historical decision cutoff
+`2025-03-11T16:00:00Z`, the replay correctly withholds the later KOD reconstruction.
+At its actual ledger open `2026-10-08T12:44:07Z`, the preserved retrospective call and
+eligible evidence can be inspected. At a later cutoff such as `2026-10-30T00:00:00Z`,
+the recorded outcome can be revealed separately. This case was selected retrospectively;
+it is not evidence of an advance prediction. The other seed cards are also explicitly
+retrospective or simulated. No prospective prediction is fabricated to fill this gap.
+
+The snapshot identity is deterministic and independent of the sandbox filter or outcome
+reveal. Local card, information-set and evidence-object hashes are checked; this view does
+not independently verify timestamp receipts or archived source bytes. A matching hash is
+local consistency, not proof of contemporaneous possession. Missing or inconsistent archives
+produce an unavailable state rather than an empty success.
