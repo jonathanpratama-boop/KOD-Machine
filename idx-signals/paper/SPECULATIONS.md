@@ -1,6 +1,6 @@
 # Speculation Register (KOD-SPEC-REGISTER-v1.1, protocol sha256 b0e9b6d9b533)
 
-Generated 2026-10-29T23:00:50Z from `paper/speculations.jsonl`: 34 sets sealed, 0 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
+Generated 2026-10-30T00:26:59Z from `paper/speculations.jsonl`: 35 sets sealed, 0 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
 
 Windows: **BASE5**: the frozen plan: the validated harness plan, prospectively, beside twins; **PATH20**: the 20-session price path of the candidate and its twins; no plan; **NEXT1**: the next session's close of the candidate and its twins; no plan.
 
@@ -56,7 +56,7 @@ PATH20 windows resolved: 0; NEXT1: 0.
 | UP10_1 | 0 | | | | | | |
 | BEATS_TWINS_1 | 0 | | | | | | |
 
-## CRYPTO: 2 sets over 2 signal sessions (2026-10-27 .. 2026-10-28, 1.00 sets per scan)
+## CRYPTO: 3 sets over 3 signal sessions (2026-10-27 .. 2026-10-29, 1.00 sets per scan)
 
 | Plan | Resolved | Traded | Paired | Sessions | Mean net | Median net | Twins net | Diff | t | p | Look | Verdict |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|
@@ -284,11 +284,11 @@ Twins (band+liq+mom+dd): MHF 6.56, BRCC 12.99, NIM 9.12, INGN 7.26, FORR 12.18.
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### CRYPTO INIT (2026-10-28) - sealed 2026-10-29T00:27:43Z, cutoff 2026-10-29T02:00:00Z
-Decision `SCAN-CRYPTO-2026-10-28-G2_RET30-INIT` (PASS), bound to ledger record `2b3f2537d3da`; set `e67ed656f66a`.
-Signal close 0.22316 (reference 0.16619); entry: the Binance spot quote taken at sealing time (the harness used the next day's open); quote 0.21769 at 2026-10-29T00:27:46Z.
+### CRYPTO PARTI (2026-10-29) - sealed 2026-10-30T00:26:54Z, cutoff 2026-10-30T02:00:00Z
+Decision `SCAN-CRYPTO-2026-10-29-G2_RET30-PARTI` (PASS), bound to ledger record `34dd0783f353`; set `f67b7b62de42`.
+Signal close 0.0598 (reference 0.0388); entry: the Binance spot quote taken at sealing time (the harness used the next day's open); quote 0.0573 at 2026-10-30T00:26:57Z.
 Tag: 1 flags today vs trailing median 1.0 -> hot_day = False.
-Twins (band+liq+mom+dd): PARTI 0.0388, DODO 0.0244, IO 0.1516, AXL 0.0488, AT 0.1436.
+Twins (band+liq+mom+dd): INIT 0.21817, 币安人生 0.5045, RUNE 0.619, OSMO 0.0466, AT 0.143.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -298,8 +298,11 @@ Twins (band+liq+mom+dd): PARTI 0.0388, DODO 0.0244, IO 0.1516, AXL 0.0488, AT 0.
 | BEATS_TWINS_5: the BASE5 net return exceeds the median BASE5 net return of the twins that traded | 0.500 | BASE5 |
 | RUN30_20: a close in s+1..s+20 is >= 1.30 x the signal close | 0.500 | PATH20 |
 | DOUBLE_20: a close in s+1..s+20 is >= 2.00 x the signal close | 0.500 | PATH20 |
+| DOWN10_1: the close of s+1 is <= 0.90 x the signal close | 0.500 | NEXT1 |
+| UP10_1: the close of s+1 is >= 1.10 x the signal close | 0.500 | NEXT1 |
+| BEATS_TWINS_1: the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1) | 0.500 | NEXT1 |
 
-Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20.
+Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
 ### IDX YPAS (2026-10-29) - sealed 2026-10-29T10:35:28Z, cutoff 2026-10-30T01:45:00Z
 Decision `SCAN-2026-10-29-F1_ARA-YPAS` (PASS), bound to ledger record `d71d086097e6`; set `b32758e651be`.
