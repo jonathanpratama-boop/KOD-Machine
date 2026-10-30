@@ -1,0 +1,75 @@
+{
+ "study_id": "FRESH_SHORT_v1",
+ "frozen_at": "2026-10-30T10:01:12Z",
+ "short_rules": "research/FRESH_SHORT_v1/short_rules.json",
+ "owner_instruction": "2026-10-30: 'i need immediate result' / 'just do whatever is necessary'",
+ "question": "on a period no KOD study has read: (1) do LEARNER v2.4's replayed raw forecasts rank the next-session own dumpers above the others (v2.4's registered claim, an independent read of RECENT_REPLAY_v1); (2) does the redesigned paper short of the certified calls make money after typical costs (short_rules.json, the primary bar)?",
+ "range": [
+  "2025-11-03",
+  "2026-03-31"
+ ],
+ "events_in_range_before_outcomes": 1080,
+ "events": "research/FRESH_SHORT_v1/data/events.csv.gz",
+ "manifest": "yahoo_us_replay-20261030T071025Z.jsonl",
+ "learner": {
+  "version": "LEARNER-v2.4",
+  "protocol": "research/LEARNER_v2/protocol_v2_4.json",
+  "protocol_sha256": "8132768cb6c16c8a06df94075fba4f37cf4911f260ec5e5379adadfabc456cea",
+  "warm_start_sha256": "e13eae758ee610bc6caec87e65ebdc86924ea17dd3026c6660983075cad68faf",
+  "claim": {
+   "statistic": "AUC of the raw NEXT_DUMP10_1 forecasts over resolved pairs (each set once), standard error from a bootstrap over signal sessions (1000 resamples, seed 20261029), z = (AUC - 0.5) / se",
+   "looks": [
+    250,
+    500,
+    1000
+   ],
+   "z_min": [
+    3.75,
+    3.0,
+    3.0
+   ],
+   "min_sessions": [
+    30,
+    60,
+    120
+   ],
+   "verdict": "SKILL when z >= z_min at a look; not shown otherwise; final at the 1000 look",
+   "secondary": "the Brier gain over the anchor and over the benchmark (daily blocks, long-run se) for both statements; the paired Brier difference against v2.2's DUMP10_5 forecasts on the same sets; hit rates of shadow and live calls; all descriptive",
+   "reporting": "AUC and Brier gain are reported apart and are not interchangeable (research/PATH_HISTORY_v1/ADDENDUM_3.md)",
+   "trial_file": "research/QUANT_GRADE/trials/LEARNER_v2_4_NEXT_DUMP_registered.json (PENDING), counted at the first look reached"
+  }
+ },
+ "statistic": "replay: protocol_v2_4.json 'claim' verbatim (AUC, session bootstrap, z, looks 250/500/1000); short: short_rules.json bar (TYPICAL net mean > 0 and one-sided 95% lower bound > 0)",
+ "timing": "as RECENT_REPLAY_v1: at each session the learner knows every replay outcome resolved by the previous session's close; running DOWN10_1 base rate; FADE10_5 prior 0.403; centres from earlier replay forecasts; gates not replayed; the certified bar from the 2022-2023 calibration plus this replay's own earlier outcomes",
+ "sealed_data": "US 2024 onward is sealed; this period's outcomes are read once, on the owner's instruction; nothing is tuned on them (code_pins); the same pull vintage as RECENT_REPLAY_v1",
+ "limits": [
+  "survivorship: today's universe",
+  "one pull vintage for twins, breadth and market features",
+  "BASE5 simulated without unit conversion",
+  "gates and published probabilities not replayed",
+  "no historical borrow availability; the stop is assumed filled at its price on daily bars"
+ ],
+ "one_run": "replay.py writes results/ once; short.py writes results/SHORT_RESULT.json once",
+ "data_pins": {
+  "research/FRESH_SHORT_v1/data/events.csv.gz": "f5a1cff95f4f47a15e58192492723c22e9f246a17c6f6922b7c562e73bda82ed",
+  "data/manifests/yahoo_us_replay-20261030T071025Z.jsonl": "fe1ef19e7bb75bdf72a146809d7d298378323fb48d9a4da016a91408de6d069f",
+  "research/FRESH_SHORT_v1/data/events_BUILD.json": "c86a0c4ec9b3e78671ea7a6c04bfaf077c24563137921f82206090998961997a",
+  "research/FRESH_SHORT_v1/short_rules.json": "80afd80e591e320f3488393f89631a8b170ecb5f045a824164a3a94a97b41826",
+  "research/LEARNER_v2/warmstart_v4/events_us.csv.gz": "e13eae758ee610bc6caec87e65ebdc86924ea17dd3026c6660983075cad68faf"
+ },
+ "code_pins": {
+  "idxsig/learner3.py": "38951c27b6acd2d7fe9cc19c8a8a500a3ce7809f8aaf4b12823095fe089cfcd8",
+  "idxsig/learner2.py": "671f86848ad5ee0a9bd3488a17b788c3459f5499c82a39386bef2dc611f2b9e6",
+  "idxsig/speculation.py": "85042402e5d0040356e7d37d7240421bc679a371be51a4bad20438a3759047f3",
+  "idxsig/paper.py": "36e13a1d910ed07a407cda3f2acca22e37e9b60950b709df6552446d2a1b76f1",
+  "idxsig/rules/moonshot_g.py": "b050c4d37d9104309b32e70a7e81682ee3029da3a6a0654dae6ac41414abb794",
+  "idxsig/global_panel.py": "2234f5e24a06854b85eb3379dd7d9e1958e0a498c31f410acc9811c7448c79d0",
+  "idxsig/execution.py": "408d1fbd57c6604f31f18f12dab056848869ed99e6ed6e9b39df7047d1b40785",
+  "idxsig/call_cert.py": "a05350e2d6a88d5d6eaa17723994acaed1ed6167efe3402693f5aad57bbb96de",
+  "idxsig/risk_control.py": "73936899dffa73fda6ebc29f85374c6d5721c3ec00adf734b65999ec7d364789",
+  "research/TA_HISTORY_v1/run.py": "85f637474646ea75789707ac106178914896619d0f255e6237f270e65d3e2837",
+  "research/FRESH_SHORT_v1/build.py": "d5b1922a0438a74f4c2d7832a03ed496e6f0fa383cabe46561f1272fa2e03d8d",
+  "research/FRESH_SHORT_v1/replay.py": "a3194f30e45c6fbeb4b540cb049b3ebb4e7a0864675c3e282a7a78531de326b7",
+  "research/FRESH_SHORT_v1/short.py": "25db845a3b57e444970a5151142d0dd142807e97736024c47868234f721be51a"
+ }
+}

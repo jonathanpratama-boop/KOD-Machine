@@ -1,0 +1,13 @@
+{
+ "id": "FRESH_SHORT_v1_registered",
+ "experiment": "FRESH_SHORT_v1",
+ "date": "2026-10-30",
+ "hypothesis": "on US +30% spikes 2025-11-03..2026-03-31 (1080 events built before outcomes), a period no KOD study has read: the redesigned paper short of LEARNER v2.4's certified next-day dump calls (short at the next open, stop 1.30x, else cover at the 5th close) has a positive mean net return per trade under TYPICAL costs with a one-sided 95% session-bootstrap lower bound above zero; beside it, v2.4's registered AUC claim on the same period",
+ "one_sided_p": null,
+ "p_source": "research/FRESH_SHORT_v1/protocol.json",
+ "variants_searched": 0,
+ "outcome": "PENDING (frozen before any outcome was read)",
+ "counted": false,
+ "registered": "2026-10-30",
+ "sealed_data_read": "US 2025-11-03..2026-03-31 outcomes, once, on the owner's instruction of 2026-10-30"
+}

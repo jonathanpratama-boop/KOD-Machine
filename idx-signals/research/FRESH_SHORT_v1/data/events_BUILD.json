@@ -1,0 +1,453 @@
+{
+ "built_at": "2026-10-30T10:00:40Z",
+ "manifest": "yahoo_us_replay-20261030T071025Z.jsonl",
+ "manifest_sha256": "fe1ef19e7bb75bdf72a146809d7d298378323fb48d9a4da016a91408de6d069f",
+ "pull": {
+  "first_session": "2025-09-25",
+  "last_session": "2026-10-29",
+  "sessions": 276,
+  "names": 5701,
+  "preprocessing": "causal (purpose=scoring): no row removed with a later bar"
+ },
+ "range": [
+  "2025-11-03",
+  "2026-03-31"
+ ],
+ "events": 1080,
+ "skipped": {
+  "no_twins": 0,
+  "features": 0
+ },
+ "per_session": {
+  "2025-11-03": {
+   "flagged": 5,
+   "built": 5
+  },
+  "2025-11-04": {
+   "flagged": 5,
+   "built": 5
+  },
+  "2025-11-05": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2025-11-06": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2025-11-07": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2025-11-10": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2025-11-11": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2025-11-12": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2025-11-13": {
+   "flagged": 4,
+   "built": 4
+  },
+  "2025-11-14": {
+   "flagged": 4,
+   "built": 4
+  },
+  "2025-11-17": {
+   "flagged": 9,
+   "built": 9
+  },
+  "2025-11-18": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2025-11-19": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2025-11-20": {
+   "flagged": 7,
+   "built": 7
+  },
+  "2025-11-21": {
+   "flagged": 6,
+   "built": 6
+  },
+  "2025-11-24": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2025-11-25": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2025-11-26": {
+   "flagged": 7,
+   "built": 7
+  },
+  "2025-11-28": {
+   "flagged": 7,
+   "built": 7
+  },
+  "2025-12-01": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2025-12-02": {
+   "flagged": 6,
+   "built": 6
+  },
+  "2025-12-03": {
+   "flagged": 9,
+   "built": 9
+  },
+  "2025-12-04": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2025-12-05": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2025-12-08": {
+   "flagged": 17,
+   "built": 17
+  },
+  "2025-12-09": {
+   "flagged": 13,
+   "built": 13
+  },
+  "2025-12-10": {
+   "flagged": 14,
+   "built": 14
+  },
+  "2025-12-11": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2025-12-12": {
+   "flagged": 14,
+   "built": 14
+  },
+  "2025-12-15": {
+   "flagged": 7,
+   "built": 7
+  },
+  "2025-12-16": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2025-12-17": {
+   "flagged": 6,
+   "built": 6
+  },
+  "2025-12-18": {
+   "flagged": 9,
+   "built": 9
+  },
+  "2025-12-19": {
+   "flagged": 14,
+   "built": 14
+  },
+  "2025-12-22": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2025-12-23": {
+   "flagged": 9,
+   "built": 9
+  },
+  "2025-12-24": {
+   "flagged": 6,
+   "built": 6
+  },
+  "2025-12-26": {
+   "flagged": 7,
+   "built": 7
+  },
+  "2025-12-29": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2025-12-30": {
+   "flagged": 13,
+   "built": 13
+  },
+  "2025-12-31": {
+   "flagged": 3,
+   "built": 3
+  },
+  "2026-01-02": {
+   "flagged": 42,
+   "built": 42
+  },
+  "2026-01-05": {
+   "flagged": 15,
+   "built": 15
+  },
+  "2026-01-06": {
+   "flagged": 9,
+   "built": 9
+  },
+  "2026-01-07": {
+   "flagged": 14,
+   "built": 14
+  },
+  "2026-01-08": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-01-09": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-01-12": {
+   "flagged": 6,
+   "built": 6
+  },
+  "2026-01-13": {
+   "flagged": 16,
+   "built": 16
+  },
+  "2026-01-14": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-01-15": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-01-16": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-01-20": {
+   "flagged": 16,
+   "built": 16
+  },
+  "2026-01-21": {
+   "flagged": 15,
+   "built": 15
+  },
+  "2026-01-22": {
+   "flagged": 15,
+   "built": 15
+  },
+  "2026-01-23": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2026-01-26": {
+   "flagged": 13,
+   "built": 13
+  },
+  "2026-01-27": {
+   "flagged": 17,
+   "built": 17
+  },
+  "2026-01-28": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2026-01-29": {
+   "flagged": 9,
+   "built": 9
+  },
+  "2026-01-30": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-02-02": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-02-03": {
+   "flagged": 7,
+   "built": 7
+  },
+  "2026-02-04": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-02-05": {
+   "flagged": 3,
+   "built": 3
+  },
+  "2026-02-06": {
+   "flagged": 14,
+   "built": 14
+  },
+  "2026-02-09": {
+   "flagged": 14,
+   "built": 14
+  },
+  "2026-02-10": {
+   "flagged": 13,
+   "built": 13
+  },
+  "2026-02-11": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2026-02-12": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-02-13": {
+   "flagged": 15,
+   "built": 15
+  },
+  "2026-02-17": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-02-18": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-02-19": {
+   "flagged": 7,
+   "built": 7
+  },
+  "2026-02-20": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-02-23": {
+   "flagged": 6,
+   "built": 6
+  },
+  "2026-02-24": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-02-25": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-02-26": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-02-27": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-03-02": {
+   "flagged": 14,
+   "built": 14
+  },
+  "2026-03-03": {
+   "flagged": 13,
+   "built": 13
+  },
+  "2026-03-04": {
+   "flagged": 17,
+   "built": 17
+  },
+  "2026-03-05": {
+   "flagged": 14,
+   "built": 14
+  },
+  "2026-03-06": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-03-09": {
+   "flagged": 18,
+   "built": 18
+  },
+  "2026-03-10": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-03-11": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2026-03-12": {
+   "flagged": 9,
+   "built": 9
+  },
+  "2026-03-13": {
+   "flagged": 5,
+   "built": 5
+  },
+  "2026-03-16": {
+   "flagged": 5,
+   "built": 5
+  },
+  "2026-03-17": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-03-18": {
+   "flagged": 6,
+   "built": 6
+  },
+  "2026-03-19": {
+   "flagged": 9,
+   "built": 9
+  },
+  "2026-03-20": {
+   "flagged": 7,
+   "built": 7
+  },
+  "2026-03-23": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-03-24": {
+   "flagged": 7,
+   "built": 7
+  },
+  "2026-03-25": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-03-26": {
+   "flagged": 16,
+   "built": 16
+  },
+  "2026-03-27": {
+   "flagged": 9,
+   "built": 9
+  },
+  "2026-03-30": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2026-03-31": {
+   "flagged": 17,
+   "built": 17
+  }
+ },
+ "output": "events.csv.gz",
+ "sha256": "f5a1cff95f4f47a15e58192492723c22e9f246a17c6f6922b7c562e73bda82ed",
+ "coverage": {
+  "has_edgar": 0.9981481481481481,
+  "has_short": 0.9157407407407407,
+  "has_shares": 0.27314814814814814,
+  "filing_8k": 0.3333333333333333,
+  "offering90": 0.42314814814814816,
+  "revsplit6m": 0.14722222222222223
+ },
+ "code_pins": {
+  "idxsig/learner3.py": "38951c27b6acd2d7fe9cc19c8a8a500a3ce7809f8aaf4b12823095fe089cfcd8",
+  "idxsig/learner2.py": "671f86848ad5ee0a9bd3488a17b788c3459f5499c82a39386bef2dc611f2b9e6",
+  "idxsig/speculation.py": "85042402e5d0040356e7d37d7240421bc679a371be51a4bad20438a3759047f3",
+  "idxsig/paper.py": "36e13a1d910ed07a407cda3f2acca22e37e9b60950b709df6552446d2a1b76f1",
+  "idxsig/rules/moonshot_g.py": "b050c4d37d9104309b32e70a7e81682ee3029da3a6a0654dae6ac41414abb794",
+  "idxsig/global_panel.py": "2234f5e24a06854b85eb3379dd7d9e1958e0a498c31f410acc9811c7448c79d0",
+  "idxsig/execution.py": "408d1fbd57c6604f31f18f12dab056848869ed99e6ed6e9b39df7047d1b40785"
+ },
+ "sec_day_dir": "data/raw/sec/recent_replay_v1",
+ "edgar_responses": 783,
+ "reads": "features only: no bar after the signal session, no plan, no outcome"
+}
