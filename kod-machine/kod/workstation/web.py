@@ -33,6 +33,7 @@ from .financials import FinancialRepository
 from .policy import DAY_END, STRICT, AsOfPolicy, eligibility
 from .services import ResearchService
 from .store import Store
+from .forecasts import ForecastArchive, ForecastUnavailable
 from .replay import ReplayArchive, ReplayUnavailable
 from .research import ResearchArchive, ResearchUnavailable
 
@@ -384,7 +385,9 @@ def _policy_query(policy):
     return urlencode({"as_of": policy.as_dict()["cutoff"], "mode": policy.mode, "policy": name})
 
 
-def create_app(data_dir, offline=False, service=None, *, testing=False, replay_db=None):
+def create_app(
+    data_dir, offline=False, service=None, *, testing=False, replay_db=None, forecast_dir=None
+):
     """Build an app with explicit runtime state; no import-time IO or collection."""
     app = FastAPI(title="KOD Workstation", docs_url=None, redoc_url=None)
     app.add_middleware(LocalBoundary)
@@ -395,7 +398,10 @@ def create_app(data_dir, offline=False, service=None, *, testing=False, replay_d
     app.state.service = service or ResearchService(Store(Path(data_dir)))
     app.state.store = app.state.service.store
     app.state.offline = bool(offline)
-    app.state.replay_db = Path(replay_db) if replay_db is not None else ASSETS.parents[1] / "var" / "kod.db"
+    app.state.replay_db = (
+        Path(replay_db) if replay_db is not None else ASSETS.parents[1] / "var" / "kod.db"
+    )
+    app.state.forecast_dir = Path(forecast_dir) if forecast_dir is not None else None
     signing_key = secrets.token_bytes(32)
     templates = Jinja2Templates(directory=str(ASSETS / "templates"))
     templates.env.filters.update(moment=_display_time, number=_number)
@@ -487,7 +493,9 @@ def create_app(data_dir, offline=False, service=None, *, testing=False, replay_d
         try:
             cases = ReplayArchive(app.state.replay_db).cases()
         except (ReplayUnavailable, OSError, sqlite3.Error):
-            ledger_error = "The frozen case ledger is unavailable. Company evidence remains accessible."
+            ledger_error = (
+                "The frozen case ledger is unavailable. Company evidence remains accessible."
+            )
         population, population_error = [], None
         try:
             from .research import ResearchArchive
@@ -498,13 +506,20 @@ def create_app(data_dir, offline=False, service=None, *, testing=False, replay_d
                 raise
             population_error = "Preserved research adapter not connected."
         except (OSError, ValueError):
-            population_error = "Preserved research catalog is unavailable; no study results were substituted."
+            population_error = (
+                "Preserved research catalog is unavailable; no study results were substituted."
+            )
         return render(
-            request, "investigate.html", page="investigate",
-            cutoff=chosen.as_dict()["cutoff"], query=_policy_query(chosen),
-            cases=cases, ledger_error=ledger_error,
+            request,
+            "investigate.html",
+            page="investigate",
+            cutoff=chosen.as_dict()["cutoff"],
+            query=_policy_query(chosen),
+            cases=cases,
+            ledger_error=ledger_error,
             workbench_query=lambda **params: urlencode(params),
-            population=population, population_error=population_error,
+            population=population,
+            population_error=population_error,
         )
 
     @app.get("/research/{study_id}", response_class=HTMLResponse)
@@ -518,7 +533,11 @@ def create_app(data_dir, offline=False, service=None, *, testing=False, replay_d
         except ResearchUnavailable as exc:
             raise HTTPException(404, str(exc)) from exc
         return render(
-            request, "research.html", page="investigate", study=study, as_of=cutoff,
+            request,
+            "research.html",
+            page="investigate",
+            study=study,
+            as_of=cutoff,
             research_now=app.state.service.clock(),
             research_query=lambda **params: urlencode(params),
         )
@@ -542,12 +561,15 @@ def create_app(data_dir, offline=False, service=None, *, testing=False, replay_d
                     raise HTTPException(404, "Replay event not found.")
                 selected = selected or max(
                     (c for c in cases if c["call_type"] != "SIMULATED"),
-                    key=lambda c: c["opened_at"], default=cases[0],
+                    key=lambda c: c["opened_at"],
+                    default=cases[0],
                 )
                 cutoff = as_of.strip() or selected["decision_cutoff"]
                 snapshot = replay.snapshot(
-                    selected["case_id"], cutoff,
-                    reveal_outcome=reveal == "outcome", minimum_grade=minimum_grade,
+                    selected["case_id"],
+                    cutoff,
+                    reveal_outcome=reveal == "outcome",
+                    minimum_grade=minimum_grade,
                 )
         except ReplayUnavailable as exc:
             error = str(exc)
@@ -556,11 +578,51 @@ def create_app(data_dir, offline=False, service=None, *, testing=False, replay_d
         except (OSError, sqlite3.Error):
             error = "The preserved ledger is unavailable. Replay reads the existing var/kod.db; it does not create a replacement or fetch live data."
         return render(
-            request, "replay.html", page="replay", cases=cases,
-            selected=selected, snapshot=snapshot, replay_error=error,
-            minimum_grade=minimum_grade, outcome_requested=reveal == "outcome",
+            request,
+            "replay.html",
+            page="replay",
+            cases=cases,
+            selected=selected,
+            snapshot=snapshot,
+            replay_error=error,
+            minimum_grade=minimum_grade,
+            outcome_requested=reveal == "outcome",
             replay_query=lambda **params: urlencode(params),
             replay_now=app.state.service.clock(),
+        )
+
+    @app.get("/forecasts", response_class=HTMLResponse)
+    def forecast_replay(request: Request, set_id: str = "", as_of: str = "", reveal: str = ""):
+        """Read a sealed market forecast at a chosen moment; never recompute, fetch or write."""
+        forecasts, snap, error = [], None, None
+        try:
+            archive = ForecastArchive(app.state.forecast_dir)
+            forecasts = archive.forecasts()
+            if forecasts:
+                chosen = next((f for f in forecasts if f["set_id"] == set_id), None)
+                if set_id and chosen is None:
+                    raise HTTPException(404, "Forecast not found.")
+                chosen = chosen or forecasts[0]
+                snap = archive.snapshot(
+                    chosen["set_id"],
+                    as_of.strip() or chosen["made_at"],
+                    reveal_outcome=reveal == "outcome",
+                )
+        except ForecastUnavailable as exc:
+            error = str(exc)
+        except ValueError as exc:
+            raise HTTPException(400, str(exc)) from exc
+        except OSError:
+            error = "The forecast ledger is unavailable. This page reads idx-signals/paper; it creates nothing."
+        return render(
+            request,
+            "forecasts.html",
+            page="forecasts",
+            forecast_list=forecasts,
+            snap=snap,
+            forecast_error=error,
+            outcome_requested=reveal == "outcome",
+            forecast_query=lambda **params: urlencode(params),
         )
 
     @app.get("/", response_class=HTMLResponse)

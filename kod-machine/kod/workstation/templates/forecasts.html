@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Forecast replay · KOD{% endblock %}
+{% block content %}
+<div class="breadcrumbs"><a href="/investigate">Evidence workbench</a><span>/</span>Forecast replay</div>
+<div class="page-heading"><div><div class="eyebrow">SEALED MARKET FORECASTS</div><h1>What KOD said, and when<span class="title-dot">.</span></h1><p>Open a sealed forecast at any moment. You see only what existed then; the outcome stays hidden until you ask.</p></div><span class="badge neutral">Read only</span></div>
+{% if forecast_error %}<section class="panel error-panel"><h2>Replay unavailable</h2><p>{{ forecast_error }}</p></section>
+{% elif not forecast_list %}<section class="panel empty-state"><h2>No sealed forecasts</h2><p>The forecast ledger has no records. Nothing has been generated or fetched.</p></section>
+{% else %}
+<form class="filter-bar panel replay-controls" action="/forecasts" method="get">
+<label>1 · Select a forecast<select name="set_id" id="forecast-set">{% for f in forecast_list %}<option value="{{ f.set_id }}" {% if snap.set_id == f.set_id %}selected{% endif %}>{{ f.ticker }} · spike on {{ f.signal_session }}</option>{% endfor %}</select></label>
+<label>2 · Choose a moment (UTC)<input id="forecast-cutoff" name="as_of" value="{{ snap.as_of }}" placeholder="2026-10-30T13:30:00Z" maxlength="40" required></label>
+<button class="button" type="submit">Show</button>
+</form>
+<nav class="replay-timeline" aria-label="Recorded moments">{% for instant in snap.timeline %}<a class="button secondary" {% if snap.as_of == instant %}aria-current="step"{% endif %} href="/forecasts?{{ forecast_query(set_id=snap.set_id, as_of=instant) }}"><span>{% if snap.forecast and instant == snap.forecast.made_at %}Forecast made{% elif snap.set and instant == snap.set.entry_cutoff %}Entry cutoff{% elif loop.first %}Set sealed{% else %}Outcome recorded{% endif %}<small>{{ instant|moment }}</small></span></a>{% endfor %}</nav>
+<div class="replay-grid">
+<section class="panel" aria-labelledby="fc-set"><div class="panel-heading"><div><div class="eyebrow">01 / THE SPIKE</div><h2 id="fc-set">{{ snap.ticker }} on {{ snap.signal_session }}</h2></div><span class="badge neutral">Original</span></div>
+{% if snap.set %}<div class="replay-copy"><p>Sealed {{ snap.set.sealed_at|moment }} · entry cutoff {{ snap.set.entry_cutoff|moment }}</p><p><b>Matched twins</b> ({{ snap.set.twins_match_level }}): {{ snap.set.twins|join(', ') }}</p><details><summary>Spike-day numbers</summary><pre class="replay-json">{{ snap.set.signal|tojson(indent=2) }}</pre></details></div>
+{% else %}<div class="empty-state compact"><h3>Not sealed yet at this moment</h3><p>The register had not recorded this spike.</p></div>{% endif %}
+</section>
+<section class="panel" aria-labelledby="fc-call"><div class="panel-heading"><div><div class="eyebrow">02 / THE FORECAST</div><h2 id="fc-call">The original, unchanged</h2></div><span class="badge neutral">Original</span></div>
+{% if snap.forecast %}{% for s in snap.forecast.statements %}<article class="document-item"><b>{{ 'Headline: ' if s.headline }}{{ s.meaning }}</b>
+<p class="replay-fact"><b>KOD</b><span>{{ '%.0f'|format(s.raw * 100) }}%</span></p><p class="replay-fact"><b>Benchmark</b><span>{{ '%.0f'|format(s.bench * 100) }}%</span></p><p class="replay-fact"><b>Base rate</b><span>{{ '%.0f'|format(s.anchor * 100) }}%</span></p><p class="replay-fact"><b>Published (earned confidence)</b><span>{{ '%.0f'|format(s.published * 100) }}%</span></p>
+{% if s.call.side %}<p><span class="badge amber">{{ s.call.side }}</span> {{ s.call.thesis }}</p>{% endif %}
+{% if s.why %}<p class="field-help">Biggest reasons: {% for w in s.why %}{{ w.label }} ({{ '%+.2f'|format(w.logit) }}){{ ', ' if not loop.last }}{% endfor %}</p>{% endif %}</article>{% endfor %}
+<p class="field-help">Made {{ snap.forecast.made_at|moment }} by {{ snap.forecast.learner }} · {{ snap.forecast.provenance.sources_read }} preserved sources read</p>
+<details><summary>All {{ snap.forecast.features|length }} recorded inputs</summary><pre class="replay-json">{{ snap.forecast.features|tojson(indent=2) }}</pre></details>
+{% else %}<div class="empty-state compact"><h3>No forecast yet at this moment</h3><p>A forecast made later cannot be shown as what KOD said then.</p></div>{% endif %}
+</section>
+</div>
+<section class="panel replay-outcome" aria-labelledby="fc-outcome"><div class="panel-heading"><div><div class="eyebrow">03 / SEPARATE REVEAL</div><h2 id="fc-outcome">What happened</h2><p>{{ snap.outcome_status }}</p></div>{% if not outcome_requested %}<a class="button secondary" href="/forecasts?{{ forecast_query(set_id=snap.set_id, as_of=snap.as_of, reveal='outcome') }}">Reveal outcome</a>{% else %}<a class="button secondary" href="/forecasts?{{ forecast_query(set_id=snap.set_id, as_of=snap.as_of) }}">Hide outcome</a>{% endif %}</div>
+{% if snap.outcome %}<div class="replay-copy">{% for o in snap.outcome %}<p class="replay-fact"><b>{{ o.window }} · {{ o.statement }}</b><span>{{ 'happened' if o.outcome else 'did not happen' }}{% if o.twins_rate is not none %} · twins {{ '%.0f'|format(o.twins_rate * 100) }}%{% endif %}</span></p>{% endfor %}</div>{% endif %}</section>
+<section class="replay-provenance"><p>{{ snap.integrity.chains }}.</p><p>Forecast record <code>{{ snap.integrity.forecast_record }}</code> · outside timestamps: {{ snap.integrity.external_timestamps|join(', ') or 'none' }}</p><p>Set record <code>{{ snap.integrity.set_record }}</code></p>{% if snap.forecast %}<p>{{ snap.forecast.reproduce }}</p>{% endif %}</section>
+{% endif %}
+{% endblock %}
