@@ -39,7 +39,7 @@ from .provenance import (
     rel,
     sha256_file,
     utc_stamp,
-    write_csv_gz_exclusive,
+    write_csv_gz_exclusive, build_stamp, publish_bytes, latest_panel_manifest,
 )
 
 PANEL_FORMAT = "panel-v2"
@@ -254,7 +254,7 @@ def build(mirror_manifest: Path | None = None, yahoo_manifest: Path | None = Non
     for col in INT_COLUMNS:
         panel[col] = panel[col].round().astype("Int64")
     PANEL_DIR.mkdir(parents=True, exist_ok=True)
-    stamp = utc_stamp().replace("-", "").replace(":", "")
+    stamp = build_stamp()
     path = PANEL_DIR / f"panel-{stamp}.csv.gz"
     out = panel.copy()
     out["date"] = out["date"].dt.strftime("%Y-%m-%d")
@@ -272,7 +272,7 @@ def build(mirror_manifest: Path | None = None, yahoo_manifest: Path | None = Non
         "columns": COLUMNS,
         "panel": rel(path),
         "sha256": sha256_file(path),
-        "built_at": utc_stamp(),
+        "built_at": utc_stamp(), "publication_id": stamp,
         "inputs": {
             m.name: {"sha256": sha256_file(m), "path": rel(m)} for m in (mirror_manifest, yahoo_manifest)
         },
@@ -317,14 +317,13 @@ def build(mirror_manifest: Path | None = None, yahoo_manifest: Path | None = Non
         },
     }
     mpath = MANIFESTS / f"panel-{stamp}.json"
-    with mpath.open("x", encoding="utf-8") as fh:
-        fh.write(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
+    publish_bytes(mpath, (json.dumps(manifest, indent=2, sort_keys=True) + "\n").encode("utf-8"))
     log(f"panel {rel(path)} rows {len(panel)} tickers {manifest['tickers']} sessions {manifest['sessions']}")
     return mpath
 
 
 def load(panel_manifest: Path | None = None) -> tuple[pd.DataFrame, dict, Path]:
-    panel_manifest = Path(panel_manifest or latest_manifest("panel", ".json"))
+    panel_manifest = Path(panel_manifest or latest_panel_manifest("panel"))
     meta = json.loads(panel_manifest.read_text(encoding="utf-8"))
     path = PKG_ROOT / meta["panel"]
     if not path.exists():

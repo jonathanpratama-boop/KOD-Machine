@@ -68,6 +68,8 @@ model, so every earlier run reproduces unchanged.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from numbers import Integral, Real
+import math
 
 import numpy as np
 import pandas as pd
@@ -157,21 +159,69 @@ class ExecConfig:
     # the price received) added to the per-side costs, for the rule and the random baselines alike: the
     # closing-auction spread the flat fee model otherwise lacks. Default off: every recorded run is unchanged.
     tick_cost: bool = False
+    # Return-only counterfactual scoring may explicitly omit capacity sizing. Never
+    # disabled by normal backtests; its paper outcome records the assumption.
+    capacity_check: bool = True
 
     def __post_init__(self):
-        # Chronology belongs to the configuration, not to the caller: the signal is read at the close of session s and
-        # the position is entered at s + entry_lag, so a lag below one session would trade before the signal existed.
-        if int(self.entry_lag) < 1:
-            raise ValueError(f"entry_lag must be at least 1 session (got {self.entry_lag}): a trade cannot be entered "
-                             "before the session that produced its signal")
-        if int(self.holding_days) < 0:
-            raise ValueError(f"holding_days cannot be negative (got {self.holding_days})")
+        validate_execution_config(self)
 
     @property
     def plan(self) -> dict:
         return {"entry_rule": self.entry_rule, "entry_window": self.entry_window if self.entry_rule != "fixed"
                 else self.entry_lag, "exit_rule": self.exit_rule, "holding_days": self.holding_days,
                 "side": self.side}
+
+
+def validate_execution_config(cfg) -> None:
+    """Validate the resolved daily-session contract, including direct engine callers.
+
+    A zero holding period is a supported same-session exit. Signals are computed
+    after a completed session, so entry lag must be strictly positive.
+    """
+    for name, minimum in (("entry_lag", 1), ("holding_days", 0), ("entry_window", 1), ("lot_size", 1)):
+        value = getattr(cfg, name)
+        if isinstance(value, (bool, np.bool_)) or not isinstance(value, Integral) or value < minimum:
+            raise ValueError(f"{name} must be an integer >= {minimum} (got {value!r})")
+    for name, value, positive in (("notional", cfg.notional, True),
+                                  ("max_participation", cfg.max_participation, True),
+                                  ("fee_buy", cfg.fees.buy, False), ("fee_sell", cfg.fees.sell, False)):
+        if isinstance(value, (bool, np.bool_)) or not isinstance(value, Real) or not math.isfinite(value) or value < 0 or (positive and value == 0):
+            raise ValueError(f"{name} must be finite and {'positive' if positive else 'nonnegative'}")
+    if cfg.max_participation > 1:
+        raise ValueError("max_participation must not exceed 1")
+    if not isinstance(cfg.capacity_check, bool):
+        raise ValueError("capacity_check must be a boolean")
+    for name, minimum in (("carry_per_session", None), ("liquidation", 0), ("jump_ratio", 1)):
+        value = getattr(cfg, name)
+        if value is None and name != "carry_per_session":
+            continue
+        if isinstance(value, (bool, np.bool_)) or not isinstance(value, Real) or not math.isfinite(value):
+            raise ValueError(f"{name} must be finite")
+        if minimum is not None and value <= minimum:
+            raise ValueError(f"{name} must exceed {minimum}")
+    # Signed finite funding is permitted: a negative rate is a funding credit.
+    previous_bound = 0
+    for tier in cfg.cost_tiers:
+        if not isinstance(tier, (tuple, list)) or len(tier) != 2:
+            raise ValueError("cost_tiers must contain (price upper bound, extra fee) pairs")
+        bound, cost = tier
+        if isinstance(bound, (bool, np.bool_)) or not isinstance(bound, Real) or math.isnan(bound) or bound <= previous_bound:
+            raise ValueError("cost_tier bounds must be positive and strictly increasing; +inf may be last")
+        if isinstance(cost, (bool, np.bool_)) or not isinstance(cost, Real) or not math.isfinite(cost) or cost < 0:
+            raise ValueError("cost_tier fees must be finite and nonnegative")
+        previous_bound = bound
+    if cfg.entry_price not in ("open", "close") or cfg.data_end_exit not in ("last_close", "zero"):
+        raise ValueError("unsupported entry_price or data_end_exit")
+
+
+def _indices(values, size: int, name: str) -> np.ndarray:
+    raw = np.asarray(values)
+    if raw.ndim != 1 or (raw.size and raw.dtype.kind not in "iu"):
+        raise ValueError(f"{name} must be a one-dimensional integer array")
+    if raw.size and (np.any(raw < 0) or np.any(raw >= size)):
+        raise ValueError(f"{name} contains an index outside [0, {size})")
+    return raw.astype(np.int64)
 
 
 def _snap_ratio(r: np.ndarray) -> np.ndarray:
@@ -470,8 +520,11 @@ def _tier_costs(price: np.ndarray, tiers: tuple) -> np.ndarray:
 
 def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfig) -> dict:
     """Simulate one trade per (ticker index, signal session index). Vectorized."""
-    tick_idx = np.asarray(tick_idx, dtype=np.int64)
-    sig_idx = np.asarray(sig_idx, dtype=np.int64)
+    validate_execution_config(cfg)
+    tick_idx = _indices(tick_idx, m.shape[0], "ticker indices")
+    sig_idx = _indices(sig_idx, m.shape[1], "signal indices")
+    if len(tick_idx) != len(sig_idx):
+        raise ValueError("ticker and signal index arrays must have equal lengths")
     n_trades = len(tick_idx)
     n_sessions = m.shape[1]
     status = np.full(n_trades, -1, dtype=np.int64)
@@ -553,7 +606,8 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     else:  # FILL-B-v2: every session's volume in the entry session's share units
         capacity = decision_capacity(m.volume, m.present, uf, tick_idx, sig_idx, e)
     too_big = shares_traded > cfg.max_participation * np.nan_to_num(capacity)
-    status[open_ & too_big] = STATUS.index("SKIP_LIQUIDITY")
+    if cfg.capacity_check:
+        status[open_ & too_big] = STATUS.index("SKIP_LIQUIDITY")
     open_ = status < 0
 
     # Exit search.

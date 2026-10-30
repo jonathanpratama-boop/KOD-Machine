@@ -20,7 +20,8 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
-from ..provenance import RAW, rel, sha256_bytes, utc_stamp, write_manifest
+from ..provenance import publish_bytes, RAW, exclusive_lock, rel, sha256_bytes, utc_stamp, write_manifest
+from .resume import bind_request, save_raw, verify_cached
 
 CHART = (
     "https://query1.finance.yahoo.com/v8/finance/chart/{symbol}"
@@ -79,6 +80,10 @@ def fetch(tickers: list[str], out_dir: Path | None = None, sleep: float = 0.35, 
     days: only the last `days` calendar days (live scans), written under a different
     manifest prefix so the panel builder never takes a short pull for full history."""
     started = datetime.now(timezone.utc)
+    if days is not None and (isinstance(days, bool) or not isinstance(days, int) or days < 1):
+        raise ValueError("days must be a positive integer")
+    if days is not None and start is not None:
+        raise ValueError("choose start or days, not both")
     if (days is not None or start is not None or suffix != ".JK") and prefix == "yahoo":
         raise ValueError("a partial or non-IDX pull needs its own manifest prefix")
     p1 = 0 if days is None else int(started.timestamp()) - days * 86400
@@ -86,58 +91,66 @@ def fetch(tickers: list[str], out_dir: Path | None = None, sleep: float = 0.35, 
         p1 = int(datetime.fromisoformat(start).replace(tzinfo=timezone.utc).timestamp())
     out_dir = out_dir or RAW / prefix / started.strftime("%Y%m%dT%H%M%SZ")
     out_dir.mkdir(parents=True, exist_ok=True)
-    progress = out_dir / "_progress.jsonl"
-    done = {}
-    if progress.exists():
-        for line in progress.read_text(encoding="utf-8").splitlines():
-            rec = json.loads(line)
-            if rec["http_status"] in (200, 404):
-                done[rec["ticker"]] = rec
-    p2 = int(started.timestamp())
-    lock = threading.Lock()
+    with exclusive_lock(out_dir / "_download"):
+        request = {"provider": SOURCE, "endpoint": CHART, "interval": "1d", "start": start,
+                   "days": days, "suffix": suffix, "prefix": prefix, "tickers": sorted(set(tickers)),
+                   "adapter": "yahoo-request-v1"}
+        bound = bind_request(out_dir, request, {"p1": p1, "p2": int(started.timestamp())}, utc_stamp(started))
+        p1, p2 = bound["window"]["p1"], bound["window"]["p2"]
+        progress = out_dir / "_progress.jsonl"
+        done = {}
+        if progress.exists():
+            for line in progress.read_text(encoding="utf-8").splitlines():
+                rec = json.loads(line)
+                if rec["http_status"] in (200, 404):
+                    verify_cached(rec, out_dir)
+                    done[rec["ticker"]] = rec
+        lock = threading.Lock()
 
-    def one(ticker):
-        status, body, url = fetch_one(ticker, p2, p1=p1, suffix=suffix)
-        stamp = utc_stamp()
-        ext = f"{suffix}.json" if status == 200 else f"{suffix}.error.json"
-        path = out_dir / f"{ticker}{ext}"
-        path.write_bytes(body)
-        try:
-            summary = _summary(json.loads(body))
-        except (json.JSONDecodeError, UnicodeDecodeError):
-            summary = {"error": "response was not JSON"}
-        rec = {"ticker": ticker, "path": rel(path), "source": SOURCE, "source_url": url, "downloaded_at": stamp,
-               "http_status": status, "bytes": len(body), "sha256": sha256_bytes(body), "terms": TERMS, **summary}
-        with lock:
-            prog.write(json.dumps(rec, sort_keys=True) + "\n")
-            prog.flush()
-            done[ticker] = rec
-            if len(done) % 100 == 0:
-                log(f"yahoo {len(done)}/{len(set(tickers))} {ticker} {status}")
-        time.sleep(sleep)
+        def one(ticker):
+            status, body, url = fetch_one(ticker, p2, p1=p1, suffix=suffix)
+            stamp = utc_stamp()
+            ext = f"{suffix}.json" if status == 200 else f"{suffix}.error.json"
+            path = out_dir / f"{ticker}{ext}"
+            path = save_raw(path, body)
+            try:
+                summary = _summary(json.loads(body))
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                summary = {"error": "response was not JSON"}
+            rec = {"ticker": ticker, "path": rel(path), "source": SOURCE, "source_url": url, "downloaded_at": stamp,
+                   "http_status": status, "bytes": len(body), "sha256": sha256_bytes(body), "terms": TERMS, **summary}
+            with lock:
+                before = progress.read_bytes() if progress.exists() else b""
+                publish_bytes(progress, before + (json.dumps(rec, sort_keys=True) + "\n").encode(), replace=True)
+                done[ticker] = rec
+                if len(done) % 100 == 0:
+                    log(f"yahoo {len(done)}/{len(set(tickers))} {ticker} {status}")
+            time.sleep(sleep)
 
-    todo = [t for t in sorted(set(tickers)) if t not in done]
-    with progress.open("a", encoding="utf-8") as prog:
+        todo = [t for t in sorted(set(tickers)) if t not in done]
         if workers <= 1:
             for t in todo:
                 one(t)
         else:
             with ThreadPoolExecutor(max_workers=workers) as pool:
                 list(pool.map(one, todo))
-    if not finalize:
-        return None
-    records = [done[t] for t in sorted(done) if t in set(tickers)]
-    header = {
-        "source": SOURCE,
-        "description": "Yahoo Finance v8 chart, daily bars, " + (
-            f"from {start}" if start else "full history" if days is None else f"last {days} days")
-                       + ", split events and dividends" + (f", symbols suffixed {suffix!r}" if suffix else ", US symbols"),
-        "started_at": min((r["downloaded_at"] for r in records), default=utc_stamp(started)),
-        "finished_at": utc_stamp(),
-        "raw_dir": rel(out_dir),
-        "requested": len(set(tickers)),
-        "ok": sum(1 for r in records if r["http_status"] == 200 and r.get("rows")),
-        "not_found": sum(1 for r in records if r["http_status"] == 404),
-        "failed": sum(1 for r in records if r["http_status"] not in (200, 404)),
-    }
-    return write_manifest(f"{prefix}-{started.strftime('%Y%m%dT%H%M%SZ')}.jsonl", header, records)
+        if not finalize:
+            return None
+        records = [done[t] for t in sorted(done) if t in set(tickers)]
+        header = {
+            "source": SOURCE,
+            "request": bound,
+            "coverage_window": bound["window"],
+            "description": "Yahoo Finance v8 chart, daily bars, " + (
+                f"from {start}" if start else "full history" if days is None else f"{days}-day window pinned at {bound['started_at']}")
+                           + ", split events and dividends" + (f", symbols suffixed {suffix!r}" if suffix else ", US symbols"),
+            "started_at": bound["started_at"],
+            "finished_at": utc_stamp(),
+            "raw_dir": rel(out_dir),
+            "requested": len(set(tickers)),
+            "ok": sum(1 for r in records if r["http_status"] == 200 and r.get("rows")),
+            "not_found": sum(1 for r in records if r["http_status"] == 404),
+            "failed": sum(1 for r in records if r["http_status"] not in (200, 404)),
+        }
+        return write_manifest(f"{prefix}-{started.strftime('%Y%m%dT%H%M%SZ')}.jsonl", header, records)
+

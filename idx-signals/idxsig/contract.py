@@ -1,4 +1,4 @@
-"""EXEC-US-v2.1: one trading contract for US daily-bar strategies, account included.
+"""Versioned US daily-bar trading contracts, account included.
 
 Historical replay and forward paper scoring both drive `Account.step`, one session at a time, on
 data through that session only. Replay calls it over a stored panel. Forward scoring calls it each
@@ -16,7 +16,8 @@ Saved state never depends on how a download is laid out:
 
 v2 (commit 21eb6aa) stored row and column numbers and adjusted-basis quantities, sized with the
 exit cost at the entry price's tier, and let exits fill on sessions without trades; v2.1 fixes all
-four (research/EXEC_US_v2_1/README.md). Legacy execution is untouched: EXEC-US-v1 (exec_us.py,
+four (research/EXEC_US_v2_1/README.md). The opt-in v2.2 rechecks entry sizing after a split changes
+the price-dependent cost tiers; the default remains v2.1 for historical replay. Legacy execution is untouched: EXEC-US-v1 (exec_us.py,
 PAPER-POLICY-v5) and the backtest fill models A, B, B2 and C (execution.py).
 
 Units: the panel is split-adjusted, and as-traded = adjusted x unit_factor F (verified split
@@ -30,12 +31,23 @@ import hashlib
 import json
 import math
 from dataclasses import asdict, dataclass
+from numbers import Integral, Real
 
 import numpy as np
 
 from .exec_us import US, cost_rate, floor_tick, tick
 
-CONTRACT_VERSION = "EXEC-US-v2.1"
+CONTRACT_VERSION = "EXEC-US-v2.1"  # historical default stays byte-compatible
+SPLIT_RISK_VERSION = "EXEC-US-v2.2"
+
+
+def _finite_number(value) -> bool:
+    return not isinstance(value, (bool, np.bool_)) and isinstance(value, Real) and math.isfinite(value)
+
+
+def _valid_index(value, size: int, name: str):
+    if isinstance(value, (bool, np.bool_)) or not isinstance(value, Integral) or not 0 <= value < size:
+        raise ValueError(f"{name} must be an integer in [0, {size})")
 
 SCAN_STATUSES = ("SIGNALS", "NO_SIGNAL", "FAILED")
 ORDER_OUTCOMES = (
@@ -46,6 +58,7 @@ ORDER_OUTCOMES = (
     "UNFILLED_NOT_TRADED",         # at the entry open: no opening print / no trades that session / not in the data
     "UNFILLED_OPEN_ABOVE_LIMIT",   # at the entry open: the gap put the open above the permitted entry
     "UNFILLED_NO_LIQUIDITY",       # at the entry open: the fill bound allows no share
+    "UNFILLED_ENTRY_LIMITS",       # v2.2: split-adjusted risk/cash/capital sizing leaves no whole share
     "FILLED",                      # the whole planned quantity (the bound is an assumption; see fill_evidence)
     "PARTIAL",                     # part of it; the rest is cancelled
 )
@@ -67,14 +80,46 @@ class ContractSpec:
     capacity_window: int = 20
     stop_slippage: float = 0.0          # assumed: a triggered stop fills at the stop (or the open on a gap)
 
+    version: str = CONTRACT_VERSION  # v2.2 is explicit opt-in, never an implicit policy promotion
+
+    def __post_init__(self):
+        if self.version not in (CONTRACT_VERSION, SPLIT_RISK_VERSION):
+            raise ValueError(f"unsupported execution contract {self.version}")
+        if self.version == SPLIT_RISK_VERSION:
+            for name in ("risk_fraction", "max_position_fraction", "plan_participation", "fill_participation"):
+                value = getattr(self, name)
+                if not _finite_number(value) or not 0 < value <= 1:
+                    raise ValueError(f"{name} must be finite and in (0, 1]")
+            for name in ("max_hold_sessions", "capacity_window"):
+                value = getattr(self, name)
+                if isinstance(value, (bool, np.bool_)) or not isinstance(value, Integral) or value < 1:
+                    raise ValueError(f"{name} must be a positive integer")
+            for name in ("max_stop_distance", "stop_slippage"):
+                value = getattr(self, name)
+                if not _finite_number(value) or not 0 <= value < 1:
+                    raise ValueError(f"{name} must be finite and in [0, 1)")
+            if not _finite_number(self.starting_cash_usd) or self.starting_cash_usd <= 0:
+                raise ValueError("starting_cash_usd must be finite and positive")
+            if not _finite_number(self.chase_limit) or self.chase_limit < 0:
+                raise ValueError("chase_limit must be finite and nonnegative")
+
     def record(self) -> dict:
-        return {"contract_version": CONTRACT_VERSION, **asdict(self)}
+        values = asdict(self)
+        version = values.pop("version")
+        return {"contract_version": version, **values}
+
+    @classmethod
+    def from_record(cls, record: dict):
+        values = dict(record)
+        values["version"] = values.pop("contract_version")
+        return cls(**values)
 
     def sha256(self) -> str:
         return hashlib.sha256(json.dumps(self.record(), sort_keys=True).encode()).hexdigest()
 
 
 SPEC = ContractSpec()
+SPEC_V2_2 = ContractSpec(version=SPLIT_RISK_VERSION)
 
 
 class ScanFailed(Exception):
@@ -124,6 +169,9 @@ def plan_order(signal_close: float, invalidation: float, adv_usd: float, equity:
     The invalidation comes from the strategy and is never moved: an entry that cannot meet the 5%
     rule at this stop is not taken. Size: the smallest of the risk, capital and liquidity limits,
     each computed at the permitted entry (the worst price the order accepts)."""
+    if spec.version == SPLIT_RISK_VERSION:
+        if not all(_finite_number(x) for x in (signal_close, invalidation, adv_usd, equity)) or signal_close <= 0 or equity <= 0 or adv_usd < 0:
+            raise ValueError("plan inputs require positive finite signal/equity and finite stop/nonnegative liquidity")
     stop = floor_tick(invalidation)
     by_stop = floor_tick(stop / (1 - spec.max_stop_distance))
     by_chase = floor_tick(signal_close * (1 + spec.chase_limit))
@@ -225,6 +273,13 @@ class Account:
         read). `signals` is [(row in this download, invalidation as traded at k)] from data through k,
         or a ScanFailed. Inside the session: entry orders at the open, then exits, then the decisions
         after the close."""
+        _valid_index(k, m.shape[1], "session index")
+        if not isinstance(signals, ScanFailed):
+            signals = list(signals)
+            for n, invalidation in signals:
+                _valid_index(n, m.shape[0], "ticker index")
+                if not _finite_number(invalidation):
+                    raise ValueError("signal invalidation must be a finite number")
         st = self.state
         session = str(m.dates[k])
         if st["last_session"] is not None and session <= st["last_session"]:
@@ -322,13 +377,41 @@ class Account:
         else:
             bound = int(math.floor(spec.fill_participation * vol_k + 1e-9))
             filled = min(planned_k, bound)
-            if filled < 1:
+            if spec.version == SPLIT_RISK_VERSION:
+                # Recheck in the entry session's actual units: an overnight split
+                # changes fee tiers even though the economic price is unchanged.
+                stop_fill = stop_k * (1 - spec.stop_slippage)
+                cash_per_share = max(p * (1 + cost_rate(p, "buy")) for p in _band_prices(0, limit_k))
+                # Size using the converted permitted band, not the opening price
+                # observed after auction matching. A fill below the stop closes at
+                # that open; cover the worst round-trip cost in that lower band too.
+                loss_per_share = max(
+                    cash_per_share - stop_fill * (1 - cost_rate(stop_fill, "sell")),
+                    max(p * (cost_rate(p, "buy") + cost_rate(p, "sell")) for p in _band_prices(0, stop_k)))
+                equity = o["plan"]["equity_at_decision_usd"]
+                risk_budget = spec.risk_fraction * equity
+                caps = {
+                    "risk": math.floor(risk_budget / loss_per_share + 1e-9) if loss_per_share > 0 else planned_k,
+                    "cash": math.floor(o["reserved_usd"] / cash_per_share + 1e-9),
+                    "capital": math.floor(spec.max_position_fraction * equity / limit_k + 1e-9),
+                    "liquidity": math.floor(spec.plan_participation * o["plan"]["adv20_value_usd"] / limit_k + 1e-9),
+                }
+                filled = min(filled, *caps.values())
+                rec.update(contract_version=spec.version, entry_size_caps=caps,
+                           risk_budget_usd=risk_budget, entry_risk_per_share_bound=loss_per_share,
+                           entry_cash_per_share_bound=cash_per_share, size_rechecked_at_entry=True,
+                           entry_sizing_adjustment=filled < min(planned_k, bound))
+            if filled < 1 and spec.version == SPLIT_RISK_VERSION and min(caps.values()) < 1:
+                outcome, reason = "UNFILLED_ENTRY_LIMITS", "entry-unit risk, reserved cash or position limits allow no whole share"
+            elif filled < 1:
                 outcome, reason = "UNFILLED_NO_LIQUIDITY", (f"{spec.fill_participation:.0%} of the session's "
                                                             f"{vol_k:,.0f} shares is below one share")
             else:
                 outcome = "FILLED" if filled == planned_k else "PARTIAL"
                 reason = None if outcome == "FILLED" else (f"bound {bound:,} shares = {spec.fill_participation:.0%} "
                                                            f"of the session's {vol_k:,.0f}")
+                if rec.get("entry_sizing_adjustment"):
+                    reason = "resized in entry-session units to satisfy risk, reserved cash, capital and liquidity limits"
         if outcome not in ("FILLED", "PARTIAL"):
             self._event(session, "ORDER_" + outcome, ticker=o["ticker"], reason=reason)
             st["closed"].append({**rec, "outcome": outcome, "reason": reason})
@@ -337,6 +420,8 @@ class Account:
         debit = filled * opened * (1 + c_in)
         st["cash_usd"] -= debit
         exit_ref = min(opened, stop_k)  # the stop, or the open itself when the open is at or below the stop
+        if spec.version == SPLIT_RISK_VERSION and opened > stop_k:
+            exit_ref = stop_k * (1 - spec.stop_slippage)
         pos = {**rec, "outcome": outcome, "reason": reason, "fill_evidence": FILL_EVIDENCE,
                "shares_filled": filled, "entry_price": opened, "entry_cost_rate": c_in, "entry_debit_usd": debit,
                "stop_distance_at_fill": (opened - stop_k) / opened,
@@ -417,6 +502,8 @@ def forward_step(state: dict | None, m_today, signals, expected_session: str,
     """Forward paper scoring for one day: the saved state (JSON), today's download (its last column is
     the latest session; any row order, any start date), today's signals or a ScanFailed. Returns
     (new state, scan record). A failed scan leaves orders and positions untouched and is recorded."""
+    if m_today.shape[1] < 1:
+        raise ValueError("forward scoring requires at least one session")
     acc = Account(spec, _canonical(state) if state is not None else None)
     st = acc.state
     k = m_today.shape[1] - 1
@@ -443,9 +530,14 @@ def forward_step(state: dict | None, m_today, signals, expected_session: str,
 
 
 def _check_window(m, k0, k1, permitted):
+    _valid_index(k0, m.shape[1], "first session index")
+    _valid_index(k1, m.shape[1], "last session index")
+    if k0 > k1:
+        raise ValueError("first session must not follow last session")
     if permitted is None:
         return
     lo, hi = str(m.dates[k0]), str(m.dates[k1])
     if lo < permitted[0] or hi > permitted[1]:
         raise ValueError(f"sessions {lo}..{hi} fall outside the permitted research window "
                          f"{permitted[0]}..{permitted[1]}")
+

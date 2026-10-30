@@ -10,6 +10,11 @@ any edit or deletion. tools/check_append_only.py enforces the same rule on every
 from __future__ import annotations
 
 import csv
+import math
+import platform
+from datetime import date
+from importlib.metadata import PackageNotFoundError, version as package_version
+from numbers import Integral
 import gzip
 import io
 import json
@@ -20,7 +25,7 @@ from pathlib import Path
 
 import numpy as np
 
-from .provenance import PKG_ROOT, exclusive_lock, rel, sha256_bytes, sha256_file, utc_stamp
+from .provenance import PKG_ROOT, exclusive_lock, publish_bytes, rel, sha256_bytes, sha256_file, utc_stamp
 
 RESULTS = PKG_ROOT / "results"
 RUNS = RESULTS / "runs"
@@ -206,21 +211,57 @@ def _quality_lines(summary: dict) -> list[str]:
     return out
 
 
-def chronology_problems(summary: dict, trades) -> list[str]:
+def chronology_problems(summary: dict, trades, *, require_economics: bool = False) -> list[str]:
     """Every way a run could claim an impossible execution: a configured entry lag below one session, a trade entered at
     or before its signal date, or exited before its entry. `trades` is any iterable of row mappings carrying
     signal_date, entry_date and exit_date (a DataFrame's records or a CSV reader). The chain of custody checks that
     stored files are unchanged; this checks that what they store could have happened."""
     problems = []
     lag = (summary.get("config") or {}).get("entry_lag")
-    if lag is not None and int(lag) < 1:
-        problems.append(f"config entry_lag {lag} is below 1 session: entries would precede their signals")
+    if lag is not None and (isinstance(lag, bool) or not isinstance(lag, Integral) or lag < 1):
+        problems.append(f"config entry_lag {lag} must be an integer >= 1 session")
     for row in trades:
-        s, e, x = ((row.get(k) if isinstance(row.get(k), str) else "") for k in ("signal_date", "entry_date", "exit_date"))
-        if e and s and e <= s:
-            problems.append(f"{row.get('ticker')}: entered {e} at or before its signal {s}")
-        if x and e and x < e:
-            problems.append(f"{row.get('ticker')}: exited {x} before its entry {e}")
+        dates = []
+        for key in ("signal_date", "entry_date", "exit_date"):
+            value = row.get(key)
+            if value is None or value == "":
+                dates.append(None)
+                continue
+            try:
+                dates.append(date.fromisoformat(str(value)))
+            except (TypeError, ValueError):
+                problems.append(f"{row.get('ticker')}: invalid {key} {value!r}")
+                dates.append(None)
+        signal, entry, exit_ = dates
+        if entry and signal and entry <= signal:
+            problems.append(f"{row.get('ticker')}: entered {entry} at or before its signal {signal}")
+        if exit_ and entry and exit_ < entry:
+            problems.append(f"{row.get('ticker')}: exited {exit_} before its entry {entry}")
+        if row.get("status") in ("EXITED", "EXIT_DATA_END"):
+            if not all(dates):
+                problems.append(f"{row.get('ticker')}: scored trade is missing valid execution dates")
+            for field in ("entry_price", "shares", "exit_price"):
+                # Older stored formats may lack a field; verify every available one.
+                if field not in row:
+                    if require_economics:
+                        problems.append(f"{row.get('ticker')}: scored trade is missing {field}")
+                    continue
+                try:
+                    value = float(row[field])
+                except (TypeError, ValueError):
+                    value = float("nan")
+                zero_exit = field == "exit_price" and row.get("status") == "EXIT_DATA_END" and (summary.get("config") or {}).get("data_end_exit") == "zero"
+                if not math.isfinite(value) or value < 0 or (value == 0 and not zero_exit):
+                    problems.append(f"{row.get('ticker')}: scored trade has invalid {field}")
+            for field in ("gross_return", "net_return"):
+                if field not in row:
+                    continue
+                try:
+                    value = float(row[field])
+                except (TypeError, ValueError):
+                    value = float("nan")
+                if not math.isfinite(value):
+                    problems.append(f"{row.get('ticker')}: scored trade has invalid {field}")
     return problems
 
 
@@ -240,6 +281,17 @@ def _write_exclusive(path: Path, data: bytes) -> str:
     return sha256_bytes(data)
 
 
+def runtime_environment() -> dict:
+    libraries = {}
+    for name in ("numpy", "pandas", "beautifulsoup4", "lxml", "exchange_calendars"):
+        try:
+            libraries[name] = package_version(name)
+        except PackageNotFoundError:
+            libraries[name] = None
+    return {"python": platform.python_version(), "platform": platform.platform(),
+            "libraries": libraries, "execution_validation": "IDXSIG-EXEC-VALIDATION-v2"}
+
+
 def write_run(output: dict, *, allow_dirty: bool = False, commit: bool = True, root: Path | None = None) -> Path:
     runs = (root / "runs") if root else RUNS
     index = (root / "RUNS.jsonl") if root else INDEX
@@ -247,10 +299,11 @@ def write_run(output: dict, *, allow_dirty: bool = False, commit: bool = True, r
     if state["dirty"] and not allow_dirty:
         raise DirtyTreeError("idxsig/ has uncommitted changes; commit the code first so the run names the code it ran")
     summary = dict(output["summary"])
-    impossible = chronology_problems(summary, output["trades"].to_dict("records"))
+    impossible = chronology_problems(summary, output["trades"].to_dict("records"), require_economics=True)
     if impossible:
         raise ValueError("refusing to store a run that is not chronological: " + "; ".join(impossible[:5]))
     summary["code"] = state
+    summary["environment"] = runtime_environment()
     created = utc_stamp()
     rule = summary["rule"]
     run_id = f"{created.replace('-', '').replace(':', '')}_{rule['rule_id']}_{rule['version']}"
@@ -296,8 +349,11 @@ def write_run(output: dict, *, allow_dirty: bool = False, commit: bool = True, r
         "dir": rel(run_dir) if not root else str(run_dir),
         "files": files,
     }
-    with exclusive_lock(index), index.open("a", encoding="utf-8") as fh:
-        fh.write(json.dumps(_jsonable(line), sort_keys=True) + "\n")
+    with exclusive_lock(index):
+        prefix = index.read_bytes() if index.exists() else b""
+        if prefix and not prefix.endswith(b"\n"):
+            raise ValueError("RUNS index has an incomplete final line; refusing to append")
+        publish_bytes(index, prefix + (json.dumps(_jsonable(line), sort_keys=True) + "\n").encode(), replace=True)
     if commit:
         trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "").strip()
         message = (

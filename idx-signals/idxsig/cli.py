@@ -191,6 +191,8 @@ def main(argv=None) -> int:
     p_l3.add_argument("--commit", action="store_true")
     p_l3r = sub.add_parser("learner3-report", help="write paper/LEARNER_V3.md")
     p_l3r.add_argument("--commit", action="store_true")
+    p_l3f = sub.add_parser("learner3-freeze", help="freeze each eligible planned learner evaluation once; report remains read-only")
+    p_l3f.add_argument("--commit", action="store_true")
     p_ig = sub.add_parser("idea-grade", help="grade a chart idea written as a JSON spec (idxsig/idea_grader.py): random "
                           "entries, the search family (SPA) and a later period; paper only")
     p_ig.add_argument("spec", help="path to a JSON spec, or a list of specs")
@@ -773,13 +775,19 @@ def main(argv=None) -> int:
         written.append(learner2.write_report())
         if args.commit:
             print(paper.commit_and_push(written, f"learner v2: {len(recs)} forecast(s) sealed", trailer))
-    elif args.cmd in ("learner3-forecast", "learner3-report"):
+    elif args.cmd in ("learner3-forecast", "learner3-report", "learner3-freeze"):
         import os
         from datetime import datetime, timezone
 
         from . import learner3, paper
 
         trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "")
+        if args.cmd == "learner3-freeze":
+            frozen = learner3.freeze_evaluations()
+            print(f"{len(frozen)} planned evaluation/review record(s) appended")
+            if args.commit and frozen:
+                print(paper.commit_and_push([learner3.evaluation.LEDGER], "learner v2.4: freeze planned evaluations", trailer))
+            return 0
         if args.cmd == "learner3-report":
             path = learner3.write_report()
             print(path.read_text(encoding="utf-8"))

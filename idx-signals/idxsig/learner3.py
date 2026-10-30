@@ -50,6 +50,7 @@ from . import catalyst as e9
 from . import catalysts as cr
 from . import learner2 as L2
 from . import paper
+from . import learner_evaluation as evaluation
 from . import speculation as spec
 from .execution import Market
 from .learner2 import Row, _clip, _logit, _num, _prob, _same, anchor_fit, call_of
@@ -508,6 +509,7 @@ def live_centres(lrecs: list[dict], asof: str) -> dict[str, np.ndarray]:
 # ------------------------------------------------------------------------------- earned confidence
 def forward_pairs(records: list[dict], lrecs: list[dict], asof: str) -> list[dict]:
     outc = outcomes(records, asof)
+    resolutions = paper.latest_resolutions(records, asof=asof)
     sets = {r["set_id"]: r for r in records if r.get("type") == "CATALYST_SET"}
     out, seen = [], set()
     for f in lrecs:
@@ -524,6 +526,9 @@ def forward_pairs(records: list[dict], lrecs: list[dict], asof: str) -> list[dic
             out.append({"set_id": f["set_id"], "event_key": f["set_id"], "statement": stmt, "kind": "PATH",
                         "family": FAMILY, "session": f["signal_session"], "window": STATEMENTS[stmt][1],
                         "resolved_at": o[1], "y": float(o[0]), "anchor": fc["anchor"], "raw": fc["raw"],
+                        "forecast_record_hash": f.get("record_hash"),
+                        "resolution_record_hash": (resolutions.get(paper.resolution_key({**s, "window": STATEMENTS[stmt][1]}))
+                                                   or resolutions.get((f["set_id"], STATEMENTS[stmt][1]), {})).get("record_hash"),
                         "bench": fc["bench"], "published": fc["published"], "call": fc.get("call") or {}, "w": 1.0})
     return out
 
@@ -712,13 +717,17 @@ def verify(path: Path | None = None, records: list[dict] | None = None, tol: flo
     they are present; the set sealed under a register version with the next session's close; made before the cutoff
     and externally timestamped before it where a token exists."""
     path = LEDGER if path is None else path
+    proto, sha = protocol()
     if not path.exists():
-        return []
+        return evaluation.verify(claim_fn=claim, proto=proto, proto_sha=sha)
     problems = [f"{path.name}: {p}" for p in paper.verify_chain(path)]
     proto, sha = protocol()
     if records is None:
         cat, spc = cr.cat_lines(), spec.spec_lines()
     lrecs = paper.ledger_lines(path)
+    evaluation_records = records if records is not None else [L2.as_set(r) for r in cat + spc]
+    problems += evaluation.verify(claim_fn=claim, proto=proto, proto_sha=sha, records=evaluation_records, forecasts=lrecs,
+                                  pair_fn=forward_pairs, headline=HEADLINE)
     seen, checker, unverified = set(), None, 0
     for i, f in enumerate(lrecs):
         if f.get("type") != RECORD:
@@ -854,8 +863,11 @@ def statistics(records: list[dict] | None = None, lrecs: list[dict] | None = Non
                      "brier_gain_vs_bench": gain("raw", "bench"), "calls": _calls(sp)}
     v22 = _v22_comparison(pairs)
     return {"protocol": {"id": proto["protocol_id"], "sha256": sha}, "learner": VERSION, "generated_at": asof,
+            "outcome_view": {"semantics": paper.RESOLUTION_VIEW, "cutoff": asof},
             "n_forecasts": sum(f.get("type") == RECORD for f in lrecs), "n_pairs": len(pairs),
-            "gates": {k: {"alpha": v[0], **v[1]} for k, v in g.items()}, "claim": claim(pairs, proto["claim"]),
+            "gates": {k: {"alpha": v[0], **v[1]} for k, v in g.items()}, "claim": evaluation.official(pairs, sha, asof, proto=proto, claim_fn=claim,
+                records=records, forecasts=lrecs, pair_fn=forward_pairs, headline=HEADLINE),
+            "descriptive_claim": {**claim(pairs, proto["claim"]), "verdict": "descriptive only; see frozen claim"},
             "statements": per, "v2_2_on_DUMP10_5": v22, "coverage": coverage(records, lrecs, asof),
             "features_unverifiable_here": getattr(verify, "unverified_features", None)}
 
@@ -956,3 +968,11 @@ def _fmt_looks(st: dict) -> str:
 def write_report() -> Path:
     REPORT.write_text(render(statistics()), encoding="utf-8")
     return REPORT
+
+
+
+def freeze_evaluations(asof: str | None = None) -> list[dict]:
+    """Explicit mutation; reports never create or replace planned decisions."""
+    proto, sha = protocol()
+    return evaluation.freeze(L2.all_records(), lines(), asof or utc_stamp(), proto, sha,
+                             forward_pairs, claim, HEADLINE)

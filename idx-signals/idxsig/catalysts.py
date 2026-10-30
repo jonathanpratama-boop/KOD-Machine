@@ -346,7 +346,7 @@ def _cone(proto_family: dict, records: list[dict], market: str, family: str) -> 
 
 
 def running_prior(family: str, statement_id: str, records: list[dict]) -> tuple[float, int]:
-    counted = paper.latest_resolutions(r for r in records if r["type"] == "RESOLUTION" and r.get("family") == family).values()
+    counted = (r for r in paper.latest_resolutions(records).values() if r.get("family") == family)
     outcomes = [c["outcome"] for r in counted for c in r.get("cone", []) if c["id"] == statement_id and c.get("outcome") is not None]
     if len(outcomes) < spec.RUNNING_MIN_N:
         return 0.5, len(outcomes)
@@ -1006,6 +1006,7 @@ def statistics(records: list[dict] | None = None) -> dict:
     for fam, (fs, fsha) in extra_families().items():
         fams[fam] = family_statistics(fam, fs, fsha, sets, res, records)
     return {"protocol": {"id": proto["protocol_id"], "sha256": proto_sha}, "register": REGISTER_VERSION,
+            "outcome_view": {"semantics": paper.RESOLUTION_VIEW, "cutoff": "complete supplied ledger"},
             "generated_at": utc_stamp(), "families": fams, "document_class": document_class(records),
             "tags": {"DILUTION_RECENT": {
                 "n": sum(r["type"] == "TAG" for r in records),
@@ -1239,6 +1240,10 @@ def write_report() -> Path:
 # ------------------------------------------------------------------------------- verify
 def verify() -> list[str]:
     problems = []
+    try:
+        paper.latest_resolutions(cat_lines())
+    except ValueError as exc:
+        problems.append(str(exc))
     if not CAT_LEDGER.exists():
         return problems
     problems += [f"catalysts.jsonl: {p}" for p in paper.verify_chain(CAT_LEDGER)]

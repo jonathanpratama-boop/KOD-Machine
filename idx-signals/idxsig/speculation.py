@@ -162,7 +162,7 @@ def tag(market: str, scan: dict, ledger: list[dict]) -> dict:
 
 
 def running_prior(market: str, statement_id: str, specs: list[dict]) -> tuple[float, int]:
-    counted = paper.latest_resolutions(r for r in specs if r["type"] == "RESOLUTION" and r["market"] == market).values()
+    counted = (r for r in paper.latest_resolutions(specs).values() if r.get("market") == market)
     outcomes = [c["outcome"] for r in counted for c in r.get("cone", []) if c["id"] == statement_id and c.get("outcome") is not None]
     if len(outcomes) < RUNNING_MIN_N:
         return 0.5, len(outcomes)
@@ -725,6 +725,7 @@ def statistics(specs: list[dict] | None = None, ledger: list[dict] | None = None
                        "twins_per_set": float(np.mean([len(s["twins"]) for s in msets])) if msets else None,
                        "plan": st, "n_path20_resolved": n_path, "n_next1_resolved": n_next, "cone": cone}
     return {"protocol": {"id": proto["protocol_id"], "sha256": proto_sha}, "register": REGISTER_VERSION,
+            "outcome_view": {"semantics": paper.RESOLUTION_VIEW, "cutoff": "complete supplied ledger"},
             "generated_at": utc_stamp(), "n_sets": len(sets), "n_resolutions": len(res), "markets": markets}
 
 
@@ -828,6 +829,10 @@ def write_report() -> Path:
 # ---------------------------------------------------------------------------------- verify
 def verify() -> list[str]:
     problems = []
+    try:
+        paper.latest_resolutions(spec_lines())
+    except ValueError as exc:
+        problems.append(str(exc))
     if not SPEC_LEDGER.exists():
         return problems
     problems += [f"speculations.jsonl: {p}" for p in paper.verify_chain(SPEC_LEDGER)]

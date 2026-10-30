@@ -23,7 +23,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from .provenance import MANIFESTS, PANEL_DIR, PKG_ROOT, check_files, read_manifest, rel, sha256_file, utc_stamp, write_csv_gz_exclusive
+from .provenance import MANIFESTS, PANEL_DIR, PKG_ROOT, check_files, read_manifest, rel, sha256_file, utc_stamp, write_csv_gz_exclusive, build_stamp, publish_bytes, latest_panel_manifest
 
 COLUMNS = ["date", "ticker", "source", "previous", "open", "high", "low", "close", "volume", "value", "frequency",
            "listed_shares", "tradable_shares"]
@@ -164,14 +164,14 @@ def build(market: str, manifest: Path, log=print) -> Path:
         raise ValueError(market)
     panel, qa = _finish(df)
     PANEL_DIR.mkdir(parents=True, exist_ok=True)
-    stamp = utc_stamp().replace("-", "").replace(":", "")
+    stamp = build_stamp()
     path = PANEL_DIR / f"panel_{market.lower()}-{stamp}.csv.gz"
     out = panel.copy()
     out["date"] = out["date"].dt.strftime("%Y-%m-%d")
     write_csv_gz_exclusive(path, out, index=False, float_format="%.10g")  # fails, touching nothing, if the stamp is taken
     first, last = panel["date"].min().date().isoformat(), panel["date"].max().date().isoformat()
     meta = {
-        "format": FORMAT, "market": market, "panel": rel(path), "sha256": sha256_file(path), "built_at": utc_stamp(),
+        "format": FORMAT, "market": market, "panel": rel(path), "sha256": sha256_file(path), "built_at": utc_stamp(), "publication_id": stamp,
         "inputs": {manifest.name: {"sha256": sha256_file(manifest), "path": rel(manifest)}},
         "rows": int(len(panel)), "tickers": int(panel["ticker"].nunique()), "sessions": int(panel["date"].nunique()),
         "first_session": first, "last_session": last, "source_boundary": last,
@@ -188,17 +188,13 @@ def build(market: str, manifest: Path, log=print) -> Path:
         "qa": qa, **{k: v for k, v in extra.items() if k != "loaded_tickers"},
     }
     mpath = MANIFESTS / f"panel_{market.lower()}-{stamp}.json"
-    with mpath.open("x", encoding="utf-8") as fh:
-        fh.write(json.dumps(meta, indent=2, sort_keys=True) + "\n")
+    publish_bytes(mpath, (json.dumps(meta, indent=2, sort_keys=True) + "\n").encode("utf-8"))
     log(f"{market} panel {rel(path)} rows {meta['rows']} tickers {meta['tickers']} sessions {meta['sessions']}")
     return mpath
 
 
 def latest(market: str) -> Path:
-    found = sorted(MANIFESTS.glob(f"panel_{market.lower()}-*.json"))
-    if not found:
-        raise FileNotFoundError(f"no {market} panel; run `python -m idxsig build-global-panel --market {market}`")
-    return found[-1]
+    return latest_panel_manifest(f"panel_{market.lower()}")
 
 
 def load(manifest: Path) -> tuple[pd.DataFrame, dict]:
@@ -289,24 +285,18 @@ def build_us_repair(raw_manifest: Path, schedule_manifest: Path, end: str, cover
             reason_counts[s_] = reason_counts.get(s_, 0) + 1
 
     PANEL_DIR.mkdir(parents=True, exist_ok=True)
-    stamp = utc_stamp().replace("-", "").replace(":", "")
+    stamp = build_stamp()
     path = PANEL_DIR / f"panel_us_repair-{stamp}.csv.gz"
     out = panel.copy()
     out["date"] = out["date"].dt.strftime("%Y-%m-%d")
     out["qa_reverting_spike"] = out["qa_reverting_spike"].astype(int)
-    import gzip
-    import io
-
-    text = io.StringIO()
-    out.to_csv(text, index=False, float_format="%.10g", lineterminator="\n")
-    with path.open("xb") as fh, gzip.GzipFile(filename="", fileobj=fh, mode="wb", mtime=0) as gz:
-        gz.write(text.getvalue().encode("utf-8"))  # no file name or time in the header: content-addressed
+    write_csv_gz_exclusive(path, out, index=False, float_format="%.10g", lineterminator="\n")
     last = panel["date"].max().date().isoformat()
     survivorship = ("survivor-only: the universe is the Nasdaq Trader listing snapshot of 2026-10-08; names "
                     "delisted earlier are absent")
     meta = {
         "format": REPAIR_FORMAT, "market": "US", "panel": rel(path), "sha256": sha256_file(path),
-        "built_at": utc_stamp(), "preprocessing": qa.get("preprocessing_version"),
+        "built_at": utc_stamp(), "publication_id": stamp, "preprocessing": qa.get("preprocessing_version"),
         "inputs": {raw_manifest.name: {"sha256": sha256_file(raw_manifest), "path": rel(raw_manifest)},
                    Path(schedule_manifest).name: {"sha256": sha256_file(Path(schedule_manifest)),
                                                   "path": rel(Path(schedule_manifest)),
@@ -360,7 +350,6 @@ def build_us_repair(raw_manifest: Path, schedule_manifest: Path, end: str, cover
                "note": "counts only: no price examples are written to this manifest"},
     }
     mpath = MANIFESTS / f"panel_us_repair-{stamp}.json"
-    with mpath.open("x", encoding="utf-8") as fh:
-        fh.write(json.dumps(meta, indent=2, sort_keys=True) + "\n")
+    publish_bytes(mpath, (json.dumps(meta, indent=2, sort_keys=True) + "\n").encode("utf-8"))
     log(f"US repair panel {rel(path)} rows {meta['rows']} tickers {meta['tickers']} quarantined {len(quarantine)}")
     return mpath

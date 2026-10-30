@@ -121,13 +121,16 @@ def _cited_observations(raw: dict) -> list:
     return sorted(set(ids))
 
 
-def run_version(service, version_id: str, record: bool = True) -> ScenarioResult:
+def run_version(service, version_id: str, record: bool = True, *, policy: AsOfPolicy | None = None, context: dict | None = None, legacy: bool = False) -> ScenarioResult:
     """Run the model for one assumption version and (by default) record the result as a calculation whose inputs are that version and the observations it
-    cites. The calculation's policy is the version's own time: the analyst made these assumptions then."""
+    cites. Direct calls default to the assumption time; dossier/review callers pass their selected policy explicitly."""
     version = assumption_version(service, version_id)
-    policy = AsOfPolicy.parse(version["created_at"], "observed", DAY_END)   # the version's own time: for the classification and the calculation alike
+    policy = policy or AsOfPolicy.parse(version["created_at"], "observed", DAY_END)
+    context = context or service.submissions_context(version["security_id"], policy, legacy=legacy)
+    if context["source"]["policy"] != policy.as_dict():
+        raise ValueError("classification context does not match calculation policy")
     a = model.validate(version["assumptions"])
-    business = business_type(service, version["security_id"], policy)
+    business = companyfacts.business_type(context["data"])
     valuation = model.run(a, business)
     status = {"ok": "ok", "ev_only": "ok", "invalid": "invalid", "not_applicable": "not_applicable"}[valuation.status]
     value = valuation.per_share if valuation.status == "ok" else valuation.enterprise_value
@@ -136,11 +139,12 @@ def run_version(service, version_id: str, record: bool = True) -> ScenarioResult
                                             "currency/share" if valuation.status == "ok" else "currency", inputs, (),
                                             tuple(valuation.warnings) + tuple(valuation.limitations),
                                             {"measure": "per_share" if valuation.status == "ok" else "enterprise_value", "valuation": valuation.as_dict(),
-                                             "currency": a.currency, "scenario": version["scenario"], "assumption_version": version["version"]})
+                                             "currency": a.currency, "scenario": version["scenario"], "assumption_version": version["version"],
+                                             **({} if legacy else {"context_version": "KOD-SCENARIO-CONTEXT-v2", "source_context": context["source"]})})
     cid = calculations.calculation_id(result, policy)
     if record:
         with service.store._connection() as db:
-            cid = calculations.record(db, result, "security", version["security_id"], policy, version["created_at"])
+            cid = calculations.record(db, result, "security", version["security_id"], policy, version["created_at"] if legacy else _now(service))
             if version["supersedes"]:
                 for (old,) in db.execute("SELECT c.id FROM calculations c JOIN calculation_inputs i ON i.calculation_id=c.id WHERE i.input_kind='assumption' AND i.input_id=?",
                                          (version["supersedes"],)).fetchall():
@@ -168,17 +172,16 @@ def record_prices(service, security_id: str, parsed: dict, source_kind: str, doc
                                                                                canonical(parsed["coverage"]), len(rows), now))
         before = db.total_changes
         for r in rows:
-            inserted = db.execute(insert, tuple(r[c] for c in cols)).rowcount
-            if not inserted:
-                # The same price was recorded before. If a different price for the same day and series has been recorded since, this import reverts to
-                # it: record it again (a new row) so the most recently recorded price is the one the user imported last.
-                latest = db.execute("SELECT id FROM price_observations WHERE security_id=? AND observed_on=? AND session=? AND source=? AND adjustment=? "
-                                    "ORDER BY seq DESC LIMIT 1", (security_id, r["observed_on"], r["session"], r["source"], r["adjustment"])).fetchone()
-                if latest is not None and latest["id"] != r["id"] and not db.execute(
-                        "SELECT 1 FROM price_observations WHERE id=? AND seq>=(SELECT seq FROM price_observations WHERE id=?)",
-                        (r["id"], latest["id"])).fetchone():
-                    again = {**r, "id": identity("price", r["id"], "re-recorded", now)}
-                    db.execute(insert, tuple(again[c] for c in cols))
+            latest = db.execute("SELECT * FROM price_observations WHERE security_id=? AND observed_on=? AND session=? AND source=? AND adjustment=? "
+                                "ORDER BY seq DESC LIMIT 1", (security_id, r["observed_on"], r["session"], r["source"], r["adjustment"])).fetchone()
+            # Payload equality, not ID equality: retries of a re-recorded value are idempotent too.
+            payload = tuple(c for c in cols if c not in ("id", "observed_at", "recorded_at", "import_id"))
+            if latest is not None and all(latest[c] == r[c] for c in payload):
+                continue
+            seq = db.execute("SELECT COALESCE(MAX(seq),0)+1 FROM price_observations").fetchone()[0]
+            if db.execute("SELECT 1 FROM price_observations WHERE id=?", (r["id"],)).fetchone():
+                r = {**r, "id": identity("price", r["id"], "revision-sequence-v1", seq)}
+            db.execute(insert, tuple(r[c] for c in cols))
         added = db.total_changes - before
     return {"import_id": import_id, "rows": len(rows), "added": added, "coverage": parsed["coverage"], "meta": parsed["meta"]}
 

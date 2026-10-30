@@ -24,7 +24,7 @@ from . import dossier as dossier_model
 from . import model as fcff
 from . import thesis as conditions
 from . import prices as price_rules
-from . import scenarios
+from . import scenarios, companyfacts
 from . import search as archive
 from .domain import timestamp
 from .financials import FinancialRepository
@@ -688,8 +688,10 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
         sec = security_or_404(security_id)
         service = app.state.service
         sets = scenarios.assumption_sets(service, security_id)
-        results = {s["latest_id"]: scenarios.run_version(service, s["latest_id"]) for s in sets}
-        reference = fcff.suggest_from_history(dossier_model.build(service, security_id, _policy(service.clock)))
+        chosen = _policy(service.clock)
+        classification = service.submissions_context(security_id, chosen)
+        results = {s["latest_id"]: scenarios.run_version(service, s["latest_id"], policy=chosen, context=classification) for s in sets}
+        reference = fcff.suggest_from_history(dossier_model.build(service, security_id, chosen, context=classification))
         prefill, scenario, name = {}, "base", "default"
         if from_version:
             v = version_or_404(security_id, from_version)
@@ -703,7 +705,7 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
                 if k in vals:
                     prefill[k] = _plain(Decimal(vals[k]["value"]) * 100)
         return render(request, "model.html", page="model", company=sec, sets=sets, results=results, reference=reference, prefill=prefill,
-                      scenario=scenario, set_name=name, business=scenarios.business_type(service, security_id, _policy(service.clock)), treatments=fcff.TREATMENTS,
+                      scenario=scenario, set_name=name, business=companyfacts.business_type(classification["data"]), treatments=fcff.TREATMENTS,
                       labels=fcff.LABELS, model_name=fcff.MODEL)
 
     @app.post("/company/{security_id}/model/assumptions")
@@ -729,9 +731,10 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
         service = app.state.service
         version = version_or_404(security_id, version_id)
         chosen = _policy(service.clock, as_of, mode, policy)
-        result = scenarios.run_version(service, version_id)
+        classification = service.submissions_context(security_id, chosen)
+        result = scenarios.run_version(service, version_id, policy=chosen, context=classification)
         a = fcff.validate(version["assumptions"])
-        business = scenarios.business_type(service, security_id, chosen)   # the what-if grids read the page's own cutoff
+        business = companyfacts.business_type(classification["data"])   # the what-if grids read the page's own cutoff
         shown, what_if = result.valuation, None
         grid = reverse = None
         problems = []

@@ -103,7 +103,7 @@ def resolve_plan(cfg: RunConfig, rule) -> dict:
     """The plan a run executes: explicit config first, then the rule's frozen plan, then the original."""
     frozen = dict(getattr(rule, "plan", None) or {})
     return {"entry_rule": cfg.entry_rule or frozen.get("entry_rule", "fixed"),
-            "entry_window": cfg.entry_window or frozen.get("entry_window", 1),
+            "entry_window": cfg.entry_window if cfg.entry_window is not None else frozen.get("entry_window", 1),
             "exit_rule": cfg.exit_rule or frozen.get("exit_rule", "fixed"),
             "side": cfg.side or frozen.get("side", "long")}
 
@@ -333,7 +333,7 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
     on the same window and panel (research/E3 runs one detector under many plans); the causal
     signals are computed once per (rule hash, window, panel hash) and reused unchanged."""
     rule = rule_registry.get(cfg.rule_id)
-    holding = cfg.holding_days or rule.holding_days
+    holding = cfg.holding_days if cfg.holding_days is not None else rule.holding_days
     profile = PROFILES[cfg.market]
     idx = profile.market == "IDX"
     plan = resolve_plan(cfg, rule)
@@ -675,3 +675,4 @@ def run(cfg: RunConfig, panel_df: pd.DataFrame, panel_meta: dict, ca_registry: t
         "warnings": warnings,
     }
     return {"summary": summary, "trades": trades_df, "draws": draws_df}
+

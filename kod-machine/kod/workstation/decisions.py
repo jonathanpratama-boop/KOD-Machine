@@ -17,9 +17,10 @@ import json
 from . import dossier as dossier_model
 from . import scenarios, thesis
 from .domain import canonical, identity, timestamp
-from .policy import AsOfPolicy
+from .policy import AsOfPolicy, eligibility
 
-PACKET_SCHEMA = "KOD-DECISION-PACKET-v1"
+PACKET_SCHEMA = "KOD-DECISION-PACKET-v2"
+LEGACY_PACKET_SCHEMA = "KOD-DECISION-PACKET-v1"
 EXPORT_NOTE = ("Contains preserved SEC data (public) and any user-supplied sources and prices; redistribution rights of user-supplied material are not "
                "established by this export. For private research use.")
 
@@ -77,7 +78,7 @@ def version_at(service, thesis_id: str, cutoff: str) -> dict | None:
     return thesis_version(service, row["id"]) if row else None
 
 
-def _assumption_trace(service, version_id: str) -> dict:
+def _assumption_trace(service, version_id: str, policy=None, context=None, legacy=False) -> dict:
     """The assumption version behind a scenario operand, what it replaced and what changed, and the recorded calculation for it."""
     v = scenarios.assumption_version(service, version_id)
     out = {"assumption_version_id": v["id"], "scenario": v["scenario"], "name": v["name"], "version": v["version"], "saved_at": v["created_at"],
@@ -85,17 +86,31 @@ def _assumption_trace(service, version_id: str) -> dict:
     if v["supersedes"]:
         previous = scenarios.assumption_version(service, v["supersedes"])
         out["changed"] = [{"assumption": name, "from": old, "to": new} for name, old, new in scenarios.changed_fields(previous["assumptions"], v["assumptions"])]
-    result = scenarios.run_version(service, v["id"], record=False)
+    result = scenarios.run_version(service, v["id"], record=False, policy=None if legacy else policy,
+                                   context=None if legacy else context, legacy=legacy)
+    if not legacy:
+        out["source_context"] = result.calculation.detail["source_context"]
     out["calculation_id"] = result.calculation_id
     out["result"] = {"status": result.valuation.status, "per_share": None if result.valuation.per_share is None else str(result.valuation.per_share),
                      "enterprise_value": None if result.valuation.enterprise_value is None else str(result.valuation.enterprise_value)}
     return out
 
 
-def review(service, security_id: str, policy: AsOfPolicy, view: str = "as_reported", d: dict | None = None) -> dict:
+def review(service, security_id: str, policy: AsOfPolicy, view: str = "as_reported", d: dict | None = None, *, legacy=False, source_membership=None) -> dict:
     """Evaluate every thesis of the company at the cutoff. Returns {'dossier', 'price', 'theses': [{thesis, version, evaluations}]}; nothing is recorded."""
-    d = d or dossier_model.build(service, security_id, policy, view)
-    price = scenarios.price_at(service, security_id, policy)
+    d = d or dossier_model.build(service, security_id, policy, view, legacy=legacy)
+    source = d.get("classification_context")
+    context = ({"source": source, "data": json.loads(service.store.raw(source["document_id"])) if source.get("document_id") else None}
+               if source else service.submissions_context(security_id, policy, legacy=legacy))
+    price = (scenarios.price_at(service, security_id, policy) if source_membership is None else
+             scenarios.price(service, source_membership["price_id"]) if source_membership["price_id"] else None)
+    if price:
+        if price["security_id"] != security_id or not eligibility(price, policy)[0]:
+            raise ValueError("frozen price does not belong to this company and cutoff")
+        with service.store._connection() as db:
+            imported = db.execute("SELECT document_id FROM price_imports WHERE id=?", (price["import_id"],)).fetchone()
+        if imported and imported["document_id"]:
+            service.store.raw(imported["document_id"])  # verify any preserved CSV source, including on replay
     cutoff = policy.as_dict()["cutoff"]
     out = []
     for t in theses(service, security_id):
@@ -108,7 +123,7 @@ def review(service, security_id: str, policy: AsOfPolicy, view: str = "as_report
                 for side in ("left", "right"):
                     src = step[side]["sources"]
                     if src.get("assumption_version_id"):
-                        src["assumption_trace"] = _assumption_trace(service, src["assumption_version_id"])
+                        src["assumption_trace"] = _assumption_trace(service, src["assumption_version_id"], policy, context, legacy)
         out.append({"thesis": {k: t[k] for k in ("id", "title")}, "version": v, "evaluations": evaluations})
     return {"dossier": d, "price": price, "theses": out}
 
@@ -136,19 +151,27 @@ def recorded_reviews(service, thesis_version_id: str) -> list:
 
 # ---- decision packets ----
 
-def _packet_body(service, security_id: str, policy: AsOfPolicy, view: str, question: str) -> dict:
+def _packet_body(service, security_id: str, policy: AsOfPolicy, view: str, question: str, schema=PACKET_SCHEMA, source_membership=None) -> dict:
     """Everything the decision rests on, from the shared read model."""
-    d = dossier_model.build(service, security_id, policy, view, question)
-    r = review(service, security_id, policy, view, d)
+    legacy = schema == LEGACY_PACKET_SCHEMA
+    if schema not in (LEGACY_PACKET_SCHEMA, PACKET_SCHEMA):
+        raise ValueError("unsupported decision packet schema")
+    context = (service.submissions_context(security_id, policy, source_membership["classification"])
+               if source_membership is not None else None)
+    d = dossier_model.build(service, security_id, policy, view, question, legacy=legacy, context=context)
+    r = review(service, security_id, policy, view, d, legacy=legacy, source_membership=source_membership)
     assumption_versions = {}
     for sc in d["scenarios"]:
         v = scenarios.assumption_version(service, sc["version_id"])
         assumption_versions[v["id"]] = {k: v[k] for k in ("id", "scenario", "name", "version", "assumptions", "rationale", "author", "created_at", "supersedes")}
     evidence = sorted(d["observations"])
-    return {"schema": PACKET_SCHEMA, "question": question, "policy": d["policy"], "view": view, "dossier": d,
+    body = {"schema": schema, "question": question, "policy": d["policy"], "view": view, "dossier": d,
             "theses": [{"thesis": t["thesis"], "version": t["version"], "evaluations": t["evaluations"]} for t in r["theses"]],
             "price": r["price"], "assumption_versions": assumption_versions, "evidence_ids": evidence,
             "calculation_ids": sorted(d["calculations"]), "unresolved": d["conflicts"], "export_note": EXPORT_NOTE}
+    if not legacy:
+        body["source_membership"] = {"classification": d["classification_context"], "price_id": r["price"]["id"] if r["price"] else None}
+    return body
 
 
 def save_packet(service, security_id: str, policy: AsOfPolicy, view: str, question: str, choice: str, rationale: str, thesis_version_id: str | None = None,
@@ -205,7 +228,8 @@ def reproduce(service, packet_id: str) -> dict:
     stored = packet(service, packet_id)
     body = stored["packet"]
     p = body["policy"]
-    rebuilt = _packet_body(service, stored["security_id"], AsOfPolicy.parse(p["cutoff"], p["mode"], p["policy_version"]), body["view"], body["question"])
+    rebuilt = _packet_body(service, stored["security_id"], AsOfPolicy.parse(p["cutoff"], p["mode"], p["policy_version"]), body["view"], body["question"],
+                           schema=body["schema"], source_membership=body.get("source_membership"))
     differences = []
     for key in ("dossier", "theses", "price", "assumption_versions", "evidence_ids", "calculation_ids", "unresolved"):
         if canonical(rebuilt[key]) != canonical(body[key]):
@@ -216,7 +240,7 @@ def reproduce(service, packet_id: str) -> dict:
             if canonical(body["dossier"].get(key)) != canonical(rebuilt["dossier"].get(key)):
                 detail.append(f"dossier.{key}")
     return {"packet_id": packet_id, "reproduced": not differences, "differences": differences, "detail": detail,
-            "note": "identical: the workspace still yields exactly the stored evidence at this cutoff" if not differences else
+            "note": "identical: the workspace reproduces the stored evidence using this packet's cutoff and source-selection rules" if not differences else
             "the workspace now yields different evidence at this cutoff (for example a new parser version or a changed record); the stored packet is unchanged"}
 
 
@@ -264,3 +288,4 @@ def render_markdown(stored: dict) -> str:
     lines += ["", f"Evidence: {len(body['evidence_ids'])} observations; {len(body['calculation_ids'])} calculations; {len(body['unresolved'])} open conflicts.", "",
               "---", "", dossier_model.render_markdown(body["dossier"]), "", body["export_note"], ""]
     return "\n".join(lines)
+
