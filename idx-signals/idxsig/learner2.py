@@ -326,10 +326,7 @@ class Row(NamedTuple):
 def outcomes(records: list[dict], asof: str) -> dict[tuple[str, str], tuple]:
     """(set, statement) -> (outcome, resolved_at, the twins' rate of the same statement or None) for every graded
     statement resolved before asof; a later revision of the same (set, window) replaces an earlier one."""
-    latest: dict[tuple, dict] = {}
-    for r in records:
-        if r.get("type") == "RESOLUTION" and (r.get("resolved_at") or "9") < asof:
-            latest[(r["set_id"], r.get("window"))] = r  # an UNRESOLVABLE or ungraded revision clears what it replaces
+    latest = paper.latest_resolutions(r for r in records if (r.get("resolved_at") or "9") < asof)
     out: dict[tuple[str, str], tuple] = {}
     for (sid, _), r in latest.items():
         for c in r.get("cone") or []:

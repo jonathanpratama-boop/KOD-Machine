@@ -158,6 +158,15 @@ class ExecConfig:
     # closing-auction spread the flat fee model otherwise lacks. Default off: every recorded run is unchanged.
     tick_cost: bool = False
 
+    def __post_init__(self):
+        # Chronology belongs to the configuration, not to the caller: the signal is read at the close of session s and
+        # the position is entered at s + entry_lag, so a lag below one session would trade before the signal existed.
+        if int(self.entry_lag) < 1:
+            raise ValueError(f"entry_lag must be at least 1 session (got {self.entry_lag}): a trade cannot be entered "
+                             "before the session that produced its signal")
+        if int(self.holding_days) < 0:
+            raise ValueError(f"holding_days cannot be negative (got {self.holding_days})")
+
     @property
     def plan(self) -> dict:
         return {"entry_rule": self.entry_rule, "entry_window": self.entry_window if self.entry_rule != "fixed"

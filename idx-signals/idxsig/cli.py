@@ -13,6 +13,14 @@ from .provenance import DATA, MANIFESTS, check_files, latest_manifest, read_mani
 EXTRA_TICKERS = DATA / "universe" / "extra_tickers.csv"
 
 
+def _sessions_from_one(text: str) -> int:
+    """argparse type for --entry-lag: whole sessions, at least 1 (execution.ExecConfig enforces the same rule)."""
+    value = int(text)
+    if value < 1:
+        raise argparse.ArgumentTypeError(f"{value} is not allowed: a trade is entered at least one session after its signal")
+    return value
+
+
 def _universe() -> list[str]:
     _, records = read_manifest(latest_manifest("idx_mirror"))
     tickers = {r["ticker"] for r in records if "ticker" in r}
@@ -76,7 +84,8 @@ def main(argv=None) -> int:
     p_run.add_argument("--start")
     p_run.add_argument("--end")
     p_run.add_argument("--holding-days", type=int)
-    p_run.add_argument("--entry-lag", type=int, default=1)
+    p_run.add_argument("--entry-lag", type=_sessions_from_one, default=1,
+                       help="sessions between the signal close and the entry, at least 1")
     p_run.add_argument("--notional", type=float, default=10_000_000.0)
     p_run.add_argument("--max-participation", type=float, default=0.10)
     p_run.add_argument("--fee-buy", type=float, default=0.0015)

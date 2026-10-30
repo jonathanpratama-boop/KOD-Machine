@@ -39,6 +39,7 @@ from .provenance import (
     rel,
     sha256_file,
     utc_stamp,
+    write_csv_gz_exclusive,
 )
 
 PANEL_FORMAT = "panel-v2"
@@ -257,7 +258,7 @@ def build(mirror_manifest: Path | None = None, yahoo_manifest: Path | None = Non
     path = PANEL_DIR / f"panel-{stamp}.csv.gz"
     out = panel.copy()
     out["date"] = out["date"].dt.strftime("%Y-%m-%d")
-    out.to_csv(path, index=False, compression={"method": "gzip", "mtime": 0})
+    write_csv_gz_exclusive(path, out, index=False)  # fails, touching nothing, if the stamp is taken
 
     last = panel.groupby("ticker")["date"].max()
     first = panel.groupby("ticker")["date"].min()

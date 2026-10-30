@@ -302,9 +302,10 @@ class Sealing(unittest.TestCase):
 
     def test_running_prior_uses_the_registers_own_resolutions_after_twenty(self):
         """Guards against: an invented prior for a statement no frozen record speaks to."""
-        res = [{"type": "RESOLUTION", "market": "US", "cone": [{"id": "RUN30_20", "outcome": i % 4 == 0}]} for i in range(19)]
+        res = [{"type": "RESOLUTION", "market": "US", "set_id": f"S{i}", "window": "PATH20",
+                "cone": [{"id": "RUN30_20", "outcome": i % 4 == 0}]} for i in range(19)]
         self.assertEqual(sp.running_prior("US", "RUN30_20", res), (0.5, 19))
-        res.append({"type": "RESOLUTION", "market": "US", "cone": [{"id": "RUN30_20", "outcome": True}]})
+        res.append({"type": "RESOLUTION", "market": "US", "set_id": "S19", "window": "PATH20", "cone": [{"id": "RUN30_20", "outcome": True}]})
         prior, n = sp.running_prior("US", "RUN30_20", res)
         self.assertEqual(n, 20)
         self.assertAlmostEqual(prior, 6 / 20)

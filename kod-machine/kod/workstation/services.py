@@ -18,6 +18,7 @@ import json
 from . import companyfacts, financials
 from .search import ArchiveIndex
 from .domain import APP_VERSION, MAX_DOCUMENT_BYTES, association as valid_association, publication, source_url as valid_url, timestamp
+from .policy import DAY_END, AsOfPolicy
 from .store import Store
 
 
@@ -233,9 +234,22 @@ class ResearchService:
                               started_at=observed, finished_at=self.clock(), new_count=coverage["added"])
         return coverage
 
+    def submissions_at(self, security_id, policy):
+        """The SEC submissions snapshot (business classification, raw acceptance times) an information-time policy allows, and when it was
+        observed: in observed mode the latest snapshot this installation held by the cutoff; in public mode the earliest preserved (labelled
+        current metadata at that time). (None, None) when none qualifies. The one selector for every read (the dossier, scenario calculations,
+        decision packets), so a snapshot imported later never changes what an earlier cutoff shows."""
+        docs = sorted((d for d in self.store.documents(security_id) if d["metadata"].get("kind") == "SEC submissions response"),
+                      key=lambda d: (d["observed_at"], d["id"]))
+        if policy.mode == "observed":
+            cutoff = policy.as_dict()["cutoff"]
+            docs = [d for d in docs if d["observed_at"] <= cutoff][-1:]
+        doc = docs[0] if docs else None
+        return (json.loads(self.store.raw(doc["id"])) if doc else None), (doc["observed_at"] if doc else None)
+
     def latest_submissions(self, security_id):
-        docs = [d for d in self.store.documents(security_id) if d["metadata"].get("kind") == "SEC submissions response"]
-        return json.loads(self.store.raw(docs[0]["id"])) if docs else None
+        """The snapshot held now: submissions_at with the clock as the cutoff (one rule, the live-page convenience)."""
+        return self.submissions_at(security_id, AsOfPolicy.parse(timestamp(self.clock()), "observed", DAY_END))[0]
 
     def index_documents(self, security_id=None) -> dict:
         """Record observations for preserved releases that have none from this parser version (for example after an upgrade from v1). The stored bytes

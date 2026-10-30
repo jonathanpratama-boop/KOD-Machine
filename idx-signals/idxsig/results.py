@@ -9,6 +9,7 @@ any edit or deletion. tools/check_append_only.py enforces the same rule on every
 
 from __future__ import annotations
 
+import csv
 import gzip
 import io
 import json
@@ -19,7 +20,7 @@ from pathlib import Path
 
 import numpy as np
 
-from .provenance import PKG_ROOT, rel, sha256_bytes, sha256_file, utc_stamp
+from .provenance import PKG_ROOT, exclusive_lock, rel, sha256_bytes, sha256_file, utc_stamp
 
 RESULTS = PKG_ROOT / "results"
 RUNS = RESULTS / "runs"
@@ -205,6 +206,33 @@ def _quality_lines(summary: dict) -> list[str]:
     return out
 
 
+def chronology_problems(summary: dict, trades) -> list[str]:
+    """Every way a run could claim an impossible execution: a configured entry lag below one session, a trade entered at
+    or before its signal date, or exited before its entry. `trades` is any iterable of row mappings carrying
+    signal_date, entry_date and exit_date (a DataFrame's records or a CSV reader). The chain of custody checks that
+    stored files are unchanged; this checks that what they store could have happened."""
+    problems = []
+    lag = (summary.get("config") or {}).get("entry_lag")
+    if lag is not None and int(lag) < 1:
+        problems.append(f"config entry_lag {lag} is below 1 session: entries would precede their signals")
+    for row in trades:
+        s, e, x = ((row.get(k) if isinstance(row.get(k), str) else "") for k in ("signal_date", "entry_date", "exit_date"))
+        if e and s and e <= s:
+            problems.append(f"{row.get('ticker')}: entered {e} at or before its signal {s}")
+        if x and e and x < e:
+            problems.append(f"{row.get('ticker')}: exited {x} before its entry {e}")
+    return problems
+
+
+def _stored_chronology(run_dir: Path) -> list[str]:
+    summary_path, trades_path = run_dir / "summary.json", run_dir / "trades.csv.gz"
+    if not (summary_path.exists() and trades_path.exists()):
+        return []
+    summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    with gzip.open(trades_path, "rt", encoding="utf-8", newline="") as fh:
+        return chronology_problems(summary, csv.DictReader(fh))
+
+
 def _write_exclusive(path: Path, data: bytes) -> str:
     with path.open("xb") as fh:
         fh.write(data)
@@ -219,6 +247,9 @@ def write_run(output: dict, *, allow_dirty: bool = False, commit: bool = True, r
     if state["dirty"] and not allow_dirty:
         raise DirtyTreeError("idxsig/ has uncommitted changes; commit the code first so the run names the code it ran")
     summary = dict(output["summary"])
+    impossible = chronology_problems(summary, output["trades"].to_dict("records"))
+    if impossible:
+        raise ValueError("refusing to store a run that is not chronological: " + "; ".join(impossible[:5]))
     summary["code"] = state
     created = utc_stamp()
     rule = summary["rule"]
@@ -265,7 +296,7 @@ def write_run(output: dict, *, allow_dirty: bool = False, commit: bool = True, r
         "dir": rel(run_dir) if not root else str(run_dir),
         "files": files,
     }
-    with index.open("a", encoding="utf-8") as fh:
+    with exclusive_lock(index), index.open("a", encoding="utf-8") as fh:
         fh.write(json.dumps(_jsonable(line), sort_keys=True) + "\n")
     if commit:
         trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "").strip()
@@ -312,6 +343,7 @@ def verify_runs(root: Path | None = None, use_git: bool = True) -> list[str]:
         extra = on_disk - set(entry["files"])
         if extra:
             problems.append(f"run {run_id}: files not in the index: {sorted(extra)}")
+        problems += [f"run {run_id}: {p}" for p in _stored_chronology(run_dir)]
     if runs.exists():
         for d in sorted(p for p in runs.iterdir() if p.is_dir()):
             if d.name not in seen:

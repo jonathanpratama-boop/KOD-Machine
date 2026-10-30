@@ -33,6 +33,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import os
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -44,7 +45,7 @@ import pandas as pd
 
 from . import market as mkt
 from .execution import Market
-from .provenance import PKG_ROOT, read_manifest, rel, sha256_file, utc_stamp
+from .provenance import PKG_ROOT, exclusive_lock, read_manifest, rel, sha256_file, utc_stamp
 from .rules import CausalSource
 from .rules import moonshot_e1 as family
 
@@ -257,21 +258,38 @@ def verify_chain(path: Path = LEDGER) -> list[str]:
     return problems
 
 
+def latest_resolutions(records) -> dict[tuple[str, str | None], dict]:
+    """The resolution that counts for each (set, window): the last RESOLUTION in ledger order, since a correction is
+    appended later and `revises` the earlier one. Every reader of outcomes (running base rates, the learners, the
+    registers' statistics) takes its records from here, so a corrected outcome is counted once and the correction wins;
+    an UNRESOLVABLE or ungraded revision clears what it replaces."""
+    latest: dict[tuple[str, str | None], dict] = {}
+    for r in records:
+        if r.get("type") == "RESOLUTION":
+            latest[(r["set_id"], r.get("window"))] = r
+    return latest
+
+
 def append(records: list[dict], path: Path = LEDGER, timestamper=None) -> list[dict]:
-    """Chain, hash, stamp and append. Returns the stored records."""
+    """Chain, hash, stamp and append. Returns the stored records. One writer at a time per ledger (exclusive_lock): the
+    previous hash is read, checked and extended under the lock, so concurrent appenders queue instead of forking the
+    chain; the lines are flushed to disk before the lock is released."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    existing = ledger_lines(path)
-    if verify_chain(path):
-        raise RuntimeError(f"{path.name} chain is broken; refusing to append")
-    prev = existing[-1]["record_hash"] if existing else None
-    out = []
-    with path.open("a", encoding="utf-8") as fh:
-        for rec in records:
-            body = {**rec, "prev_hash": prev}
-            body["record_hash"] = hashlib.sha256(_canonical(body).encode()).hexdigest()
-            fh.write(_canonical(body) + "\n")
-            prev = body["record_hash"]
-            out.append(body)
+    with exclusive_lock(path):
+        existing = ledger_lines(path)
+        if verify_chain(path):
+            raise RuntimeError(f"{path.name} chain is broken; refusing to append")
+        prev = existing[-1]["record_hash"] if existing else None
+        out = []
+        with path.open("a", encoding="utf-8") as fh:
+            for rec in records:
+                body = {**rec, "prev_hash": prev}
+                body["record_hash"] = hashlib.sha256(_canonical(body).encode()).hexdigest()
+                fh.write(_canonical(body) + "\n")
+                prev = body["record_hash"]
+                out.append(body)
+            fh.flush()
+            os.fsync(fh.fileno())
     if timestamper is not None:
         TOKENS.mkdir(parents=True, exist_ok=True)
         for body in out:

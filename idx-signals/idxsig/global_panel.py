@@ -23,7 +23,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from .provenance import MANIFESTS, PANEL_DIR, PKG_ROOT, check_files, read_manifest, rel, sha256_file, utc_stamp
+from .provenance import MANIFESTS, PANEL_DIR, PKG_ROOT, check_files, read_manifest, rel, sha256_file, utc_stamp, write_csv_gz_exclusive
 
 COLUMNS = ["date", "ticker", "source", "previous", "open", "high", "low", "close", "volume", "value", "frequency",
            "listed_shares", "tradable_shares"]
@@ -168,7 +168,7 @@ def build(market: str, manifest: Path, log=print) -> Path:
     path = PANEL_DIR / f"panel_{market.lower()}-{stamp}.csv.gz"
     out = panel.copy()
     out["date"] = out["date"].dt.strftime("%Y-%m-%d")
-    out.to_csv(path, index=False, compression={"method": "gzip", "mtime": 0}, float_format="%.10g")
+    write_csv_gz_exclusive(path, out, index=False, float_format="%.10g")  # fails, touching nothing, if the stamp is taken
     first, last = panel["date"].min().date().isoformat(), panel["date"].max().date().isoformat()
     meta = {
         "format": FORMAT, "market": market, "panel": rel(path), "sha256": sha256_file(path), "built_at": utc_stamp(),

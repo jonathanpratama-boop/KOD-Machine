@@ -254,11 +254,21 @@ def _backfill_v2(db, now):
     identity_model.seed_metric_catalog(db)
 
 
+V5_DDL = """
+DROP TRIGGER price_observations_no_update;
+ALTER TABLE price_observations ADD COLUMN seq INTEGER;
+UPDATE price_observations SET seq = rowid;
+CREATE TRIGGER price_observations_no_update BEFORE UPDATE ON price_observations
+BEGIN SELECT RAISE(ABORT, 'price observations are immutable; record a new observation instead'); END;
+CREATE UNIQUE INDEX price_observations_seq ON price_observations(seq);
+"""
+
 MIGRATIONS = (
     Migration(1, "v1 workstation: securities, evidence objects, documents, events, notes, annotations, jobs", V1_DDL),
     Migration(2, "identity, immutable financial observations, periods, metric definitions, calculation lineage, analyst records", V2_DDL, _backfill_v2),
     Migration(3, "versioned scenario assumptions and immutable dated price observations", V3_DDL),
     Migration(4, "structured thesis versions, recorded condition reviews and immutable decision packets", V4_DDL),
+    Migration(5, "explicit revision sequence on price observations (same-second corrections ordered by recording, not by id)", V5_DDL),
 )
 LATEST = MIGRATIONS[-1].version
 

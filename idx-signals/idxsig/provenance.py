@@ -8,8 +8,13 @@ checkable against the files a run actually used.
 
 from __future__ import annotations
 
+import contextlib
+import fcntl
+import gzip
 import hashlib
+import io
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -79,3 +84,31 @@ def check_files(manifest: Path) -> list[str]:
         elif sha256_file(path) != r["sha256"]:
             problems.append(f"hash mismatch {r['path']}")
     return problems
+
+
+@contextlib.contextmanager
+def exclusive_lock(path: Path):
+    """One writer at a time for an append-only file: an advisory lock on `<name>.lock` beside it, held across read-tail,
+    chain and write, so two appenders cannot read the same previous hash and append conflicting successors. The lock
+    file is empty and git-ignored (*.lock); the chain check still catches damage, the lock prevents it."""
+    path = Path(path)
+    lock_path = path.with_name(path.name + ".lock")
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    with lock_path.open("a") as lock:
+        fcntl.flock(lock.fileno(), fcntl.LOCK_EX)
+        try:
+            yield
+        finally:
+            fcntl.flock(lock.fileno(), fcntl.LOCK_UN)
+
+
+def write_csv_gz_exclusive(path: Path, frame, **to_csv) -> None:
+    """Publish a DataFrame as gzip CSV at a path that must not exist yet (O_EXCL): two builds that pick the same name
+    in the same second cannot overwrite each other, the second fails before touching anything. The bytes are the ones
+    frame.to_csv(path, compression={"method": "gzip", "mtime": 0}, **to_csv) writes (same gzip header: the basename,
+    mtime 0, level 9), so a panel's recorded sha256 does not depend on which writer produced it."""
+    path = Path(path)
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o644)
+    with os.fdopen(fd, "wb") as raw, gzip.GzipFile(filename=path.name, mode="wb", fileobj=raw, mtime=0) as gz, \
+            io.TextIOWrapper(gz, encoding="utf-8", newline="") as text:
+        frame.to_csv(text, **to_csv)

@@ -346,8 +346,8 @@ def _cone(proto_family: dict, records: list[dict], market: str, family: str) -> 
 
 
 def running_prior(family: str, statement_id: str, records: list[dict]) -> tuple[float, int]:
-    outcomes = [c["outcome"] for r in records if r["type"] == "RESOLUTION" and r.get("family") == family
-                for c in r.get("cone", []) if c["id"] == statement_id and c.get("outcome") is not None]
+    counted = paper.latest_resolutions(r for r in records if r["type"] == "RESOLUTION" and r.get("family") == family).values()
+    outcomes = [c["outcome"] for r in counted for c in r.get("cone", []) if c["id"] == statement_id and c.get("outcome") is not None]
     if len(outcomes) < spec.RUNNING_MIN_N:
         return 0.5, len(outcomes)
     return float(np.mean(outcomes)), len(outcomes)
@@ -969,7 +969,7 @@ def statistics(records: list[dict] | None = None) -> dict:
     proto, proto_sha = protocol()
     records = cat_lines() if records is None else records
     sets = [r for r in records if r["type"] == "CATALYST_SET"]
-    res = [r for r in records if r["type"] == "RESOLUTION" and r.get("status")]
+    res = [r for r in paper.latest_resolutions(records).values() if r.get("status")]
     fams = {}
     for fam, pf in proto["families"].items():
         fsets = [s for s in sets if s["family"] == fam]
@@ -1025,12 +1025,8 @@ def document_class(records: list[dict] | None = None) -> dict:
     records = cat_lines() if records is None else records
     fams = list(design["families"])
     sets = {r["set_id"]: r for r in records if r["type"] == "CATALYST_SET"}
-    latest: dict[str, dict] = {}
-    for r in records:
-        if (r["type"] == "RESOLUTION" and r.get("status") == "RESOLVED" and r.get("paired") and r["family"] in fams
-                and r["window"] == "H20" and r.get("coverage") == "FIRE"):
-            latest[r["set_id"]] = r  # a revision comes later in the chain and replaces the earlier record
-    rs = list(latest.values())
+    rs = [r for r in paper.latest_resolutions(records).values()  # the revision that counts, before any filter
+          if r.get("status") == "RESOLVED" and r.get("paired") and r["family"] in fams and r["window"] == "H20" and r.get("coverage") == "FIRE"]
     signed = [{**r, "paired": {**r["paired"], "diff": r["paired"]["diff"] * int(r.get("direction", 1))}} for r in rs]
     st = spec.plan_statistics(signed)
     st["look"] = prereg_verdict(st, st["mean_diff"], 1.0, design=design)  # no mean-net condition for a class with an avoid family

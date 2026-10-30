@@ -162,8 +162,8 @@ def tag(market: str, scan: dict, ledger: list[dict]) -> dict:
 
 
 def running_prior(market: str, statement_id: str, specs: list[dict]) -> tuple[float, int]:
-    outcomes = [c["outcome"] for r in specs if r["type"] == "RESOLUTION" and r["market"] == market
-                for c in r.get("cone", []) if c["id"] == statement_id and c.get("outcome") is not None]
+    counted = paper.latest_resolutions(r for r in specs if r["type"] == "RESOLUTION" and r["market"] == market).values()
+    outcomes = [c["outcome"] for r in counted for c in r.get("cone", []) if c["id"] == statement_id and c.get("outcome") is not None]
     if len(outcomes) < RUNNING_MIN_N:
         return 0.5, len(outcomes)
     return float(np.mean(outcomes)), len(outcomes)
@@ -666,7 +666,7 @@ def statistics(specs: list[dict] | None = None, ledger: list[dict] | None = None
     ledger = paper.ledger_lines() if ledger is None else ledger
     rule = proto["decision_rule"]
     sets = [r for r in specs if r["type"] == "SPECULATION_SET"]
-    res = [r for r in specs if r["type"] == "RESOLUTION"]
+    res = list(paper.latest_resolutions(specs).values())
     markets = {}
     for mk in ("IDX", "US", "CRYPTO"):
         msets = [s for s in sets if s["market"] == mk]
@@ -754,7 +754,7 @@ def card(s: dict) -> str:
 def render(stats: dict, specs: list[dict] | None = None) -> str:
     specs = spec_lines() if specs is None else specs
     sets = [r for r in specs if r["type"] == "SPECULATION_SET"]
-    res = [r for r in specs if r["type"] == "RESOLUTION"]
+    res = list(paper.latest_resolutions(specs).values())
     w = windows()
     out = [f"# Speculation Register ({stats['protocol']['id']}, protocol sha256 {stats['protocol']['sha256'][:12]})",
            "", f"Generated {stats['generated_at']} from `paper/speculations.jsonl`: {stats['n_sets']} sets sealed, "

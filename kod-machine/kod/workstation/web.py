@@ -703,7 +703,7 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
                 if k in vals:
                     prefill[k] = _plain(Decimal(vals[k]["value"]) * 100)
         return render(request, "model.html", page="model", company=sec, sets=sets, results=results, reference=reference, prefill=prefill,
-                      scenario=scenario, set_name=name, business=scenarios.business_type(service, security_id), treatments=fcff.TREATMENTS,
+                      scenario=scenario, set_name=name, business=scenarios.business_type(service, security_id, _policy(service.clock)), treatments=fcff.TREATMENTS,
                       labels=fcff.LABELS, model_name=fcff.MODEL)
 
     @app.post("/company/{security_id}/model/assumptions")
@@ -731,7 +731,7 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
         chosen = _policy(service.clock, as_of, mode, policy)
         result = scenarios.run_version(service, version_id)
         a = fcff.validate(version["assumptions"])
-        business = scenarios.business_type(service, security_id)
+        business = scenarios.business_type(service, security_id, chosen)   # the what-if grids read the page's own cutoff
         shown, what_if = result.valuation, None
         grid = reverse = None
         problems = []

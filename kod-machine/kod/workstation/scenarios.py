@@ -20,6 +20,9 @@ from .domain import canonical, identity, timestamp
 from .policy import AsOfPolicy, DAY_END, eligibility
 
 SCENARIOS = ("bear", "base", "bull")
+# The revision order of price observations: a per-table sequence assigned in the recording transaction (SQLite serialises writers), so two
+# corrections recorded within the same second are still ordered by which was recorded later, never by their hash ids.
+NEXT_SEQ = "(SELECT COALESCE(MAX(seq),0)+1 FROM price_observations)"
 
 
 def _now(service):
@@ -96,8 +99,10 @@ def changed_fields(old: dict, new: dict) -> list:
     return out
 
 
-def business_type(service, security_id: str) -> dict:
-    return companyfacts.business_type(service.latest_submissions(security_id))
+def business_type(service, security_id: str, policy: AsOfPolicy) -> dict:
+    """The business classification (SIC) as the policy allows it to be known: the dossier's selector (ResearchService.submissions_at), so a
+    snapshot imported later never changes the explanation of an earlier valuation."""
+    return companyfacts.business_type(service.submissions_at(security_id, policy)[0])
 
 
 @dataclass(frozen=True)
@@ -120,8 +125,9 @@ def run_version(service, version_id: str, record: bool = True) -> ScenarioResult
     """Run the model for one assumption version and (by default) record the result as a calculation whose inputs are that version and the observations it
     cites. The calculation's policy is the version's own time: the analyst made these assumptions then."""
     version = assumption_version(service, version_id)
+    policy = AsOfPolicy.parse(version["created_at"], "observed", DAY_END)   # the version's own time: for the classification and the calculation alike
     a = model.validate(version["assumptions"])
-    business = business_type(service, version["security_id"])
+    business = business_type(service, version["security_id"], policy)
     valuation = model.run(a, business)
     status = {"ok": "ok", "ev_only": "ok", "invalid": "invalid", "not_applicable": "not_applicable"}[valuation.status]
     value = valuation.per_share if valuation.status == "ok" else valuation.enterprise_value
@@ -131,7 +137,6 @@ def run_version(service, version_id: str, record: bool = True) -> ScenarioResult
                                             tuple(valuation.warnings) + tuple(valuation.limitations),
                                             {"measure": "per_share" if valuation.status == "ok" else "enterprise_value", "valuation": valuation.as_dict(),
                                              "currency": a.currency, "scenario": version["scenario"], "assumption_version": version["version"]})
-    policy = AsOfPolicy.parse(version["created_at"], "observed", DAY_END)
     cid = calculations.calculation_id(result, policy)
     if record:
         with service.store._connection() as db:
@@ -157,23 +162,23 @@ def record_prices(service, security_id: str, parsed: dict, source_kind: str, doc
     rows = prices.rows_for_store(parsed, security_id, source_kind, now, now, import_id)
     cols = ("id", "security_id", "observed_on", "session", "timezone", "currency", "open", "high", "low", "close", "volume", "adjustment", "source",
             "source_kind", "feed_coverage", "published_at", "publication_basis", "observed_at", "recorded_at", "import_id")
+    insert = f"INSERT OR IGNORE INTO price_observations({','.join(cols)},seq) VALUES ({','.join('?' * len(cols))},{NEXT_SEQ})"
     with service.store._connection() as db:
         db.execute("INSERT OR IGNORE INTO price_imports VALUES (?,?,?,?,?,?,?,?)", (import_id, security_id, document_id, source_kind, canonical(parsed["meta"]),
                                                                                canonical(parsed["coverage"]), len(rows), now))
         before = db.total_changes
         for r in rows:
-            inserted = db.execute(f"INSERT OR IGNORE INTO price_observations({','.join(cols)}) VALUES ({','.join('?' * len(cols))})",
-                                  tuple(r[c] for c in cols)).rowcount
+            inserted = db.execute(insert, tuple(r[c] for c in cols)).rowcount
             if not inserted:
                 # The same price was recorded before. If a different price for the same day and series has been recorded since, this import reverts to
                 # it: record it again (a new row) so the most recently recorded price is the one the user imported last.
                 latest = db.execute("SELECT id FROM price_observations WHERE security_id=? AND observed_on=? AND session=? AND source=? AND adjustment=? "
-                                    "ORDER BY recorded_at DESC, id LIMIT 1", (security_id, r["observed_on"], r["session"], r["source"], r["adjustment"])).fetchone()
+                                    "ORDER BY seq DESC LIMIT 1", (security_id, r["observed_on"], r["session"], r["source"], r["adjustment"])).fetchone()
                 if latest is not None and latest["id"] != r["id"] and not db.execute(
-                        "SELECT 1 FROM price_observations WHERE id=? AND recorded_at>=(SELECT recorded_at FROM price_observations WHERE id=?)",
+                        "SELECT 1 FROM price_observations WHERE id=? AND seq>=(SELECT seq FROM price_observations WHERE id=?)",
                         (r["id"], latest["id"])).fetchone():
                     again = {**r, "id": identity("price", r["id"], "re-recorded", now)}
-                    db.execute(f"INSERT OR IGNORE INTO price_observations({','.join(cols)}) VALUES ({','.join('?' * len(cols))})", tuple(again[c] for c in cols))
+                    db.execute(insert, tuple(again[c] for c in cols))
         added = db.total_changes - before
     return {"import_id": import_id, "rows": len(rows), "added": added, "coverage": parsed["coverage"], "meta": parsed["meta"]}
 
@@ -196,7 +201,7 @@ def add_manual_price(service, security_id: str, day: str, close, meta: dict, at:
 
 def price_list(service, security_id: str, limit: int = 500) -> list:
     with service.store._connection() as db:
-        return [dict(r) for r in db.execute("SELECT * FROM price_observations WHERE security_id=? ORDER BY observed_on DESC, id LIMIT ?", (security_id, limit))]
+        return [dict(r) for r in db.execute("SELECT * FROM price_observations WHERE security_id=? ORDER BY observed_on DESC, seq DESC LIMIT ?", (security_id, limit))]
 
 
 def price(service, price_id: str) -> dict:
@@ -219,9 +224,9 @@ def price_at(service, security_id: str, policy: AsOfPolicy, adjustment: str = "r
         return None
     day = [r for r in eligible if r["observed_on"] == eligible[0]["observed_on"]]
     latest_per_series = {}
-    for r in sorted(day, key=lambda r: (r["recorded_at"], r["id"]), reverse=True):
+    for r in sorted(day, key=lambda r: r["seq"], reverse=True):
         latest_per_series.setdefault((r["session"], r["source"]), r)
-    return max(latest_per_series.values(), key=lambda r: (r["published_at"], r["recorded_at"], r["id"]))
+    return max(latest_per_series.values(), key=lambda r: (r["published_at"], r["seq"]))
 
 
 def market_context(version: dict, a: model.Assumptions, valuation: model.Valuation, price_row: dict | None) -> dict:

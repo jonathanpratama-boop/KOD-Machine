@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
 .pytest_cache/
+*.lock
 
 # KOD scratch databases (the ledger itself is kod-machine/var/kod.db and is committed)
 kod-machine/var/*.db

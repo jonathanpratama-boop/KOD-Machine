@@ -18,7 +18,6 @@ from collections import Counter
 from dataclasses import replace
 from datetime import date, timedelta
 from decimal import Decimal
-import json
 import re
 
 from . import calculations as calc
@@ -672,11 +671,7 @@ def build(service, security_id: str, policy: AsOfPolicy, view: str = "as_reporte
     cutoff = policy.as_dict()["cutoff"]
     # The submissions response (business classification, raw acceptance times) and the issuer mapping are chosen so that nothing recorded later changes
     # an earlier view: in observed mode the latest held by the cutoff; in public mode the earliest preserved (labelled current metadata at that time).
-    subs = sorted((d for d in docs if d["metadata"].get("kind") == "SEC submissions response"), key=lambda d: (d["observed_at"], d["id"]))
-    if policy.mode == "observed":
-        subs = [d for d in subs if d["observed_at"] <= cutoff][-1:]
-    subs_doc = subs[0] if subs else None
-    submissions = json.loads(store.raw(subs_doc["id"])) if subs_doc else None
+    submissions, subs_observed_at = service.submissions_at(security_id, policy)
     identity_as_of = cutoff if policy.mode == "observed" else None
     from . import identity as identity_model
     with store._connection() as db:
@@ -686,7 +681,7 @@ def build(service, security_id: str, policy: AsOfPolicy, view: str = "as_reporte
         # The issuer name as recorded with the identity held by the cutoff; a later rename of the watchlist entry does not reach an earlier view.
         shown_security["name"] = (ident or {}).get("issuer_name")
     return assemble(shown_security, ident, repo.all_for(security_id, identity_as_of=identity_as_of), policy, view, submissions,
-                    subs_doc["observed_at"] if subs_doc else None, docs, question, scenario_summaries(service, security_id, policy, submissions))
+                    subs_observed_at, docs, question, scenario_summaries(service, security_id, policy, submissions))
 
 
 def scenario_summaries(service, security_id: str, policy: AsOfPolicy, submissions: dict | None) -> list:
