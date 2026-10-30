@@ -1,0 +1,13 @@
+{
+ "id": "ATTENTION_HISTORY_v1_result",
+ "experiment": "ATTENTION_HISTORY_v1",
+ "date": "2026-10-30",
+ "hypothesis": "out of time (fit 2020-21 score 2022, fit 2020-22 score 2023), on US stocks that just closed 30% or more higher, four r/wallstreetbets attention features added to LEARNER v2.4's features raise the AUC for the next-session own dump (NEXT_DUMP10_1) or the 5-session own dump (DUMP10_5), with a positive Brier gain",
+ "one_sided_p": 0.10394802598700649,
+ "p_source": "research/ATTENTION_HISTORY_v1/results/RESULT.json decision (Holm over two; week-cluster bootstrap)",
+ "variants_searched": 2,
+ "outcome": "ATTN on NEXT_DUMP10_1 DOES NOT ADD; ATTN on DUMP10_5 DOES NOT ADD",
+ "counted": true,
+ "registered": "2026-10-29",
+ "note": "the result of the PENDING registration ATTENTION_HISTORY_v1.json: one trial"
+}
