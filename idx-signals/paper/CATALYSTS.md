@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-30T10:59:35Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-30T10:59:47Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 1 over 1 signal sessions; events seen: SEALED 1; coverage gaps 0.
+Sets 2 over 1 signal sessions; events seen: SEALED 2; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 1
+- Classes: ABSTAIN 2
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,13 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 30 tags: 6 true, 0 unknown.
 
 ## Latest sets
-
-### IDX_INDEX SCMA (DELETE LQ45) - effective 2026-11-02, sealed 2026-10-28T10:38:02Z, cutoff 2026-10-29T01:45:00Z
-Set `CAT-IDX_INDEX-IDX-MAJOR-2026-11-02-SCMA`, scan `SCAN-2026-10-28-F1_ARA`; signal close 139 on 2026-10-28; entry: the closing auction of the session after the signal session (2026-10-29). Windows: POST20: entry +2, hold 20; RUNUP: entry +1, hold 1.
-Confidence CONFIRMED; events file sha256 `39df501b3e5a`.
-Coverage DESCRIPTIVE (not counted).
-Twins (band+liq+mom+dd): MDIA 78, KOTA 84, LUCY 114, MNCN 84, KIJA 119.
-Cone: WITH_FLOW_RUNUP p=0.50; REVERSAL_POST20 p=0.50.
 
 ### IDX_INDEX SMGR (ADD LQ45) - effective 2026-11-02, sealed 2026-10-28T10:38:02Z, cutoff 2026-10-29T01:45:00Z
 Set `CAT-IDX_INDEX-IDX-MAJOR-2026-11-02-SMGR`, scan `SCAN-2026-10-28-F1_ARA`; signal close 1440 on 2026-10-28; entry: the closing auction of the session after the signal session (2026-10-29). Windows: POST20: entry +2, hold 20; RUNUP: entry +1, hold 1.
@@ -207,4 +200,11 @@ Filing `0002162656-26-000001` by Bubble Holdings, LLC; Item 4 intent words: boar
 Coverage **ABSTAIN** (DILUTION_RECENT, MV_UNKNOWN); pre-entry move +0.00%, market value n/a, dilution filings 1.
 Twins (band+liq+mom+dd): AMPY 4.33, SPWH 1.07, GALT 3.52, LSAK 4.06, SND 4.89.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 ZVIA (Zevia PBC) - accepted 2026-10-29T19:53:14-04:00, sealed 2026-10-30T10:59:45Z, cutoff 2026-10-30T13:15:00Z
+Set `CAT-SEC13D_V2-0002162656-26-000001`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 1.23 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0002162656-26-000001` by Bubble Holdings, LLC; cover page max 16.1% of class; strong intent: proxy; Item 5(c): 2 price(s).
+Coverage **ABSTAIN** (DILUTION_RECENT); market value USD 105.5M from COVER_PAGE; parent CAT-SEC13D-0002162656-26-000001.
+Twins (band+liq+mom+dd): AMPY 4.33, SPWH 1.07, GALT 3.52, LSAK 4.06, SND 4.89, TUYA 1.66, CLNE 1.49, ARQ 1.77, CURV 2.22, SIGA 3.18, ONL 2.32, MAIA 1.18, CHMI 2.64, XYF 4.89, SNDL 1.3, NAGE 2.5, TLYS 4.34, AUNA 4.8, MSGM 4.66, GRWG 1.5.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
