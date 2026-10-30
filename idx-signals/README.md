@@ -1,5 +1,7 @@
 # IDX signals
 
+Optional crypto source: [CoinGlass setup, data, indicators and offline context](../docs/COINGLASS.md).
+
 Test harness for daily trading signals on the Indonesia Stock Exchange. Research only. No
 entry permission. It runs a frozen rule over every listed name (delisted names included
 where the data has them), executes each signal under IDX trading constraints, and compares

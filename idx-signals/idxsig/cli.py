@@ -41,6 +41,22 @@ def main(argv=None) -> int:
     p_fu.add_argument("--start", default="2020-01-01")
     p_fb = sub.add_parser("fetch-binance", help="Binance spot daily klines for every USDT pair (delisted included)")
     p_fb.add_argument("--start", default="2020-01-01")
+    for command in ("coinglass-check", "coinglass-pull"):
+        cg = sub.add_parser(command, help="optional CoinGlass API access check or hashed crypto-context snapshot")
+        cg.add_argument("--symbol", default="BTCUSDT", help="exact futures instrument identifier from CoinGlass")
+        cg.add_argument("--exchange", default="Binance")
+        cg.add_argument("--interval", default="4h")
+        cg.add_argument("--datasets", default="price,rsi" if command.endswith("check") else
+                        "price,open_interest,funding,liquidations,long_short,rsi,macd", help="comma-separated endpoint names")
+        if command.endswith("pull"):
+            cg.add_argument("--limit", type=int, default=200, help="bounded window, 1-1000 bars per endpoint")
+            cg.add_argument("--end", help="exclusive availability cutoff with timezone; default now")
+    for command in ("coinglass-report", "coinglass-verify"):
+        cg = sub.add_parser(command, help="read and verify a saved CoinGlass snapshot without a key or network")
+        cg.add_argument("--manifest", required=True)
+        if command.endswith("report"):
+            cg.add_argument("--asof", help="UTC observation cutoff; cannot backdate a later retrieval")
+            cg.add_argument("--max-age-intervals", type=int, default=2)
     p_ua = sub.add_parser("us-actions", help="US split schedule from a Yahoo pull, each event checked against SEC")
     p_ua.add_argument("--raw-manifest", required=True)
     p_ua.add_argument("--effective-after", required=True, help="events effective on a later session (ISO date)")
@@ -330,6 +346,44 @@ def main(argv=None) -> int:
         from .sources import binance
 
         print(binance.fetch(start=args.start))
+    elif args.cmd.startswith("coinglass-"):
+        from . import coinglass
+        from .sources.coinglass import CoinGlassClient, CoinGlassError
+
+        try:
+            if args.cmd == "coinglass-verify":
+                document = coinglass.load_snapshot(args.manifest)
+                print(json.dumps({"integrity": "OK", "snapshot_id": document["snapshot_id"],
+                                  "datasets": {n: r["status"] for n, r in document["datasets"].items()}}, indent=2))
+                return 0
+            if args.cmd == "coinglass-report":
+                context = coinglass.latest_context(args.manifest, asof=args.asof, max_age_intervals=args.max_age_intervals)
+                print(json.dumps(context, indent=2, allow_nan=False))
+                return 0 if context["all_requested_ready"] else 2
+            datasets = tuple(s.strip() for s in args.datasets.split(","))
+            client = CoinGlassClient()
+            if args.cmd == "coinglass-check":
+                _, requests = coinglass._parameters(args.symbol, args.exchange, args.interval, 2, datasets)
+                results = {}
+                for name, params in requests.items():
+                    try:
+                        response = client.request(name, **params)
+                        coinglass.normalize_history(name, response.data, params, response.metadata["observed_at"])
+                        results[name] = {"status": "accessible", "returned_rows": len(response.data)}
+                    except CoinGlassError as exc:
+                        results[name] = {"status": "unavailable", "reason": exc.kind, "message": str(exc),
+                                         "http_status": exc.http_status, "provider_code": exc.provider_code}
+                print(json.dumps({"provider": "CoinGlass v4", "datasets": results}, indent=2))
+                return 0 if all(r["status"] == "accessible" for r in results.values()) else 2
+            manifest = coinglass.capture(client, symbol=args.symbol, exchange=args.exchange, interval=args.interval,
+                                         limit=args.limit, datasets=datasets, end=args.end)
+            context = coinglass.latest_context(manifest)
+            print(json.dumps(context, indent=2, allow_nan=False))
+            document = coinglass.load_snapshot(manifest)
+            return 0 if all(r["status"] == "ok" for r in document["datasets"].values()) else 2
+        except (CoinGlassError, ValueError, OSError, KeyError, TypeError) as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
     elif args.cmd == "us-actions":
         import os
 
