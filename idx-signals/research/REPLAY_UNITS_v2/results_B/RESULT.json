@@ -1,0 +1,672 @@
+{
+ "study": "REPLAY_UNITS_v2_B",
+ "ran_at": "2026-10-30T11:43:34Z",
+ "range": [
+  "2025-11-03",
+  "2026-03-31"
+ ],
+ "events": 1080,
+ "sessions": 102,
+ "pairs": 2160,
+ "claim": {
+  "n_pairs": 1080,
+  "n_sessions": 102,
+  "auc": 0.6433815436093867,
+  "auc_bench": 0.5470435433452208,
+  "se": 0.022818643435736644,
+  "z": 6.283526188276143,
+  "look": 500,
+  "verdict": "SKILL at the n>=500 look (z 6.28 >= 3.0)"
+ },
+ "statements": {
+  "NEXT_DUMP10_1": {
+   "n": 1080,
+   "rate": 0.37222222222222223,
+   "auc": 0.6433815436093867,
+   "auc_bench": 0.5470435433452208,
+   "brier_gain_vs_base": {
+    "mean": 0.021693655183305446,
+    "se": 0.005417095059354612,
+    "blocks": 102
+   },
+   "bench_gain_vs_base": {
+    "mean": 0.003986390487559867,
+    "se": 0.0030117258084709935,
+    "blocks": 102
+   },
+   "brier_gain_vs_bench": {
+    "mean": 0.01770726469574558,
+    "se": 0.0046557746430351465,
+    "blocks": 102
+   }
+  },
+  "DUMP10_5": {
+   "n": 1080,
+   "rate": 0.43425925925925923,
+   "auc": 0.5952421665346403,
+   "auc_bench": 0.5349840695982329,
+   "brier_gain_vs_base": {
+    "mean": 0.00761310749939957,
+    "se": 0.0027913836892035043,
+    "blocks": 22
+   },
+   "bench_gain_vs_base": {
+    "mean": 0.0006762301500409142,
+    "se": 0.002124520202149797,
+    "blocks": 22
+   },
+   "brier_gain_vs_bench": {
+    "mean": 0.006936877349358656,
+    "se": 0.002545426992582876,
+    "blocks": 22
+   }
+  }
+ },
+ "by_month": {
+  "2025-11": {
+   "n": 159,
+   "rate": 0.3270440251572327,
+   "auc": 0.6013659237958303
+  },
+  "2025-12": {
+   "n": 218,
+   "rate": 0.4908256880733945,
+   "auc": 0.6571524795823861
+  },
+  "2026-01": {
+   "n": 268,
+   "rate": 0.3283582089552239,
+   "auc": 0.554324494949495
+  },
+  "2026-02": {
+   "n": 197,
+   "rate": 0.36548223350253806,
+   "auc": 0.7733333333333333
+  },
+  "2026-03": {
+   "n": 238,
+   "rate": 0.3487394957983193,
+   "auc": 0.6286824718227749
+  }
+ },
+ "certified_calls": {
+  "calls": 80,
+  "graded": 80,
+  "wrong": 43,
+  "losing_rate": 0.5375,
+  "certified_bound": 0.5,
+  "p_losing_rate_at_or_above_bound": 0.7829788723272538,
+  "share_of_events": 0.07407407407407407,
+  "calls_list": [
+   {
+    "ticker": "MTC",
+    "session": "2025-11-05",
+    "score": 0.6506,
+    "threshold": 0.5549,
+    "dumped": 0
+   },
+   {
+    "ticker": "LFS",
+    "session": "2025-11-11",
+    "score": 0.7492,
+    "threshold": 0.5543,
+    "dumped": 1
+   },
+   {
+    "ticker": "CYPH",
+    "session": "2025-11-12",
+    "score": 0.7222,
+    "threshold": 0.5542,
+    "dumped": 1
+   },
+   {
+    "ticker": "CNCK",
+    "session": "2025-12-01",
+    "score": 0.6933,
+    "threshold": 0.5527,
+    "dumped": 1
+   },
+   {
+    "ticker": "ORKT",
+    "session": "2025-12-08",
+    "score": 0.5813,
+    "threshold": 0.5518,
+    "dumped": 1
+   },
+   {
+    "ticker": "TWG",
+    "session": "2025-12-08",
+    "score": 0.709,
+    "threshold": 0.5518,
+    "dumped": 1
+   },
+   {
+    "ticker": "AFJK",
+    "session": "2025-12-09",
+    "score": 0.5926,
+    "threshold": 0.5514,
+    "dumped": 1
+   },
+   {
+    "ticker": "OCG",
+    "session": "2025-12-09",
+    "score": 0.6115,
+    "threshold": 0.5514,
+    "dumped": 1
+   },
+   {
+    "ticker": "BBGI",
+    "session": "2025-12-10",
+    "score": 0.7016,
+    "threshold": 0.5524,
+    "dumped": 1
+   },
+   {
+    "ticker": "YCBD",
+    "session": "2025-12-12",
+    "score": 0.5544,
+    "threshold": 0.5534,
+    "dumped": 0
+   },
+   {
+    "ticker": "FCDH",
+    "session": "2025-12-18",
+    "score": 0.5212,
+    "threshold": 0.4932,
+    "dumped": 1
+   },
+   {
+    "ticker": "CETX",
+    "session": "2025-12-22",
+    "score": 0.5387,
+    "threshold": 0.5246,
+    "dumped": 1
+   },
+   {
+    "ticker": "HXHX",
+    "session": "2025-12-22",
+    "score": 0.6394,
+    "threshold": 0.5246,
+    "dumped": 1
+   },
+   {
+    "ticker": "PAVS",
+    "session": "2025-12-26",
+    "score": 0.6228,
+    "threshold": 0.4931,
+    "dumped": 1
+   },
+   {
+    "ticker": "RPGL",
+    "session": "2025-12-29",
+    "score": 0.4998,
+    "threshold": 0.4931,
+    "dumped": 1
+   },
+   {
+    "ticker": "CHRN",
+    "session": "2025-12-30",
+    "score": 0.5592,
+    "threshold": 0.4931,
+    "dumped": 1
+   },
+   {
+    "ticker": "AXNX",
+    "session": "2026-01-02",
+    "score": 0.5135,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "BRTX",
+    "session": "2026-01-02",
+    "score": 0.5994,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "BTLN",
+    "session": "2026-01-02",
+    "score": 0.6743,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "BTOC",
+    "session": "2026-01-02",
+    "score": 0.5523,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "BURU",
+    "session": "2026-01-02",
+    "score": 0.6189,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "CAPS",
+    "session": "2026-01-02",
+    "score": 0.5858,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "CPOP",
+    "session": "2026-01-02",
+    "score": 0.5735,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "DHY",
+    "session": "2026-01-02",
+    "score": 0.5454,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "DKI",
+    "session": "2026-01-02",
+    "score": 0.5727,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "FRGT",
+    "session": "2026-01-02",
+    "score": 0.5727,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "GMEX",
+    "session": "2026-01-02",
+    "score": 0.632,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "GP",
+    "session": "2026-01-02",
+    "score": 0.6511,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "GTBP",
+    "session": "2026-01-02",
+    "score": 0.5587,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "HLSQ",
+    "session": "2026-01-02",
+    "score": 0.6417,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "HUBC",
+    "session": "2026-01-02",
+    "score": 0.4973,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "IGR",
+    "session": "2026-01-02",
+    "score": 0.5329,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "IZM",
+    "session": "2026-01-02",
+    "score": 0.5034,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "MBRX",
+    "session": "2026-01-02",
+    "score": 0.6311,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "OPTT",
+    "session": "2026-01-02",
+    "score": 0.594,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "REVB",
+    "session": "2026-01-02",
+    "score": 0.5557,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "SKYQ",
+    "session": "2026-01-02",
+    "score": 0.5018,
+    "threshold": 0.4931,
+    "dumped": 1
+   },
+   {
+    "ticker": "SRTM",
+    "session": "2026-01-02",
+    "score": 0.561,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "WCT",
+    "session": "2026-01-02",
+    "score": 0.6563,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "TMDE",
+    "session": "2026-01-05",
+    "score": 0.5553,
+    "threshold": 0.4931,
+    "dumped": 0
+   },
+   {
+    "ticker": "AZIO",
+    "session": "2026-01-12",
+    "score": 0.599,
+    "threshold": 0.5569,
+    "dumped": 0
+   },
+   {
+    "ticker": "LVLU",
+    "session": "2026-01-12",
+    "score": 0.5576,
+    "threshold": 0.5569,
+    "dumped": 0
+   },
+   {
+    "ticker": "VIVK",
+    "session": "2026-01-13",
+    "score": 0.6158,
+    "threshold": 0.5566,
+    "dumped": 0
+   },
+   {
+    "ticker": "XAIR",
+    "session": "2026-01-13",
+    "score": 0.5965,
+    "threshold": 0.5566,
+    "dumped": 1
+   },
+   {
+    "ticker": "ROLR",
+    "session": "2026-01-14",
+    "score": 0.6854,
+    "threshold": 0.5575,
+    "dumped": 0
+   },
+   {
+    "ticker": "CJMB",
+    "session": "2026-01-15",
+    "score": 0.6852,
+    "threshold": 0.5577,
+    "dumped": 0
+   },
+   {
+    "ticker": "SPHL",
+    "session": "2026-01-15",
+    "score": 0.7118,
+    "threshold": 0.5577,
+    "dumped": 1
+   },
+   {
+    "ticker": "NEXR",
+    "session": "2026-01-16",
+    "score": 0.5732,
+    "threshold": 0.5579,
+    "dumped": 1
+   },
+   {
+    "ticker": "CRVS",
+    "session": "2026-01-20",
+    "score": 0.5714,
+    "threshold": 0.5587,
+    "dumped": 0
+   },
+   {
+    "ticker": "IVF",
+    "session": "2026-01-20",
+    "score": 0.6627,
+    "threshold": 0.5587,
+    "dumped": 1
+   },
+   {
+    "ticker": "GITS",
+    "session": "2026-01-21",
+    "score": 0.6241,
+    "threshold": 0.5588,
+    "dumped": 0
+   },
+   {
+    "ticker": "NAMM",
+    "session": "2026-01-21",
+    "score": 0.6577,
+    "threshold": 0.5588,
+    "dumped": 0
+   },
+   {
+    "ticker": "MOVE",
+    "session": "2026-01-23",
+    "score": 0.6568,
+    "threshold": 0.5595,
+    "dumped": 0
+   },
+   {
+    "ticker": "BATL",
+    "session": "2026-01-26",
+    "score": 0.6617,
+    "threshold": 0.5592,
+    "dumped": 1
+   },
+   {
+    "ticker": "MBAI",
+    "session": "2026-01-26",
+    "score": 0.5901,
+    "threshold": 0.5592,
+    "dumped": 1
+   },
+   {
+    "ticker": "RPGL",
+    "session": "2026-01-29",
+    "score": 0.5697,
+    "threshold": 0.5596,
+    "dumped": 1
+   },
+   {
+    "ticker": "ELPW",
+    "session": "2026-01-30",
+    "score": 0.7691,
+    "threshold": 0.5595,
+    "dumped": 1
+   },
+   {
+    "ticker": "INLF",
+    "session": "2026-01-30",
+    "score": 0.7395,
+    "threshold": 0.5595,
+    "dumped": 1
+   },
+   {
+    "ticker": "PHOE",
+    "session": "2026-01-30",
+    "score": 0.6478,
+    "threshold": 0.5595,
+    "dumped": 1
+   },
+   {
+    "ticker": "FUSE",
+    "session": "2026-02-02",
+    "score": 0.5901,
+    "threshold": 0.5596,
+    "dumped": 1
+   },
+   {
+    "ticker": "KELYB",
+    "session": "2026-02-05",
+    "score": 0.6268,
+    "threshold": 0.5604,
+    "dumped": 1
+   },
+   {
+    "ticker": "NCI",
+    "session": "2026-02-11",
+    "score": 0.5674,
+    "threshold": 0.56,
+    "dumped": 1
+   },
+   {
+    "ticker": "OLB",
+    "session": "2026-02-17",
+    "score": 0.6362,
+    "threshold": 0.5598,
+    "dumped": 1
+   },
+   {
+    "ticker": "RXT",
+    "session": "2026-02-18",
+    "score": 0.6672,
+    "threshold": 0.5597,
+    "dumped": 1
+   },
+   {
+    "ticker": "STAK",
+    "session": "2026-03-02",
+    "score": 0.5934,
+    "threshold": 0.5594,
+    "dumped": 0
+   },
+   {
+    "ticker": "TPET",
+    "session": "2026-03-02",
+    "score": 0.5638,
+    "threshold": 0.5594,
+    "dumped": 0
+   },
+   {
+    "ticker": "CCHH",
+    "session": "2026-03-03",
+    "score": 0.5925,
+    "threshold": 0.5592,
+    "dumped": 0
+   },
+   {
+    "ticker": "MOBX",
+    "session": "2026-03-03",
+    "score": 0.733,
+    "threshold": 0.5592,
+    "dumped": 1
+   },
+   {
+    "ticker": "AIFF",
+    "session": "2026-03-04",
+    "score": 0.6375,
+    "threshold": 0.5596,
+    "dumped": 0
+   },
+   {
+    "ticker": "STAK",
+    "session": "2026-03-05",
+    "score": 0.5752,
+    "threshold": 0.5597,
+    "dumped": 0
+   },
+   {
+    "ticker": "TPET",
+    "session": "2026-03-05",
+    "score": 0.5614,
+    "threshold": 0.5597,
+    "dumped": 0
+   },
+   {
+    "ticker": "PRSO",
+    "session": "2026-03-06",
+    "score": 0.7369,
+    "threshold": 0.5597,
+    "dumped": 1
+   },
+   {
+    "ticker": "ACXP",
+    "session": "2026-03-11",
+    "score": 0.5623,
+    "threshold": 0.5599,
+    "dumped": 1
+   },
+   {
+    "ticker": "AGRZ",
+    "session": "2026-03-12",
+    "score": 0.5738,
+    "threshold": 0.5597,
+    "dumped": 1
+   },
+   {
+    "ticker": "ELPW",
+    "session": "2026-03-13",
+    "score": 0.6753,
+    "threshold": 0.5599,
+    "dumped": 1
+   },
+   {
+    "ticker": "RPGL",
+    "session": "2026-03-20",
+    "score": 0.6454,
+    "threshold": 0.56,
+    "dumped": 1
+   },
+   {
+    "ticker": "EEIQ",
+    "session": "2026-03-26",
+    "score": 0.6116,
+    "threshold": 0.5598,
+    "dumped": 1
+   },
+   {
+    "ticker": "ATPC",
+    "session": "2026-03-27",
+    "score": 0.6561,
+    "threshold": 0.5597,
+    "dumped": 0
+   },
+   {
+    "ticker": "GVH",
+    "session": "2026-03-27",
+    "score": 0.5733,
+    "threshold": 0.5597,
+    "dumped": 0
+   },
+   {
+    "ticker": "ASTC",
+    "session": "2026-03-30",
+    "score": 0.67,
+    "threshold": 0.5597,
+    "dumped": 0
+   }
+  ]
+ },
+ "raw_dump_rate_next_session": 0.37222222222222223,
+ "ungraded": {
+  "NEXT_DUMP10_1": 0,
+  "DUMP10_5": 0
+ },
+ "entry_status": {
+  "TRADED": 1080
+ },
+ "forecasts_file": "results/forecasts.csv.gz"
+}
