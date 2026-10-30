@@ -57,10 +57,11 @@ git config core.hooksPath .githooks
 manifest, a corporate-action registry, a KOD card, scan, evidence file or timestamp token, a
 pinned TSA certificate, or an earlier line of `RUNS.jsonl` / `opens.jsonl` / `scans.jsonl` /
 `receipts.jsonl` / `manual.csv`.
-CI (`.github/workflows/checks.yml`) runs it over the whole history, plus both test suites,
+CI (`.github/workflows/checks.yml`) runs it over the whole history on every push/PR, plus selected test suites,
 `kod verify` (with a read-only `GITHUB_TOKEN`, so GitHub receipts are checked),
 `kod receipt-selftest` for the commit being built, `idxsig rules` (source audit) and
-`idxsig verify-runs`.
+`idxsig verify-runs`. See [CI routing and timestamp safety](docs/CI_EFFICIENCY.md) for
+PR/default-branch test routing, forecast-only selection and uncancelled integrity checks.
 
 Branch protection and rulesets are not available for private repositories on GitHub Free,
 and the API reports this branch as unprotected, so a force-push is not prevented here. That
