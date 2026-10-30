@@ -15,10 +15,30 @@ from tests.rulekit import module_rule, with_rule
 from tests.support import random_walk_panel
 from tests.support import run_synthetic as run
 
-ORIGINAL_TRADE_COLUMNS = ["ticker", "signal_date", "status", "entry_date", "exit_date", "entry_price", "shares",
-                          "exit_price", "share_factor", "rolled_sessions", "gross_return", "net_return"]
+ORIGINAL_TRADE_COLUMNS = [
+    "ticker",
+    "signal_date",
+    "status",
+    "entry_date",
+    "exit_date",
+    "entry_price",
+    "shares",
+    "exit_price",
+    "share_factor",
+    "rolled_sessions",
+    "gross_return",
+    "net_return",
+]
 NEW_COLUMNS = ["matched_mean_net_return", "same_session_mean_net_return"]
-DRAW_COLUMNS = ["draw", "scored", "fill_rate", "hit_rate", "avg_net_return", "median_net_return", "baseline"]
+DRAW_COLUMNS = [
+    "draw",
+    "scored",
+    "fill_rate",
+    "hit_rate",
+    "avg_net_return",
+    "median_net_return",
+    "baseline",
+]
 
 
 def every_seventh(row: int, evaluable_rows: int | None = None) -> str:
@@ -43,9 +63,11 @@ def clone_panel():
 
 def alternating(ticker_a: int, ticker_b: int):
     """A stand-in for controls.matched_draws: even draws take ticker_a, odd draws ticker_b."""
+
     def fake(evaluable, feats, a_tick, a_sig, draws, rng, version="v2"):
         col = np.where(np.arange(draws) % 2 == 0, ticker_a, ticker_b).astype(np.int64)
         return np.repeat(col[:, None], len(a_sig), axis=1), np.zeros(len(a_sig), dtype=np.int8)
+
     return fake
 
 
@@ -60,10 +82,15 @@ class PairedColumnTests(unittest.TestCase):
         self.assertGreater(int(trades["status"].eq("EXITED").sum()), 5)
         # same-session draws come from {S000, S001}, matched draws from {S001}: both are S000's own path
         net = trades["net_return"].to_numpy(dtype=float)
-        np.testing.assert_array_equal(trades["same_session_mean_net_return"].to_numpy(dtype=float), net)
+        np.testing.assert_array_equal(
+            trades["same_session_mean_net_return"].to_numpy(dtype=float), net
+        )
         np.testing.assert_array_equal(trades["matched_mean_net_return"].to_numpy(dtype=float), net)
-        self.assertAlmostEqual(out["summary"]["random_matched"]["avg_net_return"]["random_mean"],
-                               out["summary"]["rule_trades"]["avg_net_return"], places=12)
+        self.assertAlmostEqual(
+            out["summary"]["random_matched"]["avg_net_return"]["random_mean"],
+            out["summary"]["rule_trades"]["avg_net_return"],
+            places=12,
+        )
 
     def test_matched_mean_averages_the_scored_draws(self):
         df, meta = clone_panel()
@@ -80,20 +107,28 @@ class PairedColumnTests(unittest.TestCase):
         self.assertEqual(list(trades.index), list(expected[3].index))
         both = pd.concat([expected[3], expected[4]], axis=1).to_numpy(dtype=float)
         with np.errstate(invalid="ignore"):
-            want = np.where(np.isfinite(both).any(axis=1), np.nansum(both, axis=1) / np.isfinite(both).sum(axis=1),
-                            np.nan)
-        np.testing.assert_allclose(trades["matched_mean_net_return"].to_numpy(dtype=float), want, rtol=0, atol=1e-15)
+            want = np.where(
+                np.isfinite(both).any(axis=1),
+                np.nansum(both, axis=1) / np.isfinite(both).sum(axis=1),
+                np.nan,
+            )
+        np.testing.assert_allclose(
+            trades["matched_mean_net_return"].to_numpy(dtype=float), want, rtol=0, atol=1e-15
+        )
         self.assertTrue(np.isfinite(want).any())
         self.assertTrue(np.isnan(want).any())  # the last signals run past the data on every name
 
     def test_no_control_is_drawn_for_an_overlap_skipped_signal(self):
         df, meta = random_walk_panel(n_tickers=12, n_sessions=90, seed=11)
-        daily = module_rule("PAIRD", """
+        daily = module_rule(
+            "PAIRD",
+            """
             def compute(m):
                 out = np.zeros(m.shape)
                 out[0, :] = 1.0
                 return np.where(m.tradeable, out, np.nan)
-        """)
+        """,
+        )
         with with_rule(daily):
             trades = run(RunConfig("PAIRD", random_draws=50), df, meta)["trades"]
         skipped = trades["status"] == "SKIP_OVERLAP"
@@ -104,10 +139,13 @@ class PairedColumnTests(unittest.TestCase):
 
     def test_columns_are_present_when_no_signal_is_attempted(self):
         df, meta = random_walk_panel(n_tickers=8, n_sessions=60, seed=3)
-        silent = module_rule("PAIRN", """
+        silent = module_rule(
+            "PAIRN",
+            """
             def compute(m):
                 return np.where(m.tradeable, 0.0, np.nan)
-        """)
+        """,
+        )
         with with_rule(silent):
             out = run(RunConfig("PAIRN", random_draws=5), df, meta)
         self.assertEqual(len(out["trades"]), 0)
@@ -126,11 +164,20 @@ class PairedColumnTests(unittest.TestCase):
 
 
 class PairedExcessTests(unittest.TestCase):
-    TOY = pd.DataFrame({
-        "signal_date": ["2023-01-02", "2023-01-02", "2023-01-03", "2023-01-03", "2023-01-04", "2023-01-05"],
-        "net_return": [0.05, 0.06, 0.02, 0.00, np.nan, 0.10],
-        "matched_mean_net_return": [0.03, 0.02, 0.01, 0.01, 0.01, np.nan],
-    })
+    TOY = pd.DataFrame(
+        {
+            "signal_date": [
+                "2023-01-02",
+                "2023-01-02",
+                "2023-01-03",
+                "2023-01-03",
+                "2023-01-04",
+                "2023-01-05",
+            ],
+            "net_return": [0.05, 0.06, 0.02, 0.00, np.nan, 0.10],
+            "matched_mean_net_return": [0.03, 0.02, 0.01, 0.01, 0.01, np.nan],
+        }
+    )
 
     def test_per_signal_excess(self):
         ex = per_signal_excess(self.TOY)
@@ -149,8 +196,13 @@ class PairedExcessTests(unittest.TestCase):
         self.assertEqual(r["cluster"], "signal_date")
 
     def test_every_cluster_positive_gives_the_floor_p(self):
-        frame = pd.DataFrame({"signal_date": ["a", "a", "b", "c"], "net_return": [0.1, 0.2, 0.3, 0.4],
-                              "matched_mean_net_return": [0.0, 0.0, 0.0, 0.0]})
+        frame = pd.DataFrame(
+            {
+                "signal_date": ["a", "a", "b", "c"],
+                "net_return": [0.1, 0.2, 0.3, 0.4],
+                "matched_mean_net_return": [0.0, 0.0, 0.0, 0.0],
+            }
+        )
         r = paired_excess(frame, resamples=999, seed=5)
         self.assertAlmostEqual(r["p_one_sided"], 1 / 1000, places=15)
         self.assertEqual(r["n_clusters"], 3)
@@ -175,8 +227,14 @@ class PairedExcessTests(unittest.TestCase):
             paired_excess(self.TOY, resamples=0)
 
     def test_overlap_skipped_rows_do_not_enter_the_statistic(self):
-        frame = pd.DataFrame({"signal_date": ["a", "a"], "status": ["EXITED", "SKIP_OVERLAP"],
-                              "net_return": [0.1, 0.5], "matched_mean_net_return": [0.0, np.nan]})
+        frame = pd.DataFrame(
+            {
+                "signal_date": ["a", "a"],
+                "status": ["EXITED", "SKIP_OVERLAP"],
+                "net_return": [0.1, 0.5],
+                "matched_mean_net_return": [0.0, np.nan],
+            }
+        )
         self.assertEqual(paired_excess(frame, resamples=10)["n"], 1)
 
     def test_runs_on_a_harness_trades_frame(self):
@@ -186,7 +244,9 @@ class PairedExcessTests(unittest.TestCase):
             trades = run(RunConfig("PAIRH", random_draws=30), df, meta)["trades"]
         r = paired_excess(trades, resamples=200)
         self.assertEqual(r["n"], int(np.isfinite(per_signal_excess(trades)).sum()))
-        self.assertEqual(r["n_clusters"], trades.loc[per_signal_excess(trades).notna(), "signal_date"].nunique())
+        self.assertEqual(
+            r["n_clusters"], trades.loc[per_signal_excess(trades).notna(), "signal_date"].nunique()
+        )
         self.assertGreater(r["n"], 0)
         self.assertTrue(0 < r["p_one_sided"] <= 1)
         self.assertEqual(backtest.paired_excess, paired_excess)

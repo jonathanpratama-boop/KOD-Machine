@@ -8,10 +8,36 @@ import unittest
 from idxsig import catalysts as cr
 
 
-def res(sid, family, diff, session, direction=1, window="H20", cls="FIRE", status="RESOLVED", median=0.0, revises=None):
-    r = {"type": "RESOLUTION", "family": family, "set_id": sid, "window": window, "coverage": cls, "status": status,
-         "signal_session": session, "direction": direction, "candidate": {"trade": {"net_return": diff}},
-         "paired": {"candidate_net": diff, "diff": diff, "twins_mean_net": 0.0, "twins_median_net": median}, "cone": []}
+def res(
+    sid,
+    family,
+    diff,
+    session,
+    direction=1,
+    window="H20",
+    cls="FIRE",
+    status="RESOLVED",
+    median=0.0,
+    revises=None,
+):
+    r = {
+        "type": "RESOLUTION",
+        "family": family,
+        "set_id": sid,
+        "window": window,
+        "coverage": cls,
+        "status": status,
+        "signal_session": session,
+        "direction": direction,
+        "candidate": {"trade": {"net_return": diff}},
+        "paired": {
+            "candidate_net": diff,
+            "diff": diff,
+            "twins_mean_net": 0.0,
+            "twins_median_net": median,
+        },
+        "cone": [],
+    }
     if revises:
         r["revises"] = revises
     return r
@@ -26,12 +52,19 @@ class DocumentClass(unittest.TestCase):
         """Guards against: a child family counted beside its parent (a filing twice), an avoid family's correct call
         counted as a loss, an ABSTAIN or H60 record in the class, or a revised resolution counted twice."""
         records = [
-            cset("S1", "SEC13D", 42.0), cset("D1", "DILUTION_8K", 3.5), cset("F1", "FORM4", 25.0), cset("F2", "FORM4", 8.0),
+            cset("S1", "SEC13D", 42.0),
+            cset("D1", "DILUTION_8K", 3.5),
+            cset("F1", "FORM4", 25.0),
+            cset("F2", "FORM4", 8.0),
             res("S1", "SEC13D", 0.04, "2026-11-02"),
-            res("D1", "DILUTION_8K", -0.03, "2026-11-02", direction=-1, median=-0.01),  # the issuer lost: a correct avoid
+            res(
+                "D1", "DILUTION_8K", -0.03, "2026-11-02", direction=-1, median=-0.01
+            ),  # the issuer lost: a correct avoid
             res("F1", "FORM4", 0.02, "2026-11-03"),
             res("F2", "FORM4", -0.05, "2026-11-03"),
-            res("F2", "FORM4", 0.01, "2026-11-03", revises="x"),  # a later revision replaces the earlier record
+            res(
+                "F2", "FORM4", 0.01, "2026-11-03", revises="x"
+            ),  # a later revision replaces the earlier record
             res("V1", "SEC13D_V2", 0.50, "2026-11-02"),  # the same filing as S1: excluded
             res("P1", "FORM4_SHARP", 0.50, "2026-11-03"),  # a subset of FORM4: excluded
             res("A1", "SEC13D", 0.50, "2026-11-02", cls="ABSTAIN"),
@@ -48,7 +81,9 @@ class DocumentClass(unittest.TestCase):
         self.assertAlmostEqual(dc["by_family"]["DILUTION_8K"]["mean_diff"], 0.03)
         self.assertEqual(dc["by_family"]["FORM4"]["n_paired"], 2)
         wr = dc["win_rate_descriptive"]
-        self.assertEqual((wr["n"], wr["wins"]), (4, 4))  # D1: (-0.03 - -0.01) x -1 = +0.02 > 0, a win for the avoid call
+        self.assertEqual(
+            (wr["n"], wr["wins"]), (4, 4)
+        )  # D1: (-0.03 - -0.01) x -1 = +0.02 > 0, a win for the avoid call
         self.assertEqual(dc["by_price_band"]["close_ge_20"]["n_paired"], 2)
         self.assertEqual(dc["by_price_band"]["close_lt_20"]["n_paired"], 2)
         self.assertEqual(m["look"]["verdict"], "accumulating (no look reached)")

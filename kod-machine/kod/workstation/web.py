@@ -1,4 +1,5 @@
 """Local, single-user research interface. Network access is explicit and optional."""
+
 from __future__ import annotations
 
 from decimal import Decimal
@@ -36,7 +37,14 @@ ASSETS = Path(__file__).resolve().parent
 MAX_BODY = 10 * 1024 * 1024
 MAX_UPLOAD = 8 * 1024 * 1024
 COOKIE = "kod_workstation_csrf"
-METRICS = {"revenue": "Revenue", "net_income": "Net income", "operating_income": "Operating income", "operating_expenses": "Operating expenses", "gross_margin": "Gross margin", "eps_diluted": "Diluted EPS"}
+METRICS = {
+    "revenue": "Revenue",
+    "net_income": "Net income",
+    "operating_income": "Operating income",
+    "operating_expenses": "Operating expenses",
+    "gross_margin": "Gross margin",
+    "eps_diluted": "Diluted EPS",
+}
 
 
 class _BodyTooLarge(Exception):
@@ -59,12 +67,18 @@ class LocalBoundary:
             if origin:
                 parsed = urlsplit(origin)
                 if parsed.scheme not in {"http", "https"} or parsed.netloc.lower() != host:
-                    return await PlainTextResponse("Cross-origin changes are refused.", 403)(scope, receive, send)
+                    return await PlainTextResponse("Cross-origin changes are refused.", 403)(
+                        scope, receive, send
+                    )
             if headers.get("sec-fetch-site") == "cross-site":
-                return await PlainTextResponse("Cross-site changes are refused.", 403)(scope, receive, send)
+                return await PlainTextResponse("Cross-site changes are refused.", 403)(
+                    scope, receive, send
+                )
         try:
             if int(headers.get("content-length", "0")) > MAX_BODY:
-                return await PlainTextResponse("The request is too large (10 MiB maximum).", 413)(scope, receive, send)
+                return await PlainTextResponse("The request is too large (10 MiB maximum).", 413)(
+                    scope, receive, send
+                )
         except ValueError:
             return await PlainTextResponse("Invalid Content-Length.", 400)(scope, receive, send)
         size = 0
@@ -79,27 +93,40 @@ class LocalBoundary:
 
         async def security_headers(message):
             if message["type"] == "http.response.start":
-                message.setdefault("headers", []).extend([
-                    (b"x-content-type-options", b"nosniff"),
-                    # 'same-origin', not 'no-referrer': under no-referrer a browser sends "Origin: null" on its own form posts, which the Origin check
-                    # above (rightly) refuses. Cross-site requests still carry no referrer.
-                    (b"referrer-policy", b"same-origin"),
-                    (b"x-frame-options", b"DENY"),
-                    (b"content-security-policy", b"default-src 'self'; style-src 'self'; img-src 'self' data:; script-src 'none'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'self'"),
-                ])
+                message.setdefault("headers", []).extend(
+                    [
+                        (b"x-content-type-options", b"nosniff"),
+                        # 'same-origin', not 'no-referrer': under no-referrer a browser sends "Origin: null" on its own form posts, which the Origin check
+                        # above (rightly) refuses. Cross-site requests still carry no referrer.
+                        (b"referrer-policy", b"same-origin"),
+                        (b"x-frame-options", b"DENY"),
+                        (
+                            b"content-security-policy",
+                            b"default-src 'self'; style-src 'self'; img-src 'self' data:; script-src 'none'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'self'",
+                        ),
+                    ]
+                )
             await send(message)
 
         try:
             await self.app(scope, limited, security_headers)
         except _BodyTooLarge:
-            await PlainTextResponse("The request is too large (10 MiB maximum).", 413)(scope, receive, send)
+            await PlainTextResponse("The request is too large (10 MiB maximum).", 413)(
+                scope, receive, send
+            )
 
 
 def safe_url(value):
     """Citation links do not imply authentication; allow only ordinary public URL syntax."""
     try:
         p = urlsplit(str(value))
-        if p.scheme in {"http", "https"} and p.hostname and not p.username and not p.password and not any(c in str(value) for c in "\r\n\x00"):
+        if (
+            p.scheme in {"http", "https"}
+            and p.hostname
+            and not p.username
+            and not p.password
+            and not any(c in str(value) for c in "\r\n\x00")
+        ):
             return str(value)
     except ValueError:
         pass
@@ -119,7 +146,11 @@ def _error(exc):
 
 
 def _display_time(value):
-    return str(value).replace("T", " ").replace("+00:00", " UTC").replace("Z", " UTC") if value else "Unknown"
+    return (
+        str(value).replace("T", " ").replace("+00:00", " UTC").replace("Z", " UTC")
+        if value
+        else "Unknown"
+    )
 
 
 def _number(value):
@@ -127,6 +158,7 @@ def _number(value):
         return "—"
     try:
         from decimal import Decimal
+
         v = Decimal(str(value))
         return f"{v:,.8f}".rstrip("0").rstrip(".") if "." in str(value) else f"{v:,.0f}"
     except Exception:
@@ -157,8 +189,17 @@ def _unit(fact):
 
 POLICIES = {"day-end": DAY_END, "strict": STRICT}
 MILLION = Decimal(10) ** 6
-PERCENT_FIELDS = ("revenue_growth", "operating_margin", "cash_tax_rate", "depreciation_rate", "capex_rate", "nwc_rate", "discount_rate", "terminal_growth",
-                  "terminal_roic")
+PERCENT_FIELDS = (
+    "revenue_growth",
+    "operating_margin",
+    "cash_tax_rate",
+    "depreciation_rate",
+    "capex_rate",
+    "nwc_rate",
+    "discount_rate",
+    "terminal_growth",
+    "terminal_roic",
+)
 
 
 def _plain(value: Decimal) -> str:
@@ -201,18 +242,31 @@ def _millions(text, name, required=False):
 
 def assumptions_from_form(fields) -> dict:
     """The assumption record from the model form: rates in percent, amounts and share counts in millions; stored exactly in base units and fractions."""
-    raw = {"horizon_years": int(_text(fields.get("horizon_years"), 3) or 0), "currency": _text(fields.get("currency"), 3).upper(),
-           "valuation_date": _text(fields.get("valuation_date"), 10),
-           "base": {"revenue": _millions(fields.get("base_revenue"), "Base revenue", True), "fiscal_year_end": _text(fields.get("base_fiscal_year_end"), 10)}}
+    raw = {
+        "horizon_years": int(_text(fields.get("horizon_years"), 3) or 0),
+        "currency": _text(fields.get("currency"), 3).upper(),
+        "valuation_date": _text(fields.get("valuation_date"), 10),
+        "base": {
+            "revenue": _millions(fields.get("base_revenue"), "Base revenue", True),
+            "fiscal_year_end": _text(fields.get("base_fiscal_year_end"), 10),
+        },
+    }
     for name in PERCENT_FIELDS:
         value = _percent_list(fields.get(name), name)
         raw[name] = value[0] if isinstance(value, list) and len(value) == 1 else value
     raw["bridge"] = {k: _millions(fields.get(k), k.replace("_", " ")) for k in fcff.BRIDGE}
     raw["bridge"]["as_of"] = _text(fields.get("bridge_as_of"), 10) or None
-    raw["shares"] = {"count": _millions(fields.get("share_count"), "share count"), "as_of": _text(fields.get("share_count_as_of"), 10) or None,
-                     "basis": _text(fields.get("share_count_basis"), 300) or None}
+    raw["shares"] = {
+        "count": _millions(fields.get("share_count"), "share count"),
+        "as_of": _text(fields.get("share_count_as_of"), 10) or None,
+        "basis": _text(fields.get("share_count_basis"), 300) or None,
+    }
     raw["treatments"] = {k: _text(fields.get("treatment_" + k), 40) for k in fcff.TREATMENTS}
-    cited = [i for i in _text(fields.get("cited_observations"), 2000).split() if re.fullmatch(r"fob_[0-9a-f]{24}", i)]
+    cited = [
+        i
+        for i in _text(fields.get("cited_observations"), 2000).split()
+        if re.fullmatch(r"fob_[0-9a-f]{24}", i)
+    ]
     if cited:
         raw["sources"] = {"base_revenue": {"observation_ids": cited}}
     return raw
@@ -220,20 +274,35 @@ def assumptions_from_form(fields) -> dict:
 
 def form_from_assumptions(raw: dict) -> dict:
     """Pre-fill values for the form from a stored version (the inverse of assumptions_from_form)."""
+
     def pct(v):
         return ", ".join(_plain(Decimal(x) * 100) for x in (v if isinstance(v, list) else [v]))
 
     def mil(v):
         return "" if v in (None, "") else _plain(Decimal(v) / MILLION)
-    out = {"horizon_years": raw.get("horizon_years"), "currency": raw.get("currency"), "valuation_date": raw.get("valuation_date"),
-           "base_revenue": mil((raw.get("base") or {}).get("revenue")), "base_fiscal_year_end": (raw.get("base") or {}).get("fiscal_year_end")}
+
+    out = {
+        "horizon_years": raw.get("horizon_years"),
+        "currency": raw.get("currency"),
+        "valuation_date": raw.get("valuation_date"),
+        "base_revenue": mil((raw.get("base") or {}).get("revenue")),
+        "base_fiscal_year_end": (raw.get("base") or {}).get("fiscal_year_end"),
+    }
     out.update({name: pct(raw[name]) for name in PERCENT_FIELDS if raw.get(name) is not None})
     out.update({k: mil((raw.get("bridge") or {}).get(k)) for k in fcff.BRIDGE})
     out["bridge_as_of"] = (raw.get("bridge") or {}).get("as_of") or ""
     shares = raw.get("shares") or {}
-    out.update({"share_count": mil(shares.get("count")), "share_count_as_of": shares.get("as_of") or "", "share_count_basis": shares.get("basis") or ""})
+    out.update(
+        {
+            "share_count": mil(shares.get("count")),
+            "share_count_as_of": shares.get("as_of") or "",
+            "share_count_basis": shares.get("basis") or "",
+        }
+    )
     out.update({"treatment_" + k: v for k, v in (raw.get("treatments") or {}).items()})
-    out["cited_observations"] = " ".join(((raw.get("sources") or {}).get("base_revenue") or {}).get("observation_ids", []))
+    out["cited_observations"] = " ".join(
+        ((raw.get("sources") or {}).get("base_revenue") or {}).get("observation_ids", [])
+    )
     return out
 
 
@@ -250,11 +319,28 @@ def conditions_from_form(fields) -> list:
             continue
         op = _text(fields.get(f"c{i}_op"), 2)
         right_code = _text(fields.get(f"c{i}_right"), 120)
-        right = conditions.operand_from_code(right_code) if right_code != "constant" else {
-            "kind": "constant", "value": _text(fields.get(f"c{i}_value"), 40), "unit": _text(fields.get(f"c{i}_unit"), 20)}
+        right = (
+            conditions.operand_from_code(right_code)
+            if right_code != "constant"
+            else {
+                "kind": "constant",
+                "value": _text(fields.get(f"c{i}_value"), 40),
+                "unit": _text(fields.get(f"c{i}_unit"), 20),
+            }
+        )
         if right["kind"] == "constant" and right["unit"] in ("currency", "currency/share"):
             right["currency"] = _text(fields.get(f"c{i}_currency"), 3).upper()
-        out.append({"id": f"c{i}", "label": label, "expression": {"op": op, "left": conditions.operand_from_code(left), "right": right}})
+        out.append(
+            {
+                "id": f"c{i}",
+                "label": label,
+                "expression": {
+                    "op": op,
+                    "left": conditions.operand_from_code(left),
+                    "right": right,
+                },
+            }
+        )
     advanced = _text(fields.get("advanced_conditions"), 20000)
     if advanced:
         for c in conditions.parse_conditions(advanced):
@@ -299,15 +385,26 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
     """Build an app with explicit runtime state; no import-time IO or collection."""
     app = FastAPI(title="KOD Workstation", docs_url=None, redoc_url=None)
     app.add_middleware(LocalBoundary)
-    app.add_middleware(TrustedHostMiddleware, allowed_hosts=["127.0.0.1", "localhost"] + (["testserver"] if testing else []))
+    app.add_middleware(
+        TrustedHostMiddleware,
+        allowed_hosts=["127.0.0.1", "localhost"] + (["testserver"] if testing else []),
+    )
     app.state.service = service or ResearchService(Store(Path(data_dir)))
     app.state.store = app.state.service.store
     app.state.offline = bool(offline)
     signing_key = secrets.token_bytes(32)
     templates = Jinja2Templates(directory=str(ASSETS / "templates"))
     templates.env.filters.update(moment=_display_time, number=_number)
-    templates.env.globals.update(show=dossier_model.display, metric_label=lambda m: dossier_model.LABELS.get(m, str(m).replace("_", " ")))
-    templates.env.globals.update(available=_available, metric=lambda key: METRICS.get(key, str(key).replace("_", " ").title()), unit=_unit, safe_url=safe_url)
+    templates.env.globals.update(
+        show=dossier_model.display,
+        metric_label=lambda m: dossier_model.LABELS.get(m, str(m).replace("_", " ")),
+    )
+    templates.env.globals.update(
+        available=_available,
+        metric=lambda key: METRICS.get(key, str(key).replace("_", " ").title()),
+        unit=_unit,
+        safe_url=safe_url,
+    )
     markdown = MarkdownIt("commonmark", {"html": False, "linkify": False}).disable("image")
     app.mount("/static", StaticFiles(directory=str(ASSETS / "static")), name="static")
 
@@ -324,9 +421,19 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
         if not valid_token(token):
             value = secrets.token_urlsafe(32)
             token = value + "." + hmac.new(signing_key, value.encode(), hashlib.sha256).hexdigest()
-        common = {"request": request, "csrf": token, "offline": app.state.offline, "securities": app.state.store.securities(), "message": request.query_params.get("message", "")[:600]}
-        response = templates.TemplateResponse(request=request, name=template, context={**common, **context}, status_code=status_code)
-        response.set_cookie(COOKIE, token, httponly=True, samesite="strict", max_age=8 * 3600, path="/")
+        common = {
+            "request": request,
+            "csrf": token,
+            "offline": app.state.offline,
+            "securities": app.state.store.securities(),
+            "message": request.query_params.get("message", "")[:600],
+        }
+        response = templates.TemplateResponse(
+            request=request, name=template, context={**common, **context}, status_code=status_code
+        )
+        response.set_cookie(
+            COOKIE, token, httponly=True, samesite="strict", max_age=8 * 3600, path="/"
+        )
         response.headers["Cache-Control"] = "no-store"
         return response
 
@@ -334,12 +441,16 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
         fields = await request.form(max_files=2, max_fields=max_fields)
         cookie, token = request.cookies.get(COOKIE, ""), str(fields.get("csrf", ""))
         if not valid_token(cookie) or not hmac.compare_digest(cookie, token):
-            raise HTTPException(403, "This form expired or could not be verified. Reload the page and try again.")
+            raise HTTPException(
+                403, "This form expired or could not be verified. Reload the page and try again."
+            )
         return fields
 
     def redirect(path, message=None):
         joiner = "&" if "?" in path else "?"
-        return RedirectResponse(path + (joiner + urlencode({"message": message}) if message else ""), status_code=303)
+        return RedirectResponse(
+            path + (joiner + urlencode({"message": message}) if message else ""), status_code=303
+        )
 
     def security_or_404(security_id):
         try:
@@ -355,25 +466,81 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
 
     @app.exception_handler(HTTPException)
     async def http_error(request, exc):
-        return render(request, "error.html", status_code=exc.status_code, title="Unable to complete this request", error=exc.detail, page="error")
+        return render(
+            request,
+            "error.html",
+            status_code=exc.status_code,
+            title="Unable to complete this request",
+            error=exc.detail,
+            page="error",
+        )
 
     @app.get("/", response_class=HTMLResponse)
-    def inbox(request: Request, security: str = "", category: str = "", status: str = "", q: str = "", after: str = "", before: str = ""):
+    def inbox(
+        request: Request,
+        security: str = "",
+        category: str = "",
+        status: str = "",
+        q: str = "",
+        after: str = "",
+        before: str = "",
+    ):
         store = app.state.store
         securities = store.securities()
         by_id = {s["id"]: s for s in securities}
         events = store.events(security or None)
         referenced = {event.get("document_id") for event in events}
-        rows = [{**event, "kind": event.get("form", "Filing"), "status": event.get("metadata", {}).get("extraction_status", "filing"), "company": by_id.get(event["security_id"])} for event in events]
+        rows = [
+            {
+                **event,
+                "kind": event.get("form", "Filing"),
+                "status": event.get("metadata", {}).get("extraction_status", "filing"),
+                "company": by_id.get(event["security_id"]),
+            }
+            for event in events
+        ]
         for doc in store.documents(security or None):
-            if doc["id"] not in referenced and doc.get("role") != "metadata" and doc.get("provider") not in {"sec_submissions", "sec_mapping"}:
-                rows.append({**doc, "kind": "RELEASE", "title": doc["filename"], "status": doc["extraction_status"], "company": by_id.get(doc["security_id"]), "document_id": doc["id"]})
-        rows = [r for r in rows if (not category or r["kind"] == category) and (not status or r["status"] == status)
-                and (not q or q.lower() in (r.get("title", "") + " " + str(r.get("company", {}))).lower())
-                and (not after or _available_key(r)[:10] >= after)
-                and (not before or bool(_available_key(r)) and _available_key(r)[:10] <= before)]
+            if (
+                doc["id"] not in referenced
+                and doc.get("role") != "metadata"
+                and doc.get("provider") not in {"sec_submissions", "sec_mapping"}
+            ):
+                rows.append(
+                    {
+                        **doc,
+                        "kind": "RELEASE",
+                        "title": doc["filename"],
+                        "status": doc["extraction_status"],
+                        "company": by_id.get(doc["security_id"]),
+                        "document_id": doc["id"],
+                    }
+                )
+        rows = [
+            r
+            for r in rows
+            if (not category or r["kind"] == category)
+            and (not status or r["status"] == status)
+            and (
+                not q or q.lower() in (r.get("title", "") + " " + str(r.get("company", {}))).lower()
+            )
+            and (not after or _available_key(r)[:10] >= after)
+            and (not before or bool(_available_key(r)) and _available_key(r)[:10] <= before)
+        ]
         rows.sort(key=lambda r: (_available_key(r), r.get("observed_at") or ""), reverse=True)
-        return render(request, "inbox.html", page="inbox", rows=rows[:250], total=len(rows), notes=store.notes(), selected=security, category=category, selected_status=status, q=q[:200], after=after, before=before)
+        return render(
+            request,
+            "inbox.html",
+            page="inbox",
+            rows=rows[:250],
+            total=len(rows),
+            notes=store.notes(),
+            selected=security,
+            category=category,
+            selected_status=status,
+            q=q[:200],
+            after=after,
+            before=before,
+        )
 
     @app.post("/watchlist")
     async def add_watchlist(request: Request):
@@ -390,8 +557,13 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
                 raise ValueError("CIK must contain digits only.")
             if not re.fullmatch(r"[A-Z]{3}", currency):
                 raise ValueError("Use a three-letter currency code.")
-            sec = app.state.store.upsert_security(ticker, name, cik=cik, venue=venue, currency=currency, association="user_asserted")
-            return redirect("/company/" + sec["id"], "Company added. Identity is user asserted until verified from filing metadata.")
+            sec = app.state.store.upsert_security(
+                ticker, name, cik=cik, venue=venue, currency=currency, association="user_asserted"
+            )
+            return redirect(
+                "/company/" + sec["id"],
+                "Company added. Identity is user asserted until verified from filing metadata.",
+            )
         except ValueError as exc:
             return redirect("/", _error(exc))
 
@@ -406,27 +578,47 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
     async def resolve_watchlist(request: Request):
         fields = await form(request)
         if app.state.offline:
-            return redirect("/", "Offline mode: ticker lookup is disabled. Add an explicit company and CIK instead.")
+            return redirect(
+                "/",
+                "Offline mode: ticker lookup is disabled. Add an explicit company and CIK instead.",
+            )
         try:
             from .sources import SecClient
+
             client = SecClient()
             identity = await run_in_threadpool(client.resolve, _text(fields.get("ticker"), 32))
             raw = getattr(client, "last_mapping_raw", None)
             observed = getattr(client, "last_mapping_observed_at", None)
             if not isinstance(raw, bytes) or not raw or not isinstance(observed, str):
-                raise ValueError("SEC identity lookup did not retain its source evidence. Add an explicit identity or retry.")
+                raise ValueError(
+                    "SEC identity lookup did not retain its source evidence. Add an explicit identity or retry."
+                )
             sec = app.state.store.upsert_security(**identity)
             mapping_url = "https://www.sec.gov/files/company_tickers_exchange.json"
             app.state.store.save_document(
-                sec["id"], raw, "company_tickers_exchange.json", mapping_url,
-                observed_at=observed, role="metadata", provider="sec_mapping",
-                association="verified_from_filing_metadata", external_id=mapping_url,
-                extraction_status="metadata", published_basis="Publication time unknown; current SEC listing metadata observed at retrieval",
-                metadata={"kind": "SEC current listing mapping", "selected_ticker": identity["ticker"],
-                          "selected_cik": identity.get("cik"), "observed_basis": "fetched by this SEC ticker lookup",
-                          "coverage_note": "Current listings only; not a historical security master"},
+                sec["id"],
+                raw,
+                "company_tickers_exchange.json",
+                mapping_url,
+                observed_at=observed,
+                role="metadata",
+                provider="sec_mapping",
+                association="verified_from_filing_metadata",
+                external_id=mapping_url,
+                extraction_status="metadata",
+                published_basis="Publication time unknown; current SEC listing metadata observed at retrieval",
+                metadata={
+                    "kind": "SEC current listing mapping",
+                    "selected_ticker": identity["ticker"],
+                    "selected_cik": identity.get("cik"),
+                    "observed_basis": "fetched by this SEC ticker lookup",
+                    "coverage_note": "Current listings only; not a historical security master",
+                },
             )
-            return redirect("/company/" + sec["id"], "Company identity resolved from current SEC listing metadata.")
+            return redirect(
+                "/company/" + sec["id"],
+                "Company identity resolved from current SEC listing metadata.",
+            )
         except (ValueError, RuntimeError) as exc:
             return redirect("/", _error(exc))
 
@@ -434,7 +626,16 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
     def company(security_id: str, request: Request):
         sec = security_or_404(security_id)
         docs = app.state.store.documents(security_id)
-        return render(request, "company.html", page="company", company=sec, documents=docs, parsed=[d for d in docs if d.get("extraction_status") in ("parsed", "needs_review")], events=app.state.store.events(security_id), notes=app.state.store.notes(security_id))
+        return render(
+            request,
+            "company.html",
+            page="company",
+            company=sec,
+            documents=docs,
+            parsed=[d for d in docs if d.get("extraction_status") in ("parsed", "needs_review")],
+            events=app.state.store.events(security_id),
+            notes=app.state.store.notes(security_id),
+        )
 
     @app.post("/company/{security_id}/upload")
     async def upload(security_id: str, request: Request):
@@ -446,25 +647,46 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
                 raise ValueError("Select an HTML earnings release to upload.")
             filename = Path((document.filename or "release.html").replace("\\", "/")).name
             if Path(filename).suffix.lower() not in {".htm", ".html"}:
-                raise ValueError("This version accepts .html or .htm earnings releases. PDF is not supported.")
+                raise ValueError(
+                    "This version accepts .html or .htm earnings releases. PDF is not supported."
+                )
             raw = await document.read(MAX_UPLOAD + 1)
             if len(raw) > MAX_UPLOAD:
                 raise ValueError("The release exceeds the 8 MiB upload limit.")
             header = fields.get("sec_headers")
-            headers = await header.read(1024 * 1024 + 1) if hasattr(header, "read") and header.filename else None
+            headers = (
+                await header.read(1024 * 1024 + 1)
+                if hasattr(header, "read") and header.filename
+                else None
+            )
             if headers is not None and len(headers) > 1024 * 1024:
                 raise ValueError("The SEC header file exceeds the 1 MiB limit.")
-            url = _text(fields.get("source_url"), 2000) or "https://example.invalid/local-file/" + filename
+            url = (
+                _text(fields.get("source_url"), 2000)
+                or "https://example.invalid/local-file/" + filename
+            )
             if not safe_url(url):
                 raise ValueError("The citation must be a valid http or https URL.")
             role = _text(fields.get("role"), 20)
             if role not in {"current", "comparison"}:
                 raise ValueError("Choose current or comparison release.")
-            doc = app.state.service.ingest(security_id, raw, filename, url, published_at=_text(fields.get("published_at"), 80) or None, sec_headers=headers,
-                                           role=role, association="user_asserted")
-            message = {"parsed": "Source preserved and parsed. You can now generate a research note.",
-                       "needs_review": "Source preserved and its figures were read, but the release does not establish which quarter it reports. Generate a note to see the columns, or record the reported period explicitly."}.get(
-                doc["extraction_status"], "Source preserved, but this layout was not parsed. Supply a supported HTML summary table to extract figures.")
+            doc = app.state.service.ingest(
+                security_id,
+                raw,
+                filename,
+                url,
+                published_at=_text(fields.get("published_at"), 80) or None,
+                sec_headers=headers,
+                role=role,
+                association="user_asserted",
+            )
+            message = {
+                "parsed": "Source preserved and parsed. You can now generate a research note.",
+                "needs_review": "Source preserved and its figures were read, but the release does not establish which quarter it reports. Generate a note to see the columns, or record the reported period explicitly.",
+            }.get(
+                doc["extraction_status"],
+                "Source preserved, but this layout was not parsed. Supply a supported HTML summary table to extract figures.",
+            )
             return redirect("/company/" + security_id, message)
         except ValueError as exc:
             return redirect("/company/" + security_id, _error(exc))
@@ -476,14 +698,28 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
         fields = await form(request)
         security_or_404(security_id)
         if app.state.offline:
-            return redirect("/company/" + security_id, "Offline mode: remote fetching is disabled. Upload a saved HTML release instead.")
+            return redirect(
+                "/company/" + security_id,
+                "Offline mode: remote fetching is disabled. Upload a saved HTML release instead.",
+            )
         try:
             from .sources import import_url
+
             role = _text(fields.get("role"), 20) or "current"
             if role not in {"current", "comparison"}:
                 raise ValueError("Choose current or comparison release.")
-            await run_in_threadpool(import_url, app.state.service, security_id, _text(fields.get("source_url"), 2000), role=role, published_at=_text(fields.get("published_at"), 80) or None)
-            return redirect("/company/" + security_id, "Source fetched and preserved. Check its extraction status below.")
+            await run_in_threadpool(
+                import_url,
+                app.state.service,
+                security_id,
+                _text(fields.get("source_url"), 2000),
+                role=role,
+                published_at=_text(fields.get("published_at"), 80) or None,
+            )
+            return redirect(
+                "/company/" + security_id,
+                "Source fetched and preserved. Check its extraction status below.",
+            )
         except (ValueError, RuntimeError) as exc:
             return redirect("/company/" + security_id, _error(exc))
 
@@ -492,17 +728,29 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
         fields = await form(request)
         security_or_404(security_id)
         if app.state.offline:
-            return redirect("/company/" + security_id, "Offline mode: SEC refresh is disabled. Saved sources remain available.")
+            return redirect(
+                "/company/" + security_id,
+                "Offline mode: SEC refresh is disabled. Saved sources remain available.",
+            )
         try:
             from .sources import SourceUnavailable, refresh_companyfacts, refresh_security
+
             if fields.get("what") == "filed_history":
                 try:
-                    result = await run_in_threadpool(refresh_companyfacts, app.state.service, security_id)
+                    result = await run_in_threadpool(
+                        refresh_companyfacts, app.state.service, security_id
+                    )
                 except SourceUnavailable as exc:
-                    return redirect("/company/" + security_id, "Filed-history refresh failed: " + _error(exc)[:300])
+                    return redirect(
+                        "/company/" + security_id,
+                        "Filed-history refresh failed: " + _error(exc)[:300],
+                    )
             else:
                 result = await run_in_threadpool(refresh_security, app.state.service, security_id)
-            return redirect("/company/" + security_id, result.get("message", "Refresh finished. Inspect source health for details."))
+            return redirect(
+                "/company/" + security_id,
+                result.get("message", "Refresh finished. Inspect source health for details."),
+            )
         except (ValueError, RuntimeError) as exc:
             return redirect("/company/" + security_id, _error(exc))
 
@@ -514,10 +762,15 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
             mode = _text(fields.get("mode"), 20)
             if mode not in {"observed", "public"}:
                 raise ValueError("Choose observed or public reconstruction mode.")
-            saved = app.state.service.generate_note(security_id, _text(fields.get("current_id"), 100), comparison_id=_text(fields.get("comparison_id"), 100) or None,
-                                                   as_of=_text(fields.get("as_of"), 80) or None, mode=mode,
-                                                   period=_text(fields.get("period"), 60) or None,
-                                                   reporting_currency=_text(fields.get("reporting_currency"), 3).upper() or None)
+            saved = app.state.service.generate_note(
+                security_id,
+                _text(fields.get("current_id"), 100),
+                comparison_id=_text(fields.get("comparison_id"), 100) or None,
+                as_of=_text(fields.get("as_of"), 80) or None,
+                mode=mode,
+                period=_text(fields.get("period"), 60) or None,
+                reporting_currency=_text(fields.get("reporting_currency"), 3).upper() or None,
+            )
             return redirect("/note/" + saved["id"], "Research note saved.")
         except ValueError as exc:
             return redirect("/company/" + security_id, _error(exc))
@@ -528,22 +781,42 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
         sec = security_or_404(saved["security_id"])
         result = saved["result"]
         from .. import earnings
+
         facts = result.get("facts", [])
-        highlights = [f for f in facts if f.get("metric") in {"revenue", "eps_diluted", "net_income"} and f.get("basis") != "NON-GAAP"
-                      and not any("CONFLICT" in flag for flag in f.get("flags", []))][:3]
+        highlights = [
+            f
+            for f in facts
+            if f.get("metric") in {"revenue", "eps_diluted", "net_income"}
+            and f.get("basis") != "NON-GAAP"
+            and not any("CONFLICT" in flag for flag in f.get("flags", []))
+        ][:3]
         eligible = result.get("cutoff", {}).get("current_release_eligible", False)
-        return render(request, "note.html", page="note", note=saved, company=sec, result=result, highlights=highlights, eligible=eligible,
-                      annotations=app.state.store.annotations(note_id), full_note=markdown.render(saved["markdown"]),
-                      questions=earnings.questions(result) if eligible else [])
+        return render(
+            request,
+            "note.html",
+            page="note",
+            note=saved,
+            company=sec,
+            result=result,
+            highlights=highlights,
+            eligible=eligible,
+            annotations=app.state.store.annotations(note_id),
+            full_note=markdown.render(saved["markdown"]),
+            questions=earnings.questions(result) if eligible else [],
+        )
 
     @app.post("/note/{note_id}/annotations")
     async def annotate(note_id: str, request: Request):
         fields = await form(request)
         note_or_404(note_id)
         try:
-            thesis, invalidation, review = (_text(fields.get(k)) for k in ("thesis", "invalidation", "review_condition"))
+            thesis, invalidation, review = (
+                _text(fields.get(k)) for k in ("thesis", "invalidation", "review_condition")
+            )
             if not any((thesis, invalidation, review)):
-                raise ValueError("Write a thesis, invalidation condition or review condition before saving.")
+                raise ValueError(
+                    "Write a thesis, invalidation condition or review condition before saving."
+                )
             app.state.store.annotate(note_id, thesis, invalidation, review)
             return redirect("/note/" + note_id, "Your annotation was saved as a new version.")
         except ValueError as exc:
@@ -558,16 +831,38 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
             latest = annotations[0]
             # Human annotations remain plain escaped text in a clearly separate section.
             text += "\n## User research annotation (not an extracted fact)\n\n"
-            for label, key in (("Thesis", "thesis"), ("Invalidation", "invalidation"), ("Next review", "review_condition")):
+            for label, key in (
+                ("Thesis", "thesis"),
+                ("Invalidation", "invalidation"),
+                ("Next review", "review_condition"),
+            ):
                 value = str(latest.get(key, "")).replace("\r", "").replace("\n", " ")
                 text += f"- {label}: " + re.sub(r"([\\`*_[\]<>!|])", r"\\\1", value) + "\n"
-        return Response(text, media_type="text/markdown", headers={"Content-Disposition": 'attachment; filename="kod-research-note.md"', "Cache-Control": "no-store"})
+        return Response(
+            text,
+            media_type="text/markdown",
+            headers={
+                "Content-Disposition": 'attachment; filename="kod-research-note.md"',
+                "Cache-Control": "no-store",
+            },
+        )
 
     @app.get("/note/{note_id}/export.json")
     def export_json(note_id: str):
         saved = note_or_404(note_id)
-        data = {**saved, "annotations": app.state.store.annotations(note_id), "entry_permission": False}
-        return Response(json.dumps(data, indent=2, ensure_ascii=False, allow_nan=False), media_type="application/json", headers={"Content-Disposition": 'attachment; filename="kod-research-note.json"', "Cache-Control": "no-store"})
+        data = {
+            **saved,
+            "annotations": app.state.store.annotations(note_id),
+            "entry_permission": False,
+        }
+        return Response(
+            json.dumps(data, indent=2, ensure_ascii=False, allow_nan=False),
+            media_type="application/json",
+            headers={
+                "Content-Disposition": 'attachment; filename="kod-research-note.json"',
+                "Cache-Control": "no-store",
+            },
+        )
 
     @app.get("/source/{document_id}")
     def source(document_id: str):
@@ -576,7 +871,10 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
             raw = app.state.store.raw(document_id)
         except (ValueError, KeyError):
             raise HTTPException(404, "Source not found or its stored hash could not be verified.")
-        return PlainTextResponse(raw.decode("utf-8", "replace"), headers={"Cache-Control": "no-store", "Content-Disposition": "inline"})
+        return PlainTextResponse(
+            raw.decode("utf-8", "replace"),
+            headers={"Cache-Control": "no-store", "Content-Disposition": "inline"},
+        )
 
     def build_dossier(security_id, request, as_of="", mode="", policy="", view="", question=""):
         security_or_404(security_id)
@@ -587,43 +885,114 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
             question = _text(question, 400) or None
         except ValueError as exc:
             raise HTTPException(400, _error(exc))
-        return dossier_model.build(app.state.service, security_id, chosen, view or "as_reported", question), chosen
+        return dossier_model.build(
+            app.state.service, security_id, chosen, view or "as_reported", question
+        ), chosen
 
     @app.get("/company/{security_id}/dossier", response_class=HTMLResponse)
-    def company_dossier(security_id: str, request: Request, as_of: str = "", mode: str = "", policy: str = "", view: str = "", question: str = ""):
+    def company_dossier(
+        security_id: str,
+        request: Request,
+        as_of: str = "",
+        mode: str = "",
+        policy: str = "",
+        view: str = "",
+        question: str = "",
+    ):
         d, chosen = build_dossier(security_id, request, as_of, mode, policy, view, question)
         query = _policy_query(chosen) + "&" + urlencode({"view": d["view"]})
         review = decisions.review(app.state.service, security_id, chosen, d["view"], d)
-        return render(request, "dossier.html", page="dossier", company=app.state.store.get_security(security_id), d=d, query=query, review=review,
-                      packets=decisions.packets(app.state.service, security_id)[:10], shown=conditions.shown,
-                      quarterly=dossier_model.history_table(d, "quarterly"), annual=dossier_model.history_table(d, "annual"),
-                      balances=dossier_model.history_table(d, "instant"), changes={c["key"]: c for c in d["changes"]},
-                      policy_name=next(k for k, v in POLICIES.items() if v == chosen.policy_version))
+        return render(
+            request,
+            "dossier.html",
+            page="dossier",
+            company=app.state.store.get_security(security_id),
+            d=d,
+            query=query,
+            review=review,
+            packets=decisions.packets(app.state.service, security_id)[:10],
+            shown=conditions.shown,
+            quarterly=dossier_model.history_table(d, "quarterly"),
+            annual=dossier_model.history_table(d, "annual"),
+            balances=dossier_model.history_table(d, "instant"),
+            changes={c["key"]: c for c in d["changes"]},
+            policy_name=next(k for k, v in POLICIES.items() if v == chosen.policy_version),
+        )
 
     @app.get("/company/{security_id}/dossier.json")
-    def dossier_json(security_id: str, request: Request, as_of: str = "", mode: str = "", policy: str = "", view: str = "", question: str = ""):
+    def dossier_json(
+        security_id: str,
+        request: Request,
+        as_of: str = "",
+        mode: str = "",
+        policy: str = "",
+        view: str = "",
+        question: str = "",
+    ):
         d, _ = build_dossier(security_id, request, as_of, mode, policy, view, question)
-        return Response(json.dumps({**d, "entry_permission": False}, indent=2, ensure_ascii=False, allow_nan=False), media_type="application/json",
-                        headers={"Content-Disposition": 'attachment; filename="kod-dossier.json"', "Cache-Control": "no-store"})
+        return Response(
+            json.dumps(
+                {**d, "entry_permission": False}, indent=2, ensure_ascii=False, allow_nan=False
+            ),
+            media_type="application/json",
+            headers={
+                "Content-Disposition": 'attachment; filename="kod-dossier.json"',
+                "Cache-Control": "no-store",
+            },
+        )
 
     @app.get("/company/{security_id}/dossier.md")
-    def dossier_markdown(security_id: str, request: Request, as_of: str = "", mode: str = "", policy: str = "", view: str = "", question: str = ""):
+    def dossier_markdown(
+        security_id: str,
+        request: Request,
+        as_of: str = "",
+        mode: str = "",
+        policy: str = "",
+        view: str = "",
+        question: str = "",
+    ):
         d, _ = build_dossier(security_id, request, as_of, mode, policy, view, question)
-        return Response(dossier_model.render_markdown(d), media_type="text/markdown",
-                        headers={"Content-Disposition": 'attachment; filename="kod-dossier.md"', "Cache-Control": "no-store"})
+        return Response(
+            dossier_model.render_markdown(d),
+            media_type="text/markdown",
+            headers={
+                "Content-Disposition": 'attachment; filename="kod-dossier.md"',
+                "Cache-Control": "no-store",
+            },
+        )
 
     @app.get("/company/{security_id}/dossier/calculation/{calc_id}", response_class=HTMLResponse)
-    def calculation_page(security_id: str, calc_id: str, request: Request, as_of: str = "", mode: str = "", policy: str = "", view: str = ""):
+    def calculation_page(
+        security_id: str,
+        calc_id: str,
+        request: Request,
+        as_of: str = "",
+        mode: str = "",
+        policy: str = "",
+        view: str = "",
+    ):
         d, chosen = build_dossier(security_id, request, as_of, mode, policy, view)
         record = d["calculations"].get(calc_id)
         if record is None:
-            raise HTTPException(404, "This calculation is not part of the dossier at the selected cutoff and view.")
+            raise HTTPException(
+                404, "This calculation is not part of the dossier at the selected cutoff and view."
+            )
         change = next((c for c in d["changes"] if c.get("calculation_id") == calc_id), None)
-        return render(request, "calculation.html", page="dossier", company=app.state.store.get_security(security_id), d=d, calc=record, change=change,
-                      query=_policy_query(chosen) + "&" + urlencode({"view": d["view"]}))
+        return render(
+            request,
+            "calculation.html",
+            page="dossier",
+            company=app.state.store.get_security(security_id),
+            d=d,
+            calc=record,
+            change=change,
+            query=_policy_query(chosen) + "&" + urlencode({"view": d["view"]}),
+        )
 
     @app.get("/observation/{observation_id}", response_class=HTMLResponse)
-    def observation_page(observation_id: str, request: Request, as_of: str = "", mode: str = "", policy: str = ""):
+    def observation_page(
+        observation_id: str, request: Request, as_of: str = "", mode: str = "", policy: str = ""
+    ):
         found = FinancialRepository(app.state.store)._query("o.id=?", (observation_id,))
         if not found:
             raise HTTPException(404, "Observation not found.")
@@ -636,7 +1005,15 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
         if o.provider == "sec_companyfacts" and o.source_document_id:
             try:
                 from .companyfacts import resolve_pointer
-                node = resolve_pointer(json.loads(app.state.store.raw(o.source_document_id), parse_float=Decimal, parse_int=Decimal), o.evidence["json_pointer"])
+
+                node = resolve_pointer(
+                    json.loads(
+                        app.state.store.raw(o.source_document_id),
+                        parse_float=Decimal,
+                        parse_int=Decimal,
+                    ),
+                    o.evidence["json_pointer"],
+                )
                 source_entry = node
                 check = Decimal(str(node.get("val"))) == o.value
             except (ValueError, KeyError, IndexError, TypeError, ArithmeticError):
@@ -647,32 +1024,87 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
             evidence.pop("frame", None)
             if isinstance(source_entry, dict):
                 source_entry = {k: v for k, v in source_entry.items() if k != "frame"}
-        return render(request, "observation.html", page="dossier", o=o, company=app.state.store.get_security(security_id) if security_id else None,
-                      source_entry=json.dumps(source_entry, indent=1, default=str) if source_entry is not None else None, pointer_check=check,
-                      evidence=json.dumps(evidence, indent=1, ensure_ascii=False))
+        return render(
+            request,
+            "observation.html",
+            page="dossier",
+            o=o,
+            company=app.state.store.get_security(security_id) if security_id else None,
+            source_entry=json.dumps(source_entry, indent=1, default=str)
+            if source_entry is not None
+            else None,
+            pointer_check=check,
+            evidence=json.dumps(evidence, indent=1, ensure_ascii=False),
+        )
 
     @app.get("/search", response_class=HTMLResponse)
-    def search_page(request: Request, q: str = "", company: str = "", period: str = "", source: str = "", as_of: str = "", mode: str = "", policy: str = ""):
+    def search_page(
+        request: Request,
+        q: str = "",
+        company: str = "",
+        period: str = "",
+        source: str = "",
+        as_of: str = "",
+        mode: str = "",
+        policy: str = "",
+    ):
         chosen = _policy(app.state.service.clock, as_of, mode, policy)
         if company:
             security_or_404(company)
         try:
-            result = archive.search(app.state.store, app.state.service.archive, q[:archive.MAX_QUERY], chosen, [company] if company else None,
-                                    period.strip()[:60] or None, [source] if source else None) if q.strip() else None
+            result = (
+                archive.search(
+                    app.state.store,
+                    app.state.service.archive,
+                    q[: archive.MAX_QUERY],
+                    chosen,
+                    [company] if company else None,
+                    period.strip()[:60] or None,
+                    [source] if source else None,
+                )
+                if q.strip()
+                else None
+            )
         except ValueError as exc:
             raise HTTPException(400, _error(exc))
-        return render(request, "search.html", page="search", result=result, q=q[:archive.MAX_QUERY], selected=company, period=period[:60], source=source,
-                      source_types=archive.SOURCE_TYPES, policy=chosen, policy_name=next(k for k, v in POLICIES.items() if v == chosen.policy_version),
-                      query=_policy_query(chosen))
+        return render(
+            request,
+            "search.html",
+            page="search",
+            result=result,
+            q=q[: archive.MAX_QUERY],
+            selected=company,
+            period=period[:60],
+            source=source,
+            source_types=archive.SOURCE_TYPES,
+            policy=chosen,
+            policy_name=next(k for k, v in POLICIES.items() if v == chosen.policy_version),
+            query=_policy_query(chosen),
+        )
 
     @app.get("/source/{document_id}/passage/{index}", response_class=HTMLResponse)
-    def passage_page(document_id: str, index: int, request: Request, as_of: str = "", mode: str = "", policy: str = ""):
+    def passage_page(
+        document_id: str,
+        index: int,
+        request: Request,
+        as_of: str = "",
+        mode: str = "",
+        policy: str = "",
+    ):
         chosen = _policy(app.state.service.clock, as_of, mode, policy) if as_of else None
         try:
-            context = archive.passage_context(app.state.store, app.state.service.archive, document_id, index, chosen)
+            context = archive.passage_context(
+                app.state.store, app.state.service.archive, document_id, index, chosen
+            )
         except (ValueError, KeyError) as exc:
             raise HTTPException(404, _error(exc))
-        return render(request, "passage.html", page="search", ctx=context, company=app.state.store.get_security(context["document"]["security_id"]))
+        return render(
+            request,
+            "passage.html",
+            page="search",
+            ctx=context,
+            company=app.state.store.get_security(context["document"]["security_id"]),
+        )
 
     def version_or_404(security_id, version_id):
         try:
@@ -690,23 +1122,50 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
         sets = scenarios.assumption_sets(service, security_id)
         chosen = _policy(service.clock)
         classification = service.submissions_context(security_id, chosen)
-        results = {s["latest_id"]: scenarios.run_version(service, s["latest_id"], policy=chosen, context=classification) for s in sets}
-        reference = fcff.suggest_from_history(dossier_model.build(service, security_id, chosen, context=classification))
+        results = {
+            s["latest_id"]: scenarios.run_version(
+                service, s["latest_id"], policy=chosen, context=classification
+            )
+            for s in sets
+        }
+        reference = fcff.suggest_from_history(
+            dossier_model.build(service, security_id, chosen, context=classification)
+        )
         prefill, scenario, name = {}, "base", "default"
         if from_version:
             v = version_or_404(security_id, from_version)
-            prefill, scenario, name = form_from_assumptions(v["assumptions"]), v["scenario"], v["name"]
+            prefill, scenario, name = (
+                form_from_assumptions(v["assumptions"]),
+                v["scenario"],
+                v["name"],
+            )
         elif start == "history":
             vals = reference["values"]
             if "base_revenue" in vals:
-                prefill = {"base_revenue": _plain(Decimal(vals["base_revenue"]["value"]) / MILLION),
-                           "base_fiscal_year_end": vals["base_revenue"]["fiscal_year_end"], "cited_observations": " ".join(vals["base_revenue"]["observation_ids"])}
+                prefill = {
+                    "base_revenue": _plain(Decimal(vals["base_revenue"]["value"]) / MILLION),
+                    "base_fiscal_year_end": vals["base_revenue"]["fiscal_year_end"],
+                    "cited_observations": " ".join(vals["base_revenue"]["observation_ids"]),
+                }
             for k in ("operating_margin", "capex_rate", "depreciation_rate"):
                 if k in vals:
                     prefill[k] = _plain(Decimal(vals[k]["value"]) * 100)
-        return render(request, "model.html", page="model", company=sec, sets=sets, results=results, reference=reference, prefill=prefill,
-                      scenario=scenario, set_name=name, business=companyfacts.business_type(classification["data"]), treatments=fcff.TREATMENTS,
-                      labels=fcff.LABELS, model_name=fcff.MODEL)
+        return render(
+            request,
+            "model.html",
+            page="model",
+            company=sec,
+            sets=sets,
+            results=results,
+            reference=reference,
+            prefill=prefill,
+            scenario=scenario,
+            set_name=name,
+            business=companyfacts.business_type(classification["data"]),
+            treatments=fcff.TREATMENTS,
+            labels=fcff.LABELS,
+            model_name=fcff.MODEL,
+        )
 
     @app.post("/company/{security_id}/model/assumptions")
     async def save_assumptions(security_id: str, request: Request):
@@ -714,19 +1173,45 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
         security_or_404(security_id)
         try:
             raw = assumptions_from_form(fields)
-            version = scenarios.save_assumptions(app.state.service, security_id, _text(fields.get("scenario"), 10), raw, _text(fields.get("rationale")),
-                                                 _text(fields.get("name"), 80) or "default")
+            version = scenarios.save_assumptions(
+                app.state.service,
+                security_id,
+                _text(fields.get("scenario"), 10),
+                raw,
+                _text(fields.get("rationale")),
+                _text(fields.get("name"), 80) or "default",
+            )
             scenarios.run_version(app.state.service, version["id"])
-            return redirect(f"/company/{security_id}/model/version/{version['id']}", f"Saved {version['scenario']} assumptions as version {version['version']}.")
+            return redirect(
+                f"/company/{security_id}/model/version/{version['id']}",
+                f"Saved {version['scenario']} assumptions as version {version['version']}.",
+            )
         except fcff.AssumptionError as exc:
-            return redirect(f"/company/{security_id}/model", "Not saved. " + _error("; ".join(exc.problems)))
+            return redirect(
+                f"/company/{security_id}/model", "Not saved. " + _error("; ".join(exc.problems))
+            )
         except (ValueError, ArithmeticError) as exc:
             return redirect(f"/company/{security_id}/model", "Not saved. " + _error(exc))
 
     @app.get("/company/{security_id}/model/version/{version_id}", response_class=HTMLResponse)
-    def scenario_page(security_id: str, version_id: str, request: Request, as_of: str = "", mode: str = "", policy: str = "",
-                      row: str = "discount_rate", row_values: str = "", column: str = "terminal_growth", column_values: str = "",
-                      solve: str = "", target: str = "", lo: str = "", hi: str = "", what_if_row: str = "", what_if_column: str = ""):
+    def scenario_page(
+        security_id: str,
+        version_id: str,
+        request: Request,
+        as_of: str = "",
+        mode: str = "",
+        policy: str = "",
+        row: str = "discount_rate",
+        row_values: str = "",
+        column: str = "terminal_growth",
+        column_values: str = "",
+        solve: str = "",
+        target: str = "",
+        lo: str = "",
+        hi: str = "",
+        what_if_row: str = "",
+        what_if_column: str = "",
+    ):
         sec = security_or_404(security_id)
         service = app.state.service
         version = version_or_404(security_id, version_id)
@@ -734,7 +1219,9 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
         classification = service.submissions_context(security_id, chosen)
         result = scenarios.run_version(service, version_id, policy=chosen, context=classification)
         a = fcff.validate(version["assumptions"])
-        business = companyfacts.business_type(classification["data"])   # the what-if grids read the page's own cutoff
+        business = companyfacts.business_type(
+            classification["data"]
+        )  # the what-if grids read the page's own cutoff
         shown, what_if = result.valuation, None
         grid = reverse = None
         problems = []
@@ -743,56 +1230,124 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
                 raise ValueError("choose grid parameters from: " + ", ".join(fcff.GRID_PARAMETERS))
             centre = lambda name: a.value(name)[0] if name in fcff.VECTOR else a.value(name)  # noqa: E731
             r_values = _grid_values(row_values[:200], centre(row), Decimal("0.01"))
-            c_values = _grid_values(column_values[:200], centre(column), Decimal("0.005") if column == "terminal_growth" else Decimal("0.01"))
-            grid = fcff.sensitivity(a, (row, r_values), (column, c_values), business, "per_share" if result.valuation.per_share is not None else "enterprise_value")
+            c_values = _grid_values(
+                column_values[:200],
+                centre(column),
+                Decimal("0.005") if column == "terminal_growth" else Decimal("0.01"),
+            )
+            grid = fcff.sensitivity(
+                a,
+                (row, r_values),
+                (column, c_values),
+                business,
+                "per_share" if result.valuation.per_share is not None else "enterprise_value",
+            )
             if what_if_row and what_if_column:
                 overrides = {row: Decimal(what_if_row), column: Decimal(what_if_column)}
                 if not fcff._check_pair(a, overrides):
-                    shown, what_if = fcff.run(fcff.with_values(a, overrides), business), {row: what_if_row, column: what_if_column}
+                    shown, what_if = (
+                        fcff.run(fcff.with_values(a, overrides), business),
+                        {row: what_if_row, column: what_if_column},
+                    )
         except (ValueError, ArithmeticError) as exc:
             problems.append(_error(exc))
         price_row = scenarios.price_at(service, security_id, chosen)
         context = scenarios.market_context(version, a, result.valuation, price_row)
         if solve:
             try:
-                goal = Decimal(target) if target.strip() else (Decimal(context["price"]) if context.get("status") == "ok" else None)
+                goal = (
+                    Decimal(target)
+                    if target.strip()
+                    else (Decimal(context["price"]) if context.get("status") == "ok" else None)
+                )
                 if goal is None:
                     raise ValueError("no comparable eligible price; give a target value per share")
                 bracket = (Decimal(lo), Decimal(hi)) if lo.strip() and hi.strip() else None
                 reverse = fcff.reverse(a, goal, solve, bracket, business)
-                reverse["target_source"] = "manual target" if target.strip() else f"price {context['price']} {context['currency']} on {context['price_date']} ({context['source']})"
+                reverse["target_source"] = (
+                    "manual target"
+                    if target.strip()
+                    else f"price {context['price']} {context['currency']} on {context['price_date']} ({context['source']})"
+                )
             except (ValueError, ArithmeticError) as exc:
                 problems.append(_error(exc))
         with service.store._connection() as db:
             from .calculations import stale_reasons
+
             stale = stale_reasons(db, result.calculation_id)
         versions = scenarios.history(service, version["assumption_id"])
         diffs = {}
         for newer, older in zip(versions, versions[1:]):
-            diffs[newer["id"]] = scenarios.changed_fields(older["assumptions"], newer["assumptions"])
-        return render(request, "scenario.html", page="model", company=sec, version=version, a=a, result=result, shown=shown, what_if=what_if, grid=grid,
-                      reverse=reverse, context=context, problems=problems, stale=stale, versions=versions, diffs=diffs, labels=fcff.LABELS,
-                      grid_parameters=fcff.GRID_PARAMETERS, reverse_parameters=list(fcff.REVERSE_BRACKETS), policy=chosen, solve=solve, target=target,
-                      row=row, column=column, row_values=row_values, column_values=column_values,
-                      policy_name=next(k for k, v in POLICIES.items() if v == chosen.policy_version), query=_policy_query(chosen))
+            diffs[newer["id"]] = scenarios.changed_fields(
+                older["assumptions"], newer["assumptions"]
+            )
+        return render(
+            request,
+            "scenario.html",
+            page="model",
+            company=sec,
+            version=version,
+            a=a,
+            result=result,
+            shown=shown,
+            what_if=what_if,
+            grid=grid,
+            reverse=reverse,
+            context=context,
+            problems=problems,
+            stale=stale,
+            versions=versions,
+            diffs=diffs,
+            labels=fcff.LABELS,
+            grid_parameters=fcff.GRID_PARAMETERS,
+            reverse_parameters=list(fcff.REVERSE_BRACKETS),
+            policy=chosen,
+            solve=solve,
+            target=target,
+            row=row,
+            column=column,
+            row_values=row_values,
+            column_values=column_values,
+            policy_name=next(k for k, v in POLICIES.items() if v == chosen.policy_version),
+            query=_policy_query(chosen),
+        )
 
     @app.get("/company/{security_id}/prices", response_class=HTMLResponse)
     def prices_page(security_id: str, request: Request):
         sec = security_or_404(security_id)
-        return render(request, "prices.html", page="model", company=sec, rows=scenarios.price_list(app.state.service, security_id),
-                      adjustments=price_rules.ADJUSTMENTS, sessions=price_rules.SESSIONS)
+        return render(
+            request,
+            "prices.html",
+            page="model",
+            company=sec,
+            rows=scenarios.price_list(app.state.service, security_id),
+            adjustments=price_rules.ADJUSTMENTS,
+            sessions=price_rules.SESSIONS,
+        )
 
     def price_meta(fields):
-        return {k: _text(fields.get(k), 300) for k in ("currency", "timezone", "adjustment", "session", "source", "feed_coverage")}
+        return {
+            k: _text(fields.get(k), 300)
+            for k in ("currency", "timezone", "adjustment", "session", "source", "feed_coverage")
+        }
 
     @app.post("/company/{security_id}/prices/manual")
     async def manual_price(security_id: str, request: Request):
         fields = await form(request)
         security_or_404(security_id)
         try:
-            done = scenarios.add_manual_price(app.state.service, security_id, _text(fields.get("date"), 10), _text(fields.get("close"), 40), price_meta(fields),
-                                              _text(fields.get("at"), 40) or None)
-            return redirect(f"/company/{security_id}/prices", "Price recorded." if done["added"] else "This price was already recorded.")
+            done = scenarios.add_manual_price(
+                app.state.service,
+                security_id,
+                _text(fields.get("date"), 10),
+                _text(fields.get("close"), 40),
+                price_meta(fields),
+                _text(fields.get("at"), 40) or None,
+            )
+            return redirect(
+                f"/company/{security_id}/prices",
+                "Price recorded." if done["added"] else "This price was already recorded.",
+            )
         except ValueError as exc:
             return redirect(f"/company/{security_id}/prices", "Not recorded. " + _error(exc))
 
@@ -805,17 +1360,33 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
             if not hasattr(upload, "read"):
                 raise ValueError("Choose a CSV file.")
             raw = await upload.read(price_rules.MAX_BYTES + 1)
-            done = scenarios.import_price_csv(app.state.service, security_id, raw, Path((upload.filename or "prices.csv").replace("\\", "/")).name[:120],
-                                              price_meta(fields))
-            return redirect(f"/company/{security_id}/prices", f"Imported {done['rows']} rows ({done['added']} new); "
-                                                               f"{done['coverage'].get('weekdays_without_price', 0)} weekdays without a price.")
+            done = scenarios.import_price_csv(
+                app.state.service,
+                security_id,
+                raw,
+                Path((upload.filename or "prices.csv").replace("\\", "/")).name[:120],
+                price_meta(fields),
+            )
+            return redirect(
+                f"/company/{security_id}/prices",
+                f"Imported {done['rows']} rows ({done['added']} new); "
+                f"{done['coverage'].get('weekdays_without_price', 0)} weekdays without a price.",
+            )
         except ValueError as exc:
             return redirect(f"/company/{security_id}/prices", "Nothing imported. " + _error(exc))
         finally:
             await fields.close()
 
     @app.get("/company/{security_id}/thesis", response_class=HTMLResponse)
-    def thesis_page(security_id: str, request: Request, as_of: str = "", mode: str = "", policy: str = "", view: str = "", revise: str = ""):
+    def thesis_page(
+        security_id: str,
+        request: Request,
+        as_of: str = "",
+        mode: str = "",
+        policy: str = "",
+        view: str = "",
+        revise: str = "",
+    ):
         sec = security_or_404(security_id)
         service = app.state.service
         chosen = _policy(service.clock, as_of, mode, policy)
@@ -823,7 +1394,10 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
             raise HTTPException(400, "Choose the as-reported or latest view.")
         result = decisions.review(service, security_id, chosen, view or "as_reported")
         all_theses = decisions.theses(service, security_id)
-        recorded = {t["version"]["id"]: decisions.recorded_reviews(service, t["version"]["id"])[:12] for t in result["theses"]}
+        recorded = {
+            t["version"]["id"]: decisions.recorded_reviews(service, t["version"]["id"])[:12]
+            for t in result["theses"]
+        }
         prefill = None
         if revise:
             try:
@@ -832,20 +1406,46 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
                 raise HTTPException(404, "Thesis version not found.")
             if prefill["security_id"] != security_id:
                 raise HTTPException(404, "Thesis version not found for this company.")
-        names = sorted({s["name"] for s in scenarios.assumption_sets(service, security_id)} | {"default"})
-        return render(request, "thesis.html", page="thesis", company=sec, result=result, theses=all_theses, recorded=recorded, prefill=prefill,
-                      advanced=json.dumps(prefill["conditions"], indent=1) if prefill else "", options=conditions.operand_options(names),
-                      describe=conditions.describe, shown=conditions.shown, policy=chosen, view=view or "as_reported", rows=range(1, BUILDER_ROWS + 1),
-                      policy_name=next(k for k, v in POLICIES.items() if v == chosen.policy_version), query=_policy_query(chosen))
+        names = sorted(
+            {s["name"] for s in scenarios.assumption_sets(service, security_id)} | {"default"}
+        )
+        return render(
+            request,
+            "thesis.html",
+            page="thesis",
+            company=sec,
+            result=result,
+            theses=all_theses,
+            recorded=recorded,
+            prefill=prefill,
+            advanced=json.dumps(prefill["conditions"], indent=1) if prefill else "",
+            options=conditions.operand_options(names),
+            describe=conditions.describe,
+            shown=conditions.shown,
+            policy=chosen,
+            view=view or "as_reported",
+            rows=range(1, BUILDER_ROWS + 1),
+            policy_name=next(k for k, v in POLICIES.items() if v == chosen.policy_version),
+            query=_policy_query(chosen),
+        )
 
     @app.post("/company/{security_id}/thesis")
     async def save_thesis(security_id: str, request: Request):
         fields = await form(request, max_fields=60)
         security_or_404(security_id)
         try:
-            version = decisions.save_thesis(app.state.service, security_id, _text(fields.get("title"), 120), _text(fields.get("statement")),
-                                            conditions_from_form(fields), _text(fields.get("rationale")))
-            return redirect(f"/company/{security_id}/thesis", f"Saved '{version['title']}' as version {version['version']}.")
+            version = decisions.save_thesis(
+                app.state.service,
+                security_id,
+                _text(fields.get("title"), 120),
+                _text(fields.get("statement")),
+                conditions_from_form(fields),
+                _text(fields.get("rationale")),
+            )
+            return redirect(
+                f"/company/{security_id}/thesis",
+                f"Saved '{version['title']}' as version {version['version']}.",
+            )
         except ValueError as exc:
             return redirect(f"/company/{security_id}/thesis", "Not saved. " + _error(exc))
 
@@ -853,31 +1453,58 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
     async def record_thesis_review(security_id: str, request: Request):
         fields = await form(request)
         security_or_404(security_id)
-        chosen = _policy(app.state.service.clock, _text(fields.get("as_of"), 40), _text(fields.get("mode"), 20), _text(fields.get("policy"), 20))
+        chosen = _policy(
+            app.state.service.clock,
+            _text(fields.get("as_of"), 40),
+            _text(fields.get("mode"), 20),
+            _text(fields.get("policy"), 20),
+        )
         view = _text(fields.get("view"), 20) or "as_reported"
         if view not in ("as_reported", "latest"):
             raise HTTPException(400, "Choose the as-reported or latest view.")
         rows = decisions.record_review(app.state.service, security_id, chosen, view)
         triggered = sum(1 for r in rows if r["status"] == "triggered")
-        return redirect(f"/company/{security_id}/thesis?{_policy_query(chosen)}&view={view}",
-                        f"Recorded {len(rows)} condition evaluations; {triggered} need review.")
+        return redirect(
+            f"/company/{security_id}/thesis?{_policy_query(chosen)}&view={view}",
+            f"Recorded {len(rows)} condition evaluations; {triggered} need review.",
+        )
 
     @app.post("/company/{security_id}/decisions")
     async def save_decision(security_id: str, request: Request):
         fields = await form(request, max_fields=30)
         security_or_404(security_id)
-        chosen = _policy(app.state.service.clock, _text(fields.get("as_of"), 40), _text(fields.get("mode"), 20), _text(fields.get("policy"), 20))
+        chosen = _policy(
+            app.state.service.clock,
+            _text(fields.get("as_of"), 40),
+            _text(fields.get("mode"), 20),
+            _text(fields.get("policy"), 20),
+        )
         view = _text(fields.get("view"), 20) or "as_reported"
         if view not in ("as_reported", "latest"):
             raise HTTPException(400, "Choose the as-reported or latest view.")
         try:
-            saved = decisions.save_packet(app.state.service, security_id, chosen, view, _text(fields.get("question"), 400), _text(fields.get("choice"), 200),
-                                          _text(fields.get("rationale"), 8000), _text(fields.get("thesis_version_id"), 100) or None,
-                                          _text(fields.get("review_date"), 10) or None, _text(fields.get("review_condition"), 1000) or None,
-                                          _text(fields.get("resolution_rule"), 2000) or None)
-            return redirect("/packet/" + saved["id"], "Decision packet recorded. It cannot be changed; record a new decision to revise it.")
+            saved = decisions.save_packet(
+                app.state.service,
+                security_id,
+                chosen,
+                view,
+                _text(fields.get("question"), 400),
+                _text(fields.get("choice"), 200),
+                _text(fields.get("rationale"), 8000),
+                _text(fields.get("thesis_version_id"), 100) or None,
+                _text(fields.get("review_date"), 10) or None,
+                _text(fields.get("review_condition"), 1000) or None,
+                _text(fields.get("resolution_rule"), 2000) or None,
+            )
+            return redirect(
+                "/packet/" + saved["id"],
+                "Decision packet recorded. It cannot be changed; record a new decision to revise it.",
+            )
         except ValueError as exc:
-            return redirect(f"/company/{security_id}/dossier?{_policy_query(chosen)}&view={view}", "Not recorded. " + _error(exc))
+            return redirect(
+                f"/company/{security_id}/dossier?{_policy_query(chosen)}&view={view}",
+                "Not recorded. " + _error(exc),
+            )
 
     def packet_or_404(packet_id):
         try:
@@ -888,25 +1515,59 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
     # The export routes are registered first: '/packet/{packet_id}' would otherwise also match 'pkt_….json'.
     @app.get("/packet/{packet_id}.md")
     def packet_markdown(packet_id: str):
-        return Response(decisions.render_markdown(packet_or_404(packet_id)), media_type="text/markdown",
-                        headers={"Content-Disposition": 'attachment; filename="kod-decision-packet.md"', "Cache-Control": "no-store"})
+        return Response(
+            decisions.render_markdown(packet_or_404(packet_id)),
+            media_type="text/markdown",
+            headers={
+                "Content-Disposition": 'attachment; filename="kod-decision-packet.md"',
+                "Cache-Control": "no-store",
+            },
+        )
 
     @app.get("/packet/{packet_id}.json")
     def packet_json(packet_id: str):
         stored = packet_or_404(packet_id)
-        data = {"id": stored["id"], "packet_sha256": stored["packet_sha256"], "created_at": stored["created_at"], "packet": stored["packet"], "entry_permission": False}
-        return Response(json.dumps(data, indent=2, ensure_ascii=False, allow_nan=False), media_type="application/json",
-                        headers={"Content-Disposition": 'attachment; filename="kod-decision-packet.json"', "Cache-Control": "no-store"})
+        data = {
+            "id": stored["id"],
+            "packet_sha256": stored["packet_sha256"],
+            "created_at": stored["created_at"],
+            "packet": stored["packet"],
+            "entry_permission": False,
+        }
+        return Response(
+            json.dumps(data, indent=2, ensure_ascii=False, allow_nan=False),
+            media_type="application/json",
+            headers={
+                "Content-Disposition": 'attachment; filename="kod-decision-packet.json"',
+                "Cache-Control": "no-store",
+            },
+        )
 
     @app.get("/packet/{packet_id}", response_class=HTMLResponse)
     def packet_page(packet_id: str, request: Request, reproduce: str = ""):
         stored = packet_or_404(packet_id)
         check = decisions.reproduce(app.state.service, packet_id) if reproduce else None
-        return render(request, "packet.html", page="dossier", company=app.state.store.get_security(stored["security_id"]), stored=stored, body=stored["packet"],
-                      check=check, describe=conditions.describe, shown=conditions.shown)
+        return render(
+            request,
+            "packet.html",
+            page="dossier",
+            company=app.state.store.get_security(stored["security_id"]),
+            stored=stored,
+            body=stored["packet"],
+            check=check,
+            describe=conditions.describe,
+            shown=conditions.shown,
+        )
 
     @app.get("/health", response_class=HTMLResponse)
     def health(request: Request):
-        return render(request, "health.html", page="health", health=app.state.store.health(), jobs=app.state.store.jobs()[:30], sec_configured=bool(os.environ.get("KOD_SEC_CONTACT")))
+        return render(
+            request,
+            "health.html",
+            page="health",
+            health=app.state.store.health(),
+            jobs=app.state.store.jobs()[:30],
+            sec_configured=bool(os.environ.get("KOD_SEC_CONTACT")),
+        )
 
     return app

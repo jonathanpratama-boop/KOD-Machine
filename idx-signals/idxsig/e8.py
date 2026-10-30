@@ -5,6 +5,7 @@ research/E8/IMPLEMENTATION_NOTES.md, cited as "note n").
 Reuses E6's checksum-verified hourly loader layout (idxsig.e6.Hourly / build_hourly). Nothing after
 LAST_HOUR is read; the signal functions only look at bars up to the decision hour.
 """
+
 from __future__ import annotations
 
 import json
@@ -41,8 +42,16 @@ def load(manifest: Path, last_hour: pd.Timestamp = LAST_HOUR) -> tuple[e6.Hourly
     by: dict = {}
     for r in recs:
         by.setdefault(r["symbol"], []).append(r)
-    checks = {"files": len(recs), "symbols": len(by), "unit": {}, "bars_read": 0, "duplicate_bars": 0,
-              "nonmonotonic_files": 0, "off_hour_bars": 0, "bad_symbol_names": []}
+    checks = {
+        "files": len(recs),
+        "symbols": len(by),
+        "unit": {},
+        "bars_read": 0,
+        "duplicate_bars": 0,
+        "nonmonotonic_files": 0,
+        "off_hour_bars": 0,
+        "bad_symbol_names": [],
+    }
     frames = {}
     for sym, rs in sorted(by.items()):
         base = sym[:-4]
@@ -89,16 +98,18 @@ def features(h: e6.Hourly) -> dict:
     n, T = h.present.shape
     d = e6.daily(h)
     complete, qd, bad = d["complete"], d["qd"], d["bad"]
-    hist = np.cumsum(complete, axis=1) - complete                       # complete days before day d
+    hist = np.cumsum(complete, axis=1) - complete  # complete days before day d
     liq = _prior_days(np.where(complete, qd, np.nan), 30, "median", 20)  # note 2
     bad_prior = _prior_days(bad.astype(float), BAD_DAYS, "max", 1) > 0
     absent = ~h.present.reshape(n, -1, 24).any(axis=2)
-    run = np.zeros_like(absent, dtype=float)                            # consecutive absent days ending at d
+    run = np.zeros_like(absent, dtype=float)  # consecutive absent days ending at d
     for k in range(absent.shape[1]):
         run[:, k] = np.where(absent[:, k], (run[:, k - 1] if k else 0) + 1, 0)
-    gap_prior = _prior_days(run, GAP_LOOK, "max", 1) > GAP_DAYS         # note 4
+    gap_prior = _prior_days(run, GAP_LOOK, "max", 1) > GAP_DAYS  # note 4
     r, valid = e6.hourly_returns(h)
-    full24 = pd.DataFrame(h.present.T.astype(float)).rolling(24, min_periods=24).sum().to_numpy().T == 24
+    full24 = (
+        pd.DataFrame(h.present.T.astype(float)).rolling(24, min_periods=24).sum().to_numpy().T == 24
+    )
     with np.errstate(invalid="ignore"):
         day_ok = (hist >= MIN_DAYS) & (liq >= LIQ_MIN) & ~bad_prior & ~gap_prior
     elig = _days_to_hours(day_ok, T) & full24
@@ -109,12 +120,30 @@ def features(h: e6.Hourly) -> dict:
     rmask = elig & valid
     med_r = _xs_median(np.where(rmask, r, np.nan), rmask)
     res = np.where(valid & np.isfinite(med_r)[None, :], r - med_r[None, :], np.nan)  # note 3
-    vol24 = pd.DataFrame(np.where(h.present, h.quote, 0.0).T).rolling(24, min_periods=24).sum().to_numpy().T
+    vol24 = (
+        pd.DataFrame(np.where(h.present, h.quote, 0.0).T)
+        .rolling(24, min_periods=24)
+        .sum()
+        .to_numpy()
+        .T
+    )
     liq_h = _days_to_hours(liq, T)
-    vsd = np.sqrt(pd.DataFrame(np.where(valid, r, np.nan).T).rolling(720, min_periods=600).var().to_numpy().T)
-    return {"elig": elig, "r24": r24, "res24": r24 - med24[None, :], "med24": med24, "res": res,
-            "ret": np.where(valid, r, np.nan), "mkt": med_r,
-            "vol24": vol24, "liq": liq_h, "vol30h": vsd, "valid": valid}
+    vsd = np.sqrt(
+        pd.DataFrame(np.where(valid, r, np.nan).T).rolling(720, min_periods=600).var().to_numpy().T
+    )
+    return {
+        "elig": elig,
+        "r24": r24,
+        "res24": r24 - med24[None, :],
+        "med24": med24,
+        "res": res,
+        "ret": np.where(valid, r, np.nan),
+        "mkt": med_r,
+        "vol24": vol24,
+        "liq": liq_h,
+        "vol30h": vsd,
+        "valid": valid,
+    }
 
 
 def _xs_median(x: np.ndarray, mask: np.ndarray) -> np.ndarray:
@@ -122,6 +151,7 @@ def _xs_median(x: np.ndarray, mask: np.ndarray) -> np.ndarray:
     cnt = np.isfinite(v).sum(axis=0)
     with np.errstate(all="ignore"):
         import warnings
+
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", RuntimeWarning)
             m = np.nanmedian(v, axis=0)
@@ -130,8 +160,12 @@ def _xs_median(x: np.ndarray, mask: np.ndarray) -> np.ndarray:
 
 def leader_raw(f: dict) -> np.ndarray:
     with np.errstate(invalid="ignore"):
-        return (f["elig"] & (f["r24"] >= LEAD_R24) & (f["res24"] >= LEAD_RES)
-                & (f["vol24"] >= LEAD_VOLX * f["liq"]))
+        return (
+            f["elig"]
+            & (f["r24"] >= LEAD_R24)
+            & (f["res24"] >= LEAD_RES)
+            & (f["vol24"] >= LEAD_VOLX * f["liq"])
+        )
 
 
 def _recent(raw: np.ndarray, back: int, include_now: bool) -> np.ndarray:
@@ -152,10 +186,12 @@ def leaders(f: dict) -> tuple[np.ndarray, np.ndarray]:
 
 def _corr(k, s1, s2, s11, s22, s12):
     with np.errstate(invalid="ignore", divide="ignore"):
-        return (k * s12 - s1 * s2) / np.sqrt((k * s11 - s1 ** 2) * (k * s22 - s2 ** 2))
+        return (k * s12 - s1 * s2) / np.sqrt((k * s11 - s1**2) * (k * s22 - s2**2))
 
 
-def links(ret: np.ndarray, mkt: np.ndarray, lead: int, t: int, cand: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+def links(
+    ret: np.ndarray, mkt: np.ndarray, lead: int, t: int, cand: np.ndarray
+) -> tuple[np.ndarray, np.ndarray]:
     """Partial correlation, given the market return, between `lead` and every candidate's hourly log
     returns over bars t-743..t-24 (amendment 1). ret: NaN where invalid; mkt: per-bar market median."""
     hi = t - LINK_LAG + 1
@@ -177,14 +213,16 @@ def links(ret: np.ndarray, mkt: np.ndarray, lead: int, t: int, cand: np.ndarray)
     rac = _corr(k, sa, sc, saa, scc, (A * C).sum(1))
     rbc = _corr(k, sb, sc, sbb, scc, (B * C).sum(1))
     with np.errstate(invalid="ignore", divide="ignore"):
-        c = (rab - rac * rbc) / np.sqrt((1 - rac ** 2) * (1 - rbc ** 2))
+        c = (rab - rac * rbc) / np.sqrt((1 - rac**2) * (1 - rbc**2))
     ok = cand & (k >= LINK_MIN_BARS) & np.isfinite(c)
     out[ok] = c[ok]
     nb[:] = k
     return out, nb
 
 
-def peer_events(h: e6.Hourly, f: dict, period=PERIOD, hold: int = HOLD) -> tuple[pd.DataFrame, pd.DataFrame]:
+def peer_events(
+    h: e6.Hourly, f: dict, period=PERIOD, hold: int = HOLD
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Leader triggers and peer events in the decision period (decision hours whose holding window
     t+1..t+hold ends by the last loaded hour). Returns (leaders table, peer events table)."""
     n, T = h.present.shape
@@ -192,9 +230,11 @@ def peer_events(h: e6.Hourly, f: dict, period=PERIOD, hold: int = HOLD) -> tuple
     t_lo = int((pd.Timestamp(period[0], tz="UTC") - start) / pd.Timedelta("1h"))
     t_hi = min(int((pd.Timestamp(period[1], tz="UTC") - start) / pd.Timedelta("1h")), T - 1 - hold)
     lead, raw = leaders(f)
-    busy = _recent(raw, QUIET, include_now=True)  # coins that were leaders recently are not candidates
+    busy = _recent(
+        raw, QUIET, include_now=True
+    )  # coins that were leaders recently are not candidates
     L_rows, P_rows = [], []
-    last_event = np.full(n, -10 ** 9)
+    last_event = np.full(n, -(10**9))
     for t in range(t_lo, t_hi + 1):
         ls = np.flatnonzero(lead[:, t])
         if not len(ls):
@@ -208,10 +248,19 @@ def peer_events(h: e6.Hourly, f: dict, period=PERIOD, hold: int = HOLD) -> tuple
             lk, nb = links(f["ret"], f["mkt"], L, t, c)
             order = np.argsort(-np.nan_to_num(lk, nan=-9))
             top = [i for i in order[:TOP_K] if np.isfinite(lk[i]) and lk[i] >= LINK_MIN]
-            L_rows.append({"t": t, "leader": int(L), "r24": float(f["r24"][L, t]), "res24": float(f["res24"][L, t]),
-                           "volx": float(f["vol24"][L, t] / f["liq"][L, t]), "candidates": int(c.sum()),
-                           "linked_candidates": int(np.isfinite(lk).sum()), "peers": len(top),
-                           "best_link": float(np.nanmax(lk)) if np.isfinite(lk).any() else None})
+            L_rows.append(
+                {
+                    "t": t,
+                    "leader": int(L),
+                    "r24": float(f["r24"][L, t]),
+                    "res24": float(f["res24"][L, t]),
+                    "volx": float(f["vol24"][L, t] / f["liq"][L, t]),
+                    "candidates": int(c.sum()),
+                    "linked_candidates": int(np.isfinite(lk).sum()),
+                    "peers": len(top),
+                    "best_link": float(np.nanmax(lk)) if np.isfinite(lk).any() else None,
+                }
+            )
             for i in top:
                 picked.setdefault(int(i), []).append((int(L), float(lk[i])))
         for i, lst in sorted(picked.items()):
@@ -219,9 +268,18 @@ def peer_events(h: e6.Hourly, f: dict, period=PERIOD, hold: int = HOLD) -> tuple
                 continue  # note 6: one open peer event per coin
             last_event[i] = t
             best = max(lst, key=lambda x: x[1])
-            P_rows.append({"t": t, "peer": i, "leader": best[0], "link": best[1], "leaders": len(lst),
-                           "res24": float(f["res24"][i, t]), "liq": float(f["liq"][i, t]),
-                           "vol30h": float(f["vol30h"][i, t])})
+            P_rows.append(
+                {
+                    "t": t,
+                    "peer": i,
+                    "leader": best[0],
+                    "link": best[1],
+                    "leaders": len(lst),
+                    "res24": float(f["res24"][i, t]),
+                    "liq": float(f["liq"][i, t]),
+                    "vol30h": float(f["vol30h"][i, t]),
+                }
+            )
     stamp = lambda df: df.assign(time=start + pd.to_timedelta(df["t"], unit="h")) if len(df) else df
     return stamp(pd.DataFrame(L_rows)), stamp(pd.DataFrame(P_rows))
 
@@ -238,23 +296,32 @@ def slippage(liq: np.ndarray) -> np.ndarray:
     return np.where(np.asarray(liq) >= LIQUID, SLIP_LIQUID, SLIP_THIN)
 
 
-def window(h: e6.Hourly, coins: np.ndarray, t: int, liq: np.ndarray, entry_off: int = 1, hold: int = HOLD) -> dict:
+def window(
+    h: e6.Hourly, coins: np.ndarray, t: int, liq: np.ndarray, entry_off: int = 1, hold: int = HOLD
+) -> dict:
     """Outcomes for `coins` decided at the close of hour t: entry at the open of bar t+entry_off, bars
     t+entry_off..t+entry_off+hold-1 (note O1-O4). Only those bars are read."""
     coins = np.asarray(coins, dtype=int)
     k = len(coins)
     e0 = t + entry_off
     e1 = e0 + hold - 1
-    out = {"has_entry": np.zeros(k, dtype=bool), "R72": np.full(k, np.nan), "U20": np.zeros(k, dtype=bool),
-           "U30": np.zeros(k, dtype=bool), "missing_end": np.zeros(k, dtype=bool), "net": np.full(k, np.nan),
-           "reason": np.full(k, "", dtype=object), "bars": np.zeros(k, dtype=int)}
+    out = {
+        "has_entry": np.zeros(k, dtype=bool),
+        "R72": np.full(k, np.nan),
+        "U20": np.zeros(k, dtype=bool),
+        "U30": np.zeros(k, dtype=bool),
+        "missing_end": np.zeros(k, dtype=bool),
+        "net": np.full(k, np.nan),
+        "reason": np.full(k, "", dtype=object),
+        "bars": np.zeros(k, dtype=int),
+    }
     if e1 >= h.present.shape[1] or k == 0:
         return out
     ent = h.open[coins, e0]
     has = h.present[coins, e0] & (ent > 0)
     out["has_entry"] = has
-    pw = h.present[coins, e0:e1 + 1]
-    hi, lo, op, cl = (a[coins, e0:e1 + 1] for a in (h.high, h.low, h.open, h.close))
+    pw = h.present[coins, e0 : e1 + 1]
+    hi, lo, op, cl = (a[coins, e0 : e1 + 1] for a in (h.high, h.low, h.open, h.close))
     tp, sl = ent * (1 + TP), ent * (1 + SL)
     active = has.copy()
     exit_px = np.full(k, np.nan)
@@ -282,7 +349,9 @@ def window(h: e6.Hourly, coins: np.ndarray, t: int, liq: np.ndarray, entry_off: 
         out["U20"] = has & (hmax >= ent * 1.20)
         out["U30"] = has & (hmax >= ent * 1.30)
         s = slippage(liq)
-        out["net"] = np.where(has & np.isfinite(exit_px), exit_px * (1 - FEE - s) / (ent * (1 + FEE + s)) - 1, np.nan)
+        out["net"] = np.where(
+            has & np.isfinite(exit_px), exit_px * (1 - FEE - s) / (ent * (1 + FEE + s)) - 1, np.nan
+        )
     out["reason"][~has] = "NO_ENTRY"
     return out
 
@@ -318,8 +387,14 @@ def score(h: e6.Hourly, f: dict, P: pd.DataFrame) -> pd.DataFrame:
         liq = f["liq"][everyone, t]
         w = window(h, everyone, t, liq)
         wl = window(h, everyone, t, liq, entry_off=2)
-        row = {"t": t, "peer": i, "leader": L, "link": float(ev.link), "liq": float(liq[0]),
-               "vol30h": float(f["vol30h"][i, t])}
+        row = {
+            "t": t,
+            "peer": i,
+            "leader": L,
+            "link": float(ev.link),
+            "liq": float(liq[0]),
+            "vol30h": float(f["vol30h"][i, t]),
+        }
         if not w["has_entry"][0]:
             rows.append({**row, "status": "NO_ENTRY"})
             continue
@@ -339,14 +414,31 @@ def score(h: e6.Hourly, f: dict, P: pd.DataFrame) -> pd.DataFrame:
             continue
         dr = pidx[rng.choice(sel, size=DRAWS, replace=True)]
         m = lambda a: float(np.nanmean(np.asarray(a, float)[dr]))
-        rows.append({**row, "status": "SCORED", "match_level": level, "pool": int(len(pool)),
-                     "R72": float(w["R72"][0]), "U20": bool(w["U20"][0]), "U30": bool(w["U30"][0]),
-                     "net": float(w["net"][0]), "reason": w["reason"][0], "bars": int(w["bars"][0]),
-                     "missing_end": bool(w["missing_end"][0]),
-                     "ctrl_R72": m(w["R72"]), "ctrl_U20": m(w["U20"]), "ctrl_U30": m(w["U30"]), "ctrl_net": m(w["net"]),
-                     "lat_R72": float(wl["R72"][0]) if wl["has_entry"][0] else np.nan,
-                     "lat_ctrl_R72": float(np.nanmean(np.where(wl["has_entry"][dr], wl["R72"][dr], np.nan)))
-                     if wl["has_entry"][dr].any() else np.nan})
+        rows.append(
+            {
+                **row,
+                "status": "SCORED",
+                "match_level": level,
+                "pool": int(len(pool)),
+                "R72": float(w["R72"][0]),
+                "U20": bool(w["U20"][0]),
+                "U30": bool(w["U30"][0]),
+                "net": float(w["net"][0]),
+                "reason": w["reason"][0],
+                "bars": int(w["bars"][0]),
+                "missing_end": bool(w["missing_end"][0]),
+                "ctrl_R72": m(w["R72"]),
+                "ctrl_U20": m(w["U20"]),
+                "ctrl_U30": m(w["U30"]),
+                "ctrl_net": m(w["net"]),
+                "lat_R72": float(wl["R72"][0]) if wl["has_entry"][0] else np.nan,
+                "lat_ctrl_R72": float(
+                    np.nanmean(np.where(wl["has_entry"][dr], wl["R72"][dr], np.nan))
+                )
+                if wl["has_entry"][dr].any()
+                else np.nan,
+            }
+        )
     df = pd.DataFrame(rows)
     if len(df):
         df["time"] = h.start + pd.to_timedelta(df["t"], unit="h")
@@ -374,9 +466,11 @@ def exposure(sc: pd.DataFrame) -> dict:
     if not len(sc):
         return {}
     start = sc["t"].to_numpy() + 1
-    end = start + sc["bars"].to_numpy()          # position held in hours [start, end)
-    ev = np.concatenate([np.stack([start, np.ones(len(sc))], 1), np.stack([end, -np.ones(len(sc))], 1)])
-    ev = ev[np.lexsort((ev[:, 1], ev[:, 0]))]    # closes before opens at the same hour
+    end = start + sc["bars"].to_numpy()  # position held in hours [start, end)
+    ev = np.concatenate(
+        [np.stack([start, np.ones(len(sc))], 1), np.stack([end, -np.ones(len(sc))], 1)]
+    )
+    ev = ev[np.lexsort((ev[:, 1], ev[:, 0]))]  # closes before opens at the same hour
     conc = np.cumsum(ev[:, 1])
     span = end.max() - start.min()
     covered = np.zeros(int(span) + 1, dtype=bool)
@@ -386,18 +480,28 @@ def exposure(sc: pd.DataFrame) -> dict:
     curve = np.cumsum(PER_TRADE * sc["net"].to_numpy()[order])
     dd = curve - np.maximum.accumulate(np.concatenate([[0.0], curve]))[1:]
     cap = sc["liq"].to_numpy() / 24 * 0.01
-    return {"max_concurrent_positions": int(conc.max()), "mean_holding_hours": float(sc["bars"].mean()),
-            "share_of_hours_with_a_position": float(covered.mean()),
-            "per_trade_capital": PER_TRADE, "cumulative_net_at_5pct_per_trade": float(curve[-1]),
-            "max_drawdown_at_5pct_per_trade": float(dd.min()),
-            "capacity_usd_at_1pct_of_hourly_volume": {"median": float(np.median(cap)), "p10": float(np.percentile(cap, 10))}}
+    return {
+        "max_concurrent_positions": int(conc.max()),
+        "mean_holding_hours": float(sc["bars"].mean()),
+        "share_of_hours_with_a_position": float(covered.mean()),
+        "per_trade_capital": PER_TRADE,
+        "cumulative_net_at_5pct_per_trade": float(curve[-1]),
+        "max_drawdown_at_5pct_per_trade": float(dd.min()),
+        "capacity_usd_at_1pct_of_hourly_volume": {
+            "median": float(np.median(cap)),
+            "p10": float(np.percentile(cap, 10)),
+        },
+    }
 
 
 def report(df: pd.DataFrame) -> dict:
     sc = df[df["status"] == "SCORED"].copy() if len(df) else df
-    out = {"events": int(len(df)), "scored": int(len(sc)),
-           "no_entry": int((df["status"] == "NO_ENTRY").sum()) if len(df) else 0,
-           "no_controls": int((df["status"] == "NO_CONTROLS").sum()) if len(df) else 0}
+    out = {
+        "events": int(len(df)),
+        "scored": int(len(sc)),
+        "no_entry": int((df["status"] == "NO_ENTRY").sum()) if len(df) else 0,
+        "no_controls": int((df["status"] == "NO_CONTROLS").sum()) if len(df) else 0,
+    }
     if not len(sc):
         return out
     sc["excess"] = sc["R72"] - sc["ctrl_R72"]
@@ -410,49 +514,95 @@ def report(df: pd.DataFrame) -> dict:
     busiest = sorted(counts.index, key=lambda w: (-counts[w], w))[:2]
     rest = sc[~sc["week"].isin(busiest)]
     lat = sc.dropna(subset=["lat_R72", "lat_ctrl_R72"])
-    out.update({
-        "distinct_weeks": int(sc["week"].nunique()), "distinct_coins": int(sc["peer"].nunique()),
-        "missing_end": int(sc["missing_end"].sum()), "match_levels": {k: int(v) for k, v in sc["match_level"].value_counts().items()},
-        "information": {"mean_R72": float(sc["R72"].mean()), "median_R72": float(sc["R72"].median()),
-                        "mean_ctrl_R72": float(sc["ctrl_R72"].mean()), "mean_excess": float(sc["excess"].mean()),
-                        "vs_controls": _boot(sc, "excess")},
-        "moonshot": {"U20_rate": float(sc["U20"].mean()), "U20_ctrl_rate": float(sc["ctrl_U20"].mean()),
-                     "U20_difference": _boot(sc, "dU20"),
-                     "U30_rate": float(sc["U30"].mean()), "U30_ctrl_rate": float(sc["ctrl_U30"].mean()),
-                     "U30_difference": _boot(sc, "dU30")},
-        "trading_plan": {"mean_net": float(sc["net"].mean()), "median_net": float(sc["net"].median()),
-                         "mean_net_vs_zero": _boot(sc, "net"), "mean_ctrl_net": float(sc["ctrl_net"].mean()),
-                         "mean_net_minus_ctrl": float(sc["dnet"].mean()),
-                         "win_rate": wins / len(sc), "win_rate_wilson95": wilson(wins, len(sc)),
-                         "mean_win": float(sc.loc[sc["net"] > 0, "net"].mean()) if wins else None,
-                         "mean_loss": float(loss.mean()) if len(loss) else None,
-                         "worst_1pct": float(np.percentile(sc["net"], 1)), "worst_trade": float(sc["net"].min()),
-                         "best_trade": float(sc["net"].max()),
-                         "exit_reasons": {k: int(v) for k, v in sc["reason"].value_counts().items()},
-                         "exposure": exposure(sc)},
-        "by_year": {str(y): {"scored": int((sc["year"] == y).sum()), "mean_excess": float(sc.loc[sc["year"] == y, "excess"].mean()),
-                             "mean_net": float(sc.loc[sc["year"] == y, "net"].mean())} for y in sorted(sc["year"].unique())},
-        "without_two_busiest_weeks": {"weeks_dropped": [int(w) for w in busiest], "scored": int(len(rest)),
-                                      "mean_excess": float(rest["excess"].mean()) if len(rest) else None},
-        "latency_one_hour": {"scored": int(len(lat)), "mean_excess": float((lat["lat_R72"] - lat["lat_ctrl_R72"]).mean()) if len(lat) else None},
-        "by_link_tercile": {str(k): float(v) for k, v in sc.groupby(pd.qcut(sc["link"], 3, labels=["low", "mid", "high"]),
-                                                                  observed=True)["excess"].mean().items()},
-    })
+    out.update(
+        {
+            "distinct_weeks": int(sc["week"].nunique()),
+            "distinct_coins": int(sc["peer"].nunique()),
+            "missing_end": int(sc["missing_end"].sum()),
+            "match_levels": {k: int(v) for k, v in sc["match_level"].value_counts().items()},
+            "information": {
+                "mean_R72": float(sc["R72"].mean()),
+                "median_R72": float(sc["R72"].median()),
+                "mean_ctrl_R72": float(sc["ctrl_R72"].mean()),
+                "mean_excess": float(sc["excess"].mean()),
+                "vs_controls": _boot(sc, "excess"),
+            },
+            "moonshot": {
+                "U20_rate": float(sc["U20"].mean()),
+                "U20_ctrl_rate": float(sc["ctrl_U20"].mean()),
+                "U20_difference": _boot(sc, "dU20"),
+                "U30_rate": float(sc["U30"].mean()),
+                "U30_ctrl_rate": float(sc["ctrl_U30"].mean()),
+                "U30_difference": _boot(sc, "dU30"),
+            },
+            "trading_plan": {
+                "mean_net": float(sc["net"].mean()),
+                "median_net": float(sc["net"].median()),
+                "mean_net_vs_zero": _boot(sc, "net"),
+                "mean_ctrl_net": float(sc["ctrl_net"].mean()),
+                "mean_net_minus_ctrl": float(sc["dnet"].mean()),
+                "win_rate": wins / len(sc),
+                "win_rate_wilson95": wilson(wins, len(sc)),
+                "mean_win": float(sc.loc[sc["net"] > 0, "net"].mean()) if wins else None,
+                "mean_loss": float(loss.mean()) if len(loss) else None,
+                "worst_1pct": float(np.percentile(sc["net"], 1)),
+                "worst_trade": float(sc["net"].min()),
+                "best_trade": float(sc["net"].max()),
+                "exit_reasons": {k: int(v) for k, v in sc["reason"].value_counts().items()},
+                "exposure": exposure(sc),
+            },
+            "by_year": {
+                str(y): {
+                    "scored": int((sc["year"] == y).sum()),
+                    "mean_excess": float(sc.loc[sc["year"] == y, "excess"].mean()),
+                    "mean_net": float(sc.loc[sc["year"] == y, "net"].mean()),
+                }
+                for y in sorted(sc["year"].unique())
+            },
+            "without_two_busiest_weeks": {
+                "weeks_dropped": [int(w) for w in busiest],
+                "scored": int(len(rest)),
+                "mean_excess": float(rest["excess"].mean()) if len(rest) else None,
+            },
+            "latency_one_hour": {
+                "scored": int(len(lat)),
+                "mean_excess": float((lat["lat_R72"] - lat["lat_ctrl_R72"]).mean())
+                if len(lat)
+                else None,
+            },
+            "by_link_tercile": {
+                str(k): float(v)
+                for k, v in sc.groupby(
+                    pd.qcut(sc["link"], 3, labels=["low", "mid", "high"]), observed=True
+                )["excess"]
+                .mean()
+                .items()
+            },
+        }
+    )
     return out
 
 
 def gates(rep: dict) -> dict:
     g = {}
     unscorable = (rep["no_entry"] + rep["no_controls"]) / max(1, rep["events"])
-    g["G0_sample"] = rep["scored"] >= 300 and rep.get("distinct_weeks", 0) >= 50 and unscorable <= 0.05
+    g["G0_sample"] = (
+        rep["scored"] >= 300 and rep.get("distinct_weeks", 0) >= 50 and unscorable <= 0.05
+    )
     if not rep["scored"]:
         return {"gates": g, "decision": "INCONCLUSIVE", "high_win_rate": False}
-    vi, vm, tp = rep["information"]["vs_controls"], rep["moonshot"]["U20_difference"], rep["trading_plan"]
+    vi, vm, tp = (
+        rep["information"]["vs_controls"],
+        rep["moonshot"]["U20_difference"],
+        rep["trading_plan"],
+    )
     pos = lambda b, a: b["estimate"] is not None and b["estimate"] > 0 and b["p_one_sided"] < a
     g["G1_information"] = pos(vi, 0.025)
     g["G2_moonshot"] = pos(vm, 0.025)
     g["G3_trading"] = pos(tp["mean_net_vs_zero"], 0.05) and tp["mean_net_minus_ctrl"] > 0
-    g["G4_consistency"] = all((rep["by_year"].get(y) or {}).get("mean_excess", -1) > 0 for y in ("2021", "2022"))
+    g["G4_consistency"] = all(
+        (rep["by_year"].get(y) or {}).get("mean_excess", -1) > 0 for y in ("2021", "2022")
+    )
     wb = rep["without_two_busiest_weeks"]["mean_excess"]
     g["G5_robustness"] = wb is not None and wb > 0
     if not g["G0_sample"]:
@@ -460,5 +610,9 @@ def gates(rep: dict) -> dict:
     else:
         decision = "PASS" if all(g.values()) else "FAIL"
     hwr = decision == "PASS" and (tp["win_rate_wilson95"][0] or 0) > 0.5
-    return {"gates": g, "decision": decision, "high_win_rate": bool(hwr),
-            "unscorable_share": unscorable}
+    return {
+        "gates": g,
+        "decision": decision,
+        "high_win_rate": bool(hwr),
+        "unscorable_share": unscorable,
+    }

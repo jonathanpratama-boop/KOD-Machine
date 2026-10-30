@@ -17,6 +17,7 @@ module runs that same procedure next to the live challenger without touching it:
 
 Nothing here changes v2.4's forecasts, calls, gate or ledger; the report is rewritten from the ledgers each time.
 """
+
 from __future__ import annotations
 
 import gzip
@@ -34,15 +35,22 @@ from .provenance import PKG_ROOT, sha256_file, utc_stamp
 STATEMENT = "NEXT_DUMP10_1"
 ALPHA, DELTA, MIN_CALLS = 0.5, 0.05, 10
 SHARES = [0.01, 0.02, 0.03, 0.05, 0.07, 0.10, 0.15, 0.20, 0.30, 0.40, 0.50]
-CALIBRATION = ((("2020-01-02", "2021-12-31"), ("2022-01-01", "2022-12-31")),   # (fit, scored) pairs: each year scored
-               (("2020-01-02", "2022-12-31"), ("2023-01-01", "2023-12-29")))   # by a model that never saw it
+CALIBRATION = (
+    (
+        ("2020-01-02", "2021-12-31"),
+        ("2022-01-01", "2022-12-31"),
+    ),  # (fit, scored) pairs: each year scored
+    (("2020-01-02", "2022-12-31"), ("2023-01-01", "2023-12-29")),
+)  # by a model that never saw it
 LIVE_FIT = ("2020-01-02", "2023-12-29")
 REPORT = paper.PAPER / "CALL_CERT.md"
 STUDY = "research/CALL_CERT_v1"
 
 
 def _ta():
-    spec = importlib.util.spec_from_file_location("ta_run", PKG_ROOT / "research" / "TA_HISTORY_v1" / "run.py")
+    spec = importlib.util.spec_from_file_location(
+        "ta_run", PKG_ROOT / "research" / "TA_HISTORY_v1" / "run.py"
+    )
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod
@@ -52,7 +60,12 @@ def _ta():
 def _history() -> pd.DataFrame:
     if sha256_file(learner3.HISTORY) != learner3.HISTORY_SHA256:
         raise RuntimeError("the warm start does not match its pinned sha256")
-    ev = pd.read_csv(learner3.HISTORY, dtype={"ticker": str, "session": str}, keep_default_na=False, na_values=[""])
+    ev = pd.read_csv(
+        learner3.HISTORY,
+        dtype={"ticker": str, "session": str},
+        keep_default_na=False,
+        na_values=[""],
+    )
     return ev[ev[f"y_{STATEMENT}"].notna()].reset_index(drop=True)
 
 
@@ -98,10 +111,13 @@ def certificate(cal: list[tuple[float, int]]) -> dict:
     return out
 
 
-def rows(records: list[dict] | None = None, lrecs: list[dict] | None = None, asof: str | None = None) -> list[dict]:
+def rows(
+    records: list[dict] | None = None, lrecs: list[dict] | None = None, asof: str | None = None
+) -> list[dict]:
     """One row per live v2.4 forecast: shadow score, the bar certified from what had resolved before it, the call, and
     the outcome when it has resolved by `asof`."""
     from . import learner2 as L2
+
     records = L2.all_records() if records is None else records
     lrecs = learner3.lines() if lrecs is None else lrecs
     asof = asof or utc_stamp()
@@ -109,19 +125,39 @@ def rows(records: list[dict] | None = None, lrecs: list[dict] | None = None, aso
     m = models()
     hist = list(zip(m["cal_p"], m["cal_y"]))
     live, seen = [], set()
-    for f in sorted((f for f in lrecs if f.get("type") == learner3.RECORD), key=lambda f: f["made_at"]):
+    for f in sorted(
+        (f for f in lrecs if f.get("type") == learner3.RECORD), key=lambda f: f["made_at"]
+    ):
         if f["set_id"] in seen or STATEMENT not in f.get("forecasts", {}):
             continue
         seen.add(f["set_id"])
         o = learner3.outcome_of(outc, f["set_id"], STATEMENT)
-        live.append({"set_id": f["set_id"], "ticker": f.get("ticker"), "session": f["signal_session"], "made_at": f["made_at"],
-                     "score": score(f.get("features", {})), "v24_raw": f["forecasts"][STATEMENT]["raw"],
-                     "y": (None if o is None or o[1] > asof else int(o[0])), "resolved_at": (None if o is None else o[1])})
+        live.append(
+            {
+                "set_id": f["set_id"],
+                "ticker": f.get("ticker"),
+                "session": f["signal_session"],
+                "made_at": f["made_at"],
+                "score": score(f.get("features", {})),
+                "v24_raw": f["forecasts"][STATEMENT]["raw"],
+                "y": (None if o is None or o[1] > asof else int(o[0])),
+                "resolved_at": (None if o is None else o[1]),
+            }
+        )
     for r in live:
-        prior = [(q["score"], q["y"]) for q in live
-                 if q["y"] is not None and q["resolved_at"] is not None and q["resolved_at"] < r["made_at"]]
+        prior = [
+            (q["score"], q["y"])
+            for q in live
+            if q["y"] is not None
+            and q["resolved_at"] is not None
+            and q["resolved_at"] < r["made_at"]
+        ]
         cert = certificate(hist + prior)
-        r["threshold"], r["n_calibration"], r["n_live_calibration"] = cert["chosen"], cert["n_calibration"], len(prior)
+        r["threshold"], r["n_calibration"], r["n_live_calibration"] = (
+            cert["chosen"],
+            cert["n_calibration"],
+            len(prior),
+        )
         r["call"] = cert["chosen"] is not None and r["score"] >= cert["chosen"]
     return live
 
@@ -131,50 +167,80 @@ def summary(live: list[dict]) -> dict:
     res = [r for r in calls if r["y"] is not None]
     wrong = sum(1 - r["y"] for r in res)
     n = len(res)
-    return {"forecasts": len(live), "calls": len(calls), "resolved_calls": n, "wrong": wrong,
-            "losing_rate": (wrong / n if n else None),
-            "p_exceeds_alpha": (1.0 - rc.binom_cdf(wrong - 1, n, ALPHA) if n else None),
-            "base_rate_live": (float(np.mean([r["y"] for r in live if r["y"] is not None]))
-                               if any(r["y"] is not None for r in live) else None)}
+    return {
+        "forecasts": len(live),
+        "calls": len(calls),
+        "resolved_calls": n,
+        "wrong": wrong,
+        "losing_rate": (wrong / n if n else None),
+        "p_exceeds_alpha": (1.0 - rc.binom_cdf(wrong - 1, n, ALPHA) if n else None),
+        "base_rate_live": (
+            float(np.mean([r["y"] for r in live if r["y"] is not None]))
+            if any(r["y"] is not None for r in live)
+            else None
+        ),
+    }
 
 
 def render(live: list[dict], asof: str) -> str:
     s = summary(live)
     m = models()
     cert = certificate(list(zip(m["cal_p"], m["cal_y"])))
-    lr = "no resolved call yet" if s["losing_rate"] is None else (
-        f"{s['wrong']} wrong of {s['resolved_calls']} ({s['losing_rate']:.1%}); p that the true rate exceeds 50%: "
-        f"{s['p_exceeds_alpha']:.3f}")
-    out = [f"# Certified dump calls (shadow, beside LEARNER v2.4)", "",
-           f"Generated {asof} from paper/learner_v3.jsonl and the registers. Method and history check: `{STUDY}` "
-           "(the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.", "",
-           "## The three plain answers", "",
-           "- **What is predicted:** for a US stock that just closed +30% or more, that it closes at least 10% lower at the "
-           "next session while most of its twins do not. A call is made only when the shadow score clears a bar certified "
-           "by Learn then Test.",
-           "- **What counts as success:** the calls are wrong at most half the time (certified level 50%, confidence 95%); "
-           "the realised losing rate stays at or under it.",
-           f"- **Evidence so far:** {s['forecasts']} live forecasts, {s['calls']} calls, {lr}.", "",
-           "## The bar", "",
-           f"- From history alone (2022 and 2023 scores of models that never saw those years, {cert['n_calibration']} events): "
-           + (f"threshold {cert['chosen']:.3f}" if cert["chosen"] is not None else "nothing certifies") + ".",
-           "- Each live forecast uses the bar certified from history plus every live outcome resolved before it was made; "
-           "the bar moves as outcomes resolve (the history check found the 2022 bar fired 3.1% of 2023's events, not 1%).",
-           "- 2023 on its own does not certify (strictest 1%: 15 calls, 4 wrong, p 0.059 against 0.05); pooled with 2022 it "
-           "does, at about the top 5% of spikes. Expect few calls.",
-           "", "## Live forecasts", "",
-           "| Signal session | Ticker | Shadow score | Bar | Call | v2.4 raw | Outcome |", "|---|---|---|---|---|---|---|"]
+    lr = (
+        "no resolved call yet"
+        if s["losing_rate"] is None
+        else (
+            f"{s['wrong']} wrong of {s['resolved_calls']} ({s['losing_rate']:.1%}); p that the true rate exceeds 50%: "
+            f"{s['p_exceeds_alpha']:.3f}"
+        )
+    )
+    out = [
+        f"# Certified dump calls (shadow, beside LEARNER v2.4)",
+        "",
+        f"Generated {asof} from paper/learner_v3.jsonl and the registers. Method and history check: `{STUDY}` "
+        "(the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.",
+        "",
+        "## The three plain answers",
+        "",
+        "- **What is predicted:** for a US stock that just closed +30% or more, that it closes at least 10% lower at the "
+        "next session while most of its twins do not. A call is made only when the shadow score clears a bar certified "
+        "by Learn then Test.",
+        "- **What counts as success:** the calls are wrong at most half the time (certified level 50%, confidence 95%); "
+        "the realised losing rate stays at or under it.",
+        f"- **Evidence so far:** {s['forecasts']} live forecasts, {s['calls']} calls, {lr}.",
+        "",
+        "## The bar",
+        "",
+        f"- From history alone (2022 and 2023 scores of models that never saw those years, {cert['n_calibration']} events): "
+        + (f"threshold {cert['chosen']:.3f}" if cert["chosen"] is not None else "nothing certifies")
+        + ".",
+        "- Each live forecast uses the bar certified from history plus every live outcome resolved before it was made; "
+        "the bar moves as outcomes resolve (the history check found the 2022 bar fired 3.1% of 2023's events, not 1%).",
+        "- 2023 on its own does not certify (strictest 1%: 15 calls, 4 wrong, p 0.059 against 0.05); pooled with 2022 it "
+        "does, at about the top 5% of spikes. Expect few calls.",
+        "",
+        "## Live forecasts",
+        "",
+        "| Signal session | Ticker | Shadow score | Bar | Call | v2.4 raw | Outcome |",
+        "|---|---|---|---|---|---|---|",
+    ]
     for r in sorted(live, key=lambda r: (r["session"], r["ticker"] or ""), reverse=True):
         outcome = "pending" if r["y"] is None else ("dumped" if r["y"] else "did not dump")
         bar = "none certified" if r["threshold"] is None else f"{r['threshold']:.3f}"
-        out.append(f"| {r['session']} | {r['ticker']} | {r['score']:.3f} | {bar} | {'**DUMP**' if r['call'] else '-'} | "
-                   f"{r['v24_raw']:.3f} | {outcome} |")
+        out.append(
+            f"| {r['session']} | {r['ticker']} | {r['score']:.3f} | {bar} | {'**DUMP**' if r['call'] else '-'} | "
+            f"{r['v24_raw']:.3f} | {outcome} |"
+        )
     if not live:
         out.append("| - | - | - | - | - | - | no live forecast yet |")
-    out += ["", "## Limits", "",
-            "- The bound treats events as independent; spikes cluster, so it is optimistic, and the realised rate is the check.",
-            "- History prices are survivor-only; the live record is the honest one.",
-            "- A shadow report: no order, no change to the frozen challenger."]
+    out += [
+        "",
+        "## Limits",
+        "",
+        "- The bound treats events as independent; spikes cluster, so it is optimistic, and the realised rate is the check.",
+        "- History prices are survivor-only; the live record is the honest one.",
+        "- A shadow report: no order, no change to the frozen challenger.",
+    ]
     return "\n".join(out) + "\n"
 
 

@@ -14,7 +14,15 @@ import pandas as pd
 
 from .provenance import PKG_ROOT, read_manifest
 
-RAW_COLS = ["volume", "value", "foreign_buy", "foreign_sell", "bid_volume", "offer_volume", "non_regular_value"]
+RAW_COLS = [
+    "volume",
+    "value",
+    "foreign_buy",
+    "foreign_sell",
+    "bid_volume",
+    "offer_volume",
+    "non_regular_value",
+]
 NAMES = ("fnet5", "fnet20", "fpart20", "bidq1", "bidq5", "bidx1", "blk5", "blk20")
 
 
@@ -29,7 +37,12 @@ def load_raw(manifest, tickers, dates, last: str) -> dict[str, np.ndarray]:
             continue
         df = pd.read_csv(PKG_ROOT / rec["path"], usecols=["date", *RAW_COLS])
         df["date"] = pd.to_datetime(df["date"].str[:10])
-        df = df[df["date"] <= pd.Timestamp(last)].drop_duplicates("date", keep="last").set_index("date").reindex(idx)
+        df = (
+            df[df["date"] <= pd.Timestamp(last)]
+            .drop_duplicates("date", keep="last")
+            .set_index("date")
+            .reindex(idx)
+        )
         for c in RAW_COLS:
             out[c][pos[rec["ticker"]]] = df[c].to_numpy(float)
     return out
@@ -46,8 +59,18 @@ def _ratio(num: np.ndarray, den: np.ndarray) -> np.ndarray:
 
 def features(raw: dict[str, np.ndarray], tradeable: np.ndarray) -> dict[str, np.ndarray]:
     t = lambda k: np.where(tradeable, raw[k], np.nan)  # noqa: E731
-    vol, val, fb, fs, bv, ov, nrv = (t(k) for k in ("volume", "value", "foreign_buy", "foreign_sell", "bid_volume",
-                                                    "offer_volume", "non_regular_value"))
+    vol, val, fb, fs, bv, ov, nrv = (
+        t(k)
+        for k in (
+            "volume",
+            "value",
+            "foreign_buy",
+            "foreign_sell",
+            "bid_volume",
+            "offer_volume",
+            "non_regular_value",
+        )
+    )
     f = {}
     for name, w, mn in (("fnet5", 5, 4), ("fnet20", 20, 15)):
         f[name] = _ratio(_roll(fb - fs, w, mn, "sum"), _roll(vol, w, mn, "sum"))
@@ -59,7 +82,9 @@ def features(raw: dict[str, np.ndarray], tradeable: np.ndarray) -> dict[str, np.
     prior = np.full(med.shape, np.nan)
     prior[:, 1:] = med[:, :-1]
     with np.errstate(divide="ignore", invalid="ignore"):
-        f["bidx1"] = np.where(np.isfinite(bv) & np.isfinite(prior), np.log10((bv + 1.0) / (prior + 1.0)), np.nan)
+        f["bidx1"] = np.where(
+            np.isfinite(bv) & np.isfinite(prior), np.log10((bv + 1.0) / (prior + 1.0)), np.nan
+        )
     for name, w, mn in (("blk5", 5, 4), ("blk20", 20, 15)):
         n = _roll(nrv, w, mn, "sum")
         f[name] = _ratio(n, _roll(val, w, mn, "sum") + n)

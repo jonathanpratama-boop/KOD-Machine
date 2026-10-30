@@ -39,14 +39,40 @@ from .provenance import (
     rel,
     sha256_file,
     utc_stamp,
-    write_csv_gz_exclusive, build_stamp, publish_bytes, latest_panel_manifest,
+    write_csv_gz_exclusive,
+    build_stamp,
+    publish_bytes,
+    latest_panel_manifest,
 )
 
 PANEL_FORMAT = "panel-v2"
-COLUMNS = ["date", "ticker", "source", "previous", "open", "high", "low", "close", "volume", "value", "frequency",
-           "listed_shares", "tradable_shares"]
-INT_COLUMNS = ["previous", "open", "high", "low", "close", "volume", "value", "frequency", "listed_shares",
-               "tradable_shares"]
+COLUMNS = [
+    "date",
+    "ticker",
+    "source",
+    "previous",
+    "open",
+    "high",
+    "low",
+    "close",
+    "volume",
+    "value",
+    "frequency",
+    "listed_shares",
+    "tradable_shares",
+]
+INT_COLUMNS = [
+    "previous",
+    "open",
+    "high",
+    "low",
+    "close",
+    "volume",
+    "value",
+    "frequency",
+    "listed_shares",
+    "tradable_shares",
+]
 V2_COLUMNS = ("listed_shares", "tradable_shares")
 MIN_TRADED_PER_SESSION = 50  # a date with fewer traded names is a holiday stub, not a session
 # A date is a session only if IDX itself priced the next day off it: among names whose close
@@ -64,8 +90,19 @@ def load_mirror(manifest: Path) -> pd.DataFrame:
             continue
         df = pd.read_csv(
             PKG_ROOT / rec["path"],
-            usecols=["date", "previous", "open_price", "high", "low", "close", "volume", "value", "frequency",
-                     "listed_shares", "tradeble_shares"],
+            usecols=[
+                "date",
+                "previous",
+                "open_price",
+                "high",
+                "low",
+                "close",
+                "volume",
+                "value",
+                "frequency",
+                "listed_shares",
+                "tradeble_shares",
+            ],
         )
         df["ticker"] = rec["ticker"]
         frames.append(df)
@@ -91,17 +128,27 @@ def _yahoo_frame(ticker: str, payload: dict) -> pd.DataFrame:
         return pd.DataFrame(columns=COLUMNS)
     offset = result["meta"].get("gmtoffset", 25200)
     quote = result["indicators"]["quote"][0]
-    df = pd.DataFrame({
-        "date": pd.to_datetime(np.array(stamps) + offset, unit="s").normalize(),
-        "open": pd.to_numeric(pd.Series(quote.get("open")), errors="coerce"),
-        "high": pd.to_numeric(pd.Series(quote.get("high")), errors="coerce"),
-        "low": pd.to_numeric(pd.Series(quote.get("low")), errors="coerce"),
-        "close": pd.to_numeric(pd.Series(quote.get("close")), errors="coerce"),
-        "volume": pd.to_numeric(pd.Series(quote.get("volume")), errors="coerce"),
-    })
-    df = df.dropna(subset=["close"]).drop_duplicates("date", keep="last").sort_values("date").reset_index(drop=True)
+    df = pd.DataFrame(
+        {
+            "date": pd.to_datetime(np.array(stamps) + offset, unit="s").normalize(),
+            "open": pd.to_numeric(pd.Series(quote.get("open")), errors="coerce"),
+            "high": pd.to_numeric(pd.Series(quote.get("high")), errors="coerce"),
+            "low": pd.to_numeric(pd.Series(quote.get("low")), errors="coerce"),
+            "close": pd.to_numeric(pd.Series(quote.get("close")), errors="coerce"),
+            "volume": pd.to_numeric(pd.Series(quote.get("volume")), errors="coerce"),
+        }
+    )
+    df = (
+        df.dropna(subset=["close"])
+        .drop_duplicates("date", keep="last")
+        .sort_values("date")
+        .reset_index(drop=True)
+    )
     splits = sorted(
-        (pd.Timestamp(datetime.fromtimestamp(s["date"] + offset, timezone.utc).date()), s["numerator"] / s["denominator"])
+        (
+            pd.Timestamp(datetime.fromtimestamp(s["date"] + offset, timezone.utc).date()),
+            s["numerator"] / s["denominator"],
+        )
         for s in ((result.get("events") or {}).get("splits") or {}).values()
         if s.get("denominator")
     )
@@ -118,7 +165,11 @@ def _yahoo_frame(ticker: str, payload: dict) -> pd.DataFrame:
     df["volume"] = (df["volume"] / factor).round()
     prior = df["close"].shift(1)
     reference = prior / day_ratio
-    df["previous"] = np.where(day_ratio != 1, np.round(reference / market.tick_size(reference)) * market.tick_size(reference), prior)
+    df["previous"] = np.where(
+        day_ratio != 1,
+        np.round(reference / market.tick_size(reference)) * market.tick_size(reference),
+        prior,
+    )
     traded = df["volume"] > 0
     for col in ("open", "high", "low"):
         df[col] = df[col].where(traded)
@@ -145,8 +196,9 @@ def load_yahoo(manifest: Path) -> pd.DataFrame:
 STITCH_TOLERANCE = 0.02  # Yahoo vs IDX close on the last common date before the switch
 
 
-def _rebase_first_rows(yahoo: pd.DataFrame, mirror: pd.DataFrame,
-                       boundary: pd.Timestamp) -> tuple[pd.DataFrame, dict]:
+def _rebase_first_rows(
+    yahoo: pd.DataFrame, mirror: pd.DataFrame, boundary: pd.Timestamp
+) -> tuple[pd.DataFrame, dict]:
     """Chain each name's first Yahoo session to its last IDX close, so the source switch is
     not mistaken for a corporate action. A split on that first session is kept. A name whose
     Yahoo close disagrees with IDX on the last common date keeps no Yahoo segment: its
@@ -154,16 +206,25 @@ def _rebase_first_rows(yahoo: pd.DataFrame, mirror: pd.DataFrame,
     y = yahoo.sort_values(["ticker", "date"]).copy()
     y["yahoo_prior_close"] = y.groupby("ticker")["close"].shift(1)
     common = mirror[["ticker", "date", "close"]].merge(
-        y.loc[y["date"] <= boundary, ["ticker", "date", "close"]], on=["ticker", "date"], suffixes=("_idx", "_yahoo")
+        y.loc[y["date"] <= boundary, ["ticker", "date", "close"]],
+        on=["ticker", "date"],
+        suffixes=("_idx", "_yahoo"),
     )
     last_common = common.sort_values("date").groupby("ticker").tail(1).set_index("ticker")
     gap = (last_common["close_yahoo"] / last_common["close_idx"] - 1).abs()
-    dropped = {t: {"date": str(last_common.loc[t, "date"].date()), "idx_close": float(last_common.loc[t, "close_idx"]),
-                   "yahoo_close": float(last_common.loc[t, "close_yahoo"])}
-               for t in sorted(gap[gap > STITCH_TOLERANCE].index)}
+    dropped = {
+        t: {
+            "date": str(last_common.loc[t, "date"].date()),
+            "idx_close": float(last_common.loc[t, "close_idx"]),
+            "yahoo_close": float(last_common.loc[t, "close_yahoo"]),
+        }
+        for t in sorted(gap[gap > STITCH_TOLERANCE].index)
+    }
     after = y[(y["date"] > boundary) & ~y["ticker"].isin(dropped)].copy()
     first = after.groupby("ticker").head(1)
-    last_idx = mirror[mirror["date"] <= boundary].sort_values("date").groupby("ticker")["close"].last()
+    last_idx = (
+        mirror[mirror["date"] <= boundary].sort_values("date").groupby("ticker")["close"].last()
+    )
     anchor = first["ticker"].map(last_idx)
     ratio = first["previous"] / first["yahoo_prior_close"]
     rebased = (anchor * ratio).where(anchor.notna() & ratio.notna(), first["previous"])
@@ -173,7 +234,9 @@ def _rebase_first_rows(yahoo: pd.DataFrame, mirror: pd.DataFrame,
 
 def _overlap_qa(mirror: pd.DataFrame, yahoo: pd.DataFrame, boundary: pd.Timestamp) -> dict:
     m = mirror[(mirror["volume"] > 0)][["ticker", "date", "close", "volume"]]
-    y = yahoo[(yahoo["date"] <= boundary) & (yahoo["volume"] > 0)][["ticker", "date", "close", "volume"]]
+    y = yahoo[(yahoo["date"] <= boundary) & (yahoo["volume"] > 0)][
+        ["ticker", "date", "close", "volume"]
+    ]
     both = m.merge(y, on=["ticker", "date"], suffixes=("_idx", "_yahoo"))
     if both.empty:
         return {"rows_compared": 0}
@@ -186,7 +249,9 @@ def _overlap_qa(mirror: pd.DataFrame, yahoo: pd.DataFrame, boundary: pd.Timestam
         "close_exact_share": round(float((diff == 0).mean()), 4),
         "close_within_1_tick_share": round(float((diff <= tick).mean()), 4),
         "close_off_by_more_than_2pct_share": round(float((rel_diff > 0.02).mean()), 4),
-        "volume_within_1pct_share": round(float(((both["volume_yahoo"] / both["volume_idx"] - 1).abs() <= 0.01).mean()), 4),
+        "volume_within_1pct_share": round(
+            float(((both["volume_yahoo"] / both["volume_idx"] - 1).abs() <= 0.01).mean()), 4
+        ),
     }
 
 
@@ -205,16 +270,20 @@ def _limit_qa(panel: pd.DataFrame) -> list[dict]:
     rows = []
     for idx, g in t.groupby("regime"):
         bad = g[g["above"] | g["below"]]
-        rows.append({
-            "regime": market.REGIMES[idx].label,
-            "start": market.REGIMES[idx].start.isoformat(),
-            "rows": int(len(g)),
-            "above_ara": int(g["above"].sum()),
-            "below_arb": int(g["below"].sum()),
-            "violations_priced_below_rp50": int(bad["sub50"].sum()),
-            "violations_other": int((~bad["sub50"]).sum()),
-            "other_violation_dates": sorted({d.date().isoformat() for d in bad.loc[~bad["sub50"], "date"]})[:10],
-        })
+        rows.append(
+            {
+                "regime": market.REGIMES[idx].label,
+                "start": market.REGIMES[idx].start.isoformat(),
+                "rows": int(len(g)),
+                "above_ara": int(g["above"].sum()),
+                "below_arb": int(g["below"].sum()),
+                "violations_priced_below_rp50": int(bad["sub50"].sum()),
+                "violations_other": int((~bad["sub50"]).sum()),
+                "other_violation_dates": sorted(
+                    {d.date().isoformat() for d in bad.loc[~bad["sub50"], "date"]}
+                )[:10],
+            }
+        )
     return rows
 
 
@@ -225,17 +294,26 @@ def _reference_ignored_dates(mirror: pd.DataFrame) -> dict:
     sel = (p["volume"] > 0) & nxt.notna() & prior.notna() & (p["close"] != prior)
     share = (nxt[sel] == p.loc[sel, "close"]).groupby(p.loc[sel, "date"]).agg(["mean", "size"])
     bad = share[share["mean"] < MIN_REFERENCE_CONFIRMED]
-    return {d.date().isoformat(): {"names_checked": int(r["size"]), "next_reference_equals_close": round(float(r["mean"]), 4)}
-            for d, r in bad.iterrows()}
+    return {
+        d.date().isoformat(): {
+            "names_checked": int(r["size"]),
+            "next_reference_equals_close": round(float(r["mean"]), 4),
+        }
+        for d, r in bad.iterrows()
+    }
 
 
-def build(mirror_manifest: Path | None = None, yahoo_manifest: Path | None = None, log=print) -> Path:
+def build(
+    mirror_manifest: Path | None = None, yahoo_manifest: Path | None = None, log=print
+) -> Path:
     mirror_manifest = Path(mirror_manifest or latest_manifest("idx_mirror"))
     yahoo_manifest = Path(yahoo_manifest or latest_manifest("yahoo"))
     for manifest in (mirror_manifest, yahoo_manifest):
         problems = check_files(manifest)
         if problems:
-            raise RuntimeError(f"{manifest.name}: {len(problems)} files differ from the manifest, e.g. {problems[:3]}")
+            raise RuntimeError(
+                f"{manifest.name}: {len(problems)} files differ from the manifest, e.g. {problems[:3]}"
+            )
     log("loading idx_mirror")
     mirror = load_mirror(mirror_manifest)
     log("loading yahoo")
@@ -272,9 +350,11 @@ def build(mirror_manifest: Path | None = None, yahoo_manifest: Path | None = Non
         "columns": COLUMNS,
         "panel": rel(path),
         "sha256": sha256_file(path),
-        "built_at": utc_stamp(), "publication_id": stamp,
+        "built_at": utc_stamp(),
+        "publication_id": stamp,
         "inputs": {
-            m.name: {"sha256": sha256_file(m), "path": rel(m)} for m in (mirror_manifest, yahoo_manifest)
+            m.name: {"sha256": sha256_file(m), "path": rel(m)}
+            for m in (mirror_manifest, yahoo_manifest)
         },
         "rows": int(len(panel)),
         "tickers": int(panel["ticker"].nunique()),
@@ -296,9 +376,13 @@ def build(mirror_manifest: Path | None = None, yahoo_manifest: Path | None = Non
                 "survivorship": "survivor-only: names delisted after the boundary stop at the boundary",
             },
         ],
-        "tickers_ending_before_boundary": {t: d.date().isoformat() for t, d in sorted(last.items()) if d < boundary},
+        "tickers_ending_before_boundary": {
+            t: d.date().isoformat() for t, d in sorted(last.items()) if d < boundary
+        },
         "tickers_ending_at_boundary": sorted(t for t, d in last.items() if d == boundary),
-        "tickers_listed_after_boundary": {t: d.date().isoformat() for t, d in sorted(first.items()) if d > boundary},
+        "tickers_listed_after_boundary": {
+            t: d.date().isoformat() for t, d in sorted(first.items()) if d > boundary
+        },
         "mirror_tickers": len([r for r in mirror_records if "ticker" in r]),
         "yahoo_not_found_or_empty": yahoo_missing,
         "dropped_non_session_dates": [d.date().isoformat() for d in dropped_dates][:50],
@@ -308,17 +392,22 @@ def build(mirror_manifest: Path | None = None, yahoo_manifest: Path | None = Non
         "yahoo_segment_dropped_stitch_mismatch": stitch_dropped,
         "qa_limit_violations": _limit_qa(panel),
         "market_regimes": market.regime_labels(),
-        "quality_tiers": quality.tiers(panel["date"].min().date().isoformat(), boundary.date().isoformat(),
-                                       end.date().isoformat()),
+        "quality_tiers": quality.tiers(
+            panel["date"].min().date().isoformat(),
+            boundary.date().isoformat(),
+            end.date().isoformat(),
+        ),
         "share_counts": {
             "rows_with_listed_shares": int(panel["listed_shares"].notna().sum()),
             "note": "IDX listed_shares / tradeble_shares, mirror era only. tradable_shares is NOT free float: "
-                    "it equals listed_shares for most names, including ones with a known controlling holder.",
+            "it equals listed_shares for most names, including ones with a known controlling holder.",
         },
     }
     mpath = MANIFESTS / f"panel-{stamp}.json"
     publish_bytes(mpath, (json.dumps(manifest, indent=2, sort_keys=True) + "\n").encode("utf-8"))
-    log(f"panel {rel(path)} rows {len(panel)} tickers {manifest['tickers']} sessions {manifest['sessions']}")
+    log(
+        f"panel {rel(path)} rows {len(panel)} tickers {manifest['tickers']} sessions {manifest['sessions']}"
+    )
     return mpath
 
 
@@ -327,7 +416,9 @@ def load(panel_manifest: Path | None = None) -> tuple[pd.DataFrame, dict, Path]:
     meta = json.loads(panel_manifest.read_text(encoding="utf-8"))
     path = PKG_ROOT / meta["panel"]
     if not path.exists():
-        raise FileNotFoundError(f"{meta['panel']} is missing; rebuild it with `python -m idxsig build-panel`")
+        raise FileNotFoundError(
+            f"{meta['panel']} is missing; rebuild it with `python -m idxsig build-panel`"
+        )
     if sha256_file(path) != meta["sha256"]:
         raise RuntimeError(f"{meta['panel']} does not match the hash in {panel_manifest.name}")
     df = pd.read_csv(path, dtype={c: "Int64" for c in INT_COLUMNS}, parse_dates=["date"])

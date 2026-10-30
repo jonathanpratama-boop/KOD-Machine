@@ -9,7 +9,7 @@ class Binomial(unittest.TestCase):
     def test_cdf_matches_direct_sum(self):
         for n, p in ((10, 0.3), (57, 0.5), (200, 0.05)):
             for k in (0, 3, n // 2, n - 1):
-                direct = sum(comb(n, i) * p ** i * (1 - p) ** (n - i) for i in range(k + 1))
+                direct = sum(comb(n, i) * p**i * (1 - p) ** (n - i) for i in range(k + 1))
                 self.assertAlmostEqual(rc.binom_cdf(k, n, p), direct, places=10)
 
     def test_edges(self):

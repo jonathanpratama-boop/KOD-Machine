@@ -30,12 +30,16 @@ class CommittedMixedVersionLedger(unittest.TestCase):
             ledger = Ledger(db)
             try:
                 rows = ledger.rows("SELECT * FROM cases WHERE case_id = ?", (ZEAL_CASE,))
-                self.assertEqual(len(rows), 1, "the committed ledger must retain its first real v3 card")
+                self.assertEqual(
+                    len(rows), 1, "the committed ledger must retain its first real v3 card"
+                )
                 case = dict(rows[0])
                 self.assertEqual(case["card_hash_version"], "KOD-CARD-v3")
                 self.assertEqual(case["integrity_level"], "PARTIAL")
                 self.assertEqual(case["card_sha"], ZEAL_SHA)
-                frozen = json.loads((KOD_ROOT / "registry" / "cards" / f"{ZEAL_CASE}.json").read_text())
+                frozen = json.loads(
+                    (KOD_ROOT / "registry" / "cards" / f"{ZEAL_CASE}.json").read_text()
+                )
                 self.assertEqual(sha256_obj(frozen), ZEAL_SHA)
                 self.assertEqual(_rebuild_case_sha(ledger, case), ZEAL_SHA)
             finally:

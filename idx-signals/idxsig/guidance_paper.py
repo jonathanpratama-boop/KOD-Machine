@@ -15,6 +15,7 @@ Universe: eToro-listed US stocks (the broker the owner can use) that map to an S
      the decision is scored, from the bars, and a decision that fails it is scored NOT EXECUTABLE.
 The state is bootstrapped from the releases of the 200 days before the first scanned day (MAX_GAP_DAYS).
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -39,7 +40,9 @@ ARCHIVES = "https://www.sec.gov/Archives/"
 class Policy:
     policy_id: str = "GUIDANCE-PAPER-v1"
     event: str = "full-year revenue guidance RAISE (idxsig.guidance_v2, research/E10/FEASIBILITY_AMENDMENT_1.md)"
-    entry: str = "open of the first session tradable after acceptance (by 09:15 New York time: that session)"
+    entry: str = (
+        "open of the first session tradable after acceptance (by 09:15 New York time: that session)"
+    )
     exit: str = "close of the 20th session (entry session = 1)"
     equity_usd: float = 10_000.0
     weight: float = 0.10
@@ -55,7 +58,9 @@ POLICY = Policy()
 
 
 def policy_sha() -> str:
-    return hashlib.sha256(json.dumps(asdict(POLICY), sort_keys=True, default=str).encode()).hexdigest()
+    return hashlib.sha256(
+        json.dumps(asdict(POLICY), sort_keys=True, default=str).encode()
+    ).hexdigest()
 
 
 def e10_passed(path: Path = E10_RESULT) -> bool:
@@ -68,8 +73,13 @@ def e10_passed(path: Path = E10_RESULT) -> bool:
 
 def etoro_us(path: Path = ETORO) -> set[str]:
     data = json.loads(path.read_bytes())["InstrumentDisplayDatas"]
-    return {str(x["SymbolFull"]).upper().replace(".", "-") for x in data
-            if x["InstrumentTypeID"] == 5 and x["ExchangeID"] in (4, 5) and not x.get("IsInternalInstrument")}
+    return {
+        str(x["SymbolFull"]).upper().replace(".", "-")
+        for x in data
+        if x["InstrumentTypeID"] == 5
+        and x["ExchangeID"] in (4, 5)
+        and not x.get("IsInternalInstrument")
+    }
 
 
 def index_url(day: date) -> str:
@@ -81,7 +91,9 @@ def acceptance_ny(raw: bytes) -> str | None:
     return datetime.strptime(a, "%Y%m%d%H%M%S").strftime("%Y-%m-%dT%H:%M:%S") if a else None
 
 
-def releases_on(day: date, get: Callable[[str], tuple[int, bytes]], ciks: dict[int, str]) -> list[dict]:
+def releases_on(
+    day: date, get: Callable[[str], tuple[int, bytes]], ciks: dict[int, str]
+) -> list[dict]:
     """Item 2.02 releases of universe CIKs in the day's form index, in acceptance order. `get(url)` returns
     (status, body); a day without an index (weekend, holiday) returns []."""
     status, body = get(index_url(day))
@@ -97,34 +109,68 @@ def releases_on(day: date, get: Callable[[str], tuple[int, bytes]], ciks: dict[i
         acc = acceptance_ny(raw)
         if acc is None:
             continue
-        out.append({"cik": row["cik"], "ticker": ciks[row["cik"]], "form": row["form"],
-                    "accession": row["path"].rsplit("/", 1)[-1].removesuffix(".txt"), "acceptance_ny": acc,
-                    "url": ARCHIVES + row["path"], "sha256": hashlib.sha256(raw).hexdigest(),
-                    "texts": guidance.exhibit_texts(raw)})
+        out.append(
+            {
+                "cik": row["cik"],
+                "ticker": ciks[row["cik"]],
+                "form": row["form"],
+                "accession": row["path"].rsplit("/", 1)[-1].removesuffix(".txt"),
+                "acceptance_ny": acc,
+                "url": ARCHIVES + row["path"],
+                "sha256": hashlib.sha256(raw).hexdigest(),
+                "texts": guidance.exhibit_texts(raw),
+            }
+        )
     return sorted(out, key=lambda r: r["acceptance_ny"])
 
 
 def decision(event: dict, release: dict, now: datetime) -> dict:
-    return {"type": "DECISION", "policy": {"id": POLICY.policy_id, "sha256": policy_sha()},
-            "decided_at": now.isoformat(timespec="seconds"), "market": "US", "ticker": event["ticker"],
-            "cik": event["cik"], "accession": event["accession"], "filing_url": release["url"],
-            "filing_sha256": release["sha256"], "acceptance_ny": event["acceptance_ny"],
-            "event": {k: event[k] for k in ("fiscal_year", "kind", "old_mid", "new_mid", "level_change", "class",
-                                            "prior_accession", "old_sentence", "new_sentence")},
-            "terminal_decision": "BUY ON TRIGGER", "entry": POLICY.entry, "exit": POLICY.exit,
-            "sizing": f"{POLICY.weight:.0%} of marked paper equity, at most {POLICY.slots} open positions",
-            "floor": POLICY.floor, "orders": POLICY.orders,
-            "thesis": "a raised full-year revenue forecast leaves return after an obtainable entry (E10)",
-            "prediction": "net return over the 20 sessions beats the mean of matched controls on the same dates"}
+    return {
+        "type": "DECISION",
+        "policy": {"id": POLICY.policy_id, "sha256": policy_sha()},
+        "decided_at": now.isoformat(timespec="seconds"),
+        "market": "US",
+        "ticker": event["ticker"],
+        "cik": event["cik"],
+        "accession": event["accession"],
+        "filing_url": release["url"],
+        "filing_sha256": release["sha256"],
+        "acceptance_ny": event["acceptance_ny"],
+        "event": {
+            k: event[k]
+            for k in (
+                "fiscal_year",
+                "kind",
+                "old_mid",
+                "new_mid",
+                "level_change",
+                "class",
+                "prior_accession",
+                "old_sentence",
+                "new_sentence",
+            )
+        },
+        "terminal_decision": "BUY ON TRIGGER",
+        "entry": POLICY.entry,
+        "exit": POLICY.exit,
+        "sizing": f"{POLICY.weight:.0%} of marked paper equity, at most {POLICY.slots} open positions",
+        "floor": POLICY.floor,
+        "orders": POLICY.orders,
+        "thesis": "a raised full-year revenue forecast leaves return after an obtainable entry (E10)",
+        "prediction": "net return over the 20 sessions beats the mean of matched controls on the same dates",
+    }
 
 
-def scan_day(day: date, state: dict, get, ciks: dict[int, str], now: datetime | None = None) -> tuple[list, list, dict]:
+def scan_day(
+    day: date, state: dict, get, ciks: dict[int, str], now: datetime | None = None
+) -> tuple[list, list, dict]:
     """(decisions, every event, new state) for one day. Pure apart from `get`."""
     now = now or datetime.now(timezone.utc)
     decisions, events = [], []
     for rel in releases_on(day, get, ciks):
-        ev, state = guidance_watch.revisions(state, rel["cik"], rel["ticker"], rel["accession"], rel["acceptance_ny"],
-                                             rel["texts"])
+        ev, state = guidance_watch.revisions(
+            state, rel["cik"], rel["ticker"], rel["accession"], rel["acceptance_ny"], rel["texts"]
+        )
         events.extend(ev)
         decisions.extend(decision(e, rel, now) for e in ev if e["class"] == "RAISE")
     return decisions, events, state
@@ -142,13 +188,31 @@ def bootstrap(first_day: date, get, ciks: dict[int, str], log=print) -> dict:
     return state
 
 
-def record(decisions: list[dict], events: list[dict], day: date, now: datetime, dry_run: bool,
-           path: Path = LEDGER, timestamper=None) -> list[dict]:
+def record(
+    decisions: list[dict],
+    events: list[dict],
+    day: date,
+    now: datetime,
+    dry_run: bool,
+    path: Path = LEDGER,
+    timestamper=None,
+) -> list[dict]:
     """A SCAN record (every event of the day, or NO SIGNAL) and the day's DECISIONs. Written only if E10 passed."""
-    scan = {"type": "SCAN", "policy": {"id": POLICY.policy_id, "sha256": policy_sha()}, "market": "US",
-            "session_scanned": day.isoformat(), "scanned_at": now.isoformat(timespec="seconds"),
-            "events": [{k: e[k] for k in ("ticker", "accession", "class", "level_change", "fiscal_year", "kind")}
-                       for e in events] or "NO SIGNAL"}
+    scan = {
+        "type": "SCAN",
+        "policy": {"id": POLICY.policy_id, "sha256": policy_sha()},
+        "market": "US",
+        "session_scanned": day.isoformat(),
+        "scanned_at": now.isoformat(timespec="seconds"),
+        "events": [
+            {
+                k: e[k]
+                for k in ("ticker", "accession", "class", "level_change", "fiscal_year", "kind")
+            }
+            for e in events
+        ]
+        or "NO SIGNAL",
+    }
     records = [scan] + decisions
     if dry_run:
         return records

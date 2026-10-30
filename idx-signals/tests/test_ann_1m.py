@@ -31,7 +31,9 @@ class HelperTests(unittest.TestCase):
         self.assertEqual(run.col(1455), L - 1)
 
     def test_ffill_carries_forward_and_leaves_the_start_missing(self):
-        c = np.array([[np.nan, np.nan, 1.0, np.nan, 2.0, np.nan], [3.0, np.nan, np.nan, 4.0, np.nan, np.nan]])
+        c = np.array(
+            [[np.nan, np.nan, 1.0, np.nan, 2.0, np.nan], [3.0, np.nan, np.nan, 4.0, np.nan, np.nan]]
+        )
         out = run.ffill(c)
         np.testing.assert_array_equal(out[0], [np.nan, np.nan, 1, 1, 2, 2])
         np.testing.assert_array_equal(out[1], [3, 3, 3, 4, 4, 4])
@@ -43,10 +45,10 @@ class HelperTests(unittest.TestCase):
         t2[run.col(0)] = 0
         self.assertFalse(run.quality(t2))
         t3 = t.copy()
-        t3[run.col(-60):run.col(-29)] = 0                         # 31 silent minutes leave 29 traded
+        t3[run.col(-60) : run.col(-29)] = 0  # 31 silent minutes leave 29 traded
         self.assertFalse(run.quality(t3))
         t4 = t.copy()
-        t4[run.col(-60):run.col(-30)] = 0                         # 30 silent minutes leave exactly 30
+        t4[run.col(-60) : run.col(-30)] = 0  # 30 silent minutes leave exactly 30
         self.assertTrue(run.quality(t4))
 
     def test_gross_uses_closes_at_the_entry_and_exit_bars(self):
@@ -64,7 +66,10 @@ class HelperTests(unittest.TestCase):
         rng = np.random.default_rng(1)
         days = np.repeat(np.arange(60), 3)
         x = 0.03 + rng.normal(0, 0.05, len(days))
-        a, b = run.cluster_boot(x, days, boot=2000, seed=5), run.cluster_boot(x, days, boot=2000, seed=5)
+        a, b = (
+            run.cluster_boot(x, days, boot=2000, seed=5),
+            run.cluster_boot(x, days, boot=2000, seed=5),
+        )
         self.assertEqual(a, b)
         self.assertEqual((a["n"], a["clusters"]), (180, 60))
         self.assertGreater(a["t"], 3.0)
@@ -89,18 +94,35 @@ def build_study(effect=0.05, n_events=6, n_ctrl=12, silent_event=None, noise=0.0
     rng = np.random.default_rng(seed)
     for i in range(n_events):
         key = f"{1000 + i}|TOK{i}"
-        events.append({"event_key": key, "token": f"TOK{i}", "pair": f"TOK{i}USDT", "t_ms": (18_000 + i * 3) * 86_400_000 + 5_000})
-        cases = [("event", -1, 0.01 + effect + rng.normal(0, noise))] + [("control", k, 0.01 + rng.normal(0, noise / 2))
-                                                                              for k in range(n_ctrl)]
+        events.append(
+            {
+                "event_key": key,
+                "token": f"TOK{i}",
+                "pair": f"TOK{i}USDT",
+                "t_ms": (18_000 + i * 3) * 86_400_000 + 5_000,
+            }
+        )
+        cases = [("event", -1, 0.01 + effect + rng.normal(0, noise))] + [
+            ("control", k, 0.01 + rng.normal(0, noise / 2)) for k in range(n_ctrl)
+        ]
         for role, rank, up in cases:
             c, t = flat()
-            c[run.col(0):] = 100.0                                 # price before the announcement minute is 100
-            ramp = np.linspace(100.0, 100.0 * (1 + up), 61)        # offsets 0..60
-            c[run.col(0):run.col(60) + 1] = ramp
-            c[run.col(60) + 1:] = ramp[-1]
+            c[run.col(0) :] = 100.0  # price before the announcement minute is 100
+            ramp = np.linspace(100.0, 100.0 * (1 + up), 61)  # offsets 0..60
+            c[run.col(0) : run.col(60) + 1] = ramp
+            c[run.col(60) + 1 :] = ramp[-1]
             if role == "event" and silent_event == i:
                 t[run.col(0)] = 0
-            series.append({"row": len(closes), "event_key": key, "role": role, "rank": rank, "symbol": f"S{i}{rank}", "bars": 1})
+            series.append(
+                {
+                    "row": len(closes),
+                    "event_key": key,
+                    "role": role,
+                    "rank": rank,
+                    "symbol": f"S{i}{rank}",
+                    "bars": 1,
+                }
+            )
             closes.append(c)
             trades.append(t)
     return {"series": series, "events": events}, np.array(closes), np.array(trades)
@@ -131,7 +153,7 @@ class StudyTests(unittest.TestCase):
 
     def test_a_delayed_entry_needs_a_trade_in_that_bar(self):
         man, closes, trades = build_study()
-        trades[0][run.col(4)] = 0                                  # event 0 does not trade in the bar of a 4-minute delay
+        trades[0][run.col(4)] = 0  # event 0 does not trade in the bar of a 4-minute delay
         table = run.event_table(None, man, closes, trades)
         d4 = run.spec_values(table, run.ffill(closes), trades, 4, 60)
         self.assertEqual(len(d4), 5)
@@ -144,7 +166,7 @@ class StudyTests(unittest.TestCase):
         paths = run.path_means(table, cf)
         row = lambda m: paths[paths.m == m].iloc[0]  # noqa: E731
         self.assertAlmostEqual(row(-5).excess, 0.0)
-        self.assertAlmostEqual(row(0).excess, 0.0)                 # the ramp starts at offset 0 at the base price
+        self.assertAlmostEqual(row(0).excess, 0.0)  # the ramp starts at offset 0 at the base price
         self.assertAlmostEqual(row(60).excess, 0.05)
         self.assertAlmostEqual(row(60).event, 0.06)
         extra = run.pre_and_minute(table, cf)
@@ -169,13 +191,24 @@ class EndToEndTests(unittest.TestCase):
         (tmp / "research" / "X" / "feasibility").mkdir()
         npz = tmp / "research" / "X" / "minutes" / "minutes.npz"
         np.savez_compressed(npz, closes=closes.astype(np.float32), trades=trades)
-        pd.DataFrame({"article_id": [1], "token": ["A"]}).to_csv(tmp / "research" / "X" / "feasibility" / "events.csv", index=False)
-        man["npz"] = {"path": "research/X/minutes/minutes.npz", "sha256": hashlib.sha256(npz.read_bytes()).hexdigest()}
-        man["events_csv_sha256"] = hashlib.sha256((tmp / "research" / "X" / "feasibility" / "events.csv").read_bytes()).hexdigest()
+        pd.DataFrame({"article_id": [1], "token": ["A"]}).to_csv(
+            tmp / "research" / "X" / "feasibility" / "events.csv", index=False
+        )
+        man["npz"] = {
+            "path": "research/X/minutes/minutes.npz",
+            "sha256": hashlib.sha256(npz.read_bytes()).hexdigest(),
+        }
+        man["events_csv_sha256"] = hashlib.sha256(
+            (tmp / "research" / "X" / "feasibility" / "events.csv").read_bytes()
+        ).hexdigest()
         man["panel_manifest"] = "none"
         (tmp / "research" / "X" / "minutes" / "MANIFEST.json").write_text(json.dumps(man))
-        for p in (mock.patch.object(run, "HERE", tmp / "research" / "X"), mock.patch.object(run, "ROOT", tmp),
-                  mock.patch.object(run, "OUT", tmp / "research" / "X" / "results"), mock.patch.object(run, "BOOT", 1500)):
+        for p in (
+            mock.patch.object(run, "HERE", tmp / "research" / "X"),
+            mock.patch.object(run, "ROOT", tmp),
+            mock.patch.object(run, "OUT", tmp / "research" / "X" / "results"),
+            mock.patch.object(run, "BOOT", 1500),
+        ):
             p.start()
             self.addCleanup(p.stop)
         return tmp / "research" / "X" / "results"
@@ -189,13 +222,15 @@ class EndToEndTests(unittest.TestCase):
         with redirect_stdout(io.StringIO()):
             self.assertEqual(run.main(), 0)
         res = json.loads((out / "RESULT.json").read_text())
-        self.assertTrue(res["gates"]["G1_excess_t_ge_3"] and res["gates"]["G2_net_and_winsorised_net_gt_0"])
+        self.assertTrue(
+            res["gates"]["G1_excess_t_ge_3"] and res["gates"]["G2_net_and_winsorised_net_gt_0"]
+        )
         self.assertTrue(res["gates"]["G4_delayed_5min_excess_gt_0"])
         self.assertEqual(res["events"]["valid"], 90)
         for name in ("RESULT.json", "events.csv", "grid.csv", "paths.csv"):
             self.assertTrue((out / name).exists(), name)
         with redirect_stdout(io.StringIO()), self.assertRaises(SystemExit):
-            run.main()                                                # a second run is refused
+            run.main()  # a second run is refused
 
     def test_no_effect_fails_g1(self):
         import json
@@ -217,13 +252,23 @@ class PoolTests(unittest.TestCase):
         return {"base": base, "days": days, "qv": np.full(len(days), qv)}
 
     def test_pool_rules(self):
-        d = {"OKUSDT": self.daily("OK"), "OWNUSDT": self.daily("OWN"), "NEARUSDT": self.daily("NEAR"),
-             "USDCUSDT": self.daily("USDC"), "BTCUPUSDT": self.daily("BTCUP"), "ETHDOWNUSDT": self.daily("ETHDOWN"),
-             "YOUNGUSDT": self.daily("YOUNG", first=290), "THINUSDT": self.daily("THIN", qv=5e5),
-             "DEADUSDT": self.daily("DEAD", last=300), "BRIEFUSDT": self.daily("BRIEF", first=250, last=500),
-             "EUROUSDT": self.daily("EUR")}
+        d = {
+            "OKUSDT": self.daily("OK"),
+            "OWNUSDT": self.daily("OWN"),
+            "NEARUSDT": self.daily("NEAR"),
+            "USDCUSDT": self.daily("USDC"),
+            "BTCUPUSDT": self.daily("BTCUP"),
+            "ETHDOWNUSDT": self.daily("ETHDOWN"),
+            "YOUNGUSDT": self.daily("YOUNG", first=290),
+            "THINUSDT": self.daily("THIN", qv=5e5),
+            "DEADUSDT": self.daily("DEAD", last=300),
+            "BRIEFUSDT": self.daily("BRIEF", first=250, last=500),
+            "EUROUSDT": self.daily("EUR"),
+        }
         pool = fm.pool_for(300, "OWNUSDT", {"NEARUSDT"}, d)
-        self.assertEqual(pool, ["BRIEFUSDT", "OKUSDT"])            # 50 days of history is enough; every other rule excludes
+        self.assertEqual(
+            pool, ["BRIEFUSDT", "OKUSDT"]
+        )  # 50 days of history is enough; every other rule excludes
 
     def test_permutation_is_seeded_by_the_event(self):
         pool = [f"P{i:02d}USDT" for i in range(40)]

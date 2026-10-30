@@ -44,7 +44,9 @@ def _frozen_rolling(arr, how, window):
 def frozen_features_pre_v3(m, version="v2", band_edges=(200, 5000), as_traded=False):
     close = np.where(m.present, m.close, np.nan)
     level = close * m.unit_factor if as_traded else close
-    band = np.searchsorted(np.array(band_edges, dtype=float), np.nan_to_num(level, nan=0.0), side="left")
+    band = np.searchsorted(
+        np.array(band_edges, dtype=float), np.nan_to_num(level, nan=0.0), side="left"
+    )
     band = np.where(np.isfinite(close), band, -1).astype(np.int8)
     value = np.where(m.present, np.where(m.tradeable, np.nan_to_num(m.value), 0.0), np.nan)
     with np.errstate(divide="ignore", invalid="ignore"):
@@ -52,9 +54,15 @@ def frozen_features_pre_v3(m, version="v2", band_edges=(200, 5000), as_traded=Fa
     logret = np.where(m.present, logret, np.nan)
     out = {
         "price_band": band,
-        "liquidity": _frozen_bucket(np.where(m.present, _frozen_rolling(value, "median", _LOOKBACK), np.nan), 5),
-        "volatility": _frozen_bucket(np.where(m.present, _frozen_rolling(logret, "std", _LOOKBACK), np.nan), 3),
-        "momentum": _frozen_bucket(np.where(m.present, _frozen_rolling(logret, "sum", _LOOKBACK), np.nan), 3),
+        "liquidity": _frozen_bucket(
+            np.where(m.present, _frozen_rolling(value, "median", _LOOKBACK), np.nan), 5
+        ),
+        "volatility": _frozen_bucket(
+            np.where(m.present, _frozen_rolling(logret, "std", _LOOKBACK), np.nan), 3
+        ),
+        "momentum": _frozen_bucket(
+            np.where(m.present, _frozen_rolling(logret, "sum", _LOOKBACK), np.nan), 3
+        ),
     }
     if version == "v1":
         return out
@@ -69,11 +77,13 @@ def frozen_features_pre_v3(m, version="v2", band_edges=(200, 5000), as_traded=Fa
     age = np.arange(n_sessions)[None, :] - first[:, None]
     censored = (first == 0)[:, None]
     age_bucket = np.select([censored | (age >= 250), age >= 60], [2, 1], 0).astype(np.int8)
-    out.update({
-        "market_cap": _frozen_bucket(mcap, 5),
-        "drawdown": _frozen_bucket(drawdown, 3),
-        "listing_age": np.where(m.present, age_bucket, -1).astype(np.int8),
-    })
+    out.update(
+        {
+            "market_cap": _frozen_bucket(mcap, 5),
+            "drawdown": _frozen_bucket(drawdown, 3),
+            "listing_age": np.where(m.present, age_bucket, -1).astype(np.int8),
+        }
+    )
     return out
 
 
@@ -117,7 +127,9 @@ class ControlsV3Buckets(unittest.TestCase):
             for t in (0, 1):
                 lower, upper = rows[v2[rows, s] == t], rows[v2[rows, s] == t + 1]
                 if len(lower) and len(upper):
-                    self.assertLessEqual(int(v3[lower, s].max()), int(v3[upper, s].min()), f"session {s}")
+                    self.assertLessEqual(
+                        int(v3[lower, s].max()), int(v3[upper, s].min()), f"session {s}"
+                    )
                     checked += 1
         self.assertGreater(checked, 0)
         # within a session the quintile has at most the expected share of names per bucket
@@ -132,8 +144,15 @@ class ControlsV3Buckets(unittest.TestCase):
         m, _, _ = _market(n_tickers=60, n_sessions=320, ipo={2: 10, 5: 100}, shares_until=200)
         f = controls.features(m, "v3")
         self.assertEqual(set(f), set(V3))
-        expected = {"price_band": 3, "liquidity": 5, "volatility": 5, "market_cap": 5, "momentum": 3,
-                    "drawdown": 3, "listing_age": 3}
+        expected = {
+            "price_band": 3,
+            "liquidity": 5,
+            "volatility": 5,
+            "market_cap": 5,
+            "momentum": 3,
+            "drawdown": 3,
+            "listing_age": 3,
+        }
         for name, n in expected.items():
             arr = f[name]
             self.assertEqual(arr.dtype, np.int8, name)
@@ -144,7 +163,9 @@ class ControlsV3Buckets(unittest.TestCase):
             self.assertGreaterEqual(len(np.unique(known)), n, name)
         present = m.present
         self.assertTrue((f["market_cap"][:, :201][present[:, :201]] >= 0).all())
-        self.assertTrue((f["market_cap"][:, 201:] == -1).all())   # no share counts: unknown, as in v2
+        self.assertTrue(
+            (f["market_cap"][:, 201:] == -1).all()
+        )  # no share counts: unknown, as in v2
         self.assertTrue((f["market_cap"][~present] == -1).all())
         self.assertTrue((f["listing_age"][2, :10] == -1).all())
         self.assertEqual(int(f["listing_age"][2, 10]), 0)
@@ -174,7 +195,9 @@ class ControlsV3Buckets(unittest.TestCase):
         m, _, _ = _market(n_tickers=20, n_sessions=90)
         f = controls.features(m, "v3")
         a_tick, a_sig = np.array([0, 4]), np.array([50, 70])
-        _, lv = controls.matched_draws(m.tradeable.copy(), f, a_tick, a_sig, 10, np.random.default_rng(0), "v3")
+        _, lv = controls.matched_draws(
+            m.tradeable.copy(), f, a_tick, a_sig, 10, np.random.default_rng(0), "v3"
+        )
         cov = controls.coverage(f, a_tick, a_sig, lv, "v3")
         self.assertEqual(cov["version"], "v3")
         self.assertEqual(list(cov["features"]), list(V3))
@@ -198,7 +221,9 @@ class ControlsV3Relaxation(unittest.TestCase):
         rng = np.random.default_rng(3)
         a_sig = rng.integers(70, 125, size=60)
         a_tick = rng.integers(0, m.shape[0], size=60)
-        drawn, lv = controls.matched_draws(evaluable, f, a_tick, a_sig, 40, np.random.default_rng(1), "v3")
+        drawn, lv = controls.matched_draws(
+            evaluable, f, a_tick, a_sig, 40, np.random.default_rng(1), "v3"
+        )
         lvls = controls.levels("v3")
         self.assertEqual(drawn.shape, (40, 60))
         seen = set()
@@ -216,29 +241,42 @@ class ControlsV3Relaxation(unittest.TestCase):
 
             used = pool(lvls[k])
             self.assertNotIn(n, drawn[:, col])
-            self.assertTrue(np.isin(drawn[:, col], used).all(), f"attempt {col}: a control outside its pool")
+            self.assertTrue(
+                np.isin(drawn[:, col], used).all(), f"attempt {col}: a control outside its pool"
+            )
             if k < len(lvls) - 1:
-                self.assertGreaterEqual(len(used), controls.MIN_POOL, f"attempt {col}: stopped short of MIN_POOL")
+                self.assertGreaterEqual(
+                    len(used), controls.MIN_POOL, f"attempt {col}: stopped short of MIN_POOL"
+                )
             if k > 0:
-                self.assertLess(len(pool(lvls[k - 1])), controls.MIN_POOL,
-                                f"attempt {col}: relaxed although the stricter level had a pool")
-        self.assertGreater(len(seen), 1, "the synthetic market never needed relaxing; test is vacuous")
+                self.assertLess(
+                    len(pool(lvls[k - 1])),
+                    controls.MIN_POOL,
+                    f"attempt {col}: relaxed although the stricter level had a pool",
+                )
+        self.assertGreater(
+            len(seen), 1, "the synthetic market never needed relaxing; test is vacuous"
+        )
 
     def test_v3_relaxes_volatility_after_market_cap(self):
         """Guards against: v3's priority putting the quintile below market cap, i.e. dropping it
         first, which is what v2 did (28% of recorded IDX attempts were never matched on it)."""
-        lv = controls.levels("v3")                  # lv[0] is the full match, lv[-1] the empty one
+        lv = controls.levels("v3")  # lv[0] is the full match, lv[-1] the empty one
         self.assertEqual(lv[4], ("price_band", "liquidity", "volatility"))
         self.assertEqual(lv[3], ("price_band", "liquidity", "volatility", "market_cap"))
         self.assertEqual(controls.level_names("v3")[4], "price_band+liquidity+volatility")
         v2 = controls.levels("v2")
-        self.assertEqual(v2[4], ("price_band", "liquidity", "market_cap"))   # v2 drops volatility first
+        self.assertEqual(
+            v2[4], ("price_band", "liquidity", "market_cap")
+        )  # v2 drops volatility first
 
     def test_run_records_v3_in_the_summary(self):
         """Guards against: a v3 run whose summary.json still says v2 (the method text, the harness
         key, the controls block), or whose match levels are not v3's."""
         df, meta = random_walk_panel(n_tickers=20, n_sessions=80)
-        s = run(RunConfig("PLACEBO_COINFLIP", random_draws=10, controls_version="v3"), df, meta)["summary"]
+        s = run(RunConfig("PLACEBO_COINFLIP", random_draws=10, controls_version="v3"), df, meta)[
+            "summary"
+        ]
         self.assertEqual(s["harness"]["controls"], "v3")
         rm = s["random_matched"]
         self.assertEqual(rm["controls"]["version"], "v3")
@@ -255,18 +293,26 @@ class ControlsV2Unchanged(unittest.TestCase):
         """Guards against: adding v3 changing any v1/v2 array (the recorded runs must reproduce)."""
         cases = (
             dict(n_tickers=40, n_sessions=160),
-            dict(n_tickers=30, n_sessions=300, ipo={2: 30, 9: 90}, delist={4: 120}, shares_until=200),
+            dict(
+                n_tickers=30, n_sessions=300, ipo={2: 30, 9: 90}, delist={4: 120}, shares_until=200
+            ),
             dict(n_tickers=6, n_sessions=90, shares_until=50),
         )
         for kw in cases:
             m, _, _ = _market(**kw)
             for version in ("v1", "v2"):
-                _assert_same_features(controls.features(m, version), frozen_features_pre_v3(m, version))
-                _assert_same_features(controls.features(m, version, US.band_edges),
-                                      frozen_features_pre_v3(m, version, US.band_edges))
+                _assert_same_features(
+                    controls.features(m, version), frozen_features_pre_v3(m, version)
+                )
+                _assert_same_features(
+                    controls.features(m, version, US.band_edges),
+                    frozen_features_pre_v3(m, version, US.band_edges),
+                )
             mu = m.with_units(np.full(m.shape, 0.5))
-            _assert_same_features(controls.features(mu, "v2", US.band_edges, as_traded=True),
-                                  frozen_features_pre_v3(mu, "v2", US.band_edges, as_traded=True))
+            _assert_same_features(
+                controls.features(mu, "v2", US.band_edges, as_traded=True),
+                frozen_features_pre_v3(mu, "v2", US.band_edges, as_traded=True),
+            )
         # the default version is still v2
         m, _, _ = _market(n_tickers=12, n_sessions=70)
         _assert_same_features(controls.features(m), frozen_features_pre_v3(m, "v2"))
@@ -275,30 +321,41 @@ class ControlsV2Unchanged(unittest.TestCase):
         """Guards against: v3 editing v2's feature list, priorities, bucket counts or wording."""
         self.assertEqual(controls.VERSIONS["v1"], V1)
         self.assertEqual(controls.VERSIONS["v2"], V2)
-        self.assertEqual(controls.level_names("v2"), [
-            "price_band+liquidity+market_cap+volatility+momentum+drawdown+listing_age",
-            "price_band+liquidity+market_cap+volatility+momentum+drawdown",
-            "price_band+liquidity+market_cap+volatility+momentum",
-            "price_band+liquidity+market_cap+volatility",
-            "price_band+liquidity+market_cap",
-            "price_band+liquidity",
-            "price_band",
-            "same session only",
-        ])
+        self.assertEqual(
+            controls.level_names("v2"),
+            [
+                "price_band+liquidity+market_cap+volatility+momentum+drawdown+listing_age",
+                "price_band+liquidity+market_cap+volatility+momentum+drawdown",
+                "price_band+liquidity+market_cap+volatility+momentum",
+                "price_band+liquidity+market_cap+volatility",
+                "price_band+liquidity+market_cap",
+                "price_band+liquidity",
+                "price_band",
+                "same session only",
+            ],
+        )
         self.assertEqual(controls.MIN_POOL, 5)
         self.assertEqual(controls.FEATURES["volatility"].buckets, 3)
-        self.assertEqual(controls.FEATURES["volatility"].description, "tercile of 20-session std of daily log returns")
+        self.assertEqual(
+            controls.FEATURES["volatility"].description,
+            "tercile of 20-session std of daily log returns",
+        )
         for version in ("v1", "v2"):
             for name in controls.VERSIONS[version]:
                 self.assertIs(controls.feature(name, version), controls.FEATURES[name])
         m, _, _ = _market(n_tickers=20, n_sessions=90)
         f = controls.features(m, "v2")
         a_tick, a_sig = np.array([0, 4]), np.array([50, 70])
-        _, lv = controls.matched_draws(m.tradeable.copy(), f, a_tick, a_sig, 10, np.random.default_rng(0), "v2")
+        _, lv = controls.matched_draws(
+            m.tradeable.copy(), f, a_tick, a_sig, 10, np.random.default_rng(0), "v2"
+        )
         cov = controls.coverage(f, a_tick, a_sig, lv, "v2")
         self.assertEqual(cov["version"], "v2")
         self.assertEqual(list(cov["features"]), list(V2))
-        self.assertEqual(cov["features"]["volatility"]["description"], controls.FEATURES["volatility"].description)
+        self.assertEqual(
+            cov["features"]["volatility"]["description"],
+            controls.FEATURES["volatility"].description,
+        )
         self.assertEqual(cov["features"]["volatility"]["priority"], 4)
         self.assertEqual(cov["features"]["market_cap"]["priority"], 3)
 
@@ -307,10 +364,24 @@ class ControlsV2Unchanged(unittest.TestCase):
         same rng, same pools, same level used)."""
         m, _, _ = _market(n_tickers=25, n_sessions=100, shares_until=60)
         a_tick, a_sig = np.array([0, 3, 5, 1, 2]), np.array([40, 40, 60, 80, 80])
-        live = controls.matched_draws(m.tradeable.copy(), controls.features(m, "v2"), a_tick, a_sig, 50,
-                                      np.random.default_rng(0), "v2")
-        frozen = controls.matched_draws(m.tradeable.copy(), frozen_features_pre_v3(m, "v2"), a_tick, a_sig, 50,
-                                        np.random.default_rng(0), "v2")
+        live = controls.matched_draws(
+            m.tradeable.copy(),
+            controls.features(m, "v2"),
+            a_tick,
+            a_sig,
+            50,
+            np.random.default_rng(0),
+            "v2",
+        )
+        frozen = controls.matched_draws(
+            m.tradeable.copy(),
+            frozen_features_pre_v3(m, "v2"),
+            a_tick,
+            a_sig,
+            50,
+            np.random.default_rng(0),
+            "v2",
+        )
         np.testing.assert_array_equal(live[0], frozen[0])
         np.testing.assert_array_equal(live[1], frozen[1])
 
@@ -322,7 +393,9 @@ class ControlsV2Unchanged(unittest.TestCase):
         self.assertEqual(s["harness"]["controls"], "v2")
         self.assertEqual(s["random_matched"]["controls"]["version"], "v2")
         self.assertIn(" / ".join(V2), s["random_matched"]["method"])
-        self.assertIn("tercile", s["random_matched"]["controls"]["features"]["volatility"]["description"])
+        self.assertIn(
+            "tercile", s["random_matched"]["controls"]["features"]["volatility"]["description"]
+        )
 
 
 class ControlsV3AsTraded(unittest.TestCase):
@@ -336,14 +409,20 @@ class ControlsV3AsTraded(unittest.TestCase):
         as_traded = controls.features(mu, "v3", US.band_edges, as_traded=True)
         self.assertEqual(set(as_traded), set(V3))
         self.assertFalse(np.array_equal(panel_units["price_band"], as_traded["price_band"]))
-        np.testing.assert_array_equal(as_traded["price_band"][m.present],
-                                      controls.features(m, "v3", tuple(e * 100 for e in US.band_edges))["price_band"][m.present])
+        np.testing.assert_array_equal(
+            as_traded["price_band"][m.present],
+            controls.features(m, "v3", tuple(e * 100 for e in US.band_edges))["price_band"][
+                m.present
+            ],
+        )
         for name in V3:
             if name != "price_band":
                 np.testing.assert_array_equal(panel_units[name], as_traded[name], err_msg=name)
         # the pre-existing single-bar check, on v3
-        self.assertEqual(int(controls.features(m, "v3", US.band_edges)["price_band"][0, 5]),
-                         int(controls.features(m, "v2", US.band_edges)["price_band"][0, 5]))
+        self.assertEqual(
+            int(controls.features(m, "v3", US.band_edges)["price_band"][0, 5]),
+            int(controls.features(m, "v2", US.band_edges)["price_band"][0, 5]),
+        )
 
 
 if __name__ == "__main__":

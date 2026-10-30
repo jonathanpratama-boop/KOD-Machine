@@ -78,20 +78,20 @@ from . import market
 from .market import LOT_SIZE, Fees
 
 STATUS = (
-    "EXITED",               # scored
-    "EXIT_DATA_END",        # scored: name stopped trading before the exit
-    "INCOMPLETE",           # not scored: holding period runs past the data
+    "EXITED",  # scored
+    "EXIT_DATA_END",  # scored: name stopped trading before the exit
+    "INCOMPLETE",  # not scored: holding period runs past the data
     "EXCLUDED_CORP_ACTION",  # not scored (ca_mode="exclude"): held across a non-integer reset
     "CORP_ACTION_RIGHTS_ISSUE",  # not scored (ca_mode="registry"): held across a verified rights issue
-    "CORP_ACTION_UNRESOLVED",    # not scored (ca_mode="registry"): held across a reset the registry cannot verify
+    "CORP_ACTION_UNRESOLVED",  # not scored (ca_mode="registry"): held across a reset the registry cannot verify
     "SKIP_NO_ENTRY_SESSION",
     "SKIP_NOT_TRADED",
     "SKIP_ARA_LOCK",
     "SKIP_LOT",
     "SKIP_LIQUIDITY",
     "SKIP_CAPACITY_UNKNOWN",  # fill model C: an unverified reset makes the window's share units unknown
-    "SKIP_NO_TRIGGER",        # conditional entry: no session in the entry window met the entry condition
-    "EXCLUDED_DATA_JUMP",     # not scored: held across a session whose close/reference ratio is beyond
+    "SKIP_NO_TRIGGER",  # conditional entry: no session in the entry window met the entry condition
+    "EXCLUDED_DATA_JUMP",  # not scored: held across a session whose close/reference ratio is beyond
     #                           jump_ratio (a redenomination or a bad print, not a trade); both sides alike
 )
 SCORED = (0, 1)
@@ -135,18 +135,28 @@ class ExecConfig:
     fees: Fees = field(default_factory=Fees)
     data_end_exit: str = "last_close"  # or "zero"
     lot_size: int = LOT_SIZE
-    entry_price: str = "close"  # "close" of the entry session, or its "open" (markets with opening prices)
+    entry_price: str = (
+        "close"  # "close" of the entry session, or its "open" (markets with opening prices)
+    )
     cost_tiers: tuple = ()  # extra per-side cost by entry/exit price tier (profiles.Profile.cost_tiers)
-    ca_mode: str = "exclude"  # "registry" (needs Market.with_registry), "exclude", "value_preserving"
+    ca_mode: str = (
+        "exclude"  # "registry" (needs Market.with_registry), "exclude", "value_preserving"
+    )
     units: str = "panel"  # "panel" (original) or "as_traded" (needs Market.unit_factor)
-    fill_model: str = "A"  # "A" (ex-post entry-session volume), "B" (FILL-B-v1, decision-time capacity,
+    fill_model: str = (
+        "A"  # "A" (ex-post entry-session volume), "B" (FILL-B-v1, decision-time capacity,
+    )
     #                        mixed units; reproduction only), "B2" (FILL-B-v2, entry-session units) or
     #                        "C" (FILL-C-v1, decision-time capacity, IDX close entries)
     entry_rule: str = "fixed"  # ENTRY_RULES; a conditional entry reads closes (close entries) or opens (open entries)
     entry_window: int = 1  # sessions after the signal in which a conditional entry may trigger
     exit_rule: str = "fixed"  # EXIT_RULES; LONG_EXITS for side "long", SHORT_EXITS for side "short"
-    side: str = "long"  # SIDES; "short" needs open entries and a market without auto-rejection limits
-    carry_per_session: float = 0.0  # short side: borrow or funding charged per session held, on the entry notional
+    side: str = (
+        "long"  # SIDES; "short" needs open entries and a market without auto-rejection limits
+    )
+    carry_per_session: float = (
+        0.0  # short side: borrow or funding charged per session held, on the entry notional
+    )
     # Short side, optional: an isolated-margin position is liquidated when the price has risen by this
     # fraction of the entry (checked on each session's high from the entry session on); the loss is then
     # this fraction of the sold notional plus fees and carry. None: losses are unbounded (research/E4 v1).
@@ -168,9 +178,13 @@ class ExecConfig:
 
     @property
     def plan(self) -> dict:
-        return {"entry_rule": self.entry_rule, "entry_window": self.entry_window if self.entry_rule != "fixed"
-                else self.entry_lag, "exit_rule": self.exit_rule, "holding_days": self.holding_days,
-                "side": self.side}
+        return {
+            "entry_rule": self.entry_rule,
+            "entry_window": self.entry_window if self.entry_rule != "fixed" else self.entry_lag,
+            "exit_rule": self.exit_rule,
+            "holding_days": self.holding_days,
+            "side": self.side,
+        }
 
 
 def validate_execution_config(cfg) -> None:
@@ -179,15 +193,35 @@ def validate_execution_config(cfg) -> None:
     A zero holding period is a supported same-session exit. Signals are computed
     after a completed session, so entry lag must be strictly positive.
     """
-    for name, minimum in (("entry_lag", 1), ("holding_days", 0), ("entry_window", 1), ("lot_size", 1)):
+    for name, minimum in (
+        ("entry_lag", 1),
+        ("holding_days", 0),
+        ("entry_window", 1),
+        ("lot_size", 1),
+    ):
         value = getattr(cfg, name)
-        if isinstance(value, (bool, np.bool_)) or not isinstance(value, Integral) or value < minimum:
+        if (
+            isinstance(value, (bool, np.bool_))
+            or not isinstance(value, Integral)
+            or value < minimum
+        ):
             raise ValueError(f"{name} must be an integer >= {minimum} (got {value!r})")
-    for name, value, positive in (("notional", cfg.notional, True),
-                                  ("max_participation", cfg.max_participation, True),
-                                  ("fee_buy", cfg.fees.buy, False), ("fee_sell", cfg.fees.sell, False)):
-        if isinstance(value, (bool, np.bool_)) or not isinstance(value, Real) or not math.isfinite(value) or value < 0 or (positive and value == 0):
-            raise ValueError(f"{name} must be finite and {'positive' if positive else 'nonnegative'}")
+    for name, value, positive in (
+        ("notional", cfg.notional, True),
+        ("max_participation", cfg.max_participation, True),
+        ("fee_buy", cfg.fees.buy, False),
+        ("fee_sell", cfg.fees.sell, False),
+    ):
+        if (
+            isinstance(value, (bool, np.bool_))
+            or not isinstance(value, Real)
+            or not math.isfinite(value)
+            or value < 0
+            or (positive and value == 0)
+        ):
+            raise ValueError(
+                f"{name} must be finite and {'positive' if positive else 'nonnegative'}"
+            )
     if cfg.max_participation > 1:
         raise ValueError("max_participation must not exceed 1")
     if not isinstance(cfg.capacity_check, bool):
@@ -196,7 +230,11 @@ def validate_execution_config(cfg) -> None:
         value = getattr(cfg, name)
         if value is None and name != "carry_per_session":
             continue
-        if isinstance(value, (bool, np.bool_)) or not isinstance(value, Real) or not math.isfinite(value):
+        if (
+            isinstance(value, (bool, np.bool_))
+            or not isinstance(value, Real)
+            or not math.isfinite(value)
+        ):
             raise ValueError(f"{name} must be finite")
         if minimum is not None and value <= minimum:
             raise ValueError(f"{name} must exceed {minimum}")
@@ -206,9 +244,21 @@ def validate_execution_config(cfg) -> None:
         if not isinstance(tier, (tuple, list)) or len(tier) != 2:
             raise ValueError("cost_tiers must contain (price upper bound, extra fee) pairs")
         bound, cost = tier
-        if isinstance(bound, (bool, np.bool_)) or not isinstance(bound, Real) or math.isnan(bound) or bound <= previous_bound:
-            raise ValueError("cost_tier bounds must be positive and strictly increasing; +inf may be last")
-        if isinstance(cost, (bool, np.bool_)) or not isinstance(cost, Real) or not math.isfinite(cost) or cost < 0:
+        if (
+            isinstance(bound, (bool, np.bool_))
+            or not isinstance(bound, Real)
+            or math.isnan(bound)
+            or bound <= previous_bound
+        ):
+            raise ValueError(
+                "cost_tier bounds must be positive and strictly increasing; +inf may be last"
+            )
+        if (
+            isinstance(cost, (bool, np.bool_))
+            or not isinstance(cost, Real)
+            or not math.isfinite(cost)
+            or cost < 0
+        ):
             raise ValueError("cost_tier fees must be finite and nonnegative")
         previous_bound = bound
     if cfg.entry_price not in ("open", "close") or cfg.data_end_exit not in ("last_close", "zero"):
@@ -239,9 +289,25 @@ def _snap_ratio(r: np.ndarray) -> np.ndarray:
 class Market:
     """Dense (ticker x session) arrays. Column d only depends on data up to session d."""
 
-    FIELDS = ("close", "prev", "high", "low", "volume", "value", "present", "tradeable",
-              "lock_up", "lock_down", "ca_ratio", "is_split", "share_factor", "split_factor", "other_ca_count",
-              "listed_shares", "open")
+    FIELDS = (
+        "close",
+        "prev",
+        "high",
+        "low",
+        "volume",
+        "value",
+        "present",
+        "tradeable",
+        "lock_up",
+        "lock_down",
+        "ca_ratio",
+        "is_split",
+        "share_factor",
+        "split_factor",
+        "other_ca_count",
+        "listed_shares",
+        "open",
+    )
     # Set by with_registry(); built from information that postdates the session (later
     # downloads, primary documents), so never shown to a rule (see rules.RuleView).
     REGISTRY_FIELDS = ("reg_factor", "reg_rights", "reg_unresolved", "unit_factor")
@@ -260,8 +326,11 @@ class Market:
         # session, or where the history given starts here (left-censored at the data start: declared, not
         # invented).
         lb = arrays.get("listed_before")
-        self.listed_before = (np.zeros(len(self.tickers), dtype=np.int64) if lb is None
-                              else np.asarray(lb, dtype=np.int64).copy())
+        self.listed_before = (
+            np.zeros(len(self.tickers), dtype=np.int64)
+            if lb is None
+            else np.asarray(lb, dtype=np.int64).copy()
+        )
         # Names whose listing history before the data start is unknown: present at the data's first session
         # with no history given before it, so their listing age is only a lower bound (left-censored: declared,
         # not invented). Derived when the market is built, then carried through slice()/window() beside
@@ -269,8 +338,11 @@ class Market:
         # controls v4 (controls._listing_age_v4); no rule sees it.
         lc = arrays.get("listing_censored")
         if lc is None:
-            lc = (self.present[:, 0] & (self.listed_before == 0) if self.present.shape[1]
-                  else np.zeros(len(self.tickers), dtype=bool))
+            lc = (
+                self.present[:, 0] & (self.listed_before == 0)
+                if self.present.shape[1]
+                else np.zeros(len(self.tickers), dtype=bool)
+            )
         self.listing_censored = np.asarray(lc, dtype=bool).copy()
 
     @property
@@ -297,15 +369,44 @@ class Market:
         present = np.zeros(shape, dtype=bool)
         present[ti, di] = True
         listed_before = None
-        if "sessions_listed_before" in df:  # per name, constant: listing history before this frame's first session
+        if (
+            "sessions_listed_before" in df
+        ):  # per name, constant: listing history before this frame's first session
             per = df.groupby("ticker")["sessions_listed_before"].first().reindex(tickers)
             listed_before = per.fillna(0).to_numpy(dtype=np.int64)
-        return cls.build(tickers, dates, close, prev, high, low, volume, value, present, listed, opens=opens,
-                         price_limits=price_limits, listed_before=listed_before)
+        return cls.build(
+            tickers,
+            dates,
+            close,
+            prev,
+            high,
+            low,
+            volume,
+            value,
+            present,
+            listed,
+            opens=opens,
+            price_limits=price_limits,
+            listed_before=listed_before,
+        )
 
     @classmethod
-    def build(cls, tickers, dates, close, prev, high, low, volume, value, present, listed_shares=None,
-              opens=None, price_limits: bool = True, listed_before=None) -> "Market":
+    def build(
+        cls,
+        tickers,
+        dates,
+        close,
+        prev,
+        high,
+        low,
+        volume,
+        value,
+        present,
+        listed_shares=None,
+        opens=None,
+        price_limits: bool = True,
+        listed_before=None,
+    ) -> "Market":
         tradeable = present & (np.nan_to_num(volume) > 0) & (np.nan_to_num(close) > 0)
         day_grid = np.broadcast_to(np.asarray(dates, dtype="datetime64[D]"), close.shape)
         ref = np.where(np.isfinite(prev) & (prev > 0), prev, np.nan)
@@ -317,26 +418,44 @@ class Market:
         thin = one_price | sub50
         has_ref = np.isfinite(ref)
         lock_up = tradeable & has_ref & ((close >= ara) | (thin & (close >= sp_ara)))
-        lock_down = tradeable & has_ref & (close < ref) & ((close <= arb) | (thin & (close <= sp_arb)))
+        lock_down = (
+            tradeable & has_ref & (close < ref) & ((close <= arb) | (thin & (close <= sp_arb)))
+        )
         if not price_limits:  # US / crypto: no daily auto-rejection limits
             lock_up = np.zeros(close.shape, dtype=bool)
             lock_down = np.zeros(close.shape, dtype=bool)
         # Reference resets (splits, rights): previous close vs today's reference price.
-        last_close = pd.DataFrame(np.where(present, close, np.nan)).ffill(axis=1).shift(1, axis=1).to_numpy()
+        last_close = (
+            pd.DataFrame(np.where(present, close, np.nan)).ffill(axis=1).shift(1, axis=1).to_numpy()
+        )
         raw = last_close / ref
         reset = present & np.isfinite(raw) & (np.abs(1 / raw - 1) > 0.005)
         ca_ratio = np.where(reset, _snap_ratio(np.where(reset, raw, 1.0)), 1.0)
         whole = np.abs(ca_ratio - np.round(ca_ratio)) < 1e-6
         whole_inverse = np.abs(1 / ca_ratio - np.round(1 / ca_ratio)) < 1e-6
         is_split = reset & (((ca_ratio >= 2) & whole) | ((ca_ratio <= 0.5) & whole_inverse))
-        return cls(tickers, dates, close=close, prev=prev, high=high, low=low, volume=volume, value=value,
-                   present=present, tradeable=tradeable, lock_up=lock_up, lock_down=lock_down,
-                   ca_ratio=ca_ratio, is_split=is_split,
-                   share_factor=np.cumprod(ca_ratio, axis=1),
-                   split_factor=np.cumprod(np.where(is_split, ca_ratio, 1.0), axis=1),
-                   other_ca_count=np.cumsum(reset & ~is_split, axis=1),
-                   listed_shares=np.full(close.shape, np.nan) if listed_shares is None else listed_shares,
-                   open=np.full(close.shape, np.nan) if opens is None else opens, listed_before=listed_before)
+        return cls(
+            tickers,
+            dates,
+            close=close,
+            prev=prev,
+            high=high,
+            low=low,
+            volume=volume,
+            value=value,
+            present=present,
+            tradeable=tradeable,
+            lock_up=lock_up,
+            lock_down=lock_down,
+            ca_ratio=ca_ratio,
+            is_split=is_split,
+            share_factor=np.cumprod(ca_ratio, axis=1),
+            split_factor=np.cumprod(np.where(is_split, ca_ratio, 1.0), axis=1),
+            other_ca_count=np.cumsum(reset & ~is_split, axis=1),
+            listed_shares=np.full(close.shape, np.nan) if listed_shares is None else listed_shares,
+            open=np.full(close.shape, np.nan) if opens is None else opens,
+            listed_before=listed_before,
+        )
 
     def with_registry(self, registry) -> "Market":
         """A copy with share scaling from a corporate-action registry (ca_mode="registry")."""
@@ -344,24 +463,52 @@ class Market:
 
         factor, rights, unresolved, counts = scaling_arrays(self, registry)
         arrays = {name: getattr(self, name) for name in self.FIELDS}
-        return Market(self.tickers, self.dates, **arrays, reg_factor=factor, reg_rights=rights,
-                      reg_unresolved=unresolved, unit_factor=self.unit_factor, registry_counts=counts,
-                      listed_before=self.listed_before, listing_censored=self.listing_censored)
+        return Market(
+            self.tickers,
+            self.dates,
+            **arrays,
+            reg_factor=factor,
+            reg_rights=rights,
+            reg_unresolved=unresolved,
+            unit_factor=self.unit_factor,
+            registry_counts=counts,
+            listed_before=self.listed_before,
+            listing_censored=self.listing_censored,
+        )
 
     def with_units(self, unit_factor: np.ndarray) -> "Market":
         """A copy carrying adjusted -> as-traded price factors (us_actions.unit_factors). Built from
         corporate actions after the session, so never shown to a rule (see rules.RuleView)."""
-        if unit_factor.shape != self.shape or not np.all(np.isfinite(unit_factor) & (unit_factor > 0)):
+        if unit_factor.shape != self.shape or not np.all(
+            np.isfinite(unit_factor) & (unit_factor > 0)
+        ):
             raise ValueError("unit_factor must be finite, positive and shaped like the market")
         arrays = {name: getattr(self, name) for name in self.FIELDS}
-        extra = {name: getattr(self, name) for name in self.REGISTRY_FIELDS if name != "unit_factor"}
-        return Market(self.tickers, self.dates, **arrays, **extra, unit_factor=unit_factor,
-                      registry_counts=self.registry_counts, listed_before=self.listed_before,
-                      listing_censored=self.listing_censored)
+        extra = {
+            name: getattr(self, name) for name in self.REGISTRY_FIELDS if name != "unit_factor"
+        }
+        return Market(
+            self.tickers,
+            self.dates,
+            **arrays,
+            **extra,
+            unit_factor=unit_factor,
+            registry_counts=self.registry_counts,
+            listed_before=self.listed_before,
+            listing_censored=self.listing_censored,
+        )
 
     def bounds(self, start=None, end=None) -> tuple[int, int]:
-        lo = 0 if start is None else int(np.searchsorted(self.dates, np.datetime64(start, "D"), side="left"))
-        hi = len(self.dates) if end is None else int(np.searchsorted(self.dates, np.datetime64(end, "D"), side="right"))
+        lo = (
+            0
+            if start is None
+            else int(np.searchsorted(self.dates, np.datetime64(start, "D"), side="left"))
+        )
+        hi = (
+            len(self.dates)
+            if end is None
+            else int(np.searchsorted(self.dates, np.datetime64(end, "D"), side="right"))
+        )
         return lo, hi
 
     def window(self, start=None, end=None) -> "Market":
@@ -378,16 +525,26 @@ class Market:
         ever = self.present.any(axis=1)
         first = np.where(ever, self.present.argmax(axis=1), 0)
         first_eff = np.where(self.listed_before > 0, -self.listed_before, first)
-        listed_before = np.where(ever | (self.listed_before > 0), np.maximum(0, lo - first_eff), 0).astype(np.int64)
-        return Market(self.tickers, self.dates[lo:hi], **arrays, registry_counts=self.registry_counts,
-                      listed_before=listed_before, listing_censored=self.listing_censored)
+        listed_before = np.where(
+            ever | (self.listed_before > 0), np.maximum(0, lo - first_eff), 0
+        ).astype(np.int64)
+        return Market(
+            self.tickers,
+            self.dates[lo:hi],
+            **arrays,
+            registry_counts=self.registry_counts,
+            listed_before=listed_before,
+            listing_censored=self.listing_censored,
+        )
 
     def truncate(self, last: int) -> "Market":
         """Sessions 0..last only. Used to prove a rule never reads ahead."""
         return self.slice(0, last + 1)
 
 
-def decision_capacity(volume, present, uf, tick_idx, sig_idx, entry_idx, window: int = 20) -> np.ndarray:
+def decision_capacity(
+    volume, present, uf, tick_idx, sig_idx, entry_idx, window: int = 20
+) -> np.ndarray:
     """FILL-B-v2 capacity in ENTRY-session shares: the median over the `window` sessions up to and
     including the signal session of adjusted volume / unit_factor at the entry session (a listed
     session without trades counts as 0; sessions before listing are ignored). Known at decision
@@ -397,16 +554,17 @@ def decision_capacity(volume, present, uf, tick_idx, sig_idx, entry_idx, window:
     for i, (n, s, e) in enumerate(zip(tick_idx, sig_idx, entry_idx)):
         s = min(int(s), n_sessions - 1)
         a = max(s - window + 1, 0)
-        listed = present[n, a: s + 1]
+        listed = present[n, a : s + 1]
         if not listed.any():
             continue
-        vol = np.nan_to_num(volume[n, a: s + 1])[listed] / uf[n, min(int(e), n_sessions - 1)]
+        vol = np.nan_to_num(volume[n, a : s + 1])[listed] / uf[n, min(int(e), n_sessions - 1)]
         out[i] = float(np.median(vol))
     return out
 
 
-def close_capacity(volume, present, reg_factor, reg_unresolved, tick_idx, sig_idx, entry_idx,
-                   window: int = 20) -> tuple[np.ndarray, np.ndarray]:
+def close_capacity(
+    volume, present, reg_factor, reg_unresolved, tick_idx, sig_idx, entry_idx, window: int = 20
+) -> tuple[np.ndarray, np.ndarray]:
     """FILL-C-v1 capacity in ENTRY-session shares and a mask of attempts whose units are unknown.
 
     The median over the `window` sessions up to and including the signal session of
@@ -422,11 +580,11 @@ def close_capacity(volume, present, reg_factor, reg_unresolved, tick_idx, sig_id
         if reg_unresolved[n, e] - reg_unresolved[n, a] > 0:
             unknown[i] = True
             continue
-        listed = present[n, a: s + 1]
+        listed = present[n, a : s + 1]
         if not listed.any():
             continue
-        to_entry = reg_factor[n, e] / reg_factor[n, a: s + 1]
-        out[i] = float(np.median((np.nan_to_num(volume[n, a: s + 1]) * to_entry)[listed]))
+        to_entry = reg_factor[n, e] / reg_factor[n, a : s + 1]
+        out[i] = float(np.median((np.nan_to_num(volume[n, a : s + 1]) * to_entry)[listed]))
     return out, unknown
 
 
@@ -438,8 +596,16 @@ def reference_level(m: Market) -> np.ndarray:
     return np.where(m.present, np.exp(np.cumsum(logret, axis=1)), np.nan)
 
 
-def conditional_entry(m: Market, level: np.ndarray, tick_idx: np.ndarray, sig_idx: np.ndarray, rule: str,
-                      window: int, price: str = "close", side: str = "long") -> np.ndarray:
+def conditional_entry(
+    m: Market,
+    level: np.ndarray,
+    tick_idx: np.ndarray,
+    sig_idx: np.ndarray,
+    rule: str,
+    window: int,
+    price: str = "close",
+    side: str = "long",
+) -> np.ndarray:
     """Entry session per trade for a conditional entry rule, or -1 when nothing in the window triggers.
     Every condition reads sessions s+1..s+window only: a completed close (close entries) or the open
     the entry would happen at (open entries), against the signal close on the reference chain.
@@ -450,7 +616,9 @@ def conditional_entry(m: Market, level: np.ndarray, tick_idx: np.ndarray, sig_id
     ref = level[tick_idx, np.minimum(sig_idx, n_sessions - 1)]
     direction = 1.0 if side == "long" else -1.0
     if rule == "unlock" and price != "close":
-        raise ValueError("entry rule 'unlock' is defined for closing-auction entries under auto-rejection limits")
+        raise ValueError(
+            "entry rule 'unlock' is defined for closing-auction entries under auto-rejection limits"
+        )
     with np.errstate(divide="ignore", invalid="ignore"):
         open_level = level * m.open / m.close if price == "open" else level
     for k in range(1, window + 1):
@@ -460,8 +628,12 @@ def conditional_entry(m: Market, level: np.ndarray, tick_idx: np.ndarray, sig_id
         if price == "close":
             fill = m.tradeable[tick_idx, cc] & ~m.lock_up[tick_idx, cc]
         else:
-            fill = (m.present[tick_idx, cc] & (np.nan_to_num(m.volume[tick_idx, cc]) > 0)
-                    & np.isfinite(m.open[tick_idx, cc]) & (np.nan_to_num(m.open[tick_idx, cc]) > 0))
+            fill = (
+                m.present[tick_idx, cc]
+                & (np.nan_to_num(m.volume[tick_idx, cc]) > 0)
+                & np.isfinite(m.open[tick_idx, cc])
+                & (np.nan_to_num(m.open[tick_idx, cc]) > 0)
+            )
         cand = open_level[tick_idx, cc]
         rel = (cand - ref) * direction
         if rule == "confirm":
@@ -477,8 +649,16 @@ def conditional_entry(m: Market, level: np.ndarray, tick_idx: np.ndarray, sig_id
     return out
 
 
-def conditional_exit(m: Market, level: np.ndarray, tick_idx: np.ndarray, sig_idx: np.ndarray, entry: np.ndarray,
-                     holding: int, rule: str, side: str = "long") -> np.ndarray:
+def conditional_exit(
+    m: Market,
+    level: np.ndarray,
+    tick_idx: np.ndarray,
+    sig_idx: np.ndarray,
+    entry: np.ndarray,
+    holding: int,
+    rule: str,
+    side: str = "long",
+) -> np.ndarray:
     """Session on which a conditional exit triggers (entry+1 .. entry+holding-1), or -1: the fixed exit.
     Long: stop_ref (close at or below the signal session's reference price), first_down (a down close).
     Short: stop_high (close at or above the signal session's high), first_up (an up close)."""
@@ -528,8 +708,14 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     n_trades = len(tick_idx)
     n_sessions = m.shape[1]
     status = np.full(n_trades, -1, dtype=np.int64)
-    if cfg.entry_rule not in ENTRY_RULES or cfg.exit_rule not in EXIT_RULES or cfg.side not in SIDES:
-        raise ValueError(f"unknown entry rule {cfg.entry_rule!r}, exit rule {cfg.exit_rule!r} or side {cfg.side!r}")
+    if (
+        cfg.entry_rule not in ENTRY_RULES
+        or cfg.exit_rule not in EXIT_RULES
+        or cfg.side not in SIDES
+    ):
+        raise ValueError(
+            f"unknown entry rule {cfg.entry_rule!r}, exit rule {cfg.exit_rule!r} or side {cfg.side!r}"
+        )
     if cfg.exit_rule not in (LONG_EXITS if cfg.side == "long" else SHORT_EXITS):
         raise ValueError(f"exit rule {cfg.exit_rule!r} is not defined for side {cfg.side!r}")
     if cfg.side == "short":
@@ -549,8 +735,9 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
         e = np.minimum(entry, n_sessions - 1)
     else:
         status[sig_idx + 1 >= n_sessions] = STATUS.index("SKIP_NO_ENTRY_SESSION")
-        triggered = conditional_entry(m, level, tick_idx, sig_idx, cfg.entry_rule, cfg.entry_window,
-                                      cfg.entry_price, cfg.side)
+        triggered = conditional_entry(
+            m, level, tick_idx, sig_idx, cfg.entry_rule, cfg.entry_window, cfg.entry_price, cfg.side
+        )
         status[(status < 0) & (triggered < 0)] = STATUS.index("SKIP_NO_TRIGGER")
         e = np.where(triggered >= 0, triggered, np.minimum(sig_idx + 1, n_sessions - 1))
     open_ = status < 0
@@ -559,9 +746,15 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
         raise ValueError(f"unknown units {cfg.units!r} or fill model {cfg.fill_model!r}")
     if cfg.fill_model in ("B", "B2") and (cfg.entry_price != "open" or cfg.units != "as_traded"):
         raise ValueError("fill model B is defined for open entries in as-traded units")
-    if cfg.fill_model == "C" and (cfg.entry_price != "close" or cfg.units != "panel" or cfg.ca_mode != "registry"
-                                  or m.reg_factor is None):
-        raise ValueError("fill model C is defined for close entries in panel units with a corporate-action registry")
+    if cfg.fill_model == "C" and (
+        cfg.entry_price != "close"
+        or cfg.units != "panel"
+        or cfg.ca_mode != "registry"
+        or m.reg_factor is None
+    ):
+        raise ValueError(
+            "fill model C is defined for close entries in panel units with a corporate-action registry"
+        )
     uf = None
     if cfg.units == "as_traded":
         if m.unit_factor is None:
@@ -589,20 +782,32 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
         lots = np.floor(cfg.notional / (traded_entry * cfg.lot_size))
     lots = np.where(np.isfinite(lots), lots, 0)
     shares_traded = lots * cfg.lot_size
-    shares = shares_traded * f_entry  # the same holding in adjusted shares (adjusted price = traded / F)
+    shares = (
+        shares_traded * f_entry
+    )  # the same holding in adjusted shares (adjusted price = traded / F)
     status[open_ & (shares_traded <= 0)] = STATUS.index("SKIP_LOT")
     open_ = status < 0
     if cfg.fill_model == "A":
         capacity = np.nan_to_num(m.volume[tick_idx, e]) / f_entry
     elif cfg.fill_model == "C":
-        capacity, unknown = close_capacity(m.volume, m.present, m.reg_factor, m.reg_unresolved, tick_idx, sig_idx, e)
+        capacity, unknown = close_capacity(
+            m.volume, m.present, m.reg_factor, m.reg_unresolved, tick_idx, sig_idx, e
+        )
         status[open_ & unknown] = STATUS.index("SKIP_CAPACITY_UNKNOWN")
         open_ = status < 0
     elif cfg.fill_model == "B":  # FILL-B-v1: each session in its own units (reproduction only)
-        vol_traded = np.where(m.present, np.nan_to_num(m.volume) / uf, np.nan)  # a listed day without trades counts as 0
+        vol_traded = np.where(
+            m.present, np.nan_to_num(m.volume) / uf, np.nan
+        )  # a listed day without trades counts as 0
         lo = np.maximum(sig_idx - 19, 0)
-        capacity = np.array([np.nanmedian(vol_traded[n, a: s + 1]) if np.isfinite(vol_traded[n, a: s + 1]).any()
-                             else 0.0 for n, a, s in zip(tick_idx, lo, np.minimum(sig_idx, n_sessions - 1))])
+        capacity = np.array(
+            [
+                np.nanmedian(vol_traded[n, a : s + 1])
+                if np.isfinite(vol_traded[n, a : s + 1]).any()
+                else 0.0
+                for n, a, s in zip(tick_idx, lo, np.minimum(sig_idx, n_sessions - 1))
+            ]
+        )
     else:  # FILL-B-v2: every session's volume in the entry session's share units
         capacity = decision_capacity(m.volume, m.present, uf, tick_idx, sig_idx, e)
     too_big = shares_traded > cfg.max_participation * np.nan_to_num(capacity)
@@ -621,7 +826,9 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
 
     target = e + cfg.holding_days
     if cfg.exit_rule != "fixed":
-        trigger = conditional_exit(m, level, tick_idx, sig_idx, e, cfg.holding_days, cfg.exit_rule, cfg.side)
+        trigger = conditional_exit(
+            m, level, tick_idx, sig_idx, e, cfg.holding_days, cfg.exit_rule, cfg.side
+        )
         target = np.where(trigger >= 0, trigger, target)
     within = target < n_sessions
     found = np.where(within, next_sellable[tick_idx, np.minimum(target, n_sessions - 1)], BIG)
@@ -638,14 +845,19 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     x = np.where(held, exit_idx, e)
     if cfg.ca_mode == "registry":
         if m.reg_factor is None:
-            raise ValueError("ca_mode='registry' needs a market with a corporate-action registry attached "
-                             "(Market.with_registry)")
+            raise ValueError(
+                "ca_mode='registry' needs a market with a corporate-action registry attached "
+                "(Market.with_registry)"
+            )
         unresolved = m.reg_unresolved[tick_idx, x] - m.reg_unresolved[tick_idx, e] > 0
         rights = m.reg_rights[tick_idx, x] - m.reg_rights[tick_idx, e] > 0
         status[held & unresolved] = STATUS.index("CORP_ACTION_UNRESOLVED")
         status[held & rights & ~unresolved] = STATUS.index("CORP_ACTION_RIGHTS_ISSUE")
         factor_array = m.reg_factor
-    elif cfg.ca_mode in ("exclude", "adjusted"):  # "adjusted": split-adjusted source data, no resets expected
+    elif cfg.ca_mode in (
+        "exclude",
+        "adjusted",
+    ):  # "adjusted": split-adjusted source data, no resets expected
         crossed = m.other_ca_count[tick_idx, x] - m.other_ca_count[tick_idx, e] > 0
         status[held & crossed] = STATUS.index("EXCLUDED_CORP_ACTION")
         factor_array = m.split_factor
@@ -672,7 +884,12 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
         liq_idx = np.full(n_trades, -1, dtype=np.int64)
         for off in range(0, span + 1):
             k = np.minimum(e + off, n_sessions - 1)
-            hit = scored & (liq_idx < 0) & (e + off <= x) & (np.nan_to_num(m.high[tick_idx, k]) >= trigger_level)
+            hit = (
+                scored
+                & (liq_idx < 0)
+                & (e + off <= x)
+                & (np.nan_to_num(m.high[tick_idx, k]) >= trigger_level)
+            )
             liq_idx[hit] = k[hit]
         liquidated = liq_idx >= 0
         x = np.where(liquidated, liq_idx, x)
@@ -686,11 +903,20 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
     buy_value = shares * entry_price
     f_exit = uf[tick_idx, x] if uf is not None else np.ones(n_trades)
     traded_exit = np.nan_to_num(exit_price) * f_exit  # the sale price, in the exit session's units
-    extra_in, extra_out = _tier_costs(traded_entry, cfg.cost_tiers), _tier_costs(traded_exit, cfg.cost_tiers)
-    if cfg.tick_cost:  # one tick per side at the traded prices (zero where no price was paid or received)
+    extra_in, extra_out = (
+        _tier_costs(traded_entry, cfg.cost_tiers),
+        _tier_costs(traded_exit, cfg.cost_tiers),
+    )
+    if (
+        cfg.tick_cost
+    ):  # one tick per side at the traded prices (zero where no price was paid or received)
         with np.errstate(divide="ignore", invalid="ignore"):
-            extra_in = extra_in + np.where(traded_entry > 0, market.tick_size(traded_entry) / traded_entry, 0.0)
-            extra_out = extra_out + np.where(traded_exit > 0, market.tick_size(traded_exit) / traded_exit, 0.0)
+            extra_in = extra_in + np.where(
+                traded_entry > 0, market.tick_size(traded_entry) / traded_entry, 0.0
+            )
+            extra_out = extra_out + np.where(
+                traded_exit > 0, market.tick_size(traded_exit) / traded_exit, 0.0
+            )
     with np.errstate(divide="ignore", invalid="ignore"):
         if cfg.side == "long":
             cost = buy_value * (1 + cfg.fees.buy + extra_in)
@@ -714,9 +940,15 @@ def execute(m: Market, tick_idx: np.ndarray, sig_idx: np.ndarray, cfg: ExecConfi
         "status": status,
         "entry_price": np.where(never_entered, np.nan, entry_price),
         "shares": np.where(never_entered, 0, shares),
-        **({"entry_price_as_traded": np.where(never_entered, np.nan, traded_entry),
-            "exit_price_as_traded": np.where(scored, traded_exit, np.nan),
-            "shares_as_traded": np.where(never_entered, 0, shares_traded)} if uf is not None else {}),
+        **(
+            {
+                "entry_price_as_traded": np.where(never_entered, np.nan, traded_entry),
+                "exit_price_as_traded": np.where(scored, traded_exit, np.nan),
+                "shares_as_traded": np.where(never_entered, 0, shares_traded),
+            }
+            if uf is not None
+            else {}
+        ),
         "exit_price": exit_price,
         "share_factor": np.where(scored, factor, np.nan),
         "rolled_sessions": np.where(scored & (status == 0) & ~liquidated, x - target, 0),

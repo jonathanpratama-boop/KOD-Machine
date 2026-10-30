@@ -10,6 +10,7 @@ historical test passes.
      issuer's latest earlier guidance of the same kind for the same fiscal year, exactly as research/E10/
      feasibility_a1.py does (5..200 days apart, +-50% mismatch guard), and return the events and the updated state.
 """
+
 from __future__ import annotations
 
 import re
@@ -19,7 +20,9 @@ from idxsig import guidance_v2
 
 ITEM_NAMES = {"Results of Operations and Financial Condition": "2.02"}
 ITEM_LINE = re.compile(rb"ITEM INFORMATION:\s*([^\r\n]+)")
-INDEX_ROW = re.compile(r"^(8-K(?:/A)?)\s+(.+?)\s+(\d{1,10})\s+(\d{8}|\d{4}-\d{2}-\d{2})\s+(edgar/data/\S+)\s*$")
+INDEX_ROW = re.compile(
+    r"^(8-K(?:/A)?)\s+(.+?)\s+(\d{1,10})\s+(\d{8}|\d{4}-\d{2}-\d{2})\s+(edgar/data/\S+)\s*$"
+)
 MIN_GAP_DAYS = 5
 
 
@@ -31,7 +34,15 @@ def form_index_8k(text: str) -> list[dict]:
         if m:
             form, company, cik, filed, path = m.groups()
             filed = filed if "-" in filed else f"{filed[:4]}-{filed[4:6]}-{filed[6:]}"
-            out.append({"form": form, "company": company.strip(), "cik": int(cik), "filed": filed, "path": path})
+            out.append(
+                {
+                    "form": form,
+                    "company": company.strip(),
+                    "cik": int(cik),
+                    "filed": filed,
+                    "path": path,
+                }
+            )
     return out
 
 
@@ -50,8 +61,9 @@ def _key(cik: int, fy: int, kind: str) -> str:
     return f"{cik}|{fy}|{kind}"
 
 
-def revisions(state: dict, cik: int, ticker: str, accession: str, acceptance_ny: str,
-              texts: list[str]) -> tuple[list[dict], dict]:
+def revisions(
+    state: dict, cik: int, ticker: str, accession: str, acceptance_ny: str, texts: list[str]
+) -> tuple[list[dict], dict]:
     """Events this release makes against `state` ({key: latest guidance}), and the state after it.
 
     One event per release, as in feasibility_a1.py: the latest fiscal year, dollar before growth. A change beyond
@@ -70,12 +82,29 @@ def revisions(state: dict, cik: int, ticker: str, accession: str, acceptance_ny:
                 ch = guidance_v2.level_change(g, old)
                 if ch is not None:
                     cls = "MISMATCH" if abs(ch) > guidance_v2.MAX_CHANGE else guidance_v2.label(ch)
-                    events.append({"accession": accession, "cik": cik, "ticker": ticker,
-                                   "acceptance_ny": acceptance_ny, "fiscal_year": fy, "kind": kind,
-                                   "prior_accession": prev["accession"], "old_mid": old.mid, "new_mid": g.mid,
-                                   "level_change": ch, "class": cls, "old_sentence": prev["sentence"],
-                                   "new_sentence": g.sentence})
-        state[k] = {"accession": accession, "acceptance_ny": acceptance_ny, "low": g.low, "high": g.high,
-                    "sentence": g.sentence}
+                    events.append(
+                        {
+                            "accession": accession,
+                            "cik": cik,
+                            "ticker": ticker,
+                            "acceptance_ny": acceptance_ny,
+                            "fiscal_year": fy,
+                            "kind": kind,
+                            "prior_accession": prev["accession"],
+                            "old_mid": old.mid,
+                            "new_mid": g.mid,
+                            "level_change": ch,
+                            "class": cls,
+                            "old_sentence": prev["sentence"],
+                            "new_sentence": g.sentence,
+                        }
+                    )
+        state[k] = {
+            "accession": accession,
+            "acceptance_ny": acceptance_ny,
+            "low": g.low,
+            "high": g.high,
+            "sentence": g.sentence,
+        }
     events.sort(key=lambda e: (-e["fiscal_year"], e["kind"] != "dollar"))
     return events[:1], state

@@ -21,8 +21,8 @@ LOOKBACK = 60
 COOLDOWN = 5
 MIN_PRICE = 5.0
 MIN_ADV_USD = 1_000_000.0
-PRICE_EDGES = (10.0, 25.0, 100.0)                       # $5-10, 10-25, 25-100, 100+
-ADV_EDGES = (2e6, 5e6, 20e6, 100e6)                     # <2M, 2-5M, 5-20M, 20-100M, 100M+
+PRICE_EDGES = (10.0, 25.0, 100.0)  # $5-10, 10-25, 25-100, 100+
+ADV_EDGES = (2e6, 5e6, 20e6, 100e6)  # <2M, 2-5M, 5-20M, 20-100M, 100M+
 
 
 def _rolling(a: np.ndarray, fn, window: int, min_periods: int) -> np.ndarray:
@@ -71,8 +71,15 @@ def submarket(m: Market, n: int, lo: int, hi: int) -> Market:
     return Market(m.tickers[[n]], m.dates[lo:hi], **arrays, unit_factor=m.unit_factor[[n], lo:hi])
 
 
-def run_trade(m: Market, n: int, s: int, invalidation: float, spec: ContractSpec = SPEC,
-              lead: int = 20, tail: int = 14) -> dict:
+def run_trade(
+    m: Market,
+    n: int,
+    s: int,
+    invalidation: float,
+    spec: ContractSpec = SPEC,
+    lead: int = 20,
+    tail: int = 14,
+) -> dict:
     """One decision after the close of s in a fresh account, one-name market. Returns the trade's
     record: the closed order (rejected, unfilled or exited) or, if the data ends first, status OPEN."""
     lo, hi = max(0, s - lead), min(m.shape[1], s + tail)

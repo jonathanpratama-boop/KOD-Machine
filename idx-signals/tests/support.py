@@ -27,17 +27,37 @@ def flat_market(n_tickers=3, n_sessions=20, price=1000.0, volume=1_000_000.0, st
 
 def rebuild(tickers, dates, arrays) -> Market:
     a = arrays
-    return Market.build(tickers, dates, a["close"], a["prev"], a["high"], a["low"], a["volume"], a["value"], a["present"],
-                        a.get("listed_shares"), opens=a.get("open"))
+    return Market.build(
+        tickers,
+        dates,
+        a["close"],
+        a["prev"],
+        a["high"],
+        a["low"],
+        a["volume"],
+        a["value"],
+        a["present"],
+        a.get("listed_shares"),
+        opens=a.get("open"),
+    )
 
 
-def random_walk_panel(n_tickers=40, n_sessions=160, seed=7, start="2023-01-02",
-                      drift: dict | None = None, delist: dict | None = None, ipo: dict | None = None,
-                      shares_until: int | None = None) -> tuple[pd.DataFrame, dict]:
+def random_walk_panel(
+    n_tickers=40,
+    n_sessions=160,
+    seed=7,
+    start="2023-01-02",
+    drift: dict | None = None,
+    delist: dict | None = None,
+    ipo: dict | None = None,
+    shares_until: int | None = None,
+) -> tuple[pd.DataFrame, dict]:
     """Panel DataFrame + manifest-like meta. drift: {ticker_index: daily drift}; delist: {ticker_index: last
     session}; ipo: {ticker_index: first session}; shares_until: listed shares known through this session."""
     rng = np.random.default_rng(seed)
-    dates = pd.to_datetime(np.busday_offset(np.datetime64(start, "D"), np.arange(n_sessions), roll="forward"))
+    dates = pd.to_datetime(
+        np.busday_offset(np.datetime64(start, "D"), np.arange(n_sessions), roll="forward")
+    )
     rows = []
     for i in range(n_tickers):
         price = float(rng.choice([150, 480, 1500, 4000, 9000]))
@@ -51,14 +71,36 @@ def random_walk_panel(n_tickers=40, n_sessions=160, seed=7, start="2023-01-02",
 
             price = float(max(floor_tick(np.array([prev * (1 + step)]))[0], 50.0))
             vol = int(rng.integers(50_000, 5_000_000))
-            rows.append({
-                "date": dates[d], "ticker": f"S{i:03d}", "source": "synthetic", "previous": int(prev), "open": pd.NA,
-                "high": int(max(prev, price)), "low": int(min(prev, price)), "close": int(price),
-                "volume": vol, "value": int(vol * price), "frequency": 100,
-                "listed_shares": shares if shares_until is not None and d <= shares_until else pd.NA,
-            })
+            rows.append(
+                {
+                    "date": dates[d],
+                    "ticker": f"S{i:03d}",
+                    "source": "synthetic",
+                    "previous": int(prev),
+                    "open": pd.NA,
+                    "high": int(max(prev, price)),
+                    "low": int(min(prev, price)),
+                    "close": int(price),
+                    "volume": vol,
+                    "value": int(vol * price),
+                    "frequency": 100,
+                    "listed_shares": shares
+                    if shares_until is not None and d <= shares_until
+                    else pd.NA,
+                }
+            )
     df = pd.DataFrame(rows)
-    for col in ("previous", "open", "high", "low", "close", "volume", "value", "frequency", "listed_shares"):
+    for col in (
+        "previous",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "value",
+        "frequency",
+        "listed_shares",
+    ):
         df[col] = df[col].astype("Int64")
     meta = {"sha256": "synthetic", "panel": "synthetic", "source_boundary": str(dates[-1].date())}
     return df, meta
@@ -68,13 +110,28 @@ def synthetic_registry(df: pd.DataFrame, meta: dict, events: pd.DataFrame | None
     """A corporate-action registry for a synthetic panel, as corporate_actions.load would return it."""
     from idxsig import corporate_actions as ca
 
-    reg = ca.classify(Market.from_panel(df), meta["source_boundary"], ca.empty_events() if events is None else events,
-                      pd.DataFrame(columns=ca.MANUAL_COLUMNS), "synthetic")
-    return reg, {"inputs": {"panel_sha256": meta["sha256"]}, "sha256": "synthetic", "_manifest": "synthetic",
-                 "registry_version": ca.REGISTRY_VERSION, "by_status": ca.summarize(reg)["by_status"]}
+    reg = ca.classify(
+        Market.from_panel(df),
+        meta["source_boundary"],
+        ca.empty_events() if events is None else events,
+        pd.DataFrame(columns=ca.MANUAL_COLUMNS),
+        "synthetic",
+    )
+    return reg, {
+        "inputs": {"panel_sha256": meta["sha256"]},
+        "sha256": "synthetic",
+        "_manifest": "synthetic",
+        "registry_version": ca.REGISTRY_VERSION,
+        "by_status": ca.summarize(reg)["by_status"],
+    }
 
 
 def run_synthetic(cfg, df: pd.DataFrame, meta: dict) -> dict:
     from idxsig.backtest import run
 
-    return run(cfg, df, meta, ca_registry=synthetic_registry(df, meta) if cfg.ca_mode == "registry" else None)
+    return run(
+        cfg,
+        df,
+        meta,
+        ca_registry=synthetic_registry(df, meta) if cfg.ca_mode == "registry" else None,
+    )

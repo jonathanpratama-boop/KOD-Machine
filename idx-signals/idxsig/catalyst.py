@@ -7,6 +7,7 @@ Information known at entry: a filing counts for a signal at the close of session
 session e) if its acceptance time is after 16:00 New York time on session s-1 and at or before 09:15 New
 York time on session e. Classes, first match wins: DILUTION, DOCUMENTED, UNDOCUMENTED.
 """
+
 from __future__ import annotations
 
 import json
@@ -17,16 +18,68 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 
 NY = ZoneInfo("America/New_York")
-WINDOW_OPEN = time(16, 0)    # after the close of session s-1
-WINDOW_CLOSE = time(9, 15)   # 15 minutes before the 09:30 open of the entry session
-DILUTION_FORMS = frozenset({"424B1", "424B2", "424B3", "424B4", "424B5", "424B7", "424B8", "S-1", "S-1/A", "S-1MEF",
-                            "S-3", "S-3/A", "S-3ASR", "S-3MEF", "F-1", "F-1/A", "F-1MEF", "F-3", "F-3/A", "F-3ASR",
-                            "F-3MEF", "EFFECT"})
+WINDOW_OPEN = time(16, 0)  # after the close of session s-1
+WINDOW_CLOSE = time(9, 15)  # 15 minutes before the 09:30 open of the entry session
+DILUTION_FORMS = frozenset(
+    {
+        "424B1",
+        "424B2",
+        "424B3",
+        "424B4",
+        "424B5",
+        "424B7",
+        "424B8",
+        "S-1",
+        "S-1/A",
+        "S-1MEF",
+        "S-3",
+        "S-3/A",
+        "S-3ASR",
+        "S-3MEF",
+        "F-1",
+        "F-1/A",
+        "F-1MEF",
+        "F-3",
+        "F-3/A",
+        "F-3ASR",
+        "F-3MEF",
+        "EFFECT",
+    }
+)
 DILUTION_8K_ITEMS = frozenset({"3.02"})
-INFO_FORMS = frozenset({"8-K", "8-K/A", "6-K", "6-K/A", "10-Q", "10-Q/A", "10-K", "10-K/A", "20-F", "20-F/A", "40-F",
-                        "SC 13D", "SC 13D/A", "SC TO-T", "SC TO-T/A", "SC TO-C", "SC 14D9", "DEFM14A", "PREM14A", "425"})
+INFO_FORMS = frozenset(
+    {
+        "8-K",
+        "8-K/A",
+        "6-K",
+        "6-K/A",
+        "10-Q",
+        "10-Q/A",
+        "10-K",
+        "10-K/A",
+        "20-F",
+        "20-F/A",
+        "40-F",
+        "SC 13D",
+        "SC 13D/A",
+        "SC TO-T",
+        "SC TO-T/A",
+        "SC TO-C",
+        "SC 14D9",
+        "DEFM14A",
+        "PREM14A",
+        "425",
+    }
+)
 CLASSES = ("DILUTION", "DOCUMENTED", "UNDOCUMENTED")
-COLUMNS = ("accessionNumber", "filingDate", "acceptanceDateTime", "form", "items", "primaryDocument")
+COLUMNS = (
+    "accessionNumber",
+    "filingDate",
+    "acceptanceDateTime",
+    "form",
+    "items",
+    "primaryDocument",
+)
 
 
 def filings_frame(blob: dict) -> pd.DataFrame:
@@ -53,7 +106,11 @@ def parse_submissions(main_body: bytes, chunk_bodies: list[bytes]) -> pd.DataFra
 def chunk_names(main_body: bytes, start: str, end: str) -> list[str]:
     """Chunk files whose filing-date range overlaps [start, end]."""
     files = json.loads(main_body).get("filings", {}).get("files", [])
-    return [f["name"] for f in files if f.get("filingFrom", "0000") <= end and f.get("filingTo", "9999") >= start]
+    return [
+        f["name"]
+        for f in files
+        if f.get("filingFrom", "0000") <= end and f.get("filingTo", "9999") >= start
+    ]
 
 
 def header_acceptance(body: bytes) -> str | None:
@@ -77,7 +134,9 @@ def acceptance_ny(value: str, convention: str) -> datetime | None:
         return naive.replace(tzinfo=NY)
     if convention == "utc":
         return naive.replace(tzinfo=utc).astimezone(NY)
-    if convention == "double":  # New York time converted to UTC twice (research/E9/FEASIBILITY_AMENDMENT_1.md)
+    if (
+        convention == "double"
+    ):  # New York time converted to UTC twice (research/E9/FEASIBILITY_AMENDMENT_1.md)
         once = naive.replace(tzinfo=utc).astimezone(NY).replace(tzinfo=None)
         return once.replace(tzinfo=utc).astimezone(NY)
     raise ValueError(convention)
@@ -89,7 +148,9 @@ def accepted(filings: pd.DataFrame, convention: str) -> pd.Series:
     acceptanceHeader (the caller's fetched SGML values), every other convention acceptanceDateTime."""
     col = "acceptanceHeader" if convention == "header" else "acceptanceDateTime"
     vals = [acceptance_ny(v, convention) for v in filings[col]] if len(filings) else []
-    return pd.Series(pd.to_datetime(vals, utc=True), index=filings.index, dtype="datetime64[ns, UTC]")
+    return pd.Series(
+        pd.to_datetime(vals, utc=True), index=filings.index, dtype="datetime64[ns, UTC]"
+    )
 
 
 def window(prev_session: str, entry_session: str) -> tuple[datetime, datetime]:
@@ -105,7 +166,9 @@ def items_of(s: str) -> set[str]:
 
 def is_dilution(form: str, items: str) -> bool:
     f = form.upper()
-    return f in DILUTION_FORMS or (f in ("8-K", "8-K/A") and bool(items_of(items) & DILUTION_8K_ITEMS))
+    return f in DILUTION_FORMS or (
+        f in ("8-K", "8-K/A") and bool(items_of(items) & DILUTION_8K_ITEMS)
+    )
 
 
 def is_information(form: str) -> bool:
@@ -123,15 +186,24 @@ def classify(filings: pd.DataFrame, start: datetime, end: datetime, convention: 
     info = [r for r in rows if is_information(r[0])]
     cls = "DILUTION" if dil else ("DOCUMENTED" if info else "UNDOCUMENTED")
     used = dil if dil else info
-    return {"class": cls, "n_filings_in_window": int(len(inside)),
-            "forms": ";".join(sorted({r[0] for r in rows})),
-            "evidence": ";".join(f"{f}|{a}|{t} NY|{i}" for f, a, i, t in used[:6]),
-            "items_8k": ";".join(sorted({i for r in info if r[0].upper().startswith("8-K") for i in items_of(r[2])}))}
+    return {
+        "class": cls,
+        "n_filings_in_window": int(len(inside)),
+        "forms": ";".join(sorted({r[0] for r in rows})),
+        "evidence": ";".join(f"{f}|{a}|{t} NY|{i}" for f, a, i, t in used[:6]),
+        "items_8k": ";".join(
+            sorted({i for r in info if r[0].upper().startswith("8-K") for i in items_of(r[2])})
+        ),
+    }
 
 
-def later_documentation(filings: pd.DataFrame, entry_end: datetime, days: int, convention: str) -> bool:
+def later_documentation(
+    filings: pd.DataFrame, entry_end: datetime, days: int, convention: str
+) -> bool:
     """Diagnostic only (never a decision input): an information filing within `days` calendar days AFTER the
     entry cutoff, e.g. an 8-K that arrives after the press release."""
     acc = accepted(filings, convention)
-    late = filings[(acc > pd.Timestamp(entry_end)) & (acc <= pd.Timestamp(entry_end + timedelta(days=days)))]
+    late = filings[
+        (acc > pd.Timestamp(entry_end)) & (acc <= pd.Timestamp(entry_end + timedelta(days=days)))
+    ]
     return any(is_information(f) for f in late["form"])

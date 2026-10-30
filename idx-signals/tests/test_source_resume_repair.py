@@ -1,4 +1,5 @@
 """Offline provider-boundary regressions for pinned resumable datasets."""
+
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -19,11 +20,17 @@ class Clock(datetime):
         return cls.now_value
 
 
-YAHOO = json.dumps({"chart": {"result": [{"timestamp": [1735689600], "meta": {}, "events": {}}]}}).encode()
-INFO = json.dumps({"symbols": [
-    {"symbol": "ABCUSDT", "status": "TRADING", "baseAsset": "ABC", "quoteAsset": "USDT"},
-    {"symbol": "XYZUSDT", "status": "BREAK", "baseAsset": "XYZ", "quoteAsset": "USDT"},
-]}).encode()
+YAHOO = json.dumps(
+    {"chart": {"result": [{"timestamp": [1735689600], "meta": {}, "events": {}}]}}
+).encode()
+INFO = json.dumps(
+    {
+        "symbols": [
+            {"symbol": "ABCUSDT", "status": "TRADING", "baseAsset": "ABC", "quoteAsset": "USDT"},
+            {"symbol": "XYZUSDT", "status": "BREAK", "baseAsset": "XYZ", "quoteAsset": "USDT"},
+        ]
+    }
+).encode()
 
 
 class SourceResume(unittest.TestCase):
@@ -39,7 +46,11 @@ class SourceResume(unittest.TestCase):
         return self.root / name
 
     def yahoo_response(self, ticker, p2, **kwargs):
-        return 200, YAHOO, yahoo.CHART.format(symbol=ticker + kwargs["suffix"], p1=kwargs["p1"], p2=p2)
+        return (
+            200,
+            YAHOO,
+            yahoo.CHART.format(symbol=ticker + kwargs["suffix"], p1=kwargs["p1"], p2=p2),
+        )
 
     def test_relative_window_resume_fetches_only_missing_with_original_bounds(self):
         out = self.root / "yahoo"
@@ -52,14 +63,20 @@ class SourceResume(unittest.TestCase):
             return self.yahoo_response(ticker, p2, **kwargs)
 
         args = dict(tickers=["ABC", "DEF"], out_dir=out, days=30, prefix="recent", sleep=0)
-        with patch.object(yahoo, "datetime", Clock), patch.object(yahoo, "fetch_one", side_effect=interrupted):
+        with (
+            patch.object(yahoo, "datetime", Clock),
+            patch.object(yahoo, "fetch_one", side_effect=interrupted),
+        ):
             with self.assertRaises(ConnectionError):
                 yahoo.fetch(**args)
         bound = json.loads((out / "_request.json").read_text())
         first = json.loads((out / "_progress.jsonl").read_text().splitlines()[0])
         Clock.now_value = datetime(2026, 10, 3, 12, tzinfo=timezone.utc)
-        with patch.object(yahoo, "datetime", Clock), patch.object(yahoo, "fetch_one", side_effect=self.yahoo_response) as fetch, \
-                patch.object(yahoo, "write_manifest", side_effect=self.manifest):
+        with (
+            patch.object(yahoo, "datetime", Clock),
+            patch.object(yahoo, "fetch_one", side_effect=self.yahoo_response) as fetch,
+            patch.object(yahoo, "write_manifest", side_effect=self.manifest),
+        ):
             yahoo.fetch(**args)
         self.assertEqual(fetch.call_count, 1)
         self.assertEqual(fetch.call_args.args, ("DEF", bound["window"]["p2"]))
@@ -72,10 +89,17 @@ class SourceResume(unittest.TestCase):
     def test_yahoo_changed_range_suffix_universe_or_days_refused(self):
         out = self.root / "yahoo"
         args = dict(tickers=["ABC"], out_dir=out, start="2025-01-01", prefix="history", sleep=0)
-        with patch.object(yahoo, "fetch_one", side_effect=self.yahoo_response), patch.object(yahoo, "write_manifest", side_effect=self.manifest):
+        with (
+            patch.object(yahoo, "fetch_one", side_effect=self.yahoo_response),
+            patch.object(yahoo, "write_manifest", side_effect=self.manifest),
+        ):
             yahoo.fetch(**args)
-        for change in ({"start": "2020-01-01"}, {"suffix": ""}, {"tickers": ["ABC", "DEF"]},
-                       {"start": None, "days": 30}):
+        for change in (
+            {"start": "2020-01-01"},
+            {"suffix": ""},
+            {"tickers": ["ABC", "DEF"]},
+            {"start": None, "days": 30},
+        ):
             with self.subTest(change=change), patch.object(yahoo, "fetch_one") as fetch:
                 with self.assertRaises(ResumeMismatch):
                     yahoo.fetch(**{**args, **change})
@@ -109,30 +133,46 @@ class SourceResume(unittest.TestCase):
     def binance_response(self, url):
         if "exchangeInfo" in url:
             return 200, INFO
-        return 200, json.dumps([[1735689600000, "1", "1", "1", "1", "100", 1735775999999, "100"]]).encode()
+        return 200, json.dumps(
+            [[1735689600000, "1", "1", "1", "1", "100", 1735775999999, "100"]]
+        ).encode()
 
     def test_binance_resume_keeps_bounds_universe_and_original_observation_time(self):
         out = self.root / "binance"
-        with patch.object(binance, "datetime", Clock), patch.object(binance, "_get", side_effect=self.binance_response) as fetch, \
-                patch.object(binance, "write_manifest", side_effect=self.manifest):
+        with (
+            patch.object(binance, "datetime", Clock),
+            patch.object(binance, "_get", side_effect=self.binance_response) as fetch,
+            patch.object(binance, "write_manifest", side_effect=self.manifest),
+        ):
             binance.fetch(out_dir=out, sleep=0, workers=1)
         original = self.manifests[-1]
-        self.assertTrue(all("endTime=" in c.args[0] for c in fetch.call_args_list if "klines" in c.args[0]))
+        self.assertTrue(
+            all("endTime=" in c.args[0] for c in fetch.call_args_list if "klines" in c.args[0])
+        )
         Clock.now_value = datetime(2026, 10, 3, 12, tzinfo=timezone.utc)
-        with patch.object(binance, "datetime", Clock), patch.object(binance, "_get") as fetch, \
-                patch.object(binance, "write_manifest", side_effect=self.manifest):
+        with (
+            patch.object(binance, "datetime", Clock),
+            patch.object(binance, "_get") as fetch,
+            patch.object(binance, "write_manifest", side_effect=self.manifest),
+        ):
             binance.fetch(out_dir=out, sleep=0, workers=1)
             fetch.assert_not_called()
         header, records = self.manifests[-1]
         self.assertEqual(records, original[1])
         self.assertEqual(header["coverage_window"], original[0]["coverage_window"])
-        self.assertEqual(header["coverage_window"]["end_ms"], int(datetime(2026, 10, 1, tzinfo=timezone.utc).timestamp() * 1000) - 1)
+        self.assertEqual(
+            header["coverage_window"]["end_ms"],
+            int(datetime(2026, 10, 1, tzinfo=timezone.utc).timestamp() * 1000) - 1,
+        )
         self.assertEqual(header["universe_sha256"], original[0]["universe_sha256"])
         self.assertEqual(header["started_at"], original[0]["started_at"])
 
     def test_binance_changed_parameters_and_corrupted_universe_refused(self):
         out = self.root / "binance"
-        with patch.object(binance, "_get", side_effect=self.binance_response), patch.object(binance, "write_manifest", side_effect=self.manifest):
+        with (
+            patch.object(binance, "_get", side_effect=self.binance_response),
+            patch.object(binance, "write_manifest", side_effect=self.manifest),
+        ):
             binance.fetch(out_dir=out, sleep=0, workers=1)
         for change in ({"start": "2019-01-01"}, {"quote": "BTC"}, {"only_trading": True}):
             with self.subTest(change=change), patch.object(binance, "_get") as fetch:

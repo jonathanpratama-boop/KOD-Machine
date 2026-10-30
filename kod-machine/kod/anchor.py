@@ -42,7 +42,9 @@ class AnchorReceipt:
 
 def _safe_name(record_id: str) -> str:
     if not re.fullmatch(r"[A-Za-z0-9._:-]+", record_id):
-        raise AnchorError(f"record id {record_id!r} has characters that cannot name a registry file")
+        raise AnchorError(
+            f"record id {record_id!r} has characters that cannot name a registry file"
+        )
     return record_id.replace(":", "_")
 
 
@@ -52,8 +54,15 @@ def anchor_line(record: dict) -> bytes:
 
 
 class GitAnchor:
-    def __init__(self, registry_dir: Path, push: bool = False, remote: str = "origin", extra_env=None,
-                 trailer: str = "", timestamper=None):
+    def __init__(
+        self,
+        registry_dir: Path,
+        push: bool = False,
+        remote: str = "origin",
+        extra_env=None,
+        trailer: str = "",
+        timestamper=None,
+    ):
         self.registry_dir = Path(registry_dir).resolve()
         self.push = push
         self.remote = remote
@@ -66,14 +75,22 @@ class GitAnchor:
         self._repo: Path | None = None
 
     def _env(self) -> dict:
-        return {**os.environ, "GIT_TERMINAL_PROMPT": "0", **(self.extra_env() if self.extra_env else {})}
+        return {
+            **os.environ,
+            "GIT_TERMINAL_PROMPT": "0",
+            **(self.extra_env() if self.extra_env else {}),
+        }
 
     # -- git plumbing -------------------------------------------------------
 
     def git(self, *args: str, check: bool = True) -> str:
-        proc = subprocess.run(["git", *args], cwd=self.repo, capture_output=True, text=True, env=self._env())
+        proc = subprocess.run(
+            ["git", *args], cwd=self.repo, capture_output=True, text=True, env=self._env()
+        )
         if check and proc.returncode != 0:
-            raise AnchorError(f"git {' '.join(args)} failed: {proc.stderr.strip() or proc.stdout.strip()}")
+            raise AnchorError(
+                f"git {' '.join(args)} failed: {proc.stderr.strip() or proc.stdout.strip()}"
+            )
         return proc.stdout
 
     def git_bytes(self, *args: str) -> bytes | None:
@@ -109,14 +126,27 @@ class GitAnchor:
         if not self.push:
             return False, ""
         proc = subprocess.run(
-            ["git", "push", self.remote, "HEAD"], cwd=self.repo, capture_output=True, text=True, env=self._env()
+            ["git", "push", self.remote, "HEAD"],
+            cwd=self.repo,
+            capture_output=True,
+            text=True,
+            env=self._env(),
         )
-        return proc.returncode == 0, "" if proc.returncode == 0 else (proc.stderr.strip() or "push failed")
+        return proc.returncode == 0, "" if proc.returncode == 0 else (
+            proc.stderr.strip() or "push failed"
+        )
 
     # -- anchoring ----------------------------------------------------------
 
-    def anchor(self, kind: str, record_id: str, sha: str, line: dict, body: dict,
-               require_timestamp: bool = False) -> AnchorReceipt:
+    def anchor(
+        self,
+        kind: str,
+        record_id: str,
+        sha: str,
+        line: dict,
+        body: dict,
+        require_timestamp: bool = False,
+    ) -> AnchorReceipt:
         if kind not in REGISTRY_FILES:
             raise AnchorError(f"unknown anchor kind {kind}")
         registry = self.registry_dir / REGISTRY_FILES[kind]
@@ -125,7 +155,9 @@ class GitAnchor:
         if body_path.exists():
             raise AnchorError(f"{kind} {record_id} is already anchored; refusing rewrite")
         if self.git("status", "--porcelain", "--", self.rel(registry)).strip():
-            raise AnchorError(f"{self.rel(registry)} has uncommitted edits; the registry is append-only")
+            raise AnchorError(
+                f"{self.rel(registry)} has uncommitted edits; the registry is append-only"
+            )
         record = {"kind": kind, "record_id": record_id, "sha256": sha, **line}
         data = anchor_line(record)
         stamps, stamp_errors = [], []
@@ -142,7 +174,10 @@ class GitAnchor:
         paths = [self.rel(registry), self.rel(body_path)]
         try:
             body_path.parent.mkdir(parents=True, exist_ok=True)
-            body_path.write_text(json.dumps(body, sort_keys=True, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+            body_path.write_text(
+                json.dumps(body, sort_keys=True, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
             written.append(body_path)
             for stamp, path in zip(stamps, token_paths):
                 path.parent.mkdir(parents=True, exist_ok=True)
@@ -166,9 +201,12 @@ class GitAnchor:
         committed_at = self.git("show", "-s", "--format=%cI", commit).strip()
         pushed, push_error = self._push()
         timestamps = [
-            {"authority": s.authority, "path": self.rel(p), "time": fmt_ts(s.time)} for s, p in zip(stamps, token_paths)
+            {"authority": s.authority, "path": self.rel(p), "time": fmt_ts(s.time)}
+            for s, p in zip(stamps, token_paths)
         ]
-        return AnchorReceipt(commit, paths[0], committed_at, pushed, push_error, timestamps, stamp_errors)
+        return AnchorReceipt(
+            commit, paths[0], committed_at, pushed, push_error, timestamps, stamp_errors
+        )
 
     def store_files(self, files: dict[Path, bytes], message: str) -> str:
         """Write new files (never overwrite) and commit exactly them. Returns the commit."""

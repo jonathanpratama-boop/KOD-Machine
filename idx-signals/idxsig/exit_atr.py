@@ -15,6 +15,7 @@ Pure numpy, no other idxsig imports, so the comparison can run it next to E2's o
   that bar's low (STOP_GAP_WORST).
 - A position the stop never closes is NOT_STOPPED; the caller exits it exactly as the original model does.
 """
+
 from __future__ import annotations
 
 import numpy as np
@@ -34,7 +35,12 @@ def atr_at_signal(high, low, close, consecutive: bool) -> float | None:
     """ATR from exactly 15 consecutive daily bars s-14..s, oldest first. None when the warm-up is invalid:
     not 15 bars, not consecutive days, a non-finite value, high < low, low <= 0, close <= 0, or ATR <= 0."""
     high, low, close = (np.asarray(a, dtype=float) for a in (high, low, close))
-    if not consecutive or len(high) != ATR_BARS + 1 or len(low) != ATR_BARS + 1 or len(close) != ATR_BARS + 1:
+    if (
+        not consecutive
+        or len(high) != ATR_BARS + 1
+        or len(low) != ATR_BARS + 1
+        or len(close) != ATR_BARS + 1
+    ):
         return None
     if not (np.isfinite(high).all() and np.isfinite(low).all() and np.isfinite(close).all()):
         return None
@@ -44,15 +50,32 @@ def atr_at_signal(high, low, close, consecutive: bool) -> float | None:
     return atr if atr > 0 else None
 
 
-def trail(open_, high, low, present, entry_price: float, atr: float, mult: float = MULT,
-          conservative_gaps: bool = False) -> dict:
+def trail(
+    open_,
+    high,
+    low,
+    present,
+    entry_price: float,
+    atr: float,
+    mult: float = MULT,
+    conservative_gaps: bool = False,
+) -> dict:
     """Walk the hourly bars of one trade window (index 0 = the entry bar, whose open is the entry; the last
     index = the last bar the original model holds). Arrays may contain NaN where `present` is False."""
     open_, high, low = (np.asarray(a, dtype=float) for a in (open_, high, low))
     present = np.asarray(present, dtype=bool)
     stop = entry_price - mult * atr
-    out = {"initial_stop": stop, "reason": "NOT_STOPPED", "exit_price": None, "exit_bar": None, "raises": 0,
-           "final_stop": stop, "highest": entry_price, "bars_seen": 0, "last_present_bar": None}
+    out = {
+        "initial_stop": stop,
+        "reason": "NOT_STOPPED",
+        "exit_price": None,
+        "exit_bar": None,
+        "raises": 0,
+        "final_stop": stop,
+        "highest": entry_price,
+        "bars_seen": 0,
+        "last_present_bar": None,
+    }
     highest = entry_price
     gap_before = False
     for b in range(len(present)):
@@ -81,8 +104,16 @@ def trail(open_, high, low, present, entry_price: float, atr: float, mult: float
     return out
 
 
-def trailing_exit(open_, high, low, present, entry_price: float, atr: float, original_exit_price: float,
-                  conservative_gaps: bool = False) -> dict:
+def trailing_exit(
+    open_,
+    high,
+    low,
+    present,
+    entry_price: float,
+    atr: float,
+    original_exit_price: float,
+    conservative_gaps: bool = False,
+) -> dict:
     """Arm B for one trade: the trailing stop over the original model's holding window; a position the stop
     never closes leaves exactly as the original model leaves (same session, same price), so its return is
     identical in both arms. held_bars counts hourly bars from the entry bar through the exit bar."""
@@ -97,5 +128,8 @@ def trailing_exit(open_, high, low, present, entry_price: float, atr: float, ori
 def net_return(entry_price, exit_price, per_side: float):
     """Net return with a symmetric per-side cost (fee plus slippage), as E2's harness charges it:
     exit x (1 - cost) / (entry x (1 + cost)) - 1."""
-    entry_price, exit_price = np.asarray(entry_price, dtype=float), np.asarray(exit_price, dtype=float)
+    entry_price, exit_price = (
+        np.asarray(entry_price, dtype=float),
+        np.asarray(exit_price, dtype=float),
+    )
     return exit_price * (1 - per_side) / (entry_price * (1 + per_side)) - 1

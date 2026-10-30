@@ -6,7 +6,8 @@ import numpy as np
 import pandas as pd
 
 SPEC = importlib.util.spec_from_file_location(
-    "e10_full", Path(__file__).resolve().parents[1] / "research" / "E10" / "run_full.py")
+    "e10_full", Path(__file__).resolve().parents[1] / "research" / "E10" / "run_full.py"
+)
 full = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(full)
 core = full.core
@@ -18,8 +19,14 @@ def random_panel(n=40, names=6, seed=3):
     opn = close * np.exp(rng.normal(0, 0.02, (n, names)))
     low = np.minimum(opn, close) * (1 - rng.uniform(0, 0.04, (n, names)))
     high = np.maximum(opn, close) * 1.01
-    return {"open": opn, "high": high, "low": low, "close": close, "value": np.full((n, names), 1e6),
-            "unit_factor": np.ones((n, names))}
+    return {
+        "open": opn,
+        "high": high,
+        "low": low,
+        "close": close,
+        "value": np.full((n, names), 1e6),
+        "unit_factor": np.ones((n, names)),
+    }
 
 
 class TradeManyTests(unittest.TestCase):
@@ -67,8 +74,14 @@ class TimingTests(unittest.TestCase):
 class AccountTests(unittest.TestCase):
     def flat(self, n=30, names=3, price=10.0):
         one = np.full((n, names), price)
-        return {"open": one.copy(), "high": one.copy(), "low": one.copy(), "close": one.copy(),
-                "value": np.full((n, names), 1e6), "unit_factor": np.ones((n, names))}
+        return {
+            "open": one.copy(),
+            "high": one.copy(),
+            "low": one.copy(),
+            "close": one.copy(),
+            "value": np.full((n, names), 1e6),
+            "unit_factor": np.ones((n, names)),
+        }
 
     def test_flat_price_loses_costs_and_commissions(self):
         m = self.flat()
@@ -79,19 +92,23 @@ class AccountTests(unittest.TestCase):
         c_in, c_out = 0.0015, 0.0015 + 0.0000278
         end = full.START_EQUITY - size - 2 + size * (1 - c_in) * (1 - c_out) - 2
         self.assertAlmostEqual(stats["end_equity"], end, places=6)
-        self.assertEqual((stats["trades_taken"], stats["trades_skipped"], stats["win_rate"]), (1, 0, 0.0))
+        self.assertEqual(
+            (stats["trades_taken"], stats["trades_skipped"], stats["win_rate"]), (1, 0, 0.0)
+        )
         self.assertEqual(eq.index[0], "d02")
 
     def test_full_slots_skip_later_trades(self):
         m = self.flat()
         dates = np.array([f"d{i:02d}" for i in range(30)])
-        trades = pd.DataFrame({"e": [2, 2, 3], "acceptance_ny": ["a", "b", "c"], "ticker": ["X", "Y", "Z"]})
+        trades = pd.DataFrame(
+            {"e": [2, 2, 3], "acceptance_ny": ["a", "b", "c"], "ticker": ["X", "Y", "Z"]}
+        )
         stats, _ = full.simulate(trades, m, {"X": 0, "Y": 1, "Z": 2}, dates, 0.10, 1, None)
         self.assertEqual((stats["trades_taken"], stats["trades_skipped"]), (1, 2))
 
     def test_stop_exit_and_marked_drawdown(self):
         m = self.flat()
-        m["low"][5, 0] = 9.0          # touches the 5% stop at 9.5
+        m["low"][5, 0] = 9.0  # touches the 5% stop at 9.5
         m["close"][4, 0] = 9.8
         dates = np.array([f"d{i:02d}" for i in range(30)])
         trades = pd.DataFrame({"e": [2], "acceptance_ny": ["a"], "ticker": ["X"]})
@@ -111,6 +128,7 @@ class EndToEndSmokeTest(unittest.TestCase):
         import gzip
         import json
         import tempfile
+
         rng = np.random.default_rng(11)
         dates = np.array(pd.bdate_range("2021-01-04", periods=420).strftime("%Y-%m-%d"))
         names = 40
@@ -123,8 +141,16 @@ class EndToEndSmokeTest(unittest.TestCase):
             t = tickers[k % names]
             acc = f"0000-{k:04d}"
             when = f"{dates[e - 1]}T16:30:00"
-            ev.append({"accession": acc, "ticker": t, "class": ("RAISE", "MAINTAIN", "CUT")[k % 3],
-                       "kind": "dollar", "level_change": 0.02, "acceptance_ny": when})
+            ev.append(
+                {
+                    "accession": acc,
+                    "ticker": t,
+                    "class": ("RAISE", "MAINTAIN", "CUT")[k % 3],
+                    "kind": "dollar",
+                    "level_change": 0.02,
+                    "acceptance_ny": when,
+                }
+            )
             rel.append({"accession": acc, "ticker": t, "status": "OK", "acceptance_ny": when})
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
@@ -135,8 +161,15 @@ class EndToEndSmokeTest(unittest.TestCase):
             (e10 / "protocol.json").write_text(json.dumps({"hashes": {}}))
             etoro = root / "data" / "raw" / "etoro" / "20261016T190421Z"
             etoro.mkdir(parents=True)
-            (etoro / "instruments.json").write_text(json.dumps({"InstrumentDisplayDatas": [
-                {"SymbolFull": "T01", "InstrumentTypeID": 5, "ExchangeID": 4}]}))
+            (etoro / "instruments.json").write_text(
+                json.dumps(
+                    {
+                        "InstrumentDisplayDatas": [
+                            {"SymbolFull": "T01", "InstrumentTypeID": 5, "ExchangeID": 4}
+                        ]
+                    }
+                )
+            )
             saved = (full.ROOT, full.E10, full.OUT, core.load_panel)
             full.ROOT, full.E10, full.OUT = root, e10, e10 / "results"
             core.load_panel = lambda: (dates, tickers, {t: i for i, t in enumerate(tickers)}, m)

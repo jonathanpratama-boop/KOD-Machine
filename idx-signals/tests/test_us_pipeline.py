@@ -31,7 +31,9 @@ class Verification(unittest.TestCase):
     """Each relevant provider event needs exactly one matching record; nothing missing is silent."""
 
     def recon(self, ev, sc, accepted=("VERIFIED",), read_through="2023-12-29", window=None):
-        return us_actions.reconcile_schedule(ev, sc, "2023-01-03", {"AAA", "BBB"}, accepted, read_through, window)
+        return us_actions.reconcile_schedule(
+            ev, sc, "2023-01-03", {"AAA", "BBB"}, accepted, read_through, window
+        )
 
     def test_missing_record_is_unresolved_not_accepted(self):
         ev = events(("AAA", "2024-05-01", 1.0, 10.0, "h1"), ("BBB", "2024-06-01", 2.0, 1.0, "h2"))
@@ -43,7 +45,10 @@ class Verification(unittest.TestCase):
 
     def test_duplicate_records_are_unresolved(self):
         ev = events(("AAA", "2024-05-01", 1.0, 10.0, "h1"))
-        sc = schedule(("AAA", "2024-05-01", 1.0, 10.0, "h1", "VERIFIED"), ("AAA", "2024-05-01", 1.0, 10.0, "h1", "NO_EVIDENCE"))
+        sc = schedule(
+            ("AAA", "2024-05-01", 1.0, 10.0, "h1", "VERIFIED"),
+            ("AAA", "2024-05-01", 1.0, 10.0, "h1", "NO_EVIDENCE"),
+        )
         self.assertEqual(self.recon(ev, sc)["status"].tolist(), ["UNRESOLVED_DUPLICATE_RECORD"])
 
     def test_record_from_a_different_payload_is_unresolved(self):
@@ -57,8 +62,10 @@ class Verification(unittest.TestCase):
 
     def test_share_count_records_inside_the_window_are_not_accepted(self):
         ev = events(("AAA", "2023-06-01", 1.0, 10.0, "h1"), ("BBB", "2024-06-01", 1.0, 10.0, "h2"))
-        sc = schedule(("AAA", "2023-06-01", 1.0, 10.0, "h1", "SHARES_CONFIRMED"),
-                      ("BBB", "2024-06-01", 1.0, 10.0, "h2", "SHARES_CONFIRMED"))
+        sc = schedule(
+            ("AAA", "2023-06-01", 1.0, 10.0, "h1", "SHARES_CONFIRMED"),
+            ("BBB", "2024-06-01", 1.0, 10.0, "h2", "SHARES_CONFIRMED"),
+        )
         out = self.recon(ev, sc, accepted=us_actions.RESEARCH_ACCEPTED, window="2023-12-29")
         by = dict(zip(out["ticker"], out["status"]))
         self.assertEqual(by["AAA"], "UNRESOLVED_SHARES_OUTSIDE_WINDOW")
@@ -68,28 +75,47 @@ class Verification(unittest.TestCase):
         ev = events(("AAA", "2024-06-01", 1.0, 10.0, "h"))
         sc = schedule(("AAA", "2024-06-01", 1.0, 10.0, "h", "SHARES_CONFIRMED"))
         with self.assertRaisesRegex(ValueError, "permitted for panels reading through 2023-12-29"):
-            self.recon(ev, sc, accepted=us_actions.RESEARCH_ACCEPTED, read_through="2024-12-31", window="2023-12-29")
+            self.recon(
+                ev,
+                sc,
+                accepted=us_actions.RESEARCH_ACCEPTED,
+                read_through="2024-12-31",
+                window="2023-12-29",
+            )
         with self.assertRaisesRegex(ValueError, "declares no share-count window"):
             self.recon(ev, sc, accepted=us_actions.RESEARCH_ACCEPTED, window=None)
 
     def test_inputs_are_bound_by_hash_not_name(self):
-        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(us_actions, "PKG_ROOT", Path(tmp)):
+        with (
+            tempfile.TemporaryDirectory() as tmp,
+            mock.patch.object(us_actions, "PKG_ROOT", Path(tmp)),
+        ):
             raw = Path(tmp) / "yahoo_us-x.jsonl"
             raw.write_text("raw\n")
             rows = Path(tmp) / "sched.csv"
             rows.write_text("ticker\n")
             cov_rows = Path(tmp) / "cov.csv"
             cov_rows.write_text("ticker\n")
-            good = {"raw_manifest": raw.name, "raw_manifest_sha256": us_actions.sha256_path(raw),
-                    "schedule": "sched.csv", "schedule_sha256": us_actions.sha256_path(rows)}
-            cov = {"raw_manifest": raw.name, "raw_manifest_sha256": us_actions.sha256_path(raw),
-                   "rows": "cov.csv", "rows_sha256": us_actions.sha256_path(cov_rows)}
+            good = {
+                "raw_manifest": raw.name,
+                "raw_manifest_sha256": us_actions.sha256_path(raw),
+                "schedule": "sched.csv",
+                "schedule_sha256": us_actions.sha256_path(rows),
+            }
+            cov = {
+                "raw_manifest": raw.name,
+                "raw_manifest_sha256": us_actions.sha256_path(raw),
+                "rows": "cov.csv",
+                "rows_sha256": us_actions.sha256_path(cov_rows),
+            }
             us_actions.check_bound_inputs(raw, good, cov)  # all bound: no error
             with self.assertRaisesRegex(RuntimeError, "different raw manifest"):
                 us_actions.check_bound_inputs(raw, {**good, "raw_manifest_sha256": "0" * 64})
             with self.assertRaisesRegex(RuntimeError, "schedule rows differ"):
                 us_actions.check_bound_inputs(raw, {**good, "schedule_sha256": "0" * 64})
-            with self.assertRaisesRegex(RuntimeError, "coverage was built from a different raw manifest"):
+            with self.assertRaisesRegex(
+                RuntimeError, "coverage was built from a different raw manifest"
+            ):
                 us_actions.check_bound_inputs(raw, good, {**cov, "raw_manifest_sha256": "0" * 64})
             with self.assertRaisesRegex(RuntimeError, "coverage rows differ"):
                 us_actions.check_bound_inputs(raw, good, {**cov, "rows_sha256": "0" * 64})
@@ -113,20 +139,30 @@ class Capacity(unittest.TestCase):
             s, e = 20, 21  # the 20-session window 1..20 spans the split at 10
             v2 = execution.decision_capacity(vol, present, uf, [0], [s], [e])[0]
             self.assertAlmostEqual(v2, 1000.0 * ratio)  # all sessions in post-split (entry) shares
-            self.assertAlmostEqual(exec_us.capacity_shares(vol[0], present[0], uf[0], s), 1000.0 * ratio)
+            self.assertAlmostEqual(
+                exec_us.capacity_shares(vol[0], present[0], uf[0], s), 1000.0 * ratio
+            )
 
     def test_a_split_between_signal_and_entry_converts_the_shares(self):
         vol, present, uf = self.series(2.0, split_at=21)  # effective on the entry session
         cap = exec_us.capacity_shares(vol[0], present[0], uf[0], 20)
         self.assertAlmostEqual(cap, 1000.0)  # signal-session shares
-        self.assertAlmostEqual(execution.decision_capacity(vol, present, uf, [0], [20], [21])[0], 2000.0)
+        self.assertAlmostEqual(
+            execution.decision_capacity(vol, present, uf, [0], [20], [21])[0], 2000.0
+        )
 
     def test_v1_mixed_units_are_kept_only_for_reproduction(self):
         """FILL-B-v1 put pre-split sessions in pre-split shares: documents the defect B2 fixes."""
-        vol, present, uf = self.series(0.1, split_at=16)  # 15 of the 20 sessions before a 1:10 reverse split
+        vol, present, uf = self.series(
+            0.1, split_at=16
+        )  # 15 of the 20 sessions before a 1:10 reverse split
         vol_v1 = np.where(present, vol / uf, np.nan)[0, 1:21]
-        self.assertAlmostEqual(float(np.nanmedian(vol_v1)), 1000.0)  # pre-split shares: 10x the entry-unit capacity
-        self.assertAlmostEqual(execution.decision_capacity(vol, present, uf, [0], [20], [21])[0], 100.0)
+        self.assertAlmostEqual(
+            float(np.nanmedian(vol_v1)), 1000.0
+        )  # pre-split shares: 10x the entry-unit capacity
+        self.assertAlmostEqual(
+            execution.decision_capacity(vol, present, uf, [0], [20], [21])[0], 100.0
+        )
 
 
 class FivePercentRule(unittest.TestCase):
@@ -145,7 +181,9 @@ class FivePercentRule(unittest.TestCase):
     def test_an_entry_inside_the_band_is_filled_and_sized_at_the_permitted_entry(self):
         plan = exec_us.make_plan(100.0, 95.0, 1e6)
         risk = plan["risk_per_share"]
-        self.assertAlmostEqual(risk, 5.0 + 100.0 * (plan["cost_in_at_max_entry"] + plan["cost_out_at_max_entry"]))
+        self.assertAlmostEqual(
+            risk, 5.0 + 100.0 * (plan["cost_in_at_max_entry"] + plan["cost_out_at_max_entry"])
+        )
         self.assertLessEqual(plan["shares"] * risk, 0.01 * exec_us.SPEC.equity_usd)
         self.assertLessEqual(plan["shares"] * plan["max_entry"], 0.20 * exec_us.SPEC.equity_usd)
         res = exec_us.execute(*self.bars(99.0), 0, plan)
@@ -158,7 +196,9 @@ class FivePercentRule(unittest.TestCase):
         v3 = paper.scan_frame(df, DATA, market="US", policy=paper.POLICY_ID_V3)["decisions"][0]
         v5 = paper.scan_frame(df, DATA, market="US", policy=paper.POLICY_ID_V5)["decisions"][0]
         close = v3["verified_price"]["close"]
-        self.assertLessEqual(v3["plan"]["invalidation"], close * 0.95)  # v3: 5-15% below the signal close
+        self.assertLessEqual(
+            v3["plan"]["invalidation"], close * 0.95
+        )  # v3: 5-15% below the signal close
         self.assertEqual(v5["policy"]["policy_id"], "PAPER-POLICY-v5")
         p = v5["plan"]
         self.assertLessEqual((p["max_entry"] - p["invalidation"]) / p["max_entry"], 0.05 + 1e-9)
@@ -170,36 +210,48 @@ class Approval(unittest.TestCase):
     def pinned(self, market, trading):
         pin = {"run_id": "R1", "config_sha256": "c" * 64, "execution": paper.PLAN_EXECUTION[market]}
         return mock.patch.dict(paper.APPROVAL_PINS, {market: pin}), {
-            **self.DET, "trading": {"run_id": "R1", "config_sha256": "c" * 64, **trading}}
+            **self.DET,
+            "trading": {"run_id": "R1", "config_sha256": "c" * 64, **trading},
+        }
 
     def test_a_losing_strategy_beating_a_worse_baseline_is_not_approved(self):
-        patch, ev = self.pinned("US", {"avg_net_return": -0.01, "matched_random_avg_net_return": -0.03,
-                                       "p_one_sided": 0.001})
+        patch, ev = self.pinned(
+            "US",
+            {"avg_net_return": -0.01, "matched_random_avg_net_return": -0.03, "p_one_sided": 0.001},
+        )
         with patch:
             ok, why = paper.approval(ev, "US")
         self.assertFalse(ok)
         self.assertIn("not positive", why)
 
     def test_positive_but_not_above_baseline_is_not_approved(self):
-        patch, ev = self.pinned("US", {"avg_net_return": 0.01, "matched_random_avg_net_return": 0.02,
-                                       "p_one_sided": 0.001})
+        patch, ev = self.pinned(
+            "US",
+            {"avg_net_return": 0.01, "matched_random_avg_net_return": 0.02, "p_one_sided": 0.001},
+        )
         with patch:
             self.assertFalse(paper.approval(ev, "US")[0])
 
     def test_positive_significant_and_above_baseline_is_approved(self):
-        patch, ev = self.pinned("US", {"avg_net_return": 0.02, "matched_random_avg_net_return": 0.0,
-                                       "p_one_sided": 0.001})
+        patch, ev = self.pinned(
+            "US",
+            {"avg_net_return": 0.02, "matched_random_avg_net_return": 0.0, "p_one_sided": 0.001},
+        )
         with patch:
             self.assertEqual(paper.approval(ev, "US"), (True, "approved"))
 
     def test_changed_config_or_other_execution_is_not_approved(self):
-        patch, ev = self.pinned("US", {"avg_net_return": 0.02, "matched_random_avg_net_return": 0.0,
-                                       "p_one_sided": 0.001})
+        patch, ev = self.pinned(
+            "US",
+            {"avg_net_return": 0.02, "matched_random_avg_net_return": 0.0, "p_one_sided": 0.001},
+        )
         with patch:
             ev["trading"]["config_sha256"] = "d" * 64
             self.assertIn("no longer has the pinned configuration", paper.approval(ev, "US")[1])
-        with mock.patch.dict(paper.APPROVAL_PINS, {"US": {"run_id": "R1", "config_sha256": "c" * 64,
-                                                          "execution": "something else"}}):
+        with mock.patch.dict(
+            paper.APPROVAL_PINS,
+            {"US": {"run_id": "R1", "config_sha256": "c" * 64, "execution": "something else"}},
+        ):
             ev["trading"]["config_sha256"] = "c" * 64
             self.assertIn("did not test the execution", paper.approval(ev, "US")[1])
 
@@ -213,20 +265,42 @@ class Approval(unittest.TestCase):
                 d = root / "results" / "runs" / run_id
                 d.mkdir(parents=True)
                 cfg = {"start": "2023-01-01", "end": "2023-12-31", "run": run_id}
-                (d / "summary.json").write_text(json.dumps({
-                    "run_id": run_id, "config": cfg, "rule": {"text": "Selected: G2_RET30"},
-                    "rule_trades": {"scored": 10, "fill_rate": 1.0, "status_counts": {}},
-                    "random_matched": {"avg_net_return": {"observed": avg, "random_mean": 0.0,
-                                                          "p_value_one_sided": 0.001}}}))
+                (d / "summary.json").write_text(
+                    json.dumps(
+                        {
+                            "run_id": run_id,
+                            "config": cfg,
+                            "rule": {"text": "Selected: G2_RET30"},
+                            "rule_trades": {"scored": 10, "fill_rate": 1.0, "status_counts": {}},
+                            "random_matched": {
+                                "avg_net_return": {
+                                    "observed": avg,
+                                    "random_mean": 0.0,
+                                    "p_value_one_sided": 0.001,
+                                }
+                            },
+                        }
+                    )
+                )
                 runs.append({"dir": f"results/runs/{run_id}"})
-            (root / "results" / "RUNS.jsonl").write_text("\n".join(json.dumps(r) for r in runs) + "\n")
-            pin = {"run_id": "20260101T000000Z_X_v1",
-                   "config_sha256": paper.config_sha256({"start": "2023-01-01", "end": "2023-12-31",
-                                                         "run": "20260101T000000Z_X_v1"}),
-                   "execution": paper.PLAN_EXECUTION["US"]}
-            with mock.patch.object(paper, "PKG_ROOT", root), mock.patch.dict(paper.APPROVAL_PINS, {"US": pin}):
+            (root / "results" / "RUNS.jsonl").write_text(
+                "\n".join(json.dumps(r) for r in runs) + "\n"
+            )
+            pin = {
+                "run_id": "20260101T000000Z_X_v1",
+                "config_sha256": paper.config_sha256(
+                    {"start": "2023-01-01", "end": "2023-12-31", "run": "20260101T000000Z_X_v1"}
+                ),
+                "execution": paper.PLAN_EXECUTION["US"],
+            }
+            with (
+                mock.patch.object(paper, "PKG_ROOT", root),
+                mock.patch.dict(paper.APPROVAL_PINS, {"US": pin}),
+            ):
                 t = paper._pinned_trading("US")
-            self.assertEqual(t["run_id"], "20260101T000000Z_X_v1")  # not the later, better-looking run
+            self.assertEqual(
+                t["run_id"], "20260101T000000Z_X_v1"
+            )  # not the later, better-looking run
             self.assertEqual(t["config_sha256"], pin["config_sha256"])
             self.assertFalse(paper.approval({**self.DET, "trading": t}, "US")[0])
 
@@ -234,7 +308,12 @@ class Approval(unittest.TestCase):
 class SharedExecution(unittest.TestCase):
     """The paper scorer and the historical replay are the same code: same bars, same outcome."""
 
-    CASES = ((-0.06, 0.01), (-0.24, 0.01), (-0.24, -0.03), (-0.25, 0.01))  # rejected, filled, filled, filled
+    CASES = (
+        (-0.06, 0.01),
+        (-0.24, 0.01),
+        (-0.24, -0.03),
+        (-0.25, 0.01),
+    )  # rejected, filled, filled, filled
 
     def case(self, gap, tail):
         warnings.simplefilter("ignore")
@@ -252,7 +331,9 @@ class SharedExecution(unittest.TestCase):
             paper_out = paper.score(dec, m, price_units=None)
             n = list(m.tickers).index(dec["instrument"]["ticker"])
             s = int(np.flatnonzero(m.dates.astype(str) == dec["signal_session"])[0])
-            replay = exec_us.replay(m.with_units(np.ones(m.shape)), [(n, s)], exec_us.signal_low_invalidation)[0]
+            replay = exec_us.replay(
+                m.with_units(np.ones(m.shape)), [(n, s)], exec_us.signal_low_invalidation
+            )[0]
             self.assertEqual(replay["plan"], dec["plan"]["exec_plan"])
             self.assertEqual(replay["result"], paper_out["execution"])
             statuses.add(paper_out["execution"]["status"])
@@ -269,18 +350,26 @@ class SharedExecution(unittest.TestCase):
         split = base.copy()
         rows = split["ticker"] == dec["instrument"]["ticker"]
         for col in ("previous", "open", "high", "low", "close"):
-            split.loc[rows, col] *= 10  # the provider rescales the whole history after a 1:10 reverse split
+            split.loc[rows, col] *= (
+                10  # the provider rescales the whole history after a 1:10 reverse split
+            )
         split.loc[rows, "volume"] /= 10
         m = paper._market(split, "US")
-        units = {"convention": "SPLIT_ONLY", "actions": [{"effective_session": eff, "new_shares": 1.0,
-                                                           "old_shares": 10.0}],
-                 "adjustment_reference": str(m.dates[-1]), "coverage_complete": True, "rtol": 1e-6}
+        units = {
+            "convention": "SPLIT_ONLY",
+            "actions": [{"effective_session": eff, "new_shares": 1.0, "old_shares": 10.0}],
+            "adjustment_reference": str(m.dates[-1]),
+            "coverage_complete": True,
+            "rtol": 1e-6,
+        }
         paper_out = paper.score(dec, m, price_units=units)["execution"]
         n = list(m.tickers).index(dec["instrument"]["ticker"])
         sidx = int(np.flatnonzero(m.dates.astype(str) == dec["signal_session"])[0])
         uf = np.ones(m.shape)
         uf[n, m.dates.astype(str) < eff] = 0.1
-        replay = exec_us.replay(m.with_units(uf), [(n, sidx)], exec_us.signal_low_invalidation)[0]["result"]
+        replay = exec_us.replay(m.with_units(uf), [(n, sidx)], exec_us.signal_low_invalidation)[0][
+            "result"
+        ]
         for out in (paper_out, replay):
             self.assertEqual(out["status"], plain["status"])
             self.assertEqual(out["exit_reason"], plain["exit_reason"])
@@ -290,7 +379,9 @@ class SharedExecution(unittest.TestCase):
             self.assertAlmostEqual(paper_out[key], replay[key], places=9)
         # after a 1:10 reverse split the shares are sold at 10x the price, in that price's cost tier
         self.assertNotEqual(paper_out["exit_cost_rate"], plain["exit_cost_rate"])
-        self.assertAlmostEqual(paper_out["exit_price_as_traded"], 10 * plain["exit_price_as_traded"], places=6)
+        self.assertAlmostEqual(
+            paper_out["exit_price_as_traded"], 10 * plain["exit_price_as_traded"], places=6
+        )
 
     def test_entry_is_the_next_open_never_the_signal_close(self):
         base, dec = self.case(-0.24, 0.01)

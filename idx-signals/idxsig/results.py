@@ -25,7 +25,15 @@ from pathlib import Path
 
 import numpy as np
 
-from .provenance import PKG_ROOT, exclusive_lock, publish_bytes, rel, sha256_bytes, sha256_file, utc_stamp
+from .provenance import (
+    PKG_ROOT,
+    exclusive_lock,
+    publish_bytes,
+    rel,
+    sha256_bytes,
+    sha256_file,
+    utc_stamp,
+)
 
 RESULTS = PKG_ROOT / "results"
 RUNS = RESULTS / "runs"
@@ -77,16 +85,20 @@ def _rate(x) -> str:
 def _vs(label: str, base: dict | None) -> str:
     if not base:
         return f"{label}: no comparison."
-    return (f"{label}: {_pct(base.get('difference'))} (rule at percentile "
-            f"{base.get('percentile_of_observed', float('nan')):.1f} of draws, one-sided p = "
-            f"{base.get('p_value_one_sided', float('nan')):.3f}).")
+    return (
+        f"{label}: {_pct(base.get('difference'))} (rule at percentile "
+        f"{base.get('percentile_of_observed', float('nan')):.1f} of draws, one-sided p = "
+        f"{base.get('p_value_one_sided', float('nan')):.3f})."
+    )
 
 
 def _dist_cell(base: dict, fmt) -> str:
     if not base:
         return "—"
-    return (f"{fmt(base.get('random_mean'))} (95% of draws {fmt(base.get('random_p2_5'))} .. "
-            f"{fmt(base.get('random_p97_5'))})")
+    return (
+        f"{fmt(base.get('random_mean'))} (95% of draws {fmt(base.get('random_p2_5'))} .. "
+        f"{fmt(base.get('random_p97_5'))})"
+    )
 
 
 def render_report(run_id: str, summary: dict) -> str:
@@ -128,7 +140,8 @@ def render_report(run_id: str, summary: dict) -> str:
         _vs("Average return vs same-session random", rnd["avg_net_return"]),
         _vs("Hit rate vs same-session random", rnd["hit_rate"]),
         "",
-        "Matched controls found at: " + ", ".join(f"{k} {v}" for k, v in mt.get("match_level_used", {}).items()),
+        "Matched controls found at: "
+        + ", ".join(f"{k} {v}" for k, v in mt.get("match_level_used", {}).items()),
         "",
         "Status counts (rule): " + ", ".join(f"{k} {v}" for k, v in r["status_counts"].items()),
         "",
@@ -150,9 +163,11 @@ def render_report(run_id: str, summary: dict) -> str:
     if look["mode"] == "exhaustive":
         look_text = f"exhaustive: the rule was recomputed on all {look['sessions_checked']} prefixes; 0 signals changed"
     elif look["mode"].startswith("prefix-first"):
-        look_text = (f"{look['mode']}: causal by construction. Each signal is column d of a call given only sessions "
-                     f"0..d and the names listed by d ({look['prefix_calls']} calls); source audit "
-                     f"{look['source_audit']}; {look['sandbox']}; a full-window call matched every prefix-built signal")
+        look_text = (
+            f"{look['mode']}: causal by construction. Each signal is column d of a call given only sessions "
+            f"0..d and the names listed by d ({look['prefix_calls']} calls); source audit "
+            f"{look['source_audit']}; {look['sandbox']}; a full-window call matched every prefix-built signal"
+        )
     else:
         look_text = "sampled at " + ", ".join(look["truncated_after"]) + " (not a proof)"
     lines += _quality_lines(summary)
@@ -161,7 +176,11 @@ def render_report(run_id: str, summary: dict) -> str:
         "## Execution",
         "",
         f"- {summary['execution']['price']}, entry lag {c['entry_lag']}",
-        *([f"- Plan: {summary['execution']['plan_text']}"] if summary["execution"].get("plan_text") else []),
+        *(
+            [f"- Plan: {summary['execution']['plan_text']}"]
+            if summary["execution"].get("plan_text")
+            else []
+        ),
         f"- 100-share lots, notional Rp {c['notional']:,.0f} per trade, at most {c['max_participation']:.0%} of session volume",
         f"- Fees: buy {c['fee_buy']:.2%}, sell {c['fee_sell']:.2%}",
         f"- {summary['execution']['auto_rejection']}",
@@ -181,33 +200,57 @@ def _quality_lines(summary: dict) -> list[str]:
     out = []
     dq = summary.get("data_quality")
     if dq:
-        out += ["", "## Data quality", "",
-                "Sessions by tier: " + ", ".join(f"{k} {v}" for k, v in dq["sessions_by_tier"].items())
-                + f" (panel format {dq['panel_format']})", ""]
-        out += [f"- {t['tier']} {t['from']} .. {t['to']}: {t['source']}, survivorship {t['survivorship']}, "
-                f"corporate actions from {t['corporate_actions']}" for t in dq["tiers"]]
+        out += [
+            "",
+            "## Data quality",
+            "",
+            "Sessions by tier: "
+            + ", ".join(f"{k} {v}" for k, v in dq["sessions_by_tier"].items())
+            + f" (panel format {dq['panel_format']})",
+            "",
+        ]
+        out += [
+            f"- {t['tier']} {t['from']} .. {t['to']}: {t['source']}, survivorship {t['survivorship']}, "
+            f"corporate actions from {t['corporate_actions']}"
+            for t in dq["tiers"]
+        ]
         out += ["", "Known limitations:", ""] + [f"- {x}" for x in dq["known_limitations"]]
     ca = summary.get("corporate_action_model")
     if ca and ca.get("mode") == "registry":
         counts = ca.get("resets_in_window") or {}
-        out += ["", "## Corporate actions", "",
-                f"Registry `{ca.get('registry_manifest')}` ({ca.get('registry_version')}), file SHA-256 "
-                f"`{ca.get('registry_sha256')}`.",
-                f"Reference resets in the window: {counts.get('resets', 0)}; share-scaled (verified split / reverse "
-                f"split / stock dividend) {counts.get('share_scaled', 0)}; verified rights issues "
-                f"{counts.get('rights_issue', 0)}; unresolved {counts.get('unresolved', 0)} (of which missing from the "
-                f"registry {counts.get('missing_from_registry', 0)})."]
+        out += [
+            "",
+            "## Corporate actions",
+            "",
+            f"Registry `{ca.get('registry_manifest')}` ({ca.get('registry_version')}), file SHA-256 "
+            f"`{ca.get('registry_sha256')}`.",
+            f"Reference resets in the window: {counts.get('resets', 0)}; share-scaled (verified split / reverse "
+            f"split / stock dividend) {counts.get('share_scaled', 0)}; verified rights issues "
+            f"{counts.get('rights_issue', 0)}; unresolved {counts.get('unresolved', 0)} (of which missing from the "
+            f"registry {counts.get('missing_from_registry', 0)}).",
+        ]
     controls = (summary.get("random_matched") or {}).get("controls")
     if controls:
-        out += ["", "## Matched controls", "",
-                f"Controls {controls['version']}; full match (every feature) for "
-                f"{_rate(controls['full_match_share'])} of attempts; pool minimum {controls['min_pool']}.", "",
-                "| Priority | Feature | Known for signalled name | Matched on | Availability |", "|---:|---|---:|---:|---|"]
+        out += [
+            "",
+            "## Matched controls",
+            "",
+            f"Controls {controls['version']}; full match (every feature) for "
+            f"{_rate(controls['full_match_share'])} of attempts; pool minimum {controls['min_pool']}.",
+            "",
+            "| Priority | Feature | Known for signalled name | Matched on | Availability |",
+            "|---:|---|---:|---:|---|",
+        ]
         for name, f in controls["features"].items():
-            out.append(f"| {f['priority']} | {name}: {f['description']} | {_rate(f['known_share'])} | "
-                       f"{_rate(f['matched_share'])} | {f['availability']} |")
-        out += ["", "Not matched on (no point-in-time data): "
-                + "; ".join(f"{k}: {v}" for k, v in controls["not_available"].items())]
+            out.append(
+                f"| {f['priority']} | {name}: {f['description']} | {_rate(f['known_share'])} | "
+                f"{_rate(f['matched_share'])} | {f['availability']} |"
+            )
+        out += [
+            "",
+            "Not matched on (no point-in-time data): "
+            + "; ".join(f"{k}: {v}" for k, v in controls["not_available"].items()),
+        ]
     return out
 
 
@@ -234,12 +277,16 @@ def chronology_problems(summary: dict, trades, *, require_economics: bool = Fals
                 dates.append(None)
         signal, entry, exit_ = dates
         if entry and signal and entry <= signal:
-            problems.append(f"{row.get('ticker')}: entered {entry} at or before its signal {signal}")
+            problems.append(
+                f"{row.get('ticker')}: entered {entry} at or before its signal {signal}"
+            )
         if exit_ and entry and exit_ < entry:
             problems.append(f"{row.get('ticker')}: exited {exit_} before its entry {entry}")
         if row.get("status") in ("EXITED", "EXIT_DATA_END"):
             if not all(dates):
-                problems.append(f"{row.get('ticker')}: scored trade is missing valid execution dates")
+                problems.append(
+                    f"{row.get('ticker')}: scored trade is missing valid execution dates"
+                )
             for field in ("entry_price", "shares", "exit_price"):
                 # Older stored formats may lack a field; verify every available one.
                 if field not in row:
@@ -250,7 +297,11 @@ def chronology_problems(summary: dict, trades, *, require_economics: bool = Fals
                     value = float(row[field])
                 except (TypeError, ValueError):
                     value = float("nan")
-                zero_exit = field == "exit_price" and row.get("status") == "EXIT_DATA_END" and (summary.get("config") or {}).get("data_end_exit") == "zero"
+                zero_exit = (
+                    field == "exit_price"
+                    and row.get("status") == "EXIT_DATA_END"
+                    and (summary.get("config") or {}).get("data_end_exit") == "zero"
+                )
                 if not math.isfinite(value) or value < 0 or (value == 0 and not zero_exit):
                     problems.append(f"{row.get('ticker')}: scored trade has invalid {field}")
             for field in ("gross_return", "net_return"):
@@ -288,20 +339,32 @@ def runtime_environment() -> dict:
             libraries[name] = package_version(name)
         except PackageNotFoundError:
             libraries[name] = None
-    return {"python": platform.python_version(), "platform": platform.platform(),
-            "libraries": libraries, "execution_validation": "IDXSIG-EXEC-VALIDATION-v2"}
+    return {
+        "python": platform.python_version(),
+        "platform": platform.platform(),
+        "libraries": libraries,
+        "execution_validation": "IDXSIG-EXEC-VALIDATION-v2",
+    }
 
 
-def write_run(output: dict, *, allow_dirty: bool = False, commit: bool = True, root: Path | None = None) -> Path:
+def write_run(
+    output: dict, *, allow_dirty: bool = False, commit: bool = True, root: Path | None = None
+) -> Path:
     runs = (root / "runs") if root else RUNS
     index = (root / "RUNS.jsonl") if root else INDEX
     state = code_state()
     if state["dirty"] and not allow_dirty:
-        raise DirtyTreeError("idxsig/ has uncommitted changes; commit the code first so the run names the code it ran")
+        raise DirtyTreeError(
+            "idxsig/ has uncommitted changes; commit the code first so the run names the code it ran"
+        )
     summary = dict(output["summary"])
-    impossible = chronology_problems(summary, output["trades"].to_dict("records"), require_economics=True)
+    impossible = chronology_problems(
+        summary, output["trades"].to_dict("records"), require_economics=True
+    )
     if impossible:
-        raise ValueError("refusing to store a run that is not chronological: " + "; ".join(impossible[:5]))
+        raise ValueError(
+            "refusing to store a run that is not chronological: " + "; ".join(impossible[:5])
+        )
     summary["code"] = state
     summary["environment"] = runtime_environment()
     created = utc_stamp()
@@ -314,14 +377,20 @@ def write_run(output: dict, *, allow_dirty: bool = False, commit: bool = True, r
     run_dir.mkdir(parents=True, exist_ok=False)
 
     files = {}
-    files["summary.json"] = _write_exclusive(run_dir / "summary.json", (json.dumps(summary, indent=2, sort_keys=True) + "\n").encode())
+    files["summary.json"] = _write_exclusive(
+        run_dir / "summary.json", (json.dumps(summary, indent=2, sort_keys=True) + "\n").encode()
+    )
     buf = io.BytesIO()
     with gzip.GzipFile(fileobj=buf, mode="wb", mtime=0) as gz:
         gz.write(output["trades"].to_csv(index=False, float_format="%.10g").encode())
     files["trades.csv.gz"] = _write_exclusive(run_dir / "trades.csv.gz", buf.getvalue())
-    files["random_draws.csv"] = _write_exclusive(run_dir / "random_draws.csv",
-                                                 output["draws"].to_csv(index=False, float_format="%.10g").encode())
-    files["REPORT.md"] = _write_exclusive(run_dir / "REPORT.md", render_report(run_id, summary).encode())
+    files["random_draws.csv"] = _write_exclusive(
+        run_dir / "random_draws.csv",
+        output["draws"].to_csv(index=False, float_format="%.10g").encode(),
+    )
+    files["REPORT.md"] = _write_exclusive(
+        run_dir / "REPORT.md", render_report(run_id, summary).encode()
+    )
     r = summary["rule_trades"]
     avg = summary["random"]["avg_net_return"] or {}
     matched = summary["random_matched"]["avg_net_return"] or {}
@@ -353,7 +422,11 @@ def write_run(output: dict, *, allow_dirty: bool = False, commit: bool = True, r
         prefix = index.read_bytes() if index.exists() else b""
         if prefix and not prefix.endswith(b"\n"):
             raise ValueError("RUNS index has an incomplete final line; refusing to append")
-        publish_bytes(index, prefix + (json.dumps(_jsonable(line), sort_keys=True) + "\n").encode(), replace=True)
+        publish_bytes(
+            index,
+            prefix + (json.dumps(_jsonable(line), sort_keys=True) + "\n").encode(),
+            replace=True,
+        )
     if commit:
         trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "").strip()
         message = (
@@ -406,10 +479,14 @@ def verify_runs(root: Path | None = None, use_git: bool = True) -> list[str]:
                 problems.append(f"run directory {d.name} is not in RUNS.jsonl")
     if use_git and root is None:
         try:
-            committed = _git("show", f"HEAD:./{rel(index)}", check=False)  # ./ = relative to idx-signals/
+            committed = _git(
+                "show", f"HEAD:./{rel(index)}", check=False
+            )  # ./ = relative to idx-signals/
             current = index.read_text(encoding="utf-8") if index.exists() else ""
             if committed and not current.startswith(committed):
-                problems.append("RUNS.jsonl no longer starts with the committed RUNS.jsonl: earlier lines were changed")
+                problems.append(
+                    "RUNS.jsonl no longer starts with the committed RUNS.jsonl: earlier lines were changed"
+                )
             changed = _git("diff", "--name-status", "HEAD", "--", rel(runs), check=False)
             for row in changed.splitlines():
                 code, _, name = row.partition("\t")

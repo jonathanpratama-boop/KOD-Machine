@@ -36,7 +36,9 @@ class AmendedRunnerTest(unittest.TestCase):
             shutil.move(str(e10 / "feasibility"), str(e10 / "feasibility_a1"))
             (e10 / "feasibility").mkdir()
             pd.DataFrame({"broken": [1]}).to_csv(e10 / "feasibility" / "events.csv.gz", index=False)
-            pd.DataFrame({"broken": [1]}).to_csv(e10 / "feasibility" / "releases.csv.gz", index=False)
+            pd.DataFrame({"broken": [1]}).to_csv(
+                e10 / "feasibility" / "releases.csv.gz", index=False
+            )
             saved = (full.ROOT, full.E10, full.OUT, core.PANEL, verify.PANEL, verify.E10, full.pd)
             full.ROOT, full.E10, full.OUT, core.PANEL = root, e10, e10 / "results", panel_path
             verify.PANEL, verify.E10 = panel_path, e10

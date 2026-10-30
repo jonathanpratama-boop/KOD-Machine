@@ -43,14 +43,63 @@ class LocalAuthority:
         self.tmp = tempfile.TemporaryDirectory()
         d = Path(self.tmp.name)
         self.dir = d
-        sh("openssl", "req", "-x509", "-newkey", "rsa:2048", "-nodes", "-keyout", "ca.key", "-out", "ca.crt",
-           "-subj", "/CN=KOD Test CA", "-days", "2", "-addext", "basicConstraints=critical,CA:TRUE",
-           "-addext", "keyUsage=critical,keyCertSign,cRLSign", cwd=d)
-        sh("openssl", "req", "-newkey", "rsa:2048", "-nodes", "-keyout", "tsa.key", "-out", "tsa.csr",
-           "-subj", "/CN=KOD Test TSA", cwd=d)
-        (d / "ext.cnf").write_text("extendedKeyUsage=critical,timeStamping\nkeyUsage=critical,digitalSignature\n")
-        sh("openssl", "x509", "-req", "-in", "tsa.csr", "-CA", "ca.crt", "-CAkey", "ca.key", "-CAcreateserial",
-           "-out", "tsa.crt", "-days", "2", "-extfile", "ext.cnf", cwd=d)
+        sh(
+            "openssl",
+            "req",
+            "-x509",
+            "-newkey",
+            "rsa:2048",
+            "-nodes",
+            "-keyout",
+            "ca.key",
+            "-out",
+            "ca.crt",
+            "-subj",
+            "/CN=KOD Test CA",
+            "-days",
+            "2",
+            "-addext",
+            "basicConstraints=critical,CA:TRUE",
+            "-addext",
+            "keyUsage=critical,keyCertSign,cRLSign",
+            cwd=d,
+        )
+        sh(
+            "openssl",
+            "req",
+            "-newkey",
+            "rsa:2048",
+            "-nodes",
+            "-keyout",
+            "tsa.key",
+            "-out",
+            "tsa.csr",
+            "-subj",
+            "/CN=KOD Test TSA",
+            cwd=d,
+        )
+        (d / "ext.cnf").write_text(
+            "extendedKeyUsage=critical,timeStamping\nkeyUsage=critical,digitalSignature\n"
+        )
+        sh(
+            "openssl",
+            "x509",
+            "-req",
+            "-in",
+            "tsa.csr",
+            "-CA",
+            "ca.crt",
+            "-CAkey",
+            "ca.key",
+            "-CAcreateserial",
+            "-out",
+            "tsa.crt",
+            "-days",
+            "2",
+            "-extfile",
+            "ext.cnf",
+            cwd=d,
+        )
         (d / "serial").write_text("01\n")
         (d / "tsa.cnf").write_text(TSA_CONFIG.format(dir=d))
         authority = self
@@ -59,7 +108,18 @@ class LocalAuthority:
             def do_POST(self):
                 query = authority.dir / "q.tsq"
                 query.write_bytes(self.rfile.read(int(self.headers["Content-Length"])))
-                sh("openssl", "ts", "-reply", "-config", "tsa.cnf", "-queryfile", "q.tsq", "-out", "r.tsr", cwd=authority.dir)
+                sh(
+                    "openssl",
+                    "ts",
+                    "-reply",
+                    "-config",
+                    "tsa.cnf",
+                    "-queryfile",
+                    "q.tsq",
+                    "-out",
+                    "r.tsr",
+                    cwd=authority.dir,
+                )
                 body = (authority.dir / "r.tsr").read_bytes()
                 self.send_response(200)
                 self.send_header("Content-Type", "application/timestamp-reply")
@@ -72,7 +132,9 @@ class LocalAuthority:
 
         self.server = http.server.HTTPServer(("127.0.0.1", 0), Handler)
         threading.Thread(target=self.server.serve_forever, daemon=True).start()
-        self.authority = Authority("local", f"http://127.0.0.1:{self.server.server_port}/tsr", d / "ca.crt", d / "tsa.crt")
+        self.authority = Authority(
+            "local", f"http://127.0.0.1:{self.server.server_port}/tsr", d / "ca.crt", d / "tsa.crt"
+        )
 
     def close(self):
         self.server.shutdown()
@@ -94,7 +156,9 @@ class RFC3161Tests(unittest.TestCase):
         self.assertEqual([s.authority for s in stamps], ["local"])
         now = datetime.now(timezone.utc)
         self.assertLess(abs(stamps[0].time - now), timedelta(minutes=2))
-        again = ts.verify("local", stamps[0].token, b'{"kind":"CASE","record_id":"KOD-P-X","sha256":"ab"}')
+        again = ts.verify(
+            "local", stamps[0].token, b'{"kind":"CASE","record_id":"KOD-P-X","sha256":"ab"}'
+        )
         self.assertEqual(again, stamps[0].time)
 
     def test_token_does_not_verify_for_other_data(self):
@@ -108,7 +172,9 @@ class RFC3161Tests(unittest.TestCase):
         stamp = ts.stamp(b"line")[0]
         other = LocalAuthority()
         try:
-            impostor = RFC3161Timestamper([Authority("local", "", other.authority.cafile, other.authority.untrusted)])
+            impostor = RFC3161Timestamper(
+                [Authority("local", "", other.authority.cafile, other.authority.untrusted)]
+            )
             with self.assertRaises(TimestampError):
                 impostor.verify("local", stamp.token, b"line")
         finally:

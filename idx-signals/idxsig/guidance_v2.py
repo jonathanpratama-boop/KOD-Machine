@@ -16,6 +16,7 @@ filter (revenue term, forward cue, one fiscal year, not a quarter alone) and cha
 The revision step (research/E10/feasibility_a1.py) also drops a level change beyond +-50% as a measure mismatch, and
 counts it.
 """
+
 from __future__ import annotations
 
 import re
@@ -28,9 +29,35 @@ WINDOW_AFTER = 80
 WINDOW_BEFORE = 80
 
 REV_TERM = re.compile(r"\b(?:total\s+)?(?:net\s+)?(?:revenues?|sales)\b", re.I)
-_VERBS = ("raise", "increase", "update", "reaffirm", "reiterate", "maintain", "narrow", "lower", "reduce", "expect",
-          "project", "anticipate", "forecast", "guide", "target", "estimate", "deliver", "generate", "achieve",
-          "provide", "issue", "initiate", "confirm", "introduce", "establish", "revise", "tighten")
+_VERBS = (
+    "raise",
+    "increase",
+    "update",
+    "reaffirm",
+    "reiterate",
+    "maintain",
+    "narrow",
+    "lower",
+    "reduce",
+    "expect",
+    "project",
+    "anticipate",
+    "forecast",
+    "guide",
+    "target",
+    "estimate",
+    "deliver",
+    "generate",
+    "achieve",
+    "provide",
+    "issue",
+    "initiate",
+    "confirm",
+    "introduce",
+    "establish",
+    "revise",
+    "tighten",
+)
 
 
 def _forms(verb: str) -> set[str]:
@@ -39,24 +66,82 @@ def _forms(verb: str) -> set[str]:
 
 
 ALLOWED_BEFORE = {
-    "total", "net", "consolidated", "company", "company's", "our", "its", "the", "of", "in", "for", "and", "gaap",
-    "reported", "overall", "guidance", "outlook", "to", "that", "with", "on", "at", "sees", "see", "seeing", "now",
-    "a", "an", "by", "is", "are", "be", "will", "including", "includes", "range", "where", "which", "as", "while",
-    "both", "record", "sets", "set", "setting", "also", "currently", "still",
+    "total",
+    "net",
+    "consolidated",
+    "company",
+    "company's",
+    "our",
+    "its",
+    "the",
+    "of",
+    "in",
+    "for",
+    "and",
+    "gaap",
+    "reported",
+    "overall",
+    "guidance",
+    "outlook",
+    "to",
+    "that",
+    "with",
+    "on",
+    "at",
+    "sees",
+    "see",
+    "seeing",
+    "now",
+    "a",
+    "an",
+    "by",
+    "is",
+    "are",
+    "be",
+    "will",
+    "including",
+    "includes",
+    "range",
+    "where",
+    "which",
+    "as",
+    "while",
+    "both",
+    "record",
+    "sets",
+    "set",
+    "setting",
+    "also",
+    "currently",
+    "still",
 } | set().union(*(_forms(v) for v in _VERBS))
-MEASURE_GAP = re.compile(r"\b(EBITDA|EBIT|EPS|earnings|income|margins?|cash|loans?|deposits?|bookings|backlog|ARR|"
-                         r"expenses?|capex|capital|assets|balances?|shares?|profit|operating|tax|interest|dividends?|"
-                         r"debt|NOI|FFO|AFFO|units|volumes?|segment|organic|comparable)\b", re.I)
-SUBJECT_SKIP = re.compile(r"\b(acquired|acquisitions?|acquire|acquiring|merger|combined company|pro forma|"
-                          r"twelve months end\w*|trailing|last twelve months|LTM|run[- ]rate|annualized|contribut\w*|"
-                          r"divest\w*|year[- ]to[- ]date|YTD|through (?:January|February|March|April|May|June|July|"
-                          r"August|September|October|November|December)|(?:first|initial) (?:half|six months|"
-                          r"nine months|three quarters))\b", re.I)
+MEASURE_GAP = re.compile(
+    r"\b(EBITDA|EBIT|EPS|earnings|income|margins?|cash|loans?|deposits?|bookings|backlog|ARR|"
+    r"expenses?|capex|capital|assets|balances?|shares?|profit|operating|tax|interest|dividends?|"
+    r"debt|NOI|FFO|AFFO|units|volumes?|segment|organic|comparable)\b",
+    re.I,
+)
+SUBJECT_SKIP = re.compile(
+    r"\b(acquired|acquisitions?|acquire|acquiring|merger|combined company|pro forma|"
+    r"twelve months end\w*|trailing|last twelve months|LTM|run[- ]rate|annualized|contribut\w*|"
+    r"divest\w*|year[- ]to[- ]date|YTD|through (?:January|February|March|April|May|June|July|"
+    r"August|September|October|November|December)|(?:first|initial) (?:half|six months|"
+    r"nine months|three quarters))\b",
+    re.I,
+)
 GAP_BEFORE = re.compile(r"\s*(?:in|of)\s+", re.I)
 TOKENS = re.compile(r"[A-Za-z0-9][\w&'’-]*")
-TIME_WORD = re.compile(r"^(?:full|year|full-year|fiscal|annual|calendar|(?:fy)?'?(?:20)?[12]\d|fy)$", re.I)
-GROWTH_RANGE_PCT = re.compile(r"\b(grow\w*|growth|increase\w*|up|decline\w*|decrease\w*|down)\b[^.%$]{0,40}?" +
-                              v1.NUM + r"\s*(?:to|-|–|—)\s*" + v1.NUM + r"\s*%", re.I)    # "grow 11-14%"
+TIME_WORD = re.compile(
+    r"^(?:full|year|full-year|fiscal|annual|calendar|(?:fy)?'?(?:20)?[12]\d|fy)$", re.I
+)
+GROWTH_RANGE_PCT = re.compile(
+    r"\b(grow\w*|growth|increase\w*|up|decline\w*|decrease\w*|down)\b[^.%$]{0,40}?"
+    + v1.NUM
+    + r"\s*(?:to|-|–|—)\s*"
+    + v1.NUM
+    + r"\s*%",
+    re.I,
+)  # "grow 11-14%"
 AFTER_PATTERNS = (v1.DOLLAR_RANGE, v1.DOLLAR_ONE, v1.GROWTH_RANGE, GROWTH_RANGE_PCT, v1.GROWTH_ONE)
 LIST_BREAK = re.compile(r"[•●▪◦;|]")
 
@@ -75,7 +160,7 @@ def parse(match: re.Match) -> tuple[str, float, float] | None:
 def qualified(sentence: str, start: int) -> bool:
     """True if the word before the revenue term at `start`, past any time words ("full year 2021"), names a
     segment or another measure."""
-    words = TOKENS.findall(sentence[max(0, start - 60):start])
+    words = TOKENS.findall(sentence[max(0, start - 60) : start])
     while words and TIME_WORD.match(words[-1]):
         words.pop()
     return bool(words) and words[-1].lower().replace("’", "'") not in ALLOWED_BEFORE
@@ -86,22 +171,26 @@ def anchored_amount(sentence: str) -> tuple[str, float, float] | None:
     for term in REV_TERM.finditer(sentence):
         if qualified(sentence, term.start()):
             continue
-        tail = sentence[term.end():term.end() + WINDOW_AFTER]
+        tail = sentence[term.end() : term.end() + WINDOW_AFTER]
         first = None
         for pat in AFTER_PATTERNS:
             m = pat.search(tail)
             if m and (first is None or m.start() < first.start()):
                 first = m
         if first is not None:
-            gap = tail[:first.start()]
-            if not MEASURE_GAP.search(gap) and not REV_TERM.search(gap) and not LIST_BREAK.search(gap):
+            gap = tail[: first.start()]
+            if (
+                not MEASURE_GAP.search(gap)
+                and not REV_TERM.search(gap)
+                and not LIST_BREAK.search(gap)
+            ):
                 got = parse(first)
                 if got is not None:
                     return got
-        head = sentence[max(0, term.start() - WINDOW_BEFORE):term.start()]
+        head = sentence[max(0, term.start() - WINDOW_BEFORE) : term.start()]
         for pat in (v1.DOLLAR_RANGE, v1.DOLLAR_ONE):
             ms = list(pat.finditer(head))
-            if ms and GAP_BEFORE.fullmatch(head[ms[-1].end():]):
+            if ms and GAP_BEFORE.fullmatch(head[ms[-1].end() :]):
                 got = parse(ms[-1])
                 if got is not None:
                     return got
@@ -109,7 +198,11 @@ def anchored_amount(sentence: str) -> tuple[str, float, float] | None:
 
 
 def guidance_sentence(sentence: str) -> Guidance | None:
-    if len(sentence) > v1.MAX_SENTENCE or not v1.REVENUE.search(sentence) or not v1.FORWARD.search(sentence):
+    if (
+        len(sentence) > v1.MAX_SENTENCE
+        or not v1.REVENUE.search(sentence)
+        or not v1.FORWARD.search(sentence)
+    ):
         return None
     if v1.QUARTER.search(sentence) and not v1.FULL_YEAR.search(sentence):
         return None

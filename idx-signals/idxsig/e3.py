@@ -43,8 +43,12 @@ def protocol(path: Path = PROTOCOL) -> tuple[dict, str]:
 
 def plan_grid(proto: dict) -> list[dict]:
     p = proto["plans"]
-    return [{"entry_rule": e, "entry_window": int(w), "exit_rule": x, "holding_days": int(h)}
-            for (e, w), x, h in itertools.product([tuple(v) for v in p["entries"]], p["exits"], p["holding_days"])]
+    return [
+        {"entry_rule": e, "entry_window": int(w), "exit_rule": x, "holding_days": int(h)}
+        for (e, w), x, h in itertools.product(
+            [tuple(v) for v in p["entries"]], p["exits"], p["holding_days"]
+        )
+    ]
 
 
 def plan_id(detector: str, plan: dict) -> str:
@@ -60,15 +64,28 @@ def harness_config(proto: dict, rule_id: str, period: str, plan: dict | None = N
     h = proto["harness"]
     start, end = proto["periods"][period]
     return RunConfig(
-        rule_id=rule_id, market="IDX", start=start, end=end,
+        rule_id=rule_id,
+        market="IDX",
+        start=start,
+        end=end,
         holding_days=int(plan["holding_days"]) if plan else None,
         entry_rule=plan["entry_rule"] if plan else None,
         entry_window=int(plan["entry_window"]) if plan else None,
         exit_rule=plan["exit_rule"] if plan else None,
-        entry_lag=1, notional=float(h["notional_idr"]), max_participation=h["max_participation"],
-        fee_buy=h["fee_buy"], fee_sell=h["fee_sell"], overlap=h["overlap"], random_draws=h["random_draws"],
-        seed=h["seed"], data_end_exit=h["data_end_exit"], ca_mode=h["ca_mode"], lookahead_cuts=None,
-        controls_version=h["controls_version"], units=h["units"], fill_model=h["fill_model"],
+        entry_lag=1,
+        notional=float(h["notional_idr"]),
+        max_participation=h["max_participation"],
+        fee_buy=h["fee_buy"],
+        fee_sell=h["fee_sell"],
+        overlap=h["overlap"],
+        random_draws=h["random_draws"],
+        seed=h["seed"],
+        data_end_exit=h["data_end_exit"],
+        ca_mode=h["ca_mode"],
+        lookahead_cuts=None,
+        controls_version=h["controls_version"],
+        units=h["units"],
+        fill_model=h["fill_model"],
     )
 
 
@@ -78,15 +95,25 @@ def plan_row(summary: dict, detector: str, plan: dict, years: list[int]) -> dict
     matched = summary["random_matched"]["avg_net_return"] or {}
     same = summary["random"]["avg_net_return"] or {}
     by_year = {int(y["year"]): y for y in summary["by_year"]}
-    row = {"plan_id": plan_id(detector, plan), "detector": detector, **{k: plan[k] for k in PLAN_KEYS},
-           "signals": sig["total"], "attempted": sig["attempted"], "filled": r["filled"], "fill_rate": r["fill_rate"],
-           "scored": r["scored"], "hit_rate": r["hit_rate"], "avg_net_return": r["avg_net_return"],
-           "median_net_return": r["median_net_return"],
-           "matched_random_avg_net_return": matched.get("random_mean"),
-           "matched_random_p2_5": matched.get("random_p2_5"), "matched_random_p97_5": matched.get("random_p97_5"),
-           "p_one_sided_vs_matched": matched.get("p_value_one_sided"),
-           "same_session_random_avg_net_return": same.get("random_mean"),
-           "p_one_sided_vs_same_session": same.get("p_value_one_sided")}
+    row = {
+        "plan_id": plan_id(detector, plan),
+        "detector": detector,
+        **{k: plan[k] for k in PLAN_KEYS},
+        "signals": sig["total"],
+        "attempted": sig["attempted"],
+        "filled": r["filled"],
+        "fill_rate": r["fill_rate"],
+        "scored": r["scored"],
+        "hit_rate": r["hit_rate"],
+        "avg_net_return": r["avg_net_return"],
+        "median_net_return": r["median_net_return"],
+        "matched_random_avg_net_return": matched.get("random_mean"),
+        "matched_random_p2_5": matched.get("random_p2_5"),
+        "matched_random_p97_5": matched.get("random_p97_5"),
+        "p_one_sided_vs_matched": matched.get("p_value_one_sided"),
+        "same_session_random_avg_net_return": same.get("random_mean"),
+        "p_one_sided_vs_same_session": same.get("p_value_one_sided"),
+    }
     for y in years:
         yr = by_year.get(y, {})
         row[f"scored_{y}"] = int(yr.get("scored", 0))
@@ -127,8 +154,13 @@ def select(table: pd.DataFrame, proto: dict, years: list[int]) -> dict | None:
 
 def selected_tuple(row: dict) -> tuple:
     """What goes into moonshot_e3.SELECTED."""
-    return (str(row["detector"]), str(row["entry_rule"]), int(row["entry_window"]), str(row["exit_rule"]),
-            int(row["holding_days"]))
+    return (
+        str(row["detector"]),
+        str(row["entry_rule"]),
+        int(row["entry_window"]),
+        str(row["exit_rule"]),
+        int(row["holding_days"]),
+    )
 
 
 def _runtime() -> dict:
@@ -140,7 +172,9 @@ def _now() -> str:
 
 
 def write_json(path: Path, obj) -> None:
-    path.write_text(json.dumps(_jsonable(obj), indent=2, sort_keys=True, default=str) + "\n", encoding="utf-8")
+    path.write_text(
+        json.dumps(_jsonable(obj), indent=2, sort_keys=True, default=str) + "\n", encoding="utf-8"
+    )
 
 
 def write_csv(path: Path, df: pd.DataFrame) -> None:
@@ -156,10 +190,18 @@ def recorded_run(run_dir: str) -> dict:
 
 
 def _stamp(proto_sha: str, proto: dict, stage: str, meta: dict, registry) -> dict:
-    return {"protocol_id": proto["protocol_id"], "protocol_sha256": proto_sha, "stage": stage, "computed_at": _now(),
-            "panel_sha256": meta["sha256"], "registry_sha256": registry[1]["sha256"],
-            "detector_module_sha256": sha256_file(Path(moonshot_e3.__file__)), "code": code_state(),
-            "runtime": _runtime(), "holdout": "sealed: the harness refuses any detector window that touches it"}
+    return {
+        "protocol_id": proto["protocol_id"],
+        "protocol_sha256": proto_sha,
+        "stage": stage,
+        "computed_at": _now(),
+        "panel_sha256": meta["sha256"],
+        "registry_sha256": registry[1]["sha256"],
+        "detector_module_sha256": sha256_file(Path(moonshot_e3.__file__)),
+        "code": code_state(),
+        "runtime": _runtime(),
+        "holdout": "sealed: the harness refuses any detector window that touches it",
+    }
 
 
 def run_reproduce(df, meta, registry, out: Path, proto: dict, proto_sha: str, log=print) -> dict:
@@ -171,34 +213,63 @@ def run_reproduce(df, meta, registry, out: Path, proto: dict, proto_sha: str, lo
     for run_dir in proto["precondition"]["runs"]:
         rec = recorded_run(run_dir)
         recorded = json.loads((PKG_ROOT / run_dir / "summary.json").read_text(encoding="utf-8"))
-        cfg_fields = {k: v for k, v in recorded["config"].items() if k in RunConfig.__dataclass_fields__}
+        cfg_fields = {
+            k: v for k, v in recorded["config"].items() if k in RunConfig.__dataclass_fields__
+        }
         cfg = RunConfig(**cfg_fields)
         log(f"reproducing {run_dir}")
         summary = run(cfg, df, meta, ca_registry=registry)["summary"]
 
         def facts(s):
-            return {"signals": s["signals"]["total"], "scored": s["rule_trades"]["scored"],
-                    "avg_net_return": s["rule_trades"]["avg_net_return"],
-                    "matched_random_avg_net_return": (s["random_matched"]["avg_net_return"] or {}).get("random_mean"),
-                    "status_counts": s["rule_trades"]["status_counts"]}
+            return {
+                "signals": s["signals"]["total"],
+                "scored": s["rule_trades"]["scored"],
+                "avg_net_return": s["rule_trades"]["avg_net_return"],
+                "matched_random_avg_net_return": (s["random_matched"]["avg_net_return"] or {}).get(
+                    "random_mean"
+                ),
+                "status_counts": s["rule_trades"]["status_counts"],
+            }
 
         want, got = facts(recorded), facts(summary)
         same = all(want[k] == got[k] for k in ("signals", "scored", "status_counts")) and all(
-            (want[k] is None and got[k] is None) or (want[k] is not None and got[k] is not None
-                                                     and abs(want[k] - got[k]) < 1e-12)
-            for k in ("avg_net_return", "matched_random_avg_net_return"))
-        results.append({"run_dir": run_dir, "run_id": rec["run_id"], "config": cfg_fields, "recorded": want,
-                        "reproduced": got, "recorded_panel_sha256": recorded["panel"]["panel_sha256"],
-                        "recorded_registry_sha256": recorded["corporate_action_model"].get("registry_sha256"),
-                        "status": "REPRODUCED" if same else "DEVIATES"})
-    result = {**_stamp(proto_sha, proto, "reproduce", meta, registry), "runs": results,
-              "status": "REPRODUCED" if all(r["status"] == "REPRODUCED" for r in results) else "DEVIATES"}
+            (want[k] is None and got[k] is None)
+            or (want[k] is not None and got[k] is not None and abs(want[k] - got[k]) < 1e-12)
+            for k in ("avg_net_return", "matched_random_avg_net_return")
+        )
+        results.append(
+            {
+                "run_dir": run_dir,
+                "run_id": rec["run_id"],
+                "config": cfg_fields,
+                "recorded": want,
+                "reproduced": got,
+                "recorded_panel_sha256": recorded["panel"]["panel_sha256"],
+                "recorded_registry_sha256": recorded["corporate_action_model"].get(
+                    "registry_sha256"
+                ),
+                "status": "REPRODUCED" if same else "DEVIATES",
+            }
+        )
+    result = {
+        **_stamp(proto_sha, proto, "reproduce", meta, registry),
+        "runs": results,
+        "status": "REPRODUCED" if all(r["status"] == "REPRODUCED" for r in results) else "DEVIATES",
+    }
     write_json(out / "result.json", result)
     return result
 
 
-def run_discovery(df, meta, registry, out: Path, proto: dict, proto_sha: str, log=print,
-                  accept_deviation: bool = False) -> dict:
+def run_discovery(
+    df,
+    meta,
+    registry,
+    out: Path,
+    proto: dict,
+    proto_sha: str,
+    log=print,
+    accept_deviation: bool = False,
+) -> dict:
     repro_path = E3_DIR / "reproduce" / "result.json"
     if not repro_path.exists():
         raise RuntimeError("the precondition has not been run (e3-reproduce)")
@@ -206,8 +277,10 @@ def run_discovery(df, meta, registry, out: Path, proto: dict, proto_sha: str, lo
     if repro["panel_sha256"] != meta["sha256"] or repro["registry_sha256"] != registry[1]["sha256"]:
         raise RuntimeError("the precondition ran on different data than this discovery")
     if repro["status"] != "REPRODUCED" and not accept_deviation:
-        raise RuntimeError("the recorded runs did not reproduce identically on this data; see "
-                           f"{rel(repro_path)} and pass --accept-deviation to proceed with that on record")
+        raise RuntimeError(
+            "the recorded runs did not reproduce identically on this data; see "
+            f"{rel(repro_path)} and pass --accept-deviation to proceed with that on record"
+        )
     out.mkdir(parents=True, exist_ok=False)
     years = years_of(proto["periods"]["discovery"])
     grid = plan_grid(proto)
@@ -216,13 +289,20 @@ def run_discovery(df, meta, registry, out: Path, proto: dict, proto_sha: str, lo
     for det in proto["detectors"]["candidates"]:
         rule_id = moonshot_e3.candidate_rule_id(det)
         for plan in grid:
-            summary = run(harness_config(proto, rule_id, "discovery", plan), df, meta, ca_registry=registry,
-                          signal_cache=cache)["summary"]
+            summary = run(
+                harness_config(proto, rule_id, "discovery", plan),
+                df,
+                meta,
+                ca_registry=registry,
+                signal_cache=cache,
+            )["summary"]
             row = plan_row(summary, det, plan, years)
             rows.append(row)
             summaries[row["plan_id"]] = summary
-            log(f"{row['plan_id']}: scored {row['scored']}, avg net {row['avg_net_return']}, "
-                f"matched {row['matched_random_avg_net_return']}, p {row['p_one_sided_vs_matched']}")
+            log(
+                f"{row['plan_id']}: scored {row['scored']}, avg net {row['avg_net_return']}, "
+                f"matched {row['matched_random_avg_net_return']}, p {row['p_one_sided_vs_matched']}"
+            )
     table = pd.DataFrame(rows)
     reasons = [admissibility(r, proto, years) for r in rows]
     table["admissible"] = [not r for r in reasons]
@@ -234,16 +314,24 @@ def run_discovery(df, meta, registry, out: Path, proto: dict, proto_sha: str, lo
     chosen = select(table, proto, years)
     if chosen is not None:
         write_json(out / "selected_summary.json", summaries[chosen["plan_id"]])
-    summary = {**_stamp(proto_sha, proto, "discovery", meta, registry),
-               "precondition": {"status": repro["status"], "accepted_deviation": bool(accept_deviation)},
-               "detectors": list(proto["detectors"]["candidates"]), "plans_per_detector": len(grid),
-               "runs": len(rows), "admissible": int(table["admissible"].sum()),
-               "reference_plan": next(r for r in rows if r["plan_id"] == ref_id),
-               "selected": chosen, "selected_tuple": list(selected_tuple(chosen)) if chosen else None,
-               "freeze": ("write selected_tuple into idxsig/rules/moonshot_e3.SELECTED and commit before "
-                          "e3-validation" if chosen else
-                          "no admissible plan: SELECTED stays None, MOONSHOT_E3_D1 is not created, the paper "
-                          "policy keeps PASS")}
+    summary = {
+        **_stamp(proto_sha, proto, "discovery", meta, registry),
+        "precondition": {"status": repro["status"], "accepted_deviation": bool(accept_deviation)},
+        "detectors": list(proto["detectors"]["candidates"]),
+        "plans_per_detector": len(grid),
+        "runs": len(rows),
+        "admissible": int(table["admissible"].sum()),
+        "reference_plan": next(r for r in rows if r["plan_id"] == ref_id),
+        "selected": chosen,
+        "selected_tuple": list(selected_tuple(chosen)) if chosen else None,
+        "freeze": (
+            "write selected_tuple into idxsig/rules/moonshot_e3.SELECTED and commit before "
+            "e3-validation"
+            if chosen
+            else "no admissible plan: SELECTED stays None, MOONSHOT_E3_D1 is not created, the paper "
+            "policy keeps PASS"
+        ),
+    }
     write_json(out / "summary.json", summary)
     return summary
 
@@ -256,10 +344,16 @@ def detection_evidence(df, meta, detector: str) -> dict:
 
     study = e1.Study(df, meta)
     result = study.evaluate(detector, "validation")
-    result.update({"stage": "validation-detection", "panel_sha256": meta["sha256"], "computed_at": _now(),
-                   "detector_module_sha256": sha256_file(Path(e1.family.__file__)),
-                   "note": "E1 metrics (KOD-IDX-E1-v1, e1.Study.evaluate) on the validation period for the E3 "
-                           "detector; for the paper policy's detection gate; not an E3 pass criterion"})
+    result.update(
+        {
+            "stage": "validation-detection",
+            "panel_sha256": meta["sha256"],
+            "computed_at": _now(),
+            "detector_module_sha256": sha256_file(Path(e1.family.__file__)),
+            "note": "E1 metrics (KOD-IDX-E1-v1, e1.Study.evaluate) on the validation period for the E3 "
+            "detector; for the paper policy's detection gate; not an E3 pass criterion",
+        }
+    )
     return result
 
 
@@ -268,27 +362,50 @@ def run_validation(df, meta, registry, out: Path, proto: dict, proto_sha: str, l
         raise RuntimeError("no frozen (detector, plan): run discovery and write SELECTED first")
     disc = json.loads((E3_DIR / "discovery" / "summary.json").read_text(encoding="utf-8"))
     if list(moonshot_e3.SELECTED) != list(disc["selected_tuple"] or []):
-        raise RuntimeError(f"moonshot_e3.SELECTED {moonshot_e3.SELECTED} is not the pair discovery selected "
-                           f"({disc['selected_tuple']})")
+        raise RuntimeError(
+            f"moonshot_e3.SELECTED {moonshot_e3.SELECTED} is not the pair discovery selected "
+            f"({disc['selected_tuple']})"
+        )
     out.mkdir(parents=True, exist_ok=False)
     log(f"validating {moonshot_e3.SELECTED}")
-    output = run(harness_config(proto, moonshot_e3.RULE_ID, "validation"), df, meta, ca_registry=registry)
+    output = run(
+        harness_config(proto, moonshot_e3.RULE_ID, "validation"), df, meta, ca_registry=registry
+    )
     run_dir = write_run(output)  # the trading run on record, committed, as E1's was
     summary = json.loads((run_dir / "summary.json").read_text(encoding="utf-8"))
     det, entry_rule, window, exit_rule, hold = moonshot_e3.SELECTED
-    plan = {"entry_rule": entry_rule, "entry_window": window, "exit_rule": exit_rule, "holding_days": hold}
+    plan = {
+        "entry_rule": entry_rule,
+        "entry_window": window,
+        "exit_rule": exit_rule,
+        "holding_days": hold,
+    }
     row = plan_row(summary, det, plan, years_of(proto["periods"]["validation"]))
     log(f"detection evidence for {det} (E1 metrics, validation)")
     write_json(out / "detection.json", detection_evidence(df, meta, det))
     v = proto["validation"]
-    passed = (row["scored"] >= v["min_scored"] and row["avg_net_return"] is not None and row["avg_net_return"] > 0
-              and row["p_one_sided_vs_matched"] is not None
-              and row["p_one_sided_vs_matched"] < v["max_p_one_sided_vs_matched"])
-    result = {**_stamp(proto_sha, proto, "validation", meta, registry), "selected": list(moonshot_e3.SELECTED),
-              "run_id": summary["run_id"], "run_dir": rel(run_dir), "plan_text": summary["execution"]["plan_text"],
-              "result": row, "criteria": v, "passed": bool(passed),
-              "consequence": ("PAPER-POLICY-v4 may underwrite a paper BUY ON TRIGGER for this pair; judged "
-                              "prospectively from here; no real orders" if passed else
-                              "the paper policy keeps PASS; this plan family is exhausted for these detectors")}
+    passed = (
+        row["scored"] >= v["min_scored"]
+        and row["avg_net_return"] is not None
+        and row["avg_net_return"] > 0
+        and row["p_one_sided_vs_matched"] is not None
+        and row["p_one_sided_vs_matched"] < v["max_p_one_sided_vs_matched"]
+    )
+    result = {
+        **_stamp(proto_sha, proto, "validation", meta, registry),
+        "selected": list(moonshot_e3.SELECTED),
+        "run_id": summary["run_id"],
+        "run_dir": rel(run_dir),
+        "plan_text": summary["execution"]["plan_text"],
+        "result": row,
+        "criteria": v,
+        "passed": bool(passed),
+        "consequence": (
+            "PAPER-POLICY-v4 may underwrite a paper BUY ON TRIGGER for this pair; judged "
+            "prospectively from here; no real orders"
+            if passed
+            else "the paper policy keeps PASS; this plan family is exhausted for these detectors"
+        ),
+    }
     write_json(out / "result.json", result)
     return result

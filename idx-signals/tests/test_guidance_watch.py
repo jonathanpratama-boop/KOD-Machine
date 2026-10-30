@@ -18,17 +18,23 @@ ITEM INFORMATION:\t\tResults of Operations and Financial Condition
 ITEM INFORMATION:\t\tFinancial Statements and Exhibits
 """
 
-OLD = ["Agilent has increased its outlook and now expects revenue of $5.825 billion to $5.900 billion for fiscal "
-       "year 2021."]
-NEW = ["Agilent has increased its outlook and now expects revenue in the range of $6.15 billion to $6.21 billion for "
-       "fiscal year 2021."]
+OLD = [
+    "Agilent has increased its outlook and now expects revenue of $5.825 billion to $5.900 billion for fiscal "
+    "year 2021."
+]
+NEW = [
+    "Agilent has increased its outlook and now expects revenue in the range of $6.15 billion to $6.21 billion for "
+    "fiscal year 2021."
+]
 
 
 class WatchTests(unittest.TestCase):
     def test_form_index_keeps_8k_rows(self):
         rows = w.form_index_8k(INDEX)
-        self.assertEqual([(r["form"], r["cik"], r["filed"]) for r in rows],
-                         [("8-K", 1090872, "2026-10-16"), ("8-K/A", 55, "2026-10-16")])
+        self.assertEqual(
+            [(r["form"], r["cik"], r["filed"]) for r in rows],
+            [("8-K", 1090872, "2026-10-16"), ("8-K/A", 55, "2026-10-16")],
+        )
         self.assertEqual(rows[0]["path"], "edgar/data/1090872/0001090872-26-000020.txt")
 
     def test_header_items(self):
@@ -50,10 +56,22 @@ class WatchTests(unittest.TestCase):
         self.assertEqual(w.revisions(state, 1, "X", "b", "2022-01-25T16:05:00", NEW)[0], [])
 
     def test_mismatch_is_flagged_not_traded(self):
-        _, state = w.revisions({}, 1, "X", "a", "2021-05-25T16:05:00",
-                               ["The company expects full year 2021 revenue of $100 million."])
-        ev, _ = w.revisions(state, 1, "X", "b", "2021-08-25T16:05:00",
-                            ["The company expects full year 2021 revenue of $300 million."])
+        _, state = w.revisions(
+            {},
+            1,
+            "X",
+            "a",
+            "2021-05-25T16:05:00",
+            ["The company expects full year 2021 revenue of $100 million."],
+        )
+        ev, _ = w.revisions(
+            state,
+            1,
+            "X",
+            "b",
+            "2021-08-25T16:05:00",
+            ["The company expects full year 2021 revenue of $300 million."],
+        )
         self.assertEqual(ev[0]["class"], "MISMATCH")
 
 

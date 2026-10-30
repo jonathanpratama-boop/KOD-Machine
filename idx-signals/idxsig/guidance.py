@@ -9,6 +9,7 @@ states the rule these functions implement:
   the same issuer's latest earlier release (at most 200 days earlier) that stated the same kind for the same fiscal
   year: RAISE if the level change is at least +1%, CUT if at most -1%, MAINTAIN otherwise.
 """
+
 from __future__ import annotations
 
 import html
@@ -20,21 +21,35 @@ CUT_AT = -0.01
 MAX_GAP_DAYS = 200
 
 REVENUE = re.compile(r"\b(revenues?|net sales|total sales|sales)\b", re.I)
-FORWARD = re.compile(r"\b(expects?|expected|expecting|outlook|guidance|anticipates?|anticipated|forecasts?|"
-                     r"projects?|projected|now sees|sees|targets?)\b", re.I)
+FORWARD = re.compile(
+    r"\b(expects?|expected|expecting|outlook|guidance|anticipates?|anticipated|forecasts?|"
+    r"projects?|projected|now sees|sees|targets?)\b",
+    re.I,
+)
 QUARTER = re.compile(r"\b(quarter|quarterly|Q[1-4])\b", re.I)
-FULL_YEAR = re.compile(r"\b(full[- ]year|fiscal[- ]year|for the year|annual|full fiscal|whole year|calendar year)\b",
-                       re.I)
+FULL_YEAR = re.compile(
+    r"\b(full[- ]year|fiscal[- ]year|for the year|annual|full fiscal|whole year|calendar year)\b",
+    re.I,
+)
 FISCAL_YEAR = re.compile(r"\b(?:fiscal(?:\s+year)?|full[- ]year|FY)\s*'?((?:20)?[12]\d)\b", re.I)
 YEAR = re.compile(r"\b(20[12]\d)\b")
 NUM = r"(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)"
 UNIT = r"\s*(billion|million|bn|mm)\b"
-DOLLAR_RANGE = re.compile(r"\$\s?" + NUM + r"(?:" + UNIT + r")?\s*(?:to|-|–|—|and)\s*\$?\s?" + NUM + UNIT,
-                          re.I)
+DOLLAR_RANGE = re.compile(
+    r"\$\s?" + NUM + r"(?:" + UNIT + r")?\s*(?:to|-|–|—|and)\s*\$?\s?" + NUM + UNIT, re.I
+)
 DOLLAR_ONE = re.compile(r"\$\s?" + NUM + UNIT, re.I)
-GROWTH_RANGE = re.compile(r"\b(grow\w*|growth|increase\w*|up|decline\w*|decrease\w*|down)\b[^.%$]{0,40}?" + NUM +
-                          r"\s*%\s*(?:to|-|–|—|and)\s*" + NUM + r"\s*%", re.I)
-GROWTH_ONE = re.compile(r"\b(grow\w*|growth|increase\w*|decline\w*|decrease\w*)\b[^.%$]{0,40}?" + NUM + r"\s*%", re.I)
+GROWTH_RANGE = re.compile(
+    r"\b(grow\w*|growth|increase\w*|up|decline\w*|decrease\w*|down)\b[^.%$]{0,40}?"
+    + NUM
+    + r"\s*%\s*(?:to|-|–|—|and)\s*"
+    + NUM
+    + r"\s*%",
+    re.I,
+)
+GROWTH_ONE = re.compile(
+    r"\b(grow\w*|growth|increase\w*|decline\w*|decrease\w*)\b[^.%$]{0,40}?" + NUM + r"\s*%", re.I
+)
 NEGATIVE = re.compile(r"^(decline|decrease|down)", re.I)
 DOC = re.compile(rb"<DOCUMENT>(.*?)</DOCUMENT>", re.S)
 DOC_TYPE = re.compile(rb"<TYPE>([^\r\n<]+)")
@@ -49,7 +64,7 @@ MAX_SENTENCE = 700
 @dataclass(frozen=True)
 class Guidance:
     fiscal_year: int
-    kind: str          # "dollar" (millions of USD) or "growth" (fraction)
+    kind: str  # "dollar" (millions of USD) or "growth" (fraction)
     low: float
     high: float
     sentence: str
@@ -99,9 +114,11 @@ def _year(token: str) -> int:
     return y + 2000 if y < 100 else y
 
 
-COMPARISON = re.compile(r"\b(?:compared (?:to|with)|versus|vs\.?|over|from|relative to|than)\s+(?:the\s+)?"
-                        r"(?:prior\s+|previous\s+)?(?:full[- ]year\s+|fiscal(?:\s+year)?\s+|FY\s*)?'?(?:20)?[12]\d\b",
-                        re.I)
+COMPARISON = re.compile(
+    r"\b(?:compared (?:to|with)|versus|vs\.?|over|from|relative to|than)\s+(?:the\s+)?"
+    r"(?:prior\s+|previous\s+)?(?:full[- ]year\s+|fiscal(?:\s+year)?\s+|FY\s*)?'?(?:20)?[12]\d\b",
+    re.I,
+)
 
 
 def fiscal_year(sentence: str) -> int | None:

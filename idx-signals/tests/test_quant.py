@@ -9,7 +9,11 @@ def planted(T=80, N=300, strength=0.15, seed=2):
     rng = np.random.default_rng(seed)
     sig = rng.normal(size=(T, N))
     fwd = strength * sig + rng.normal(size=(T, N))
-    return [sig + 0.5 * rng.normal(size=(T, N)), rng.normal(size=(T, N)), rng.normal(size=(T, N))], fwd
+    return [
+        sig + 0.5 * rng.normal(size=(T, N)),
+        rng.normal(size=(T, N)),
+        rng.normal(size=(T, N)),
+    ], fwd
 
 
 class RankTests(unittest.TestCase):
@@ -47,10 +51,14 @@ class WalkForwardTests(unittest.TestCase):
         t = 50
         a, _ = q.walk_forward_scores(feats, fwd, first=30, lam=10.0, embargo=1)
         fwd2 = fwd.copy()
-        fwd2[t - 1:] = np.random.default_rng(7).normal(size=fwd[t - 1:].shape) * 100     # everything not yet realised
+        fwd2[t - 1 :] = (
+            np.random.default_rng(7).normal(size=fwd[t - 1 :].shape) * 100
+        )  # everything not yet realised
         b, _ = q.walk_forward_scores(feats, fwd2, first=30, lam=10.0, embargo=1)
         np.testing.assert_allclose(a[t], b[t])
-        self.assertFalse(np.allclose(a[t + 5], b[t + 5], equal_nan=True))   # later months do see the change
+        self.assertFalse(
+            np.allclose(a[t + 5], b[t + 5], equal_nan=True)
+        )  # later months do see the change
 
 
 class StatsTests(unittest.TestCase):
@@ -81,14 +89,27 @@ class StatsTests(unittest.TestCase):
 class CostTests(unittest.TestCase):
     def test_impact_monotone_and_floor(self):
         self.assertAlmostEqual(float(q.impact_cost_per_side(0.0, 1e6, 0.03)), 0.0005)
-        self.assertGreater(float(q.impact_cost_per_side(1e5, 1e6, 0.03)), float(q.impact_cost_per_side(1e4, 1e6, 0.03)))
+        self.assertGreater(
+            float(q.impact_cost_per_side(1e5, 1e6, 0.03)),
+            float(q.impact_cost_per_side(1e4, 1e6, 0.03)),
+        )
 
     def test_net_spread_falls_with_aum_and_breakeven(self):
         m = 60
-        args = dict(gross=np.full(m, 0.01), turnover_long=np.full(m, 0.5), turnover_short=np.full(m, 0.5),
-                    adv_long=np.full(m, 5e6), adv_short=np.full(m, 5e6), vol_long=np.full(m, 0.03),
-                    vol_short=np.full(m, 0.03), n_leg=np.full(m, 100.0))
-        means = {a: float(q.net_spread_at_aum(aum=a, **args).mean()) for a in (1e4, 1e5, 1e6, 1e7, 1e8, 1e9)}
+        args = dict(
+            gross=np.full(m, 0.01),
+            turnover_long=np.full(m, 0.5),
+            turnover_short=np.full(m, 0.5),
+            adv_long=np.full(m, 5e6),
+            adv_short=np.full(m, 5e6),
+            vol_long=np.full(m, 0.03),
+            vol_short=np.full(m, 0.03),
+            n_leg=np.full(m, 100.0),
+        )
+        means = {
+            a: float(q.net_spread_at_aum(aum=a, **args).mean())
+            for a in (1e4, 1e5, 1e6, 1e7, 1e8, 1e9)
+        }
         vals = [means[a] for a in sorted(means)]
         self.assertTrue(all(x >= y for x, y in zip(vals, vals[1:])))
         be = q.breakeven_aum(means)

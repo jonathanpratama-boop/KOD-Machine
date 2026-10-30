@@ -36,14 +36,22 @@ from .profiles import PROFILES
 from .provenance import PKG_ROOT, sha256_file, utc_stamp
 
 PROTOCOL_DIR = PKG_ROOT / "research" / "SPECULATION_REGISTER_v1"
-PROTOCOL_JSON = PROTOCOL_DIR / "protocol_v1_1.json"  # KOD-SPEC-REGISTER-v1.1 (ADDENDUM_1.md); v1 sets keep their own
-PROTOCOL_VERSIONS = {"KOD-SPEC-REGISTER-v1": PROTOCOL_DIR / "protocol.json", "KOD-SPEC-REGISTER-v1.1": PROTOCOL_JSON}
+PROTOCOL_JSON = (
+    PROTOCOL_DIR / "protocol_v1_1.json"
+)  # KOD-SPEC-REGISTER-v1.1 (ADDENDUM_1.md); v1 sets keep their own
+PROTOCOL_VERSIONS = {
+    "KOD-SPEC-REGISTER-v1": PROTOCOL_DIR / "protocol.json",
+    "KOD-SPEC-REGISTER-v1.1": PROTOCOL_JSON,
+}
 SPEC_LEDGER = paper.PAPER / "speculations.jsonl"
 REPORT = paper.PAPER / "SPECULATIONS.md"
 REGISTER_VERSION = "spec-register-v1.1"
 RESOLVER_ID = "spec-resolve-v1.1"
 WINDOW_ORDER = ("BASE5", "PATH20", "NEXT1")
-V1_WINDOWS = ("BASE5", "PATH20")  # the windows of a set sealed under v1 (no "windows" field, or those two)
+V1_WINDOWS = (
+    "BASE5",
+    "PATH20",
+)  # the windows of a set sealed under v1 (no "windows" field, or those two)
 PLAN = "BASE5"
 TWINS = 5
 MIN_POOL = 5
@@ -53,9 +61,11 @@ REDENOMINATION = 10.0  # crypto: a close/previous ratio beyond this (or its inve
 RECONCILE_RTOL = paper.RECONCILE_RTOL
 # Trade dispersion of the 2023 validation runs (results/runs/<id>/trades.csv.gz, scored trades), used only to
 # project the sessions a look needs until the register has ten resolved sessions of its own.
-VALIDATION_SD = {"IDX": (0.1967, "20261009T050040Z_MOONSHOT_E1_D1_v1.1"),
-                 "US": (0.3429, "20261008T115656Z_MOONSHOT_E2_US_D1_v1"),
-                 "CRYPTO": (0.3486, "20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1")}
+VALIDATION_SD = {
+    "IDX": (0.1967, "20261009T050040Z_MOONSHOT_E1_D1_v1.1"),
+    "US": (0.3429, "20261008T115656Z_MOONSHOT_E2_US_D1_v1"),
+    "CRYPTO": (0.3486, "20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1"),
+}
 
 
 def protocol() -> tuple[dict, str]:
@@ -87,8 +97,13 @@ def entry_cutoff(market: str, signal_session: str) -> datetime:
 
 def scan_features(scan: dict) -> pd.DataFrame:
     path = PKG_ROOT / scan["features_file"]
-    return pd.read_csv(path, dtype={"ticker": str}, keep_default_na=False, na_values=[""],
-                       compression="gzip" if path.suffix == ".gz" else None)
+    return pd.read_csv(
+        path,
+        dtype={"ticker": str},
+        keep_default_na=False,
+        na_values=[""],
+        compression="gzip" if path.suffix == ".gz" else None,
+    )
 
 
 def _bucket(values: pd.Series, n: int) -> np.ndarray:
@@ -100,8 +115,16 @@ def twin_seed(decision_id: str) -> int:
     return int(hashlib.sha256(f"KOD-SPEC-REGISTER-v1:{decision_id}".encode()).hexdigest()[:8], 16)
 
 
-def draw_twins(feats: pd.DataFrame, candidate: str, candidates: list[str], selected: str, market: str, seed: int,
-               k: int = TWINS, min_pool: int = MIN_POOL) -> tuple[list[dict], str]:
+def draw_twins(
+    feats: pd.DataFrame,
+    candidate: str,
+    candidates: list[str],
+    selected: str,
+    market: str,
+    seed: int,
+    k: int = TWINS,
+    min_pool: int = MIN_POOL,
+) -> tuple[list[dict], str]:
     """Five matched names from the scan's own features (protocol: Twins). Returns (twins, match level)."""
     prof = PROFILES[market]
     f = feats.copy()
@@ -135,10 +158,21 @@ def draw_twins(feats: pd.DataFrame, candidate: str, candidates: list[str], selec
     rows = chosen.set_index("ticker").loc[picked]
     twins = []
     for t, r in rows.iterrows():
-        twins.append({"ticker": t, "close": float(r["close"]), "previous": _num(r["previous"]),
-                      "adv20_value": _num(r["adv20_value"]), "ret20": _num(r["ret20"]), "dd60": _num(r["dd60"]),
-                      "volr": _num(r["volr"]), "band": int(r["band"]), "liquidity_quintile": int(r["liq"]),
-                      "momentum_tercile": int(r["mom"]), "drawdown_tercile": int(r["dd"])})
+        twins.append(
+            {
+                "ticker": t,
+                "close": float(r["close"]),
+                "previous": _num(r["previous"]),
+                "adv20_value": _num(r["adv20_value"]),
+                "ret20": _num(r["ret20"]),
+                "dd60": _num(r["dd60"]),
+                "volr": _num(r["volr"]),
+                "band": int(r["band"]),
+                "liquidity_quintile": int(r["liq"]),
+                "momentum_tercile": int(r["mom"]),
+                "drawdown_tercile": int(r["dd"]),
+            }
+        )
     return twins, level_name
 
 
@@ -152,25 +186,43 @@ def _num(v):
 
 def tag(market: str, scan: dict, ledger: list[dict]) -> dict:
     sel = scan["detector"]["selected"]
-    earlier = [r for r in ledger if r["type"] == "SCAN" and r.get("market", "IDX") == market
-               and r["session"] < scan["session"] and r["detector"]["selected"] == sel]
-    counts = [len(r["flags"].get(sel, [])) for r in sorted(earlier, key=lambda r: r["session"])[-20:]]
+    earlier = [
+        r
+        for r in ledger
+        if r["type"] == "SCAN"
+        and r.get("market", "IDX") == market
+        and r["session"] < scan["session"]
+        and r["detector"]["selected"] == sel
+    ]
+    counts = [
+        len(r["flags"].get(sel, [])) for r in sorted(earlier, key=lambda r: r["session"])[-20:]
+    ]
     today = len(scan["flags"].get(sel, []))
     median = float(np.median(counts)) if counts else None
-    return {"flags_today": today, "earlier_scans": len(counts), "trailing_median": median,
-            "hot_day": (today > median) if len(counts) >= 10 else None}
+    return {
+        "flags_today": today,
+        "earlier_scans": len(counts),
+        "trailing_median": median,
+        "hot_day": (today > median) if len(counts) >= 10 else None,
+    }
 
 
 def running_prior(market: str, statement_id: str, specs: list[dict]) -> tuple[float, int]:
     counted = (r for r in paper.latest_resolutions(specs).values() if r.get("market") == market)
-    outcomes = [c["outcome"] for r in counted for c in r.get("cone", []) if c["id"] == statement_id and c.get("outcome") is not None]
+    outcomes = [
+        c["outcome"]
+        for r in counted
+        for c in r.get("cone", [])
+        if c["id"] == statement_id and c.get("outcome") is not None
+    ]
     if len(outcomes) < RUNNING_MIN_N:
         return 0.5, len(outcomes)
     return float(np.mean(outcomes)), len(outcomes)
 
 
-def pending_decisions(market: str, now: datetime, ledger: list[dict] | None = None,
-                      specs: list[dict] | None = None) -> list[tuple[dict, dict]]:
+def pending_decisions(
+    market: str, now: datetime, ledger: list[dict] | None = None, specs: list[dict] | None = None
+) -> list[tuple[dict, dict]]:
     """Decisions of the market's protocol detector with no set yet whose entry cutoff is still ahead."""
     proto, _ = protocol()
     ledger = paper.ledger_lines() if ledger is None else ledger
@@ -179,7 +231,11 @@ def pending_decisions(market: str, now: datetime, ledger: list[dict] | None = No
     scans = {r["scan_id"]: r for r in ledger if r["type"] == "SCAN"}
     out = []
     for r in ledger:
-        if r["type"] != "DECISION" or r.get("market", "IDX") != market or r["decision_id"] in sealed:
+        if (
+            r["type"] != "DECISION"
+            or r.get("market", "IDX") != market
+            or r["decision_id"] in sealed
+        ):
             continue
         if r["decision"] in proto["markets"][market]["excluded_decisions"]:
             continue
@@ -191,23 +247,41 @@ def pending_decisions(market: str, now: datetime, ledger: list[dict] | None = No
     return out
 
 
-def build_set(decision: dict, scan: dict, feats: pd.DataFrame, ledger: list[dict], specs: list[dict],
-              now: datetime, quotes: dict | None = None) -> dict:
+def build_set(
+    decision: dict,
+    scan: dict,
+    feats: pd.DataFrame,
+    ledger: list[dict],
+    specs: list[dict],
+    now: datetime,
+    quotes: dict | None = None,
+) -> dict:
     proto, proto_sha = protocol()
     market = decision.get("market", "IDX")
     sel = scan["detector"]["selected"]
     ticker = decision["instrument"]["ticker"]
     cutoff = entry_cutoff(market, decision["signal_session"])
     if now >= cutoff:
-        raise ValueError(f"{decision['decision_id']}: the entry cutoff {utc_stamp(cutoff)} has passed; not a speculation")
+        raise ValueError(
+            f"{decision['decision_id']}: the entry cutoff {utc_stamp(cutoff)} has passed; not a speculation"
+        )
     row = feats[feats["ticker"] == ticker]
     if row.empty:
         raise ValueError(f"{ticker} is not in {scan['features_file']}")
     row = row.iloc[0]
     recorded = float(decision["verified_price"]["close"])
     if not math.isclose(float(row["close"]), recorded, rel_tol=1e-6):
-        raise ValueError(f"{ticker}: features close {row['close']} differs from the decision's {recorded}")
-    twins, level = draw_twins(feats, ticker, list(scan["candidates_ranked"]), sel, market, twin_seed(decision["decision_id"]))
+        raise ValueError(
+            f"{ticker}: features close {row['close']} differs from the decision's {recorded}"
+        )
+    twins, level = draw_twins(
+        feats,
+        ticker,
+        list(scan["candidates_ranked"]),
+        sel,
+        market,
+        twin_seed(decision["decision_id"]),
+    )
     quotes = quotes or {}
     if market == "CRYPTO":
         for tw in twins:
@@ -221,37 +295,87 @@ def build_set(decision: dict, scan: dict, feats: pd.DataFrame, ledger: list[dict
             source = f"register running base rate (n {n}; 0.5 below {RUNNING_MIN_N})"
         else:
             prior, source = float(st["prior"][market]), st["prior_source"]
-        cone.append({"id": st["id"], "statement": st["statement"], "prior": prior, "prior_source": source,
-                     "resolves_with": st["resolves_with"]})
+        cone.append(
+            {
+                "id": st["id"],
+                "statement": st["statement"],
+                "prior": prior,
+                "prior_source": source,
+                "resolves_with": st["resolves_with"],
+            }
+        )
     q = quotes.get(ticker) if market == "CRYPTO" else None
-    entry = {"IDX": {"basis": "close", "session": paper._next_session(decision["signal_session"], "IDX"),
-                     "text": "the next session's closing auction, if traded and not locked at ARA"},
-             "US": {"basis": "open", "session": paper._next_session(decision["signal_session"], "US"),
-                    "text": "the next session's opening print"},
-             "CRYPTO": {"basis": "quote", "session": paper._next_session(decision["signal_session"], "CRYPTO"),
-                        "quote": float(q[0]) if q else None, "quote_time": q[1] if q else None,
-                        "quote_source": "Binance spot ticker price at sealing time",
-                        "decision_quote": decision["verified_price"].get("quote"),
-                        "text": "the Binance spot quote taken at sealing time (the harness used the next day's open)"}}[market]
+    entry = {
+        "IDX": {
+            "basis": "close",
+            "session": paper._next_session(decision["signal_session"], "IDX"),
+            "text": "the next session's closing auction, if traded and not locked at ARA",
+        },
+        "US": {
+            "basis": "open",
+            "session": paper._next_session(decision["signal_session"], "US"),
+            "text": "the next session's opening print",
+        },
+        "CRYPTO": {
+            "basis": "quote",
+            "session": paper._next_session(decision["signal_session"], "CRYPTO"),
+            "quote": float(q[0]) if q else None,
+            "quote_time": q[1] if q else None,
+            "quote_source": "Binance spot ticker price at sealing time",
+            "decision_quote": decision["verified_price"].get("quote"),
+            "text": "the Binance spot quote taken at sealing time (the harness used the next day's open)",
+        },
+    }[market]
     return {
-        "type": "SPECULATION_SET", "register": REGISTER_VERSION, "market": market,
-        "set_id": f"SPEC-{decision['decision_id']}", "decision_id": decision["decision_id"],
-        "decision_record_hash": decision["record_hash"], "decision": decision["decision"],
-        "scan_id": scan["scan_id"], "scan_record_hash": scan["record_hash"],
-        "features_file": scan["features_file"], "features_sha256": scan["features_sha256"],
-        "ticker": ticker, "signal_session": decision["signal_session"], "sealed_at": utc_stamp(now),
-        "entry_cutoff": utc_stamp(cutoff), "entry": entry,
-        "signal": {k: _num(row[k]) for k in ("close", "previous", "high", "low", "volume", "adv20_value", "ret1",
-                                             "ret5", "ret20", "volr", "cpos", "dd60")},
-        "twins": twins, "twins_match_level": level, "twins_seed": twin_seed(decision["decision_id"]),
+        "type": "SPECULATION_SET",
+        "register": REGISTER_VERSION,
+        "market": market,
+        "set_id": f"SPEC-{decision['decision_id']}",
+        "decision_id": decision["decision_id"],
+        "decision_record_hash": decision["record_hash"],
+        "decision": decision["decision"],
+        "scan_id": scan["scan_id"],
+        "scan_record_hash": scan["record_hash"],
+        "features_file": scan["features_file"],
+        "features_sha256": scan["features_sha256"],
+        "ticker": ticker,
+        "signal_session": decision["signal_session"],
+        "sealed_at": utc_stamp(now),
+        "entry_cutoff": utc_stamp(cutoff),
+        "entry": entry,
+        "signal": {
+            k: _num(row[k])
+            for k in (
+                "close",
+                "previous",
+                "high",
+                "low",
+                "volume",
+                "adv20_value",
+                "ret1",
+                "ret5",
+                "ret20",
+                "volr",
+                "cpos",
+                "dd60",
+            )
+        },
+        "twins": twins,
+        "twins_match_level": level,
+        "twins_seed": twin_seed(decision["decision_id"]),
         "tag": tag(market, scan, ledger),
-        "cone": cone, "windows": list(WINDOW_ORDER), "plan": PLAN,
+        "cone": cone,
+        "windows": list(WINDOW_ORDER),
+        "plan": PLAN,
         "protocol": {"id": proto["protocol_id"], "sha256": proto_sha},
-        "detector": decision["detector"], "policy": decision.get("policy"),
+        "detector": decision["detector"],
+        "policy": decision.get("policy"),
     }
 
 
-def seal(market: str, now: datetime | None = None, timestamper=None, quotes=None) -> tuple[list[Path], list[dict]]:
+def seal(
+    market: str, now: datetime | None = None, timestamper=None, quotes=None
+) -> tuple[list[Path], list[dict]]:
     """Seal a set for every pending decision of the market. Returns (files written, sets)."""
     now = now or datetime.now(timezone.utc)
     ledger, specs = paper.ledger_lines(), spec_lines()
@@ -265,15 +389,24 @@ def seal(market: str, now: datetime | None = None, timestamper=None, quotes=None
     if market == "CRYPTO" and quotes is not None:
         names = set()
         for decision, scan in pending:
-            tw, _ = draw_twins(feats_cache[scan["scan_id"]], decision["instrument"]["ticker"],
-                               list(scan["candidates_ranked"]), scan["detector"]["selected"], market,
-                               twin_seed(decision["decision_id"]))
+            tw, _ = draw_twins(
+                feats_cache[scan["scan_id"]],
+                decision["instrument"]["ticker"],
+                list(scan["candidates_ranked"]),
+                scan["detector"]["selected"],
+                market,
+                twin_seed(decision["decision_id"]),
+            )
             names |= {decision["instrument"]["ticker"], *(t["ticker"] for t in tw)}
         live = quotes(sorted(names))
-    records = [build_set(decision, scan, feats_cache[scan["scan_id"]], ledger, specs, now, live)
-               for decision, scan in pending]
+    records = [
+        build_set(decision, scan, feats_cache[scan["scan_id"]], ledger, specs, now, live)
+        for decision, scan in pending
+    ]
     stored = paper.append(records, path=SPEC_LEDGER, timestamper=timestamper)
-    tokens = [paper.TOKENS / f"{r['record_hash']}.{a}.tsr" for r in stored for a in ("freetsa", "sectigo")]
+    tokens = [
+        paper.TOKENS / f"{r['record_hash']}.{a}.tsr" for r in stored for a in ("freetsa", "sectigo")
+    ]
     return [SPEC_LEDGER, *[t for t in tokens if t.exists()]], stored
 
 
@@ -290,13 +423,19 @@ def redenominated(m, n: int, d: int, horizon: int, market: str) -> bool:
     if market != "CRYPTO":
         return False
     hi = min(d + horizon, m.shape[1] - 1)
-    close, prev, present = m.close[n, d + 1: hi + 1], m.prev[n, d + 1: hi + 1], m.present[n, d + 1: hi + 1]
+    close, prev, present = (
+        m.close[n, d + 1 : hi + 1],
+        m.prev[n, d + 1 : hi + 1],
+        m.present[n, d + 1 : hi + 1],
+    )
     with np.errstate(divide="ignore", invalid="ignore"):
         ratio = np.where(present & (prev > 0), close / prev, 1.0)
     return bool(np.any((ratio > REDENOMINATION) | (ratio < 1 / REDENOMINATION)))
 
 
-def simulate(m, n: int, d: int, plan: dict, market: str, quote: float | None = None, unit_factor=None) -> dict | None:
+def simulate(
+    m, n: int, d: int, plan: dict, market: str, quote: float | None = None, unit_factor=None
+) -> dict | None:
     """One name (row n) under the frozen plan from signal session d. None while the window is still open (a
     roll past the bars); otherwise {"status": TRADED | NOT_FILLABLE | REDENOMINATION, "trade": {...} | None}."""
     prof = PROFILES[market]
@@ -309,8 +448,11 @@ def simulate(m, n: int, d: int, plan: dict, market: str, quote: float | None = N
     if e > last:
         return None
     if redenominated(m, n, d, e - d + hold, market):
-        return {"status": "REDENOMINATION", "trade": None,
-                "reason": f"a close/previous ratio beyond {REDENOMINATION:g}x inside the window: a redenomination, not a move"}
+        return {
+            "status": "REDENOMINATION",
+            "trade": None,
+            "reason": f"a close/previous ratio beyond {REDENOMINATION:g}x inside the window: a redenomination, not a move",
+        }
 
     def sellable(k):
         if market == "IDX":
@@ -329,17 +471,27 @@ def simulate(m, n: int, d: int, plan: dict, market: str, quote: float | None = N
     else:
         ok, price, basis = bool(quote is not None and quote > 0), float(quote or 0), "quote"
     if not ok:
-        return {"status": "NOT_FILLABLE", "trade": None,
-                "reason": {"IDX": "not traded or locked at ARA on the entry session",
-                           "US": "no opening print on the entry session",
-                           "CRYPTO": "no quote at sealing time"}[market]}
+        return {
+            "status": "NOT_FILLABLE",
+            "trade": None,
+            "reason": {
+                "IDX": "not traded or locked at ARA on the entry session",
+                "US": "no opening print on the entry session",
+                "CRYPTO": "no quote at sealing time",
+            }[market],
+        }
     target, reason = e + hold, "horizon"
     x = next((k for k in range(target, last + 1) if sellable(k)), None)
     if x is None:
         present_idx = np.flatnonzero(present)
         traded_idx = np.flatnonzero(m.tradeable[n])
-        if len(present_idx) and present_idx[-1] < target and last >= target + DATA_END_GRACE and len(traded_idx) \
-                and traded_idx[-1] >= e:
+        if (
+            len(present_idx)
+            and present_idx[-1] < target
+            and last >= target + DATA_END_GRACE
+            and len(traded_idx)
+            and traded_idx[-1] >= e
+        ):
             x, reason = int(traded_idx[-1]), "data end"
         else:
             return None
@@ -358,11 +510,25 @@ def simulate(m, n: int, d: int, plan: dict, market: str, quote: float | None = N
         path = [float(level[k] / level[e] - 1) for k in range(e + 1, x + 1) if present[k]]
     else:
         path = [float(close[k] / price - 1) for k in range(e, x + 1) if present[k] and close[k] > 0]
-    return {"status": "TRADED", "trade": {
-        "entry_session": str(dates[e]), "entry_price": price, "entry_basis": basis, "entry_lag_sessions": e - d,
-        "exit_session": str(dates[x]), "exit_reason": reason + (f" (rolled {x - target})" if x > target and reason != "data end" else ""),
-        "gross_return": gross, "net_return": float(net), "cost_in": float(fee_in), "cost_out": float(fee_out),
-        "mfe": max(path) if path else 0.0, "mae": min(path) if path else 0.0, "sessions_held": x - e}}
+    return {
+        "status": "TRADED",
+        "trade": {
+            "entry_session": str(dates[e]),
+            "entry_price": price,
+            "entry_basis": basis,
+            "entry_lag_sessions": e - d,
+            "exit_session": str(dates[x]),
+            "exit_reason": reason
+            + (f" (rolled {x - target})" if x > target and reason != "data end" else ""),
+            "gross_return": gross,
+            "net_return": float(net),
+            "cost_in": float(fee_in),
+            "cost_out": float(fee_out),
+            "mfe": max(path) if path else 0.0,
+            "mae": min(path) if path else 0.0,
+            "sessions_held": x - e,
+        },
+    }
 
 
 def path_statement(m, n: int, d: int, horizon: int, multiple: float) -> bool | None:
@@ -370,7 +536,7 @@ def path_statement(m, n: int, d: int, horizon: int, multiple: float) -> bool | N
     hi = min(d + horizon, m.shape[1] - 1)
     if hi < d + horizon:
         return None
-    seg = level[d + 1: hi + 1][m.present[n, d + 1: hi + 1]]
+    seg = level[d + 1 : hi + 1][m.present[n, d + 1 : hi + 1]]
     return bool(len(seg) and seg.max() / level[d] >= multiple)
 
 
@@ -382,8 +548,15 @@ def next_return(m, n: int, d: int) -> float | None:
     return float(level[d + 1] / level[d] - 1)
 
 
-def statement_outcome(sid: str, m, n: int, d: int, result: dict | None, twin_nets: list[float],
-                      twin_r1: list[float] | None = None) -> bool | None:
+def statement_outcome(
+    sid: str,
+    m,
+    n: int,
+    d: int,
+    result: dict | None,
+    twin_nets: list[float],
+    twin_r1: list[float] | None = None,
+) -> bool | None:
     """One statement for one name. `result` is the name's BASE5 simulation (None for a path-only name); `twin_r1` the
     other names' next-session returns (NEXT1 statements only)."""
     net = (result or {}).get("trade", {}) if result else {}
@@ -412,8 +585,14 @@ def statement_outcome(sid: str, m, n: int, d: int, result: dict | None, twin_net
     return None
 
 
-def cone_outcomes(statements: list[dict], window_id: str, m, d: int, candidate: tuple[int, dict | None],
-                  twins: list[tuple[int, dict | None]]) -> list[dict]:
+def cone_outcomes(
+    statements: list[dict],
+    window_id: str,
+    m,
+    d: int,
+    candidate: tuple[int, dict | None],
+    twins: list[tuple[int, dict | None]],
+) -> list[dict]:
     """Grade the statements of `window_id` for the candidate (row, BASE5 result) and each twin (row, result)."""
     n, cres = candidate
     twin_nets = [r["trade"]["net_return"] for _, r in twins if r and r.get("trade")]
@@ -424,15 +603,30 @@ def cone_outcomes(statements: list[dict], window_id: str, m, d: int, candidate: 
         if st["resolves_with"] != window_id:
             continue
         o = statement_outcome(st["id"], m, n, d, cres, twin_nets, twin_r1)
-        rec = {"id": st["id"], "prior": st["prior"], "outcome": o,
-               "brier": None if o is None else float((st["prior"] - float(o)) ** 2)}
+        rec = {
+            "id": st["id"],
+            "prior": st["prior"],
+            "outcome": o,
+            "brier": None if o is None else float((st["prior"] - float(o)) ** 2),
+        }
         if o is None:
             rec["note"] = "not graded: no position (or no twin traded)"
         tw = []
         for tn, tres in twins:
-            others = [r["trade"]["net_return"] for k, r in twins if k != tn and r and r.get("trade")]
-            tw.append(statement_outcome(st["id"], m, tn, d, tres, others,
-                                        [v for k, v in r1_all.items() if k != tn and v is not None]))
+            others = [
+                r["trade"]["net_return"] for k, r in twins if k != tn and r and r.get("trade")
+            ]
+            tw.append(
+                statement_outcome(
+                    st["id"],
+                    m,
+                    tn,
+                    d,
+                    tres,
+                    others,
+                    [v for k, v in r1_all.items() if k != tn and v is not None],
+                )
+            )
         known = [x for x in tw if x is not None]
         rec["twins_rate"] = float(np.mean(known)) if known else None
         rec["twins_graded"] = len(known)
@@ -441,7 +635,9 @@ def cone_outcomes(statements: list[dict], window_id: str, m, d: int, candidate: 
 
 
 # ---------------------------------------------------------------------------------- resolution
-def due(market: str, today: str | None = None, specs: list[dict] | None = None) -> list[tuple[str, str]]:
+def due(
+    market: str, today: str | None = None, specs: list[dict] | None = None
+) -> list[tuple[str, str]]:
     """(set_id, window) pairs whose window can have ended by `today` (calendar check, no data pull)."""
     specs = spec_lines() if specs is None else specs
     today = np.datetime64(today or datetime.now(timezone.utc).date().isoformat(), "D")
@@ -451,7 +647,11 @@ def due(market: str, today: str | None = None, specs: list[dict] | None = None) 
         if s["type"] != "SPECULATION_SET" or s["market"] != market:
             continue
         sig = np.datetime64(s["signal_session"], "D")
-        elapsed = int((today - sig).astype(int)) if market == "CRYPTO" else int(np.busday_count(sig, today))
+        elapsed = (
+            int((today - sig).astype(int))
+            if market == "CRYPTO"
+            else int(np.busday_count(sig, today))
+        )
         for wid in s.get("windows", V1_WINDOWS):  # a set's own windows: a v1 set never opens NEXT1
             w = windows()[wid]
             if (s["set_id"], wid) in done:
@@ -461,7 +661,15 @@ def due(market: str, today: str | None = None, specs: list[dict] | None = None) 
     return out
 
 
-def _units_for(name: str, signal_session: str, recorded_close: float, m, events: pd.DataFrame, verify, market: str):
+def _units_for(
+    name: str,
+    signal_session: str,
+    recorded_close: float,
+    m,
+    events: pd.DataFrame,
+    verify,
+    market: str,
+):
     """((row, signal index, unit factor) or None, units record, reason). Reconciles the recorded close as
     paper-score does: units from split records (SEC-corroborated for US), never from a price ratio."""
     tickers = list(m.tickers)
@@ -480,14 +688,30 @@ def _units_for(name: str, signal_session: str, recorded_close: float, m, events:
     from .price_units import split_conversion_factor
 
     def uf(k):
-        return split_conversion_factor(str(dates[k]), units["actions"], units["adjustment_reference"],
-                                       coverage_complete=units.get("coverage_complete", False))
+        return split_conversion_factor(
+            str(dates[k]),
+            units["actions"],
+            units["adjustment_reference"],
+            coverage_complete=units.get("coverage_complete", False),
+        )
 
     cd = float(m.close[n, d])
-    if not (recorded_close > 0 and np.isfinite(cd) and cd > 0 and np.isclose(cd * uf(d), recorded_close, rtol=RECONCILE_RTOL)):
-        return None, None, f"recorded signal close {recorded_close:g} does not reconcile with the scoring bars (rtol {RECONCILE_RTOL})"
-    return (n, d, uf if market != "CRYPTO" else None), {"actions": units["actions"], "evidence": evidence,
-                                                         "convention": units["convention"]}, None
+    if not (
+        recorded_close > 0
+        and np.isfinite(cd)
+        and cd > 0
+        and np.isclose(cd * uf(d), recorded_close, rtol=RECONCILE_RTOL)
+    ):
+        return (
+            None,
+            None,
+            f"recorded signal close {recorded_close:g} does not reconcile with the scoring bars (rtol {RECONCILE_RTOL})",
+        )
+    return (
+        (n, d, uf if market != "CRYPTO" else None),
+        {"actions": units["actions"], "evidence": evidence, "convention": units["convention"]},
+        None,
+    )
 
 
 def resolve_set(s: dict, window_id: str, m, events: pd.DataFrame, verify=None) -> dict | None:
@@ -500,10 +724,22 @@ def resolve_set(s: dict, window_id: str, m, events: pd.DataFrame, verify=None) -
     d0 = int(np.flatnonzero(dates == s["signal_session"])[0])
     if d0 + window_length(w) > m.shape[1] - 1:
         return None
-    base = {"type": "RESOLUTION", "register": REGISTER_VERSION, "resolver": RESOLVER_ID, "market": market,
-            "set_id": s["set_id"], "window": window_id, "ticker": s["ticker"], "signal_session": s["signal_session"],
-            "resolved_at": utc_stamp(), "preprocessing": paper.SCORING_PREPROCESSING[market], "protocol": s["protocol"]}
-    located, units, reason = _units_for(s["ticker"], s["signal_session"], float(s["signal"]["close"]), m, events, verify, market)
+    base = {
+        "type": "RESOLUTION",
+        "register": REGISTER_VERSION,
+        "resolver": RESOLVER_ID,
+        "market": market,
+        "set_id": s["set_id"],
+        "window": window_id,
+        "ticker": s["ticker"],
+        "signal_session": s["signal_session"],
+        "resolved_at": utc_stamp(),
+        "preprocessing": paper.SCORING_PREPROCESSING[market],
+        "protocol": s["protocol"],
+    }
+    located, units, reason = _units_for(
+        s["ticker"], s["signal_session"], float(s["signal"]["close"]), m, events, verify, market
+    )
     if located is None:
         return {**base, "status": "UNRESOLVABLE", "reason": reason}
     n, d, uf = located
@@ -513,46 +749,101 @@ def resolve_set(s: dict, window_id: str, m, events: pd.DataFrame, verify=None) -
             return {**base, "status": "UNRESOLVABLE", "reason": "redenomination inside the window"}
         cand = None
     else:
-        cand = simulate(m, n, d, plan, market, quote=s["entry"].get("quote") if market == "CRYPTO" else None, unit_factor=uf)
+        cand = simulate(
+            m,
+            n,
+            d,
+            plan,
+            market,
+            quote=s["entry"].get("quote") if market == "CRYPTO" else None,
+            unit_factor=uf,
+        )
         if cand is None:
             return None
         if cand["status"] == "REDENOMINATION":
             return {**base, "status": "UNRESOLVABLE", "reason": cand["reason"]}
     twins, graded = [], []
     for tw in s["twins"]:
-        loc, tunits, treason = _units_for(tw["ticker"], s["signal_session"], float(tw["close"]), m, events, verify, market)
+        loc, tunits, treason = _units_for(
+            tw["ticker"], s["signal_session"], float(tw["close"]), m, events, verify, market
+        )
         if loc is None:
-            twins.append({"ticker": tw["ticker"], "status": "DROPPED", "reason": treason, "trade": None})
+            twins.append(
+                {"ticker": tw["ticker"], "status": "DROPPED", "reason": treason, "trade": None}
+            )
             continue
         tn, td, tuf = loc
         if w["kind"] == "path":
             if redenominated(m, tn, td, int(w["horizon"]), market):
-                twins.append({"ticker": tw["ticker"], "status": "DROPPED", "reason": "redenomination inside the window", "trade": None})
+                twins.append(
+                    {
+                        "ticker": tw["ticker"],
+                        "status": "DROPPED",
+                        "reason": "redenomination inside the window",
+                        "trade": None,
+                    }
+                )
                 continue
             twins.append({"ticker": tw["ticker"], "status": "PATH", "trade": None})
             graded.append((tn, None))
             continue
-        res = simulate(m, tn, td, plan, market, quote=tw.get("quote") if market == "CRYPTO" else None, unit_factor=tuf)
+        res = simulate(
+            m,
+            tn,
+            td,
+            plan,
+            market,
+            quote=tw.get("quote") if market == "CRYPTO" else None,
+            unit_factor=tuf,
+        )
         if res is None:
             return None  # a twin still rolling: wait for the whole set
         if res["status"] == "REDENOMINATION":
-            twins.append({"ticker": tw["ticker"], "status": "DROPPED", "reason": res["reason"], "trade": None})
+            twins.append(
+                {
+                    "ticker": tw["ticker"],
+                    "status": "DROPPED",
+                    "reason": res["reason"],
+                    "trade": None,
+                }
+            )
             continue
-        twins.append({"ticker": tw["ticker"], **res, **({"units": tunits} if tunits and tunits["actions"] else {})})
+        twins.append(
+            {
+                "ticker": tw["ticker"],
+                **res,
+                **({"units": tunits} if tunits and tunits["actions"] else {}),
+            }
+        )
         graded.append((tn, res))
     paired = None
     if cand and cand["trade"]:
         twin_nets = [r["trade"]["net_return"] for _, r in graded if r and r.get("trade")]
         if twin_nets:
-            paired = {"candidate_net": cand["trade"]["net_return"], "twins_traded": len(twin_nets),
-                      "twins_mean_net": float(np.mean(twin_nets)), "twins_median_net": float(np.median(twin_nets)),
-                      "diff": float(cand["trade"]["net_return"] - np.mean(twin_nets))}
-    return {**base, "status": "RESOLVED",
-            **({"candidate": {**cand, "units": units}} if cand is not None else {"candidate": {"status": "PATH", "units": units}}),
-            "twins": twins, "paired": paired, "cone": cone_outcomes(s["cone"], window_id, m, d, (n, cand), graded)}
+            paired = {
+                "candidate_net": cand["trade"]["net_return"],
+                "twins_traded": len(twin_nets),
+                "twins_mean_net": float(np.mean(twin_nets)),
+                "twins_median_net": float(np.median(twin_nets)),
+                "diff": float(cand["trade"]["net_return"] - np.mean(twin_nets)),
+            }
+    return {
+        **base,
+        "status": "RESOLVED",
+        **(
+            {"candidate": {**cand, "units": units}}
+            if cand is not None
+            else {"candidate": {"status": "PATH", "units": units}}
+        ),
+        "twins": twins,
+        "paired": paired,
+        "cone": cone_outcomes(s["cone"], window_id, m, d, (n, cand), graded),
+    }
 
 
-def resolve_pending(manifest: Path, market: str, timestamper=None, verify=None) -> tuple[list[Path], list[dict]]:
+def resolve_pending(
+    manifest: Path, market: str, timestamper=None, verify=None
+) -> tuple[list[Path], list[dict]]:
     specs = spec_lines()
     todo = due(market, specs=specs)
     if not todo:
@@ -575,7 +866,9 @@ def resolve_pending(manifest: Path, market: str, timestamper=None, verify=None) 
     if not out:
         return [], []
     stored = paper.append(out, path=SPEC_LEDGER, timestamper=timestamper)
-    tokens = [paper.TOKENS / f"{r['record_hash']}.{a}.tsr" for r in stored for a in ("freetsa", "sectigo")]
+    tokens = [
+        paper.TOKENS / f"{r['record_hash']}.{a}.tsr" for r in stored for a in ("freetsa", "sectigo")
+    ]
     return [SPEC_LEDGER, *[t for t in tokens if t.exists()]], out
 
 
@@ -612,7 +905,9 @@ def _betainc(a: float, b: float, x: float) -> float:
         return 0.0
     if x >= 1:
         return 1.0
-    front = math.exp(math.lgamma(a + b) - math.lgamma(a) - math.lgamma(b) + a * math.log(x) + b * math.log(1 - x))
+    front = math.exp(
+        math.lgamma(a + b) - math.lgamma(a) - math.lgamma(b) + a * math.log(x) + b * math.log(1 - x)
+    )
     if x < (a + 1) / (a + b + 2):
         return front * _betacf(a, b, x) / a
     return 1.0 - front * _betacf(b, a, 1 - x) / b
@@ -630,23 +925,42 @@ def t_sf(t: float, df: int) -> float:
 def plan_statistics(resolutions: list[dict]) -> dict:
     """Per-session paired test for one market's BASE5 RESOLVED records with a paired difference."""
     paired = [r for r in resolutions if r.get("status") == "RESOLVED" and r.get("paired")]
-    traded = [r for r in resolutions if r.get("status") == "RESOLVED" and (r.get("candidate") or {}).get("trade")]
+    traded = [
+        r
+        for r in resolutions
+        if r.get("status") == "RESOLVED" and (r.get("candidate") or {}).get("trade")
+    ]
     by_session = {}
     for r in paired:
         by_session.setdefault(r["signal_session"], []).append(r["paired"]["diff"])
     session_means = np.array([np.mean(v) for _, v in sorted(by_session.items())])
     n_sess = len(session_means)
-    out = {"n_resolved": sum(r.get("status") == "RESOLVED" for r in resolutions),
-           "n_unresolvable": sum(r.get("status") == "UNRESOLVABLE" for r in resolutions),
-           "n_traded": len(traded), "n_paired": len(paired), "n_sessions": n_sess,
-           "n_not_fillable": sum((r.get("candidate") or {}).get("status") == "NOT_FILLABLE" for r in resolutions),
-           "mean_net": float(np.mean([r["candidate"]["trade"]["net_return"] for r in traded])) if traded else None,
-           "median_net": float(np.median([r["candidate"]["trade"]["net_return"] for r in traded])) if traded else None,
-           "mean_twins_net": float(np.mean([r["paired"]["twins_mean_net"] for r in paired])) if paired else None,
-           "mean_diff": float(np.mean([r["paired"]["diff"] for r in paired])) if paired else None,
-           "sd_diff_sets": float(np.std([r["paired"]["diff"] for r in paired], ddof=1)) if len(paired) > 1 else None,
-           "sd_session": float(np.std(session_means, ddof=1)) if n_sess > 1 else None,
-           "t": None, "p_one_sided": None}
+    out = {
+        "n_resolved": sum(r.get("status") == "RESOLVED" for r in resolutions),
+        "n_unresolvable": sum(r.get("status") == "UNRESOLVABLE" for r in resolutions),
+        "n_traded": len(traded),
+        "n_paired": len(paired),
+        "n_sessions": n_sess,
+        "n_not_fillable": sum(
+            (r.get("candidate") or {}).get("status") == "NOT_FILLABLE" for r in resolutions
+        ),
+        "mean_net": float(np.mean([r["candidate"]["trade"]["net_return"] for r in traded]))
+        if traded
+        else None,
+        "median_net": float(np.median([r["candidate"]["trade"]["net_return"] for r in traded]))
+        if traded
+        else None,
+        "mean_twins_net": float(np.mean([r["paired"]["twins_mean_net"] for r in paired]))
+        if paired
+        else None,
+        "mean_diff": float(np.mean([r["paired"]["diff"] for r in paired])) if paired else None,
+        "sd_diff_sets": float(np.std([r["paired"]["diff"] for r in paired], ddof=1))
+        if len(paired) > 1
+        else None,
+        "sd_session": float(np.std(session_means, ddof=1)) if n_sess > 1 else None,
+        "t": None,
+        "p_one_sided": None,
+    }
     if n_sess >= 2 and out["sd_session"] and out["sd_session"] > 0:
         t = float(session_means.mean() / (out["sd_session"] / math.sqrt(n_sess)))
         out["t"], out["p_one_sided"] = t, float(t_sf(t, n_sess - 1))
@@ -655,9 +969,14 @@ def plan_statistics(resolutions: list[dict]) -> dict:
 
 def look_status(stats: dict, rule: dict) -> dict:
     looks = rule["looks"]
-    reached = [n for n in looks if stats["n_paired"] >= n and stats["n_sessions"] >= rule["min_sessions"]]
-    return {"looks": looks, "reached": reached[-1] if reached else None,
-            "next": next((n for n in looks if n not in reached), None)}
+    reached = [
+        n for n in looks if stats["n_paired"] >= n and stats["n_sessions"] >= rule["min_sessions"]
+    ]
+    return {
+        "looks": looks,
+        "reached": reached[-1] if reached else None,
+        "next": next((n for n in looks if n not in reached), None),
+    }
 
 
 def statistics(specs: list[dict] | None = None, ledger: list[dict] | None = None) -> dict:
@@ -673,15 +992,30 @@ def statistics(specs: list[dict] | None = None, ledger: list[dict] | None = None
         mres = [r for r in res if r["market"] == mk]
         sessions = sorted({s["signal_session"] for s in msets})
         first = sessions[0] if sessions else None
-        scans_since = [r for r in ledger if r["type"] == "SCAN" and r.get("market", "IDX") == mk
-                       and first is not None and r["session"] >= first]
+        scans_since = [
+            r
+            for r in ledger
+            if r["type"] == "SCAN"
+            and r.get("market", "IDX") == mk
+            and first is not None
+            and r["session"] >= first
+        ]
         rate = (len(msets) / len(scans_since)) if scans_since else None
         st = plan_statistics([r for r in mres if r["window"] == PLAN])
         st["look"] = look_status(st, rule)
-        st["p_holm"] = float(holm([st["p_one_sided"]])[0]) if st["p_one_sided"] is not None else None
+        st["p_holm"] = (
+            float(holm([st["p_one_sided"]])[0]) if st["p_one_sided"] is not None else None
+        )
         at_look = st["look"]["reached"] is not None
-        eligible = (at_look and st["p_holm"] is not None and st["p_holm"] < 0.05 and st["t"] is not None
-                    and st["t"] >= 3.0 and st["mean_net"] is not None and st["mean_net"] > 0)
+        eligible = (
+            at_look
+            and st["p_holm"] is not None
+            and st["p_holm"] < 0.05
+            and st["t"] is not None
+            and st["t"] >= 3.0
+            and st["mean_net"] is not None
+            and st["mean_net"] > 0
+        )
         if not at_look:
             st["verdict"] = "accumulating (no look reached)"
         elif eligible:
@@ -699,34 +1033,75 @@ def statistics(specs: list[dict] | None = None, ledger: list[dict] | None = None
             sd_src = f"validation trade sd {sd_v} (run {run_v}), paired, / sqrt(sets per session)"
         else:
             sd_s, sd_src = None, "no sessions yet"
-        st["projection"] = {"sd_session": sd_s, "sd_source": sd_src,
-                            "sessions_for_t3": ({f"{int(e * 100)}pt": int(math.ceil((3.0 * sd_s / e) ** 2)) for e in (0.02, 0.05, 0.10)}
-                                                if sd_s else None),
-                            "sessions_to_next_look": (None if st["look"]["next"] is None or not rate else
-                                                      int(math.ceil(max(0, st["look"]["next"] - st["n_paired"]) / rate)))}
+        st["projection"] = {
+            "sd_session": sd_s,
+            "sd_source": sd_src,
+            "sessions_for_t3": (
+                {
+                    f"{int(e * 100)}pt": int(math.ceil((3.0 * sd_s / e) ** 2))
+                    for e in (0.02, 0.05, 0.10)
+                }
+                if sd_s
+                else None
+            ),
+            "sessions_to_next_look": (
+                None
+                if st["look"]["next"] is None or not rate
+                else int(math.ceil(max(0, st["look"]["next"] - st["n_paired"]) / rate))
+            ),
+        }
         n_path = sum(r["window"] == "PATH20" and r.get("status") == "RESOLVED" for r in mres)
         n_next = sum(r["window"] == "NEXT1" and r.get("status") == "RESOLVED" for r in mres)
         cone = {}
         for c in proto["cone"]:
-            graded = [x for r in mres for x in r.get("cone", []) if x["id"] == c["id"] and x.get("outcome") is not None]
+            graded = [
+                x
+                for r in mres
+                for x in r.get("cone", [])
+                if x["id"] == c["id"] and x.get("outcome") is not None
+            ]
             if graded:
                 outcomes = np.array([float(x["outcome"]) for x in graded])
                 priors = np.array([float(x["prior"]) for x in graded])
-                running = np.array([outcomes[:i].mean() if i >= RUNNING_MIN_N else 0.5 for i in range(len(outcomes))])
+                running = np.array(
+                    [
+                        outcomes[:i].mean() if i >= RUNNING_MIN_N else 0.5
+                        for i in range(len(outcomes))
+                    ]
+                )
                 tw = [x["twins_rate"] for x in graded if x.get("twins_rate") is not None]
-                cone[c["id"]] = {"n": len(graded), "realised_rate": float(outcomes.mean()), "mean_prior": float(priors.mean()),
-                                 "twins_rate": float(np.mean(tw)) if tw else None,
-                                 "brier": float(((priors - outcomes) ** 2).mean()), "brier_uninformed": float(((0.5 - outcomes) ** 2).mean()),
-                                 "brier_running": float(((running - outcomes) ** 2).mean())}
+                cone[c["id"]] = {
+                    "n": len(graded),
+                    "realised_rate": float(outcomes.mean()),
+                    "mean_prior": float(priors.mean()),
+                    "twins_rate": float(np.mean(tw)) if tw else None,
+                    "brier": float(((priors - outcomes) ** 2).mean()),
+                    "brier_uninformed": float(((0.5 - outcomes) ** 2).mean()),
+                    "brier_running": float(((running - outcomes) ** 2).mean()),
+                }
             else:
                 cone[c["id"]] = {"n": 0}
-        markets[mk] = {"n_sets": len(msets), "sessions": len(sessions), "first_session": first,
-                       "last_session": sessions[-1] if sessions else None, "sets_per_scan": rate,
-                       "twins_per_set": float(np.mean([len(s["twins"]) for s in msets])) if msets else None,
-                       "plan": st, "n_path20_resolved": n_path, "n_next1_resolved": n_next, "cone": cone}
-    return {"protocol": {"id": proto["protocol_id"], "sha256": proto_sha}, "register": REGISTER_VERSION,
-            "outcome_view": {"semantics": paper.RESOLUTION_VIEW, "cutoff": "complete supplied ledger"},
-            "generated_at": utc_stamp(), "n_sets": len(sets), "n_resolutions": len(res), "markets": markets}
+        markets[mk] = {
+            "n_sets": len(msets),
+            "sessions": len(sessions),
+            "first_session": first,
+            "last_session": sessions[-1] if sessions else None,
+            "sets_per_scan": rate,
+            "twins_per_set": float(np.mean([len(s["twins"]) for s in msets])) if msets else None,
+            "plan": st,
+            "n_path20_resolved": n_path,
+            "n_next1_resolved": n_next,
+            "cone": cone,
+        }
+    return {
+        "protocol": {"id": proto["protocol_id"], "sha256": proto_sha},
+        "register": REGISTER_VERSION,
+        "outcome_view": {"semantics": paper.RESOLUTION_VIEW, "cutoff": "complete supplied ledger"},
+        "generated_at": utc_stamp(),
+        "n_sets": len(sets),
+        "n_resolutions": len(res),
+        "markets": markets,
+    }
 
 
 # ---------------------------------------------------------------------------------- report
@@ -738,17 +1113,28 @@ def card(s: dict) -> str:
     """One sealed set as a postcard from the future."""
     e = s["entry"]
     t = s["tag"]
-    lines = [f"### {s['market']} {s['ticker']} ({s['signal_session']}) - sealed {s['sealed_at']}, cutoff {s['entry_cutoff']}",
-             f"Decision `{s['decision_id']}` ({s['decision']}), bound to ledger record `{s['decision_record_hash'][:12]}`; "
-             f"set `{s.get('record_hash', '')[:12]}`.",
-             f"Signal close {s['signal']['close']:g} (reference {s['signal']['previous']}); entry: {e['text']}"
-             + (f"; quote {e['quote']:g} at {e['quote_time']}" if e.get("quote") else "") + ".",
-             f"Tag: {t['flags_today']} flags today vs trailing median {t['trailing_median']} -> hot_day = {t['hot_day']}.",
-             f"Twins ({s['twins_match_level']}): " + ", ".join(f"{x['ticker']} {x['close']:g}" for x in s["twins"]) + ".",
-             "", "| Statement | Prior | Resolves with |", "|---|---:|---|"]
+    lines = [
+        f"### {s['market']} {s['ticker']} ({s['signal_session']}) - sealed {s['sealed_at']}, cutoff {s['entry_cutoff']}",
+        f"Decision `{s['decision_id']}` ({s['decision']}), bound to ledger record `{s['decision_record_hash'][:12]}`; "
+        f"set `{s.get('record_hash', '')[:12]}`.",
+        f"Signal close {s['signal']['close']:g} (reference {s['signal']['previous']}); entry: {e['text']}"
+        + (f"; quote {e['quote']:g} at {e['quote_time']}" if e.get("quote") else "")
+        + ".",
+        f"Tag: {t['flags_today']} flags today vs trailing median {t['trailing_median']} -> hot_day = {t['hot_day']}.",
+        f"Twins ({s['twins_match_level']}): "
+        + ", ".join(f"{x['ticker']} {x['close']:g}" for x in s["twins"])
+        + ".",
+        "",
+        "| Statement | Prior | Resolves with |",
+        "|---|---:|---|",
+    ]
     for c in s["cone"]:
         lines.append(f"| {c['id']}: {c['statement']} | {c['prior']:.3f} | {c['resolves_with']} |")
-    lines += ["", f"Plan: {PLAN} ({windows()[PLAN]['what']}); windows {', '.join(s.get('windows', V1_WINDOWS))}.", ""]
+    lines += [
+        "",
+        f"Plan: {PLAN} ({windows()[PLAN]['what']}); windows {', '.join(s.get('windows', V1_WINDOWS))}.",
+        "",
+    ]
     return "\n".join(lines)
 
 
@@ -757,41 +1143,64 @@ def render(stats: dict, specs: list[dict] | None = None) -> str:
     sets = [r for r in specs if r["type"] == "SPECULATION_SET"]
     res = list(paper.latest_resolutions(specs).values())
     w = windows()
-    out = [f"# Speculation Register ({stats['protocol']['id']}, protocol sha256 {stats['protocol']['sha256'][:12]})",
-           "", f"Generated {stats['generated_at']} from `paper/speculations.jsonl`: {stats['n_sets']} sets sealed, "
-           f"{stats['n_resolutions']} resolutions. Paper only; no orders. The register never changes a decision and runs "
-           "no variant of a retired entry.", "",
-           "Windows: " + "; ".join(f"**{k}**: {v['what']}" for k, v in w.items()) + ".", ""]
+    out = [
+        f"# Speculation Register ({stats['protocol']['id']}, protocol sha256 {stats['protocol']['sha256'][:12]})",
+        "",
+        f"Generated {stats['generated_at']} from `paper/speculations.jsonl`: {stats['n_sets']} sets sealed, "
+        f"{stats['n_resolutions']} resolutions. Paper only; no orders. The register never changes a decision and runs "
+        "no variant of a retired entry.",
+        "",
+        "Windows: " + "; ".join(f"**{k}**: {v['what']}" for k, v in w.items()) + ".",
+        "",
+    ]
     for mk, m in stats["markets"].items():
-        out += [f"## {mk}: {m['n_sets']} sets over {m['sessions']} signal sessions"
-                + (f" ({m['first_session']} .. {m['last_session']}, {m['sets_per_scan']:.2f} sets per scan)" if m["n_sets"] else ""), ""]
+        out += [
+            f"## {mk}: {m['n_sets']} sets over {m['sessions']} signal sessions"
+            + (
+                f" ({m['first_session']} .. {m['last_session']}, {m['sets_per_scan']:.2f} sets per scan)"
+                if m["n_sets"]
+                else ""
+            ),
+            "",
+        ]
         if not m["n_sets"]:
             out += ["No set sealed yet.", ""]
             continue
         a = m["plan"]
         t_txt = "n/a" if a["t"] is None else "%.2f" % a["t"]
         p_txt = "n/a" if a["p_holm"] is None else "%.3f" % a["p_holm"]
-        out += ["| Plan | Resolved | Traded | Paired | Sessions | Mean net | Median net | Twins net | Diff | t | p | Look | Verdict |",
-                "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|",
-                f"| {PLAN} | {a['n_resolved']} | {a['n_traded']} | {a['n_paired']} | {a['n_sessions']} | {_pct(a['mean_net'])} | "
-                f"{_pct(a['median_net'])} | {_pct(a['mean_twins_net'])} | {_pct(a['mean_diff'])} | {t_txt} | {p_txt} | "
-                f"{a['look']['reached'] or '-'} / next {a['look']['next']} | {a['verdict']} |", ""]
+        out += [
+            "| Plan | Resolved | Traded | Paired | Sessions | Mean net | Median net | Twins net | Diff | t | p | Look | Verdict |",
+            "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|",
+            f"| {PLAN} | {a['n_resolved']} | {a['n_traded']} | {a['n_paired']} | {a['n_sessions']} | {_pct(a['mean_net'])} | "
+            f"{_pct(a['median_net'])} | {_pct(a['mean_twins_net'])} | {_pct(a['mean_diff'])} | {t_txt} | {p_txt} | "
+            f"{a['look']['reached'] or '-'} / next {a['look']['next']} | {a['verdict']} |",
+            "",
+        ]
         p = a["projection"]
         s3 = p["sessions_for_t3"] or {}
         sd_txt = "n/a" if p["sd_session"] is None else "%.3f" % p["sd_session"]
         nxt = "n/a" if p["sessions_to_next_look"] is None else p["sessions_to_next_look"]
-        out += ["Projection (labelled): sessions of resolved sets needed for t >= 3 if the true paired effect were 2, 5 or 10 "
-                "points per set, and sessions to the next look at the current candidate rate.", "",
-                "| sd per session (source) | 2pt | 5pt | 10pt | to next look |", "|---|---:|---:|---:|---:|",
-                f"| {sd_txt} ({p['sd_source']}) | {s3.get('2pt', 'n/a')} | {s3.get('5pt', 'n/a')} | {s3.get('10pt', 'n/a')} | {nxt} |", "",
-                f"PATH20 windows resolved: {m['n_path20_resolved']}; NEXT1: {m.get('n_next1_resolved', 0)}.", "",
-                "| Statement | Graded | Realised rate | Twins' rate | Mean prior | Brier (register) | Brier (0.5) | Brier (running) |",
-                "|---|---:|---:|---:|---:|---:|---:|---:|"]
+        out += [
+            "Projection (labelled): sessions of resolved sets needed for t >= 3 if the true paired effect were 2, 5 or 10 "
+            "points per set, and sessions to the next look at the current candidate rate.",
+            "",
+            "| sd per session (source) | 2pt | 5pt | 10pt | to next look |",
+            "|---|---:|---:|---:|---:|",
+            f"| {sd_txt} ({p['sd_source']}) | {s3.get('2pt', 'n/a')} | {s3.get('5pt', 'n/a')} | {s3.get('10pt', 'n/a')} | {nxt} |",
+            "",
+            f"PATH20 windows resolved: {m['n_path20_resolved']}; NEXT1: {m.get('n_next1_resolved', 0)}.",
+            "",
+            "| Statement | Graded | Realised rate | Twins' rate | Mean prior | Brier (register) | Brier (0.5) | Brier (running) |",
+            "|---|---:|---:|---:|---:|---:|---:|---:|",
+        ]
         for sid, c in m["cone"].items():
             if c["n"]:
                 tw = "n/a" if c["twins_rate"] is None else "%.3f" % c["twins_rate"]
-                out.append(f"| {sid} | {c['n']} | {c['realised_rate']:.3f} | {tw} | {c['mean_prior']:.3f} | {c['brier']:.4f} | "
-                           f"{c['brier_uninformed']:.4f} | {c['brier_running']:.4f} |")
+                out.append(
+                    f"| {sid} | {c['n']} | {c['realised_rate']:.3f} | {tw} | {c['mean_prior']:.3f} | {c['brier']:.4f} | "
+                    f"{c['brier_uninformed']:.4f} | {c['brier_running']:.4f} |"
+                )
             else:
                 out.append(f"| {sid} | 0 | | | | | | |")
         out.append("")
@@ -806,16 +1215,25 @@ def render(stats: dict, specs: list[dict] | None = None) -> str:
                 if s["signal_session"] == last_session:
                     out.append(card(s))
     if res:
-        out += ["## Latest resolutions", "", "| Set | Window | Status | Candidate | Net | Twins mean | Diff | Cone (candidate / twins' rate) |",
-                "|---|---|---|---|---:|---:|---:|---|"]
+        out += [
+            "## Latest resolutions",
+            "",
+            "| Set | Window | Status | Candidate | Net | Twins mean | Diff | Cone (candidate / twins' rate) |",
+            "|---|---|---|---|---:|---:|---:|---|",
+        ]
         for r in res[-40:]:
             c = r.get("candidate") or {}
             tr = c.get("trade") or {}
             pr = r.get("paired") or {}
-            cone = ", ".join(f"{x['id']}={'?' if x['outcome'] is None else int(x['outcome'])}"
-                             + ("" if x.get("twins_rate") is None else f"/{x['twins_rate']:.2f}") for x in r.get("cone", []))
-            out.append(f"| {r['set_id'].replace('SPEC-SCAN-', '')} | {r['window']} | {r['status']}{(' (' + r['reason'] + ')') if r.get('reason') else ''} | "
-                       f"{c.get('status', '')} | {_pct(tr.get('net_return'))} | {_pct(pr.get('twins_mean_net'))} | {_pct(pr.get('diff'))} | {cone} |")
+            cone = ", ".join(
+                f"{x['id']}={'?' if x['outcome'] is None else int(x['outcome'])}"
+                + ("" if x.get("twins_rate") is None else f"/{x['twins_rate']:.2f}")
+                for x in r.get("cone", [])
+            )
+            out.append(
+                f"| {r['set_id'].replace('SPEC-SCAN-', '')} | {r['window']} | {r['status']}{(' (' + r['reason'] + ')') if r.get('reason') else ''} | "
+                f"{c.get('status', '')} | {_pct(tr.get('net_return'))} | {_pct(pr.get('twins_mean_net'))} | {_pct(pr.get('diff'))} | {cone} |"
+            )
         out.append("")
     return "\n".join(out) + "\n"
 
@@ -848,15 +1266,23 @@ def verify() -> list[str]:
                 problems.append(f"{sid}: sealed twice")
             sets[sid] = r
             if r["sealed_at"] >= r["entry_cutoff"]:
-                problems.append(f"{sid}: sealed at {r['sealed_at']}, after its cutoff {r['entry_cutoff']}")
+                problems.append(
+                    f"{sid}: sealed at {r['sealed_at']}, after its cutoff {r['entry_cutoff']}"
+                )
             dec = decisions.get(r["decision_id"])
             if dec is None or dec["record_hash"] != r["decision_record_hash"]:
                 problems.append(f"{sid}: decision record hash not in the ledger")
             sc = scans.get(r["scan_id"])
-            if sc is None or sc["record_hash"] != r["scan_record_hash"] or sc["features_sha256"] != r["features_sha256"]:
+            if (
+                sc is None
+                or sc["record_hash"] != r["scan_record_hash"]
+                or sc["features_sha256"] != r["features_sha256"]
+            ):
                 problems.append(f"{sid}: scan record or features hash does not match the ledger")
             if r["protocol"]["sha256"] != proto_shas.get(r["protocol"].get("id")):
-                problems.append(f"{sid}: protocol sha256 differs from its version's file in research/SPECULATION_REGISTER_v1")
+                problems.append(
+                    f"{sid}: protocol sha256 differs from its version's file in research/SPECULATION_REGISTER_v1"
+                )
         elif r["type"] == "RESOLUTION":
             key = (r["set_id"], r["window"])
             if r["set_id"] not in sets:

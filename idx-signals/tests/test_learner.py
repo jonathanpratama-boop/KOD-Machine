@@ -15,19 +15,49 @@ from idxsig import paper
 T0 = datetime(2026, 10, 30, 12, 0, tzinfo=timezone.utc)
 
 
-def cset(sid, family="FORM4_SHARP", top_exec=False, value=60_000.0, cutoff="2026-10-30T13:15:00Z", session="2026-10-29",
-         cone=None, hash_="h"):
-    cone = cone or [{"id": "BEATS_TWINS_60", "prior": 0.5}, {"id": "GAIN0_60", "prior": 0.5},
-                    {"id": "MECH_SECOND_BUY_20", "prior": 0.5}]
-    return {"type": "CATALYST_SET", "set_id": sid, "family": family, "record_hash": f"{hash_}{sid}", "entry_cutoff": cutoff,
-            "signal_session": session, "direction": 1, "signal": {"close": 30.0, "adv20_value": 2e7, "volr": 1.0},
-            "coverage": {"class": "FIRE", "rules": {}, "inputs": {"top_exec": top_exec, "total_value": value, "n_owners": 1}},
-            "event": {}, "cone": cone}
+def cset(
+    sid,
+    family="FORM4_SHARP",
+    top_exec=False,
+    value=60_000.0,
+    cutoff="2026-10-30T13:15:00Z",
+    session="2026-10-29",
+    cone=None,
+    hash_="h",
+):
+    cone = cone or [
+        {"id": "BEATS_TWINS_60", "prior": 0.5},
+        {"id": "GAIN0_60", "prior": 0.5},
+        {"id": "MECH_SECOND_BUY_20", "prior": 0.5},
+    ]
+    return {
+        "type": "CATALYST_SET",
+        "set_id": sid,
+        "family": family,
+        "record_hash": f"{hash_}{sid}",
+        "entry_cutoff": cutoff,
+        "signal_session": session,
+        "direction": 1,
+        "signal": {"close": 30.0, "adv20_value": 2e7, "volr": 1.0},
+        "coverage": {
+            "class": "FIRE",
+            "rules": {},
+            "inputs": {"top_exec": top_exec, "total_value": value, "n_owners": 1},
+        },
+        "event": {},
+        "cone": cone,
+    }
 
 
 def res(sid, outcomes, resolved_at, window="H60"):
-    return {"type": "RESOLUTION", "set_id": sid, "window": window, "status": "RESOLVED", "resolved_at": resolved_at,
-            "cone": [{"id": k, "prior": 0.5, "outcome": v} for k, v in outcomes.items()]}
+    return {
+        "type": "RESOLUTION",
+        "set_id": sid,
+        "window": window,
+        "status": "RESOLVED",
+        "resolved_at": resolved_at,
+        "cone": [{"id": k, "prior": 0.5, "outcome": v} for k, v in outcomes.items()],
+    }
 
 
 def world(n=200, signal=True, resolved_at="2026-12-01T00:00:00Z"):
@@ -55,19 +85,28 @@ class Learning(unittest.TestCase):
     def test_it_learns_a_real_pattern_but_does_not_publish_it_until_earned(self):
         """Guards against: a pattern in the data not learned at all, or published with confidence the learner has not
         earned on forward forecasts."""
-        recs = world(200) + [cset("NEW_TE", top_exec=True, cutoff="2026-12-02T13:15:00Z"),
-                             cset("NEW_X", top_exec=False, cutoff="2026-12-02T13:15:00Z")]
+        recs = world(200) + [
+            cset("NEW_TE", top_exec=True, cutoff="2026-12-02T13:15:00Z"),
+            cset("NEW_X", top_exec=False, cutoff="2026-12-02T13:15:00Z"),
+        ]
         now = datetime(2026, 12, 2, 12, 0, tzinfo=timezone.utc)
         fs = {f["set_id"]: f for f in ln.forecast_records(now, recs, [])}
-        te, x = fs["NEW_TE"]["forecasts"]["BEATS_TWINS_60"], fs["NEW_X"]["forecasts"]["BEATS_TWINS_60"]
-        self.assertGreater(te["raw"], 0.65)  # heavy shrinkage (lambda 20): it moves, cautiously, on 200 outcomes
+        te, x = (
+            fs["NEW_TE"]["forecasts"]["BEATS_TWINS_60"],
+            fs["NEW_X"]["forecasts"]["BEATS_TWINS_60"],
+        )
+        self.assertGreater(
+            te["raw"], 0.65
+        )  # heavy shrinkage (lambda 20): it moves, cautiously, on 200 outcomes
         self.assertLess(x["raw"], 0.35)
         self.assertEqual(fs["NEW_TE"]["alpha"], 0.0)  # no forward record yet
         self.assertAlmostEqual(te["published"], 0.5)
 
     def test_outcomes_resolved_after_the_forecast_are_never_used(self):
         """Guards against: peeking, the learner training on results that did not exist when it forecast."""
-        recs = world(200, resolved_at="2026-12-05T00:00:00Z") + [cset("NEW", top_exec=True, cutoff="2026-12-02T13:15:00Z")]
+        recs = world(200, resolved_at="2026-12-05T00:00:00Z") + [
+            cset("NEW", top_exec=True, cutoff="2026-12-02T13:15:00Z")
+        ]
         now = datetime(2026, 12, 2, 12, 0, tzinfo=timezone.utc)
         (f,) = [f for f in ln.forecast_records(now, recs, []) if f["set_id"] == "NEW"]
         self.assertEqual(f["trained"]["rows"], {})
@@ -75,7 +114,16 @@ class Learning(unittest.TestCase):
 
     def test_confidence_is_earned_from_forward_skill_and_lost_without_it(self):
         """Guards against: alpha rising on luck, or on forecasts scored against outcomes known when they were made."""
-        good = [{"prior": 0.5, "raw": 0.8 if y else 0.2, "published": 0.5, "y": float(y), "session": "s"} for y in [1, 0] * 150]
+        good = [
+            {
+                "prior": 0.5,
+                "raw": 0.8 if y else 0.2,
+                "published": 0.5,
+                "y": float(y),
+                "session": "s",
+            }
+            for y in [1, 0] * 150
+        ]
         a, info = ln.alpha_from(good)
         self.assertEqual(a, 1.0)
         self.assertGreater(info["skill"], 0.05)
@@ -86,8 +134,11 @@ class Learning(unittest.TestCase):
 
     def test_triangulated_needs_both_the_catalyst_and_the_beat(self):
         """Guards against: a set credited as a catalyst call when the stock rose but the stated catalyst never came."""
-        recs = [cset("A"), res("A", {"BEATS_TWINS_60": True}, "2026-12-20T00:00:00Z"),
-                res("A", {"MECH_SECOND_BUY_20": False}, "2026-12-01T00:00:00Z", window="M20")]
+        recs = [
+            cset("A"),
+            res("A", {"BEATS_TWINS_60": True}, "2026-12-20T00:00:00Z"),
+            res("A", {"MECH_SECOND_BUY_20": False}, "2026-12-01T00:00:00Z", window="M20"),
+        ]
         rows = ln.training_rows(recs, "2027-01-01T00:00:00Z")
         self.assertEqual([r[2] for r in rows[ln.TRI]], [0.0])
         self.assertAlmostEqual(rows[ln.TRI][0][1], ln._logit(0.25))
@@ -96,15 +147,22 @@ class Learning(unittest.TestCase):
 
     def test_gains_are_split_into_earned_and_lucky(self):
         """Guards against: a rising market counted as the machine's skill."""
-        recs = [cset("E"), res("E", {"GAIN0_60": True, "BEATS_TWINS_60": True}, "2026-12-01T00:00:00Z"),
-                res("E", {"MECH_SECOND_BUY_20": True}, "2026-12-01T00:00:00Z", window="M20"),
-                cset("M"), res("M", {"GAIN0_60": True, "BEATS_TWINS_60": False}, "2026-12-01T00:00:00Z"),
-                res("M", {"MECH_SECOND_BUY_20": True}, "2026-12-01T00:00:00Z", window="M20"),
-                cset("C"), res("C", {"GAIN0_60": True, "BEATS_TWINS_60": True}, "2026-12-01T00:00:00Z"),
-                res("C", {"MECH_SECOND_BUY_20": False}, "2026-12-01T00:00:00Z", window="M20")]
+        recs = [
+            cset("E"),
+            res("E", {"GAIN0_60": True, "BEATS_TWINS_60": True}, "2026-12-01T00:00:00Z"),
+            res("E", {"MECH_SECOND_BUY_20": True}, "2026-12-01T00:00:00Z", window="M20"),
+            cset("M"),
+            res("M", {"GAIN0_60": True, "BEATS_TWINS_60": False}, "2026-12-01T00:00:00Z"),
+            res("M", {"MECH_SECOND_BUY_20": True}, "2026-12-01T00:00:00Z", window="M20"),
+            cset("C"),
+            res("C", {"GAIN0_60": True, "BEATS_TWINS_60": True}, "2026-12-01T00:00:00Z"),
+            res("C", {"MECH_SECOND_BUY_20": False}, "2026-12-01T00:00:00Z", window="M20"),
+        ]
         e = ln.earned_vs_lucky(recs, "2027-01-01T00:00:00Z")
         self.assertEqual((e["earned"], e["lucky"]), (1, 2))
-        self.assertEqual(e["lucky_reasons"], {"market_or_sector_carried_it": 1, "stated_catalyst_never_came": 1})
+        self.assertEqual(
+            e["lucky_reasons"], {"market_or_sector_carried_it": 1, "stated_catalyst_never_came": 1}
+        )
 
 
 class Timing(unittest.TestCase):
@@ -119,12 +177,19 @@ class Timing(unittest.TestCase):
 class Verify(unittest.TestCase):
     def test_late_forecasts_wrong_sets_and_peeking_are_caught(self):
         """Guards against: a forecast after the cutoff, bound to an edited set, or trained on later outcomes."""
-        recs = world(60, resolved_at="2026-12-05T00:00:00Z") + [cset("A", cutoff="2026-12-10T13:15:00Z")]
+        recs = world(60, resolved_at="2026-12-05T00:00:00Z") + [
+            cset("A", cutoff="2026-12-10T13:15:00Z")
+        ]
         now = datetime(2026, 12, 10, 12, 0, tzinfo=timezone.utc)
         (good,) = [f for f in ln.forecast_records(now, recs, []) if f["set_id"] == "A"]
         late = {**good, "set_id": "S1", "set_record_hash": "hS1", "made_at": "2026-12-11T00:00:00Z"}
         wrong = {**good, "set_id": "S2", "set_record_hash": "not-the-hash"}
-        peek = {**good, "set_id": "S3", "set_record_hash": "hS3", "made_at": "2026-12-01T00:00:00Z"}  # before the outcomes existed
+        peek = {
+            **good,
+            "set_id": "S3",
+            "set_record_hash": "hS3",
+            "made_at": "2026-12-01T00:00:00Z",
+        }  # before the outcomes existed
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "learner.jsonl"
             paper.append([good, late, wrong, peek], path=path)

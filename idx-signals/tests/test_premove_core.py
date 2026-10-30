@@ -12,20 +12,37 @@ def panel(n=125, symbols=("AAA", "BBB"), varying=False):
     rows = []
     for k, symbol in enumerate(symbols):
         t = np.arange(n)
-        close = 100 * np.exp(.001 * t + .015 * np.sin(t / 3 + k)) if varying else np.full(n, 100.)
+        close = (
+            100 * np.exp(0.001 * t + 0.015 * np.sin(t / 3 + k)) if varying else np.full(n, 100.0)
+        )
         for j, day in enumerate(pd.date_range("2020-01-01", periods=n)):
             value = float(close[j])
             volume = float(10_000 + (j % 7) * 200)
-            rows.append({"date": day, "ticker": symbol, "open": value, "high": value * 1.01,
-                         "low": value * .99, "close": value, "volume": volume, "value": value * volume})
+            rows.append(
+                {
+                    "date": day,
+                    "ticker": symbol,
+                    "open": value,
+                    "high": value * 1.01,
+                    "low": value * 0.99,
+                    "close": value,
+                    "volume": volume,
+                    "value": value * volume,
+                }
+            )
     return pd.DataFrame(rows)
 
 
 class PanelAndExamples(unittest.TestCase):
     def test_bad_inputs_are_not_silently_cleaned(self):
         source = panel()
-        for bad in (pd.concat([source, source.iloc[:1]]), source.assign(volume=-1),
-                    source.assign(close=np.inf), source.assign(high=1), source.assign(volume=True)):
+        for bad in (
+            pd.concat([source, source.iloc[:1]]),
+            source.assign(volume=-1),
+            source.assign(close=np.inf),
+            source.assign(high=1),
+            source.assign(volume=True),
+        ):
             with self.assertRaises(ValueError):
                 prepare_panel(bad)
         with self.assertRaises(ValueError):
@@ -86,12 +103,23 @@ class PanelAndExamples(unittest.TestCase):
         for c in ("open", "high", "low", "close", "volume", "value"):
             altered.loc[later, c] *= 20
         second = build_examples(altered)
-        cols = ["date", "ticker", "eligible", "median_value20", *first.feature_columns, *first.sequence_columns]
-        assert_frame_equal(first.frame.loc[first.frame.date <= cutoff, cols].reset_index(drop=True),
-                           second.frame.loc[second.frame.date <= cutoff, cols].reset_index(drop=True))
+        cols = [
+            "date",
+            "ticker",
+            "eligible",
+            "median_value20",
+            *first.feature_columns,
+            *first.sequence_columns,
+        ]
+        assert_frame_equal(
+            first.frame.loc[first.frame.date <= cutoff, cols].reset_index(drop=True),
+            second.frame.loc[second.frame.date <= cutoff, cols].reset_index(drop=True),
+        )
         prefix = build_examples(source[source.date <= cutoff])
-        assert_frame_equal(first.frame.loc[first.frame.date <= cutoff, cols].reset_index(drop=True),
-                           prefix.frame[cols].reset_index(drop=True))
+        assert_frame_equal(
+            first.frame.loc[first.frame.date <= cutoff, cols].reset_index(drop=True),
+            prefix.frame[cols].reset_index(drop=True),
+        )
 
     def test_next_open_not_signal_close_is_target_reference(self):
         source = panel(symbols=("AAA",))
@@ -105,8 +133,13 @@ class PanelAndExamples(unittest.TestCase):
 
     def test_first_close_crossing_sets_direction_and_lead_time(self):
         source = panel(symbols=("AAA",))
-        for i, value in [(82, 120.), (83, 75.)]:
-            source.loc[i, ["open", "high", "low", "close"]] = [value, value * 1.01, value * .99, value]
+        for i, value in [(82, 120.0), (83, 75.0)]:
+            source.loc[i, ["open", "high", "low", "close"]] = [
+                value,
+                value * 1.01,
+                value * 0.99,
+                value,
+            ]
         row = build_examples(source).frame.iloc[80]
         self.assertEqual(row.up_first, 1)
         self.assertEqual(row.down_first, 0)
@@ -133,8 +166,14 @@ class PanelAndExamples(unittest.TestCase):
 
     def test_configuration_and_liquidity_are_explicit(self):
         source = panel()
-        for kwargs in ({"horizon": 0}, {"horizon": True}, {"lookback": 61},
-                       {"threshold_floor": np.nan}, {"vol_multiplier": -1}, {"min_value20": -1}):
+        for kwargs in (
+            {"horizon": 0},
+            {"horizon": True},
+            {"lookback": 61},
+            {"threshold_floor": np.nan},
+            {"vol_multiplier": -1},
+            {"min_value20": -1},
+        ):
             with self.assertRaises(ValueError):
                 build_examples(source, **kwargs)
         self.assertFalse(build_examples(source, min_value20=1e9).frame.eligible.any())
@@ -150,8 +189,10 @@ class PanelAndExamples(unittest.TestCase):
 class ModelFit(unittest.TestCase):
     def training(self):
         rng = np.random.default_rng(18)
-        f = pd.DataFrame(rng.normal(size=(200, 7)), columns=["x", "y", "s0", "s1", "s2", "s3", "s4"])
-        labels = np.where(f.x > .6, 0, np.where(f.y < -.7, 1, 2))
+        f = pd.DataFrame(
+            rng.normal(size=(200, 7)), columns=["x", "y", "s0", "s1", "s2", "s3", "s4"]
+        )
+        labels = np.where(f.x > 0.6, 0, np.where(f.y < -0.7, 1, 2))
         for k, target in enumerate(TARGETS):
             f[target] = (labels == k).astype(float)
         return f
@@ -172,7 +213,16 @@ class ModelFit(unittest.TestCase):
         self.assertEqual(original, json.dumps(m.record(), allow_nan=False, sort_keys=True))
         unseen[list(TARGETS)] = np.nan
         np.testing.assert_allclose(p, m.predict(unseen))
-        self.assertEqual(original, json.dumps(fit_model(train, ("x", "y"), ("s0", "s1", "s2", "s3", "s4"), pca_components=3).record(), allow_nan=False, sort_keys=True))
+        self.assertEqual(
+            original,
+            json.dumps(
+                fit_model(
+                    train, ("x", "y"), ("s0", "s1", "s2", "s3", "s4"), pca_components=3
+                ).record(),
+                allow_nan=False,
+                sort_keys=True,
+            ),
+        )
 
     def test_constant_class_and_missing_targets_are_handled_honestly(self):
         train = self.training()

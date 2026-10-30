@@ -78,14 +78,28 @@ class Feature:
 
 FEATURES = {
     "price_band": Feature("price_band", 3, "close <= Rp200 / <= Rp5,000 / above", "every tier"),
-    "liquidity": Feature("liquidity", 5, "quintile of 20-session median traded value", "every tier"),
-    "market_cap": Feature("market_cap", 5, "quintile of close x IDX listed shares", "TIER_1, TIER_2 (no share "
-                          "counts after the mirror ends)"),
-    "volatility": Feature("volatility", 3, "tercile of 20-session std of daily log returns", "every tier"),
+    "liquidity": Feature(
+        "liquidity", 5, "quintile of 20-session median traded value", "every tier"
+    ),
+    "market_cap": Feature(
+        "market_cap",
+        5,
+        "quintile of close x IDX listed shares",
+        "TIER_1, TIER_2 (no share counts after the mirror ends)",
+    ),
+    "volatility": Feature(
+        "volatility", 3, "tercile of 20-session std of daily log returns", "every tier"
+    ),
     "momentum": Feature("momentum", 3, "tercile of 20-session cumulative log return", "every tier"),
-    "drawdown": Feature("drawdown", 3, "tercile of close / 60-session high close - 1", "every tier"),
-    "listing_age": Feature("listing_age", 3, "sessions since first panel session: <60 / <250 / older or "
-                           "censored at the panel start", "every tier"),
+    "drawdown": Feature(
+        "drawdown", 3, "tercile of close / 60-session high close - 1", "every tier"
+    ),
+    "listing_age": Feature(
+        "listing_age",
+        3,
+        "sessions since first panel session: <60 / <250 / older or censored at the panel start",
+        "every tier",
+    ),
 }
 UNAVAILABLE = {
     "sector": "only a 2025-02 snapshot (List Emiten/Sectors); not point-in-time, so not used",
@@ -94,22 +108,53 @@ UNAVAILABLE = {
 }
 VERSIONS = {
     "v1": ("price_band", "liquidity", "volatility", "momentum"),
-    "v2": ("price_band", "liquidity", "market_cap", "volatility", "momentum", "drawdown", "listing_age"),
-    "v3": ("price_band", "liquidity", "volatility", "market_cap", "momentum", "drawdown", "listing_age"),
-    "v4": ("price_band", "liquidity", "volatility", "market_cap", "momentum", "drawdown", "listing_age"),
+    "v2": (
+        "price_band",
+        "liquidity",
+        "market_cap",
+        "volatility",
+        "momentum",
+        "drawdown",
+        "listing_age",
+    ),
+    "v3": (
+        "price_band",
+        "liquidity",
+        "volatility",
+        "market_cap",
+        "momentum",
+        "drawdown",
+        "listing_age",
+    ),
+    "v4": (
+        "price_band",
+        "liquidity",
+        "volatility",
+        "market_cap",
+        "momentum",
+        "drawdown",
+        "listing_age",
+    ),
 }
 # Per-version feature definitions that differ from FEATURES (the v1/v2 table, left as it is so
 # the recorded runs' reports reproduce). Bucket counts stay below 7: _codes packs them base 8.
 FEATURE_OVERRIDES = {
     "v3": {
-        "volatility": Feature("volatility", 5, "quintile of 20-session std of daily log returns", "every tier"),
+        "volatility": Feature(
+            "volatility", 5, "quintile of 20-session std of daily log returns", "every tier"
+        ),
     },
 }
 FEATURE_OVERRIDES["v4"] = {
     "volatility": FEATURE_OVERRIDES["v3"]["volatility"],
-    "listing_age": Feature("listing_age", 3, "sessions since the first listed session, the same in any window: "
-                           "<60 / <250 / older; unknown while a history that starts at the data's first session "
-                           "is shorter than 250", "every tier"),
+    "listing_age": Feature(
+        "listing_age",
+        3,
+        "sessions since the first listed session, the same in any window: "
+        "<60 / <250 / older; unknown while a history that starts at the data's first session "
+        "is shorter than 250",
+        "every tier",
+    ),
 }
 
 
@@ -135,7 +180,9 @@ def _rolling(arr: np.ndarray, how: str, window: int) -> np.ndarray:
     return getattr(frame, how)().to_numpy().T
 
 
-def features(m, version: str = "v2", band_edges: tuple = (200, 5000), as_traded: bool = False) -> dict[str, np.ndarray]:
+def features(
+    m, version: str = "v2", band_edges: tuple = (200, 5000), as_traded: bool = False
+) -> dict[str, np.ndarray]:
     """band_edges: upper edges of the price bands (IDX default: Rp200, Rp5,000; see profiles.py).
     as_traded: band on the price as traded that session (Market.unit_factor), not the price
     rescaled by later splits. Return-based features and traded value are unit-free.
@@ -144,7 +191,9 @@ def features(m, version: str = "v2", band_edges: tuple = (200, 5000), as_traded:
     vol_buckets = feature("volatility", version).buckets
     close = np.where(m.present, m.close, np.nan)
     level = close * m.unit_factor if as_traded else close
-    band = np.searchsorted(np.array(band_edges, dtype=float), np.nan_to_num(level, nan=0.0), side="left")
+    band = np.searchsorted(
+        np.array(band_edges, dtype=float), np.nan_to_num(level, nan=0.0), side="left"
+    )
     band = np.where(np.isfinite(close), band, -1).astype(np.int8)
     value = np.where(m.present, np.where(m.tradeable, np.nan_to_num(m.value), 0.0), np.nan)
     with np.errstate(divide="ignore", invalid="ignore"):
@@ -153,7 +202,9 @@ def features(m, version: str = "v2", band_edges: tuple = (200, 5000), as_traded:
     out = {
         "price_band": band,
         "liquidity": _bucket(np.where(m.present, _rolling(value, "median", LOOKBACK), np.nan), 5),
-        "volatility": _bucket(np.where(m.present, _rolling(logret, "std", LOOKBACK), np.nan), vol_buckets),
+        "volatility": _bucket(
+            np.where(m.present, _rolling(logret, "std", LOOKBACK), np.nan), vol_buckets
+        ),
         "momentum": _bucket(np.where(m.present, _rolling(logret, "sum", LOOKBACK), np.nan), 3),
     }
     if version == "v1":
@@ -171,11 +222,13 @@ def features(m, version: str = "v2", band_edges: tuple = (200, 5000), as_traded:
     age = np.arange(n_sessions)[None, :] - first[:, None]
     censored = (first == 0)[:, None]  # present since the panel's first session: true age unknown
     age_bucket = np.select([censored | (age >= 250), age >= 60], [2, 1], 0).astype(np.int8)
-    out.update({
-        "market_cap": _bucket(mcap, 5),
-        "drawdown": _bucket(drawdown, 3),
-        "listing_age": np.where(m.present, age_bucket, -1).astype(np.int8),
-    })
+    out.update(
+        {
+            "market_cap": _bucket(mcap, 5),
+            "drawdown": _bucket(drawdown, 3),
+            "listing_age": np.where(m.present, age_bucket, -1).astype(np.int8),
+        }
+    )
     if version == "v4":
         out["listing_age"] = _listing_age_v4(m)
     return out
@@ -200,13 +253,20 @@ def _codes(feats: dict[str, np.ndarray], version: str) -> list[np.ndarray]:
     for level in levels(version):
         code = np.zeros(feats["price_band"].shape, dtype=np.int64)
         for i, name in enumerate(level):
-            code += (feats[name].astype(np.int64) + 1) * (8 ** i)
+            code += (feats[name].astype(np.int64) + 1) * (8**i)
         codes.append(code)
     return codes
 
 
-def matched_draws(evaluable: np.ndarray, feats: dict[str, np.ndarray], a_tick: np.ndarray, a_sig: np.ndarray,
-                  draws: int, rng: np.random.Generator, version: str = "v2") -> tuple[np.ndarray, np.ndarray]:
+def matched_draws(
+    evaluable: np.ndarray,
+    feats: dict[str, np.ndarray],
+    a_tick: np.ndarray,
+    a_sig: np.ndarray,
+    draws: int,
+    rng: np.random.Generator,
+    version: str = "v2",
+) -> tuple[np.ndarray, np.ndarray]:
     """Returns (control tickers shaped (draws, attempts), match level used per attempt)."""
     codes = _codes(feats, version)
     out = np.empty((draws, len(a_sig)), dtype=np.int64)
@@ -232,8 +292,14 @@ def level_names(version: str = "v2") -> list[str]:
     return ["+".join(level) if level else "same session only" for level in levels(version)]
 
 
-def coverage(feats: dict[str, np.ndarray], a_tick: np.ndarray, a_sig: np.ndarray, level_used: np.ndarray,
-             version: str = "v2", band_names: tuple | None = None) -> dict:
+def coverage(
+    feats: dict[str, np.ndarray],
+    a_tick: np.ndarray,
+    a_sig: np.ndarray,
+    level_used: np.ndarray,
+    version: str = "v2",
+    band_names: tuple | None = None,
+) -> dict:
     """How often each feature was known for the signalled name, and how often it was matched on.
     band_names: the market's price bands (profiles.py), which replace the IDX wording in the report."""
     names = VERSIONS[version]
@@ -241,12 +307,27 @@ def coverage(feats: dict[str, np.ndarray], a_tick: np.ndarray, a_sig: np.ndarray
     out = {}
     for i, name in enumerate(names):
         known = feats[name][a_tick, a_sig] >= 0 if len(a_tick) else np.array([], dtype=bool)
-        matched = np.array([name in lv[k] for k in level_used], dtype=bool) if len(level_used) else known
+        matched = (
+            np.array([name in lv[k] for k in level_used], dtype=bool) if len(level_used) else known
+        )
         f = feature(name, version)
-        description = ("close in " + " / ".join(band_names)) if (name == "price_band" and band_names) else f.description
-        out[name] = {"description": description, "availability": f.availability, "priority": i + 1,
-                     "known_share": float(known.mean()) if len(known) else None,
-                     "matched_share": float(matched.mean()) if len(matched) else None}
+        description = (
+            ("close in " + " / ".join(band_names))
+            if (name == "price_band" and band_names)
+            else f.description
+        )
+        out[name] = {
+            "description": description,
+            "availability": f.availability,
+            "priority": i + 1,
+            "known_share": float(known.mean()) if len(known) else None,
+            "matched_share": float(matched.mean()) if len(matched) else None,
+        }
     full = float((level_used == 0).mean()) if len(level_used) else None
-    return {"version": version, "features": out, "full_match_share": full, "min_pool": MIN_POOL,
-            "not_available": UNAVAILABLE}
+    return {
+        "version": version,
+        "features": out,
+        "full_match_share": full,
+        "min_pool": MIN_POOL,
+        "not_available": UNAVAILABLE,
+    }

@@ -29,9 +29,9 @@ EXPECTED_CRYPTO = {
     "assumption_note": "costs assumed: 0.1% taker fee + 0.1% slippage per side; sessions are UTC days",
     "short_carry_per_session": 0.0005,
     "short_note": "short side assumed: a perpetual-futures short at the spot reference price, funding "
-                  "0.05% per UTC day paid by the short (a conservative stand-in: after a pump longs "
-                  "usually pay), 0.1% fee + 0.1% slippage per side; perpetuals may not exist for "
-                  "every pair, and liquidation risk is not modelled",
+    "0.05% per UTC day paid by the short (a conservative stand-in: after a pump longs "
+    "usually pay), 0.1% fee + 0.1% slippage per side; perpetuals may not exist for "
+    "every pair, and liquidation risk is not modelled",
 }
 
 
@@ -40,7 +40,9 @@ class CryptoCloseProfile(unittest.TestCase):
         """Guards against: adding the variant altering CRYPTO itself (any field), which would silently
         change every recorded E2 / E4 crypto run's inputs."""
         self.assertEqual(asdict(CRYPTO), EXPECTED_CRYPTO)
-        self.assertEqual(set(Profile.__dataclass_fields__), set(EXPECTED_CRYPTO))  # no field left unfrozen
+        self.assertEqual(
+            set(Profile.__dataclass_fields__), set(EXPECTED_CRYPTO)
+        )  # no field left unfrozen
 
     def test_crypto_close_is_registered_and_differs_only_in_entry(self):
         """Guards against: a variant that quietly carries a different cost, lot, band, carry or note (it
@@ -83,8 +85,14 @@ class CryptoCloseProfile(unittest.TestCase):
         m = rebuild(t, d, a)
         out = {}
         for name, prof in (("open", CRYPTO), ("close", CRYPTO_CLOSE)):
-            cfg = ExecConfig(holding_days=3, lot_size=prof.lot_size, entry_price=prof.entry, notional=prof.notional,
-                             cost_tiers=prof.cost_tiers, fees=Fees(prof.fee_buy, prof.fee_sell))
+            cfg = ExecConfig(
+                holding_days=3,
+                lot_size=prof.lot_size,
+                entry_price=prof.entry,
+                notional=prof.notional,
+                cost_tiers=prof.cost_tiers,
+                fees=Fees(prof.fee_buy, prof.fee_sell),
+            )
             out[name] = execute(m, np.array([0]), np.array([2]), cfg)
             self.assertEqual(STATUS[out[name]["status"][0]], "EXITED")
         self.assertEqual(out["open"]["entry_price"][0], 11.0)
@@ -92,7 +100,9 @@ class CryptoCloseProfile(unittest.TestCase):
         self.assertEqual(out["open"]["shares"][0], 454)  # floor(5000 / 11)
         self.assertEqual(out["close"]["shares"][0], 500)  # floor(5000 / 10)
         per_side = 0.001 + 0.001
-        self.assertAlmostEqual(out["open"]["net_return"][0], (10 * (1 - per_side)) / (11 * (1 + per_side)) - 1)
+        self.assertAlmostEqual(
+            out["open"]["net_return"][0], (10 * (1 - per_side)) / (11 * (1 + per_side)) - 1
+        )
         self.assertAlmostEqual(out["close"]["net_return"][0], (1 - per_side) / (1 + per_side) - 1)
 
 
@@ -107,24 +117,33 @@ class CryptoCloseThroughTheHarness(unittest.TestCase):
         df, meta = random_walk_panel(start="2023-10-02", n_sessions=120)
         df["open"] = df["previous"]  # an opening print distinct from the close on every session
         meta = {**meta, "default_start": "2023-10-02", "quality_tiers": [], "known_limitations": []}
-        rule = module_rule("EDGECC", """
+        rule = module_rule(
+            "EDGECC",
+            """
 def compute(m):
     out = np.zeros(m.shape)
     out[0, ::7] = 1.0
     return np.where(m.tradeable, out, np.nan)
-""")
+""",
+        )
         closes = df.set_index(["ticker", df["date"].astype(str)])["close"].astype(float)
         opens = df.set_index(["ticker", df["date"].astype(str)])["open"].astype(float)
         with with_rule(rule):
             with self.assertRaises(HoldoutSealed):
-                run(RunConfig("EDGECC", market="CRYPTO_CLOSE", ca_mode="adjusted", random_draws=5), df, meta)
+                run(
+                    RunConfig("EDGECC", market="CRYPTO_CLOSE", ca_mode="adjusted", random_draws=5),
+                    df,
+                    meta,
+                )
             common = dict(ca_mode="adjusted", random_draws=5, end="2023-12-29")
             at_close = run(RunConfig("EDGECC", market="CRYPTO_CLOSE", **common), df, meta)
             at_open = run(RunConfig("EDGECC", market="CRYPTO", **common), df, meta)
         s = at_close["summary"]
         self.assertEqual(s["config"]["market"], "CRYPTO_CLOSE")
         self.assertEqual((s["market"]["profile"], s["market"]["entry"]), ("CRYPTO", "close"))
-        self.assertEqual(s["market"]["cost_assumption"], at_open["summary"]["market"]["cost_assumption"])
+        self.assertEqual(
+            s["market"]["cost_assumption"], at_open["summary"]["market"]["cost_assumption"]
+        )
         self.assertTrue(s["execution"]["price"].startswith("official close"))
         self.assertEqual(at_open["summary"]["market"]["entry"], "open")
         tc, to = at_close["trades"], at_open["trades"]

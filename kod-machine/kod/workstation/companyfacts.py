@@ -12,6 +12,7 @@ Rules kept here:
 - Availability is the accession's filing date (date precision). The submissions feed's acceptanceDateTime is kept as raw metadata only; an exact acceptance time
   is used only when the filing's own header was preserved and matched (not done in bulk).
 """
+
 from __future__ import annotations
 
 from datetime import date
@@ -52,11 +53,21 @@ CONCEPTS = {
 # When one filing period carries several concepts mapped to one metric, they are different line items (Costco reported net sales as SalesRevenueNet and
 # total revenue including membership fees as Revenues). Only the first concept present for that period, in this order, is used; the others are not
 # compared with it as if they were revisions.
-CONCEPT_PRECEDENCE = {"revenue": ("Revenues", "RevenueFromContractWithCustomerExcludingAssessedTax", "SalesRevenueNet")}
+CONCEPT_PRECEDENCE = {
+    "revenue": (
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "SalesRevenueNet",
+    )
+}
 CURRENCY_CODE = re.compile(r"^[A-Z]{3}$")
 
 # Business types the first operating-company model does not support (SEC SIC codes): banks and credit institutions, insurance, real-estate investment trusts.
-FINANCIAL_SIC = ((6000, 6199, "bank or credit institution"), (6300, 6411, "insurance"), (6798, 6798, "real estate investment trust"))
+FINANCIAL_SIC = (
+    (6000, 6199, "bank or credit institution"),
+    (6300, 6411, "insurance"),
+    (6798, 6798, "real estate investment trust"),
+)
 
 
 def json_pointer(*tokens) -> str:
@@ -88,8 +99,10 @@ class CompanyFactsError(ValueError):
 
 def parse(raw: bytes) -> dict:
     """Decimal-exact JSON: numbers are read from their text, never through binary floats."""
+
     def refuse(name):
         raise CompanyFactsError(f"companyfacts response contains the non-JSON number {name}")
+
     try:
         data = json.loads(raw, parse_float=Decimal, parse_int=Decimal, parse_constant=refuse)
     except (ValueError, UnicodeDecodeError, ArithmeticError) as exc:
@@ -102,12 +115,27 @@ def parse(raw: bytes) -> dict:
 def business_type(submissions: dict | None) -> dict:
     """{'supported': bool, 'sic', 'description', 'reason'} from the submissions feed's SIC code; unknown when no submissions were preserved."""
     if not submissions or not str(submissions.get("sic") or "").isdigit():
-        return {"supported": None, "sic": None, "description": None, "reason": "SIC code unknown; business type not established"}
+        return {
+            "supported": None,
+            "sic": None,
+            "description": None,
+            "reason": "SIC code unknown; business type not established",
+        }
     sic = int(submissions["sic"])
     for low, high, kind in FINANCIAL_SIC:
         if low <= sic <= high:
-            return {"supported": False, "sic": sic, "description": submissions.get("sicDescription"), "reason": f"SIC {sic} is a {kind}; the operating-company model does not apply"}
-    return {"supported": True, "sic": sic, "description": submissions.get("sicDescription"), "reason": None}
+            return {
+                "supported": False,
+                "sic": sic,
+                "description": submissions.get("sicDescription"),
+                "reason": f"SIC {sic} is a {kind}; the operating-company model does not apply",
+            }
+    return {
+        "supported": True,
+        "sic": sic,
+        "description": submissions.get("sicDescription"),
+        "reason": None,
+    }
 
 
 def _unit(unit: str):
@@ -125,13 +153,26 @@ def acceptance_times(submissions: dict | None) -> dict:
     return dict(zip(recent.get("accessionNumber", []), recent.get("acceptanceDateTime", [])))
 
 
-def observation_rows(data: dict, document: dict, security_id: str, issuer_id: str | None, now: str, submissions: dict | None = None) -> tuple[list, list, dict]:
+def observation_rows(
+    data: dict,
+    document: dict,
+    security_id: str,
+    issuer_id: str | None,
+    now: str,
+    submissions: dict | None = None,
+) -> tuple[list, list, dict]:
     """(periods, observation rows, coverage) from a parsed companyfacts response preserved as `document` (pure). Exact repeats of one fact inside the response
     (the same value, period, accession and form listed under several frames) become one observation with every pointer kept."""
     accepted = acceptance_times(submissions)
     periods, rows, seen = {}, {}, {}
-    coverage = {"provider": PROVIDER, "scope": "whole-entity standard-taxonomy facts as filed; no segments or custom KPIs", "metrics": {}, "unmapped_units": [],
-                "absent_metrics": [], "concepts_present": []}
+    coverage = {
+        "provider": PROVIDER,
+        "scope": "whole-entity standard-taxonomy facts as filed; no segments or custom KPIs",
+        "metrics": {},
+        "unmapped_units": [],
+        "absent_metrics": [],
+        "concepts_present": [],
+    }
     for (taxonomy, tag), metric in sorted(CONCEPTS.items()):
         concept = (data["facts"].get(taxonomy) or {}).get(tag)
         if not concept:
@@ -146,10 +187,23 @@ def observation_rows(data: dict, document: dict, security_id: str, issuer_id: st
             for index, e in enumerate(entries):
                 pointer = json_pointer("facts", taxonomy, tag, "units", unit_key, index)
                 try:
-                    end, start, val, accn, form, filed = e["end"], e.get("start"), e["val"], e["accn"], e["form"], e["filed"]
-                    if not isinstance(val, Decimal) or not val.is_finite() or abs(val) >= Decimal(10) ** 18:
+                    end, start, val, accn, form, filed = (
+                        e["end"],
+                        e.get("start"),
+                        e["val"],
+                        e["accn"],
+                        e["form"],
+                        e["filed"],
+                    )
+                    if (
+                        not isinstance(val, Decimal)
+                        or not val.is_finite()
+                        or abs(val) >= Decimal(10) ** 18
+                    ):
                         raise TypeError("value is not a finite number of a plausible magnitude")
-                    if not all(isinstance(x, str) for x in (end, accn, form, filed)) or (start is not None and not isinstance(start, str)):
+                    if not all(isinstance(x, str) for x in (end, accn, form, filed)) or (
+                        start is not None and not isinstance(start, str)
+                    ):
                         raise TypeError("dates and filing fields must be text")
                     duration_kind(start, end) if start else date.fromisoformat(end)
                     date.fromisoformat(filed)
@@ -169,36 +223,113 @@ def observation_rows(data: dict, document: dict, security_id: str, issuer_id: st
                 flags = []
                 if metric == "capex" and value < 0:
                     flags.append("CAPEX_NEGATIVE_AS_REPORTED")
-                oid = identity("fob", PROVIDER, document["id"], pointer, tag, metric, METRIC_VERSION, _decimal_string(value), unit, currency, p.id, accn, MAPPING_VERSION)
+                oid = identity(
+                    "fob",
+                    PROVIDER,
+                    document["id"],
+                    pointer,
+                    tag,
+                    metric,
+                    METRIC_VERSION,
+                    _decimal_string(value),
+                    unit,
+                    currency,
+                    p.id,
+                    accn,
+                    MAPPING_VERSION,
+                )
                 seen[key] = oid
                 rows[oid] = {
-                    "id": oid, "provider": PROVIDER, "issuer_id": issuer_id, "security_id": security_id, "concept": tag, "taxonomy": taxonomy, "metric": metric,
-                    "metric_version": METRIC_VERSION, "raw_value": str(val), "value": _decimal_string(value), "unit": unit, "scale": scale, "currency": currency,
-                    "currency_basis": "UNIT_OF_MEASURE" if currency else None, "period_id": p.id, "basis": "GAAP" if taxonomy == "us-gaap" else "UNSTATED",
-                    "context": "consolidated (companyfacts whole entity)", "dimensions_available": 0, "accession": accn, "form": form, "filed": filed,
-                    "amendment": 1 if form.endswith("/A") else 0, "source_document_id": document["id"], "source_sha256": document["sha256"],
-                    "_pointer": pointer, "_also_at": [], "_frame": e.get("frame"), "_fy": e.get("fy"), "_fp": e.get("fp"), "_accepted_raw": accepted.get(accn),
-                    "published_at": None, "publication_date": filed, "publication_precision": "date",
+                    "id": oid,
+                    "provider": PROVIDER,
+                    "issuer_id": issuer_id,
+                    "security_id": security_id,
+                    "concept": tag,
+                    "taxonomy": taxonomy,
+                    "metric": metric,
+                    "metric_version": METRIC_VERSION,
+                    "raw_value": str(val),
+                    "value": _decimal_string(value),
+                    "unit": unit,
+                    "scale": scale,
+                    "currency": currency,
+                    "currency_basis": "UNIT_OF_MEASURE" if currency else None,
+                    "period_id": p.id,
+                    "basis": "GAAP" if taxonomy == "us-gaap" else "UNSTATED",
+                    "context": "consolidated (companyfacts whole entity)",
+                    "dimensions_available": 0,
+                    "accession": accn,
+                    "form": form,
+                    "filed": filed,
+                    "amendment": 1 if form.endswith("/A") else 0,
+                    "source_document_id": document["id"],
+                    "source_sha256": document["sha256"],
+                    "_pointer": pointer,
+                    "_also_at": [],
+                    "_frame": e.get("frame"),
+                    "_fy": e.get("fy"),
+                    "_fp": e.get("fp"),
+                    "_accepted_raw": accepted.get(accn),
+                    "published_at": None,
+                    "publication_date": filed,
+                    "publication_precision": "date",
                     "publication_basis": f"SEC filing date of accession {accn} (companyfacts 'filed'); exact acceptance time not established",
-                    "observed_at": document["observed_at"], "recorded_at": now, "parser_version": PARSER_VERSION, "mapping_version": MAPPING_VERSION,
-                    "flags": canonical(sorted(flags))}
-                m = coverage["metrics"].setdefault(metric, {"observations": 0, "kinds": {}, "first_end": None, "last_end": None, "concepts": set(), "forms": set()})
+                    "observed_at": document["observed_at"],
+                    "recorded_at": now,
+                    "parser_version": PARSER_VERSION,
+                    "mapping_version": MAPPING_VERSION,
+                    "flags": canonical(sorted(flags)),
+                }
+                m = coverage["metrics"].setdefault(
+                    metric,
+                    {
+                        "observations": 0,
+                        "kinds": {},
+                        "first_end": None,
+                        "last_end": None,
+                        "concepts": set(),
+                        "forms": set(),
+                    },
+                )
                 m["observations"] += 1
-                m["kinds"][p.kind if p.kind in ("quarter", "6 months", "9 months", "12 months", "instant") else "other"] = \
-                    m["kinds"].get(p.kind if p.kind in ("quarter", "6 months", "9 months", "12 months", "instant") else "other", 0) + 1
+                m["kinds"][
+                    p.kind
+                    if p.kind in ("quarter", "6 months", "9 months", "12 months", "instant")
+                    else "other"
+                ] = (
+                    m["kinds"].get(
+                        p.kind
+                        if p.kind in ("quarter", "6 months", "9 months", "12 months", "instant")
+                        else "other",
+                        0,
+                    )
+                    + 1
+                )
                 m["first_end"] = min(filter(None, (m["first_end"], end)))
                 m["last_end"] = max(filter(None, (m["last_end"], end)))
                 m["concepts"].add(tag)
                 m["forms"].add(form)
     out = []
     for row in rows.values():
-        evidence = {"json_pointer": row.pop("_pointer"), "also_at": row.pop("_also_at"), "frame": row.pop("_frame"), "filing_fy": row.pop("_fy"),
-                    "filing_fp": row.pop("_fp"), "submissions_acceptance_raw": row.pop("_accepted_raw"), "document_id": document["id"],
-                    "note": "fy/fp describe the filing, not this fact; the period is the fact's own start/end"}
+        evidence = {
+            "json_pointer": row.pop("_pointer"),
+            "also_at": row.pop("_also_at"),
+            "frame": row.pop("_frame"),
+            "filing_fy": row.pop("_fy"),
+            "filing_fp": row.pop("_fp"),
+            "submissions_acceptance_raw": row.pop("_accepted_raw"),
+            "document_id": document["id"],
+            "note": "fy/fp describe the filing, not this fact; the period is the fact's own start/end",
+        }
         row["evidence"] = canonical(evidence)
         out.append(row)
     from .identity import METRIC_CATALOG_V1
-    coverage["absent_metrics"] = sorted(m for m, *_ in METRIC_CATALOG_V1 if m not in coverage["metrics"] and m not in ("gross_margin",))
+
+    coverage["absent_metrics"] = sorted(
+        m
+        for m, *_ in METRIC_CATALOG_V1
+        if m not in coverage["metrics"] and m not in ("gross_margin",)
+    )
     for m in coverage["metrics"].values():
         m["concepts"], m["forms"] = sorted(m["concepts"]), sorted(m["forms"])
     coverage["observations"] = len(out)
@@ -213,7 +344,16 @@ def filing_chronology(observations, submissions: dict | None = None) -> list:
     for o in observations:
         if not o.accession:
             continue
-        f = filings.setdefault(o.accession, {"accession": o.accession, "form": o.form, "filed": o.filed, "amendment": bool(o.amendment), "observations": 0,
-                                             "submissions_acceptance_raw": accepted.get(o.accession)})
+        f = filings.setdefault(
+            o.accession,
+            {
+                "accession": o.accession,
+                "form": o.form,
+                "filed": o.filed,
+                "amendment": bool(o.amendment),
+                "observations": 0,
+                "submissions_acceptance_raw": accepted.get(o.accession),
+            },
+        )
         f["observations"] += 1
     return sorted(filings.values(), key=lambda f: (f["filed"] or "", f["accession"]))

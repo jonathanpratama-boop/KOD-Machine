@@ -29,13 +29,16 @@ class BacktestTests(unittest.TestCase):
         self.assertEqual(a["rule_trades"], b["rule_trades"])
 
     def test_rule_that_reads_ahead_is_refused(self):
-        peek = module_rule("PEEK", """
+        peek = module_rule(
+            "PEEK",
+            """
             def compute(m):
                 tomorrow = np.roll(m.close, -1, axis=1)
                 out = (tomorrow > m.close).astype(float)
                 out[:, -1] = np.nan
                 return np.where(m.tradeable, out, np.nan)
-        """)
+        """,
+        )
         df, meta = random_walk_panel()
         with with_rule(peek):
             with self.assertRaises(LookaheadError):
@@ -44,33 +47,44 @@ class BacktestTests(unittest.TestCase):
     def test_real_edge_beats_random_and_noise_does_not(self):
         df, meta = random_walk_panel(drift={0: 0.01})
 
-        first_name = module_rule("EDGE", """
+        first_name = module_rule(
+            "EDGE",
+            """
             def compute(m):
                 out = np.zeros(m.shape)
                 out[0, ::7] = 1.0
                 return np.where(m.tradeable, out, np.nan)
-        """)
+        """,
+        )
         with with_rule(first_name):
             s = run(RunConfig("EDGE", random_draws=200), df, meta)["summary"]
-        self.assertGreater(s["rule_trades"]["avg_net_return"], s["random"]["avg_net_return"]["random_p97_5"])
+        self.assertGreater(
+            s["rule_trades"]["avg_net_return"], s["random"]["avg_net_return"]["random_p97_5"]
+        )
         self.assertLess(s["random"]["avg_net_return"]["p_value_one_sided"], 0.01)
 
     def test_overlapping_signals_are_skipped_while_held(self):
         df, meta = random_walk_panel()
 
-        daily = module_rule("DAILY", """
+        daily = module_rule(
+            "DAILY",
+            """
             def compute(m):
                 out = np.zeros(m.shape)
                 out[0, :] = 1.0
                 return np.where(m.tradeable, out, np.nan)
-        """, holding=5)
+        """,
+            holding=5,
+        )
         with with_rule(daily):
             out = run(RunConfig("DAILY", random_draws=5), df, meta)
         sig = out["summary"]["signals"]
         self.assertGreater(sig["skipped_overlap"], 0)
         trades = out["trades"]
         held = trades[trades["status"] == "EXITED"]
-        self.assertTrue((held["entry_date"].to_numpy()[1:] > held["exit_date"].to_numpy()[:-1]).all())
+        self.assertTrue(
+            (held["entry_date"].to_numpy()[1:] > held["exit_date"].to_numpy()[:-1]).all()
+        )
 
     def test_user_rule_is_pending_not_guessed(self):
         self.assertIn("USER_RULE", rules.pending())

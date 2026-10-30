@@ -62,8 +62,13 @@ class LedgerTests(unittest.TestCase):
     def test_prospective_close_checks_hash(self):
         lab = Lab()
         self.addCleanup(lab.cleanup)
-        card = prospective_card("KOD-P-HASH", T0, T0 + timedelta(hours=1), T0 + timedelta(days=5),
-                                evidence=[lab.evidence_id])
+        card = prospective_card(
+            "KOD-P-HASH",
+            T0,
+            T0 + timedelta(hours=1),
+            T0 + timedelta(days=5),
+            evidence=[lab.evidence_id],
+        )
         open_and_evaluate(lab.ledger, card)
         lab.clock.advance(days=6)
         with self.assertRaises(LedgerError):

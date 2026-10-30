@@ -22,8 +22,13 @@ class ScorerV2(unittest.TestCase):
     def setUp(self):
         warnings.simplefilter("ignore")
         base = gframe(spike=(7, 70))
-        self.decision = paper.scan_frame(base[base["date"] <= base["date"].unique()[70]], DATA, validation=VALIDATED,
-                                         market="US", policy=paper.POLICY_ID_V3)["decisions"][0]
+        self.decision = paper.scan_frame(
+            base[base["date"] <= base["date"].unique()[70]],
+            DATA,
+            validation=VALIDATED,
+            market="US",
+            policy=paper.POLICY_ID_V3,
+        )["decisions"][0]
         self.ran = gframe(spike=(7, 70), tail=0.03, gap=0.01)
         self.session_after = str(self.ran["date"].unique()[73].date())
 
@@ -41,7 +46,11 @@ class ScorerV2(unittest.TestCase):
     def scored(self, df, ev, verify=None):
         m = paper._market(df, "US")
         units, reason, evidence = paper.scoring_units(self.decision, m, ev, verify)
-        return (paper.score(self.decision, m, price_units=units) if units else None), reason, evidence
+        return (
+            (paper.score(self.decision, m, price_units=units) if units else None),
+            reason,
+            evidence,
+        )
 
     def test_no_split_scores_with_v2(self):
         out, reason, _ = self.scored(self.ran, events())
@@ -54,7 +63,9 @@ class ScorerV2(unittest.TestCase):
         plain, _, _ = self.scored(self.ran, events())
         split = self.reverse_split(self.ran, self.session_after)
         ev = events(("T007", self.session_after, 1.0, 10.0, "1:10", "SPLIT"))
-        out, reason, evidence = self.scored(split, ev, verify=lambda e: ("VERIFIED", [{"accession": "x"}]))
+        out, reason, evidence = self.scored(
+            split, ev, verify=lambda e: ("VERIFIED", [{"accession": "x"}])
+        )
         self.assertIsNone(reason)
         self.assertEqual(evidence[0]["status"], "VERIFIED")
         a, b = plain["execution"]["paper_trade"], out["execution"]["paper_trade"]
@@ -63,7 +74,9 @@ class ScorerV2(unittest.TestCase):
         self.assertAlmostEqual(b["entry_cost_rate"], a["entry_cost_rate"])
         # after a 1:10 reverse split the shares really are sold at 10x: the exit tier is the one at that price
         self.assertAlmostEqual(b["exit_price_as_traded"], 10 * a["exit_price_as_traded"], places=6)
-        gross = lambda t: (1 + t["net_return"]) * (1 + t["entry_cost_rate"]) / (1 - t["exit_cost_rate"])  # noqa: E731
+        gross = (
+            lambda t: (1 + t["net_return"]) * (1 + t["entry_cost_rate"]) / (1 - t["exit_cost_rate"])
+        )  # noqa: E731
         self.assertAlmostEqual(gross(a), gross(b), places=9)
 
     def test_uncorroborated_split_is_unscorable_with_the_reason(self):
@@ -86,7 +99,9 @@ class ScorerV2(unittest.TestCase):
         d = copy.deepcopy(self.decision)
         d["market"] = "IDX"
         m = paper._market(self.ran, "US")
-        _, reason, _ = paper.scoring_units(d, m, events(("T007", self.session_after, 1.0, 5.0, "1:5", "SPLIT")))
+        _, reason, _ = paper.scoring_units(
+            d, m, events(("T007", self.session_after, 1.0, 5.0, "1:5", "SPLIT"))
+        )
         self.assertIn("no independent IDX corporate-action source", reason)
 
     def test_crypto_is_unadjusted(self):
@@ -100,11 +115,18 @@ class ScorerV2(unittest.TestCase):
 class Due(unittest.TestCase):
     def test_nothing_is_due_before_entry_plus_horizon(self):
         """Guards against: a daily 5,700-name pull (and a stray manifest) when no window can have ended."""
-        dec = {"type": "DECISION", "market": "US", "decision_id": "D1", "signal_session": "2026-10-07"}
+        dec = {
+            "type": "DECISION",
+            "market": "US",
+            "decision_id": "D1",
+            "signal_session": "2026-10-07",
+        }
         with mock.patch.object(paper, "ledger_lines", return_value=[dec]):
             self.assertEqual(paper.due("US", "2026-10-08"), [])
-            self.assertEqual(paper.due("US", "2026-10-14"), [])      # exit session not yet traded
-            self.assertEqual(paper.due("US", "2026-10-15"), ["D1"])  # entry Oct 8 + 5 sessions = Oct 15
+            self.assertEqual(paper.due("US", "2026-10-14"), [])  # exit session not yet traded
+            self.assertEqual(
+                paper.due("US", "2026-10-15"), ["D1"]
+            )  # entry Oct 8 + 5 sessions = Oct 15
         crypto = {**dec, "market": "CRYPTO", "decision_id": "C1"}
         with mock.patch.object(paper, "ledger_lines", return_value=[crypto]):
             self.assertEqual(paper.due("CRYPTO", "2026-10-13"), [])
@@ -116,19 +138,39 @@ class Revisions(unittest.TestCase):
         """Guards against: a corrected outcome overwriting, or floating free of, the original."""
         warnings.simplefilter("ignore")
         base = gframe(spike=(7, 70))
-        dec = paper.scan_frame(base[base["date"] <= base["date"].unique()[70]], DATA, validation=VALIDATED,
-                               market="US", policy=paper.POLICY_ID_V3)["decisions"][0]
-        earlier = {"type": "OUTCOME", "decision_id": dec["decision_id"], "record_hash": "a" * 64, "status": "UNSCORABLE"}
+        dec = paper.scan_frame(
+            base[base["date"] <= base["date"].unique()[70]],
+            DATA,
+            validation=VALIDATED,
+            market="US",
+            policy=paper.POLICY_ID_V3,
+        )["decisions"][0]
+        earlier = {
+            "type": "OUTCOME",
+            "decision_id": dec["decision_id"],
+            "record_hash": "a" * 64,
+            "status": "UNSCORABLE",
+        }
         ran = gframe(spike=(7, 70), tail=0.03, gap=0.01)
         appended = []
-        with mock.patch.object(paper, "ledger_lines", return_value=[dec, earlier]), \
-                mock.patch.object(paper, "load_recent", return_value=(ran, {"manifest": "m", "manifest_sha256": "0"})), \
-                mock.patch("idxsig.us_actions.yahoo_events", return_value=events()), \
-                mock.patch.object(paper, "append", side_effect=lambda recs, timestamper=None:
-                                  appended.extend(recs) or [{**r, "record_hash": "b" * 64} for r in recs]):
+        with (
+            mock.patch.object(paper, "ledger_lines", return_value=[dec, earlier]),
+            mock.patch.object(
+                paper, "load_recent", return_value=(ran, {"manifest": "m", "manifest_sha256": "0"})
+            ),
+            mock.patch("idxsig.us_actions.yahoo_events", return_value=events()),
+            mock.patch.object(
+                paper,
+                "append",
+                side_effect=lambda recs, timestamper=None: appended.extend(recs)
+                or [{**r, "record_hash": "b" * 64} for r in recs],
+            ),
+        ):
             _, none = paper.score_pending(paper.Path("m.jsonl"), market="US")
             self.assertEqual(none, [])  # already has an outcome: not scored again unasked
-            _, outs = paper.score_pending(paper.Path("m.jsonl"), market="US", rescore={dec["decision_id"]: "evidence found"})
+            _, outs = paper.score_pending(
+                paper.Path("m.jsonl"), market="US", rescore={dec["decision_id"]: "evidence found"}
+            )
         self.assertEqual(len(outs), 1)
         self.assertEqual(outs[0]["revises"], "a" * 64)
         self.assertEqual(outs[0]["revision_reason"], "evidence found")

@@ -6,6 +6,7 @@ code). A database newer than this application, or one whose recorded migrations 
 
 Migration 1 is the v1 workstation schema exactly as released (KOD-WORKSTATION-v1). Later migrations only add tables, indexes and triggers.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -281,12 +282,33 @@ BEGIN SELECT RAISE(ABORT, 'calculation source lineage is immutable'); END;
 """
 
 MIGRATIONS = (
-    Migration(1, "v1 workstation: securities, evidence objects, documents, events, notes, annotations, jobs", V1_DDL),
-    Migration(2, "identity, immutable financial observations, periods, metric definitions, calculation lineage, analyst records", V2_DDL, _backfill_v2),
+    Migration(
+        1,
+        "v1 workstation: securities, evidence objects, documents, events, notes, annotations, jobs",
+        V1_DDL,
+    ),
+    Migration(
+        2,
+        "identity, immutable financial observations, periods, metric definitions, calculation lineage, analyst records",
+        V2_DDL,
+        _backfill_v2,
+    ),
     Migration(3, "versioned scenario assumptions and immutable dated price observations", V3_DDL),
-    Migration(4, "structured thesis versions, recorded condition reviews and immutable decision packets", V4_DDL),
-    Migration(5, "explicit revision sequence on price observations (same-second corrections ordered by recording, not by id)", V5_DDL),
-    Migration(6, "immutable source observation events and calculation classification source lineage", V6_DDL),
+    Migration(
+        4,
+        "structured thesis versions, recorded condition reviews and immutable decision packets",
+        V4_DDL,
+    ),
+    Migration(
+        5,
+        "explicit revision sequence on price observations (same-second corrections ordered by recording, not by id)",
+        V5_DDL,
+    ),
+    Migration(
+        6,
+        "immutable source observation events and calculation classification source lineage",
+        V6_DDL,
+    ),
 )
 LATEST = MIGRATIONS[-1].version
 
@@ -310,7 +332,11 @@ def _version(db) -> int:
 
 def _has_data(db) -> bool:
     tables = {r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
-    return any(db.execute(f"SELECT 1 FROM {t} LIMIT 1").fetchone() for t in ("securities", "documents", "notes") if t in tables)
+    return any(
+        db.execute(f"SELECT 1 FROM {t} LIMIT 1").fetchone()
+        for t in ("securities", "documents", "notes")
+        if t in tables
+    )
 
 
 def _check_recorded(db, migrations, version):
@@ -320,7 +346,9 @@ def _check_recorded(db, migrations, version):
     for row in db.execute("SELECT version, checksum FROM schema_migrations ORDER BY version"):
         known = next((m for m in migrations if m.version == row[0]), None)
         if known is None or known.checksum != row[1]:
-            raise MigrationError(f"schema migration {row[0]} recorded in this database differs from this application's; refusing to continue (the database is unchanged)")
+            raise MigrationError(
+                f"schema migration {row[0]} recorded in this database differs from this application's; refusing to continue (the database is unchanged)"
+            )
 
 
 def safety_copy(path: Path, version: int, now: str) -> Path:
@@ -353,7 +381,9 @@ def ensure_schema(path: Path, app_version: str, migrations=MIGRATIONS, now=utc_n
         db.execute("PRAGMA busy_timeout=15000")
         start = _version(db)
         if start > latest:
-            raise MigrationError(f"database schema v{start} is newer than this application (v{latest}); use the KOD release that created it")
+            raise MigrationError(
+                f"database schema v{start} is newer than this application (v{latest}); use the KOD release that created it"
+            )
         _check_recorded(db, migrations, start)
         report = {"from": start, "to": start, "applied": [], "safety_copy": None}
         if start == latest:
@@ -370,7 +400,9 @@ def ensure_schema(path: Path, app_version: str, migrations=MIGRATIONS, now=utc_n
                     db.execute("COMMIT")
                     continue
                 if current != migration.version - 1:
-                    raise MigrationError(f"database is at v{current}; migration {migration.version} needs v{migration.version - 1}")
+                    raise MigrationError(
+                        f"database is at v{current}; migration {migration.version} needs v{migration.version - 1}"
+                    )
                 for statement in statements(migration.ddl):
                     db.execute(statement)
                 stamp = now()
@@ -379,17 +411,30 @@ def ensure_schema(path: Path, app_version: str, migrations=MIGRATIONS, now=utc_n
                 if migration.version >= 2:
                     if migration.version == 2:
                         first = migrations[0]
-                        db.execute("INSERT OR IGNORE INTO schema_migrations VALUES (?,?,?,?,?)",
-                                   (first.version, first.name, first.checksum, "recorded at upgrade to v2 (applied before migration tracking)", "KOD-WORKSTATION-v1"))
-                    db.execute("INSERT INTO schema_migrations VALUES (?,?,?,?,?)", (migration.version, migration.name, migration.checksum, stamp, app_version))
+                        db.execute(
+                            "INSERT OR IGNORE INTO schema_migrations VALUES (?,?,?,?,?)",
+                            (
+                                first.version,
+                                first.name,
+                                first.checksum,
+                                "recorded at upgrade to v2 (applied before migration tracking)",
+                                "KOD-WORKSTATION-v1",
+                            ),
+                        )
+                    db.execute(
+                        "INSERT INTO schema_migrations VALUES (?,?,?,?,?)",
+                        (migration.version, migration.name, migration.checksum, stamp, app_version),
+                    )
                 db.execute(f"PRAGMA user_version={int(migration.version)}")
                 db.execute("COMMIT")
             except Exception as exc:
                 db.execute("ROLLBACK")
                 if isinstance(exc, MigrationError):
                     raise
-                raise MigrationError(f"migration {migration.version} ({migration.name}) failed and was rolled back; the database remains at v{_version(db)}: "
-                                     f"{type(exc).__name__}: {exc}") from exc
+                raise MigrationError(
+                    f"migration {migration.version} ({migration.name}) failed and was rolled back; the database remains at v{_version(db)}: "
+                    f"{type(exc).__name__}: {exc}"
+                ) from exc
             report["applied"].append(migration.version)
         report["to"] = _version(db)
         if report["to"] < latest:

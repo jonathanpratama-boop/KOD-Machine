@@ -10,6 +10,7 @@
   summed.
 - TTM is the sum of four contiguous, non-overlapping quarters of an additive flow; a gap or overlap leaves it unavailable.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -46,6 +47,8 @@ def long_quarter(period) -> bool:
 
 def quarter_like(period) -> bool:
     return period.kind == "quarter" or long_quarter(period)
+
+
 KIND = {m: kind for m, _, kind, *_ in METRIC_CATALOG_V1}
 
 
@@ -54,7 +57,7 @@ class Quarter:
     start: str
     end: str
     value: Decimal | None
-    status: str                  # reported | derived | conflicted | not_derivable
+    status: str  # reported | derived | conflicted | not_derivable
     figure: ResolvedFigure | None
     calculation: CalculationResult | None
     reasons: tuple
@@ -92,11 +95,18 @@ def _one_quarter_per_end(quarters: dict, own: list, additive: bool) -> None:
         ends = sorted(ends)
         for a, b in zip(ends, ends[1:]):
             q = ((_day(a) + timedelta(days=1)).isoformat(), b)
-            if duration_kind(*q) == "quarter" or (105 <= (_day(b) - _day(q[0])).days + 1 <= 126 and any(
-                    f.period.kind == "12 months" and f.period.start_date == start and f.period.end_date == b for f in own)):
+            if duration_kind(*q) == "quarter" or (
+                105 <= (_day(b) - _day(q[0])).days + 1 <= 126
+                and any(
+                    f.period.kind == "12 months"
+                    and f.period.start_date == start
+                    and f.period.end_date == b
+                    for f in own
+                )
+            ):
                 derivable.add(q)
         if len(ends) > 1 and duration_kind(start, ends[0]) == "quarter":
-            derivable.add((start, ends[0]))           # a fiscal year's first quarter
+            derivable.add((start, ends[0]))  # a fiscal year's first quarter
     by_end = {}
     for key in quarters:
         by_end.setdefault(key[1], []).append(key)
@@ -118,6 +128,7 @@ def _one_quarter_per_end(quarters: dict, own: list, additive: bool) -> None:
                 if k != keep:
                     del quarters[k]
 
+
 def quarterly(figures: list, metric: str, check=None, alternatives: dict | None = None) -> list:
     """Discrete quarters for one metric from resolved duration figures (one basis/unit/currency group per call is the caller's choice; mixed groups are
     never combined). Returns Quarter records sorted by end date. `check(shorter, longer)` may return reasons the two year-to-date figures must not be
@@ -127,9 +138,13 @@ def quarterly(figures: list, metric: str, check=None, alternatives: dict | None 
     quarters = {}
     for f in own:
         # A reported week-based fourth quarter (15-18 weeks ending a fiscal year) is a quarter as reported.
-        if f.period.kind == "quarter" or (long_quarter(f.period) and f.period.end_date in year_ends):
+        if f.period.kind == "quarter" or (
+            long_quarter(f.period) and f.period.end_date in year_ends
+        ):
             key = (f.period.start_date, f.period.end_date)
-            quarters[key] = Quarter(*key, f.value, "reported" if f.status == "ok" else f.status, f, None, f.reasons)
+            quarters[key] = Quarter(
+                *key, f.value, "reported" if f.status == "ok" else f.status, f, None, f.reasons
+            )
     _one_quarter_per_end(quarters, own, metric in ADDITIVE)
     reported_ends = {end for _, end in quarters}
     if metric not in ADDITIVE:
@@ -147,27 +162,71 @@ def quarterly(figures: list, metric: str, check=None, alternatives: dict | None 
                 continue
             if (q_start, q_end) in quarters:
                 # Already reported. The year-to-date difference is still offered to the caller (to cross-check the reported figure's scale).
-                if alternatives is not None and shorter.status == "ok" and longer.status == "ok" and not _compatible(shorter, longer):
+                if (
+                    alternatives is not None
+                    and shorter.status == "ok"
+                    and longer.status == "ok"
+                    and not _compatible(shorter, longer)
+                ):
                     alternatives[(q_start, q_end)] = longer.value - shorter.value
                 continue
             if q_end in reported_ends:
-                continue                  # a reported quarter ends on the same date (with another start): the reported figure is used, never a second one
+                continue  # a reported quarter ends on the same date (with another start): the reported figure is used, never a second one
             reasons = _compatible(shorter, longer) + (list(check(shorter, longer)) if check else [])
-            inputs = tuple(("year_to_date_" + role, "observation", oid) for role, f in (("longer", longer), ("shorter", shorter)) for oid in f.observation_ids)
+            inputs = tuple(
+                ("year_to_date_" + role, "observation", oid)
+                for role, f in (("longer", longer), ("shorter", shorter))
+                for oid in f.observation_ids
+            )
             if shorter.status != "ok" or longer.status != "ok":
                 bad = shorter.status if shorter.status != "ok" else longer.status
-                calc = CalculationResult("quarter_from_ytd_difference", "ytd-difference-v1", "conflicted", None, longer.unit, inputs, (),
-                                         (f"a year-to-date input is {bad}",))
-                quarters[(q_start, q_end)] = Quarter(q_start, q_end, None, "conflicted", None, calc, calc.reasons)
+                calc = CalculationResult(
+                    "quarter_from_ytd_difference",
+                    "ytd-difference-v1",
+                    "conflicted",
+                    None,
+                    longer.unit,
+                    inputs,
+                    (),
+                    (f"a year-to-date input is {bad}",),
+                )
+                quarters[(q_start, q_end)] = Quarter(
+                    q_start, q_end, None, "conflicted", None, calc, calc.reasons
+                )
                 continue
             if reasons:
-                calc = CalculationResult("quarter_from_ytd_difference", "ytd-difference-v1", "incompatible", None, longer.unit, inputs, (), tuple(reasons))
-                quarters[(q_start, q_end)] = Quarter(q_start, q_end, None, "not_derivable", None, calc, calc.reasons)
+                calc = CalculationResult(
+                    "quarter_from_ytd_difference",
+                    "ytd-difference-v1",
+                    "incompatible",
+                    None,
+                    longer.unit,
+                    inputs,
+                    (),
+                    tuple(reasons),
+                )
+                quarters[(q_start, q_end)] = Quarter(
+                    q_start, q_end, None, "not_derivable", None, calc, calc.reasons
+                )
                 continue
-            calc = CalculationResult("quarter_from_ytd_difference", "ytd-difference-v1", "ok", longer.value - shorter.value, longer.unit, inputs, (), (),
-                                     {"longer": f"{longer.period.kind} ended {longer.period.end_date}", "shorter": f"{shorter.period.kind} ended {shorter.period.end_date}",
-                                      "formula": f"{longer.period.kind} minus {shorter.period.kind}, same start {start}"})
-            quarters[(q_start, q_end)] = Quarter(q_start, q_end, calc.value, "derived", None, calc, ())
+            calc = CalculationResult(
+                "quarter_from_ytd_difference",
+                "ytd-difference-v1",
+                "ok",
+                longer.value - shorter.value,
+                longer.unit,
+                inputs,
+                (),
+                (),
+                {
+                    "longer": f"{longer.period.kind} ended {longer.period.end_date}",
+                    "shorter": f"{shorter.period.kind} ended {shorter.period.end_date}",
+                    "formula": f"{longer.period.kind} minus {shorter.period.kind}, same start {start}",
+                },
+            )
+            quarters[(q_start, q_end)] = Quarter(
+                q_start, q_end, calc.value, "derived", None, calc, ()
+            )
     return sorted(quarters.values(), key=lambda q: q.end)
 
 
@@ -195,18 +254,53 @@ def ttm(quarters: list, end: str, metric: str) -> CalculationResult:
     for _ in range(4):
         q = by_end.get(cursor)
         if q is None:
-            return CalculationResult("ttm", "ttm-v1", "missing", None, unit, tuple(_ttm_inputs(chain)), (), (f"no quarter ending {cursor}",))
+            return CalculationResult(
+                "ttm",
+                "ttm-v1",
+                "missing",
+                None,
+                unit,
+                tuple(_ttm_inputs(chain)),
+                (),
+                (f"no quarter ending {cursor}",),
+            )
         if q.value is None:
-            return CalculationResult("ttm", "ttm-v1", "conflicted" if q.status == "conflicted" else "missing", None, unit, tuple(_ttm_inputs(chain + [q])), (),
-                                     (f"the quarter ending {cursor} is {q.status}",))
+            return CalculationResult(
+                "ttm",
+                "ttm-v1",
+                "conflicted" if q.status == "conflicted" else "missing",
+                None,
+                unit,
+                tuple(_ttm_inputs(chain + [q])),
+                (),
+                (f"the quarter ending {cursor} is {q.status}",),
+            )
         chain.append(q)
         cursor = (_day(q.start) - timedelta(days=1)).isoformat()
     starts = [q.start for q in chain]
     if len(set(starts)) != 4:
-        return CalculationResult("ttm", "ttm-v1", "invalid", None, unit, tuple(_ttm_inputs(chain)), (), ("the quarters overlap",))
+        return CalculationResult(
+            "ttm",
+            "ttm-v1",
+            "invalid",
+            None,
+            unit,
+            tuple(_ttm_inputs(chain)),
+            (),
+            ("the quarters overlap",),
+        )
     total = sum((q.value for q in chain), Decimal(0))
-    return CalculationResult("ttm", "ttm-v1", "ok", total, unit, tuple(_ttm_inputs(chain)), (), (),
-                             {"quarters": [f"{q.start}..{q.end} ({q.status})" for q in reversed(chain)]})
+    return CalculationResult(
+        "ttm",
+        "ttm-v1",
+        "ok",
+        total,
+        unit,
+        tuple(_ttm_inputs(chain)),
+        (),
+        (),
+        {"quarters": [f"{q.start}..{q.end} ({q.status})" for q in reversed(chain)]},
+    )
 
 
 def _ttm_inputs(chain):

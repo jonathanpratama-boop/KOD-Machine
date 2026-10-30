@@ -3,6 +3,7 @@
 This database is independent of the historical KOD registry and paper ledger.
 Every method opens its own connection. Immutable objects are addressed by SHA-256.
 """
+
 from __future__ import annotations
 
 from contextlib import contextmanager
@@ -18,7 +19,16 @@ import threading
 
 from ..hashing import utc_now
 from . import financials, identity as identity_model, migrations
-from .domain import APP_VERSION, Security, SourceEnvelope, canonical, identity, publication, source_url, timestamp
+from .domain import (
+    APP_VERSION,
+    Security,
+    SourceEnvelope,
+    canonical,
+    identity,
+    publication,
+    source_url,
+    timestamp,
+)
 
 
 DB_NAME = "workstation.sqlite3"
@@ -50,15 +60,30 @@ class Store:
         """Refuse accidental writes into the existing lab or source tree."""
         package = Path(__file__).resolve().parents[2]
         repository = package.parent
-        protected = [package / name for name in ("var", "registry", "research", "tsa", "kod", "tests", "examples")]
+        protected = [
+            package / name
+            for name in ("var", "registry", "research", "tsa", "kod", "tests", "examples")
+        ]
         protected.append(repository / "idx-signals")
         parts = path.parts
-        legacy_shape = any(part == "idx-signals" or
-                           (part == "kod-machine" and i + 1 < len(parts) and parts[i + 1] in
-                            {"var", "registry", "research", "tsa", "kod", "tests", "examples"})
-                           for i, part in enumerate(parts))
-        if legacy_shape or path in (package, repository) or any(path == p or p in path.parents for p in protected):
-            raise ValueError("workstation data/backup/restore must stay outside protected lab and source paths")
+        legacy_shape = any(
+            part == "idx-signals"
+            or (
+                part == "kod-machine"
+                and i + 1 < len(parts)
+                and parts[i + 1]
+                in {"var", "registry", "research", "tsa", "kod", "tests", "examples"}
+            )
+            for i, part in enumerate(parts)
+        )
+        if (
+            legacy_shape
+            or path in (package, repository)
+            or any(path == p or p in path.parents for p in protected)
+        ):
+            raise ValueError(
+                "workstation data/backup/restore must stay outside protected lab and source paths"
+            )
 
     @contextmanager
     def _connection(self):
@@ -82,23 +107,38 @@ class Store:
                 data[field] = json.loads(data[field])
         return data
 
-    def upsert_security(self, ticker, name, cik=None, venue="XNAS", currency="USD", association="user_asserted", now=None):
+    def upsert_security(
+        self,
+        ticker,
+        name,
+        cik=None,
+        venue="XNAS",
+        currency="USD",
+        association="user_asserted",
+        now=None,
+    ):
         """Add or update a watchlist listing; `now` (default the wall clock) is when the listing and its identity mapping are recorded."""
         now = timestamp(now) if now else utc_now()
         sec = Security(ticker, name, cik, venue, currency, association).validated()
         with self._connection() as db:
-            previous = db.execute("SELECT * FROM securities WHERE ticker=? AND venue=?", (sec.ticker, sec.venue)).fetchone()
+            previous = db.execute(
+                "SELECT * FROM securities WHERE ticker=? AND venue=?", (sec.ticker, sec.venue)
+            ).fetchone()
             if previous and previous["cik"] and sec.cik and previous["cik"] != sec.cik:
                 raise ValueError("known CIK mismatch for this listing")
             sid = previous["id"] if previous else identity("sec", sec.ticker, sec.venue)
             assoc = sec.association
             if previous and previous["association"] == "verified_from_filing_metadata":
                 assoc = previous["association"]
-            db.execute("""INSERT INTO securities VALUES (?,?,?,?,?,?,?,?,?)
+            db.execute(
+                """INSERT INTO securities VALUES (?,?,?,?,?,?,?,?,?)
                 ON CONFLICT(id) DO UPDATE SET name=excluded.name,cik=COALESCE(excluded.cik,securities.cik),
                 currency=excluded.currency,association=excluded.association,watched=1""",
-                (sid, sec.ticker, sec.name, sec.cik, sec.venue, sec.currency, assoc, 1, now))
-            identity_model.ensure_identity(db, db.execute("SELECT * FROM securities WHERE id=?", (sid,)).fetchone(), now)
+                (sid, sec.ticker, sec.name, sec.cik, sec.venue, sec.currency, assoc, 1, now),
+            )
+            identity_model.ensure_identity(
+                db, db.execute("SELECT * FROM securities WHERE id=?", (sid,)).fetchone(), now
+            )
         return self.get_security(sid)
 
     def identity(self, security_id):
@@ -113,41 +153,82 @@ class Store:
 
     def observation_count(self, document_id, parser_version=None):
         with self._connection() as db:
-            sql, args = "SELECT COUNT(*) FROM financial_observations WHERE source_document_id=?", [document_id]
+            sql, args = (
+                "SELECT COUNT(*) FROM financial_observations WHERE source_document_id=?",
+                [document_id],
+            )
             if parser_version:
                 sql, args = sql + " AND parser_version=?", args + [parser_version]
             return db.execute(sql, args).fetchone()[0]
 
-    def save_record(self, subject_kind, subject_id, record_type, value, rationale, author="local_user"):
+    def save_record(
+        self, subject_kind, subject_id, record_type, value, rationale, author="local_user"
+    ):
         """An analyst decision (reported period, reporting currency, metric mapping) as a new version; earlier versions are kept."""
         if record_type not in ("reported_period", "reporting_currency", "metric_mapping"):
             raise ValueError("unsupported analyst record type")
         text, why = str(value).strip(), str(rationale or "").strip()
         if not text or len(text) > 200 or len(why) > 4000:
-            raise ValueError("an analyst record needs a value of at most 200 characters and a rationale of at most 4,000")
+            raise ValueError(
+                "an analyst record needs a value of at most 200 characters and a rationale of at most 4,000"
+            )
         with self._connection() as db:
-            previous = db.execute("SELECT id FROM analyst_records WHERE subject_kind=? AND subject_id=? AND record_type=? ORDER BY created_at DESC, rowid DESC LIMIT 1",
-                                  (subject_kind, subject_id, record_type)).fetchone()
+            previous = db.execute(
+                "SELECT id FROM analyst_records WHERE subject_kind=? AND subject_id=? AND record_type=? ORDER BY created_at DESC, rowid DESC LIMIT 1",
+                (subject_kind, subject_id, record_type),
+            ).fetchone()
             now = utc_now()
-            rid = identity("rec", subject_kind, subject_id, record_type, text, why, author, now, previous["id"] if previous else None)
-            db.execute("INSERT INTO analyst_records VALUES (?,?,?,?,?,?,?,?,?)", (rid, subject_kind, subject_id, record_type, text, why, author, now,
-                                                                                  previous["id"] if previous else None))
+            rid = identity(
+                "rec",
+                subject_kind,
+                subject_id,
+                record_type,
+                text,
+                why,
+                author,
+                now,
+                previous["id"] if previous else None,
+            )
+            db.execute(
+                "INSERT INTO analyst_records VALUES (?,?,?,?,?,?,?,?,?)",
+                (
+                    rid,
+                    subject_kind,
+                    subject_id,
+                    record_type,
+                    text,
+                    why,
+                    author,
+                    now,
+                    previous["id"] if previous else None,
+                ),
+            )
             return dict(db.execute("SELECT * FROM analyst_records WHERE id=?", (rid,)).fetchone())
 
     def records(self, subject_kind, subject_id, record_type=None):
         with self._connection() as db:
-            sql, args = "SELECT * FROM analyst_records WHERE subject_kind=? AND subject_id=?", [subject_kind, subject_id]
+            sql, args = (
+                "SELECT * FROM analyst_records WHERE subject_kind=? AND subject_id=?",
+                [subject_kind, subject_id],
+            )
             if record_type:
                 sql, args = sql + " AND record_type=?", args + [record_type]
             return [dict(r) for r in db.execute(sql + " ORDER BY created_at DESC,id", args)]
 
     def securities(self):
         with self._connection() as db:
-            return [self._row(r) for r in db.execute("SELECT * FROM securities WHERE watched=1 ORDER BY ticker,venue")]
+            return [
+                self._row(r)
+                for r in db.execute(
+                    "SELECT * FROM securities WHERE watched=1 ORDER BY ticker,venue"
+                )
+            ]
 
     def get_security(self, security_id):
         with self._connection() as db:
-            return self._row(db.execute("SELECT * FROM securities WHERE id=?", (security_id,)).fetchone())
+            return self._row(
+                db.execute("SELECT * FROM securities WHERE id=?", (security_id,)).fetchone()
+            )
 
     def remove_watchlist(self, security_id):
         self.get_security(security_id)
@@ -182,9 +263,22 @@ class Store:
                 os.unlink(tmp)
         return sha
 
-    def save_document(self, security_id, raw: bytes, filename, source_url, published_at=None,
-                      published_basis="unknown", observed_at=None, role="current", association="user_asserted",
-                      provider="local", external_id=None, extraction_status="pending", metadata=None):
+    def save_document(
+        self,
+        security_id,
+        raw: bytes,
+        filename,
+        source_url,
+        published_at=None,
+        published_basis="unknown",
+        observed_at=None,
+        role="current",
+        association="user_asserted",
+        provider="local",
+        external_id=None,
+        extraction_status="pending",
+        metadata=None,
+    ):
         self.get_security(security_id)
         published, pub_date = publication(published_at)
         observed = timestamp(observed_at or utc_now())
@@ -194,32 +288,85 @@ class Store:
         else:
             info.setdefault("publication_precision", "second" if published else "unknown")
         info.setdefault("parser_version", APP_VERSION)
-        envelope = SourceEnvelope(security_id, raw, str(filename), source_url, published, str(published_basis), observed, role, association, provider, external_id)
+        envelope = SourceEnvelope(
+            security_id,
+            raw,
+            str(filename),
+            source_url,
+            published,
+            str(published_basis),
+            observed,
+            role,
+            association,
+            provider,
+            external_id,
+        )
         envelope.validate()
         safe_name = Path(str(filename).replace("\\", "/")).name[:200] or "document.htm"
         sha = self._save_object(raw)
-        doc_id = identity("doc", security_id, provider, external_id or source_url, sha, role, published,
-                          str(published_basis), info.get("publication_date"), association, info.get("parser_sha256"))
+        doc_id = identity(
+            "doc",
+            security_id,
+            provider,
+            external_id or source_url,
+            sha,
+            role,
+            published,
+            str(published_basis),
+            info.get("publication_date"),
+            association,
+            info.get("parser_sha256"),
+        )
         with self._connection() as db:
             db.execute("INSERT OR IGNORE INTO objects VALUES (?,?)", (sha, len(raw)))
-            db.execute("INSERT OR IGNORE INTO documents VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-                       (doc_id, security_id, sha, safe_name, source_url, published, str(published_basis), observed,
-                        role, association, provider, external_id, extraction_status, canonical(info), utc_now()))
-            db.execute("INSERT INTO observations(document_id,observed_at,recorded_at) VALUES (?,?,?)", (doc_id, observed, utc_now()))
+            db.execute(
+                "INSERT OR IGNORE INTO documents VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                (
+                    doc_id,
+                    security_id,
+                    sha,
+                    safe_name,
+                    source_url,
+                    published,
+                    str(published_basis),
+                    observed,
+                    role,
+                    association,
+                    provider,
+                    external_id,
+                    extraction_status,
+                    canonical(info),
+                    utc_now(),
+                ),
+            )
+            db.execute(
+                "INSERT INTO observations(document_id,observed_at,recorded_at) VALUES (?,?,?)",
+                (doc_id, observed, utc_now()),
+            )
         return self.document(doc_id)
 
     def documents(self, security_id=None):
         with self._connection() as db:
             where, args = ("WHERE d.security_id=?", (security_id,)) if security_id else ("", ())
-            rows = db.execute(f"SELECT d.*,o.bytes FROM documents d JOIN objects o USING(sha256) {where} ORDER BY d.observed_at DESC,d.id", args)
+            rows = db.execute(
+                f"SELECT d.*,o.bytes FROM documents d JOIN objects o USING(sha256) {where} ORDER BY d.observed_at DESC,d.id",
+                args,
+            )
             return [self._row(r) for r in rows]
 
     def document(self, document_id):
         with self._connection() as db:
-            row = db.execute("SELECT d.*,o.bytes FROM documents d JOIN objects o USING(sha256) WHERE d.id=?", (document_id,)).fetchone()
+            row = db.execute(
+                "SELECT d.*,o.bytes FROM documents d JOIN objects o USING(sha256) WHERE d.id=?",
+                (document_id,),
+            ).fetchone()
             result = self._row(row)
-            result["observation_count"] = db.execute("SELECT COUNT(*) FROM observations WHERE document_id=?", (document_id,)).fetchone()[0]
-            result["last_observed_at"] = db.execute("SELECT MAX(observed_at) FROM observations WHERE document_id=?", (document_id,)).fetchone()[0]
+            result["observation_count"] = db.execute(
+                "SELECT COUNT(*) FROM observations WHERE document_id=?", (document_id,)
+            ).fetchone()[0]
+            result["last_observed_at"] = db.execute(
+                "SELECT MAX(observed_at) FROM observations WHERE document_id=?", (document_id,)
+            ).fetchone()[0]
             return result
 
     def raw(self, document_id):
@@ -232,13 +379,25 @@ class Store:
             raise ValueError("stored evidence failed SHA-256 integrity verification")
         return raw
 
-    def save_event(self, security_id, external_id, form, title, source_url, published_at=None,
-                   published_basis="unknown", observed_at=None, document_id=None, metadata=None):
+    def save_event(
+        self,
+        security_id,
+        external_id,
+        form,
+        title,
+        source_url,
+        published_at=None,
+        published_basis="unknown",
+        observed_at=None,
+        document_id=None,
+        metadata=None,
+    ):
         self.get_security(security_id)
         if document_id and self.document(document_id)["security_id"] != security_id:
             raise ValueError("event document belongs to a different security")
         # Do not confuse this method's source_url argument with the validator.
         from .domain import source_url as valid_url
+
         valid_url(source_url)
         published, date_only = publication(published_at)
         info = dict(metadata or {})
@@ -248,22 +407,62 @@ class Store:
         observed = timestamp(observed_at or utc_now())
         if published and observed < published:
             raise ValueError("observation must not precede publication")
-        values = (eid, security_id, str(external_id), str(form), str(title)[:500], source_url, published,
-                  str(published_basis), observed, document_id, canonical(info))
+        values = (
+            eid,
+            security_id,
+            str(external_id),
+            str(form),
+            str(title)[:500],
+            source_url,
+            published,
+            str(published_basis),
+            observed,
+            document_id,
+            canonical(info),
+        )
         with self._connection() as db:
             payload = canonical(values)
             db.execute("INSERT OR IGNORE INTO events VALUES (?,?,?,?,?,?,?,?,?,?,?)", values)
-            db.execute("INSERT OR IGNORE INTO event_revisions VALUES (?,?,?,?)", (eid, hashlib.sha256(payload.encode()).hexdigest(), payload, utc_now()))
-            db.execute("UPDATE events SET form=?,title=?,source_url=?,published_at=?,published_basis=?,document_id=?,metadata=? WHERE id=?",
-                       (form, str(title)[:500], source_url, published, str(published_basis), document_id, canonical(info), eid))
+            db.execute(
+                "INSERT OR IGNORE INTO event_revisions VALUES (?,?,?,?)",
+                (eid, hashlib.sha256(payload.encode()).hexdigest(), payload, utc_now()),
+            )
+            db.execute(
+                "UPDATE events SET form=?,title=?,source_url=?,published_at=?,published_basis=?,document_id=?,metadata=? WHERE id=?",
+                (
+                    form,
+                    str(title)[:500],
+                    source_url,
+                    published,
+                    str(published_basis),
+                    document_id,
+                    canonical(info),
+                    eid,
+                ),
+            )
             return self._row(db.execute("SELECT * FROM events WHERE id=?", (eid,)).fetchone())
 
     def events(self, security_id=None):
         with self._connection() as db:
             where, args = ("WHERE security_id=?", (security_id,)) if security_id else ("", ())
-            return [self._row(r) for r in db.execute(f"SELECT * FROM events {where} ORDER BY COALESCE(published_at,json_extract(metadata,'$.publication_date'),observed_at) DESC,id", args)]
+            return [
+                self._row(r)
+                for r in db.execute(
+                    f"SELECT * FROM events {where} ORDER BY COALESCE(published_at,json_extract(metadata,'$.publication_date'),observed_at) DESC,id",
+                    args,
+                )
+            ]
 
-    def save_note(self, security_id, current_document_id, comparison_document_id, result, markdown, as_of, mode):
+    def save_note(
+        self,
+        security_id,
+        current_document_id,
+        comparison_document_id,
+        result,
+        markdown,
+        as_of,
+        mode,
+    ):
         self.get_security(security_id)
         for doc_id in (current_document_id, comparison_document_id):
             if doc_id and self.document(doc_id)["security_id"] != security_id:
@@ -272,16 +471,44 @@ class Store:
             raise ValueError("mode must be observed or public")
         cutoff = timestamp(as_of)
         body = canonical(result)
-        nid = identity("note", security_id, current_document_id, comparison_document_id, body, markdown, cutoff, mode, APP_VERSION)
+        nid = identity(
+            "note",
+            security_id,
+            current_document_id,
+            comparison_document_id,
+            body,
+            markdown,
+            cutoff,
+            mode,
+            APP_VERSION,
+        )
         with self._connection() as db:
-            db.execute("INSERT OR IGNORE INTO notes VALUES (?,?,?,?,?,?,?,?,?,?)",
-                       (nid, security_id, current_document_id, comparison_document_id, body, markdown, cutoff, mode, utc_now(), APP_VERSION))
+            db.execute(
+                "INSERT OR IGNORE INTO notes VALUES (?,?,?,?,?,?,?,?,?,?)",
+                (
+                    nid,
+                    security_id,
+                    current_document_id,
+                    comparison_document_id,
+                    body,
+                    markdown,
+                    cutoff,
+                    mode,
+                    utc_now(),
+                    APP_VERSION,
+                ),
+            )
         return self.note(nid)
 
     def notes(self, security_id=None):
         with self._connection() as db:
             where, args = ("WHERE security_id=?", (security_id,)) if security_id else ("", ())
-            return [self._row(r) for r in db.execute(f"SELECT * FROM notes {where} ORDER BY created_at DESC, rowid DESC", args)]  # the same second: the later insert first
+            return [
+                self._row(r)
+                for r in db.execute(
+                    f"SELECT * FROM notes {where} ORDER BY created_at DESC, rowid DESC", args
+                )
+            ]  # the same second: the later insert first
 
     def note(self, note_id):
         with self._connection() as db:
@@ -295,25 +522,55 @@ class Store:
         if not any(values):
             raise ValueError("provide at least one annotation field")
         with self._connection() as db:
-            cursor = db.execute("INSERT INTO annotations(note_id,thesis,invalidation,review_condition,created_at) VALUES (?,?,?,?,?)", (note_id, *values, utc_now()))
-            return self._row(db.execute("SELECT * FROM annotations WHERE id=?", (cursor.lastrowid,)).fetchone())
+            cursor = db.execute(
+                "INSERT INTO annotations(note_id,thesis,invalidation,review_condition,created_at) VALUES (?,?,?,?,?)",
+                (note_id, *values, utc_now()),
+            )
+            return self._row(
+                db.execute("SELECT * FROM annotations WHERE id=?", (cursor.lastrowid,)).fetchone()
+            )
 
     def annotations(self, note_id):
         self.note(note_id)
         with self._connection() as db:
-            return [self._row(r) for r in db.execute("SELECT * FROM annotations WHERE note_id=? ORDER BY id DESC", (note_id,))]
+            return [
+                self._row(r)
+                for r in db.execute(
+                    "SELECT * FROM annotations WHERE note_id=? ORDER BY id DESC", (note_id,)
+                )
+            ]
 
-    def record_job(self, provider, scope, status, message, started_at=None, finished_at=None, new_count=0):
+    def record_job(
+        self, provider, scope, status, message, started_at=None, finished_at=None, new_count=0
+    ):
         start = timestamp(started_at or utc_now())
-        finish = timestamp(finished_at) if finished_at else (None if str(status).lower() == "running" else utc_now())
+        finish = (
+            timestamp(finished_at)
+            if finished_at
+            else (None if str(status).lower() == "running" else utc_now())
+        )
         with self._connection() as db:
-            cursor = db.execute("INSERT INTO jobs(provider,scope,status,message,started_at,finished_at,new_count) VALUES (?,?,?,?,?,?,?)",
-                                (str(provider), str(scope), str(status).lower(), str(message)[:2000], start, finish, int(new_count)))
-            return self._row(db.execute("SELECT * FROM jobs WHERE id=?", (cursor.lastrowid,)).fetchone())
+            cursor = db.execute(
+                "INSERT INTO jobs(provider,scope,status,message,started_at,finished_at,new_count) VALUES (?,?,?,?,?,?,?)",
+                (
+                    str(provider),
+                    str(scope),
+                    str(status).lower(),
+                    str(message)[:2000],
+                    start,
+                    finish,
+                    int(new_count),
+                ),
+            )
+            return self._row(
+                db.execute("SELECT * FROM jobs WHERE id=?", (cursor.lastrowid,)).fetchone()
+            )
 
     def jobs(self):
         with self._connection() as db:
-            return [self._row(r) for r in db.execute("SELECT * FROM jobs ORDER BY id DESC LIMIT 200")]
+            return [
+                self._row(r) for r in db.execute("SELECT * FROM jobs ORDER BY id DESC LIMIT 200")
+            ]
 
     def health(self):
         # Query the complete history: a busy source must not displace another's
@@ -323,9 +580,24 @@ class Store:
         found = {}
         for row in rows:
             key = row["provider"], row["scope"]
-            current = found.setdefault(key, {**row, "last_attempt": row["started_at"], "last_success": None, "last_success_at": None})
-            if current["last_success"] is None and row["status"] in ("success", "ok", "completed", "checked_empty"):
-                current["last_success"] = current["last_success_at"] = row["finished_at"] or row["started_at"]
+            current = found.setdefault(
+                key,
+                {
+                    **row,
+                    "last_attempt": row["started_at"],
+                    "last_success": None,
+                    "last_success_at": None,
+                },
+            )
+            if current["last_success"] is None and row["status"] in (
+                "success",
+                "ok",
+                "completed",
+                "checked_empty",
+            ):
+                current["last_success"] = current["last_success_at"] = (
+                    row["finished_at"] or row["started_at"]
+                )
         return list(found.values())
 
     @staticmethod
@@ -341,7 +613,10 @@ class Store:
         target = self._new_target(target)
         if target == self.root or self.root in target.parents:
             raise ValueError("backup target must be outside the active data directory")
-        with self._lock, tempfile.TemporaryDirectory(prefix=".kod-backup-", dir=target.parent) as staging:
+        with (
+            self._lock,
+            tempfile.TemporaryDirectory(prefix=".kod-backup-", dir=target.parent) as staging,
+        ):
             stage = Path(staging)
             destination = sqlite3.connect(stage / DB_NAME)
             try:
@@ -349,7 +624,9 @@ class Store:
                     source.backup(destination)
                 destination.execute("PRAGMA journal_mode=DELETE")
                 destination.commit()
-                hashes = [r[0] for r in destination.execute("SELECT sha256 FROM objects ORDER BY sha256")]
+                hashes = [
+                    r[0] for r in destination.execute("SELECT sha256 FROM objects ORDER BY sha256")
+                ]
             finally:
                 destination.close()
             files = {DB_NAME: hashlib.sha256((stage / DB_NAME).read_bytes()).hexdigest()}
@@ -363,7 +640,17 @@ class Store:
                 dst.parent.mkdir(parents=True, exist_ok=True)
                 dst.write_bytes(data)
                 files[relative] = sha
-            (stage / "BACKUP.json").write_text(canonical({"schema_version": SCHEMA_VERSION, "app_version": APP_VERSION, "created_at": utc_now(), "files": files}), encoding="utf-8")
+            (stage / "BACKUP.json").write_text(
+                canonical(
+                    {
+                        "schema_version": SCHEMA_VERSION,
+                        "app_version": APP_VERSION,
+                        "created_at": utc_now(),
+                        "files": files,
+                    }
+                ),
+                encoding="utf-8",
+            )
             os.replace(stage, target)
         return target
 
@@ -382,16 +669,30 @@ class Store:
             raise ValueError("backup manifest must contain a files mapping")
         files = manifest["files"]
         version = manifest.get("schema_version")
-        if not isinstance(version, int) or not 1 <= version <= SCHEMA_VERSION or DB_NAME not in files:
+        if (
+            not isinstance(version, int)
+            or not 1 <= version <= SCHEMA_VERSION
+            or DB_NAME not in files
+        ):
             raise ValueError("unsupported or incomplete backup")
         for name, sha in files.items():
-            if not isinstance(name, str) or not isinstance(sha, str) or not re.fullmatch(r"[0-9a-f]{64}", sha):
+            if (
+                not isinstance(name, str)
+                or not isinstance(sha, str)
+                or not re.fullmatch(r"[0-9a-f]{64}", sha)
+            ):
                 raise ValueError("invalid backup file hash")
             if name != DB_NAME and not re.fullmatch(r"objects/[0-9a-f]{2}/[0-9a-f]{64}", name):
                 raise ValueError("invalid backup path")
             path = source / name
-            components = [source.joinpath(*Path(name).parts[:i]) for i in range(1, len(Path(name).parts) + 1)]
-            if any(p.is_symlink() for p in components) or not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != sha:
+            components = [
+                source.joinpath(*Path(name).parts[:i]) for i in range(1, len(Path(name).parts) + 1)
+            ]
+            if (
+                any(p.is_symlink() for p in components)
+                or not path.is_file()
+                or hashlib.sha256(path.read_bytes()).hexdigest() != sha
+            ):
                 raise ValueError("backup failed SHA-256 integrity verification")
         with tempfile.TemporaryDirectory(prefix=".kod-restore-", dir=target.parent) as staging:
             stage = Path(staging)

@@ -4,7 +4,17 @@ import unittest
 
 import numpy as np
 
-from idxsig.execution import ENTRY_RULES, EXIT_RULES, LONG_EXITS, SHORT_EXITS, SIDES, STATUS, ExecConfig, Market, execute
+from idxsig.execution import (
+    ENTRY_RULES,
+    EXIT_RULES,
+    LONG_EXITS,
+    SHORT_EXITS,
+    SIDES,
+    STATUS,
+    ExecConfig,
+    Market,
+    execute,
+)
 from idxsig.market import Fees
 from tests.support import flat_market, rebuild
 
@@ -12,7 +22,12 @@ FEES = (1 - 0.0025) / (1 + 0.0015)
 
 
 def one(m, ticker=0, signal=2, **cfg):
-    out = execute(m, np.array([ticker]), np.array([signal]), ExecConfig(holding_days=cfg.pop("holding", 5), **cfg))
+    out = execute(
+        m,
+        np.array([ticker]),
+        np.array([signal]),
+        ExecConfig(holding_days=cfg.pop("holding", 5), **cfg),
+    )
     return {k: v[0] for k, v in out.items()}
 
 
@@ -21,10 +36,10 @@ def set_close(a, i, session, price):
     a["close"][i, session] = price
     a["high"][i, session] = max(price, a["prev"][i, session])
     a["low"][i, session] = min(price, a["prev"][i, session])
-    a["prev"][i, session + 1:] = price
-    a["close"][i, session + 1:] = price
-    a["high"][i, session + 1:] = price * 1.01
-    a["low"][i, session + 1:] = price * 0.99
+    a["prev"][i, session + 1 :] = price
+    a["close"][i, session + 1 :] = price
+    a["high"][i, session + 1 :] = price * 1.01
+    a["low"][i, session + 1 :] = price * 0.99
 
 
 class PlanTests(unittest.TestCase):
@@ -43,9 +58,16 @@ class PlanTests(unittest.TestCase):
         self.assertEqual(base["exit_idx"], 8)
         for key in ("status", "entry_idx", "exit_idx", "net_return"):
             self.assertEqual(base[key], explicit[key])
-        self.assertEqual(ExecConfig(holding_days=5).plan,
-                         {"entry_rule": "fixed", "entry_window": 1, "exit_rule": "fixed", "holding_days": 5,
-                          "side": "long"})
+        self.assertEqual(
+            ExecConfig(holding_days=5).plan,
+            {
+                "entry_rule": "fixed",
+                "entry_window": 1,
+                "exit_rule": "fixed",
+                "holding_days": 5,
+                "side": "long",
+            },
+        )
 
     def test_confirm_waits_for_a_close_above_the_signal_close(self):
         t, d, a = flat_market(price=1000.0)
@@ -87,8 +109,10 @@ class PlanTests(unittest.TestCase):
         set_close(a, 0, 4, 1500.0)  # unlocked
         r = one(rebuild(t, d, a), entry_rule="unlock", entry_window=3)
         self.assertEqual(r["entry_idx"], 4)
-        self.assertEqual(STATUS[one(rebuild(t, d, a), entry_rule="unlock", entry_window=1)["status"]],
-                         "SKIP_NO_TRIGGER")
+        self.assertEqual(
+            STATUS[one(rebuild(t, d, a), entry_rule="unlock", entry_window=1)["status"]],
+            "SKIP_NO_TRIGGER",
+        )
 
     def test_conditional_entry_past_the_data_is_no_entry_session(self):
         t, d, a = flat_market(n_sessions=4)
@@ -146,7 +170,9 @@ class PlanTests(unittest.TestCase):
     def test_plan_arguments_are_checked(self):
         t, d, a = flat_market()
         with self.assertRaises(ValueError):
-            one(rebuild(t, d, a), entry_rule="unlock", entry_price="open")  # no locks at an open entry
+            one(
+                rebuild(t, d, a), entry_rule="unlock", entry_price="open"
+            )  # no locks at an open entry
         with self.assertRaises(ValueError):
             one(rebuild(t, d, a), entry_rule="confirm", entry_window=0)
         with self.assertRaises(ValueError):
@@ -167,8 +193,20 @@ def open_market(price=10.0, n_sessions=20):
 
 
 def build_open(t, d, a) -> Market:
-    return Market.build(t, d, a["close"], a["prev"], a["high"], a["low"], a["volume"], a["value"], a["present"],
-                        a.get("listed_shares"), opens=a["open"], price_limits=False)
+    return Market.build(
+        t,
+        d,
+        a["close"],
+        a["prev"],
+        a["high"],
+        a["low"],
+        a["volume"],
+        a["value"],
+        a["present"],
+        a.get("listed_shares"),
+        opens=a["open"],
+        price_limits=False,
+    )
 
 
 def set_bar(a, i, session, open_=None, close=None, high=None, low=None):
@@ -177,23 +215,35 @@ def set_bar(a, i, session, open_=None, close=None, high=None, low=None):
         a["open"][i, session] = open_
     if close is not None:
         a["close"][i, session] = close
-        a["prev"][i, session + 1:] = close
-        a["close"][i, session + 1:] = close
-        a["open"][i, session + 1:] = close
+        a["prev"][i, session + 1 :] = close
+        a["close"][i, session + 1 :] = close
+        a["open"][i, session + 1 :] = close
     c = a["close"][i, session]
     a["high"][i, session] = max(high if high is not None else c, c, a["open"][i, session])
     a["low"][i, session] = min(low if low is not None else c, c, a["open"][i, session])
-    a["high"][i, session + 1:] = a["close"][i, session + 1:]
-    a["low"][i, session + 1:] = a["close"][i, session + 1:]
+    a["high"][i, session + 1 :] = a["close"][i, session + 1 :]
+    a["low"][i, session + 1 :] = a["close"][i, session + 1 :]
 
 
-CRYPTO_COSTS = dict(lot_size=1, entry_price="open", notional=5000.0, fees=Fees(0.001, 0.001),
-                    cost_tiers=((float("inf"), 0.001),), ca_mode="adjusted")
+CRYPTO_COSTS = dict(
+    lot_size=1,
+    entry_price="open",
+    notional=5000.0,
+    fees=Fees(0.001, 0.001),
+    cost_tiers=((float("inf"), 0.001),),
+    ca_mode="adjusted",
+)
 
 
 def short(m, signal=2, holding=3, carry=0.0005, **cfg):
-    out = execute(m, np.array([0]), np.array([signal]),
-                  ExecConfig(holding_days=holding, side="short", carry_per_session=carry, **{**CRYPTO_COSTS, **cfg}))
+    out = execute(
+        m,
+        np.array([0]),
+        np.array([signal]),
+        ExecConfig(
+            holding_days=holding, side="short", carry_per_session=carry, **{**CRYPTO_COSTS, **cfg}
+        ),
+    )
     return {k: v[0] for k, v in out.items()}
 
 
@@ -237,7 +287,9 @@ class ShortSideTests(unittest.TestCase):
         r = short(build_open(t, d, a), holding=5, exit_rule="first_up")
         self.assertEqual(r["exit_idx"], 5)
 
-    def test_short_confirm_waits_for_an_open_below_the_signal_close_and_pullback_for_one_above(self):
+    def test_short_confirm_waits_for_an_open_below_the_signal_close_and_pullback_for_one_above(
+        self,
+    ):
         t, d, a = open_market()
         set_bar(a, 0, 2, close=10.5)
         a["open"][0, 3] = 10.6  # a gap up: not a confirmation for a short
@@ -246,10 +298,16 @@ class ShortSideTests(unittest.TestCase):
         r = short(m, entry_rule="confirm", entry_window=3)
         self.assertEqual((r["entry_idx"], r["entry_price"]), (4, 10.2))
         self.assertEqual(short(m, entry_rule="pullback", entry_window=3)["entry_idx"], 3)
-        self.assertEqual(STATUS[short(m, entry_rule="confirm", entry_window=1)["status"]], "SKIP_NO_TRIGGER")
+        self.assertEqual(
+            STATUS[short(m, entry_rule="confirm", entry_window=1)["status"]], "SKIP_NO_TRIGGER"
+        )
         # the same conditions read the other way round for a long at the open
-        long_ = execute(m, np.array([0]), np.array([2]), ExecConfig(holding_days=3, entry_rule="confirm",
-                                                                     entry_window=3, **CRYPTO_COSTS))
+        long_ = execute(
+            m,
+            np.array([0]),
+            np.array([2]),
+            ExecConfig(holding_days=3, entry_rule="confirm", entry_window=3, **CRYPTO_COSTS),
+        )
         self.assertEqual(long_["entry_idx"][0], 3)
 
     def test_short_rules_are_checked(self):
@@ -264,8 +322,12 @@ class ShortSideTests(unittest.TestCase):
         a["high"][0, 3] = 1250.0
         a["prev"][0, 4:] = 1250.0
         with self.assertRaises(ValueError):
-            execute(rebuild(t, d, a), np.array([0]), np.array([1]),
-                    ExecConfig(holding_days=3, side="short", entry_price="open"))
+            execute(
+                rebuild(t, d, a),
+                np.array([0]),
+                np.array([1]),
+                ExecConfig(holding_days=3, side="short", entry_price="open"),
+            )
 
     def test_liquidation_caps_the_loss_at_the_first_high_beyond_the_trigger(self):
         t, d, a = open_market()
@@ -277,7 +339,9 @@ class ShortSideTests(unittest.TestCase):
         self.assertEqual(r["exit_price"], 20.0)
         self.assertAlmostEqual(r["net_return"], (1 - 0.002) - 2.0 * (1 + 0.002) - 2 * 0.0005)
         self.assertEqual(r["rolled_sessions"], 0)
-        free = short(build_open(t, d, a), holding=5)  # no cap: the loss runs to the close of session 8
+        free = short(
+            build_open(t, d, a), holding=5
+        )  # no cap: the loss runs to the close of session 8
         self.assertFalse(free["liquidated"])
         self.assertLess(free["net_return"], -2.0)
         below = open_market()
@@ -294,9 +358,15 @@ class ShortSideTests(unittest.TestCase):
         self.assertTrue(np.isnan(r["net_return"]))
         real = open_market()
         set_bar(real[2], 0, 5, close=30.0)  # x3: a real squeeze, scored
-        self.assertEqual(STATUS[short(build_open(*real), holding=5, jump_ratio=10.0)["status"]], "EXITED")
-        long_ = execute(build_open(t, d, a), np.array([0]), np.array([2]),
-                        ExecConfig(holding_days=5, jump_ratio=10.0, **CRYPTO_COSTS))
+        self.assertEqual(
+            STATUS[short(build_open(*real), holding=5, jump_ratio=10.0)["status"]], "EXITED"
+        )
+        long_ = execute(
+            build_open(t, d, a),
+            np.array([0]),
+            np.array([2]),
+            ExecConfig(holding_days=5, jump_ratio=10.0, **CRYPTO_COSTS),
+        )
         self.assertEqual(STATUS[long_["status"][0]], "EXCLUDED_DATA_JUMP")
         self.assertEqual(STATUS[-1], "EXCLUDED_DATA_JUMP")  # appended, never inserted
 
@@ -329,7 +399,9 @@ class HarnessPlanTests(unittest.TestCase):
 
         from idxsig.backtest import HOLDOUT
 
-        proto = json.loads((Path(__file__).resolve().parents[1] / "research" / "E1" / "protocol.json").read_text())
+        proto = json.loads(
+            (Path(__file__).resolve().parents[1] / "research" / "E1" / "protocol.json").read_text()
+        )
         self.assertEqual(list(HOLDOUT), proto["periods"]["holdout"])
 
     def test_detector_window_touching_the_holdout_is_refused_unless_final(self):
@@ -346,7 +418,9 @@ class HarnessPlanTests(unittest.TestCase):
             self.assertTrue(out["summary"]["config"]["holdout_final"])
             before = run_synthetic(RunConfig("EDGEH", random_draws=5, end="2023-12-29"), df, meta)
             self.assertEqual(before["summary"]["universe"]["last_session"], "2023-12-29")
-        run_synthetic(RunConfig("PLACEBO_COINFLIP", random_draws=5), df, meta)  # a placebo is not a detector
+        run_synthetic(
+            RunConfig("PLACEBO_COINFLIP", random_draws=5), df, meta
+        )  # a placebo is not a detector
 
     def test_runs_carry_the_plan_and_a_rule_plan_is_the_default(self):
         import dataclasses
@@ -365,12 +439,29 @@ class HarnessPlanTests(unittest.TestCase):
             self.assertEqual(plan, {**frozen, "holding_days": 5, "side": "long"})
             self.assertEqual(out["summary"]["config"]["entry_rule"], "confirm")
             self.assertEqual(out["summary"]["execution"]["plan_text"], plan_text(plan))
-            summary = {**out["summary"], "code": {"commit": "test", "dirty": False}}  # write_run adds this
-            self.assertIn("- Plan: buy at the first close in s+1..s+3 that is above", render_report("t", summary))
-            forced = run_synthetic(RunConfig("PLANNED", random_draws=5, entry_rule="fixed", exit_rule="fixed"), df, meta)
-            self.assertEqual(forced["summary"]["execution"]["plan"],
-                             {"entry_rule": "fixed", "entry_window": 1, "exit_rule": "fixed", "holding_days": 5,
-                              "side": "long"})
+            summary = {
+                **out["summary"],
+                "code": {"commit": "test", "dirty": False},
+            }  # write_run adds this
+            self.assertIn(
+                "- Plan: buy at the first close in s+1..s+3 that is above",
+                render_report("t", summary),
+            )
+            forced = run_synthetic(
+                RunConfig("PLANNED", random_draws=5, entry_rule="fixed", exit_rule="fixed"),
+                df,
+                meta,
+            )
+            self.assertEqual(
+                forced["summary"]["execution"]["plan"],
+                {
+                    "entry_rule": "fixed",
+                    "entry_window": 1,
+                    "exit_rule": "fixed",
+                    "holding_days": 5,
+                    "side": "long",
+                },
+            )
         plain = module_rule("PLAIN", EDGE_BODY)
         with with_rule(plain):
             out = run_synthetic(RunConfig("PLAIN", random_draws=5), df, meta)

@@ -36,7 +36,7 @@ def reset_at(price_before, price_after, session=5, price_scale=None):
     t, d, a = flat_market(price=price_before)
     a["prev"][0, session] = price_after
     for k in ("close", "prev", "high", "low"):
-        a[k][0, session + (1 if k == "prev" else 0):] = price_after
+        a[k][0, session + (1 if k == "prev" else 0) :] = price_after
     return rebuild(t, d, a)
 
 
@@ -74,7 +74,9 @@ class Ace5RightsIssueIsNotASplit(unittest.TestCase):
 def exposure_panel(n=40, sessions=150, seed=11):
     """Half the names are cheap (from Rp60) and drift up 0.4% a day; half are Rp1,000 and flat."""
     rng = np.random.default_rng(seed)
-    dates = pd.to_datetime(np.busday_offset(np.datetime64("2022-01-03", "D"), np.arange(sessions), roll="forward"))
+    dates = pd.to_datetime(
+        np.busday_offset(np.datetime64("2022-01-03", "D"), np.arange(sessions), roll="forward")
+    )
     rows = []
     for i in range(n):
         cheap = i < n // 2
@@ -85,13 +87,29 @@ def exposure_panel(n=40, sessions=150, seed=11):
             tick = 1 if price < 200 else 5
             price = max(round(prev * (1 + step) / tick) * tick, 51.0)
             vol = int(rng.integers(5_000_000, 50_000_000))
-            rows.append({"date": dates[d], "ticker": f"S{i:03d}", "source": "synthetic", "previous": int(prev),
-                         "open": pd.NA, "high": int(max(prev, price)), "low": int(min(prev, price)),
-                         "close": int(price), "volume": vol, "value": int(vol * price), "frequency": 100})
+            rows.append(
+                {
+                    "date": dates[d],
+                    "ticker": f"S{i:03d}",
+                    "source": "synthetic",
+                    "previous": int(prev),
+                    "open": pd.NA,
+                    "high": int(max(prev, price)),
+                    "low": int(min(prev, price)),
+                    "close": int(price),
+                    "volume": vol,
+                    "value": int(vol * price),
+                    "frequency": 100,
+                }
+            )
     df = pd.DataFrame(rows)
     for col in ("previous", "open", "high", "low", "close", "volume", "value", "frequency"):
         df[col] = df[col].astype("Int64")
-    return df, {"sha256": "synthetic", "panel": "synthetic", "source_boundary": str(dates[-1].date())}
+    return df, {
+        "sha256": "synthetic",
+        "panel": "synthetic",
+        "source_boundary": str(dates[-1].date()),
+    }
 
 
 class Ace6MatchedControls(unittest.TestCase):
@@ -114,8 +132,9 @@ class Ace6MatchedControls(unittest.TestCase):
         evaluable = m.tradeable.copy()
         a_tick = np.array([0, 3, 7])
         a_sig = np.array([30, 30, 45])
-        drawn, levels = controls.matched_draws(evaluable, controls.features(m), a_tick, a_sig, 50,
-                                               np.random.default_rng(0))
+        drawn, levels = controls.matched_draws(
+            evaluable, controls.features(m), a_tick, a_sig, 50, np.random.default_rng(0)
+        )
         for col, n in enumerate(a_tick):
             self.assertNotIn(n, drawn[:, col])
         self.assertEqual(len(levels), 3)
@@ -123,13 +142,16 @@ class Ace6MatchedControls(unittest.TestCase):
     def test_matched_baseline_is_not_fooled_by_exposure(self):
         df, meta = exposure_panel()
 
-        cheap_names = module_rule("CHEAP", """
+        cheap_names = module_rule(
+            "CHEAP",
+            """
             def compute(m):
                 out = np.zeros(m.shape)
                 out[:, ::5] = 1.0
                 out = np.where(m.close <= 200, out, 0.0)
                 return np.where(m.tradeable, out, np.nan)
-        """)
+        """,
+        )
         with with_rule(cheap_names):
             s = run(RunConfig("CHEAP", random_draws=200), df, meta)["summary"]
         same, matched = s["random"]["avg_net_return"], s["random_matched"]["avg_net_return"]
@@ -138,7 +160,12 @@ class Ace6MatchedControls(unittest.TestCase):
         # ...against names of the same kind it is not.
         self.assertGreater(matched["p_value_one_sided"], 0.05)
         self.assertLess(abs(matched["difference"]), abs(same["difference"]) / 4)
-        self.assertTrue(any(k.startswith("price_band+liquidity") for k in s["random_matched"]["match_level_used"]))
+        self.assertTrue(
+            any(
+                k.startswith("price_band+liquidity")
+                for k in s["random_matched"]["match_level_used"]
+            )
+        )
 
 
 class Ace7SurvivorshipSafeDefault(unittest.TestCase):
@@ -147,7 +174,9 @@ class Ace7SurvivorshipSafeDefault(unittest.TestCase):
         s = run(RunConfig("PLACEBO_COINFLIP", random_draws=5), df, meta)["summary"]
         self.assertEqual(s["universe"]["first_session"] >= FIRST_SNAPSHOT, True)
         self.assertFalse(any("survivor-biased" in w for w in s["warnings"]))
-        early = run(RunConfig("PLACEBO_COINFLIP", random_draws=5, start="2019-08-01"), df, meta)["summary"]
+        early = run(RunConfig("PLACEBO_COINFLIP", random_draws=5, start="2019-08-01"), df, meta)[
+            "summary"
+        ]
         self.assertTrue(any("survivor-biased" in w for w in early["warnings"]))
 
 
@@ -155,14 +184,17 @@ class Ace8ExhaustiveLookahead(unittest.TestCase):
     def test_sparse_leak_is_caught_only_by_the_exhaustive_check(self):
         df, meta = random_walk_panel(n_tickers=10, n_sessions=120)
 
-        leaks_once = module_rule("LEAK", """
+        leaks_once = module_rule(
+            "LEAK",
+            """
             def compute(m):
                 out = np.zeros(m.shape)
                 k = 17  # one session, far from the sampled cut points
                 if m.shape[1] > k + 1:
                     out[:, k] = (m.close[:, k + 1] > m.close[:, k]).astype(float)
                 return np.where(m.tradeable, out, np.nan)
-        """)
+        """,
+        )
         with with_rule(leaks_once):
             sampled = run(RunConfig("LEAK", random_draws=5, lookahead_cuts=3), df, meta)["summary"]
             self.assertEqual(sampled["lookahead_check"]["mode"], "sampled")

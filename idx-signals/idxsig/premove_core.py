@@ -5,6 +5,7 @@ information only. Extreme returns are preserved; no future-informed cleaning or
 redenomination inference is performed. Forecast scores are normalized one-v-rest
 logistic outputs, not a claim of calibrated market probabilities.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -14,9 +15,22 @@ import numpy as np
 import pandas as pd
 
 TARGETS = ("up_first", "down_first", "neither")
-SUMMARY_FEATURES = ("ret1", "ret5", "ret20", "rel1", "vol20", "range_ratio", "close_position",
-                    "drawdown60", "volume_ratio", "volume_creep", "volatility_ratio",
-                    "up_fraction5", "log_value20", "age_log")
+SUMMARY_FEATURES = (
+    "ret1",
+    "ret5",
+    "ret20",
+    "rel1",
+    "vol20",
+    "range_ratio",
+    "close_position",
+    "drawdown60",
+    "volume_ratio",
+    "volume_creep",
+    "volatility_ratio",
+    "up_fraction5",
+    "log_value20",
+    "age_log",
+)
 REQUIRED = ("date", "ticker", "open", "high", "low", "close", "volume", "value")
 
 
@@ -44,7 +58,10 @@ def prepare_panel(df: pd.DataFrame, market="CRYPTO") -> pd.DataFrame:
     frame["date"] = pd.to_datetime(frame["date"], utc=True, errors="raise").dt.tz_localize(None)
     if frame["date"].isna().any() or (frame["date"] != frame["date"].dt.normalize()).any():
         raise ValueError("panel dates must be daily session dates")
-    if frame["ticker"].isna().any() or not frame["ticker"].map(lambda x: isinstance(x, str) and bool(x.strip())).all():
+    if (
+        frame["ticker"].isna().any()
+        or not frame["ticker"].map(lambda x: isinstance(x, str) and bool(x.strip())).all()
+    ):
         raise ValueError("invalid ticker")
     if frame.duplicated(["date", "ticker"]).any():
         raise ValueError("duplicate ticker/session")
@@ -56,28 +73,50 @@ def prepare_panel(df: pd.DataFrame, market="CRYPTO") -> pd.DataFrame:
         if np.isinf(values).any() or (values[np.isfinite(values)] < 0).any():
             raise ValueError("negative or infinite market value")
     known = frame[["open", "high", "low", "close"]].notna().all(axis=1)
-    if ((frame.loc[known, "low"] > frame.loc[known, ["open", "close"]].min(axis=1)) |
-        (frame.loc[known, "high"] < frame.loc[known, ["open", "close"]].max(axis=1))).any():
+    if (
+        (frame.loc[known, "low"] > frame.loc[known, ["open", "close"]].min(axis=1))
+        | (frame.loc[known, "high"] < frame.loc[known, ["open", "close"]].max(axis=1))
+    ).any():
         raise ValueError("inconsistent OHLC")
     frame = frame.sort_values(["ticker", "date"]).reset_index(drop=True)
     frame.attrs["market"] = market
     return frame
 
 
-def build_examples(df: pd.DataFrame, horizon=5, lookback=20, threshold_floor=.10,
-                   vol_multiplier=3.0, min_value20=100_000.0) -> Examples:
+def build_examples(
+    df: pd.DataFrame,
+    horizon=5,
+    lookback=20,
+    threshold_floor=0.10,
+    vol_multiplier=3.0,
+    min_value20=100_000.0,
+) -> Examples:
     for name, value in (("horizon", horizon), ("lookback", lookback)):
         if type(value) is not int or not 1 <= value <= 60:
             raise ValueError(f"{name} must be an integer from 1 to 60")
-    for name, value, positive in (("threshold_floor", threshold_floor, True),
-                                   ("vol_multiplier", vol_multiplier, True), ("min_value20", min_value20, False)):
-        if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value < 0 or (positive and value == 0):
+    for name, value, positive in (
+        ("threshold_floor", threshold_floor, True),
+        ("vol_multiplier", vol_multiplier, True),
+        ("min_value20", min_value20, False),
+    ):
+        if (
+            isinstance(value, bool)
+            or not isinstance(value, (int, float))
+            or not math.isfinite(value)
+            or value < 0
+            or (positive and value == 0)
+        ):
             raise ValueError(f"invalid {name}")
     market = df.attrs.get("market", "CRYPTO")
     panel = prepare_panel(df, market)
-    calendar = (pd.date_range(panel.date.min(), panel.date.max(), freq="D") if market == "CRYPTO"
-                else pd.DatetimeIndex(sorted(panel.date.unique())))
-    seq_cols = tuple(f"seq_{kind}_{lag:02d}" for kind in ("return", "range", "volume") for lag in range(lookback))
+    calendar = (
+        pd.date_range(panel.date.min(), panel.date.max(), freq="D")
+        if market == "CRYPTO"
+        else pd.DatetimeIndex(sorted(panel.date.unique()))
+    )
+    seq_cols = tuple(
+        f"seq_{kind}_{lag:02d}" for kind in ("return", "range", "volume") for lag in range(lookback)
+    )
     frames = []
     for ticker, source in panel.groupby("ticker", sort=True):
         source = source.set_index("date")
@@ -85,7 +124,12 @@ def build_examples(df: pd.DataFrame, horizon=5, lookback=20, threshold_floor=.10
         present = pd.Series(calendar.isin(source.index), index=calendar)
         complete = bars["complete_bar"].eq(True)
         c, o, h, lo, v, q = (bars[k] for k in ("close", "open", "high", "low", "volume", "value"))
-        valid = present & complete & (bars[["open", "high", "low", "close", "volume"]] > 0).all(axis=1) & q.notna()
+        valid = (
+            present
+            & complete
+            & (bars[["open", "high", "low", "close", "volume"]] > 0).all(axis=1)
+            & q.notna()
+        )
         prev = c.shift(1)
         lr = np.log(c.where(c > 0) / prev.where(prev > 0))
         vol20 = lr.rolling(20, min_periods=20).std(ddof=1)
@@ -104,7 +148,7 @@ def build_examples(df: pd.DataFrame, horizon=5, lookback=20, threshold_floor=.10
         f["vol20"] = vol20
         f["range_ratio"] = ranges / range_med.where(range_med > 0)
         spread = h - lo
-        f["close_position"] = ((c - lo) / spread.where(spread > 0)).where(spread != 0, .5)
+        f["close_position"] = ((c - lo) / spread.where(spread > 0)).where(spread != 0, 0.5)
         f["drawdown60"] = c / c.rolling(60, min_periods=60).max() - 1
         f["volume_ratio"] = volume_ratio
         oldvol = v.shift(5).rolling(20, min_periods=20).median()
@@ -113,11 +157,13 @@ def build_examples(df: pd.DataFrame, horizon=5, lookback=20, threshold_floor=.10
         # Zero volatility is a known constant path, not missing history.
         f.loc[vol60 == 0, "volatility_ratio"] = 0.0
         f.loc[range_med == 0, "range_ratio"] = 0.0
-        f["up_fraction5"] = (lr > 0).astype(float).where(lr.notna()).rolling(5, min_periods=5).mean()
+        f["up_fraction5"] = (
+            (lr > 0).astype(float).where(lr.notna()).rolling(5, min_periods=5).mean()
+        )
         f["median_value20"] = value20
         f["log_value20"] = np.log1p(value20)
         f["age_log"] = np.log1p(present.cumsum())
-        f["baseline_g2"] = (f.ret1 >= .30).astype(float)
+        f["baseline_g2"] = (f.ret1 >= 0.30).astype(float)
         f["baseline_volume"] = volume_ratio
         f["baseline_volatility"] = vol20
         streams = {"return": lr, "range": ranges, "volume": np.log1p(volume_ratio)}
@@ -129,11 +175,15 @@ def build_examples(df: pd.DataFrame, horizon=5, lookback=20, threshold_floor=.10
         f["entry_open"] = o.shift(-1)
         f["entry_date"] = pd.Series(calendar, index=calendar).shift(-1)
         f["label_end_date"] = pd.Series(calendar, index=calendar).shift(-horizon)
-        b = np.maximum(math.log1p(threshold_floor), vol_multiplier * vol20.to_numpy() * math.sqrt(horizon))
+        b = np.maximum(
+            math.log1p(threshold_floor), vol_multiplier * vol20.to_numpy() * math.sqrt(horizon)
+        )
         f["barrier_log"] = b
         f["barrier_up_fraction"] = np.expm1(np.minimum(b, 700))
         future = np.column_stack([c.shift(-j).to_numpy() for j in range(1, horizon + 1)])
-        future_valid = np.column_stack([valid.shift(-j, fill_value=False).to_numpy() for j in range(1, horizon + 1)])
+        future_valid = np.column_stack(
+            [valid.shift(-j, fill_value=False).to_numpy() for j in range(1, horizon + 1)]
+        )
         entry = f.entry_open.to_numpy()
         future_log = np.log(future / entry[:, None])
         up = future_log >= b[:, None]
@@ -144,7 +194,9 @@ def build_examples(df: pd.DataFrame, horizon=5, lookback=20, threshold_floor=.10
         f["label_known"] = known
         f["up_first"] = np.where(known, up_step < down_step, np.nan)
         f["down_first"] = np.where(known, down_step < up_step, np.nan)
-        f["neither"] = np.where(known, (up_step == horizon + 1) & (down_step == horizon + 1), np.nan)
+        f["neither"] = np.where(
+            known, (up_step == horizon + 1) & (down_step == horizon + 1), np.nan
+        )
         steps = np.minimum(up_step, down_step)
         f["first_hit_step"] = np.where(known & (steps <= horizon), steps, np.nan)
         dates = np.full(len(f), np.datetime64("NaT"), dtype="datetime64[ns]")
@@ -155,12 +207,18 @@ def build_examples(df: pd.DataFrame, horizon=5, lookback=20, threshold_floor=.10
         f["first_hit_date"] = dates
         # Keep ineligible rows for diagnostics, but never synthesize listed rows.
         frames.append(f.loc[present].rename_axis("date").reset_index())
-    frame = pd.concat(frames, ignore_index=True).sort_values(["date", "ticker"]).reset_index(drop=True)
+    frame = (
+        pd.concat(frames, ignore_index=True).sort_values(["date", "ticker"]).reset_index(drop=True)
+    )
     market_ret = frame.groupby("date")["ret1"].transform("median")
     frame["rel1"] = frame.ret1 - market_ret
     cols = list(SUMMARY_FEATURES) + list(seq_cols)
     frame["eligible"] &= np.isfinite(frame[cols]).all(axis=1)
-    frame.attrs.update(market=market, horizon=horizon, target="next-open to future-close first passage; symmetric log barriers")
+    frame.attrs.update(
+        market=market,
+        horizon=horizon,
+        target="next-open to future-close first passage; symmetric log barriers",
+    )
     return Examples(frame, SUMMARY_FEATURES, seq_cols)
 
 
@@ -215,12 +273,27 @@ class FittedModel:
         return values / values.sum(axis=1, keepdims=True)
 
     def record(self):
-        return {"recipe": "PCA-OVR-ridge-v1", "targets": list(TARGETS),
-                "feature_columns": list(self.feature_columns), "sequence_columns": list(self.sequence_columns),
-                **{name: getattr(self, name).tolist() for name in ("mean", "scale", "sequence_mean", "sequence_scale", "components", "coefficients")},
-                "constants": [float(v) if np.isfinite(v) else None for v in self.constants],
-                "iterations": list(self.iterations), "converged": list(self.converged),
-                "objectives": list(self.objectives)}
+        return {
+            "recipe": "PCA-OVR-ridge-v1",
+            "targets": list(TARGETS),
+            "feature_columns": list(self.feature_columns),
+            "sequence_columns": list(self.sequence_columns),
+            **{
+                name: getattr(self, name).tolist()
+                for name in (
+                    "mean",
+                    "scale",
+                    "sequence_mean",
+                    "sequence_scale",
+                    "components",
+                    "coefficients",
+                )
+            },
+            "constants": [float(v) if np.isfinite(v) else None for v in self.constants],
+            "iterations": list(self.iterations),
+            "converged": list(self.converged),
+            "objectives": list(self.objectives),
+        }
 
 
 def fit_model(train, feature_columns, sequence_columns=(), pca_components=8, ridge=1.0):
@@ -229,10 +302,17 @@ def fit_model(train, feature_columns, sequence_columns=(), pca_components=8, rid
         raise ValueError("empty training rows")
     if type(pca_components) is not int or pca_components < 1:
         raise ValueError("pca_components must be a positive integer")
-    if isinstance(ridge, bool) or not isinstance(ridge, (int, float)) or not math.isfinite(ridge) or ridge <= 0:
+    if (
+        isinstance(ridge, bool)
+        or not isinstance(ridge, (int, float))
+        or not math.isfinite(ridge)
+        or ridge <= 0
+    ):
         raise ValueError("ridge must be finite and positive")
     feature_columns, sequence_columns = tuple(feature_columns), tuple(sequence_columns)
-    if not feature_columns or len(set(feature_columns + sequence_columns)) != len(feature_columns + sequence_columns):
+    if not feature_columns or len(set(feature_columns + sequence_columns)) != len(
+        feature_columns + sequence_columns
+    ):
         raise ValueError("feature columns must be nonempty and distinct")
     x = _matrix(train, feature_columns)
     mean, scale = _scale_fit(x)
@@ -270,9 +350,13 @@ def fit_model(train, feature_columns, sequence_columns=(), pca_components=8, rid
             objectives.append(0.0)
             continue
         beta[0] = math.log(base / (1 - base))
+
         def objective(candidate):
             z = x @ candidate
-            return float(np.sum(np.logaddexp(0, z) - target * z) + .5 * candidate @ penalty @ candidate)
+            return float(
+                np.sum(np.logaddexp(0, z) - target * z) + 0.5 * candidate @ penalty @ candidate
+            )
+
         initial_objective = objective(beta)
         objective_value = initial_objective
         for iteration in range(1, 51):
@@ -287,9 +371,12 @@ def fit_model(train, feature_columns, sequence_columns=(), pca_components=8, rid
             for _ in range(25):
                 candidate = beta - step
                 candidate_objective = objective(candidate)
-                if math.isfinite(candidate_objective) and candidate_objective <= objective_value + 1e-10:
+                if (
+                    math.isfinite(candidate_objective)
+                    and candidate_objective <= objective_value + 1e-10
+                ):
                     break
-                step *= .5
+                step *= 0.5
             else:
                 raise ValueError("logistic objective did not decrease")
             beta = candidate
@@ -307,5 +394,17 @@ def fit_model(train, feature_columns, sequence_columns=(), pca_components=8, rid
         objectives.append(objective_value)
         if not math.isfinite(objective_value) or objective_value > initial_objective + 1e-8:
             raise ValueError("logistic objective is invalid")
-    return FittedModel(feature_columns, sequence_columns, mean, scale, sm, ss, components,
-                       np.array(coefficients), np.array(constants), tuple(iterations), tuple(converged), tuple(objectives))
+    return FittedModel(
+        feature_columns,
+        sequence_columns,
+        mean,
+        scale,
+        sm,
+        ss,
+        components,
+        np.array(coefficients),
+        np.array(constants),
+        tuple(iterations),
+        tuple(converged),
+        tuple(objectives),
+    )

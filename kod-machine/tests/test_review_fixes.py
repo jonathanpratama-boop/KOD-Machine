@@ -30,15 +30,22 @@ class Ace1EvidenceContract(LabTest):
         self.assertEqual(self.case_rows(), [])
 
     def test_unknown_facts_need_no_evidence(self):
-        card = self.card(facts={"dated_catalyst_known": None, "volume_creep_before_story": None}, evidence=None)
+        card = self.card(
+            facts={"dated_catalyst_known": None, "volume_creep_before_story": None}, evidence=None
+        )
         open_and_evaluate(self.ledger, card)
 
     def test_evidence_published_after_the_horizon_cutoff_is_refused(self):
-        late = self.lab.add_evidence("Filing.", published=self.clock() - timedelta(days=10), name="late.html")
+        late = self.lab.add_evidence(
+            "Filing.", published=self.clock() - timedelta(days=10), name="late.html"
+        )
         with self.assertRaisesRegex(LedgerError, "not published by the T-30D cutoff"):
             open_and_evaluate(self.ledger, self.card(evidence=[late]))
         card = self.card(evidence=[late])
-        card["information_sets"]["T-30D"]["facts"] = {"dated_catalyst_known": None, "catalyst": None}
+        card["information_sets"]["T-30D"]["facts"] = {
+            "dated_catalyst_known": None,
+            "catalyst": None,
+        }
         card["information_sets"]["T-30D"].pop("evidence")
         open_and_evaluate(self.ledger, card)  # cited only at T-72H and T-24H, where it was public
 
@@ -46,7 +53,9 @@ class Ace1EvidenceContract(LabTest):
         with self.assertRaisesRegex(LedgerError, "not a recorded v2 evidence object"):
             open_and_evaluate(self.ledger, self.card(evidence=["0" * 64]))
         card = self.card(case_id="KOD-P-NULL", facts={"dated_catalyst_known": None}, evidence=None)
-        card["information_sets"]["T-24H"]["evidence"] = {"dated_catalyst_known": [self.lab.evidence_id]}
+        card["information_sets"]["T-24H"]["evidence"] = {
+            "dated_catalyst_known": [self.lab.evidence_id]
+        }
         with self.assertRaisesRegex(LedgerError, "UNKNOWN"):
             open_and_evaluate(self.ledger, card)
         card["information_sets"]["T-24H"]["evidence"] = {"not_a_fact": [self.lab.evidence_id]}
@@ -59,7 +68,11 @@ class Ace1EvidenceContract(LabTest):
         path = Path(self.lab.tmp.name) / "x.pdf"
         path.write_bytes(b"%PDF filing")
         published = self.clock() - timedelta(days=6)
-        base = evidence_meta(published, published + timedelta(days=2), retrieval_time=fmt_ts(self.clock() - timedelta(hours=1)))
+        base = evidence_meta(
+            published,
+            published + timedelta(days=2),
+            retrieval_time=fmt_ts(self.clock() - timedelta(hours=1)),
+        )
         with self.assertRaisesRegex(LedgerError, "provenance is required"):
             self.ledger.add_evidence({**base, "provenance": ""}, path)
         with self.assertRaisesRegex(LedgerError, "publication_time is after retrieval_time"):
@@ -84,13 +97,17 @@ class Ace1EvidenceContract(LabTest):
         self.lab.git("commit", "-q", "-am", "rewrite the source")
         result = self.verify()
         self.assertFalse(result["ok"])
-        self.assertTrue(any("no longer matches content_sha256" in f["message"] for f in result["findings"]))
+        self.assertTrue(
+            any("no longer matches content_sha256" in f["message"] for f in result["findings"])
+        )
 
     def test_report_shows_evidence_coverage(self):
         open_and_evaluate(self.ledger, self.card())
         report = build_report(self.ledger)
         case = report["cases"]["PROSPECTIVE"][0]
-        self.assertEqual(case["evidence"], {"known_facts": 6, "cited_facts": 6, "weakest_grade": "A"})
+        self.assertEqual(
+            case["evidence"], {"known_facts": 6, "cited_facts": 6, "weakest_grade": "A"}
+        )
 
 
 class Ace2ExternalTimestamps(LabTest):
@@ -120,7 +137,10 @@ class Ace3FrozenEvaluations(LabTest):
     def test_card_hash_covers_the_evaluations(self):
         card = json.loads(self.lab.git("show", "HEAD:registry/cards/KOD-P-T-1.json"))
         frozen = {e["detector"]: e["status"] for e in card["detector_evaluations"]}
-        stored = {r["detector"]: r["status"] for r in self.ledger.rows("SELECT * FROM detector_evaluations")}
+        stored = {
+            r["detector"]: r["status"]
+            for r in self.ledger.rows("SELECT * FROM detector_evaluations")
+        }
         self.assertEqual(frozen, stored)
         self.assertEqual(frozen["DATED_CATALYST_KNOWN"], "SIGNAL")
 
@@ -128,7 +148,15 @@ class Ace3FrozenEvaluations(LabTest):
         with self.assertRaisesRegex(sqlite3.DatabaseError, "frozen at open"):
             self.ledger.conn.execute(
                 "INSERT INTO detector_evaluations VALUES (?, ?, ?, ?, ?, ?, ?)",
-                ("KOD-P-T-1:NEW:v9", "KOD-P-T-1", "NEW", "v9", "SIGNAL", "{}", fmt_ts(self.clock() + timedelta(days=6))),
+                (
+                    "KOD-P-T-1:NEW:v9",
+                    "KOD-P-T-1",
+                    "NEW",
+                    "v9",
+                    "SIGNAL",
+                    "{}",
+                    fmt_ts(self.clock() + timedelta(days=6)),
+                ),
             )
         self.ledger.conn.rollback()
         self.assertFalse(hasattr(self.ledger, "record_evaluation"))
@@ -136,7 +164,9 @@ class Ace3FrozenEvaluations(LabTest):
     def test_evaluation_edited_in_the_db_fails_verify(self):
         conn = sqlite3.connect(self.ledger.path)
         conn.execute("DROP TRIGGER evals_no_update")
-        conn.execute("UPDATE detector_evaluations SET status = 'NO_SIGNAL' WHERE detector = 'DATED_CATALYST_KNOWN'")
+        conn.execute(
+            "UPDATE detector_evaluations SET status = 'NO_SIGNAL' WHERE detector = 'DATED_CATALYST_KNOWN'"
+        )
         conn.commit()
         conn.close()
         self.assertFalse(self.verify()["ok"])
@@ -161,14 +191,27 @@ class Ace3FrozenEvaluations(LabTest):
     def test_scan_entry_hash_covers_its_evaluations(self):
         from tests.test_hardening import entry, scan_payload
 
-        self.ledger.log_scan(scan_payload(self.clock, [entry("AAAA", True, True), entry("BBBB", False, False)]))
+        self.ledger.log_scan(
+            scan_payload(self.clock, [entry("AAAA", True, True), entry("BBBB", False, False)])
+        )
         body = json.loads(self.lab.git("show", "HEAD:registry/scans/SCAN-T-1.json"))
-        statuses = {e["detector"]: e["status"] for e in body["entries"]["SCAN-T-1:AAAA"]["detector_evaluations"]}
+        statuses = {
+            e["detector"]: e["status"]
+            for e in body["entries"]["SCAN-T-1:AAAA"]["detector_evaluations"]
+        }
         self.assertEqual(statuses["DATED_CATALYST_KNOWN"], "SIGNAL")
         with self.assertRaisesRegex(sqlite3.DatabaseError, "frozen at scan time"):
             self.ledger.conn.execute(
                 "INSERT INTO scan_evaluations VALUES (?, ?, ?, ?, ?, ?, ?)",
-                ("SCAN-T-1:AAAA:NEW:v9", "SCAN-T-1:AAAA", "NEW", "v9", "SIGNAL", "{}", fmt_ts(self.clock() + timedelta(days=6))),
+                (
+                    "SCAN-T-1:AAAA:NEW:v9",
+                    "SCAN-T-1:AAAA",
+                    "NEW",
+                    "v9",
+                    "SIGNAL",
+                    "{}",
+                    fmt_ts(self.clock() + timedelta(days=6)),
+                ),
             )
         self.ledger.conn.rollback()
         self.assertTrue(self.verify()["ok"])
@@ -180,7 +223,9 @@ class Ace4HorizonOffsets(LabTest):
         card["information_sets"]["T-72H"]["cutoff"] = fmt_ts(
             self.clock() - timedelta(minutes=20) - timedelta(hours=71)
         )
-        with self.assertRaisesRegex(LedgerError, "T-72H cutoff .* must be decision_cutoff minus 3 days"):
+        with self.assertRaisesRegex(
+            LedgerError, "T-72H cutoff .* must be decision_cutoff minus 3 days"
+        ):
             open_and_evaluate(self.ledger, card)
 
     def test_retrospective_offsets_must_be_exact_too(self):

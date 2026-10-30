@@ -1,4 +1,5 @@
 """Local POSIX durability/retry invariants; no live services."""
+
 import gzip
 import json
 import multiprocessing
@@ -27,8 +28,10 @@ def _die_before_publish(path):
 
 class ReceiptStub:
     authorities = {"freetsa": None, "sectigo": None}
+
     def __init__(self, fail=False):
         self.fail, self.calls = fail, 0
+
     def stamp(self, data):
         self.calls += 1
         if self.fail:
@@ -51,7 +54,8 @@ class StorageRepair(unittest.TestCase):
         for job in jobs:
             job.join(20)
             if job.is_alive():
-                job.kill(); job.join()
+                job.kill()
+                job.join()
                 self.fail("writer did not finish")
             self.assertEqual(job.exitcode, 0)
         self.assertEqual(len(paper.ledger_lines(self.path)), 48)
@@ -73,7 +77,8 @@ class StorageRepair(unittest.TestCase):
         before = self.path.read_bytes()
         ctx = multiprocessing.get_context("fork")
         job = ctx.Process(target=_die_before_publish, args=(str(self.path),))
-        job.start(); job.join(10)
+        job.start()
+        job.join(10)
         self.assertEqual(job.exitcode, 17)
         self.assertEqual(self.path.read_bytes(), before)
         paper.append([{"type": "TEST", "id": 2}], self.path)
@@ -141,18 +146,23 @@ class StorageRepair(unittest.TestCase):
 
     def test_panel_builds_same_second_and_failed_manifest_keep_old_hashes(self):
         from idxsig import global_panel
-        frame = pd.DataFrame({"date": pd.to_datetime(["2026-01-02"]), "ticker": ["ABC"], "close": [100.0]})
+
+        frame = pd.DataFrame(
+            {"date": pd.to_datetime(["2026-01-02"]), "ticker": ["ABC"], "close": [100.0]}
+        )
         source = self.root / "source.jsonl"
         source.write_text("{}\n")
         data, manifests = self.root / "data", self.root / "manifests"
         manifests.mkdir()
-        with patch.object(global_panel, "check_files", return_value=[]), \
-                patch.object(global_panel, "load_us", return_value=(frame, {})), \
-                patch.object(global_panel, "_finish", side_effect=lambda df: (df, {})), \
-                patch.object(global_panel, "PANEL_DIR", data), \
-                patch.object(global_panel, "MANIFESTS", manifests), \
-                patch.object(global_panel, "rel", side_effect=str), \
-                patch.object(global_panel, "utc_stamp", return_value="2026-01-02T00:00:00Z"):
+        with (
+            patch.object(global_panel, "check_files", return_value=[]),
+            patch.object(global_panel, "load_us", return_value=(frame, {})),
+            patch.object(global_panel, "_finish", side_effect=lambda df: (df, {})),
+            patch.object(global_panel, "PANEL_DIR", data),
+            patch.object(global_panel, "MANIFESTS", manifests),
+            patch.object(global_panel, "rel", side_effect=str),
+            patch.object(global_panel, "utc_stamp", return_value="2026-01-02T00:00:00Z"),
+        ):
             first = global_panel.build("US", source, log=lambda _: None)
             meta = json.loads(first.read_text())
             before = Path(meta["panel"]).read_bytes()
@@ -161,7 +171,9 @@ class StorageRepair(unittest.TestCase):
             self.assertNotEqual(first, second)
             self.assertEqual(Path(meta["panel"]).read_bytes(), before)
             self.assertEqual(provenance.sha256_file(Path(meta["panel"])), meta["sha256"])
-            with patch.object(global_panel, "publish_bytes", side_effect=OSError("manifest failed")):
+            with patch.object(
+                global_panel, "publish_bytes", side_effect=OSError("manifest failed")
+            ):
                 with self.assertRaises(OSError):
                     global_panel.build("US", source, log=lambda _: None)
             self.assertEqual(len(list(manifests.glob("*.json"))), 2)
@@ -169,8 +181,14 @@ class StorageRepair(unittest.TestCase):
 
     def test_same_second_build_ids_are_distinct_and_latest_uses_metadata(self):
         self.assertNotEqual(provenance.build_stamp(), provenance.build_stamp())
-        for name, when in [("panel-z.json", "2026-01-01T00:00:00Z"), ("panel-a.json", "2026-01-02T00:00:00Z")]:
-            provenance.publish_bytes(self.root / name, json.dumps({"built_at": when, "panel": "x", "sha256": "x"}).encode())
+        for name, when in [
+            ("panel-z.json", "2026-01-01T00:00:00Z"),
+            ("panel-a.json", "2026-01-02T00:00:00Z"),
+        ]:
+            provenance.publish_bytes(
+                self.root / name,
+                json.dumps({"built_at": when, "panel": "x", "sha256": "x"}).encode(),
+            )
         with patch.object(provenance, "MANIFESTS", self.root):
             self.assertEqual(provenance.latest_panel_manifest("panel").name, "panel-a.json")
 

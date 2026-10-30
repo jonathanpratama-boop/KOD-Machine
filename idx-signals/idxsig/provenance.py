@@ -61,7 +61,9 @@ def write_manifest(name: str, header: dict, records: list[dict]) -> Path:
 
 
 def read_manifest(path: Path) -> tuple[dict, list[dict]]:
-    lines = [json.loads(x) for x in Path(path).read_text(encoding="utf-8").splitlines() if x.strip()]
+    lines = [
+        json.loads(x) for x in Path(path).read_text(encoding="utf-8").splitlines() if x.strip()
+    ]
     return lines[0], lines[1:]
 
 
@@ -176,13 +178,17 @@ def latest_panel_manifest(prefix: str) -> Path:
     found = list(MANIFESTS.glob(f"{prefix}-*.json"))
     if not found:
         raise FileNotFoundError(f"no {prefix} manifest in {MANIFESTS}")
+
     def key(path):
         meta = json.loads(path.read_text(encoding="utf-8"))
         if not meta.get("panel") or not meta.get("sha256"):
             raise ValueError(f"incomplete panel manifest: {path.name}")
         if meta.get("publication_id"):
-            moment = datetime.strptime(meta["publication_id"].split("-", 1)[0], "%Y%m%dT%H%M%S%fZ").replace(tzinfo=timezone.utc)
+            moment = datetime.strptime(
+                meta["publication_id"].split("-", 1)[0], "%Y%m%dT%H%M%S%fZ"
+            ).replace(tzinfo=timezone.utc)
         else:
             moment = datetime.fromisoformat(meta["built_at"].replace("Z", "+00:00"))
         return moment, path.name
+
     return max(found, key=key)

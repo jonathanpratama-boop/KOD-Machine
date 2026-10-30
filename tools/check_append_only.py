@@ -115,7 +115,9 @@ def check(old: str, new: str | None) -> list[str]:
 
 
 def main(argv=None) -> int:
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--staged", action="store_true")
     group.add_argument("--range")
@@ -123,7 +125,12 @@ def main(argv=None) -> int:
     args = parser.parse_args(argv)
     problems: list[str] = []
     if args.staged:
-        has_head = subprocess.run(["git", "rev-parse", "--verify", "-q", "HEAD"], capture_output=True).returncode == 0
+        has_head = (
+            subprocess.run(
+                ["git", "rev-parse", "--verify", "-q", "HEAD"], capture_output=True
+            ).returncode
+            == 0
+        )
         problems = check("HEAD" if has_head else EMPTY_TREE, None)
     else:
         spec = args.range if args.range else "HEAD"
@@ -140,4 +147,3 @@ def main(argv=None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

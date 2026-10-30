@@ -6,7 +6,9 @@ import numpy as np
 import pandas as pd
 
 SPEC = importlib.util.spec_from_file_location(
-    "lowvol_run", Path(__file__).resolve().parents[1] / "research" / "US_LOWVOL_MOM_2005_2019" / "run.py")
+    "lowvol_run",
+    Path(__file__).resolve().parents[1] / "research" / "US_LOWVOL_MOM_2005_2019" / "run.py",
+)
 run = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(run)
 
@@ -15,10 +17,12 @@ def panel(planted: bool, seed=4, names=400, sessions=1400):
     rng = np.random.default_rng(seed)
     dates = pd.bdate_range("2004-01-02", periods=sessions)
     sd = rng.uniform(0.005, 0.04, names)
-    drift = (-sd * 0.15) if planted else np.zeros(names)          # calmer stocks drift higher when planted
+    drift = (-sd * 0.15) if planted else np.zeros(names)  # calmer stocks drift higher when planted
     r = rng.normal(drift, sd, (sessions, names))
-    adj = pd.DataFrame(100 * np.exp(np.cumsum(r, axis=0)), index=dates, columns=[f"S{i}" for i in range(names)])
-    vol = pd.DataFrame(np.full(adj.shape, 1e9), index=dates, columns=adj.columns)     # always liquid
+    adj = pd.DataFrame(
+        100 * np.exp(np.cumsum(r, axis=0)), index=dates, columns=[f"S{i}" for i in range(names)]
+    )
+    vol = pd.DataFrame(np.full(adj.shape, 1e9), index=dates, columns=adj.columns)  # always liquid
     return adj, adj.copy(), vol
 
 
@@ -40,13 +44,13 @@ class EngineTests(unittest.TestCase):
         vol = pd.DataFrame(np.full(base.shape, 1e9), index=dates)
         for jump_at, expect_in_return in ((t + 1, False), (t + 2, True)):
             a = base.copy()
-            a[jump_at:, 0] *= 2.0                       # stock 0 doubles on that session
+            a[jump_at:, 0] *= 2.0  # stock 0 doubles on that session
             m, _ = run.monthly(pd.DataFrame(a, index=dates), pd.DataFrame(a, index=dates), vol)
             u = float(m.loc[m.formed == dates[t].strftime("%Y-%m-%d"), "universe"].iloc[0])
             if expect_in_return:
-                self.assertGreater(u, 1e-3)             # about +1/400
+                self.assertGreater(u, 1e-3)  # about +1/400
             else:
-                self.assertLess(abs(u), 1e-4)           # the jump happened before entry: not earned
+                self.assertLess(abs(u), 1e-4)  # the jump happened before entry: not earned
 
 
 if __name__ == "__main__":

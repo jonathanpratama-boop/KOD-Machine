@@ -62,8 +62,14 @@ def protocol_with(panel_format, base=E2_PROTOCOL, markets=None) -> Path:
 
 
 def us_study(df, meta, proto_path=None, **kw):
-    return e1.Study(df, meta, protocol_path=proto_path or protocol_with(UNITS_FORMAT), profile=US,
-                    family_module=moonshot_g, **kw)
+    return e1.Study(
+        df,
+        meta,
+        protocol_path=proto_path or protocol_with(UNITS_FORMAT),
+        profile=US,
+        family_module=moonshot_g,
+        **kw,
+    )
 
 
 def frames_equal(a: pd.DataFrame, b: pd.DataFrame) -> bool:
@@ -84,15 +90,24 @@ class DefaultsUnchanged(unittest.TestCase):
         self.assertEqual(bare.pool_keys, explicit.pool_keys)
         self.assertEqual(set(bare.buckets), {"price_band", "liquidity", "market_cap"})
         self.assertIsNone(bare.m.unit_factor)
-        self.assertTrue(frames_equal(bare.detector_table("discovery"), explicit.detector_table("discovery")))
+        self.assertTrue(
+            frames_equal(bare.detector_table("discovery"), explicit.detector_table("discovery"))
+        )
         ev = bare.episodes("discovery", 0.30).head(20)
         ev2 = explicit.episodes("discovery", 0.30).head(20)
         self.assertTrue(frames_equal(ev, ev2))
-        ctrl, ctrl2 = bare.matched_controls(ev, "discovery"), explicit.matched_controls(ev2, "discovery")
+        ctrl, ctrl2 = (
+            bare.matched_controls(ev, "discovery"),
+            explicit.matched_controls(ev2, "discovery"),
+        )
         self.assertTrue(frames_equal(ctrl, ctrl2))
-        self.assertTrue(frames_equal(bare.signal_stats(ev, ctrl, "x"), explicit.signal_stats(ev2, ctrl2, "x")))
-        self.assertEqual(json.dumps(bare.evaluate("F1_ARA", "validation"), sort_keys=True, default=float),
-                         json.dumps(explicit.evaluate("F1_ARA", "validation"), sort_keys=True, default=float))
+        self.assertTrue(
+            frames_equal(bare.signal_stats(ev, ctrl, "x"), explicit.signal_stats(ev2, ctrl2, "x"))
+        )
+        self.assertEqual(
+            json.dumps(bare.evaluate("F1_ARA", "validation"), sort_keys=True, default=float),
+            json.dumps(explicit.evaluate("F1_ARA", "validation"), sort_keys=True, default=float),
+        )
         self.assertNotIn("volatility_q", ev.columns)
         self.assertNotIn("close_as_traded", ev.columns)
         self.assertLessEqual(int(ctrl["match_relaxed_steps"].max()), 3)
@@ -103,12 +118,19 @@ class DefaultsUnchanged(unittest.TestCase):
         plain, _ = us_panel(with_units=False)
         proto = protocol_with(UNITS_FORMAT)
         with_col = us_study(df, meta, proto)
-        without = e1.Study(plain, {**meta, "format": "panel-global-v1"}, protocol_path=E2_PROTOCOL, profile=US,
-                           family_module=moonshot_g)
+        without = e1.Study(
+            plain,
+            {**meta, "format": "panel-global-v1"},
+            protocol_path=E2_PROTOCOL,
+            profile=US,
+            family_module=moonshot_g,
+        )
         self.assertIsNotNone(with_col.m.unit_factor)  # carried for callers, not used by default
         for k in ("price_band", "liquidity", "market_cap"):
             np.testing.assert_array_equal(with_col.buckets[k], without.buckets[k])
-        self.assertTrue(frames_equal(with_col.episodes("discovery", 0.30), without.episodes("discovery", 0.30)))
+        self.assertTrue(
+            frames_equal(with_col.episodes("discovery", 0.30), without.episodes("discovery", 0.30))
+        )
 
     def test_e1_protocol_declares_the_legacy_format(self):
         """Guards against: reading data.panel_format from E1's own protocol changing E1's panel check."""
@@ -148,7 +170,11 @@ class PanelFormatFromProtocol(unittest.TestCase):
     def test_unknown_declared_formats_are_refused(self):
         """Guards against: a typo in a protocol's data.panel_format becoming a new accepted format."""
         with self.assertRaises(ValueError):
-            us_study(self.df, {**self.meta, "format": "panel-global-v9"}, protocol_with("panel-global-v9"))
+            us_study(
+                self.df,
+                {**self.meta, "format": "panel-global-v9"},
+                protocol_with("panel-global-v9"),
+            )
         self.assertEqual(e1.PANEL_FORMATS, ("panel-v2", "panel-global-v1", "panel-global-v2-units"))
 
 
@@ -157,8 +183,11 @@ class PerMarketPanelFormat(unittest.TestCase):
     panel-global-v2-units, CRYPTO panel-global-v1) must build every market's study from the same
     file, so the recorded protocol_sha256 is the frozen protocol's for each of them."""
 
-    MARKETS = {"IDX": {"panel_format": "panel-v2"}, "US": {"panel_format": UNITS_FORMAT},
-               "CRYPTO": {"panel_format": "panel-global-v1"}}
+    MARKETS = {
+        "IDX": {"panel_format": "panel-v2"},
+        "US": {"panel_format": UNITS_FORMAT},
+        "CRYPTO": {"panel_format": "panel-global-v1"},
+    }
 
     @classmethod
     def setUpClass(cls):
@@ -171,7 +200,9 @@ class PerMarketPanelFormat(unittest.TestCase):
         panel-v2 and US panel-global-v2-units from one protocol file)."""
         proto = protocol_with("panel-v2", base=E1_PROTOCOL, markets=self.MARKETS)
         idx = e1.Study(self.idx_df, self.idx_meta, protocol_path=proto)
-        us = e1.Study(self.us_df, self.us_meta, protocol_path=proto, profile=US, family_module=moonshot_g)
+        us = e1.Study(
+            self.us_df, self.us_meta, protocol_path=proto, profile=US, family_module=moonshot_g
+        )
         self.assertEqual(idx.panel_format, "panel-v2")
         self.assertEqual(us.panel_format, UNITS_FORMAT)
         self.assertEqual(idx.protocol_sha, us.protocol_sha)
@@ -183,11 +214,21 @@ class PerMarketPanelFormat(unittest.TestCase):
         with self.assertRaises(ValueError):
             e1.Study(self.idx_df, {**self.idx_meta, "format": UNITS_FORMAT}, protocol_path=proto)
         with self.assertRaises(ValueError):
-            e1.Study(self.us_df, {**self.us_meta, "format": "panel-global-v1"}, protocol_path=proto, profile=US,
-                     family_module=moonshot_g)
+            e1.Study(
+                self.us_df,
+                {**self.us_meta, "format": "panel-global-v1"},
+                protocol_path=proto,
+                profile=US,
+                family_module=moonshot_g,
+            )
         with self.assertRaises(ValueError):
-            e1.Study(self.us_df, {**self.us_meta, "format": "panel-v2"}, protocol_path=proto, profile=US,
-                     family_module=moonshot_g)
+            e1.Study(
+                self.us_df,
+                {**self.us_meta, "format": "panel-v2"},
+                protocol_path=proto,
+                profile=US,
+                family_module=moonshot_g,
+            )
 
     def test_the_market_entry_wins_over_the_global_key(self):
         """Guards against: data.panel_format (one value for the whole protocol) overriding the entry
@@ -195,11 +236,17 @@ class PerMarketPanelFormat(unittest.TestCase):
         proto = protocol_with("panel-global-v1", markets={"US": {"panel_format": UNITS_FORMAT}})
         self.assertEqual(us_study(self.us_df, self.us_meta, proto).panel_format, UNITS_FORMAT)
         plain, plain_meta = us_panel(with_units=False)
-        with self.assertRaises(ValueError):  # the global panel-global-v1 does not rescue a US panel-global-v1 panel
+        with self.assertRaises(
+            ValueError
+        ):  # the global panel-global-v1 does not rescue a US panel-global-v1 panel
             us_study(plain, plain_meta, proto)
         # a market absent from the markets block falls back to the global key
-        only_us = protocol_with("panel-v2", base=E1_PROTOCOL, markets={"US": {"panel_format": UNITS_FORMAT}})
-        self.assertEqual(e1.Study(self.idx_df, self.idx_meta, protocol_path=only_us).panel_format, "panel-v2")
+        only_us = protocol_with(
+            "panel-v2", base=E1_PROTOCOL, markets={"US": {"panel_format": UNITS_FORMAT}}
+        )
+        self.assertEqual(
+            e1.Study(self.idx_df, self.idx_meta, protocol_path=only_us).panel_format, "panel-v2"
+        )
         with self.assertRaises(ValueError):
             e1.Study(self.idx_df, {**self.idx_meta, "format": UNITS_FORMAT}, protocol_path=only_us)
 
@@ -213,9 +260,13 @@ class PerMarketPanelFormat(unittest.TestCase):
         self.assertEqual(st.panel_format, UNITS_FORMAT)
         self.assertEqual(st.protocol_sha, e1.sha256_file(bare))
         global_v1 = protocol_with("panel-global-v1")
-        self.assertEqual(us_study(self.us_df, self.us_meta, global_v1, panel_format=UNITS_FORMAT).panel_format,
-                         UNITS_FORMAT)
-        with self.assertRaises(ValueError):  # the keyword is held against the panel like any declaration
+        self.assertEqual(
+            us_study(self.us_df, self.us_meta, global_v1, panel_format=UNITS_FORMAT).panel_format,
+            UNITS_FORMAT,
+        )
+        with self.assertRaises(
+            ValueError
+        ):  # the keyword is held against the panel like any declaration
             us_study(self.us_df, self.us_meta, bare, panel_format="panel-global-v1")
         with self.assertRaises(ValueError):
             us_study(self.us_df, self.us_meta, bare, panel_format="panel-global-v9")
@@ -226,31 +277,49 @@ class PerMarketPanelFormat(unittest.TestCase):
         """Guards against: the E5 draft's markets block (plain strings per market) or E2's (dicts
         without panel_format) being read as a declaration, which would break the recorded defaults."""
         # The E5 draft's markets block is {market: "<description string>"}; reproduced here, not read.
-        strings = {"IDX": "TIER_1 panel; decisive for Arm A", "US": "survivor-only; DIAGNOSTIC",
-                   "CRYPTO": "decisive for Arm B"}
+        strings = {
+            "IDX": "TIER_1 panel; decisive for Arm A",
+            "US": "survivor-only; DIAGNOSTIC",
+            "CRYPTO": "decisive for Arm B",
+        }
         proto = protocol_with("panel-v2", base=E1_PROTOCOL, markets=strings)
-        self.assertEqual(e1.Study(self.idx_df, self.idx_meta, protocol_path=proto).panel_format, "panel-v2")
+        self.assertEqual(
+            e1.Study(self.idx_df, self.idx_meta, protocol_path=proto).panel_format, "panel-v2"
+        )
         no_global = protocol_with(None, base=E1_PROTOCOL, markets=strings)
-        self.assertEqual(e1.Study(self.idx_df, self.idx_meta, protocol_path=no_global).panel_format, "panel-v2")
+        self.assertEqual(
+            e1.Study(self.idx_df, self.idx_meta, protocol_path=no_global).panel_format, "panel-v2"
+        )
         plain, plain_meta = us_panel(with_units=False)
-        self.assertEqual(us_study(plain, plain_meta, protocol_with(None, markets=strings)).panel_format,
-                         "panel-global-v1")
+        self.assertEqual(
+            us_study(plain, plain_meta, protocol_with(None, markets=strings)).panel_format,
+            "panel-global-v1",
+        )
         e2 = json.loads(E2_PROTOCOL.read_text(encoding="utf-8"))
         self.assertNotIn("data", e2)
-        self.assertTrue(all(isinstance(v, dict) and "panel_format" not in v for v in e2["markets"].values()))
+        self.assertTrue(
+            all(isinstance(v, dict) and "panel_format" not in v for v in e2["markets"].values())
+        )
         e1_proto, _ = e1.protocol()
         self.assertNotIn("markets", e1_proto)
         self.assertEqual(us_study(plain, plain_meta, E2_PROTOCOL).panel_format, "panel-global-v1")
 
     def test_unknown_per_market_formats_are_refused(self):
         """Guards against: a typo in markets.<market>.panel_format becoming an accepted format."""
-        proto = protocol_with("panel-v2", base=E1_PROTOCOL, markets={"IDX": {"panel_format": "panel-v3"}})
+        proto = protocol_with(
+            "panel-v2", base=E1_PROTOCOL, markets={"IDX": {"panel_format": "panel-v3"}}
+        )
         with self.assertRaises(ValueError):
             e1.Study(self.idx_df, self.idx_meta, protocol_path=proto)
         # an unknown name for another market does not touch this study
-        other = protocol_with("panel-v2", base=E1_PROTOCOL, markets={"US": {"panel_format": "panel-v3"},
-                                                                      "IDX": {"panel_format": "panel-v2"}})
-        self.assertEqual(e1.Study(self.idx_df, self.idx_meta, protocol_path=other).panel_format, "panel-v2")
+        other = protocol_with(
+            "panel-v2",
+            base=E1_PROTOCOL,
+            markets={"US": {"panel_format": "panel-v3"}, "IDX": {"panel_format": "panel-v2"}},
+        )
+        self.assertEqual(
+            e1.Study(self.idx_df, self.idx_meta, protocol_path=other).panel_format, "panel-v2"
+        )
 
 
 def family_without_ignition():
@@ -259,7 +328,9 @@ def family_without_ignition():
     mod.FEATURE_ARGS = moonshot_g.FEATURE_ARGS
     mod.FAMILY = tuple((n, d) for n, d in moonshot_g.FAMILY if "IGNITION" not in n)
     mod.features = moonshot_g.features
-    mod.family_flags = lambda f: {k: v for k, v in moonshot_g.family_flags(f).items() if "IGNITION" not in k}
+    mod.family_flags = lambda f: {
+        k: v for k, v in moonshot_g.family_flags(f).items() if "IGNITION" not in k
+    }
     mod.__file__ = moonshot_g.__file__
     return mod
 
@@ -269,7 +340,9 @@ class IgnitionGuard(unittest.TestCase):
         """Guards against: KeyError / StopIteration in _signals when the family has no IGNITION member."""
         warnings.simplefilter("ignore")
         df, meta = us_panel(with_units=False)
-        st = e1.Study(df, meta, protocol_path=E2_PROTOCOL, profile=US, family_module=family_without_ignition())
+        st = e1.Study(
+            df, meta, protocol_path=E2_PROTOCOL, profile=US, family_module=family_without_ignition()
+        )
         self.assertTrue(np.isnan(st.sig["ign"]).all())
         table = st.detector_table("discovery")
         self.assertEqual(len(table), len(moonshot_g.FAMILY) - 1)
@@ -319,14 +392,18 @@ class AsTradedPool(unittest.TestCase):
         band_adjusted = np.searchsorted(edges, adjusted, side="left")
         np.testing.assert_array_equal(st.buckets["price_band"][n, early], band_traded)
         np.testing.assert_array_equal(self.legacy.buckets["price_band"][n, early], band_adjusted)
-        self.assertTrue((band_traded != band_adjusted).any())  # the defect, by default: a different band
+        self.assertTrue(
+            (band_traded != band_adjusted).any()
+        )  # the defect, by default: a different band
         for k in ("liquidity", "market_cap"):  # unit-free features are untouched
             np.testing.assert_array_equal(st.buckets[k], self.legacy.buckets[k])
         d = int(early[np.flatnonzero(band_traded != band_adjusted)[0]])
         row = st.row(n, d)
         self.assertEqual(row["price_band"], US.band_names[int(band_traded[early == d][0])])
         self.assertAlmostEqual(row["close_as_traded"], float(m.close[n, d]) * SPLIT_FACTOR)
-        self.assertAlmostEqual(row["close"], float(m.close[n, d]))  # the panel close stays what it was
+        self.assertAlmostEqual(
+            row["close"], float(m.close[n, d])
+        )  # the panel close stays what it was
         self.assertNotEqual(row["price_band"], self.legacy.row(n, d)["price_band"])
 
     def test_controls_match_on_the_as_traded_band(self):
@@ -336,8 +413,13 @@ class AsTradedPool(unittest.TestCase):
         ctrl = st.matched_controls(ev, "discovery")
         full = ctrl[ctrl["match_relaxed_steps"] == 0]
         self.assertGreater(len(full), 0)
-        merged = full.merge(ev.reset_index().rename(columns={"index": "event_index"})[["event_index", "price_band"]],
-                            on="event_index", suffixes=("", "_event"))
+        merged = full.merge(
+            ev.reset_index().rename(columns={"index": "event_index"})[
+                ["event_index", "price_band"]
+            ],
+            on="event_index",
+            suffixes=("", "_event"),
+        )
         self.assertTrue((merged["price_band"] == merged["price_band_event"]).all())
         self.assertIn("close_as_traded", ctrl.columns)
 
@@ -382,8 +464,11 @@ class PoolV3(unittest.TestCase):
         self.assertEqual(ctrl.groupby("event_index").size().min(), e1.N_CONTROLS)
         self.assertLessEqual(int(ctrl["match_relaxed_steps"].max()), 4)
         cols = ["event_index", "price_band", "liquidity_q", "volatility_q", "market_cap_q"]
-        merged = ctrl.merge(ev.reset_index().rename(columns={"index": "event_index"})[cols],
-                            on="event_index", suffixes=("", "_event"))
+        merged = ctrl.merge(
+            ev.reset_index().rename(columns={"index": "event_index"})[cols],
+            on="event_index",
+            suffixes=("", "_event"),
+        )
         full = merged[merged["match_relaxed_steps"] == 0]
         one = merged[merged["match_relaxed_steps"] == 1]
         self.assertGreater(len(full), 0)
@@ -441,29 +526,51 @@ class StudyOptionsRecorded(unittest.TestCase):
         out = Path(tempfile.mkdtemp())
         summary = e1.run_discovery(st, out / "disc")
         result = e1.run_validation(st, next(iter(st.flags)), out / "val")
-        on_disk = [json.loads((out / d / f).read_text(encoding="utf-8")) for d, f in
-                   (("disc", "summary.json"), ("val", "result.json"))]
+        on_disk = [
+            json.loads((out / d / f).read_text(encoding="utf-8"))
+            for d, f in (("disc", "summary.json"), ("val", "result.json"))
+        ]
         return summary, on_disk[0], result, on_disk[1]
 
     def test_the_default_path_writes_no_study_options_key(self):
         """Guards against: an E1 or E2 re-run gaining a key its recorded summary.json / result.json never had."""
-        for st in (e1.Study(self.idx_df, self.idx_meta),
-                   e1.Study(self.idx_df, self.idx_meta, pool_units="panel", pool_version="v1"),
-                   us_study(*us_panel(with_units=False), protocol_with(None))):  # E2 US on its legacy panel
+        for st in (
+            e1.Study(self.idx_df, self.idx_meta),
+            e1.Study(self.idx_df, self.idx_meta, pool_units="panel", pool_version="v1"),
+            us_study(*us_panel(with_units=False), protocol_with(None)),
+        ):  # E2 US on its legacy panel
             self.assertIsNone(st.study_options())
             for doc in self._stages(st):
                 self.assertNotIn("study_options", doc)
         # the exact recorded key set of E1's summary, so a default re-run is byte-comparable
         summary = self._stages(e1.Study(self.idx_df, self.idx_meta))[1]
-        self.assertEqual(set(summary), {"protocol_id", "protocol_sha256", "panel_sha256", "market", "stage",
-                                        "computed_at", "eligible_ticker_days", "episodes", "first100_span",
-                                        "selected_detector", "code", "holdout"})
+        self.assertEqual(
+            set(summary),
+            {
+                "protocol_id",
+                "protocol_sha256",
+                "panel_sha256",
+                "market",
+                "stage",
+                "computed_at",
+                "eligible_ticker_days",
+                "episodes",
+                "first100_span",
+                "selected_detector",
+                "code",
+                "holdout",
+            },
+        )
 
     def test_v3_pool_is_recorded(self):
         """Guards against: a v3-pool result directory indistinguishable from a v1 one except by a CSV column."""
         st = e1.Study(self.idx_df, self.idx_meta, pool_version="v3")
-        want = {"panel_format": "panel-v2", "pool_units": "panel", "pool_version": "v3",
-                "pool_keys": ["price_band", "liquidity", "volatility", "market_cap"]}
+        want = {
+            "panel_format": "panel-v2",
+            "pool_units": "panel",
+            "pool_version": "v3",
+            "pool_keys": ["price_band", "liquidity", "volatility", "market_cap"],
+        }
         self.assertEqual(st.study_options(), want)
         for doc in self._stages(st):
             self.assertEqual(doc["study_options"], want)
@@ -471,8 +578,12 @@ class StudyOptionsRecorded(unittest.TestCase):
     def test_as_traded_bands_are_recorded(self):
         """Guards against: an as-traded-band result directory not saying which price its bands were formed on."""
         st = us_study(self.us_df, self.us_meta, pool_units="as_traded")
-        want = {"panel_format": UNITS_FORMAT, "pool_units": "as_traded", "pool_version": "v1",
-                "pool_keys": ["price_band", "liquidity", "market_cap"]}
+        want = {
+            "panel_format": UNITS_FORMAT,
+            "pool_units": "as_traded",
+            "pool_version": "v1",
+            "pool_keys": ["price_band", "liquidity", "market_cap"],
+        }
         self.assertEqual(st.study_options(), want)
         for doc in self._stages(st):
             self.assertEqual(doc["study_options"], want)
@@ -482,8 +593,12 @@ class StudyOptionsRecorded(unittest.TestCase):
         looking, in its outputs, exactly like the recorded E2 run on panel-global-v1."""
         st = us_study(self.us_df, self.us_meta)
         self.assertEqual(st.legacy_panel_format, "panel-global-v1")
-        want = {"panel_format": UNITS_FORMAT, "pool_units": "panel", "pool_version": "v1",
-                "pool_keys": ["price_band", "liquidity", "market_cap"]}
+        want = {
+            "panel_format": UNITS_FORMAT,
+            "pool_units": "panel",
+            "pool_version": "v1",
+            "pool_keys": ["price_band", "liquidity", "market_cap"],
+        }
         self.assertEqual(st.study_options(), want)
         summary, on_disk, result, result_disk = self._stages(st)
         self.assertEqual(on_disk["study_options"], want)

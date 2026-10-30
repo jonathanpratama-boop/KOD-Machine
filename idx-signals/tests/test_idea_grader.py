@@ -43,8 +43,16 @@ class Honesty(unittest.TestCase):
         n = 1500
         dates = np.array([f"2018-{1 + i // 28 % 12:02d}-{1 + i % 28:02d}" for i in range(n)])
         s = ig.Series(dates, np.exp(np.cumsum(rng.normal(0, 0.02, n))))
-        g = ig.grade({"name": "noise", "market": "US", "ticker": "X", "entry": {"type": "rsi_below", "n": 14, "level": 30},
-                      "exit": {"hold": 10}}, s)
+        g = ig.grade(
+            {
+                "name": "noise",
+                "market": "US",
+                "ticker": "X",
+                "entry": {"type": "rsi_below", "n": 14, "level": 30},
+                "exit": {"hold": 10},
+            },
+            s,
+        )
         self.assertIn(g["verdict"], ("NOT DISTINGUISHABLE FROM LUCK", "IN-SAMPLE ONLY"))
         self.assertIn("Paper only", ig.words(g))
 

@@ -26,7 +26,9 @@ def levels(present: np.ndarray, close: np.ndarray, prev: np.ndarray) -> np.ndarr
     return np.where(present, np.exp(np.cumsum(logret, axis=1)), np.nan)
 
 
-def prior_median(level: np.ndarray, window: int = DEFAULT_WINDOW, min_periods: int = DEFAULT_MIN_PERIODS) -> np.ndarray:
+def prior_median(
+    level: np.ndarray, window: int = DEFAULT_WINDOW, min_periods: int = DEFAULT_MIN_PERIODS
+) -> np.ndarray:
     """Median of each name's levels over the `window` sessions strictly before each session."""
     med = pd.DataFrame(level.T).rolling(window, min_periods=min_periods).median().to_numpy().T
     out = np.full(level.shape, np.nan)
@@ -34,15 +36,23 @@ def prior_median(level: np.ndarray, window: int = DEFAULT_WINDOW, min_periods: i
     return out
 
 
-def extended(level: np.ndarray, threshold: float = DEFAULT_THRESHOLD, window: int = DEFAULT_WINDOW,
-             min_periods: int = DEFAULT_MIN_PERIODS) -> np.ndarray:
+def extended(
+    level: np.ndarray,
+    threshold: float = DEFAULT_THRESHOLD,
+    window: int = DEFAULT_WINDOW,
+    min_periods: int = DEFAULT_MIN_PERIODS,
+) -> np.ndarray:
     """True where the level is more than `threshold` x its prior-window median (False where either is unknown)."""
     med = prior_median(level, window, min_periods)
     with np.errstate(invalid="ignore"):
         return np.isfinite(level) & np.isfinite(med) & (level > threshold * med)
 
 
-def extended_market(m, threshold: float = DEFAULT_THRESHOLD, window: int = DEFAULT_WINDOW,
-                    min_periods: int = DEFAULT_MIN_PERIODS) -> np.ndarray:
+def extended_market(
+    m,
+    threshold: float = DEFAULT_THRESHOLD,
+    window: int = DEFAULT_WINDOW,
+    min_periods: int = DEFAULT_MIN_PERIODS,
+) -> np.ndarray:
     """`extended` for an execution.Market."""
     return extended(levels(m.present, m.close, m.prev), threshold, window, min_periods)

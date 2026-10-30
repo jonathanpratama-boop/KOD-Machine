@@ -15,14 +15,16 @@ def ts(s):
 
 class SessionMappingTests(unittest.TestCase):
     def setUp(self):
-        self.dates = np.busday_offset(np.datetime64("2023-01-02", "D"), np.arange(30), roll="forward")
+        self.dates = np.busday_offset(
+            np.datetime64("2023-01-02", "D"), np.arange(30), roll="forward"
+        )
 
     def idx(self, d):
         return int(np.searchsorted(self.dates, np.datetime64(d, "D")))
 
     def test_morning_news_is_bought_at_that_days_close(self):
         s = ie.signal_session(self.dates, ts("2023-01-09T10:00:00+07:00"))
-        self.assertEqual(s, self.idx("2023-01-09") - 1)               # entry at s + 1 = that day's close
+        self.assertEqual(s, self.idx("2023-01-09") - 1)  # entry at s + 1 = that day's close
 
     def test_the_cutoff_is_inclusive(self):
         d = self.idx("2023-01-09")
@@ -30,19 +32,25 @@ class SessionMappingTests(unittest.TestCase):
         self.assertEqual(ie.signal_session(self.dates, ts("2023-01-09T14:31:00+07:00")), d)
 
     def test_news_after_the_cutoff_waits_for_the_next_close(self):
-        self.assertEqual(ie.signal_session(self.dates, ts("2023-01-09T18:00:00+07:00")), self.idx("2023-01-09"))
+        self.assertEqual(
+            ie.signal_session(self.dates, ts("2023-01-09T18:00:00+07:00")), self.idx("2023-01-09")
+        )
 
     def test_weekend_news_is_bought_at_monday_close(self):
-        s = ie.signal_session(self.dates, ts("2023-01-14T11:00:00+07:00"))      # a Saturday
-        self.assertEqual(s, self.idx("2023-01-13"))                              # signal Friday, entry Monday's close
+        s = ie.signal_session(self.dates, ts("2023-01-14T11:00:00+07:00"))  # a Saturday
+        self.assertEqual(s, self.idx("2023-01-13"))  # signal Friday, entry Monday's close
 
     def test_no_session_before_the_first(self):
         self.assertIsNone(ie.signal_session(self.dates, ts("2023-01-01T08:00:00+07:00")))
-        self.assertIsNone(ie.signal_session(self.dates, ts("2023-01-02T09:00:00+07:00")))   # needs the session before it
+        self.assertIsNone(
+            ie.signal_session(self.dates, ts("2023-01-02T09:00:00+07:00"))
+        )  # needs the session before it
 
 
 def planted(n_sessions=200, drift_names=8, seed=3):
-    df, meta = random_walk_panel(n_tickers=40, n_sessions=n_sessions, seed=seed, drift={i: 0.004 for i in range(drift_names)})
+    df, meta = random_walk_panel(
+        n_tickers=40, n_sessions=n_sessions, seed=seed, drift={i: 0.004 for i in range(drift_names)}
+    )
     reg, _ = synthetic_registry(df, meta)
     return df, meta, reg
 
@@ -57,7 +65,9 @@ class RunEventsTests(unittest.TestCase):
         cls.cfg = ExecConfig(holding_days=20, ca_mode="registry", max_participation=0.5)
 
     def events(self, rows):
-        return pd.DataFrame([{"ticker": t, "posted_wib": f"{self.dates[i]}T16:00:00+07:00"} for t, i in rows])
+        return pd.DataFrame(
+            [{"ticker": t, "posted_wib": f"{self.dates[i]}T16:00:00+07:00"} for t, i in rows]
+        )
 
     def test_a_planted_drift_shows_up_as_excess_over_matched_controls(self):
         ev = self.events([(f"S{i:03d}", 70 + 4 * i) for i in range(8)])
@@ -67,7 +77,10 @@ class RunEventsTests(unittest.TestCase):
         self.assertGreater(f.net_return.mean(), 0.04)
         self.assertGreater(f.excess.mean(), 0.03)
         self.assertTrue((f.control_n > 20).all())
-        self.assertTrue((res.entry_date > res.signal_date).all() or (res.entry_date[res.entry_date != ""] > res.signal_date[res.entry_date != ""]).all())
+        self.assertTrue(
+            (res.entry_date > res.signal_date).all()
+            or (res.entry_date[res.entry_date != ""] > res.signal_date[res.entry_date != ""]).all()
+        )
 
     def test_no_drift_no_excess(self):
         ev = self.events([(f"S{i:03d}", 70 + 3 * (i - 10)) for i in range(10, 40)])
@@ -85,23 +98,41 @@ class RunEventsTests(unittest.TestCase):
     def test_unknown_tickers_and_late_events(self):
         ev = self.events([("ZZZZ", 80), ("S002", 195)])
         res = ie.run_events(self.prep, ev, self.cfg, draws=20)
-        self.assertEqual(len(res), 1)                                   # the unknown ticker is not mapped
-        self.assertEqual(res.status.iloc[0], "INCOMPLETE")              # 20 sessions do not fit before the data ends
+        self.assertEqual(len(res), 1)  # the unknown ticker is not mapped
+        self.assertEqual(
+            res.status.iloc[0], "INCOMPLETE"
+        )  # 20 sessions do not fit before the data ends
         self.assertTrue(np.isnan(res.net_return.iloc[0]))
         self.assertEqual(len(ie.filled(res)), 0)
 
     def test_history_is_counted_on_the_whole_panel_not_the_window(self):
         dates = self.dates
-        prep = ie.prepare(self.df, self.reg, str(dates[80]), str(dates[-1]))      # the window starts at session 80
-        self.assertGreater(prep.evaluable[:, 0].sum(), 20)                         # names with 80 sessions of history already
+        prep = ie.prepare(
+            self.df, self.reg, str(dates[80]), str(dates[-1])
+        )  # the window starts at session 80
+        self.assertGreater(
+            prep.evaluable[:, 0].sum(), 20
+        )  # names with 80 sessions of history already
         ev = self.events([("S030", 85)])
-        res = ie.run_events(prep, pd.DataFrame([{"ticker": "S030", "posted_wib": f"{dates[85]}T16:00:00+07:00"}]), self.cfg, draws=20)
+        res = ie.run_events(
+            prep,
+            pd.DataFrame([{"ticker": "S030", "posted_wib": f"{dates[85]}T16:00:00+07:00"}]),
+            self.cfg,
+            draws=20,
+        )
         self.assertGreater(res.control_n.iloc[0], 0)
 
     def test_an_event_with_no_possible_control_does_not_stop_the_run(self):
         dates = self.dates
-        early = pd.DataFrame([{"ticker": "S003", "posted_wib": f"{dates[10]}T16:00:00+07:00"},      # nobody has 60 sessions yet
-                              {"ticker": "S003", "posted_wib": f"{dates[90]}T16:00:00+07:00"}])
+        early = pd.DataFrame(
+            [
+                {
+                    "ticker": "S003",
+                    "posted_wib": f"{dates[10]}T16:00:00+07:00",
+                },  # nobody has 60 sessions yet
+                {"ticker": "S003", "posted_wib": f"{dates[90]}T16:00:00+07:00"},
+            ]
+        )
         res = ie.run_events(self.prep, early, self.cfg, draws=20)
         self.assertEqual(len(res), 2)
         self.assertEqual(res.control_n.iloc[0], 0)
@@ -115,11 +146,15 @@ class RunEventsTests(unittest.TestCase):
         np.testing.assert_allclose(ie.mean_over_scored(net, scored), [0.2, 0.3, nan])
 
     def test_unbuyable_control_draws_do_not_erase_the_control_mean(self):
-        cfg = ExecConfig(holding_days=20, ca_mode="registry", max_participation=0.05)      # a tight cap leaves some draws unbuyable
-        res = ie.run_events(self.prep, self.events([(f"S{i:03d}", 70 + 4 * i) for i in range(8, 30)]), cfg, draws=40)
+        cfg = ExecConfig(
+            holding_days=20, ca_mode="registry", max_participation=0.05
+        )  # a tight cap leaves some draws unbuyable
+        res = ie.run_events(
+            self.prep, self.events([(f"S{i:03d}", 70 + 4 * i) for i in range(8, 30)]), cfg, draws=40
+        )
         ex = res[res.status == "EXITED"]
         partial = ex[(ex.control_n > 0) & (ex.control_n < 40)]
-        self.assertGreater(len(partial), 0)                                                # the case this test is about exists
+        self.assertGreater(len(partial), 0)  # the case this test is about exists
         self.assertTrue(ex[ex.control_n > 0].control_mean.notna().all())
         self.assertEqual(len(ie.filled(res)), int((ex.control_n > 0).sum()))
 

@@ -40,8 +40,11 @@ class CoreJourneyTests(unittest.TestCase):
 
     def ingest(self, **kwargs):
         values = dict(
-            security_id=self.security["id"], raw=release(), filename="earnings.htm",
-            source_url="https://example.com/earnings.htm", published_at=PUBLISHED,
+            security_id=self.security["id"],
+            raw=release(),
+            filename="earnings.htm",
+            source_url="https://example.com/earnings.htm",
+            published_at=PUBLISHED,
             retrieved_at=OBSERVED,
         )
         values.update(kwargs)
@@ -96,10 +99,14 @@ class CoreJourneyTests(unittest.TestCase):
         self.assertEqual(self.store.raw(first["id"]), release())
         self.assertEqual(self.store.raw(second["id"]), release("115"))
 
-    def test_parser_upgrade_can_reparse_previously_unsupported_bytes_without_erasing_old_version(self):
+    def test_parser_upgrade_can_reparse_previously_unsupported_bytes_without_erasing_old_version(
+        self,
+    ):
         self.service.parser_sha256 = "1" * 64
         # Simulate an earlier parser version that recognised no figures in these bytes.
-        with mock.patch("kod.workstation.services.earnings.extract_table_facts", return_value=([], [])):
+        with mock.patch(
+            "kod.workstation.services.earnings.extract_table_facts", return_value=([], [])
+        ):
             old = self.ingest()
         self.assertEqual(old["extraction_status"], "unsupported")
         self.service.parser_sha256 = "2" * 64
@@ -120,17 +127,27 @@ class CoreJourneyTests(unittest.TestCase):
 
     def test_known_sec_url_cik_mismatch_is_rejected_before_storage(self):
         with self.assertRaises(ValueError):
-            self.ingest(source_url="https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/apple.htm")
+            self.ingest(
+                source_url="https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/apple.htm"
+            )
         self.assertEqual(self.store.documents(), [])
 
     def test_matching_official_looking_url_is_still_user_asserted(self):
-        document = self.ingest(source_url="https://www.sec.gov/Archives/edgar/data/1234/000000123424000001/earnings.htm")
+        document = self.ingest(
+            source_url="https://www.sec.gov/Archives/edgar/data/1234/000000123424000001/earnings.htm"
+        )
         self.assertEqual(document["association"], "user_asserted")
 
     def test_later_identity_resolution_revalidates_current_and_comparison_sources(self):
         unknown = self.store.upsert_security("AMD", "Advanced Micro Devices", cik=None)
-        wrong = self.ingest(security_id=unknown["id"], source_url="https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/apple.htm")
-        correct = self.ingest(security_id=unknown["id"], source_url="https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/amd.htm")
+        wrong = self.ingest(
+            security_id=unknown["id"],
+            source_url="https://www.sec.gov/Archives/edgar/data/320193/000032019324000120/apple.htm",
+        )
+        correct = self.ingest(
+            security_id=unknown["id"],
+            source_url="https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/amd.htm",
+        )
         self.store.upsert_security("AMD", "Advanced Micro Devices", cik="2488")
         for current_id, comparison_id in ((wrong["id"], None), (correct["id"], wrong["id"])):
             with self.subTest(current=current_id), self.assertRaises(ValueError):
@@ -139,7 +156,9 @@ class CoreJourneyTests(unittest.TestCase):
 
     def test_later_identity_resolution_checks_preserved_header_evidence(self):
         unknown = self.store.upsert_security("AMD", "Advanced Micro Devices", cik=None)
-        document = self.ingest(security_id=unknown["id"], sec_headers=b"CENTRAL INDEX KEY: 0000320193")
+        document = self.ingest(
+            security_id=unknown["id"], sec_headers=b"CENTRAL INDEX KEY: 0000320193"
+        )
         self.store.upsert_security("AMD", "Advanced Micro Devices", cik="2488")
         with self.assertRaises(ValueError):
             self.service.generate_note(unknown["id"], document["id"], as_of=CUTOFF)
@@ -150,7 +169,12 @@ class CoreJourneyTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "different filing"):
             self.ingest(source_url=url, published_at=None, sec_headers=other)
         own = other.replace(b"24-000262", b"24-000315").replace(b"20240828", b"20241120")
-        self.assertEqual(self.ingest(source_url=url, published_at=None, sec_headers=own, retrieved_at=NOW)["published_at"], "2024-11-20T21:21:16Z")
+        self.assertEqual(
+            self.ingest(source_url=url, published_at=None, sec_headers=own, retrieved_at=NOW)[
+                "published_at"
+            ],
+            "2024-11-20T21:21:16Z",
+        )
 
     def test_fact_evidence_uses_actual_stored_document_and_version_identity(self):
         note = self.note()
@@ -171,7 +195,9 @@ class CoreJourneyTests(unittest.TestCase):
         document = self.ingest(published_at="2024-11-20")
         self.assertIsNone(document["published_at"])
         self.assertEqual(document["metadata"]["publication_date"], "2024-11-20")
-        note = self.service.generate_note(self.security["id"], document["id"], as_of=CUTOFF, mode="public")
+        note = self.service.generate_note(
+            self.security["id"], document["id"], as_of=CUTOFF, mode="public"
+        )
         self.assertEqual(note["result"]["facts"], [])
 
     def test_observation_cannot_precede_its_known_publication(self):
@@ -192,8 +218,12 @@ class CoreJourneyTests(unittest.TestCase):
 
     def test_later_retrieval_is_public_reconstruction_only(self):
         document = self.ingest(retrieved_at=NOW)
-        observed = self.service.generate_note(self.security["id"], document["id"], as_of=CUTOFF, mode="observed")
-        public = self.service.generate_note(self.security["id"], document["id"], as_of=CUTOFF, mode="public")
+        observed = self.service.generate_note(
+            self.security["id"], document["id"], as_of=CUTOFF, mode="observed"
+        )
+        public = self.service.generate_note(
+            self.security["id"], document["id"], as_of=CUTOFF, mode="public"
+        )
         self.assertEqual(observed["result"]["facts"], [])
         self.assertTrue(public["result"]["facts"])
         self.assertIn("Historical reconstruction", public["markdown"])
@@ -232,12 +262,21 @@ class CoreJourneyTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.service.generate_note(other["id"], document["id"], as_of=CUTOFF)
         with self.assertRaises(ValueError):
-            self.service.generate_note(self.security["id"], document["id"], foreign["id"], as_of=CUTOFF)
+            self.service.generate_note(
+                self.security["id"], document["id"], foreign["id"], as_of=CUTOFF
+            )
 
     def test_annotation_versions_and_note_survive_restart(self):
         note = self.note()
-        self.store.annotate(note["id"], "Revenue improved", "Revenue is restated lower", "Next earnings release")
-        self.store.annotate(note["id"], "Await margin explanation", "Management retracts guidance", "Read the original reconciliation")
+        self.store.annotate(
+            note["id"], "Revenue improved", "Revenue is restated lower", "Next earnings release"
+        )
+        self.store.annotate(
+            note["id"],
+            "Await margin explanation",
+            "Management retracts guidance",
+            "Read the original reconciliation",
+        )
         reopened = Store(self.root)
         self.assertEqual(reopened.note(note["id"])["result"]["period"], "Q3 FY25")
         annotations = reopened.annotations(note["id"])
@@ -253,9 +292,14 @@ class CoreJourneyTests(unittest.TestCase):
     def test_events_are_idempotent_and_keep_source_association(self):
         document = self.ingest()
         values = dict(
-            security_id=self.security["id"], external_id="0000001234-24-000001", form="8-K",
-            title="Results", source_url="https://example.com/filing.htm", published_at=PUBLISHED,
-            observed_at=OBSERVED, document_id=document["id"],
+            security_id=self.security["id"],
+            external_id="0000001234-24-000001",
+            form="8-K",
+            title="Results",
+            source_url="https://example.com/filing.htm",
+            published_at=PUBLISHED,
+            observed_at=OBSERVED,
+            document_id=document["id"],
         )
         first = self.store.save_event(**values)
         second = self.store.save_event(**values)
@@ -267,12 +311,33 @@ class CoreJourneyTests(unittest.TestCase):
         document = self.ingest()
         other = self.store.upsert_security("OTHER", "Other Corporation", cik="5678")
         with self.assertRaises(ValueError):
-            self.store.save_event(other["id"], "event-1", "8-K", "Results", "https://example.com/filing.htm", document_id=document["id"])
+            self.store.save_event(
+                other["id"],
+                "event-1",
+                "8-K",
+                "Results",
+                "https://example.com/filing.htm",
+                document_id=document["id"],
+            )
         self.assertEqual(self.store.events(), [])
 
     def test_last_success_survives_later_failed_refresh(self):
-        self.store.record_job("sec", self.security["id"], "success", "No new events", started_at=OBSERVED, finished_at=CUTOFF)
-        self.store.record_job("sec", self.security["id"], "failed", "Provider unavailable", started_at=NOW, finished_at=NOW)
+        self.store.record_job(
+            "sec",
+            self.security["id"],
+            "success",
+            "No new events",
+            started_at=OBSERVED,
+            finished_at=CUTOFF,
+        )
+        self.store.record_job(
+            "sec",
+            self.security["id"],
+            "failed",
+            "Provider unavailable",
+            started_at=NOW,
+            finished_at=NOW,
+        )
         health = next(h for h in self.store.health() if h["provider"] == "sec")
         self.assertEqual(health["status"], "failed")
         self.assertTrue(health["last_success"])
@@ -333,7 +398,12 @@ class CoreJourneyTests(unittest.TestCase):
 
     def test_mutable_store_refuses_legacy_frozen_record_destinations(self):
         backup = self.store.backup(self.base / "valid-backup")
-        for suffix in ("kod-machine/registry/cards", "kod-machine/var", "idx-signals/research", "idx-signals/data/manifests"):
+        for suffix in (
+            "kod-machine/registry/cards",
+            "kod-machine/var",
+            "idx-signals/research",
+            "idx-signals/data/manifests",
+        ):
             operations = {
                 "create": Store,
                 "backup": self.store.backup,

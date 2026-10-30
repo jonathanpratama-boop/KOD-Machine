@@ -122,6 +122,12 @@ def special_limits(ref: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
 
 def regime_labels() -> list[dict]:
     return [
-        {"start": r.start.isoformat(), "arb_flat": r.arb_flat, "floor": r.floor, "small_abs": r.small_abs, "label": r.label}
+        {
+            "start": r.start.isoformat(),
+            "arb_flat": r.arb_flat,
+            "floor": r.floor,
+            "small_abs": r.small_abs,
+            "label": r.label,
+        }
         for r in REGIMES
     ]

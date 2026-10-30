@@ -40,9 +40,14 @@ class FakeHTTP:
         self.elapsed += seconds
 
     def client(self, **kwargs):
-        return cg.CoinGlassClient(KEY, transport=self.transport, sleep=self.sleep,
-                                 monotonic=lambda: self.elapsed,
-                                 clock=lambda: self.epoch + timedelta(seconds=self.elapsed), **kwargs)
+        return cg.CoinGlassClient(
+            KEY,
+            transport=self.transport,
+            sleep=self.sleep,
+            monotonic=lambda: self.elapsed,
+            clock=lambda: self.epoch + timedelta(seconds=self.elapsed),
+            **kwargs,
+        )
 
 
 class CoinGlassClientTests(unittest.TestCase):
@@ -51,8 +56,10 @@ class CoinGlassClientTests(unittest.TestCase):
         result = fake.client().request("price", **PARAMS, limit=50)
         url, headers, timeout, _ = fake.calls[0]
         parsed = urlparse(url)
-        self.assertEqual((parsed.scheme, parsed.netloc, parsed.path),
-                         ("https", "open-api-v4.coinglass.com", "/api/futures/price/history"))
+        self.assertEqual(
+            (parsed.scheme, parsed.netloc, parsed.path),
+            ("https", "open-api-v4.coinglass.com", "/api/futures/price/history"),
+        )
         self.assertEqual(headers["CG-API-KEY"], KEY)
         self.assertEqual(timeout, 25.0)
         self.assertEqual(parse_qs(parsed.query)["symbol"], ["BTCUSDT"])
@@ -75,28 +82,45 @@ class CoinGlassClientTests(unittest.TestCase):
         for key in ("", "bad\nheader", "a b", "ü", 123):
             with self.subTest(key=key), self.assertRaises(cg.CoinGlassError):
                 cg.CoinGlassClient(key)
-        for kwargs in ({"max_attempts": 0}, {"max_attempts": 4}, {"max_attempts": True},
-                       {"timeout": 26}, {"timeout": float("nan")}, {"timeout": True},
-                       {"requests_per_minute": 0}, {"requests_per_minute": float("inf")}):
+        for kwargs in (
+            {"max_attempts": 0},
+            {"max_attempts": 4},
+            {"max_attempts": True},
+            {"timeout": 26},
+            {"timeout": float("nan")},
+            {"timeout": True},
+            {"requests_per_minute": 0},
+            {"requests_per_minute": float("inf")},
+        ):
             with self.subTest(kwargs=kwargs), self.assertRaises(cg.CoinGlassError):
                 cg.CoinGlassClient(KEY, **kwargs)
 
     def test_endpoint_and_parameter_allowlist_before_network(self):
         fake = FakeHTTP([])
         client = fake.client()
-        cases = [("https://evil.invalid/x", PARAMS), ("../price", PARAMS),
-                 ("price", {**PARAMS, "api_key": "secret"}), ("price", {"symbol": "BTCUSDT"}),
-                 ("price", {**PARAMS, "interval": "2h"}), ("price", {**PARAMS, "exchange": "x\r\nHeader"}),
-                 ("price", {**PARAMS, "limit": 1001}), ("price", {**PARAMS, "limit": True}),
-                 ("price", {**PARAMS, "start_time": 1.5}),
-                 ("price", {**PARAMS, "start_time": 100, "end_time": 100}),
-                 ("rsi", {**PARAMS, "window": 0}), ("rsi", {**PARAMS, "series_type": "volume"}),
-                 ("macd", {**PARAMS, "fast_window": 26, "slow_window": 12}),
-                 ("open_interest", {**PARAMS, "unit": "BTC"}),
-                 ("boll", {**PARAMS, "mult": float("nan")}),
-                 ("supported_coins", {"exchange": "Binance"})]
+        cases = [
+            ("https://evil.invalid/x", PARAMS),
+            ("../price", PARAMS),
+            ("price", {**PARAMS, "api_key": "secret"}),
+            ("price", {"symbol": "BTCUSDT"}),
+            ("price", {**PARAMS, "interval": "2h"}),
+            ("price", {**PARAMS, "exchange": "x\r\nHeader"}),
+            ("price", {**PARAMS, "limit": 1001}),
+            ("price", {**PARAMS, "limit": True}),
+            ("price", {**PARAMS, "start_time": 1.5}),
+            ("price", {**PARAMS, "start_time": 100, "end_time": 100}),
+            ("rsi", {**PARAMS, "window": 0}),
+            ("rsi", {**PARAMS, "series_type": "volume"}),
+            ("macd", {**PARAMS, "fast_window": 26, "slow_window": 12}),
+            ("open_interest", {**PARAMS, "unit": "BTC"}),
+            ("boll", {**PARAMS, "mult": float("nan")}),
+            ("supported_coins", {"exchange": "Binance"}),
+        ]
         for endpoint, params in cases:
-            with self.subTest(endpoint=endpoint, params=params), self.assertRaises(cg.CoinGlassError):
+            with (
+                self.subTest(endpoint=endpoint, params=params),
+                self.assertRaises(cg.CoinGlassError),
+            ):
                 client.request(endpoint, **params)
         self.assertFalse(fake.calls)
         with self.assertRaises(cg.CoinGlassError) as caught:
@@ -104,8 +128,12 @@ class CoinGlassClientTests(unittest.TestCase):
         self.assertEqual(caught.exception.kind, "security")
 
     def test_supported_catalogs_and_every_indicator_registry(self):
-        pairs = {"Binance": [{"instrument_id": "BTCUSDT", "base_asset": "BTC", "quote_asset": "USDT"}]}
-        fake = FakeHTTP([response(["BTC", "ETH"]), response(pairs)] + [response([]) for _ in range(6)])
+        pairs = {
+            "Binance": [{"instrument_id": "BTCUSDT", "base_asset": "BTC", "quote_asset": "USDT"}]
+        }
+        fake = FakeHTTP(
+            [response(["BTC", "ETH"]), response(pairs)] + [response([]) for _ in range(6)]
+        )
         client = fake.client()
         self.assertEqual(client.request("supported_coins").data, ["BTC", "ETH"])
         self.assertEqual(client.request("supported_pairs", exchange="Binance").data, pairs)
@@ -113,22 +141,33 @@ class CoinGlassClientTests(unittest.TestCase):
             result = client.request(name, **PARAMS)
             self.assertEqual(result.data, [])
             self.assertIn("/api/futures/indicators/", result.metadata["path"])
-        self.assertEqual(cg.validate_request("open_interest", {**PARAMS, "unit": "coin"})["unit"], "coin")
+        self.assertEqual(
+            cg.validate_request("open_interest", {**PARAMS, "unit": "coin"})["unit"], "coin"
+        )
 
     def test_http_200_provider_errors_and_live_plan_message_are_not_success(self):
-        for code, message, expected in (("401", "Invalid API key", "unauthorized"),
-                                        ("401", "Upgrade plan", "plan"),
-                                        ("405", "", "plan"), ("400", "bad parameter", "schema"),
-                                        ("404", "missing", "provider"), ("422", "bad", "schema")):
+        for code, message, expected in (
+            ("401", "Invalid API key", "unauthorized"),
+            ("401", "Upgrade plan", "plan"),
+            ("405", "", "plan"),
+            ("400", "bad parameter", "schema"),
+            ("404", "missing", "provider"),
+            ("422", "bad", "schema"),
+        ):
             fake = FakeHTTP([response(code=code, message=message)])
-            with self.subTest(code=code, message=message), self.assertRaises(cg.CoinGlassError) as caught:
+            with (
+                self.subTest(code=code, message=message),
+                self.assertRaises(cg.CoinGlassError) as caught,
+            ):
                 fake.client().request("price", **PARAMS)
             self.assertEqual(caught.exception.kind, expected)
             self.assertEqual(caught.exception.provider_code, code)
             self.assertEqual(len(fake.calls), 1)
 
     def test_rate_limit_retry_after_and_pacing(self):
-        fake = FakeHTTP([response(code="429", headers={"Retry-After": "7"}), response(), response()])
+        fake = FakeHTTP(
+            [response(code="429", headers={"Retry-After": "7"}), response(), response()]
+        )
         client = fake.client()
         result = client.request("price", **PARAMS)
         self.assertEqual(result.metadata["attempts"], 2)
@@ -140,7 +179,9 @@ class CoinGlassClientTests(unittest.TestCase):
     def test_http_date_retry_after_and_excessive_delay_does_not_retry_early(self):
         epoch = datetime(2024, 1, 1, tzinfo=timezone.utc)
         date = format_datetime(epoch + timedelta(seconds=10), usegmt=True)
-        fake = FakeHTTP([response(status=429, code="429", headers={"retry-after": date}), response()])
+        fake = FakeHTTP(
+            [response(status=429, code="429", headers={"retry-after": date}), response()]
+        )
         self.assertEqual(fake.client().request("price", **PARAMS).metadata["attempts"], 2)
         self.assertEqual(fake.calls[1][3], 10)
         fake = FakeHTTP([response(status=429, code="429", headers={"Retry-After": "120"})])
@@ -152,11 +193,13 @@ class CoinGlassClientTests(unittest.TestCase):
         self.assertFalse(fake.delays)
 
     def test_transient_failures_have_a_hard_attempt_limit_and_safe_traceback(self):
-        for replies, expected in (([TimeoutError(KEY)] * 3, "transport"),
-                                  ([response(code="500")] * 3, "provider"),
-                                  ([(408, {}, b"request timeout")] * 3, "provider"),
-                                  ([(503, {}, b"gateway failed")] * 3, "provider"),
-                                  ([RuntimeError("headers=" + KEY)] * 3, "transport")):
+        for replies, expected in (
+            ([TimeoutError(KEY)] * 3, "transport"),
+            ([response(code="500")] * 3, "provider"),
+            ([(408, {}, b"request timeout")] * 3, "provider"),
+            ([(503, {}, b"gateway failed")] * 3, "provider"),
+            ([RuntimeError("headers=" + KEY)] * 3, "transport"),
+        ):
             fake = FakeHTTP(replies)
             with self.subTest(expected=expected), self.assertRaises(cg.CoinGlassError) as caught:
                 fake.client().request("price", **PARAMS)
@@ -170,12 +213,16 @@ class CoinGlassClientTests(unittest.TestCase):
             fake.client().request("price", **PARAMS)
         self.assertEqual(caught.exception.kind, "security")
         self.assertEqual(len(fake.calls), 1)
-        self.assertIsNone(cg._NoRedirects().redirect_request(None, None, 302, "", {}, "https://evil.invalid"))
+        self.assertIsNone(
+            cg._NoRedirects().redirect_request(None, None, 302, "", {}, "https://evil.invalid")
+        )
 
     def test_credentials_reflected_in_raw_or_escaped_json_are_discarded(self):
         escaped = "".join("\\u%04x" % ord(c) for c in KEY)
-        bodies = [json.dumps({"code": "401", "msg": KEY}).encode(),
-                  ('{"code":"0","data":[{"value":"' + escaped + '"}]}').encode()]
+        bodies = [
+            json.dumps({"code": "401", "msg": KEY}).encode(),
+            ('{"code":"0","data":[{"value":"' + escaped + '"}]}').encode(),
+        ]
         for body in bodies:
             fake = FakeHTTP([(200, {}, body)])
             with self.subTest(body=body), self.assertRaises(cg.CoinGlassError) as caught:
@@ -184,9 +231,14 @@ class CoinGlassClientTests(unittest.TestCase):
             self.assertNotIn(KEY, str(caught.exception))
 
     def test_malformed_success_shape_and_nonfinite_json_rejected(self):
-        bodies = [b"not json", b'{"data":[]}', b'{"code":false,"data":[]}',
-                  b'{"code":"0","data":null}', b'{"code":"0","data":[42]}',
-                  b'{"code":"0","data":[{"close":NaN}]}']
+        bodies = [
+            b"not json",
+            b'{"data":[]}',
+            b'{"code":false,"data":[]}',
+            b'{"code":"0","data":null}',
+            b'{"code":"0","data":[42]}',
+            b'{"code":"0","data":[{"close":NaN}]}',
+        ]
         for body in bodies:
             fake = FakeHTTP([(200, {}, body)])
             with self.subTest(body=body), self.assertRaises(cg.CoinGlassError) as caught:
@@ -198,10 +250,19 @@ class CoinGlassClientTests(unittest.TestCase):
         class Reply:
             code = 200
             headers = {}
-            def __enter__(self): return self
-            def __exit__(self, *args): return False
-            def geturl(self): return cg.BASE_URL + "/api/futures/supported-coins"
-            def read(self, size): return response(["BTC"])[2]
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *args):
+                return False
+
+            def geturl(self):
+                return cg.BASE_URL + "/api/futures/supported-coins"
+
+            def read(self, size):
+                return response(["BTC"])[2]
+
         opener = mock.Mock()
         opener.open.return_value = Reply()
         with mock.patch.object(cg, "build_opener", return_value=opener) as build:

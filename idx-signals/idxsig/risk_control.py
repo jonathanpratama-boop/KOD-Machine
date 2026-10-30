@@ -9,6 +9,7 @@ valid whatever the shape of the losing rate across thresholds). Pure functions, 
 The guarantee assumes calibration and future calls are exchangeable; markets drift, so a certificate is checked against
 the realised losing rate on later events, never taken on trust.
 """
+
 from __future__ import annotations
 
 from math import exp, lgamma, log
@@ -33,8 +34,14 @@ def p_value(losses: int, calls: int, alpha: float) -> float:
     return 1.0 if calls == 0 else binom_cdf(losses, calls, alpha)
 
 
-def certify(scores: list[float], wrong: list[int], thresholds: list[float], alpha: float, delta: float,
-            min_calls: int = 1) -> dict:
+def certify(
+    scores: list[float],
+    wrong: list[int],
+    thresholds: list[float],
+    alpha: float,
+    delta: float,
+    min_calls: int = 1,
+) -> dict:
     """Fixed-sequence Learn then Test. `thresholds` are tried in the order given (strictest first); a call is made when
     score >= threshold; `wrong[i]` is 1 when the call on event i would have been wrong. Returns every tested threshold
     with its calls, losses and p-value, the certified ones, and the certified threshold that makes the most calls."""
@@ -61,4 +68,9 @@ def realised(scores: list[float], wrong: list[int], threshold: float | None, alp
     sel = [w for s, w in zip(scores, wrong) if s >= threshold]
     n, k = len(sel), int(sum(sel))
     p_exceeds = None if n == 0 else 1.0 - binom_cdf(k - 1, n, alpha)
-    return {"calls": n, "losses": k, "losing_rate": (k / n if n else None), "p_exceeds_alpha": p_exceeds}
+    return {
+        "calls": n,
+        "losses": k,
+        "losing_rate": (k / n if n else None),
+        "p_exceeds_alpha": p_exceeds,
+    }

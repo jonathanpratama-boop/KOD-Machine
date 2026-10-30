@@ -6,13 +6,29 @@ from pathlib import Path
 import tempfile
 import unittest
 
-SPEC = importlib.util.spec_from_file_location("collect_premove_crypto", Path(__file__).resolve().parents[2] / "tools" / "collect_premove_crypto.py")
+SPEC = importlib.util.spec_from_file_location(
+    "collect_premove_crypto",
+    Path(__file__).resolve().parents[2] / "tools" / "collect_premove_crypto.py",
+)
 collector = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(collector)
 
 
 def bar(t=collector.START_MS, close="11"):
-    return [t, "10", "12", "9", close, "100", t + collector.DAY_MS - 1, "1000", 10, "50", "500", "0"]
+    return [
+        t,
+        "10",
+        "12",
+        "9",
+        close,
+        "100",
+        t + collector.DAY_MS - 1,
+        "1000",
+        10,
+        "50",
+        "500",
+        "0",
+    ]
 
 
 class PremoveCollector(unittest.TestCase):
@@ -38,16 +54,29 @@ class PremoveCollector(unittest.TestCase):
         move = bar(collector.START_MS + 2 * collector.DAY_MS)
         move[1:5] = ["110", "120", "90", "110"]
         # A future reversal cannot retroactively remove the large-move row.
-        self.assertEqual(len(collector.rows_frame([bar(), move, bar(collector.START_MS + 3 * collector.DAY_MS)], "XUSDT")), 3)
+        self.assertEqual(
+            len(
+                collector.rows_frame(
+                    [bar(), move, bar(collector.START_MS + 3 * collector.DAY_MS)], "XUSDT"
+                )
+            ),
+            3,
+        )
 
     def test_sealed_and_invalid_rows_are_rejected(self):
         invalid = [bar(1704067200000), bar(1577750400000), bar(collector.START_MS + 1)]
-        nonfinite = bar(); nonfinite[4] = "NaN"; invalid.append(nonfinite)
-        bad = bar(); bad[2] = "9"; invalid.append(bad)
+        nonfinite = bar()
+        nonfinite[4] = "NaN"
+        invalid.append(nonfinite)
+        bad = bar()
+        bad[2] = "9"
+        invalid.append(bad)
         for row in invalid:
             with self.subTest(row=row):
-                with self.assertRaises(ValueError): collector.rows_frame([row], "BTCUSDT")
-        with self.assertRaises(ValueError): collector.rows_frame([bar(), bar(close="10")], "BTCUSDT")
+                with self.assertRaises(ValueError):
+                    collector.rows_frame([row], "BTCUSDT")
+        with self.assertRaises(ValueError):
+            collector.rows_frame([bar(), bar(close="10")], "BTCUSDT")
 
     def test_short_delisting_day_is_preserved_and_flagged(self):
         short = bar(collector.START_MS + collector.DAY_MS)
@@ -56,15 +85,23 @@ class PremoveCollector(unittest.TestCase):
         self.assertEqual(frame.complete_bar.tolist(), [True, False])
         self.assertEqual(len(frame), 2)
         short[6] = short[0] - 1
-        with self.assertRaises(ValueError): collector.rows_frame([short], "DELISTEDUSDT")
+        with self.assertRaises(ValueError):
+            collector.rows_frame([short], "DELISTEDUSDT")
 
     def test_reuse_verifies_bytes_and_preserves_observation_time(self):
         with tempfile.TemporaryDirectory() as root:
-            base = Path(root) / "old"; out = Path(root) / "new"
-            base.mkdir(); out.mkdir()
+            base = Path(root) / "old"
+            out = Path(root) / "new"
+            base.mkdir()
+            out.mkdir()
             body = json.dumps([bar()]).encode()
-            rec = {"url": "https://example.test/exact?end=2023", "path": "raw/pair.json",
-                   "sha256": collector.digest(body), "bytes": len(body), "observed_at": "original-time"}
+            rec = {
+                "url": "https://example.test/exact?end=2023",
+                "path": "raw/pair.json",
+                "sha256": collector.digest(body),
+                "bytes": len(body),
+                "observed_at": "original-time",
+            }
             collector.publish_bytes(base / rec["path"], body)
             collector.dump(base / "records" / "pair.json", {"requests": [rec]})
             client = collector.Collector(out, base)
@@ -74,7 +111,8 @@ class PremoveCollector(unittest.TestCase):
             self.assertEqual((out / "raw/copied.json").read_bytes(), body)
             self.assertNotIn("https://example.test/exact?end=2024", client.cache)
             (base / rec["path"]).write_bytes(b"corrupt")
-            with self.assertRaises(ValueError): client.get(rec["url"], "raw/corrupt.json")
+            with self.assertRaises(ValueError):
+                client.get(rec["url"], "raw/corrupt.json")
 
     def test_empty_window_is_not_failure(self):
         with tempfile.TemporaryDirectory() as root:
@@ -86,23 +124,37 @@ class PremoveCollector(unittest.TestCase):
 
     def test_reused_universe_is_derived_from_verified_catalog(self):
         with tempfile.TemporaryDirectory() as root:
-            base = Path(root) / "old"; out = Path(root) / "new"
-            base.mkdir(); out.mkdir()
-            body = b'<ListBucketResult><IsTruncated>false</IsTruncated><CommonPrefixes><Prefix>data/spot/monthly/klines/BTCUSDT/</Prefix></CommonPrefixes></ListBucketResult>'
-            rec = {"url": "https://example.test/catalog", "path": "catalog/page-0.xml", "sha256": collector.digest(body), "bytes": len(body)}
+            base = Path(root) / "old"
+            out = Path(root) / "new"
+            base.mkdir()
+            out.mkdir()
+            body = b"<ListBucketResult><IsTruncated>false</IsTruncated><CommonPrefixes><Prefix>data/spot/monthly/klines/BTCUSDT/</Prefix></CommonPrefixes></ListBucketResult>"
+            rec = {
+                "url": "https://example.test/catalog",
+                "path": "catalog/page-0.xml",
+                "sha256": collector.digest(body),
+                "bytes": len(body),
+            }
             collector.publish_bytes(base / rec["path"], body)
             collector.dump(base / "UNIVERSE.json", {"pairs": ["BTCUSDT"], "catalog_pages": [rec]})
             client = collector.Collector(out, base)
             self.assertEqual(client.universe(), ["BTCUSDT"])
-            self.assertEqual((out / "UNIVERSE.json").read_bytes(), (base / "UNIVERSE.json").read_bytes())
-            (base / "UNIVERSE.json").write_text(json.dumps({"pairs": ["BTCUSDT", "ETHUSDT"], "catalog_pages": [rec]}))
-            with self.assertRaises(ValueError): collector.Collector(Path(root) / "bad", base).universe()
+            self.assertEqual(
+                (out / "UNIVERSE.json").read_bytes(), (base / "UNIVERSE.json").read_bytes()
+            )
+            (base / "UNIVERSE.json").write_text(
+                json.dumps({"pairs": ["BTCUSDT", "ETHUSDT"], "catalog_pages": [rec]})
+            )
+            with self.assertRaises(ValueError):
+                collector.Collector(Path(root) / "bad", base).universe()
 
     def test_failed_pair_is_explicit_and_never_a_synthetic_zero(self):
         with tempfile.TemporaryDirectory() as root:
             client = collector.Collector(root)
+
             def fail(url, path):
                 raise TimeoutError("provider unavailable")
+
             client.get = fail
             result, frame = client.pair("GONEUSDT")
             self.assertEqual(result["status"], "failed")

@@ -10,6 +10,7 @@ Order of operations, so that nothing from after the cutoff can leak into results
 4. BM25 ranks the passages; a passage repeated in several documents is one result listing every document it appears in.
 A score ranks reading order for this query. It is not importance, materiality or an expected return.
 """
+
 from __future__ import annotations
 
 from collections import Counter
@@ -50,8 +51,17 @@ def passages(raw: bytes, filename: str) -> list[dict]:
         nonlocal buffer, count
         text = " ".join(buffer).strip()
         if text:
-            out.append({"index": len(out), "text": text, "line_start": start, "line_end": last,
-                        "sha256": hashlib.sha256(" ".join(text.split()).casefold().encode()).hexdigest()})
+            out.append(
+                {
+                    "index": len(out),
+                    "text": text,
+                    "line_start": start,
+                    "line_end": last,
+                    "sha256": hashlib.sha256(
+                        " ".join(text.split()).casefold().encode()
+                    ).hexdigest(),
+                }
+            )
         buffer, count = [], 0
 
     for i, line in enumerate(lines):
@@ -110,10 +120,23 @@ def _snippet(text: str, terms: set) -> list[dict]:
 
 
 def _availability(doc):
-    return {"published_at": doc.get("published_at"), "publication_date": (doc.get("metadata") or {}).get("publication_date"), "observed_at": doc.get("observed_at")}
+    return {
+        "published_at": doc.get("published_at"),
+        "publication_date": (doc.get("metadata") or {}).get("publication_date"),
+        "observed_at": doc.get("observed_at"),
+    }
 
 
-def search(store, index: ArchiveIndex, query: str, policy: AsOfPolicy, security_ids=None, period: str | None = None, source_types=None, limit: int = 20) -> dict:
+def search(
+    store,
+    index: ArchiveIndex,
+    query: str,
+    policy: AsOfPolicy,
+    security_ids=None,
+    period: str | None = None,
+    source_types=None,
+    limit: int = 20,
+) -> dict:
     query = str(query or "").strip()
     if len(query) > MAX_QUERY:
         raise ValueError(f"the query exceeds {MAX_QUERY} characters")
@@ -175,22 +198,62 @@ def search(store, index: ArchiveIndex, query: str, policy: AsOfPolicy, security_
         for d, _, q in occurrences[key][1:]:
             if d["id"] not in seen:
                 seen.add(d["id"])
-                others.append({"document_id": d["id"], "passage_index": q["index"], "filename": d["filename"]})
-        results.append({
-            "score": round(scores[key], 6), "text": p["text"], "snippet": _snippet(p["text"], terms), "passage_sha256": key,
-            "document_id": doc["id"], "passage_index": p["index"], "filename": doc["filename"], "source_type": kind, "source_url": doc["source_url"],
-            "document_sha256": doc["sha256"], "ticker": sec["ticker"], "security_id": doc["security_id"],
-            "period": (doc.get("metadata") or {}).get("period"), "published_at": doc.get("published_at"),
-            "publication_date": (doc.get("metadata") or {}).get("publication_date"), "observed_at": doc.get("observed_at"),
-            "also_in": others, "repeated_at": [q["index"] for d, _, q in occurrences[key][1:] if d["id"] == doc["id"]]})
-    return {"query": query, "policy": policy.as_dict(), "index_version": PASSAGE_VERSION, "ranking": RANKING,
-            "filters": {"security_ids": sorted(wanted) if wanted else [], "period": period or None, "source_types": sorted(source_types or [])},
-            "coverage": {"documents_searched": len(eligible), "excluded": dict(excluded), "passages": total,
-                         "distinct_passages": len(corpus), "matches": len(hits)},
-            "results": results}
+                others.append(
+                    {"document_id": d["id"], "passage_index": q["index"], "filename": d["filename"]}
+                )
+        results.append(
+            {
+                "score": round(scores[key], 6),
+                "text": p["text"],
+                "snippet": _snippet(p["text"], terms),
+                "passage_sha256": key,
+                "document_id": doc["id"],
+                "passage_index": p["index"],
+                "filename": doc["filename"],
+                "source_type": kind,
+                "source_url": doc["source_url"],
+                "document_sha256": doc["sha256"],
+                "ticker": sec["ticker"],
+                "security_id": doc["security_id"],
+                "period": (doc.get("metadata") or {}).get("period"),
+                "published_at": doc.get("published_at"),
+                "publication_date": (doc.get("metadata") or {}).get("publication_date"),
+                "observed_at": doc.get("observed_at"),
+                "also_in": others,
+                "repeated_at": [
+                    q["index"] for d, _, q in occurrences[key][1:] if d["id"] == doc["id"]
+                ],
+            }
+        )
+    return {
+        "query": query,
+        "policy": policy.as_dict(),
+        "index_version": PASSAGE_VERSION,
+        "ranking": RANKING,
+        "filters": {
+            "security_ids": sorted(wanted) if wanted else [],
+            "period": period or None,
+            "source_types": sorted(source_types or []),
+        },
+        "coverage": {
+            "documents_searched": len(eligible),
+            "excluded": dict(excluded),
+            "passages": total,
+            "distinct_passages": len(corpus),
+            "matches": len(hits),
+        },
+        "results": results,
+    }
 
 
-def passage_context(store, index: ArchiveIndex, document_id: str, passage_index: int, policy: AsOfPolicy | None = None, around: int = 2) -> dict:
+def passage_context(
+    store,
+    index: ArchiveIndex,
+    document_id: str,
+    passage_index: int,
+    policy: AsOfPolicy | None = None,
+    around: int = 2,
+) -> dict:
     """One passage with its neighbours, for an exact source link. With a policy, a document not eligible at the cutoff is refused."""
     doc = store.document(document_id)
     if source_type(doc) is None:
@@ -200,5 +263,11 @@ def passage_context(store, index: ArchiveIndex, document_id: str, passage_index:
     items = index.of(doc)
     if not 0 <= passage_index < len(items):
         raise ValueError("passage not found")
-    return {"document": doc, "passage": items[passage_index], "before": items[max(0, passage_index - around):passage_index],
-            "after": items[passage_index + 1:passage_index + 1 + around], "count": len(items), "index_version": PASSAGE_VERSION}
+    return {
+        "document": doc,
+        "passage": items[passage_index],
+        "before": items[max(0, passage_index - around) : passage_index],
+        "after": items[passage_index + 1 : passage_index + 1 + around],
+        "count": len(items),
+        "index_version": PASSAGE_VERSION,
+    }

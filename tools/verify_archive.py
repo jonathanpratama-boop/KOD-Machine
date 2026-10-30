@@ -6,6 +6,7 @@ sha256), or, for a full check, if fewer files were checked than the summary list
 
 Usage: python3 tools/verify_archive.py <manifest.jsonl.gz> <root that contains idx-signals/>  [--only PREFIX ...]
 """
+
 import argparse
 import gzip
 import hashlib
@@ -18,12 +19,16 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("manifest")
     ap.add_argument("root")
-    ap.add_argument("--only", nargs="*", default=[], help="check only paths starting with these prefixes")
+    ap.add_argument(
+        "--only", nargs="*", default=[], help="check only paths starting with these prefixes"
+    )
     args = ap.parse_args()
     manifest = Path(args.manifest)
     summary_path = manifest.with_name(manifest.name.replace(".jsonl.gz", ".summary.json"))
     if not summary_path.is_file():
-        print(f"FAIL no summary file {summary_path.name}: cannot tell a complete manifest from a partial one")
+        print(
+            f"FAIL no summary file {summary_path.name}: cannot tell a complete manifest from a partial one"
+        )
         return 1
     summary = json.loads(summary_path.read_text())
     if hashlib.sha256(manifest.read_bytes()).hexdigest() != summary["manifest_sha256"]:
@@ -54,8 +59,10 @@ def main() -> int:
                 ok += 1
     problems = []
     if (listed, listed_bytes) != (summary["files"], summary["bytes"]):
-        problems.append(f"manifest lists {listed} files / {listed_bytes} bytes, summary says "
-                        f"{summary['files']} / {summary['bytes']}")
+        problems.append(
+            f"manifest lists {listed} files / {listed_bytes} bytes, summary says "
+            f"{summary['files']} / {summary['bytes']}"
+        )
     if ok + missing + bad == 0:
         problems.append("no file was checked (empty manifest or no path matched --only)")
     if not args.only and ok + missing + bad != summary["files"]:
@@ -63,8 +70,10 @@ def main() -> int:
     for p in problems:
         print(f"FAIL {p}")
     scope = f"prefixes {args.only}" if args.only else "full archive"
-    print(f"{scope}: verified {ok}, missing {missing}, mismatched {bad} (manifest {summary['files']} files, "
-          f"{summary['bytes'] / 1e9:.2f} GB)")
+    print(
+        f"{scope}: verified {ok}, missing {missing}, mismatched {bad} (manifest {summary['files']} files, "
+        f"{summary['bytes'] / 1e9:.2f} GB)"
+    )
     return 1 if missing or bad or problems else 0
 
 

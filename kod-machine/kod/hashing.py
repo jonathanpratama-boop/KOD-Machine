@@ -28,7 +28,7 @@ def parse_ts(text: str) -> datetime:
         raise ValueError(f"timestamp has no timezone: {text!r}")
     try:
         return moment.astimezone(timezone.utc)
-    except OverflowError as exc:            # e.g. 0001-01-01T00:00:00+01:00 has no UTC representation
+    except OverflowError as exc:  # e.g. 0001-01-01T00:00:00+01:00 has no UTC representation
         raise ValueError(f"timestamp out of range: {text!r}") from exc
 
 

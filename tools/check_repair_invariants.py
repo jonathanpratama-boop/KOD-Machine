@@ -4,6 +4,7 @@
 This checks software invariants, not trading profitability or live data coverage.
 Run from any directory: python tools/check_repair_invariants.py --json /tmp/kod-check.json
 """
+
 from __future__ import annotations
 
 import argparse
@@ -29,7 +30,11 @@ def git_info():
     def read(*args):
         proc = subprocess.run(["git", *args], cwd=ROOT, capture_output=True, text=True)
         return proc.stdout.strip() if proc.returncode == 0 else None
-    return {"commit": read("rev-parse", "HEAD"), "working_tree_status": read("status", "--porcelain")}
+
+    return {
+        "commit": read("rev-parse", "HEAD"),
+        "working_tree_status": read("status", "--porcelain"),
+    }
 
 
 def main(argv=None):
@@ -41,21 +46,40 @@ def main(argv=None):
         for name, directory, module in CHECKS:
             print(f"{name}: {directory} / {module}")
         return 0
-    receipt = {"schema": "KOD-ENGINEERING-CHECK-v1", "started_at": datetime.now(timezone.utc).isoformat(),
-               "python": platform.python_version(), "platform": platform.platform(), "source": git_info(),
-               "scope": "targeted offline engineering regressions; not full CI or strategy validation", "checks": []}
+    receipt = {
+        "schema": "KOD-ENGINEERING-CHECK-v1",
+        "started_at": datetime.now(timezone.utc).isoformat(),
+        "python": platform.python_version(),
+        "platform": platform.platform(),
+        "source": git_info(),
+        "scope": "targeted offline engineering regressions; not full CI or strategy validation",
+        "checks": [],
+    }
     for name, directory, module in CHECKS:
         started = time.monotonic()
         command = [sys.executable, "-m", "unittest", module, "-v"]
         try:
-            proc = subprocess.run(command, cwd=ROOT / directory, capture_output=True, text=True, timeout=300)
-            status, output, code = ("PASS" if proc.returncode == 0 else "FAIL"), proc.stdout + proc.stderr, proc.returncode
+            proc = subprocess.run(
+                command, cwd=ROOT / directory, capture_output=True, text=True, timeout=300
+            )
+            status, output, code = (
+                ("PASS" if proc.returncode == 0 else "FAIL"),
+                proc.stdout + proc.stderr,
+                proc.returncode,
+            )
         except subprocess.TimeoutExpired:
             status, output, code = "FAIL", "check exceeded 300 seconds", None
         except OSError as exc:
             status, output, code = "UNAVAILABLE", str(exc), None
-        result = {"name": name, "status": status, "elapsed_seconds": round(time.monotonic() - started, 3),
-                  "command": command, "directory": directory, "exit_code": code, "output": output}
+        result = {
+            "name": name,
+            "status": status,
+            "elapsed_seconds": round(time.monotonic() - started, 3),
+            "command": command,
+            "directory": directory,
+            "exit_code": code,
+            "output": output,
+        }
         receipt["checks"].append(result)
         print(f"{status}: {name} ({result['elapsed_seconds']}s)", flush=True)
         if status != "PASS":

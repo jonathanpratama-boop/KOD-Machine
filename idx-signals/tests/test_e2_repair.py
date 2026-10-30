@@ -18,14 +18,35 @@ SEC_FEE = US.fee_sell
 
 def bars(n_sessions=10, open_=3.0, close=3.0, volume=1_000_000.0, tickers=("SYN",)):
     dates = pd.date_range("2020-01-01", periods=n_sessions, freq="B")
-    rows = [dict(date=d, ticker=t, source="synthetic", previous=close, open=open_, high=close, low=close, close=close,
-                 volume=volume, value=volume * close) for t in tickers for d in dates]
+    rows = [
+        dict(
+            date=d,
+            ticker=t,
+            source="synthetic",
+            previous=close,
+            open=open_,
+            high=close,
+            low=close,
+            close=close,
+            volume=volume,
+            value=volume * close,
+        )
+        for t in tickers
+        for d in dates
+    ]
     return pd.DataFrame(rows)
 
 
 def cfg(**kw):
-    base = dict(holding_days=2, notional=5000.0, entry_price="open", lot_size=1, cost_tiers=US.cost_tiers,
-                ca_mode="adjusted", fees=__import__("idxsig.market", fromlist=["Fees"]).Fees(US.fee_buy, US.fee_sell))
+    base = dict(
+        holding_days=2,
+        notional=5000.0,
+        entry_price="open",
+        lot_size=1,
+        cost_tiers=US.cost_tiers,
+        ca_mode="adjusted",
+        fees=__import__("idxsig.market", fromlist=["Fees"]).Fees(US.fee_buy, US.fee_sell),
+    )
     base.update(kw)
     return ExecConfig(**base)
 
@@ -73,7 +94,7 @@ class AsTradedUnits(unittest.TestCase):
         f[:, :2] = 2.0  # 2:1 split effective at session 2: sessions 0-1 traded at 30
         out = one(m.with_units(f), cfg(units="as_traded"))
         self.assertAlmostEqual(out["entry_price_as_traded"], 30.0)  # entry at session 1
-        self.assertAlmostEqual(out["exit_price_as_traded"], 15.0)   # exit at session 3
+        self.assertAlmostEqual(out["exit_price_as_traded"], 15.0)  # exit at session 3
         self.assertAlmostEqual(out["net_return"], (1 - SEC_FEE - 0.0015) / (1 + 0.0005) - 1)
 
     def test_as_traded_needs_factors_and_valid_ones(self):
@@ -91,15 +112,24 @@ class AsTradedUnits(unittest.TestCase):
             view.unit_factor
 
     def test_price_band_uses_the_traded_price(self):
-        m = Market.from_panel(bars(open_=6.0, close=6.0), price_limits=False).with_units(np.full((1, 10), 0.1))
-        self.assertEqual(int(controls.features(m, "v2", US.band_edges)["price_band"][0, 5]), 2)        # $5-20
-        self.assertEqual(int(controls.features(m, "v2", US.band_edges, as_traded=True)["price_band"][0, 5]), 0)
+        m = Market.from_panel(bars(open_=6.0, close=6.0), price_limits=False).with_units(
+            np.full((1, 10), 0.1)
+        )
+        self.assertEqual(
+            int(controls.features(m, "v2", US.band_edges)["price_band"][0, 5]), 2
+        )  # $5-20
+        self.assertEqual(
+            int(controls.features(m, "v2", US.band_edges, as_traded=True)["price_band"][0, 5]), 0
+        )
 
 
 class FillModels(unittest.TestCase):
     def market(self, entry_volume):
         df = bars(n_sessions=30)
-        df.loc[df["date"] == df["date"].unique()[21], ["volume", "value"]] = [entry_volume, entry_volume * 3.0]
+        df.loc[df["date"] == df["date"].unique()[21], ["volume", "value"]] = [
+            entry_volume,
+            entry_volume * 3.0,
+        ]
         m = Market.from_panel(df, price_limits=False)
         return m.with_units(np.ones(m.shape))
 
@@ -114,7 +144,9 @@ class FillModels(unittest.TestCase):
 
     def test_model_b_decides_from_volume_known_at_the_decision(self):
         """Guards against: an opening fill accepted or refused by volume printed after the open."""
-        self.assertEqual(self.run_at(self.market(10_000.0), "B"), self.run_at(self.market(1_000_000.0), "B"))
+        self.assertEqual(
+            self.run_at(self.market(10_000.0), "B"), self.run_at(self.market(1_000_000.0), "B")
+        )
         self.assertEqual(self.run_at(self.market(10_000.0), "B"), "EXITED")
 
     def test_model_b_refuses_when_recent_volume_is_too_thin(self):
@@ -127,7 +159,9 @@ class FillModels(unittest.TestCase):
         """Guards against: capacity read from the few days a thin name happened to trade."""
         df = bars(n_sessions=30)
         days = df["date"].unique()
-        df.loc[df["date"].isin(days[1:20:2]) | df["date"].isin(days[2:19:4]), ["volume", "value"]] = [0.0, 0.0]
+        df.loc[
+            df["date"].isin(days[1:20:2]) | df["date"].isin(days[2:19:4]), ["volume", "value"]
+        ] = [0.0, 0.0]
         m = Market.from_panel(df, price_limits=False).with_units(np.ones((1, 30)))
         out = execute(m, np.array([0]), np.array([20]), cfg(units="as_traded", fill_model="B"))
         self.assertEqual(STATUS[out["status"][0]], "SKIP_LIQUIDITY")  # median of 20 sessions is 0
@@ -141,21 +175,29 @@ class FillModels(unittest.TestCase):
 class SplitEvidence(unittest.TestCase):
     def test_effective_session_is_already_in_new_units(self):
         """Guards against: an off-by-one at the split boundary (Yahoo stamps 09:30 on the new-units session)."""
-        ev = pd.DataFrame([{"effective_session": "2020-01-03", "numerator": 1.0, "denominator": 10.0}])
-        f = us_actions.unit_factors(np.array(["2020-01-02", "2020-01-03", "2020-01-06"], dtype="datetime64[D]"), ev)
+        ev = pd.DataFrame(
+            [{"effective_session": "2020-01-03", "numerator": 1.0, "denominator": 10.0}]
+        )
+        f = us_actions.unit_factors(
+            np.array(["2020-01-02", "2020-01-03", "2020-01-06"], dtype="datetime64[D]"), ev
+        )
         self.assertEqual(f.tolist(), [0.1, 1.0, 1.0])
 
     def test_price_adjustments_are_not_called_splits(self):
         self.assertEqual(us_actions.classify_ratio(1, 10), "SPLIT")
         self.assertEqual(us_actions.classify_ratio(3, 2), "SPLIT")
         self.assertEqual(us_actions.classify_ratio(1, 250), "SPLIT")
-        self.assertEqual(us_actions.classify_ratio(1281, 1000), "NOT_A_SPLIT")  # GE HealthCare spin-off
+        self.assertEqual(
+            us_actions.classify_ratio(1281, 1000), "NOT_A_SPLIT"
+        )  # GE HealthCare spin-off
         self.assertEqual(us_actions.classify_ratio(1019, 1000), "NOT_A_SPLIT")
 
     def test_filing_must_state_the_same_ratio(self):
         """Guards against: corroborating a 1:10 provider record with a filing about a 1:20 split."""
-        text = ("The Board approved a 1-for-20 reverse stock split. The common stock will begin trading on a "
-                "split-adjusted basis at the open on March 6, 2023.")
+        text = (
+            "The Board approved a 1-for-20 reverse stock split. The common stock will begin trading on a "
+            "split-adjusted basis at the open on March 6, 2023."
+        )
         good = us_actions.judge(text, 1, 20, date(2023, 3, 6))
         self.assertTrue(good["ratio_ok"] and good["date_ok"])
         self.assertFalse(us_actions.judge(text, 1, 10, date(2023, 3, 6))["ratio_ok"])
@@ -164,7 +206,10 @@ class SplitEvidence(unittest.TestCase):
     def test_phrasings(self):
         cases = {
             "one (1) post-consolidation share for every ten (10) pre-consolidation shares": (1, 10),
-            "every twenty-five (25) shares of common stock issued and outstanding will be combined into one (1) share": (1, 25),
+            "every twenty-five (25) shares of common stock issued and outstanding will be combined into one (1) share": (
+                1,
+                25,
+            ),
             "a three-for-two stock split": (3, 2),
             "a 1:35 reverse split": (1, 35),
         }
@@ -179,8 +224,12 @@ class SplitEvidence(unittest.TestCase):
     def test_reversed_wording_is_ambiguous(self):
         """'10-for-1 reverse split' is a common misstatement of 1-for-10; leave it unverified;
         the parser must never invert a written ratio to agree with the provider."""
-        self.assertFalse(us_actions.judge("a 10-for-1 reverse stock split", 1, 10, date(2023, 1, 3))["ratio_ok"])
-        self.assertFalse(us_actions.judge("a 10-for-1 stock split", 1, 10, date(2023, 1, 3))["ratio_ok"])
+        self.assertFalse(
+            us_actions.judge("a 10-for-1 reverse stock split", 1, 10, date(2023, 1, 3))["ratio_ok"]
+        )
+        self.assertFalse(
+            us_actions.judge("a 10-for-1 stock split", 1, 10, date(2023, 1, 3))["ratio_ok"]
+        )
 
 
 class RepairRun(unittest.TestCase):
@@ -194,16 +243,40 @@ class RepairRun(unittest.TestCase):
                 prev = p
                 step = 0.4 if (i in (3, 7) and k == 40) else rng.normal(0, 0.01)
                 p = prev * (1 + step)
-                rows.append(dict(date=d, ticker=f"T{i:02d}", source="synthetic", previous=prev, open=prev, high=max(p, prev),
-                                 low=min(p, prev), close=p, volume=1e6, value=1e6 * p, frequency=np.nan,
-                                 listed_shares=np.nan, tradable_shares=np.nan, unit_factor=0.5 if i == 3 else 1.0,
-                                 qa_reverting_spike=0))
+                rows.append(
+                    dict(
+                        date=d,
+                        ticker=f"T{i:02d}",
+                        source="synthetic",
+                        previous=prev,
+                        open=prev,
+                        high=max(p, prev),
+                        low=min(p, prev),
+                        close=p,
+                        volume=1e6,
+                        value=1e6 * p,
+                        frequency=np.nan,
+                        listed_shares=np.nan,
+                        tradable_shares=np.nan,
+                        unit_factor=0.5 if i == 3 else 1.0,
+                        qa_reverting_spike=0,
+                    )
+                )
         df = pd.DataFrame(rows)
-        meta = {"sha256": "0" * 64, "panel": "synthetic", "source_boundary": "2020-03-24", "default_start": "2020-01-01",
-                "survivorship": "synthetic", "quality_tiers": [{"tier": "US_SURVIVOR", "from": "2020-01-01",
-                                                                 "to": "2020-03-24"}],
-                "known_limitations": [], "preprocessing": "causal-close-v2",
-                "unit_quarantine": {"tickers": {"T07": ["NO_EVIDENCE"]}, "reason_counts": {"NO_EVIDENCE": 1}}}
+        meta = {
+            "sha256": "0" * 64,
+            "panel": "synthetic",
+            "source_boundary": "2020-03-24",
+            "default_start": "2020-01-01",
+            "survivorship": "synthetic",
+            "quality_tiers": [{"tier": "US_SURVIVOR", "from": "2020-01-01", "to": "2020-03-24"}],
+            "known_limitations": [],
+            "preprocessing": "causal-close-v2",
+            "unit_quarantine": {
+                "tickers": {"T07": ["NO_EVIDENCE"]},
+                "reason_counts": {"NO_EVIDENCE": 1},
+            },
+        }
         return df, meta
 
     def test_quarantine_removes_names_from_both_sides(self):
@@ -212,15 +285,25 @@ class RepairRun(unittest.TestCase):
 
         warnings.simplefilter("ignore")
         df, meta = self.panel()
-        base = dict(rule_id="MOONSHOT_E2_US_D1", market="US", ca_mode="adjusted", notional=5000.0, fee_buy=0.0,
-                    fee_sell=US.fee_sell, random_draws=20, units="as_traded")
+        base = dict(
+            rule_id="MOONSHOT_E2_US_D1",
+            market="US",
+            ca_mode="adjusted",
+            notional=5000.0,
+            fee_buy=0.0,
+            fee_sell=US.fee_sell,
+            random_draws=20,
+            units="as_traded",
+        )
         kept = run(RunConfig(**base), df, meta)
         dropped = run(RunConfig(**base, quarantine="unit_schedule"), df, meta)
         self.assertEqual(set(kept["trades"]["ticker"]), {"T03", "T07"})
         self.assertEqual(set(dropped["trades"]["ticker"]), {"T03"})
         self.assertEqual(dropped["summary"]["repair"]["quarantine"]["tickers_excluded"], 1)
-        self.assertEqual(dropped["summary"]["universe"]["tickers_ever_evaluable"],
-                         kept["summary"]["universe"]["tickers_ever_evaluable"] - 1)
+        self.assertEqual(
+            dropped["summary"]["universe"]["tickers_ever_evaluable"],
+            kept["summary"]["universe"]["tickers_ever_evaluable"] - 1,
+        )
         row = dropped["trades"].iloc[0]
         self.assertAlmostEqual(row["entry_price_as_traded"], row["entry_price"] * 0.5)
         self.assertIn("qa_sensitivity", dropped["summary"]["repair"])
@@ -240,9 +323,13 @@ class FakeSec:
         import json as _json
 
         if url.startswith("https://efts.sec.gov"):
-            hits = [{"_id": f"0000000000-23-00000{i}:{name}", "_source": {"form": "8-K", "file_date": "2023-03-01",
-                                                                           "file_type": "8-K"}}
-                    for i, name in enumerate(self.docs)]
+            hits = [
+                {
+                    "_id": f"0000000000-23-00000{i}:{name}",
+                    "_source": {"form": "8-K", "file_date": "2023-03-01", "file_type": "8-K"},
+                }
+                for i, name in enumerate(self.docs)
+            ]
             return 200, _json.dumps({"hits": {"hits": hits}}).encode()
         name = url.rsplit("/", 1)[-1]
         return 200, self.docs[name].encode()
@@ -250,8 +337,14 @@ class FakeSec:
 
 class Coverage(unittest.TestCase):
     def test_jump_rows_are_found_and_marked(self):
-        panel = pd.DataFrame({"ticker": ["A", "A", "B", "C"], "date": pd.to_datetime(["2023-03-06"] * 4),
-                              "close": [10.0, 10.0, 1.0, 10.5], "previous": [1.0, 1.0, 2.5, 10.0]}).iloc[[0, 2, 3]]
+        panel = pd.DataFrame(
+            {
+                "ticker": ["A", "A", "B", "C"],
+                "date": pd.to_datetime(["2023-03-06"] * 4),
+                "close": [10.0, 10.0, 1.0, 10.5],
+                "previous": [1.0, 1.0, 2.5, 10.0],
+            }
+        ).iloc[[0, 2, 3]]
         ev = pd.DataFrame([{"ticker": "B", "effective_session": "2023-03-06"}])
         rows = us_actions.jump_rows(panel, ev, "2023-01-03", "2023-12-29")
         self.assertEqual(rows["ticker"].tolist(), ["A", "B"])  # C moved 5%: not a jump
@@ -261,51 +354,79 @@ class Coverage(unittest.TestCase):
         """Guards against: a fake +900% day from a split the provider never adjusted for, and
         against calling a genuine move a split without a filing that says so."""
         no_events = pd.DataFrame(columns=["ticker", "effective_session"])
-        dated = FakeSec({"a.htm": "a 1-for-10 reverse stock split effective at the open on March 6, 2023"})
+        dated = FakeSec(
+            {"a.htm": "a 1-for-10 reverse stock split effective at the open on March 6, 2023"}
+        )
         res = us_actions.check_jump(dated, {"A": 1}, no_events, "A", "2023-03-06", 9.6, False)
         self.assertEqual(res["status"], "MISSING_PROVIDER_SPLIT")
         silent = FakeSec({"a.htm": "the company announced a partnership"})
-        self.assertEqual(us_actions.check_jump(silent, {"A": 1}, no_events, "A", "2023-03-06", 9.6, False)["status"],
-                         "NO_SPLIT_EVIDENCE")
-        wrong = FakeSec({"a.htm": "a 1-for-2 reverse stock split effective March 6, 2023"})  # x2, not x9.6
-        self.assertEqual(us_actions.check_jump(wrong, {"A": 1}, no_events, "A", "2023-03-06", 9.6, False)["status"],
-                         "NO_SPLIT_EVIDENCE")
+        self.assertEqual(
+            us_actions.check_jump(silent, {"A": 1}, no_events, "A", "2023-03-06", 9.6, False)[
+                "status"
+            ],
+            "NO_SPLIT_EVIDENCE",
+        )
+        wrong = FakeSec(
+            {"a.htm": "a 1-for-2 reverse stock split effective March 6, 2023"}
+        )  # x2, not x9.6
+        self.assertEqual(
+            us_actions.check_jump(wrong, {"A": 1}, no_events, "A", "2023-03-06", 9.6, False)[
+                "status"
+            ],
+            "NO_SPLIT_EVIDENCE",
+        )
         near = pd.DataFrame([{"ticker": "A", "effective_session": "2023-03-08"}])
-        self.assertEqual(us_actions.check_jump(dated, {"A": 1}, near, "A", "2023-03-06", 9.6, False)["status"],
-                         "PROVIDER_DATE_MISMATCH")
-        self.assertEqual(us_actions.check_jump(dated, {}, no_events, "A", "2023-03-06", 9.6, False)["status"], "NO_CIK")
+        self.assertEqual(
+            us_actions.check_jump(dated, {"A": 1}, near, "A", "2023-03-06", 9.6, False)["status"],
+            "PROVIDER_DATE_MISMATCH",
+        )
+        self.assertEqual(
+            us_actions.check_jump(dated, {}, no_events, "A", "2023-03-06", 9.6, False)["status"],
+            "NO_CIK",
+        )
 
 
 class ShareCounts(unittest.TestCase):
     """sec-shares-v1: cover-page share counts corroborate post-window splits."""
 
     def ev(self, *rows):
-        return pd.DataFrame([dict(effective_session=d, numerator=n, denominator=m, kind=k) for d, n, m, k in rows])
+        return pd.DataFrame(
+            [dict(effective_session=d, numerator=n, denominator=m, kind=k) for d, n, m, k in rows]
+        )
 
     def pt(self, end, val, filed=None):
         return {"end": end, "val": val, "filed": filed or end, "form": "10-Q", "accn": "x"}
 
     def test_a_reverse_split_shows_in_the_share_count(self):
         pts = [self.pt("2024-03-25", 745_426_859, "2024-03-28"), self.pt("2024-05-06", 49_719_375)]
-        res = us_actions.check_shares(pts, self.ev(("2024-04-10", 1, 15, "SPLIT")), "2024-04-10", "2023-12-29")
+        res = us_actions.check_shares(
+            pts, self.ev(("2024-04-10", 1, 15, "SPLIT")), "2024-04-10", "2023-12-29"
+        )
         self.assertTrue(res["ok"])
         self.assertAlmostEqual(res["q"], 1.0, places=2)
 
     def test_dilution_beyond_twofold_is_not_enough(self):
         pts = [self.pt("2024-03-31", 13_390_659), self.pt("2025-03-31", 568_021)]
-        self.assertFalse(us_actions.check_shares(pts, self.ev(("2024-11-26", 1, 75, "SPLIT")), "2024-11-26",
-                                                 "2023-12-29")["ok"])
+        self.assertFalse(
+            us_actions.check_shares(
+                pts, self.ev(("2024-11-26", 1, 75, "SPLIT")), "2024-11-26", "2023-12-29"
+            )["ok"]
+        )
 
     def test_a_count_before_the_window_end_cannot_place_the_split_after_it(self):
         """Guards against: accepting a split that might have happened inside the window."""
         pts = [self.pt("2023-11-10", 1e8), self.pt("2024-02-10", 1e7)]
-        res = us_actions.check_shares(pts, self.ev(("2024-01-05", 1, 10, "SPLIT")), "2024-01-05", "2023-12-29")
+        res = us_actions.check_shares(
+            pts, self.ev(("2024-01-05", 1, 10, "SPLIT")), "2024-01-05", "2023-12-29"
+        )
         self.assertFalse(res["ok"])
 
     def test_a_count_filed_after_the_split_is_not_used_as_the_before(self):
         """Guards against: a restated (already split-adjusted) count posing as the pre-split one."""
         pts = [self.pt("2024-03-31", 1e7, filed="2024-05-15"), self.pt("2024-06-30", 1e7)]
-        res = us_actions.check_shares(pts, self.ev(("2024-04-15", 1, 10, "SPLIT")), "2024-04-15", "2023-12-29")
+        res = us_actions.check_shares(
+            pts, self.ev(("2024-04-15", 1, 10, "SPLIT")), "2024-04-15", "2023-12-29"
+        )
         self.assertFalse(res["ok"])
 
     def test_two_splits_between_counts_are_checked_together(self):
@@ -321,6 +442,12 @@ class ShareCounts(unittest.TestCase):
         self.assertFalse(us_actions.check_shares(pts, ev, "2024-03-01", "2023-12-29")["ok"])
 
     def test_a_small_split_needs_a_tight_match(self):
-        pts = [self.pt("2024-01-31", 1e8), self.pt("2024-06-30", 1.5e8 * 1.3)]  # 3:2 plus 30% issuance
-        self.assertFalse(us_actions.check_shares(pts, self.ev(("2024-03-01", 3, 2, "SPLIT")), "2024-03-01",
-                                                 "2023-12-29")["ok"])
+        pts = [
+            self.pt("2024-01-31", 1e8),
+            self.pt("2024-06-30", 1.5e8 * 1.3),
+        ]  # 3:2 plus 30% issuance
+        self.assertFalse(
+            us_actions.check_shares(
+                pts, self.ev(("2024-03-01", 3, 2, "SPLIT")), "2024-03-01", "2023-12-29"
+            )["ok"]
+        )

@@ -4,6 +4,7 @@ Vendor indicators and derivatives data are research inputs, not changes to a
 frozen strategy. A historical API timestamp never substitutes for observation
 time. Reading a saved snapshot performs no network requests.
 """
+
 from __future__ import annotations
 
 from datetime import datetime, timezone
@@ -15,31 +16,69 @@ from .provenance import DATA, build_stamp, publish_bytes, sha256_bytes
 from .sources.coinglass import CoinGlassClient, CoinGlassError, validate_request
 
 SCHEMA = "KOD-COINGLASS-CONTEXT-v1"
-DEFAULT_DATASETS = ("price", "open_interest", "funding", "liquidations", "long_short", "rsi", "macd")
-INTERVAL_MS = {"1m": 60_000, "3m": 180_000, "5m": 300_000, "15m": 900_000,
-               "30m": 1_800_000, "1h": 3_600_000, "4h": 14_400_000,
-               "6h": 21_600_000, "8h": 28_800_000, "12h": 43_200_000,
-               "1d": 86_400_000, "1w": 604_800_000}
-FIELDS = {"price": ("open", "high", "low", "close", "volume_usd"),
-          "open_interest": ("open", "high", "low", "close"),
-          "funding": ("open", "high", "low", "close"),
-          "liquidations": ("long_liquidation_usd", "short_liquidation_usd"),
-          "long_short": ("global_account_long_percent", "global_account_short_percent",
-                         "global_account_long_short_ratio"),
-          "rsi": ("rsi_value",), "macd": ("macd_value",), "ma": ("ma_value",),
-          "ema": ("ema_value",), "boll": ("mb_value", "ub_value", "lb_value"),
-          "atr": ("avg_true_range_value",)}
-UNITS = {"price": "quote price; volume_usd is USD", "open_interest": "USD",
-         "funding": "provider-native rate; scale not asserted", "liquidations": "USD",
-         "long_short": "account percentages and ratio; not position notionals",
-         "rsi": "0-100", "macd": "provider MACD value; not signal/histogram",
-         "ma": "price", "ema": "price", "boll": "price", "atr": "price"}
+DEFAULT_DATASETS = (
+    "price",
+    "open_interest",
+    "funding",
+    "liquidations",
+    "long_short",
+    "rsi",
+    "macd",
+)
+INTERVAL_MS = {
+    "1m": 60_000,
+    "3m": 180_000,
+    "5m": 300_000,
+    "15m": 900_000,
+    "30m": 1_800_000,
+    "1h": 3_600_000,
+    "4h": 14_400_000,
+    "6h": 21_600_000,
+    "8h": 28_800_000,
+    "12h": 43_200_000,
+    "1d": 86_400_000,
+    "1w": 604_800_000,
+}
+FIELDS = {
+    "price": ("open", "high", "low", "close", "volume_usd"),
+    "open_interest": ("open", "high", "low", "close"),
+    "funding": ("open", "high", "low", "close"),
+    "liquidations": ("long_liquidation_usd", "short_liquidation_usd"),
+    "long_short": (
+        "global_account_long_percent",
+        "global_account_short_percent",
+        "global_account_long_short_ratio",
+    ),
+    "rsi": ("rsi_value",),
+    "macd": ("macd_value",),
+    "ma": ("ma_value",),
+    "ema": ("ema_value",),
+    "boll": ("mb_value", "ub_value", "lb_value"),
+    "atr": ("avg_true_range_value",),
+}
+UNITS = {
+    "price": "quote price; volume_usd is USD",
+    "open_interest": "USD",
+    "funding": "provider-native rate; scale not asserted",
+    "liquidations": "USD",
+    "long_short": "account percentages and ratio; not position notionals",
+    "rsi": "0-100",
+    "macd": "provider MACD value; not signal/histogram",
+    "ma": "price",
+    "ema": "price",
+    "boll": "price",
+    "atr": "price",
+}
 
 
 def _moment(value=None):
     if value is None:
         return datetime.now(timezone.utc)
-    dt = value if isinstance(value, datetime) else datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    dt = (
+        value
+        if isinstance(value, datetime)
+        else datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    )
     if dt.tzinfo is None or dt.utcoffset() is None:
         raise ValueError("time must include a UTC offset, for example 2026-10-30T00:00:00Z")
     return dt.astimezone(timezone.utc)
@@ -50,7 +89,9 @@ def _stamp(value=None):
 
 
 def _json(value):
-    return (json.dumps(value, sort_keys=True, ensure_ascii=False, allow_nan=False, indent=2) + "\n").encode()
+    return (
+        json.dumps(value, sort_keys=True, ensure_ascii=False, allow_nan=False, indent=2) + "\n"
+    ).encode()
 
 
 def _number(value):
@@ -91,7 +132,11 @@ def normalize_history(endpoint, data, params, observed_at):
             raise ValueError("history time must be a millisecond timestamp between 2000 and 2100")
         if any(field not in source for field in FIELDS[endpoint]):
             raise ValueError(f"{endpoint} response is missing documented fields")
-        if t < params.get("start_time", 0) or t > params.get("end_time", observed_ms) or t + step > observed_ms:
+        if (
+            t < params.get("start_time", 0)
+            or t > params.get("end_time", observed_ms)
+            or t + step > observed_ms
+        ):
             ignored += 1
             continue
         values = {field: _number(source[field]) for field in FIELDS[endpoint]}
@@ -118,9 +163,15 @@ def normalize_history(endpoint, data, params, observed_at):
         rows[t] = row
     ordered = [rows[t] for t in sorted(rows)]
     gaps = sum(max(0, (b["time"] - a["time"]) // step - 1) for a, b in zip(ordered, ordered[1:]))
-    units = "coin" if endpoint == "open_interest" and params.get("unit") == "coin" else UNITS[endpoint]
-    return {"rows": ordered, "discarded_outside_window_or_unclosed": ignored,
-            "missing_intervals_between_rows": gaps, "units": units}
+    units = (
+        "coin" if endpoint == "open_interest" and params.get("unit") == "coin" else UNITS[endpoint]
+    )
+    return {
+        "rows": ordered,
+        "discarded_outside_window_or_unclosed": ignored,
+        "missing_intervals_between_rows": gaps,
+        "units": units,
+    }
 
 
 def _parameters(symbol, exchange, interval, limit, datasets, end=None):
@@ -129,7 +180,11 @@ def _parameters(symbol, exchange, interval, limit, datasets, end=None):
     if type(limit) is not int or not 1 <= limit <= 1000:
         raise ValueError("limit must be an integer from 1 to 1000")
     datasets = tuple(datasets)
-    if not datasets or len(set(datasets)) != len(datasets) or any(d not in FIELDS for d in datasets):
+    if (
+        not datasets
+        or len(set(datasets)) != len(datasets)
+        or any(d not in FIELDS for d in datasets)
+    ):
         raise ValueError("datasets must be distinct supported history endpoint names")
     cutoff = _moment(end)
     now = _moment()
@@ -139,8 +194,14 @@ def _parameters(symbol, exchange, interval, limit, datasets, end=None):
     # Bound on bar START, deliberately one whole period before the cutoff.
     end_ms = int(cutoff.timestamp() * 1000) - step
     start_ms = end_ms - limit * step + 1
-    common = {"symbol": symbol, "exchange": exchange, "interval": interval, "limit": limit,
-              "start_time": start_ms, "end_time": end_ms}
+    common = {
+        "symbol": symbol,
+        "exchange": exchange,
+        "interval": interval,
+        "limit": limit,
+        "start_time": start_ms,
+        "end_time": end_ms,
+    }
     requests = {}
     for name in datasets:
         params = dict(common)
@@ -159,8 +220,17 @@ def _parameters(symbol, exchange, interval, limit, datasets, end=None):
     return {**common, "datasets": list(datasets), "cutoff": _stamp(cutoff)}, requests
 
 
-def capture(client=None, *, symbol="BTCUSDT", exchange="Binance", interval="4h", limit=200,
-            datasets=DEFAULT_DATASETS, end=None, root=DATA):
+def capture(
+    client=None,
+    *,
+    symbol="BTCUSDT",
+    exchange="Binance",
+    interval="4h",
+    limit=200,
+    datasets=DEFAULT_DATASETS,
+    end=None,
+    root=DATA,
+):
     """Fetch one bounded window; partial access is a recorded outcome, never zero.
 
     Each invocation publishes a new manifest last. Paid raw responses stay under
@@ -177,11 +247,28 @@ def capture(client=None, *, symbol="BTCUSDT", exchange="Binance", interval="4h",
         try:
             response = client.request(name, **params)
         except CoinGlassError as exc:
-            results[name] = {"status": "unavailable", "reason": exc.kind, "message": str(exc), "params": params}
+            results[name] = {
+                "status": "unavailable",
+                "reason": exc.kind,
+                "message": str(exc),
+                "params": params,
+            }
             continue
         # Network metadata has a small allowlisted schema; headers are never saved.
-        metadata = {k: response.metadata[k] for k in
-                    ("endpoint", "path", "params", "requested_at", "observed_at", "http_status", "attempts", "provider_code", "sha256")}
+        metadata = {
+            k: response.metadata[k]
+            for k in (
+                "endpoint",
+                "path",
+                "params",
+                "requested_at",
+                "observed_at",
+                "http_status",
+                "attempts",
+                "provider_code",
+                "sha256",
+            )
+        }
         if metadata["params"] != params or metadata["endpoint"] != name:
             raise ValueError("client response identity mismatch")
         if sha256_bytes(response.raw) != metadata["sha256"]:
@@ -191,24 +278,62 @@ def capture(client=None, *, symbol="BTCUSDT", exchange="Binance", interval="4h",
             raise ValueError("client data does not match its raw response")
         raw_path = directory / f"{name}.json"
         publish_bytes(raw_path, response.raw)
-        files.append({"path": raw_path.relative_to(root.parent).as_posix(), "sha256": metadata["sha256"], "kind": "raw", "endpoint": name})
+        files.append(
+            {
+                "path": raw_path.relative_to(root.parent).as_posix(),
+                "sha256": metadata["sha256"],
+                "kind": "raw",
+                "endpoint": name,
+            }
+        )
         try:
             normalized = normalize_history(name, response.data, params, metadata["observed_at"])
         except (ValueError, TypeError, KeyError) as exc:
-            results[name] = {"status": "invalid", "reason": "schema", "message": str(exc), "metadata": metadata}
+            results[name] = {
+                "status": "invalid",
+                "reason": "schema",
+                "message": str(exc),
+                "metadata": metadata,
+            }
             continue
-        results[name] = {"status": "ok" if normalized["rows"] else "empty", "metadata": metadata, **normalized}
-    document = {"schema": SCHEMA, "snapshot_id": snapshot_id, "settings": settings,
-                "requested_at": started, "observed_at": _stamp(), "datasets": results}
+        results[name] = {
+            "status": "ok" if normalized["rows"] else "empty",
+            "metadata": metadata,
+            **normalized,
+        }
+    document = {
+        "schema": SCHEMA,
+        "snapshot_id": snapshot_id,
+        "settings": settings,
+        "requested_at": started,
+        "observed_at": _stamp(),
+        "datasets": results,
+    }
     normalized_path = directory / "context.json"
     payload = _json(document)
     publish_bytes(normalized_path, payload)
-    files.append({"path": normalized_path.relative_to(root.parent).as_posix(), "sha256": sha256_bytes(payload), "kind": "normalized"})
+    files.append(
+        {
+            "path": normalized_path.relative_to(root.parent).as_posix(),
+            "sha256": sha256_bytes(payload),
+            "kind": "normalized",
+        }
+    )
     manifest = root / "manifests" / f"coinglass-{snapshot_id}.jsonl"
-    header = {"manifest": manifest.name, "schema": SCHEMA, "provider": "CoinGlass v4", "n_files": len(files),
-              "observed_at": document["observed_at"], "snapshot_id": snapshot_id, "settings": settings,
-              "path_base": "parent of data directory", "availability": "actual retrieval time; no backdated availability"}
-    content = "\n".join(json.dumps(x, sort_keys=True, allow_nan=False) for x in [header, *files]) + "\n"
+    header = {
+        "manifest": manifest.name,
+        "schema": SCHEMA,
+        "provider": "CoinGlass v4",
+        "n_files": len(files),
+        "observed_at": document["observed_at"],
+        "snapshot_id": snapshot_id,
+        "settings": settings,
+        "path_base": "parent of data directory",
+        "availability": "actual retrieval time; no backdated availability",
+    }
+    content = (
+        "\n".join(json.dumps(x, sort_keys=True, allow_nan=False) for x in [header, *files]) + "\n"
+    )
     publish_bytes(manifest, content.encode())
     return manifest
 
@@ -244,9 +369,16 @@ def load_snapshot(manifest):
             raw[record["endpoint"]] = (json.loads(content), record["sha256"])
         else:
             raise ValueError("unknown manifest entry")
-    if document is None or document.get("schema") != SCHEMA or document["snapshot_id"] != header["snapshot_id"]:
+    if (
+        document is None
+        or document.get("schema") != SCHEMA
+        or document["snapshot_id"] != header["snapshot_id"]
+    ):
         raise ValueError("snapshot identity mismatch")
-    if document["settings"] != header["settings"] or document["observed_at"] != header["observed_at"]:
+    if (
+        document["settings"] != header["settings"]
+        or document["observed_at"] != header["observed_at"]
+    ):
         raise ValueError("snapshot context mismatch")
     settings = document["settings"]
     if set(document["datasets"]) != set(settings["datasets"]):
@@ -262,9 +394,15 @@ def load_snapshot(manifest):
         meta = result["metadata"]
         params = meta["params"]
         validate_request(name, params)
-        if any(params.get(k) != settings[k] for k in ("symbol", "exchange", "interval", "limit", "start_time", "end_time")):
+        if any(
+            params.get(k) != settings[k]
+            for k in ("symbol", "exchange", "interval", "limit", "start_time", "end_time")
+        ):
             raise ValueError("endpoint context differs from snapshot")
-        if _moment(meta["requested_at"]) > _moment(meta["observed_at"]) or _moment(meta["observed_at"]) > observed:
+        if (
+            _moment(meta["requested_at"]) > _moment(meta["observed_at"])
+            or _moment(meta["observed_at"]) > observed
+        ):
             raise ValueError("invalid response observation ordering")
         payload, sha = raw[name]
         if str(payload.get("code")) != "0" or sha != meta["sha256"] or meta["endpoint"] != name:
@@ -272,7 +410,9 @@ def load_snapshot(manifest):
         if result["status"] == "invalid":
             continue
         replay = normalize_history(name, payload["data"], params, meta["observed_at"])
-        if any(replay[k] != result[k] for k in replay) or (result["status"] == "ok") != bool(replay["rows"]):
+        if any(replay[k] != result[k] for k in replay) or (result["status"] == "ok") != bool(
+            replay["rows"]
+        ):
             raise ValueError("normalized observations do not reproduce from raw data")
     if set(raw) != {n for n, r in document["datasets"].items() if r["status"] != "unavailable"}:
         raise ValueError("unexpected raw endpoint")
@@ -290,8 +430,11 @@ def latest_context(manifest, *, asof=None, max_age_intervals=2):
     step = INTERVAL_MS[document["settings"]["interval"]]
     context = {}
     for name, result in document["datasets"].items():
-        item = {"status": result["status"], "units": result.get("units", UNITS[name]),
-                "params": result.get("metadata", {}).get("params", result.get("params"))}
+        item = {
+            "status": result["status"],
+            "units": result.get("units", UNITS[name]),
+            "params": result.get("metadata", {}).get("params", result.get("params")),
+        }
         if not available:
             item["status"] = "not_yet_observed"
         elif result["status"] in ("ok", "empty"):
@@ -301,19 +444,30 @@ def latest_context(manifest, *, asof=None, max_age_intervals=2):
             else:
                 latest = rows[-1]
                 age = cutoff_ms - latest["bar_end"]
-                item.update(status="stale" if age > max_age_intervals * step else "ready",
-                            time=latest["time"], bar_end=latest["bar_end"], age_seconds=age / 1000,
-                            values={k: latest[k] for k in FIELDS[name]},
-                            observed_at=result["metadata"]["observed_at"],
-                            missing_intervals=result["missing_intervals_between_rows"])
+                item.update(
+                    status="stale" if age > max_age_intervals * step else "ready",
+                    time=latest["time"],
+                    bar_end=latest["bar_end"],
+                    age_seconds=age / 1000,
+                    values={k: latest[k] for k in FIELDS[name]},
+                    observed_at=result["metadata"]["observed_at"],
+                    missing_intervals=result["missing_intervals_between_rows"],
+                )
                 if any(v is None for v in item["values"].values()) and item["status"] == "ready":
                     item["status"] = "incomplete"
         else:
             item.update(reason=result.get("reason"), message=result.get("message"))
         context[name] = item
-    return {"schema": SCHEMA, "manifest": str(Path(manifest)), "snapshot_id": document["snapshot_id"],
-            "settings": document["settings"], "observed_at": document["observed_at"], "asof": _stamp(cutoff),
-            "all_requested_ready": all(r["status"] == "ready" for r in context.values()), "datasets": context}
+    return {
+        "schema": SCHEMA,
+        "manifest": str(Path(manifest)),
+        "snapshot_id": document["snapshot_id"],
+        "settings": document["settings"],
+        "observed_at": document["observed_at"],
+        "asof": _stamp(cutoff),
+        "all_requested_ready": all(r["status"] == "ready" for r in context.values()),
+        "datasets": context,
+    }
 
 
 def history_frame(manifest, *, asof=None):
@@ -337,11 +491,19 @@ def history_frame(manifest, *, asof=None):
         parts.append(frame.rename(columns={c: f"{name}.{c}" for c in frame.columns}))
     out = pd.concat(parts, axis=1).sort_index() if parts else pd.DataFrame()
     out.index.name = "time"
-    out.attrs.update(schema=SCHEMA, observed_at=document["observed_at"], manifest=str(Path(manifest)),
-                     settings=document["settings"], units={name: result.get("units", UNITS[name])
-                                                          for name, result in document["datasets"].items()},
-                     endpoint_parameters={name: result.get("metadata", {}).get("params", result.get("params"))
-                                          for name, result in document["datasets"].items()},
-                     endpoint_status={name: result["status"] for name, result in document["datasets"].items()},
-                     availability="historical bars retrieved at observed_at; not vintage point-in-time evidence")
+    out.attrs.update(
+        schema=SCHEMA,
+        observed_at=document["observed_at"],
+        manifest=str(Path(manifest)),
+        settings=document["settings"],
+        units={
+            name: result.get("units", UNITS[name]) for name, result in document["datasets"].items()
+        },
+        endpoint_parameters={
+            name: result.get("metadata", {}).get("params", result.get("params"))
+            for name, result in document["datasets"].items()
+        },
+        endpoint_status={name: result["status"] for name, result in document["datasets"].items()},
+        availability="historical bars retrieved at observed_at; not vintage point-in-time evidence",
+    )
     return out

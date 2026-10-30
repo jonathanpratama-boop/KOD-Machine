@@ -4,6 +4,7 @@ Every price states its listing, currency, source, session, timezone, adjustment 
 feed it came from. A daily close is treated as available from the end of its trading day in the stated timezone; it is not an intraday fill. A CSV is
 accepted whole or not at all: one malformed row rejects the file, with a report of every problem. Missing volume stays missing.
 """
+
 from __future__ import annotations
 
 import csv
@@ -25,7 +26,10 @@ CURRENCY = re.compile(r"^[A-Z]{3}$")
 
 class PriceError(ValueError):
     def __init__(self, problems):
-        super().__init__("; ".join(problems[:10]) + (f" (and {len(problems) - 10} more)" if len(problems) > 10 else ""))
+        super().__init__(
+            "; ".join(problems[:10])
+            + (f" (and {len(problems) - 10} more)" if len(problems) > 10 else "")
+        )
         self.problems = list(problems)
 
 
@@ -38,7 +42,9 @@ def _zone(name):
 
 def available_at(day: str, zone: str) -> str:
     """A daily close is first usable at midnight after its trading day in the listing's timezone (a conservative bound; the close time is not recorded)."""
-    moment = datetime.combine(date.fromisoformat(day) + timedelta(days=1), time(0, 0), tzinfo=ZoneInfo(zone)).astimezone(timezone.utc)
+    moment = datetime.combine(
+        date.fromisoformat(day) + timedelta(days=1), time(0, 0), tzinfo=ZoneInfo(zone)
+    ).astimezone(timezone.utc)
     return moment.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
@@ -57,8 +63,14 @@ def _metadata(meta: dict) -> tuple[dict, list]:
     for key in ("source", "feed_coverage"):
         if not str(meta.get(key) or "").strip() or len(str(meta.get(key))) > 300:
             problems.append(f"{key} is required (at most 300 characters)")
-    return {"currency": currency, "timezone": zone, "adjustment": meta.get("adjustment"), "session": meta.get("session"),
-            "source": str(meta.get("source") or "").strip(), "feed_coverage": str(meta.get("feed_coverage") or "").strip()}, problems
+    return {
+        "currency": currency,
+        "timezone": zone,
+        "adjustment": meta.get("adjustment"),
+        "session": meta.get("session"),
+        "source": str(meta.get("source") or "").strip(),
+        "feed_coverage": str(meta.get("feed_coverage") or "").strip(),
+    }, problems
 
 
 def _price(text, name, row, problems, required=True):
@@ -95,7 +107,9 @@ def parse_csv(raw: bytes, meta: dict) -> dict:
     if "date" not in header or "close" not in header:
         problems.append("the header must name at least the columns date and close")
     if unknown:
-        problems.append("unknown columns: " + ", ".join(unknown) + " (allowed: " + ", ".join(COLUMNS) + ")")
+        problems.append(
+            "unknown columns: " + ", ".join(unknown) + " (allowed: " + ", ".join(COLUMNS) + ")"
+        )
     if len(set(header)) != len(header):
         problems.append("a column is named twice")
     if problems:
@@ -122,11 +136,17 @@ def parse_csv(raw: bytes, meta: dict) -> dict:
             continue
         seen.add(day)
         close = _price(record.get("close"), "close", n, problems)
-        o, h, l = (_price(record.get(k), k, n, problems, required=False) for k in ("open", "high", "low"))
+        o, h, l = (
+            _price(record.get(k), k, n, problems, required=False) for k in ("open", "high", "low")
+        )
         if any(v is not None for v in (o, h, l)) and None in (o, h, l):
             problems.append(f"row {n}: open, high and low must be given together")
-        elif None not in (o, h, l, close) and not (l <= min(o, close) and max(o, close) <= h and l <= h):
-            problems.append(f"row {n}: open/high/low/close are not coherent (low <= open, close <= high)")
+        elif None not in (o, h, l, close) and not (
+            l <= min(o, close) and max(o, close) <= h and l <= h
+        ):
+            problems.append(
+                f"row {n}: open/high/low/close are not coherent (low <= open, close <= high)"
+            )
         volume = (record.get("volume") or "").strip().replace(",", "")
         if volume:
             try:
@@ -136,7 +156,16 @@ def parse_csv(raw: bytes, meta: dict) -> dict:
             except InvalidOperation:
                 problems.append(f"row {n}: volume must be a whole non-negative number ({volume!r})")
         if close is not None:
-            rows.append({"date": day, "open": o, "high": h, "low": l, "close": close, "volume": volume or None})
+            rows.append(
+                {
+                    "date": day,
+                    "open": o,
+                    "high": h,
+                    "low": l,
+                    "close": close,
+                    "volume": volume or None,
+                }
+            )
     if not rows and not problems:
         problems.append("the file has no price rows")
     if problems:
@@ -151,10 +180,20 @@ def coverage(rows: list) -> dict:
         return {"rows": 0}
     first, last = date.fromisoformat(rows[0]["date"]), date.fromisoformat(rows[-1]["date"])
     have = {r["date"] for r in rows}
-    gaps = [d for d in (first + timedelta(days=i) for i in range((last - first).days + 1)) if d.weekday() < 5 and d.isoformat() not in have]
-    return {"rows": len(rows), "first": first.isoformat(), "last": last.isoformat(), "weekdays_without_price": len(gaps),
-            "first_gaps": [d.isoformat() for d in gaps[:10]], "volume_missing": sum(1 for r in rows if r["volume"] is None),
-            "note": "weekday gaps may be exchange holidays or missing data; this importer does not know the exchange calendar"}
+    gaps = [
+        d
+        for d in (first + timedelta(days=i) for i in range((last - first).days + 1))
+        if d.weekday() < 5 and d.isoformat() not in have
+    ]
+    return {
+        "rows": len(rows),
+        "first": first.isoformat(),
+        "last": last.isoformat(),
+        "weekdays_without_price": len(gaps),
+        "first_gaps": [d.isoformat() for d in gaps[:10]],
+        "volume_missing": sum(1 for r in rows if r["volume"] is None),
+        "note": "weekday gaps may be exchange holidays or missing data; this importer does not know the exchange calendar",
+    }
 
 
 def manual(meta: dict, day: str, close, at: str | None = None) -> dict:
@@ -178,21 +217,72 @@ def manual(meta: dict, day: str, close, at: str | None = None) -> dict:
         problems.append("only a manual quote carries a time; a close is dated by its trading day")
     if problems:
         raise PriceError(problems)
-    return {"meta": meta, "rows": [{"date": day, "open": None, "high": None, "low": None, "close": value, "volume": None, "at": at}], "coverage": coverage(
-        [{"date": day, "volume": None}])}
+    return {
+        "meta": meta,
+        "rows": [
+            {
+                "date": day,
+                "open": None,
+                "high": None,
+                "low": None,
+                "close": value,
+                "volume": None,
+                "at": at,
+            }
+        ],
+        "coverage": coverage([{"date": day, "volume": None}]),
+    }
 
 
-def rows_for_store(parsed: dict, security_id: str, source_kind: str, observed_at: str, now: str, import_id: str | None = None) -> list:
+def rows_for_store(
+    parsed: dict,
+    security_id: str,
+    source_kind: str,
+    observed_at: str,
+    now: str,
+    import_id: str | None = None,
+) -> list:
     """Immutable price-observation rows (pure). A row's identity depends on what it says, not on when it was imported."""
     meta = parsed["meta"]
     out = []
     for r in parsed["rows"]:
         published = r.get("at") or available_at(r["date"], meta["timezone"])
-        values = {k: (None if r.get(k) is None else str(r[k])) for k in ("open", "high", "low", "close", "volume")}
-        pid = identity("price", security_id, r["date"], meta["session"], meta["adjustment"], meta["source"], meta["currency"], values)
-        out.append({"id": pid, "security_id": security_id, "observed_on": r["date"], "session": meta["session"], "timezone": meta["timezone"],
-                    "currency": meta["currency"], **values, "adjustment": meta["adjustment"], "source": meta["source"], "source_kind": source_kind,
-                    "feed_coverage": meta["feed_coverage"], "published_at": published,
-                    "publication_basis": ("time of the manual quote" if r.get("at") else f"end of the trading day {r['date']} in {meta['timezone']}"),
-                    "observed_at": observed_at, "recorded_at": now, "import_id": import_id})
+        values = {
+            k: (None if r.get(k) is None else str(r[k]))
+            for k in ("open", "high", "low", "close", "volume")
+        }
+        pid = identity(
+            "price",
+            security_id,
+            r["date"],
+            meta["session"],
+            meta["adjustment"],
+            meta["source"],
+            meta["currency"],
+            values,
+        )
+        out.append(
+            {
+                "id": pid,
+                "security_id": security_id,
+                "observed_on": r["date"],
+                "session": meta["session"],
+                "timezone": meta["timezone"],
+                "currency": meta["currency"],
+                **values,
+                "adjustment": meta["adjustment"],
+                "source": meta["source"],
+                "source_kind": source_kind,
+                "feed_coverage": meta["feed_coverage"],
+                "published_at": published,
+                "publication_basis": (
+                    "time of the manual quote"
+                    if r.get("at")
+                    else f"end of the trading day {r['date']} in {meta['timezone']}"
+                ),
+                "observed_at": observed_at,
+                "recorded_at": now,
+                "import_id": import_id,
+            }
+        )
     return out

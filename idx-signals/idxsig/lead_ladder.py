@@ -28,7 +28,10 @@ class Kind:
 
 
 def kinds_from_protocol(proto: dict) -> dict[str, Kind]:
-    return {k: Kind(k, v["horizon"], v["direction"], v["threshold"], v["max_day"]) for k, v in proto["kinds"].items()}
+    return {
+        k: Kind(k, v["horizon"], v["direction"], v["threshold"], v["max_day"])
+        for k, v in proto["kinds"].items()
+    }
 
 
 def qualifying(level: np.ndarray, kind: Kind) -> np.ndarray:
@@ -47,7 +50,9 @@ def qualifying(level: np.ndarray, kind: Kind) -> np.ndarray:
                 best = np.fmin(best, ahead)
             if kind.max_day is not None:
                 step = np.full((n, s), np.nan)
-                step[:, : s - j] = level[:, j:] / level[:, j - 1: s - 1]  # session t+j against t+j-1
+                step[:, : s - j] = (
+                    level[:, j:] / level[:, j - 1 : s - 1]
+                )  # session t+j against t+j-1
                 if kind.direction == "up":
                     ok_day &= ~(step > kind.max_day)
                 else:
@@ -68,12 +73,14 @@ def first_in(q: np.ndarray, separation: int) -> np.ndarray:
     cm1[:, 1:] = c[:, :-1]
     csep = np.zeros(q.shape, dtype=np.int64)
     if separation + 1 < s:
-        csep[:, separation + 1:] = c[:, : s - separation - 1]
+        csep[:, separation + 1 :] = c[:, : s - separation - 1]
     before = cm1 - csep
     return q & (before == 0)
 
 
-def eligible(present: np.ndarray, tradeable: np.ndarray, prev: np.ndarray, min_history: int) -> np.ndarray:
+def eligible(
+    present: np.ndarray, tradeable: np.ndarray, prev: np.ndarray, min_history: int
+) -> np.ndarray:
     history = np.cumsum(present, axis=1) - present
     return tradeable & present & (prev > 0) & (history >= min_history)
 
@@ -91,8 +98,19 @@ def tail_stats(v: float, xs: np.ndarray, binary: bool, top_q: float, bot_q: floa
 class Ladder:
     """Per-event table for one market. Arrays are (names x sessions) over the sealed study market."""
 
-    def __init__(self, level, present, tradeable, prev, buckets: dict, features: dict, binary: tuple,
-                 dates: np.ndarray, window: tuple[int, int], proto: dict):
+    def __init__(
+        self,
+        level,
+        present,
+        tradeable,
+        prev,
+        buckets: dict,
+        features: dict,
+        binary: tuple,
+        dates: np.ndarray,
+        window: tuple[int, int],
+        proto: dict,
+    ):
         self.level, self.dates, self.proto = level, dates, proto
         self.features, self.binary = features, set(binary)
         self.feature_names = list(features)
@@ -156,8 +174,17 @@ class Ladder:
                     if voided and self.ext[n, u]:
                         continue
                     pool, relaxed = self.pool(n, u, t, kind, voided)
-                    row = {"kind": kind, "event": i, "name_idx": int(n), "t": int(t), "lead": k, "u": int(u),
-                           "analysis": analysis, "pool_size": len(pool), "relaxed": relaxed}
+                    row = {
+                        "kind": kind,
+                        "event": i,
+                        "name_idx": int(n),
+                        "t": int(t),
+                        "lead": k,
+                        "u": int(u),
+                        "analysis": analysis,
+                        "pool_size": len(pool),
+                        "relaxed": relaxed,
+                    }
                     for f in self.feature_names:
                         arr = self.features[f]
                         v = arr[n, u]
@@ -189,8 +216,14 @@ def _boot_log_se(I: np.ndarray, E: np.ndarray, week: np.ndarray, reps: int, rng)
     return float(np.std(np.log(lifts[good]), ddof=1))
 
 
-def aggregate(tab: pd.DataFrame, dates: np.ndarray, feature_names: list[str], binary: set, proto: dict,
-              market: str) -> pd.DataFrame:
+def aggregate(
+    tab: pd.DataFrame,
+    dates: np.ndarray,
+    feature_names: list[str],
+    binary: set,
+    proto: dict,
+    market: str,
+) -> pd.DataFrame:
     """Lift per (kind, analysis, lead, feature, tail) with week-bootstrap lower bound and per-year lifts."""
     z = proto["z_one_sided"]
     reps = proto["bootstrap"]["resamples"]
@@ -199,13 +232,13 @@ def aggregate(tab: pd.DataFrame, dates: np.ndarray, feature_names: list[str], bi
         return pd.DataFrame(out)
     tdates = pd.DatetimeIndex(dates.astype("datetime64[ns]"))
     iso = tdates.isocalendar()
-    week_of = (iso["year"].to_numpy() * 100 + iso["week"].to_numpy())
+    week_of = iso["year"].to_numpy() * 100 + iso["week"].to_numpy()
     year_of = tdates.year.to_numpy()
     for (kind, analysis, lead), g in tab.groupby(["kind", "analysis", "lead"], sort=True):
         week = week_of[g["t"].to_numpy()]
         year = year_of[g["t"].to_numpy()]
         for f in feature_names:
-            for tail in (("top",) if f in binary else ("top", "bottom")):
+            for tail in ("top",) if f in binary else ("top", "bottom"):
                 ci, ce = f"{f}|{tail}|I", f"{f}|{tail}|E"
                 if ci not in g:
                     continue
@@ -214,19 +247,46 @@ def aggregate(tab: pd.DataFrame, dates: np.ndarray, feature_names: list[str], bi
                 n = int(sel.sum())
                 sI, sE = float(I.sum()), float(E.sum())
                 lift = sI / sE if sE > 0 else float("nan")
-                seed = proto["bootstrap"]["seed"] + zlib.crc32(f"{market}|{kind}|{analysis}|{int(lead)}|{f}|{tail}".encode()) % 10**6
-                se = _boot_log_se(I, E, week[sel], reps, np.random.default_rng(seed)) if n and sE > 0 else float("inf")
-                lower = float(np.exp(np.log(lift) - z * se)) if lift > 0 and np.isfinite(se) else 0.0
+                seed = (
+                    proto["bootstrap"]["seed"]
+                    + zlib.crc32(f"{market}|{kind}|{analysis}|{int(lead)}|{f}|{tail}".encode())
+                    % 10**6
+                )
+                se = (
+                    _boot_log_se(I, E, week[sel], reps, np.random.default_rng(seed))
+                    if n and sE > 0
+                    else float("inf")
+                )
+                lower = (
+                    float(np.exp(np.log(lift) - z * se)) if lift > 0 and np.isfinite(se) else 0.0
+                )
                 years = {}
                 for y in np.unique(year[sel]):
                     ys = year[sel] == y
                     yE = E[ys].sum()
-                    years[str(int(y))] = {"events": int(ys.sum()), "lift": float(I[ys].sum() / yE) if yE > 0 else None}
+                    years[str(int(y))] = {
+                        "events": int(ys.sum()),
+                        "lift": float(I[ys].sum() / yE) if yE > 0 else None,
+                    }
                 auc = g[f"{f}|auc"].to_numpy(float)
-                out.append({"market": market, "kind": kind, "analysis": analysis, "lead": int(lead), "feature": f,
-                            "tail": tail, "events": n, "observed": sI, "expected": sE, "lift": lift,
-                            "log_se": se, "lower_bound": lower, "auc_mean": float(np.nanmean(auc)) if np.isfinite(auc).any() else None,
-                            "years": years})
+                out.append(
+                    {
+                        "market": market,
+                        "kind": kind,
+                        "analysis": analysis,
+                        "lead": int(lead),
+                        "feature": f,
+                        "tail": tail,
+                        "events": n,
+                        "observed": sI,
+                        "expected": sE,
+                        "lift": lift,
+                        "log_se": se,
+                        "lower_bound": lower,
+                        "auc_mean": float(np.nanmean(auc)) if np.isfinite(auc).any() else None,
+                        "years": years,
+                    }
+                )
     return pd.DataFrame(out)
 
 
@@ -243,17 +303,38 @@ def gate(agg: pd.DataFrame, proto: dict) -> pd.DataFrame:
                 dl = key.loc[(r.market, down, r.lead, r.feature, r.tail), "lift"]
             except KeyError:
                 dl = float("nan")
-            yrs = [v["lift"] for v in r.years.values() if v["events"] >= gs["G4_min_events_per_year"]]
+            yrs = [
+                v["lift"] for v in r.years.values() if v["events"] >= gs["G4_min_events_per_year"]
+            ]
             g1 = bool(r.lift >= gs["G1_min_lift"])
             g2 = bool(r.lower_bound > gs["G2_lower_bound_above"])
             g3 = bool(np.isfinite(dl) and r.lift >= gs["G3_min_ratio_to_down"] * dl)
-            g4 = bool(len(yrs) > 0 and all(y is not None and y >= gs["G4_min_lift_each_year"] for y in yrs))
+            g4 = bool(
+                len(yrs) > 0
+                and all(y is not None and y >= gs["G4_min_lift_each_year"] for y in yrs)
+            )
             g5 = bool(r.events >= gs["G5_min_events"] and r.expected >= gs["G5_min_expected"])
-            rows.append({"market": r.market, "kind": r.kind, "lead": r.lead, "feature": r.feature, "tail": r.tail,
-                         "events": r.events, "expected": r.expected, "lift": r.lift, "lower_bound": r.lower_bound,
-                         "down_lift": dl, "G1": g1, "G2": g2, "G3": g3, "G4": g4, "G5": g5,
-                         "passes": g1 and g2 and g3 and g4 and g5,
-                         "movement_only": g1 and g2 and g4 and g5 and not g3})
+            rows.append(
+                {
+                    "market": r.market,
+                    "kind": r.kind,
+                    "lead": r.lead,
+                    "feature": r.feature,
+                    "tail": r.tail,
+                    "events": r.events,
+                    "expected": r.expected,
+                    "lift": r.lift,
+                    "lower_bound": r.lower_bound,
+                    "down_lift": dl,
+                    "G1": g1,
+                    "G2": g2,
+                    "G3": g3,
+                    "G4": g4,
+                    "G5": g5,
+                    "passes": g1 and g2 and g3 and g4 and g5,
+                    "movement_only": g1 and g2 and g4 and g5 and not g3,
+                }
+            )
     return pd.DataFrame(rows)
 
 
@@ -261,7 +342,9 @@ def verdict(gates: pd.DataFrame, proto: dict) -> dict:
     confirming = [m for m, v in proto["markets"].items() if v["can_confirm"]]
     passing = gates[gates["passes"]] if len(gates) else gates
     horizon = {}
-    for (m, k, f, t), g in passing.groupby(["market", "kind", "feature", "tail"]) if len(passing) else []:
+    for (m, k, f, t), g in (
+        passing.groupby(["market", "kind", "feature", "tail"]) if len(passing) else []
+    ):
         horizon[f"{m}|{k}|{f}|{t}"] = int(g["lead"].max())
     if len(passing) and passing["market"].isin(confirming).any():
         v = "LEAD_FOUND"
@@ -273,9 +356,20 @@ def verdict(gates: pd.DataFrame, proto: dict) -> dict:
     if len(passing):
         p = passing[passing["market"].isin(confirming)] if v == "LEAD_FOUND" else passing
         p = p.sort_values(["lead", "lift"], ascending=[False, False])
-        best = p.iloc[0][["market", "kind", "lead", "feature", "tail", "lift", "lower_bound"]].to_dict()
+        best = p.iloc[0][
+            ["market", "kind", "lead", "feature", "tail", "lift", "lower_bound"]
+        ].to_dict()
     mo = gates[gates["movement_only"]] if len(gates) else gates
-    return {"verdict": v, "cells_gated": int(len(gates)), "cells_passing": int(len(passing)),
-            "horizons": horizon, "best_cell": best, "movement_only_cells": int(len(mo)),
-            "movement_only": mo[["market", "kind", "lead", "feature", "tail", "lift", "down_lift"]].to_dict("records")
-            if len(mo) else []}
+    return {
+        "verdict": v,
+        "cells_gated": int(len(gates)),
+        "cells_passing": int(len(passing)),
+        "horizons": horizon,
+        "best_cell": best,
+        "movement_only_cells": int(len(mo)),
+        "movement_only": mo[
+            ["market", "kind", "lead", "feature", "tail", "lift", "down_lift"]
+        ].to_dict("records")
+        if len(mo)
+        else [],
+    }
