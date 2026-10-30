@@ -263,12 +263,30 @@ BEGIN SELECT RAISE(ABORT, 'price observations are immutable; record a new observ
 CREATE UNIQUE INDEX price_observations_seq ON price_observations(seq);
 """
 
+V6_DDL = """
+CREATE TRIGGER observations_no_update BEFORE UPDATE ON observations
+BEGIN SELECT RAISE(ABORT, 'source observation events are immutable'); END;
+CREATE TRIGGER observations_no_delete BEFORE DELETE ON observations
+BEGIN SELECT RAISE(ABORT, 'source observation events are immutable'); END;
+CREATE TABLE calculation_source_documents (
+ calculation_id TEXT NOT NULL REFERENCES calculations(id),
+ role TEXT NOT NULL, document_id TEXT NOT NULL REFERENCES documents(id),
+ sha256 TEXT NOT NULL REFERENCES objects(sha256),
+ PRIMARY KEY(calculation_id,role,document_id)
+);
+CREATE TRIGGER calculation_source_documents_no_update BEFORE UPDATE ON calculation_source_documents
+BEGIN SELECT RAISE(ABORT, 'calculation source lineage is immutable'); END;
+CREATE TRIGGER calculation_source_documents_no_delete BEFORE DELETE ON calculation_source_documents
+BEGIN SELECT RAISE(ABORT, 'calculation source lineage is immutable'); END;
+"""
+
 MIGRATIONS = (
     Migration(1, "v1 workstation: securities, evidence objects, documents, events, notes, annotations, jobs", V1_DDL),
     Migration(2, "identity, immutable financial observations, periods, metric definitions, calculation lineage, analyst records", V2_DDL, _backfill_v2),
     Migration(3, "versioned scenario assumptions and immutable dated price observations", V3_DDL),
     Migration(4, "structured thesis versions, recorded condition reviews and immutable decision packets", V4_DDL),
     Migration(5, "explicit revision sequence on price observations (same-second corrections ordered by recording, not by id)", V5_DDL),
+    Migration(6, "immutable source observation events and calculation classification source lineage", V6_DDL),
 )
 LATEST = MIGRATIONS[-1].version
 

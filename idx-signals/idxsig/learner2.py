@@ -326,9 +326,15 @@ class Row(NamedTuple):
 def outcomes(records: list[dict], asof: str) -> dict[tuple[str, str], tuple]:
     """(set, statement) -> (outcome, resolved_at, the twins' rate of the same statement or None) for every graded
     statement resolved before asof; a later revision of the same (set, window) replaces an earlier one."""
-    latest = paper.latest_resolutions(r for r in records if (r.get("resolved_at") or "9") < asof)
+    latest = paper.latest_resolutions(records, asof=asof)
     out: dict[tuple[str, str], tuple] = {}
-    for (sid, _), r in latest.items():
+    namespaces = {}
+    for r in latest.values():
+        sid = r["set_id"]
+        namespace = paper.resolution_key(r)[:-2]
+        if sid in namespaces and namespaces[sid] != namespace:
+            raise ValueError(f"ambiguous learner set id across registers: {sid}")
+        namespaces[sid] = namespace
         for c in r.get("cone") or []:
             if c.get("outcome") is not None:
                 out[(sid, c["id"])] = (bool(c["outcome"]), r["resolved_at"], c.get("twins_rate"))

@@ -662,7 +662,7 @@ def assemble(security: dict, identity: dict | None, observations: list, policy: 
     }
 
 
-def build(service, security_id: str, policy: AsOfPolicy, view: str = "as_reported", question: str | None = None) -> dict:
+def build(service, security_id: str, policy: AsOfPolicy, view: str = "as_reported", question: str | None = None, *, legacy: bool = False, context=None) -> dict:
     """Read the store and assemble the dossier (the imperative shell around assemble)."""
     store = service.store
     security = store.get_security(security_id)
@@ -671,7 +671,8 @@ def build(service, security_id: str, policy: AsOfPolicy, view: str = "as_reporte
     cutoff = policy.as_dict()["cutoff"]
     # The submissions response (business classification, raw acceptance times) and the issuer mapping are chosen so that nothing recorded later changes
     # an earlier view: in observed mode the latest held by the cutoff; in public mode the earliest preserved (labelled current metadata at that time).
-    submissions, subs_observed_at = service.submissions_at(security_id, policy)
+    context = context or service.submissions_context(security_id, policy, legacy=legacy)
+    submissions, subs_observed_at = context["data"], context["source"]["observed_at"]
     identity_as_of = cutoff if policy.mode == "observed" else None
     from . import identity as identity_model
     with store._connection() as db:
@@ -680,11 +681,14 @@ def build(service, security_id: str, policy: AsOfPolicy, view: str = "as_reporte
     if policy.mode == "observed":
         # The issuer name as recorded with the identity held by the cutoff; a later rename of the watchlist entry does not reach an earlier view.
         shown_security["name"] = (ident or {}).get("issuer_name")
-    return assemble(shown_security, ident, repo.all_for(security_id, identity_as_of=identity_as_of), policy, view, submissions,
-                    subs_observed_at, docs, question, scenario_summaries(service, security_id, policy, submissions))
+    result = assemble(shown_security, ident, repo.all_for(security_id, identity_as_of=identity_as_of), policy, view, submissions,
+                      subs_observed_at, docs, question, scenario_summaries(service, security_id, policy, submissions, context=context, legacy=legacy))
+    if not legacy:
+        result["classification_context"] = context["source"]
+    return result
 
 
-def scenario_summaries(service, security_id: str, policy: AsOfPolicy, submissions: dict | None) -> list:
+def scenario_summaries(service, security_id: str, policy: AsOfPolicy, submissions: dict | None, *, context=None, legacy=False) -> list:
     """For each assumption set, the latest version saved at or before the cutoff (a scenario written later is hindsight, so it is absent), run without
     recording: status, value, and what is missing for a per-share value."""
     from . import model, scenarios
@@ -696,7 +700,8 @@ def scenario_summaries(service, security_id: str, policy: AsOfPolicy, submission
         if not versions:
             continue
         v = versions[0]
-        valuation = model.run(model.validate(v["assumptions"]), business)
+        valuation = (model.run(model.validate(v["assumptions"]), business) if legacy else
+                     scenarios.run_version(service, v["id"], record=False, policy=policy, context=context).valuation)
         out.append({"set_id": s["id"], "version_id": v["id"], "scenario": s["scenario"], "name": s["name"], "version": v["version"], "saved_at": v["created_at"],
                     "status": valuation.status, "per_share": None if valuation.per_share is None else str(valuation.per_share),
                     "enterprise_value": None if valuation.enterprise_value is None else str(valuation.enterprise_value),

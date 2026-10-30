@@ -226,6 +226,11 @@ def point_change(current: CalculationResult | None, prior: CalculationResult | N
 
 
 def calculation_id(result: CalculationResult, policy: AsOfPolicy | None = None) -> str:
+    # Version only the scenario provenance recipe; old financial/formula IDs are unchanged.
+    if result.detail.get("context_version") == "KOD-SCENARIO-CONTEXT-v2":
+        return identity("calc", result.formula, result.formula_version, sorted(result.inputs), policy.as_dict() if policy else None,
+                        result.status, None if result.value is None else _decimal_string(result.value), result.unit, list(result.reasons),
+                        result.detail["context_version"], result.detail["source_context"])
     return identity("calc", result.formula, result.formula_version, sorted(result.inputs), policy.as_dict() if policy else None, result.status,
                     None if result.value is None else _decimal_string(result.value), result.unit, list(result.reasons))
 
@@ -262,6 +267,13 @@ def record(db, result: CalculationResult, subject_kind: str, subject_id: str, po
                 canonical({"evidence_ids": list(result.evidence_ids), "detail": result.detail}), now))
     for role, kind, iid in result.inputs:
         db.execute("INSERT OR IGNORE INTO calculation_inputs VALUES (?,?,?,?)", (cid, role, kind, iid))
+    source = result.detail.get("source_context", {})
+    if source.get("document_id"):
+        row = db.execute("SELECT sha256 FROM documents WHERE id=?", (source["document_id"],)).fetchone()
+        if row is None or row["sha256"] != source["sha256"]:
+            raise ValueError("classification source hash does not match preserved document")
+        db.execute("INSERT OR IGNORE INTO calculation_source_documents VALUES (?,?,?,?)",
+                   (cid, "business_classification", source["document_id"], source["sha256"]))
     return cid
 
 
@@ -316,5 +328,14 @@ def lineage(db, calc_id: str) -> dict:
             a = db.execute("SELECT * FROM assumption_versions WHERE id=?", (iid,)).fetchone() if _has_table(db, "assumption_versions") else None
             node = dict(a) if a else {"id": iid, "missing": True}
         out["inputs"].append({"role": role, "kind": kind, "id": iid, "node": node})
+    if _has_table(db, "calculation_source_documents"):
+        sources = []
+        for source in db.execute("SELECT s.*,d.sha256 AS actual_sha FROM calculation_source_documents s JOIN documents d ON d.id=s.document_id WHERE s.calculation_id=?", (calc_id,)):
+            if source["sha256"] != source["actual_sha"]:
+                raise ValueError("classification source lineage hash mismatch")
+            sources.append({k: source[k] for k in ("role", "document_id", "sha256")})
+        if sources:
+            out["source_documents"] = sources
     out["stale"] = stale_reasons(db, calc_id)
     return out
+

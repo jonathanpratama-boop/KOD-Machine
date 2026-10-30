@@ -10,7 +10,7 @@ import sqlite3
 import tempfile
 import unittest
 
-from kod.workstation import decisions, scenarios
+from kod.workstation import decisions, scenarios, migrations
 from kod.workstation.policy import DAY_END, AsOfPolicy
 from kod.workstation.services import ResearchService
 from kod.workstation.store import Store
@@ -92,7 +92,7 @@ class PriceRevisionOrder(Case):
         self.assertEqual(scenarios.price_at(self.service, sid, policy)["close"], "100")
         db = sqlite3.connect(self.store.path)
         self.addCleanup(db.close)
-        self.assertEqual(db.execute("PRAGMA user_version").fetchone()[0], 5)
+        self.assertEqual(db.execute("PRAGMA user_version").fetchone()[0], migrations.LATEST)
         seqs = [r[0] for r in db.execute("SELECT seq FROM price_observations ORDER BY seq")]
         self.assertEqual(seqs, list(range(1, len(seqs) + 1)))
 

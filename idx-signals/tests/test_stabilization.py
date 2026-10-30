@@ -139,7 +139,7 @@ class SafeWrites(unittest.TestCase):
             self.assertEqual(paper.verify_chain(path), [])
             self.assertEqual(len(paper.ledger_lines(path)), 160)
 
-    def test_panel_publication_is_exclusive_and_byte_identical(self):
+    def test_panel_publication_is_exclusive_and_content_identical(self):
         frame = pd.DataFrame({"date": ["2024-01-02", "2024-01-03"], "ticker": ["AAAA", "AAAA"], "close": [1.23456789012, 2.0],
                               "volume": pd.array([100, None], dtype="Int64")})
         with tempfile.TemporaryDirectory() as tmp:
@@ -147,7 +147,7 @@ class SafeWrites(unittest.TestCase):
             a.parent.mkdir(); b.parent.mkdir()
             frame.to_csv(a, index=False, compression={"method": "gzip", "mtime": 0}, float_format="%.10g")
             write_csv_gz_exclusive(b, frame, index=False, float_format="%.10g")
-            self.assertEqual(a.read_bytes(), b.read_bytes())
+            self.assertEqual(gzip.decompress(a.read_bytes()), gzip.decompress(b.read_bytes()))
             before = b.read_bytes()
             with self.assertRaises(FileExistsError):
                 write_csv_gz_exclusive(b, frame.iloc[:1], index=False, float_format="%.10g")

@@ -154,7 +154,8 @@ class EndToEnd(unittest.TestCase):
         proto.write_text(json.dumps({"protocol_id": "KOD-LEARNER-v2.3-test", "claim": {"looks": [60, 120, 240], "z_min": [3.75, 3.0, 3.0], "min_sessions": [5, 10, 20]}}))
         self.patches = [mock.patch.object(L3, "HISTORY", self.hist), mock.patch.object(L3, "HISTORY_SHA256", sha),
                         mock.patch.object(L3, "PROTOCOL_JSON", proto), mock.patch.object(L3, "LEDGER", root / "learner_v3.jsonl"),
-                        mock.patch.object(L3, "REPORT", root / "LEARNER_V3.md")]
+                        mock.patch.object(L3, "REPORT", root / "LEARNER_V3.md"),
+                        mock.patch.object(L3.evaluation, "LEDGER", root / "evaluations.jsonl")]
         for p in self.patches:
             p.start()
         L3.history_rows.cache_clear()
@@ -202,11 +203,18 @@ class EndToEnd(unittest.TestCase):
         st = L3.statistics(visible, lrecs, asof)
         h = st["statements"][L3.HEADLINE]
         self.assertGreater(h["auc"], 0.6)  # the edge is in vol20_pre, which the benchmark also sees
-        self.assertGreater(st["claim"]["z"], 3.75)
+        self.assertGreater(st["descriptive_claim"]["z"], 3.75)
         self.assertEqual(st["gates"]["PATH/1"]["observations"], 79)
         self.assertTrue(st["gates"]["PATH/1"]["open"])  # an edge of this size takes 40-80 sessions to prove
         self.assertGreater(st["gates"]["PATH/1"]["alpha"], 0.0)
-        self.assertIn("SKILL", st["claim"]["verdict"])
+        self.assertNotIn("SKILL", st["claim"]["verdict"])  # reporting never creates a planned decision
+        proto, sha = L3.protocol()
+        frozen = L3.evaluation.freeze(visible, lrecs, asof, proto, sha, L3.forward_pairs, L3.claim, L3.HEADLINE)
+        self.assertEqual(len(frozen), 3)
+        st = L3.statistics(visible, lrecs, asof)
+        self.assertEqual(st["claim"]["look"], 240)
+        self.assertEqual(st["claim"]["n_pairs"], 240)
+        self.assertEqual(L3.evaluation.verify(claim_fn=L3.claim, proto=proto, proto_sha=sha), [])
         text = L3.render(st, lrecs)
         self.assertIn("What are we predicting?", text)
         self.assertEqual(L3.verify(L3.LEDGER, self.recs), [])
@@ -258,3 +266,4 @@ class WarmStart(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

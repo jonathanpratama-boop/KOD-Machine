@@ -234,18 +234,36 @@ class ResearchService:
                               started_at=observed, finished_at=self.clock(), new_count=coverage["added"])
         return coverage
 
-    def submissions_at(self, security_id, policy):
-        """The SEC submissions snapshot (business classification, raw acceptance times) an information-time policy allows, and when it was
-        observed: in observed mode the latest snapshot this installation held by the cutoff; in public mode the earliest preserved (labelled
-        current metadata at that time). (None, None) when none qualifies. The one selector for every read (the dossier, scenario calculations,
-        decision packets), so a snapshot imported later never changes what an earlier cutoff shows."""
-        docs = sorted((d for d in self.store.documents(security_id) if d["metadata"].get("kind") == "SEC submissions response"),
-                      key=lambda d: (d["observed_at"], d["id"]))
+    def submissions_context(self, security_id, policy, source=None, *, legacy=False):
+        """Select and verify one classification source; public reconstruction is an explicit proxy."""
+        documents = {d["id"]: d for d in self.store.documents(security_id) if d["metadata"].get("kind") == "SEC submissions response"}
+        with self.store._connection() as db:
+            events = db.execute("SELECT o.* FROM observations o JOIN documents d ON d.id=o.document_id WHERE d.security_id=?", (security_id,)).fetchall()
+        # INTEGER PRIMARY KEY observation IDs preserve actual import order, including A -> B -> A re-observations.
+        candidates = ([(d, d["observed_at"], None) for d in documents.values()] if legacy else
+                      [(documents[e["document_id"]], e["observed_at"], e["id"]) for e in events if e["document_id"] in documents])
+        candidates.sort(key=lambda item: (item[1], item[0]["id"] if legacy else item[2]))
+        if source is not None:
+            candidates = [item for item in candidates if item[0]["id"] == source.get("document_id") and item[2] == source.get("recording_seq")]
+            if source.get("document_id") and not candidates:
+                raise ValueError("frozen classification source is not available for this company")
         if policy.mode == "observed":
-            cutoff = policy.as_dict()["cutoff"]
-            docs = [d for d in docs if d["observed_at"] <= cutoff][-1:]
-        doc = docs[0] if docs else None
-        return (json.loads(self.store.raw(doc["id"])) if doc else None), (doc["observed_at"] if doc else None)
+            candidates = [item for item in candidates if item[1] <= policy.as_dict()["cutoff"]][-1:]
+        doc, observed, sequence = candidates[0] if candidates else (None, None, None)
+        raw = json.loads(self.store.raw(doc["id"])) if doc else None
+        result = {"data": raw, "source": {"document_id": doc["id"] if doc else None,
+                "sha256": doc["sha256"] if doc else None, "observed_at": observed, "recording_seq": sequence,
+                "policy": policy.as_dict(), "availability": "unknown" if doc is None else
+                ("observed_snapshot" if policy.mode == "observed" else "public_reconstruction_proxy"),
+                "limitation": "SIC classification unavailable at this cutoff" if doc is None else
+                ("current metadata proxy; not evidence of historical classification" if policy.mode == "public" else None)}}
+        if source is not None and source != result["source"]:
+            raise ValueError("frozen classification source does not match its policy and preserved metadata")
+        return result
+
+    def submissions_at(self, security_id, policy):
+        context = self.submissions_context(security_id, policy)
+        return context["data"], context["source"]["observed_at"]
 
     def latest_submissions(self, security_id):
         """The snapshot held now: submissions_at with the clock as the cutoff (one rule, the live-page convenience)."""

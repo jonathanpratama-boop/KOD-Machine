@@ -45,7 +45,7 @@ import pandas as pd
 
 from . import market as mkt
 from .execution import Market
-from .provenance import PKG_ROOT, exclusive_lock, read_manifest, rel, sha256_file, utc_stamp
+from .provenance import PKG_ROOT, exclusive_lock, read_manifest, rel, sha256_file, utc_stamp, publish_bytes
 from .rules import CausalSource
 from .rules import moonshot_e1 as family
 
@@ -246,9 +246,9 @@ def ledger_lines(path: Path = LEDGER) -> list[dict]:
     return [json.loads(x) for x in path.read_text(encoding="utf-8").splitlines() if x.strip()]
 
 
-def verify_chain(path: Path = LEDGER) -> list[str]:
+def _chain_problems(records) -> list[str]:
     problems, prev = [], None
-    for i, rec in enumerate(ledger_lines(path)):
+    for i, rec in enumerate(records):
         body = {k: v for k, v in rec.items() if k != "record_hash"}
         if hashlib.sha256(_canonical(body).encode()).hexdigest() != rec.get("record_hash"):
             problems.append(f"line {i + 1}: record_hash does not match its content")
@@ -258,43 +258,160 @@ def verify_chain(path: Path = LEDGER) -> list[str]:
     return problems
 
 
-def latest_resolutions(records) -> dict[tuple[str, str | None], dict]:
-    """The resolution that counts for each (set, window): the last RESOLUTION in ledger order, since a correction is
-    appended later and `revises` the earlier one. Every reader of outcomes (running base rates, the learners, the
-    registers' statistics) takes its records from here, so a corrected outcome is counted once and the correction wins;
-    an UNRESOLVABLE or ungraded revision clears what it replaces."""
-    latest: dict[tuple[str, str | None], dict] = {}
+def verify_chain(path: Path = LEDGER) -> list[str]:
+    try:
+        return _chain_problems(ledger_lines(path))
+    except (ValueError, UnicodeError) as exc:
+        return [f"unreadable ledger: {exc}"]
+
+
+RESOLUTION_VIEW = "effective-outcomes-v1"
+
+
+def resolution_key(record: dict) -> tuple:
+    """Register namespace + set/window; absent register retains legacy fixture keys.
+
+    A register's recorded schema version is not a different population. Explicit
+    unknown register names remain separate namespaces rather than being guessed.
+    """
+    register = record.get("register")
+    for name in ("spec-register", "catalyst-register"):
+        if register and register.startswith(name + "-v"):
+            register = name
+            break
+    key = (record["set_id"], record.get("window"))
+    return (register, *key) if register else key
+
+
+def latest_resolutions(records, *, asof: str | None = None) -> dict[tuple, dict]:
+    """Effective outcomes in ledger order, after the availability cutoff.
+
+    Persisted (hash-bearing) revisions must link to the currently effective record
+    of the same set/window and register. Unhashed in-memory fixtures retain their
+    legacy last-record semantics; they are not evidence of a verified ledger.
+    A null/ungraded revision deliberately clears the previous scored outcome.
+    """
+    latest: dict[tuple, dict] = {}
+    hashes = {}
     for r in records:
-        if r.get("type") == "RESOLUTION":
-            latest[(r["set_id"], r.get("window"))] = r
+        if r.get("type") != "RESOLUTION":
+            continue
+        if asof is not None and (r.get("resolved_at") or "9") >= asof:
+            continue
+        key = resolution_key(r)
+        previous = latest.get(key)
+        digest = r.get("record_hash")
+        if digest and digest in hashes:
+            if hashes[digest] != r:
+                raise ValueError("resolution hash reused for different content")
+            continue  # idempotent inclusion of the same immutable record
+        if previous is not None:
+            for field in ("market", "family"):
+                if previous.get(field) is not None and r.get(field) is not None and previous[field] != r[field]:
+                    raise ValueError(f"{key}: resolution register/identity changed ({field})")
+        if digest and r.get("revises"):
+            if previous is None or previous.get("record_hash") != r["revises"]:
+                raise ValueError(f"{key}: revises must name the preceding effective resolution")
+        elif digest and previous is not None and previous.get("record_hash"):
+            raise ValueError(f"{key}: duplicate resolution without revises")
+        if digest:
+            hashes[digest] = r
+        latest[key] = {**r, "cone": [], "paired": None} if r.get("status") not in (None, "RESOLVED") else r
     return latest
 
 
-def append(records: list[dict], path: Path = LEDGER, timestamper=None) -> list[dict]:
-    """Chain, hash, stamp and append. Returns the stored records. One writer at a time per ledger (exclusive_lock): the
-    previous hash is read, checked and extended under the lock, so concurrent appenders queue instead of forking the
-    chain; the lines are flushed to disk before the lock is released."""
+class ReceiptPendingError(RuntimeError):
+    """The events are committed; retry receipts by hash, never repeat the event."""
+    def __init__(self, records, reason):
+        self.records = records
+        self.record_hashes = [r["record_hash"] for r in records]
+        super().__init__(f"ledger committed; timestamp receipts pending for {self.record_hashes}: {reason}")
+
+
+def retry_receipts(record_hashes, path: Path = LEDGER, timestamper=None, tokens: Path | None = None) -> dict:
+    """Obtain missing receipt files for committed hashes without changing the ledger.
+
+    Receipt timestamps remain the authority's actual time, including late retries.
+    Existing tokens are immutable. Returned missing authorities are not success.
+    """
+    if timestamper is None:
+        raise ValueError("a timestamper is required")
+    rows = ledger_lines(Path(path))
+    if _chain_problems(rows):
+        raise RuntimeError("ledger chain is broken; refusing receipt retry")
+    known = {r["record_hash"] for r in rows}
+    hashes = list(dict.fromkeys(record_hashes))
+    if set(hashes) - known:
+        raise ValueError("receipt retry references a hash absent from the ledger")
+    tokens = Path(tokens) if tokens is not None else TOKENS
+    tokens.mkdir(parents=True, exist_ok=True)
+    authorities = tuple(getattr(timestamper, "authorities", ("freetsa", "sectigo")))
+    report = {"written": [], "missing": []}
+    for digest in hashes:
+        if authorities and all((tokens / f"{digest}.{a}.tsr").exists() for a in authorities):
+            continue
+        for stamp in timestamper.stamp(digest.encode()):
+            if not stamp.authority.replace("_", "").replace("-", "").isalnum():
+                raise ValueError("invalid timestamp authority name")
+            target = tokens / f"{digest}.{stamp.authority}.tsr"
+            try:
+                publish_bytes(target, stamp.token)
+                report["written"].append(str(target))
+            except FileExistsError:
+                pass  # another retry won; never replace an earlier timestamp
+        report["missing"].extend(f"{digest}.{a}" for a in authorities if not (tokens / f"{digest}.{a}.tsr").exists())
+    return report
+
+
+_ANY_HEAD = object()
+
+
+def append(records: list[dict], path: Path = LEDGER, timestamper=None, *, expected_head=_ANY_HEAD) -> list[dict]:
+    """Atomically publish a complete batch under a process lock, preserving old bytes.
+
+    Exact payload retries return the original record without duplicating an event.
+    expected_head optionally rejects proposals computed against a stale prefix.
+    Remote receipts are obtained after releasing the lock; failures explicitly carry
+    committed hashes for retry_receipts(). No historical hash recipe is changed.
+    """
+    path = Path(path).resolve()
     path.parent.mkdir(parents=True, exist_ok=True)
     with exclusive_lock(path):
-        existing = ledger_lines(path)
-        if verify_chain(path):
-            raise RuntimeError(f"{path.name} chain is broken; refusing to append")
+        before = path.read_bytes() if path.exists() else b""
+        try:
+            existing = [json.loads(line) for line in before.decode("utf-8").splitlines() if line.strip()]
+            problems = _chain_problems(existing)
+        except (ValueError, UnicodeError) as exc:
+            raise RuntimeError(f"{path.name} unreadable; refusing to append") from exc
+        if problems or (before and not before.endswith(b"\n")):
+            raise RuntimeError(f"{path.name} chain is broken or its final newline is missing; refusing to append")
         prev = existing[-1]["record_hash"] if existing else None
-        out = []
-        with path.open("a", encoding="utf-8") as fh:
-            for rec in records:
-                body = {**rec, "prev_hash": prev}
-                body["record_hash"] = hashlib.sha256(_canonical(body).encode()).hexdigest()
-                fh.write(_canonical(body) + "\n")
-                prev = body["record_hash"]
-                out.append(body)
-            fh.flush()
-            os.fsync(fh.fileno())
-    if timestamper is not None:
-        TOKENS.mkdir(parents=True, exist_ok=True)
-        for body in out:
-            for stamp in timestamper.stamp(body["record_hash"].encode()):
-                (TOKENS / f"{body['record_hash']}.{stamp.authority}.tsr").write_bytes(stamp.token)
+        if expected_head is not _ANY_HEAD and prev != expected_head:
+            raise RuntimeError("ledger head changed; recompute the proposal against the current prefix")
+        def payload(r):
+            return {k: v for k, v in r.items() if k not in ("record_hash", "prev_hash")}
+        seen = {_canonical(payload(r)): r for r in existing}
+        out, added = [], []
+        for rec in records:
+            key = _canonical(payload(rec))
+            if key in seen:
+                out.append(seen[key])
+                continue
+            body = {**payload(rec), "prev_hash": prev}
+            body["record_hash"] = hashlib.sha256(_canonical(body).encode()).hexdigest()
+            added.append((_canonical(body) + "\n").encode("utf-8"))
+            prev = body["record_hash"]
+            seen[key] = body
+            out.append(body)
+        if added:
+            publish_bytes(path, before + b"".join(added), replace=True)
+    if timestamper is not None and out:
+        try:
+            report = retry_receipts([r["record_hash"] for r in out], path, timestamper)
+            if report["missing"]:
+                raise RuntimeError("missing authorities: " + ", ".join(report["missing"]))
+        except Exception as exc:
+            raise ReceiptPendingError(out, exc) from exc
     return out
 
 
@@ -878,7 +995,8 @@ def _score_plan(decision: dict, m: Market, n: int, d: int, level: np.ndarray, di
     p = POLICY
     cfg = ExecConfig(holding_days=int(xp["holding_days"]), entry_rule=xp["entry_rule"],
                      entry_window=int(xp["entry_window"]), exit_rule=xp["exit_rule"], notional=1e15,
-                     max_participation=float("inf"), fees=mkt.Fees(p.fee_buy, p.fee_sell), ca_mode="exclude")
+                     max_participation=1.0, capacity_check=False,
+                     fees=mkt.Fees(p.fee_buy, p.fee_sell), ca_mode="exclude")
     out = execute(m, np.array([n]), np.array([d]), cfg)
     code = int(out["status"][0])
     status = STATUS[code]
@@ -914,6 +1032,8 @@ def _score_plan(decision: dict, m: Market, n: int, d: int, level: np.ndarray, di
     return {"type": "OUTCOME", "market": "IDX", "decision_id": decision["decision_id"], "scored_at": utc_stamp(),
             "discovery": discovery,
             "execution": {"plan": xp, "harness_status": status, "fillable_at_trigger": code not in NEVER_ENTERED,
+                          "capacity_check": cfg.capacity_check,
+                          "capacity_note": "return-only counterfactual: position size and liquidity capacity are not assessed",
                           "paper_trade": trade, "executed": executed,
                           **({"not_traded_because": status} if trade is None else {})},
             "scoring_version": ("verified-units-v1" if verified_units else
