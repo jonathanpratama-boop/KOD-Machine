@@ -16,3 +16,8 @@ idx-signals/data/panel/
 runtime/
 kod-machine/.venv/
 .venv-workstation/
+
+# Runtime credentials are supplied through the environment, never repository data.
+.env
+.env.*
+!.env.example
