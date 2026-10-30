@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-30T23:02:30Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-30T23:02:42Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -24,7 +24,7 @@ Sets 14 over 1 sessions.
 
 ## DILUTION_8K (counted at each look; direction -1; `KOD-CATALYST-FAMILY-DILUTION_8K-v1`)
 
-Sets 5 over 2 signal sessions; events seen: SEALED 5, SKIP_REPEAT_90D 3, SKIP_NO_TICKER 4, SKIP_NOT_IN_UNIVERSE 3; coverage gaps 0.
+Sets 7 over 3 signal sessions; events seen: SEALED 7, SKIP_REPEAT_90D 7, SKIP_NO_TICKER 5, SKIP_NOT_IN_UNIVERSE 7; coverage gaps 0.
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
 
@@ -102,20 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 30 tags: 6 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4 XYL (Xylem Inc.) - filed 2026-10-29, sealed 2026-10-30T11:01:26Z, cutoff 2026-10-30T13:15:00Z
-Set `CAT-FORM4-0001524472-26-000150`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 90.76 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20.
-Form 4 `0001524472-26-000150` (1 filing(s)) by KOCH D CHRISTIAN (director).
-Coverage **FIRE**; purchases USD 985,600, owners 1, top executive no, lag 0 days.
-Twins (band+liq+mom+dd): MTZ 177.82, AMKR 41.21, CORT 85.95, AAOI 79.19, INTC 92.07.
-Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
-
-### FORM4 TFC (TRUIST FINANCIAL CORP) - filed 2026-10-29, sealed 2026-10-30T11:01:26Z, cutoff 2026-10-30T13:15:00Z
-Set `CAT-FORM4-0001534574-26-000018`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 49.32 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20.
-Form 4 `0001534574-26-000018` (1 filing(s)) by Lyons Michael P. (President & CEO).
-Coverage **FIRE**; purchases USD 1,209,050, owners 1, top executive yes, lag 1 days.
-Twins (band+liq+mom+dd): AOS 63.49, CTAS 218.07, ABBV 290.79, RPRX 65.93, LH 368.16.
-Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
 ### FORM4 BBT (Beacon Financial Corp) - filed 2026-10-29, sealed 2026-10-30T11:01:26Z, cutoff 2026-10-30T13:15:00Z
 Set `CAT-FORM4-0001628280-26-068056`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 30.66 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20.
@@ -207,4 +193,18 @@ Filing `0002011620-26-000006` by Quint Digital Ltd; cover page max 14.4% of clas
 Coverage **FIRE**; market value USD 136.4M from XBRL; parent CAT-SEC13D-0002011620-26-000006.
 Twins (band+liq+mom+dd): AIFU 9.8, LIVE 7.3001, NYC 5.96, FGI 7.91, NXTT 5.3, VHC 9.48, VMAR 6.26.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### DILUTION_8K PTHS - event `0001104659-26-120457`, accepted 2026-10-30T09:17:39-04:00, sealed 2026-10-30T23:02:40Z, cutoff 2026-11-02T14:15:00Z
+Set `CAT-DILUTION_8K-0001104659-26-120457`, scan `SCAN-US-2026-10-30-G2_RET30`; signal close 9.4 on 2026-10-30; entry: the entry session's opening print (2026-11-02). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move -43.17%.
+Twins (band+liq+mom+dd): OCC 11.53, AIRO 5.16, ESOA 9.4, CNL 10.5, MF 8.35.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### DILUTION_8K RAPP - event `0001193125-26-441851`, accepted 2026-10-30T17:12:36-04:00, sealed 2026-10-30T23:02:40Z, cutoff 2026-11-02T14:15:00Z
+Set `CAT-DILUTION_8K-0001193125-26-441851`, scan `SCAN-US-2026-10-30-G2_RET30`; signal close 25.05 on 2026-10-30; entry: the entry session's opening print (2026-11-02). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move +0.00%.
+Twins (band+liq+mom+dd): TSAT 40.09, JBSS 53.9, ASMB 20.13, CYD 22.45, OPY 86.2.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
