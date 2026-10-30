@@ -2,8 +2,8 @@
 
 Judged against a climatology twin of itself (how often each statement comes true per family), on skill statements only: beating the twins, the stated catalyst happening, both, and the stock's own pump, dump or pump and dump (each only when most of its twins did not make the same move). A call is right only when its whole thesis came true. Confidence opens only when a time-uniform lower bound on its weekly forward gain is above zero and the last half-year still shows skill.
 
-- As of 2026-10-30T00:27:05Z: 36 forecasts sealed, 0 forward-scored pairs
-- Coverage: 18 of 18 sets due since the first forecast; forecasts without an external timestamp: 0
+- As of 2026-10-30T11:03:31Z: 60 forecasts sealed, 0 forward-scored pairs
+- Coverage: 21 of 21 sets due since the first forecast; forecasts without an external timestamp: 0
 - Claim (raw beats the anchor, Brier gain per 4-week block, overlap-robust t): 0 pairs, 0 blocks, t None: **accumulating (no look reached)**
 
 | Gate (kind/horizon) | Earned confidence (alpha) | Observations | Mean gain | Proof (lower bound) | Recent lower bound |
@@ -26,6 +26,6 @@ Reliability (raw): none yet
 
 ## What it believes now
 
-- **RELATIVE RIGHT (shared)**: distance from the 60-session high, in the call's direction +0.114 (sd 0.177); purchase size -0.061 (sd 0.180); volume against its 20-session median +0.045 (sd 0.149); a top executive bought +0.041 (sd 0.202); 5-session move in the call's direction -0.025 (sd 0.170); the family fired (no abstention rule) +0.030 (sd 0.238); traded value (liquidity) +0.015 (sd 0.135); microcap or size unknown -0.025 (sd 0.237)
+- **RELATIVE RIGHT (shared)**: purchase size -0.062 (sd 0.180); distance from the 60-session high, in the call's direction +0.057 (sd 0.173); close near the day's high, in the call's direction +0.048 (sd 0.171); traded value (liquidity) +0.032 (sd 0.134); a top executive bought +0.040 (sd 0.202); volume against its 20-session median +0.029 (sd 0.148); 20-session move in the call's direction +0.023 (sd 0.169); the family fired (no abstention rule) +0.030 (sd 0.238)
 - **MECHANISM (FORM4_SHARP:MECH_SECOND_BUY_20)**: traded value (liquidity) -0.295 (sd 0.115); distance from the 60-session high, in the call's direction -0.147 (sd 0.175); a top executive bought +0.077 (sd 0.183); days from trade to filing -0.090 (sd 0.243); 5-session move in the call's direction -0.054 (sd 0.168); volume against its 20-session median +0.041 (sd 0.150); several insiders on one filing +0.062 (sd 0.238); 20-session move in the call's direction -0.044 (sd 0.177)
 - **TRIANGULATED (FORM4_SHARP:TRIANGULATED)**: traded value (liquidity) -0.216 (sd 0.133); purchase size -0.086 (sd 0.173); distance from the 60-session high, in the call's direction -0.081 (sd 0.189); volume against its 20-session median +0.047 (sd 0.166); a top executive bought +0.043 (sd 0.198); days from trade to filing -0.047 (sd 0.245); 5-session move in the call's direction -0.033 (sd 0.182); several insiders on one filing +0.032 (sd 0.242)
