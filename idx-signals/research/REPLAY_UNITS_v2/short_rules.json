@@ -1,0 +1,45 @@
+{
+ "study_id": "FRESH_SHORT_v1",
+ "frozen_at": "2026-10-30T09:48:45Z",
+ "period": [
+  "2025-11-03",
+  "2026-03-31"
+ ],
+ "why_this_period": "inside the 400-day pull, before RECENT_REPLAY_v1's range; no KOD study has read its outcomes",
+ "selection": "certified next-day dump calls of this period's replay (call_cert bar from 2022-2023 + this replay's own earlier outcomes)",
+ "trade": {
+  "entry": "short at the open of s+1",
+  "stop": "cover at 1.3 x entry when a session's high reaches it (at that session's open if it opened above)",
+  "exit": "else cover at the close of s+5",
+  "position": "2% of capital per trade in the book view"
+ },
+ "costs": {
+  "CHEAP": {
+   "trading": 0.002,
+   "borrow_per_day": 0.001
+  },
+  "TYPICAL": {
+   "trading": 0.006,
+   "borrow_per_day": 0.005
+  },
+  "BRUTAL": {
+   "trading": 0.015,
+   "borrow_per_day": 0.02
+  }
+ },
+ "bar": "TYPICAL mean net per trade > 0 and one-sided 95% session-bootstrap lower bound > 0",
+ "bootstrap": {
+  "resamples": 2000,
+  "seed": 20261031
+ },
+ "manifest": "yahoo_us_replay-20261030T071025Z.jsonl",
+ "limits": [
+  "no historical borrow availability",
+  "daily bars: the stop is assumed filled at its price",
+  "survivorship: names delisted since are absent",
+  "paper only"
+ ],
+ "code": {
+  "research/FRESH_SHORT_v1/short.py": "25db845a3b57e444970a5151142d0dd142807e97736024c47868234f721be51a"
+ }
+}
