@@ -10,6 +10,7 @@ import os
 from pathlib import Path
 import re
 import secrets
+import sqlite3
 from urllib.parse import urlencode, urlsplit
 
 from fastapi import FastAPI, HTTPException, Request
@@ -32,6 +33,8 @@ from .financials import FinancialRepository
 from .policy import DAY_END, STRICT, AsOfPolicy, eligibility
 from .services import ResearchService
 from .store import Store
+from .replay import ReplayArchive, ReplayUnavailable
+from .research import ResearchArchive, ResearchUnavailable
 
 ASSETS = Path(__file__).resolve().parent
 MAX_BODY = 10 * 1024 * 1024
@@ -381,7 +384,7 @@ def _policy_query(policy):
     return urlencode({"as_of": policy.as_dict()["cutoff"], "mode": policy.mode, "policy": name})
 
 
-def create_app(data_dir, offline=False, service=None, *, testing=False):
+def create_app(data_dir, offline=False, service=None, *, testing=False, replay_db=None):
     """Build an app with explicit runtime state; no import-time IO or collection."""
     app = FastAPI(title="KOD Workstation", docs_url=None, redoc_url=None)
     app.add_middleware(LocalBoundary)
@@ -392,6 +395,7 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
     app.state.service = service or ResearchService(Store(Path(data_dir)))
     app.state.store = app.state.service.store
     app.state.offline = bool(offline)
+    app.state.replay_db = Path(replay_db) if replay_db is not None else ASSETS.parents[1] / "var" / "kod.db"
     signing_key = secrets.token_bytes(32)
     templates = Jinja2Templates(directory=str(ASSETS / "templates"))
     templates.env.filters.update(moment=_display_time, number=_number)
@@ -473,6 +477,90 @@ def create_app(data_dir, offline=False, service=None, *, testing=False):
             title="Unable to complete this request",
             error=exc.detail,
             page="error",
+        )
+
+    @app.get("/investigate", response_class=HTMLResponse)
+    def investigate(request: Request, as_of: str = ""):
+        """One explicit information cutoff across independent preserved evidence stores."""
+        chosen = _policy(app.state.service.clock, as_of, "observed", "strict")
+        cases, ledger_error = [], None
+        try:
+            cases = ReplayArchive(app.state.replay_db).cases()
+        except (ReplayUnavailable, OSError, sqlite3.Error):
+            ledger_error = "The frozen case ledger is unavailable. Company evidence remains accessible."
+        population, population_error = [], None
+        try:
+            from .research import ResearchArchive
+
+            population = ResearchArchive().studies()
+        except ModuleNotFoundError as exc:
+            if exc.name != "kod.workstation.research":
+                raise
+            population_error = "Preserved research adapter not connected."
+        except (OSError, ValueError):
+            population_error = "Preserved research catalog is unavailable; no study results were substituted."
+        return render(
+            request, "investigate.html", page="investigate",
+            cutoff=chosen.as_dict()["cutoff"], query=_policy_query(chosen),
+            cases=cases, ledger_error=ledger_error,
+            workbench_query=lambda **params: urlencode(params),
+            population=population, population_error=population_error,
+        )
+
+    @app.get("/research/{study_id}", response_class=HTMLResponse)
+    def research_study(study_id: str, request: Request, as_of: str = ""):
+        try:
+            cutoff = timestamp(as_of.strip() or app.state.service.clock())
+        except ValueError as exc:
+            raise HTTPException(400, "Choose a timezone-qualified information cutoff.") from exc
+        try:
+            study = ResearchArchive().study(study_id, as_of=cutoff)
+        except ResearchUnavailable as exc:
+            raise HTTPException(404, str(exc)) from exc
+        return render(
+            request, "research.html", page="investigate", study=study, as_of=cutoff,
+            research_now=app.state.service.clock(),
+            research_query=lambda **params: urlencode(params),
+        )
+
+    @app.get("/replay", response_class=HTMLResponse)
+    def event_replay(
+        request: Request,
+        case_id: str = "",
+        as_of: str = "",
+        minimum_grade: str = "D",
+        reveal: str = "",
+    ):
+        """Read an immutable ledger snapshot; never collect or write research here."""
+        cases, snapshot, selected, error = [], None, None, None
+        try:
+            replay = ReplayArchive(app.state.replay_db)
+            cases = replay.cases()
+            if cases:
+                selected = next((c for c in cases if c["case_id"] == case_id), None)
+                if case_id and selected is None:
+                    raise HTTPException(404, "Replay event not found.")
+                selected = selected or max(
+                    (c for c in cases if c["call_type"] != "SIMULATED"),
+                    key=lambda c: c["opened_at"], default=cases[0],
+                )
+                cutoff = as_of.strip() or selected["decision_cutoff"]
+                snapshot = replay.snapshot(
+                    selected["case_id"], cutoff,
+                    reveal_outcome=reveal == "outcome", minimum_grade=minimum_grade,
+                )
+        except ReplayUnavailable as exc:
+            error = str(exc)
+        except (ValueError, KeyError) as exc:
+            raise HTTPException(400, str(exc)) from exc
+        except (OSError, sqlite3.Error):
+            error = "The preserved ledger is unavailable. Replay reads the existing var/kod.db; it does not create a replacement or fetch live data."
+        return render(
+            request, "replay.html", page="replay", cases=cases,
+            selected=selected, snapshot=snapshot, replay_error=error,
+            minimum_grade=minimum_grade, outcome_requested=reveal == "outcome",
+            replay_query=lambda **params: urlencode(params),
+            replay_now=app.state.service.clock(),
         )
 
     @app.get("/", response_class=HTMLResponse)

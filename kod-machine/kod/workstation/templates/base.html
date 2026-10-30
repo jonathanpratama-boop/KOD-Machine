@@ -13,7 +13,9 @@
   <a class="brand" href="/" aria-label="KOD Workstation home"><span class="brand-mark">K</span><span>KOD<span class="brand-sub">WORKSTATION</span></span></a>
   <div class="sidebar-label">Research desk</div>
   <nav aria-label="Main navigation">
+    <a href="/investigate" {% if page == 'investigate' %}aria-current="page"{% endif %}><span class="nav-icon">⊞</span> Evidence workbench</a>
     <a href="/" {% if page == 'inbox' %}aria-current="page"{% endif %}><span class="nav-icon">▤</span> Event inbox</a>
+    <a href="/replay" {% if page == 'replay' %}aria-current="page"{% endif %}><span class="nav-icon">↶</span> Event replay</a>
     <a href="/search" {% if page == 'search' %}aria-current="page"{% endif %}><span class="nav-icon">⌕</span> Archive search</a>
     <a href="/health" {% if page == 'health' %}aria-current="page"{% endif %}><span class="nav-icon">◉</span> Data &amp; health</a>
   </nav>
