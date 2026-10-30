@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-30T10:58:58Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-30T10:59:27Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -19,7 +19,7 @@ Primaries (`research/CATALYST_REGISTER_v1/prereg_2.json`), looks at [60, 120, 24
 
 Sets 14 over 1 sessions.
 
-- RUNUP: paired 0, mean signed diff n/a, share with the flow n/a
+- RUNUP: paired 14, mean signed diff +1.16%, share with the flow 64%
 - POST20: paired 0, mean signed diff n/a, share with the flow n/a
 
 ## DILUTION_8K (counted at each look; direction -1; `KOD-CATALYST-FAMILY-DILUTION_8K-v1`)
@@ -72,7 +72,7 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 | SEC13D | BEATS_TWINS_20 | 0 | | | | | |
 | SEC13D | FADE10_20 | 0 | | | | | |
 | SEC13D | RUN30_20 | 0 | | | | | |
-| IDX_INDEX | WITH_FLOW_RUNUP | 0 | | | | | |
+| IDX_INDEX | WITH_FLOW_RUNUP | 14 | 0.64 | 0.50 | n/a | 0.250 | 0.250 |
 | IDX_INDEX | REVERSAL_POST20 | 0 | | | | | |
 | DILUTION_8K | LOSES_TO_TWINS_20 | 0 | | | | | |
 | DILUTION_8K | GAIN0_20 | 0 | | | | | |
