@@ -385,6 +385,18 @@ def main(argv=None) -> int:
     p_l3.add_argument("--commit", action="store_true")
     p_l3r = sub.add_parser("learner3-report", help="write paper/LEARNER_V3.md")
     p_l3r.add_argument("--commit", action="store_true")
+    for command, helptext in (
+        (
+            "premove-shadow-forecast",
+            "seal today's three-arm pre-move shortlists (research/PREMOVE_SHADOW_v1)",
+        ),
+        (
+            "premove-shadow-score",
+            "record the outcomes of sealed pre-move days whose five bars are complete",
+        ),
+        ("premove-shadow-report", "write paper/PREMOVE_SHADOW.md"),
+    ):
+        sub.add_parser(command, help=helptext).add_argument("--commit", action="store_true")
     p_l3f = sub.add_parser(
         "learner3-freeze",
         help="freeze each eligible planned learner evaluation once; report remains read-only",
@@ -1202,6 +1214,8 @@ def main(argv=None) -> int:
 
         from . import learner, learner2, learner3
 
+        from . import premove_shadow
+
         problems = (
             paper.verify_all()
             + speculation.verify()
@@ -1209,11 +1223,66 @@ def main(argv=None) -> int:
             + learner.verify()
             + learner2.verify()
             + learner3.verify()
+            + premove_shadow.verify()
         )
         print("paper-verify: " + ("OK" if not problems else f"{len(problems)} problems"))
         for p_ in problems:
             print(f"  {p_}")
         return 1 if problems else 0
+    elif args.cmd in ("premove-shadow-forecast", "premove-shadow-score", "premove-shadow-report"):
+        import os
+
+        from . import paper, premove_shadow as shadow
+
+        trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "")
+        if args.cmd == "premove-shadow-report":
+            path = shadow.write_report()
+            print(path.read_text(encoding="utf-8"))
+            if args.commit:
+                print(paper.commit_and_push([path], "pre-move shadow trial: report", trailer))
+            return 0
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "kod-machine"))
+        from kod.timestamp import RFC3161Timestamper
+
+        manifest, _ = _recent_manifest("CRYPTO", max_age_hours=6)
+        if args.cmd == "premove-shadow-forecast":
+            record = shadow.forecast(manifest)
+            if record is None:
+                print(
+                    "pre-move shadow: this day is already sealed or outside the trial; nothing recorded"
+                )
+                return 0
+            recs = [record]
+            message = f"pre-move shadow trial: day {record['decision_date']} sealed (3 arms)"
+            for arm in shadow.ARMS:
+                print(
+                    f"{arm}: " + ", ".join(x["ticker"] for x in record["shortlists"]["early"][arm])
+                )
+        else:
+            recs = shadow.score(manifest)
+            if not recs:
+                print(
+                    "pre-move shadow: no sealed day has its five outcome bars yet; nothing recorded"
+                )
+                return 0
+            message = f"pre-move shadow trial: {len(recs)} day(s) resolved"
+            for r in recs:
+                print(f"{r['decision_date']}: resolved, {r['unknown']} candidate(s) unknown")
+        try:
+            stored = paper.append(recs, path=shadow.LEDGER, timestamper=RFC3161Timestamper())
+        except paper.ReceiptPendingError as exc:
+            stored = exc.records
+            print(f"warning: {exc}")
+        report = shadow.write_report()
+        if args.commit:
+            tokens = [
+                paper.TOKENS / f"{r['record_hash']}.{a}.tsr"
+                for r in stored
+                for a in ("freetsa", "sectigo")
+            ]
+            paths = [shadow.LEDGER, report, *[t for t in tokens if t.exists()]]
+            print(paper.commit_and_push(paths, message, trailer))
+        return 0
     elif args.cmd in ("speculate", "speculate-score", "speculate-report"):
         import os
         from datetime import datetime, timezone
