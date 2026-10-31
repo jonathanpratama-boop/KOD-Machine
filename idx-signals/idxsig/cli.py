@@ -1261,6 +1261,62 @@ def main(argv=None) -> int:
         for p_ in problems:
             print(f"  {p_}")
         return 1 if problems else 0
+    elif args.cmd in ("paper-account-sync", "paper-account-report"):
+        import os
+        from datetime import datetime, timezone
+
+        from . import paper, paper_account as acct
+
+        trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "")
+        if args.cmd == "paper-account-report":
+            path = acct.write_report()
+            print(path.read_text(encoding="utf-8"))
+            if args.commit:
+                print(paper.commit_and_push([path], "paper account: report", trailer))
+            return 0
+        manifest, extra = (
+            (Path(args.manifest), [])
+            if args.manifest
+            else _recent_manifest("US", args.max_age_hours)
+        )
+        bars_of, session, _ = acct.bars_from_manifest(manifest, _sec_verifier())
+        recs = acct.sync(acct.lines(), None, bars_of, datetime.now(timezone.utc), session)
+        for r in recs:
+            if r["type"] == acct.MARK:
+                print(
+                    f"  {r['arm']} {r['session']}: equity ${r['equity']:,.2f} (cash ${r['cash']:,.2f}, "
+                    f"realized ${r['realized']:+,.2f}, unrealized ${r['unrealized']:+,.2f})"
+                )
+            else:
+                what = r.get("status") or r.get("exit_reason") or r.get("reason") or r.get("order")
+                print(f"  {r['arm']} {r['ticker']}: {r['type']} {what}")
+        if not recs:
+            print("paper account: nothing new; nothing recorded")
+            return 0
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "kod-machine"))
+        from kod.timestamp import RFC3161Timestamper
+
+        try:
+            stored = paper.append(recs, path=acct.LEDGER, timestamper=RFC3161Timestamper())
+        except paper.ReceiptPendingError as exc:
+            stored = exc.records
+            print(f"warning: {exc}")
+        report = acct.write_report()
+        if args.commit:
+            tokens = [
+                paper.TOKENS / f"{r['record_hash']}.{a}.tsr"
+                for r in stored
+                for a in ("freetsa", "sectigo")
+            ]
+            n_orders = sum(r["type"] == acct.ORDER for r in recs)
+            print(
+                paper.commit_and_push(
+                    [acct.LEDGER, report, *[t for t in tokens if t.exists()], *extra],
+                    f"paper account: {len(recs)} record(s), {n_orders} new order(s)",
+                    trailer,
+                )
+            )
+        return 0
     elif args.cmd in (
         "paper-book-plan",
         "paper-book-score",
