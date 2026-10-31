@@ -420,6 +420,11 @@ def main(argv=None) -> int:
     sub.add_parser("paper-account-report", help="write paper/PAPER_ACCOUNT.md").add_argument(
         "--commit", action="store_true"
     )
+    sub.add_parser(
+        "crypto-account-sync",
+        help="the crypto spot paper account (research/CRYPTO_ACCOUNT_v1): record spot quotes, then "
+        "fills, exits, decisions and the mark",
+    ).add_argument("--commit", action="store_true")
     p_pbc = sub.add_parser(
         "paper-book-confirm",
         help="the owner's BUY or SKIP on a planned spike, before its entry cutoff",
@@ -1244,7 +1249,7 @@ def main(argv=None) -> int:
 
         from . import learner, learner2, learner3
 
-        from . import paper_account, paper_book, premove_shadow
+        from . import crypto_account, paper_account, paper_book, premove_shadow
 
         problems = (
             paper.verify_all()
@@ -1256,11 +1261,72 @@ def main(argv=None) -> int:
             + premove_shadow.verify()
             + paper_book.verify()
             + paper_account.verify()
+            + crypto_account.verify()
         )
         print("paper-verify: " + ("OK" if not problems else f"{len(problems)} problems"))
         for p_ in problems:
             print(f"  {p_}")
         return 1 if problems else 0
+    elif args.cmd == "crypto-account-sync":
+        import os
+        from datetime import datetime, timezone
+
+        from . import crypto_account as ca, paper
+
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "kod-machine"))
+        from kod.timestamp import RFC3161Timestamper
+
+        cands = ca.candidates(paper.ledger_lines(paper.LEDGER))
+        latest = max((d["signal_session"] for d in cands), default=None)
+        watch = sorted(
+            set(ca.symbols_needed(ca.lines(), cands))
+            | {ca.symbol_of(d) for d in cands if d["signal_session"] == latest}
+        )
+        quotes = ca.fetch_quotes(watch)
+        for q in quotes:
+            print(f"  quote {q['symbol']}: bid {q['bid']:g} ask {q['ask']:g} at {q['observed_at']}")
+        missing = sorted(set(watch) - {q["symbol"] for q in quotes})
+        if missing:
+            print(f"  no quote for: {', '.join(missing)}")
+        written, stamper = [], RFC3161Timestamper()
+
+        def add(recs):
+            try:
+                written.extend(paper.append(recs, path=ca.LEDGER, timestamper=stamper))
+            except paper.ReceiptPendingError as exc:
+                written.extend(exc.records)
+                print(f"warning: {exc}")
+
+        if quotes:
+            add(quotes)
+        now = datetime.now(timezone.utc)
+        new = ca.step(ca.lines(), cands, now)
+        for r in new:
+            what = r.get("status") or r.get("exit_reason") or r.get("reason") or r.get("order")
+            print(f"  {r['type']} {r.get('symbol') or r['ticker']}: {what}")
+        if new:
+            add(new)
+        add([ca.mark(ca.lines(), now)])
+        m = written[-1]
+        print(
+            f"  mark {m['session']}: equity {m['equity']:,.2f} USDT (cash {m['cash']:,.2f}, "
+            f"reserved {m['reserved']:,.2f}, realized {m['realized']:+,.2f})"
+        )
+        report = ca.write_report()
+        if args.commit:
+            tokens = [
+                paper.TOKENS / f"{r['record_hash']}.{a}.tsr"
+                for r in written
+                for a in ("freetsa", "sectigo")
+            ]
+            print(
+                paper.commit_and_push(
+                    [ca.LEDGER, report, *[t for t in tokens if t.exists()]],
+                    f"crypto account: {len(quotes)} quote(s), {len(new)} decision/fill record(s)",
+                    os.environ.get("IDXSIG_COMMIT_TRAILER", ""),
+                )
+            )
+        return 0
     elif args.cmd in ("paper-account-sync", "paper-account-report"):
         import os
         from datetime import datetime, timezone
