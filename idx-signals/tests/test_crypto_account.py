@@ -1,4 +1,6 @@
-"""CRYPTO_ACCOUNT_v1: orders, fills, cancels, stops, time exits and cash from recorded spot quotes only (fixtures)."""
+"""CRYPTO_ACCOUNT_v1.1: orders, fills, cancels, stops, time exits and cash from recorded spot quotes only, run through
+the same cycle the command uses, with a controlled clock and quote feed (fixtures). Includes the v1.1 regressions:
+failed fetches, stale quotes and impossible timestamps."""
 
 import tempfile
 import unittest
@@ -39,7 +41,30 @@ def _quote(symbol, bid, ask, t):
     }
 
 
-class CryptoAccount(unittest.TestCase):
+class Market:
+    """A clock and a spot book. Each fetch observes at the current time, then one second passes."""
+
+    def __init__(self):
+        self.t = T0
+        self.book: dict[str, tuple[float, float]] = {}
+
+    def clock(self):
+        return self.t
+
+    def fetch(self, symbols):
+        def get(sym):
+            if sym not in self.book:
+                raise ConnectionError("no answer")
+            bid, ask = self.book[sym]
+            return bid, ask, "fixture"
+
+        with mock.patch.object(ca, "utc_stamp", lambda: ca._stamp(self.t)):
+            out = ca.fetch_quotes(symbols, get)
+        self.t += timedelta(seconds=1)
+        return out
+
+
+class Base(unittest.TestCase):
     def setUp(self):
         tmp = tempfile.TemporaryDirectory()
         self.addCleanup(tmp.cleanup)
@@ -47,48 +72,50 @@ class CryptoAccount(unittest.TestCase):
         p = mock.patch.object(ca, "LEDGER", self.ledger)
         p.start()
         self.addCleanup(p.stop)
+        self.m = Market()
 
-    def _run(self, quotes, cands, now):
-        if quotes:
-            paper.append(quotes, path=self.ledger)
-        new = ca.step(ca.lines(), cands, now)
-        if new:
-            paper.append(new, path=self.ledger)
-        paper.append([ca.mark(ca.lines(), now)], path=self.ledger)
-        return new
+    def append(self, recs):
+        return paper.append(recs, path=self.ledger)
 
-    def _types(self, new):
+    def run_cycle(self, cands, advance=timedelta(0)):
+        self.m.t += advance
+        return ca.cycle(cands, self.m.fetch, self.m.clock, self.append)
+
+    @staticmethod
+    def kinds(run):
         return [
-            (r["type"], r.get("status") or r.get("exit_reason") or r.get("reason", "")[:12])
-            for r in new
-            if r["type"] != ca.MARK
+            (
+                r["type"],
+                r.get("status") or r.get("exit_reason") or r.get("reason", "").split(":")[0],
+            )
+            for r in run["events"]
         ]
 
+    def of(self, kind):
+        return [r for r in ca.lines() if r["type"] == kind]
+
+
+class Lifecycle(Base):
     def test_order_fill_stop_and_cash_reconcile(self):
         cands = [_decision("AAA", quote=100.0)]
-        new = self._run([_quote("AAAUSDT", 100.4, 100.5, T0)], cands, T0)
-        # the order and its fill at the decision quote's ask (100.5 <= limit 101.0) in the same step
-        self.assertEqual(self._types(new), [("ACCT_ORDER", "")])
-        order = next(r for r in ca.lines() if r["type"] == ca.ORDER)
+        self.m.book["AAAUSDT"] = (100.4, 100.5)
+        run = self.run_cycle(cands)
+        # ordered on the fresh decision quote, filled on the quote observed right after the order
+        self.assertEqual(self.kinds(run), [("ACCT_ORDER", ""), ("ACCT_ENTRY", "FILLED")])
+        order, fill = self.of(ca.ORDER)[0], self.of(ca.ENTRY)[0]
         self.assertAlmostEqual(order["limit"], 101.0)
         self.assertLessEqual(order["planned_risk_usd"], 0.005 * ca.START_CASH + 1e-6)
-        st = ca.account(ca.lines())
-        self.assertAlmostEqual(st["reserved"], order["reserved_usd"])
-        last_mark = [r for r in ca.lines() if r["type"] == ca.MARK][-1]
-        self.assertAlmostEqual(
-            last_mark["reserved"], round(order["reserved_usd"], 2)
-        )  # the mark sees it
-        self.assertEqual(st["equity"], ca.START_CASH)  # a reservation is not a loss
-        new = self._run([], cands, T0 + timedelta(minutes=1))
-        self.assertEqual(self._types(new), [("ACCT_ENTRY", "FILLED")])
-        fill = new[0]
+        self.assertGreaterEqual(fill["filled_at"], order["made_at"])
+        self.assertNotEqual(fill["quote_record_hash"], order["decision_quote_record_hash"])
         self.assertEqual((fill["price"], fill["stop"]), (100.5, 100.5 * 0.95))
-        # a later quote whose bid is through the stop: exits at that bid, below the stop
-        new = self._run(
-            [_quote("AAAUSDT", 94.0, 94.1, T0 + timedelta(hours=7))], cands, T0 + timedelta(hours=7)
-        )
-        self.assertEqual(self._types(new), [("ACCT_EXIT", "STOP")])
-        exit_ = new[0]
+        self.assertEqual(fill["deadline"], ca._stamp(ca._t(fill["filled_at"]) + ca.HOLD))
+        self.assertEqual(run["mark"]["reserved"], 0.0)  # the mark is taken after the fill
+        self.assertEqual(ca.verify(), [])
+        # a later quote with its bid through the stop: exits at that bid, below the stop
+        self.m.book["AAAUSDT"] = (94.0, 94.1)
+        run = self.run_cycle(cands, timedelta(hours=7))
+        self.assertEqual(self.kinds(run), [("ACCT_EXIT", "STOP")])
+        exit_ = self.of(ca.EXIT)[0]
         self.assertEqual(exit_["price"], 94.0)
         qty = order["quantity"]
         expected = qty * 94.0 * (1 - ca.FEE) - qty * 100.5 * (1 + ca.FEE)
@@ -102,87 +129,209 @@ class CryptoAccount(unittest.TestCase):
 
     def test_time_exit_at_the_first_quote_after_the_deadline(self):
         cands = [_decision("BBB", quote=10.0)]
-        self._run([_quote("BBBUSDT", 9.99, 10.0, T0)], cands, T0)
-        self._run([], cands, T0 + timedelta(minutes=1))
-        self._run(
-            [_quote("BBBUSDT", 10.4, 10.41, T0 + timedelta(days=2))], cands, T0 + timedelta(days=2)
-        )
+        self.m.book["BBBUSDT"] = (9.99, 10.0)
+        self.run_cycle(cands)
+        self.m.book["BBBUSDT"] = (10.4, 10.41)
+        self.run_cycle(cands, timedelta(days=2))
         st = ca.account(ca.lines())
         self.assertEqual((len(st["open"]), st["open"][0]["bid"]), (1, 10.4))
         self.assertGreater(st["unrealized"], 0)
-        new = self._run(
-            [_quote("BBBUSDT", 10.6, 10.61, T0 + timedelta(days=5, hours=1))],
-            cands,
-            T0 + timedelta(days=5, hours=1),
-        )
-        self.assertEqual(self._types(new), [("ACCT_EXIT", "TIME_EXIT")])
-        self.assertGreater(new[0]["net_pnl_usd"], 0)
+        self.m.book["BBBUSDT"] = (10.6, 10.61)
+        run = self.run_cycle(cands, timedelta(days=3, hours=1))
+        self.assertEqual(self.kinds(run), [("ACCT_EXIT", "TIME_EXIT")])
+        self.assertGreater(run["events"][0]["net_pnl_usd"], 0)
+        self.assertAlmostEqual(run["events"][0]["hours_after_deadline"], 1.0, places=1)
         self.assertEqual(ca.verify(), [])
 
     def test_cancel_before_the_fill_releases_the_reservation(self):
         cands = [_decision("CCC", quote=1.0)]
-        self._run(
-            [_quote("CCCUSDT", 1.05, 1.06, T0)], cands, T0
-        )  # ask above the limit 1.01: no fill yet
-        order = next(r for r in ca.lines() if r["type"] == ca.ORDER)
-        paper.append(
-            [
-                ca.cancel(
-                    ca.lines(), order["record_hash"], "owner cancel", T0 + timedelta(minutes=5)
-                )
-            ],
-            path=self.ledger,
-        )
-        new = self._run(
-            [_quote("CCCUSDT", 1.0, 1.005, T0 + timedelta(minutes=10))],
-            cands,
-            T0 + timedelta(minutes=10),
-        )
-        self.assertEqual(self._types(new), [])  # a cancelled order never fills
+        self.m.book["CCCUSDT"] = (1.05, 1.06)  # above the limit 1.01: no fill
+        run = self.run_cycle(cands)
+        self.assertEqual(self.kinds(run), [("ACCT_ORDER", "")])
+        self.assertGreater(run["mark"]["reserved"], 0)  # the mark sees the reservation
+        order = self.of(ca.ORDER)[0]
+        self.m.t += timedelta(minutes=5)
+        self.append([ca.cancel(ca.lines(), order["record_hash"], "owner cancel", self.m.t)])
+        self.m.book["CCCUSDT"] = (1.0, 1.005)
+        run = self.run_cycle(cands, timedelta(minutes=5))
+        self.assertEqual(self.kinds(run), [])  # a cancelled order never fills
         st = ca.account(ca.lines())
         self.assertEqual(
             (st["cash"], st["reserved"], st["free_cash"]), (ca.START_CASH, 0.0, ca.START_CASH)
         )
         with self.assertRaises(ValueError):
-            ca.cancel(ca.lines(), order["record_hash"], "again", T0 + timedelta(minutes=11))
+            ca.cancel(ca.lines(), order["record_hash"], "again", self.m.t)
         self.assertEqual(ca.verify(), [])
 
     def test_an_unfilled_order_expires(self):
         cands = [_decision("DDD", quote=1.0)]
-        self._run([_quote("DDDUSDT", 1.05, 1.06, T0)], cands, T0)
-        new = self._run(
-            [_quote("DDDUSDT", 1.0, 1.005, T0 + timedelta(hours=2))], cands, T0 + timedelta(hours=2)
-        )
-        self.assertEqual(
-            self._types(new), [("ACCT_ENTRY", "EXPIRED_UNFILLED")]
-        )  # cheap again, but too late
+        self.m.book["DDDUSDT"] = (1.05, 1.06)
+        self.run_cycle(cands)
+        self.m.book["DDDUSDT"] = (1.0, 1.005)  # cheap again, but after the order expired
+        run = self.run_cycle(cands, timedelta(hours=2))
+        self.assertEqual(self.kinds(run), [("ACCT_ENTRY", "EXPIRED_UNFILLED")])
+        self.assertIn("1 quote(s) observed, 0 fetch failure(s)", run["events"][0]["reason"])
         self.assertEqual(ca.account(ca.lines())["reserved"], 0.0)
 
     def test_pass_is_declined_and_never_bought(self):
-        new = self._run([], [_decision("EEE", verdict="PASS")], T0)
-        self.assertEqual(self._types(new), [("ACCT_DECLINE", "POLICY_PASS:")])
+        run = self.run_cycle([_decision("EEE", verdict="PASS")])
+        self.assertEqual(self.kinds(run), [("ACCT_DECLINE", "POLICY_PASS")])
         self.assertEqual(ca.symbols_needed(ca.lines(), [_decision("EEE", verdict="PASS")]), [])
         self.assertEqual(ca.account(ca.lines())["cash"], ca.START_CASH)
 
-    def test_a_buy_without_a_recorded_quote_is_declined(self):
-        new = self._run([], [_decision("FFF")], T0)
-        self.assertEqual(self._types(new), [("ACCT_DECLINE", "NO_QUOTE: no")])
-
     def test_the_risk_budget_caps_open_orders(self):
-        cands = [_decision(t, quote=1.0, n=i) for i, t in enumerate(("G1", "G2", "G3", "G4"))]
-        quotes = [_quote(f"{t}USDT", 1.05, 1.06, T0) for t in ("G1", "G2", "G3", "G4")]
-        new = self._run(quotes, cands, T0)
-        kinds = [r["type"] for r in new if r["type"] != ca.MARK]
-        self.assertEqual(kinds, [ca.ORDER] * 3 + [ca.DECLINE])
-        self.assertIn("LIMIT_", new[3]["reason"])
+        tickers = ("G1", "G2", "G3", "G4")
+        cands = [_decision(t, quote=1.0, n=i) for i, t in enumerate(tickers)]
+        for t in tickers:
+            self.m.book[f"{t}USDT"] = (1.05, 1.06)
+        run = self.run_cycle(cands)
+        self.assertEqual([k for k, _ in self.kinds(run)], [ca.ORDER] * 3 + [ca.DECLINE])
+        self.assertIn("LIMIT_", run["events"][3]["reason"])
 
-    def test_verify_catches_a_fill_off_the_recorded_ask(self):
-        cands = [_decision("HHH", quote=100.0)]
-        self._run([_quote("HHHUSDT", 100.4, 100.5, T0)], cands, T0)
-        new = ca.settle(ca.lines(), T0 + timedelta(minutes=1))
-        new[0]["price"] = 99.0
-        paper.append(new, path=self.ledger)
+
+class StaleQuotes(Base):
+    """v1.1 regressions: a failed fetch never becomes a fill, an old quote never becomes a decision or a fill."""
+
+    def test_failed_fetch_is_recorded_and_the_buy_declined(self):
+        run = self.run_cycle([_decision("FFF")])  # the feed does not answer for FFF
+        errors = self.of(ca.QUOTE_ERROR)
+        self.assertEqual([e["symbol"] for e in errors], ["FFFUSDT"])
+        self.assertIn("ConnectionError", errors[0]["error"])
+        self.assertEqual(self.kinds(run), [("ACCT_DECLINE", "NO_FRESH_QUOTE")])
+        self.assertIn("the fetch failed at", run["events"][0]["reason"])
+        self.assertEqual(self.of(ca.ORDER), [])
+
+    def test_a_ten_day_old_quote_is_not_used_when_the_fetch_fails(self):
+        # Ace's case: an old cached quote under the limit, and today's fetch fails
+        old = T0 - timedelta(days=10)
+        self.append([_quote("AAAUSDT", 99.0, 99.1, old)])
+        run = self.run_cycle([_decision("AAA", quote=100.0)])
+        self.assertEqual(self.kinds(run), [("ACCT_DECLINE", "NO_FRESH_QUOTE")])
+        reason = run["events"][0]["reason"]
+        self.assertIn("the fetch failed", reason)
+        self.assertIn(f"newest recorded quote is from {ca._stamp(old)}", reason)
+        self.assertEqual((self.of(ca.ORDER), self.of(ca.ENTRY)), ([], []))
+
+    def test_quotes_from_before_the_order_or_after_the_clock_cannot_fill_it(self):
+        self.m.book["AAAUSDT"] = (101.5, 101.6)  # above the limit at the decision
+        self.run_cycle([_decision("AAA", quote=100.0)])
+        order = self.of(ca.ORDER)[0]
+        self.append(
+            [_quote("AAAUSDT", 99.0, 99.1, T0 - timedelta(days=10))]
+        )  # the old cache, appended late
+        self.assertEqual(ca.settle(ca.lines(), self.m.t), [])  # still pending, nothing back-dated
+        self.append(
+            [_quote("AAAUSDT", 99.0, 99.1, self.m.t + timedelta(minutes=30))]
+        )  # stamped in the future
+        self.assertEqual(ca.settle(ca.lines(), self.m.t), [])
+        self.assertIsNone(ca.fresh_quote(ca.lines(), "AAAUSDT", T0 - timedelta(days=1))[0])
+        self.assertEqual(ca.account(ca.lines())["reserved"], order["reserved_usd"])
+
+    def test_failed_fetches_while_an_order_lives_expire_it_explicitly(self):
+        cands = [_decision("AAA", quote=100.0)]
+        self.m.book["AAAUSDT"] = (101.5, 101.6)
+        self.run_cycle(cands)
+        del self.m.book["AAAUSDT"]
+        self.run_cycle(cands, timedelta(minutes=30))
+        run = self.run_cycle(cands, timedelta(hours=1))
+        self.assertEqual(self.kinds(run), [("ACCT_ENTRY", "EXPIRED_UNFILLED")])
+        self.assertIn("1 fetch failure(s)", run["events"][0]["reason"])
+        self.assertEqual(ca.verify(), [])
+
+    def test_exit_waits_for_a_fresh_quote_and_records_how_late(self):
+        cands = [_decision("BBB", quote=10.0)]
+        self.m.book["BBBUSDT"] = (9.99, 10.0)
+        self.run_cycle(cands)
+        del self.m.book["BBBUSDT"]  # the deadline passes while the feed is down
+        run = self.run_cycle(cands, timedelta(days=5, hours=2))
+        self.assertEqual(self.kinds(run), [])  # no exit on an old price
+        self.assertIn("waiting for a fresh quote", ca.render(ca.lines()))
+        self.m.book["BBBUSDT"] = (10.2, 10.21)
+        run = self.run_cycle(cands, timedelta(hours=10))
+        self.assertEqual(self.kinds(run), [("ACCT_EXIT", "TIME_EXIT")])
+        self.assertGreater(run["events"][0]["hours_after_deadline"], 11.9)
+        self.assertEqual(ca.verify(), [])
+
+
+class LedgerChecks(Base):
+    """verify() rejects fills and exits that could not have happened."""
+
+    def _pending(self, ticker):
+        self.m.book[f"{ticker}USDT"] = (101.5, 101.6)  # no fill in the run
+        self.run_cycle([_decision(ticker, quote=100.0)])
+        return self.of(ca.ORDER)[0]
+
+    def _entry(self, order, quote, **fields):
+        return {
+            "type": ca.ENTRY,
+            "account": ca.ACCOUNT_ID,
+            "arm": ca.ARM,
+            "set_id": order["set_id"],
+            "ticker": order["ticker"],
+            "order_record_hash": order["record_hash"],
+            "status": "FILLED",
+            "price": quote["ask"],
+            "shares": order["quantity"],
+            "cost_in": ca.FEE,
+            "stop": quote["ask"] * 0.95,
+            "filled_at": quote["observed_at"],
+            "deadline": ca._stamp(ca._t(quote["observed_at"]) + ca.HOLD),
+            "quote_record_hash": quote["record_hash"],
+            "recorded_at": ca._stamp(self.m.t),
+            **fields,
+        }
+
+    def test_a_fill_off_the_recorded_ask_is_flagged(self):
+        order = self._pending("HHH")
+        q = self.of(ca.QUOTE)[-1]
+        self.append([self._entry(order, q, price=99.0)])
         self.assertTrue(any("qualifying recorded ask" in p for p in ca.verify()))
+
+    def test_a_back_dated_fill_with_a_past_deadline_is_flagged(self):
+        order = self._pending("JJJ")
+        (old,) = self.append([_quote("JJJUSDT", 99.0, 99.1, T0 - timedelta(days=10))])
+        self.append([self._entry(order, old)])
+        problems = ca.verify()
+        self.assertTrue(
+            any("not observed while the order was live" in p for p in problems), problems
+        )
+
+    def test_a_deadline_not_from_the_fill_is_flagged(self):
+        order = self._pending("KKK")
+        self.m.book["KKKUSDT"] = (100.0, 100.1)
+        (q,) = self.append(self.m.fetch(["KKKUSDT"]))
+        self.append([self._entry(order, q, deadline=ca._stamp(T0 - timedelta(days=5)))])
+        problems = ca.verify()
+        self.assertTrue(any("holding deadline not from the fill" in p for p in problems), problems)
+
+    def test_a_time_exit_before_the_deadline_is_flagged(self):
+        self.m.book["AAAUSDT"] = (100.4, 100.5)
+        self.run_cycle([_decision("AAA", quote=100.0)])
+        order, fill = self.of(ca.ORDER)[0], self.of(ca.ENTRY)[0]
+        self.m.t += timedelta(hours=1)
+        (later,) = self.append(self.m.fetch(["AAAUSDT"]))
+        self.append(
+            [
+                {
+                    "type": ca.EXIT,
+                    "account": ca.ACCOUNT_ID,
+                    "arm": ca.ARM,
+                    "set_id": order["set_id"],
+                    "ticker": "AAA",
+                    "order_record_hash": order["record_hash"],
+                    "exit_reason": "TIME_EXIT",
+                    "price": later["bid"],
+                    "cost_out": ca.FEE,
+                    "exited_at": later["observed_at"],
+                    "quote_record_hash": later["record_hash"],
+                    "net_pnl_usd": 0.0,
+                    "net_return": 0.0,
+                    "recorded_at": ca._stamp(self.m.t),
+                }
+            ]
+        )
+        self.assertGreater(fill["deadline"], later["observed_at"])
+        self.assertTrue(any("time exit before the deadline" in p for p in ca.verify()))
 
 
 if __name__ == "__main__":

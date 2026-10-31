@@ -1278,36 +1278,33 @@ def main(argv=None) -> int:
 
         cands = ca.candidates(paper.ledger_lines(paper.LEDGER))
         latest = max((d["signal_session"] for d in cands), default=None)
-        watch = sorted(
-            set(ca.symbols_needed(ca.lines(), cands))
-            | {ca.symbol_of(d) for d in cands if d["signal_session"] == latest}
-        )
-        quotes = ca.fetch_quotes(watch)
-        for q in quotes:
-            print(f"  quote {q['symbol']}: bid {q['bid']:g} ask {q['ask']:g} at {q['observed_at']}")
-        missing = sorted(set(watch) - {q["symbol"] for q in quotes})
-        if missing:
-            print(f"  no quote for: {', '.join(missing)}")
         written, stamper = [], RFC3161Timestamper()
 
-        def add(recs):
+        def append(recs):
             try:
                 written.extend(paper.append(recs, path=ca.LEDGER, timestamper=stamper))
             except paper.ReceiptPendingError as exc:
                 written.extend(exc.records)
                 print(f"warning: {exc}")
 
-        if quotes:
-            add(quotes)
-        now = datetime.now(timezone.utc)
-        new = ca.step(ca.lines(), cands, now)
-        for r in new:
+        run = ca.cycle(
+            cands,
+            ca.fetch_quotes,
+            lambda: datetime.now(timezone.utc),
+            append,
+            watch_extra=[ca.symbol_of(d) for d in cands if d["signal_session"] == latest],
+        )
+        for q in run["observed"]:
+            if q["type"] == ca.QUOTE:
+                print(
+                    f"  quote {q['symbol']}: bid {q['bid']:g} ask {q['ask']:g} at {q['observed_at']}"
+                )
+            else:
+                print(f"  no quote for {q['symbol']} at {q['attempted_at']}: {q['error']}")
+        for r in run["events"]:
             what = r.get("status") or r.get("exit_reason") or r.get("reason") or r.get("order")
             print(f"  {r['type']} {r.get('symbol') or r['ticker']}: {what}")
-        if new:
-            add(new)
-        add([ca.mark(ca.lines(), now)])
-        m = written[-1]
+        m = run["mark"]
         print(
             f"  mark {m['session']}: equity {m['equity']:,.2f} USDT (cash {m['cash']:,.2f}, "
             f"reserved {m['reserved']:,.2f}, realized {m['realized']:+,.2f})"
@@ -1319,10 +1316,12 @@ def main(argv=None) -> int:
                 for r in written
                 for a in ("freetsa", "sectigo")
             ]
+            n_quotes = sum(r["type"] == ca.QUOTE for r in run["observed"])
             print(
                 paper.commit_and_push(
                     [ca.LEDGER, report, *[t for t in tokens if t.exists()]],
-                    f"crypto account: {len(quotes)} quote(s), {len(new)} decision/fill record(s)",
+                    f"crypto account: {n_quotes} quote(s), "
+                    f"{len(run['events'])} decision/fill record(s)",
                     os.environ.get("IDXSIG_COMMIT_TRAILER", ""),
                 )
             )

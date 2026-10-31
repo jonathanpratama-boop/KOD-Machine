@@ -1,4 +1,4 @@
-"""CRYPTO_ACCOUNT_v1: a crypto spot paper account (research/CRYPTO_ACCOUNT_v1/protocol.json). Paper only: no orders.
+"""CRYPTO_ACCOUNT_v1: a crypto spot paper account (research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json). Paper only: no orders.
 
 A separate adapter beside the frozen US stock account. It reuses that account's tested cash accounting
 (paper_account.orders_of / account_state: cash, reservations, fills, cancels, realized P&L) by writing records
@@ -9,11 +9,21 @@ of the same shapes, and replaces everything market-specific:
     bookTicker endpoint and timestamped when observed). Nothing fills, stops or exits on a price that was not
     recorded in this ledger.
   * fees: an explicit taker fee per side (FEE); the bid/ask spread is paid by buying at the ask, selling at the bid.
-  * fills: a limit buy fills at the ask of the first recorded quote, from the decision quote on and before the
-    order expires, whose ask is at or below the limit; otherwise it expires unfilled (ACCT_ENTRY EXPIRED_UNFILLED).
-  * exits: the stop is set at the fill, MAX_STOP below it. A position exits at the bid of the first recorded quote
-    after the fill whose bid is at or below the stop (that bid can be well below the stop: quotes are sparse),
-    or at the bid of the first recorded quote at or after the HOLD deadline.
+  * decisions: an order needs a quote observed within QUOTE_MAX_AGE before it is placed; a missing, stale or
+    failed quote is a DECLINE (NO_FRESH_QUOTE). A failed fetch is recorded (CRYPTO_QUOTE_ERROR), never replaced
+    by an older quote.
+  * fills: a limit buy fills at the ask of the first quote observed at or after the order was placed (never its
+    decision quote) and before it expires, whose ask is at or below the limit; otherwise it expires unfilled
+    (ACCT_ENTRY EXPIRED_UNFILLED, with the quotes and fetch failures of its life). Each run observes again right
+    after placing orders (cycle), so an order can fill in the run that placed it.
+  * exits: the stop is set at the fill, MAX_STOP below it; the HOLD deadline runs from the fill. A position exits
+    at the bid of the first quote observed after the fill whose bid is at or below the stop (that bid can be
+    well below the stop: quotes are sparse), or at the bid of the first quote observed at or after the deadline
+    (how late is recorded). No fill or exit uses a quote observed after the run's own clock.
+
+Version history: v1 (research/CRYPTO_ACCOUNT_v1/protocol.json, code at commit b4aec00) let an order use the
+latest recorded quote of any age, as its decision price and as its fill, with a deadline counted from that old
+quote. v1.1 (protocol_v1_1.json, CORRECTION_1.md) is this file; every record it writes carries rules = RULES.
 
 Decisions come from the crypto paper scan (paper/ledger.jsonl, the frozen paper policy). The account only buys a
 decision the policy itself made a buy; every PASS is recorded as a decline with the policy's reason. Quantities
@@ -36,8 +46,9 @@ from .provenance import utc_stamp
 LEDGER = paper.PAPER / "crypto_account.jsonl"
 REPORT = paper.PAPER / "CRYPTO_ACCOUNT.md"
 ACCOUNT_ID = "CRYPTO_ACCOUNT_v1"
+RULES = "CRYPTO_ACCOUNT_v1.1"
 ARM = "CRYPTO_SPOT"
-QUOTE = "CRYPTO_QUOTE"
+QUOTE, QUOTE_ERROR = "CRYPTO_QUOTE", "CRYPTO_QUOTE_ERROR"
 ORDER, DECLINE, CANCEL, ENTRY, EXIT, MARK = (
     stock.ORDER,
     stock.DECLINE,
@@ -55,6 +66,9 @@ FEE = 0.001  # taker fee per side (Binance spot base rate)
 CHASE = 0.01  # limit = the policy's decision-time quote x (1 + CHASE)
 MAX_STOP = 0.05  # stop set at the fill, 5% below it
 ORDER_VALID = timedelta(hours=1)
+QUOTE_MAX_AGE = timedelta(
+    minutes=5
+)  # the newest quote a decision may use, at the moment it is made
 HOLD = timedelta(days=5)
 FIRST_SIGNAL = "2026-10-30"
 BOOK_TICKER = "https://data-api.binance.vision/api/v3/ticker/bookTicker?symbol={}"
@@ -77,30 +91,48 @@ def floor8(x: float) -> float:
 
 
 # ---------------------------------------------------------------------------------------- quotes
-def fetch_quotes(symbols: list[str]) -> list[dict]:
-    """One CRYPTO_QUOTE per symbol that answered; a symbol without an answer gets no record."""
+def book_ticker(symbol: str) -> tuple[float, float, str]:
+    """Best bid and ask from Binance's public spot endpoint; raises if there is no usable answer."""
+    url = BOOK_TICKER.format(quote_url(symbol))
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=20) as resp:
+        body = json.loads(resp.read())
+    bid, ask = float(body["bidPrice"]), float(body["askPrice"])
+    if not (bid > 0 and ask >= bid):
+        raise ValueError(f"unusable book: bid {bid} ask {ask}")
+    return bid, ask, url
+
+
+def fetch_quotes(symbols: list[str], get=book_ticker) -> list[dict]:
+    """One CRYPTO_QUOTE per symbol that answered and one CRYPTO_QUOTE_ERROR per symbol that did not."""
     out = []
     for sym in sorted(set(symbols)):
-        url = BOOK_TICKER.format(quote_url(sym))
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-            with urllib.request.urlopen(req, timeout=20) as resp:
-                body = json.loads(resp.read())
-            bid, ask = float(body["bidPrice"]), float(body["askPrice"])
-        except Exception:  # noqa: BLE001, S112 - no answer is no observation
-            continue
-        if bid > 0 and ask >= bid:
+            bid, ask, url = get(sym)
+        except Exception as exc:  # noqa: BLE001 - recorded, never replaced by an older quote
             out.append(
                 {
-                    "type": QUOTE,
+                    "type": QUOTE_ERROR,
                     "account": ACCOUNT_ID,
+                    "rules": RULES,
                     "symbol": sym,
-                    "bid": bid,
-                    "ask": ask,
-                    "observed_at": utc_stamp(),
-                    "source": url,
+                    "attempted_at": utc_stamp(),
+                    "error": f"{type(exc).__name__}: {exc}"[:200],
                 }
             )
+            continue
+        out.append(
+            {
+                "type": QUOTE,
+                "account": ACCOUNT_ID,
+                "rules": RULES,
+                "symbol": sym,
+                "bid": bid,
+                "ask": ask,
+                "observed_at": utc_stamp(),
+                "source": url,
+            }
+        )
     return out
 
 
@@ -109,6 +141,26 @@ def quotes_of(recs: list[dict], symbol: str) -> list[dict]:
         (r for r in recs if r["type"] == QUOTE and r["symbol"] == symbol),
         key=lambda r: r["observed_at"],
     )
+
+
+def errors_of(recs: list[dict], symbol: str) -> list[dict]:
+    return [r for r in recs if r["type"] == QUOTE_ERROR and r["symbol"] == symbol]
+
+
+def fresh_quote(recs: list[dict], symbol: str, now: datetime) -> tuple[dict | None, str]:
+    """The newest quote observed within QUOTE_MAX_AGE before `now`, or None and why there is none."""
+    seen = [q for q in quotes_of(recs, symbol) if q["observed_at"] <= _stamp(now)]
+    if seen and now - _t(seen[-1]["observed_at"]) <= QUOTE_MAX_AGE:
+        return seen[-1], ""
+    errs = [e for e in errors_of(recs, symbol) if now - _t(e["attempted_at"]) <= QUOTE_MAX_AGE]
+    why = f"the fetch failed at {errs[-1]['attempted_at']} ({errs[-1]['error']}); " if errs else ""
+    if seen:
+        return (
+            None,
+            why
+            + f"the newest recorded quote is from {seen[-1]['observed_at']}, older than {QUOTE_MAX_AGE}",
+        )
+    return None, why + "no quote was ever recorded for the coin"
 
 
 # ------------------------------------------------------------------------------------- decisions
@@ -186,10 +238,10 @@ def decide(recs: list[dict], cands: list[dict], now: datetime) -> list[dict]:
         if d["decision_id"] in decided:
             continue
         sym = symbol_of(d)
-        qs = quotes_of(recs, sym)
-        q = qs[-1] if qs else None
+        q, stale = fresh_quote(recs, sym, now)
         base = {
             "account": ACCOUNT_ID,
+            "rules": RULES,
             "arm": ARM,
             "decision_id": d["decision_id"],
             "set_id": d["decision_id"],
@@ -210,9 +262,7 @@ def decide(recs: list[dict], cands: list[dict], now: datetime) -> list[dict]:
             )
             continue
         if q is None:
-            out.append(
-                {"type": DECLINE, **base, "reason": "NO_QUOTE: no recorded spot quote for the coin"}
-            )
+            out.append({"type": DECLINE, **base, "reason": f"NO_FRESH_QUOTE: {stale}"})
             continue
         ref = float((d.get("verified_price") or {}).get("quote") or 0)
         if not ref > 0:
@@ -286,6 +336,7 @@ def cancel(recs: list[dict], order_hash: str, reason: str, now: datetime) -> dic
     return {
         "type": CANCEL,
         "account": ACCOUNT_ID,
+        "rules": RULES,
         "arm": ARM,
         "set_id": o["set_id"],
         "ticker": o["ticker"],
@@ -305,24 +356,23 @@ def settle(recs: list[dict], now: datetime) -> list[dict]:
             continue
         base = {
             "account": ACCOUNT_ID,
+            "rules": RULES,
             "arm": ARM,
             "set_id": o["set_id"],
             "ticker": o["ticker"],
             "order_record_hash": h,
             "recorded_at": _stamp(now),
         }
-        qs = quotes_of(recs, o["symbol"])
+        qs = [q for q in quotes_of(recs, o["symbol"]) if q["observed_at"] <= _stamp(now)]
         en = x["entry"]
         if en is None:
-            fill = next(
-                (
-                    q
-                    for q in qs
-                    if o["decision_quote_at"] <= q["observed_at"] <= o["valid_until"]
-                    and q["ask"] <= o["limit"]
-                ),
-                None,
-            )
+            live = [
+                q
+                for q in qs
+                if o["made_at"] <= q["observed_at"] <= o["valid_until"]
+                and q["record_hash"] != o["decision_quote_record_hash"]
+            ]
+            fill = next((q for q in live if q["ask"] <= o["limit"]), None)
             if fill is not None:
                 en = {
                     "type": ENTRY,
@@ -338,12 +388,18 @@ def settle(recs: list[dict], now: datetime) -> list[dict]:
                 }
                 out.append(en)
             elif now > _t(o["valid_until"]):
+                failed = [
+                    e
+                    for e in errors_of(recs, o["symbol"])
+                    if o["made_at"] <= e["attempted_at"] <= o["valid_until"]
+                ]
                 out.append(
                     {
                         "type": ENTRY,
                         **base,
                         "status": "EXPIRED_UNFILLED",
-                        "reason": f"no recorded ask at or below {o['limit']:g} before {o['valid_until']}",
+                        "reason": f"no ask at or below {o['limit']:g} observed between {o['made_at']} and "
+                        f"{o['valid_until']} ({len(live)} quote(s) observed, {len(failed)} fetch failure(s))",
                     }
                 )
                 continue
@@ -363,11 +419,13 @@ def settle(recs: list[dict], now: datetime) -> list[dict]:
             )
             if why:
                 proceeds = en["shares"] * q["bid"] * (1 - FEE)
+                late = (_t(q["observed_at"]) - _t(en["deadline"])).total_seconds() / 3600
                 out.append(
                     {
                         "type": EXIT,
                         **base,
                         "exit_reason": why,
+                        "hours_after_deadline": round(late, 2) if why == "TIME_EXIT" else None,
                         "price": q["bid"],
                         "cost_out": FEE,
                         "exited_at": q["observed_at"],
@@ -386,6 +444,7 @@ def mark(recs: list[dict], now: datetime) -> dict:
     return {
         "type": MARK,
         "account": ACCOUNT_ID,
+        "rules": RULES,
         "arm": ARM,
         "session": _stamp(now),
         **{
@@ -416,11 +475,31 @@ def symbols_needed(recs: list[dict], cands: list[dict]) -> list[str]:
     return sorted(out)
 
 
-def step(recs: list[dict], cands: list[dict], now: datetime) -> list[dict]:
-    """After the quotes are recorded: fills and exits, then the decisions. The mark is taken from the ledger
-    after these are written (mark()), so it always includes tonight's reservations."""
-    new = settle(recs, now)
-    return new + decide(recs + new, cands, now)
+def cycle(cands: list[dict], fetch, clock, append, watch_extra=()) -> dict:
+    """One run, each phase written before the next reads the ledger: observe; record fills, expiries and exits;
+    decide; observe again the coins of orders just placed and record their fills; mark."""
+
+    events: list[dict] = []
+
+    def put(recs, track=True):
+        if recs:
+            append(recs)
+            if track:
+                events.extend(recs)
+        return recs
+
+    observed = put(
+        fetch(sorted(set(symbols_needed(lines(), cands)) | set(watch_extra))), track=False
+    )
+    now = clock()
+    put(settle(lines(), now))
+    decided = put(decide(lines(), cands, now))
+    placed = sorted({r["symbol"] for r in decided if r["type"] == ORDER})
+    after = put(fetch(placed), track=False) if placed else []
+    if placed:
+        put(settle(lines(), clock()))
+    marked = put([mark(lines(), clock())], track=False)
+    return {"observed": observed + after, "events": events, "mark": marked[0]}
 
 
 # ---------------------------------------------------------------------------------------- report
@@ -432,11 +511,11 @@ def render(recs: list[dict]) -> str:
         default="no records yet",
     )
     out = [
-        "# KOD crypto spot paper account (CRYPTO_ACCOUNT_v1)",
+        "# KOD crypto spot paper account (CRYPTO_ACCOUNT_v1, rules v1.1)",
         "",
         (
             f"As of the latest record ({as_of}). Paper only: no orders, no money. "
-            "Protocol: `research/CRYPTO_ACCOUNT_v1/protocol.json`."
+            "Protocol: `research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json` (supersedes protocol.json; see CORRECTION_1.md)."
         ),
         "",
         (
@@ -467,11 +546,23 @@ def render(recs: list[dict]) -> str:
         "## Open positions",
         "",
     ]
+    entries = {
+        x["order"]["symbol"]: x["entry"] for x in book.values() if x["entry"] and not x["exit"]
+    }
     out += [
         f"- {p['symbol']}: {p['quantity']:g} valued {p['value']:,.2f} USDT at the bid recorded "
         f"{p['valued_at'] or '(none: carried at entry price)'}"
+        + (
+            f"; time exit due since {entries[p['symbol']]['deadline']}, waiting for a fresh quote"
+            if entries.get(p["symbol"]) and as_of >= entries[p["symbol"]]["deadline"]
+            else ""
+        )
         for p in st["open"]
     ] or ["- None."]
+    errors = [r for r in recs if r["type"] == QUOTE_ERROR]
+    out += ["", "## Quote fetch failures", ""] + (
+        [f"- {e['attempted_at']} {e['symbol']}: {e['error']}" for e in errors[-10:]] or ["- None."]
+    )
     out += [
         "",
         "## Every decision",
@@ -519,7 +610,7 @@ def verify() -> list[str]:
     problems = [f"crypto_account.jsonl: {p}" for p in paper.verify_chain(LEDGER)]
     recs = lines()
     by_hash = {r["record_hash"]: r for r in recs}
-    decided, followed = set(), set()
+    decided, followed, fills = set(), set(), {}
     for r in recs:
         if r["type"] in (ORDER, DECLINE):
             if r["decision_id"] in decided:
@@ -529,28 +620,58 @@ def verify() -> list[str]:
             q = by_hash.get(r["decision_quote_record_hash"])
             if q is None or q["type"] != QUOTE or q["symbol"] != r["symbol"]:
                 problems.append(f"{r['decision_id']}: order does not point at its quote")
-        if r["type"] in (ENTRY, EXIT, CANCEL):
-            o = by_hash.get(r["order_record_hash"])
-            if o is None or o["type"] != ORDER:
-                problems.append(f"{r['set_id']}: {r['type']} does not point at its order")
-                continue
-            if (r["order_record_hash"], r["type"]) in followed:
-                problems.append(f"{r['set_id']}: {r['type']} recorded twice")
-            followed.add((r["order_record_hash"], r["type"]))
-            if r["type"] == CANCEL and r["made_at"] >= o["valid_until"]:
-                problems.append(f"{r['set_id']}: cancelled after the order expired")
-            if r.get("status") == "FILLED" or r["type"] == EXIT:
-                q = by_hash.get(r["quote_record_hash"])
-                if q is None or q["type"] != QUOTE or q["symbol"] != o["symbol"]:
-                    problems.append(
-                        f"{r['set_id']}: {r['type']} does not point at a recorded quote"
-                    )
-                elif r["type"] == ENTRY and not (
-                    q["ask"] == r["price"]
-                    and q["ask"] <= o["limit"]
-                    and o["decision_quote_at"] <= q["observed_at"] <= o["valid_until"]
-                ):
-                    problems.append(f"{r['set_id']}: fill not at a qualifying recorded ask")
-                elif r["type"] == EXIT and q["bid"] != r["price"]:
-                    problems.append(f"{r['set_id']}: exit not at the recorded bid")
+            elif not (
+                q["observed_at"] <= r["made_at"]
+                and _t(r["made_at"]) - _t(q["observed_at"]) <= QUOTE_MAX_AGE
+            ):
+                problems.append(f"{r['decision_id']}: order placed on a quote that was not fresh")
+        if r["type"] not in (ENTRY, EXIT, CANCEL):
+            continue
+        o = by_hash.get(r["order_record_hash"])
+        if o is None or o["type"] != ORDER:
+            problems.append(f"{r['set_id']}: {r['type']} does not point at its order")
+            continue
+        if (r["order_record_hash"], r["type"]) in followed:
+            problems.append(f"{r['set_id']}: {r['type']} recorded twice")
+        followed.add((r["order_record_hash"], r["type"]))
+        if r["type"] == CANCEL and r["made_at"] >= o["valid_until"]:
+            problems.append(f"{r['set_id']}: cancelled after the order expired")
+        if r.get("status") != "FILLED" and r["type"] != EXIT:
+            continue
+        q = by_hash.get(r["quote_record_hash"])
+        if q is None or q["type"] != QUOTE or q["symbol"] != o["symbol"]:
+            problems.append(f"{r['set_id']}: {r['type']} does not point at a recorded quote")
+            continue
+        if q["observed_at"] > r["recorded_at"]:
+            problems.append(
+                f"{r['set_id']}: {r['type']} uses a quote observed after it was recorded"
+            )
+        if r["type"] == ENTRY:
+            fills[r["order_record_hash"]] = r
+            if not (
+                o["made_at"] <= q["observed_at"] <= o["valid_until"]
+                and q["record_hash"] != o["decision_quote_record_hash"]
+            ):
+                problems.append(f"{r['set_id']}: fill not observed while the order was live")
+            if not (q["ask"] == r["price"] and q["ask"] <= o["limit"]):
+                problems.append(f"{r['set_id']}: fill not at a qualifying recorded ask")
+            if r["filled_at"] != q["observed_at"] or r["deadline"] != _stamp(
+                _t(q["observed_at"]) + HOLD
+            ):
+                problems.append(
+                    f"{r['set_id']}: fill time or holding deadline not from the fill quote"
+                )
+            continue
+        en = fills.get(r["order_record_hash"])
+        if en is None:
+            problems.append(f"{r['set_id']}: exit without a filled entry")
+            continue
+        if q["bid"] != r["price"]:
+            problems.append(f"{r['set_id']}: exit not at the recorded bid")
+        if q["observed_at"] <= en["filled_at"]:
+            problems.append(f"{r['set_id']}: exit quote not after the fill")
+        if r["exit_reason"] == "STOP" and q["bid"] > en["stop"]:
+            problems.append(f"{r['set_id']}: stop exit above the stop")
+        if r["exit_reason"] == "TIME_EXIT" and q["observed_at"] < en["deadline"]:
+            problems.append(f"{r['set_id']}: time exit before the deadline")
     return problems
