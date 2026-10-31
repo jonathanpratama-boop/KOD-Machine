@@ -1,0 +1,1576 @@
+{
+ "study": "CRYPTO_REPLAY_v1",
+ "ran_at": "2026-10-31T15:07:53Z",
+ "status": "a separate hypothetical test of the frozen PREMOVE_SEQUENCE_v1 rankings: every day's frozen top-five early-population shortlist is offered to the account in rank order and the account limits decide which names enter. It is not a replay of the live crypto paper policy (which decides PASS) and grants no permission to activate buys. Retrospective development evidence on 2023, a year KOD has studied before; NOT untouched validation. Simulation only: no orders. 2024 data is never opened, not even to finish year-end trades: positions open at the end of 2023-12-31 stay unresolved, valued at their last 2023 close.",
+ "scenarios": {
+  "BASE": {
+   "policy": {
+    "start_cash": 10000.0,
+    "risk": 0.005,
+    "max_risk": 0.015,
+    "max_new_per_day": 3,
+    "stop": 0.05,
+    "target": 0.1,
+    "hold_bars": 5,
+    "fee": 0.001,
+    "slip": 0.001,
+    "entry_delay": 0,
+    "loss_fraction": 0.05284620379620375
+   },
+   "arms": {
+    "summary": {
+     "start_equity": 10000.0,
+     "end_equity": 10152.191354758459,
+     "net_return": 0.015219135475845968,
+     "realized_pnl": 208.92506308316467,
+     "unrealized_pnl": -56.73370832468311,
+     "max_drawdown": -0.13353453611005972,
+     "max_drawdown_day": "2023-09-12",
+     "orders": 291,
+     "fills": 291,
+     "closed_trades": 288,
+     "wins": 118,
+     "losses": 170,
+     "win_rate": 0.4097222222222222,
+     "average_win": 50.576751393383674,
+     "average_loss": -33.87724471374182,
+     "expectancy_per_trade": 0.725434246816544,
+     "profit_factor": 1.0362771816213914,
+     "fees_usd": 543.8652030812727,
+     "slippage_usd": 543.8636100250272,
+     "mean_exposure": 0.20863684872631033,
+     "days_with_a_position": 351,
+     "turnover": 54.94140564036025,
+     "exit_reasons": {
+      "TIME_EXIT": 145,
+      "TARGET": 50,
+      "STOP": 93
+     },
+     "skips_and_rejections": {
+      "SKIP_DAILY_LIMIT": 28,
+      "SKIP_DUPLICATE_SYMBOL": 579,
+      "SKIP_RISK_LIMIT": 927,
+      "ambiguous_bar": 2,
+      "unresolved_end_of_data": 3
+     },
+     "invariants": "all hold",
+     "independent_trade_audit": "every fill and exit re-derived from the raw bars: all match",
+     "tested_accounting_crosscheck": {
+      "cash": 7319.214941340825,
+      "reserved": 0.0,
+      "realized": 208.92506308316467,
+      "replay_cash": 7319.214941340825,
+      "replay_reserved": 0.0,
+      "replay_realized": 208.92506308316467,
+      "match": true
+     },
+     "repeat_run_identical": true,
+     "fingerprint": "e58303cf421fa5f88adab35416228c67626be0d5e34a163c1e4746de73ef5a61",
+     "unresolved": [
+      {
+       "type": "UNRESOLVED",
+       "order_id": 287,
+       "ticker": "WNXMUSDT",
+       "entry_day": "2023-12-28",
+       "deadline": "2024-01-01",
+       "bars_held": 4,
+       "valued_at_close_of": "2023-12-31",
+       "value": 929.5287981838779,
+       "unrealized": -32.8741741850946,
+       "net_liquidation_value": 927.6706701163084,
+       "value_if_stopped": 911.5436287570896,
+       "value_if_target": 1055.4715701397881,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      },
+      {
+       "type": "UNRESOLVED",
+       "order_id": 290,
+       "ticker": "SUNUSDT",
+       "entry_day": "2023-12-30",
+       "deadline": "2024-01-03",
+       "bars_held": 2,
+       "valued_at_close_of": "2023-12-31",
+       "value": 944.5554197437896,
+       "unrealized": -19.098154942883298,
+       "net_liquidation_value": 942.6672534597218,
+       "value_if_stopped": 912.7281414898408,
+       "value_if_target": 1056.843111198763,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      },
+      {
+       "type": "UNRESOLVED",
+       "order_id": 291,
+       "ticker": "PAXGUSDT",
+       "entry_day": "2023-12-30",
+       "deadline": "2024-01-03",
+       "bars_held": 2,
+       "valued_at_close_of": "2023-12-31",
+       "value": 958.8921954899677,
+       "unrealized": -4.761379196705207,
+       "net_liquidation_value": 956.9753699911832,
+       "value_if_stopped": 912.7281414898408,
+       "value_if_target": 1056.8431111987632,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      }
+     ],
+     "unfilled": []
+    },
+    "sequence": {
+     "start_equity": 10000.0,
+     "end_equity": 10232.581932988138,
+     "net_return": 0.023258193298813845,
+     "realized_pnl": 323.9487211286963,
+     "unrealized_pnl": -91.36678814054676,
+     "max_drawdown": -0.18210342474508112,
+     "max_drawdown_day": "2023-09-14",
+     "orders": 328,
+     "fills": 328,
+     "closed_trades": 325,
+     "wins": 129,
+     "losses": 196,
+     "win_rate": 0.39692307692307693,
+     "average_win": 60.566556580526004,
+     "average_loss": -38.20988304979162,
+     "expectancy_per_trade": 0.9967652957806045,
+     "profit_factor": 1.0432558140898158,
+     "fees_usd": 615.3694940168142,
+     "slippage_usd": 615.3681221530962,
+     "mean_exposure": 0.19944073382624403,
+     "days_with_a_position": 336,
+     "turnover": 62.107825909015965,
+     "exit_reasons": {
+      "STOP": 128,
+      "TIME_EXIT": 124,
+      "TARGET": 73
+     },
+     "skips_and_rejections": {
+      "SKIP_DAILY_LIMIT": 58,
+      "SKIP_DUPLICATE_SYMBOL": 523,
+      "SKIP_RISK_LIMIT": 916,
+      "ambiguous_bar": 8,
+      "unresolved_end_of_data": 3
+     },
+     "invariants": "all hold",
+     "independent_trade_audit": "every fill and exit re-derived from the raw bars: all match",
+     "tested_accounting_crosscheck": {
+      "cash": 7397.398665794539,
+      "reserved": 0.0,
+      "realized": 323.9487211286963,
+      "replay_cash": 7397.398665794537,
+      "replay_reserved": 1.1368683772161603e-12,
+      "replay_realized": 323.9487211286963,
+      "match": true
+     },
+     "repeat_run_identical": true,
+     "fingerprint": "ff503edacd626cfbce871369b3cbb63cbb647679f76e62aa28b7f91e6ebf99c5",
+     "unresolved": [
+      {
+       "type": "UNRESOLVED",
+       "order_id": 325,
+       "ticker": "WNXMUSDT",
+       "entry_day": "2023-12-28",
+       "deadline": "2024-01-01",
+       "bars_held": 4,
+       "valued_at_close_of": "2023-12-31",
+       "value": 946.8300863756531,
+       "unrealized": -33.486060081211235,
+       "net_liquidation_value": 944.9373730329881,
+       "value_if_stopped": 928.5101595964957,
+       "value_if_target": 1075.1170269012057,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      },
+      {
+       "type": "UNRESOLVED",
+       "order_id": 327,
+       "ticker": "SUNUSDT",
+       "entry_day": "2023-12-30",
+       "deadline": "2024-01-03",
+       "bars_held": 2,
+       "valued_at_close_of": "2023-12-31",
+       "value": 953.6512570080675,
+       "unrealized": -19.282065495697225,
+       "net_liquidation_value": 951.7449081453085,
+       "value_if_stopped": 921.5174898626133,
+       "value_if_target": 1067.020251419868,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      },
+      {
+       "type": "UNRESOLVED",
+       "order_id": 328,
+       "ticker": "WANUSDT",
+       "entry_day": "2023-12-31",
+       "deadline": "2024-01-04",
+       "bars_held": 1,
+       "valued_at_close_of": "2023-12-31",
+       "value": 934.7019238098793,
+       "unrealized": -38.5986625636383,
+       "net_liquidation_value": 932.8334546641834,
+       "value_if_stopped": 921.8653452310581,
+       "value_if_target": 1067.4230313201729,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      }
+     ],
+     "unfilled": []
+    },
+    "shuffled": {
+     "start_equity": 10000.0,
+     "end_equity": 11029.665812032741,
+     "net_return": 0.10296658120327407,
+     "realized_pnl": 1050.5961961988914,
+     "unrealized_pnl": -20.930384166155818,
+     "max_drawdown": -0.15343882868444558,
+     "max_drawdown_day": "2023-07-06",
+     "orders": 323,
+     "fills": 321,
+     "closed_trades": 320,
+     "wins": 132,
+     "losses": 188,
+     "win_rate": 0.4125,
+     "average_win": 62.94976086125714,
+     "average_loss": -38.610490624931124,
+     "expectancy_per_trade": 3.2831131131215363,
+     "profit_factor": 1.1447346964233447,
+     "fees_usd": 628.9200506969189,
+     "slippage_usd": 628.9213030303802,
+     "mean_exposure": 0.20051475925632303,
+     "days_with_a_position": 337,
+     "turnover": 60.96042755824899,
+     "exit_reasons": {
+      "TIME_EXIT": 130,
+      "TARGET": 72,
+      "STOP": 118
+     },
+     "skips_and_rejections": {
+      "SKIP_DAILY_LIMIT": 56,
+      "SKIP_DUPLICATE_SYMBOL": 543,
+      "SKIP_RISK_LIMIT": 903,
+      "ambiguous_bar": 5,
+      "unfilled_end_of_data": 2,
+      "unresolved_end_of_data": 1
+     },
+     "invariants": "all hold",
+     "independent_trade_audit": "every fill and exit re-derived from the raw bars: all match",
+     "tested_accounting_crosscheck": {
+      "cash": 9994.492107526326,
+      "reserved": 2087.1254734905037,
+      "realized": 1050.5961961988914,
+      "replay_cash": 9994.492107526332,
+      "replay_reserved": 2087.1254734905024,
+      "replay_realized": 1050.5961961988914,
+      "match": true
+     },
+     "repeat_run_identical": true,
+     "fingerprint": "817db4af8257abb1600d6673856b8fc5934dc2a1fabc16dc8d834f356415b782",
+     "unresolved": [
+      {
+       "type": "UNRESOLVED",
+       "order_id": 320,
+       "ticker": "SUNUSDT",
+       "entry_day": "2023-12-30",
+       "deadline": "2024-01-03",
+       "bars_held": 2,
+       "valued_at_close_of": "2023-12-31",
+       "value": 1035.1737045064099,
+       "unrealized": -20.930384166155818,
+       "net_liquidation_value": 1033.1043922711017,
+       "value_if_stopped": 1000.2929967725713,
+       "value_if_target": 1158.2339962629774,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      }
+     ],
+     "unfilled": [
+      {
+       "type": "UNFILLED",
+       "order_id": 322,
+       "ticker": "PAXGUSDT",
+       "entry_day": "2024-01-01",
+       "reason": "entry day after the data ends"
+      },
+      {
+       "type": "UNFILLED",
+       "order_id": 323,
+       "ticker": "WNXMUSDT",
+       "entry_day": "2024-01-01",
+       "reason": "entry day after the data ends"
+      }
+     ]
+    },
+    "cash": {
+     "start_equity": 10000.0,
+     "end_equity": 10000.0,
+     "net_return": 0.0,
+     "realized_pnl": 0.0,
+     "unrealized_pnl": 0.0,
+     "max_drawdown": 0.0,
+     "max_drawdown_day": "2023-01-01",
+     "orders": 0,
+     "fills": 0,
+     "closed_trades": 0,
+     "wins": 0,
+     "losses": 0,
+     "win_rate": null,
+     "average_win": null,
+     "average_loss": null,
+     "expectancy_per_trade": null,
+     "profit_factor": null,
+     "fees_usd": 0,
+     "slippage_usd": 0,
+     "mean_exposure": 0.0,
+     "days_with_a_position": 0,
+     "turnover": 0.0,
+     "exit_reasons": {},
+     "skips_and_rejections": {},
+     "invariants": "all hold",
+     "independent_trade_audit": "every fill and exit re-derived from the raw bars: all match",
+     "tested_accounting_crosscheck": {
+      "cash": 10000.0,
+      "reserved": 0.0,
+      "realized": 0.0,
+      "replay_cash": 10000.0,
+      "replay_reserved": 0.0,
+      "replay_realized": 0.0,
+      "match": true
+     },
+     "repeat_run_identical": true,
+     "fingerprint": "b4fee718020e679be435403364ac9e193ebaef60cab8f72c2f2f1d9b59370498",
+     "unresolved": [],
+     "unfilled": []
+    }
+   },
+   "comparisons": {
+    "sequence_minus_summary": {
+     "end_equity_difference": 80.3905782296788,
+     "sum_of_daily_return_differences": 0.009993909245015968,
+     "lower95": -0.14424526460790602,
+     "upper95": 0.16790681708744704,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    },
+    "sequence_minus_shuffled": {
+     "end_equity_difference": -797.0838790446032,
+     "sum_of_daily_return_differences": -0.07483869294528372,
+     "lower95": -0.21341007031875492,
+     "upper95": 0.06611998046859165,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    },
+    "summary_minus_shuffled": {
+     "end_equity_difference": -877.474457274282,
+     "sum_of_daily_return_differences": -0.08483260219029973,
+     "lower95": -0.2368874153950471,
+     "upper95": 0.05864096408947301,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    },
+    "sequence_minus_cash": {
+     "end_equity_difference": 232.58193298813785,
+     "sum_of_daily_return_differences": 0.03046353831054733,
+     "lower95": -0.20879034977874544,
+     "upper95": 0.2747523234183085,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    },
+    "summary_minus_cash": {
+     "end_equity_difference": 152.19135475845906,
+     "sum_of_daily_return_differences": 0.020469629065531347,
+     "lower95": -0.18127598175015072,
+     "upper95": 0.2247213553019851,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    },
+    "shuffled_minus_cash": {
+     "end_equity_difference": 1029.665812032741,
+     "sum_of_daily_return_differences": 0.10530223125583103,
+     "lower95": -0.14872779590001145,
+     "upper95": 0.36440123546157893,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    }
+   }
+  },
+  "ENTRY_DELAY_1": {
+   "policy": {
+    "start_cash": 10000.0,
+    "risk": 0.005,
+    "max_risk": 0.015,
+    "max_new_per_day": 3,
+    "stop": 0.05,
+    "target": 0.1,
+    "hold_bars": 5,
+    "fee": 0.001,
+    "slip": 0.001,
+    "entry_delay": 1,
+    "loss_fraction": 0.05284620379620375
+   },
+   "arms": {
+    "summary": {
+     "start_equity": 10000.0,
+     "end_equity": 10456.674682365403,
+     "net_return": 0.04566746823654033,
+     "realized_pnl": 470.52443017425105,
+     "unrealized_pnl": -13.849747808843745,
+     "max_drawdown": -0.07814025410829317,
+     "max_drawdown_day": "2023-10-12",
+     "orders": 233,
+     "fills": 231,
+     "closed_trades": 230,
+     "wins": 97,
+     "losses": 133,
+     "win_rate": 0.4217391304347826,
+     "average_win": 54.44929350371369,
+     "average_loss": -36.17336120064644,
+     "expectancy_per_trade": 2.0457583920619604,
+     "profit_factor": 1.0978006343082067,
+     "fees_usd": 460.3153667045161,
+     "slippage_usd": 460.3157649850983,
+     "mean_exposure": 0.1632460105561017,
+     "days_with_a_position": 325,
+     "turnover": 43.67428483151641,
+     "exit_reasons": {
+      "TIME_EXIT": 113,
+      "TARGET": 45,
+      "STOP": 72
+     },
+     "skips_and_rejections": {
+      "SKIP_DAILY_LIMIT": 20,
+      "SKIP_DUPLICATE_SYMBOL": 587,
+      "SKIP_RISK_LIMIT": 985,
+      "ambiguous_bar": 2,
+      "unfilled_end_of_data": 2,
+      "unresolved_end_of_data": 1
+     },
+     "invariants": "all hold",
+     "independent_trade_audit": "every fill and exit re-derived from the raw bars: all match",
+     "tested_accounting_crosscheck": {
+      "cash": 9477.6494504693,
+      "reserved": 1981.3200718357762,
+      "realized": 470.52443017425105,
+      "replay_cash": 9477.649450469286,
+      "replay_reserved": 1981.3200718357753,
+      "replay_realized": 470.52443017425105,
+      "match": true
+     },
+     "repeat_run_identical": true,
+     "fingerprint": "d855236adbb6409acec703fa0666a3aceefaa40dc642e58eac908463a9718768",
+     "unresolved": [
+      {
+       "type": "UNRESOLVED",
+       "order_id": 231,
+       "ticker": "SUNUSDT",
+       "entry_day": "2023-12-31",
+       "deadline": "2024-01-04",
+       "bars_held": 1,
+       "valued_at_close_of": "2023-12-31",
+       "value": 979.0252318961176,
+       "unrealized": -13.849747808843745,
+       "net_liquidation_value": 977.0681604575573,
+       "value_if_stopped": 940.4053061833214,
+       "value_if_target": 1088.8903545280564,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      }
+     ],
+     "unfilled": [
+      {
+       "type": "UNFILLED",
+       "order_id": 232,
+       "ticker": "PAXGUSDT",
+       "entry_day": "2024-01-01",
+       "reason": "entry day after the data ends"
+      },
+      {
+       "type": "UNFILLED",
+       "order_id": 233,
+       "ticker": "JUVUSDT",
+       "entry_day": "2024-01-01",
+       "reason": "entry day after the data ends"
+      }
+     ]
+    },
+    "sequence": {
+     "start_equity": 10000.0,
+     "end_equity": 10706.725992891657,
+     "net_return": 0.0706725992891657,
+     "realized_pnl": 752.9102475158371,
+     "unrealized_pnl": -46.184254624168716,
+     "max_drawdown": -0.10388470131119532,
+     "max_drawdown_day": "2023-06-14",
+     "orders": 248,
+     "fills": 247,
+     "closed_trades": 245,
+     "wins": 99,
+     "losses": 146,
+     "win_rate": 0.40408163265306124,
+     "average_win": 64.59691884018447,
+     "average_loss": -38.64510080590702,
+     "expectancy_per_trade": 3.07310305108505,
+     "profit_factor": 1.1334430340713428,
+     "fees_usd": 489.54393306428165,
+     "slippage_usd": 489.5436401934389,
+     "mean_exposure": 0.1558405637541563,
+     "days_with_a_position": 308,
+     "turnover": 46.68150519831907,
+     "exit_reasons": {
+      "STOP": 91,
+      "TIME_EXIT": 98,
+      "TARGET": 56
+     },
+     "skips_and_rejections": {
+      "SKIP_DAILY_LIMIT": 32,
+      "SKIP_DUPLICATE_SYMBOL": 526,
+      "SKIP_RISK_LIMIT": 1019,
+      "ambiguous_bar": 5,
+      "unfilled_end_of_data": 1,
+      "unresolved_end_of_data": 2
+     },
+     "invariants": "all hold",
+     "independent_trade_audit": "every fill and exit re-derived from the raw bars: all match",
+     "tested_accounting_crosscheck": {
+      "cash": 8728.041583927501,
+      "reserved": 1013.0080520240494,
+      "realized": 752.9102475158371,
+      "replay_cash": 8728.041583927508,
+      "replay_reserved": 1013.0080520240483,
+      "replay_realized": 752.9102475158371,
+      "match": true
+     },
+     "repeat_run_identical": true,
+     "fingerprint": "05d915197831bc55795cea8ba3db86361ed4ffd33b003549b13dffd892b1475d",
+     "unresolved": [
+      {
+       "type": "UNRESOLVED",
+       "order_id": 245,
+       "ticker": "WNXMUSDT",
+       "entry_day": "2023-12-29",
+       "deadline": "2024-01-02",
+       "bars_held": 3,
+       "valued_at_close_of": "2023-12-31",
+       "value": 990.5109566739872,
+       "unrealized": -26.204177957623756,
+       "net_liquidation_value": 988.5309252715958,
+       "value_if_stopped": 962.9855994241841,
+       "value_if_target": 1115.0359572280026,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      },
+      {
+       "type": "UNRESOLVED",
+       "order_id": 247,
+       "ticker": "SUNUSDT",
+       "entry_day": "2023-12-30",
+       "deadline": "2024-01-03",
+       "bars_held": 2,
+       "valued_at_close_of": "2023-12-31",
+       "value": 988.1734522901622,
+       "unrealized": -19.98007666654496,
+       "net_liquidation_value": 986.1980935590342,
+       "value_if_stopped": 954.876442107599,
+       "value_if_target": 1105.6464066509043,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      }
+     ],
+     "unfilled": [
+      {
+       "type": "UNFILLED",
+       "order_id": 248,
+       "ticker": "PAXGUSDT",
+       "entry_day": "2024-01-02",
+       "reason": "entry day after the data ends"
+      }
+     ]
+    },
+    "shuffled": {
+     "start_equity": 10000.0,
+     "end_equity": 10512.527079651132,
+     "net_return": 0.051252707965113276,
+     "realized_pnl": 566.0018267496354,
+     "unrealized_pnl": -53.47474709852054,
+     "max_drawdown": -0.11239640416053776,
+     "max_drawdown_day": "2023-12-19",
+     "orders": 242,
+     "fills": 241,
+     "closed_trades": 239,
+     "wins": 98,
+     "losses": 141,
+     "win_rate": 0.4100418410041841,
+     "average_win": 60.67484117454444,
+     "average_loss": -38.15696885358666,
+     "expectancy_per_trade": 2.3682084801239975,
+     "profit_factor": 1.105202207445704,
+     "fees_usd": 495.14484051033696,
+     "slippage_usd": 495.14439340628627,
+     "mean_exposure": 0.15867095809073561,
+     "days_with_a_position": 303,
+     "turnover": 45.397178834787965,
+     "exit_reasons": {
+      "TIME_EXIT": 107,
+      "TARGET": 51,
+      "STOP": 81
+     },
+     "skips_and_rejections": {
+      "SKIP_DAILY_LIMIT": 30,
+      "SKIP_DUPLICATE_SYMBOL": 544,
+      "SKIP_RISK_LIMIT": 1009,
+      "ambiguous_bar": 3,
+      "unfilled_end_of_data": 1,
+      "unresolved_end_of_data": 2
+     },
+     "invariants": "all hold",
+     "independent_trade_audit": "every fill and exit re-derived from the raw bars: all match",
+     "tested_accounting_crosscheck": {
+      "cash": 8562.606715326203,
+      "reserved": 998.9401211199772,
+      "realized": 566.0018267496351,
+      "replay_cash": 8562.606715326217,
+      "replay_reserved": 998.9401211199751,
+      "replay_realized": 566.0018267496354,
+      "match": true
+     },
+     "repeat_run_identical": true,
+     "fingerprint": "07820cd9b1e920774c501f8de447907bca5c34a21b764ee5b38e30198df1a7a5",
+     "unresolved": [
+      {
+       "type": "UNRESOLVED",
+       "order_id": 240,
+       "ticker": "SUNUSDT",
+       "entry_day": "2023-12-30",
+       "deadline": "2024-01-03",
+       "bars_held": 2,
+       "valued_at_close_of": "2023-12-31",
+       "value": 983.3532337531374,
+       "unrealized": -19.882615703901138,
+       "net_liquidation_value": 981.3875106388649,
+       "value_if_stopped": 950.2186433009743,
+       "value_if_target": 1100.2531659274441,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      },
+      {
+       "type": "UNRESOLVED",
+       "order_id": 241,
+       "ticker": "UTKUSDT",
+       "entry_day": "2023-12-31",
+       "deadline": "2024-01-04",
+       "bars_held": 1,
+       "valued_at_close_of": "2023-12-31",
+       "value": 966.567130571778,
+       "unrealized": -33.5921313946194,
+       "net_liquidation_value": 964.634962877765,
+       "value_if_stopped": 947.3046417798604,
+       "value_if_target": 1096.8790589029963,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      }
+     ],
+     "unfilled": [
+      {
+       "type": "UNFILLED",
+       "order_id": 242,
+       "ticker": "PAXGUSDT",
+       "entry_day": "2024-01-01",
+       "reason": "entry day after the data ends"
+      }
+     ]
+    },
+    "cash": {
+     "start_equity": 10000.0,
+     "end_equity": 10000.0,
+     "net_return": 0.0,
+     "realized_pnl": 0.0,
+     "unrealized_pnl": 0.0,
+     "max_drawdown": 0.0,
+     "max_drawdown_day": "2023-01-01",
+     "orders": 0,
+     "fills": 0,
+     "closed_trades": 0,
+     "wins": 0,
+     "losses": 0,
+     "win_rate": null,
+     "average_win": null,
+     "average_loss": null,
+     "expectancy_per_trade": null,
+     "profit_factor": null,
+     "fees_usd": 0,
+     "slippage_usd": 0,
+     "mean_exposure": 0.0,
+     "days_with_a_position": 0,
+     "turnover": 0.0,
+     "exit_reasons": {},
+     "skips_and_rejections": {},
+     "invariants": "all hold",
+     "independent_trade_audit": "every fill and exit re-derived from the raw bars: all match",
+     "tested_accounting_crosscheck": {
+      "cash": 10000.0,
+      "reserved": 0.0,
+      "realized": 0.0,
+      "replay_cash": 10000.0,
+      "replay_reserved": 0.0,
+      "replay_realized": 0.0,
+      "match": true
+     },
+     "repeat_run_identical": true,
+     "fingerprint": "b4fee718020e679be435403364ac9e193ebaef60cab8f72c2f2f1d9b59370498",
+     "unresolved": [],
+     "unfilled": []
+    }
+   },
+   "comparisons": {
+    "sequence_minus_summary": {
+     "end_equity_difference": 250.05131052625438,
+     "sum_of_daily_return_differences": 0.02507797817202969,
+     "lower95": -0.12652412086450046,
+     "upper95": 0.16994232963473005,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    },
+    "sequence_minus_shuffled": {
+     "end_equity_difference": 194.19891324052514,
+     "sum_of_daily_return_differences": 0.01911265641625237,
+     "lower95": -0.1483990701470053,
+     "upper95": 0.19363201254939097,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    },
+    "summary_minus_shuffled": {
+     "end_equity_difference": -55.85239728572924,
+     "sum_of_daily_return_differences": -0.005965321755777325,
+     "lower95": -0.13973818796119833,
+     "upper95": 0.12490530993656071,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    },
+    "sequence_minus_cash": {
+     "end_equity_difference": 706.7259928916574,
+     "sum_of_daily_return_differences": 0.07360123525391775,
+     "lower95": -0.12429003496069407,
+     "upper95": 0.268607098560197,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    },
+    "summary_minus_cash": {
+     "end_equity_difference": 456.674682365403,
+     "sum_of_daily_return_differences": 0.048523257081888045,
+     "lower95": -0.1405416786185484,
+     "upper95": 0.23040717473432454,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    },
+    "shuffled_minus_cash": {
+     "end_equity_difference": 512.5270796511322,
+     "sum_of_daily_return_differences": 0.054488578837665363,
+     "lower95": -0.18486452707574744,
+     "upper95": 0.2868869398799328,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    }
+   }
+  },
+  "DOUBLE_COSTS": {
+   "policy": {
+    "start_cash": 10000.0,
+    "risk": 0.005,
+    "max_risk": 0.015,
+    "max_new_per_day": 3,
+    "stop": 0.05,
+    "target": 0.1,
+    "hold_bars": 5,
+    "fee": 0.002,
+    "slip": 0.002,
+    "entry_delay": 0,
+    "loss_fraction": 0.05568483033932148
+   },
+   "arms": {
+    "summary": {
+     "start_equity": 10000.0,
+     "end_equity": 8952.490967393314,
+     "net_return": -0.1047509032606686,
+     "realized_pnl": -995.2620074612651,
+     "unrealized_pnl": -52.24702514542673,
+     "max_drawdown": -0.1941406584777361,
+     "max_drawdown_day": "2023-10-12",
+     "orders": 292,
+     "fills": 292,
+     "closed_trades": 289,
+     "wins": 107,
+     "losses": 182,
+     "win_rate": 0.370242214532872,
+     "average_win": 44.871571865075595,
+     "average_loss": -31.849012071562377,
+     "expectancy_per_trade": -3.4438131746064538,
+     "profit_factor": 0.8283000880472766,
+     "fees_usd": 978.583086331829,
+     "slippage_usd": 978.5772556554703,
+     "mean_exposure": 0.19760894035240095,
+     "days_with_a_position": 353,
+     "turnover": 52.24921125871084,
+     "exit_reasons": {
+      "TIME_EXIT": 147,
+      "TARGET": 47,
+      "STOP": 95
+     },
+     "skips_and_rejections": {
+      "SKIP_DAILY_LIMIT": 24,
+      "SKIP_DUPLICATE_SYMBOL": 585,
+      "SKIP_RISK_LIMIT": 924,
+      "ambiguous_bar": 2,
+      "unresolved_end_of_data": 3
+     },
+     "invariants": "all hold",
+     "independent_trade_audit": "every fill and exit re-derived from the raw bars: all match",
+     "tested_accounting_crosscheck": {
+      "cash": 6585.1705683345535,
+      "reserved": 0.0,
+      "realized": -995.2620074612637,
+      "replay_cash": 6585.170568334568,
+      "replay_reserved": 6.821210263296962e-13,
+      "replay_realized": -995.2620074612651,
+      "match": true
+     },
+     "repeat_run_identical": true,
+     "fingerprint": "d179fcad837753caacfbeb456d0a2a3b31a679ca2a6b5a222c7d9859a69adf8e",
+     "unresolved": [
+      {
+       "type": "UNRESOLVED",
+       "order_id": 288,
+       "ticker": "WNXMUSDT",
+       "entry_day": "2023-12-28",
+       "deadline": "2024-01-01",
+       "bars_held": 4,
+       "valued_at_close_of": "2023-12-31",
+       "value": 777.2487496941991,
+       "unrealized": -29.09723273085183,
+       "net_liquidation_value": 774.1428636904211,
+       "value_if_stopped": 761.4447431989184,
+       "value_if_target": 881.6728605461163,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      },
+      {
+       "type": "UNRESOLVED",
+       "order_id": 291,
+       "ticker": "SUNUSDT",
+       "entry_day": "2023-12-30",
+       "deadline": "2024-01-03",
+       "bars_held": 2,
+       "valued_at_close_of": "2023-12-31",
+       "value": 789.0476113805654,
+       "unrealized": -17.563109508995694,
+       "net_liquidation_value": 785.8945771254887,
+       "value_if_stopped": 761.6947397469481,
+       "value_if_target": 881.9623302333084,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      },
+      {
+       "type": "UNRESOLVED",
+       "order_id": 292,
+       "ticker": "PAXGUSDT",
+       "entry_day": "2023-12-30",
+       "deadline": "2024-01-03",
+       "bars_held": 2,
+       "valued_at_close_of": "2023-12-31",
+       "value": 801.0240379839819,
+       "unrealized": -5.5866829055792095,
+       "net_liquidation_value": 797.8231459281978,
+       "value_if_stopped": 761.6947397469482,
+       "value_if_target": 881.9623302333085,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      }
+     ],
+     "unfilled": []
+    },
+    "sequence": {
+     "start_equity": 10000.0,
+     "end_equity": 8937.456795946753,
+     "net_return": -0.10625432040532468,
+     "realized_pnl": -982.1048234605354,
+     "unrealized_pnl": -80.43838059270615,
+     "max_drawdown": -0.2361147249657054,
+     "max_drawdown_day": "2023-09-16",
+     "orders": 327,
+     "fills": 327,
+     "closed_trades": 324,
+     "wins": 118,
+     "losses": 206,
+     "win_rate": 0.36419753086419754,
+     "average_win": 52.91037095396757,
+     "average_loss": -35.07538153411995,
+     "expectancy_per_trade": -3.031187726730052,
+     "profit_factor": 0.8640784808463259,
+     "fees_usd": 1088.2022241820778,
+     "slippage_usd": 1088.197296010531,
+     "mean_exposure": 0.1893528180891876,
+     "days_with_a_position": 336,
+     "turnover": 58.75900399449973,
+     "exit_reasons": {
+      "STOP": 130,
+      "TIME_EXIT": 125,
+      "TARGET": 69
+     },
+     "skips_and_rejections": {
+      "SKIP_DAILY_LIMIT": 58,
+      "SKIP_DUPLICATE_SYMBOL": 524,
+      "SKIP_RISK_LIMIT": 916,
+      "ambiguous_bar": 8,
+      "unresolved_end_of_data": 3
+     },
+     "invariants": "all hold",
+     "independent_trade_audit": "every fill and exit re-derived from the raw bars: all match",
+     "tested_accounting_crosscheck": {
+      "cash": 6591.557593124996,
+      "reserved": 0.0,
+      "realized": -982.1048234605381,
+      "replay_cash": 6591.557593125001,
+      "replay_reserved": 6.821210263296962e-13,
+      "replay_realized": -982.1048234605354,
+      "match": true
+     },
+     "repeat_run_identical": true,
+     "fingerprint": "ef536c8c5d08d9d27c37da6b2328f11d86e1acc322ddc3476738170ecbcb3736",
+     "unresolved": [
+      {
+       "type": "UNRESOLVED",
+       "order_id": 324,
+       "ticker": "WNXMUSDT",
+       "entry_day": "2023-12-28",
+       "deadline": "2024-01-01",
+       "bars_held": 4,
+       "valued_at_close_of": "2023-12-31",
+       "value": 783.6765510163029,
+       "unrealized": -29.33786512954066,
+       "net_liquidation_value": 780.5449795184418,
+       "value_if_stopped": 767.74184631934,
+       "value_if_target": 888.9642431066044,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      },
+      {
+       "type": "UNRESOLVED",
+       "order_id": 326,
+       "ticker": "SUNUSDT",
+       "entry_day": "2023-12-30",
+       "deadline": "2024-01-03",
+       "bars_held": 2,
+       "valued_at_close_of": "2023-12-31",
+       "value": 789.0656229506469,
+       "unrealized": -17.56351042165693,
+       "net_liquidation_value": 785.9125167213361,
+       "value_if_stopped": 761.7121269337133,
+       "value_if_target": 881.9824627653524,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      },
+      {
+       "type": "UNRESOLVED",
+       "order_id": 327,
+       "ticker": "WANUSDT",
+       "entry_day": "2023-12-31",
+       "deadline": "2024-01-04",
+       "bars_held": 1,
+       "valued_at_close_of": "2023-12-31",
+       "value": 773.157028854803,
+       "unrealized": -33.537005041508564,
+       "net_liquidation_value": 770.0674933674992,
+       "value_if_stopped": 761.7734134830527,
+       "value_if_target": 882.0534261382716,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      }
+     ],
+     "unfilled": []
+    },
+    "shuffled": {
+     "start_equity": 10000.0,
+     "end_equity": 9423.130856376672,
+     "net_return": -0.05768691436233275,
+     "realized_pnl": -558.2229981964423,
+     "unrealized_pnl": -18.646145426847625,
+     "max_drawdown": -0.19929797143119377,
+     "max_drawdown_day": "2023-09-16",
+     "orders": 329,
+     "fills": 327,
+     "closed_trades": 326,
+     "wins": 121,
+     "losses": 205,
+     "win_rate": 0.37116564417177916,
+     "average_win": 54.95048722025085,
+     "average_loss": -35.15722903339899,
+     "expectancy_per_trade": -1.71234048526516,
+     "profit_factor": 0.9225468249216815,
+     "fees_usd": 1124.8225513870193,
+     "slippage_usd": 1124.8258916860714,
+     "mean_exposure": 0.18866196345261485,
+     "days_with_a_position": 339,
+     "turnover": 58.946512553975744,
+     "exit_reasons": {
+      "TIME_EXIT": 134,
+      "TARGET": 69,
+      "STOP": 123
+     },
+     "skips_and_rejections": {
+      "SKIP_DAILY_LIMIT": 52,
+      "SKIP_DUPLICATE_SYMBOL": 526,
+      "SKIP_RISK_LIMIT": 918,
+      "ambiguous_bar": 5,
+      "unfilled_end_of_data": 2,
+      "unresolved_end_of_data": 1
+     },
+     "invariants": "all hold",
+     "independent_trade_audit": "every fill and exit re-derived from the raw bars: all match",
+     "tested_accounting_crosscheck": {
+      "cash": 8585.426319889435,
+      "reserved": 1692.2258358256308,
+      "realized": -558.2229981964423,
+      "replay_cash": 8585.42631988938,
+      "replay_reserved": 1692.225835825631,
+      "replay_realized": -558.2229981964423,
+      "match": true
+     },
+     "repeat_run_identical": true,
+     "fingerprint": "577f0947599192de0eea15010f5f5d1eed6d57af916e56abb91ddbc3afc86474",
+     "unresolved": [
+      {
+       "type": "UNRESOLVED",
+       "order_id": 326,
+       "ticker": "SUNUSDT",
+       "entry_day": "2023-12-30",
+       "deadline": "2024-01-03",
+       "bars_held": 2,
+       "valued_at_close_of": "2023-12-31",
+       "value": 837.704536487292,
+       "unrealized": -18.646145426847625,
+       "net_liquidation_value": 834.3570691594888,
+       "value_if_stopped": 808.6649394807885,
+       "value_if_target": 936.3488772935447,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      }
+     ],
+     "unfilled": [
+      {
+       "type": "UNFILLED",
+       "order_id": 328,
+       "ticker": "PAXGUSDT",
+       "entry_day": "2024-01-01",
+       "reason": "entry day after the data ends"
+      },
+      {
+       "type": "UNFILLED",
+       "order_id": 329,
+       "ticker": "WNXMUSDT",
+       "entry_day": "2024-01-01",
+       "reason": "entry day after the data ends"
+      }
+     ]
+    },
+    "cash": {
+     "start_equity": 10000.0,
+     "end_equity": 10000.0,
+     "net_return": 0.0,
+     "realized_pnl": 0.0,
+     "unrealized_pnl": 0.0,
+     "max_drawdown": 0.0,
+     "max_drawdown_day": "2023-01-01",
+     "orders": 0,
+     "fills": 0,
+     "closed_trades": 0,
+     "wins": 0,
+     "losses": 0,
+     "win_rate": null,
+     "average_win": null,
+     "average_loss": null,
+     "expectancy_per_trade": null,
+     "profit_factor": null,
+     "fees_usd": 0,
+     "slippage_usd": 0,
+     "mean_exposure": 0.0,
+     "days_with_a_position": 0,
+     "turnover": 0.0,
+     "exit_reasons": {},
+     "skips_and_rejections": {},
+     "invariants": "all hold",
+     "independent_trade_audit": "every fill and exit re-derived from the raw bars: all match",
+     "tested_accounting_crosscheck": {
+      "cash": 10000.0,
+      "reserved": 0.0,
+      "realized": 0.0,
+      "replay_cash": 10000.0,
+      "replay_reserved": 0.0,
+      "replay_realized": 0.0,
+      "match": true
+     },
+     "repeat_run_identical": true,
+     "fingerprint": "b4fee718020e679be435403364ac9e193ebaef60cab8f72c2f2f1d9b59370498",
+     "unresolved": [],
+     "unfilled": []
+    }
+   },
+   "comparisons": {
+    "sequence_minus_summary": {
+     "end_equity_difference": -15.034171446561231,
+     "sum_of_daily_return_differences": 9.568895839869376e-05,
+     "lower95": -0.13888883515418504,
+     "upper95": 0.15015806555314862,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    },
+    "sequence_minus_shuffled": {
+     "end_equity_difference": -485.67406042991934,
+     "sum_of_daily_return_differences": -0.0527991641137274,
+     "lower95": -0.16498415031172098,
+     "upper95": 0.065699543057892,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    },
+    "summary_minus_shuffled": {
+     "end_equity_difference": -470.6398889833581,
+     "sum_of_daily_return_differences": -0.05289485307212608,
+     "lower95": -0.18212572125134122,
+     "upper95": 0.06756711361253018,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    },
+    "sequence_minus_cash": {
+     "end_equity_difference": -1062.5432040532469,
+     "sum_of_daily_return_differences": -0.10563605626627282,
+     "lower95": -0.33285597108292264,
+     "upper95": 0.12430805808489122,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    },
+    "summary_minus_cash": {
+     "end_equity_difference": -1047.5090326066857,
+     "sum_of_daily_return_differences": -0.1057317452246715,
+     "lower95": -0.2949239821269512,
+     "upper95": 0.08857545538229844,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    },
+    "shuffled_minus_cash": {
+     "end_equity_difference": -576.8691436233275,
+     "sum_of_daily_return_differences": -0.052836892152545396,
+     "lower95": -0.2697170610973451,
+     "upper95": 0.16198898496722228,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    }
+   }
+  },
+  "DELAY_AND_DOUBLE": {
+   "policy": {
+    "start_cash": 10000.0,
+    "risk": 0.005,
+    "max_risk": 0.015,
+    "max_new_per_day": 3,
+    "stop": 0.05,
+    "target": 0.1,
+    "hold_bars": 5,
+    "fee": 0.002,
+    "slip": 0.002,
+    "entry_delay": 1,
+    "loss_fraction": 0.05568483033932148
+   },
+   "arms": {
+    "summary": {
+     "start_equity": 10000.0,
+     "end_equity": 9825.748505162223,
+     "net_return": -0.017425149483777713,
+     "realized_pnl": -160.15417884158308,
+     "unrealized_pnl": -14.097315996189991,
+     "max_drawdown": -0.10608738337281653,
+     "max_drawdown_day": "2023-12-19",
+     "orders": 233,
+     "fills": 231,
+     "closed_trades": 230,
+     "wins": 87,
+     "losses": 143,
+     "win_rate": 0.3782608695652174,
+     "average_win": 52.6074407121796,
+     "average_loss": -33.12588476084761,
+     "expectancy_per_trade": -0.6963225167025351,
+     "profit_factor": 0.9661908111833382,
+     "fees_usd": 844.7304119597825,
+     "slippage_usd": 844.7329863382822,
+     "mean_exposure": 0.15476191842123566,
+     "days_with_a_position": 325,
+     "turnover": 41.40926836716804,
+     "exit_reasons": {
+      "TIME_EXIT": 116,
+      "TARGET": 44,
+      "STOP": 70
+     },
+     "skips_and_rejections": {
+      "SKIP_DAILY_LIMIT": 20,
+      "SKIP_DUPLICATE_SYMBOL": 592,
+      "SKIP_RISK_LIMIT": 980,
+      "ambiguous_bar": 2,
+      "unfilled_end_of_data": 2,
+      "unresolved_end_of_data": 1
+     },
+     "invariants": "all hold",
+     "independent_trade_audit": "every fill and exit re-derived from the raw bars: all match",
+     "tested_accounting_crosscheck": {
+      "cash": 8954.131226665471,
+      "reserved": 1767.0603935036272,
+      "realized": -160.15417884158308,
+      "replay_cash": 8954.131226665468,
+      "replay_reserved": 1767.0603935036274,
+      "replay_realized": -160.15417884158308,
+      "match": true
+     },
+     "repeat_run_identical": true,
+     "fingerprint": "0a0178cd3f0a65334c4f38f538f042a525c64dae96deb8098d5930d506dae090",
+     "unresolved": [
+      {
+       "type": "UNRESOLVED",
+       "order_id": 231,
+       "ticker": "SUNUSDT",
+       "entry_day": "2023-12-31",
+       "deadline": "2024-01-04",
+       "bars_held": 1,
+       "valued_at_close_of": "2023-12-31",
+       "value": 871.6172784967544,
+       "unrealized": -14.097315996189991,
+       "net_liquidation_value": 868.1342958518813,
+       "value_if_stopped": 836.3937275695439,
+       "value_if_target": 968.4558950805247,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      }
+     ],
+     "unfilled": [
+      {
+       "type": "UNFILLED",
+       "order_id": 232,
+       "ticker": "PAXGUSDT",
+       "entry_day": "2024-01-01",
+       "reason": "entry day after the data ends"
+      },
+      {
+       "type": "UNFILLED",
+       "order_id": 233,
+       "ticker": "JUVUSDT",
+       "entry_day": "2024-01-01",
+       "reason": "entry day after the data ends"
+      }
+     ]
+    },
+    "sequence": {
+     "start_equity": 10000.0,
+     "end_equity": 9751.859136520014,
+     "net_return": -0.024814086347998643,
+     "realized_pnl": -204.7714541586006,
+     "unrealized_pnl": -43.36940932137793,
+     "max_drawdown": -0.13493207299697918,
+     "max_drawdown_day": "2023-12-19",
+     "orders": 248,
+     "fills": 247,
+     "closed_trades": 245,
+     "wins": 93,
+     "losses": 152,
+     "win_rate": 0.3795918367346939,
+     "average_win": 58.41253945057562,
+     "average_loss": -37.08643173067192,
+     "expectancy_per_trade": -0.8358018537085743,
+     "profit_factor": 0.9636745689300085,
+     "fees_usd": 891.4277257527576,
+     "slippage_usd": 891.4270311220096,
+     "mean_exposure": 0.14774209285342765,
+     "days_with_a_position": 308,
+     "turnover": 44.22182237013271,
+     "exit_reasons": {
+      "STOP": 92,
+      "TIME_EXIT": 99,
+      "TARGET": 54
+     },
+     "skips_and_rejections": {
+      "SKIP_DAILY_LIMIT": 34,
+      "SKIP_DUPLICATE_SYMBOL": 530,
+      "SKIP_RISK_LIMIT": 1013,
+      "ambiguous_bar": 5,
+      "unfilled_end_of_data": 1,
+      "unresolved_end_of_data": 2
+     },
+     "invariants": "all hold",
+     "independent_trade_audit": "every fill and exit re-derived from the raw bars: all match",
+     "tested_accounting_crosscheck": {
+      "cash": 8043.487556140775,
+      "reserved": 875.62977898074,
+      "realized": -204.7714541586006,
+      "replay_cash": 8043.487556140771,
+      "replay_reserved": 875.6297789807418,
+      "replay_realized": -204.7714541586006,
+      "match": true
+     },
+     "repeat_run_identical": true,
+     "fingerprint": "092e3f28d457df179ae87635aa0781f1a6b248a6119fb444aa3611f9eb5318c1",
+     "unresolved": [
+      {
+       "type": "UNRESOLVED",
+       "order_id": 245,
+       "ticker": "WNXMUSDT",
+       "entry_day": "2023-12-29",
+       "deadline": "2024-01-02",
+       "bars_held": 3,
+       "valued_at_close_of": "2023-12-31",
+       "value": 855.1551680626143,
+       "unrealized": -24.37799097316133,
+       "net_liquidation_value": 851.7379680110361,
+       "value_if_stopped": 830.556504297061,
+       "value_if_target": 961.6970049755445,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      },
+      {
+       "type": "UNRESOLVED",
+       "order_id": 247,
+       "ticker": "SUNUSDT",
+       "entry_day": "2023-12-30",
+       "deadline": "2024-01-03",
+       "bars_held": 2,
+       "valued_at_close_of": "2023-12-31",
+       "value": 853.2164123166289,
+       "unrealized": -18.991418348216598,
+       "net_liquidation_value": 849.8069595330116,
+       "value_if_stopped": 823.639085593646,
+       "value_if_target": 953.687362266327,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      }
+     ],
+     "unfilled": [
+      {
+       "type": "UNFILLED",
+       "order_id": 248,
+       "ticker": "PAXGUSDT",
+       "entry_day": "2024-01-02",
+       "reason": "entry day after the data ends"
+      }
+     ]
+    },
+    "shuffled": {
+     "start_equity": 10000.0,
+     "end_equity": 9881.980414891223,
+     "net_return": -0.01180195851087773,
+     "realized_pnl": -66.83080226705238,
+     "unrealized_pnl": -51.188782841750935,
+     "max_drawdown": -0.13523692174710855,
+     "max_drawdown_day": "2023-12-19",
+     "orders": 245,
+     "fills": 244,
+     "closed_trades": 242,
+     "wins": 90,
+     "losses": 152,
+     "win_rate": 0.371900826446281,
+     "average_win": 59.38285090707274,
+     "average_loss": -35.600574894102635,
+     "expectancy_per_trade": -0.27616033994649697,
+     "profit_factor": 0.9876497407131161,
+     "fees_usd": 908.5371932898236,
+     "slippage_usd": 908.5370435117434,
+     "mean_exposure": 0.14918196088745306,
+     "days_with_a_position": 298,
+     "turnover": 43.5912331637185,
+     "exit_reasons": {
+      "TIME_EXIT": 106,
+      "TARGET": 54,
+      "STOP": 82
+     },
+     "skips_and_rejections": {
+      "SKIP_DAILY_LIMIT": 26,
+      "SKIP_DUPLICATE_SYMBOL": 544,
+      "SKIP_RISK_LIMIT": 1010,
+      "ambiguous_bar": 2,
+      "unfilled_end_of_data": 1,
+      "unresolved_end_of_data": 2
+     },
+     "invariants": "all hold",
+     "independent_trade_audit": "every fill and exit re-derived from the raw bars: all match",
+     "tested_accounting_crosscheck": {
+      "cash": 8145.48124316199,
+      "reserved": 887.3135066295719,
+      "realized": -66.8308022670526,
+      "replay_cash": 8145.481243162007,
+      "replay_reserved": 887.3135066295724,
+      "replay_realized": -66.83080226705238,
+      "match": true
+     },
+     "repeat_run_identical": true,
+     "fingerprint": "37d7baa7d46e1cd52725f52b958873157579d2570b76654f4687ea0c5d247425",
+     "unresolved": [
+      {
+       "type": "UNRESOLVED",
+       "order_id": 243,
+       "ticker": "SUNUSDT",
+       "entry_day": "2023-12-30",
+       "deadline": "2024-01-03",
+       "bars_held": 2,
+       "valued_at_close_of": "2023-12-31",
+       "value": 875.6927724493033,
+       "unrealized": -19.491711066526932,
+       "net_liquidation_value": 872.1935041305959,
+       "value_if_stopped": 845.3362874288582,
+       "value_if_target": 978.8104380755201,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      },
+      {
+       "type": "UNRESOLVED",
+       "order_id": 244,
+       "ticker": "UTKUSDT",
+       "entry_day": "2023-12-31",
+       "deadline": "2024-01-04",
+       "bars_held": 1,
+       "valued_at_close_of": "2023-12-31",
+       "value": 860.8063992799136,
+       "unrealized": -31.697071775224003,
+       "net_liquidation_value": 857.3666169083912,
+       "value_if_stopped": 842.804566692177,
+       "value_if_target": 975.8789719593628,
+       "note": "not realized: the 2024 bars that would finish this trade are never read"
+      }
+     ],
+     "unfilled": [
+      {
+       "type": "UNFILLED",
+       "order_id": 245,
+       "ticker": "PAXGUSDT",
+       "entry_day": "2024-01-02",
+       "reason": "entry day after the data ends"
+      }
+     ]
+    },
+    "cash": {
+     "start_equity": 10000.0,
+     "end_equity": 10000.0,
+     "net_return": 0.0,
+     "realized_pnl": 0.0,
+     "unrealized_pnl": 0.0,
+     "max_drawdown": 0.0,
+     "max_drawdown_day": "2023-01-01",
+     "orders": 0,
+     "fills": 0,
+     "closed_trades": 0,
+     "wins": 0,
+     "losses": 0,
+     "win_rate": null,
+     "average_win": null,
+     "average_loss": null,
+     "expectancy_per_trade": null,
+     "profit_factor": null,
+     "fees_usd": 0,
+     "slippage_usd": 0,
+     "mean_exposure": 0.0,
+     "days_with_a_position": 0,
+     "turnover": 0.0,
+     "exit_reasons": {},
+     "skips_and_rejections": {},
+     "invariants": "all hold",
+     "independent_trade_audit": "every fill and exit re-derived from the raw bars: all match",
+     "tested_accounting_crosscheck": {
+      "cash": 10000.0,
+      "reserved": 0.0,
+      "realized": 0.0,
+      "replay_cash": 10000.0,
+      "replay_reserved": 0.0,
+      "replay_realized": 0.0,
+      "match": true
+     },
+     "repeat_run_identical": true,
+     "fingerprint": "b4fee718020e679be435403364ac9e193ebaef60cab8f72c2f2f1d9b59370498",
+     "unresolved": [],
+     "unfilled": []
+    }
+   },
+   "comparisons": {
+    "sequence_minus_summary": {
+     "end_equity_difference": -73.88936864220886,
+     "sum_of_daily_return_differences": -0.006366881958182531,
+     "lower95": -0.15388686064914842,
+     "upper95": 0.13241901551702906,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    },
+    "sequence_minus_shuffled": {
+     "end_equity_difference": -130.12127837120897,
+     "sum_of_daily_return_differences": -0.012838056653905222,
+     "lower95": -0.17091340648896458,
+     "upper95": 0.1450275392103126,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    },
+    "summary_minus_shuffled": {
+     "end_equity_difference": -56.23190972900011,
+     "sum_of_daily_return_differences": -0.006471174695722698,
+     "lower95": -0.1291624134620602,
+     "upper95": 0.11601260152352072,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    },
+    "sequence_minus_cash": {
+     "end_equity_difference": -248.14086347998636,
+     "sum_of_daily_return_differences": -0.020473368537904175,
+     "lower95": -0.20554424009075992,
+     "upper95": 0.16255657217284408,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    },
+    "summary_minus_cash": {
+     "end_equity_difference": -174.2514948377775,
+     "sum_of_daily_return_differences": -0.014106486579721696,
+     "lower95": -0.19262664894860523,
+     "upper95": 0.15972382535174542,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    },
+    "shuffled_minus_cash": {
+     "end_equity_difference": -118.01958510877739,
+     "sum_of_daily_return_differences": -0.007635311883998963,
+     "lower95": -0.21710379969368304,
+     "upper95": 0.20769611942309057,
+     "block_days": 10,
+     "draws": 2000,
+     "seed": 20261031
+    }
+   }
+  }
+ },
+ "predictive_ranking_quality": {
+  "published_early_shortlist_up_hits": {
+   "summary": 60,
+   "sequence": 76
+  },
+  "rebuilt_early_shortlist_up_hits": {
+   "summary": 60,
+   "sequence": 76,
+   "shuffled": 75
+  },
+  "alerts_per_arm": 1825,
+  "note": "an up hit = the price reached its volatility-scaled barrier (at least +10%) on a daily close within 5 days before falling as far; it ignores costs, stops and whether the account could take the trade"
+ },
+ "code": {
+  "commit_at_run": "e1fac0753750e55c6348311330e7c1c2cf730c6e",
+  "pins": {
+   "idxsig/crypto_replay.py": "aa04635e569a251cbec79eed68f17a51fc2bacb9cbe52f35e4568d54b807264a",
+   "research/CRYPTO_REPLAY_v1/replay.py": "26ac50782fdf64c5a2d147b22574c2c66baea26fb90d90241b405be6680ebcc5",
+   "research/CRYPTO_REPLAY_v1/rankings.py": "2625c7adb44d456f7793e0b5f492d8914ff97d61d95b1f525d79dc4c5afbdca6",
+   "research/CRYPTO_REPLAY_v1/report.py": "56e997bf89a723fa138de9d240baf9d8f1a121a78b8fe5b4540c2cfa51a773c3",
+   "tests/test_crypto_replay.py": "e969b9f907256afcd6c1a1fd35dbac4a496ca83f67a89d73db89693154d56184",
+   "research/CRYPTO_REPLAY_v1/rankings/shortlists_2023.csv.gz": "a6a5bd99252e569578f1442f1c163a65f3f435f189292af8c6335ec4ad74fe79",
+   "research/CRYPTO_REPLAY_v1/rankings/VERIFY.json": "a9f89dd7d2268927cd03158cfe2c49ae91abb9a031e4beb7b54deade54a1a11e",
+   "research/PREMOVE_SEQUENCE_v1/runs/20261030T024900Z/models.json": "e6dff0b91e5328b14c9440ef41c1b13f8d5549b6f34c582f643853c94a9844c5",
+   "research/PREMOVE_SEQUENCE_v1/runs/20261030T024900Z/summary.json": "7bf727510581d095a259bc99dc0f66e50e798876bdf41e4fa48cd04c1c0c8261",
+   "research/PREMOVE_SHADOW_v1/control_model.json": "394b67ef64c18eeb42cc0ff0e1c8df154fdbc9ba3dbff87ac9a2a18441d2a26b",
+   "idxsig/paper_account.py": "2d7cbc536695d0298b3bfa508824bd5e68ea8c6566800e59a0681666dbb00bfd"
+  }
+ }
+}
