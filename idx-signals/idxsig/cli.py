@@ -409,6 +409,17 @@ def main(argv=None) -> int:
         ("paper-book-report", "write paper/PAPER_BOOK.md"),
     ):
         sub.add_parser(command, help=helptext).add_argument("--commit", action="store_true")
+    p_pas = sub.add_parser(
+        "paper-account-sync",
+        help="the KOD paper account (research/PAPER_ACCOUNT_v1): cancels, fills, exits, marks, "
+        "then tonight's orders for both stop arms",
+    )
+    p_pas.add_argument("--manifest", help="a recent US bars manifest (default: the latest one)")
+    p_pas.add_argument("--max-age-hours", type=float, default=6.0)
+    p_pas.add_argument("--commit", action="store_true")
+    sub.add_parser("paper-account-report", help="write paper/PAPER_ACCOUNT.md").add_argument(
+        "--commit", action="store_true"
+    )
     p_pbc = sub.add_parser(
         "paper-book-confirm",
         help="the owner's BUY or SKIP on a planned spike, before its entry cutoff",
@@ -1233,7 +1244,7 @@ def main(argv=None) -> int:
 
         from . import learner, learner2, learner3
 
-        from . import paper_book, premove_shadow
+        from . import paper_account, paper_book, premove_shadow
 
         problems = (
             paper.verify_all()
@@ -1244,6 +1255,7 @@ def main(argv=None) -> int:
             + learner3.verify()
             + premove_shadow.verify()
             + paper_book.verify()
+            + paper_account.verify()
         )
         print("paper-verify: " + ("OK" if not problems else f"{len(problems)} problems"))
         for p_ in problems:
