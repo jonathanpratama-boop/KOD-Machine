@@ -1265,11 +1265,11 @@ def main(argv=None) -> int:
         import os
         from datetime import datetime, timezone
 
-        from . import paper, paper_account as acct
+        from . import paper, paper_account as acct, paper_account_report
 
         trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "")
         if args.cmd == "paper-account-report":
-            path = acct.write_report()
+            path = paper_account_report.write_report()
             print(path.read_text(encoding="utf-8"))
             if args.commit:
                 print(paper.commit_and_push([path], "paper account: report", trailer))
@@ -1301,7 +1301,7 @@ def main(argv=None) -> int:
         except paper.ReceiptPendingError as exc:
             stored = exc.records
             print(f"warning: {exc}")
-        report = acct.write_report()
+        report = paper_account_report.write_report()
         if args.commit:
             tokens = [
                 paper.TOKENS / f"{r['record_hash']}.{a}.tsr"
