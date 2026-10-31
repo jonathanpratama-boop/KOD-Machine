@@ -1,0 +1,95 @@
+{
+ "study_id": "LIQ_REBOUND_v1",
+ "frozen_at": "2026-10-31T23:05:49Z",
+ "config": {
+  "window_h": 24,
+  "sigma_k": 2.0,
+  "sigma_bars": 720,
+  "sigma_min": 576,
+  "oi_lag_min": 5,
+  "oi_tol_min": 15,
+  "oi_q": 0.05,
+  "oi_bars": 4320,
+  "oi_min": 2160,
+  "entry_lag_h": 1,
+  "hold_h": 72,
+  "stop": 0.2,
+  "size": 0.5,
+  "start_cash": 10000.0,
+  "min_order": 10.0,
+  "episode_gap_days": 7
+ },
+ "costs": {
+  "A1": {
+   "buy": 0.0016,
+   "sell": 0.0037
+  },
+  "A2": {
+   "buy": 0.0031,
+   "sell": 0.0052
+  },
+  "A3": {
+   "buy": 0.0115,
+   "sell": 0.0215
+  },
+  "S2": {
+   "buy": 0.0041,
+   "sell": 0.0062
+  }
+ },
+ "windows": {
+  "discovery_signal_bars": [
+   "2020-09-01 00:00:00",
+   "2022-12-31 23:00:00"
+  ],
+  "screen_2023_signal_bars": [
+   "2023-01-01 00:00:00",
+   "2023-12-31 23:00:00"
+  ],
+  "data_bars": [
+   "2020-04-01 00:00:00",
+   "2023-12-31 23:00:00"
+  ],
+  "not_read": "2024-01-01 onward"
+ },
+ "bootstrap": {
+  "draws": 2000,
+  "seed": 20261031
+ },
+ "placebo": {
+  "draws": 2000,
+  "seed": 20261101
+ },
+ "missed_fill_stress": {
+  "draws": 500,
+  "seed": 20261102,
+  "p_fail": 0.3
+ },
+ "gates": {
+  "G0_sample": "discovery cascade trades (A2 account) >= 20 and episodes (7-day gap) >= 8; else INCONCLUSIVE",
+  "G1_net_edge": "discovery mean net trade return (A2) > 0 and its episode-cluster bootstrap one-sided 95% lower bound > 0",
+  "G2_timing": "discovery mean net trade return (A2) > the 90th percentile of the random-entry placebo (same coins, same counts, same rules and costs, eligible signal hours of the discovery window)",
+  "G3_mechanism": "discovery mean GROSS return of cascade trades > that of control trades (control: drop-only hours - same price leg, OI change above its 5% tail - with no cascade hour on the same coin in the preceding 1 + entry lag + hold bars; trade-level, debounced; drop size not matched); NOT_EVALUABLE if fewer than 5 control trades",
+  "G4_account": "discovery A2 account: end equity > start, max drawdown >= -25%, realized P&L without the 3 largest winners > 0",
+  "G5_stress": "discovery accounts S1 (A2, entry 4h after the signal) and S2 (doubled slippage) both end above start",
+  "G6_screen_2023": "if the 2023 A2 account has >= 3 trades its mean net trade return must be >= 0; with fewer than 3 trades the screen is uninformative (flagged) and does not block",
+  "verdict": "PROMISING (a candidate for validation, never proof) only if G0-G6 all PASS; INCONCLUSIVE if G0 fails or G3 is NOT_EVALUABLE; otherwise FAIL"
+ },
+ "versions": {
+  "python": "3.13.16",
+  "numpy": "2.5.3",
+  "pandas": "3.0.5"
+ },
+ "code_commit": "27e6a637f8251dc3d1d9cd8fce43fcc9a90390b0",
+ "pins": {
+  "research/LIQ_REBOUND_v1/rebound.py": "affd9ef83d83f654f19b03ee18550f6b9623c8ca4ba0f52164b1b8855eeb55d1",
+  "research/LIQ_REBOUND_v1/collect.py": "4ddd8ca5872113bf1ff6619b91ae1fd77b759b7c07a0a8d3400a7ee50bfba6ad",
+  "research/LIQ_REBOUND_v1/PROTOCOL.md": "8ae42b70d70d945cf6e313e6cdaee2d6e0b951d687fae22554d23fe00ba8ffc6",
+  "research/LIQ_REBOUND_v1/FEASIBILITY.json": "1fa30d55b9bb462e8525520706f1dd0c4c03affc3be6c48b208341363a967b76",
+  "research/LIQ_REBOUND_v1/report.py": "22b13bbc296fc828df567cf5f79dd73cb770a18ef62346f25991feb7a69e00aa",
+  "idxsig/provenance.py": "368a4a34e3c33a96f0f662b006ddcdfd96973dae527b8085a6cb4a9e33bdf182",
+  "tests/test_liq_rebound.py": "b590adea85613fba1d94a0b8061c687b73a21e56139db401347f0c1a562d77a5",
+  "data/manifests/liq_rebound-20261031T223330Z.jsonl": "fe681126e6600b3111de4cb1f1e25ce3898180081131659cebb89e70d1242121",
+  "data/manifests/binance_1h-20261015T182940Z.jsonl": "2587a63ce26034e1d54670579f8843150f640407a6df0338f35537bd30d20adf"
+ }
+}
