@@ -397,6 +397,25 @@ def main(argv=None) -> int:
         ("premove-shadow-report", "write paper/PREMOVE_SHADOW.md"),
     ):
         sub.add_parser(command, help=helptext).add_argument("--commit", action="store_true")
+    for command, helptext in (
+        (
+            "paper-book-plan",
+            "seal tonight's KOD paper-book plan (DONT_BUY/BUY_OK) for each new v2.4 forecast",
+        ),
+        (
+            "paper-book-score",
+            "record the five-session trade of every planned spike the register resolved",
+        ),
+        ("paper-book-report", "write paper/PAPER_BOOK.md"),
+    ):
+        sub.add_parser(command, help=helptext).add_argument("--commit", action="store_true")
+    p_pbc = sub.add_parser(
+        "paper-book-confirm",
+        help="the owner's BUY or SKIP on a planned spike, before its entry cutoff",
+    )
+    p_pbc.add_argument("ticker")
+    p_pbc.add_argument("decision", choices=("BUY", "SKIP"))
+    p_pbc.add_argument("--commit", action="store_true")
     p_l3f = sub.add_parser(
         "learner3-freeze",
         help="freeze each eligible planned learner evaluation once; report remains read-only",
@@ -1214,7 +1233,7 @@ def main(argv=None) -> int:
 
         from . import learner, learner2, learner3
 
-        from . import premove_shadow
+        from . import paper_book, premove_shadow
 
         problems = (
             paper.verify_all()
@@ -1224,11 +1243,76 @@ def main(argv=None) -> int:
             + learner2.verify()
             + learner3.verify()
             + premove_shadow.verify()
+            + paper_book.verify()
         )
         print("paper-verify: " + ("OK" if not problems else f"{len(problems)} problems"))
         for p_ in problems:
             print(f"  {p_}")
         return 1 if problems else 0
+    elif args.cmd in (
+        "paper-book-plan",
+        "paper-book-score",
+        "paper-book-report",
+        "paper-book-confirm",
+    ):
+        import os
+        from datetime import datetime, timezone
+
+        from . import paper, paper_book as book
+
+        trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "")
+        if args.cmd == "paper-book-report":
+            path = book.write_report()
+            print(path.read_text(encoding="utf-8"))
+            if args.commit:
+                print(paper.commit_and_push([path], "paper book: report", trailer))
+            return 0
+        now = datetime.now(timezone.utc)
+        if args.cmd == "paper-book-plan":
+            recs = book.plan_records(now)
+            message = f"paper book: {len(recs)} spike(s) planned"
+            for r in recs:
+                print(
+                    f"  {r['ticker']} ({r['signal_session']}): dump tomorrow {r['dump_tomorrow']:.2f} -> {r['verdict']}"
+                )
+        elif args.cmd == "paper-book-score":
+            recs = book.result_records()
+            message = f"paper book: {len(recs)} trade(s) closed"
+            for r in recs:
+                net = f"{r['net_return']:+.2%}" if r["net_return"] is not None else r["reason"]
+                print(f"  {r['ticker']}: {r['status']} {net}")
+        else:
+            try:
+                recs = [book.confirm_record(args.ticker, args.decision, now)]
+            except ValueError as exc:
+                print(f"error: {exc}")
+                return 2
+            message = f"paper book: owner {args.decision} {recs[0]['ticker']}"
+            print(f"  recorded: {args.decision} {recs[0]['ticker']} ({recs[0]['set_id']})")
+        if not recs:
+            print("paper book: nothing new; nothing recorded")
+            return 0
+        sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "kod-machine"))
+        from kod.timestamp import RFC3161Timestamper
+
+        try:
+            stored = paper.append(recs, path=book.LEDGER, timestamper=RFC3161Timestamper())
+        except paper.ReceiptPendingError as exc:
+            stored = exc.records
+            print(f"warning: {exc}")
+        report = book.write_report()
+        if args.commit:
+            tokens = [
+                paper.TOKENS / f"{r['record_hash']}.{a}.tsr"
+                for r in stored
+                for a in ("freetsa", "sectigo")
+            ]
+            print(
+                paper.commit_and_push(
+                    [book.LEDGER, report, *[t for t in tokens if t.exists()]], message, trailer
+                )
+            )
+        return 0
     elif args.cmd in ("premove-shadow-forecast", "premove-shadow-score", "premove-shadow-report"):
         import os
 
