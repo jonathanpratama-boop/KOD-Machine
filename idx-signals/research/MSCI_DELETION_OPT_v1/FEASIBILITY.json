@@ -1,0 +1,175 @@
+{
+ "study": "MSCI_DELETION_OPT_v1",
+ "computed_at": "2026-11-01T09:00:49Z",
+ "what": "status counts and scored-trade counts per hold (5 control draws) and reproduction flags; no return printed, saved or looked at",
+ "panel_sha256": "9d3a0718c95f9e885c4f8310cf68bf5e75021c366c454f73389d7fae75c02877",
+ "registry_sha256": "659da375e4586deab958e22dc242d7be6966ebc226bfefe8ce7ce85eb51f1e6c",
+ "reviews": {
+  "order": [
+   "Nov19",
+   "Feb20",
+   "May20",
+   "Aug20",
+   "Nov20",
+   "Feb21",
+   "May21",
+   "Aug21",
+   "Nov21",
+   "Feb22",
+   "May22",
+   "Aug22",
+   "Nov22",
+   "Feb23",
+   "May23",
+   "Aug23",
+   "Feb25",
+   "May25",
+   "Aug25",
+   "Nov25",
+   "Feb26",
+   "May26",
+   "Aug26"
+  ],
+  "outer": [
+   "Nov20",
+   "Feb21",
+   "May21",
+   "Aug21",
+   "Nov21",
+   "Feb22",
+   "May22",
+   "Aug22",
+   "Nov22",
+   "Feb23",
+   "May23",
+   "Aug23",
+   "Feb25",
+   "May25",
+   "Aug25",
+   "Nov25",
+   "Feb26",
+   "May26",
+   "Aug26"
+  ],
+  "blocks": {
+   "dev_outer": [
+    "Nov20",
+    "Feb21",
+    "May21",
+    "Aug21",
+    "Nov21",
+    "Feb22",
+    "May22",
+    "Aug22",
+    "Nov22",
+    "Feb23",
+    "May23",
+    "Aug23"
+   ],
+   "oot": [
+    "Feb25",
+    "May25",
+    "Aug25",
+    "Nov25",
+    "Feb26",
+    "May26",
+    "Aug26"
+   ]
+  }
+ },
+ "events": {
+  "discovery": 46,
+  "screen_2023": 14,
+  "oot": 51
+ },
+ "status_counts_by_hold": {
+  "1": {
+   "EXITED": 99,
+   "SKIP_LIQUIDITY": 6,
+   "SKIP_NOT_TRADED": 4,
+   "SKIP_ARA_LOCK": 2
+  },
+  "2": {
+   "EXITED": 99,
+   "SKIP_LIQUIDITY": 6,
+   "SKIP_NOT_TRADED": 4,
+   "SKIP_ARA_LOCK": 2
+  },
+  "3": {
+   "EXITED": 99,
+   "SKIP_LIQUIDITY": 6,
+   "SKIP_NOT_TRADED": 4,
+   "SKIP_ARA_LOCK": 2
+  },
+  "5": {
+   "EXITED": 99,
+   "SKIP_LIQUIDITY": 6,
+   "SKIP_NOT_TRADED": 4,
+   "SKIP_ARA_LOCK": 2
+  },
+  "10": {
+   "EXITED": 99,
+   "SKIP_LIQUIDITY": 6,
+   "SKIP_NOT_TRADED": 4,
+   "SKIP_ARA_LOCK": 2
+  },
+  "20": {
+   "EXITED": 93,
+   "SKIP_LIQUIDITY": 6,
+   "INCOMPLETE": 6,
+   "SKIP_NOT_TRADED": 4,
+   "SKIP_ARA_LOCK": 2
+  }
+ },
+ "scored_with_controls_by_hold": {
+  "1": {
+   "discovery": 0,
+   "screen_2023": 0,
+   "oot": 0
+  },
+  "2": {
+   "discovery": 0,
+   "screen_2023": 0,
+   "oot": 0
+  },
+  "3": {
+   "discovery": 0,
+   "screen_2023": 0,
+   "oot": 0
+  },
+  "5": {
+   "discovery": 0,
+   "screen_2023": 0,
+   "oot": 0
+  },
+  "10": {
+   "discovery": 0,
+   "screen_2023": 0,
+   "oot": 0
+  },
+  "20": {
+   "discovery": 0,
+   "screen_2023": 0,
+   "oot": 0
+  }
+ },
+ "outer_sample_at_5_draws": {
+  "trades": 74,
+  "reviews": 16
+ },
+ "reproduces_frozen_studies": {
+  "discovery/primary": true,
+  "screen_2023/primary": true,
+  "oot/primary": true,
+  "discovery/S1_entry_next_session": true,
+  "screen_2023/S1_entry_next_session": true,
+  "oot/S1_entry_next_session": true,
+  "discovery/S2_tick_cost": true,
+  "screen_2023/S2_tick_cost": true,
+  "oot/S2_tick_cost": true,
+  "discovery/descriptive_hold_5": true,
+  "screen_2023/descriptive_hold_5": true,
+  "oot/descriptive_hold_5": true
+ },
+ "reproduction_note": "hold 20 (primary, S1, S2) and hold 5 recomputed at 200 draws against the two frozen studies' committed trade files (already published results); only True/False is shown"
+}

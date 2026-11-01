@@ -1,0 +1,130 @@
+{
+ "study_id": "VIX_BASIS_v1",
+ "frozen_at": "2026-11-01T09:09:12Z",
+ "discovery": [
+  "2006-01-03",
+  "2015-12-31"
+ ],
+ "validation": [
+  "2016-01-04",
+  "2023-12-29"
+ ],
+ "sealed_from": "2024-01-01",
+ "rescale": "2007-03-26",
+ "sealed_expiries": {
+  "2024-01": "2024-01-17",
+  "2024-02": "2024-02-14"
+ },
+ "start_equity_usd": 10000.0,
+ "variants": {
+  "primary": {
+   "entry_roll": 0.1,
+   "min_days": 10,
+   "hold": 5,
+   "lag": 1,
+   "weight": 0.2,
+   "cost_points": 0.065,
+   "side": "short_only",
+   "multiplier": null
+  },
+  "S1_double_costs": {
+   "entry_roll": 0.1,
+   "min_days": 10,
+   "hold": 5,
+   "lag": 1,
+   "weight": 0.2,
+   "cost_points": 0.13,
+   "side": "short_only",
+   "multiplier": null
+  },
+  "S2_lag_2": {
+   "entry_roll": 0.1,
+   "min_days": 10,
+   "hold": 5,
+   "lag": 2,
+   "weight": 0.2,
+   "cost_points": 0.065,
+   "side": "short_only",
+   "multiplier": null
+  },
+  "N1_threshold_0.05": {
+   "entry_roll": 0.05,
+   "min_days": 10,
+   "hold": 5,
+   "lag": 1,
+   "weight": 0.2,
+   "cost_points": 0.065,
+   "side": "short_only",
+   "multiplier": null
+  },
+  "N2_threshold_0.15": {
+   "entry_roll": 0.15,
+   "min_days": 10,
+   "hold": 5,
+   "lag": 1,
+   "weight": 0.2,
+   "cost_points": 0.065,
+   "side": "short_only",
+   "multiplier": null
+  },
+  "D1_both_sides": {
+   "entry_roll": 0.1,
+   "min_days": 10,
+   "hold": 5,
+   "lag": 1,
+   "weight": 0.2,
+   "cost_points": 0.065,
+   "side": "both",
+   "multiplier": null
+  },
+  "B1_always_short": {
+   "entry_roll": 0.1,
+   "min_days": 10,
+   "hold": 5,
+   "lag": 1,
+   "weight": 0.2,
+   "cost_points": 0.065,
+   "side": "always_short",
+   "multiplier": null
+  },
+  "R1_whole_vxm_contracts": {
+   "entry_roll": 0.1,
+   "min_days": 10,
+   "hold": 5,
+   "lag": 1,
+   "weight": 0.2,
+   "cost_points": 0.065,
+   "side": "short_only",
+   "multiplier": 100.0
+  }
+ },
+ "bootstrap": {
+  "draws": 10000,
+  "seed": 20261103
+ },
+ "gates": {
+  "D0_sample": "discovery: at least 40 trades (positions: a fresh entry with its cost-free continuations) under the primary rule; else INCONCLUSIVE",
+  "D1_account": "discovery account ends above its start and its P&L without the 5 largest winning positions is > 0",
+  "D2_net": "discovery mean net position return (its P&L over the notional it opened with) > 0 and its bootstrap one-sided 95% lower bound > 0, clustering positions by the calendar month of their entry",
+  "D3_drawdown": "discovery daily marked-to-market maximum drawdown shallower than -35%",
+  "D4_stress": "discovery account ends above its start with doubled costs (S1) and with a two-session lag (S2)",
+  "D5_not_brittle": "discovery account ends above its start with entry thresholds 0.05 (N1) and 0.15 (N2)",
+  "D6_years": "the primary discovery account rises in at least 6 of the 10 calendar years 2006-2015",
+  "validation": "computed only if D0-D6 all pass (otherwise the verdict is FAIL, or INCONCLUSIVE if D0 fails, and validation is never computed): V1 account ends above start; V2 mean net position return > 0; V3 daily maximum drawdown shallower than -35%; V4 account ends above start with doubled costs",
+  "verdict": "FAIL if any D gate fails (INCONCLUSIVE if D0 fails); CONFIRMED if D0-D6 and V1-V4 pass; NOT_CONFIRMED if discovery passes and validation does not. CONFIRMED licenses only a prospective paper log and asking the owner whether to spend the sealed 2024-2026 holdout; never a live order. One run."
+ },
+ "versions": {
+  "python": "3.13.16",
+  "numpy": "2.5.3",
+  "pandas": "3.0.5"
+ },
+ "code_commit": "e4840c14215f8be315a60181b507d1316210313f",
+ "pins": {
+  "research/VIX_BASIS_v1/vix_basis.py": "dd32c8758deb917e27385e8e59ff142b7a1bb662cc6bd6d07b5ab046b20932b3",
+  "research/VIX_BASIS_v1/collect.py": "b5ca1a14bfad9c859e4d7a0eec49dbd93d1bead73159850622241cd654221b5a",
+  "research/VIX_BASIS_v1/PROTOCOL.md": "54efa39d0223a6bb60ece5d8fceff870f17d4846135508eb69bbe6d41cd82cbf",
+  "research/VIX_BASIS_v1/FEASIBILITY.json": "014c22bbcefa210a17640bb9dcb245daa33d70a67c21399fb919052508fcb531",
+  "tests/test_vix_basis.py": "2f27a852c61b3781afeb196ccf3e1f63acb41d694126c78d47fba3d79c47a648",
+  "data/manifests/cboe_vx-20261101T081634Z.jsonl": "cc3633d048ca7cbf78d3c4087a24fffabce2a8295d5ce271b9949ca7b1dff161"
+ }
+}
