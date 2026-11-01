@@ -58,9 +58,10 @@ Constraints followed:
 
 ## What remains untested (not evidence against anything)
 
-- IDX archive fields never used as signals: daily foreign buy/sell volume, closing bid/offer queues, negotiated-market
-  blocks (2019-07 .. 2023-12 is clean development data; 2024-01 .. 2025-02 is the sealed holdout). A scoping workflow
-  (literature, counts-only coverage, candidate designs) is running.
+- ~~IDX archive fields never used as signals~~ **Corrected (see `2026-11-01c_movers_now_holdout_exposure.md`).**
+  Counted test 30 (FLOW_IDX_v1) used foreign buy/sell, closing bid/offer queues and negotiated value on
+  2021-01-22 .. 2022-12-30, with a partial 2023 exposure. Its consequence closed the "Tape" family, so re-opening it
+  needs the owner. Only non_regular_volume/frequency and a few minor fields were never used.
 - A hedged VIX basis (the paper's S&P hedge). A hedged MSCI-deletion relative trade. No IDX index future was verified
   for a retail account.
 - S&P 500 deletions. Blocked: KOD's US panel only covers stocks still listed today.
