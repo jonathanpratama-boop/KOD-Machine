@@ -1,0 +1,113 @@
+{
+ "study_id": "MSCI_DELETION_v1",
+ "frozen_at": "2026-11-01T00:18:30Z",
+ "windows": {
+  "start": "2019-10-01",
+  "end": "2023-12-29",
+  "holdout_first_not_read": "2024-01-02",
+  "discovery_reviews": [
+   "Nov19",
+   "Feb20",
+   "May20",
+   "Aug20",
+   "Nov20",
+   "Feb21",
+   "May21",
+   "Aug21",
+   "Nov21",
+   "Feb22",
+   "May22",
+   "Aug22",
+   "Nov22"
+  ],
+  "screen_reviews": [
+   "Feb23",
+   "May23",
+   "Aug23",
+   "Nov23"
+  ]
+ },
+ "deletion_kinds": [
+  "ST_EXIT",
+  "ST_TO_SC",
+  "SC_EXIT"
+ ],
+ "hold": 20,
+ "entry_lag": 1,
+ "descriptive_holds": [
+  5,
+  60
+ ],
+ "draws": 200,
+ "seed": 20261101,
+ "bootstrap": {
+  "draws": 10000,
+  "seed": 20261102
+ },
+ "max_weight": 0.25,
+ "start_cash_idr": 160000000.0,
+ "exec_config": {
+  "holding_days": "20",
+  "entry_lag": "1",
+  "notional": "40000000.0",
+  "max_participation": "0.1",
+  "fees": "Fees(buy=0.0015, sell=0.0025)",
+  "data_end_exit": "last_close",
+  "lot_size": "100",
+  "entry_price": "close",
+  "cost_tiers": "()",
+  "ca_mode": "registry",
+  "units": "panel",
+  "fill_model": "C",
+  "entry_rule": "fixed",
+  "entry_window": "1",
+  "exit_rule": "fixed",
+  "side": "long",
+  "carry_per_session": "0.0",
+  "liquidation": "None",
+  "jump_ratio": "None",
+  "tick_cost": "False",
+  "capacity_check": "True"
+ },
+ "gates": {
+  "G0_sample": "discovery: at least 30 scored deletion trades (with matched controls) from at least 6 reviews; else INCONCLUSIVE",
+  "G1_net_edge": "discovery mean net trade return (hold 20, fees 0.15%/0.25%) > 0 and its review-cluster bootstrap one-sided 95% lower bound > 0",
+  "G2_vs_matched_controls": "discovery mean excess (net minus the event's matched-control mean under the same plan) > 0 and its review-cluster bootstrap one-sided 95% lower bound > 0",
+  "G3_account": "discovery account (equal weight per review, at most 25% per name, cash otherwise) ends above start and its P&L without the 3 largest winning trades is > 0",
+  "G4_stress": "discovery mean net trade return > 0 with entry one session after the implementation close (S1) and with one tick per side added to costs (S2)",
+  "G5_screen_2023": "with at least 5 scored 2023 deletion trades their mean net return must be >= 0 (fewer: uninformative, flagged, does not block)",
+  "verdict": "PROMISING (a candidate for validation, never proof) only if G0-G5 all pass; INCONCLUSIVE if G0 fails; otherwise FAIL. Where this text and the code differ, this file's code governs."
+ },
+ "versions": {
+  "python": "3.13.16",
+  "numpy": "2.5.3",
+  "pandas": "3.0.5"
+ },
+ "idxsig_tree": "fb09d0fc30a53935e2fdf488477e99d21e2ae385",
+ "code_commit": "490e3ffcae10bd044f69a371f85a801881a880dc",
+ "pins": {
+  "research/MSCI_DELETION_v1/msci_deletion.py": "e8626ccccc8a1f5e27a1ea1624251170cf24b783c007d95303caa4518db1b90f",
+  "research/MSCI_DELETION_v1/build_events.py": "f4e1f66cc4c448622b55dc1397066b2a46fa13428785e9160d6d527d12789ec2",
+  "research/MSCI_DELETION_v1/collect.py": "8aaa2f6360f7d80a989178f5516eea636793e20a365a26c6965de83cbb18a83a",
+  "research/MSCI_DELETION_v1/ticker_map.csv": "13a80bbf4e7e5dcfd883ed5dddfb437ffac696f129aba6433f896a51ae6f7ec4",
+  "research/MSCI_DELETION_v1/events_all.csv": "583562931d246173271f82f892df5333ba8282e7d4e31174d48087ab3abf178e",
+  "research/MSCI_DELETION_v1/PROTOCOL.md": "dc0fd4206bce8d5d31a8afe63a1a7c4509681c21d3a02e896ad8f865a8d9dda1",
+  "research/MSCI_DELETION_v1/FEASIBILITY.json": "559506c94ceca722afbd70406cb221dc407ddafa86644167b5b1e6d0a6a55eef",
+  "research/MSCI_DELETION_v1/report.py": "c462e5652aef6c0071178b9892add39b38c015261973ada1a6a308709ab4c2f6",
+  "tests/test_msci_deletion.py": "38f01ed317d6c1fa3ad3a0083b5a98361cb3f8b065f0becf14b514f0034a807c",
+  "data/manifests/msci_lists-20261031T235555Z.jsonl": "df2d03e13e994f96cf0d01c80d08098ab5f778bebd8d78eb41238ea346b1e146",
+  "data/manifests/panel-20261007T225823Z.json": "941cf83715ee69188969e1c5aab4e2b12622a5fb361381e86dffe8e505545a74",
+  "data/manifests/ca_registry-20261007T230210Z.json": "6063887a4e796284505dcbc53e652e6540c380856635f8e0994e38cdeffe7b01",
+  "idxsig/idx_events.py": "db9190348b1f11542fdd7b5b1c2ee59a178d5a8865d8a24f70537fc943debfb3",
+  "idxsig/execution.py": "16c47aab157d55c68f797275eb12f0cfe1336f705ecec082e1b0b52ffaa87112",
+  "idxsig/controls.py": "5e5ca6fb5a981d0cf66600d971b2531ad34c854a90ad4ecfe9ab40cedf915c0c",
+  "idxsig/market.py": "e9e9328af46a871d6a8bc929ab10889f071bcdbef4be6d85f6fe1d26bd2f9cbc",
+  "idxsig/panel.py": "b37aa0399691ae941d2ece7090365a1faf68372c432afef199c432f435b3a36d",
+  "idxsig/corporate_actions.py": "e5d638ae24c06b026d25cb393673d869ead2949a9aa230655bb3448a679823f0",
+  "idxsig/provenance.py": "368a4a34e3c33a96f0f662b006ddcdfd96973dae527b8085a6cb4a9e33bdf182",
+  "idxsig/__init__.py": "2f04016eea982bf97ab28d35058617dae3209ec4d132e5abe925f8d5aaa35492",
+  "idxsig/quality.py": "ca2e88cec07b40ad6b394c1a1b24450a5081dc92ece54c447143b857dd09e533",
+  "idxsig/sources/__init__.py": "43b646a75a54f7eacc8f4a078d946fa3d7859fe47c247305f39e25cdfbc1804b",
+  "idxsig/sources/idx_mirror.py": "14d3939c7e9b874306c7ba64fd9f7cb60fb5b6293748430592939e51946dfa32"
+ }
+}
