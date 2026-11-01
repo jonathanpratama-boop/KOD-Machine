@@ -28,15 +28,29 @@ All three account profiles vendor the same reviewed core:
 - `paper_candidate.py`, sha256 `dbda12d4…34c3`;
 - the same cash accounting, sha256 `29688797…f8a6`.
 
-The historical replay and the reference adapter differ from it only through their documented profile diffs
-(`CORE_PROFILE_DIFF.patch`). They are one account contract:
+The historical replay and the reference adapter add documented profile diffs (`CORE_PROFILE_DIFF.patch`).
+**Shared accounting code does not make the three execution profiles interchangeable.** Synthetic paper v2, the
+Coinbase USD reference and the historical Binance daily replay are separate contracts, each with its own:
+- evidence and instruments;
+- currency and initial cash;
+- costs and fill timing;
+- journals, pins and clearances.
+
+Their journals, symbols, receipts, costs and timing rules must not be mixed. They share only the signal and risk logic:
 - SMA 10/40;
 - 20-return volatility targets, normalised down within shared cash;
 - persistent 25% drawdown / negative 90-day Sharpe kill.
 
+See `PROFILES.md`.
+
 ## Tests run in this checkout
 
-`sh handoff/ace-integration-20261101/run_all_checks.sh` from the repo root passes end to end.
+`sh handoff/ace-integration-20261101/run_all_checks.sh` from the repo root passes end to end. The script:
+- runs every Python process under `offline_guard/` (an audit hook that denies IP network access), and self-checks that
+  guard first;
+- verifies the pinned historical archive's sha256 before extracting it;
+- writes only to a fresh scratch directory it creates for the run;
+- deletes nothing.
 
 | Suite | Result |
 |---|---|
@@ -66,9 +80,14 @@ The historical replay and the reference adapter differ from it only through thei
 `paper_execution_feasibility.py`).
 - **Causes:** exchange_calendars 4.5.6 raises `NotSessionError` for XNYS 2026-10-15 and 2026-10-19 in calendar
   construction. pandas 3.0.5 raises `TypeError: Cannot cast DatetimeArray to dtype float64`.
-- **Not reproduced on the base commit.** Re-running the two modules on `d54104f` was attempted but blocked: the disk
-  allowance was full, and a shared `/tmp` clean-up was refused.
-- **Left as found.** Tests were not edited to hide them.
+- **The baseline reproduces them.**
+  - **Tree:** baseline `d54104f`'s code, as a `git archive` of `idx-signals/idxsig`, `idx-signals/tests`,
+    `research/GUIDANCE_REVISION_v1` and `research/PREMOVE_SEQUENCE_v1`. This was not a full checkout.
+  - **Run:** the same Python 3.13.16 and libraries.
+  - **Result:** the same 8 tests failed with identical final exception lines. The tracebacks are in the review package
+    sent to Ace.
+- **They remain unfixed.** No fix or test edit was made. A fix needs pinned libraries or changed test calendar
+  dates.
 
 ## Historical account contract: what the integrated strategy is and is not
 
@@ -94,9 +113,10 @@ No parameter, risk rule or comparator was tuned in this integration.
 
 - **Fresh public-data cycle: not attempted.** The only implemented live-data route is the Coinbase `--public-once`
   capture. Ace's one authorised attempt (2026-11-01T11:07Z) stopped with `URLError` before any response
-  (`reference_profile/coinbase_reference_capture_20261101T1107/`). The kit states that its clearance is not renewed
-  permission to retry, so no permitted public-data access exists for this path. A retry needs a new independent review
-  clearance and your explicit go-ahead.
+  (`reference_profile/coinbase_reference_capture_20261101T1107/`). **Capture authorisation is not renewed.** The kit's pre-capture
+  clearance is historical evidence, not permission to retry, so no permitted public-data access exists for this path.
+  `run_all_checks.sh` never invokes `--public-once`. A retry needs a new independent review clearance and your explicit
+  go-ahead.
 - **Not built (by design of the reviewed candidate):**
   - trusted receipt clock, raw-byte persistence and external anchoring for a forward trial;
   - venue lot and minimum-notional applicability for Binance USDT;
