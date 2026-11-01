@@ -1,0 +1,48 @@
+{
+ "study_id": "CRYPTO_ACCOUNT_v1",
+ "rules_version": "CRYPTO_ACCOUNT_v1.4",
+ "prepared_at": "2026-10-31T19:23:00Z",
+ "status": "local successor candidate; not published or activated",
+ "source_upstream_commit": "41b8eb398b900da4cf251efe3971e31dae044ec9",
+ "source_local_parent": "99ee3ab6c175241313810bfd57b0e1c4ddb82a3f",
+ "supersedes": {
+  "file": "research/CRYPTO_ACCOUNT_v1/protocol_v1_3.json",
+  "sha256": "01352c9e9e3ca63b3b4e6d0b0141c4e7fa18dcec4cb6d6f0a60a7a281d8f78d7",
+  "kept_unchanged": true
+ },
+ "correction": "research/CRYPTO_ACCOUNT_v1/CORRECTION_4.md",
+ "changed": [
+  "Settlement, decision and mark phases capture one prefix and use existing expected_head CAS. Exact stale-head failures trigger bounded recompute (three total attempts), never stale-proposal replay.",
+  "Receipt-pending errors represent already-committed records and never cause business retries; unrelated failures propagate. Observation appends remain unguarded.",
+  "decide and mark value positions only from quotes observed by caller now. Future business-event timestamps fail closed; whole-ledger reporting semantics remain unchanged when no as-of clock supplied.",
+  "Invalid Boolean, null, non-numeric or nonfinite/nonpositive policy references decline NO_DECISION_PRICE; valid numeric strings remain supported and unrelated candidates proceed."
+ ],
+ "unchanged": [
+  "Strategy thresholds, cash/risk limits, sizing formula, fee and settlement rules.",
+  "Frozen shared paper.py, paper_account.py, stock protocols, existing historical records and previous crypto protocols/candidates.",
+  "No network, production ledger access, remote CI or real orders."
+ ],
+ "account": {
+  "start_cash_usdt": 10000.0,
+  "risk_per_position": 0.005,
+  "max_aggregate_planned_risk": 0.015,
+  "max_new_orders_per_utc_day": 3,
+  "max_position_fraction": 0.2,
+  "leverage": "none"
+ },
+ "fees": {
+  "taker_fee_per_side": 0.001,
+  "spread": "paid by buying at the ask and selling at the bid"
+ },
+ "pins": {
+  "idxsig/crypto_account.py": "16aefa3609b8ab3ee76b490e094d3b1be4db17b2588b637206b8bfa13b62af5a",
+  "idxsig/cli.py": "ea234dc5da58c196416df8e5db2a9d7560f5f38d3dda4d7afb34e7e835c177d2",
+  "idxsig/paper.py": "c9c017d27f453e232ccc9db1401f9c83da9a544e6ef1422b7e7636f32fdeb624",
+  "idxsig/paper_account.py": "2d7cbc536695d0298b3bfa508824bd5e68ea8c6566800e59a0681666dbb00bfd",
+  "research/PAPER_ACCOUNT_v1/protocol.json": "2a36e8777be15fc58886d8defbc174ea83892acb415db7e6e08b65f379186f0a",
+  "research/CRYPTO_ACCOUNT_v1/protocol.json": "60ff96b071f10d41fa5537cc8915cccf0aea4143c948da3fd57baac6bdf4cce7",
+  "research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json": "b3021091f1f9220e8bd7514b37c0c61a6ddbd423839ec7a77219414152d0776d",
+  "research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json": "91a15db636485ad91250217b99452c1c2af3cd9f032a9fbff5003b916f2bf26a",
+  "research/CRYPTO_ACCOUNT_v1/protocol_v1_3.json": "01352c9e9e3ca63b3b4e6d0b0141c4e7fa18dcec4cb6d6f0a60a7a281d8f78d7"
+ }
+}

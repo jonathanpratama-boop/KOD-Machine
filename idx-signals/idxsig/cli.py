@@ -1280,9 +1280,9 @@ def main(argv=None) -> int:
         latest = max((d["signal_session"] for d in cands), default=None)
         written, stamper = [], RFC3161Timestamper()
 
-        def append(recs):
+        def append(recs, **kwargs):
             try:
-                written.extend(paper.append(recs, path=ca.LEDGER, timestamper=stamper))
+                written.extend(paper.append(recs, path=ca.LEDGER, timestamper=stamper, **kwargs))
             except paper.ReceiptPendingError as exc:
                 written.extend(exc.records)
                 print(f"warning: {exc}")
