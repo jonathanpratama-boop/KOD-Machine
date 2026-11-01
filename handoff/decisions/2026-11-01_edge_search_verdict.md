@@ -1,4 +1,4 @@
-# Edge search 2026-10-31 .. 2026-11-01: verdict (owner's request: "find and test a credible source of trading profit")
+# Edge search 2026-10-31 .. 2026-11-01: verdict (owner's request: "find and test a credible source of trading profit"; final, all three runs independently verified)
 
 Constraints followed: simulation only; unleveraged spot buying, cash allowed (owner's addition of 2026-10-31); no
 shorting, perpetual carry, margin or option selling; no paid data, credentials, deployment or real orders; frozen
@@ -11,7 +11,7 @@ Ace's funding-carry and execution work was not duplicated.
 |---|---|---|---|---|
 | 1 | `research/LIQ_REBOUND_v1` | Liquidity provision to forced deleveraging: buy BTC/ETH spot 1h after a 24h drop with a coin-unit open-interest collapse, hold 72h (liquidated leveraged traders) | Binance spot 1h + 5-min OI, 2020-09..2022-12, 2023 screen | **FAIL**, independently re-derived from raw data: 23 trades, -2.0% per trade net, account -24.5% vs cash; worse than random entries and than drops without an OI collapse |
 | 2 | `research/MSCI_DELETION_v1` | Liquidity provision to index trackers: buy MSCI Indonesia deletions in the implementation-day closing auction, hold 20 sessions (passive funds forced to sell) | MSCI's own lists + KOD's IDX harness, Nov 2019..Nov 2022, 2023 screen | **PROMISING** on development data, independently confirmed (prices match Yahoo on 3,001 ticker-days): +14.0% per trade, +11.1% over matched controls, account IDR 160m -> 262.8m; but one regime (2019-2020 reviews +24%; 2021-22 about zero) |
-| 3 | `research/MSCI_DELETION_OOT_v1` | The same frozen rule, unchanged, on the reviews after the sealed IDX holdout | Feb 2025..Aug 2026 (unsealed segment, never used for this question) | **NOT_CONFIRMED**: 46 trades, -4.2% per trade net (28% winners), account IDR 160m -> 129.5m (-19%) vs cash; excess over controls +4.5% (95% -3.6% to +10.6%) because the controls fell -8.7% |
+| 3 | `research/MSCI_DELETION_OOT_v1` | The same frozen rule, unchanged, on the reviews after the sealed IDX holdout | Feb 2025..Aug 2026 (unsealed segment, never used for this question) | **NOT_CONFIRMED**, independently verified and robust (-2.9% per trade even without the two floor-removal outliers): 46 trades, -4.2% per trade net (28% winners), account IDR 160m -> 129.5m (-19%) vs cash; excess over controls +4.5% (95% -3.6% to +10.6%) because the market fell (liquid IDX -8.1% over the same windows) |
 
 Considered and not run (reasons recorded in each study's PROTOCOL.md): crypto option volatility-risk-premium selling
 (owner's spot-only rule), token-unlock shorts (shorting; data paywalled), turn-of-month and pre-FOMC index timing (weak
