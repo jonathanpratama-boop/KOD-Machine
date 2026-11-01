@@ -30,7 +30,16 @@ def last_hash():
 def main():
     sig_date = dt.date.fromisoformat(sys.argv[1]) if len(sys.argv) > 1 else dt.datetime.now(dt.timezone.utc).date() - dt.timedelta(days=1)
     prev = last_hash()
+    already = set()
+    if os.path.exists(LEDGER):
+        for l in open(LEDGER):
+            if l.strip():
+                r = json.loads(l)
+                already.add((r.get("symbol"), r.get("signal_date")))
     for sym in ["BTCUSDT", "ETHUSDT"]:
+        if (sym, sig_date.isoformat()) in already:
+            print(f"{sym} {sig_date}: already logged; nothing appended")
+            continue
         df = lib.load_klines("spot", sym, "1d")
         n_monthly = len(df)
         df = extend_with_daily(df, sym, sig_date)
