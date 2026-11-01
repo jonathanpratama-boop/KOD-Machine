@@ -22,3 +22,5 @@ def _hook(event, args):
 
 
 sys.addaudithook(_hook)
+
+GUARD_INSTALLED = True

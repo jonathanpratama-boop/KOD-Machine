@@ -15,17 +15,19 @@ PYTHONDONTWRITEBYTECODE=1
 export PYTHONPATH PYTHONDONTWRITEBYTECODE
 echo "scratch: $SCRATCH"
 
-echo "== offline guard self-check (an outbound connection must be denied)"
-python3 - <<'EOF'
-import socket
+echo "== offline guard self-check (audit event only; no network operation)"
+python3 - "$A/offline_guard/sitecustomize.py" <<'EOF'
+import sys
+from pathlib import Path
+import sitecustomize as guard
+if Path(guard.__file__).resolve() != Path(sys.argv[1]).resolve() or getattr(guard, "GUARD_INSTALLED", False) is not True:
+    raise SystemExit("guard not active: expected startup guard/marker missing")
 try:
-    socket.create_connection(("192.0.2.1", 80), timeout=1)
-except Exception as e:
-    if type(e).__name__ != "NetworkBlocked":
-        raise SystemExit(f"guard not active: {type(e).__name__}: {e}")
-    print("denied:", e)
+    sys.audit("socket.getaddrinfo", "192.0.2.1", 80, 0, 0, 0)
+except guard.NetworkBlocked as e:
+    print("denied audit event:", e)
 else:
-    raise SystemExit("guard not active: connection succeeded")
+    raise SystemExit("guard not active: audit event was not denied")
 EOF
 
 echo "== repair v1.4 affected tests (idx-signals)"
@@ -55,7 +57,21 @@ if [ "$GOT" != "$ARCHIVE_SHA256" ]; then
   exit 1
 fi
 echo "archive sha256 OK: $GOT"
-python3 -I -c "import zipfile,sys; zipfile.ZipFile(sys.argv[1]).extractall(sys.argv[2])" "$ARCHIVE" "$SCRATCH/hist"
+python3 -I -B - "$A/offline_guard/sitecustomize.py" "$ARCHIVE" "$SCRATCH/hist" <<'EOF'
+import runpy
+import sys
+guard = runpy.run_path(sys.argv[1])  # trusted absolute local guard, before extraction
+if guard.get("GUARD_INSTALLED") is not True:
+    raise SystemExit("guard installation failed")
+try:
+    sys.audit("socket.getaddrinfo", "192.0.2.1", 80, 0, 0, 0)
+except guard["NetworkBlocked"]:
+    pass
+else:
+    raise SystemExit("guard audit check failed")
+import zipfile
+zipfile.ZipFile(sys.argv[2]).extractall(sys.argv[3])
+EOF
 
 echo "== historical proof: 27 tests, then verify the frozen journals"
 (cd "$SCRATCH/hist" && python3 historical-independent-audit/run_combined.py \
