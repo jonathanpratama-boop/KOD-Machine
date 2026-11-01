@@ -17,6 +17,7 @@ import os
 import sys
 import time
 import urllib.request
+import urllib.parse
 import xml.etree.ElementTree as ET
 
 ROOT = os.environ.get("BINANCE_RAW", "/home/claude/data/binance")
@@ -32,7 +33,7 @@ def s3_list(prefix, delimiter="/"):
         url = f"{S3}?delimiter={delimiter}&prefix={prefix}"
         if marker:
             url += f"&marker={marker}"
-        with urllib.request.urlopen(url, timeout=60) as r:
+        with urllib.request.urlopen(urllib.parse.quote(url, safe=":/?&=-_."), timeout=60) as r:
             root = ET.fromstring(r.read())
         for p in root.iter(f"{NS}Prefix"):
             if p.text != prefix:
@@ -65,7 +66,7 @@ def fetch_one(key, manifest_path):
     os.makedirs(os.path.dirname(dest), exist_ok=True)
     for attempt in range(4):
         try:
-            with urllib.request.urlopen(DL + key, timeout=120) as r:
+            with urllib.request.urlopen(DL + urllib.parse.quote(key), timeout=120) as r:
                 data = r.read()
             break
         except Exception as e:  # noqa
@@ -96,7 +97,7 @@ def main():
     if symbols_arg == "ALL_USDT":
         prefixes, _ = s3_list(base_prefix(market, datatype))
         symbols = [p.rstrip("/").split("/")[-1] for p in prefixes]
-        symbols = [s for s in symbols if s.endswith("USDT") and not any(x in s for x in ("UP", "DOWN", "BULL", "BEAR")) or s in ("BTCUSDT",)]
+        symbols = [s for s in symbols if s.isascii() and s.isalnum() and s.endswith("USDT") and not any(x in s for x in ("UP", "DOWN", "BULL", "BEAR")) or s in ("BTCUSDT",)]
     else:
         symbols = [l.strip() for l in open(symbols_arg) if l.strip()]
     os.makedirs(ROOT, exist_ok=True)
