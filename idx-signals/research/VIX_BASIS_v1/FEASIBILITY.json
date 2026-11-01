@@ -1,0 +1,52 @@
+{
+ "study": "VIX_BASIS_v1",
+ "computed_at": "2026-11-01T09:07:59Z",
+ "what": "data checks and counts only; no strategy return, P&L or price statistic printed or saved",
+ "qa": {
+  "sealed_rows_dropped": 1485,
+  "zero_settle_used_close": 488,
+  "zero_rows_dropped": 336,
+  "rescaled_10x": 2426,
+  "non_business_day_rows_dropped": 9,
+  "idle_rows_dropped": 529,
+  "implausible_rows_dropped": 1,
+  "vix_days_not_vx_sessions": 3890
+ },
+ "contracts": 218,
+ "sessions_with_vix": 8574,
+ "first_vix": "1990-01-02",
+ "last_row_any_file": "2023-12-29",
+ "discovery": {
+  "sessions_with_vx_and_vix": 2517,
+  "sessions_without_a_front": 0,
+  "vix_rows_on_non_sessions": 0,
+  "vx_sessions_without_vix": 0,
+  "short_signal_sessions": 655,
+  "contracts_used": 121
+ },
+ "validation": {
+  "sessions_with_vx_and_vix": 2012,
+  "sessions_without_a_front": 0,
+  "vix_rows_on_non_sessions": 12,
+  "vx_sessions_without_vix": 1,
+  "contracts_used": 97
+ },
+ "expiry": {
+  "rule": "Cboe: 30 days before the next month's third Friday, or before the business day preceding it when that Friday is Good Friday; load() asserts every full contract's last row equals it",
+  "contracts_checked": 216,
+  "good_friday_shifted": [
+   "2008-02",
+   "2014-03",
+   "2019-03",
+   "2022-03"
+  ]
+ },
+ "unscheduled_closures": {
+  "2007-01-02": "2006-12-28",
+  "2012-10-29": "2012-10-29",
+  "2012-10-30": "2012-10-29"
+ },
+ "non_business_days_dropped": [
+  "2015-04-03"
+ ]
+}
