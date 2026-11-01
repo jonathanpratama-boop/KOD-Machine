@@ -1,0 +1,59 @@
+test_age_transit_plus_residence_not_omitted_or_doubled (__main__.Freshness.test_age_transit_plus_residence_not_omitted_or_doubled) ... FAIL
+test_bad_or_ambiguous_age_date_headers_rejected (__main__.Freshness.test_bad_or_ambiguous_age_date_headers_rejected) ... 
+  test_bad_or_ambiguous_age_date_headers_rejected (__main__.Freshness.test_bad_or_ambiguous_age_date_headers_rejected) (age='1.5') ... FAIL
+  test_bad_or_ambiguous_age_date_headers_rejected (__main__.Freshness.test_bad_or_ambiguous_age_date_headers_rejected) (age='+1') ... FAIL
+  test_bad_or_ambiguous_age_date_headers_rejected (__main__.Freshness.test_bad_or_ambiguous_age_date_headers_rejected) (name='age') ... FAIL
+  test_bad_or_ambiguous_age_date_headers_rejected (__main__.Freshness.test_bad_or_ambiguous_age_date_headers_rejected) (name='date') ... FAIL
+test_closed_at_receipt_but_http_date_preclose_rejected (__main__.Freshness.test_closed_at_receipt_but_http_date_preclose_rejected) ... ok
+test_date_age_not_summed_and_absent_age_uses_date (__main__.Freshness.test_date_age_not_summed_and_absent_age_uses_date) ... ok
+test_role_latency_bound_and_clock_jump (__main__.Freshness.test_role_latency_bound_and_clock_jump) ... ok
+
+======================================================================
+FAIL: test_age_transit_plus_residence_not_omitted_or_doubled (__main__.Freshness.test_age_transit_plus_residence_not_omitted_or_doubled)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/coinbase-independent-audit/test_freshness.py", line 14, in test_age_transit_plus_residence_not_omitted_or_doubled
+    with self.assertRaises(ValueError):a.product_rules(r,at(177.001))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_bad_or_ambiguous_age_date_headers_rejected (__main__.Freshness.test_bad_or_ambiguous_age_date_headers_rejected) (age='1.5')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/coinbase-independent-audit/test_freshness.py", line 23, in test_bad_or_ambiguous_age_date_headers_rejected
+    with self.subTest(age=age),self.assertRaises(ValueError):a.checked_receipt(self.cached(age))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_bad_or_ambiguous_age_date_headers_rejected (__main__.Freshness.test_bad_or_ambiguous_age_date_headers_rejected) (age='+1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/coinbase-independent-audit/test_freshness.py", line 23, in test_bad_or_ambiguous_age_date_headers_rejected
+    with self.subTest(age=age),self.assertRaises(ValueError):a.checked_receipt(self.cached(age))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_bad_or_ambiguous_age_date_headers_rejected (__main__.Freshness.test_bad_or_ambiguous_age_date_headers_rejected) (name='age')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/coinbase-independent-audit/test_freshness.py", line 26, in test_bad_or_ambiguous_age_date_headers_rejected
+    with self.subTest(name=name),self.assertRaises(ValueError):a.checked_receipt(r)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_bad_or_ambiguous_age_date_headers_rejected (__main__.Freshness.test_bad_or_ambiguous_age_date_headers_rejected) (name='date')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/coinbase-independent-audit/test_freshness.py", line 26, in test_bad_or_ambiguous_age_date_headers_rejected
+    with self.subTest(name=name),self.assertRaises(ValueError):a.checked_receipt(r)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.004s
+
+FAILED (failures=5)

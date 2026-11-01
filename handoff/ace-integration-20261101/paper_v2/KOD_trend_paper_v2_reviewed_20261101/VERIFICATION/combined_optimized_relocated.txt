@@ -1,0 +1,35 @@
+test_actual_daily_negative_sharpe_kills_before_drawdown (test_candidate.CandidateTests.test_actual_daily_negative_sharpe_kills_before_drawdown) ... ok
+test_actual_holdings_drift_requires_rebalance (test_candidate.CandidateTests.test_actual_holdings_drift_requires_rebalance) ... ok
+test_bar_completeness_and_future_publication (test_candidate.CandidateTests.test_bar_completeness_and_future_publication) ... ok
+test_buy_fails_closed_when_other_held_mark_stale (test_candidate.CandidateTests.test_buy_fails_closed_when_other_held_mark_stale) ... ok
+test_cash_fixture_1000_and_10000 (test_candidate.CandidateTests.test_cash_fixture_1000_and_10000) ... ok
+test_concurrent_same_operation_only_once (test_candidate.CandidateTests.test_concurrent_same_operation_only_once) ... ok
+test_first_peak_and_persistent_kill_no_same_quote_liquidation (test_candidate.CandidateTests.test_first_peak_and_persistent_kill_no_same_quote_liquidation) ... ok
+test_future_receipt_and_wrong_product_rejected (test_candidate.CandidateTests.test_future_receipt_and_wrong_product_rejected) ... ok
+test_missing_cycles_and_late_daily_not_reconstructed (test_candidate.CandidateTests.test_missing_cycles_and_late_daily_not_reconstructed) ... ok
+test_partial_fill_quantity_and_fees (test_candidate.CandidateTests.test_partial_fill_quantity_and_fees) ... ok
+test_replay_retry_and_conflict (test_candidate.CandidateTests.test_replay_retry_and_conflict) ... ok
+test_same_time_and_past_midnight_do_not_fill (test_candidate.CandidateTests.test_same_time_and_past_midnight_do_not_fill) ... ok
+test_sells_before_buys_across_symbols_not_quote_arrival_order (test_candidate.CandidateTests.test_sells_before_buys_across_symbols_not_quote_arrival_order) ... ok
+test_sharpe_clean_window_missing_and_zero_variance (test_candidate.CandidateTests.test_sharpe_clean_window_missing_and_zero_variance) ... ok
+test_torn_tampered_and_changed_code_refused (test_candidate.CandidateTests.test_torn_tampered_and_changed_code_refused) ... ok
+test_uncertain_fsync_retry_establishes_new_durability_barrier (test_candidate.CandidateTests.test_uncertain_fsync_retry_establishes_new_durability_barrier) ... ok
+test_unknown_liquidity_no_fill_and_expiry (test_candidate.CandidateTests.test_unknown_liquidity_no_fill_and_expiry) ... ok
+test_unknown_mark_propagates_not_cost (test_candidate.CandidateTests.test_unknown_mark_propagates_not_cost) ... ok
+test_complete_append_then_fsync_error_retry_does_not_duplicate (test_independent.Independent.test_complete_append_then_fsync_error_retry_does_not_duplicate) ... ok
+test_missing_daily_nav_and_exact_warmup (test_independent.Independent.test_missing_daily_nav_and_exact_warmup) ... ok
+test_no_automatic_kill_reset_after_correction_metadata (test_independent.Independent.test_no_automatic_kill_reset_after_correction_metadata) ... ok
+test_partial_append_fails_closed_without_truncating_existing_bytes (test_independent.Independent.test_partial_append_fails_closed_without_truncating_existing_bytes) ... ok
+test_partial_kill_residual_persisted_and_no_duplicate_quote_fill (test_independent.Independent.test_partial_kill_residual_persisted_and_no_duplicate_quote_fill) ... ok
+test_rebalance_waits_for_other_symbol_pending_sale (test_independent.Independent.test_rebalance_waits_for_other_symbol_pending_sale) ... ok
+test_replay_state_and_conflicting_retry_bytes_unchanged (test_independent.Independent.test_replay_state_and_conflicting_retry_bytes_unchanged) ... ok
+test_reused_core_and_initial_protocol_hash_identity (test_independent.Independent.test_reused_core_and_initial_protocol_hash_identity) ... ok
+test_shared_cash_conservation_and_allin_fill_fees (test_independent.Independent.test_shared_cash_conservation_and_allin_fill_fees) ... ok
+test_unknown_aggregate_nav_blocks_buy_until_marks_recover (test_independent.Independent.test_unknown_aggregate_nav_blocks_buy_until_marks_recover) ... ok
+test_unknown_depth_then_sub_precision_ioc_never_invents_units (test_independent.Independent.test_unknown_depth_then_sub_precision_ioc_never_invents_units) ... ok
+test_wrong_venue_instrument_and_future_source_rejected_atomically (test_independent.Independent.test_wrong_venue_instrument_and_future_source_rejected_atomically) ... ok
+
+----------------------------------------------------------------------
+Ran 30 tests in 0.690s
+
+OK

@@ -1,0 +1,13 @@
+{
+  "phase": "TRANSPORT",
+  "http_status": null,
+  "request_number": 1,
+  "url": "https://api.exchange.coinbase.com/products/BTC-USD",
+  "request_started_at": "2026-11-01T11:07:21.697271Z",
+  "failed_at": "2026-11-01T11:07:26.707576Z",
+  "status": "ROUTE_STOPPED",
+  "error_type": "URLError",
+  "error": "TRANSPORT failed: URLError (transport details omitted to avoid credential logging)",
+  "retry_performed": false,
+  "alternate_host_used": false
+}

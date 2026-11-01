@@ -1,0 +1,65 @@
+{
+  "initial_cash": "10000",
+  "end_account": {
+    "cash_total": "10000",
+    "cash_reserved": "0",
+    "cash_available": "10000",
+    "holdings": {
+      "BTCUSDT": "0",
+      "ETHUSDT": "0"
+    },
+    "nav": "10000",
+    "gross_value": "0",
+    "gross_fraction": "0",
+    "missing_marks": [],
+    "nav_basis": "daily_open_reference_NOT_BBO"
+  },
+  "growth": "0",
+  "CAGR": 0.0,
+  "sampled_max_drawdown": "0",
+  "daily_vol_annualized": 0.0,
+  "daily_Sharpe": null,
+  "Sharpe_zero_variance": true,
+  "days": 1923,
+  "daily_samples": 1924,
+  "fills": 0,
+  "paid_fees": "0",
+  "modeled_slippage": "0",
+  "traded_notional": "0",
+  "normalized_turnover": "0",
+  "annualized_normalized_turnover": "0",
+  "kill": null,
+  "liquidation": {
+    "first_kill_liquidation_at": null,
+    "last_kill_liquidation_at": null,
+    "kill_to_first_fill_days": null,
+    "kill_fill_count": 0,
+    "preplanned_terminal_fill_count": 0,
+    "remaining_holdings": {
+      "BTCUSDT": "0",
+      "ETHUSDT": "0"
+    }
+  },
+  "exposure": {
+    "basis": "daily_postfill_open_reference",
+    "minimum": "0",
+    "maximum": "0",
+    "mean": "0",
+    "invested_samples": 0,
+    "samples": 1924
+  },
+  "pending_intents": [],
+  "first_fill": null,
+  "last_fill": null,
+  "reconciliation": "PASS",
+  "journal": {
+    "events": 1925,
+    "last_record_hash": "9e3097fcc7b06c6da75035b3532a85a1abbc0db9f4822a60e0ae52239cfd70a5",
+    "final_state_sha256": "1bae91ca2cd66722d9fe9b49f115290ee338526502db1d23f67bee6279154aa6",
+    "journal_sha256": "764df41114720e150220a13f3a23f37f3437ba7e149a9dd64d7d7057da246bd3",
+    "replay": "PASS"
+  },
+  "policy": "CASH",
+  "start": "2017-09-26",
+  "terminal_open": "2023-01-01"
+}

@@ -1,0 +1,45 @@
+{
+ "study_id": "CRYPTO_ACCOUNT_v1",
+ "rules_version": "CRYPTO_ACCOUNT_v1.1",
+ "frozen_at": "2026-10-31T12:39:11Z",
+ "supersedes": {
+  "file": "research/CRYPTO_ACCOUNT_v1/protocol.json",
+  "sha256": "60ff96b071f10d41fa5537cc8915cccf0aea4143c948da3fd57baac6bdf4cce7",
+  "code_commit": "b4aec00",
+  "kept_unchanged": true
+ },
+ "correction": "research/CRYPTO_ACCOUNT_v1/CORRECTION_1.md",
+ "changed": [
+  "a decision needs a quote observed within QUOTE_MAX_AGE (5 minutes) before the order; missing, stale or failed quotes are DECLINE NO_FRESH_QUOTE",
+  "a failed fetch is recorded as CRYPTO_QUOTE_ERROR, never replaced by an older quote",
+  "a fill must come from a quote observed at or after the order was placed (never the order's decision quote), at or before it expires, and not after the run's clock",
+  "the holding deadline is the fill quote's observation time + 5 days",
+  "exits use quotes observed after the fill and not after the run's clock; a time exit records how many hours after the deadline its quote was observed",
+  "each run observes again right after placing orders (crypto_account.cycle), so an order can fill in the run that placed it",
+  "verify() rejects orders on non-fresh quotes, fills outside the order's life or off the recorded ask, deadlines not from the fill, exits before the fill, stop exits above the stop and time exits before the deadline"
+ ],
+ "unchanged": [
+  "account limits, sizing, fee, chase, stop distance, order life, hold, decision source and PASS handling",
+  "every existing ledger record (2 quotes, 2 PASS declines, 1 mark under v1; none affected: no order was ever placed)",
+  "the frozen stock account (PAPER_ACCOUNT_v1) and its pins",
+  "the existing crypto experiments"
+ ],
+ "account": {
+  "start_cash_usdt": 10000.0,
+  "risk_per_position": 0.005,
+  "max_aggregate_planned_risk": 0.015,
+  "max_new_orders_per_utc_day": 3,
+  "max_position_fraction": 0.2,
+  "leverage": "none"
+ },
+ "fees": {
+  "taker_fee_per_side": 0.001,
+  "spread": "paid by buying at the ask and selling at the bid"
+ },
+ "pins": {
+  "idxsig/crypto_account.py": "cca81549a89c59c6dbb2b652939c72b4e92f8a8c6287bda2f5a9c965cbb0104c",
+  "idxsig/paper_account.py": "2d7cbc536695d0298b3bfa508824bd5e68ea8c6566800e59a0681666dbb00bfd",
+  "research/PAPER_ACCOUNT_v1/protocol.json": "2a36e8777be15fc58886d8defbc174ea83892acb415db7e6e08b65f379186f0a",
+  "research/CRYPTO_ACCOUNT_v1/protocol.json": "60ff96b071f10d41fa5537cc8915cccf0aea4143c948da3fd57baac6bdf4cce7"
+ }
+}

@@ -1,0 +1,69 @@
+{
+  "initial_cash": "10000",
+  "end_account": {
+    "cash_total": "15037.86162458737010000000",
+    "cash_reserved": "0",
+    "cash_available": "15037.86162458737010000000",
+    "holdings": {
+      "BTCUSDT": "0E-8",
+      "ETHUSDT": "0E-8"
+    },
+    "nav": "15037.86162458737010000000",
+    "gross_value": "0",
+    "gross_fraction": "0E+20",
+    "missing_marks": [],
+    "nav_basis": "daily_open_reference_NOT_BBO"
+  },
+  "growth": "0.50378616245873701000",
+  "CAGR": 0.11500169311766162,
+  "sampled_max_drawdown": "0.1953708266686855805258469458",
+  "daily_vol_annualized": 0.17152315940975432,
+  "daily_Sharpe": 0.7194586031946532,
+  "Sharpe_zero_variance": false,
+  "days": 1368,
+  "daily_samples": 1369,
+  "fills": 4,
+  "paid_fees": "25.03",
+  "modeled_slippage": "12.52271450582990000000",
+  "traded_notional": "25042.89130449025340000000",
+  "normalized_turnover": "1.998498646055078776332576259",
+  "annualized_normalized_turnover": "0.5332251504459822758489695428",
+  "kill": {
+    "at": "2023-06-16T00:00:00Z",
+    "reason": "NEGATIVE_TRAILING_90_DAY_SHARPE",
+    "trigger": "daily:2023-06-16"
+  },
+  "liquidation": {
+    "first_kill_liquidation_at": "2023-06-17T00:00:00Z",
+    "last_kill_liquidation_at": "2023-06-17T00:00:00Z",
+    "kill_to_first_fill_days": 1.0,
+    "kill_fill_count": 2,
+    "preplanned_terminal_fill_count": 0,
+    "remaining_holdings": {
+      "BTCUSDT": "0E-8",
+      "ETHUSDT": "0E-8"
+    }
+  },
+  "exposure": {
+    "basis": "daily_postfill_open_reference",
+    "minimum": "0",
+    "maximum": "0.9999988748038162243188192822",
+    "mean": "0.1212562220923039184854475850",
+    "invested_samples": 166,
+    "samples": 1369
+  },
+  "pending_intents": [],
+  "first_fill": "2023-01-02T00:00:00Z",
+  "last_fill": "2023-06-17T00:00:00Z",
+  "reconciliation": "PASS",
+  "journal": {
+    "events": 1876,
+    "last_record_hash": "fc3e984ead9610691db82466277b421e527b6f59fe2e09136654f0d48f459d4c",
+    "final_state_sha256": "5f9e3b74e2102ac09e8bbdd9bd750d11976c432206b54d5503833ae23e39b3a1",
+    "journal_sha256": "69e7f69c6a915277e47c1f9c92c028946e89654b79aef28a0a16cbf4adcd38dd",
+    "replay": "PASS"
+  },
+  "policy": "PASSIVE_50_50_RISK_MATCHED",
+  "start": "2023-01-01",
+  "terminal_open": "2026-09-30"
+}

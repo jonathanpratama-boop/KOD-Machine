@@ -1,0 +1,24 @@
+{
+  "vendor_source": "../paper_cash_v1/accounting.py",
+  "vendor_sha256": "29688797f6738e4aa02ca87403a5a90d60dec0bca54cffab36a4a4a7e266f8a6",
+  "reused_symbols": [
+    "buy_size",
+    "cash_round",
+    "liquidation",
+    "append_event",
+    "event_hash",
+    "verify_chain"
+  ],
+  "inspected_not_reused": {
+    "idxsig.paper_account.account_state": "Missing marks default to cost; hardcoded START_CASH and US cost profile.",
+    "idxsig.contract.Account": "US opening-print/split/whole-session-volume semantics unsuitable for quote-only synthetic spot."
+  },
+  "reviewed_remote_commit": "48d18b8ecae67bdeeb07a47f1772903a5381782b",
+  "preserved_v1_files": {
+    "v1/PAPER_PROTOCOL.md": "e48ddf92c37ec51ea3ba53aecfa0562f1e99d5939dbb365e6e1e9da1816b8812",
+    "v1/ledger.jsonl": "0b45dd59ed8f4dfb673c7cb4acd94844bdfe493a17f83597b0fbba0cf4556199",
+    "v1/log_decision.py": "191110a3007ced5040f367e770392a09cbc8adfbed0cb28d37e2e9a839fc775b",
+    "v1/DUPLICATE_AUDIT_METADATA.json": "0e9ded269d8d9eb6a6b63ea59709caa6c1732a742c1be5f78c43907c2c1fa6bc",
+    "v1/PINS.json": "555595b79ad8bbcd5612d48d04cb34f188f86a63464877c47f91cb5e9be28e47"
+  }
+}

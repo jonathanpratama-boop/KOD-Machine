@@ -1,0 +1,314 @@
+From 99ee3ab6c175241313810bfd57b0e1c4ddb82a3f Mon Sep 17 00:00:00 2001
+From: Ace <ace@local>
+Date: Sun, 1 Nov 2026 02:12:45 +0700
+Subject: [PATCH] Reject nonfinite and invalid quote inputs as versioned v1.3
+ candidate
+
+---
+ idx-signals/idxsig/crypto_account.py          |  29 +++--
+ .../CRYPTO_ACCOUNT_v1/CORRECTION_3.md         |  45 ++++++++
+ .../CRYPTO_ACCOUNT_v1/protocol_v1_3.json      |  43 ++++++++
+ .../tests/test_crypto_quote_validation.py     | 101 ++++++++++++++++++
+ 4 files changed, 210 insertions(+), 8 deletions(-)
+ create mode 100644 idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_3.md
+ create mode 100644 idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_3.json
+ create mode 100644 idx-signals/tests/test_crypto_quote_validation.py
+
+diff --git a/idx-signals/idxsig/crypto_account.py b/idx-signals/idxsig/crypto_account.py
+index 87b5430..03be67a 100644
+--- a/idx-signals/idxsig/crypto_account.py
++++ b/idx-signals/idxsig/crypto_account.py
+@@ -1,4 +1,4 @@
+-"""CRYPTO_ACCOUNT_v1: a crypto spot paper account (research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json). Paper only: no orders.
++"""CRYPTO_ACCOUNT_v1: a crypto spot paper account (research/CRYPTO_ACCOUNT_v1/protocol_v1_3.json). Paper only: no orders.
+ 
+ A separate adapter beside the frozen US stock account. It reuses that account's tested cash accounting
+ (paper_account.orders_of / account_state: cash, reservations, fills, cancels, realized P&L) by writing records
+@@ -25,6 +25,7 @@ Version history: v1 (research/CRYPTO_ACCOUNT_v1/protocol.json, code at commit b4
+ latest recorded quote of any age, as its decision price and as its fill, with a deadline counted from that old
+ quote. v1.1 (protocol_v1_1.json, CORRECTION_1.md) corrected fill timing.
+ v1.2 (protocol_v1_2.json, CORRECTION_2.md) blocks new orders after failed fetches even with a recent cache;
++v1.3 (protocol_v1_3.json, CORRECTION_3.md) rejects invalid prices at both quote input boundaries;
+ every new record carries rules = RULES. Historical records and protocols remain unchanged.
+ 
+ Decisions come from the crypto paper scan (paper/ledger.jsonl, the frozen paper policy). The account only buys a
+@@ -48,7 +49,7 @@ from .provenance import utc_stamp
+ LEDGER = paper.PAPER / "crypto_account.jsonl"
+ REPORT = paper.PAPER / "CRYPTO_ACCOUNT.md"
+ ACCOUNT_ID = "CRYPTO_ACCOUNT_v1"
+-RULES = "CRYPTO_ACCOUNT_v1.2"
++RULES = "CRYPTO_ACCOUNT_v1.3"
+ ARM = "CRYPTO_SPOT"
+ QUOTE, QUOTE_ERROR = "CRYPTO_QUOTE", "CRYPTO_QUOTE_ERROR"
+ ORDER, DECLINE, CANCEL, ENTRY, EXIT, MARK = (
+@@ -93,15 +94,26 @@ def floor8(x: float) -> float:
+ 
+ 
+ # ---------------------------------------------------------------------------------------- quotes
++def validated_book(bid, ask) -> tuple[float, float]:
++    """Reject nonfinite, nonpositive or crossed prices before recording a quote."""
++    if isinstance(bid, bool) or isinstance(ask, bool) or bid is None or ask is None:
++        raise ValueError("unusable book: Boolean or null price")
++    try:
++        bid, ask = float(bid), float(ask)
++    except (TypeError, ValueError, OverflowError) as exc:
++        raise ValueError("unusable book: non-numeric price") from exc
++    if not (math.isfinite(bid) and math.isfinite(ask) and bid > 0 and ask >= bid):
++        raise ValueError(f"unusable book: bid {bid} ask {ask}")
++    return bid, ask
++
++
+ def book_ticker(symbol: str) -> tuple[float, float, str]:
+     """Best bid and ask from Binance's public spot endpoint; raises if there is no usable answer."""
+     url = BOOK_TICKER.format(quote_url(symbol))
+     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+     with urllib.request.urlopen(req, timeout=20) as resp:
+         body = json.loads(resp.read())
+-    bid, ask = float(body["bidPrice"]), float(body["askPrice"])
+-    if not (bid > 0 and ask >= bid):
+-        raise ValueError(f"unusable book: bid {bid} ask {ask}")
++    bid, ask = validated_book(body["bidPrice"], body["askPrice"])
+     return bid, ask, url
+ 
+ 
+@@ -111,6 +123,7 @@ def fetch_quotes(symbols: list[str], get=book_ticker) -> list[dict]:
+     for sym in sorted(set(symbols)):
+         try:
+             bid, ask, url = get(sym)
++            bid, ask = validated_book(bid, ask)
+         except Exception as exc:  # noqa: BLE001 - recorded, never replaced by an older quote
+             out.append(
+                 {
+@@ -527,11 +540,11 @@ def render(recs: list[dict]) -> str:
+         default="no records yet",
+     )
+     out = [
+-        "# KOD crypto spot paper account (CRYPTO_ACCOUNT_v1, rules v1.2)",
++        "# KOD crypto spot paper account (CRYPTO_ACCOUNT_v1, rules v1.3)",
+         "",
+         (
+             f"As of the latest record ({as_of}). Paper only: no orders, no money. "
+-            "Protocol: `research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json` (supersedes v1.1; see CORRECTION_2.md)."
++            "Protocol: `research/CRYPTO_ACCOUNT_v1/protocol_v1_3.json` (supersedes v1.2; see CORRECTION_3.md)."
+         ),
+         "",
+         (
+@@ -633,7 +646,7 @@ def verify() -> list[str]:
+                 problems.append(f"{r['decision_id']}: decided twice")
+             decided.add(r["decision_id"])
+         if r["type"] == ORDER:
+-            if r.get("rules") == "CRYPTO_ACCOUNT_v1.2":
++            if r.get("rules") in ("CRYPTO_ACCOUNT_v1.2", "CRYPTO_ACCOUNT_v1.3"):
+                 eligible, why = fresh_quote(recs[:i], r["symbol"], _t(r["made_at"]))
+                 if eligible is None:
+                     problems.append(f"{r['decision_id']}: order has no eligible decision quote: {why}")
+diff --git a/idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_3.md b/idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_3.md
+new file mode 100644
+index 0000000..2cd13d1
+--- /dev/null
++++ b/idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_3.md
+@@ -0,0 +1,45 @@
++# CRYPTO_ACCOUNT_v1 — Correction 3 (rules v1.3)
++
++Local successor candidate; not published, activated or deployed. Extends the
++reviewed local v1.2 candidate without modifying its protocol, patches or archive.
++
++## Confirmed input defect
++
++`book_ticker` tested positive bid and ask >= bid, but positive infinity could pass.
++`fetch_quotes` trusted injected getter results without checking them at all.
++Offline full-cycle reproductions showed malformed quote records appended for
++NaN, positive/negative infinity, zero/negative and crossed prices. Some malformed
++feeds produced paper fills; an infinite ask reserved 962.50 in the synthetic
++10,000 account. These are fixture results, not claims about production records.
++
++With a fixture open position and a new independent decision, an infinite bid/ask
++was committed before sizing raised `OverflowError: cannot convert float infinity
++to integer`. The ledger grew from five records to six, ending in an invalid quote.
++
++## Minimal correction
++
++A shared validator rejects Boolean/null/non-numeric inputs, preserves legitimate
++numeric-string parsing, converts prices to float and requires finite positive bid,
++finite ask and ask >= bid. Both the HTTP parser and the injected getter boundary
++use it. The existing fetch exception path records CRYPTO_QUOTE_ERROR instead of
++CRYPTO_QUOTE, and the existing v1.2 eligibility gate declines new orders without
++reserving cash. No strategy, sizing, settlement or position rules are changed.
++Existing valid positions continue to use their last real recorded quote.
++
++New records identify v1.3. The verifier retains the same failed-fetch eligibility
++check for both v1.2 and v1.3 orders. Historical protocols/records are not rewritten;
++this repair does not sanitize earlier corrupted records, inspect production
++ledgers or assert that none exist. Earlier code pins intentionally remain the
++historical versions, with the new source hash recorded only in protocol_v1_3.json.
++
++## Offline verification
++
++Eight new tests exercise invalid injected books, the actual mocked HTTP parser,
++HTTP infinity through the full cycle, recent-cache fallback rejection, position
++preservation/no mid-cycle crash, valid finite locked quotes, numeric strings, and
++unrelated valid-symbol progress while another position has an invalid fetch.
++The initial six tests produced 15 failed subcases and one error before the fix;
++the expanded final eight tests also fail against unchanged v1.2 source (trace
++preserved separately). After correction: eight pass; 81 combined account/
++feasibility/adjacent tests pass with socket connections blocked.
++No network requests, production ledger edits, real orders or remote writes.
+diff --git a/idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_3.json b/idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_3.json
+new file mode 100644
+index 0000000..fc43971
+--- /dev/null
++++ b/idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_3.json
+@@ -0,0 +1,43 @@
++{
++ "study_id": "CRYPTO_ACCOUNT_v1",
++ "rules_version": "CRYPTO_ACCOUNT_v1.3",
++ "prepared_at": "2026-10-31T19:12:00Z",
++ "status": "local successor candidate; not published or activated",
++ "source_upstream_commit": "41b8eb398b900da4cf251efe3971e31dae044ec9",
++ "source_local_parent": "319012922c2d0f23e91398f8d01c0cafe7288a7e",
++ "supersedes": {
++  "file": "research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json",
++  "sha256": "91a15db636485ad91250217b99452c1c2af3cd9f032a9fbff5003b916f2bf26a",
++  "kept_unchanged": true
++ },
++ "correction": "research/CRYPTO_ACCOUNT_v1/CORRECTION_3.md",
++ "changed": [
++  "Reject Boolean, null, non-numeric, nonfinite, nonpositive or crossed prices at HTTP and injected getter boundaries before recording quotes; retain numeric-string parsing. Invalid input records CRYPTO_QUOTE_ERROR; the existing failed-fetch gate declines new orders without reservation.",
++  "New records carry v1.3; existing v1.2 eligibility verifier remains applicable to both local candidate versions."
++ ],
++ "unchanged": [
++  "Strategy, sizing, fill/exit rules, fees and account limits.",
++  "All historical protocol files, earlier archived candidates, stock account files and research engines.",
++  "No production ledger accessed or rewritten; existing malformed historical records are not repaired by this input-boundary change."
++ ],
++ "account": {
++  "start_cash_usdt": 10000.0,
++  "risk_per_position": 0.005,
++  "max_aggregate_planned_risk": 0.015,
++  "max_new_orders_per_utc_day": 3,
++  "max_position_fraction": 0.2,
++  "leverage": "none"
++ },
++ "fees": {
++  "taker_fee_per_side": 0.001,
++  "spread": "paid by buying at the ask and selling at the bid"
++ },
++ "pins": {
++  "idxsig/crypto_account.py": "5644fbb05e479e131d27da846063c065d971a348c46ef3c76d4043d6135386e3",
++  "idxsig/paper_account.py": "2d7cbc536695d0298b3bfa508824bd5e68ea8c6566800e59a0681666dbb00bfd",
++  "research/PAPER_ACCOUNT_v1/protocol.json": "2a36e8777be15fc58886d8defbc174ea83892acb415db7e6e08b65f379186f0a",
++  "research/CRYPTO_ACCOUNT_v1/protocol.json": "60ff96b071f10d41fa5537cc8915cccf0aea4143c948da3fd57baac6bdf4cce7",
++  "research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json": "b3021091f1f9220e8bd7514b37c0c61a6ddbd423839ec7a77219414152d0776d",
++  "research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json": "91a15db636485ad91250217b99452c1c2af3cd9f032a9fbff5003b916f2bf26a"
++ }
++}
+diff --git a/idx-signals/tests/test_crypto_quote_validation.py b/idx-signals/tests/test_crypto_quote_validation.py
+new file mode 100644
+index 0000000..09fa142
+--- /dev/null
++++ b/idx-signals/tests/test_crypto_quote_validation.py
+@@ -0,0 +1,101 @@
++"""v1.3 quote-boundary regressions; injected feed and actual HTTP parser, offline."""
++import io
++import json
++import tempfile
++import unittest
++from datetime import timedelta
++from pathlib import Path
++from unittest import mock
++
++from idxsig import crypto_account as ca
++from tests import test_crypto_account as fixtures
++
++BAD_BOOKS = ((float('nan'), 100), (99, float('nan')),
++             (float('inf'), float('inf')), (99, float('inf')),
++             (float('-inf'), 100), (99, float('-inf')),
++             (0, 1), (-1, 1), (1, 0), (1, -1), (101, 100),
++             (True, 100), (99, True), (None, 100), (99, None),
++             ('garbage', 100), (99, 'garbage'), ([], 100), (99, {}))
++
++
++class InvalidQuotes(fixtures.Base):
++    def test_invalid_injected_books_decline_without_quotes_orders_or_reservations(self):
++        for bid, ask in BAD_BOOKS:
++            with self.subTest(bid=bid, ask=ask), tempfile.TemporaryDirectory() as td, mock.patch.object(ca, 'LEDGER', Path(td)/'ledger.jsonl'):
++                # append() follows Base.ledger, so bind it to the same per-case file.
++                with mock.patch.object(self, 'ledger', ca.LEDGER):
++                    self.m.book['AAAUSDT'] = (bid, ask)
++                    run = self.run_cycle([fixtures._decision('AAA')])
++                    self.assertEqual(self.kinds(run), [(ca.DECLINE, 'NO_FRESH_QUOTE')])
++                    self.assertEqual((self.of(ca.QUOTE), self.of(ca.ORDER), self.of(ca.ENTRY)), ([], [], []))
++                    self.assertEqual(len(self.of(ca.QUOTE_ERROR)), 1)
++                    self.assertIn('ValueError', self.of(ca.QUOTE_ERROR)[0]['error'])
++                    self.assertEqual((run['mark']['cash'], run['mark']['reserved']), (ca.START_CASH, 0.0))
++
++    def test_http_parser_rejects_invalid_bid_ask_before_returning(self):
++        for bid, ask in BAD_BOOKS:
++            payload = json.dumps({'bidPrice':bid, 'askPrice':ask}).encode()
++            with self.subTest(bid=bid, ask=ask), mock.patch.object(ca.urllib.request, 'urlopen', return_value=io.BytesIO(payload)):
++                with self.assertRaises(ValueError): ca.book_ticker('AAAUSDT')
++
++    def test_http_infinity_becomes_recorded_error_not_order(self):
++        payload = b'{"bidPrice":"Infinity","askPrice":"Infinity"}'
++        with mock.patch.object(ca.urllib.request, 'urlopen', side_effect=lambda *a, **kw: io.BytesIO(payload)), mock.patch.object(ca, 'utc_stamp', return_value=ca._stamp(fixtures.T0)):
++            run = ca.cycle([fixtures._decision('AAA')], ca.fetch_quotes,
++                           lambda: fixtures.T0 + timedelta(seconds=1), self.append)
++        self.assertEqual(self.kinds(run), [(ca.DECLINE, 'NO_FRESH_QUOTE')])
++        self.assertEqual(self.of(ca.QUOTE), [])
++        self.assertEqual(run['mark']['reserved'], 0)
++
++    def test_invalid_current_quote_cannot_fall_back_to_valid_recent_cache(self):
++        self.append([fixtures._quote('AAAUSDT',99,100,fixtures.T0-timedelta(minutes=1))])
++        self.m.book['AAAUSDT'] = (float('inf'),float('inf'))
++        run = self.run_cycle([fixtures._decision('AAA')])
++        self.assertEqual(self.kinds(run), [(ca.DECLINE,'NO_FRESH_QUOTE')])
++        self.assertEqual(len(self.of(ca.QUOTE)),1)
++        self.assertEqual(run['mark']['reserved'],0)
++
++    def test_invalid_quote_preserves_existing_position_and_does_not_crash_midcycle(self):
++        self.m.book['AAAUSDT'] = (99,100)
++        decision = fixtures._decision('AAA')
++        self.run_cycle([decision])
++        before = ca.account(ca.lines())
++        quote_count = len(self.of(ca.QUOTE))
++        self.m.book['AAAUSDT'] = (float('inf'),float('inf'))
++        run = self.run_cycle([{**decision,'decision_id':'independent-next'}])
++        self.assertEqual(self.kinds(run),[(ca.DECLINE,'NO_FRESH_QUOTE')])
++        self.assertEqual(ca.account(ca.lines()),before)
++        self.assertEqual(len(self.of(ca.QUOTE)),quote_count)
++        self.assertEqual(self.of(ca.EXIT),[])
++        self.assertEqual(ca.verify(),[])
++
++    def test_valid_finite_and_locked_quote_still_work(self):
++        self.m.book['AAAUSDT']=(100,100)
++        run=self.run_cycle([fixtures._decision('AAA')])
++        self.assertEqual(self.kinds(run),[(ca.ORDER,''),(ca.ENTRY,'FILLED')])
++
++    def test_legitimate_numeric_strings_parse_in_http_and_injected_feed(self):
++        payload = b'{"bidPrice":"99.00000000","askPrice":"1e2"}'
++        with mock.patch.object(ca.urllib.request,'urlopen',return_value=io.BytesIO(payload)):
++            bid,ask,_=ca.book_ticker('AAAUSDT')
++        self.assertEqual((bid,ask),(99.0,100.0))
++        self.m.book['AAAUSDT']=('99.00000000','1e2')
++        self.assertEqual(self.kinds(self.run_cycle([fixtures._decision('AAA')])),[(ca.ORDER,''),(ca.ENTRY,'FILLED')])
++
++    def test_invalid_position_quote_does_not_block_unrelated_valid_symbol(self):
++        self.m.book['AAAUSDT']=(99,100)
++        self.run_cycle([fixtures._decision('AAA')])
++        before=ca.account(ca.lines())['open'][0]
++        self.m.book['AAAUSDT']=(True,None)
++        self.m.book['BBBUSDT']=(99,100)
++        run=self.run_cycle([fixtures._decision('BBB')])
++        self.assertEqual(self.kinds(run),[(ca.ORDER,''),(ca.ENTRY,'FILLED')])
++        after=ca.account(ca.lines())
++        self.assertEqual(next(p for p in after['open'] if p['symbol']=='AAAUSDT'),before)
++        self.assertEqual(len(after['open']),2)
++        self.assertEqual(self.of(ca.QUOTE_ERROR)[-1]['symbol'],'AAAUSDT')
++        self.assertNotIn('nan',ca.render(ca.lines()).lower())
++        self.assertEqual(ca.verify(),[])
++
++
++if __name__ == '__main__': unittest.main()
+-- 
+2.52.0
+

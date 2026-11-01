@@ -1,0 +1,45 @@
+{
+  "profile": "COINBASE_EXCHANGE_USD_REFERENCE_v1",
+  "source_pins": {
+    "ADAPTER_SPEC.md": "051803482129e4c90e4b6b306b3e9f982c5ad093a39a591734ba34d7e67e96cc",
+    "ADAPTER_ADDENDUM_1.md": "5f2352ab32b41912d5f74d0edd89c38a78b8ae8bc9be53aa4eb8bcfde741faec",
+    "ADAPTER_ADDENDUM_2.md": "dd0dd51791c820d51ef8153fda7a06d8e01928bbf2a36624fec2389c1ed50893",
+    "adapter.py": "ad8425a4159d30e0e4cb0f0ec8f3a411b49c6e28b608836795721e2d4371f69d",
+    "paper_reference_core.py": "8c1920f9c89acd92ca51914a9f5ff8d3dfeeeb3b8f1c485f6c4c544b87af703e",
+    "run_once.py": "5e19b953f81e2bcd7acec0368d6c5d776fcb72309f333abe7615f9394b956d1c",
+    "vendor/paper_cash_accounting.py": "29688797f6738e4aa02ca87403a5a90d60dec0bca54cffab36a4a4a7e266f8a6",
+    "vendor/paper_candidate_v2_original.py": "dbda12d461cb601693d6fa77737b8e0f955c9b0f2b7732841a2d9488f6c834c3"
+  },
+  "started_at": "2026-11-01T11:07:21.693402Z",
+  "mode": "simulation_only_no_real_orders",
+  "initial_cash_USD": "1000",
+  "scenario": {
+    "id": "USD_REFERENCE_ASSUMED_FEE1PCT_SLIP0_1PCT_TAX0_NOT_VENUE_TERMS_v1",
+    "fee": ".01",
+    "slippage": ".001",
+    "precision": 8,
+    "quote_max_age_seconds": 5,
+    "intent_life_seconds": 3600,
+    "daily_grace_seconds": 300
+  },
+  "review_clearance": {
+    "profile": "COINBASE_EXCHANGE_USD_REFERENCE_v1",
+    "approved_for_one_bounded_capture": true,
+    "requires_parent_go": true,
+    "public_capture_performed": false,
+    "reviewer": "audit_account_concurrency",
+    "review_report_sha256": "00f1e8e2712a3d8f13f6f7253e2e317d33349368729f1ab2713c22c58c958631",
+    "source_pins": {
+      "ADAPTER_SPEC.md": "051803482129e4c90e4b6b306b3e9f982c5ad093a39a591734ba34d7e67e96cc",
+      "ADAPTER_ADDENDUM_1.md": "5f2352ab32b41912d5f74d0edd89c38a78b8ae8bc9be53aa4eb8bcfde741faec",
+      "ADAPTER_ADDENDUM_2.md": "dd0dd51791c820d51ef8153fda7a06d8e01928bbf2a36624fec2389c1ed50893",
+      "adapter.py": "ad8425a4159d30e0e4cb0f0ec8f3a411b49c6e28b608836795721e2d4371f69d",
+      "paper_reference_core.py": "8c1920f9c89acd92ca51914a9f5ff8d3dfeeeb3b8f1c485f6c4c544b87af703e",
+      "run_once.py": "5e19b953f81e2bcd7acec0368d6c5d776fcb72309f333abe7615f9394b956d1c",
+      "vendor/paper_cash_accounting.py": "29688797f6738e4aa02ca87403a5a90d60dec0bca54cffab36a4a4a7e266f8a6",
+      "vendor/paper_candidate_v2_original.py": "dbda12d461cb601693d6fa77737b8e0f955c9b0f2b7732841a2d9488f6c834c3"
+    },
+    "scope": "Technical approval only after endpoint freshness amendment: one prospective bounded GET-only selected-source USD reference simulation; managed routing preserved; stop on refusal; no orders, credentials, retries or alternate route."
+  },
+  "maximum_requests": 8
+}

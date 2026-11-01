@@ -1,0 +1,302 @@
+From f2062b56d28cc42ba11133be3475a15ba7115c58 Mon Sep 17 00:00:00 2001
+From: Ace <ace@local>
+Date: Sun, 1 Nov 2026 01:42:22 +0700
+Subject: [PATCH] Fix crypto new-order gate after failed current quote fetch
+ (v1.2)
+
+---
+ idx-signals/idxsig/crypto_account.py          | 38 +++++++---
+ .../CRYPTO_ACCOUNT_v1/CORRECTION_2.md         | 54 ++++++++++++++
+ .../CRYPTO_ACCOUNT_v1/protocol_v1_2.json      | 44 ++++++++++++
+ idx-signals/tests/test_crypto_account.py      | 71 +++++++++++++++++++
+ 4 files changed, 198 insertions(+), 9 deletions(-)
+ create mode 100644 idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_2.md
+ create mode 100644 idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json
+
+diff --git a/idx-signals/idxsig/crypto_account.py b/idx-signals/idxsig/crypto_account.py
+index c651a71..87b5430 100644
+--- a/idx-signals/idxsig/crypto_account.py
++++ b/idx-signals/idxsig/crypto_account.py
+@@ -1,4 +1,4 @@
+-"""CRYPTO_ACCOUNT_v1: a crypto spot paper account (research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json). Paper only: no orders.
++"""CRYPTO_ACCOUNT_v1: a crypto spot paper account (research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json). Paper only: no orders.
+ 
+ A separate adapter beside the frozen US stock account. It reuses that account's tested cash accounting
+ (paper_account.orders_of / account_state: cash, reservations, fills, cancels, realized P&L) by writing records
+@@ -23,7 +23,9 @@ of the same shapes, and replaces everything market-specific:
+ 
+ Version history: v1 (research/CRYPTO_ACCOUNT_v1/protocol.json, code at commit b4aec00) let an order use the
+ latest recorded quote of any age, as its decision price and as its fill, with a deadline counted from that old
+-quote. v1.1 (protocol_v1_1.json, CORRECTION_1.md) is this file; every record it writes carries rules = RULES.
++quote. v1.1 (protocol_v1_1.json, CORRECTION_1.md) corrected fill timing.
++v1.2 (protocol_v1_2.json, CORRECTION_2.md) blocks new orders after failed fetches even with a recent cache;
++every new record carries rules = RULES. Historical records and protocols remain unchanged.
+ 
+ Decisions come from the crypto paper scan (paper/ledger.jsonl, the frozen paper policy). The account only buys a
+ decision the policy itself made a buy; every PASS is recorded as a decline with the policy's reason. Quantities
+@@ -46,7 +48,7 @@ from .provenance import utc_stamp
+ LEDGER = paper.PAPER / "crypto_account.jsonl"
+ REPORT = paper.PAPER / "CRYPTO_ACCOUNT.md"
+ ACCOUNT_ID = "CRYPTO_ACCOUNT_v1"
+-RULES = "CRYPTO_ACCOUNT_v1.1"
++RULES = "CRYPTO_ACCOUNT_v1.2"
+ ARM = "CRYPTO_SPOT"
+ QUOTE, QUOTE_ERROR = "CRYPTO_QUOTE", "CRYPTO_QUOTE_ERROR"
+ ORDER, DECLINE, CANCEL, ENTRY, EXIT, MARK = (
+@@ -148,12 +150,26 @@ def errors_of(recs: list[dict], symbol: str) -> list[dict]:
+ 
+ 
+ def fresh_quote(recs: list[dict], symbol: str, now: datetime) -> tuple[dict | None, str]:
+-    """The newest quote observed within QUOTE_MAX_AGE before `now`, or None and why there is none."""
++    """A recent quote not superseded by a failed fetch, as of `now`.
++
++    Observation time orders events; ledger order breaks same-second ties. Future
++    events cannot authorize or block a decision. Settlement remains independent:
++    a fetch failure does not erase valid observations for an existing order.
++    """
+     seen = [q for q in quotes_of(recs, symbol) if q["observed_at"] <= _stamp(now)]
++    events = [
++        (r.get("observed_at") or r.get("attempted_at"), i, r)
++        for i, r in enumerate(recs)
++        if r["type"] in (QUOTE, QUOTE_ERROR) and r["symbol"] == symbol
++        and (r.get("observed_at") or r.get("attempted_at")) <= _stamp(now)
++    ]
++    latest = max(events, key=lambda e: (e[0], e[1]))[2] if events else None
++    errs = [latest] if latest and latest["type"] == QUOTE_ERROR else []
++    why = f"the fetch failed at {errs[-1]['attempted_at']} ({errs[-1]['error']}); " if errs else ""
+     if seen and now - _t(seen[-1]["observed_at"]) <= QUOTE_MAX_AGE:
++        if errs:
++            return None, why + "the cached quote cannot authorize a new order"
+         return seen[-1], ""
+-    errs = [e for e in errors_of(recs, symbol) if now - _t(e["attempted_at"]) <= QUOTE_MAX_AGE]
+-    why = f"the fetch failed at {errs[-1]['attempted_at']} ({errs[-1]['error']}); " if errs else ""
+     if seen:
+         return (
+             None,
+@@ -511,11 +527,11 @@ def render(recs: list[dict]) -> str:
+         default="no records yet",
+     )
+     out = [
+-        "# KOD crypto spot paper account (CRYPTO_ACCOUNT_v1, rules v1.1)",
++        "# KOD crypto spot paper account (CRYPTO_ACCOUNT_v1, rules v1.2)",
+         "",
+         (
+             f"As of the latest record ({as_of}). Paper only: no orders, no money. "
+-            "Protocol: `research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json` (supersedes protocol.json; see CORRECTION_1.md)."
++            "Protocol: `research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json` (supersedes v1.1; see CORRECTION_2.md)."
+         ),
+         "",
+         (
+@@ -611,12 +627,16 @@ def verify() -> list[str]:
+     recs = lines()
+     by_hash = {r["record_hash"]: r for r in recs}
+     decided, followed, fills = set(), set(), {}
+-    for r in recs:
++    for i, r in enumerate(recs):
+         if r["type"] in (ORDER, DECLINE):
+             if r["decision_id"] in decided:
+                 problems.append(f"{r['decision_id']}: decided twice")
+             decided.add(r["decision_id"])
+         if r["type"] == ORDER:
++            if r.get("rules") == "CRYPTO_ACCOUNT_v1.2":
++                eligible, why = fresh_quote(recs[:i], r["symbol"], _t(r["made_at"]))
++                if eligible is None:
++                    problems.append(f"{r['decision_id']}: order has no eligible decision quote: {why}")
+             q = by_hash.get(r["decision_quote_record_hash"])
+             if q is None or q["type"] != QUOTE or q["symbol"] != r["symbol"]:
+                 problems.append(f"{r['decision_id']}: order does not point at its quote")
+diff --git a/idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_2.md b/idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_2.md
+new file mode 100644
+index 0000000..c496b08
+--- /dev/null
++++ b/idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_2.md
+@@ -0,0 +1,54 @@
++# CRYPTO_ACCOUNT_v1 — Correction 2 (rules v1.2)
++
++Local amendment candidate prepared 2026-10-31; not published or activated.
++Source inspected: `41b8eb398b900da4cf251efe3971e31dae044ec9`.
++
++## Defect and reproduction
++
++v1.1's `fresh_quote` returned a cached quote within five minutes before checking
++recorded fetch errors. A failed current request with a one-minute-old cache
++therefore created an ACCT_ORDER and reservation (not a backdated fill), despite
++the v1.1 documentation promising NO_FRESH_QUOTE. The added full-cycle regression
++uses `fetch_quotes` with a getter that raises ConnectionError, not a fabricated
++success. It fails on the unchanged source with ACCT_ORDER and passes on v1.2.
++
++## Correction
++
++Before allowing a new order, require the most recent quote/failure event as of
++the decision clock to be a successful quote, still within the existing five-minute
++age limit. Event timestamps determine recency; ledger sequence resolves
++same-second ties. Future events cannot block or authorize the decision. A later
++successful observation restores eligibility for a new independent decision; an
++already declined decision is never retried or rewritten.
++
++Existing pending reservations and open positions are retained on failure. Valid
++recorded observations still settle existing orders under unchanged v1.1 rules;
++otherwise pending orders wait or expire, and positions wait for a real exit
++observation. No synthetic replacement price, fill, cancellation, or exit is added.
++The verifier applies the new eligibility check only to v1.2 orders, using their
++preceding ledger records, never later same-second events.
++
++## Preservation and verification
++
++The v1/v1.1 protocol files and all frozen US account files remain byte-identical.
++New records declare CRYPTO_ACCOUNT_v1.2. Historical records and research experiments
++are not edited. No production ledger was accessed for this local repair, so this
++is not a claim about how many live records were affected.
++
++Run from idx-signals:
++`python -m unittest tests.test_crypto_account tests.test_paper_account tests.test_paper_book tests.test_paper_account_report`
++
++43 tests pass: 22 crypto tests and 21 adjacent account/book/report tests, including
++US frozen fingerprint checks. The regression covers recent cache plus actual fetch
++failure, preserved pending/open state, same-second failure/recovery, future error,
++recovery without retrying a declined decision, and version-aware verification.
++All inputs are synthetic; no network requests, real-money orders, CI, publication,
++merge, deployment, or 2024 research data access.
++
++## Remaining simulation limits (not changed here)
++
++Fractional quantity sizing still ignores exchange tick/lot/min-notional filters.
++The adapter records bid/ask prices but not displayed quantity/depth and assumes a
++whole-order fill at the first qualifying ask, without partial fills or queue/latency
++modelling. Address these in a separately reviewed paper-only execution amendment,
++not by changing frozen historical protocols or treating testnet as production depth.
+diff --git a/idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json b/idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json
+new file mode 100644
+index 0000000..410674b
+--- /dev/null
++++ b/idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json
+@@ -0,0 +1,44 @@
++{
++ "study_id": "CRYPTO_ACCOUNT_v1",
++ "rules_version": "CRYPTO_ACCOUNT_v1.2",
++ "prepared_at": "2026-10-31T18:41:00Z",
++ "status": "local amendment candidate; not published or activated",
++ "source_commit": "41b8eb398b900da4cf251efe3971e31dae044ec9",
++ "supersedes": {
++  "file": "research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json",
++  "sha256": "b3021091f1f9220e8bd7514b37c0c61a6ddbd423839ec7a77219414152d0776d",
++  "kept_unchanged": true
++ },
++ "correction": "research/CRYPTO_ACCOUNT_v1/CORRECTION_2.md",
++ "changed": [
++  "A failed latest quote fetch at or before decision time blocks new orders and reservations even when a cached quote is younger than five minutes; DECLINE NO_FRESH_QUOTE includes the recorded failure.",
++  "Latest observation is determined by event timestamp with ledger order resolving same-second ties. A subsequent successful observation restores eligibility; future observations and errors cannot affect a current decision.",
++  "verify checks this gate for v1.2 orders against only the ledger prefix before that order; old-version records retain their original semantics."
++ ],
++ "unchanged": [
++  "Existing pending orders, reservations, fills, cancellations, expiry and exits use the v1.1 settlement rules. Failures do not fabricate quotes or erase already recorded valid observations.",
++  "Limits, sizing, fee, chase, stop distance, order life, holding period, policy decision source and PASS handling.",
++  "All historical ledger records, frozen v1 and v1.1 protocols, frozen US account files/pins, and existing research experiments. No production ledger was read or written for this local repair."
++ ],
++ "account": {
++  "start_cash_usdt": 10000.0,
++  "risk_per_position": 0.005,
++  "max_aggregate_planned_risk": 0.015,
++  "max_new_orders_per_utc_day": 3,
++  "max_position_fraction": 0.2,
++  "leverage": "none"
++ },
++ "fees": {
++  "taker_fee_per_side": 0.001,
++  "spread": "paid by buying at the ask and selling at the bid"
++ },
++ "pins": {
++  "idxsig/crypto_account.py": "a313e18076475d8f8f5ec287d7ae84ab5adb3b75b1190799f8b1a697eb000147",
++  "idxsig/paper_account.py": "2d7cbc536695d0298b3bfa508824bd5e68ea8c6566800e59a0681666dbb00bfd",
++  "research/PAPER_ACCOUNT_v1/protocol.json": "2a36e8777be15fc58886d8defbc174ea83892acb415db7e6e08b65f379186f0a",
++  "research/CRYPTO_ACCOUNT_v1/protocol.json": "60ff96b071f10d41fa5537cc8915cccf0aea4143c948da3fd57baac6bdf4cce7",
++  "research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json": "b3021091f1f9220e8bd7514b37c0c61a6ddbd423839ec7a77219414152d0776d"
++ },
++ "rechecked_head": "5eae447c1c16dcff3daf02da6bd6ee836069eaae",
++ "recheck": "crypto source, test and v1.1 protocol blobs unchanged"
++}
+diff --git a/idx-signals/tests/test_crypto_account.py b/idx-signals/tests/test_crypto_account.py
+index e5df4f5..829616a 100644
+--- a/idx-signals/tests/test_crypto_account.py
++++ b/idx-signals/tests/test_crypto_account.py
+@@ -192,6 +192,77 @@ class Lifecycle(Base):
+ class StaleQuotes(Base):
+     """v1.1 regressions: a failed fetch never becomes a fill, an old quote never becomes a decision or a fill."""
+ 
++    def test_failed_current_fetch_never_reserves_on_one_minute_old_cache(self):
++        self.append([_quote("AAAUSDT", 99.0, 99.1, T0 - timedelta(minutes=1))])
++        before = ca.account(ca.lines())
++        run = self.run_cycle([_decision("AAA")])
++        self.assertEqual(self.kinds(run), [(ca.DECLINE, "NO_FRESH_QUOTE")])
++        self.assertIn("the fetch failed", run["events"][0]["reason"])
++        self.assertEqual(len(self.of(ca.QUOTE_ERROR)), 1)
++        self.assertEqual((self.of(ca.ORDER), self.of(ca.ENTRY)), ([], []))
++        self.assertEqual(ca.account(ca.lines()), before)
++        self.assertEqual(run["mark"]["reserved"], 0.0)
++        self.assertEqual(ca.verify(), [])
++
++    def test_failed_fetch_preserves_existing_pending_reservation(self):
++        cands = [_decision("AAA")]
++        self.m.book["AAAUSDT"] = (101.5, 101.6)
++        self.run_cycle(cands)
++        before = ca.account(ca.lines())
++        del self.m.book["AAAUSDT"]
++        run = self.run_cycle(cands, timedelta(minutes=1))
++        self.assertEqual(self.kinds(run), [])
++        self.assertEqual(ca.account(ca.lines()), before)
++        self.assertEqual((self.of(ca.ENTRY), self.of(ca.CANCEL)), ([], []))
++        self.assertEqual(ca.verify(), [])
++
++    def test_failed_fetch_preserves_open_position_without_fabricated_exit(self):
++        cands = [_decision("AAA")]
++        self.m.book["AAAUSDT"] = (99.0, 99.1)
++        self.run_cycle(cands)
++        before = ca.account(ca.lines())
++        del self.m.book["AAAUSDT"]
++        run = self.run_cycle(cands, timedelta(minutes=1))
++        self.assertEqual(self.kinds(run), [])
++        self.assertEqual(ca.account(ca.lines()), before)
++        self.assertEqual(self.of(ca.EXIT), [])
++        self.assertEqual(ca.verify(), [])
++
++    def test_same_second_failure_and_recovery_follow_ledger_order(self):
++        self.append([_quote("AAAUSDT", 99.0, 99.1, T0)])
++        self.append(self.m.fetch(["AAAUSDT"]))  # real failure at the same second
++        self.assertIsNone(ca.fresh_quote(ca.lines(), "AAAUSDT", self.m.t)[0])
++        self.append([_quote("AAAUSDT", 99.0, 99.2, T0)])
++        self.assertIsNotNone(ca.fresh_quote(ca.lines(), "AAAUSDT", self.m.t)[0])
++
++    def test_future_failure_does_not_block_current_quote(self):
++        self.append([_quote("AAAUSDT", 99.0, 99.1, T0)])
++        self.m.t += timedelta(hours=1)
++        self.append(self.m.fetch(["AAAUSDT"]))
++        self.assertIsNotNone(ca.fresh_quote(ca.lines(), "AAAUSDT", T0)[0])
++
++    def test_later_success_recovers_without_retrying_declined_decision(self):
++        cands = [_decision("AAA")]
++        self.append([_quote("AAAUSDT", 99.0, 99.1, T0 - timedelta(minutes=1))])
++        self.run_cycle(cands)
++        self.m.book["AAAUSDT"] = (99.0, 99.1)
++        self.assertEqual(self.kinds(self.run_cycle(cands)), [])
++        new = {**cands[0], "decision_id": "new-independent-decision"}
++        self.assertEqual(self.kinds(self.run_cycle([new])), [(ca.ORDER, ""), (ca.ENTRY, "FILLED")])
++        self.assertEqual(ca.verify(), [])
++
++    def test_v12_verifier_flags_order_after_failure_but_preserves_v11(self):
++        self.append([_quote("AAAUSDT", 99.0, 99.1, T0 - timedelta(minutes=1))])
++        order = ca.decide(ca.lines(), [_decision("AAA")], T0)[0]
++        self.append(self.m.fetch(["AAAUSDT"]))
++        self.append([order])  # intentionally bypass the new eligibility gate
++        self.assertTrue(any("no eligible decision quote" in p for p in ca.verify()))
++        # Historical version semantics are not retroactively rewritten.
++        legacy = [{**r, "rules": "CRYPTO_ACCOUNT_v1.1"} if r["type"] == ca.ORDER else r
++                  for r in ca.lines()]
++        with mock.patch.object(ca, "lines", return_value=legacy):
++            self.assertEqual(ca.verify(), [])
++
+     def test_failed_fetch_is_recorded_and_the_buy_declined(self):
+         run = self.run_cycle([_decision("FFF")])  # the feed does not answer for FFF
+         errors = self.of(ca.QUOTE_ERROR)
+-- 
+2.52.0
+

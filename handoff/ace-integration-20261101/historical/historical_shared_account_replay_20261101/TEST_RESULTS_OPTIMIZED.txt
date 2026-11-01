@@ -1,0 +1,18 @@
+test_90_day_sharpe_kill_waits_for_later_open_and_never_resets (test_daily.DailyTests.test_90_day_sharpe_kill_waits_for_later_open_and_never_resets) ... ok
+test_atomic_mark_cannot_be_overwritten (test_daily.DailyTests.test_atomic_mark_cannot_be_overwritten) ... ok
+test_capacity_known_at_creation_and_frozen (test_daily.DailyTests.test_capacity_known_at_creation_and_frozen) ... ok
+test_cash_control_and_zero_variance_sharpe (test_daily.DailyTests.test_cash_control_and_zero_variance_sharpe) ... ok
+test_conventional_control_explicitly_has_no_kill (test_daily.DailyTests.test_conventional_control_explicitly_has_no_kill) ... ok
+test_kill_initial_peak_and_later_only_liquidation (test_daily.DailyTests.test_kill_initial_peak_and_later_only_liquidation) ... ok
+test_no_manufactured_midnight_availability_or_future_tail_effect (test_daily.DailyTests.test_no_manufactured_midnight_availability_or_future_tail_effect) ... ok
+test_offline_writer_replay_reconciliation_and_terminal_fees (test_daily.DailyTests.test_offline_writer_replay_reconciliation_and_terminal_fees) ... ok
+test_original_v2_bytes_preserved (test_daily.DailyTests.test_original_v2_bytes_preserved) ... ok
+test_passive_does_not_refill_partial_entry (test_daily.DailyTests.test_passive_does_not_refill_partial_entry) ... ok
+test_signal_weights_exact_v2_and_full_session_delay (test_daily.DailyTests.test_signal_weights_exact_v2_and_full_session_delay) ... ok
+test_terminal_plan_cannot_be_moved (test_daily.DailyTests.test_terminal_plan_cannot_be_moved) ... ok
+test_zero_variance_negative_returns_and_insufficient_history (test_daily.DailyTests.test_zero_variance_negative_returns_and_insufficient_history) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.981s
+
+OK

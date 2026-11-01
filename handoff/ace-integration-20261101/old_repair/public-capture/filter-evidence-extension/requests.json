@@ -1,0 +1,22 @@
+[
+  {
+    "symbol": "BTCUSDT",
+    "endpoint": "avgPrice",
+    "url": "https://data-api.binance.vision/api/v3/avgPrice?symbol=BTCUSDT",
+    "request_start_utc": "2026-10-31 18:55:06.457641+00:00",
+    "received_utc": "2026-10-31 18:55:10.708503+00:00",
+    "http_status": 200,
+    "sha256": "1eb338064af22fd56b8a4670fccc784cfc0ffed01cdf5bcfb99a387b7a735319",
+    "bytes": 61
+  },
+  {
+    "symbol": "BTCUSDT",
+    "endpoint": "referencePrice",
+    "url": "https://data-api.binance.vision/api/v3/referencePrice?symbol=BTCUSDT",
+    "request_start_utc": "2026-10-31 18:55:10.708973+00:00",
+    "received_utc": "2026-10-31 18:55:13.569640+00:00",
+    "http_status": 404,
+    "sha256": "55f7d9e99b8e2d4e0e193b2f0275501e6d9c1ebd29cadbea6a0da48a8587e3e0",
+    "bytes": 146
+  }
+]

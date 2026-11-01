@@ -1,0 +1,71 @@
+{
+  "classification": "SYNTHETIC_ACCOUNTING_ACCEPTANCE_NOT_MARKET_PERFORMANCE",
+  "network_used": false,
+  "real_orders": false,
+  "bundle_pins": {
+    "paper_candidate.py": "dbda12d461cb601693d6fa77737b8e0f955c9b0f2b7732841a2d9488f6c834c3",
+    "PAPER_PROTOCOL_v2_CANDIDATE.md": "94a6508600ae50766c7ab9efdd74bb069e41076c575a94f68b0f58f31be5b22c",
+    "PROTOCOL_ADDENDUM_1.md": "e371b30f1f536b75732879e12cf941f445fdaa41b79f5b72b6148daa553ecf95",
+    "vendor/paper_cash_accounting.py": "29688797f6738e4aa02ca87403a5a90d60dec0bca54cffab36a4a4a7e266f8a6"
+  },
+  "fixtures": [
+    {
+      "initial_cash": "1000",
+      "normalized_targets": {
+        "BTCUSDT": "0.5",
+        "ETHUSDT": "0.5"
+      },
+      "account": {
+        "cash_total": "3.9980003793770",
+        "cash_reserved": "0",
+        "cash_available": "3.9980003793770",
+        "holdings": {
+          "BTCUSDT": "4.88751623",
+          "ETHUSDT": "4.98751623"
+        },
+        "nav": "448.8744610793770",
+        "gross_value": "444.87646070",
+        "gross_fraction": "0.9910932772388892691593979691",
+        "missing_marks": [],
+        "nav_basis": "fresh_bid_indicative"
+      },
+      "kill": {
+        "at": "2026-02-10T00:04:00Z",
+        "reason": "DRAWDOWN_AT_LEAST_25_PERCENT",
+        "trigger": "observe:4e505dcb2b9ece48175292d66ebbf0a0dd501ab69c35ab0e41f14dffb10c5e54"
+      },
+      "fill_count": 3,
+      "journal_sha256": "f5ed9a250a88052ccd55a17ea68445001531b2aeda2d00e2bf4befad5c29b9b0",
+      "note": "Deliberate synthetic loss/partial-liquidation fixture; not a historical trade or expected return."
+    },
+    {
+      "initial_cash": "10000",
+      "normalized_targets": {
+        "BTCUSDT": "0.5",
+        "ETHUSDT": "0.5"
+      },
+      "account": {
+        "cash_total": "4.0180017907690",
+        "cash_reserved": "0",
+        "cash_available": "4.0180017907690",
+        "holdings": {
+          "BTCUSDT": "49.77516231",
+          "ETHUSDT": "49.87516231"
+        },
+        "nav": "4488.7826096907690",
+        "gross_value": "4484.76460790",
+        "gross_fraction": "0.9991048793982371538730400387",
+        "missing_marks": [],
+        "nav_basis": "fresh_bid_indicative"
+      },
+      "kill": {
+        "at": "2026-02-10T00:04:00Z",
+        "reason": "DRAWDOWN_AT_LEAST_25_PERCENT",
+        "trigger": "observe:4e505dcb2b9ece48175292d66ebbf0a0dd501ab69c35ab0e41f14dffb10c5e54"
+      },
+      "fill_count": 3,
+      "journal_sha256": "31df79efc258f9c38dfea5c501cffe66afc330f7e05b74144bcca37d1d3d2e9c",
+      "note": "Deliberate synthetic loss/partial-liquidation fixture; not a historical trade or expected return."
+    }
+  ]
+}

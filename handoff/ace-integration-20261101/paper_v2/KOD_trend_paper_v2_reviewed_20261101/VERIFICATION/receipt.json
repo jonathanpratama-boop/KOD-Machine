@@ -1,0 +1,25 @@
+{
+  "classification": "LOCAL_ONLY_SYNTHETIC_ACCOUNT_ACCEPTANCE_AND_READ_ONLY_AUDITS",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "platform": "Linux",
+  "author_unit_tests": 18,
+  "independent_unit_tests": 12,
+  "combined_normal": "PASS_30",
+  "combined_optimized": "PASS_30",
+  "additional_multiprocess_races": 2,
+  "demo_repeated_receipts_identical": true,
+  "backtest_audit_synthetic_reproducer": "PASS_EXPECTED_DEFECTS_REPRODUCED",
+  "growth_parametric_reproducer": "PASS_ALL_25_PUBLISHED_ROUNDED_CELLS_MATCH",
+  "raw_market_data_read": false,
+  "historical_outcome_backtest_rerun": false,
+  "network_or_financial_orders": false,
+  "remote_publication_or_activation": false,
+  "code_sha256": "dbda12d461cb601693d6fa77737b8e0f955c9b0f2b7732841a2d9488f6c834c3",
+  "limitations": [
+    "Synthetic observation adapter only; no real forward record.",
+    "Per-asset T1c evidence does not validate new portfolio contract.",
+    "Linux/POSIX tested; no Mac/storage/power-loss certification.",
+    "No maximum signal-age policy: production adapter needs explicit latest-completed-cycle handling.",
+    "No external immutable receipts or proof of executable venue liquidity."
+  ]
+}

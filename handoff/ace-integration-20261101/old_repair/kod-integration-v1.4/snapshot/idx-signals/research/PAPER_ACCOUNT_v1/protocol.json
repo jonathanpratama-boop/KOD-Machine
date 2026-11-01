@@ -1,0 +1,43 @@
+{
+ "study_id": "PAPER_ACCOUNT_v1",
+ "frozen_at": "2026-10-31T10:31:19Z",
+ "decision": "Owner and Ace, 2026-10-31: connect the existing execution model (EXEC-US-v1) to a separately versioned, capital-constrained paper account; keep PAPER_BOOK_v1 untouched as the comparison.",
+ "candidates": "from paper/paper_book.jsonl: every BUY_OK plan the owner did not SKIP, plus every spike the owner confirmed BUY; considered lowest dump-tomorrow first, ties by ticker; signals from 2026-10-30",
+ "account": {
+  "start_cash_usd": 10000.0,
+  "risk_per_position": 0.005,
+  "max_aggregate_planned_risk": 0.015,
+  "aggregate_includes": "pending orders' planned loss + open positions' loss from the latest close to the stop plus exit cost",
+  "max_new_orders_per_signal_session": 3,
+  "leverage": "none: an order reserves shares x limit x (1 + entry cost) of free cash",
+  "sizing": "exec_us.make_plan with equity = the account's equity at the latest close (open positions marked)"
+ },
+ "arms": {
+  "BASE": "exec_us.make_plan/execute unchanged: stop at the signal-session low; permitted entry = highest open with stop <= 5% away and <= signal close x 1.10",
+  "FIXED5": "same candidates, costs, entry print and time exit; stop set at the fill, 5% below it rounded up to the tick; permitted entry = the chase limit; sized as if filled at that limit with a 5% stop"
+ },
+ "timing": "orders sealed before the entry session's regular 09:30 New York open (idxsig/calendar_us.py: NYSE holidays, daylight saving); the old 13:30 UTC cutoff of earlier records is unchanged",
+ "lifecycle": [
+  "ACCT_ORDER",
+  "ACCT_DECLINE",
+  "ACCT_CANCEL",
+  "ACCT_ENTRY (FILLED or REJECTED_*)",
+  "ACCT_EXIT (STOP, STOP_GAP_AT_OPEN, TIME_EXIT_*, DATA_END_LAST_CLOSE)",
+  "ACCT_MARK (cash, reserved, open value, equity, realized, unrealized)"
+ ],
+ "definition_of_done": "operational: ten consecutive candidate decisions processed end to end (tests/test_paper_account.py runs ten fixture decisions through exec_us: time exit, stop, gap through stop, per-session limit, risk limit, stop too wide, no opening print, open at or below stop, owner cancel, no plan; cash reconciles); live: the first ten real decisions",
+ "not_a_profit_test": "this account checks that decisions, fills, cash and losses are recorded honestly; profit is judged later on many closed trades under a separately registered evaluation, never on a few",
+ "known_limits": [
+  "daily bars: a stop and a time exit in the same session resolve stop first; no slippage beyond the stop level except gaps at the open",
+  "open prints are not fills; small caps may not fill",
+  "BASE is expected to reject most spikes (its 5% stop rule vs the spike-day low; EXEC_US_v2 demo: 79 of 113 above the permitted entry)",
+  "a held name missing from a pull is carried at cost until it returns"
+ ],
+ "pins": {
+  "idxsig/paper_account.py": "2d7cbc536695d0298b3bfa508824bd5e68ea8c6566800e59a0681666dbb00bfd",
+  "idxsig/calendar_us.py": "8c4af36c5a1443cfdbf51db26d4b9f3491880f19508ac48a0da374391b49d5fa",
+  "idxsig/exec_us.py": "74f0277bf43dd33b8003b8b08cb8d04eae1e3308bebc225ed0a25592e2a11c56",
+  "idxsig/paper_book.py": "90dfb98d71bdee9d28ac7c52799083869b6e5a802445bec8cbf6aedbcf642e12",
+  "research/PAPER_BOOK_v1/protocol.json": "b5705c6efcf51f2683af8b88587356706623ec6290fe98363ce4c1d8acad4c64"
+ }
+}
