@@ -1,0 +1,11 @@
+Ran x at commit `c` on the frozen protocol (`protocol.json`, sha256 `0000000000000000...`). One run. Simulation only. **Exploratory:** every review here was inspected before; the sealed 2024 reviews were not computed. The two frozen studies' trade files reproduce: True.
+ERROR: test_calendar_does_not_depend_on_hosts_default_date_range (tests.test_guidance_revision.GuidanceTests.test_calendar_does_not_depend_on_hosts_default_date_range)
+ERROR: test_calendar_range_can_begin_and_end_on_nontrading_days (tests.test_guidance_revision.GuidanceTests.test_calendar_range_can_begin_and_end_on_nontrading_days)
+ERROR: test_funded_mark_and_gap_exit_do_not_invent_stop_price (tests.test_guidance_revision.GuidanceTests.test_funded_mark_and_gap_exit_do_not_invent_stop_price)
+ERROR: test_no_premature_or_retrospective_fill_and_identity_cannot_alias (tests.test_guidance_revision.GuidanceTests.test_no_premature_or_retrospective_fill_and_identity_cannot_alias)
+ERROR: test_weekend_dst_holiday_and_twentieth_session (tests.test_guidance_revision.GuidanceTests.test_weekend_dst_holiday_and_twentieth_session)
+ERROR: test_weekend_wait_is_unfilled_with_explicit_conditions (tests.test_guidance_revision.GuidanceTests.test_weekend_wait_is_unfilled_with_explicit_conditions)
+ERROR: test_empty_population_does_not_invent_alerts_or_episodes (tests.test_premove_evaluation.AlertAccounting.test_empty_population_does_not_invent_alerts_or_episodes)
+ERROR: test_test_outcomes_do_not_change_training_calibration_or_scores (tests.test_premove_evaluation.RankingAndTime.test_test_outcomes_do_not_change_training_calibration_or_scores)
+Ran 1262 tests in 277.093s
+FAILED (errors=8)
