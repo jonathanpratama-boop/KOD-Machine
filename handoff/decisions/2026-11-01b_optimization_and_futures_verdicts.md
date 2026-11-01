@@ -67,7 +67,7 @@ Constraints followed:
 
 ## Decisions for the owner
 
-1. **Publication.** 13 local commits on `claude/idx-signals-test-repo-ds0jw7` await your approval to push.
+1. **Publication.** The local commits on `claude/idx-signals-test-repo-ds0jw7` (13, including this correction) await your approval to push.
 2. **MSCI Nov 2026 review.** It is announced 11 Nov 2026, effective 1 Dec, with implementation at the IDX close on 30 Nov.
    The frozen rules license no prospective log after a REJECT. A no-money prospective log of an auction-entry,
    short-hold rule would be a new, separately frozen hypothesis based on already-seen data. It would need your explicit
