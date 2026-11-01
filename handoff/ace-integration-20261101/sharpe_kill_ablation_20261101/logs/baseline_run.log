@@ -1,0 +1,554 @@
+Running fixed case development TREND_V2_SHARED
+Running fixed case development PASSIVE_50_50_RISK_MATCHED
+Running fixed case development CONVENTIONAL_50_50_BUY_HOLD_NO_KILL
+Running fixed case development CASH
+Running fixed case validation TREND_V2_SHARED
+Running fixed case validation PASSIVE_50_50_RISK_MATCHED
+Running fixed case validation CONVENTIONAL_50_50_BUY_HOLD_NO_KILL
+Running fixed case validation CASH
+{
+  "development": {
+    "TREND_V2_SHARED": {
+      "initial_cash": "10000",
+      "end_account": {
+        "cash_total": "20592.76937267666925000000",
+        "cash_reserved": "0",
+        "cash_available": "20592.76937267666925000000",
+        "holdings": {
+          "BTCUSDT": "0E-8",
+          "ETHUSDT": "0E-8"
+        },
+        "nav": "20592.76937267666925000000",
+        "gross_value": "0",
+        "gross_fraction": "0E+20",
+        "missing_marks": [],
+        "nav_basis": "daily_open_reference_NOT_BBO"
+      },
+      "growth": "1.05927693726766692500",
+      "CAGR": 0.146952526629607,
+      "sampled_max_drawdown": "0.1541684092760982675411533361",
+      "daily_vol_annualized": 0.126324291135652,
+      "daily_Sharpe": 1.1475105864381918,
+      "Sharpe_zero_variance": false,
+      "days": 1923,
+      "daily_samples": 1924,
+      "fills": 228,
+      "paid_fees": "88.69",
+      "modeled_slippage": "44.36001660903075000000",
+      "traded_notional": "88714.67030836685715000000",
+      "normalized_turnover": "5.504278978186698355333656749",
+      "annualized_normalized_turnover": "1.044753940217444045604152217",
+      "kill": {
+        "at": "2018-03-15T00:00:00Z",
+        "reason": "NEGATIVE_TRAILING_90_DAY_SHARPE",
+        "trigger": "daily:2018-03-15"
+      },
+      "liquidation": {
+        "first_kill_liquidation_at": "2018-03-16T00:00:00Z",
+        "last_kill_liquidation_at": "2018-03-16T00:00:00Z",
+        "kill_to_first_fill_days": 1.0,
+        "kill_fill_count": 1,
+        "preplanned_terminal_fill_count": 0,
+        "remaining_holdings": {
+          "BTCUSDT": "0E-8",
+          "ETHUSDT": "0E-8"
+        }
+      },
+      "exposure": {
+        "basis": "daily_postfill_open_reference",
+        "minimum": "0",
+        "maximum": "0.9292395423216281716649931253",
+        "mean": "0.03304545294023920953212056849",
+        "invested_samples": 144,
+        "samples": 1924
+      },
+      "pending_intents": [],
+      "first_fill": "2017-10-06T00:00:00Z",
+      "last_fill": "2018-03-16T00:00:00Z",
+      "reconciliation": "PASS",
+      "journal": {
+        "events": 2612,
+        "last_record_hash": "06bb24ea627fc478326d850ccf7101b550927f562a8c6bcbb5cd4f2610a1b86c",
+        "final_state_sha256": "49b4c7f1eb143fdcb727d8efcb092965417f359bc8c49992f292712f37e87334",
+        "journal_sha256": "9350eab20ab03d7965c531145706b1d64033f9d8d5da1531801d34165607b381",
+        "replay": "PASS"
+      },
+      "policy": "TREND_V2_SHARED",
+      "start": "2017-09-26",
+      "terminal_open": "2023-01-01"
+    },
+    "PASSIVE_50_50_RISK_MATCHED": {
+      "initial_cash": "10000",
+      "end_account": {
+        "cash_total": "17844.12712791117715000000",
+        "cash_reserved": "0",
+        "cash_available": "17844.12712791117715000000",
+        "holdings": {
+          "BTCUSDT": "0E-8",
+          "ETHUSDT": "0E-8"
+        },
+        "nav": "17844.12712791117715000000",
+        "gross_value": "0",
+        "gross_fraction": "0E+20",
+        "missing_marks": [],
+        "nav_basis": "daily_open_reference_NOT_BBO"
+      },
+      "growth": "0.78441271279111771500",
+      "CAGR": 0.11618381033334146,
+      "sampled_max_drawdown": "0.2759643612551368553353952285",
+      "daily_vol_annualized": 0.18873029002501232,
+      "daily_Sharpe": 0.6776414976118581,
+      "Sharpe_zero_variance": false,
+      "days": 1923,
+      "daily_samples": 1924,
+      "fills": 4,
+      "paid_fees": "16.92",
+      "modeled_slippage": "8.46300356632285000000",
+      "traded_notional": "16922.07237757996125000000",
+      "normalized_turnover": "1.146762103977642924711599345",
+      "annualized_normalized_turnover": "0.2176641539011126716171262407",
+      "kill": {
+        "at": "2018-02-03T00:00:00Z",
+        "reason": "DRAWDOWN_AT_LEAST_25_PERCENT",
+        "trigger": "mark_batch:2018-02-03T00:00:00Z"
+      },
+      "liquidation": {
+        "first_kill_liquidation_at": "2018-02-04T00:00:00Z",
+        "last_kill_liquidation_at": "2018-02-04T00:00:00Z",
+        "kill_to_first_fill_days": 1.0,
+        "kill_fill_count": 2,
+        "preplanned_terminal_fill_count": 0,
+        "remaining_holdings": {
+          "BTCUSDT": "0E-8",
+          "ETHUSDT": "0E-8"
+        }
+      },
+      "exposure": {
+        "basis": "daily_postfill_open_reference",
+        "minimum": "0",
+        "maximum": "0.7718997414470348764151196243",
+        "mean": "0.04278678627361224764461213786",
+        "invested_samples": 130,
+        "samples": 1924
+      },
+      "pending_intents": [],
+      "first_fill": "2017-09-27T00:00:00Z",
+      "last_fill": "2018-02-04T00:00:00Z",
+      "reconciliation": "PASS",
+      "journal": {
+        "events": 2323,
+        "last_record_hash": "cbc91e09a6233e84c70f30e047e5c471047e896d4c770104e940875f0fd59c82",
+        "final_state_sha256": "165e6ffdf250cec5762d429368ac2deb043243ff84874392180ef3a78b24a2f1",
+        "journal_sha256": "558a97da8e18b6849da77d0d9bf9edac69fd93375151e80d4cb0c028d61532ae",
+        "replay": "PASS"
+      },
+      "policy": "PASSIVE_50_50_RISK_MATCHED",
+      "start": "2017-09-26",
+      "terminal_open": "2023-01-01"
+    },
+    "CONVENTIONAL_50_50_BUY_HOLD_NO_KILL": {
+      "initial_cash": "10000",
+      "end_account": {
+        "cash_total": "24500.54400089026685000000",
+        "cash_reserved": "0",
+        "cash_available": "24500.54400089026685000000",
+        "holdings": {
+          "BTCUSDT": "0E-8",
+          "ETHUSDT": "0E-8"
+        },
+        "nav": "24500.54400089026685000000",
+        "gross_value": "0",
+        "gross_fraction": "0E+20",
+        "missing_marks": [],
+        "nav_basis": "daily_open_reference_NOT_BBO"
+      },
+      "growth": "1.45005440008902668500",
+      "CAGR": 0.185409784954377,
+      "sampled_max_drawdown": "0.7169018535752372550077911325",
+      "daily_vol_annualized": 0.562798067378608,
+      "daily_Sharpe": 0.5868062810512948,
+      "Sharpe_zero_variance": false,
+      "days": 1923,
+      "daily_samples": 1924,
+      "fills": 4,
+      "paid_fees": "23.59",
+      "modeled_slippage": "11.79621360783315000000",
+      "traded_notional": "23585.15925055905095000000",
+      "normalized_turnover": "1.229868128581724915350378643",
+      "annualized_normalized_turnover": "0.2334383083371448747284910061",
+      "kill": null,
+      "liquidation": {
+        "first_kill_liquidation_at": null,
+        "last_kill_liquidation_at": null,
+        "kill_to_first_fill_days": null,
+        "kill_fill_count": 0,
+        "preplanned_terminal_fill_count": 2,
+        "remaining_holdings": {
+          "BTCUSDT": "0E-8",
+          "ETHUSDT": "0E-8"
+        }
+      },
+      "exposure": {
+        "basis": "daily_postfill_open_reference",
+        "minimum": "0",
+        "maximum": "0.9340367764371172968638257654",
+        "mean": "0.6880803134969711665061643233",
+        "invested_samples": 1922,
+        "samples": 1924
+      },
+      "pending_intents": [],
+      "first_fill": "2017-09-27T00:00:00Z",
+      "last_fill": "2023-01-01T00:00:00Z",
+      "reconciliation": "PASS",
+      "journal": {
+        "events": 7699,
+        "last_record_hash": "433121cc0b05ff162cba66ff0f27c880b3d081084702e47ad3dc89f9d80e35b1",
+        "final_state_sha256": "cfe995a5b6456df019d26f4e66a8af12fc434d321ef5c08589abfb6aac90607a",
+        "journal_sha256": "5dcc39310067c9c0c183850646c663e2cfd84d96162751e2aa59cbb45e7bb882",
+        "replay": "PASS"
+      },
+      "policy": "CONVENTIONAL_50_50_BUY_HOLD_NO_KILL",
+      "start": "2017-09-26",
+      "terminal_open": "2023-01-01"
+    },
+    "CASH": {
+      "initial_cash": "10000",
+      "end_account": {
+        "cash_total": "10000",
+        "cash_reserved": "0",
+        "cash_available": "10000",
+        "holdings": {
+          "BTCUSDT": "0",
+          "ETHUSDT": "0"
+        },
+        "nav": "10000",
+        "gross_value": "0",
+        "gross_fraction": "0",
+        "missing_marks": [],
+        "nav_basis": "daily_open_reference_NOT_BBO"
+      },
+      "growth": "0",
+      "CAGR": 0.0,
+      "sampled_max_drawdown": "0",
+      "daily_vol_annualized": 0.0,
+      "daily_Sharpe": null,
+      "Sharpe_zero_variance": true,
+      "days": 1923,
+      "daily_samples": 1924,
+      "fills": 0,
+      "paid_fees": "0",
+      "modeled_slippage": "0",
+      "traded_notional": "0",
+      "normalized_turnover": "0",
+      "annualized_normalized_turnover": "0",
+      "kill": null,
+      "liquidation": {
+        "first_kill_liquidation_at": null,
+        "last_kill_liquidation_at": null,
+        "kill_to_first_fill_days": null,
+        "kill_fill_count": 0,
+        "preplanned_terminal_fill_count": 0,
+        "remaining_holdings": {
+          "BTCUSDT": "0",
+          "ETHUSDT": "0"
+        }
+      },
+      "exposure": {
+        "basis": "daily_postfill_open_reference",
+        "minimum": "0",
+        "maximum": "0",
+        "mean": "0",
+        "invested_samples": 0,
+        "samples": 1924
+      },
+      "pending_intents": [],
+      "first_fill": null,
+      "last_fill": null,
+      "reconciliation": "PASS",
+      "journal": {
+        "events": 1925,
+        "last_record_hash": "9e3097fcc7b06c6da75035b3532a85a1abbc0db9f4822a60e0ae52239cfd70a5",
+        "final_state_sha256": "1bae91ca2cd66722d9fe9b49f115290ee338526502db1d23f67bee6279154aa6",
+        "journal_sha256": "764df41114720e150220a13f3a23f37f3437ba7e149a9dd64d7d7057da246bd3",
+        "replay": "PASS"
+      },
+      "policy": "CASH",
+      "start": "2017-09-26",
+      "terminal_open": "2023-01-01"
+    }
+  },
+  "validation": {
+    "TREND_V2_SHARED": {
+      "initial_cash": "10000",
+      "end_account": {
+        "cash_total": "12377.20052300523680000000",
+        "cash_reserved": "0",
+        "cash_available": "12377.20052300523680000000",
+        "holdings": {
+          "BTCUSDT": "0E-8",
+          "ETHUSDT": "0E-8"
+        },
+        "nav": "12377.20052300523680000000",
+        "gross_value": "0",
+        "gross_fraction": "0E+20",
+        "missing_marks": [],
+        "nav_basis": "daily_open_reference_NOT_BBO"
+      },
+      "growth": "0.23772005230052368000",
+      "CAGR": 0.05855360411385391,
+      "sampled_max_drawdown": "0.1155083127869236040008422631",
+      "daily_vol_annualized": 0.12420951270048627,
+      "daily_Sharpe": 0.5196338303785428,
+      "Sharpe_zero_variance": false,
+      "days": 1368,
+      "daily_samples": 1369,
+      "fills": 180,
+      "paid_fees": "76.78",
+      "modeled_slippage": "38.36795809456320000000",
+      "traded_notional": "76734.67001488585010000000",
+      "normalized_turnover": "6.557554351185196547255201566",
+      "annualized_normalized_turnover": "1.749639867092541476424085213",
+      "kill": {
+        "at": "2023-04-22T00:00:00Z",
+        "reason": "NEGATIVE_TRAILING_90_DAY_SHARPE",
+        "trigger": "daily:2023-04-22"
+      },
+      "liquidation": {
+        "first_kill_liquidation_at": "2023-04-23T00:00:00Z",
+        "last_kill_liquidation_at": "2023-04-23T00:00:00Z",
+        "kill_to_first_fill_days": 1.0,
+        "kill_fill_count": 2,
+        "preplanned_terminal_fill_count": 0,
+        "remaining_holdings": {
+          "BTCUSDT": "0E-8",
+          "ETHUSDT": "0E-8"
+        }
+      },
+      "exposure": {
+        "basis": "daily_postfill_open_reference",
+        "minimum": "0",
+        "maximum": "0.9999999997907720495096906944",
+        "mean": "0.06259952530994446191255226075",
+        "invested_samples": 89,
+        "samples": 1369
+      },
+      "pending_intents": [],
+      "first_fill": "2023-01-11T00:00:00Z",
+      "last_fill": "2023-04-23T00:00:00Z",
+      "reconciliation": "PASS",
+      "journal": {
+        "events": 1821,
+        "last_record_hash": "d72949884dc8932092b33e806cf0a83d164153d90f7913b89c7d13ca3b9a94a5",
+        "final_state_sha256": "e0ffe0c572dc6f80bd708694fde622a007ab7f1dda3e962d905cd0ed777fe775",
+        "journal_sha256": "4d89c2cb569399dd070e0ba50606ad72e01e8fedd4aaee3455a2022652c77d5c",
+        "replay": "PASS"
+      },
+      "policy": "TREND_V2_SHARED",
+      "start": "2023-01-01",
+      "terminal_open": "2026-09-30"
+    },
+    "PASSIVE_50_50_RISK_MATCHED": {
+      "initial_cash": "10000",
+      "end_account": {
+        "cash_total": "15037.86162458737010000000",
+        "cash_reserved": "0",
+        "cash_available": "15037.86162458737010000000",
+        "holdings": {
+          "BTCUSDT": "0E-8",
+          "ETHUSDT": "0E-8"
+        },
+        "nav": "15037.86162458737010000000",
+        "gross_value": "0",
+        "gross_fraction": "0E+20",
+        "missing_marks": [],
+        "nav_basis": "daily_open_reference_NOT_BBO"
+      },
+      "growth": "0.50378616245873701000",
+      "CAGR": 0.11500169311766162,
+      "sampled_max_drawdown": "0.1953708266686855805258469458",
+      "daily_vol_annualized": 0.17152315940975432,
+      "daily_Sharpe": 0.7194586031946532,
+      "Sharpe_zero_variance": false,
+      "days": 1368,
+      "daily_samples": 1369,
+      "fills": 4,
+      "paid_fees": "25.03",
+      "modeled_slippage": "12.52271450582990000000",
+      "traded_notional": "25042.89130449025340000000",
+      "normalized_turnover": "1.998498646055078776332576259",
+      "annualized_normalized_turnover": "0.5332251504459822758489695428",
+      "kill": {
+        "at": "2023-06-16T00:00:00Z",
+        "reason": "NEGATIVE_TRAILING_90_DAY_SHARPE",
+        "trigger": "daily:2023-06-16"
+      },
+      "liquidation": {
+        "first_kill_liquidation_at": "2023-06-17T00:00:00Z",
+        "last_kill_liquidation_at": "2023-06-17T00:00:00Z",
+        "kill_to_first_fill_days": 1.0,
+        "kill_fill_count": 2,
+        "preplanned_terminal_fill_count": 0,
+        "remaining_holdings": {
+          "BTCUSDT": "0E-8",
+          "ETHUSDT": "0E-8"
+        }
+      },
+      "exposure": {
+        "basis": "daily_postfill_open_reference",
+        "minimum": "0",
+        "maximum": "0.9999988748038162243188192822",
+        "mean": "0.1212562220923039184854475850",
+        "invested_samples": 166,
+        "samples": 1369
+      },
+      "pending_intents": [],
+      "first_fill": "2023-01-02T00:00:00Z",
+      "last_fill": "2023-06-17T00:00:00Z",
+      "reconciliation": "PASS",
+      "journal": {
+        "events": 1876,
+        "last_record_hash": "fc3e984ead9610691db82466277b421e527b6f59fe2e09136654f0d48f459d4c",
+        "final_state_sha256": "5f9e3b74e2102ac09e8bbdd9bd750d11976c432206b54d5503833ae23e39b3a1",
+        "journal_sha256": "69e7f69c6a915277e47c1f9c92c028946e89654b79aef28a0a16cbf4adcd38dd",
+        "replay": "PASS"
+      },
+      "policy": "PASSIVE_50_50_RISK_MATCHED",
+      "start": "2023-01-01",
+      "terminal_open": "2026-09-30"
+    },
+    "CONVENTIONAL_50_50_BUY_HOLD_NO_KILL": {
+      "initial_cash": "10000",
+      "end_account": {
+        "cash_total": "36220.20742133487805000000",
+        "cash_reserved": "0",
+        "cash_available": "36220.20742133487805000000",
+        "holdings": {
+          "BTCUSDT": "0E-8",
+          "ETHUSDT": "0E-8"
+        },
+        "nav": "36220.20742133487805000000",
+        "gross_value": "0",
+        "gross_fraction": "0E+20",
+        "missing_marks": [],
+        "nav_basis": "daily_open_reference_NOT_BBO"
+      },
+      "growth": "2.62202074213348780500",
+      "CAGR": 0.40972791670389275,
+      "sampled_max_drawdown": "0.5758003143790786544672938894",
+      "daily_vol_annualized": 0.4918289207381659,
+      "daily_Sharpe": 0.9430589400564802,
+      "Sharpe_zero_variance": false,
+      "days": 1368,
+      "daily_samples": 1369,
+      "fills": 4,
+      "paid_fees": "46.23",
+      "modeled_slippage": "23.12979094242195000000",
+      "traded_notional": "46246.43710123776135000000",
+      "normalized_turnover": "1.998499428510825292966605844",
+      "annualized_normalized_turnover": "0.5332253592152421286058560914",
+      "kill": null,
+      "liquidation": {
+        "first_kill_liquidation_at": null,
+        "last_kill_liquidation_at": null,
+        "kill_to_first_fill_days": null,
+        "kill_fill_count": 0,
+        "preplanned_terminal_fill_count": 2,
+        "remaining_holdings": {
+          "BTCUSDT": "0E-8",
+          "ETHUSDT": "0E-8"
+        }
+      },
+      "exposure": {
+        "basis": "daily_postfill_open_reference",
+        "minimum": "0",
+        "maximum": "0.9999996459103541227268736100",
+        "mean": "0.9985383082408979687917027670",
+        "invested_samples": 1367,
+        "samples": 1369
+      },
+      "pending_intents": [],
+      "first_fill": "2023-01-02T00:00:00Z",
+      "last_fill": "2026-09-30T00:00:00Z",
+      "reconciliation": "PASS",
+      "journal": {
+        "events": 5479,
+        "last_record_hash": "062c3e89ae7371bfeb18389c4e13dbc85134ddc6cc7aa57fc5dcb7cd88ad2ab9",
+        "final_state_sha256": "d1ae2e1b6de23fa2cf1a0b51d198275146b22d7226282dc2e9d041ebead544a4",
+        "journal_sha256": "942effe4248f802f834000eb5981d90fc8712e050d606e49f8ce0e955eb3ad8a",
+        "replay": "PASS"
+      },
+      "policy": "CONVENTIONAL_50_50_BUY_HOLD_NO_KILL",
+      "start": "2023-01-01",
+      "terminal_open": "2026-09-30"
+    },
+    "CASH": {
+      "initial_cash": "10000",
+      "end_account": {
+        "cash_total": "10000",
+        "cash_reserved": "0",
+        "cash_available": "10000",
+        "holdings": {
+          "BTCUSDT": "0",
+          "ETHUSDT": "0"
+        },
+        "nav": "10000",
+        "gross_value": "0",
+        "gross_fraction": "0",
+        "missing_marks": [],
+        "nav_basis": "daily_open_reference_NOT_BBO"
+      },
+      "growth": "0",
+      "CAGR": 0.0,
+      "sampled_max_drawdown": "0",
+      "daily_vol_annualized": 0.0,
+      "daily_Sharpe": null,
+      "Sharpe_zero_variance": true,
+      "days": 1368,
+      "daily_samples": 1369,
+      "fills": 0,
+      "paid_fees": "0",
+      "modeled_slippage": "0",
+      "traded_notional": "0",
+      "normalized_turnover": "0",
+      "annualized_normalized_turnover": "0",
+      "kill": null,
+      "liquidation": {
+        "first_kill_liquidation_at": null,
+        "last_kill_liquidation_at": null,
+        "kill_to_first_fill_days": null,
+        "kill_fill_count": 0,
+        "preplanned_terminal_fill_count": 0,
+        "remaining_holdings": {
+          "BTCUSDT": "0",
+          "ETHUSDT": "0"
+        }
+      },
+      "exposure": {
+        "basis": "daily_postfill_open_reference",
+        "minimum": "0",
+        "maximum": "0",
+        "mean": "0",
+        "invested_samples": 0,
+        "samples": 1369
+      },
+      "pending_intents": [],
+      "first_fill": null,
+      "last_fill": null,
+      "reconciliation": "PASS",
+      "journal": {
+        "events": 1370,
+        "last_record_hash": "faab6ca56f675aff916c5f959a12e5ccaea19f677b878c75fb58136a76f099c0",
+        "final_state_sha256": "d9948b49a4ff7196997b88b8f7675d1d80806dad10e680602551499773c2c4e1",
+        "journal_sha256": "df60aba06aa41ffac87a6cf12bd32ad16dab02f710b61b1ea6d4d89449c4957a",
+        "replay": "PASS"
+      },
+      "policy": "CASH",
+      "start": "2023-01-01",
+      "terminal_open": "2026-09-30"
+    }
+  }
+}
+
+real	8m4.983s
+user	7m57.791s
+sys	0m3.285s

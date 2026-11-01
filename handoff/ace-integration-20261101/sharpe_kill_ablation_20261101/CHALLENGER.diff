@@ -1,0 +1,11 @@
+--- historical/historical_shared_account_replay_20261101/daily_core.py (published)
++++ sharpe_kill_ablation_20261101/challenger_engine/daily_core.py (challenger)
+@@ -442,7 +442,7 @@
+                 sample["daily_return"] = nav/prev["nav"]-1
+         st["daily"].append(sample)
+         sh = sharpe_status(st["daily"])
+-        if sh["negative"] and st["risk_kills_enabled"]: kill(st, at, "NEGATIVE_TRAILING_90_DAY_SHARPE", oid)
++        if False and sh["negative"] and st["risk_kills_enabled"]: kill(st, at, "NEGATIVE_TRAILING_90_DAY_SHARPE", oid)  # ABLATION: Sharpe kill disabled; 25% drawdown kill unchanged
+         result.update(status=sample["status"], sample=sample, trailing_sharpe=sh)
+     elif op == "missed":
+         if date.fromisoformat(c["date"]) > utc(at).date(): raise ValueError("future missed cycle")
