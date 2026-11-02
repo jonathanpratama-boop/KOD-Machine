@@ -1,6 +1,6 @@
 # Speculation Register (KOD-SPEC-REGISTER-v1.1, protocol sha256 b0e9b6d9b533)
 
-Generated 2026-11-02T22:57:09Z from `paper/speculations.jsonl`: 66 sets sealed, 16 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
+Generated 2026-11-02T22:57:54Z from `paper/speculations.jsonl`: 66 sets sealed, 27 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
 
 Windows: **BASE5**: the frozen plan: the validated harness plan, prospectively, beside twins; **PATH20**: the 20-session price path of the candidate and its twins; no plan; **NEXT1**: the next session's close of the candidate and its twins; no plan.
 
@@ -42,7 +42,7 @@ Projection (labelled): sessions of resolved sets needed for t >= 3 if the true p
 |---|---:|---:|---:|---:|
 | 0.149 (validation trade sd 0.3429 (run 20261008T115656Z_MOONSHOT_E2_US_D1_v1), paired, / sqrt(sets per session)) | 500 | 80 | 20 | 6 |
 
-PATH20 windows resolved: 0; NEXT1: 9.
+PATH20 windows resolved: 0; NEXT1: 20.
 
 | Statement | Graded | Realised rate | Twins' rate | Mean prior | Brier (register) | Brier (0.5) | Brier (running) |
 |---|---:|---:|---:|---:|---:|---:|---:|
@@ -52,9 +52,9 @@ PATH20 windows resolved: 0; NEXT1: 9.
 | BEATS_TWINS_5 | 0 | | | | | | |
 | RUN30_20 | 0 | | | | | | |
 | DOUBLE_20 | 0 | | | | | | |
-| DOWN10_1 | 9 | 0.556 | 0.081 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
-| UP10_1 | 9 | 0.111 | 0.000 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
-| BEATS_TWINS_1 | 9 | 0.222 | 0.525 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| DOWN10_1 | 20 | 0.350 | 0.057 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| UP10_1 | 20 | 0.100 | 0.030 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| BEATS_TWINS_1 | 20 | 0.450 | 0.511 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
 
 ## CRYPTO: 5 sets over 4 signal sessions (2026-10-27 .. 2026-10-30, 0.83 sets per scan)
 
@@ -444,4 +444,15 @@ Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside 
 | 2026-10-30-F1_ARA-KONI | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.40 |
 | 2026-10-30-F1_ARA-POLI | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
 | 2026-10-30-F1_ARA-ALKA | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.20, BEATS_TWINS_1=0/0.60 |
+| US-2026-10-30-G2_RET30-ONEG | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.20, BEATS_TWINS_1=0/0.60 |
+| US-2026-10-30-G2_RET30-SLGB | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.20, UP10_1=0/0.00, BEATS_TWINS_1=1/0.60 |
+| US-2026-10-30-G2_RET30-CHOW | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0 |
+| US-2026-10-30-G2_RET30-SGRX | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.20, BEATS_TWINS_1=1/0.40 |
+| US-2026-10-30-G2_RET30-ASUR | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=1/0.40 |
+| US-2026-10-30-G2_RET30-GDYN | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=1/0.40 |
+| US-2026-10-30-G2_RET30-FMC | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.20, BEATS_TWINS_1=1/0.60 |
+| US-2026-10-30-G2_RET30-WHLR | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.40 |
+| US-2026-10-30-G2_RET30-OMEX | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=1/0.40 |
+| US-2026-10-30-G2_RET30-MASK | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
+| US-2026-10-30-G2_RET30-ATYR | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.20, UP10_1=1/0.00, BEATS_TWINS_1=1/0.60 |
 
