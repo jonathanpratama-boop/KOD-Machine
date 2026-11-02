@@ -1,6 +1,6 @@
 # KOD paper account (PAPER_ACCOUNT_v1)
 
-As of the latest record (2026-10-31T10:36:42Z). Paper only: no orders, no money. Protocol: `research/PAPER_ACCOUNT_v1/protocol.json`.
+As of the latest record (2026-11-02T22:58:25Z). Paper only: no orders, no money. Protocol: `research/PAPER_ACCOUNT_v1/protocol.json`.
 
 ## The three plain answers
 
@@ -12,23 +12,23 @@ As of the latest record (2026-10-31T10:36:42Z). Paper only: no orders, no money.
 
 | Arm | Cash | Reserved | Available | Open value | Equity | Realized | Unrealized | Pending | Filled | Rejected | Cancelled | Declined | Closed |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| BASE | $10,000.00 | $1,897.15 | $8,102.85 | $0.00 | $10,000.00 | $0.00 | $0.00 | 2 | 0 | 0 | 0 | 0 | 0 |
-| FIXED5 | $10,000.00 | $1,892.52 | $8,107.48 | $0.00 | $10,000.00 | $0.00 | $0.00 | 2 | 0 | 0 | 0 | 0 | 0 |
+| BASE | $10,000.00 | $0.00 | $10,000.00 | $0.00 | $10,000.00 | $0.00 | $0.00 | 0 | 0 | 2 | 0 | 0 | 0 |
+| FIXED5 | $9,107.77 | $0.00 | $9,107.77 | $897.00 | $10,004.77 | -$47.79 | $51.18 | 0 | 2 | 0 | 0 | 0 | 1 |
 
 ## Open positions and valuation
 
-- No open positions.
+- FIXED5 FMC: $897.00, valued at the close of 2026-11-02 (+6.38% since entry)
 
 ## Drawdown (from recorded nightly marks only)
 
-- BASE: 0.00% across 1 mark(s)
-- FIXED5: 0.00% across 1 mark(s)
+- BASE: 0.00% across 2 mark(s)
+- FIXED5: 0.00% across 2 mark(s)
 
 ## Every decision
 
 | Signal | Ticker | Arm | Source | Decision | Entry | Exit | Net P&L |
 |---|---|---|---|---|---|---|---:|
-| 2026-10-30 | FMC | BASE | KOD | order 174 @ <= 5.42, reserved $944.49 | pending: next open (before 2026-11-02T14:30:00Z) | - | - |
-| 2026-10-30 | ASUR | BASE | KOD | order 107 @ <= 8.89, reserved $952.66 | pending: next open (before 2026-11-02T14:30:00Z) | - | - |
-| 2026-10-30 | FMC | FIXED5 | KOD | order 138 @ <= 6.8, reserved $939.81 | pending: next open (before 2026-11-02T14:30:00Z) | - | - |
-| 2026-10-30 | ASUR | FIXED5 | KOD | order 92 @ <= 10.34, reserved $952.71 | pending: next open (before 2026-11-02T14:30:00Z) | - | - |
+| 2026-10-30 | FMC | BASE | KOD | order 174 @ <= 5.42, reserved $944.49 | REJECTED_STOP_TOO_WIDE: open 6.11 is above the permitted entry 5.42: the stop at 5.15 would be 15.71% away, more than 5% | - | - |
+| 2026-10-30 | ASUR | BASE | KOD | order 107 @ <= 8.89, reserved $952.66 | REJECTED_STOP_TOO_WIDE: open 9.98 is above the permitted entry 8.89: the stop at 8.45 would be 15.33% away, more than 5% | - | - |
+| 2026-10-30 | FMC | FIXED5 | KOD | order 138 @ <= 6.8, reserved $939.81 | filled 138 @ 6.11 on 2026-11-02, stop 5.81 | - | - |
+| 2026-10-30 | ASUR | FIXED5 | KOD | order 92 @ <= 10.34, reserved $952.71 | filled 92 @ 9.98 on 2026-11-02, stop 9.49 | STOP 2026-11-02 @ 9.49 | -$47.79 |
