@@ -24,11 +24,17 @@ separate journals, pins and clearances. It merges none of their outputs and runs
 | What it does not show | not market performance | not Binance/USDT or eToro execution | not live-quote parity or untouched validation |
 
 **Common contract (unchanged in every profile).**
-- **Signal:** SMA 10/40 and 20-return volatility targets.
-- **Sizing:** targets normalised down when they sum above 1, within shared cash.
+- **Signal:** SMA 10/40 on each coin.
+- **Sizing:** per-coin inverse volatility, `min(1, 0.015 / sigma20)` for each long coin, then scaled down only when the
+  weights sum above 1, within shared cash. This is **not a portfolio-volatility target** and has no correlation term:
+  with both coins long and `sigma20` at or above 3%, the account runs 100% gross. The recorded accounts ran 2.4-2.6%
+  daily volatility while invested, against the 1.5% per-coin figure.
 - **Rebalancing:** against actual holdings, sells before buys.
 - **Risk:** initial-equity peak; persistent kill at 25% drawdown or negative 90-day Sharpe; liquidation only on later
-  observations.
+  observations. "Negative 90-day Sharpe" means the mean of the last 90 daily account returns is below zero, with no
+  significance test: a loss policy, not a detector of lost edge. The drawdown kill is checked only at daily opens and
+  sells at the next open, so it is not a loss cap (the ablation saw 25.2% and 28.7% at the trigger and 27.1% and 30.2%
+  after the sale).
 
 **Not the same as the earlier backtest.** None of the three is the FRESH_EYES_v1 per-asset 0/1 backtest, and that
 backtest does not validate them.

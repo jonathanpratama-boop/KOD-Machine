@@ -1,5 +1,9 @@
 # KOD-Machine, seen fresh: what works, what does not, and what to build next
 
+> **Corrections (2026-11-02): see `ERRATA_20261102.md` in this folder.** In particular: the sizing is per coin, with no
+> portfolio-volatility target (§6); the loss cap in §6 was never built; "validated" means "survived a frozen historical
+> test", not "shown to make money".
+
 Written 2026-11-01 (UTC) by the cloud session on the owner's instruction to study the machine and the field from a
 wider perspective, to backtest the findings, and to lead without step-by-step approval. Everything below is either a
 verified fact (with its source in this folder), a result of a frozen test run once today (`backtests/RESULT.md`,

@@ -1,7 +1,14 @@
-# Ace → KOD integration status (2026-11-01, local only)
+# Ace → KOD integration status (2026-11-01; updated 2026-11-02)
 
-Branch `integrate/trend-account-20261101` in worktree `/home/user/kod-integrate`. Not pushed, merged, deployed or
-scheduled. Simulation only; no credentials, orders or network requests were used.
+Branch `integrate/trend-account-20261101` in worktree `/home/user/kod-integrate`. Pushed to `origin` on 2026-11-01 at the
+owner's instruction; not merged, deployed or scheduled, and no pull request is open. Simulation only; no credentials,
+orders or live network requests were used (only the pinned historical archives were re-downloaded, hash-checked, for the
+ablation below).
+
+**Two acceptance questions, kept apart.**
+- Does the system execute and account for its rules correctly within the specified model? **Yes**, independently audited.
+- Is there adequate economic evidence that following those rules makes money after costs? **Not established.** About 70
+  counted trials have produced no approved strategy.
 
 **Base and inputs.** The branch is based on remote tip `aa993e8` plus 14 local research commits (merge `d54104f`). The kit
 is `KOD_Ace_Claude_integration_kit_20261101.zip`, sha256 `0bd94ffc241636f056b88db801b93a5e2ac9e8ff28e8d9ac40c79cce510f3881`.
@@ -38,8 +45,10 @@ Coinbase USD reference and the historical Binance daily replay are separate cont
 
 Their journals, symbols, receipts, costs and timing rules must not be mixed. They share only the signal and risk logic:
 - SMA 10/40;
-- 20-return volatility targets, normalised down within shared cash;
-- persistent 25% drawdown / negative 90-day Sharpe kill.
+- per-coin inverse-volatility sizing (`min(1, 0.015 / sigma20)`), normalised down within shared cash. This is not a
+  portfolio-volatility target and has no correlation term (see `PROFILES.md`);
+- persistent 25% drawdown / negative 90-day Sharpe kill. The Sharpe kill means "the 90-day mean account return is below
+  zero", with no significance test.
 
 See `PROFILES.md`.
 
@@ -103,11 +112,32 @@ The frozen historical replay of this exact contract is preserved unchanged. Endi
 | Validation 2023-01 .. 2026-09 | 12,377 | 15,038 | 36,220 |
 
 - **The loss rule stopped trading early.** It killed the trend account on 2018-03-15 and on 2023-04-22 (negative 90-day
-  Sharpe), and the account stayed in cash afterwards.
+  Sharpe: 90-day sums of -1.03% and -0.025%, with the accounts up 105.6% and 21.8%), and the account stayed in cash
+  afterwards. See the ablation below for what happens without that rule.
 - **Validation:** the trend account trailed both passive controls.
 - **Development:** the risk-matched passive control was capacity-limited to 45.31% exposure.
 
 No parameter, risk rule or comparator was tuned in this integration.
+
+## Sharpe-kill ablation (2026-11-01, reused-data diagnostic)
+
+Question: did the permanent negative-90-day-Sharpe kill materially suppress returns or protect capital in the published
+shared-account replay? The baseline was reproduced exactly (all 8 journals and summaries byte-identical; `RESULTS.json`
+sha256 `142c1074…324f` apart from two wall-clock fields) from the 220 re-downloaded, hash-verified archives. The challenger
+is the published engine with one line changed (the Sharpe trigger disabled; 25% drawdown kill and everything else
+unchanged; no restart), frozen and RFC 3161 timestamped before its single run. Full report:
+`sharpe_kill_ablation_20261101/REPORT.md`.
+
+| | With the Sharpe kill | Without it | Pre-declared reading |
+|---|---|---|---|
+| Development 2017-09 → 2023-01 | 20,593 USDT, max drawdown 15.4% | 17,716, 27.1% | Protected capital |
+| Validation 2023-01 → 2026-09 | 12,377, 11.6% | 19,340, 30.2% | Both: suppressed returns and protected capital |
+
+Both challengers were stopped later by the 25% drawdown kill (2018-08-08, 2024-08-03), which overshot to 27.1% and 30.2%.
+The development "protection" is mostly the arithmetic of the 25% stop, and the validation gain rests on one rally (about
+5 days of 470). It did not rescue the strategy: the trend account still ended below conventional buy-and-hold in both
+windows, with far smaller drawdowns. This is a historical description of the rule on reused data, not evidence that
+removing it would help in future. Corrections to older wording are in `handoff/fresh-eyes-2026-11-01/ERRATA_20261102.md`.
 
 ## Blocked and remaining
 
