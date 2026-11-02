@@ -7,8 +7,8 @@ ablation below).
 
 **Two acceptance questions, kept apart.**
 - Does the system execute and account for its rules correctly within the specified model? **Yes**, independently audited.
-- Is there adequate economic evidence that following those rules makes money after costs? **Not established.** About 70
-  counted trials have produced no approved strategy.
+- Is there adequate economic evidence that following those rules makes money after costs? **Not established.** No approved strategy: the trial register holds 68 trial files (39 flagged as counted), and the
+  last multiple-testing analysis (2026-10-22) counted 27 trials, none of which has since been confirmed.
 
 **Base and inputs.** The branch is based on remote tip `aa993e8` plus 14 local research commits (merge `d54104f`). The kit
 is `KOD_Ace_Claude_integration_kit_20261101.zip`, sha256 `0bd94ffc241636f056b88db801b93a5e2ac9e8ff28e8d9ac40c79cce510f3881`.
