@@ -1,0 +1,68 @@
+{
+ "study": "AVOID_TILT_v1",
+ "script_sha256": "47b72ed4a0247691264ef298f97dc99163f95b7b677a22fbd2b9162fe78637f5",
+ "periods": {
+  "discovery": {
+   "A": {
+    "months": 42,
+    "ann_return": 0.09004477288217205,
+    "ann_vol": 0.22509779823193388,
+    "sharpe": 0.49220805333141454,
+    "max_drawdown": 0.32347208138069194
+   },
+   "B": {
+    "months": 42,
+    "ann_return": 0.10355034106934702,
+    "ann_vol": 0.22100953460826328,
+    "sharpe": 0.5534891454742343,
+    "max_drawdown": 0.30575911120988963
+   },
+   "diff_mean_monthly": 0.0009609524479215141,
+   "diff_lb95": 0.00010086399215300835,
+   "share_months_B_beats_A": 0.7619047619047619,
+   "avg_names_A": 2775.809523809524,
+   "avg_excluded": 124.23809523809524,
+   "avg_spike_excl": 32.45238095238095,
+   "avg_dil_excl": 98.21428571428571,
+   "excluded_next_month_mean": -0.015856789177166423,
+   "kept_next_month_mean": 0.010539291304834617,
+   "by_year_diff": {
+    "2020": 0.0018142195987316933,
+    "2021": 0.008265136186525282,
+    "2022": 0.014520094875923015,
+    "2023": 0.015760552151523596
+   }
+  },
+  "holdout": {
+   "A": {
+    "months": 33,
+    "ann_return": 0.08377333668950016,
+    "ann_vol": 0.14402539086803065,
+    "sharpe": 0.6299864916918907,
+    "max_drawdown": 0.15073077799017265
+   },
+   "B": {
+    "months": 33,
+    "ann_return": 0.10435797453695406,
+    "ann_vol": 0.14450718089471642,
+    "sharpe": 0.7595048279216394,
+    "max_drawdown": 0.14144267127967047
+   },
+   "diff_mean_monthly": 0.0015849875709482426,
+   "diff_lb95": 0.001158356925450627,
+   "share_months_B_beats_A": 0.8484848484848485,
+   "avg_names_A": 3047.878787878788,
+   "avg_excluded": 47.0,
+   "avg_spike_excl": 47.0,
+   "avg_dil_excl": 0.0,
+   "excluded_next_month_mean": -0.09494482447838057,
+   "kept_next_month_mean": 0.009458539587287299,
+   "by_year_diff": {
+    "2024": 0.013141729633769004,
+    "2025": 0.024956134296352083,
+    "2026": 0.014206725911170923
+   }
+  }
+ },
+ "verdict": "PASS: excluding KOD-flagged names beat the market portfolio in the holdout, net of costs"
+}
