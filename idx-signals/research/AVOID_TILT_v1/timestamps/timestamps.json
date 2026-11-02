@@ -1,0 +1,30 @@
+{
+ "PROTOCOL.md": {
+  "sha256": "5ada7c49585e35d472b9915b7f2fa2f58fdf48f356314e4242c3e446531f515a",
+  "tokens": [
+   {
+    "authority": "freetsa",
+    "time": "2026-11-02T22:11:48+00:00"
+   },
+   {
+    "authority": "sectigo",
+    "time": "2026-11-02T22:11:49+00:00"
+   }
+  ],
+  "errors": []
+ },
+ "run.py": {
+  "sha256": "47b72ed4a0247691264ef298f97dc99163f95b7b677a22fbd2b9162fe78637f5",
+  "tokens": [
+   {
+    "authority": "freetsa",
+    "time": "2026-11-02T22:11:50+00:00"
+   },
+   {
+    "authority": "sectigo",
+    "time": "2026-11-02T22:11:50+00:00"
+   }
+  ],
+  "errors": []
+ }
+}
