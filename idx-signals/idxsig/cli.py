@@ -291,6 +291,13 @@ def main(argv=None) -> int:
     )
     p_sc.add_argument("--commit", action="store_true")
     p_sc.add_argument(
+        "--max-age-hours",
+        type=float,
+        default=6.0,
+        help="reuse the latest recent-bars pull if it is at most this old, instead of pulling the "
+        "same bars again (0 = always pull now)",
+    )
+    p_sc.add_argument(
         "--rescore",
         action="append",
         default=[],
@@ -1190,7 +1197,10 @@ def main(argv=None) -> int:
                 return 0
             print(f"{len(due)} {mk} decision(s) due: pulling bars")
         if manifest is None:
-            manifest, extra = _pull_recent(mk)
+            if args.cmd == "paper-score":
+                manifest, extra = _manifest_for_score(mk, args.max_age_hours)
+            else:  # paper-scan always scans freshly pulled bars
+                manifest, extra = _pull_recent(mk)
         stamper = RFC3161Timestamper()
         trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "")
         if args.cmd == "paper-scan":
@@ -1961,6 +1971,15 @@ def _pull_recent(mk: str) -> tuple[Path, list]:
         start = (date.today() - timedelta(days=paper.HISTORY_DAYS)).isoformat()
         manifest = binance.fetch(start=start, only_trading=True, prefix="binance_recent")
     return manifest, extra
+
+
+def _manifest_for_score(mk: str, max_age_hours: float) -> tuple[Path, list]:
+    """paper-score's bars: the pull the scan just made if it is recent enough, else a fresh pull.
+    The routine runs paper-scan and then paper-score minutes apart; pulling the same ~33 MB of bars twice
+    filled the disk. max_age_hours <= 0 keeps the old behaviour (always pull)."""
+    if max_age_hours and max_age_hours > 0:
+        return _recent_manifest(mk, max_age_hours)
+    return _pull_recent(mk)
 
 
 def _recent_manifest(mk: str, max_age_hours: float) -> tuple[Path, list]:
