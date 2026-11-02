@@ -1,12 +1,12 @@
 # Certified dump calls (shadow, beside LEARNER v2.4)
 
-Generated 2026-10-30T23:02:01Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
+Generated 2026-11-02T22:57:58Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
 
 ## The three plain answers
 
 - **What is predicted:** for a US stock that just closed +30% or more, that it closes at least 10% lower at the next session while most of its twins do not. A call is made only when the shadow score clears a bar certified by Learn then Test.
 - **What counts as success:** the calls are wrong at most half the time (certified level 50%, confidence 95%); the realised losing rate stays at or under it.
-- **Evidence so far:** 21 live forecasts, 4 calls, 0 wrong of 1 (0.0%); p that the true rate exceeds 50%: 1.000.
+- **Evidence so far:** 21 live forecasts, 4 calls, 2 wrong of 4 (50.0%); p that the true rate exceeds 50%: 0.688.
 
 ## The bar
 
@@ -18,17 +18,17 @@ Generated 2026-10-30T23:02:01Z from paper/learner_v3.jsonl and the registers. Me
 
 | Signal session | Ticker | Shadow score | Bar | Call | v2.4 raw | Outcome |
 |---|---|---|---|---|---|---|
-| 2026-10-30 | WHLR | 0.601 | 0.555 | **DUMP** | 0.623 | pending |
-| 2026-10-30 | SLGB | 0.378 | 0.555 | - | 0.519 | pending |
-| 2026-10-30 | SGRX | 0.446 | 0.555 | - | 0.581 | pending |
-| 2026-10-30 | ONEG | 0.516 | 0.555 | - | 0.609 | pending |
-| 2026-10-30 | OMEX | 0.626 | 0.555 | **DUMP** | 0.700 | pending |
-| 2026-10-30 | MASK | 0.521 | 0.555 | - | 0.631 | pending |
-| 2026-10-30 | GDYN | 0.333 | 0.555 | - | 0.466 | pending |
-| 2026-10-30 | FMC | 0.255 | 0.555 | - | 0.382 | pending |
-| 2026-10-30 | CHOW | 0.562 | 0.555 | **DUMP** | 0.681 | pending |
-| 2026-10-30 | ATYR | 0.548 | 0.555 | - | 0.651 | pending |
-| 2026-10-30 | ASUR | 0.301 | 0.555 | - | 0.430 | pending |
+| 2026-10-30 | WHLR | 0.601 | 0.555 | **DUMP** | 0.623 | dumped |
+| 2026-10-30 | SLGB | 0.378 | 0.555 | - | 0.519 | did not dump |
+| 2026-10-30 | SGRX | 0.446 | 0.555 | - | 0.581 | did not dump |
+| 2026-10-30 | ONEG | 0.516 | 0.555 | - | 0.609 | did not dump |
+| 2026-10-30 | OMEX | 0.626 | 0.555 | **DUMP** | 0.700 | did not dump |
+| 2026-10-30 | MASK | 0.521 | 0.555 | - | 0.631 | dumped |
+| 2026-10-30 | GDYN | 0.333 | 0.555 | - | 0.466 | did not dump |
+| 2026-10-30 | FMC | 0.255 | 0.555 | - | 0.382 | did not dump |
+| 2026-10-30 | CHOW | 0.562 | 0.555 | **DUMP** | 0.681 | did not dump |
+| 2026-10-30 | ATYR | 0.548 | 0.555 | - | 0.651 | did not dump |
+| 2026-10-30 | ASUR | 0.301 | 0.555 | - | 0.430 | did not dump |
 | 2026-10-29 | XCH | 0.336 | 0.555 | - | 0.507 | did not dump |
 | 2026-10-29 | SGLY | 0.454 | 0.555 | - | 0.575 | pending |
 | 2026-10-29 | PCLA | 0.479 | 0.555 | - | 0.599 | dumped |
