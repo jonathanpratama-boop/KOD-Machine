@@ -1,0 +1,530 @@
+[
+ {
+  "sym": "ANKRUSDT",
+  "trigger_hour": "2020-08-30 17:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No dated in-window catalyst. Lead: Stkr (ETH 2.0 staking) announced in August 2020, date not verified.",
+  "sources": [
+   {
+    "url": "https://reddit.com/r/Ankrofficial/comments/ikj6wp/ankr_august_recap_stkr_ethereum_20_and_more",
+    "type": "Reddit (project recap)",
+    "published_raw": "early Sep 2020 (inferred from post id)",
+    "published_utc": "unknown",
+    "confidence": "LOW"
+   }
+  ],
+  "sector_move": "unknown",
+  "notes": "DeFi summer 2020 context."
+ },
+ {
+  "sym": "BANDUSDT",
+  "trigger_hour": "2020-09-19 19:00:00+00:00",
+  "category": "PARTNERSHIP",
+  "timing": "BEFORE_MOVE",
+  "catalyst_summary": "Fantom blog: Band oracles live on Fantom (Sep 18 2020); Band CosmoScan upgrade post (Sep 17 2020). Both are routine integration news, and neither is clearly the driver.",
+  "sources": [
+   {
+    "url": "https://blog.fantom.foundation/band-oracles-are-live-on-fantom/",
+    "type": "project blog (partner)",
+    "published_raw": "Sep 18, 2020",
+    "published_utc": "2020-09-18 (time unknown)",
+    "confidence": "LOW"
+   },
+   {
+    "url": "https://medium.com/@smiled0g",
+    "type": "project blog",
+    "published_raw": "Sep 17, 2020",
+    "published_utc": "2020-09-17 (time unknown)",
+    "confidence": "LOW"
+   }
+  ],
+  "sector_move": "unknown",
+  "notes": "Date from search snippet only; page not opened. A causal link is weak. DeFi sector was falling in Sep 2020."
+ },
+ {
+  "sym": "DASHUSDT",
+  "trigger_hour": "2020-11-12 03:00:00+00:00",
+  "category": "SOCIAL_HYPE_OR_PUMP_GROUP",
+  "timing": "BEFORE_MOVE",
+  "catalyst_summary": "Teeka Tiwari 'Crypto Catch Up' coin-pick event promoted via GlobeNewswire on Nov 11 2020. Separately, Dash v0.16 migration / Spork 21 activation post went up Nov 11 2020. FXStreet's article attributing the rise to Teeka's endorsement is dated Nov 12 21:25, which is after the trigger.",
+  "sources": [
+   {
+    "url": "https://www.globenewswire.com/news-release/2020/11/11/2124399/0/en/teeka-tiwari-crypto-catch-up-event-to-reveal-top-coin-picks.html",
+    "type": "press release",
+    "published_raw": "2020-11-11 (URL date)",
+    "published_utc": "2020-11-11 (time unknown)",
+    "confidence": "MEDIUM"
+   },
+   {
+    "url": "https://crash.dash.org/news/dash-v0-16-migration",
+    "type": "project blog",
+    "published_raw": "November 11, 2020 12:47 am",
+    "published_utc": "2020-11-11 ~00:47 (tz not shown)",
+    "confidence": "MEDIUM"
+   },
+   {
+    "url": "https://fxstreet.com/cryptocurrencies/news/dash-price-poised-to-jump-to-100-following-massive-endorsement-from-teeka-tiwari-202011122125",
+    "type": "news article",
+    "published_raw": "202011122125 (URL)",
+    "published_utc": "2020-11-12 21:25 (assumed UTC) - NOT_AVAILABLE_IN_TIME",
+    "confidence": "MEDIUM"
+   }
+  ],
+  "sector_move": "unknown",
+  "notes": "Exactly when Teeka revealed Dash as a pick is unverified. The press release only advertised the event."
+ },
+ {
+  "sym": "ONTUSDT",
+  "trigger_hour": "2021-02-21 02:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Generic searches returned no in-window catalyst; only a few searches done."
+ },
+ {
+  "sym": "BADGERUSDT",
+  "trigger_hour": "2021-04-01 01:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Generic searches returned no in-window catalyst; only a few searches done."
+ },
+ {
+  "sym": "ATMUSDT",
+  "trigger_hour": "2021-04-07 18:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Generic searches returned no in-window catalyst; only a few searches done. Fan-token sector context possible; not verified."
+ },
+ {
+  "sym": "JSTUSDT",
+  "trigger_hour": "2021-04-15 09:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Generic searches returned no in-window catalyst; only a few searches done. JST 'third buyback & burn' results are 2025 JustLend events, not 2021."
+ },
+ {
+  "sym": "MASKUSDT",
+  "trigger_hour": "2021-07-02 07:00:00+00:00",
+  "category": "PRODUCT_OR_UPGRADE",
+  "timing": "BEFORE_MOVE",
+  "catalyst_summary": "$MASK went live on BSC / multi-chain launch (Mask blog Jun 29 2021). June newsletter published Jul 2 2021. Coinbase Pro listing came later (Jul 14), so it does not apply.",
+  "sources": [
+   {
+    "url": "https://masknetwork.medium.com/the-mask-network-multi-chain-ecosystem-officially-starts-with-mask-now-live-on-bsc-3c8170e2e9a2",
+    "type": "project blog",
+    "published_raw": "Jun 29, 2021",
+    "published_utc": "2021-06-29 (time unknown)",
+    "confidence": "MEDIUM"
+   },
+   {
+    "url": "https://masknetwork.medium.com/mask-network-newsletter-june-2021-d9f58877bdf5",
+    "type": "project blog",
+    "published_raw": "Jul 2, 2021",
+    "published_utc": "2021-07-02 (time unknown)",
+    "confidence": "LOW"
+   }
+  ],
+  "sector_move": "unknown",
+  "notes": "Weak link; three days before the move."
+ },
+ {
+  "sym": "BTGUSDT",
+  "trigger_hour": "2021-08-02 07:00:00+00:00",
+  "category": "OTHER",
+  "timing": "AFTER_TRIGGER_ONLY",
+  "catalyst_summary": "Invezz article 'Bitcoin Gold (BTG) surges by more than 10% as its user base expands', dated Aug 2 2021. It explains the move after the fact. No upstream catalyst found.",
+  "sources": [
+   {
+    "url": "https://invezz.com/news/2021/08/02/bitcoin-gold-btg-surges-by-more-than-10-as-its-user-base-expands",
+    "type": "news article",
+    "published_raw": "2021/08/02 (URL)",
+    "published_utc": "2021-08-02 (time unknown)",
+    "confidence": "LOW"
+   }
+  ],
+  "sector_move": "unknown",
+  "notes": "Publication time unknown; the article reports the rise rather than causing it. A Korean exchange pump was not checked."
+ },
+ {
+  "sym": "STXUSDT",
+  "trigger_hour": "2021-08-03 02:00:00+00:00",
+  "category": "PRODUCT_OR_UPGRADE",
+  "timing": "AFTER_TRIGGER_ONLY",
+  "catalyst_summary": "CityCoins/MiamiCoin (on Stacks) launch press release dated Aug 3 2021, with mining activation that day. Blockchain.com STX trading competition post dated Aug 2 2021. Stacks had been in a multi-week Bitcoin-DeFi rally (Cointelegraph Jul 23 2021).",
+  "sources": [
+   {
+    "url": "https://www.globenewswire.com/de/news-release/2021/08/03/2273980/0/en/CityCoins-Community-Officially-Launches-with-MiamiCoin-Its-First-City-Based-Token.html",
+    "type": "press release",
+    "published_raw": "2021-08-03 (URL)",
+    "published_utc": "2021-08-03 (time unknown; likely after 02:00)",
+    "confidence": "LOW"
+   },
+   {
+    "url": "https://medium.com/blockchain/announcing-asset-drops-an-stx-trading-competition-6051638959b1",
+    "type": "exchange blog",
+    "published_raw": "Aug 2, 2021",
+    "published_utc": "2021-08-02 (time unknown)",
+    "confidence": "LOW"
+   },
+   {
+    "url": "https://cointelegraph.com/markets/stacks-stx-price-rallies-195-after-revealing-plans-to-bring-defi-to-bitcoin",
+    "type": "news article",
+    "published_raw": "Jul 23, 2021",
+    "published_utc": "2021-07-23",
+    "confidence": "MEDIUM"
+   }
+  ],
+  "sector_move": "unknown",
+  "notes": "The MiamiCoin activation was pre-scheduled, but the pre-announcement date was not verified. If the Aug 2 Blockchain.com post was out more than 3h before the trigger, timing would be BEFORE_MOVE."
+ },
+ {
+  "sym": "DEXEUSDT",
+  "trigger_hour": "2021-08-08 13:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Generic searches returned no in-window catalyst; only a few searches done."
+ },
+ {
+  "sym": "LPTUSDT",
+  "trigger_hour": "2021-08-20 04:00:00+00:00",
+  "category": "PRODUCT_OR_UPGRADE",
+  "timing": "BEFORE_MOVE",
+  "catalyst_summary": "Livepeer blog 'Let's Activate Our Top Performing Nodes' (Aug 18 2021). Livepeer raised $20M (Aug 3 2021). Business Insider CEO interview on LPT's 905% rise and the Grayscale trust (Aug 2021).",
+  "sources": [
+   {
+    "url": "https://medium.com/livepeer-blog/lets-activate-our-top-performing-nodes-649a3cb8d159",
+    "type": "project blog",
+    "published_raw": "Aug 18, 2021",
+    "published_utc": "2021-08-18 (time unknown)",
+    "confidence": "MEDIUM"
+   },
+   {
+    "url": "https://www.businessinsider.com/altcoin-price-surge-ethereum-blockchain-decentralized-video-streaming-grayscale-listing-2021-8",
+    "type": "news article",
+    "published_raw": "2021-8, (Monday)",
+    "published_utc": "2021-08 (exact day unknown)",
+    "confidence": "LOW"
+   }
+  ],
+  "sector_move": "unknown",
+  "notes": "Ongoing momentum narrative. No single in-window trigger found."
+ },
+ {
+  "sym": "PSGUSDT",
+  "trigger_hour": "2021-08-20 11:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No in-window catalyst found. Background: Messi signed with PSG on Aug 10 2021 and received PSG fan tokens (widely reported Aug 12). His debut came later.",
+  "sources": [
+   {
+    "url": "https://www.cnbc.com/2021/08/12/lionel-messi-is-being-partly-paid-in-crypto-at-psg.html",
+    "type": "news article",
+    "published_raw": "Thu, Aug 12 2021 4:54 AM EDT",
+    "published_utc": "2021-08-12 08:54",
+    "confidence": "HIGH"
+   }
+  ],
+  "sector_move": "unknown",
+  "notes": "Background context only, 8 days before the trigger."
+ },
+ {
+  "sym": "BADGERUSDT",
+  "trigger_hour": "2021-08-28 06:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Generic searches returned no in-window catalyst; only a few searches done."
+ },
+ {
+  "sym": "TROYUSDT",
+  "trigger_hour": "2021-08-30 10:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Generic searches returned no in-window catalyst; only a few searches done."
+ },
+ {
+  "sym": "WTCUSDT",
+  "trigger_hour": "2021-09-13 17:00:00+00:00",
+  "category": "OTHER",
+  "timing": "BEFORE_MOVE",
+  "catalyst_summary": "Waltonchain community notice 'Dear WTC supporters' (Sep 10 2021 09:14). Content not opened (based on community feedback...). Mainnet upgrade notice Aug 30 2021.",
+  "sources": [
+   {
+    "url": "https://waltonchain.cointoken.news/dear-wtc-supporters-yjpw6jie/",
+    "type": "project announcement (mirror)",
+    "published_raw": "10 Sep 2021, 09:14",
+    "published_utc": "2021-09-10 09:14 (tz not shown)",
+    "confidence": "LOW"
+   },
+   {
+    "url": "https://waltonchain-en.medium.com/waltonchain-mainnet-upgrading-90c87b3a5ba5",
+    "type": "project blog",
+    "published_raw": "Aug 30, 2021",
+    "published_utc": "2021-08-30",
+    "confidence": "MEDIUM"
+   }
+  ],
+  "sector_move": "unknown",
+  "notes": "Content of the Sep 10 notice not verified."
+ },
+ {
+  "sym": "NANOUSDT",
+  "trigger_hour": "2021-10-03 12:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Generic searches returned no in-window catalyst; only a few searches done."
+ },
+ {
+  "sym": "BTGUSDT",
+  "trigger_hour": "2021-10-06 12:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Generic searches returned no in-window catalyst; only a few searches done."
+ },
+ {
+  "sym": "ALICEUSDT",
+  "trigger_hour": "2021-10-30 17:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "YGGUSDT",
+  "trigger_hour": "2021-12-02 01:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "OMUSDT",
+  "trigger_hour": "2021-12-04 00:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "OOKIUSDT",
+  "trigger_hour": "2022-01-29 08:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "XVSUSDT",
+  "trigger_hour": "2022-02-16 12:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "ERNUSDT",
+  "trigger_hour": "2022-02-20 20:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "DFUSDT",
+  "trigger_hour": "2022-02-22 19:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "DUSKUSDT",
+  "trigger_hour": "2022-03-01 15:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "SUPERUSDT",
+  "trigger_hour": "2022-03-28 16:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "CVPUSDT",
+  "trigger_hour": "2022-03-29 18:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "COSUSDT",
+  "trigger_hour": "2022-04-01 15:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "RAMPUSDT",
+  "trigger_hour": "2022-05-18 19:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "HNTUSDT",
+  "trigger_hour": "2022-05-30 17:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "REQUSDT",
+  "trigger_hour": "2022-06-29 15:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "AMPUSDT",
+  "trigger_hour": "2022-06-30 15:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "COSUSDT",
+  "trigger_hour": "2022-08-12 10:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "BICOUSDT",
+  "trigger_hour": "2022-08-27 18:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "FIROUSDT",
+  "trigger_hour": "2022-08-30 08:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "MFTUSDT",
+  "trigger_hour": "2022-09-13 19:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "DIAUSDT",
+  "trigger_hour": "2022-11-04 01:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "VIDTUSDT",
+  "trigger_hour": "2022-11-20 09:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ },
+ {
+  "sym": "XEMUSDT",
+  "trigger_hour": "2022-11-21 06:00:00+00:00",
+  "category": "NONE_FOUND",
+  "timing": "NONE_FOUND",
+  "catalyst_summary": "No catalyst found.",
+  "sources": [],
+  "sector_move": "unknown",
+  "notes": "Not researched: run-time budget ran out before targeted searches for this event. NONE_FOUND here means not searched, not 'no catalyst exists'."
+ }
+]

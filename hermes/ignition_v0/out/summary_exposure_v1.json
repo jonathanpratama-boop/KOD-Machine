@@ -1,0 +1,438 @@
+{
+ "2020_21": {
+  "ignitions_TREND": {
+   "3d": {
+    "n": 366,
+    "days": 184,
+    "mean": 0.0353,
+    "btc_same_window": -0.0003,
+    "beta_to_btc": 0.95,
+    "alpha": 0.0356,
+    "alpha_95": [
+     0.0099,
+     0.0613
+    ],
+    "vs_alt_market": 0.0231
+   },
+   "7d": {
+    "n": 367,
+    "days": 184,
+    "mean": 0.1387,
+    "btc_same_window": -0.0007,
+    "beta_to_btc": 1.37,
+    "alpha": 0.1397,
+    "alpha_95": [
+     0.0789,
+     0.2011
+    ],
+    "vs_alt_market": 0.1024
+   },
+   "14d": {
+    "n": 366,
+    "days": 184,
+    "mean": 0.1735,
+    "btc_same_window": -0.0009,
+    "beta_to_btc": 1.78,
+    "alpha": 0.1752,
+    "alpha_95": [
+     0.1127,
+     0.2353
+    ],
+    "vs_alt_market": 0.0835
+   },
+   "30d": {
+    "n": 366,
+    "days": 184,
+    "mean": 0.4344,
+    "btc_same_window": -0.0022,
+    "beta_to_btc": 2.27,
+    "alpha": 0.4395,
+    "alpha_95": [
+     0.3287,
+     0.5683
+    ],
+    "vs_alt_market": 0.2194
+   }
+  },
+  "random_TREND": {
+   "3d": {
+    "n": 964,
+    "days": 278,
+    "mean": 0.0388,
+    "btc_same_window": 0.0079,
+    "beta_to_btc": 1.02,
+    "alpha": 0.0307,
+    "alpha_95": [
+     0.0115,
+     0.0532
+    ],
+    "vs_alt_market": 0.0207
+   },
+   "7d": {
+    "n": 967,
+    "days": 278,
+    "mean": 0.0785,
+    "btc_same_window": 0.007,
+    "beta_to_btc": 1.28,
+    "alpha": 0.0696,
+    "alpha_95": [
+     0.0445,
+     0.0955
+    ],
+    "vs_alt_market": 0.025
+   },
+   "14d": {
+    "n": 966,
+    "days": 278,
+    "mean": 0.1241,
+    "btc_same_window": 0.0109,
+    "beta_to_btc": 1.28,
+    "alpha": 0.1102,
+    "alpha_95": [
+     0.0806,
+     0.1447
+    ],
+    "vs_alt_market": 0.0264
+   },
+   "30d": {
+    "n": 967,
+    "days": 278,
+    "mean": 0.2929,
+    "btc_same_window": 0.0381,
+    "beta_to_btc": 1.27,
+    "alpha": 0.2447,
+    "alpha_95": [
+     0.1951,
+     0.2939
+    ],
+    "vs_alt_market": 0.0255
+   }
+  },
+  "ignitions_NOT_TREND": {
+   "3d": {
+    "n": 2593,
+    "days": 566,
+    "mean": -0.0283,
+    "btc_same_window": 0.0048,
+    "beta_to_btc": 0.88,
+    "alpha": -0.0325,
+    "alpha_95": [
+     -0.0435,
+     -0.022
+    ],
+    "vs_alt_market": -0.0216
+   },
+   "7d": {
+    "n": 2594,
+    "days": 566,
+    "mean": -0.0092,
+    "btc_same_window": 0.0162,
+    "beta_to_btc": 1.0,
+    "alpha": -0.0254,
+    "alpha_95": [
+     -0.0404,
+     -0.0095
+    ],
+    "vs_alt_market": -0.0324
+   },
+   "14d": {
+    "n": 2591,
+    "days": 565,
+    "mean": 0.0238,
+    "btc_same_window": 0.0325,
+    "beta_to_btc": 1.16,
+    "alpha": -0.0137,
+    "alpha_95": [
+     -0.0338,
+     0.0069
+    ],
+    "vs_alt_market": -0.0417
+   },
+   "30d": {
+    "n": 2592,
+    "days": 566,
+    "mean": 0.1255,
+    "btc_same_window": 0.0585,
+    "beta_to_btc": 1.25,
+    "alpha": 0.0524,
+    "alpha_95": [
+     0.0158,
+     0.09
+    ],
+    "vs_alt_market": -0.0256
+   }
+  },
+  "random_ALL": {
+   "3d": {
+    "n": 14709,
+    "days": 580,
+    "mean": -0.0043,
+    "btc_same_window": 0.004,
+    "beta_to_btc": 1.07,
+    "alpha": -0.0085,
+    "alpha_95": [
+     -0.0146,
+     -0.0021
+    ],
+    "vs_alt_market": -0.0
+   },
+   "7d": {
+    "n": 14719,
+    "days": 580,
+    "mean": 0.0247,
+    "btc_same_window": 0.0138,
+    "beta_to_btc": 1.13,
+    "alpha": 0.009,
+    "alpha_95": [
+     -0.0005,
+     0.0186
+    ],
+    "vs_alt_market": 0.0
+   },
+   "14d": {
+    "n": 14699,
+    "days": 579,
+    "mean": 0.0687,
+    "btc_same_window": 0.028,
+    "beta_to_btc": 1.2,
+    "alpha": 0.035,
+    "alpha_95": [
+     0.0211,
+     0.0505
+    ],
+    "vs_alt_market": -0.0
+   },
+   "30d": {
+    "n": 14701,
+    "days": 580,
+    "mean": 0.16,
+    "btc_same_window": 0.051,
+    "beta_to_btc": 1.3,
+    "alpha": 0.0936,
+    "alpha_95": [
+     0.0686,
+     0.1195
+    ],
+    "vs_alt_market": 0.0
+   }
+  }
+ },
+ "2022": {
+  "ignitions_TREND": {
+   "3d": {
+    "n": 15,
+    "days": 15,
+    "mean": -0.0067,
+    "btc_same_window": -0.026,
+    "beta_to_btc": 1.83,
+    "alpha": 0.0409,
+    "alpha_95": [
+     -0.0698,
+     0.1798
+    ],
+    "vs_alt_market": 0.0349
+   },
+   "7d": {
+    "n": 15,
+    "days": 15,
+    "mean": -0.1082,
+    "btc_same_window": -0.0546,
+    "beta_to_btc": 1.3,
+    "alpha": -0.0375,
+    "alpha_95": [
+     -0.1698,
+     0.0805
+    ],
+    "vs_alt_market": -0.0573
+   },
+   "14d": {
+    "n": 15,
+    "days": 15,
+    "mean": -0.1597,
+    "btc_same_window": -0.0835,
+    "beta_to_btc": 0.72,
+    "alpha": -0.0999,
+    "alpha_95": [
+     -0.2813,
+     0.1143
+    ],
+    "vs_alt_market": -0.0893
+   },
+   "30d": {
+    "n": 15,
+    "days": 15,
+    "mean": -0.2148,
+    "btc_same_window": -0.0996,
+    "beta_to_btc": 1.71,
+    "alpha": -0.0443,
+    "alpha_95": [
+     -0.345,
+     0.1766
+    ],
+    "vs_alt_market": -0.1077
+   }
+  },
+  "random_TREND": {
+   "3d": {
+    "n": 41,
+    "days": 33,
+    "mean": -0.0275,
+    "btc_same_window": -0.0162,
+    "beta_to_btc": 0.56,
+    "alpha": -0.0184,
+    "alpha_95": [
+     -0.0557,
+     0.0178
+    ],
+    "vs_alt_market": 0.0033
+   },
+   "7d": {
+    "n": 41,
+    "days": 33,
+    "mean": -0.0865,
+    "btc_same_window": -0.0465,
+    "beta_to_btc": -0.13,
+    "alpha": -0.0924,
+    "alpha_95": [
+     -0.186,
+     0.0006
+    ],
+    "vs_alt_market": -0.0031
+   },
+   "14d": {
+    "n": 41,
+    "days": 33,
+    "mean": -0.0605,
+    "btc_same_window": -0.0741,
+    "beta_to_btc": 0.47,
+    "alpha": -0.0255,
+    "alpha_95": [
+     -0.1619,
+     0.0996
+    ],
+    "vs_alt_market": 0.0499
+   },
+   "30d": {
+    "n": 41,
+    "days": 33,
+    "mean": -0.1609,
+    "btc_same_window": -0.1093,
+    "beta_to_btc": -0.24,
+    "alpha": -0.1866,
+    "alpha_95": [
+     -0.3451,
+     -0.0384
+    ],
+    "vs_alt_market": 0.026
+   }
+  },
+  "ignitions_NOT_TREND": {
+   "3d": {
+    "n": 2170,
+    "days": 333,
+    "mean": -0.0678,
+    "btc_same_window": -0.0046,
+    "beta_to_btc": 0.86,
+    "alpha": -0.0639,
+    "alpha_95": [
+     -0.0726,
+     -0.0543
+    ],
+    "vs_alt_market": -0.0504
+   },
+   "7d": {
+    "n": 2170,
+    "days": 333,
+    "mean": -0.0722,
+    "btc_same_window": -0.0162,
+    "beta_to_btc": 1.04,
+    "alpha": -0.0553,
+    "alpha_95": [
+     -0.0672,
+     -0.0441
+    ],
+    "vs_alt_market": -0.0453
+   },
+   "14d": {
+    "n": 2170,
+    "days": 333,
+    "mean": -0.0837,
+    "btc_same_window": -0.0278,
+    "beta_to_btc": 1.08,
+    "alpha": -0.0535,
+    "alpha_95": [
+     -0.0681,
+     -0.0391
+    ],
+    "vs_alt_market": -0.0463
+   },
+   "30d": {
+    "n": 2168,
+    "days": 333,
+    "mean": -0.1274,
+    "btc_same_window": -0.0679,
+    "beta_to_btc": 1.03,
+    "alpha": -0.0572,
+    "alpha_95": [
+     -0.0793,
+     -0.036
+    ],
+    "vs_alt_market": -0.0474
+   }
+  },
+  "random_ALL": {
+   "3d": {
+    "n": 10943,
+    "days": 333,
+    "mean": -0.0178,
+    "btc_same_window": -0.0048,
+    "beta_to_btc": 1.08,
+    "alpha": -0.0126,
+    "alpha_95": [
+     -0.0171,
+     -0.0081
+    ],
+    "vs_alt_market": 0.0
+   },
+   "7d": {
+    "n": 10943,
+    "days": 333,
+    "mean": -0.027,
+    "btc_same_window": -0.0163,
+    "beta_to_btc": 1.14,
+    "alpha": -0.0085,
+    "alpha_95": [
+     -0.0149,
+     -0.0022
+    ],
+    "vs_alt_market": 0.0
+   },
+   "14d": {
+    "n": 10943,
+    "days": 333,
+    "mean": -0.0378,
+    "btc_same_window": -0.028,
+    "beta_to_btc": 1.19,
+    "alpha": -0.0044,
+    "alpha_95": [
+     -0.0143,
+     0.0049
+    ],
+    "vs_alt_market": -0.0
+   },
+   "30d": {
+    "n": 10937,
+    "days": 333,
+    "mean": -0.0805,
+    "btc_same_window": -0.0678,
+    "beta_to_btc": 1.17,
+    "alpha": -0.0012,
+    "alpha_95": [
+     -0.0162,
+     0.0134
+    ],
+    "vs_alt_market": -0.0
+   }
+  }
+ }
+}

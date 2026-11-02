@@ -1,0 +1,15 @@
+{
+ "version": "IGNITION_SCAN_v0",
+ "window": "2020-01-01..2022-12-31 (2023+ not on disk)",
+ "trigger_ret_3h": 0.1,
+ "trigger_vol_mult": 5.0,
+ "max_prior_run_7d": 0.3,
+ "min_avg_hourly_quote_usd": 20000,
+ "cooldown_h": 72,
+ "horizon_h": 72,
+ "entry": "open of hour t+1 (first hour after the trigger hour closes)",
+ "cost_per_side": 0.003,
+ "controls_per_event": 5,
+ "controls": "same entry hour, random other eligible coins (liquidity filter, not triggered within +/-72h), seed 7",
+ "script_sha256": "960279f9cbddeb45f82e6fd565b79b55ddd60fbd13b0ea739bc298660025646e"
+}
