@@ -1,0 +1,30 @@
+{
+ "PROTOCOL.md": {
+  "sha256": "310f5c4799edb1a33934fb1d4da78c49c26131b01df4042ad8c13d0863e5aaaf",
+  "tokens": [
+   {
+    "authority": "freetsa",
+    "time": "2026-11-02T22:03:22+00:00"
+   },
+   {
+    "authority": "sectigo",
+    "time": "2026-11-02T22:03:23+00:00"
+   }
+  ],
+  "errors": []
+ },
+ "calls.jsonl": {
+  "sha256": "bb45e4a152c4ad1f57a30b93594768b37d2c9367b749d88fe63845547c856e32",
+  "tokens": [
+   {
+    "authority": "freetsa",
+    "time": "2026-11-02T22:03:24+00:00"
+   },
+   {
+    "authority": "sectigo",
+    "time": "2026-11-02T22:03:25+00:00"
+   }
+  ],
+  "errors": []
+ }
+}
