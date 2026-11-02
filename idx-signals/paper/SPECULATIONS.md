@@ -1,10 +1,10 @@
 # Speculation Register (KOD-SPEC-REGISTER-v1.1, protocol sha256 b0e9b6d9b533)
 
-Generated 2026-11-02T00:29:15Z from `paper/speculations.jsonl`: 51 sets sealed, 13 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
+Generated 2026-11-02T10:32:40Z from `paper/speculations.jsonl`: 54 sets sealed, 13 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
 
 Windows: **BASE5**: the frozen plan: the validated harness plan, prospectively, beside twins; **PATH20**: the 20-session price path of the candidate and its twins; no plan; **NEXT1**: the next session's close of the candidate and its twins; no plan.
 
-## IDX: 5 sets over 2 signal sessions (2026-10-29 .. 2026-10-30, 2.50 sets per scan)
+## IDX: 8 sets over 3 signal sessions (2026-10-29 .. 2026-11-02, 2.67 sets per scan)
 
 | Plan | Resolved | Traded | Paired | Sessions | Mean net | Median net | Twins net | Diff | t | p | Look | Verdict |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|
@@ -14,7 +14,7 @@ Projection (labelled): sessions of resolved sets needed for t >= 3 if the true p
 
 | sd per session (source) | 2pt | 5pt | 10pt | to next look |
 |---|---:|---:|---:|---:|
-| 0.176 (validation trade sd 0.1967 (run 20261009T050040Z_MOONSHOT_E1_D1_v1.1), paired, / sqrt(sets per session)) | 697 | 112 | 28 | 24 |
+| 0.170 (validation trade sd 0.1967 (run 20261009T050040Z_MOONSHOT_E1_D1_v1.1), paired, / sqrt(sets per session)) | 653 | 105 | 27 | 23 |
 
 PATH20 windows resolved: 0; NEXT1: 0.
 
@@ -344,11 +344,11 @@ Twins (band+liq+mom): KAT 0.00415, FLOKI 2.435e-05, SOLV 0.005082, RSR 0.001445,
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### IDX KONI (2026-10-30) - sealed 2026-10-30T10:52:22Z, cutoff 2026-11-02T01:45:00Z
-Decision `SCAN-2026-10-30-F1_ARA-KONI` (PASS), bound to ledger record `62006a318fb2`; set `0ca09931b7e3`.
-Signal close 1940 (reference 1555.0); entry: the next session's closing auction, if traded and not locked at ARA.
-Tag: 4 flags today vs trailing median 5.0 -> hot_day = False.
-Twins (band+liq+mom): LFLO 680, DAYA 1200, OMRE 950, GUNA 212, SKBM 484.
+### IDX DFAM (2026-11-02) - sealed 2026-11-02T10:32:37Z, cutoff 2026-11-03T01:45:00Z
+Decision `SCAN-2026-11-02-F1_ARA-DFAM` (PASS), bound to ledger record `5d0de1a7fb90`; set `109f23e91e5d`.
+Signal close 75 (reference 56.0); entry: the next session's closing auction, if traded and not locked at ARA.
+Tag: 5 flags today vs trailing median 4.5 -> hot_day = True.
+Twins (band+liq+mom): BATR 93, JKON 78, DGIK 136, KLAS 68, PRIM 120.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -364,11 +364,11 @@ Twins (band+liq+mom): LFLO 680, DAYA 1200, OMRE 950, GUNA 212, SKBM 484.
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### IDX POLI (2026-10-30) - sealed 2026-10-30T10:52:22Z, cutoff 2026-11-02T01:45:00Z
-Decision `SCAN-2026-10-30-F1_ARA-POLI` (PASS), bound to ledger record `50ac7e20bc4e`; set `acc44ccd2e0b`.
-Signal close 830 (reference 665.0); entry: the next session's closing auction, if traded and not locked at ARA.
-Tag: 4 flags today vs trailing median 5.0 -> hot_day = False.
-Twins (band+liq+mom): CSAP 264, ASDM 490, DAYA 1200, DUTI 4700, PRAY 710.
+### IDX AKPI (2026-11-02) - sealed 2026-11-02T10:32:37Z, cutoff 2026-11-03T01:45:00Z
+Decision `SCAN-2026-11-02-F1_ARA-AKPI` (PASS), bound to ledger record `87b4480c6bf6`; set `af62fb9b1ed3`.
+Signal close 635 (reference 510.0); entry: the next session's closing auction, if traded and not locked at ARA.
+Tag: 5 flags today vs trailing median 4.5 -> hot_day = True.
+Twins (band+liq+mom+dd): BUAH 456, EMMI 402, KKGI 290, SPTO 590, CFIN 332.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -384,11 +384,11 @@ Twins (band+liq+mom): CSAP 264, ASDM 490, DAYA 1200, DUTI 4700, PRAY 710.
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### IDX ALKA (2026-10-30) - sealed 2026-10-30T10:52:22Z, cutoff 2026-11-02T01:45:00Z
-Decision `SCAN-2026-10-30-F1_ARA-ALKA` (PASS), bound to ledger record `3873d69ee2b7`; set `e1a1020166a5`.
-Signal close 5525 (reference 4420.0); entry: the next session's closing auction, if traded and not locked at ARA.
-Tag: 4 flags today vs trailing median 5.0 -> hot_day = False.
-Twins (band): LIFE 9000, INDF 6400, INKP 6575, EMAS 5450, MLBI 6150.
+### IDX ROCK (2026-11-02) - sealed 2026-11-02T10:32:37Z, cutoff 2026-11-03T01:45:00Z
+Decision `SCAN-2026-11-02-F1_ARA-ROCK` (PASS), bound to ledger record `80db85549042`; set `7f19a0e16d0c`.
+Signal close 2270 (reference 1820.0); entry: the next session's closing auction, if traded and not locked at ARA.
+Tag: 5 flags today vs trailing median 4.5 -> hot_day = True.
+Twins (band+liq+mom+dd): KING 264, VISI 635, ELPI 406, NICE 250, CCSI 222.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
