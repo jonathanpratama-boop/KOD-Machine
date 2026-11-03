@@ -1,6 +1,6 @@
 # Speculation Register (KOD-SPEC-REGISTER-v1.1, protocol sha256 b0e9b6d9b533)
 
-Generated 2026-11-03T10:29:52Z from `paper/speculations.jsonl`: 70 sets sealed, 28 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
+Generated 2026-11-03T10:30:07Z from `paper/speculations.jsonl`: 70 sets sealed, 31 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
 
 Windows: **BASE5**: the frozen plan: the validated harness plan, prospectively, beside twins; **PATH20**: the 20-session price path of the candidate and its twins; no plan; **NEXT1**: the next session's close of the candidate and its twins; no plan.
 
@@ -16,7 +16,7 @@ Projection (labelled): sessions of resolved sets needed for t >= 3 if the true p
 |---|---:|---:|---:|---:|
 | 0.161 (validation trade sd 0.1967 (run 20261009T050040Z_MOONSHOT_E1_D1_v1.1), paired, / sqrt(sets per session)) | 581 | 93 | 24 | 20 |
 
-PATH20 windows resolved: 0; NEXT1: 3.
+PATH20 windows resolved: 0; NEXT1: 6.
 
 | Statement | Graded | Realised rate | Twins' rate | Mean prior | Brier (register) | Brier (0.5) | Brier (running) |
 |---|---:|---:|---:|---:|---:|---:|---:|
@@ -26,9 +26,9 @@ PATH20 windows resolved: 0; NEXT1: 3.
 | BEATS_TWINS_5 | 0 | | | | | | |
 | RUN30_20 | 0 | | | | | | |
 | DOUBLE_20 | 0 | | | | | | |
-| DOWN10_1 | 3 | 0.000 | 0.000 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
-| UP10_1 | 3 | 0.000 | 0.067 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
-| BEATS_TWINS_1 | 3 | 0.000 | 0.533 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| DOWN10_1 | 6 | 0.000 | 0.000 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| UP10_1 | 6 | 0.000 | 0.033 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| BEATS_TWINS_1 | 6 | 0.000 | 0.533 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
 
 ## US: 53 sets over 5 signal sessions (2026-10-27 .. 2026-11-02, 10.60 sets per scan)
 
@@ -476,4 +476,7 @@ Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside 
 | US-2026-10-30-G2_RET30-MASK | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
 | US-2026-10-30-G2_RET30-ATYR | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.20, UP10_1=1/0.00, BEATS_TWINS_1=1/0.60 |
 | CRYPTO-2026-10-27-G2_RET30-HAEDAL | BASE5 | RESOLVED | TRADED | +2.01% | -8.64% | +10.65% | RUN30_5=0/0.00, FADE10_5=0/0.20, GAIN0_5=1/0.00, BEATS_TWINS_5=1/0.60 |
+| 2026-11-02-F1_ARA-DFAM | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.40 |
+| 2026-11-02-F1_ARA-AKPI | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
+| 2026-11-02-F1_ARA-ROCK | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
 
