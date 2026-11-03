@@ -36,6 +36,7 @@ from .store import Store
 from .forecasts import ForecastArchive, ForecastUnavailable
 from .replay import ReplayArchive, ReplayUnavailable
 from .research import ResearchArchive, ResearchUnavailable
+from .operations import OperationsArchive, OperationsUnavailable, health_rows, brief
 
 ASSETS = Path(__file__).resolve().parent
 MAX_BODY = 10 * 1024 * 1024
@@ -386,7 +387,8 @@ def _policy_query(policy):
 
 
 def create_app(
-    data_dir, offline=False, service=None, *, testing=False, replay_db=None, forecast_dir=None
+    data_dir, offline=False, service=None, *, testing=False, replay_db=None, forecast_dir=None,
+    runtime_root=None
 ):
     """Build an app with explicit runtime state; no import-time IO or collection."""
     app = FastAPI(title="KOD Workstation", docs_url=None, redoc_url=None)
@@ -402,9 +404,25 @@ def create_app(
         Path(replay_db) if replay_db is not None else ASSETS.parents[1] / "var" / "kod.db"
     )
     app.state.forecast_dir = Path(forecast_dir) if forecast_dir is not None else None
+    app.state.runtime_root = runtime_root
     signing_key = secrets.token_bytes(32)
     templates = Jinja2Templates(directory=str(ASSETS / "templates"))
     templates.env.filters.update(moment=_display_time, number=_number)
+    def ops_percent(value):
+        if value is None:
+            return "—"
+        try:
+            number = Decimal(str(value))
+            return f"{number * 100:,.1f}%" if number.is_finite() else "—"
+        except Exception:
+            return "—"
+
+    templates.env.filters.update(
+        ops_brief=brief,
+        ops_percent=ops_percent,
+        ops_pretty=lambda value: json.dumps(value, sort_keys=True, ensure_ascii=False, indent=2,
+                                           allow_nan=False),
+    )
     templates.env.globals.update(
         show=dossier_model.display,
         metric_label=lambda m: dossier_model.LABELS.get(m, str(m).replace("_", " ")),
@@ -484,6 +502,75 @@ def create_app(
             error=exc.detail,
             page="error",
         )
+
+    def operations_page(request, page, *, query="", state="", status="", candidate_id=None):
+        """Render a verified runner projection. Reading never changes operational state."""
+        titles = {
+            "today": ("Today", "Review the latest recorded run, its coverage and the work ahead."),
+            "candidates": ("Candidates", "Inspect detections, supporting evidence and unresolved blockers."),
+            "candidate": ("Candidate detail", "Trace the recorded observation through context, blockers and plan."),
+            "market_map": ("Market map", "See which groups participated in the recorded market move."),
+            "paper_portfolio": ("Paper portfolio", "Inspect simulated cash, positions, orders and fills."),
+            "experiments": ("Experiments", "Track research status without turning an experiment into a trading policy."),
+        }
+        title, description = titles[page]
+        context = {
+            "page": page, "ops_title": title, "ops_description": description,
+            "ops_error": None, "query": query[:200].strip(), "selected_state": state,
+            "selected_status": status,
+        }
+        try:
+            snap = OperationsArchive(app.state.runtime_root).snapshot()
+            payload = snap["payload"]
+            run = payload["run"]
+            candidates = payload["candidates"]
+            experiments = payload["experiments"]
+            pattern = context["query"].casefold()
+            context.update(
+                snapshot=snap, payload=payload, sources=health_rows(payload["health"]),
+                synthetic=bool(run.get("synthetic")) or str(run.get("mode", "")).lower()
+                    in {"demo", "synthetic", "synthetic_demo", "fixture"},
+                blocked_count=sum(bool(c.get("blockers")) for c in candidates),
+                states=sorted({str(c.get("state", "UNKNOWN")) for c in candidates}),
+                candidates=[c for c in candidates if (not state or c.get("state") == state)
+                            and (not pattern or pattern in brief(c).casefold())],
+                groups=payload["market_context"].get("groups", []),
+                experiment_statuses=sorted({str(e.get("status", "UNKNOWN")) for e in experiments}),
+                experiments=[e for e in experiments if (not status or e.get("status") == status)
+                             and (not pattern or pattern in brief(e).casefold())],
+            )
+            if candidate_id is not None:
+                candidate = next((c for c in candidates if c["id"] == candidate_id), None)
+                if candidate is None:
+                    raise HTTPException(404, "Candidate not found in the recorded runtime snapshot.")
+                context["candidate"] = candidate
+        except OperationsUnavailable as exc:
+            context["ops_error"] = str(exc)
+        return render(request, "operations.html", **context)
+
+    @app.get("/today", response_class=HTMLResponse)
+    def today(request: Request):
+        return operations_page(request, "today")
+
+    @app.get("/candidates", response_class=HTMLResponse)
+    def candidates_page(request: Request, q: str = "", state: str = ""):
+        return operations_page(request, "candidates", query=q, state=state)
+
+    @app.get("/candidate/{candidate_id:path}", response_class=HTMLResponse)
+    def candidate_page(candidate_id: str, request: Request):
+        return operations_page(request, "candidate", candidate_id=candidate_id)
+
+    @app.get("/market-map", response_class=HTMLResponse)
+    def market_map(request: Request):
+        return operations_page(request, "market_map")
+
+    @app.get("/paper-portfolio", response_class=HTMLResponse)
+    def paper_portfolio(request: Request):
+        return operations_page(request, "paper_portfolio")
+
+    @app.get("/experiments", response_class=HTMLResponse)
+    def experiments_page(request: Request, q: str = "", status: str = ""):
+        return operations_page(request, "experiments", query=q, status=status)
 
     @app.get("/investigate", response_class=HTMLResponse)
     def investigate(request: Request, as_of: str = ""):

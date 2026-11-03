@@ -1,0 +1,51 @@
+test_401_403_429_and_redirect_status_stop_one_call_no_retry (__main__.Independent.test_401_403_429_and_redirect_status_stop_one_call_no_retry) ... ok
+test_candle_column_mapping_closed_contiguous_reversed_rows (__main__.Independent.test_candle_column_mapping_closed_contiguous_reversed_rows) ... ok
+test_equal_sequence_newer_observation_permitted (__main__.Independent.test_equal_sequence_newer_observation_permitted) ... ok
+test_original_core_identity_and_unchanged_shared_reducers (__main__.Independent.test_original_core_identity_and_unchanged_shared_reducers) ... ok
+test_oversized_response_preserved_bounded_then_stopped (__main__.Independent.test_oversized_response_preserved_bounded_then_stopped) ... ok
+test_partial_capture_refusal_keeps_held_paper_state_no_rollback (__main__.Independent.test_partial_capture_refusal_keeps_held_paper_state_no_rollback) ... ok
+test_post_decision_receipt_cannot_relabel_pre_decision_source_or_request (__main__.Independent.test_post_decision_receipt_cannot_relabel_pre_decision_source_or_request) ... ERROR
+test_programmatic_default_capture_requires_clearance_before_transport (__main__.Independent.test_programmatic_default_capture_requires_clearance_before_transport) ... ok
+test_raw_receipt_binds_normalized_policy_fields (__main__.Independent.test_raw_receipt_binds_normalized_policy_fields) ... ok
+test_regressed_source_sequence_or_time_rejected_without_mutation (__main__.Independent.test_regressed_source_sequence_or_time_rejected_without_mutation) ... 
+  test_regressed_source_sequence_or_time_rejected_without_mutation (__main__.Independent.test_regressed_source_sequence_or_time_rejected_without_mutation) (kwargs={'time': '2026-11-01T12:00:00.950000Z'}) ... FAIL
+test_regressed_source_sequence_or_time_rejected_without_mutation (__main__.Independent.test_regressed_source_sequence_or_time_rejected_without_mutation) ... FAIL
+test_shared_cash_profile_costs_and_mixed_journal_rejection (__main__.Independent.test_shared_cash_profile_costs_and_mixed_journal_rejection) ... ok
+test_timezone_missing_http_date_rejected_not_assumed_local (__main__.Independent.test_timezone_missing_http_date_rejected_not_assumed_local) ... ok
+test_wrong_origin_paths_query_never_reach_transport (__main__.Independent.test_wrong_origin_paths_query_never_reach_transport) ... ok
+
+======================================================================
+ERROR: test_post_decision_receipt_cannot_relabel_pre_decision_source_or_request (__main__.Independent.test_post_decision_receipt_cannot_relabel_pre_decision_source_or_request)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/coinbase-independent-audit/test_independent.py", line 42, in test_post_decision_receipt_cannot_relabel_pre_decision_source_or_request
+    out=self.l.transact({'op':'observe','at':at(3.1),'evidence':e})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/6c6e29d7a6a5/coinbase_reference_adapter_20261101/paper_reference_core.py", line 494, in transact
+    st, result = apply(st, command)
+                 ^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/6c6e29d7a6a5/coinbase_reference_adapter_20261101/paper_reference_core.py", line 301, in apply
+    raise ValueError("out-of-order quote")
+ValueError: out-of-order quote
+
+======================================================================
+FAIL: test_regressed_source_sequence_or_time_rejected_without_mutation (__main__.Independent.test_regressed_source_sequence_or_time_rejected_without_mutation) (kwargs={'time': '2026-11-01T12:00:00.950000Z'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/coinbase-independent-audit/test_independent.py", line 16, in test_regressed_source_sequence_or_time_rejected_without_mutation
+    with self.subTest(kwargs=kwargs),self.assertRaises(ValueError):observe(self.l,seconds=3,**kwargs)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_regressed_source_sequence_or_time_rejected_without_mutation (__main__.Independent.test_regressed_source_sequence_or_time_rejected_without_mutation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/coinbase-independent-audit/test_independent.py", line 17, in test_regressed_source_sequence_or_time_rejected_without_mutation
+    self.assertEqual(self.path.read_bytes(),old)
+AssertionError: b'{"c[40335 chars]N"}\n{"command":{"at":"2026-11-01T12:00:03Z","[3622 chars]"}\n' != b'{"c[40335 chars]N"}\n'
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.170s
+
+FAILED (failures=2, errors=1)

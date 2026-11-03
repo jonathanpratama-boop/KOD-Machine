@@ -1,0 +1,9 @@
+{
+  "symbol": "BTCUSDT",
+  "url": "https://data-api.binance.vision/api/v3/depth?symbol=BTCUSDT&limit=100",
+  "request_start_utc": "2026-10-31 18:51:01.290234+00:00",
+  "http_status": 200,
+  "received_utc": "2026-10-31 18:51:05.000340+00:00",
+  "sha256": "343696165a1bfacb9e5d476cb7c404fdc90e2ed1276935058fc38069af2c205f",
+  "bytes": 6447
+}

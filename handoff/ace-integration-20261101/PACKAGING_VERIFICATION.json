@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "scope": "PACKAGING_ONLY",
+  "original_archives": {
+    "originals/KOD-engineering-checkpoint-20261031.zip": "aefad3ca7a2033962d5e2f303e698c73d526b5b5727da510ce1edc969ffdfe81",
+    "originals/KOD_trend_paper_v2_reviewed_20261101.zip": "ccbd89add6ebfb3ae4389981df0a32c72f9927c48f6af0a1d37de6428866643b",
+    "originals/KOD_historical_shared_account_proof_20261101.zip": "6ec9f6f87f02fac17d85e00aa92406c49c49349c43626ee317babfda18b93037"
+  },
+  "original_archives_CRC": "PASS",
+  "reference_source_pins": "MATCH_INDEPENDENT_CLEARANCE_AND_ATTEMPT_MANIFEST",
+  "reference_review_sha256": "00f1e8e2712a3d8f13f6f7253e2e317d33349368729f1ab2713c22c58c958631",
+  "product_code_changes": 0,
+  "product_tests_rerun": false,
+  "market_requests": 0,
+  "historical_outcome_runs": 0,
+  "remote_repository_operations": 0,
+  "extract_verification": "Performed against SHA256SUMS after kit creation; receipt also retained by producer"
+}

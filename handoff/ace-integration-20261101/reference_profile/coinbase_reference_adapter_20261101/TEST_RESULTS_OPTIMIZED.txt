@@ -1,0 +1,32 @@
+test_book_identity_quantity_tick_and_source_clock (test_adapter.AdapterTests.test_book_identity_quantity_tick_and_source_clock) ... ok
+test_cached_preclose_response_cannot_be_mislabeled_closed (test_adapter.AdapterTests.test_cached_preclose_response_cannot_be_mislabeled_closed) ... ok
+test_cash_signal_does_not_force_trade (test_adapter.AdapterTests.test_cash_signal_does_not_force_trade) ... ok
+test_default_transport_preserves_managed_routing_and_blocks_origin_auth (test_adapter.AdapterTests.test_default_transport_preserves_managed_routing_and_blocks_origin_auth) ... ok
+test_duplicate_headers_and_response_delay_age (test_adapter.AdapterTests.test_duplicate_headers_and_response_delay_age) ... ok
+test_endpoint_specific_latency_cache_and_effective_metadata_age (test_adapter.AdapterTests.test_endpoint_specific_latency_cache_and_effective_metadata_age) ... ok
+test_gaps_duplicates_empty_bars (test_adapter.AdapterTests.test_gaps_duplicates_empty_bars) ... ok
+test_http_refusal_preserved_stops_without_retry (test_adapter.AdapterTests.test_http_refusal_preserved_stops_without_retry) ... ok
+test_no_fill_past_source_or_request_unknown_size_or_minimum (test_adapter.AdapterTests.test_no_fill_past_source_or_request_unknown_size_or_minimum) ... ok
+test_origin_and_endpoint_allowlist (test_adapter.AdapterTests.test_origin_and_endpoint_allowlist) ... ok
+test_original_core_and_synthetic_default_unchanged (test_adapter.AdapterTests.test_original_core_and_synthetic_default_unchanged) ... ok
+test_payload_cannot_relabel_or_modify_raw_data (test_adapter.AdapterTests.test_payload_cannot_relabel_or_modify_raw_data) ... ok
+test_pending_buy_blocked_unknown_other_mark (test_adapter.AdapterTests.test_pending_buy_blocked_unknown_other_mark) ... ok
+test_product_unknowns_block (test_adapter.AdapterTests.test_product_unknowns_block) ... ok
+test_receipt_hash_clock_cache (test_adapter.AdapterTests.test_receipt_hash_clock_cache) ... ok
+test_redirect_refused (test_adapter.AdapterTests.test_redirect_refused) ... ok
+test_regressing_source_sequence_or_time_fails_closed (test_adapter.AdapterTests.test_regressing_source_sequence_or_time_fails_closed) ... ok
+test_shared_cash_actual_future_quote_fill_and_replay (test_adapter.AdapterTests.test_shared_cash_actual_future_quote_fill_and_replay) ... ok
+test_transport_errors_do_not_echo_possible_ambient_credentials (test_adapter.AdapterTests.test_transport_errors_do_not_echo_possible_ambient_credentials) ... ok
+test_warmup_no_publication_claim_and_bars_are_latest (test_adapter.AdapterTests.test_warmup_no_publication_claim_and_bars_are_latest) ... ok
+test_cash_cycle_only_6_gets (test_run_once.OneShotTests.test_cash_cycle_only_6_gets) ... ok
+test_default_programmatic_path_requires_clearance_without_network (test_run_once.OneShotTests.test_default_programmatic_path_requires_clearance_without_network) ... ok
+test_directory_cannot_be_reused_to_recapture (test_run_once.OneShotTests.test_directory_cannot_be_reused_to_recapture) ... ok
+test_full_mock_cycle_8_gets_and_no_backfill (test_run_once.OneShotTests.test_full_mock_cycle_8_gets_and_no_backfill) ... ok
+test_refused_source_one_request_no_account_no_retry (test_run_once.OneShotTests.test_refused_source_one_request_no_account_no_retry) ... ok
+test_review_clearance_must_match_every_source_pin (test_run_once.OneShotTests.test_review_clearance_must_match_every_source_pin) ... ok
+test_transport_budget_hard_limit_eight (test_run_once.OneShotTests.test_transport_budget_hard_limit_eight) ... ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 0.226s
+
+OK

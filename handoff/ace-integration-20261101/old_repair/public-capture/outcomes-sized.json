@@ -1,0 +1,335 @@
+[
+  {
+    "symbol": "BTCUSDT",
+    "exchange_status": "TRADING",
+    "order_types": [
+      "LIMIT",
+      "LIMIT_MAKER",
+      "MARKET",
+      "STOP_LOSS",
+      "STOP_LOSS_LIMIT",
+      "TAKE_PROFIT",
+      "TAKE_PROFIT_LIMIT"
+    ],
+    "unsupported_filters": [
+      {
+        "type": "ICEBERG_PARTS",
+        "classification": "inapplicable_to_plain_limit_ioc",
+        "detail": "no iceberg quantity requested"
+      },
+      {
+        "type": "MARKET_LOT_SIZE",
+        "classification": "inapplicable_to_plain_limit_ioc",
+        "detail": "market orders only; this is LIMIT/IOC"
+      },
+      {
+        "type": "TRAILING_DELTA",
+        "classification": "inapplicable_to_plain_limit_ioc",
+        "detail": "not a trailing order"
+      },
+      {
+        "type": "PERCENT_PRICE_BY_SIDE",
+        "classification": "unsupported_requires_other_evidence",
+        "detail": "Required evidence/validation unavailable; do not infer pass."
+      },
+      {
+        "type": "MAX_NUM_ORDERS",
+        "classification": "unsupported_requires_other_evidence",
+        "detail": "Required evidence/validation unavailable; do not infer pass."
+      },
+      {
+        "type": "MAX_NUM_ORDER_LISTS",
+        "classification": "inapplicable_to_plain_limit_ioc",
+        "detail": "standalone intent, not an order list"
+      },
+      {
+        "type": "MAX_NUM_ALGO_ORDERS",
+        "classification": "inapplicable_to_plain_limit_ioc",
+        "detail": "not an algo/conditional order"
+      },
+      {
+        "type": "MAX_NUM_ORDER_AMENDS",
+        "classification": "inapplicable_to_plain_limit_ioc",
+        "detail": "new intent, not an amendment"
+      }
+    ],
+    "book_levels": [
+      100,
+      100
+    ],
+    "last_update_id": 102146919613,
+    "estimates": [
+      {
+        "target_notional_usdt": "100",
+        "sized_notional_usdt": "99.4314496000000000",
+        "intent": {
+          "symbol": "BTCUSDT",
+          "side": "BUY",
+          "quantity": "0.00128000",
+          "limit_price": "77680.82000000",
+          "placed_at": "2026-10-31 18:51:01.290234+00:00"
+        },
+        "result": {
+          "status": "REJECTED",
+          "reason": "UNSUPPORTED_FILTER:ICEBERG_PARTS",
+          "quantity": "0",
+          "limit_price": "0",
+          "filled": "0",
+          "unfilled": "0",
+          "notional": "0",
+          "fee_quote": "0",
+          "fee_rate": "0",
+          "fills": []
+        },
+        "fee_assumption": "0.1% quote-notional fee, not account-specific"
+      },
+      {
+        "target_notional_usdt": "1000",
+        "sized_notional_usdt": "999.7521534000000000",
+        "intent": {
+          "symbol": "BTCUSDT",
+          "side": "BUY",
+          "quantity": "0.01287000",
+          "limit_price": "77680.82000000",
+          "placed_at": "2026-10-31 18:51:01.290234+00:00"
+        },
+        "result": {
+          "status": "REJECTED",
+          "reason": "UNSUPPORTED_FILTER:ICEBERG_PARTS",
+          "quantity": "0",
+          "limit_price": "0",
+          "filled": "0",
+          "unfilled": "0",
+          "notional": "0",
+          "fee_quote": "0",
+          "fee_rate": "0",
+          "fills": []
+        },
+        "fee_assumption": "0.1% quote-notional fee, not account-specific"
+      }
+    ],
+    "evaluation_note": "Initial adapter division exceeded supported Decimal scale and was rejected. Offline sizing now floors to observed lot step; same capture, all observed filters intact, no network retry."
+  },
+  {
+    "symbol": "ETHUSDT",
+    "exchange_status": "TRADING",
+    "order_types": [
+      "LIMIT",
+      "LIMIT_MAKER",
+      "MARKET",
+      "STOP_LOSS",
+      "STOP_LOSS_LIMIT",
+      "TAKE_PROFIT",
+      "TAKE_PROFIT_LIMIT"
+    ],
+    "unsupported_filters": [
+      {
+        "type": "ICEBERG_PARTS",
+        "classification": "inapplicable_to_plain_limit_ioc",
+        "detail": "no iceberg quantity requested"
+      },
+      {
+        "type": "MARKET_LOT_SIZE",
+        "classification": "inapplicable_to_plain_limit_ioc",
+        "detail": "market orders only; this is LIMIT/IOC"
+      },
+      {
+        "type": "TRAILING_DELTA",
+        "classification": "inapplicable_to_plain_limit_ioc",
+        "detail": "not a trailing order"
+      },
+      {
+        "type": "PERCENT_PRICE_BY_SIDE",
+        "classification": "unsupported_requires_other_evidence",
+        "detail": "Required evidence/validation unavailable; do not infer pass."
+      },
+      {
+        "type": "MAX_NUM_ORDERS",
+        "classification": "unsupported_requires_other_evidence",
+        "detail": "Required evidence/validation unavailable; do not infer pass."
+      },
+      {
+        "type": "MAX_NUM_ORDER_LISTS",
+        "classification": "inapplicable_to_plain_limit_ioc",
+        "detail": "standalone intent, not an order list"
+      },
+      {
+        "type": "MAX_NUM_ALGO_ORDERS",
+        "classification": "inapplicable_to_plain_limit_ioc",
+        "detail": "not an algo/conditional order"
+      },
+      {
+        "type": "MAX_NUM_ORDER_AMENDS",
+        "classification": "inapplicable_to_plain_limit_ioc",
+        "detail": "new intent, not an amendment"
+      }
+    ],
+    "book_levels": [
+      100,
+      100
+    ],
+    "last_update_id": 82704487388,
+    "estimates": [
+      {
+        "target_notional_usdt": "100",
+        "sized_notional_usdt": "99.9638360000000000",
+        "intent": {
+          "symbol": "ETHUSDT",
+          "side": "BUY",
+          "quantity": "0.04430000",
+          "limit_price": "2256.52000000",
+          "placed_at": "2026-10-31 18:51:05.001019+00:00"
+        },
+        "result": {
+          "status": "REJECTED",
+          "reason": "UNSUPPORTED_FILTER:ICEBERG_PARTS",
+          "quantity": "0",
+          "limit_price": "0",
+          "filled": "0",
+          "unfilled": "0",
+          "notional": "0",
+          "fee_quote": "0",
+          "fee_rate": "0",
+          "fills": []
+        },
+        "fee_assumption": "0.1% quote-notional fee, not account-specific"
+      },
+      {
+        "target_notional_usdt": "1000",
+        "sized_notional_usdt": "999.8640120000000000",
+        "intent": {
+          "symbol": "ETHUSDT",
+          "side": "BUY",
+          "quantity": "0.44310000",
+          "limit_price": "2256.52000000",
+          "placed_at": "2026-10-31 18:51:05.001019+00:00"
+        },
+        "result": {
+          "status": "REJECTED",
+          "reason": "UNSUPPORTED_FILTER:ICEBERG_PARTS",
+          "quantity": "0",
+          "limit_price": "0",
+          "filled": "0",
+          "unfilled": "0",
+          "notional": "0",
+          "fee_quote": "0",
+          "fee_rate": "0",
+          "fills": []
+        },
+        "fee_assumption": "0.1% quote-notional fee, not account-specific"
+      }
+    ],
+    "evaluation_note": "Initial adapter division exceeded supported Decimal scale and was rejected. Offline sizing now floors to observed lot step; same capture, all observed filters intact, no network retry."
+  },
+  {
+    "symbol": "BEAMXUSDT",
+    "exchange_status": "TRADING",
+    "order_types": [
+      "LIMIT",
+      "LIMIT_MAKER",
+      "MARKET",
+      "STOP_LOSS",
+      "STOP_LOSS_LIMIT",
+      "TAKE_PROFIT",
+      "TAKE_PROFIT_LIMIT"
+    ],
+    "unsupported_filters": [
+      {
+        "type": "ICEBERG_PARTS",
+        "classification": "inapplicable_to_plain_limit_ioc",
+        "detail": "no iceberg quantity requested"
+      },
+      {
+        "type": "MARKET_LOT_SIZE",
+        "classification": "inapplicable_to_plain_limit_ioc",
+        "detail": "market orders only; this is LIMIT/IOC"
+      },
+      {
+        "type": "TRAILING_DELTA",
+        "classification": "inapplicable_to_plain_limit_ioc",
+        "detail": "not a trailing order"
+      },
+      {
+        "type": "PERCENT_PRICE_BY_SIDE",
+        "classification": "unsupported_requires_other_evidence",
+        "detail": "Required evidence/validation unavailable; do not infer pass."
+      },
+      {
+        "type": "MAX_NUM_ORDERS",
+        "classification": "unsupported_requires_other_evidence",
+        "detail": "Required evidence/validation unavailable; do not infer pass."
+      },
+      {
+        "type": "MAX_NUM_ORDER_LISTS",
+        "classification": "inapplicable_to_plain_limit_ioc",
+        "detail": "standalone intent, not an order list"
+      },
+      {
+        "type": "MAX_NUM_ALGO_ORDERS",
+        "classification": "inapplicable_to_plain_limit_ioc",
+        "detail": "not an algo/conditional order"
+      },
+      {
+        "type": "MAX_NUM_ORDER_AMENDS",
+        "classification": "inapplicable_to_plain_limit_ioc",
+        "detail": "new intent, not an amendment"
+      }
+    ],
+    "book_levels": [
+      100,
+      100
+    ],
+    "last_update_id": 2329756261,
+    "estimates": [
+      {
+        "target_notional_usdt": "100",
+        "sized_notional_usdt": "99.9961560000000000",
+        "intent": {
+          "symbol": "BEAMXUSDT",
+          "side": "BUY",
+          "quantity": "20124.00000000",
+          "limit_price": "0.00496900",
+          "placed_at": "2026-10-31 18:51:07.889749+00:00"
+        },
+        "result": {
+          "status": "REJECTED",
+          "reason": "UNSUPPORTED_FILTER:ICEBERG_PARTS",
+          "quantity": "0",
+          "limit_price": "0",
+          "filled": "0",
+          "unfilled": "0",
+          "notional": "0",
+          "fee_quote": "0",
+          "fee_rate": "0",
+          "fills": []
+        },
+        "fee_assumption": "0.1% quote-notional fee, not account-specific"
+      },
+      {
+        "target_notional_usdt": "1000",
+        "sized_notional_usdt": "999.9963430000000000",
+        "intent": {
+          "symbol": "BEAMXUSDT",
+          "side": "BUY",
+          "quantity": "201247.00000000",
+          "limit_price": "0.00496900",
+          "placed_at": "2026-10-31 18:51:07.889749+00:00"
+        },
+        "result": {
+          "status": "REJECTED",
+          "reason": "UNSUPPORTED_FILTER:ICEBERG_PARTS",
+          "quantity": "0",
+          "limit_price": "0",
+          "filled": "0",
+          "unfilled": "0",
+          "notional": "0",
+          "fee_quote": "0",
+          "fee_rate": "0",
+          "fills": []
+        },
+        "fee_assumption": "0.1% quote-notional fee, not account-specific"
+      }
+    ],
+    "evaluation_note": "Initial adapter division exceeded supported Decimal scale and was rejected. Offline sizing now floors to observed lot step; same capture, all observed filters intact, no network retry."
+  }
+]

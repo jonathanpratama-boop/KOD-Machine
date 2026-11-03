@@ -1,0 +1,41 @@
+{
+  "version": "V1_SIGNAL_AUDIT_1",
+  "source_repository": "jonathanpratama-boop/KOD-Machine",
+  "source_commit": "48d18b8ecae67bdeeb07a47f1772903a5381782b",
+  "original_ledger_git_blob_sha": "d64bee55698cc4925724cdd4fd0d5ef04c3de7e1",
+  "preservation": "No original line deleted, edited, reclassified in place, or used as an account fill. This is separate metadata.",
+  "rows": [
+    {
+      "line": 1,
+      "line_sha256": "2163d067b6e4b1f75944e4101709ec94db86a8043e7fe75fdf4b1b2933ac7dc7",
+      "symbol": "BTCUSDT",
+      "signal_date": "2026-10-31",
+      "classification": "signal_observation_not_fill",
+      "canonical_first_line": 1
+    },
+    {
+      "line": 2,
+      "line_sha256": "3590eb9c04680d9a5e85c057b883b92daffbf10098a6429f05da3fb4e75d4bd5",
+      "symbol": "ETHUSDT",
+      "signal_date": "2026-10-31",
+      "classification": "signal_observation_not_fill",
+      "canonical_first_line": 2
+    },
+    {
+      "line": 3,
+      "line_sha256": "3842d4e51c4c8944e3f343faf6fdaf286e736c4099942b5568b39f5cd3a5a904",
+      "symbol": "BTCUSDT",
+      "signal_date": "2026-10-31",
+      "classification": "duplicate_signal_observation",
+      "canonical_first_line": 1
+    },
+    {
+      "line": 4,
+      "line_sha256": "ecb5e1dface0fb8c2d167126663c2a2c6ead684514c842e8d150908e91bcbbd5",
+      "symbol": "ETHUSDT",
+      "signal_date": "2026-10-31",
+      "classification": "duplicate_signal_observation",
+      "canonical_first_line": 2
+    }
+  ]
+}

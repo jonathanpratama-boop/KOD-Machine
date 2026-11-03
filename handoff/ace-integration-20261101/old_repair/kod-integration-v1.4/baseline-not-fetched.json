@@ -1,0 +1,434 @@
+[
+  {
+    "path": "idx-signals/tests/test_admission_holdout.py",
+    "sha": "e0a53377fddb91142d4fc95c886cb2ee469d61e9",
+    "size": 2553,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_ann_1m.py",
+    "sha": "f1f56368fd50344b180292e35afaa8a38e28a85f",
+    "size": 11946,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_ann_1s.py",
+    "sha": "e9b1540af6f28a0f786788ac1263fb3c56f65799",
+    "size": 8378,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_binance_holdout.py",
+    "sha": "97ae7026a79eb5ead8757515f0a0063ac38e8d89",
+    "size": 5693,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_breakout.py",
+    "sha": "dc94724c87be4c7de6913ccdc0887f12fe80fc00",
+    "size": 4481,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_call_cert.py",
+    "sha": "63fb829af38416e10e3ef4da4dd740b0a0b003ee",
+    "size": 2080,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_catalyst.py",
+    "sha": "327acfd907117f7e84ec5d308a3749eb53d5dcfa",
+    "size": 8802,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_catalysts.py",
+    "sha": "eb9a81470a8717dc761b19b08921eed58678b97d",
+    "size": 39176,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_causal_panel.py",
+    "sha": "3b2fa5bb0197ef49b27676eb2f987e157ebee4f3",
+    "size": 1976,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_coinglass_client.py",
+    "sha": "15229e61832587391ef7f8a9b698b1da151187a4",
+    "size": 12166,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_coinglass_context.py",
+    "sha": "0c7295124412590995c1de90d0af02e1dac34d3d",
+    "size": 14101,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_document_class.py",
+    "sha": "e02ff53834c984aa3126cc3fd4a42a31abca8174",
+    "size": 4680,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_e1.py",
+    "sha": "dac4f0c4b612617e51619ef08161afd4a88ee8a4",
+    "size": 7338,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_e10_a1.py",
+    "sha": "0754f7712c336ea6be984f790f6a333b7bb2eb7c",
+    "size": 2117,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_e10_full.py",
+    "sha": "d19d31c77bc8a6a864a7c64cecbfe6a3b3b3e2cd",
+    "size": 8259,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_e10_runner.py",
+    "sha": "9d900cf566602cfa76af417fb619ef5213c5afbf",
+    "size": 3275,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_e10_verify.py",
+    "sha": "8563578e249c812fc3a7da16bf346459cf909e1c",
+    "size": 4592,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_e1_study_opts.py",
+    "sha": "419b6a8b397e6c344de3acebec09b231f442091c",
+    "size": 29334,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_e2_repair.py",
+    "sha": "3ef9f546af94d1e469c64b0a8ddfe015e0038b9f",
+    "size": 19742,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_e3.py",
+    "sha": "106ff9fd2bb680355d026b98183ceca437db904e",
+    "size": 8900,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_e3_retention_policy.py",
+    "sha": "7d98c28cc0fed22f3c3360fe0c590f35a15dd596",
+    "size": 3443,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_e4.py",
+    "sha": "765584afcf908253a12461d387599401ab2c8794",
+    "size": 12483,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_e5.py",
+    "sha": "2e38dd8c9177b2d8ef134e1ed289d03cef90a9b8",
+    "size": 86892,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_e5_rules.py",
+    "sha": "54208f76a5718b39c773dc8650bda3d34029f39c",
+    "size": 33689,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_e6.py",
+    "sha": "8cbf7d2cd27d70e0abd9aafa4f4cbd5537785e85",
+    "size": 9086,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_e8.py",
+    "sha": "ba78e620fc638204d2c1d4a33e6238f2b2615053",
+    "size": 13081,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_e9_pipeline.py",
+    "sha": "bb0ea5102435113662fed694efb5e835183e9a7a",
+    "size": 7383,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_e9_runner.py",
+    "sha": "b0c5c79d8e202ef4458e80ad45b7b29249b77838",
+    "size": 4253,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_event_study.py",
+    "sha": "8a92c3d08ee0f800a00b990a10487821342f5f7c",
+    "size": 5650,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_exit_atr.py",
+    "sha": "8fc2dfea0b2cd46691d359081f0c8a5ceded523b",
+    "size": 8108,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_fam_dilution8k.py",
+    "sha": "7164becc0ee5de9445b23e69945b106ec91e1b31",
+    "size": 19475,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_fam_form4.py",
+    "sha": "1aaba587fb98184314aedbe624365dbb08949261",
+    "size": 28411,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_flow_features.py",
+    "sha": "6b22f669212ee819ce0d1d522e2c521b1fb4938e",
+    "size": 3176,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_guidance.py",
+    "sha": "d6fbc3515295a65d5b1c421a4a301089f9c0962d",
+    "size": 3859,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_guidance_paper.py",
+    "sha": "f1e3e4699403c032c663956d569c1d9f20a5ed06",
+    "size": 4774,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_guidance_revision.py",
+    "sha": "740128a6bf7bef57a3c1ab9f04b87ed85321d5d7",
+    "size": 11754,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_guidance_v2.py",
+    "sha": "7e9ed4045517829c8ecefc72308d8a42dd730eea",
+    "size": 4319,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_guidance_watch.py",
+    "sha": "6cdb12081ed888b7ea6051a318fe375cb679ccce",
+    "size": 3344,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_idea_grader.py",
+    "sha": "9560289a24de4ecb6591cb1334cbec7b32aa1c81",
+    "size": 2122,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_idx_events.py",
+    "sha": "d7366302b55074f274682a3d074ad815ac4c7927",
+    "size": 7229,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_idx_news.py",
+    "sha": "9d3c0aafab010e8550ec44c251be07f36cde7d6e",
+    "size": 6615,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_idx_news_run.py",
+    "sha": "33899064eb59abb502bf00ea2e965f780523bd77",
+    "size": 4960,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_idx_oot.py",
+    "sha": "72c91d6776af34985b95e66d7e47d6dd2ef44633",
+    "size": 6688,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_intl_panel.py",
+    "sha": "14e22330b341a568e12fd45a22b58a29fc3de6e6",
+    "size": 2478,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_kill_test_13d.py",
+    "sha": "9b62daf9173c2e17f77ef54b12e74eee75764ff3",
+    "size": 28391,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_lead_ladder.py",
+    "sha": "d788b25d2f51ab433f0fe1079f944c14d41bb444",
+    "size": 9361,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_learner.py",
+    "sha": "0d64e0de2676e1988cbc2ee99c2299e06d36746c",
+    "size": 8962,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_learner2.py",
+    "sha": "025dd994b934b93e3e8474146980c9bb46c61710",
+    "size": 39849,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_learner3.py",
+    "sha": "f5337032e9f5c6494142df549167b875eaa51cdb",
+    "size": 17220,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_lookahead.py",
+    "sha": "52e3181ecc33e94b1e97c6450a4caf45117b2ce4",
+    "size": 13897,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_lowvol_mom.py",
+    "sha": "80a931fd6563605fc9702c92ef5f438d27141f94",
+    "size": 2417,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_microstructure.py",
+    "sha": "88789f623aaa6eeb118689cfd888603362f63ef3",
+    "size": 13722,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_outcome_repair.py",
+    "sha": "008746c2683a7d9cdf96cf741b6d1501f3ccd798",
+    "size": 11653,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_paper_markets.py",
+    "sha": "129477f4990b9009e3bc265ccda90ce6403f8a1b",
+    "size": 13676,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_paper_scorer_v2.py",
+    "sha": "cb0a586c52a4ce1c7c9775300f8165828efa429c",
+    "size": 8333,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_plans.py",
+    "sha": "c35859173679c67a6a446d7cb7ec0c9fccb4f606",
+    "size": 20160,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_policy_versions.py",
+    "sha": "abf11d5cbda4069a6c0e5684d9c5fea3f767f548",
+    "size": 2546,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_premove_collector.py",
+    "sha": "e538190b39ff7c92f55cde39d2e79440e61cd77c",
+    "size": 6942,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_premove_core.py",
+    "sha": "50b87732e5a945a5c27a3c847d812713cb7fa996",
+    "size": 10608,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_premove_evaluation.py",
+    "sha": "b61993c649512a927fbaf26ee3bcb3a471529117",
+    "size": 12814,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_premove_shadow.py",
+    "sha": "da2c7f1b1207b0a09264ceff61076e400e9c6de6",
+    "size": 7128,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_quant_engine.py",
+    "sha": "9b997f55a1ab712547925fef8414f6fbbe312146",
+    "size": 3458,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_review_fixes.py",
+    "sha": "e83ec3f200fe812c3738cc9b79f4e395c74908b3",
+    "size": 8533,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_sensor_v2.py",
+    "sha": "b0d8154b8c265fbd15e1ad80be5e8c565aaccd5a",
+    "size": 38321,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_sensors.py",
+    "sha": "ac1543bdda6791de353513564aa3062df1afb7b1",
+    "size": 8814,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_slow_10k.py",
+    "sha": "6ae1f5e375f1aedf2576ecdefac637c1202ec97f",
+    "size": 11883,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_source_resume_repair.py",
+    "sha": "29cb316422fbb62ab3e384a2bb300d3c2143cf33",
+    "size": 8698,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_speculation.py",
+    "sha": "21a744fee54dcebccbf474779eb85714c2228018",
+    "size": 35541,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_split_verification.py",
+    "sha": "5cfeb74e19af499d358a26b50dc94b17433b7bf4",
+    "size": 11085,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_storage_repair.py",
+    "sha": "70daccaaa2ed04f91b80173de05c8824fed74619",
+    "size": 9000,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_us_insider_buy.py",
+    "sha": "2d81a5dcee0a1e2048090c22f3e630ff6da34d9d",
+    "size": 16977,
+    "type": "file"
+  },
+  {
+    "path": "idx-signals/tests/test_us_pipeline.py",
+    "sha": "ec4ddad83dda5c1676f7bee422f5e51c71a36aa4",
+    "size": 20770,
+    "type": "file"
+  }
+]

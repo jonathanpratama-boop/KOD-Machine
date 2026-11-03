@@ -1,0 +1,251 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-11-04",
+  "meaning": "Research and paper state from inspected code and committed reports. No live strategy authorization.",
+  "experiments": [
+    {
+      "id": "TREND_CORE_PAPER_v1",
+      "status": "PAPER_SIGNAL_LOG",
+      "evidence_level": "PROSPECTIVE_SIGNALS_ONLY",
+      "summary": "Owner-approved BTC/ETH trend paper trial exists; original logger is not a complete shared account.",
+      "live_eligible": false,
+      "sources": [
+        {
+          "path": "handoff/decisions/2026-11-01c_owner_approves_three_defaults.md",
+          "ref": "a48aff980343b46022a26769a2e3c2d0836651eb"
+        },
+        {
+          "path": "handoff/fresh-eyes-2026-11-01/paper/PAPER_PROTOCOL.md",
+          "ref": "a48aff980343b46022a26769a2e3c2d0836651eb"
+        }
+      ],
+      "limitations": [
+        "Historical approval does not prove prospective performance.",
+        "Original signal logger's execution clock, combined exposure, accounting and kill rules require explicit implementation reconciliation.",
+        "No live eligibility is granted by 90 elapsed calendar days alone."
+      ]
+    },
+    {
+      "id": "PREMOVE_SHADOW_v1",
+      "status": "PAPER_TRIAL",
+      "evidence_level": "PROSPECTIVE_TRIAL",
+      "summary": "Existing frozen pre-move comparison continues without policy promotion.",
+      "live_eligible": false,
+      "sources": [
+        {
+          "path": "idx-signals/paper/PREMOVE_SHADOW.md",
+          "ref": "a48aff980343b46022a26769a2e3c2d0836651eb"
+        }
+      ],
+      "limitations": [
+        "A hit or ranking advantage is not a net executable profit.",
+        "Trial status is a documented program state, not a fresh runtime verification."
+      ]
+    },
+    {
+      "id": "EXCHANGE_RULE_CHANGE_REGISTER",
+      "status": "PLANNED",
+      "evidence_level": "OWNER_DECISION",
+      "summary": "Approved research family for exchange delisting, margin, leverage-tier and collateral changes.",
+      "live_eligible": false,
+      "sources": [
+        {
+          "path": "handoff/decisions/2026-11-01c_owner_approves_three_defaults.md",
+          "ref": "a48aff980343b46022a26769a2e3c2d0836651eb"
+        }
+      ],
+      "limitations": [
+        "Research authorization is not evidence of a profitable strategy.",
+        "A new dated protocol must precede outcome access."
+      ]
+    },
+    {
+      "id": "NEIGHBOURS_v1",
+      "status": "RESEARCH_CORRECTION_PENDING",
+      "evidence_level": "REPORTED_RETROSPECTIVE_WITH_DEFECT",
+      "summary": "Original daily ridge comparison found no incremental peer/next-stop value; causal repair is implemented but corrected original-data evaluation has not run.",
+      "live_eligible": false,
+      "sources": [
+        {
+          "path": "idx-signals/research/NEIGHBOURS_v1/REPORT.md",
+          "ref": "d3f2b47bc04fe4ca12463155335f6629c6c79a54"
+        },
+        {
+          "path": "idx-signals/research/NEIGHBOURS_v1/RESULT.json",
+          "ref": "d3f2b47bc04fe4ca12463155335f6629c6c79a54"
+        },
+        {
+          "path": "idx-signals/research/NEIGHBOURS_v1/CORRECTION_2026-11-04.md",
+          "ref_type": "working_tree",
+          "ref": null
+        }
+      ],
+      "reported_metrics": {
+        "rows_test": 469339,
+        "days_test": 2100,
+        "B_minus_A_IC": -0.005151476405625808,
+        "C_minus_B_IC": -0.00010852970430927119
+      },
+      "limitations": [
+        "Future-complete labels changed the original ranking universe.",
+        "Report's 482598 row count conflicts with machine result's 469339 test rows.",
+        "2023-26 already inspected; daily bars; one ridge/group specification.",
+        "Mean-per-pick returns are not portfolio performance."
+      ]
+    },
+    {
+      "id": "PRESSURE_v1",
+      "status": "RESEARCH_CORRECTION_PENDING",
+      "evidence_level": "REPORTED_RETROSPECTIVE_WITH_DEFECT",
+      "summary": "Original daily taker-pressure arm reported no incremental value; additive causal runner awaits intentional corrected evaluation.",
+      "live_eligible": false,
+      "sources": [
+        {
+          "path": "idx-signals/research/PRESSURE_v1/REPORT.md",
+          "ref": "d3f2b47bc04fe4ca12463155335f6629c6c79a54"
+        },
+        {
+          "path": "idx-signals/research/PRESSURE_v1/CORRECTION_2026-11-04.md",
+          "ref_type": "working_tree",
+          "ref": null
+        }
+      ],
+      "limitations": [
+        "Inherits original future-complete label selection.",
+        "82 archive-file failures reported; missing feature ranks were neutral-imputed.",
+        "Daily taker volume is not full order-book imbalance.",
+        "No new corrected-data result is claimed."
+      ]
+    },
+    {
+      "id": "SEESAW_v1",
+      "status": "RESEARCH_CLOSED",
+      "evidence_level": "REPORTED_RETROSPECTIVE",
+      "summary": "Locked monthly tide-on rule failed in the inspected check period; no predictive promotion.",
+      "live_eligible": false,
+      "sources": [
+        {
+          "path": "idx-signals/research/SEESAW_v1/REPORT.md",
+          "ref": "d3f2b47bc04fe4ca12463155335f6629c6c79a54"
+        }
+      ],
+      "limitations": [
+        "79 monthly blocks; weak correlations are descriptive.",
+        "This result concerns only the specified monthly rule and is not independently rerun."
+      ]
+    },
+    {
+      "id": "GROUP_FLOW_v1",
+      "status": "RESEARCH_CLOSED",
+      "evidence_level": "DESCRIPTIVE_RETROSPECTIVE",
+      "summary": "Group-backed US jumps had less severe median outcomes in reported samples; not a buy rule or manipulation detector.",
+      "live_eligible": false,
+      "sources": [
+        {
+          "path": "idx-signals/research/GROUP_FLOW_v1/REPORT.md",
+          "ref": "d3f2b47bc04fe4ca12463155335f6629c6c79a54"
+        }
+      ],
+      "limitations": [
+        "Survivor-only prices and required subsequent 20-close completeness.",
+        "Crash is a daily close at or below event close/1.30, not an intraday stop.",
+        "20-day US outcomes do not establish 1-5-day crypto utility."
+      ]
+    },
+    {
+      "id": "ATTENTION_LEAD_v1",
+      "status": "RESEARCH_CLOSED",
+      "evidence_level": "REPORTED_RETROSPECTIVE",
+      "summary": "Latest full-universe Wikipedia attention report returns NO USABLE LEAD: +0.10% excess over 20 sessions, t=0.24; original collection-era files preserved.",
+      "live_eligible": false,
+      "sources": [
+        {
+          "path": "docs/research_sources/hermes_20261104/06_REPORT.md",
+          "ref_type": "working_tree",
+          "ref": null,
+          "original_commit": "f26fcce828714bebaa4afd3b8563b1ba7312f501",
+          "original_path": "idx-signals/research/ATTENTION_LEAD_v1/REPORT.md"
+        }
+      ],
+      "limitations": [
+        "Report read and source bytes verified; underlying results not independently recomputed.",
+        "The daily Wikipedia specification failed; that does not exclude all pre-event information channels.",
+        "20-session US evidence is not 1\u20135-day crypto entry validation."
+      ],
+      "reported_metrics": {
+        "events": 1473,
+        "tickers": 683,
+        "excess_fwd20": 0.001,
+        "t": 0.24,
+        "ci95": [
+          -0.0065,
+          0.0092
+        ]
+      }
+    },
+    {
+      "id": "US_PLUS30_ENTRY_LINE",
+      "status": "RESEARCH_CLOSED",
+      "evidence_level": "OWNER_DECISION",
+      "summary": "The historical US +30% entry line was explicitly closed; existing detectors remain preserved.",
+      "live_eligible": false,
+      "sources": [
+        {
+          "path": "handoff/decisions/2026-10-22_close_US_plus30_line_and_take_the_blueprint_next_step.md",
+          "ref": "a48aff980343b46022a26769a2e3c2d0836651eb"
+        }
+      ],
+      "limitations": [
+        "Preserved detection evidence is not permission to trade an exhausted entry hypothesis."
+      ]
+    },
+    {
+      "id": "HERMES_COMBO_HOLDOUT_v1",
+      "status": "RESEARCH_CLOSED",
+      "evidence_level": "REPORTED_RETROSPECTIVE",
+      "summary": "Both frozen Hermes combo variants failed: typical trade lost 7\u20138%; mean return interval crosses zero.",
+      "live_eligible": false,
+      "sources": [
+        {
+          "path": "docs/research_sources/hermes_20261104/04_RESULT_COMBO_HOLDOUT_v1.json",
+          "ref_type": "working_tree",
+          "ref": null,
+          "original_commit": "c7c84127e94b6debf691d321fa553377dc4af575",
+          "original_path": "hermes/ignition_v0/out_holdout/RESULT_COMBO_HOLDOUT_v1.json"
+        }
+      ],
+      "reported_metrics": {
+        "A_n": 968,
+        "A_mean": 0.011,
+        "A_median": -0.0798,
+        "B_n": 830,
+        "B_mean": 0.0121,
+        "B_median": -0.0733
+      },
+      "limitations": [
+        "Source reports read, not independently rerun.",
+        "2023\u201326 was not fully unexposed to prior momentum research.",
+        "TP50/14d without a stop is not the selective repricing mandate."
+      ]
+    },
+    {
+      "id": "TIMING_ATTRIBUTION_v1",
+      "status": "PLANNED",
+      "evidence_level": "PROTOCOL_ONLY",
+      "summary": "Offline stage-delay diagnostic implemented; next 30 scheduled attempts proposed before selecting a new detector. No trial started.",
+      "live_eligible": false,
+      "sources": [
+        {
+          "path": "docs/TIMING_RESEARCH.md",
+          "ref_type": "working_tree",
+          "ref": null
+        }
+      ],
+      "limitations": [
+        "Synthetic tests establish engineering behavior only.",
+        "Source availability and actual queue coverage must be evidenced.",
+        "Early ignition, peer participation and prepared catalysts remain hypotheses; no new market result."
+      ]
+    }
+  ]
+}

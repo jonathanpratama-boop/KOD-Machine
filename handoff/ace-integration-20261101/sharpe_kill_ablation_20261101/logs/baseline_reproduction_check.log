@@ -1,0 +1,22 @@
+MATCH development_CASH.jsonl 764df41114720e15
+MATCH development_CONVENTIONAL_50_50_BUY_HOLD_NO_KILL.jsonl 5dcc39310067c9c0
+MATCH development_PASSIVE_50_50_RISK_MATCHED.jsonl 558a97da8e18b684
+MATCH development_TREND_V2_SHARED.jsonl 9350eab20ab03d79
+MATCH validation_CASH.jsonl df60aba06aa41ffa
+MATCH validation_CONVENTIONAL_50_50_BUY_HOLD_NO_KILL.jsonl 942effe4248f802f
+MATCH validation_PASSIVE_50_50_RISK_MATCHED.jsonl 69e7f69c6a915277
+MATCH validation_TREND_V2_SHARED.jsonl 4d89c2cb569399dd
+MATCH INPUT_VALIDATION.json
+MATCH development_CASH_summary.json
+MATCH development_CONVENTIONAL_50_50_BUY_HOLD_NO_KILL_summary.json
+MATCH development_PASSIVE_50_50_RISK_MATCHED_summary.json
+MATCH development_TREND_V2_SHARED_summary.json
+MATCH validation_CASH_summary.json
+MATCH validation_CONVENTIONAL_50_50_BUY_HOLD_NO_KILL_summary.json
+MATCH validation_PASSIVE_50_50_RISK_MATCHED_summary.json
+MATCH validation_TREND_V2_SHARED_summary.json
+  started_at: published 2026-11-01T11:34:27.503333+00:00  reproduced 2026-11-01T22:51:46.675002+00:00  (wall clock, expected to differ)
+  finished_at: published 2026-11-01T11:38:47.897493+00:00  reproduced 2026-11-01T22:59:51.523817+00:00  (wall clock, expected to differ)
+MATCH RESULTS.json apart from the two wall-clock fields
+published RESULTS.json sha256 142c1074cf4c861e800304fee5752746cd510bbeb8ecb407d413ea83affd324f
+BASELINE REPRODUCED EXACTLY

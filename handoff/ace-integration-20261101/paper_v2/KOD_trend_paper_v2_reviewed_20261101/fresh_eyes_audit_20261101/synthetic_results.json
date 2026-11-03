@@ -1,0 +1,70 @@
+{
+  "engine_shift_costs": "PASS: signal close day0 earns open day1 to day2; entry/exit fees on day1/day2",
+  "initial_equity_drawdown": {
+    "reported": 0.0,
+    "correct": -0.6,
+    "net": [
+      -0.6,
+      0.1
+    ]
+  },
+  "t1_t5_prefix_causality": {
+    "pass": [
+      "donchian",
+      "tsmom",
+      "sma10_40",
+      "sma200",
+      "atr_trail",
+      "fixed_stop",
+      "time_exit"
+    ],
+    "warmup": "SMA40 first39 and SMA200 first199 flat"
+  },
+  "t3_future_total_length_filter": {
+    "earlier_rebalance": "2010-04-05 00:00:00+00:00",
+    "sole_new_future_bar": "2010-04-10 00:00:00+00:00",
+    "n_univ_with_99_future_lifetime_bars": 20,
+    "n_univ_with_100_future_lifetime_bars": 21,
+    "finding": "Appending one later bar changes an earlier eligible universe via len(d)<100"
+  },
+  "t3_rebalance_turnover": {
+    "reported_second_week_fee": 0.0,
+    "drift_adjusted_min_fee": 1.7499982135439353e-06,
+    "finding": "Targets unchanged but pretrade weights drift; code compares new target to old target, not holdings"
+  },
+  "t4_threshold_blocking": {
+    "derived_z3_indices": [],
+    "standalone_z3_indices": [
+      1
+    ],
+    "finding": "Matches code structure: z2 entry suppresses subsequent z3 entry"
+  },
+  "protocol_sha256": "177e7ccd3ee26b8ecfbeff34d059b43d32bc55cd992cdb64ad792ebe8a170173",
+  "t1_gate_recomputation_from_aggregate": "PASS: all eight published verdicts match aggregate metrics",
+  "BTCUSDT_etoro_comparison": {
+    "Sharpe": 0.854,
+    "bh_Sharpe": 1.162,
+    "MaxDD": -0.4039,
+    "bh_MaxDD": -0.5297
+  },
+  "ETHUSDT_etoro_comparison": {
+    "Sharpe": 0.932,
+    "bh_Sharpe": 0.653,
+    "MaxDD": -0.4226,
+    "bh_MaxDD": -0.6755
+  },
+  "t3_positive_years": {
+    "T3a_ls_net": {
+      "positive": 3,
+      "total": 7,
+      "share": 0.42857142857142855,
+      "json_share": 0.429
+    },
+    "T3b_lo_net": {
+      "positive": 4,
+      "total": 7,
+      "share": 0.5714285714285714,
+      "json_share": 0.571
+    }
+  }
+}

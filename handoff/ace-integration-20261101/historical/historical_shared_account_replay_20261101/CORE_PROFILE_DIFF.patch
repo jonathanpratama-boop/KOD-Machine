@@ -1,0 +1,287 @@
+--- reviewed_v2_dbda12d461cb601693d6fa77737b8e0f955c9b0f2b7732841a2d9488f6c834c3
++++ daily_historical_model_profile
+@@ -1,7 +1,7 @@
+-"""Offline TREND_CORE v2 candidate. Synthetic evidence only; no network or order API.
++"""Historical daily profile of reviewed v2; explicit assumed execution, no network/orders.
+ 
+ A small event adapter around the existing paper_cash_v1 Decimal fill and ledger
+-primitives. Not a historical bar backtester. Read PAPER_PROTOCOL_v2_CANDIDATE.md.
++primitives. Not a historical bar backtester. Read PROTOCOL_v1.md and PROTOCOL_ADDENDUM_1.md.
+ """
+ from __future__ import annotations
+ 
+@@ -27,7 +27,10 @@
+ _spec.loader.exec_module(_core)
+ D = Decimal
+ SYMBOLS = ("BTCUSDT", "ETHUSDT")
+-VERSION = "TREND_CORE_PAPER_v2_CANDIDATE"
++VERSION = "HISTORICAL_SHARED_ACCOUNT_DAILY_v1"
++POLICIES = ("TREND_V2_SHARED", "PASSIVE_50_50_RISK_MATCHED", "CONVENTIONAL_50_50_BUY_HOLD_NO_KILL", "CASH")
++SCENARIO = {"id":"DAILY_ASSUMED_FEE_0_1PCT_SLIP_0_05PCT_TAX0_v1", "fee":".001", "slippage":".0005", "precision":8,
++            "quote_max_age_seconds":120, "intent_life_seconds":172800, "daily_grace_seconds":300}
+ 
+ 
+ def wire(x):
+@@ -69,8 +72,7 @@
+ 
+ 
+ def bundle_pins():
+-    paths = ["paper_candidate.py", "PAPER_PROTOCOL_v2_CANDIDATE.md", "PROTOCOL_ADDENDUM_1.md",
+-             "vendor/paper_cash_accounting.py"]
++    paths = ["daily_core.py", "daily_adapter.py", "history_inputs.py", "replay.py", "PROTOCOL_v1.md", "PROTOCOL_ADDENDUM_1.md", "vendor/paper_cash_accounting.py"]
+     return {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in paths}
+ 
+ 
+@@ -85,23 +87,20 @@
+     for k in ("precision", "quote_max_age_seconds", "intent_life_seconds", "daily_grace_seconds"):
+         if isinstance(s[k], bool) or not isinstance(s[k], int) or s[k] < 0:
+             raise ValueError("nonnegative integer scenario field required")
+-    if s["precision"] > 12 or not 0 < s["quote_max_age_seconds"] <= 120 or not 0 < s["intent_life_seconds"] <= 3600 or s["daily_grace_seconds"] > 300:
++    if s["precision"] > 12 or not 0 < s["quote_max_age_seconds"] <= 120 or not 0 < s["intent_life_seconds"] <= 172800 or s["daily_grace_seconds"] > 300:
+         raise ValueError("unsupported candidate timing/precision")
+     return wire(s)
+ 
+ 
+ def evidence(payload, received_at):
+     """Fixture helper; this creates a local hash, NOT an external time receipt."""
+-    return {"kind": "synthetic", "payload": wire(payload), "received_at": received_at,
++    return {"kind": "synthetic", "payload": wire(payload), "model_available_at": received_at,
+             "payload_sha256": sha(payload)}
+ 
+ 
+ def unpack(e, at):
+-    if set(e) != {"kind", "payload", "received_at", "payload_sha256"} or e["kind"] != "synthetic":
+-        raise ValueError("only synthetic evidence supported; external adapter unimplemented")
+-    if sha(e["payload"]) != e["payload_sha256"] or utc(e["received_at"]) > utc(at):
+-        raise ValueError("evidence hash mismatch or future receipt")
+-    return copy.deepcopy(e["payload"])
++    from daily_adapter import validate_evidence
++    return copy.deepcopy(validate_evidence(e, at))
+ 
+ 
+ def fresh_quote(st, symbol, at):
+@@ -109,8 +108,8 @@
+     if not e:
+         return None
+     q = e["payload"]
+-    age = (utc(at) - utc(q["observed_at"])).total_seconds()
+-    if not 0 <= age <= st["scenario"]["quote_max_age_seconds"] or utc(e["received_at"]) > utc(at):
++    age = (utc(at) - utc(q["model_observed_at"])).total_seconds()
++    if not 0 <= age <= st["scenario"]["quote_max_age_seconds"] or utc(e["model_available_at"]) > utc(at):
+         return None
+     return q
+ 
+@@ -131,7 +130,7 @@
+         if q is None:
+             missing.append(symbol)
+         else:
+-            values[symbol] = qty * number(q["bid"], positive=True)
++            values[symbol] = qty * number(q["reference_price"], positive=True)
+     gross = None if missing else sum(values.values(), D(0))
+     nav = None if gross is None else cash + gross
+     exposure = None if nav is None or nav <= 0 else gross / nav
+@@ -139,7 +138,7 @@
+         raise ValueError("gross exposure exceeds equity")
+     return {"cash_total": cash, "cash_reserved": reserved, "cash_available": cash - reserved,
+             "holdings": copy.deepcopy(st["holdings"]), "nav": nav, "gross_value": gross,
+-            "gross_fraction": exposure, "missing_marks": missing, "nav_basis": "fresh_bid_indicative"}
++            "gross_fraction": exposure, "missing_marks": missing, "nav_basis": "daily_open_reference_NOT_BBO"}
+ 
+ 
+ def cancel_pending(st, reason):
+@@ -166,7 +165,7 @@
+             st["intents"].append({"id": f"liquidate:{trigger}:{symbol}", "symbol": symbol,
+                 "side": "SELL", "quantity": qty, "reserved": D(0), "status": "PENDING",
+                 "made_at": at, "expires_at": stamp(utc(at) + timedelta(seconds=st["scenario"]["intent_life_seconds"])),
+-                "reason": "PERSISTENT_KILL"})
++                "reason": "PERSISTENT_KILL", "capacity_assumption": copy.deepcopy(st["capacity_assumptions"].get(symbol))})
+ 
+ 
+ def kill(st, at, reason, trigger):
+@@ -182,7 +181,7 @@
+         st["peak"] = max(st["peak"], v["nav"])
+         dd = (st["peak"] - v["nav"]) / st["peak"]
+         st["maximum_observed_drawdown"] = max(st["maximum_observed_drawdown"], dd)
+-        if dd >= D(".25"):
++        if dd >= D(".25") and st["risk_kills_enabled"]:
+             kill(st, at, "DRAWDOWN_AT_LEAST_25_PERCENT", trigger)
+     return v
+ 
+@@ -195,7 +194,8 @@
+ 
+ 
+ def signals(e, signal_date, at):
+-    p = unpack(e, at)
++    from daily_adapter import validate_decision_evidence
++    p = validate_decision_evidence(e, signal_date, at)
+     if set(p) != set(SYMBOLS):
+         raise ValueError("both specified spot instruments required")
+     end = date.fromisoformat(signal_date)
+@@ -212,7 +212,7 @@
+             if bar["day"] != expected.isoformat():
+                 raise ValueError("missing/duplicate/nonconsecutive day")
+             close_at = datetime.combine(expected + timedelta(days=1), datetime.min.time(), timezone.utc)
+-            if not close_at <= utc(bar["published_at"]) <= utc(bar["received_at"]) <= utc(e["received_at"]) <= utc(at):
++            if not close_at <= utc(bar["assumed_available_at"]) <= utc(e["model_available_at"]) <= utc(at):
+                 raise ValueError("noncausal bar availability")
+             if bar["source_sha256"] != sha({"day": bar["day"], "close": bar["close"]}):
+                 raise ValueError("bar content hash mismatch")
+@@ -251,6 +251,7 @@
+     op = c["op"]
+     if op == "init": return "init:" + c["account_id"]
+     if op == "observe": return "observe:" + sha(c["evidence"])
++    if op == "mark_batch": return "mark_batch:" + c["at"]
+     if op == "decision": return "decision:" + c["signal_date"]
+     if op in ("daily", "missed"): return op + ":" + c["date"]
+     if op == "audit": return "audit:" + c["reference_sha256"]
+@@ -259,14 +260,17 @@
+ 
+ 
+ def initial(c):
+-    if c.get("mode") != "synthetic_spot_only":
+-        raise ValueError("only offline synthetic spot mode supported")
++    if c.get("mode") != "historical_daily_assumption" or c.get("policy") not in POLICIES:
++        raise ValueError("explicit daily historical policy required")
++    if c["scenario"] != SCENARIO or len(c["input_snapshot_sha256"]) != 64:raise ValueError("scenario/input pin mismatch")
+     s = scenario_record(c["scenario"])
+     cash = number(c["initial_cash"], positive=True)
+     utc(c["at"])
+     st = {"version": VERSION, "account_id": c["account_id"], "scenario": s,
+           "scenario_sha256": sha(s), "pins": bundle_pins(), "cash_total": cash,
+           "holdings": dict.fromkeys(SYMBOLS, D(0)), "quotes": {}, "intents": [],
++          "policy":c["policy"], "risk_kills_enabled":c["policy"] not in ("CONVENTIONAL_50_50_BUY_HOLD_NO_KILL","CASH"),
++          "terminal_decision_at":c["terminal_decision_at"], "input_snapshot_sha256":c["input_snapshot_sha256"], "capacity_assumptions":{}, "passive_decision_taken":False,
+           "peak": cash, "maximum_observed_drawdown": D(0), "kill": None,
+           "daily": [], "clock": c["at"], "realized_fees": D(0), "fills": []}
+     return st
+@@ -282,22 +286,38 @@
+     if utc(at) < utc(st["clock"]): raise ValueError("operation clock cannot move backwards")
+     st = copy.deepcopy(st)
+     st["clock"] = at
++    if op in ("mark_batch","decision"):
++        from daily_adapter import validate_capacities
++        st["capacity_assumptions"]=copy.deepcopy(validate_capacities(c["capacities"],at))
+     expire(st, at)
+     if st["kill"]: liquidations(st, at, oid)
+     result = {}
+-    if op == "observe":
++    if "evidence" in c and c["evidence"]["input_snapshot_sha256"] != st["input_snapshot_sha256"]:raise ValueError("mixed input snapshots")
++    if op == "mark_batch":
++        from daily_adapter import validate_open, validate_capacities, evidence as model_evidence
++        p=unpack(c["evidence"],at)
++        if set(p)!=set(SYMBOLS):raise ValueError("atomic pair of opening marks required")
++        st["capacity_assumptions"]=copy.deepcopy(validate_capacities(c["capacities"],at))
++        for symbol,q in p.items():
++            validate_open(q,at)
++            if q["symbol"]!=symbol:raise ValueError("mark identity mismatch")
++            st["quotes"][symbol]=model_evidence(q,at,st["input_snapshot_sha256"])
++        risk(st,at,oid)
++        result["status"]="ATOMIC_OPEN_REFERENCES_NO_FILL"
++    elif op == "observe":
+         e = c["evidence"]
+         q = unpack(e, at)
+-        if q.get("venue") != "SYNTHETIC_SPOT" or q.get("product") != "spot" or q.get("symbol") not in SYMBOLS:
++        if q.get("venue") != "HISTORICAL_DAILY_SPOT_REFERENCE" or q.get("product") != "spot" or q.get("symbol") not in SYMBOLS:
+             raise ValueError("unsupported venue / product / symbol")
+-        if not utc(q["observed_at"]) <= utc(e["received_at"]) <= utc(at):
++        if not utc(q["model_observed_at"]) <= utc(e["model_available_at"]) <= utc(at):
+             raise ValueError("quote received before observation or in future")
+-        bid, ask = number(q["bid"], positive=True), number(q["ask"], positive=True)
+-        if ask < bid: raise ValueError("crossed quote")
+-        for k in ("bid_qty", "ask_qty"):
+-            if q.get(k) is not None: number(q[k])
++        from daily_adapter import validate_open
++        validate_open(q,at)
++        bid = ask = number(q["reference_price"], positive=True) # explicit OPEN reference, never a BBO field
++        if any(st["quotes"].get(s,{}).get("payload",{}).get("model_observed_at")!=at for s in SYMBOLS):raise ValueError("atomic current opening marks required first")
+         previous = st["quotes"].get(q["symbol"])
+-        if previous and utc(q["observed_at"]) < utc(previous["payload"]["observed_at"]):
++        if previous != e:raise ValueError("opening observation differs from atomic batch")
++        if previous and utc(q["model_observed_at"]) < utc(previous["payload"]["model_observed_at"]):
+             raise ValueError("out-of-order quote")
+         st["quotes"][q["symbol"]] = copy.deepcopy(e)
+         # Observe risk BEFORE filling pending buys; kill never fills at triggering quote.
+@@ -307,12 +327,13 @@
+         for o in sorted(st["intents"], key=lambda x: x["side"] == "BUY"):
+             if o["status"] != "PENDING" or o["symbol"] != q["symbol"]:
+                 continue
+-            if not utc(o["made_at"]) < utc(q["observed_at"]) <= utc(e["received_at"]) <= utc(at) < utc(o["expires_at"]) or fresh_quote(st, q["symbol"], at) is None:
++            if not utc(o["made_at"]) < utc(q["model_observed_at"]) <= utc(e["model_available_at"]) <= utc(at) < utc(o["expires_at"]) or fresh_quote(st, q["symbol"], at) is None:
+                 result["blocked"].append({"intent": o["id"], "reason": "INELIGIBLE_TIME"})
+                 continue
+-            size = q.get("ask_qty" if o["side"] == "BUY" else "bid_qty")
++            cap = o.get("capacity_assumption")
++            size = None if cap is None else cap["quantity"]
+             if size is None:
+-                result["blocked"].append({"intent": o["id"], "reason": "UNKNOWN_LIQUIDITY"})
++                result["blocked"].append({"intent": o["id"], "reason": "UNKNOWN_MODELED_CAPACITY"})
+                 continue
+             limit = number(size)
+             precision = st["scenario"]["precision"]
+@@ -351,9 +372,9 @@
+                 fill = {"id": "fill:"+o["id"], "intent_id": o["id"], "side": o["side"],
+                     "symbol": q["symbol"], "quantity": qty, "price": px, "fee": cost,
+                     "cash_change": cash_change, "observation_id": oid,
+-                    "observed_at": q["observed_at"], "received_at": e["received_at"],
+-                    "fill_recorded_at": at, "available_quantity": limit,
+-                    "evidence": "synthetic_top_of_book_quantity_scenario",
++                    "model_observed_at": q["model_observed_at"], "model_available_at": e["model_available_at"],
++                    "fill_recorded_at": at, "modeled_capacity": limit, "capacity_assumption": cap, "reference_price": q["reference_price"],
++                    "evidence": "HISTORICAL_OPEN_AND_LAGGED_VOLUME_MODEL_NOT_EXECUTABLE_QUOTE",
+                     "scenario_sha256": st["scenario_sha256"]}
+                 st["fills"].append(fill)
+                 result["fills"].append(fill)
+@@ -364,10 +385,23 @@
+         if st["kill"]: liquidations(st, at, oid+":residual")
+         result["status"] = "OBSERVED"
+     elif op == "decision":
++        from daily_adapter import validate_capacities, moment, validate_decision_evidence
++        validate_decision_evidence(c["evidence"],c["signal_date"],at)
++        if at != moment(utc(at).date().isoformat(),1):raise ValueError("daily decision model time must be00:01UTC")
++        st["capacity_assumptions"]=copy.deepcopy(validate_capacities(c["capacities"],at))
++        is_terminal=utc(at)==utc(st["terminal_decision_at"])
++        if c.get("terminal",False) != is_terminal:raise ValueError("preplanned terminal decision mismatch")
+         if st["kill"]:
+             result["status"] = "BLOCKED_PERSISTENT_KILL"
+         else:
+-            raw, targets, metrics = signals(c["evidence"], c["signal_date"], at)
++            if is_terminal:
++                raw=targets=dict.fromkeys(SYMBOLS,D(0));metrics={"policy":"PREPLANNED_TERMINAL_FLAT"}
++            elif st["policy"] == "TREND_V2_SHARED":
++                raw, targets, metrics = signals(c["evidence"], c["signal_date"], at)
++            else:
++                if st["passive_decision_taken"]:raise ValueError("passive entry only once")
++                raw=targets=dict.fromkeys(SYMBOLS,D(0) if st["policy"]=="CASH" else D(".5"));metrics={"policy":st["policy"]}
++                st["passive_decision_taken"]=True
+             quotes = {s: fresh_quote(st, s, at) for s in SYMBOLS}
+             view = risk(st, at, oid)
+             if st["kill"]:
+@@ -377,16 +411,16 @@
+             else:
+                 cancel_pending(st, "SUPERSEDED_DECISION")
+                 for symbol in SYMBOLS:
+-                    current = st["holdings"][symbol] * number(quotes[symbol]["bid"], positive=True)
++                    current = st["holdings"][symbol] * number(quotes[symbol]["reference_price"], positive=True)
+                     desired = targets[symbol] * view["nav"]
+                     delta = desired - current
+                     if delta == 0: continue
+                     o = {"id": oid+":"+symbol, "symbol": symbol,
+                          "side": "BUY" if delta > 0 else "SELL", "reserved": D(0),
+                          "made_at": at, "expires_at": stamp(utc(at)+timedelta(seconds=st["scenario"]["intent_life_seconds"])),
+-                         "status": "PENDING", "decision_quote_sha256": st["quotes"][symbol]["payload_sha256"]}
++                         "status": "PENDING", "decision_quote_sha256": st["quotes"][symbol]["payload_sha256"], "capacity_assumption":copy.deepcopy(st["capacity_assumptions"][symbol])}
+                     if delta > 0: o["budget"] = delta
+-                    else: o["quantity"] = min(st["holdings"][symbol], -delta/number(quotes[symbol]["bid"], positive=True))
++                    else: o["quantity"] = min(st["holdings"][symbol], -delta/number(quotes[symbol]["reference_price"], positive=True))
+                     st["intents"].append(o)
+                 reserve(st)
+                 result.update(status="DECIDED", raw_targets=raw, normalized_targets=targets, signal_metrics=metrics)
+@@ -408,7 +442,7 @@
+                 sample["daily_return"] = nav/prev["nav"]-1
+         st["daily"].append(sample)
+         sh = sharpe_status(st["daily"])
+-        if sh["negative"]: kill(st, at, "NEGATIVE_TRAILING_90_DAY_SHARPE", oid)
++        if sh["negative"] and st["risk_kills_enabled"]: kill(st, at, "NEGATIVE_TRAILING_90_DAY_SHARPE", oid)
+         result.update(status=sample["status"], sample=sample, trailing_sharpe=sh)
+     elif op == "missed":
+         if date.fromisoformat(c["date"]) > utc(at).date(): raise ValueError("future missed cycle")

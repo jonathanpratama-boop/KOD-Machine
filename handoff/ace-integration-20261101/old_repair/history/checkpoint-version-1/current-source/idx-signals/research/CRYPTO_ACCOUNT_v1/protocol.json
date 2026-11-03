@@ -1,0 +1,34 @@
+{
+ "study_id": "CRYPTO_ACCOUNT_v1",
+ "frozen_at": "2026-10-31T12:22:25Z",
+ "decision": "Owner, 2026-10-31: a separate crypto spot paper-account adapter reusing the tested cash accounting, with 24/7 timestamps, recorded spot quotes, explicit fees and simulated fill/exit rules; the frozen stock account and the existing crypto experiments unchanged; no real orders.",
+ "reuses": "idxsig/paper_account.py orders_of / account_state / cost_basis (cash, reservations, cancels, fills, realized P&L), unmodified and still pinned by PAPER_ACCOUNT_v1",
+ "decisions": "the crypto paper scan's frozen-policy decisions (paper/ledger.jsonl, PAPER-POLICY-v4) from signal 2026-10-30; only a decision the policy itself made a buy can become an order; PASS is recorded as a decline with the policy's reason",
+ "account": {
+  "start_cash_usdt": 10000.0,
+  "risk_per_position": 0.005,
+  "max_aggregate_planned_risk": 0.015,
+  "max_new_orders_per_utc_day": 3,
+  "max_position_fraction": 0.2,
+  "leverage": "none"
+ },
+ "market_data": "Binance spot best bid/ask from the public bookTicker endpoint, one CRYPTO_QUOTE record per observation, timestamped when observed; nothing fills or exits on an unrecorded price",
+ "fees": {
+  "taker_fee_per_side": 0.001,
+  "spread": "paid by buying at the ask and selling at the bid"
+ },
+ "fill_rule": "limit = policy decision quote x (1 + 0.01); fills at the ask of the first recorded quote from the decision quote on and before the order expires (1:00:00) whose ask <= limit; else EXPIRED_UNFILLED",
+ "exit_rule": "stop set at the fill, 5% below it; exit at the bid of the first recorded quote after the fill whose bid <= stop (can be far below the stop: quotes are sparse), else at the bid of the first recorded quote at or after 5 days",
+ "marks": "taken after each run's records are written, so they include that run's reservations",
+ "known_limits": [
+  "sparse quotes: fills, stops and exits are only as fine as the observations",
+  "lot-size and minimum-notional rules not modelled; fractional quantities",
+  "top-of-book only: no depth, no queue position",
+  "all crypto paper decisions so far are PASS (the owner retired crypto entries); this account will mostly record declines until a policy buys"
+ ],
+ "pins": {
+  "idxsig/crypto_account.py": "ac506ad2a6407b6f3703fab7a3fcff837f8daedfba8dd1c37fd7e79bc670afd3",
+  "idxsig/paper_account.py": "2d7cbc536695d0298b3bfa508824bd5e68ea8c6566800e59a0681666dbb00bfd",
+  "research/PAPER_ACCOUNT_v1/protocol.json": "2a36e8777be15fc58886d8defbc174ea83892acb415db7e6e08b65f379186f0a"
+ }
+}

@@ -1,0 +1,2 @@
+run 1 (2026-11-03T09:38:49Z) crashed at import (scipy not installed) before any data was read; replaced spearmanr with a pandas rank correlation (p-values not reported) and read LEVERAGED as the regex it is. No rule changed.
+run 2 used run_v2.py (a copy of run.py with only those two fixes; run.py itself is kept unchanged as committed).

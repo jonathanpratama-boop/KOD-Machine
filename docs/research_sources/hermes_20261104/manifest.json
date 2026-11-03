@@ -1,0 +1,53 @@
+{
+  "status": "SOURCE_REPORTS_READ_NOT_RECOMPUTED",
+  "sources": [
+    {
+      "file": "01_CLUE_LEDGER.md",
+      "source_path": "hermes/CLUE_LEDGER.md",
+      "source_commit": "c7c84127e94b6debf691d321fa553377dc4af575",
+      "git_blob_sha1": "38a30119541223ed4a8ad24e1cc97ebafcfb9144",
+      "sha256": "6d93c870231177e4549e054435dd5c9fbd1e421b7982240f0f0b725423f99e55",
+      "source_url": "https://github.com/jonathanpratama-boop/KOD-Machine/blob/c7c84127e94b6debf691d321fa553377dc4af575/hermes/CLUE_LEDGER.md"
+    },
+    {
+      "file": "02_RESEARCH_LOG.md",
+      "source_path": "hermes/ignition_v0/RESEARCH_LOG.md",
+      "source_commit": "c7c84127e94b6debf691d321fa553377dc4af575",
+      "git_blob_sha1": "64de9f96a75700b2660eb43372e2e210a517aa3d",
+      "sha256": "be1bb11a9fc290ed052d89d0a3b63ffb2690cb422f3d00ca6966649b7dfa2f24",
+      "source_url": "https://github.com/jonathanpratama-boop/KOD-Machine/blob/c7c84127e94b6debf691d321fa553377dc4af575/hermes/ignition_v0/RESEARCH_LOG.md"
+    },
+    {
+      "file": "03_PROTOCOL_COMBO_HOLDOUT_v1.md",
+      "source_path": "hermes/ignition_v0/PROTOCOL_COMBO_HOLDOUT_v1.md",
+      "source_commit": "c7c84127e94b6debf691d321fa553377dc4af575",
+      "git_blob_sha1": "30f4411d85adf6eabb65094e942944db2f7f7954",
+      "sha256": "5a3bf4a6e5f9ba6668f1125c567bb2eecafad32816eab9decf27ffdc26c3d421",
+      "source_url": "https://github.com/jonathanpratama-boop/KOD-Machine/blob/c7c84127e94b6debf691d321fa553377dc4af575/hermes/ignition_v0/PROTOCOL_COMBO_HOLDOUT_v1.md"
+    },
+    {
+      "file": "04_RESULT_COMBO_HOLDOUT_v1.json",
+      "source_path": "hermes/ignition_v0/out_holdout/RESULT_COMBO_HOLDOUT_v1.json",
+      "source_commit": "c7c84127e94b6debf691d321fa553377dc4af575",
+      "git_blob_sha1": "3ea87219e70e42ad588421ea4ade5b9c919c7a0b",
+      "sha256": "2d7adc7c955cd9b07e4046a06252b69742e9ae74806b58924b1eaa77d87e9cbf",
+      "source_url": "https://github.com/jonathanpratama-boop/KOD-Machine/blob/c7c84127e94b6debf691d321fa553377dc4af575/hermes/ignition_v0/out_holdout/RESULT_COMBO_HOLDOUT_v1.json"
+    },
+    {
+      "file": "05_TIMING_NARROWING_2026-11-03.md",
+      "source_path": "handoff/timing/TIMING_NARROWING_2026-11-03.md",
+      "source_commit": "f26fcce828714bebaa4afd3b8563b1ba7312f501",
+      "git_blob_sha1": "ccf1be539048e5b5e093d0865b617d6c8607edfc",
+      "sha256": "1ad2af29f4ece4cc786dc6c28a720871ffe6785be75e15629e94eea2b6b197b7",
+      "source_url": "https://github.com/jonathanpratama-boop/KOD-Machine/blob/f26fcce828714bebaa4afd3b8563b1ba7312f501/handoff/timing/TIMING_NARROWING_2026-11-03.md"
+    },
+    {
+      "file": "06_REPORT.md",
+      "source_path": "idx-signals/research/ATTENTION_LEAD_v1/REPORT.md",
+      "source_commit": "f26fcce828714bebaa4afd3b8563b1ba7312f501",
+      "git_blob_sha1": "0854c755048ad62855eaaa7a0661fbbebab90767",
+      "sha256": "9638aa695d4494d2adf2f416ba98b8c5ea9c9da077cec69660154218b0d686e6",
+      "source_url": "https://github.com/jonathanpratama-boop/KOD-Machine/blob/f26fcce828714bebaa4afd3b8563b1ba7312f501/idx-signals/research/ATTENTION_LEAD_v1/REPORT.md"
+    }
+  ]
+}

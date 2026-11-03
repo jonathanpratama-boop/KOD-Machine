@@ -1,0 +1,442 @@
+test_a_calendar_day_gap_makes_the_symbol_fresh_again (tests.test_admission.Filter.test_a_calendar_day_gap_makes_the_symbol_fresh_again) ... ok
+test_band_is_ten_inclusive_fifteen_exclusive (tests.test_admission.Filter.test_band_is_ten_inclusive_fifteen_exclusive) ... ok
+test_missing_prior_day_evidence_is_not_eligible (tests.test_admission.Filter.test_missing_prior_day_evidence_is_not_eligible) ... ok
+test_no_eligible_candidates_leaves_the_day_empty_and_never_refills (tests.test_admission.Filter.test_no_eligible_candidates_leaves_the_day_empty_and_never_refills) ... ok
+test_the_challenger_is_a_subset_of_the_original_five_keeping_ranks (tests.test_admission.Filter.test_the_challenger_is_a_subset_of_the_original_five_keeping_ranks) ... ok
+test_yesterdays_symbol_is_not_fresh_whatever_its_band_yesterday (tests.test_admission.Filter.test_yesterdays_symbol_is_not_fresh_whatever_its_band_yesterday) ... ok
+test_only_eligible_alerts_can_become_orders (tests.test_admission.ThroughTheEngine.test_only_eligible_alerts_can_become_orders) ... ok
+test_overlapping_signals_are_skipped_while_held (tests.test_backtest.BacktestTests.test_overlapping_signals_are_skipped_while_held) ... ok
+test_placebo_runs_over_the_full_universe (tests.test_backtest.BacktestTests.test_placebo_runs_over_the_full_universe) ... ok
+test_real_edge_beats_random_and_noise_does_not (tests.test_backtest.BacktestTests.test_real_edge_beats_random_and_noise_does_not) ... ok
+test_rule_that_reads_ahead_is_refused (tests.test_backtest.BacktestTests.test_rule_that_reads_ahead_is_refused) ... ok
+test_runs_are_deterministic (tests.test_backtest.BacktestTests.test_runs_are_deterministic) ... ok
+test_user_rule_is_pending_not_guessed (tests.test_backtest.BacktestTests.test_user_rule_is_pending_not_guessed) ... ok
+test_columns_are_present_when_no_signal_is_attempted (tests.test_backtest_paired.PairedColumnTests.test_columns_are_present_when_no_signal_is_attempted) ... ok
+test_columns_equal_the_control_outcome_when_every_control_is_a_clone (tests.test_backtest_paired.PairedColumnTests.test_columns_equal_the_control_outcome_when_every_control_is_a_clone) ... ok
+test_matched_mean_averages_the_scored_draws (tests.test_backtest_paired.PairedColumnTests.test_matched_mean_averages_the_scored_draws) ... ok
+test_no_control_is_drawn_for_an_overlap_skipped_signal (tests.test_backtest_paired.PairedColumnTests.test_no_control_is_drawn_for_an_overlap_skipped_signal) ... ok
+test_summary_and_draws_are_unchanged (tests.test_backtest_paired.PairedColumnTests.test_summary_and_draws_are_unchanged) ... ok
+test_bootstrap_is_reproducible_under_the_seed (tests.test_backtest_paired.PairedExcessTests.test_bootstrap_is_reproducible_under_the_seed) ... ok
+test_empty_frame (tests.test_backtest_paired.PairedExcessTests.test_empty_frame) ... ok
+test_every_cluster_positive_gives_the_floor_p (tests.test_backtest_paired.PairedExcessTests.test_every_cluster_positive_gives_the_floor_p) ... ok
+test_overlap_skipped_rows_do_not_enter_the_statistic (tests.test_backtest_paired.PairedExcessTests.test_overlap_skipped_rows_do_not_enter_the_statistic) ... ok
+test_per_signal_excess (tests.test_backtest_paired.PairedExcessTests.test_per_signal_excess) ... ok
+test_runs_on_a_harness_trades_frame (tests.test_backtest_paired.PairedExcessTests.test_runs_on_a_harness_trades_frame) ... ok
+test_toy_frame_has_the_known_answer (tests.test_backtest_paired.PairedExcessTests.test_toy_frame_has_the_known_answer) ... ok
+test_a_rolling_window_download_is_not_already_processed (tests.test_contract.AceReview.test_a_rolling_window_download_is_not_already_processed)
+P1 (Ace): a download whose window starts later shifts every index; the next session was ... ok
+test_a_split_readjusted_download_keeps_the_holding (tests.test_contract.AceReview.test_a_split_readjusted_download_keeps_the_holding)
+P1 (Ace): after a 2-for-1 split the provider re-adjusts history. The holding must double ... ok
+test_no_exit_on_a_session_without_trades (tests.test_contract.AceReview.test_no_exit_on_a_session_without_trades)
+P2 (Ace): a zero-volume session with stale prices filled the scheduled exit. ... ok
+test_planned_risk_covers_the_exit_cost_tier_at_the_stop (tests.test_contract.AceReview.test_planned_risk_covers_the_exit_cost_tier_at_the_stop)
+P2 (Ace): $5 entry, $4.75 stop. The exit cost was estimated at the entry price's tier, so ... ok
+test_saved_orders_follow_the_ticker_not_the_row (tests.test_contract.AceReview.test_saved_orders_follow_the_ticker_not_the_row)
+P1 (Ace): state kept row numbers, so a download with another row order filled the $100 ... ok
+test_insufficient_capital_for_one_share (tests.test_contract.Capital.test_insufficient_capital_for_one_share)
+Guards against: an order the account cannot pay for. The first position takes almost all ... ok
+test_simultaneous_signals_share_cash_by_priority_without_leverage (tests.test_contract.Capital.test_simultaneous_signals_share_cash_by_priority_without_leverage)
+Guards against: spending the same cash twice, or an order order that depends on input order. ... ok
+test_demo_window_ends_on_the_declared_session (tests.test_contract.DemoWindow.test_demo_window_ends_on_the_declared_session)
+P2 (Ace): the demo sliced one session past its declared end (bounds() is already exclusive). ... ok
+test_excessive_entry_gap_is_not_filled_and_cash_is_released (tests.test_contract.EntryRejections.test_excessive_entry_gap_is_not_filled_and_cash_is_released)
+Guards against: chasing a gap. Signal $100, stop $95, open $110: the stop would be 13.6% away. ... ok
+test_open_at_or_below_the_stop_fills_and_stops_out_at_that_open (tests.test_contract.EntryRejections.test_open_at_or_below_the_stop_fills_and_stops_out_at_that_open)
+Guards against: assuming an order can be cancelled on information inside the auction. The ... ok
+test_risk_distance_is_measured_at_the_permitted_entry_and_the_stop_never_moves (tests.test_contract.EntryRejections.test_risk_distance_is_measured_at_the_permitted_entry_and_the_stop_never_moves)
+Guards against: measuring the 5% from the signal close, or widening/raising the stop to make ... ok
+test_entry_session_volume_bounds_the_fill (tests.test_contract.Liquidity.test_entry_session_volume_bounds_the_fill)
+Guards against (Hermes): 10,000 shares scored as filled when the whole entry session ... ok
+test_legacy_fill_c_still_reproduces_hermes_case (tests.test_contract.Liquidity.test_legacy_fill_c_still_reproduces_hermes_case)
+Documents, does not fix: FILL-C-v1 (kept for reproduction) sizes from the 20 sessions before ... ok
+test_no_trade_on_the_entry_session (tests.test_contract.Liquidity.test_no_trade_on_the_entry_session)
+Guards against: filling on a session with no opening print. ... ok
+test_thin_history_gives_no_plan (tests.test_contract.Liquidity.test_thin_history_gives_no_plan)
+Guards against: planning a position the name's traded value cannot carry. ... ok
+test_planned_risk_account_risk_and_gap_loss_are_separate (tests.test_contract.Risk.test_planned_risk_account_risk_and_gap_loss_are_separate)
+Guards against: reporting a gap loss as if the 5% stop had capped it. ... ok
+test_contract_version_is_bound_to_the_state (tests.test_contract.SameContractBothWays.test_contract_version_is_bound_to_the_state)
+Guards against: continuing a saved account under changed rules. ... ok
+test_forward_scoring_equals_replay_on_identical_inputs (tests.test_contract.SameContractBothWays.test_forward_scoring_equals_replay_on_identical_inputs)
+Guards against: forward paper scoring and replay drifting apart. Forward sees only the data ... ok
+test_research_window_is_enforced (tests.test_contract.SameContractBothWays.test_research_window_is_enforced)
+Guards against: evidence drawn from sessions outside the permitted research dates. ... ok
+test_a_failed_scan_still_lets_held_positions_exit (tests.test_contract.Scans.test_a_failed_scan_still_lets_held_positions_exit)
+Guards against: a failed scan freezing stops that the broker would have executed. ... ok
+test_no_signal_and_failed_scan_are_different_records (tests.test_contract.Scans.test_no_signal_and_failed_scan_are_different_records)
+Guards against: a scan that could not run being read as 'nothing to buy'. ... ok
+test_stale_data_fails_the_scan_and_touches_nothing (tests.test_contract.Scans.test_stale_data_fails_the_scan_and_touches_nothing)
+Guards against: trading yesterday's bars as if they were today's. ... ok
+test_split_between_decision_and_execution (tests.test_contract.Units.test_split_between_decision_and_execution)
+Guards against: a 1:2 split at the entry open filling at the old limit or for the old share ... ok
+test_entry_at_next_open_time_exit_and_balance (tests.test_contract.ValidTrade.test_entry_at_next_open_time_exit_and_balance)
+Guards against: a fill at the already-observed signal close, a wrong holding period, and a ... ok
+test_controls_v1_reproduces_older_runs (tests.test_controls_quality.ControlFeatures.test_controls_v1_reproduces_older_runs)
+Guards against: losing the ability to re-run the configuration older runs used. ... ok
+test_every_feature_uses_only_past_data (tests.test_controls_quality.ControlFeatures.test_every_feature_uses_only_past_data)
+Guards against: a control feature (market cap, drawdown, listing age ...) computed with ... ok
+test_listing_age_counts_from_first_session_and_censors_the_start (tests.test_controls_quality.ControlFeatures.test_listing_age_counts_from_first_session_and_censors_the_start)
+Guards against: treating names present at the data's start as new listings, or ... ok
+test_market_cap_is_unknown_without_share_counts_and_reported (tests.test_controls_quality.ControlFeatures.test_market_cap_is_unknown_without_share_counts_and_reported)
+Guards against: inventing market cap where the data has no share counts (Yahoo era) ... ok
+test_same_session_baseline_is_kept_beside_matched (tests.test_controls_quality.ControlFeatures.test_same_session_baseline_is_kept_beside_matched)
+Guards against: replacing the plain same-session baseline instead of adding to it. ... ok
+test_unavailable_features_are_declared_not_invented (tests.test_controls_quality.ControlFeatures.test_unavailable_features_are_declared_not_invented)
+Guards against: matching on sector, board or free float from a present-day snapshot. ... ok
+test_default_window_is_tier_1_only (tests.test_controls_quality.QualityTiers.test_default_window_is_tier_1_only)
+Guards against: the default run silently mixing in survivor-biased or Yahoo-era sessions. ... ok
+test_extended_window_states_its_tiers (tests.test_controls_quality.QualityTiers.test_extended_window_states_its_tiers)
+Guards against: an extended window whose weaker segments are not labelled. ... ok
+test_tier_boundaries (tests.test_controls_quality.QualityTiers.test_tier_boundaries)
+Guards against: an off-by-one at the first snapshot or the source boundary. ... ok
+test_default_run_still_records_v2 (tests.test_controls_v3.ControlsV2Unchanged.test_default_run_still_records_v2)
+Guards against: the harness default moving to v3 (every recorded run is v2 or v1). ... ok
+test_v1_and_v2_features_equal_the_frozen_pre_v3_copy (tests.test_controls_v3.ControlsV2Unchanged.test_v1_and_v2_features_equal_the_frozen_pre_v3_copy)
+Guards against: adding v3 changing any v1/v2 array (the recorded runs must reproduce). ... ok
+test_v2_draws_equal_the_frozen_copy_under_the_same_seed (tests.test_controls_v3.ControlsV2Unchanged.test_v2_draws_equal_the_frozen_copy_under_the_same_seed)
+Guards against: v3 changing the code path matched_draws takes for v2 (same features, ... ok
+test_v2_literals_and_report_fields_are_unchanged (tests.test_controls_v3.ControlsV2Unchanged.test_v2_literals_and_report_fields_are_unchanged)
+Guards against: v3 editing v2's feature list, priorities, bucket counts or wording. ... ok
+test_v3_price_band_uses_the_traded_price_and_the_rest_is_unit_free (tests.test_controls_v3.ControlsV3AsTraded.test_v3_price_band_uses_the_traded_price_and_the_rest_is_unit_free)
+Guards against: the as_traded band path not reaching v3, or a unit factor leaking into ... ok
+test_v3_bucket_counts_per_feature (tests.test_controls_v3.ControlsV3Buckets.test_v3_bucket_counts_per_feature)
+Guards against: a feature bucketed with the wrong count (e.g. liquidity as a tercile or ... ok
+test_v3_coverage_reports_the_quintile_and_the_version (tests.test_controls_v3.ControlsV3Buckets.test_v3_coverage_reports_the_quintile_and_the_version)
+Guards against: the report describing v3's volatility control as a tercile. ... ok
+test_v3_feature_order_is_the_protocol_draft_order (tests.test_controls_v3.ControlsV3Buckets.test_v3_feature_order_is_the_protocol_draft_order)
+Guards against: v3 registered with a different feature list or priority than the E5 ... ok
+test_v3_features_use_only_past_data (tests.test_controls_v3.ControlsV3Buckets.test_v3_features_use_only_past_data)
+Guards against: the quintile (or any v3 feature) computed with data after the session. ... ok
+test_v3_matches_v2_on_every_feature_but_volatility (tests.test_controls_v3.ControlsV3Buckets.test_v3_matches_v2_on_every_feature_but_volatility)
+Guards against: v3 silently changing a feature other than the one the protocol names. ... ok
+test_v3_volatility_is_a_quintile_refining_the_v2_tercile (tests.test_controls_v3.ControlsV3Buckets.test_v3_volatility_is_a_quintile_refining_the_v2_tercile)
+Guards against: v3 keeping the tercile, or re-ranking volatility differently from v2 so ... ok
+test_relaxed_from_the_last_feature_down_to_min_pool (tests.test_controls_v3.ControlsV3Relaxation.test_relaxed_from_the_last_feature_down_to_min_pool)
+Guards against: v3 relaxing in another order, stopping before MIN_POOL names match, or ... ok
+test_run_records_v3_in_the_summary (tests.test_controls_v3.ControlsV3Relaxation.test_run_records_v3_in_the_summary)
+Guards against: a v3 run whose summary.json still says v2 (the method text, the harness ... ok
+test_v3_relaxes_volatility_after_market_cap (tests.test_controls_v3.ControlsV3Relaxation.test_v3_relaxes_volatility_after_market_cap)
+Guards against: v3's priority putting the quintile below market cap, i.e. dropping it ... ok
+test_a_window_built_from_a_frame_with_its_listing_history (tests.test_controls_v4.ListingAgeV4.test_a_window_built_from_a_frame_with_its_listing_history)
+Guards against: losing the history when the window is a panel frame cut before the Market is built ... ok
+test_any_window_gets_the_buckets_of_the_whole_market (tests.test_controls_v4.ListingAgeV4.test_any_window_gets_the_buckets_of_the_whole_market)
+Guards against: the v1-v3 defect itself, a window start that moves a name's bucket. ... ok
+test_buckets_count_from_the_first_listed_session_and_keep_the_start_unknown (tests.test_controls_v4.ListingAgeV4.test_buckets_count_from_the_first_listed_session_and_keep_the_start_unknown)
+Guards against: a name present at the data's first session called established before 250 ... ok
+test_features_use_only_past_data (tests.test_controls_v4.ListingAgeV4.test_features_use_only_past_data)
+Guards against: a v4 bucket computed with data after its session. ... ok
+test_market_carries_the_censoring_through_every_copy (tests.test_controls_v4.ListingAgeV4.test_market_carries_the_censoring_through_every_copy)
+Guards against: a slice, registry or unit copy that re-derives the flag from its own first column. ... ok
+test_run_records_v4_and_the_default_stays_v2 (tests.test_controls_v4.V4AgainstEarlierVersions.test_run_records_v4_and_the_default_stays_v2)
+Guards against: a v4 run reported as another version, or v4 becoming anyone's default. ... ok
+test_v1_to_v3_are_unchanged (tests.test_controls_v4.V4AgainstEarlierVersions.test_v1_to_v3_are_unchanged)
+Guards against: the v4 change leaking into the versions the recorded runs used. ... ok
+test_integer_reset_without_share_change_is_unknown (tests.test_corporate_actions.NonScalingActions.test_integer_reset_without_share_change_is_unknown)
+Guards against: the old rule that every integer reset is a split. A 2x reset whose share ... ok
+test_registry_mode_refuses_a_market_without_a_registry (tests.test_corporate_actions.NonScalingActions.test_registry_mode_refuses_a_market_without_a_registry)
+Guards against: running the default mode with no registry and silently scaling nothing. ... ok
+test_reset_missing_from_the_registry_is_unresolved (tests.test_corporate_actions.NonScalingActions.test_reset_missing_from_the_registry_is_unresolved)
+Guards against: a registry built from other data silently treating an unexplained reset as no event. ... ok
+test_rights_issue_is_not_a_free_split (tests.test_corporate_actions.NonScalingActions.test_rights_issue_is_not_a_free_split)
+Guards against: a rights issue (reference 1200 -> 1000, new shares paid for and listed ... ok
+test_single_source_reset_after_the_mirror_is_not_applied (tests.test_corporate_actions.NonScalingActions.test_single_source_reset_after_the_mirror_is_not_applied)
+Guards against: Yahoo-era resets (derived from Yahoo's own split events) treated as verified. ... ok
+test_yahoo_event_without_a_reset_is_not_applied (tests.test_corporate_actions.NonScalingActions.test_yahoo_event_without_a_reset_is_not_applied)
+Guards against: scaling shares on a Yahoo split the exchange prices do not show. ... ok
+test_committed_manual_file_has_no_invented_entries (tests.test_corporate_actions.RegistryFiles.test_committed_manual_file_has_no_invented_entries)
+Guards against: primary-source rows added without archived documents. ... ok
+test_manual_entries_need_a_primary_source (tests.test_corporate_actions.RegistryFiles.test_manual_entries_need_a_primary_source)
+Guards against: a manual override with no URL or time, or an invented action type. ... ok
+test_date_the_exchange_reference_ignores_is_not_a_session (tests.test_corporate_actions.SessionCalendar.test_date_the_exchange_reference_ignores_is_not_a_session)
+Guards against: a stub date (the mirror's Saturday 2021-05-22) whose closes IDX's next ... ok
+test_declared_ratio_is_applied_not_the_snapped_reset (tests.test_corporate_actions.ShareScalingActions.test_declared_ratio_is_applied_not_the_snapped_reset)
+Guards against: a 511:500 stock dividend scaled by a nearby simple fraction (up to 1% off). ... ok
+test_lagged_register_update_needs_a_second_source (tests.test_corporate_actions.ShareScalingActions.test_lagged_register_update_needs_a_second_source)
+Guards against: a late share-count change of the right size (e.g. warrants, a placement) ... ok
+test_reverse_split_preserves_value (tests.test_corporate_actions.ShareScalingActions.test_reverse_split_preserves_value)
+Guards against: a 5:1 consolidation read as a 400% gain. ... ok
+test_split_preserves_value (tests.test_corporate_actions.ShareScalingActions.test_split_preserves_value)
+Guards against: a verified 1:2 split read as a 50% loss, or scaled by a wrong ratio. ... ok
+test_a_back_dated_fill_with_a_past_deadline_is_flagged (tests.test_crypto_account.LedgerChecks.test_a_back_dated_fill_with_a_past_deadline_is_flagged) ... ok
+test_a_deadline_not_from_the_fill_is_flagged (tests.test_crypto_account.LedgerChecks.test_a_deadline_not_from_the_fill_is_flagged) ... ok
+test_a_fill_off_the_recorded_ask_is_flagged (tests.test_crypto_account.LedgerChecks.test_a_fill_off_the_recorded_ask_is_flagged) ... ok
+test_a_time_exit_before_the_deadline_is_flagged (tests.test_crypto_account.LedgerChecks.test_a_time_exit_before_the_deadline_is_flagged) ... ok
+test_an_unfilled_order_expires (tests.test_crypto_account.Lifecycle.test_an_unfilled_order_expires) ... ok
+test_cancel_before_the_fill_releases_the_reservation (tests.test_crypto_account.Lifecycle.test_cancel_before_the_fill_releases_the_reservation) ... ok
+test_order_fill_stop_and_cash_reconcile (tests.test_crypto_account.Lifecycle.test_order_fill_stop_and_cash_reconcile) ... ok
+test_pass_is_declined_and_never_bought (tests.test_crypto_account.Lifecycle.test_pass_is_declined_and_never_bought) ... ok
+test_the_risk_budget_caps_open_orders (tests.test_crypto_account.Lifecycle.test_the_risk_budget_caps_open_orders) ... ok
+test_time_exit_at_the_first_quote_after_the_deadline (tests.test_crypto_account.Lifecycle.test_time_exit_at_the_first_quote_after_the_deadline) ... ok
+test_a_ten_day_old_quote_is_not_used_when_the_fetch_fails (tests.test_crypto_account.StaleQuotes.test_a_ten_day_old_quote_is_not_used_when_the_fetch_fails) ... ok
+test_exit_waits_for_a_fresh_quote_and_records_how_late (tests.test_crypto_account.StaleQuotes.test_exit_waits_for_a_fresh_quote_and_records_how_late) ... ok
+test_failed_current_fetch_never_reserves_on_one_minute_old_cache (tests.test_crypto_account.StaleQuotes.test_failed_current_fetch_never_reserves_on_one_minute_old_cache) ... ok
+test_failed_fetch_is_recorded_and_the_buy_declined (tests.test_crypto_account.StaleQuotes.test_failed_fetch_is_recorded_and_the_buy_declined) ... ok
+test_failed_fetch_preserves_existing_pending_reservation (tests.test_crypto_account.StaleQuotes.test_failed_fetch_preserves_existing_pending_reservation) ... ok
+test_failed_fetch_preserves_open_position_without_fabricated_exit (tests.test_crypto_account.StaleQuotes.test_failed_fetch_preserves_open_position_without_fabricated_exit) ... ok
+test_failed_fetches_while_an_order_lives_expire_it_explicitly (tests.test_crypto_account.StaleQuotes.test_failed_fetches_while_an_order_lives_expire_it_explicitly) ... ok
+test_future_failure_does_not_block_current_quote (tests.test_crypto_account.StaleQuotes.test_future_failure_does_not_block_current_quote) ... ok
+test_later_success_recovers_without_retrying_declined_decision (tests.test_crypto_account.StaleQuotes.test_later_success_recovers_without_retrying_declined_decision) ... ok
+test_quotes_from_before_the_order_or_after_the_clock_cannot_fill_it (tests.test_crypto_account.StaleQuotes.test_quotes_from_before_the_order_or_after_the_clock_cannot_fill_it) ... ok
+test_same_second_failure_and_recovery_follow_ledger_order (tests.test_crypto_account.StaleQuotes.test_same_second_failure_and_recovery_follow_ledger_order) ... ok
+test_v12_verifier_flags_order_after_failure_but_preserves_v11 (tests.test_crypto_account.StaleQuotes.test_v12_verifier_flags_order_after_failure_but_preserves_v11) ... ok
+test_actual_receipt_failure_occurs_after_lock_release_and_does_not_retry (tests.test_crypto_account_concurrency.Concurrency.test_actual_receipt_failure_occurs_after_lock_release_and_does_not_retry) ... ok
+test_cli_callback_forwards_expected_head_and_keeps_receipt_pending_separate (tests.test_crypto_account_concurrency.Concurrency.test_cli_callback_forwards_expected_head_and_keeps_receipt_pending_separate) ... ok
+test_disjoint_candidates_cannot_double_daily_or_risk_budget (tests.test_crypto_account_concurrency.Concurrency.test_disjoint_candidates_cannot_double_daily_or_risk_budget) ... ok
+test_duplicate_candidates_recompute_to_empty_without_replayed_orders (tests.test_crypto_account_concurrency.Concurrency.test_duplicate_candidates_recompute_to_empty_without_replayed_orders) ... ok
+test_observations_unguarded_and_all_state_phases_guarded (tests.test_crypto_account_concurrency.Concurrency.test_observations_unguarded_and_all_state_phases_guarded) ... ok
+test_one_remaining_slot_admits_only_one_concurrent_candidate (tests.test_crypto_account_concurrency.Concurrency.test_one_remaining_slot_admits_only_one_concurrent_candidate) ... ok
+test_receipt_pending_after_commit_is_success_not_business_retry (tests.test_crypto_account_concurrency.Concurrency.test_receipt_pending_after_commit_is_success_not_business_retry) ... ok
+test_retry_exhaustion_never_commits_stale_proposals (tests.test_crypto_account_concurrency.Concurrency.test_retry_exhaustion_never_commits_stale_proposals) ... ok
+test_stale_mark_recomputed_from_new_reservation (tests.test_crypto_account_concurrency.Concurrency.test_stale_mark_recomputed_from_new_reservation) ... ok
+test_stale_settlement_does_not_duplicate_fill (tests.test_crypto_account_concurrency.Concurrency.test_stale_settlement_does_not_duplicate_fill) ... ok
+test_unrelated_runtime_errors_are_not_treated_as_conflicts (tests.test_crypto_account_concurrency.Concurrency.test_unrelated_runtime_errors_are_not_treated_as_conflicts) ... ok
+test_invalid_policy_quote_declines_and_unrelated_candidate_continues (tests.test_crypto_policy_price_validation.PolicyPrice.test_invalid_policy_quote_declines_and_unrelated_candidate_continues) ... ok
+test_legitimate_numeric_string_policy_quote_is_retained (tests.test_crypto_policy_price_validation.PolicyPrice.test_legitimate_numeric_string_policy_quote_is_retained) ... ok
+test_missing_or_malformed_verified_price_declines (tests.test_crypto_policy_price_validation.PolicyPrice.test_missing_or_malformed_verified_price_declines) ... ok
+test_http_infinity_becomes_recorded_error_not_order (tests.test_crypto_quote_validation.InvalidQuotes.test_http_infinity_becomes_recorded_error_not_order) ... ok
+test_http_parser_rejects_invalid_bid_ask_before_returning (tests.test_crypto_quote_validation.InvalidQuotes.test_http_parser_rejects_invalid_bid_ask_before_returning) ... ok
+test_invalid_current_quote_cannot_fall_back_to_valid_recent_cache (tests.test_crypto_quote_validation.InvalidQuotes.test_invalid_current_quote_cannot_fall_back_to_valid_recent_cache) ... ok
+test_invalid_injected_books_decline_without_quotes_orders_or_reservations (tests.test_crypto_quote_validation.InvalidQuotes.test_invalid_injected_books_decline_without_quotes_orders_or_reservations) ... ok
+test_invalid_position_quote_does_not_block_unrelated_valid_symbol (tests.test_crypto_quote_validation.InvalidQuotes.test_invalid_position_quote_does_not_block_unrelated_valid_symbol) ... ok
+test_invalid_quote_preserves_existing_position_and_does_not_crash_midcycle (tests.test_crypto_quote_validation.InvalidQuotes.test_invalid_quote_preserves_existing_position_and_does_not_crash_midcycle) ... ok
+test_legitimate_numeric_strings_parse_in_http_and_injected_feed (tests.test_crypto_quote_validation.InvalidQuotes.test_legitimate_numeric_strings_parse_in_http_and_injected_feed) ... ok
+test_valid_finite_and_locked_quote_still_work (tests.test_crypto_quote_validation.InvalidQuotes.test_valid_finite_and_locked_quote_still_work) ... ok
+test_bars_from_panel_marks_missing_and_incomplete_bars_invalid (tests.test_crypto_replay.Machinery.test_bars_from_panel_marks_missing_and_incomplete_bars_invalid) ... ok
+test_cash_only_reference_is_flat (tests.test_crypto_replay.Machinery.test_cash_only_reference_is_flat) ... ok
+test_doubled_costs_lose_more_on_the_same_path (tests.test_crypto_replay.Machinery.test_doubled_costs_lose_more_on_the_same_path) ... ok
+test_duplicate_symbol_daily_limit_and_risk_limit (tests.test_crypto_replay.Machinery.test_duplicate_symbol_daily_limit_and_risk_limit) ... ok
+test_end_of_data_leaves_unresolved_and_unfilled (tests.test_crypto_replay.Machinery.test_end_of_data_leaves_unresolved_and_unfilled) ... ok
+test_entry_bar_stop_counts_as_bar_one (tests.test_crypto_replay.Machinery.test_entry_bar_stop_counts_as_bar_one) ... ok
+test_entry_delay_waits_one_more_bar (tests.test_crypto_replay.Machinery.test_entry_delay_waits_one_more_bar) ... ok
+test_insufficient_cash (tests.test_crypto_replay.Machinery.test_insufficient_cash) ... ok
+test_missing_bars_while_held_and_a_rolled_time_exit (tests.test_crypto_replay.Machinery.test_missing_bars_while_held_and_a_rolled_time_exit) ... ok
+test_missing_entry_bar_is_rejected_and_releases_cash (tests.test_crypto_replay.Machinery.test_missing_entry_bar_is_rejected_and_releases_cash) ... ok
+test_overlapping_positions_share_cash_and_reconcile (tests.test_crypto_replay.Machinery.test_overlapping_positions_share_cash_and_reconcile) ... ok
+test_repeat_runs_are_identical (tests.test_crypto_replay.Machinery.test_repeat_runs_are_identical) ... ok
+test_reservation_fill_fees_and_time_exit (tests.test_crypto_replay.Machinery.test_reservation_fill_fees_and_time_exit) ... ok
+test_stop_target_gap_and_ambiguous_bar (tests.test_crypto_replay.Machinery.test_stop_target_gap_and_ambiguous_bar) ... ok
+test_weekends_are_trading_days (tests.test_crypto_replay.Machinery.test_weekends_are_trading_days) ... ok
+test_a_small_loss_does_not_shrink_the_account_below_three_positions (tests.test_crypto_replay.ReviewFixes.test_a_small_loss_does_not_shrink_the_account_below_three_positions) ... ok
+test_an_open_gain_does_not_block_new_entries (tests.test_crypto_replay.ReviewFixes.test_an_open_gain_does_not_block_new_entries) ... ok
+test_the_audit_rederives_every_trade_and_catches_a_tampered_exit (tests.test_crypto_replay.ReviewFixes.test_the_audit_rederives_every_trade_and_catches_a_tampered_exit) ... ok
+test_year_end_positions_carry_valuation_bounds (tests.test_crypto_replay.ReviewFixes.test_year_end_positions_carry_valuation_bounds) ... ok
+test_future_business_events_fail_closed_not_partial_history (tests.test_crypto_valuation_asof.AsOf.test_future_business_events_fail_closed_not_partial_history) ... ok
+test_future_deadlines_are_not_mistaken_for_future_business_events (tests.test_crypto_valuation_asof.AsOf.test_future_deadlines_are_not_mistaken_for_future_business_events) ... ok
+test_future_quote_becomes_eligible_at_its_actual_observation_time (tests.test_crypto_valuation_asof.AsOf.test_future_quote_becomes_eligible_at_its_actual_observation_time) ... ok
+test_future_quote_cannot_change_present_mark_or_decision (tests.test_crypto_valuation_asof.AsOf.test_future_quote_cannot_change_present_mark_or_decision) ... ok
+test_naive_asof_clock_fails_closed (tests.test_crypto_valuation_asof.AsOf.test_naive_asof_clock_fails_closed) ... ok
+test_delisted_before_exit_exits_at_last_close_or_zero (tests.test_execution.ExecutionTests.test_delisted_before_exit_exits_at_last_close_or_zero) ... ok
+test_entry_locked_at_ara_is_refused (tests.test_execution.ExecutionTests.test_entry_locked_at_ara_is_refused) ... ok
+test_exit_locked_at_arb_rolls_forward (tests.test_execution.ExecutionTests.test_exit_locked_at_arb_rolls_forward) ... ok
+test_flat_trade_pays_both_fees_and_uses_whole_lots (tests.test_execution.ExecutionTests.test_flat_trade_pays_both_fees_and_uses_whole_lots) ... ok
+test_holding_past_the_data_is_incomplete (tests.test_execution.ExecutionTests.test_holding_past_the_data_is_incomplete) ... ok
+test_lot_too_expensive_is_skipped (tests.test_execution.ExecutionTests.test_lot_too_expensive_is_skipped) ... ok
+test_one_price_bar_at_special_board_limit_is_a_lock (tests.test_execution.ExecutionTests.test_one_price_bar_at_special_board_limit_is_a_lock) ... ok
+test_participation_cap (tests.test_execution.ExecutionTests.test_participation_cap) ... ok
+test_split_scales_shares (tests.test_execution.ExecutionTests.test_split_scales_shares) ... ok
+test_suspended_entry_is_skipped_and_suspended_exit_rolls (tests.test_execution.ExecutionTests.test_suspended_entry_is_skipped_and_suspended_exit_rolls) ... ok
+test_below_stop_fee_boundary_respects_reserved_cash (tests.test_execution_repair.SplitRiskContract.test_below_stop_fee_boundary_respects_reserved_cash) ... ok
+test_invalid_inputs_fail_before_mutating_state (tests.test_execution_repair.SplitRiskContract.test_invalid_inputs_fail_before_mutating_state) ... ok
+test_legacy_spec_record_is_byte_compatible (tests.test_execution_repair.SplitRiskContract.test_legacy_spec_record_is_byte_compatible) ... ok
+test_new_forward_and_replay_match (tests.test_execution_repair.SplitRiskContract.test_new_forward_and_replay_match) ... ok
+test_ordinary_economics_unchanged (tests.test_execution_repair.SplitRiskContract.test_ordinary_economics_unchanged) ... ok
+test_reverse_split_and_fractional_zero_release_cash (tests.test_execution_repair.SplitRiskContract.test_reverse_split_and_fractional_zero_release_cash) ... ok
+test_split_tier_change_resizes (tests.test_execution_repair.SplitRiskContract.test_split_tier_change_resizes) ... ok
+test_indices_never_wrap_or_truncate (tests.test_execution_repair.ValidatedInputs.test_indices_never_wrap_or_truncate) ... ok
+test_integer_fields_reject_coercion (tests.test_execution_repair.ValidatedInputs.test_integer_fields_reject_coercion) ... ok
+test_numerical_limits (tests.test_execution_repair.ValidatedInputs.test_numerical_limits) ... ok
+test_return_only_scoring_uses_explicit_capacity_opt_out (tests.test_execution_repair.ValidatedInputs.test_return_only_scoring_uses_explicit_capacity_opt_out) ... ok
+test_writer_checks_before_publication (tests.test_execution_repair.ValidatedInputs.test_writer_checks_before_publication) ... ok
+test_a_dead_entry_day_does_not_block_a_liquid_name (tests.test_fill_c.Causality.test_a_dead_entry_day_does_not_block_a_liquid_name)
+Guards against: skipping a name that was liquid when the decision was made because its ... ok
+test_entry_session_volume_is_not_used (tests.test_fill_c.Causality.test_entry_session_volume_is_not_used)
+Guards against: sizing on the entry session's final volume, which includes the very auction ... ok
+test_listed_sessions_without_trades_count_as_zero (tests.test_fill_c.Causality.test_listed_sessions_without_trades_count_as_zero)
+Guards against: a median over traded days only, which overstates capacity for names that ... ok
+test_sessions_after_the_signal_do_not_change_capacity (tests.test_fill_c.Causality.test_sessions_after_the_signal_do_not_change_capacity)
+Guards against: a window that reaches past the signal session. ... ok
+test_only_close_entries_in_panel_units_with_a_registry (tests.test_fill_c.Scope.test_only_close_entries_in_panel_units_with_a_registry)
+Guards against: C silently running where its share units are undefined. ... ok
+test_status_appended_so_old_codes_keep_their_meaning (tests.test_fill_c.Scope.test_status_appended_so_old_codes_keep_their_meaning)
+Guards against: renumbering the statuses recorded runs were written with. ... ok
+test_reverse_split_between_signal_and_entry (tests.test_fill_c.ShareUnits.test_reverse_split_between_signal_and_entry)
+Guards against: a 5:1 consolidation leaving capacity five times too large. ... ok
+test_split_between_signal_and_entry (tests.test_fill_c.ShareUnits.test_split_between_signal_and_entry)
+Guards against: pre-split volume compared with post-split shares. A verified 1:2 split on the ... ok
+test_split_inside_the_window (tests.test_fill_c.ShareUnits.test_split_inside_the_window)
+Guards against: mixing units when the split falls inside the 20 sessions. Every session is ... ok
+test_unverified_reset_makes_units_unknown (tests.test_fill_c.ShareUnits.test_unverified_reset_makes_units_unknown)
+Guards against: guessing the units across a reset the registry cannot explain. ... ok
+test_april_2025_and_september_2026 (tests.test_market.AutoRejectionScheduleTests.test_april_2025_and_september_2026) ... ok
+test_band_edges (tests.test_market.AutoRejectionScheduleTests.test_band_edges) ... ok
+test_covid_asymmetric (tests.test_market.AutoRejectionScheduleTests.test_covid_asymmetric) ... ok
+test_dates_before_schedule_are_refused (tests.test_market.AutoRejectionScheduleTests.test_dates_before_schedule_are_refused) ... ok
+test_floor_rp50_until_september_2026 (tests.test_market.AutoRejectionScheduleTests.test_floor_rp50_until_september_2026) ... ok
+test_normalisation_stages (tests.test_market.AutoRejectionScheduleTests.test_normalisation_stages) ... ok
+test_special_board (tests.test_market.AutoRejectionScheduleTests.test_special_board) ... ok
+test_symmetric_before_covid (tests.test_market.AutoRejectionScheduleTests.test_symmetric_before_covid) ... ok
+test_rounding_to_tick (tests.test_market.TickTests.test_rounding_to_tick) ... ok
+test_tick_bands (tests.test_market.TickTests.test_tick_bands) ... ok
+test_family_g_is_audit_clean_and_fixed (tests.test_markets.GlobalPanel.test_family_g_is_audit_clean_and_fixed)
+Guards against: an E2 detector module that could read the future, or a family edited after analysis. ... ok
+test_one_day_spike_that_reverts_is_dropped_but_a_real_jump_is_kept (tests.test_markets.GlobalPanel.test_one_day_spike_that_reverts_is_dropped_but_a_real_jump_is_kept)
+Guards against: a bad print (x5 for one day) becoming a fake moonshot, while a jump that holds ... ok
+test_tickers_that_look_like_missing_values_survive_a_round_trip (tests.test_markets.GlobalPanel.test_tickers_that_look_like_missing_values_survive_a_round_trip)
+Guards against: the Nasdaq symbol NA (and NAN, NULL) being read back as a missing ticker. ... ok
+test_idx_profile_reproduces_the_original_constants (tests.test_markets.Profiles.test_idx_profile_reproduces_the_original_constants)
+Guards against: the market refactor changing IDX lots, fees, bands or entry. ... ok
+test_markets_without_price_limits_have_no_locks (tests.test_markets.Profiles.test_markets_without_price_limits_have_no_locks)
+Guards against: IDX auto-rejection limits applied to US or crypto bars (a +40% day 'locked'). ... ok
+test_next_open_entry_and_single_share_lots (tests.test_markets.Profiles.test_next_open_entry_and_single_share_lots)
+Guards against: US/crypto trades entered at the next close (missing the open), or rounded to ... ok
+test_report_names_the_markets_own_price_bands (tests.test_markets.Profiles.test_report_names_the_markets_own_price_bands)
+Guards against: a US or crypto run report describing its price bands in rupiah (the ... ok
+test_us_cost_tiers_charge_cheap_names_more (tests.test_markets.Profiles.test_us_cost_tiers_charge_cheap_names_more)
+Guards against: a $0.50 stock traded as if it cost what a $50 stock costs to trade. ... ok
+test_adjusted_never_below_raw_and_capped (tests.test_multiple_testing.MultipleTestingTests.test_adjusted_never_below_raw_and_capped) ... ok
+test_bh_matches_textbook (tests.test_multiple_testing.MultipleTestingTests.test_bh_matches_textbook) ... ok
+test_holm_matches_textbook (tests.test_multiple_testing.MultipleTestingTests.test_holm_matches_textbook) ... ok
+test_hurdles_grow_with_tries (tests.test_multiple_testing.MultipleTestingTests.test_hurdles_grow_with_tries) ... ok
+test_p_values (tests.test_multiple_testing.MultipleTestingTests.test_p_values) ... ok
+test_every_candidate_reaches_a_terminal_decision (tests.test_paper.PaperScan.test_every_candidate_reaches_a_terminal_decision)
+Guards against: candidates left undecided, BUY without validated evidence, and plans missing ... ok
+test_ledger_chain_detects_any_edit (tests.test_paper.PaperScan.test_ledger_chain_detects_any_edit)
+Guards against: a decision rewritten after the outcome is known. ... ok
+test_no_signal_day_is_still_a_record (tests.test_paper.PaperScan.test_no_signal_day_is_still_a_record)
+Guards against: quiet days leaving no trace, so the scan history looks better than it was. ... ok
+test_one_price_limit_bar_does_not_put_the_stop_at_the_entry (tests.test_paper.PaperScan.test_one_price_limit_bar_does_not_put_the_stop_at_the_entry)
+Guards against (policy v1 defect, GTBO 2026-10-07): a one-price ARA bar's low equals its close, ... ok
+test_scoring_separates_discovery_from_the_decision (tests.test_paper.PaperScan.test_scoring_separates_discovery_from_the_decision)
+Guards against: a rejected name that then ran being scored as a good call (or vice versa). ... ok
+test_untradeable_candidate_is_not_executable_with_the_reason (tests.test_paper.PaperScan.test_untradeable_candidate_is_not_executable_with_the_reason)
+Guards against: a plan for a name where no lot fits the liquidity or risk caps. ... ok
+test_entry_cutoff_is_the_real_open (tests.test_paper_account.Calendar.test_entry_cutoff_is_the_real_open) ... ok
+test_holidays_and_weekends_are_skipped (tests.test_paper_account.Calendar.test_holidays_and_weekends_are_skipped) ... ok
+test_open_moves_with_daylight_saving (tests.test_paper_account.Calendar.test_open_moves_with_daylight_saving) ... ok
+test_ledger_checks_catch_a_late_order (tests.test_paper_account.TenDecisions.test_ledger_checks_catch_a_late_order) ... ok
+test_ten_candidates_end_to_end (tests.test_paper_account.TenDecisions.test_ten_candidates_end_to_end) ... ok
+test_10_the_frozen_files_keep_their_fingerprints (tests.test_paper_account_report.Preservation.test_10_the_frozen_files_keep_their_fingerprints) ... ok
+test_1_pending_order_reserves_cash_without_changing_equity (tests.test_paper_account_report.Report.test_1_pending_order_reserves_cash_without_changing_equity) ... ok
+test_2_a_cancel_in_the_same_session_releases_the_reservation (tests.test_paper_account_report.Report.test_2_a_cancel_in_the_same_session_releases_the_reservation) ... ok
+test_3_a_rejected_entry_leaves_no_purchase_and_no_reservation (tests.test_paper_account_report.Report.test_3_a_rejected_entry_leaves_no_purchase_and_no_reservation) ... ok
+test_4_and_7_a_fill_pays_cash_and_an_unvalued_position_is_flagged (tests.test_paper_account_report.Report.test_4_and_7_a_fill_pays_cash_and_an_unvalued_position_is_flagged) ... ok
+test_5_a_recorded_price_decline_shows_in_unrealized_and_equity (tests.test_paper_account_report.Report.test_5_a_recorded_price_decline_shows_in_unrealized_and_equity) ... ok
+test_6_an_exit_closes_the_position_and_cash_reconciles (tests.test_paper_account_report.Report.test_6_an_exit_closes_the_position_and_cash_reconciles) ... ok
+test_8_rendering_twice_is_identical_and_writes_no_record (tests.test_paper_account_report.Report.test_8_rendering_twice_is_identical_and_writes_no_record) ... ok
+test_9_both_command_paths_use_this_renderer (tests.test_paper_account_report.Report.test_9_both_command_paths_use_this_renderer) ... ok
+test_drawdown_is_dated_from_recorded_marks (tests.test_paper_account_report.Report.test_drawdown_is_dated_from_recorded_marks) ... ok
+test_no_plan_after_the_entry_cutoff (tests.test_paper_book.Book.test_no_plan_after_the_entry_cutoff) ... ok
+test_owner_confirm_before_the_cutoff_only (tests.test_paper_book.Book.test_owner_confirm_before_the_cutoff_only) ... ok
+test_plans_cover_new_forecasts_only_and_use_the_cutoff (tests.test_paper_book.Book.test_plans_cover_new_forecasts_only_and_use_the_cutoff) ... ok
+test_results_come_from_base5_resolutions_and_fill_the_books (tests.test_paper_book.Book.test_results_come_from_base5_resolutions_and_fill_the_books) ... ok
+test_not_reached_before_300_trades (tests.test_paper_book.PlannedLook.test_not_reached_before_300_trades) ... ok
+test_reached_and_judged_on_the_first_300 (tests.test_paper_book.PlannedLook.test_reached_and_judged_on_the_first_300) ... ok
+test_book_before_intent_and_filters_after_intent (tests.test_paper_execution_feasibility.Feasibility.test_book_before_intent_and_filters_after_intent) ... ok
+test_buy_rounding_never_increases_price_or_quantity (tests.test_paper_execution_feasibility.Feasibility.test_buy_rounding_never_increases_price_or_quantity) ... ok
+test_complete_depth_fee_and_no_input_mutation (tests.test_paper_execution_feasibility.Feasibility.test_complete_depth_fee_and_no_input_mutation) ... ok
+test_disabled_price_bounds_and_invalid_bounds (tests.test_paper_execution_feasibility.Feasibility.test_disabled_price_bounds_and_invalid_bounds) ... ok
+test_dust_and_zero_displayed_quantity_not_invented (tests.test_paper_execution_feasibility.Feasibility.test_dust_and_zero_displayed_quantity_not_invented) ... ok
+test_existing_microstructure_depth_walk_agrees_in_simple_case (tests.test_paper_execution_feasibility.Feasibility.test_existing_microstructure_depth_walk_agrees_in_simple_case) ... ok
+test_filled_never_exceeds_request_or_displayed_depth (tests.test_paper_execution_feasibility.Feasibility.test_filled_never_exceeds_request_or_displayed_depth) ... ok
+test_future_book_filters_and_intent (tests.test_paper_execution_feasibility.Feasibility.test_future_book_filters_and_intent) ... ok
+test_invalid_filter_numbers_and_fees (tests.test_paper_execution_feasibility.Feasibility.test_invalid_filter_numbers_and_fees) ... ok
+test_limit_bounded_partial_and_no_touch (tests.test_paper_execution_feasibility.Feasibility.test_limit_bounded_partial_and_no_touch) ... ok
+test_malformed_books_and_nonfinite_inputs (tests.test_paper_execution_feasibility.Feasibility.test_malformed_books_and_nonfinite_inputs) ... ok
+test_max_notional_and_quantity_bounds (tests.test_paper_execution_feasibility.Feasibility.test_max_notional_and_quantity_bounds) ... ok
+test_min_notional_checked_after_rounding (tests.test_paper_execution_feasibility.Feasibility.test_min_notional_checked_after_rounding) ... ok
+test_missing_data_identity_and_timezone (tests.test_paper_execution_feasibility.Feasibility.test_missing_data_identity_and_timezone) ... ok
+test_missing_filter_or_step_rejected (tests.test_paper_execution_feasibility.Feasibility.test_missing_filter_or_step_rejected) ... ok
+test_partial_depth_and_unfilled_rest_are_explicit (tests.test_paper_execution_feasibility.Feasibility.test_partial_depth_and_unfilled_rest_are_explicit) ... ok
+test_sell_rounds_limit_up_and_walks_bids (tests.test_paper_execution_feasibility.Feasibility.test_sell_rounds_limit_up_and_walks_bids) ... ok
+test_stale_book_and_filters (tests.test_paper_execution_feasibility.Feasibility.test_stale_book_and_filters) ... ok
+test_unknown_and_duplicate_filters_fail_closed (tests.test_paper_execution_feasibility.Feasibility.test_unknown_and_duplicate_filters_fail_closed) ... ok
+test_zero_lot_step_fails_closed_but_zero_price_tick_is_disabled (tests.test_paper_execution_feasibility.Feasibility.test_zero_lot_step_fails_closed_but_zero_price_tick_is_disabled) ... ok
+test_algo_counts_no_increment_for_plain_limit_but_missing_fails (tests.test_paper_execution_filter_evidence.Evidence.test_algo_counts_no_increment_for_plain_limit_but_missing_fails) ... ok
+test_count_evidence_absence_is_not_zero (tests.test_paper_execution_filter_evidence.Evidence.test_count_evidence_absence_is_not_zero) ... ok
+test_counts_invalid_future_stale_or_inconsistent (tests.test_paper_execution_filter_evidence.Evidence.test_counts_invalid_future_stale_or_inconsistent) ... ok
+test_inapplicable_filters_are_reported_not_silently_dropped (tests.test_paper_execution_filter_evidence.Evidence.test_inapplicable_filters_are_reported_not_silently_dropped) ... ok
+test_missing_reference_and_interval_mismatch (tests.test_paper_execution_filter_evidence.Evidence.test_missing_reference_and_interval_mismatch) ... ok
+test_nonplain_intents_cannot_use_inapplicability (tests.test_paper_execution_filter_evidence.Evidence.test_nonplain_intents_cannot_use_inapplicability) ... ok
+test_override_presence_or_unknown_never_uses_average (tests.test_paper_execution_filter_evidence.Evidence.test_override_presence_or_unknown_never_uses_average) ... ok
+test_percent_buy_sell_bounds (tests.test_paper_execution_filter_evidence.Evidence.test_percent_buy_sell_bounds) ... ok
+test_reference_recency_identity_and_time_order (tests.test_paper_execution_filter_evidence.Evidence.test_reference_recency_identity_and_time_order) ... ok
+test_unknown_duplicate_and_malformed_inapplicable_remain_rejections (tests.test_paper_execution_filter_evidence.Evidence.test_unknown_duplicate_and_malformed_inapplicable_remain_rejections) ... ok
+test_open_plan_windows_are_not_scored (tests.test_paper_v4.V4.test_open_plan_windows_are_not_scored)
+Guards against: a conditional entry judged 'no trigger' before its window has elapsed. ... ok
+test_plan_decisions_are_scored_by_the_harness_model (tests.test_paper_v4.V4.test_plan_decisions_are_scored_by_the_harness_model)
+Guards against: outcomes of a validated plan computed by a different rule than the one validated. ... ok
+test_plan_without_a_stop_sizes_on_one_locked_session (tests.test_paper_v4.V4.test_plan_without_a_stop_sizes_on_one_locked_session)
+Guards against: a plan with no price stop producing no invalidation and therefore no size. ... ok
+test_scan_runs_the_e3_detector_and_decisions_carry_its_plan (tests.test_paper_v4.V4.test_scan_runs_the_e3_detector_and_decisions_carry_its_plan)
+Guards against: a validated plan existing while decisions still describe the v3 next-close plan. ... ok
+test_without_a_validated_pair_the_policy_is_v3s (tests.test_paper_v4.V4.test_without_a_validated_pair_the_policy_is_v3s)
+Guards against: v4 changing IDX decisions when E3 has not frozen and validated anything. ... ok
+test_duplicate_or_future_schedule_rejected (tests.test_price_units.PriceUnits.test_duplicate_or_future_schedule_rejected) ... ok
+test_fail_closed (tests.test_price_units.PriceUnits.test_fail_closed) ... ok
+test_forward_multiple_and_no_action (tests.test_price_units.PriceUnits.test_forward_multiple_and_no_action) ... ok
+test_reverse_split_and_boundary (tests.test_price_units.PriceUnits.test_reverse_split_and_boundary) ... ok
+test_unknown_volume_convention_rejected (tests.test_price_units.PriceUnits.test_unknown_volume_convention_rejected) ... ok
+test_costs_are_identical_one_tenth_percent_fee_plus_one_tenth_percent_tier_per_side (tests.test_profiles_crypto_close.CryptoCloseProfile.test_costs_are_identical_one_tenth_percent_fee_plus_one_tenth_percent_tier_per_side)
+Guards against: the sensitivity run paying different costs from the primary (0.1% fee + 0.1% ... ok
+test_crypto_close_is_registered_and_differs_only_in_entry (tests.test_profiles_crypto_close.CryptoCloseProfile.test_crypto_close_is_registered_and_differs_only_in_entry)
+Guards against: a variant that quietly carries a different cost, lot, band, carry or note (it ... ok
+test_crypto_profile_is_unchanged_field_by_field (tests.test_profiles_crypto_close.CryptoCloseProfile.test_crypto_profile_is_unchanged_field_by_field)
+Guards against: adding the variant altering CRYPTO itself (any field), which would silently ... ok
+test_existing_registry_entries_are_untouched (tests.test_profiles_crypto_close.CryptoCloseProfile.test_existing_registry_entries_are_untouched)
+Guards against: the registry rewrite re-keying or replacing IDX / US / CRYPTO. ... ok
+test_variant_enters_at_the_close_of_t_plus_1_not_its_open (tests.test_profiles_crypto_close.CryptoCloseProfile.test_variant_enters_at_the_close_of_t_plus_1_not_its_open)
+Guards against: the variant's entry string not reaching the execution engine (still filled at ... ok
+test_backtest_run_uses_the_close_entry_and_the_same_sealed_holdout (tests.test_profiles_crypto_close.CryptoCloseThroughTheHarness.test_backtest_run_uses_the_close_entry_and_the_same_sealed_holdout)
+Guards against: backtest.run accepting market='CRYPTO_CLOSE' but filling at the open, reporting ... ok
+test_impact_monotone_and_floor (tests.test_quant.CostTests.test_impact_monotone_and_floor) ... ok
+test_net_spread_falls_with_aum_and_breakeven (tests.test_quant.CostTests.test_net_spread_falls_with_aum_and_breakeven) ... ok
+test_ic_extremes (tests.test_quant.RankTests.test_ic_extremes) ... ok
+test_rank_normalize (tests.test_quant.RankTests.test_rank_normalize) ... ok
+test_hac_recovers_known_model (tests.test_quant.StatsTests.test_hac_recovers_known_model) ... ok
+test_nw_exceeds_iid_se_when_autocorrelated (tests.test_quant.StatsTests.test_nw_exceeds_iid_se_when_autocorrelated) ... ok
+test_quintiles (tests.test_quant.StatsTests.test_quintiles) ... ok
+test_finds_planted_signal_and_weights_it (tests.test_quant.WalkForwardTests.test_finds_planted_signal_and_weights_it) ... ok
+test_no_lookahead (tests.test_quant.WalkForwardTests.test_no_lookahead) ... ok
+test_pure_noise_has_no_ic (tests.test_quant.WalkForwardTests.test_pure_noise_has_no_ic) ... ok
+test_appending_passes (tests.test_results.AppendOnlyGuardTests.test_appending_passes) ... ok
+test_corporate_action_registry_is_frozen_and_manual_file_append_only (tests.test_results.AppendOnlyGuardTests.test_corporate_action_registry_is_frozen_and_manual_file_append_only)
+Guards against: re-classifying past corporate actions in place (which would silently change ... ok
+test_deleting_a_run_fails (tests.test_results.AppendOnlyGuardTests.test_deleting_a_run_fails) ... ok
+test_editing_a_past_run_fails (tests.test_results.AppendOnlyGuardTests.test_editing_a_past_run_fails) ... ok
+test_rewriting_the_index_fails_in_history_check (tests.test_results.AppendOnlyGuardTests.test_rewriting_the_index_fails_in_history_check) ... ok
+test_edited_or_deleted_run_files_fail_verify (tests.test_results.RunStoreTests.test_edited_or_deleted_run_files_fail_verify) ... ok
+test_existing_run_directory_is_never_reused (tests.test_results.RunStoreTests.test_existing_run_directory_is_never_reused) ... ok
+test_run_is_written_once_hashed_and_read_only (tests.test_results.RunStoreTests.test_run_is_written_once_hashed_and_read_only) ... ok
+test_unindexed_run_directory_fails_verify (tests.test_results.RunStoreTests.test_unindexed_run_directory_fails_verify) ... ok
+test_cdf_matches_direct_sum (tests.test_risk_control.Binomial.test_cdf_matches_direct_sum) ... ok
+test_edges (tests.test_risk_control.Binomial.test_edges) ... ok
+test_null_is_rarely_certified (tests.test_risk_control.Certify.test_null_is_rarely_certified) ... ok
+test_realised (tests.test_risk_control.Certify.test_realised) ... ok
+test_stops_at_first_failure_and_picks_most_calls (tests.test_risk_control.Certify.test_stops_at_first_failure_and_picks_most_calls) ... ok
+test_a_session_still_trading_is_refused (tests.test_session_guard.SessionGuard.test_a_session_still_trading_is_refused)
+Guards against: an early run recording half an Indonesian, US or crypto day as a closed decision. ... ok
+test_new_york_daylight_saving_is_respected (tests.test_session_guard.SessionGuard.test_new_york_daylight_saving_is_respected)
+Guards against: a fixed UTC offset letting a winter US session through an hour early. ... ok
+test_the_routines_scheduled_times_pass (tests.test_session_guard.SessionGuard.test_the_routines_scheduled_times_pass)
+Guards against: the guard blocking the scheduled routines (IDX 10:17, US 22:47, crypto 00:23 UTC). ... ok
+test_a_chronological_stored_run_passes (tests.test_stabilization.Chronology.test_a_chronological_stored_run_passes) ... ok
+test_a_stored_run_with_a_trade_before_its_signal_fails_verification (tests.test_stabilization.Chronology.test_a_stored_run_with_a_trade_before_its_signal_fails_verification) ... ok
+test_cli_refuses_a_negative_entry_lag_before_doing_anything (tests.test_stabilization.Chronology.test_cli_refuses_a_negative_entry_lag_before_doing_anything) ... ok
+test_configuration_refuses_an_entry_before_the_signal (tests.test_stabilization.Chronology.test_configuration_refuses_an_entry_before_the_signal) ... ok
+test_write_run_refuses_an_impossible_run (tests.test_stabilization.Chronology.test_write_run_refuses_an_impossible_run) ... ok
+test_an_ungraded_revision_clears_the_earlier_outcome (tests.test_stabilization.CorrectionsCountOnce.test_an_ungraded_revision_clears_the_earlier_outcome) ... ok
+test_catalyst_running_prior (tests.test_stabilization.CorrectionsCountOnce.test_catalyst_running_prior) ... ok
+test_learner_outcomes_take_the_correction (tests.test_stabilization.CorrectionsCountOnce.test_learner_outcomes_take_the_correction) ... ok
+test_one_rule (tests.test_stabilization.CorrectionsCountOnce.test_one_rule) ... ok
+test_speculation_running_prior (tests.test_stabilization.CorrectionsCountOnce.test_speculation_running_prior) ... ok
+test_concurrent_appenders_keep_one_chain (tests.test_stabilization.SafeWrites.test_concurrent_appenders_keep_one_chain) ... ok
+test_panel_publication_is_exclusive_and_content_identical (tests.test_stabilization.SafeWrites.test_panel_publication_is_exclusive_and_content_identical) ... ok
+test_action_after_window_changes_units_not_economic_return (tests.test_verified_paper_units.VerifiedPaperUnits.test_action_after_window_changes_units_not_economic_return) ... ok
+test_exit_uses_its_own_cost_tier (tests.test_verified_paper_units.VerifiedPaperUnits.test_exit_uses_its_own_cost_tier) ... ok
+test_split_between_signal_entry_uses_entry_units (tests.test_verified_paper_units.VerifiedPaperUnits.test_split_between_signal_entry_uses_entry_units) ... ok
+test_unreconciled_or_unknown_metadata_rejected (tests.test_verified_paper_units.VerifiedPaperUnits.test_unreconciled_or_unknown_metadata_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 331 tests in 10.026s
+
+OK

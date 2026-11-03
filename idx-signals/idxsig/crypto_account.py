@@ -1,4 +1,4 @@
-"""CRYPTO_ACCOUNT_v1: a crypto spot paper account (research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json). Paper only: no orders.
+"""CRYPTO_ACCOUNT_v1: a crypto spot paper account (research/CRYPTO_ACCOUNT_v1/protocol_v1_4.json). Paper only: no orders.
 
 A separate adapter beside the frozen US stock account. It reuses that account's tested cash accounting
 (paper_account.orders_of / account_state: cash, reservations, fills, cancels, realized P&L) by writing records
@@ -23,7 +23,11 @@ of the same shapes, and replaces everything market-specific:
 
 Version history: v1 (research/CRYPTO_ACCOUNT_v1/protocol.json, code at commit b4aec00) let an order use the
 latest recorded quote of any age, as its decision price and as its fill, with a deadline counted from that old
-quote. v1.1 (protocol_v1_1.json, CORRECTION_1.md) is this file; every record it writes carries rules = RULES.
+quote. v1.1 (protocol_v1_1.json, CORRECTION_1.md) corrected fill timing.
+v1.2 (protocol_v1_2.json, CORRECTION_2.md) blocks new orders after failed fetches even with a recent cache;
+v1.3 (protocol_v1_3.json, CORRECTION_3.md) rejects invalid prices at both quote input boundaries;
+v1.4 (protocol_v1_4.json, CORRECTION_4.md) guards state phases with CAS and uses as-of decision/mark valuation;
+every new record carries rules = RULES. Historical records and protocols remain unchanged.
 
 Decisions come from the crypto paper scan (paper/ledger.jsonl, the frozen paper policy). The account only buys a
 decision the policy itself made a buy; every PASS is recorded as a decline with the policy's reason. Quantities
@@ -46,7 +50,7 @@ from .provenance import utc_stamp
 LEDGER = paper.PAPER / "crypto_account.jsonl"
 REPORT = paper.PAPER / "CRYPTO_ACCOUNT.md"
 ACCOUNT_ID = "CRYPTO_ACCOUNT_v1"
-RULES = "CRYPTO_ACCOUNT_v1.1"
+RULES = "CRYPTO_ACCOUNT_v1.4"
 ARM = "CRYPTO_SPOT"
 QUOTE, QUOTE_ERROR = "CRYPTO_QUOTE", "CRYPTO_QUOTE_ERROR"
 ORDER, DECLINE, CANCEL, ENTRY, EXIT, MARK = (
@@ -91,15 +95,26 @@ def floor8(x: float) -> float:
 
 
 # ---------------------------------------------------------------------------------------- quotes
+def validated_book(bid, ask) -> tuple[float, float]:
+    """Reject nonfinite, nonpositive or crossed prices before recording a quote."""
+    if isinstance(bid, bool) or isinstance(ask, bool) or bid is None or ask is None:
+        raise ValueError("unusable book: Boolean or null price")
+    try:
+        bid, ask = float(bid), float(ask)
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise ValueError("unusable book: non-numeric price") from exc
+    if not (math.isfinite(bid) and math.isfinite(ask) and bid > 0 and ask >= bid):
+        raise ValueError(f"unusable book: bid {bid} ask {ask}")
+    return bid, ask
+
+
 def book_ticker(symbol: str) -> tuple[float, float, str]:
     """Best bid and ask from Binance's public spot endpoint; raises if there is no usable answer."""
     url = BOOK_TICKER.format(quote_url(symbol))
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
     with urllib.request.urlopen(req, timeout=20) as resp:
         body = json.loads(resp.read())
-    bid, ask = float(body["bidPrice"]), float(body["askPrice"])
-    if not (bid > 0 and ask >= bid):
-        raise ValueError(f"unusable book: bid {bid} ask {ask}")
+    bid, ask = validated_book(body["bidPrice"], body["askPrice"])
     return bid, ask, url
 
 
@@ -109,6 +124,7 @@ def fetch_quotes(symbols: list[str], get=book_ticker) -> list[dict]:
     for sym in sorted(set(symbols)):
         try:
             bid, ask, url = get(sym)
+            bid, ask = validated_book(bid, ask)
         except Exception as exc:  # noqa: BLE001 - recorded, never replaced by an older quote
             out.append(
                 {
@@ -148,12 +164,26 @@ def errors_of(recs: list[dict], symbol: str) -> list[dict]:
 
 
 def fresh_quote(recs: list[dict], symbol: str, now: datetime) -> tuple[dict | None, str]:
-    """The newest quote observed within QUOTE_MAX_AGE before `now`, or None and why there is none."""
+    """A recent quote not superseded by a failed fetch, as of `now`.
+
+    Observation time orders events; ledger order breaks same-second ties. Future
+    events cannot authorize or block a decision. Settlement remains independent:
+    a fetch failure does not erase valid observations for an existing order.
+    """
     seen = [q for q in quotes_of(recs, symbol) if q["observed_at"] <= _stamp(now)]
-    if seen and now - _t(seen[-1]["observed_at"]) <= QUOTE_MAX_AGE:
-        return seen[-1], ""
-    errs = [e for e in errors_of(recs, symbol) if now - _t(e["attempted_at"]) <= QUOTE_MAX_AGE]
+    events = [
+        (r.get("observed_at") or r.get("attempted_at"), i, r)
+        for i, r in enumerate(recs)
+        if r["type"] in (QUOTE, QUOTE_ERROR) and r["symbol"] == symbol
+        and (r.get("observed_at") or r.get("attempted_at")) <= _stamp(now)
+    ]
+    latest = max(events, key=lambda e: (e[0], e[1]))[2] if events else None
+    errs = [latest] if latest and latest["type"] == QUOTE_ERROR else []
     why = f"the fetch failed at {errs[-1]['attempted_at']} ({errs[-1]['error']}); " if errs else ""
+    if seen and now - _t(seen[-1]["observed_at"]) <= QUOTE_MAX_AGE:
+        if errs:
+            return None, why + "the cached quote cannot authorize a new order"
+        return seen[-1], ""
     if seen:
         return (
             None,
@@ -182,9 +212,26 @@ def symbol_of(decision: dict) -> str:
     return f"{decision['instrument']['ticker']}USDT"
 
 
-def account(recs: list[dict]) -> dict:
+class FutureLedgerStateError(ValueError):
+    """An as-of account view cannot safely reconstruct future business events."""
+
+
+def account(recs: list[dict], now: datetime | None = None) -> dict:
     """Cash, reservations and realized P&L from the stock account's tested accounting; the open positions valued
-    here at the latest recorded bid, with this adapter's fee, and their risk to the stop."""
+    here at the latest recorded bid, with this adapter's fee, and their risk to the stop.
+    An explicit `now` excludes later quotes and rejects future business events;
+    omitted `now` retains the historical whole-ledger reporting view."""
+    if now is not None:
+        if now.tzinfo is None or now.utcoffset() is None:
+            raise ValueError("as-of valuation needs a timezone-aware clock")
+        for r in recs:
+            if r["type"] in (ORDER, DECLINE, CANCEL, ENTRY, EXIT, MARK):
+                for field in ("made_at", "recorded_at", "filled_at", "exited_at"):
+                    if r.get(field) and _t(r[field]) > now:
+                        raise FutureLedgerStateError(f"{r['type']} has future {field}; refusing as-of valuation")
+        # Quote facts can be ignored until observed. Business events cannot be
+        # partially filtered without rebuilding accounting, so those fail closed.
+        recs = [r for r in recs if r["type"] != QUOTE or _t(r["observed_at"]) <= now]
     st = stock.account_state(recs, ARM)
     value = unrealized = open_risk = 0.0
     positions = []
@@ -230,7 +277,7 @@ def account(recs: list[dict]) -> dict:
 def decide(recs: list[dict], cands: list[dict], now: datetime) -> list[dict]:
     """ORDER or DECLINE for each scan decision this account has not decided yet."""
     decided = {r["decision_id"] for r in recs if r["type"] in (ORDER, DECLINE)}
-    state = account(recs)
+    state = account(recs, now=now)
     today = _stamp(now)[:10]
     placed_today = sum(1 for r in recs if r["type"] == ORDER and r["made_at"][:10] == today)
     out = []
@@ -264,13 +311,20 @@ def decide(recs: list[dict], cands: list[dict], now: datetime) -> list[dict]:
         if q is None:
             out.append({"type": DECLINE, **base, "reason": f"NO_FRESH_QUOTE: {stale}"})
             continue
-        ref = float((d.get("verified_price") or {}).get("quote") or 0)
-        if not ref > 0:
+        price = d.get("verified_price")
+        raw_ref = price.get("quote") if isinstance(price, dict) else None
+        try:
+            if isinstance(raw_ref, bool):
+                raise ValueError("Boolean policy quote")
+            ref = float(raw_ref)
+            if not (math.isfinite(ref) and ref > 0):
+                raise ValueError("nonpositive or nonfinite policy quote")
+        except (TypeError, ValueError, OverflowError):
             out.append(
                 {
                     "type": DECLINE,
                     **base,
-                    "reason": "NO_DECISION_PRICE: the policy recorded no quote",
+                    "reason": "NO_DECISION_PRICE: policy quote must be a positive finite non-Boolean number",
                 }
             )
             continue
@@ -440,7 +494,7 @@ def settle(recs: list[dict], now: datetime) -> list[dict]:
 
 
 def mark(recs: list[dict], now: datetime) -> dict:
-    st = account(recs)
+    st = account(recs, now=now)
     return {
         "type": MARK,
         "account": ACCOUNT_ID,
@@ -475,31 +529,76 @@ def symbols_needed(recs: list[dict], cands: list[dict]) -> list[str]:
     return sorted(out)
 
 
+class StaleHeadConflict(RuntimeError):
+    """The phase's ledger prefix changed; the proposal was not committed."""
+
+
+MAX_PHASE_ATTEMPTS = 3
+_UNGUARDED = object()
+_STALE_HEAD_MESSAGE = "ledger head changed; recompute the proposal against the current prefix"
+
+
+def _append_at_head(append, recs, expected_head):
+    """Local translation of the frozen paper writer's exact CAS failure only."""
+    try:
+        return append(recs, expected_head=expected_head)
+    except RuntimeError as exc:
+        if type(exc) is RuntimeError and str(exc) == _STALE_HEAD_MESSAGE:
+            raise StaleHeadConflict(str(exc)) from exc
+        raise
+
+
 def cycle(cands: list[dict], fetch, clock, append, watch_extra=()) -> dict:
     """One run, each phase written before the next reads the ledger: observe; record fills, expiries and exits;
-    decide; observe again the coins of orders just placed and record their fills; mark."""
+    decide; observe again the coins of orders just placed and record their fills; mark.
+    State-derived phases commit against the exact snapshot head and recompute at
+    most MAX_PHASE_ATTEMPTS times. The append callback must forward expected_head."""
 
     events: list[dict] = []
+    receipt_warnings: list[str] = []
 
-    def put(recs, track=True):
+    def put(recs, track=True, expected_head=_UNGUARDED):
         if recs:
-            append(recs)
+            try:
+                if expected_head is _UNGUARDED:
+                    append(recs)
+                else:
+                    _append_at_head(append, recs, expected_head)
+            except paper.ReceiptPendingError as exc:
+                # The writer already committed and released its lock. Never
+                # replay the business phase merely to retry external receipts.
+                recs = exc.records
+                receipt_warnings.append(str(exc))
             if track:
                 events.extend(recs)
         return recs
 
+    def phase(compute, track=True):
+        for attempt in range(MAX_PHASE_ATTEMPTS):
+            snapshot = lines()
+            head = snapshot[-1]["record_hash"] if snapshot else None
+            proposal = compute(snapshot, clock())
+            if not proposal:
+                return []
+            try:
+                return put(proposal, track=track, expected_head=head)
+            except StaleHeadConflict:
+                if attempt + 1 == MAX_PHASE_ATTEMPTS:
+                    raise StaleHeadConflict("crypto account phase contention: retry budget exhausted")
+        raise AssertionError("unreachable")
+
     observed = put(
         fetch(sorted(set(symbols_needed(lines(), cands)) | set(watch_extra))), track=False
     )
-    now = clock()
-    put(settle(lines(), now))
-    decided = put(decide(lines(), cands, now))
+    phase(settle)
+    decided = phase(lambda snapshot, now: decide(snapshot, cands, now))
     placed = sorted({r["symbol"] for r in decided if r["type"] == ORDER})
     after = put(fetch(placed), track=False) if placed else []
     if placed:
-        put(settle(lines(), clock()))
-    marked = put([mark(lines(), clock())], track=False)
-    return {"observed": observed + after, "events": events, "mark": marked[0]}
+        phase(settle)
+    marked = phase(lambda snapshot, now: [mark(snapshot, now)], track=False)
+    return {"observed": observed + after, "events": events, "mark": marked[0],
+            "receipt_warnings": receipt_warnings}
 
 
 # ---------------------------------------------------------------------------------------- report
@@ -511,11 +610,11 @@ def render(recs: list[dict]) -> str:
         default="no records yet",
     )
     out = [
-        "# KOD crypto spot paper account (CRYPTO_ACCOUNT_v1, rules v1.1)",
+        "# KOD crypto spot paper account (CRYPTO_ACCOUNT_v1, rules v1.4)",
         "",
         (
             f"As of the latest record ({as_of}). Paper only: no orders, no money. "
-            "Protocol: `research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json` (supersedes protocol.json; see CORRECTION_1.md)."
+            "Protocol: `research/CRYPTO_ACCOUNT_v1/protocol_v1_4.json` (supersedes v1.3; see CORRECTION_4.md)."
         ),
         "",
         (
@@ -611,12 +710,16 @@ def verify() -> list[str]:
     recs = lines()
     by_hash = {r["record_hash"]: r for r in recs}
     decided, followed, fills = set(), set(), {}
-    for r in recs:
+    for i, r in enumerate(recs):
         if r["type"] in (ORDER, DECLINE):
             if r["decision_id"] in decided:
                 problems.append(f"{r['decision_id']}: decided twice")
             decided.add(r["decision_id"])
         if r["type"] == ORDER:
+            if r.get("rules") in ("CRYPTO_ACCOUNT_v1.2", "CRYPTO_ACCOUNT_v1.3", "CRYPTO_ACCOUNT_v1.4"):
+                eligible, why = fresh_quote(recs[:i], r["symbol"], _t(r["made_at"]))
+                if eligible is None:
+                    problems.append(f"{r['decision_id']}: order has no eligible decision quote: {why}")
             q = by_hash.get(r["decision_quote_record_hash"])
             if q is None or q["type"] != QUOTE or q["symbol"] != r["symbol"]:
                 problems.append(f"{r['decision_id']}: order does not point at its quote")

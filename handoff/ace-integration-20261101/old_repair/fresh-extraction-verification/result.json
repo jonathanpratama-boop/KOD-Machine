@@ -1,0 +1,9 @@
+{
+  "run": 331,
+  "failures": [],
+  "errors": [],
+  "skipped": [],
+  "excluded": {
+    "tests.test_corporate_actions.RegistryFiles.test_registry_for_another_panel_is_refused": "Requires committed data/manifests/ca_registry*.json plus hash-matching registry dataset; intentionally not fetched in source-only scope."
+  }
+}
