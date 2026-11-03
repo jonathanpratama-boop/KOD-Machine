@@ -1,0 +1,4 @@
+# Linux, CPython 3.12. Both analysis and workstation share this environment.
+-r idx-signals/requirements.txt
+-r kod-machine/requirements-workstation.txt
+-c constraints-runtime.txt

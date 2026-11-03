@@ -1,0 +1,78 @@
+{
+  "development/PASSIVE_50_50_RISK_MATCHED": {
+    "first_entry_day": "2017-09-27",
+    "intended_budget_each": "5000",
+    "filled_cash_debit": {
+      "BTCUSDT": "2830.58071108675780000000",
+      "ETHUSDT": "1704.46191374763425000000"
+    },
+    "reference_position_value": {
+      "BTCUSDT": "2826.3375423156000000",
+      "ETHUSDT": "1701.9109582685000000"
+    },
+    "first_entry_cash": "5464.95737516560795000000",
+    "first_entry_NAV": "9993.20587574970795000000",
+    "first_entry_gross_fraction": "0.4531327140545258507313845604",
+    "capacity_binding": {
+      "BTCUSDT": true,
+      "ETHUSDT": true
+    }
+  },
+  "development/CONVENTIONAL_50_50_BUY_HOLD_NO_KILL": {
+    "first_entry_day": "2017-09-27",
+    "intended_budget_each": "5000",
+    "filled_cash_debit": {
+      "BTCUSDT": "2830.58071108675780000000",
+      "ETHUSDT": "1704.46191374763425000000"
+    },
+    "reference_position_value": {
+      "BTCUSDT": "2826.3375423156000000",
+      "ETHUSDT": "1701.9109582685000000"
+    },
+    "first_entry_cash": "5464.95737516560795000000",
+    "first_entry_NAV": "9993.20587574970795000000",
+    "first_entry_gross_fraction": "0.4531327140545258507313845604",
+    "capacity_binding": {
+      "BTCUSDT": true,
+      "ETHUSDT": true
+    }
+  },
+  "validation/PASSIVE_50_50_RISK_MATCHED": {
+    "first_entry_day": "2023-01-02",
+    "intended_budget_each": "5000",
+    "filled_cash_debit": {
+      "BTCUSDT": "4999.98985100950495000000",
+      "ETHUSDT": "4999.98998894193670000000"
+    },
+    "reference_position_value": {
+      "BTCUSDT": "4992.5035992099000000",
+      "ETHUSDT": "4992.5037370734000000"
+    },
+    "first_entry_cash": "0.02016004855835000000",
+    "first_entry_NAV": "9985.02749633185835000000",
+    "first_entry_gross_fraction": "0.9999979809721539819414483847",
+    "capacity_binding": {
+      "BTCUSDT": false,
+      "ETHUSDT": false
+    }
+  },
+  "validation/CONVENTIONAL_50_50_BUY_HOLD_NO_KILL": {
+    "first_entry_day": "2023-01-02",
+    "intended_budget_each": "5000",
+    "filled_cash_debit": {
+      "BTCUSDT": "4999.98985100950495000000",
+      "ETHUSDT": "4999.98998894193670000000"
+    },
+    "reference_position_value": {
+      "BTCUSDT": "4992.5035992099000000",
+      "ETHUSDT": "4992.5037370734000000"
+    },
+    "first_entry_cash": "0.02016004855835000000",
+    "first_entry_NAV": "9985.02749633185835000000",
+    "first_entry_gross_fraction": "0.9999979809721539819414483847",
+    "capacity_binding": {
+      "BTCUSDT": false,
+      "ETHUSDT": false
+    }
+  }
+}

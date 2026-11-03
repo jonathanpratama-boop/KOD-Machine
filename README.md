@@ -1,5 +1,11 @@
 # KOD-Machine
 
+The integrated paper operations and research workstation are described in
+[Operating architecture](docs/OPERATING_SYSTEM.md), with setup and recovery in
+[Runtime guide](docs/RUNTIME.md). Start with `python tools/kod.py runtime --root /tmp/kod-demo demo`
+after installing `requirements-runtime.txt`. [Timing research](docs/TIMING_RESEARCH.md)
+records Hermes' negative findings and the next bounded diagnostic. Synthetic checks do not establish an investment edge.
+
 Two research tools. Neither grants entry permission.
 
 | Directory | What it is |

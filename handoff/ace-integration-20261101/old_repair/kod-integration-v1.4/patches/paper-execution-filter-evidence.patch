@@ -1,0 +1,419 @@
+From 319012922c2d0f23e91398f8d01c0cafe7288a7e Mon Sep 17 00:00:00 2001
+From: Ace <ace@local>
+Date: Sun, 1 Nov 2026 01:57:25 +0700
+Subject: [PATCH] Distinguish inapplicable filters from observed and simulated
+ evidence
+
+---
+ .../idxsig/paper_execution_feasibility.py     | 128 ++++++++++++++++--
+ .../FILTER_EVIDENCE_EXTENSION.md              |  73 ++++++++++
+ .../test_paper_execution_filter_evidence.py   | 106 +++++++++++++++
+ 3 files changed, 297 insertions(+), 10 deletions(-)
+ create mode 100644 idx-signals/research/PAPER_EXECUTION_FEASIBILITY_v1/FILTER_EVIDENCE_EXTENSION.md
+ create mode 100644 idx-signals/tests/test_paper_execution_filter_evidence.py
+
+diff --git a/idx-signals/idxsig/paper_execution_feasibility.py b/idx-signals/idxsig/paper_execution_feasibility.py
+index 0d7ce82..bd4cef8 100644
+--- a/idx-signals/idxsig/paper_execution_feasibility.py
++++ b/idx-signals/idxsig/paper_execution_feasibility.py
+@@ -18,7 +18,7 @@ class FilterSnapshot:
+     symbol: str
+     observed_at: datetime
+     source: str
+-    filters: tuple[Mapping[str, str], ...]
++    filters: tuple[Mapping[str, str | int | bool], ...]
+ 
+ 
+ @dataclass(frozen=True)
+@@ -37,6 +37,34 @@ class Intent:
+     quantity: Decimal
+     limit_price: Decimal
+     placed_at: datetime
++    order_type: str = "LIMIT"
++    time_in_force: str = "IOC"
++    iceberg_quantity: Decimal = ZERO
++    trailing_delta: int | None = None
++    is_order_list: bool = False
++    is_amendment: bool = False
++
++
++@dataclass(frozen=True)
++class AverageReference:
++    symbol: str
++    price: Decimal
++    minutes: int
++    observed_at: datetime
++    last_trade_at: datetime
++    source: str
++    override_state: Literal["ABSENT", "PRESENT", "UNKNOWN"]
++    override_observed_at: datetime
++    override_source: str
++
++
++@dataclass(frozen=True)
++class SimulatedCounts:
++    """Hypothetical state, never evidence about a real exchange account."""
++    symbol: str
++    as_of: datetime
++    open_orders: int
++    open_algo_orders: int
+ 
+ 
+ @dataclass(frozen=True)
+@@ -51,6 +79,8 @@ class Estimate:
+     fee_quote: Decimal = ZERO
+     fee_rate: Decimal = ZERO
+     fills: tuple[tuple[Decimal, Decimal], ...] = ()
++    filter_checks: tuple[str, ...] = ()
++    assumptions: tuple[str, ...] = ()
+ 
+ 
+ class Invalid(ValueError):
+@@ -89,11 +119,30 @@ def _recent(t, now, age, name):
+         raise Invalid(f"STALE_{name}")
+ 
+ 
+-def _filters(snapshot):
++def _integer(value):
++    if type(value) is not int or value < 0:
++        raise Invalid("NONNEGATIVE_INTEGER_REQUIRED")
++    return value
++
++
++def _filters(snapshot, checks):
+     required = {"PRICE_FILTER": ("minPrice", "maxPrice", "tickSize"),
+                 "LOT_SIZE": ("minQty", "maxQty", "stepSize"),
+                 "MIN_NOTIONAL": ("minNotional",),
+-                "NOTIONAL": ("minNotional", "maxNotional")}
++                "NOTIONAL": ("minNotional", "maxNotional"),
++                "PERCENT_PRICE_BY_SIDE": ("bidMultiplierUp", "bidMultiplierDown", "askMultiplierUp", "askMultiplierDown", "avgPriceMins"),
++                "MAX_NUM_ORDERS": ("maxNumOrders",),
++                "MAX_NUM_ALGO_ORDERS": ("maxNumAlgoOrders",),
++                "ICEBERG_PARTS": ("limit",),
++                "MARKET_LOT_SIZE": ("minQty", "maxQty", "stepSize"),
++                "TRAILING_DELTA": ("minTrailingAboveDelta", "maxTrailingAboveDelta", "minTrailingBelowDelta", "maxTrailingBelowDelta"),
++                "MAX_NUM_ORDER_AMENDS": ("maxNumOrderAmends",),
++                "MAX_NUM_ORDER_LISTS": ("maxNumOrderLists",)}
++    integers = {"avgPriceMins", "maxNumOrders", "maxNumAlgoOrders", "limit", "maxNumOrderAmends", "maxNumOrderLists",
++                "minTrailingAboveDelta", "maxTrailingAboveDelta", "minTrailingBelowDelta", "maxTrailingBelowDelta"}
++    inapplicable = {"ICEBERG_PARTS": "no iceberg quantity", "MARKET_LOT_SIZE": "LIMIT not MARKET",
++                   "TRAILING_DELTA": "no trailing parameter", "MAX_NUM_ORDER_AMENDS": "new intent not amendment",
++                   "MAX_NUM_ORDER_LISTS": "standalone not order list"}
+     found = {}
+     for row in snapshot.filters:
+         name = row.get("filterType")
+@@ -103,7 +152,9 @@ def _filters(snapshot):
+             raise Invalid(f"DUPLICATE_FILTER:{name}")
+         if any(k not in row for k in required[name]):
+             raise Invalid(f"MISSING_FILTER_FIELD:{name}")
+-        found[name] = {k: _number(row[k], string=True) for k in required[name]}
++        found[name] = {k: _integer(row[k]) if k in integers else _number(row[k], string=True) for k in required[name]}
++        if name in inapplicable:
++            checks.append(f"{name}:INAPPLICABLE:{inapplicable[name]}")
+     if not {"PRICE_FILTER", "LOT_SIZE"} <= found.keys():
+         raise Invalid("MISSING_PRICE_OR_LOT_FILTER")
+     if not ({"MIN_NOTIONAL", "NOTIONAL"} & found.keys()):
+@@ -136,26 +187,36 @@ def _levels(levels, descending):
+ 
+ def estimate(intent: Intent, book: BookSnapshot | None, filters: FilterSnapshot | None,
+              *, now: datetime, max_book_age: timedelta, max_filter_age: timedelta,
+-             fee_rate: Decimal) -> Estimate:
++             fee_rate: Decimal, average: AverageReference | None = None,
++             simulated_counts: SimulatedCounts | None = None,
++             max_reference_age: timedelta | None = None,
++             max_count_age: timedelta | None = None) -> Estimate:
+     """Round quantity down; buy limit down / sell limit up. Walk one snapshot once.
+ 
+     Caller supplies observed filters and an explicit quote-currency fee assumption.
+     Unconsumed IOC quantity does not rest in this model. Never reuse the same book
+     independently for multiple orders and then add fills: liquidity is not reserved.
+     """
++    checks, assumptions = [], []
+     try:
+         with localcontext() as ctx:
+             ctx.prec = 160
+-            return _estimate(intent, book, filters, now, max_book_age, max_filter_age, fee_rate)
++            return _estimate(intent, book, filters, now, max_book_age, max_filter_age, fee_rate,
++                             average, simulated_counts, max_reference_age, max_count_age, checks, assumptions)
+     except Invalid as exc:
+-        return Estimate("REJECTED", str(exc))
++        return Estimate("REJECTED", str(exc), filter_checks=tuple(checks), assumptions=tuple(assumptions))
+ 
+ 
+-def _estimate(intent, book, filters, now, book_age, filter_age, fee):
++def _estimate(intent, book, filters, now, book_age, filter_age, fee,
++              average, counts, ref_age, count_age, checks, assumptions):
+     _aware(now)
+     _aware(intent.placed_at)
+     if intent.placed_at > now:
+         raise Invalid("FUTURE_INTENT")
++    if (intent.order_type != "LIMIT" or intent.time_in_force != "IOC"
++            or _number(intent.iceberg_quantity) != ZERO or intent.trailing_delta is not None
++            or intent.is_order_list is not False or intent.is_amendment is not False):
++        raise Invalid("ONLY_PLAIN_NEW_STANDALONE_LIMIT_IOC_SUPPORTED")
+     if book is None or filters is None:
+         raise Invalid("MISSING_BOOK_OR_FILTERS")
+     if not intent.symbol or intent.symbol != book.symbol or intent.symbol != filters.symbol:
+@@ -173,7 +234,7 @@ def _estimate(intent, book, filters, now, book_age, filter_age, fee):
+     qty, price, fee = _number(intent.quantity), _number(intent.limit_price), _number(fee)
+     if not qty or not price or fee >= 1:
+         raise Invalid("INVALID_INTENT_OR_FEE")
+-    fs = _filters(filters)
++    fs = _filters(filters, checks)
+     pf, lot = fs["PRICE_FILTER"], fs["LOT_SIZE"]
+     step, tick = lot["stepSize"], pf["tickSize"]
+     qty = (qty / step).to_integral_value(rounding=ROUND_FLOOR) * step
+@@ -190,6 +251,52 @@ def _estimate(intent, book, filters, now, book_age, filter_age, fee):
+             raise Invalid("MIN_NOTIONAL")
+     if "NOTIONAL" in fs and order_notional > fs["NOTIONAL"]["maxNotional"]:
+         raise Invalid("MAX_NOTIONAL")
++    checks.extend(f"{f}:PASS_OBSERVED_FILTER" for f in ("PRICE_FILTER", "LOT_SIZE", "MIN_NOTIONAL", "NOTIONAL") if f in fs)
++    if "PERCENT_PRICE_BY_SIDE" in fs:
++        rule = fs["PERCENT_PRICE_BY_SIDE"]
++        if average is None:
++            raise Invalid("MISSING_AVERAGE_REFERENCE")
++        if average.symbol != intent.symbol or not average.source or not average.override_source:
++            raise Invalid("REFERENCE_IDENTITY_OR_PROVENANCE")
++        for t, name in ((average.observed_at, "AVERAGE"), (average.last_trade_at, "AVERAGE_TRADE"),
++                        (average.override_observed_at, "REFERENCE_STATE")):
++            _recent(t, now, ref_age, name)
++            if t > intent.placed_at:
++                raise Invalid("REFERENCE_AFTER_INTENT")
++        if average.last_trade_at > average.observed_at:
++            raise Invalid("TRADE_AFTER_AVERAGE_OBSERVATION")
++        if average.override_state != "ABSENT":
++            raise Invalid("ACTIVE_OR_UNKNOWN_OVERRIDE_REFERENCE")
++        if _integer(average.minutes) != rule["avgPriceMins"]:
++            raise Invalid("AVERAGE_INTERVAL_MISMATCH")
++        ref = _number(average.price)
++        prefix = "bid" if intent.side == "BUY" else "ask"
++        lo, hi = rule[prefix + "MultiplierDown"], rule[prefix + "MultiplierUp"]
++        if ref <= 0 or lo <= 0 or hi < lo:
++            raise Invalid("INVALID_PERCENT_PRICE_BOUNDS")
++        if not ref * lo <= price <= ref * hi:
++            raise Invalid("PERCENT_PRICE_BY_SIDE")
++        checks.append("PERCENT_PRICE_BY_SIDE:PASS_OBSERVED_AVERAGE_AND_ABSENT_OVERRIDE")
++    if {"MAX_NUM_ORDERS", "MAX_NUM_ALGO_ORDERS"} & fs.keys():
++        if counts is None:
++            raise Invalid("MISSING_SIMULATED_ACCOUNT_COUNTS")
++        if counts.symbol != intent.symbol:
++            raise Invalid("COUNT_SYMBOL_MISMATCH")
++        _recent(counts.as_of, now, count_age, "SIMULATED_COUNTS")
++        if counts.as_of > intent.placed_at:
++            raise Invalid("COUNTS_AFTER_INTENT")
++        ordinary, algo = _integer(counts.open_orders), _integer(counts.open_algo_orders)
++        if algo > ordinary:
++            raise Invalid("ALGO_COUNT_EXCEEDS_TOTAL")
++        assumptions.append("SIMULATED_ACCOUNT_COUNTS_ONLY:NOT_ACTUAL_ACCOUNT_VERIFICATION")
++        if "MAX_NUM_ORDERS" in fs:
++            if ordinary + 1 > fs["MAX_NUM_ORDERS"]["maxNumOrders"]:
++                raise Invalid("MAX_NUM_ORDERS")
++            checks.append("MAX_NUM_ORDERS:PASS_SIMULATED_COUNT_PLUS_ONE")
++        if "MAX_NUM_ALGO_ORDERS" in fs:
++            if algo > fs["MAX_NUM_ALGO_ORDERS"]["maxNumAlgoOrders"]:
++                raise Invalid("MAX_NUM_ALGO_ORDERS")
++            checks.append("MAX_NUM_ALGO_ORDERS:PASS_SIMULATED_COUNT_PLUS_ZERO_NON_ALGO")
+     _levels(book.bids, True)
+     _levels(book.asks, False)
+     if not book.bids or not book.asks:
+@@ -213,4 +320,5 @@ def _estimate(intent, book, filters, now, book_age, filter_age, fee):
+     filled = qty - remaining
+     status = "COMPLETE" if remaining == 0 else "PARTIAL" if filled else "UNFILLED"
+     return Estimate(status, "DISPLAYED_DEPTH_ONLY" if not remaining else reason,
+-                    qty, price, filled, remaining, notional, notional * fee, fee, tuple(fills))
++                    qty, price, filled, remaining, notional, notional * fee, fee, tuple(fills),
++                    tuple(checks), tuple(assumptions))
+diff --git a/idx-signals/research/PAPER_EXECUTION_FEASIBILITY_v1/FILTER_EVIDENCE_EXTENSION.md b/idx-signals/research/PAPER_EXECUTION_FEASIBILITY_v1/FILTER_EVIDENCE_EXTENSION.md
+new file mode 100644
+index 0000000..77521d1
+--- /dev/null
++++ b/idx-signals/research/PAPER_EXECUTION_FEASIBILITY_v1/FILTER_EVIDENCE_EXTENSION.md
+@@ -0,0 +1,73 @@
++# Filter evidence extension — local candidate, not integrated
++
++This additive amendment supersedes only the applicability/evidence portion of
++SPEC.md. The earlier local prototype commit and first public rejection artifacts
++remain available unchanged. No quote-account module, strategy or ledger changed.
++
++## Explicit request scope and evidence
++
++Intent now names LIMIT, IOC, zero iceberg quantity, no trailing parameter, no
++order list and no amendment. Any other shape is rejected, so inapplicability is
++not inferred for an unsupported order type. Every supplied filter is inspected;
++`Estimate.filter_checks` records the interpretation even on later rejection.
++Unknown or duplicate filters remain rejections.
++
++Verified against [Binance filters](https://developers.binance.com/en/docs/products/spot/filters):
++iceberg-parts, market-lot and trailing-delta constraints do not apply to this plain
++limit intent. A new standalone intent also creates no order list or amendment.
++These five filters are marked INAPPLICABLE, never silently removed. Open-order
++limits count the new normal order; an algo count receives no increment because
++this request is not conditional.
++
++`SimulatedCounts` must provide symbol-specific total/algo open counts and as-of
++time. Missing, negative, Boolean, stale, future or inconsistent counts reject.
++Even for the non-algo request, supplied MAX_NUM_ALGO_ORDERS requires counts; this
++is deliberately conservative. A total at its maximum blocks the additional
++order; an algo count above its maximum also rejects. Every use emits
++`SIMULATED_ACCOUNT_COUNTS_ONLY:NOT_ACTUAL_ACCOUNT_VERIFICATION`. This is not
++evidence of actual holdings, balances or exchange account eligibility.
++
++## Percentage-price evidence
++
++PERCENT_PRICE_BY_SIDE checks the side-specific multiplier bounds against a fresh
++`AverageReference` with the exact required minute interval. Missing/mismatched
++evidence rejects. Its observation, last-trade and overriding-reference-state
++times must be timezone-aware, no later than intent time and within the caller's
++reference age limit. A trade later than the average observation also rejects.
++
++Current [official documentation](https://developers.binance.com/en/docs/catalog/core-trading-spot-trading/api/rest-api/market)
++provides average interval, price and last-trade time via avgPrice. It separately
++defines referencePrice, including null or error -2043 for absence. The current
++filter specification gives a non-null overriding reference precedence over the
++average. Therefore this bounded implementation accepts averages only with fresh
++observed ABSENT override state and its provenance. PRESENT/UNKNOWN rejects;
++support for non-null overriding references is intentionally not added here.
++An inaccessible endpoint is not evidence that a reference is absent.
++
++This remains a partial **feasibility model**, not full exchange parity. Price-range
++execution rules, account/exchange/asset constraints outside the supplied subset,
++actual fee asset/rate and liquidity persistence are still not verified. COMPLETE
++is only the displayed-depth estimate under the declared simulated assumptions.
++
++## Verification and public observation
++
++`python -m unittest tests.test_paper_execution_filter_evidence tests.test_paper_execution_feasibility tests.test_crypto_account tests.test_paper_account tests.test_paper_book tests.test_paper_account_report`
++
++73 offline tests pass (10 new applicability/evidence fixtures). Socket connections
++were prohibited. Includes inapplicable-filter audit trails, unsupported request
++shapes, missing/mismatched/stale/future references, side bounds, reference override
++states, absent/invalid/stale counts, total/algo caps and simulated-state labeling.
++
++The initial bounded public observation used **two** of the six allowed GETs:
++BTCUSDT avgPrice succeeded, reporting a 5-minute average. The data-only host's
++referencePrice endpoint returned HTTP 404 HTML. Capture stopped immediately:
++no retry, alternative host, refreshed book or BEAMX request. No absence assertion
++or fill estimate was manufactured from that error. Raw response hashes and
++request/receive times are retained in the separate capture directory.
++
++After separate authorization for one documented public-host fallback (404 was
++endpoint unavailability), `api.binance.com/api/v3/referencePrice?symbol=BTCUSDT`
++returned HTTP 451 with a restricted-location eligibility message. All further
++network requests stopped immediately. Total extension GETs: **three**, not six.
++There was no further host switch, retry or bypass. Reference state remains UNKNOWN;
++no real-metadata eligibility or fill result is claimed.
+diff --git a/idx-signals/tests/test_paper_execution_filter_evidence.py b/idx-signals/tests/test_paper_execution_filter_evidence.py
+new file mode 100644
+index 0000000..494a64a
+--- /dev/null
++++ b/idx-signals/tests/test_paper_execution_filter_evidence.py
+@@ -0,0 +1,106 @@
++"""Filter applicability and explicit observed/simulated evidence, offline only."""
++import unittest
++from dataclasses import replace
++from datetime import timedelta
++from decimal import Decimal as D
++
++from idxsig.paper_execution_feasibility import AverageReference, SimulatedCounts
++from tests import test_paper_execution_feasibility as fixtures
++
++T = fixtures.T
++
++
++class Evidence(unittest.TestCase):
++    setUp = fixtures.Feasibility.setUp
++    run_estimate = fixtures.Feasibility.run_estimate
++
++    def add(self, *rows):
++        self.filters = replace(self.filters, filters=self.rows + rows)
++
++    def percent(self):
++        self.add({"filterType": "PERCENT_PRICE_BY_SIDE", "bidMultiplierUp": "1.2", "bidMultiplierDown": "0.5",
++                  "askMultiplierUp": "2", "askMultiplierDown": "0.8", "avgPriceMins": 5})
++        return AverageReference("AAAUSDT", D("100"), 5, T - timedelta(seconds=1), T - timedelta(seconds=2),
++                                "fixture/avgPrice", "ABSENT", T - timedelta(seconds=1), "fixture/referencePrice:-2043")
++
++    def test_inapplicable_filters_are_reported_not_silently_dropped(self):
++        self.add({"filterType": "ICEBERG_PARTS", "limit": 1},
++                 {"filterType": "MARKET_LOT_SIZE", "minQty": "0", "maxQty": "0", "stepSize": "0"},
++                 {"filterType": "TRAILING_DELTA", "minTrailingAboveDelta": 10, "maxTrailingAboveDelta": 20,
++                  "minTrailingBelowDelta": 10, "maxTrailingBelowDelta": 20},
++                 {"filterType": "MAX_NUM_ORDER_AMENDS", "maxNumOrderAmends": 0},
++                 {"filterType": "MAX_NUM_ORDER_LISTS", "maxNumOrderLists": 0})
++        out = self.run_estimate()
++        self.assertEqual(out.status, "COMPLETE")
++        self.assertEqual(sum(":INAPPLICABLE:" in c for c in out.filter_checks), 5)
++
++    def test_nonplain_intents_cannot_use_inapplicability(self):
++        for fields in ({"order_type": "MARKET"}, {"time_in_force": "GTC"}, {"iceberg_quantity": D("1")},
++                       {"trailing_delta": 10}, {"is_order_list": True}, {"is_amendment": True}):
++            self.assertEqual(self.run_estimate(intent=replace(self.intent, **fields)).reason,
++                             "ONLY_PLAIN_NEW_STANDALONE_LIMIT_IOC_SUPPORTED")
++
++    def test_missing_reference_and_interval_mismatch(self):
++        ref = self.percent()
++        self.assertEqual(self.run_estimate().reason, "MISSING_AVERAGE_REFERENCE")
++        self.assertEqual(self.run_estimate(average=replace(ref, minutes=1), max_reference_age=timedelta(seconds=10)).reason,
++                         "AVERAGE_INTERVAL_MISMATCH")
++
++    def test_percent_buy_sell_bounds(self):
++        ref = self.percent()
++        args = dict(average=ref, max_reference_age=timedelta(seconds=10))
++        self.assertEqual(self.run_estimate(**args).status, "COMPLETE")
++        self.assertEqual(self.run_estimate(intent=replace(self.intent, limit_price=D("120.05")), **args).reason, "PERCENT_PRICE_BY_SIDE")
++        self.assertEqual(self.run_estimate(intent=replace(self.intent, side="SELL", limit_price=D("79.95")), **args).reason, "PERCENT_PRICE_BY_SIDE")
++        self.assertNotEqual(self.run_estimate(intent=replace(self.intent, side="SELL", limit_price=D("200")), **args).reason, "PERCENT_PRICE_BY_SIDE")
++
++    def test_override_presence_or_unknown_never_uses_average(self):
++        ref = self.percent()
++        for state in ("PRESENT", "UNKNOWN"):
++            self.assertEqual(self.run_estimate(average=replace(ref, override_state=state), max_reference_age=timedelta(seconds=10)).reason,
++                             "ACTIVE_OR_UNKNOWN_OVERRIDE_REFERENCE")
++
++    def test_reference_recency_identity_and_time_order(self):
++        ref = self.percent()
++        for fields in ({"observed_at": T + timedelta(seconds=1)}, {"last_trade_at": T - timedelta(minutes=2)},
++                       {"override_observed_at": T - timedelta(minutes=2)}, {"symbol": "BBB"}, {"override_source": ""},
++                       {"last_trade_at": T}, {"price": D("0")}):
++            with self.subTest(fields=fields):
++                self.assertEqual(self.run_estimate(average=replace(ref, **fields), max_reference_age=timedelta(seconds=10)).status, "REJECTED")
++        self.assertEqual(self.run_estimate(average=ref).reason, "INVALID_MAX_AGE")
++
++    def test_count_evidence_absence_is_not_zero(self):
++        self.add({"filterType": "MAX_NUM_ORDERS", "maxNumOrders": 5},
++                 {"filterType": "MAX_NUM_ALGO_ORDERS", "maxNumAlgoOrders": 2})
++        self.assertEqual(self.run_estimate().reason, "MISSING_SIMULATED_ACCOUNT_COUNTS")
++        counts = SimulatedCounts("AAAUSDT", T, 4, 2)
++        out = self.run_estimate(simulated_counts=counts, max_count_age=timedelta(seconds=10))
++        self.assertEqual(out.status, "COMPLETE")
++        self.assertIn("SIMULATED_ACCOUNT_COUNTS_ONLY:NOT_ACTUAL_ACCOUNT_VERIFICATION", out.assumptions)
++        self.assertEqual(self.run_estimate(simulated_counts=replace(counts, open_orders=5), max_count_age=timedelta(seconds=10)).reason, "MAX_NUM_ORDERS")
++
++    def test_algo_counts_no_increment_for_plain_limit_but_missing_fails(self):
++        self.add({"filterType": "MAX_NUM_ALGO_ORDERS", "maxNumAlgoOrders": 2})
++        self.assertEqual(self.run_estimate().reason, "MISSING_SIMULATED_ACCOUNT_COUNTS")
++        counts = SimulatedCounts("AAAUSDT", T, 3, 2)
++        self.assertEqual(self.run_estimate(simulated_counts=counts, max_count_age=timedelta(seconds=10)).status, "COMPLETE")
++        self.assertEqual(self.run_estimate(simulated_counts=replace(counts, open_algo_orders=3), max_count_age=timedelta(seconds=10)).reason, "MAX_NUM_ALGO_ORDERS")
++
++    def test_counts_invalid_future_stale_or_inconsistent(self):
++        self.add({"filterType": "MAX_NUM_ORDERS", "maxNumOrders": 5})
++        counts = SimulatedCounts("AAAUSDT", T, 0, 0)
++        for fields in ({"open_orders": -1}, {"open_orders": True}, {"open_algo_orders": 1},
++                       {"as_of": T + timedelta(seconds=1)}, {"as_of": T - timedelta(minutes=1)}, {"symbol": "BBB"}):
++            self.assertEqual(self.run_estimate(simulated_counts=replace(counts, **fields), max_count_age=timedelta(seconds=10)).status, "REJECTED")
++
++    def test_unknown_duplicate_and_malformed_inapplicable_remain_rejections(self):
++        for row in ({"filterType": "UNKNOWN"}, {"filterType": "ICEBERG_PARTS"},
++                    {"filterType": "ICEBERG_PARTS", "limit": True}):
++            self.add(row)
++            self.assertEqual(self.run_estimate().status, "REJECTED")
++        self.add({"filterType": "ICEBERG_PARTS", "limit": 1}, {"filterType": "ICEBERG_PARTS", "limit": 1})
++        self.assertEqual(self.run_estimate().reason, "DUPLICATE_FILTER:ICEBERG_PARTS")
++
++
++if __name__ == "__main__":
++    unittest.main()
+-- 
+2.52.0
+

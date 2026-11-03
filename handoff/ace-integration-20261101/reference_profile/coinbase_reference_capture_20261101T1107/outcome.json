@@ -1,0 +1,17 @@
+{
+  "status": "BLOCKED_REFERENCE_ROUTE_STOPPED",
+  "stage": "PRODUCT_METADATA",
+  "error_type": "StopRoute",
+  "error": "TRANSPORT failed: URLError (transport details omitted to avoid credential logging)",
+  "decision": null,
+  "out_of_range_candle_counts": null,
+  "profile": "COINBASE_EXCHANGE_USD_REFERENCE_v1",
+  "finished_at": "2026-11-01T11:07:26.709469Z",
+  "requests_attempted": 1,
+  "real_orders": 0,
+  "scheduled_jobs": 0,
+  "retry_performed": false,
+  "account_at_final_receipt": null,
+  "fill_count": 0,
+  "pending_intents": []
+}

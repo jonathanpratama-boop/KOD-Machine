@@ -1,0 +1,17 @@
+{
+ "file": "FREEZE.json",
+ "sha256": "2252e728356ddd881eaabb19c0f8d45c309ed711155e8a05415f8adf172dacff",
+ "tokens": [
+  {
+   "authority": "freetsa",
+   "token": "FREEZE.json.freetsa.tsr",
+   "time": "2026-11-01T23:07:39+00:00"
+  },
+  {
+   "authority": "sectigo",
+   "token": "FREEZE.json.sectigo.tsr",
+   "time": "2026-11-01T23:07:40+00:00"
+  }
+ ],
+ "errors": []
+}

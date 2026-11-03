@@ -1,0 +1,1908 @@
+diff --git a/idx-signals/idxsig/cli.py b/idx-signals/idxsig/cli.py
+index da37313..af22e56 100644
+--- a/idx-signals/idxsig/cli.py
++++ b/idx-signals/idxsig/cli.py
+@@ -1280,9 +1280,9 @@ def main(argv=None) -> int:
+         latest = max((d["signal_session"] for d in cands), default=None)
+         written, stamper = [], RFC3161Timestamper()
+ 
+-        def append(recs):
++        def append(recs, **kwargs):
+             try:
+-                written.extend(paper.append(recs, path=ca.LEDGER, timestamper=stamper))
++                written.extend(paper.append(recs, path=ca.LEDGER, timestamper=stamper, **kwargs))
+             except paper.ReceiptPendingError as exc:
+                 written.extend(exc.records)
+                 print(f"warning: {exc}")
+diff --git a/idx-signals/idxsig/crypto_account.py b/idx-signals/idxsig/crypto_account.py
+index c651a71..9b237ec 100644
+--- a/idx-signals/idxsig/crypto_account.py
++++ b/idx-signals/idxsig/crypto_account.py
+@@ -1,4 +1,4 @@
+-"""CRYPTO_ACCOUNT_v1: a crypto spot paper account (research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json). Paper only: no orders.
++"""CRYPTO_ACCOUNT_v1: a crypto spot paper account (research/CRYPTO_ACCOUNT_v1/protocol_v1_4.json). Paper only: no orders.
+ 
+ A separate adapter beside the frozen US stock account. It reuses that account's tested cash accounting
+ (paper_account.orders_of / account_state: cash, reservations, fills, cancels, realized P&L) by writing records
+@@ -23,7 +23,11 @@ of the same shapes, and replaces everything market-specific:
+ 
+ Version history: v1 (research/CRYPTO_ACCOUNT_v1/protocol.json, code at commit b4aec00) let an order use the
+ latest recorded quote of any age, as its decision price and as its fill, with a deadline counted from that old
+-quote. v1.1 (protocol_v1_1.json, CORRECTION_1.md) is this file; every record it writes carries rules = RULES.
++quote. v1.1 (protocol_v1_1.json, CORRECTION_1.md) corrected fill timing.
++v1.2 (protocol_v1_2.json, CORRECTION_2.md) blocks new orders after failed fetches even with a recent cache;
++v1.3 (protocol_v1_3.json, CORRECTION_3.md) rejects invalid prices at both quote input boundaries;
++v1.4 (protocol_v1_4.json, CORRECTION_4.md) guards state phases with CAS and uses as-of decision/mark valuation;
++every new record carries rules = RULES. Historical records and protocols remain unchanged.
+ 
+ Decisions come from the crypto paper scan (paper/ledger.jsonl, the frozen paper policy). The account only buys a
+ decision the policy itself made a buy; every PASS is recorded as a decline with the policy's reason. Quantities
+@@ -46,7 +50,7 @@ from .provenance import utc_stamp
+ LEDGER = paper.PAPER / "crypto_account.jsonl"
+ REPORT = paper.PAPER / "CRYPTO_ACCOUNT.md"
+ ACCOUNT_ID = "CRYPTO_ACCOUNT_v1"
+-RULES = "CRYPTO_ACCOUNT_v1.1"
++RULES = "CRYPTO_ACCOUNT_v1.4"
+ ARM = "CRYPTO_SPOT"
+ QUOTE, QUOTE_ERROR = "CRYPTO_QUOTE", "CRYPTO_QUOTE_ERROR"
+ ORDER, DECLINE, CANCEL, ENTRY, EXIT, MARK = (
+@@ -91,15 +95,26 @@ def floor8(x: float) -> float:
+ 
+ 
+ # ---------------------------------------------------------------------------------------- quotes
++def validated_book(bid, ask) -> tuple[float, float]:
++    """Reject nonfinite, nonpositive or crossed prices before recording a quote."""
++    if isinstance(bid, bool) or isinstance(ask, bool) or bid is None or ask is None:
++        raise ValueError("unusable book: Boolean or null price")
++    try:
++        bid, ask = float(bid), float(ask)
++    except (TypeError, ValueError, OverflowError) as exc:
++        raise ValueError("unusable book: non-numeric price") from exc
++    if not (math.isfinite(bid) and math.isfinite(ask) and bid > 0 and ask >= bid):
++        raise ValueError(f"unusable book: bid {bid} ask {ask}")
++    return bid, ask
++
++
+ def book_ticker(symbol: str) -> tuple[float, float, str]:
+     """Best bid and ask from Binance's public spot endpoint; raises if there is no usable answer."""
+     url = BOOK_TICKER.format(quote_url(symbol))
+     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+     with urllib.request.urlopen(req, timeout=20) as resp:
+         body = json.loads(resp.read())
+-    bid, ask = float(body["bidPrice"]), float(body["askPrice"])
+-    if not (bid > 0 and ask >= bid):
+-        raise ValueError(f"unusable book: bid {bid} ask {ask}")
++    bid, ask = validated_book(body["bidPrice"], body["askPrice"])
+     return bid, ask, url
+ 
+ 
+@@ -109,6 +124,7 @@ def fetch_quotes(symbols: list[str], get=book_ticker) -> list[dict]:
+     for sym in sorted(set(symbols)):
+         try:
+             bid, ask, url = get(sym)
++            bid, ask = validated_book(bid, ask)
+         except Exception as exc:  # noqa: BLE001 - recorded, never replaced by an older quote
+             out.append(
+                 {
+@@ -148,12 +164,26 @@ def errors_of(recs: list[dict], symbol: str) -> list[dict]:
+ 
+ 
+ def fresh_quote(recs: list[dict], symbol: str, now: datetime) -> tuple[dict | None, str]:
+-    """The newest quote observed within QUOTE_MAX_AGE before `now`, or None and why there is none."""
++    """A recent quote not superseded by a failed fetch, as of `now`.
++
++    Observation time orders events; ledger order breaks same-second ties. Future
++    events cannot authorize or block a decision. Settlement remains independent:
++    a fetch failure does not erase valid observations for an existing order.
++    """
+     seen = [q for q in quotes_of(recs, symbol) if q["observed_at"] <= _stamp(now)]
++    events = [
++        (r.get("observed_at") or r.get("attempted_at"), i, r)
++        for i, r in enumerate(recs)
++        if r["type"] in (QUOTE, QUOTE_ERROR) and r["symbol"] == symbol
++        and (r.get("observed_at") or r.get("attempted_at")) <= _stamp(now)
++    ]
++    latest = max(events, key=lambda e: (e[0], e[1]))[2] if events else None
++    errs = [latest] if latest and latest["type"] == QUOTE_ERROR else []
++    why = f"the fetch failed at {errs[-1]['attempted_at']} ({errs[-1]['error']}); " if errs else ""
+     if seen and now - _t(seen[-1]["observed_at"]) <= QUOTE_MAX_AGE:
++        if errs:
++            return None, why + "the cached quote cannot authorize a new order"
+         return seen[-1], ""
+-    errs = [e for e in errors_of(recs, symbol) if now - _t(e["attempted_at"]) <= QUOTE_MAX_AGE]
+-    why = f"the fetch failed at {errs[-1]['attempted_at']} ({errs[-1]['error']}); " if errs else ""
+     if seen:
+         return (
+             None,
+@@ -182,9 +212,26 @@ def symbol_of(decision: dict) -> str:
+     return f"{decision['instrument']['ticker']}USDT"
+ 
+ 
+-def account(recs: list[dict]) -> dict:
++class FutureLedgerStateError(ValueError):
++    """An as-of account view cannot safely reconstruct future business events."""
++
++
++def account(recs: list[dict], now: datetime | None = None) -> dict:
+     """Cash, reservations and realized P&L from the stock account's tested accounting; the open positions valued
+-    here at the latest recorded bid, with this adapter's fee, and their risk to the stop."""
++    here at the latest recorded bid, with this adapter's fee, and their risk to the stop.
++    An explicit `now` excludes later quotes and rejects future business events;
++    omitted `now` retains the historical whole-ledger reporting view."""
++    if now is not None:
++        if now.tzinfo is None or now.utcoffset() is None:
++            raise ValueError("as-of valuation needs a timezone-aware clock")
++        for r in recs:
++            if r["type"] in (ORDER, DECLINE, CANCEL, ENTRY, EXIT, MARK):
++                for field in ("made_at", "recorded_at", "filled_at", "exited_at"):
++                    if r.get(field) and _t(r[field]) > now:
++                        raise FutureLedgerStateError(f"{r['type']} has future {field}; refusing as-of valuation")
++        # Quote facts can be ignored until observed. Business events cannot be
++        # partially filtered without rebuilding accounting, so those fail closed.
++        recs = [r for r in recs if r["type"] != QUOTE or _t(r["observed_at"]) <= now]
+     st = stock.account_state(recs, ARM)
+     value = unrealized = open_risk = 0.0
+     positions = []
+@@ -230,7 +277,7 @@ def account(recs: list[dict]) -> dict:
+ def decide(recs: list[dict], cands: list[dict], now: datetime) -> list[dict]:
+     """ORDER or DECLINE for each scan decision this account has not decided yet."""
+     decided = {r["decision_id"] for r in recs if r["type"] in (ORDER, DECLINE)}
+-    state = account(recs)
++    state = account(recs, now=now)
+     today = _stamp(now)[:10]
+     placed_today = sum(1 for r in recs if r["type"] == ORDER and r["made_at"][:10] == today)
+     out = []
+@@ -264,13 +311,20 @@ def decide(recs: list[dict], cands: list[dict], now: datetime) -> list[dict]:
+         if q is None:
+             out.append({"type": DECLINE, **base, "reason": f"NO_FRESH_QUOTE: {stale}"})
+             continue
+-        ref = float((d.get("verified_price") or {}).get("quote") or 0)
+-        if not ref > 0:
++        price = d.get("verified_price")
++        raw_ref = price.get("quote") if isinstance(price, dict) else None
++        try:
++            if isinstance(raw_ref, bool):
++                raise ValueError("Boolean policy quote")
++            ref = float(raw_ref)
++            if not (math.isfinite(ref) and ref > 0):
++                raise ValueError("nonpositive or nonfinite policy quote")
++        except (TypeError, ValueError, OverflowError):
+             out.append(
+                 {
+                     "type": DECLINE,
+                     **base,
+-                    "reason": "NO_DECISION_PRICE: the policy recorded no quote",
++                    "reason": "NO_DECISION_PRICE: policy quote must be a positive finite non-Boolean number",
+                 }
+             )
+             continue
+@@ -440,7 +494,7 @@ def settle(recs: list[dict], now: datetime) -> list[dict]:
+ 
+ 
+ def mark(recs: list[dict], now: datetime) -> dict:
+-    st = account(recs)
++    st = account(recs, now=now)
+     return {
+         "type": MARK,
+         "account": ACCOUNT_ID,
+@@ -475,31 +529,76 @@ def symbols_needed(recs: list[dict], cands: list[dict]) -> list[str]:
+     return sorted(out)
+ 
+ 
++class StaleHeadConflict(RuntimeError):
++    """The phase's ledger prefix changed; the proposal was not committed."""
++
++
++MAX_PHASE_ATTEMPTS = 3
++_UNGUARDED = object()
++_STALE_HEAD_MESSAGE = "ledger head changed; recompute the proposal against the current prefix"
++
++
++def _append_at_head(append, recs, expected_head):
++    """Local translation of the frozen paper writer's exact CAS failure only."""
++    try:
++        return append(recs, expected_head=expected_head)
++    except RuntimeError as exc:
++        if type(exc) is RuntimeError and str(exc) == _STALE_HEAD_MESSAGE:
++            raise StaleHeadConflict(str(exc)) from exc
++        raise
++
++
+ def cycle(cands: list[dict], fetch, clock, append, watch_extra=()) -> dict:
+     """One run, each phase written before the next reads the ledger: observe; record fills, expiries and exits;
+-    decide; observe again the coins of orders just placed and record their fills; mark."""
++    decide; observe again the coins of orders just placed and record their fills; mark.
++    State-derived phases commit against the exact snapshot head and recompute at
++    most MAX_PHASE_ATTEMPTS times. The append callback must forward expected_head."""
+ 
+     events: list[dict] = []
++    receipt_warnings: list[str] = []
+ 
+-    def put(recs, track=True):
++    def put(recs, track=True, expected_head=_UNGUARDED):
+         if recs:
+-            append(recs)
++            try:
++                if expected_head is _UNGUARDED:
++                    append(recs)
++                else:
++                    _append_at_head(append, recs, expected_head)
++            except paper.ReceiptPendingError as exc:
++                # The writer already committed and released its lock. Never
++                # replay the business phase merely to retry external receipts.
++                recs = exc.records
++                receipt_warnings.append(str(exc))
+             if track:
+                 events.extend(recs)
+         return recs
+ 
++    def phase(compute, track=True):
++        for attempt in range(MAX_PHASE_ATTEMPTS):
++            snapshot = lines()
++            head = snapshot[-1]["record_hash"] if snapshot else None
++            proposal = compute(snapshot, clock())
++            if not proposal:
++                return []
++            try:
++                return put(proposal, track=track, expected_head=head)
++            except StaleHeadConflict:
++                if attempt + 1 == MAX_PHASE_ATTEMPTS:
++                    raise StaleHeadConflict("crypto account phase contention: retry budget exhausted")
++        raise AssertionError("unreachable")
++
+     observed = put(
+         fetch(sorted(set(symbols_needed(lines(), cands)) | set(watch_extra))), track=False
+     )
+-    now = clock()
+-    put(settle(lines(), now))
+-    decided = put(decide(lines(), cands, now))
++    phase(settle)
++    decided = phase(lambda snapshot, now: decide(snapshot, cands, now))
+     placed = sorted({r["symbol"] for r in decided if r["type"] == ORDER})
+     after = put(fetch(placed), track=False) if placed else []
+     if placed:
+-        put(settle(lines(), clock()))
+-    marked = put([mark(lines(), clock())], track=False)
+-    return {"observed": observed + after, "events": events, "mark": marked[0]}
++        phase(settle)
++    marked = phase(lambda snapshot, now: [mark(snapshot, now)], track=False)
++    return {"observed": observed + after, "events": events, "mark": marked[0],
++            "receipt_warnings": receipt_warnings}
+ 
+ 
+ # ---------------------------------------------------------------------------------------- report
+@@ -511,11 +610,11 @@ def render(recs: list[dict]) -> str:
+         default="no records yet",
+     )
+     out = [
+-        "# KOD crypto spot paper account (CRYPTO_ACCOUNT_v1, rules v1.1)",
++        "# KOD crypto spot paper account (CRYPTO_ACCOUNT_v1, rules v1.4)",
+         "",
+         (
+             f"As of the latest record ({as_of}). Paper only: no orders, no money. "
+-            "Protocol: `research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json` (supersedes protocol.json; see CORRECTION_1.md)."
++            "Protocol: `research/CRYPTO_ACCOUNT_v1/protocol_v1_4.json` (supersedes v1.3; see CORRECTION_4.md)."
+         ),
+         "",
+         (
+@@ -611,12 +710,16 @@ def verify() -> list[str]:
+     recs = lines()
+     by_hash = {r["record_hash"]: r for r in recs}
+     decided, followed, fills = set(), set(), {}
+-    for r in recs:
++    for i, r in enumerate(recs):
+         if r["type"] in (ORDER, DECLINE):
+             if r["decision_id"] in decided:
+                 problems.append(f"{r['decision_id']}: decided twice")
+             decided.add(r["decision_id"])
+         if r["type"] == ORDER:
++            if r.get("rules") in ("CRYPTO_ACCOUNT_v1.2", "CRYPTO_ACCOUNT_v1.3", "CRYPTO_ACCOUNT_v1.4"):
++                eligible, why = fresh_quote(recs[:i], r["symbol"], _t(r["made_at"]))
++                if eligible is None:
++                    problems.append(f"{r['decision_id']}: order has no eligible decision quote: {why}")
+             q = by_hash.get(r["decision_quote_record_hash"])
+             if q is None or q["type"] != QUOTE or q["symbol"] != r["symbol"]:
+                 problems.append(f"{r['decision_id']}: order does not point at its quote")
+diff --git a/idx-signals/idxsig/paper_execution_feasibility.py b/idx-signals/idxsig/paper_execution_feasibility.py
+new file mode 100644
+index 0000000..bd4cef8
+--- /dev/null
++++ b/idx-signals/idxsig/paper_execution_feasibility.py
+@@ -0,0 +1,324 @@
++"""Pure, paper-only LIMIT/IOC displayed-depth feasibility estimator.
++
++No network, authentication, broker, persistence or strategy integration. Not an
++exchange acceptance check or a promise of fills. See the companion SPEC.md.
++"""
++
++from dataclasses import dataclass
++from datetime import datetime, timedelta
++from decimal import Decimal, ROUND_CEILING, ROUND_FLOOR, localcontext
++from typing import Literal, Mapping
++
++D = Decimal
++ZERO = D("0")
++
++
++@dataclass(frozen=True)
++class FilterSnapshot:
++    symbol: str
++    observed_at: datetime
++    source: str
++    filters: tuple[Mapping[str, str | int | bool], ...]
++
++
++@dataclass(frozen=True)
++class BookSnapshot:
++    symbol: str
++    observed_at: datetime
++    source: str
++    bids: tuple[tuple[Decimal, Decimal], ...]
++    asks: tuple[tuple[Decimal, Decimal], ...]
++
++
++@dataclass(frozen=True)
++class Intent:
++    symbol: str
++    side: Literal["BUY", "SELL"]
++    quantity: Decimal
++    limit_price: Decimal
++    placed_at: datetime
++    order_type: str = "LIMIT"
++    time_in_force: str = "IOC"
++    iceberg_quantity: Decimal = ZERO
++    trailing_delta: int | None = None
++    is_order_list: bool = False
++    is_amendment: bool = False
++
++
++@dataclass(frozen=True)
++class AverageReference:
++    symbol: str
++    price: Decimal
++    minutes: int
++    observed_at: datetime
++    last_trade_at: datetime
++    source: str
++    override_state: Literal["ABSENT", "PRESENT", "UNKNOWN"]
++    override_observed_at: datetime
++    override_source: str
++
++
++@dataclass(frozen=True)
++class SimulatedCounts:
++    """Hypothetical state, never evidence about a real exchange account."""
++    symbol: str
++    as_of: datetime
++    open_orders: int
++    open_algo_orders: int
++
++
++@dataclass(frozen=True)
++class Estimate:
++    status: str
++    reason: str
++    quantity: Decimal = ZERO
++    limit_price: Decimal = ZERO
++    filled: Decimal = ZERO
++    unfilled: Decimal = ZERO
++    notional: Decimal = ZERO
++    fee_quote: Decimal = ZERO
++    fee_rate: Decimal = ZERO
++    fills: tuple[tuple[Decimal, Decimal], ...] = ()
++    filter_checks: tuple[str, ...] = ()
++    assumptions: tuple[str, ...] = ()
++
++
++class Invalid(ValueError):
++    pass
++
++
++def _number(value, *, string=False):
++    if string:
++        if not isinstance(value, str):
++            raise Invalid("FILTER_NUMBER_MUST_BE_STRING")
++        try:
++            value = D(value)
++        except Exception as exc:
++            raise Invalid("INVALID_NUMBER") from exc
++    if not isinstance(value, Decimal) or not value.is_finite():
++        raise Invalid("INVALID_NUMBER")
++    if len(value.as_tuple().digits) > 28 or abs(value.as_tuple().exponent) > 18:
++        raise Invalid("NUMBER_PRECISION_UNSUPPORTED")
++    if value < ZERO:
++        raise Invalid("NEGATIVE_NUMBER")
++    return value
++
++
++def _aware(t):
++    if not isinstance(t, datetime) or t.tzinfo is None or t.utcoffset() is None:
++        raise Invalid("TIMEZONE_REQUIRED")
++
++
++def _recent(t, now, age, name):
++    _aware(t)
++    if not isinstance(age, timedelta) or age < timedelta(0):
++        raise Invalid("INVALID_MAX_AGE")
++    if t > now:
++        raise Invalid(f"FUTURE_{name}")
++    if now - t > age:
++        raise Invalid(f"STALE_{name}")
++
++
++def _integer(value):
++    if type(value) is not int or value < 0:
++        raise Invalid("NONNEGATIVE_INTEGER_REQUIRED")
++    return value
++
++
++def _filters(snapshot, checks):
++    required = {"PRICE_FILTER": ("minPrice", "maxPrice", "tickSize"),
++                "LOT_SIZE": ("minQty", "maxQty", "stepSize"),
++                "MIN_NOTIONAL": ("minNotional",),
++                "NOTIONAL": ("minNotional", "maxNotional"),
++                "PERCENT_PRICE_BY_SIDE": ("bidMultiplierUp", "bidMultiplierDown", "askMultiplierUp", "askMultiplierDown", "avgPriceMins"),
++                "MAX_NUM_ORDERS": ("maxNumOrders",),
++                "MAX_NUM_ALGO_ORDERS": ("maxNumAlgoOrders",),
++                "ICEBERG_PARTS": ("limit",),
++                "MARKET_LOT_SIZE": ("minQty", "maxQty", "stepSize"),
++                "TRAILING_DELTA": ("minTrailingAboveDelta", "maxTrailingAboveDelta", "minTrailingBelowDelta", "maxTrailingBelowDelta"),
++                "MAX_NUM_ORDER_AMENDS": ("maxNumOrderAmends",),
++                "MAX_NUM_ORDER_LISTS": ("maxNumOrderLists",)}
++    integers = {"avgPriceMins", "maxNumOrders", "maxNumAlgoOrders", "limit", "maxNumOrderAmends", "maxNumOrderLists",
++                "minTrailingAboveDelta", "maxTrailingAboveDelta", "minTrailingBelowDelta", "maxTrailingBelowDelta"}
++    inapplicable = {"ICEBERG_PARTS": "no iceberg quantity", "MARKET_LOT_SIZE": "LIMIT not MARKET",
++                   "TRAILING_DELTA": "no trailing parameter", "MAX_NUM_ORDER_AMENDS": "new intent not amendment",
++                   "MAX_NUM_ORDER_LISTS": "standalone not order list"}
++    found = {}
++    for row in snapshot.filters:
++        name = row.get("filterType")
++        if name not in required:
++            raise Invalid(f"UNSUPPORTED_FILTER:{name}")
++        if name in found:
++            raise Invalid(f"DUPLICATE_FILTER:{name}")
++        if any(k not in row for k in required[name]):
++            raise Invalid(f"MISSING_FILTER_FIELD:{name}")
++        found[name] = {k: _integer(row[k]) if k in integers else _number(row[k], string=True) for k in required[name]}
++        if name in inapplicable:
++            checks.append(f"{name}:INAPPLICABLE:{inapplicable[name]}")
++    if not {"PRICE_FILTER", "LOT_SIZE"} <= found.keys():
++        raise Invalid("MISSING_PRICE_OR_LOT_FILTER")
++    if not ({"MIN_NOTIONAL", "NOTIONAL"} & found.keys()):
++        raise Invalid("MISSING_NOTIONAL_FILTER")
++    lot = found["LOT_SIZE"]
++    if lot["stepSize"] <= 0 or lot["maxQty"] <= 0 or lot["minQty"] > lot["maxQty"]:
++        raise Invalid("UNSUPPORTED_OR_INVALID_LOT_FILTER")
++    price = found["PRICE_FILTER"]
++    if price["maxPrice"] and price["minPrice"] > price["maxPrice"]:
++        raise Invalid("INVALID_PRICE_BOUNDS")
++    n = found.get("NOTIONAL")
++    if n and (n["maxNotional"] <= 0 or n["minNotional"] > n["maxNotional"]):
++        raise Invalid("INVALID_NOTIONAL_BOUNDS")
++    return found
++
++
++def _levels(levels, descending):
++    if len(levels) > 10000:
++        raise Invalid("TOO_MANY_LEVELS")
++    prior = None
++    for price, qty in levels:
++        _number(price)
++        _number(qty)
++        if price <= 0:
++            raise Invalid("INVALID_BOOK_PRICE")
++        if prior is not None and (price >= prior if descending else price <= prior):
++            raise Invalid("UNSORTED_OR_DUPLICATE_LEVEL")
++        prior = price
++
++
++def estimate(intent: Intent, book: BookSnapshot | None, filters: FilterSnapshot | None,
++             *, now: datetime, max_book_age: timedelta, max_filter_age: timedelta,
++             fee_rate: Decimal, average: AverageReference | None = None,
++             simulated_counts: SimulatedCounts | None = None,
++             max_reference_age: timedelta | None = None,
++             max_count_age: timedelta | None = None) -> Estimate:
++    """Round quantity down; buy limit down / sell limit up. Walk one snapshot once.
++
++    Caller supplies observed filters and an explicit quote-currency fee assumption.
++    Unconsumed IOC quantity does not rest in this model. Never reuse the same book
++    independently for multiple orders and then add fills: liquidity is not reserved.
++    """
++    checks, assumptions = [], []
++    try:
++        with localcontext() as ctx:
++            ctx.prec = 160
++            return _estimate(intent, book, filters, now, max_book_age, max_filter_age, fee_rate,
++                             average, simulated_counts, max_reference_age, max_count_age, checks, assumptions)
++    except Invalid as exc:
++        return Estimate("REJECTED", str(exc), filter_checks=tuple(checks), assumptions=tuple(assumptions))
++
++
++def _estimate(intent, book, filters, now, book_age, filter_age, fee,
++              average, counts, ref_age, count_age, checks, assumptions):
++    _aware(now)
++    _aware(intent.placed_at)
++    if intent.placed_at > now:
++        raise Invalid("FUTURE_INTENT")
++    if (intent.order_type != "LIMIT" or intent.time_in_force != "IOC"
++            or _number(intent.iceberg_quantity) != ZERO or intent.trailing_delta is not None
++            or intent.is_order_list is not False or intent.is_amendment is not False):
++        raise Invalid("ONLY_PLAIN_NEW_STANDALONE_LIMIT_IOC_SUPPORTED")
++    if book is None or filters is None:
++        raise Invalid("MISSING_BOOK_OR_FILTERS")
++    if not intent.symbol or intent.symbol != book.symbol or intent.symbol != filters.symbol:
++        raise Invalid("SYMBOL_MISMATCH")
++    if not book.source or not filters.source:
++        raise Invalid("MISSING_PROVENANCE")
++    _recent(book.observed_at, now, book_age, "BOOK")
++    _recent(filters.observed_at, now, filter_age, "FILTERS")
++    if book.observed_at < intent.placed_at:
++        raise Invalid("BOOK_BEFORE_INTENT")
++    if filters.observed_at > intent.placed_at:
++        raise Invalid("FILTERS_AFTER_INTENT")
++    if intent.side not in ("BUY", "SELL"):
++        raise Invalid("UNSUPPORTED_SIDE")
++    qty, price, fee = _number(intent.quantity), _number(intent.limit_price), _number(fee)
++    if not qty or not price or fee >= 1:
++        raise Invalid("INVALID_INTENT_OR_FEE")
++    fs = _filters(filters, checks)
++    pf, lot = fs["PRICE_FILTER"], fs["LOT_SIZE"]
++    step, tick = lot["stepSize"], pf["tickSize"]
++    qty = (qty / step).to_integral_value(rounding=ROUND_FLOOR) * step
++    if tick:  # Binance explicitly allows zero tickSize to disable this rule.
++        rounding = ROUND_FLOOR if intent.side == "BUY" else ROUND_CEILING
++        price = (price / tick).to_integral_value(rounding=rounding) * tick
++    if qty <= 0 or not lot["minQty"] <= qty <= lot["maxQty"]:
++        raise Invalid("LOT_SIZE")
++    if price <= 0 or (pf["minPrice"] and price < pf["minPrice"]) or (pf["maxPrice"] and price > pf["maxPrice"]):
++        raise Invalid("PRICE_FILTER")
++    order_notional = price * qty
++    for name in ("MIN_NOTIONAL", "NOTIONAL"):
++        if name in fs and order_notional < fs[name]["minNotional"]:
++            raise Invalid("MIN_NOTIONAL")
++    if "NOTIONAL" in fs and order_notional > fs["NOTIONAL"]["maxNotional"]:
++        raise Invalid("MAX_NOTIONAL")
++    checks.extend(f"{f}:PASS_OBSERVED_FILTER" for f in ("PRICE_FILTER", "LOT_SIZE", "MIN_NOTIONAL", "NOTIONAL") if f in fs)
++    if "PERCENT_PRICE_BY_SIDE" in fs:
++        rule = fs["PERCENT_PRICE_BY_SIDE"]
++        if average is None:
++            raise Invalid("MISSING_AVERAGE_REFERENCE")
++        if average.symbol != intent.symbol or not average.source or not average.override_source:
++            raise Invalid("REFERENCE_IDENTITY_OR_PROVENANCE")
++        for t, name in ((average.observed_at, "AVERAGE"), (average.last_trade_at, "AVERAGE_TRADE"),
++                        (average.override_observed_at, "REFERENCE_STATE")):
++            _recent(t, now, ref_age, name)
++            if t > intent.placed_at:
++                raise Invalid("REFERENCE_AFTER_INTENT")
++        if average.last_trade_at > average.observed_at:
++            raise Invalid("TRADE_AFTER_AVERAGE_OBSERVATION")
++        if average.override_state != "ABSENT":
++            raise Invalid("ACTIVE_OR_UNKNOWN_OVERRIDE_REFERENCE")
++        if _integer(average.minutes) != rule["avgPriceMins"]:
++            raise Invalid("AVERAGE_INTERVAL_MISMATCH")
++        ref = _number(average.price)
++        prefix = "bid" if intent.side == "BUY" else "ask"
++        lo, hi = rule[prefix + "MultiplierDown"], rule[prefix + "MultiplierUp"]
++        if ref <= 0 or lo <= 0 or hi < lo:
++            raise Invalid("INVALID_PERCENT_PRICE_BOUNDS")
++        if not ref * lo <= price <= ref * hi:
++            raise Invalid("PERCENT_PRICE_BY_SIDE")
++        checks.append("PERCENT_PRICE_BY_SIDE:PASS_OBSERVED_AVERAGE_AND_ABSENT_OVERRIDE")
++    if {"MAX_NUM_ORDERS", "MAX_NUM_ALGO_ORDERS"} & fs.keys():
++        if counts is None:
++            raise Invalid("MISSING_SIMULATED_ACCOUNT_COUNTS")
++        if counts.symbol != intent.symbol:
++            raise Invalid("COUNT_SYMBOL_MISMATCH")
++        _recent(counts.as_of, now, count_age, "SIMULATED_COUNTS")
++        if counts.as_of > intent.placed_at:
++            raise Invalid("COUNTS_AFTER_INTENT")
++        ordinary, algo = _integer(counts.open_orders), _integer(counts.open_algo_orders)
++        if algo > ordinary:
++            raise Invalid("ALGO_COUNT_EXCEEDS_TOTAL")
++        assumptions.append("SIMULATED_ACCOUNT_COUNTS_ONLY:NOT_ACTUAL_ACCOUNT_VERIFICATION")
++        if "MAX_NUM_ORDERS" in fs:
++            if ordinary + 1 > fs["MAX_NUM_ORDERS"]["maxNumOrders"]:
++                raise Invalid("MAX_NUM_ORDERS")
++            checks.append("MAX_NUM_ORDERS:PASS_SIMULATED_COUNT_PLUS_ONE")
++        if "MAX_NUM_ALGO_ORDERS" in fs:
++            if algo > fs["MAX_NUM_ALGO_ORDERS"]["maxNumAlgoOrders"]:
++                raise Invalid("MAX_NUM_ALGO_ORDERS")
++            checks.append("MAX_NUM_ALGO_ORDERS:PASS_SIMULATED_COUNT_PLUS_ZERO_NON_ALGO")
++    _levels(book.bids, True)
++    _levels(book.asks, False)
++    if not book.bids or not book.asks:
++        raise Invalid("MISSING_BOOK_SIDE")
++    if book.bids[0][0] >= book.asks[0][0]:
++        raise Invalid("CROSSED_OR_LOCKED_BOOK")
++    remaining, notional, fills = qty, ZERO, []
++    reason = "INSUFFICIENT_DISPLAYED_DEPTH"
++    for p, available in (book.asks if intent.side == "BUY" else book.bids):
++        if (p > price if intent.side == "BUY" else p < price):
++            reason = "LIMIT_PRICE"
++            break
++        # Conservative: do not assume odd-lot dust can be combined across levels.
++        take = (min(remaining, available) / step).to_integral_value(rounding=ROUND_FLOOR) * step
++        if take:
++            fills.append((p, take))
++            notional += p * take
++            remaining -= take
++        if remaining == 0:
++            break
++    filled = qty - remaining
++    status = "COMPLETE" if remaining == 0 else "PARTIAL" if filled else "UNFILLED"
++    return Estimate(status, "DISPLAYED_DEPTH_ONLY" if not remaining else reason,
++                    qty, price, filled, remaining, notional, notional * fee, fee, tuple(fills),
++                    tuple(checks), tuple(assumptions))
+diff --git a/idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_2.md b/idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_2.md
+new file mode 100644
+index 0000000..c496b08
+--- /dev/null
++++ b/idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_2.md
+@@ -0,0 +1,54 @@
++# CRYPTO_ACCOUNT_v1 — Correction 2 (rules v1.2)
++
++Local amendment candidate prepared 2026-10-31; not published or activated.
++Source inspected: `41b8eb398b900da4cf251efe3971e31dae044ec9`.
++
++## Defect and reproduction
++
++v1.1's `fresh_quote` returned a cached quote within five minutes before checking
++recorded fetch errors. A failed current request with a one-minute-old cache
++therefore created an ACCT_ORDER and reservation (not a backdated fill), despite
++the v1.1 documentation promising NO_FRESH_QUOTE. The added full-cycle regression
++uses `fetch_quotes` with a getter that raises ConnectionError, not a fabricated
++success. It fails on the unchanged source with ACCT_ORDER and passes on v1.2.
++
++## Correction
++
++Before allowing a new order, require the most recent quote/failure event as of
++the decision clock to be a successful quote, still within the existing five-minute
++age limit. Event timestamps determine recency; ledger sequence resolves
++same-second ties. Future events cannot block or authorize the decision. A later
++successful observation restores eligibility for a new independent decision; an
++already declined decision is never retried or rewritten.
++
++Existing pending reservations and open positions are retained on failure. Valid
++recorded observations still settle existing orders under unchanged v1.1 rules;
++otherwise pending orders wait or expire, and positions wait for a real exit
++observation. No synthetic replacement price, fill, cancellation, or exit is added.
++The verifier applies the new eligibility check only to v1.2 orders, using their
++preceding ledger records, never later same-second events.
++
++## Preservation and verification
++
++The v1/v1.1 protocol files and all frozen US account files remain byte-identical.
++New records declare CRYPTO_ACCOUNT_v1.2. Historical records and research experiments
++are not edited. No production ledger was accessed for this local repair, so this
++is not a claim about how many live records were affected.
++
++Run from idx-signals:
++`python -m unittest tests.test_crypto_account tests.test_paper_account tests.test_paper_book tests.test_paper_account_report`
++
++43 tests pass: 22 crypto tests and 21 adjacent account/book/report tests, including
++US frozen fingerprint checks. The regression covers recent cache plus actual fetch
++failure, preserved pending/open state, same-second failure/recovery, future error,
++recovery without retrying a declined decision, and version-aware verification.
++All inputs are synthetic; no network requests, real-money orders, CI, publication,
++merge, deployment, or 2024 research data access.
++
++## Remaining simulation limits (not changed here)
++
++Fractional quantity sizing still ignores exchange tick/lot/min-notional filters.
++The adapter records bid/ask prices but not displayed quantity/depth and assumes a
++whole-order fill at the first qualifying ask, without partial fills or queue/latency
++modelling. Address these in a separately reviewed paper-only execution amendment,
++not by changing frozen historical protocols or treating testnet as production depth.
+diff --git a/idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_3.md b/idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_3.md
+new file mode 100644
+index 0000000..2cd13d1
+--- /dev/null
++++ b/idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_3.md
+@@ -0,0 +1,45 @@
++# CRYPTO_ACCOUNT_v1 — Correction 3 (rules v1.3)
++
++Local successor candidate; not published, activated or deployed. Extends the
++reviewed local v1.2 candidate without modifying its protocol, patches or archive.
++
++## Confirmed input defect
++
++`book_ticker` tested positive bid and ask >= bid, but positive infinity could pass.
++`fetch_quotes` trusted injected getter results without checking them at all.
++Offline full-cycle reproductions showed malformed quote records appended for
++NaN, positive/negative infinity, zero/negative and crossed prices. Some malformed
++feeds produced paper fills; an infinite ask reserved 962.50 in the synthetic
++10,000 account. These are fixture results, not claims about production records.
++
++With a fixture open position and a new independent decision, an infinite bid/ask
++was committed before sizing raised `OverflowError: cannot convert float infinity
++to integer`. The ledger grew from five records to six, ending in an invalid quote.
++
++## Minimal correction
++
++A shared validator rejects Boolean/null/non-numeric inputs, preserves legitimate
++numeric-string parsing, converts prices to float and requires finite positive bid,
++finite ask and ask >= bid. Both the HTTP parser and the injected getter boundary
++use it. The existing fetch exception path records CRYPTO_QUOTE_ERROR instead of
++CRYPTO_QUOTE, and the existing v1.2 eligibility gate declines new orders without
++reserving cash. No strategy, sizing, settlement or position rules are changed.
++Existing valid positions continue to use their last real recorded quote.
++
++New records identify v1.3. The verifier retains the same failed-fetch eligibility
++check for both v1.2 and v1.3 orders. Historical protocols/records are not rewritten;
++this repair does not sanitize earlier corrupted records, inspect production
++ledgers or assert that none exist. Earlier code pins intentionally remain the
++historical versions, with the new source hash recorded only in protocol_v1_3.json.
++
++## Offline verification
++
++Eight new tests exercise invalid injected books, the actual mocked HTTP parser,
++HTTP infinity through the full cycle, recent-cache fallback rejection, position
++preservation/no mid-cycle crash, valid finite locked quotes, numeric strings, and
++unrelated valid-symbol progress while another position has an invalid fetch.
++The initial six tests produced 15 failed subcases and one error before the fix;
++the expanded final eight tests also fail against unchanged v1.2 source (trace
++preserved separately). After correction: eight pass; 81 combined account/
++feasibility/adjacent tests pass with socket connections blocked.
++No network requests, production ledger edits, real orders or remote writes.
+diff --git a/idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_4.md b/idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_4.md
+new file mode 100644
+index 0000000..1aee7db
+--- /dev/null
++++ b/idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_4.md
+@@ -0,0 +1,72 @@
++# CRYPTO_ACCOUNT_v1 — Correction 4 (rules v1.4)
++
++Local successor candidate, not remotely published or activated. Preserves v1.2
++and v1.3 protocol/patch history. No production ledger, strategy, shared US account
++engine or frozen `paper.py` implementation is changed.
++
++## A. Stale-prefix concurrency
++
++The supplied offline audit was reproduced: cycle A computed three orders and
++paused before appending; cycle B committed three orders on the same unreserved
++prefix. A then appended stale proposals. Six orders reserved 5,774.99999544 USDT,
++with planned risk 299.99999976 against a 150 cap. The hash chain remained valid;
++disjoint candidates also passed the existing account verifier. This is a
++controlled allowed interleaving, not a claim about an actual production incident.
++
++Each settlement, decision and mark phase now reads a single prefix, computes
++against that snapshot and sends its exact last hash as `expected_head` to the
++existing atomic writer. On the writer's exact stale-head RuntimeError, a narrow
++local adapter raises `StaleHeadConflict`; the phase reloads/recomputes at most
++three total attempts. Exhaustion fails closed without committing stale records.
++Unrelated errors propagate, never masquerading as contention.
++
++Quote observations remain unguarded facts. An empty recomputation produces no
++phantom order/event or follow-on fetch. Only committed proposals are tracked.
++ReceiptPendingError means an already-committed write: its records and warning are
++kept, and the business phase is NOT retried. The existing CLI receipt warning
++behavior is retained. No ledger lock encloses network receipt operations.
++Only the crypto CLI callback and test Base.append forward the added keyword;
++the frozen shared writer itself is unchanged.
++
++Scope: this protects state phases using `cycle` and its callback contract; it
++does not claim to constrain an external writer that deliberately bypasses CAS.
++It does not retroactively repair records or add a complete historical risk audit.
++
++## B. Separate as-of valuation guard
++
++The separate artificial future-row fixture was reproduced: a future quote for
++an existing position changed today's mark equity from 9,998.10 to 10,951.07 and
++changed another candidate from ORDER to risk-limit DECLINE, even though settlement
++and fresh_quote ignored that future quote. No normal forward contamination is
++asserted; this tests an inconsistent future-row/stale-clock input.
++
++`decide` and `mark` now pass their clock to `account`. Only recorded quotes at or
++before that clock value positions. The ordinary whole-ledger `account(recs)`
++view remains unchanged for historical reporting. Future business events cannot
++be safely reconstructed by dropping just quote rows: if an order/decline/cancel/
++entry/exit/mark has a future made/recorded/filled/exited time, as-of valuation
++raises FutureLedgerStateError. Planned future validity and holding deadlines are
++not mistaken for executed future events. No history is rewritten.
++
++## C. Separate policy-reference input boundary
++
++With a valid 99/100 book, a policy `verified_price.quote` of positive infinity or
++non-numeric text could crash after the observation had already appended. Boolean
++True could coerce to 1.0 and create an unintended 1.01 limit. The successor requires
++a positive finite non-Boolean reference and catches conversion failures. Invalid
++or malformed policy references produce DECLINE/NO_DECISION_PRICE and processing
++continues for unrelated valid candidates. Legitimate numeric strings remain
++supported. No policy threshold or strategy decision is changed.
++
++## Verification
++
++100 combined offline tests pass with socket connections prohibited: 11 new CAS
++tests, 5 separate as-of tests and 3 policy-reference tests, plus all 81 prior focused tests. Controlled
++duplicate/disjoint candidates, one remaining slot, stale fill and mark, empty
++recomputation, retry exhaustion, unchanged bytes on rejected CAS, cash/risk/daily
++bounds, hash chains, CLI forwarding and receipt-pending are covered. A real writer
++receipt-failure fixture obtains the ledger lock nonblockingly during receipt
++handling, proving the append lock was already released. No receipt service called.
++
++Three selected duplicate/disjoint/future-valuation regressions fail against the
++unchanged v1.3 source and pass the successor. No remote CI, orders or publication.
+diff --git a/idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json b/idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json
+new file mode 100644
+index 0000000..410674b
+--- /dev/null
++++ b/idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json
+@@ -0,0 +1,44 @@
++{
++ "study_id": "CRYPTO_ACCOUNT_v1",
++ "rules_version": "CRYPTO_ACCOUNT_v1.2",
++ "prepared_at": "2026-10-31T18:41:00Z",
++ "status": "local amendment candidate; not published or activated",
++ "source_commit": "41b8eb398b900da4cf251efe3971e31dae044ec9",
++ "supersedes": {
++  "file": "research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json",
++  "sha256": "b3021091f1f9220e8bd7514b37c0c61a6ddbd423839ec7a77219414152d0776d",
++  "kept_unchanged": true
++ },
++ "correction": "research/CRYPTO_ACCOUNT_v1/CORRECTION_2.md",
++ "changed": [
++  "A failed latest quote fetch at or before decision time blocks new orders and reservations even when a cached quote is younger than five minutes; DECLINE NO_FRESH_QUOTE includes the recorded failure.",
++  "Latest observation is determined by event timestamp with ledger order resolving same-second ties. A subsequent successful observation restores eligibility; future observations and errors cannot affect a current decision.",
++  "verify checks this gate for v1.2 orders against only the ledger prefix before that order; old-version records retain their original semantics."
++ ],
++ "unchanged": [
++  "Existing pending orders, reservations, fills, cancellations, expiry and exits use the v1.1 settlement rules. Failures do not fabricate quotes or erase already recorded valid observations.",
++  "Limits, sizing, fee, chase, stop distance, order life, holding period, policy decision source and PASS handling.",
++  "All historical ledger records, frozen v1 and v1.1 protocols, frozen US account files/pins, and existing research experiments. No production ledger was read or written for this local repair."
++ ],
++ "account": {
++  "start_cash_usdt": 10000.0,
++  "risk_per_position": 0.005,
++  "max_aggregate_planned_risk": 0.015,
++  "max_new_orders_per_utc_day": 3,
++  "max_position_fraction": 0.2,
++  "leverage": "none"
++ },
++ "fees": {
++  "taker_fee_per_side": 0.001,
++  "spread": "paid by buying at the ask and selling at the bid"
++ },
++ "pins": {
++  "idxsig/crypto_account.py": "a313e18076475d8f8f5ec287d7ae84ab5adb3b75b1190799f8b1a697eb000147",
++  "idxsig/paper_account.py": "2d7cbc536695d0298b3bfa508824bd5e68ea8c6566800e59a0681666dbb00bfd",
++  "research/PAPER_ACCOUNT_v1/protocol.json": "2a36e8777be15fc58886d8defbc174ea83892acb415db7e6e08b65f379186f0a",
++  "research/CRYPTO_ACCOUNT_v1/protocol.json": "60ff96b071f10d41fa5537cc8915cccf0aea4143c948da3fd57baac6bdf4cce7",
++  "research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json": "b3021091f1f9220e8bd7514b37c0c61a6ddbd423839ec7a77219414152d0776d"
++ },
++ "rechecked_head": "5eae447c1c16dcff3daf02da6bd6ee836069eaae",
++ "recheck": "crypto source, test and v1.1 protocol blobs unchanged"
++}
+diff --git a/idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_3.json b/idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_3.json
+new file mode 100644
+index 0000000..fc43971
+--- /dev/null
++++ b/idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_3.json
+@@ -0,0 +1,43 @@
++{
++ "study_id": "CRYPTO_ACCOUNT_v1",
++ "rules_version": "CRYPTO_ACCOUNT_v1.3",
++ "prepared_at": "2026-10-31T19:12:00Z",
++ "status": "local successor candidate; not published or activated",
++ "source_upstream_commit": "41b8eb398b900da4cf251efe3971e31dae044ec9",
++ "source_local_parent": "319012922c2d0f23e91398f8d01c0cafe7288a7e",
++ "supersedes": {
++  "file": "research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json",
++  "sha256": "91a15db636485ad91250217b99452c1c2af3cd9f032a9fbff5003b916f2bf26a",
++  "kept_unchanged": true
++ },
++ "correction": "research/CRYPTO_ACCOUNT_v1/CORRECTION_3.md",
++ "changed": [
++  "Reject Boolean, null, non-numeric, nonfinite, nonpositive or crossed prices at HTTP and injected getter boundaries before recording quotes; retain numeric-string parsing. Invalid input records CRYPTO_QUOTE_ERROR; the existing failed-fetch gate declines new orders without reservation.",
++  "New records carry v1.3; existing v1.2 eligibility verifier remains applicable to both local candidate versions."
++ ],
++ "unchanged": [
++  "Strategy, sizing, fill/exit rules, fees and account limits.",
++  "All historical protocol files, earlier archived candidates, stock account files and research engines.",
++  "No production ledger accessed or rewritten; existing malformed historical records are not repaired by this input-boundary change."
++ ],
++ "account": {
++  "start_cash_usdt": 10000.0,
++  "risk_per_position": 0.005,
++  "max_aggregate_planned_risk": 0.015,
++  "max_new_orders_per_utc_day": 3,
++  "max_position_fraction": 0.2,
++  "leverage": "none"
++ },
++ "fees": {
++  "taker_fee_per_side": 0.001,
++  "spread": "paid by buying at the ask and selling at the bid"
++ },
++ "pins": {
++  "idxsig/crypto_account.py": "5644fbb05e479e131d27da846063c065d971a348c46ef3c76d4043d6135386e3",
++  "idxsig/paper_account.py": "2d7cbc536695d0298b3bfa508824bd5e68ea8c6566800e59a0681666dbb00bfd",
++  "research/PAPER_ACCOUNT_v1/protocol.json": "2a36e8777be15fc58886d8defbc174ea83892acb415db7e6e08b65f379186f0a",
++  "research/CRYPTO_ACCOUNT_v1/protocol.json": "60ff96b071f10d41fa5537cc8915cccf0aea4143c948da3fd57baac6bdf4cce7",
++  "research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json": "b3021091f1f9220e8bd7514b37c0c61a6ddbd423839ec7a77219414152d0776d",
++  "research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json": "91a15db636485ad91250217b99452c1c2af3cd9f032a9fbff5003b916f2bf26a"
++ }
++}
+diff --git a/idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_4.json b/idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_4.json
+new file mode 100644
+index 0000000..8200e25
+--- /dev/null
++++ b/idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_4.json
+@@ -0,0 +1,48 @@
++{
++ "study_id": "CRYPTO_ACCOUNT_v1",
++ "rules_version": "CRYPTO_ACCOUNT_v1.4",
++ "prepared_at": "2026-10-31T19:23:00Z",
++ "status": "local successor candidate; not published or activated",
++ "source_upstream_commit": "41b8eb398b900da4cf251efe3971e31dae044ec9",
++ "source_local_parent": "99ee3ab6c175241313810bfd57b0e1c4ddb82a3f",
++ "supersedes": {
++  "file": "research/CRYPTO_ACCOUNT_v1/protocol_v1_3.json",
++  "sha256": "01352c9e9e3ca63b3b4e6d0b0141c4e7fa18dcec4cb6d6f0a60a7a281d8f78d7",
++  "kept_unchanged": true
++ },
++ "correction": "research/CRYPTO_ACCOUNT_v1/CORRECTION_4.md",
++ "changed": [
++  "Settlement, decision and mark phases capture one prefix and use existing expected_head CAS. Exact stale-head failures trigger bounded recompute (three total attempts), never stale-proposal replay.",
++  "Receipt-pending errors represent already-committed records and never cause business retries; unrelated failures propagate. Observation appends remain unguarded.",
++  "decide and mark value positions only from quotes observed by caller now. Future business-event timestamps fail closed; whole-ledger reporting semantics remain unchanged when no as-of clock supplied.",
++  "Invalid Boolean, null, non-numeric or nonfinite/nonpositive policy references decline NO_DECISION_PRICE; valid numeric strings remain supported and unrelated candidates proceed."
++ ],
++ "unchanged": [
++  "Strategy thresholds, cash/risk limits, sizing formula, fee and settlement rules.",
++  "Frozen shared paper.py, paper_account.py, stock protocols, existing historical records and previous crypto protocols/candidates.",
++  "No network, production ledger access, remote CI or real orders."
++ ],
++ "account": {
++  "start_cash_usdt": 10000.0,
++  "risk_per_position": 0.005,
++  "max_aggregate_planned_risk": 0.015,
++  "max_new_orders_per_utc_day": 3,
++  "max_position_fraction": 0.2,
++  "leverage": "none"
++ },
++ "fees": {
++  "taker_fee_per_side": 0.001,
++  "spread": "paid by buying at the ask and selling at the bid"
++ },
++ "pins": {
++  "idxsig/crypto_account.py": "16aefa3609b8ab3ee76b490e094d3b1be4db17b2588b637206b8bfa13b62af5a",
++  "idxsig/cli.py": "ea234dc5da58c196416df8e5db2a9d7560f5f38d3dda4d7afb34e7e835c177d2",
++  "idxsig/paper.py": "c9c017d27f453e232ccc9db1401f9c83da9a544e6ef1422b7e7636f32fdeb624",
++  "idxsig/paper_account.py": "2d7cbc536695d0298b3bfa508824bd5e68ea8c6566800e59a0681666dbb00bfd",
++  "research/PAPER_ACCOUNT_v1/protocol.json": "2a36e8777be15fc58886d8defbc174ea83892acb415db7e6e08b65f379186f0a",
++  "research/CRYPTO_ACCOUNT_v1/protocol.json": "60ff96b071f10d41fa5537cc8915cccf0aea4143c948da3fd57baac6bdf4cce7",
++  "research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json": "b3021091f1f9220e8bd7514b37c0c61a6ddbd423839ec7a77219414152d0776d",
++  "research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json": "91a15db636485ad91250217b99452c1c2af3cd9f032a9fbff5003b916f2bf26a",
++  "research/CRYPTO_ACCOUNT_v1/protocol_v1_3.json": "01352c9e9e3ca63b3b4e6d0b0141c4e7fa18dcec4cb6d6f0a60a7a281d8f78d7"
++ }
++}
+diff --git a/idx-signals/research/PAPER_EXECUTION_FEASIBILITY_v1/FILTER_EVIDENCE_EXTENSION.md b/idx-signals/research/PAPER_EXECUTION_FEASIBILITY_v1/FILTER_EVIDENCE_EXTENSION.md
+new file mode 100644
+index 0000000..77521d1
+--- /dev/null
++++ b/idx-signals/research/PAPER_EXECUTION_FEASIBILITY_v1/FILTER_EVIDENCE_EXTENSION.md
+@@ -0,0 +1,73 @@
++# Filter evidence extension — local candidate, not integrated
++
++This additive amendment supersedes only the applicability/evidence portion of
++SPEC.md. The earlier local prototype commit and first public rejection artifacts
++remain available unchanged. No quote-account module, strategy or ledger changed.
++
++## Explicit request scope and evidence
++
++Intent now names LIMIT, IOC, zero iceberg quantity, no trailing parameter, no
++order list and no amendment. Any other shape is rejected, so inapplicability is
++not inferred for an unsupported order type. Every supplied filter is inspected;
++`Estimate.filter_checks` records the interpretation even on later rejection.
++Unknown or duplicate filters remain rejections.
++
++Verified against [Binance filters](https://developers.binance.com/en/docs/products/spot/filters):
++iceberg-parts, market-lot and trailing-delta constraints do not apply to this plain
++limit intent. A new standalone intent also creates no order list or amendment.
++These five filters are marked INAPPLICABLE, never silently removed. Open-order
++limits count the new normal order; an algo count receives no increment because
++this request is not conditional.
++
++`SimulatedCounts` must provide symbol-specific total/algo open counts and as-of
++time. Missing, negative, Boolean, stale, future or inconsistent counts reject.
++Even for the non-algo request, supplied MAX_NUM_ALGO_ORDERS requires counts; this
++is deliberately conservative. A total at its maximum blocks the additional
++order; an algo count above its maximum also rejects. Every use emits
++`SIMULATED_ACCOUNT_COUNTS_ONLY:NOT_ACTUAL_ACCOUNT_VERIFICATION`. This is not
++evidence of actual holdings, balances or exchange account eligibility.
++
++## Percentage-price evidence
++
++PERCENT_PRICE_BY_SIDE checks the side-specific multiplier bounds against a fresh
++`AverageReference` with the exact required minute interval. Missing/mismatched
++evidence rejects. Its observation, last-trade and overriding-reference-state
++times must be timezone-aware, no later than intent time and within the caller's
++reference age limit. A trade later than the average observation also rejects.
++
++Current [official documentation](https://developers.binance.com/en/docs/catalog/core-trading-spot-trading/api/rest-api/market)
++provides average interval, price and last-trade time via avgPrice. It separately
++defines referencePrice, including null or error -2043 for absence. The current
++filter specification gives a non-null overriding reference precedence over the
++average. Therefore this bounded implementation accepts averages only with fresh
++observed ABSENT override state and its provenance. PRESENT/UNKNOWN rejects;
++support for non-null overriding references is intentionally not added here.
++An inaccessible endpoint is not evidence that a reference is absent.
++
++This remains a partial **feasibility model**, not full exchange parity. Price-range
++execution rules, account/exchange/asset constraints outside the supplied subset,
++actual fee asset/rate and liquidity persistence are still not verified. COMPLETE
++is only the displayed-depth estimate under the declared simulated assumptions.
++
++## Verification and public observation
++
++`python -m unittest tests.test_paper_execution_filter_evidence tests.test_paper_execution_feasibility tests.test_crypto_account tests.test_paper_account tests.test_paper_book tests.test_paper_account_report`
++
++73 offline tests pass (10 new applicability/evidence fixtures). Socket connections
++were prohibited. Includes inapplicable-filter audit trails, unsupported request
++shapes, missing/mismatched/stale/future references, side bounds, reference override
++states, absent/invalid/stale counts, total/algo caps and simulated-state labeling.
++
++The initial bounded public observation used **two** of the six allowed GETs:
++BTCUSDT avgPrice succeeded, reporting a 5-minute average. The data-only host's
++referencePrice endpoint returned HTTP 404 HTML. Capture stopped immediately:
++no retry, alternative host, refreshed book or BEAMX request. No absence assertion
++or fill estimate was manufactured from that error. Raw response hashes and
++request/receive times are retained in the separate capture directory.
++
++After separate authorization for one documented public-host fallback (404 was
++endpoint unavailability), `api.binance.com/api/v3/referencePrice?symbol=BTCUSDT`
++returned HTTP 451 with a restricted-location eligibility message. All further
++network requests stopped immediately. Total extension GETs: **three**, not six.
++There was no further host switch, retry or bypass. Reference state remains UNKNOWN;
++no real-metadata eligibility or fill result is claimed.
+diff --git a/idx-signals/research/PAPER_EXECUTION_FEASIBILITY_v1/SPEC.md b/idx-signals/research/PAPER_EXECUTION_FEASIBILITY_v1/SPEC.md
+new file mode 100644
+index 0000000..24e8188
+--- /dev/null
++++ b/idx-signals/research/PAPER_EXECUTION_FEASIBILITY_v1/SPEC.md
+@@ -0,0 +1,86 @@
++# Paper execution feasibility v1 — local, disconnected prototype
++
++## Scope and API
++
++`idxsig.paper_execution_feasibility.estimate(intent, book, filters, *, now,
++max_book_age, max_filter_age, fee_rate) -> Estimate` is a pure function for a
++single plain LIMIT/IOC-style base-quantity intent. All prices and quantities are
++Decimal, never float. It accepts timestamped `BookSnapshot` and `FilterSnapshot`
++objects supplied by the caller. It does not fetch anything, route orders, reserve
++cash/liquidity, update a strategy, or write any ledger. No credentials exist here.
++
++The caller must retain the original inputs and public-data provenance together
++with each estimate. Filter and book timestamps mean **when locally observed**,
++not an inferred exchange event time. Required ordering is
++`filters.observed_at <= intent.placed_at <= book.observed_at <= now`.
++Book and filter maximum ages are caller-supplied, independent, nonnegative values.
++Unknown age, missing data, future data and timezone-naive timestamps fail closed.
++
++Outputs include normalized quantity/limit, per-level assumed fills, unfilled
++quantity, gross quote notional and quote-currency fee under the supplied rate.
++States are REJECTED, UNFILLED, PARTIAL or COMPLETE; every state has a reason.
++COMPLETE means only that this snapshot displayed sufficient eligible depth.
++It is **not** exchange acceptance or a guaranteed execution.
++
++## Filter subset (not complete Binance parity)
++
++Rules checked against official Binance spot documentation on 2026-10-31:
++https://github.com/binance/binance-spot-api-docs/blob/master/filters.md
++
++- PRICE_FILTER: enabled minimum/maximum and tick multiples. An explicitly zero
++  price bound or tick disables that component; missing fields are not zero.
++- LOT_SIZE: quantity minimum/maximum and step multiples. Missing or zero lot
++  steps are unsupported and rejected, not guessed.
++- MIN_NOTIONAL / NOTIONAL: limit price times normalized order quantity against
++  applicable minimum/maximum. At least one notional filter must be present.
++  Market-order flags do not apply because this estimator supports only limits.
++- Unsupported or duplicate filter types fail closed. Do **not** strip observed
++  filters to force a result. Most real symbols may remain unsupported until
++  percentage-price, account/exchange/asset limits and their required evidence are
++  implemented. Even supported symbol filters do not prove account eligibility.
++
++Quantity rounds downward; BUY limits downward and SELL limits upward to the
++observed increments. Bounds and notional are checked **after** rounding. This is
++a disclosed intent normalization, not a claim that the exchange rounds requests.
++Decimals are constrained to 28 significant digits and exponent magnitude <=18;
++unsupported precision and nonfinite/negative values are explicitly rejected.
++
++## Depth and reuse decision
++
++Inspected existing `microstructure.book_fill` and retained its best-first,
++consume-only-displayed-depth algorithm. Its float arithmetic, buy quote-budget
++semantics and lack of limit/filter validation make direct reuse unsafe for exact
++base-quantity filter checks. The new narrow Decimal walker is cross-checked
++against that existing utility on an equivalent complete-fill fixture. Existing
++microstructure code is byte-identical; no second collector is introduced.
++
++Books must be strictly ordered with no duplicate price levels, positive prices,
++nonnegative quantities, both sides present and no locked/crossed top-of-book.
++Consumption is capped by each displayed quantity and the normalized limit.
++Each level's usable quantity rounds down to a lot; dust is not combined across
++levels (intentionally conservative). Residual IOC quantity is explicitly unfilled,
++not silently booked later. A valid order can have a partial execution worth less
++than order-level minimum notional; that is not retroactively rejected.
++
++Fee rate is mandatory, finite and in [0,1); fees are assumed paid in quote
++currency on consumed notional, with no discount or actual account-tier claim.
++No queue priority, latency, cancellation races, hidden liquidity, market impact,
++funding availability, exchange balance, fee rounding or actual fee asset is
++modelled. The snapshot is an optimistic upper bound on available displayed
++liquidity, not evidence it will remain there. Repeated independent estimates on
++the same snapshot **must not be summed**: this function does not share consumption
++across orders. Testnet depth is not evidence of production liquidity.
++
++## Verification
++
++`python -m unittest tests.test_paper_execution_feasibility`
++
++20 synthetic adversarial tests cover min/max notional, quantity and price rounding,
++missing/zero increments, unsupported filters, partial and absent fills, insufficient
++depth, dust, fee accounting, stale/missing/future inputs, timestamp ordering,
++malformed books, nonfinite numbers, disabled price constraints and bounded fills.
++The combined 63-test suite includes the separately reviewed v1.2 repair and frozen
++US account preservation tests. All run with socket connections prohibited.
++
++No strategy, account, historical protocol, production ledger or research dataset
++is modified; this prototype is not integrated, activated or remotely published.
+diff --git a/idx-signals/tests/test_crypto_account.py b/idx-signals/tests/test_crypto_account.py
+index e5df4f5..36a453e 100644
+--- a/idx-signals/tests/test_crypto_account.py
++++ b/idx-signals/tests/test_crypto_account.py
+@@ -74,8 +74,8 @@ class Base(unittest.TestCase):
+         self.addCleanup(p.stop)
+         self.m = Market()
+ 
+-    def append(self, recs):
+-        return paper.append(recs, path=self.ledger)
++    def append(self, recs, **kwargs):
++        return paper.append(recs, path=self.ledger, **kwargs)
+ 
+     def run_cycle(self, cands, advance=timedelta(0)):
+         self.m.t += advance
+@@ -192,6 +192,77 @@ class Lifecycle(Base):
+ class StaleQuotes(Base):
+     """v1.1 regressions: a failed fetch never becomes a fill, an old quote never becomes a decision or a fill."""
+ 
++    def test_failed_current_fetch_never_reserves_on_one_minute_old_cache(self):
++        self.append([_quote("AAAUSDT", 99.0, 99.1, T0 - timedelta(minutes=1))])
++        before = ca.account(ca.lines())
++        run = self.run_cycle([_decision("AAA")])
++        self.assertEqual(self.kinds(run), [(ca.DECLINE, "NO_FRESH_QUOTE")])
++        self.assertIn("the fetch failed", run["events"][0]["reason"])
++        self.assertEqual(len(self.of(ca.QUOTE_ERROR)), 1)
++        self.assertEqual((self.of(ca.ORDER), self.of(ca.ENTRY)), ([], []))
++        self.assertEqual(ca.account(ca.lines()), before)
++        self.assertEqual(run["mark"]["reserved"], 0.0)
++        self.assertEqual(ca.verify(), [])
++
++    def test_failed_fetch_preserves_existing_pending_reservation(self):
++        cands = [_decision("AAA")]
++        self.m.book["AAAUSDT"] = (101.5, 101.6)
++        self.run_cycle(cands)
++        before = ca.account(ca.lines())
++        del self.m.book["AAAUSDT"]
++        run = self.run_cycle(cands, timedelta(minutes=1))
++        self.assertEqual(self.kinds(run), [])
++        self.assertEqual(ca.account(ca.lines()), before)
++        self.assertEqual((self.of(ca.ENTRY), self.of(ca.CANCEL)), ([], []))
++        self.assertEqual(ca.verify(), [])
++
++    def test_failed_fetch_preserves_open_position_without_fabricated_exit(self):
++        cands = [_decision("AAA")]
++        self.m.book["AAAUSDT"] = (99.0, 99.1)
++        self.run_cycle(cands)
++        before = ca.account(ca.lines())
++        del self.m.book["AAAUSDT"]
++        run = self.run_cycle(cands, timedelta(minutes=1))
++        self.assertEqual(self.kinds(run), [])
++        self.assertEqual(ca.account(ca.lines()), before)
++        self.assertEqual(self.of(ca.EXIT), [])
++        self.assertEqual(ca.verify(), [])
++
++    def test_same_second_failure_and_recovery_follow_ledger_order(self):
++        self.append([_quote("AAAUSDT", 99.0, 99.1, T0)])
++        self.append(self.m.fetch(["AAAUSDT"]))  # real failure at the same second
++        self.assertIsNone(ca.fresh_quote(ca.lines(), "AAAUSDT", self.m.t)[0])
++        self.append([_quote("AAAUSDT", 99.0, 99.2, T0)])
++        self.assertIsNotNone(ca.fresh_quote(ca.lines(), "AAAUSDT", self.m.t)[0])
++
++    def test_future_failure_does_not_block_current_quote(self):
++        self.append([_quote("AAAUSDT", 99.0, 99.1, T0)])
++        self.m.t += timedelta(hours=1)
++        self.append(self.m.fetch(["AAAUSDT"]))
++        self.assertIsNotNone(ca.fresh_quote(ca.lines(), "AAAUSDT", T0)[0])
++
++    def test_later_success_recovers_without_retrying_declined_decision(self):
++        cands = [_decision("AAA")]
++        self.append([_quote("AAAUSDT", 99.0, 99.1, T0 - timedelta(minutes=1))])
++        self.run_cycle(cands)
++        self.m.book["AAAUSDT"] = (99.0, 99.1)
++        self.assertEqual(self.kinds(self.run_cycle(cands)), [])
++        new = {**cands[0], "decision_id": "new-independent-decision"}
++        self.assertEqual(self.kinds(self.run_cycle([new])), [(ca.ORDER, ""), (ca.ENTRY, "FILLED")])
++        self.assertEqual(ca.verify(), [])
++
++    def test_v12_verifier_flags_order_after_failure_but_preserves_v11(self):
++        self.append([_quote("AAAUSDT", 99.0, 99.1, T0 - timedelta(minutes=1))])
++        order = ca.decide(ca.lines(), [_decision("AAA")], T0)[0]
++        self.append(self.m.fetch(["AAAUSDT"]))
++        self.append([order])  # intentionally bypass the new eligibility gate
++        self.assertTrue(any("no eligible decision quote" in p for p in ca.verify()))
++        # Historical version semantics are not retroactively rewritten.
++        legacy = [{**r, "rules": "CRYPTO_ACCOUNT_v1.1"} if r["type"] == ca.ORDER else r
++                  for r in ca.lines()]
++        with mock.patch.object(ca, "lines", return_value=legacy):
++            self.assertEqual(ca.verify(), [])
++
+     def test_failed_fetch_is_recorded_and_the_buy_declined(self):
+         run = self.run_cycle([_decision("FFF")])  # the feed does not answer for FFF
+         errors = self.of(ca.QUOTE_ERROR)
+diff --git a/idx-signals/tests/test_crypto_account_concurrency.py b/idx-signals/tests/test_crypto_account_concurrency.py
+new file mode 100644
+index 0000000..add1137
+--- /dev/null
++++ b/idx-signals/tests/test_crypto_account_concurrency.py
+@@ -0,0 +1,190 @@
++"""Controlled interleavings of real cycle/CAS writes; fixtures, no network receipts."""
++import ast
++import fcntl
++import unittest
++from datetime import timedelta
++from pathlib import Path
++from unittest import mock
++
++from idxsig import crypto_account as ca, paper
++from tests import test_crypto_account as fixtures
++
++
++class Concurrency(fixtures.Base):
++    def bounded(self):
++        rows=ca.lines();state=ca.account(rows)
++        orders=[r for r in rows if r['type']==ca.ORDER]
++        decided=[r['decision_id'] for r in rows if r['type'] in (ca.ORDER,ca.DECLINE)]
++        self.assertEqual(len(decided),len(set(decided)))
++        self.assertLessEqual(len(orders),ca.MAX_NEW_PER_DAY)
++        self.assertLessEqual(state['planned_risk'],ca.MAX_PLANNED_RISK*state['equity']+1e-8)
++        self.assertGreaterEqual(state['free_cash'],0)
++        self.assertGreaterEqual(state['reserved'],0)
++        self.assertEqual(paper.verify_chain(self.ledger),[])
++        self.assertEqual(ca.verify(),[])
++
++    def overlap(self, duplicate):
++        first=[fixtures._decision(t) for t in ('A','B','C')]
++        second=first if duplicate else [fixtures._decision(t) for t in ('D','E','F')]
++        for d in first+second:self.m.book[ca.symbol_of(d)]=(105,106)
++        armed=True;conflicts=[]
++        def append(recs,**kwargs):
++            nonlocal armed
++            if armed and any(r['type']==ca.ORDER for r in recs):
++                armed=False
++                ca.cycle(second,self.m.fetch,self.m.clock,append)
++            before=self.ledger.read_bytes() if self.ledger.exists() else b''
++            try:return self.append(recs,**kwargs)
++            except RuntimeError as exc:
++                if str(exc)==ca._STALE_HEAD_MESSAGE:
++                    conflicts.append(kwargs['expected_head'])
++                    self.assertEqual(self.ledger.read_bytes(),before)
++                raise
++        run=ca.cycle(first,self.m.fetch,self.m.clock,append)
++        self.assertEqual(len(conflicts),1)
++        self.assertEqual(len(self.of(ca.ORDER)),3)
++        self.assertEqual(self.kinds(run),[] if duplicate else [(ca.DECLINE,'LIMIT_NEW_PER_DAY')]*3)
++        self.assertEqual(run['mark']['reserved'],round(ca.account(ca.lines())['reserved'],2))
++        self.bounded()
++
++    def test_duplicate_candidates_recompute_to_empty_without_replayed_orders(self):
++        self.overlap(True)
++
++    def test_disjoint_candidates_cannot_double_daily_or_risk_budget(self):
++        self.overlap(False)
++
++    def test_one_remaining_slot_admits_only_one_concurrent_candidate(self):
++        for t in ('A','B','C','D'):self.m.book[t+'USDT']=(105,106)
++        self.run_cycle([fixtures._decision('A'),fixtures._decision('B')])
++        armed=True
++        def append(recs,**kwargs):
++            nonlocal armed
++            if armed and any(r['type']==ca.ORDER for r in recs):
++                armed=False
++                ca.cycle([fixtures._decision('D')],self.m.fetch,self.m.clock,append)
++            return self.append(recs,**kwargs)
++        run=ca.cycle([fixtures._decision('C')],self.m.fetch,self.m.clock,append)
++        self.assertEqual(self.kinds(run),[(ca.DECLINE,'LIMIT_NEW_PER_DAY')])
++        self.assertEqual(len(self.of(ca.ORDER)),3)
++        self.bounded()
++
++    def test_stale_settlement_does_not_duplicate_fill(self):
++        d=fixtures._decision('A');self.m.book['AUSDT']=(105,106)
++        self.run_cycle([d]);self.m.book['AUSDT']=(99,100)
++        armed=True
++        def append(recs,**kwargs):
++            nonlocal armed
++            if armed and any(r['type']==ca.ENTRY for r in recs):
++                armed=False
++                ca.cycle([d],self.m.fetch,self.m.clock,append)
++            return self.append(recs,**kwargs)
++        run=ca.cycle([d],self.m.fetch,self.m.clock,append)
++        self.assertEqual(len(self.of(ca.ENTRY)),1)
++        self.assertEqual(self.kinds(run),[])
++        self.bounded()
++
++    def test_stale_mark_recomputed_from_new_reservation(self):
++        self.m.book['AUSDT']=(105,106);armed=True
++        def append(recs,**kwargs):
++            nonlocal armed
++            if armed and any(r['type']==ca.MARK for r in recs):
++                armed=False
++                ca.cycle([fixtures._decision('A')],self.m.fetch,self.m.clock,append)
++            return self.append(recs,**kwargs)
++        run=ca.cycle([],self.m.fetch,self.m.clock,append)
++        self.assertGreater(run['mark']['reserved'],0)
++        self.assertEqual(run['mark']['reserved'],round(ca.account(ca.lines())['reserved'],2))
++        self.bounded()
++
++    def test_retry_exhaustion_never_commits_stale_proposals(self):
++        self.m.book['AUSDT']=(105,106);attempts=[]
++        def append(recs,**kwargs):
++            if any(r['type']==ca.ORDER for r in recs):
++                attempts.append(kwargs.get('expected_head'))
++                self.append([fixtures._quote('NOISEUSDT',1,1,fixtures.T0+timedelta(seconds=len(attempts)))])
++                before=self.ledger.read_bytes()
++                try:return self.append(recs,**kwargs)
++                finally:self.assertEqual(self.ledger.read_bytes(),before)
++            return self.append(recs,**kwargs)
++        with self.assertRaisesRegex(ca.StaleHeadConflict,'retry budget exhausted'):
++            ca.cycle([fixtures._decision('A')],self.m.fetch,self.m.clock,append)
++        self.assertEqual(len(attempts),ca.MAX_PHASE_ATTEMPTS)
++        self.assertEqual(len(set(attempts)),len(attempts))
++        self.assertEqual(self.of(ca.ORDER),[])
++        self.assertEqual(ca.account(ca.lines())['reserved'],0)
++        self.bounded()
++
++    def test_receipt_pending_after_commit_is_success_not_business_retry(self):
++        self.m.book['AUSDT']=(105,106);order_attempts=[]
++        def append(recs,**kwargs):
++            written=self.append(recs,**kwargs)
++            if any(r['type']==ca.ORDER for r in recs):
++                order_attempts.append(recs)
++                raise paper.ReceiptPendingError(written,RuntimeError('fixture receipt unavailable'))
++            return written
++        run=ca.cycle([fixtures._decision('A')],self.m.fetch,self.m.clock,append)
++        self.assertEqual(len(order_attempts),1)
++        self.assertEqual(self.kinds(run),[(ca.ORDER,'')])
++        self.assertEqual(len(run['receipt_warnings']),1)
++        self.assertGreater(run['mark']['reserved'],0)
++        self.bounded()
++
++    def test_actual_receipt_failure_occurs_after_lock_release_and_does_not_retry(self):
++        self.m.book['AUSDT']=(105,106);receipt_calls=[]
++        def receipts(hashes,path,timestamper):
++            # Nonblocking acquisition fails if the append critical section still
++            # owns this lock; no actual receipt service is contacted.
++            with path.with_name(path.name+'.lock').open('a') as lock:
++                fcntl.flock(lock.fileno(),fcntl.LOCK_EX|fcntl.LOCK_NB)
++                fcntl.flock(lock.fileno(),fcntl.LOCK_UN)
++            receipt_calls.append(hashes)
++            raise RuntimeError('offline receipt failure')
++        def append(recs,**kwargs):
++            return paper.append(recs,path=self.ledger,timestamper=object(),**kwargs)
++        with mock.patch.object(paper,'retry_receipts',side_effect=receipts):
++            run=ca.cycle([fixtures._decision('A')],self.m.fetch,self.m.clock,append)
++        self.assertEqual(len(self.of(ca.ORDER)),1)
++        self.assertEqual(len(receipt_calls),4)  # observation, order, observation, mark
++        self.assertEqual(len(run['receipt_warnings']),4)
++        self.bounded()
++
++    def test_unrelated_runtime_errors_are_not_treated_as_conflicts(self):
++        self.m.book['AUSDT']=(105,106);calls=[]
++        def append(recs,**kwargs):
++            if any(r['type']==ca.ORDER for r in recs):
++                calls.append(1);raise RuntimeError('ledger chain broken')
++            return self.append(recs,**kwargs)
++        with self.assertRaisesRegex(RuntimeError,'ledger chain broken'):
++            ca.cycle([fixtures._decision('A')],self.m.fetch,self.m.clock,append)
++        self.assertEqual(len(calls),1)
++        self.assertEqual(self.of(ca.ORDER),[])
++
++    def test_observations_unguarded_and_all_state_phases_guarded(self):
++        self.m.book['AUSDT']=(99,100);calls=[]
++        def append(recs,**kwargs):
++            calls.append(([r['type'] for r in recs],kwargs))
++            return self.append(recs,**kwargs)
++        ca.cycle([fixtures._decision('A')],self.m.fetch,self.m.clock,append)
++        for kinds,kwargs in calls:
++            self.assertEqual('expected_head' in kwargs,any(k in (ca.ORDER,ca.DECLINE,ca.ENTRY,ca.EXIT,ca.MARK) for k in kinds))
++        self.bounded()
++
++    def test_cli_callback_forwards_expected_head_and_keeps_receipt_pending_separate(self):
++        source=(Path(ca.__file__).parent/'cli.py').read_text()
++        callbacks=[n for n in ast.walk(ast.parse(source)) if isinstance(n,ast.FunctionDef) and n.name=='append'
++                   and 'ca.LEDGER' in ast.get_source_segment(source,n)]
++        self.assertEqual(len(callbacks),1)
++        callback=callbacks[0];wrapped=ast.Module(body=[callback],type_ignores=[])
++        writer=mock.Mock(return_value=[{'committed':True}]);written=[]
++        ns={'paper':mock.Mock(append=writer,ReceiptPendingError=paper.ReceiptPendingError),
++            'ca':ca,'stamper':None,'written':written,'print':mock.Mock()}
++        exec(compile(ast.fix_missing_locations(wrapped),'cli-callback','exec'),ns)
++        ns['append']([{'fixture':True}],expected_head='expected-prefix')
++        self.assertEqual(writer.call_args.kwargs['expected_head'],'expected-prefix')
++        writer.side_effect=paper.ReceiptPendingError([{'record_hash':'committed-hash'}],RuntimeError('pending'))
++        ns['append']([{'fixture':True}],expected_head='next-prefix')
++        self.assertEqual(written[-1]['record_hash'],'committed-hash')
++        self.assertEqual(writer.call_count,2)
++
++
++if __name__=='__main__':unittest.main()
+diff --git a/idx-signals/tests/test_crypto_policy_price_validation.py b/idx-signals/tests/test_crypto_policy_price_validation.py
+new file mode 100644
+index 0000000..5f2fd2c
+--- /dev/null
++++ b/idx-signals/tests/test_crypto_policy_price_validation.py
+@@ -0,0 +1,36 @@
++"""Policy reference input boundary; no strategy threshold changes or network."""
++import tempfile
++from pathlib import Path
++from unittest import mock
++
++from idxsig import crypto_account as ca
++from tests import test_crypto_account as fixtures
++
++
++class PolicyPrice(fixtures.Base):
++    def test_invalid_policy_quote_declines_and_unrelated_candidate_continues(self):
++        bad=(float('inf'),float('-inf'),float('nan'),True,False,None,'garbage',0,-1,'NaN','Infinity',[],{})
++        for quote in bad:
++            with self.subTest(quote=quote),tempfile.TemporaryDirectory() as td, mock.patch.object(ca,'LEDGER',Path(td)/'ledger.jsonl'):
++                with mock.patch.object(self,'ledger',ca.LEDGER):
++                    self.m.book={'AAAUSDT':(99,100),'BBBUSDT':(99,100)}
++                    run=self.run_cycle([fixtures._decision('AAA',quote=quote),fixtures._decision('BBB')])
++                    self.assertEqual(self.kinds(run),[(ca.DECLINE,'NO_DECISION_PRICE'),(ca.ORDER,''),(ca.ENTRY,'FILLED')])
++                    self.assertEqual([r['symbol'] for r in self.of(ca.ORDER)],['BBBUSDT'])
++                    self.assertEqual(run['mark']['reserved'],0)
++                    self.assertEqual(len(ca.account(ca.lines())['open']),1)
++                    self.assertEqual(ca.verify(),[])
++
++    def test_legitimate_numeric_string_policy_quote_is_retained(self):
++        self.m.book['AAAUSDT']=(99,100)
++        run=self.run_cycle([fixtures._decision('AAA',quote='1e2')])
++        self.assertEqual(self.kinds(run),[(ca.ORDER,''),(ca.ENTRY,'FILLED')])
++        self.assertEqual(self.of(ca.ORDER)[0]['limit'],101)
++
++    def test_missing_or_malformed_verified_price_declines(self):
++        self.m.book['AAAUSDT']=(99,100)
++        d={**fixtures._decision('AAA'),'verified_price':'not-a-price-record'}
++        run=self.run_cycle([d])
++        self.assertEqual(self.kinds(run),[(ca.DECLINE,'NO_DECISION_PRICE')])
++        self.assertEqual(self.of(ca.ORDER),[])
++        self.assertEqual(run['mark']['reserved'],0)
+diff --git a/idx-signals/tests/test_crypto_quote_validation.py b/idx-signals/tests/test_crypto_quote_validation.py
+new file mode 100644
+index 0000000..09fa142
+--- /dev/null
++++ b/idx-signals/tests/test_crypto_quote_validation.py
+@@ -0,0 +1,101 @@
++"""v1.3 quote-boundary regressions; injected feed and actual HTTP parser, offline."""
++import io
++import json
++import tempfile
++import unittest
++from datetime import timedelta
++from pathlib import Path
++from unittest import mock
++
++from idxsig import crypto_account as ca
++from tests import test_crypto_account as fixtures
++
++BAD_BOOKS = ((float('nan'), 100), (99, float('nan')),
++             (float('inf'), float('inf')), (99, float('inf')),
++             (float('-inf'), 100), (99, float('-inf')),
++             (0, 1), (-1, 1), (1, 0), (1, -1), (101, 100),
++             (True, 100), (99, True), (None, 100), (99, None),
++             ('garbage', 100), (99, 'garbage'), ([], 100), (99, {}))
++
++
++class InvalidQuotes(fixtures.Base):
++    def test_invalid_injected_books_decline_without_quotes_orders_or_reservations(self):
++        for bid, ask in BAD_BOOKS:
++            with self.subTest(bid=bid, ask=ask), tempfile.TemporaryDirectory() as td, mock.patch.object(ca, 'LEDGER', Path(td)/'ledger.jsonl'):
++                # append() follows Base.ledger, so bind it to the same per-case file.
++                with mock.patch.object(self, 'ledger', ca.LEDGER):
++                    self.m.book['AAAUSDT'] = (bid, ask)
++                    run = self.run_cycle([fixtures._decision('AAA')])
++                    self.assertEqual(self.kinds(run), [(ca.DECLINE, 'NO_FRESH_QUOTE')])
++                    self.assertEqual((self.of(ca.QUOTE), self.of(ca.ORDER), self.of(ca.ENTRY)), ([], [], []))
++                    self.assertEqual(len(self.of(ca.QUOTE_ERROR)), 1)
++                    self.assertIn('ValueError', self.of(ca.QUOTE_ERROR)[0]['error'])
++                    self.assertEqual((run['mark']['cash'], run['mark']['reserved']), (ca.START_CASH, 0.0))
++
++    def test_http_parser_rejects_invalid_bid_ask_before_returning(self):
++        for bid, ask in BAD_BOOKS:
++            payload = json.dumps({'bidPrice':bid, 'askPrice':ask}).encode()
++            with self.subTest(bid=bid, ask=ask), mock.patch.object(ca.urllib.request, 'urlopen', return_value=io.BytesIO(payload)):
++                with self.assertRaises(ValueError): ca.book_ticker('AAAUSDT')
++
++    def test_http_infinity_becomes_recorded_error_not_order(self):
++        payload = b'{"bidPrice":"Infinity","askPrice":"Infinity"}'
++        with mock.patch.object(ca.urllib.request, 'urlopen', side_effect=lambda *a, **kw: io.BytesIO(payload)), mock.patch.object(ca, 'utc_stamp', return_value=ca._stamp(fixtures.T0)):
++            run = ca.cycle([fixtures._decision('AAA')], ca.fetch_quotes,
++                           lambda: fixtures.T0 + timedelta(seconds=1), self.append)
++        self.assertEqual(self.kinds(run), [(ca.DECLINE, 'NO_FRESH_QUOTE')])
++        self.assertEqual(self.of(ca.QUOTE), [])
++        self.assertEqual(run['mark']['reserved'], 0)
++
++    def test_invalid_current_quote_cannot_fall_back_to_valid_recent_cache(self):
++        self.append([fixtures._quote('AAAUSDT',99,100,fixtures.T0-timedelta(minutes=1))])
++        self.m.book['AAAUSDT'] = (float('inf'),float('inf'))
++        run = self.run_cycle([fixtures._decision('AAA')])
++        self.assertEqual(self.kinds(run), [(ca.DECLINE,'NO_FRESH_QUOTE')])
++        self.assertEqual(len(self.of(ca.QUOTE)),1)
++        self.assertEqual(run['mark']['reserved'],0)
++
++    def test_invalid_quote_preserves_existing_position_and_does_not_crash_midcycle(self):
++        self.m.book['AAAUSDT'] = (99,100)
++        decision = fixtures._decision('AAA')
++        self.run_cycle([decision])
++        before = ca.account(ca.lines())
++        quote_count = len(self.of(ca.QUOTE))
++        self.m.book['AAAUSDT'] = (float('inf'),float('inf'))
++        run = self.run_cycle([{**decision,'decision_id':'independent-next'}])
++        self.assertEqual(self.kinds(run),[(ca.DECLINE,'NO_FRESH_QUOTE')])
++        self.assertEqual(ca.account(ca.lines()),before)
++        self.assertEqual(len(self.of(ca.QUOTE)),quote_count)
++        self.assertEqual(self.of(ca.EXIT),[])
++        self.assertEqual(ca.verify(),[])
++
++    def test_valid_finite_and_locked_quote_still_work(self):
++        self.m.book['AAAUSDT']=(100,100)
++        run=self.run_cycle([fixtures._decision('AAA')])
++        self.assertEqual(self.kinds(run),[(ca.ORDER,''),(ca.ENTRY,'FILLED')])
++
++    def test_legitimate_numeric_strings_parse_in_http_and_injected_feed(self):
++        payload = b'{"bidPrice":"99.00000000","askPrice":"1e2"}'
++        with mock.patch.object(ca.urllib.request,'urlopen',return_value=io.BytesIO(payload)):
++            bid,ask,_=ca.book_ticker('AAAUSDT')
++        self.assertEqual((bid,ask),(99.0,100.0))
++        self.m.book['AAAUSDT']=('99.00000000','1e2')
++        self.assertEqual(self.kinds(self.run_cycle([fixtures._decision('AAA')])),[(ca.ORDER,''),(ca.ENTRY,'FILLED')])
++
++    def test_invalid_position_quote_does_not_block_unrelated_valid_symbol(self):
++        self.m.book['AAAUSDT']=(99,100)
++        self.run_cycle([fixtures._decision('AAA')])
++        before=ca.account(ca.lines())['open'][0]
++        self.m.book['AAAUSDT']=(True,None)
++        self.m.book['BBBUSDT']=(99,100)
++        run=self.run_cycle([fixtures._decision('BBB')])
++        self.assertEqual(self.kinds(run),[(ca.ORDER,''),(ca.ENTRY,'FILLED')])
++        after=ca.account(ca.lines())
++        self.assertEqual(next(p for p in after['open'] if p['symbol']=='AAAUSDT'),before)
++        self.assertEqual(len(after['open']),2)
++        self.assertEqual(self.of(ca.QUOTE_ERROR)[-1]['symbol'],'AAAUSDT')
++        self.assertNotIn('nan',ca.render(ca.lines()).lower())
++        self.assertEqual(ca.verify(),[])
++
++
++if __name__ == '__main__': unittest.main()
+diff --git a/idx-signals/tests/test_crypto_valuation_asof.py b/idx-signals/tests/test_crypto_valuation_asof.py
+new file mode 100644
+index 0000000..9fcf450
+--- /dev/null
++++ b/idx-signals/tests/test_crypto_valuation_asof.py
+@@ -0,0 +1,50 @@
++"""Separate artificial future-row/stale-clock guard; no normal forward-data claim."""
++from datetime import timedelta
++from idxsig import crypto_account as ca
++from tests import test_crypto_account as fixtures
++
++
++class AsOf(fixtures.Base):
++    def seed(self):
++        self.m.book['AAAUSDT']=(99.9,100)
++        self.run_cycle([fixtures._decision('AAA')])
++        now=fixtures.T0+timedelta(minutes=1)
++        self.append([fixtures._quote('BBBUSDT',99.9,100,now)])
++        return now
++
++    def test_future_quote_cannot_change_present_mark_or_decision(self):
++        now=self.seed();candidate=fixtures._decision('BBB');before=ca.lines()
++        expected_mark=ca.mark(before,now);expected_decision=ca.decide(before,[candidate],now)
++        self.append([fixtures._quote('AAAUSDT',200,200.1,now+timedelta(days=6))])
++        self.assertEqual(ca.mark(ca.lines(),now),expected_mark)
++        self.assertEqual(ca.decide(ca.lines(),[candidate],now),expected_decision)
++        self.assertEqual(expected_decision[0]['type'],ca.ORDER)
++        self.assertLessEqual(expected_mark['open_positions'][0]['valued_at'],expected_mark['made_at'])
++        # Existing full-ledger reporting semantics are not silently rewritten.
++        self.assertGreater(ca.account(ca.lines())['equity'],expected_mark['equity'])
++
++    def test_future_quote_becomes_eligible_at_its_actual_observation_time(self):
++        now=self.seed();future=now+timedelta(days=6)
++        self.append([fixtures._quote('AAAUSDT',200,200.1,future)])
++        self.assertEqual(ca.mark(ca.lines(),future)['open_positions'][0]['valued_at'],ca._stamp(future))
++
++    def test_future_business_events_fail_closed_not_partial_history(self):
++        now=self.seed();rows=ca.lines();future=ca._stamp(now+timedelta(days=1))
++        for kind,fields in ((ca.ORDER,('made_at',)),(ca.DECLINE,('made_at',)),(ca.CANCEL,('made_at',)),
++                            (ca.ENTRY,('recorded_at','filled_at')),(ca.EXIT,('recorded_at','exited_at')),
++                            (ca.MARK,('made_at',))):
++            for field in fields:
++                with self.subTest(kind=kind,field=field):
++                    inconsistent=rows+[{'type':kind,field:future,'decision_id':'future-fixture'}]
++                    with self.assertRaises(ca.FutureLedgerStateError):ca.mark(inconsistent,now)
++                    with self.assertRaises(ca.FutureLedgerStateError):ca.decide(inconsistent,[fixtures._decision('BBB')],now)
++
++    def test_future_deadlines_are_not_mistaken_for_future_business_events(self):
++        now=self.seed()
++        self.assertGreater(self.of(ca.ENTRY)[0]['deadline'],ca._stamp(now))
++        self.assertEqual(len(ca.mark(ca.lines(),now)['open_positions']),1)
++
++    def test_naive_asof_clock_fails_closed(self):
++        now=self.seed()
++        with self.assertRaisesRegex(ValueError,'timezone-aware'):
++            ca.mark(ca.lines(),now.replace(tzinfo=None))
+diff --git a/idx-signals/tests/test_paper_execution_feasibility.py b/idx-signals/tests/test_paper_execution_feasibility.py
+new file mode 100644
+index 0000000..49d527c
+--- /dev/null
++++ b/idx-signals/tests/test_paper_execution_feasibility.py
+@@ -0,0 +1,148 @@
++"""Adversarial synthetic fixtures: no exchange requests, orders or ledger writes."""
++import unittest
++from dataclasses import replace
++from datetime import datetime, timedelta, timezone
++from decimal import Decimal as D
++
++from idxsig.paper_execution_feasibility import BookSnapshot, FilterSnapshot, Intent, estimate
++
++T = datetime(2026, 10, 31, 18, tzinfo=timezone.utc)
++
++
++class Feasibility(unittest.TestCase):
++    def setUp(self):
++        self.rows = (
++            {"filterType": "PRICE_FILTER", "minPrice": "0.01", "maxPrice": "10000", "tickSize": "0.05"},
++            {"filterType": "LOT_SIZE", "minQty": "0.1", "maxQty": "100", "stepSize": "0.1"},
++            {"filterType": "MIN_NOTIONAL", "minNotional": "10"},
++            {"filterType": "NOTIONAL", "minNotional": "10", "maxNotional": "10000"},
++        )
++        self.filters = FilterSnapshot("AAAUSDT", T - timedelta(seconds=1), "fixture/exchangeInfo", self.rows)
++        self.book = BookSnapshot("AAAUSDT", T, "fixture/depth",
++                                 ((D("99"), D("2")), (D("98"), D("3"))),
++                                 ((D("100"), D("1")), (D("101"), D("2"))))
++        self.intent = Intent("AAAUSDT", "BUY", D("2"), D("102"), T)
++
++    def run_estimate(self, **kw):
++        args = dict(intent=self.intent, book=self.book, filters=self.filters, now=T,
++                    max_book_age=timedelta(seconds=5), max_filter_age=timedelta(minutes=1), fee_rate=D("0.001"))
++        args.update(kw)
++        return estimate(**args)
++
++    def filters_with(self, index, **fields):
++        rows = list(self.rows)
++        rows[index] = {**rows[index], **fields}
++        return replace(self.filters, filters=tuple(rows))
++
++    def test_complete_depth_fee_and_no_input_mutation(self):
++        out = self.run_estimate()
++        self.assertEqual((out.status, out.filled, out.notional, out.fee_quote), ("COMPLETE", D("2"), D("201"), D("0.201")))
++        self.assertEqual(out.fills, ((D("100"), D("1")), (D("101"), D("1"))))
++        self.assertEqual(self.book.asks[-1][1], D("2"))
++
++    def test_existing_microstructure_depth_walk_agrees_in_simple_case(self):
++        # Reuse the existing walker as a cross-check, not float arithmetic for filters.
++        from idxsig.microstructure import book_fill
++        old = book_fill([(100., 1.), (101., 2.)], 201., 99.5, "buy")
++        out = self.run_estimate()
++        self.assertTrue(old["complete"])
++        self.assertAlmostEqual(old["vwap"], float(out.notional / out.filled))
++
++    def test_buy_rounding_never_increases_price_or_quantity(self):
++        out = self.run_estimate(intent=replace(self.intent, quantity=D("2.09"), limit_price=D("101.049")))
++        self.assertEqual((out.quantity, out.limit_price), (D("2.0"), D("101.00")))
++
++    def test_sell_rounds_limit_up_and_walks_bids(self):
++        out = self.run_estimate(intent=replace(self.intent, side="SELL", quantity=D("2.99"), limit_price=D("97.981")))
++        self.assertEqual((out.quantity, out.limit_price, out.notional), (D("2.9"), D("98.00"), D("286.2")))
++
++    def test_min_notional_checked_after_rounding(self):
++        out = self.run_estimate(intent=replace(self.intent, quantity=D("0.199"), limit_price=D("99.99")))
++        self.assertEqual(out.reason, "MIN_NOTIONAL")
++
++    def test_max_notional_and_quantity_bounds(self):
++        self.assertEqual(self.run_estimate(filters=self.filters_with(3, maxNotional="100")).reason, "MAX_NOTIONAL")
++        self.assertEqual(self.run_estimate(intent=replace(self.intent, quantity=D("100.1"))).reason, "LOT_SIZE")
++        self.assertEqual(self.run_estimate(intent=replace(self.intent, quantity=D("0.09"))).reason, "LOT_SIZE")
++
++    def test_missing_filter_or_step_rejected(self):
++        for rows in (self.rows[1:], self.rows[:2], (self.rows[0], {"filterType": "LOT_SIZE", "minQty": "0.1", "maxQty": "100"}, self.rows[2])):
++            with self.subTest(rows=rows):
++                self.assertEqual(self.run_estimate(filters=replace(self.filters, filters=rows)).status, "REJECTED")
++
++    def test_zero_lot_step_fails_closed_but_zero_price_tick_is_disabled(self):
++        self.assertEqual(self.run_estimate(filters=self.filters_with(1, stepSize="0")).status, "REJECTED")
++        out = self.run_estimate(filters=self.filters_with(0, tickSize="0"), intent=replace(self.intent, limit_price=D("101.019")))
++        self.assertEqual(out.limit_price, D("101.019"))
++        self.assertEqual(out.status, "COMPLETE")
++
++    def test_unknown_and_duplicate_filters_fail_closed(self):
++        for row in ({"filterType": "PERCENT_PRICE"}, self.rows[0]):
++            self.assertEqual(self.run_estimate(filters=replace(self.filters, filters=self.rows + (row,))).status, "REJECTED")
++
++    def test_partial_depth_and_unfilled_rest_are_explicit(self):
++        out = self.run_estimate(intent=replace(self.intent, quantity=D("4")))
++        self.assertEqual((out.status, out.filled, out.unfilled, out.reason), ("PARTIAL", D("3"), D("1"), "INSUFFICIENT_DISPLAYED_DEPTH"))
++        self.assertEqual(out.fee_quote, out.notional * D("0.001"))
++
++    def test_limit_bounded_partial_and_no_touch(self):
++        out = self.run_estimate(intent=replace(self.intent, limit_price=D("100")))
++        self.assertEqual((out.status, out.filled, out.reason), ("PARTIAL", D("1"), "LIMIT_PRICE"))
++        out = self.run_estimate(intent=replace(self.intent, limit_price=D("99")))
++        self.assertEqual((out.status, out.filled, out.reason, out.fee_quote), ("UNFILLED", D("0"), "LIMIT_PRICE", D("0")))
++
++    def test_dust_and_zero_displayed_quantity_not_invented(self):
++        book = replace(self.book, asks=((D("100"), D("0.09")), (D("101"), D("0"))))
++        out = self.run_estimate(book=book)
++        self.assertEqual((out.status, out.filled), ("UNFILLED", D("0")))
++
++    def test_stale_book_and_filters(self):
++        self.assertEqual(self.run_estimate(now=T + timedelta(seconds=6)).reason, "STALE_BOOK")
++        self.assertEqual(self.run_estimate(filters=replace(self.filters, observed_at=T - timedelta(minutes=2))).reason, "STALE_FILTERS")
++
++    def test_future_book_filters_and_intent(self):
++        later = T + timedelta(seconds=1)
++        self.assertEqual(self.run_estimate(book=replace(self.book, observed_at=later)).reason, "FUTURE_BOOK")
++        self.assertEqual(self.run_estimate(filters=replace(self.filters, observed_at=later)).reason, "FUTURE_FILTERS")
++        self.assertEqual(self.run_estimate(intent=replace(self.intent, placed_at=later)).reason, "FUTURE_INTENT")
++
++    def test_book_before_intent_and_filters_after_intent(self):
++        self.assertEqual(self.run_estimate(book=replace(self.book, observed_at=T - timedelta(seconds=1))).reason, "BOOK_BEFORE_INTENT")
++        self.assertEqual(self.run_estimate(intent=replace(self.intent, placed_at=T - timedelta(seconds=2))).reason, "FILTERS_AFTER_INTENT")
++
++    def test_missing_data_identity_and_timezone(self):
++        for kw in ({"book": None}, {"filters": None}, {"book": replace(self.book, symbol="BBB")}, {"now": T.replace(tzinfo=None)}, {"book": replace(self.book, source="")}):
++            with self.subTest(kw=kw):
++                self.assertEqual(self.run_estimate(**kw).status, "REJECTED")
++
++    def test_malformed_books_and_nonfinite_inputs(self):
++        for asks in (((D("100"), D("1")), (D("100"), D("2"))), ((D("100"), D("-1")),), ((D("98"), D("1")),), ()):
++            with self.subTest(asks=asks):
++                self.assertEqual(self.run_estimate(book=replace(self.book, asks=asks)).status, "REJECTED")
++        for n in (D("NaN"), D("Infinity"), D("-1"), 1.01):
++            self.assertEqual(self.run_estimate(intent=replace(self.intent, quantity=n)).status, "REJECTED")
++
++    def test_invalid_filter_numbers_and_fees(self):
++        for n in ("NaN", "-1", "garbage", 0.1):
++            self.assertEqual(self.run_estimate(filters=self.filters_with(0, tickSize=n)).status, "REJECTED")
++        for fee in (D("1"), D("-0.1"), D("NaN")):
++            self.assertEqual(self.run_estimate(fee_rate=fee).status, "REJECTED")
++
++    def test_disabled_price_bounds_and_invalid_bounds(self):
++        self.assertEqual(self.run_estimate(filters=self.filters_with(0, minPrice="0", maxPrice="0")).status, "COMPLETE")
++        self.assertEqual(self.run_estimate(filters=self.filters_with(0, minPrice="200", maxPrice="100")).status, "REJECTED")
++        self.assertEqual(self.run_estimate(filters=self.filters_with(3, minNotional="20000")).status, "REJECTED")
++
++    def test_filled_never_exceeds_request_or_displayed_depth(self):
++        for raw in ("0.1", "0.29", "1", "2.01", "3", "4", "10"):
++            out = self.run_estimate(intent=replace(self.intent, quantity=D(raw)))
++            self.assertLessEqual(out.filled, out.quantity)
++            self.assertEqual(out.filled + out.unfilled, out.quantity)
++            self.assertLessEqual(out.filled, D("3"))
++            for price, qty in out.fills:
++                self.assertLessEqual(qty, dict(self.book.asks)[price])
++                self.assertLessEqual(price, out.limit_price)
++
++
++if __name__ == "__main__":
++    unittest.main()
+diff --git a/idx-signals/tests/test_paper_execution_filter_evidence.py b/idx-signals/tests/test_paper_execution_filter_evidence.py
+new file mode 100644
+index 0000000..494a64a
+--- /dev/null
++++ b/idx-signals/tests/test_paper_execution_filter_evidence.py
+@@ -0,0 +1,106 @@
++"""Filter applicability and explicit observed/simulated evidence, offline only."""
++import unittest
++from dataclasses import replace
++from datetime import timedelta
++from decimal import Decimal as D
++
++from idxsig.paper_execution_feasibility import AverageReference, SimulatedCounts
++from tests import test_paper_execution_feasibility as fixtures
++
++T = fixtures.T
++
++
++class Evidence(unittest.TestCase):
++    setUp = fixtures.Feasibility.setUp
++    run_estimate = fixtures.Feasibility.run_estimate
++
++    def add(self, *rows):
++        self.filters = replace(self.filters, filters=self.rows + rows)
++
++    def percent(self):
++        self.add({"filterType": "PERCENT_PRICE_BY_SIDE", "bidMultiplierUp": "1.2", "bidMultiplierDown": "0.5",
++                  "askMultiplierUp": "2", "askMultiplierDown": "0.8", "avgPriceMins": 5})
++        return AverageReference("AAAUSDT", D("100"), 5, T - timedelta(seconds=1), T - timedelta(seconds=2),
++                                "fixture/avgPrice", "ABSENT", T - timedelta(seconds=1), "fixture/referencePrice:-2043")
++
++    def test_inapplicable_filters_are_reported_not_silently_dropped(self):
++        self.add({"filterType": "ICEBERG_PARTS", "limit": 1},
++                 {"filterType": "MARKET_LOT_SIZE", "minQty": "0", "maxQty": "0", "stepSize": "0"},
++                 {"filterType": "TRAILING_DELTA", "minTrailingAboveDelta": 10, "maxTrailingAboveDelta": 20,
++                  "minTrailingBelowDelta": 10, "maxTrailingBelowDelta": 20},
++                 {"filterType": "MAX_NUM_ORDER_AMENDS", "maxNumOrderAmends": 0},
++                 {"filterType": "MAX_NUM_ORDER_LISTS", "maxNumOrderLists": 0})
++        out = self.run_estimate()
++        self.assertEqual(out.status, "COMPLETE")
++        self.assertEqual(sum(":INAPPLICABLE:" in c for c in out.filter_checks), 5)
++
++    def test_nonplain_intents_cannot_use_inapplicability(self):
++        for fields in ({"order_type": "MARKET"}, {"time_in_force": "GTC"}, {"iceberg_quantity": D("1")},
++                       {"trailing_delta": 10}, {"is_order_list": True}, {"is_amendment": True}):
++            self.assertEqual(self.run_estimate(intent=replace(self.intent, **fields)).reason,
++                             "ONLY_PLAIN_NEW_STANDALONE_LIMIT_IOC_SUPPORTED")
++
++    def test_missing_reference_and_interval_mismatch(self):
++        ref = self.percent()
++        self.assertEqual(self.run_estimate().reason, "MISSING_AVERAGE_REFERENCE")
++        self.assertEqual(self.run_estimate(average=replace(ref, minutes=1), max_reference_age=timedelta(seconds=10)).reason,
++                         "AVERAGE_INTERVAL_MISMATCH")
++
++    def test_percent_buy_sell_bounds(self):
++        ref = self.percent()
++        args = dict(average=ref, max_reference_age=timedelta(seconds=10))
++        self.assertEqual(self.run_estimate(**args).status, "COMPLETE")
++        self.assertEqual(self.run_estimate(intent=replace(self.intent, limit_price=D("120.05")), **args).reason, "PERCENT_PRICE_BY_SIDE")
++        self.assertEqual(self.run_estimate(intent=replace(self.intent, side="SELL", limit_price=D("79.95")), **args).reason, "PERCENT_PRICE_BY_SIDE")
++        self.assertNotEqual(self.run_estimate(intent=replace(self.intent, side="SELL", limit_price=D("200")), **args).reason, "PERCENT_PRICE_BY_SIDE")
++
++    def test_override_presence_or_unknown_never_uses_average(self):
++        ref = self.percent()
++        for state in ("PRESENT", "UNKNOWN"):
++            self.assertEqual(self.run_estimate(average=replace(ref, override_state=state), max_reference_age=timedelta(seconds=10)).reason,
++                             "ACTIVE_OR_UNKNOWN_OVERRIDE_REFERENCE")
++
++    def test_reference_recency_identity_and_time_order(self):
++        ref = self.percent()
++        for fields in ({"observed_at": T + timedelta(seconds=1)}, {"last_trade_at": T - timedelta(minutes=2)},
++                       {"override_observed_at": T - timedelta(minutes=2)}, {"symbol": "BBB"}, {"override_source": ""},
++                       {"last_trade_at": T}, {"price": D("0")}):
++            with self.subTest(fields=fields):
++                self.assertEqual(self.run_estimate(average=replace(ref, **fields), max_reference_age=timedelta(seconds=10)).status, "REJECTED")
++        self.assertEqual(self.run_estimate(average=ref).reason, "INVALID_MAX_AGE")
++
++    def test_count_evidence_absence_is_not_zero(self):
++        self.add({"filterType": "MAX_NUM_ORDERS", "maxNumOrders": 5},
++                 {"filterType": "MAX_NUM_ALGO_ORDERS", "maxNumAlgoOrders": 2})
++        self.assertEqual(self.run_estimate().reason, "MISSING_SIMULATED_ACCOUNT_COUNTS")
++        counts = SimulatedCounts("AAAUSDT", T, 4, 2)
++        out = self.run_estimate(simulated_counts=counts, max_count_age=timedelta(seconds=10))
++        self.assertEqual(out.status, "COMPLETE")
++        self.assertIn("SIMULATED_ACCOUNT_COUNTS_ONLY:NOT_ACTUAL_ACCOUNT_VERIFICATION", out.assumptions)
++        self.assertEqual(self.run_estimate(simulated_counts=replace(counts, open_orders=5), max_count_age=timedelta(seconds=10)).reason, "MAX_NUM_ORDERS")
++
++    def test_algo_counts_no_increment_for_plain_limit_but_missing_fails(self):
++        self.add({"filterType": "MAX_NUM_ALGO_ORDERS", "maxNumAlgoOrders": 2})
++        self.assertEqual(self.run_estimate().reason, "MISSING_SIMULATED_ACCOUNT_COUNTS")
++        counts = SimulatedCounts("AAAUSDT", T, 3, 2)
++        self.assertEqual(self.run_estimate(simulated_counts=counts, max_count_age=timedelta(seconds=10)).status, "COMPLETE")
++        self.assertEqual(self.run_estimate(simulated_counts=replace(counts, open_algo_orders=3), max_count_age=timedelta(seconds=10)).reason, "MAX_NUM_ALGO_ORDERS")
++
++    def test_counts_invalid_future_stale_or_inconsistent(self):
++        self.add({"filterType": "MAX_NUM_ORDERS", "maxNumOrders": 5})
++        counts = SimulatedCounts("AAAUSDT", T, 0, 0)
++        for fields in ({"open_orders": -1}, {"open_orders": True}, {"open_algo_orders": 1},
++                       {"as_of": T + timedelta(seconds=1)}, {"as_of": T - timedelta(minutes=1)}, {"symbol": "BBB"}):
++            self.assertEqual(self.run_estimate(simulated_counts=replace(counts, **fields), max_count_age=timedelta(seconds=10)).status, "REJECTED")
++
++    def test_unknown_duplicate_and_malformed_inapplicable_remain_rejections(self):
++        for row in ({"filterType": "UNKNOWN"}, {"filterType": "ICEBERG_PARTS"},
++                    {"filterType": "ICEBERG_PARTS", "limit": True}):
++            self.add(row)
++            self.assertEqual(self.run_estimate().status, "REJECTED")
++        self.add({"filterType": "ICEBERG_PARTS", "limit": 1}, {"filterType": "ICEBERG_PARTS", "limit": 1})
++        self.assertEqual(self.run_estimate().reason, "DUPLICATE_FILTER:ICEBERG_PARTS")
++
++
++if __name__ == "__main__":
++    unittest.main()

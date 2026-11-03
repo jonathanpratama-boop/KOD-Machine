@@ -74,8 +74,8 @@ class Base(unittest.TestCase):
         self.addCleanup(p.stop)
         self.m = Market()
 
-    def append(self, recs):
-        return paper.append(recs, path=self.ledger)
+    def append(self, recs, **kwargs):
+        return paper.append(recs, path=self.ledger, **kwargs)
 
     def run_cycle(self, cands, advance=timedelta(0)):
         self.m.t += advance
@@ -191,6 +191,77 @@ class Lifecycle(Base):
 
 class StaleQuotes(Base):
     """v1.1 regressions: a failed fetch never becomes a fill, an old quote never becomes a decision or a fill."""
+
+    def test_failed_current_fetch_never_reserves_on_one_minute_old_cache(self):
+        self.append([_quote("AAAUSDT", 99.0, 99.1, T0 - timedelta(minutes=1))])
+        before = ca.account(ca.lines())
+        run = self.run_cycle([_decision("AAA")])
+        self.assertEqual(self.kinds(run), [(ca.DECLINE, "NO_FRESH_QUOTE")])
+        self.assertIn("the fetch failed", run["events"][0]["reason"])
+        self.assertEqual(len(self.of(ca.QUOTE_ERROR)), 1)
+        self.assertEqual((self.of(ca.ORDER), self.of(ca.ENTRY)), ([], []))
+        self.assertEqual(ca.account(ca.lines()), before)
+        self.assertEqual(run["mark"]["reserved"], 0.0)
+        self.assertEqual(ca.verify(), [])
+
+    def test_failed_fetch_preserves_existing_pending_reservation(self):
+        cands = [_decision("AAA")]
+        self.m.book["AAAUSDT"] = (101.5, 101.6)
+        self.run_cycle(cands)
+        before = ca.account(ca.lines())
+        del self.m.book["AAAUSDT"]
+        run = self.run_cycle(cands, timedelta(minutes=1))
+        self.assertEqual(self.kinds(run), [])
+        self.assertEqual(ca.account(ca.lines()), before)
+        self.assertEqual((self.of(ca.ENTRY), self.of(ca.CANCEL)), ([], []))
+        self.assertEqual(ca.verify(), [])
+
+    def test_failed_fetch_preserves_open_position_without_fabricated_exit(self):
+        cands = [_decision("AAA")]
+        self.m.book["AAAUSDT"] = (99.0, 99.1)
+        self.run_cycle(cands)
+        before = ca.account(ca.lines())
+        del self.m.book["AAAUSDT"]
+        run = self.run_cycle(cands, timedelta(minutes=1))
+        self.assertEqual(self.kinds(run), [])
+        self.assertEqual(ca.account(ca.lines()), before)
+        self.assertEqual(self.of(ca.EXIT), [])
+        self.assertEqual(ca.verify(), [])
+
+    def test_same_second_failure_and_recovery_follow_ledger_order(self):
+        self.append([_quote("AAAUSDT", 99.0, 99.1, T0)])
+        self.append(self.m.fetch(["AAAUSDT"]))  # real failure at the same second
+        self.assertIsNone(ca.fresh_quote(ca.lines(), "AAAUSDT", self.m.t)[0])
+        self.append([_quote("AAAUSDT", 99.0, 99.2, T0)])
+        self.assertIsNotNone(ca.fresh_quote(ca.lines(), "AAAUSDT", self.m.t)[0])
+
+    def test_future_failure_does_not_block_current_quote(self):
+        self.append([_quote("AAAUSDT", 99.0, 99.1, T0)])
+        self.m.t += timedelta(hours=1)
+        self.append(self.m.fetch(["AAAUSDT"]))
+        self.assertIsNotNone(ca.fresh_quote(ca.lines(), "AAAUSDT", T0)[0])
+
+    def test_later_success_recovers_without_retrying_declined_decision(self):
+        cands = [_decision("AAA")]
+        self.append([_quote("AAAUSDT", 99.0, 99.1, T0 - timedelta(minutes=1))])
+        self.run_cycle(cands)
+        self.m.book["AAAUSDT"] = (99.0, 99.1)
+        self.assertEqual(self.kinds(self.run_cycle(cands)), [])
+        new = {**cands[0], "decision_id": "new-independent-decision"}
+        self.assertEqual(self.kinds(self.run_cycle([new])), [(ca.ORDER, ""), (ca.ENTRY, "FILLED")])
+        self.assertEqual(ca.verify(), [])
+
+    def test_v12_verifier_flags_order_after_failure_but_preserves_v11(self):
+        self.append([_quote("AAAUSDT", 99.0, 99.1, T0 - timedelta(minutes=1))])
+        order = ca.decide(ca.lines(), [_decision("AAA")], T0)[0]
+        self.append(self.m.fetch(["AAAUSDT"]))
+        self.append([order])  # intentionally bypass the new eligibility gate
+        self.assertTrue(any("no eligible decision quote" in p for p in ca.verify()))
+        # Historical version semantics are not retroactively rewritten.
+        legacy = [{**r, "rules": "CRYPTO_ACCOUNT_v1.1"} if r["type"] == ca.ORDER else r
+                  for r in ca.lines()]
+        with mock.patch.object(ca, "lines", return_value=legacy):
+            self.assertEqual(ca.verify(), [])
 
     def test_failed_fetch_is_recorded_and_the_buy_declined(self):
         run = self.run_cycle([_decision("FFF")])  # the feed does not answer for FFF

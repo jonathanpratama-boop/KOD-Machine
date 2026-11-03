@@ -1,0 +1,45 @@
+{
+  "status": "ALL_INPUTS_VALIDATED",
+  "assets": [
+    {
+      "symbol": "BTCUSDT",
+      "files": 110,
+      "bars": 3332,
+      "first_open_utc": "2017-08-17T00:00:00+00:00",
+      "last_open_utc": "2026-09-30T00:00:00+00:00",
+      "duplicates": 0,
+      "missing_daily_intervals": 0,
+      "timestamp_units": {
+        "ms": 2694,
+        "us": 638
+      },
+      "schema_width_counts": {
+        "12": 3332
+      },
+      "terminal_open_only_used": "2026-09-30T00:00:00+00:00",
+      "hashes_verified": true,
+      "monthly_coverage_verified": true,
+      "ohlc_sanity_verified": true
+    },
+    {
+      "symbol": "ETHUSDT",
+      "files": 110,
+      "bars": 3332,
+      "first_open_utc": "2017-08-17T00:00:00+00:00",
+      "last_open_utc": "2026-09-30T00:00:00+00:00",
+      "duplicates": 0,
+      "missing_daily_intervals": 0,
+      "timestamp_units": {
+        "ms": 2694,
+        "us": 638
+      },
+      "schema_width_counts": {
+        "12": 3332
+      },
+      "terminal_open_only_used": "2026-09-30T00:00:00+00:00",
+      "hashes_verified": true,
+      "monthly_coverage_verified": true,
+      "ohlc_sanity_verified": true
+    }
+  ]
+}

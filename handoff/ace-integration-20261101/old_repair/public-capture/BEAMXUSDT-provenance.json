@@ -1,0 +1,9 @@
+{
+  "symbol": "BEAMXUSDT",
+  "url": "https://data-api.binance.vision/api/v3/depth?symbol=BEAMXUSDT&limit=100",
+  "request_start_utc": "2026-10-31 18:51:07.889749+00:00",
+  "http_status": 200,
+  "received_utc": "2026-10-31 18:51:10.446600+00:00",
+  "sha256": "7dc5c87970e7b70b41444013b9c89f8da45893565879189a9ecda5f2cbe9d1e0",
+  "bytes": 6467
+}

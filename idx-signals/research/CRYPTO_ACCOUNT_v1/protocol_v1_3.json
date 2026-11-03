@@ -1,0 +1,43 @@
+{
+ "study_id": "CRYPTO_ACCOUNT_v1",
+ "rules_version": "CRYPTO_ACCOUNT_v1.3",
+ "prepared_at": "2026-10-31T19:12:00Z",
+ "status": "local successor candidate; not published or activated",
+ "source_upstream_commit": "41b8eb398b900da4cf251efe3971e31dae044ec9",
+ "source_local_parent": "319012922c2d0f23e91398f8d01c0cafe7288a7e",
+ "supersedes": {
+  "file": "research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json",
+  "sha256": "91a15db636485ad91250217b99452c1c2af3cd9f032a9fbff5003b916f2bf26a",
+  "kept_unchanged": true
+ },
+ "correction": "research/CRYPTO_ACCOUNT_v1/CORRECTION_3.md",
+ "changed": [
+  "Reject Boolean, null, non-numeric, nonfinite, nonpositive or crossed prices at HTTP and injected getter boundaries before recording quotes; retain numeric-string parsing. Invalid input records CRYPTO_QUOTE_ERROR; the existing failed-fetch gate declines new orders without reservation.",
+  "New records carry v1.3; existing v1.2 eligibility verifier remains applicable to both local candidate versions."
+ ],
+ "unchanged": [
+  "Strategy, sizing, fill/exit rules, fees and account limits.",
+  "All historical protocol files, earlier archived candidates, stock account files and research engines.",
+  "No production ledger accessed or rewritten; existing malformed historical records are not repaired by this input-boundary change."
+ ],
+ "account": {
+  "start_cash_usdt": 10000.0,
+  "risk_per_position": 0.005,
+  "max_aggregate_planned_risk": 0.015,
+  "max_new_orders_per_utc_day": 3,
+  "max_position_fraction": 0.2,
+  "leverage": "none"
+ },
+ "fees": {
+  "taker_fee_per_side": 0.001,
+  "spread": "paid by buying at the ask and selling at the bid"
+ },
+ "pins": {
+  "idxsig/crypto_account.py": "5644fbb05e479e131d27da846063c065d971a348c46ef3c76d4043d6135386e3",
+  "idxsig/paper_account.py": "2d7cbc536695d0298b3bfa508824bd5e68ea8c6566800e59a0681666dbb00bfd",
+  "research/PAPER_ACCOUNT_v1/protocol.json": "2a36e8777be15fc58886d8defbc174ea83892acb415db7e6e08b65f379186f0a",
+  "research/CRYPTO_ACCOUNT_v1/protocol.json": "60ff96b071f10d41fa5537cc8915cccf0aea4143c948da3fd57baac6bdf4cce7",
+  "research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json": "b3021091f1f9220e8bd7514b37c0c61a6ddbd423839ec7a77219414152d0776d",
+  "research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json": "91a15db636485ad91250217b99452c1c2af3cd9f032a9fbff5003b916f2bf26a"
+ }
+}

@@ -1,0 +1,8 @@
+{
+  "kind": "NETWORK_POLICY_BLOCK",
+  "runtime_error": "Unified exec process failed: Network access to \"https://data-api.binance.vision:443\" was blocked by policy.",
+  "observed_at_utc": "2026-10-31T19:06:43Z",
+  "process_check_utc": "2026-10-31T19:06:48Z",
+  "process_alive": false,
+  "resume_allowed": false
+}

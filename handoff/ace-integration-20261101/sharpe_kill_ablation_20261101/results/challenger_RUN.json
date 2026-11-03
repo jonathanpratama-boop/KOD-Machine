@@ -1,0 +1,28 @@
+{
+  "label": "challenger_sharpe_kill_disabled",
+  "classification": "REUSED_DATA_DIAGNOSTIC_NOT_INDEPENDENT_VALIDATION",
+  "engine_dir": "/home/user/kod-integrate/handoff/ace-integration-20261101/sharpe_kill_ablation_20261101/challenger_engine",
+  "source_pins": {
+    "daily_core.py": "38a58acd39e9bd8652d67a26774d76bfd05adb328d1df517bb7300a7b3f9629a",
+    "daily_adapter.py": "ddb7f76ef7515d23a107bb16d79494830370fa831edb49e2e2b2f0e1e2623ca5",
+    "history_inputs.py": "ca4c7a66b3fbb0831cd7cb8b48243902b41948d3f6ac4edd7f6298e15183a154",
+    "replay.py": "8c08857a1d2e018551be51b99dbd618ae6c84cadb8871fa4622245502a70587d",
+    "PROTOCOL_v1.md": "cbd57e64af5135e480196eca5d22e35d741ab2fb7767197ba7ea7f54786180fd",
+    "PROTOCOL_ADDENDUM_1.md": "a45485ac5e7115097def5d9a59fc8a6bb4117713dc8ee582a190d77b0ec2b47d",
+    "vendor/paper_cash_accounting.py": "29688797f6738e4aa02ca87403a5a90d60dec0bca54cffab36a4a4a7e266f8a6"
+  },
+  "driver_sha256": "8321ae716e956da5720ea7f639cc8473ff9509bd8c38565787ab1d1053e9e8cf",
+  "input_snapshot_sha256": "6b6a0e9324819da0bf709c58df3effae596ba92001cc88151e028ff86c72a511",
+  "partitions": {
+    "development": [
+      "2017-09-26",
+      "2023-01-01"
+    ],
+    "validation": [
+      "2023-01-01",
+      "2026-09-30"
+    ]
+  },
+  "policy": "TREND_V2_SHARED",
+  "finished_at": "2026-11-01T23:14:45.344506+00:00"
+}

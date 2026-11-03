@@ -97,12 +97,19 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-          cache-dependency-path: kod-machine/requirements-workstation.txt
-      - run: python3 -m pip install -r kod-machine/requirements-workstation.txt
+          cache-dependency-path: |
+            requirements-runtime.txt
+            constraints-runtime.txt
+            kod-machine/requirements-workstation.txt
+            idx-signals/requirements.txt
+            idx-signals/constraints-research.txt
+      - run: python3 -m pip install -r requirements-runtime.txt
       - name: Audit optional application dependencies against known advisories
         run: |
           python3 -m pip install pip-audit==2.10.1
           python3 -m pip_audit -r kod-machine/requirements-workstation.txt --progress-spinner off
+      - name: Runtime paper integration, restart and verified recovery
+        run: python3 tools/check_runtime_release.py
       - name: Optional workstation integration, recovery, source-boundary and web tests
         working-directory: kod-machine
         run: python3 -m unittest discover -s workstation_tests -v

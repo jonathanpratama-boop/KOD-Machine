@@ -1,0 +1,259 @@
+[
+ {
+  "key": "rederive",
+  "checks": [
+   {
+    "item": "Ending NAV, all 4 arms (last daily row = last record = summary end_account.nav)",
+    "status": "CONFIRMED",
+    "detail": "dev baseline 20592.76937267666925, dev challenger 17716.06019658048690, val baseline 12377.20052300523680, val challenger 19339.99999954918810. COMPARISON.json has 20592.76937267667 / 17716.060196580485 / 12377.200523005236 / 19339.99999954919; MD has 20,592.77 / 17,716.06 / 12,377.20 / 19,340.00. The challenger figures also check by hand from the post-kill fills: dev 11053.95966738562995 + 1.06188443*6280.128365 - 6.67 = 17716.06019658048690; val 1.04136670556845 + 0.17675083*60667.641005 - 10.72 + 2.97542146*2902.198175 - 8.64 = 19339.99999954918810. The val figure being almost exactly 19,340 is a coincidence of the arithmetic."
+   },
+   {
+    "item": "Total growth vs 10,000",
+    "status": "CONFIRMED",
+    "detail": "dev B +1.059276937 (+105.93%), dev C +0.771606020 (+77.16%), val B +0.237720052 (+23.77%), val C +0.933999999955 (+93.40%). Matches JSON growth fields and MD."
+   },
+   {
+    "item": "Max drawdown from the final maximum_observed_drawdown (= summary sampled_max_drawdown = max over every record's NAV, including mark_batch/observe marks)",
+    "status": "CONFIRMED",
+    "detail": "dev B 0.1541684092760982675, dev C 0.2711758037982338839, val B 0.1155083127869236040, val C 0.3020428655921983192. JSON sampled_max_drawdown 0.15416840927609826 / 0.27117580379823386 / 0.1155083127869236 / 0.30204286559219834; MD 15.42% / 27.12% / 11.55% / 30.20%."
+   },
+   {
+    "item": "Max drawdown from daily NAV rows only (close_drawdown)",
+    "status": "CONFIRMED",
+    "detail": "dev B 0.153888033776282 (peak 2018-01-14, trough 2018-03-15); dev C 0.270934213804990 (2018-01-14 to 2018-08-09); val B 0.115451409081429 (2023-02-21 to 2023-03-28); val C 0.302037176214895 (2024-03-12 to 2024-08-04). All exactly equal to JSON close_drawdown, dates included. This is slightly lower than sampled_max_drawdown because the daily rows leave out the intraday mark_batch marks."
+   },
+   {
+    "item": "Fills and total fees (summed from observe.result.fills[])",
+    "status": "CONFIRMED",
+    "detail": "dev B 228 fills / 88.69 (127 BUY, 101 SELL); dev C 321 / 193.29; val B 180 / 76.78; val C 693 / 482.69. Additional fills 93 (dev) and 513 (val) match. Traded notional (sum of qty*price) 88714.67 / 193275.77 / 76734.67 / 482581.61, equal to the summaries."
+   },
+   {
+    "item": "Days invested (previous daily row gross_fraction>0) out of return days",
+    "status": "CONFIRMED",
+    "detail": "dev B 144/1923, dev C 199/1923, val B 89/1368, val C 388/1368. Counting gross_fraction>0 on the same row gives the same numbers. JSON invested_days and time_invested_fraction (0.07488, 0.10348, 0.06506, 0.28363) match, as do invested_mean_daily and invested_daily_vol (stdev with ddof=1; annualised with sqrt(365): 0.45266 / 0.45294 / 0.48686 / 0.44419)."
+   },
+   {
+    "item": "Kill date and reason",
+    "status": "CONFIRMED",
+    "detail": "dev B 2018-03-15 NEGATIVE_TRAILING_90_DAY_SHARPE (trigger daily:2018-03-15). dev C 2018-08-08 DRAWDOWN_AT_LEAST_25_PERCENT (trigger mark_batch:2018-08-08T00:00:00Z, drawdown at kill 0.25165806726). val B 2023-04-22 NEGATIVE_TRAILING_90_DAY_SHARPE (daily:2023-04-22). val C 2024-08-03 DRAWDOWN_AT_LEAST_25_PERCENT (mark_batch:2024-08-03T00:00:00Z, drawdown at kill 0.28665916291). The kill value never changes after it is set, and the only later decision in each journal is BLOCKED_PERSISTENT_KILL. NAV on the kill day (20560.24409662397, 18190.49202417653, 12182.36804596608, 19766.27375635837) matches JSON kill_daily."
+   },
+   {
+    "item": "First divergence between baseline and challenger",
+    "status": "DISCREPANCY",
+    "detail": "COMPARISON.json/MD put first_divergence at index 0, the init record (2017-09-26 / 2023-01-01). That record's command and result are identical in both arms. Only provenance['daily_core.py'] differs (b5f8c1b2... vs 38a58acd...), which in turn changes record_hash and state_sha256 on every record. From the journals: commands and results are identical up to the first daily row that differs, daily:2018-03-15 in dev (record index 854, daily index 170) and daily:2023-04-22 in val (record index 559, daily index 111). On those rows only result.kill differs (baseline has the Sharpe kill, challenger has null); NAV and trailing_sharpe are identical. So the reported first divergence is an artefact of the provenance hash, not of behaviour. As a result trades.baseline_fills_after_divergence=228/180 and challenger_fills_after_divergence=321/693 are just the totals. Measured from the real divergence they are dev B 1 vs C 94, val B 2 vs C 515. Additional fills (93 / 513) are unaffected."
+   },
+   {
+    "item": "First daily NAV difference",
+    "status": "CONFIRMED",
+    "detail": "dev 2018-04-21; val 2023-04-23. Matches JSON first_daily_nav_difference. In dev the challenger's own decision:2018-03-14 targeted 0 and sold the same 0.72896184 BTC at 8236.85951 (fee 6.00) on 2018-03-16. Its NAV therefore stays identical to the baseline until it re-enters ETH on 2018-04-21 (decision:2018-04-19)."
+   },
+   {
+    "item": "Challenger liquidation fills after its kill",
+    "status": "CONFIRMED",
+    "detail": "dev: liquidate:mark_batch:2018-08-08T00:00:00Z:BTCUSDT SELL 1.06188443 @ 6280.128365 (ref 6283.27), fee 6.67, 2018-08-09. It was first blocked INELIGIBLE_TIME on 2018-08-08. val: BTC SELL 0.17675083 @ 60667.641005 (fee 10.72) and ETH SELL 2.97542146 @ 2902.198175 (fee 8.64), both 2024-08-04, both first blocked INELIGIBLE_TIME on 2024-08-03. Baseline liquidations: dev BTC 0.72896184 @ 8236.85951, fee 6.00, 2018-03-16; val BTC 0.25660959 @ 27802.941575 (7.13) and ETH 2.80535796 @ 1873.232915 (5.26), 2023-04-23. All match JSON kill_liquidation_fills."
+   },
+   {
+    "item": "Pending intents cancelled at the kill",
+    "status": "CONFIRMED",
+    "detail": "Inferred, because the journal does not list intents. dev C: decision:2018-08-06:BTCUSDT BUY, made 2018-08-07T00:01. Its target 0.4707 was above the current gross 0.3998, no fill ever carries that intent_id, and cash_reserved goes from 1304.550250 to 0 at the kill mark_batch. val C: decision:2024-08-01 made 2024-08-02T00:01. BTC BUY: target 0.6662, cash_reserved 1.041366706 goes to 0 at the kill. ETH SELL: target 0 against 2.97542146 ETH held. Neither intent has a fill. The ETH SELL is inferred from target versus holdings only. Baselines: none pending (cash_reserved 0, and the previous decision's intents filled before the kill row). Matches JSON kill_cancelled_intents."
+   },
+   {
+    "item": "Days with trailing_sharpe.negative true",
+    "status": "CONFIRMED",
+    "detail": "Challenger dev 224 (first 2018-03-15, last 2018-11-06, 5 runs); challenger val 294 (first 2023-04-22, last 2024-11-01, 10 runs). Baseline dev 85 (3 runs), baseline val 32 (9 runs). First day able to fire (first FINITE status): 2017-12-25 / 2023-04-01. All match JSON."
+   },
+   {
+    "item": "Whole-partition vol, Sharpe, CAGR, mean exposure (summary fields copied into COMPARISON)",
+    "status": "CONFIRMED",
+    "detail": "Recomputed from daily_return: vol (ddof=1, sqrt 365) 0.126324291 / 0.146541411 / 0.124209513 / 0.236981037; Sharpe 1.14751 / 0.81310 / 0.51963 / 0.86012; CAGR ((nav/1e4)^(365/n)-1) 0.1469525 / 0.1146589 / 0.0585536 / 0.1924228; mean daily gross_fraction 0.0330455 / 0.0496329 / 0.0625995 / 0.2568377. All agree to about 1e-15."
+   },
+   {
+    "item": "Year-end NAV (last daily row each year)",
+    "status": "CONFIRMED",
+    "detail": "dev both arms 2017 20113.71; 2018-2023 B 20592.77, C 17716.06. val 2023 B 12377.20, C 17404.18; 2024-2026 B 12377.20, C 19340.00. Matches JSON and MD tables."
+   },
+   {
+    "item": "Journal SHA256 values",
+    "status": "CONFIRMED",
+    "detail": "sha256sum: dev B 9350eab2..., dev C 691b8eeb..., val B 4d89c2cb..., val C 13087860.... All equal JSON summary.journal_sha256 and the summary files. Benchmark journal hashes match their summary files only: the benchmark .jsonl files are not on disk (only .lock files), so they could not be hashed."
+   },
+   {
+    "item": "Benchmark numbers (CASH, PASSIVE_50_50_RISK_MATCHED, CONVENTIONAL_50_50_BUY_HOLD_NO_KILL)",
+    "status": "CONFIRMED",
+    "detail": "Every COMPARISON benchmark field equals the corresponding baseline/*_summary.json field: end_nav, growth, CAGR, sampled_max_drawdown, vol, Sharpe, fills, fees, turnover, mean exposure, invested_samples, kill, liquidation. Examples: dev PASSIVE 17844.12712791118, mdd 0.27596, kill 2018-02-03 drawdown; val CONVENTIONAL 36220.207421334875, mdd 0.57580. These are summary-to-summary checks only, since the benchmark journals are absent."
+   },
+   {
+    "item": "normalized_turnover",
+    "status": "COULD_NOT_CHECK",
+    "detail": "The COMPARISON values (5.5043 / 10.7232 / 6.5576 / 30.7455) equal the summary files, but I could not reproduce them from the journals with simple definitions. Traded notional divided by mean daily NAV gives 4.36 / 10.80 / 6.21 / 26.83, and divided by 20000 gives 4.44 / 9.66 / 3.84 / 24.13. The engine's definition is not in the journal. Not required by the task."
+   },
+   {
+    "item": "Pre-declared reading rule",
+    "status": "CONFIRMED",
+    "detail": "dev: NAV delta C-B -2876.70917609618235 (<= -1000) and sampled-MDD delta +0.11700739452 (>= 0.05), so protected=true, suppressed=false, label PROTECTED_CAPITAL. val: NAV delta +6962.79947654395130 (>= +1000) gives suppressed=true; MDD delta +0.18653455281 (>= 0.05) gives protected=true; label BOTH. Matches JSON reading and MD. Using daily-row MDD instead (deltas +0.11705 / +0.18659) gives the same labels, and every delta is far from its threshold."
+   }
+  ],
+  "concerns": [
+   "The 'first divergence' that COMPARISON.json/MD report (index 0, the init record) is not a behavioural divergence. compare.py appears to compare whole records including provenance/record_hash/state_sha256, and those differ from the first record only because daily_core.py has a different hash. The behavioural first divergence is daily:2018-03-15 (dev) and daily:2023-04-22 (val), where only the kill field differs. The trades.*_fills_after_divergence values (228/321, 180/693) are therefore just totals; measured from the real divergence they are 1 vs 94 (dev) and 2 vs 515 (val).",
+   "The MD line 'Days the removed Sharpe rule would have fired (challenger): 224 / 294' counts every day with trailing_sharpe.negative=true. That includes 91 days in each partition after the challenger's own 25% drawdown kill, when the account was already flat. Only 133 (dev) and 203 (val) negative days fall before the challenger's kill. Because the Sharpe kill is permanent, it would have fired once, on 2018-03-15 / 2023-04-22.",
+   "The cancelled intents are inferred, not read: the journal has no explicit intent list. The BUY intents are corroborated by cash_reserved dropping to 0 at the kill. The validation ETHUSDT SELL intent rests only on target 0 against 2.97542146 ETH held.",
+   "sampled_max_drawdown (the rule's input) includes intraday mark_batch open marks taken before fills. It is slightly higher than the daily-row drawdown (for example dev baseline 0.154168 vs 0.153888). The rule labels do not change either way.",
+   "The benchmark journals (CASH/PASSIVE/CONVENTIONAL .jsonl) are absent from /home/user/kod-sharpe-ablation.mmxl0H/baseline (only .lock files remain), so their numbers and journal hashes could be checked only against their summary files.",
+   "Scratch outputs (about 35 KB) are in /tmp/claude-0/-home-user/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/ (derive.py, extra.py, out.json, extra_out.json). Nothing else was written. compare.py was never opened, and COMPARISON.json/.md were read only after every figure had been derived."
+  ]
+ },
+ {
+  "key": "integrity",
+  "checks": [
+   {
+    "item": "1. challenger_engine/ differs from the published engine in exactly one line (daily_core.py:445); every other engine file byte-identical",
+    "status": "CONFIRMED",
+    "detail": "`diff -r historical/historical_shared_account_replay_20261101 sharpe_kill_ablation_20261101/challenger_engine` shows exactly one content difference:\n445c445\n<         if sh[\"negative\"] and st[\"risk_kills_enabled\"]: kill(st, at, \"NEGATIVE_TRAILING_90_DAY_SHARPE\", oid)\n---\n>         if False and sh[\"negative\"] and st[\"risk_kills_enabled\"]: kill(st, at, \"NEGATIVE_TRAILING_90_DAY_SHARPE\", oid)  # ABLATION: Sharpe kill disabled; 25% drawdown kill unchanged\nThis matches CHALLENGER.diff (@@ -442,7 +442,7 @@). daily_core.py: published b5f8c1b2\u2026965700, challenger 38a58acd\u20269f629a. The other 6 shared files have the same sha256 in both trees: PROTOCOL_ADDENDUM_1.md a45485ac\u2026, PROTOCOL_v1.md cbd57e64\u2026, daily_adapter.py ddb7f76e\u2026, history_inputs.py ca4c7a66\u2026, replay.py 8c08857a\u2026, vendor/paper_cash_accounting.py 29688797\u2026. These 7 files are the full bundle_pins() set (daily_core.py:74-76), and every one of the engine's imports is among them. The challenger copy leaves out 8 published files that are not code (diff reports 'Only in' for them): CORE_PROFILE_DIFF.patch, README.md, SOURCE_PINS_PRE_OUTCOME.json, TEST_RESULTS_NORMAL.txt, TEST_RESULTS_OPTIMIZED.txt, tests/ (fixtures_daily.py, test_daily.py), vendor/paper_candidate_v2_original.py. None of them is pinned or imported. The published engine is clean against HEAD and unchanged from 7990850 through 7b8bd4f to HEAD, and its hashes equal FREEZE.json published_engine_sha256, SOURCE_PINS_PRE_OUTCOME.json and the published START_PIN.json source_pins."
+   },
+   {
+    "item": "2. FREEZE.json files_sha256 match the committed content at 7b8bd4f; no frozen file modified after the freeze",
+    "status": "CONFIRMED",
+    "detail": "All 16 entries match `git show 7b8bd4f:<path> | sha256` exactly, and each working-tree file is byte-identical to its committed blob (CHALLENGER.diff 2987bfdd\u2026, PROTOCOL.md bc5e621e\u2026, 7 challenger_engine files, compare.py 89f0f68f\u2026, 5 logs, run_challenger.py 8321ae71\u2026). FREEZE.json: committed = working tree = 2252e728356ddd881eaabb19c0f8d45c309ed711155e8a05415f8adf172dacff. `git diff 7b8bd4f` on the folder is empty. Untracked when the audit started: COMPARISON.json and COMPARISON.md (mtime 23:18:12). While I was auditing, another process added logs/challenger_run.log, logs/compare_run.log, results/* (23:19:52-53) and REPORT.md (23:21:29), then committed them as 1305f9e (2026-11-01T23:21:48Z). `git diff --name-status 7b8bd4f 1305f9e` shows only 'A' (added) entries, so no frozen file was modified, renamed or deleted. TSR tokens and timestamps.json are also unchanged since 7b8bd4f."
+   },
+   {
+    "item": "3. RFC 3161 tokens in timestamps/ cover FREEZE.json's sha256; gen times",
+    "status": "CONFIRMED",
+    "detail": "I verified offline the way kod/timestamp.py does: `openssl ts -verify -in <tsr> -data FREEZE.json -CAfile <pinned>`, plus `-untrusted tsa/freetsa-tsa.crt` for freetsa only. Sectigo has no untrusted file because its intermediates are embedded in the token. FreeTSA: 'Verification: OK' (with -data and with -digest 2252e728\u2026), imprint sha256 2252e728\u2026dacff, serial 0x09A2BE7C, gen time Nov 1 23:07:39 2026 GMT. Sectigo: 'Verification: OK' (with -data and -digest), same imprint, signer 'Sectigo Public Time Stamping Signer R37', serial 0xDE04F58A\u20262030, gen time Nov 1 23:07:40 2026 GMT. Both tokens carry the same nonce, 0x6C4404EDFF788FC4. As a negative control, a zero digest gives 'message imprint mismatch / Verification: FAILED'. The pinned CA files match the hashes in tsa/README.md: freetsa-cacert 2151b611\u2026, freetsa-tsa.crt 8bfb0305\u2026, sectigo-usertrust-rsa-root 8a3dbcb9\u2026. timestamps/FREEZE.json.timestamps.json gives the same sha256 and the same times (23:07:39 and 23:07:40), with errors []."
+   },
+   {
+    "item": "4. Timing: was the challenger produced after the freeze?",
+    "status": "CONFIRMED",
+    "detail": "Timeline (UTC). Local-clock times are file mtime/birth.\n22:51:46-22:59:51 baseline re-run\n23:01:26 challenger_engine/ and CHALLENGER.diff written\n23:01:39 run_challenger.py written\n23:01:50-23:04:28 harness check with the published engine\n23:03:16 PROTOCOL.md last written\n23:05:03 compare.py last written\n23:07:02 compare self-test output\n23:07:22 FREEZE.json written\n23:07:39 / 23:07:40 RFC 3161 freetsa / sectigo\n23:07:51 freeze commit 7b8bd4f (author and commit dates)\n23:08:18.590 /home/user/kod-sharpe-ablation.mmxl0H/logs/challenger_run.log created (birth; mtime 23:14:45.344)\n23:08:18.666 challenger/ directory created\n23:08:18.79 challenger INPUT_VALIDATION.json and development_TREND_V2_SHARED.jsonl born; that journal's mtime 23:09:31.946\n23:10:43.920 validation_TREND_V2_SHARED.jsonl born; mtime 23:12:44.082\n23:14:45.34 RUN.json (finished_at 23:14:45.344506)\n23:14:52-23:18:12 compare run\nEvery challenger output was born 38 s or more after the later TSA time and 27 s or more after the commit time. The local clock agreed with the TSAs at freeze time: the timestamps/ directory mtime is 23:07:40.33 local against the Sectigo token's 23:07:40."
+   },
+   {
+    "item": "5a. Challenger journal provenance pins equal the challenger engine's file hashes",
+    "status": "CONFIRMED",
+    "detail": "/home/user/kod-sharpe-ablation.mmxl0H/challenger/development_TREND_V2_SHARED.jsonl (sha256 691b8eeb\u2026d1e9, 3196 rows) and validation_TREND_V2_SHARED.jsonl (13087860\u2026d0a2, 3697 rows): every row has exactly one provenance dict, equal to the challenger engine's 7 file hashes (daily_core.py 38a58acd\u2026, the other 6 as in check 1). RUN.json source_pins match too, and its driver_sha256 8321ae71\u2026 equals the frozen run_challenger.py. engine_dir is \u2026/sharpe_kill_ablation_20261101/challenger_engine. Both summaries report replay PASS, with journal_sha256 equal to the actual file hashes. The committed results/*.jsonl.gz decompress to the same two sha256 values, and the copied summaries and RUN.json are byte-identical. The challenger journals contain no NEGATIVE_TRAILING_90_DAY_SHARPE kill; their first kill is the drawdown kill (dev 2018-08-08, val 2024-08-03). The baseline's Sharpe kills fall on 2018-03-15 and 2023-04-22, matching compare_selftest.log."
+   },
+   {
+    "item": "5b. Baseline journal provenance pins equal the published engine's",
+    "status": "CONFIRMED",
+    "detail": "/home/user/kod-sharpe-ablation.mmxl0H/baseline/development_TREND_V2_SHARED.jsonl (2612 rows) and validation_TREND_V2_SHARED.jsonl (1821 rows): every row's provenance equals the published 7-file pins (daily_core.py b5f8c1b2\u2026). The harness_check journals carry the same single pin set, and harness_check/RUN.json gives engine_dir = the published engine and driver_sha256 8321ae71\u2026."
+   },
+   {
+    "item": "5c. Baseline trend journal sha256 equal the published values (FREEZE.json baseline_reproduction and the published *_summary.json journal.journal_sha256)",
+    "status": "CONFIRMED",
+    "detail": "development_TREND_V2_SHARED.jsonl: 9350eab20ab03d7965c531145706b1d64033f9d8d5da1531801d34165607b381. validation_TREND_V2_SHARED.jsonl: 4d89c2cb569399dd070e0ba50606ad72e01e8fedd4aaee3455a2022652c77d5c. For both, the actual baseline file = harness_check file = FREEZE baseline_reproduction = published summary journal.journal_sha256 = historical/BUNDLE_MANIFEST.json entry (7828063 and 5362558 bytes). The published TREND summaries hash to 4982c0ee\u2026 and 99dc8634\u2026, which equal FREEZE, and the baseline copies are byte-identical. All 8 published summaries equal the baseline copies. INPUT_VALIDATION.json 0b15eb87\u2026 is identical in published, FREEZE, baseline and challenger. Published RESULTS.json 142c1074\u2026 equals FREEZE published_RESULTS_json_sha256."
+   },
+   {
+    "item": "6. logs/baseline_reproduction_check.log and logs/harness_check_comparison.log say what PROTOCOL.md claims",
+    "status": "CONFIRMED",
+    "detail": "baseline_reproduction_check.log has MATCH for all 8 journals, INPUT_VALIDATION.json and all 8 summaries. It shows started_at and finished_at differing as wall clock (published 11:34:27 / 11:38:47, reproduced 22:51:46 / 22:59:51), then 'MATCH RESULTS.json apart from the two wall-clock fields', 'published RESULTS.json sha256 142c1074\u2026' and 'BASELINE REPRODUCED EXACTLY'. That is what the protocol says. harness_check_comparison.log has MATCH for both TREND journals (full hashes 9350eab2\u2026 and 4d89c2cb\u2026), both TREND summaries (4982c0ee\u2026 and 99dc8634\u2026) and INPUT_VALIDATION (0b15eb87\u2026), then 'HARNESS EQUIVALENT TO CANONICAL RUN'. compare_selftest.log shows NO_MATERIAL_EFFECT in both partitions, divergence None and extra fills 0, as claimed. The committed baseline logs are byte-identical to /home/user/kod-sharpe-ablation.mmxl0H/logs."
+   }
+  ],
+  "concerns": [
+   "The timing proof only works in one direction. The RFC 3161 tokens prove FREEZE.json existed by 23:07:39-40 UTC. They do not prove the challenger outputs were absent then. 'Challenger after freeze' rests on local filesystem birth/mtime and the self-reported git commit time. Those agree with the TSA clocks to within about a second, but they are not externally attested. No challenger journal, COMPARISON.* or commit 1305f9e carries its own RFC 3161 token.",
+   "PROTOCOL.md was last written at 23:03:16. That was before the harness check finished (RUN.json finished_at 23:04:28, validation journal still running), before compare.py's final edit (23:05:03) and before the self-test output (23:07:02). So the protocol's sentences about the harness equivalence and the compare self-test were written before those checks completed. The logs do confirm them, so nothing is false, but the claims were written in advance rather than after verification.",
+   "I could only fully re-hash 2 of the 8 baseline journals. The '8 journals byte-identical' claim in baseline_reproduction_check.log gives 16-hex prefixes. The 6 non-trend journals no longer exist in /home/user/kod-sharpe-ablation.mmxl0H/baseline (only .lock files remain). I could re-hash only the 2 TREND journals in full. The 6 prefixes do match the published summaries' full journal_sha256.",
+   "The published engine directory and its vendor/ subdirectory had their directory mtime changed at 23:08:09.03, after the freeze commit and 9 s before the challenger run. An entry was added or removed. The most likely cause is cleanup of a gitignored __pycache__ (.gitignore:1 is '__pycache__/', and none exists now). Tracked content is unaffected: the directory is clean against HEAD and the hashes equal FREEZE.json published_engine_sha256.",
+   "Concurrent activity during the audit: another process wrote results/, REPORT.md and the two run logs in the audited folder, and committed them as 1305f9e at 23:21:48Z. That commit only adds files, and no frozen file changed. The folder was a moving target while I checked it, but everything frozen at 7b8bd4f still matches.",
+   "harness_check/ in /home/user/kod-sharpe-ablation.mmxl0H holds non-trend summaries timestamped 23:04:44, 16 s after RUN.json. run_challenger.py only produces TREND_V2_SHARED, so these were copied in afterwards; they are byte-identical to the published/baseline summaries. This is harmless, but they are not harness outputs.",
+   "My audit wrote only one file: /tmp/claude-0/-home-user/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/pins.py (about 1 KB). No repo or experiment files were touched, no git writes were made, and nothing was run from the replay, run_challenger.py or the engine."
+  ]
+ },
+ {
+  "key": "skeptic",
+  "checks": [
+   {
+    "item": "Integrity: the journals analysed are the frozen ones, and the engine change is a single line",
+    "status": "CONFIRMED",
+    "detail": "SHA256 of baseline dev/val journals = 9350eab2.../4d89c2cb... and challenger = 691b8eeb.../13087860..., matching FREEZE.json and summary pins. The gz copies in results/ decompress to the same hashes. diff of published vs challenger daily_core.py shows only line 445. daily_adapter, history_inputs, replay and vendor are byte-identical (cmp)."
+   },
+   {
+    "item": "Fairness: were the arms identical before the baseline's kill?",
+    "status": "CONFIRMED",
+    "detail": "compare.py reports first_divergence index 0, but that is only the state hash picking up the daily_core.py provenance hash. Comparing id + command + result row by row, the init commands and results are equal. The first difference is record 854 'daily:2018-03-15' (dev) and record 559 'daily:2023-04-22' (val), and only the 'kill' field differs there. All fills up to and including the kill day are identical. On 2018-03-16 the challenger sold the same 0.72896184 BTC at the same 8,236.86, but under its own signal intent decision:2018-03-14. First NAV difference: 2018-04-21 (dev) and 2023-04-23 (val). Benchmarks use the same data. No unfairness found."
+   },
+   {
+    "item": "Reading rule applied correctly",
+    "status": "CONFIRMED",
+    "detail": "compare.reading() uses end-NAV +/-1,000 and a sampled-max-DD difference of >=0.05, matching PROTOCOL.md. Dev: dNAV -2,876.71 (<=-1,000) and dDD +11.70pp (>=5) give PROTECTED; not suppressed. Val: dNAV +6,962.80 (>=+1,000) gives SUPPRESSED; dDD +18.65pp gives PROTECTED; so BOTH. Labels are correct as computed. The misreading is in draft (c), not in the script."
+   },
+   {
+    "item": "(a) Ending NAV 17,716 vs 20,593 (-2,877); DD 27.1% vs 15.4%; drawdowns measured from the same peak",
+    "status": "CONFIRMED",
+    "detail": "End NAV 17,716.06 vs 20,592.77, a difference of -2,876.71. Sampled max DD 27.12% vs 15.42%. Both arms measure DD from the same running peak, 24,307.73 on 2018-01-14. The baseline's 15.42% was reached on 2018-03-15, the kill day, while the arms were still identical, so the challenger had the same 15.42% plus the extra loss from its re-entries."
+   },
+   {
+    "item": "(a) Wording '27.1% ... before the 25% drawdown kill stopped it on 2018-08-08'",
+    "status": "DISCREPANCY",
+    "detail": "The order of events is wrong. Drawdown was 24.23% at the 08-07 open and 25.17% at the 08-08 open, where the kill fired (NAV 18,190.49). The 27.12% came after the forced sale at the 08-09 open (1.06188 BTC sold at 6,280.13; BTC opens 6,720.63 then 6,283.27). Suggested wording: 'the drawdown kill fired at 25.2% on 2018-08-08; the forced sale at the next open took it to 27.1%.'"
+   },
+   {
+    "item": "(a) Is the development 'protection' mostly the drawdown rule's mechanics?",
+    "status": "DISCREPANCY",
+    "detail": "Largely yes, so the size needs rewording. Of the -2,876.71: 2,361.97 is the drawdown budget the baseline had left (its exit NAV 20,592.77 minus the 25% line 0.75x24,307.73 = 18,230.80); 40.30 is the gap through the line at the 08-08 open; 474.43 is the drop from kill to liquidation overnight. So about 82% of the gap is that remaining budget, and once the challenger hit the 25% stop the PROTECTED label was guaranteed: any drawdown-kill exit means DD >=25%, at least +9.6pp over 15.42%, and NAV <=18,231, at least 2,362 below the baseline. The loss comes from two re-entries: 2018-04-21..05-26 lost -1,122.14 and 07-20..08-09 lost -1,731.75 (93 extra fills). The first re-entry was +2,457 ahead of the baseline on 2018-05-06 (NAV 23,050) before giving it back. Fragility: neutralising just the 2 worst post-divergence days (2018-04-26 -6.3%, 2018-08-01 -4.4%) gives a naive end NAV of 19,770 (-822, NAV leg fails) and DD 19.6% (+4.2pp, DD leg fails). This is path-naive: without the kill the account would have kept trading after 08-09, which is not knowable here. The label therefore rests on a few days plus the 25% stop ending the path."
+   },
+   {
+    "item": "(b) Quit on 2023-04-22 on a near-zero 90-day mean",
+    "status": "CONFIRMED",
+    "detail": "Window of 90 returns: mean -0.00028%/day, sum -0.025%, annualised Sharpe -0.0024, t = -0.0012. Worth adding that the compound 90-day return was -2.18% (NAV 12,453.39 to 12,182.37; the gap is volatility drag) and that DD was 11.55% at the time. In dev the trigger was similar: mean -0.0114%/day, t = -0.059, compound -2.49%."
+   },
+   {
+    "item": "(b) 19,340 vs 12,377; peak about 27,700 in March 2024; stopped by the drawdown kill on 2024-08-03; 30.2% drawdown",
+    "status": "CONFIRMED",
+    "detail": "End NAV 19,340.00 vs 12,377.20 (+6,962.80). Peak 27,709.44 on 2024-03-12. Profitable stretches: 2023-09-23..2024-01-29 +6,243 and 2024-02-09..04-17 +6,795; later -1,745 and -2,963. The kill fired at 28.67%, not 25%: the 08-02 open was at 24.07%, and the 08-03 open gapped (BTC 65,354 to 61,498, ETH 3,203 to 2,990). Liquidation at the 08-04 open took it to 30.20%. The draft should say the stop fired at 28.7%."
+   },
+   {
+    "item": "(b) Are the drawdowns measured from the same peak in validation?",
+    "status": "DISCREPANCY",
+    "detail": "No. Baseline peak is 13,730.72 (2023-02-21); challenger peak is 27,709.44 (2024-03-12), a level the baseline never reached. Even at its post-kill low the challenger was still 6,963 above the baseline. Measured from the common pre-divergence peak, the challenger's worst drawdown was 20.50% (NAV 10,916 on 2023-09-27, before the rally). That is +8.95pp, so the PROTECTED leg still holds. The real capital-protection episode was the May-Sept 2023 whipsaw: the challenger was below the baseline on 170 days (2023-04-24..10-23), by at least 1,000 on 94 days, at most -1,461. Suggested wording: 'protected against a 20.5% whipsaw drawdown in mid-2023 and a later 30% give-back of gains it had otherwise prevented'."
+   },
+   {
+    "item": "(b) Does the 'suppressed returns' reading depend on a few days?",
+    "status": "DISCREPANCY",
+    "detail": "Yes. Removing the 5 best of the 470 days between divergence and the challenger's liquidation (2023-10-24 +9.3%, 2024-03-21 +8.5%, 2023-11-10 +8.4%, 2024-02-29 +7.1%, 2024-01-09 +6.0%) gives a naive end NAV of 13,255.71. That is below baseline+1,000 (13,377.20), so SUPPRESSED flips. Naive DD stays 35.7%, so PROTECTED holds. The draft should say the suppression rests on one rally and a handful of days."
+   },
+   {
+    "item": "Overshoot past 25% and why",
+    "status": "CONFIRMED",
+    "detail": "Drawdown is checked only at daily opens, and liquidation happens at the next open by design ('kill never fills at triggering quote'). Dev: 40 USDT gap through the line, then 474.43 overnight, which is 1.06188 BTC x (6,720.63-6,283.27) = 464 plus about 10 in fees and slippage; the kill also cancelled a pending BTC buy, which helped. Val: 1,015.80 gap through the line, then 426.27 overnight. Of that, about 256 is ETH: the kill cancelled a pending ETH SELL (decision 2024-08-01, ETH target 0) due at the 08-03 open (2,989.61), and 2.9754 ETH was sold a day later at 2,903.65. About 141 is BTC (0.17675 x 800). About 29 is fees and slippage. Total below the 25% line: dev 514.74, val 1,442.08."
+   },
+   {
+    "item": "Fees and slippage",
+    "status": "CONFIRMED",
+    "detail": "Total fees + slippage, baseline vs challenger: dev 88.69+44.36 vs 193.29+96.64; val 76.78+38.37 vs 482.69+241.29. Extra cost after divergence: dev about 156.9 (5.5% of the 2,877 gap); val about 608.8 (8.7% of the 6,963 gap; turnover 30.7x vs 6.6x). No reading changes because of costs."
+   },
+   {
+    "item": "(c) 'one partition each way'",
+    "status": "DISCREPANCY",
+    "detail": "This misstates the pre-declared reading. PROTECTED_CAPITAL held in both partitions (dev through both legs; val through the DD leg, +18.65pp, and +8.95pp even from the common peak). SUPPRESSED_RETURNS held only in validation. What went 'one each way' is the net ending NAV: kill better by 2,877 in dev, worse by 6,963 in val. The draft should say that explicitly and not pool the partitions."
+   },
+   {
+    "item": "(c) Still trails conventional buy-and-hold in both partitions, with far smaller drawdowns",
+    "status": "CONFIRMED",
+    "detail": "On ending NAV: dev 17,716 vs 24,501 (-6,784); val 19,340 vs 36,220 (-16,880). DD 27.1% vs 71.7% and 30.2% vs 57.6%. Qualifier: on whole-window Sharpe the challenger beats buy-and-hold in dev (0.81 vs 0.59) and loses in val (0.86 vs 0.94), so 'trails' should say 'on ending NAV'. The baseline with the rule also trails buy-and-hold in dev (20,593 vs 24,501)."
+   },
+   {
+    "item": "(c) Roughly ties the capacity-limited passive control in development",
+    "status": "CONFIRMED",
+    "detail": "17,716 vs 17,844 (-128, -0.7%); DD 27.1% vs 27.6%. The tie is largely mechanical: both accounts were stopped by the same 25% drawdown kill (passive 2018-02-03, challenger 2018-08-08) from similar peaks (challenger 24,308; passive about 24,650 implied by end/(1-0.276)). Both ended at about 72-73% of their peak, so the tie says little about trend versus passive. In validation the passive control was stopped by the ablated Sharpe rule itself (2023-06-16), so it is not a neutral comparator there. The challenger beat it 19,340 vs 15,038."
+   },
+   {
+    "item": "(d) Reused-data diagnostic; cannot show removing the rule would improve future returns",
+    "status": "CONFIRMED",
+    "detail": "Matches PROTOCOL.md and COMPARISON classification REUSED_DATA_DIAGNOSTIC_NOT_INDEPENDENT_VALIDATION. Could be stated both ways: it also cannot show that keeping the rule protects in future. Both challenger outcomes also depend on the unchanged 25% kill ending the path (one historical path per partition, no significance test)."
+   },
+   {
+    "item": "Reported counts of days the removed rule 'would have fired'",
+    "status": "DISCREPANCY",
+    "detail": "Not in the draft, but the COMPARISON/REPORT counts of 224 (dev) and 294 (val) each include 90 days after the challenger's own drawdown kill, when the account was permanently flat. While the account could still trade, the counts are 134 (dev) and 204 (val)."
+   }
+  ],
+  "concerns": [
+   "Draft (a) has the order of events wrong. The drawdown kill fired at 25.17% at the 2018-08-08 open; 27.12% was reached only after the forced sale at the 08-09 open.",
+   "Draft (a) presents the 2,877 USDT as what the Sharpe rule saved. About 2,362 of it is just the drawdown budget the baseline had left above the 25% line (18,230.80); about 514 is overshoot past that line. Once the challenger hit the 25% stop, the PROTECTED label was certain under the rule. The NAV and DD legs of that label both flip, path-naively, if the 2 worst post-divergence days (2018-04-26, 2018-08-01) are neutralised. The first re-entry was briefly +2,457 ahead of the baseline.",
+   "Draft (b): the 30.2% drawdown is measured from a 27,709 peak the baseline never reached, and the stop fired at 28.7% after an overnight gap, not at 25%. Measured from the common Feb-2023 peak, the challenger's worst drawdown was 20.5% (-1,461 vs the baseline on 2023-09-27), which still satisfies the DD leg. The SUPPRESSED reading rests on about 5 rally days out of 470 (naive end NAV without them 13,256 < 13,377).",
+   "Draft (c) 'one partition each way' misreads the pre-declared reading: PROTECTED held in both partitions and SUPPRESSED in one. Only the net ending NAV went one way in each partition.",
+   "Draft (c): 'trails buy-and-hold' is true on ending NAV only; the challenger's dev Sharpe (0.81) beats buy-and-hold (0.59). The tie with the passive control in dev is mechanical: both were stopped by the same 25% kill from similar peaks. The validation passive control was itself stopped by the ablated Sharpe rule.",
+   "In validation the kill cancelled a pending de-risking ETH sale due at the trigger open. That cost about 256 of the 426 USDT lost overnight. This kill mechanic is not mentioned in the draft.",
+   "compare.py's first_divergence field (index 0) is a provenance-hash artifact. An independent row-by-row check confirms the arms are identical through the baseline kill day, with only the kill field differing; the comparison is fair.",
+   "Analysis script (read-only, stdout only): /tmp/claude-0/-home-user/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/attack.py"
+  ]
+ }
+]

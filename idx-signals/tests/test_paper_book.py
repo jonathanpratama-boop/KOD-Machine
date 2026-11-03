@@ -45,6 +45,11 @@ class Book(unittest.TestCase):
             p.start()
             self.addCleanup(p.stop)
         self.now = datetime(2026, 10, 31, 12, tzinfo=timezone.utc)
+        # The scenario's decision clock and actual recording clock must agree.
+        # Otherwise these fixed forecasts become late merely as calendar time passes.
+        clock = mock.patch.object(book, "utc_stamp", return_value="2026-10-31T12:00:00Z")
+        clock.start()
+        self.addCleanup(clock.stop)
 
     def _plan(self):
         paper.append(book.plan_records(self.now), path=self.ledger)
@@ -61,6 +66,12 @@ class Book(unittest.TestCase):
     def test_no_plan_after_the_entry_cutoff(self):
         late = datetime(2026, 11, 2, 13, 30, tzinfo=timezone.utc)
         self.assertEqual(book.plan_records(late), [])
+
+    def test_actual_late_recording_is_still_rejected_by_verification(self):
+        with mock.patch.object(book, "utc_stamp", return_value="2026-11-03T12:00:00Z"):
+            self._plan()
+        self.assertEqual(len(book.verify()), 2)
+        self.assertTrue(all("planned after its entry cutoff" in p for p in book.verify()))
 
     def test_owner_confirm_before_the_cutoff_only(self):
         self._plan()
