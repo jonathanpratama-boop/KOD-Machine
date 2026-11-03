@@ -1,0 +1,62 @@
+{
+ "months": 79,
+ "periods": {
+  "check_2023_26": {
+   "n": 45,
+   "S1_stable_30d": {
+    "rho_moonshot": 0.16693017127799736,
+    "p": NaN,
+    "rho_median_ret": -0.14123847167325426
+   },
+   "S2_alt_minus_btc": {
+    "rho_moonshot": -0.04057971014492753,
+    "p": NaN,
+    "rho_median_ret": -0.11264822134387352
+   },
+   "S3_breadth50": {
+    "rho_moonshot": 0.244532279314888,
+    "p": NaN,
+    "rho_median_ret": 0.13794466403162056
+   },
+   "tide_off": {
+    "n": 38,
+    "moonshot_rate": 0.23852092899983476,
+    "median_alt_30d": -0.014489163787966206
+   },
+   "tide_on": {
+    "n": 7,
+    "moonshot_rate": 0.19935416771486564,
+    "median_alt_30d": -0.09268952649421149
+   }
+  },
+  "dev_2020_22": {
+   "n": 34,
+   "S1_stable_30d": {
+    "rho_moonshot": 0.3411764705882353,
+    "p": NaN,
+    "rho_median_ret": 0.22047364400305572
+   },
+   "S2_alt_minus_btc": {
+    "rho_moonshot": 0.06371275783040489,
+    "p": NaN,
+    "rho_median_ret": -0.044766997708174175
+   },
+   "S3_breadth50": {
+    "rho_moonshot": 0.22811306340718102,
+    "p": NaN,
+    "rho_median_ret": 0.093353705118411
+   },
+   "tide_off": {
+    "n": 21,
+    "moonshot_rate": 0.31306262291765846,
+    "median_alt_30d": 0.01989989813225131
+   },
+   "tide_on": {
+    "n": 13,
+    "moonshot_rate": 0.36916666132487114,
+    "median_alt_30d": -0.0018223707659374977
+   }
+  }
+ },
+ "reading": "FLOW DESCRIBES, DOES NOT LEAD"
+}
