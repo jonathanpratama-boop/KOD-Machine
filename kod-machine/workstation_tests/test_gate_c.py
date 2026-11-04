@@ -132,11 +132,14 @@ class ImportTests(CompanyFactsCase):
 class RevisionTests(CompanyFactsCase):
     def test_apples_fy2008_restatement_is_shown_as_reported_or_latest_by_cutoff(self):
         sec, _ = self.company("AAPL")
-        fy2008 = lambda figures: next(
-            f
-            for f in figures
-            if f.period.start_date == "2007-09-30" and f.period.end_date == "2008-09-27"
-        )  # noqa: E731
+
+        def fy2008(figures):
+            return next(
+                f
+                for f in figures
+                if f.period.start_date == "2007-09-30" and f.period.end_date == "2008-09-27"
+            )
+
         before = AsOfPolicy.parse("2009-12-31T00:00:00Z", "public", DAY_END)
         after = AsOfPolicy.parse("2010-02-01T00:00:00Z", "public", DAY_END)
         self.assertEqual(
