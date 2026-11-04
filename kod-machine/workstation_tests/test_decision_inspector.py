@@ -5,8 +5,9 @@ import json
 from pathlib import Path
 import sys
 import tempfile
+from types import SimpleNamespace
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from fastapi.testclient import TestClient
 
@@ -225,24 +226,71 @@ class DecisionInspectorTests(unittest.TestCase):
         self.assertNotEqual(view["price_status"], "VERIFIED_RETAINED_BYTES")
 
     def test_public_capture_is_compatible_with_prospective_attempt_cohort(self):
-        from idxsig.runtime.timing import capture_intraday
+        from idxsig.runtime.timing import capture_intraday, clock_observation
         from idxsig.runtime.timing_demo import DEMO_TIME, synthetic_fetcher
 
-        # Fake transport supplies a production-shaped public_market receipt.
-        result = capture_intraday(
-            self.runtime,
-            scheduled_at=DEMO_TIME.isoformat(),
-            symbols=["BTCUSDT"],
-            bars=2,
-            fetcher=synthetic_fetcher,
-            clock=lambda: DEMO_TIME.isoformat(),
-            evidence_kind="public_market",
+        tracking = (
+            "334FA8DC,51.79.168.220,3,"
+            f"{DEMO_TIME.timestamp() - 1:.9f},0.001704435,"
+            "0.000812492,0.010271930,-182.658,54.013,48.161,"
+            "0.008213954,0.029829502,65.2,Normal\n"
         )
-        view = DecisionInspector(self.runtime).attempt(result["attempt_id"])
-        self.assertEqual(view["attempt"]["evidence_kind"], "prospective")
-        self.assertEqual(view["price_status"], "VERIFIED_RETAINED_BYTES")
-        self.assertEqual(len(view["bars"]), 2)
-        self.assertIsNone(view["attempt"]["decision_at"])
+        # Control chrony availability and output. Keep +00:00 input to exercise its
+        # equivalence to the journal's canonical Z timestamp with retained raw.
+        for name, executable, returncode, clock_status in (
+            ("missing", None, 0, "UNKNOWN"),
+            ("measured", "/fixture/chronyc", 0, "MEASURED_EXTERNAL"),
+            ("failed", "/fixture/chronyc", 1, "MEASUREMENT_FAILED"),
+        ):
+            with self.subTest(clock=name):
+                root = self.runtime / name
+                process = SimpleNamespace(returncode=returncode, stdout=tracking, stderr="")
+                runner = Mock(return_value=process)
+
+                def observe_clock(root, *, clock):
+                    return clock_observation(root, clock=clock, runner=runner)
+
+                with (
+                    patch("idxsig.runtime.timing.shutil.which", return_value=executable),
+                    patch("idxsig.runtime.timing.clock_observation", side_effect=observe_clock),
+                ):
+                    result = capture_intraday(
+                        root,
+                        scheduled_at=DEMO_TIME.isoformat(),
+                        symbols=["BTCUSDT"],
+                        bars=2,
+                        fetcher=synthetic_fetcher,
+                        clock=lambda: DEMO_TIME.isoformat(),
+                        evidence_kind="public_market",
+                    )
+                before = hashes(root)
+                view = DecisionInspector(root).attempt(result["attempt_id"])
+                self.assertEqual(view["attempt"]["evidence_kind"], "prospective")
+                self.assertEqual(view["price_status"], "VERIFIED_RETAINED_BYTES")
+                self.assertEqual(len(view["bars"]), 2)
+                self.assertIsNone(view["attempt"]["decision_at"])
+                clock = view["attempt"]["clock"]
+                self.assertEqual(clock["status"], clock_status)
+                self.assertEqual(clock["observed_at"], "2026-11-02T12:03:00Z")
+                if executable:
+                    runner.assert_called_once()
+                    raw = json.loads(
+                        (root / "timing/clocks" / (clock["evidence_id"] + ".json")).read_text()
+                    )
+                    self.assertEqual(raw["observed_at"], clock["observed_at"])
+                    self.assertEqual(raw["stdout"], tracking)
+                else:
+                    runner.assert_not_called()
+                    self.assertIsNone(clock["evidence_id"])
+                assessment = view["clock_assessment"]
+                self.assertEqual(
+                    assessment["status"], "VERIFIED" if name == "measured" else "UNKNOWN"
+                )
+                self.assertEqual(
+                    assessment["system_time_offset_seconds"],
+                    "0.001704435" if name == "measured" else None,
+                )
+                self.assertEqual(before, hashes(root))
 
     def test_legacy_clock_claim_is_separated_from_raw_evidence_assessment(self):
         payload = timing_payload()

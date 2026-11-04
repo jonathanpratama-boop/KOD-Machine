@@ -35,7 +35,9 @@ def clock_observation(root, *, clock=now, runner=subprocess.run):
     Absence of chrony is UNKNOWN, not a zero offset. The raw local observation is
     retained. Exchange server time is a different clock and is never called NTP.
     """
-    at = clock()
+    # Attempt validation uses UTC Z timestamps. Persist the same spelling in
+    # hashed clock evidence so equivalent caller offsets cannot break linkage.
+    at = utc_text(parse_time(clock()))
     result = {"status": "UNKNOWN", "offset_seconds": None, "observed_at": at, "evidence_id": None}
     executable = shutil.which("chronyc")
     if executable is None:
@@ -46,7 +48,7 @@ def clock_observation(root, *, clock=now, runner=subprocess.run):
         )
         evidence = {
             "parser_version": PARSER_VERSION,
-            "observed_at": clock(),
+            "observed_at": utc_text(parse_time(clock())),
             "command": "chronyc -c tracking",
             "returncode": process.returncode,
             "stdout": process.stdout[:16384],
@@ -70,7 +72,7 @@ def clock_observation(root, *, clock=now, runner=subprocess.run):
             status="MEASUREMENT_FAILED", observed_at=evidence["observed_at"], evidence_id=identity
         )
     except (OSError, subprocess.SubprocessError, ValueError, ArithmeticError):
-        result.update(status="MEASUREMENT_FAILED", observed_at=clock())
+        result.update(status="MEASUREMENT_FAILED", observed_at=utc_text(parse_time(clock())))
     return result
 
 

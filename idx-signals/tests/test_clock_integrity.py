@@ -2,6 +2,7 @@
 
 import copy
 from pathlib import Path
+import subprocess
 from tempfile import TemporaryDirectory
 from types import SimpleNamespace
 import unittest
@@ -11,7 +12,7 @@ from idxsig.runtime.clock import PARSER_VERSION, assess_clock, parse_tracking
 from idxsig.runtime.storage import atomic_json, digest, read_json
 from idxsig.runtime.timing import clock_observation
 from idxsig.runtime.timing_evidence import assess_retained_clock, verify_linked_evidence
-from idxsig.timing_capture import make_attempt
+from idxsig.timing_capture import append_attempt, make_attempt, read_attempts
 
 
 NOW = "2026-11-04T17:30:52Z"
@@ -135,6 +136,63 @@ class RetainedClockTests(unittest.TestCase):
         path = self.root / "timing/clocks" / (result["evidence_id"] + ".json")
         self.assertEqual(read_json(path)["parser_version"], PARSER_VERSION)
         self.assertEqual(read_json(path)["stdout"], TRACKING + "\n")
+
+    def test_collector_canonicalizes_clock_before_linking_retained_evidence(self):
+        for timestamp in ("2026-11-04T17:30:52+00:00", "2026-11-04T23:00:52+05:30"):
+            for returncode in (0, 1):
+                with self.subTest(timestamp=timestamp, returncode=returncode):
+                    process = SimpleNamespace(returncode=returncode, stdout=TRACKING, stderr="")
+                    with patch(
+                        "idxsig.runtime.timing.shutil.which", return_value="/usr/bin/chronyc"
+                    ):
+                        result = clock_observation(
+                            self.root, clock=lambda: timestamp, runner=lambda *a, **k: process
+                        )
+                    self.assertEqual(result["observed_at"], NOW)
+                    path = self.root / "timing/clocks" / (result["evidence_id"] + ".json")
+                    before = path.read_bytes()
+                    self.assertEqual(read_json(path)["observed_at"], NOW)
+                    row = make_attempt(
+                        "canonical-clock-" + str(returncode),
+                        detector_version="CLOCK_TEST_V1",
+                        universe_snapshot_id="declared-universe",
+                        evidence_id="clock-test",
+                        evidence_kind="synthetic",
+                        recorded_at=timestamp,
+                        status="STARTED",
+                        source="test",
+                        clock=result,
+                    )
+                    append_attempt(self.root, row)
+                    retained = next(
+                        item for item in read_attempts(self.root) if item["id"] == row["id"]
+                    )
+                    self.assertTrue(verify_linked_evidence(self.root, [retained])["ok"])
+                    self.assertEqual(path.read_bytes(), before)
+
+    def test_unavailable_clock_paths_also_canonicalize_observation_time(self):
+        timestamp = "2026-11-04T17:30:52+00:00"
+        with patch("idxsig.runtime.timing.shutil.which", return_value=None):
+            result = clock_observation(self.root, clock=lambda: timestamp)
+        self.assertEqual(result["status"], "UNKNOWN")
+        self.assertEqual(result["observed_at"], NOW)
+        with patch("idxsig.runtime.timing.shutil.which", return_value="/usr/bin/chronyc"):
+            with patch(
+                "subprocess.run", side_effect=subprocess.TimeoutExpired("chronyc", 2)
+            ) as run:
+                result = clock_observation(self.root, clock=lambda: timestamp, runner=run)
+        self.assertEqual(result["status"], "MEASUREMENT_FAILED")
+        self.assertEqual(result["observed_at"], NOW)
+        self.assertIsNone(result["evidence_id"])
+        self.assertFalse((self.root / "timing").exists())
+
+    def test_retained_clock_still_rejects_a_different_observation_instant(self):
+        path, row = self.retained(raw_clock(), "0.001704435")
+        before = path.read_bytes()
+        row["clock"]["observed_at"] = "2026-11-04T17:30:51.999999Z"
+        with self.assertRaisesRegex(ValueError, "observation time mismatch"):
+            assess_retained_clock(self.root, row)
+        self.assertEqual(path.read_bytes(), before)
 
     def test_failed_measurement_keeps_original_raw_evidence(self):
         process = SimpleNamespace(returncode=1, stdout=TRACKING, stderr="unavailable")
