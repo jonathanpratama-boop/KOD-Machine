@@ -29,8 +29,9 @@ begin with a label such as `Q2`.
 ## Where the note goes
 
 In the merge commit itself, on the branch being merged, or in a non-merge commit pushed together with the
-merge. One note satisfies one merge. A note pushed later does not change the failed run of the push that
-lacked it: that run stays as the record.
+merge. One note satisfies one merge. The note is read as it stands at the head of the push, so a commit
+pushed with the merge can still correct it. A note pushed later does not change the failed run of the
+push that lacked it: that run stays as the record.
 
 ## Exemptions (no note needed)
 

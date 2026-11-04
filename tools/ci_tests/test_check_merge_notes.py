@@ -234,6 +234,26 @@ class MergeHistoryTests(unittest.TestCase):
         self.assertTrue(error.startswith(f"::error file={NOTE},title=Merge note invalid::"))
         self.assertIn(f"(added by {merge[:12]}): Q3 is missing", error)
 
+    def test_note_is_read_as_it_stands_at_the_head_of_the_push(self):
+        before = self.repo.head()
+        wrong = filled().replace("Answer: n.a.", "Answer: maybe", 1)
+        self.branch("feature/rules", {RULES: "RULE = 2\n", NOTE: wrong})
+        merge = self.repo.merge("feature/rules", "Merge feature/rules")
+        self.assertEqual(self.check("--push", before, merge).returncode, 1)
+        corrected = self.repo.commit("correct the merge note", {NOTE: filled()})
+        proc = self.check("--push", before, corrected)
+        self.assertEqual(proc.returncode, 0, proc.stdout)
+        self.repo.git("rm", "-q", NOTE)
+        removed = self.repo.commit("remove the merge note")
+        proc = self.check("--push", before, removed)
+        self.assertEqual(proc.returncode, 1, proc.stdout)
+        [error] = self.errors(proc)
+        self.assertIn(
+            f"{NOTE} (added by {merge[:12]}): the note is missing at the head of the push "
+            f"({removed[:12]}), where notes are read",
+            error,
+        )
+
     def test_one_note_covers_one_merge(self):
         before = self.repo.head()
         self.branch("feature/a", {"idx-signals/idxsig/a.py": "A = 1\n"})

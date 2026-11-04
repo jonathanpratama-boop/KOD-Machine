@@ -28,7 +28,8 @@ What is checked, on the first-parent line of the range (the commits that landed 
     exactly one "Answer:" line (yes, no or n.a.) and one filled "Evidence:" line; Q4 answers yes
     and has one "Architect:" line. A question starts at a line that begins with its label, as a
     Markdown heading ("## Q1.") or plain ("Q1."); any other heading ends it. Every note offered
-    for a merge is validated.
+    for a merge is validated as it stands at the range head, so a commit pushed with the merge
+    can still correct it.
 
 Exit status: 0 pass; 1 a merge lacks a valid note (each problem is a GitHub ::error naming the file
 to add or fix); 2 the range or the introduction cannot be resolved, or invalid arguments.
@@ -154,7 +155,7 @@ def _answer_problems(number: int, lines: list[str]) -> list[str]:
 @dataclass(frozen=True)
 class Note:
     path: str
-    commit: str  # the commit whose diff adds the note; it is read as of that commit
+    commit: str  # the commit whose diff adds the note; the note is read at the range head
 
 
 class Introduction:
@@ -227,7 +228,7 @@ def check(commits: ci_push.CommitRange, introduction: Introduction) -> int:
             )
             continue
         own = added_notes(parents[0], merge, commits.base)
-        errors = [error for error in map(note_error, own) if error]
+        errors = [error for error in (note_error(note, commits.head) for note in own) if error]
         for error in errors:
             print(error)
         failures += len(errors)
@@ -243,7 +244,7 @@ def check(commits: ci_push.CommitRange, introduction: Introduction) -> int:
                 f"merge notes: {label}: no note needed: it changes only paper logs and merge notes"
             )
     if waiting:
-        failures += pair_range_notes(line, waiting, commits.base)
+        failures += pair_range_notes(line, waiting, commits)
     if failures:
         print(f"merge notes: FAIL, {failures} problem(s) in {commits}")
         return 1
@@ -260,18 +261,20 @@ def already_on_branch(parents: list[str], base: str | None) -> bool:
 
 
 def pair_range_notes(
-    line: list[tuple[str, list[str]]], waiting: list[tuple[str, str, list[str]]], base: str | None
+    line: list[tuple[str, list[str]]],
+    waiting: list[tuple[str, str, list[str]]],
+    commits: ci_push.CommitRange,
 ) -> int:
     """Give each waiting merge a note added by a non-merge commit in the range; count failures."""
     offered = [
         note
         for sha, parents in line
         if len(parents) <= 1
-        for note in added_notes(parents[0] if parents else ci_push.EMPTY_TREE, sha, base)
+        for note in added_notes(parents[0] if parents else ci_push.EMPTY_TREE, sha, commits.base)
     ]
     failures, valid = 0, []
     for note in offered:
-        error = note_error(note)
+        error = note_error(note, commits.head)
         if error:
             print(error)
             failures += 1
@@ -311,14 +314,18 @@ def added_notes(old: str, new: str, base: str | None) -> list[Note]:
     return [Note(path, new) for path in added if path.endswith(".md") and path not in NOT_NOTES]
 
 
-def note_error(note: Note) -> str | None:
-    """A ::error annotation when `note` is misnamed or does not answer the six questions."""
+def note_error(note: Note, head: str) -> str | None:
+    """A ::error annotation when `note` is misnamed, or missing or incomplete at `head`."""
     problem = name_problem(note.path)
     if problem is not None:
         problems = [problem]
+    elif not ci_push.git("ls-tree", "--name-only", head, "--", note.path).strip():
+        problems = [
+            f"the note is missing at the head of the push ({head[:12]}), where notes are read"
+        ]
     else:
         try:
-            problems = note_problems(ci_push.blob(note.commit, note.path).decode("utf-8"))
+            problems = note_problems(ci_push.blob(head, note.path).decode("utf-8"))
         except UnicodeDecodeError:
             problems = ["the note is not UTF-8 text"]
     if not problems:
