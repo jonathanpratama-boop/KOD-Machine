@@ -1,0 +1,113 @@
+{
+  "schema": "KOD_ECONOMIC_EVENT_REGISTER_SNAPSHOT_V1",
+  "created_at": "2026-11-04T16:27:59.394707+00:00",
+  "scope": "Retrospective source/chain verification; publication is not current signal discovery",
+  "cases_verified": 2,
+  "independent_policy_episodes_admitted": 1,
+  "real_orders": 0,
+  "price_return_tests_executed": 0,
+  "records": [
+    {
+      "id": "GMX_2024_REPURCHASE_PAYOUT_POLICY",
+      "case_id": "GMX_BUYBACK_DISTRIBUTION_2024",
+      "hypothesis": "H1",
+      "subtype": "FUNDED_REPURCHASE_PAYMENT_FLOW",
+      "source_status": "IMPLEMENTED_FEE_FUNDED_BUYBACK_AND_STAKER_REWARD_VERIFIED",
+      "research_admission": true,
+      "new_holder_fee_share": false,
+      "fee_share_change_percentage_points": "0",
+      "permanent_burn_claim": false,
+      "first_known_specific_version_disclosure": "2024-07-20T02:23:45.212Z",
+      "first_ever_disclosure_proven": false,
+      "observed_buyback": {
+        "stage": "actual example buyback",
+        "at": "2024-10-25T08:56:13Z",
+        "tx": "0xa25c3e5d32e359e28400ab58363a07ed111066d04ef6b168489656ee38de0d3a",
+        "block": 267455173,
+        "status": "0x1",
+        "GMX_raw": "25000000000000000000",
+        "GMX_normalized": "25",
+        "USDC_raw": "566648207",
+        "USDC_normalized": "566.648207",
+        "supplier": "0xe47b36382dc50b90bcf6176ddb159c4b9333a7ab",
+        "evidence": "raw/buyback-example-receipt.raw; GMX Transfer log133, USDC Transfer log134, BuybackFees log135",
+        "limitation": "Observed example in a bounded query; not proven first-ever buyback."
+      },
+      "observed_reward_claim": {
+        "stage": "staker reward claim observed",
+        "at": "2024-10-30T01:28:43Z",
+        "tx": "0xa30a0347609628481015429ce843d1306d8e136d74f1d3f3e889881744f64ff8",
+        "block": 269066815,
+        "status": "0x1",
+        "program_distributed_GMX_raw": "4120557295638385241",
+        "program_distributed_GMX_normalized": "4.120557295638385241",
+        "individual_claim_GMX_raw": "121571506507967",
+        "individual_claim_GMX_normalized": "0.000121571506507967",
+        "transaction_caller": "0x6d3e8657fd8480d26cc87e7afc0865b4c8f7796e",
+        "evidence": "raw/holder-claim-receipt.raw log13 distributor->tracker; log15 tracker->claim receiver, matching Claim event; log18 combined vesting+reward auto-restake",
+        "limitation": "The caller acted through a contract account, which auto-restaked the fee reward alongside separate vested GMX via the official reward router. Not proof dollars were paid to a human; fungible tokens are not individually traced.",
+        "claim_receiver_contract_account": "0x7bda21538912554189d2e350d382238c05d7e1a9",
+        "official_reward_router": "0x5E4766F932ce00aA4a1A82d3Da85adf15C5694A1"
+      },
+      "counting_unit": "one policy episode; its transactions are implementation samples, not independent policy events",
+      "source_result_sha256": "3e76464dbd79a57b1c51244f64c6b86d338d31fdaa407bbc52e191a870a97d5f",
+      "current_entry_permission": false
+    },
+    {
+      "id": "SUSHI_2025_EMISSIONS_AUTHORIZATION",
+      "hypothesis": "H2",
+      "subtype": "ISSUANCE_CEILING_AUTHORIZATION",
+      "source_status": "OFFCHAIN_VOTE_CONFIRMED_IMPLEMENTATION_ATTRIBUTION_UNRESOLVED",
+      "known_signal_public_by": "2025-12-07T01:08:40Z",
+      "vote_end_at": "2025-12-21T18:00:00Z",
+      "new_authorized_ceiling_percent": "5",
+      "actual_mint_rate_percent": null,
+      "policy_change_return_panel_admission": false,
+      "reason": "Legacy reward mint is not proven to implement this authorization. Latest-prior policy and original first disclosure incomplete.",
+      "source_result_sha256": "0b27e2e3fc5be3c90b1ac8ed0d9857b2f715b2a918da9e55bc90072ac7234160",
+      "current_entry_permission": false
+    },
+    {
+      "id": "SUSHI_20260402_OBSERVED_MINT",
+      "hypothesis": "H2",
+      "subtype": "ACTUAL_SUPPLY_OBSERVATION",
+      "source_status": "MINT_CONFIRMED_POLICY_ATTRIBUTION_UNRESOLVED",
+      "supply_observation_admission": true,
+      "policy_change_return_panel_admission": false,
+      "actual_issuance": {
+        "verified": true,
+        "transaction_hash": "0x64c3dd1cf19b0267080fae868ae63d8ac2a59038573c6c62791a9a24ce823751",
+        "block_number": 24789496,
+        "block_hash": "0x2bb4e790b7c63076583559c65026d3157964e740e68e126e1b6af73448548c31",
+        "timestamp": "2026-04-02T04:21:23Z",
+        "receipt_status": "SUCCESS",
+        "method": "deposit(uint256,uint256)",
+        "pool_id": 125,
+        "deposit_amount_raw": "0",
+        "call_from": "0xa14bb91455e3b70d2d4f59a0d3cbf35d939308fc",
+        "call_to": "0xc2edad668740f1aa35e4d8f227fb8e17dca888cd",
+        "mint_events": [
+          {
+            "recipient": "0xe94b5eec1fa96ceecbd33ef5baa8d00e4493f4f3",
+            "amount_sushi": "348944.41692",
+            "raw_units": "348944416920000000000000",
+            "log_index": 94
+          },
+          {
+            "recipient": "0xc2edad668740f1aa35e4d8f227fb8e17dca888cd",
+            "amount_sushi": "3489444.1692",
+            "raw_units": "3489444169200000000000000",
+            "log_index": 95
+          }
+        ],
+        "total_minted_sushi": "3838388.58612",
+        "claim_to_specific_5_percent_vote": "UNRESOLVED; ordinary legacy updatePool reward path",
+        "reward_accrual_start_block": "UNKNOWN; may predate vote",
+        "sushi_payout_to_transaction_caller_in_receipt": "NONE_OBSERVED",
+        "economic_interpretation": "Newly minted supply is directly verified. It does not prove tokens were sold, the full annual ceiling was used, or that the December vote caused this mint."
+      },
+      "current_entry_permission": false
+    }
+  ],
+  "interpretation": "Implementation evidence establishes historical mechanisms. It does not establish causal price effects, a current opportunity or profitable performance."
+}
