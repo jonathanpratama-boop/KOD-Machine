@@ -22,7 +22,10 @@ def synth(n=12, days=150, seed=1, gaps=True):
     if gaps:
         present[0, 500:520] = False
         present[1, : 24 * 40] = False  # lists on day 40
-    nan = lambda a: np.where(present, a, np.nan)
+
+    def nan(a):
+        return np.where(present, a, np.nan)
+
     return e6.Hourly(
         [f"C{i:02d}USDT" for i in range(n)],
         pd.Timestamp("2020-04-01", tz="UTC"),
@@ -42,7 +45,10 @@ def index(h):
 
 def perturb_after(h, hour):
     later = np.arange(h.present.shape[1])[None, :] > hour
-    g = lambda a, m=1.7: np.where(later, a * m + 0.3, a)
+
+    def g(a, m=1.7):
+        return np.where(later, a * m + 0.3, a)
+
     present = h.present.copy()
     present[2, hour + 1 :] = False  # a delisting after the cut
     return e6.Hourly(
@@ -94,9 +100,12 @@ class Causality(unittest.TestCase):
         k = 60
         e0 = 24 * (k + 1) + 1
         o1 = e6.outcomes(h)
-        g = lambda a: np.where(
-            np.arange(a.shape[1])[None, :] < e0, a * 2.0, a
-        )  # every bar up to 00:00 of d+1
+
+        def g(a):
+            return np.where(
+                np.arange(a.shape[1])[None, :] < e0, a * 2.0, a
+            )  # every bar up to 00:00 of d+1
+
         h2 = e6.Hourly(
             h.symbols, h.start, h.present, g(h.open), g(h.high), g(h.low), g(h.close), h.quote, h.tb
         )
@@ -143,7 +152,7 @@ class Causality(unittest.TestCase):
 class Measurement(unittest.TestCase):
     def test_planted_absorption_is_seen_and_the_placebo_does_not_see_it(self):
         rng = np.random.default_rng(3)
-        n, days = 1, 80
+        days = 80
         hours = days * 24
         net_sign = rng.choice([-1.0, 1.0], size=hours)
         size = np.exp(rng.normal(0, 0.3, hours))

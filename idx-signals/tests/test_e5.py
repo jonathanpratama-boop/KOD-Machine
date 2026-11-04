@@ -1353,7 +1353,7 @@ class WindowInvariance(unittest.TestCase):
         warnings.simplefilter("ignore")
         found = Discovered.get("CRYPTO")
         model = found["model"]
-        df, meta = found["df"], found["meta"]
+        df = found["df"]
         m = Market.from_panel(df, price_limits=False).window("2021-03-01", "2022-06-30")
         f_full = moonshot_e5.features(*[getattr(m, a) for a in moonshot_e5.FEATURE_ARGS])
         s_full = e5.arm_scores(f_full, model)

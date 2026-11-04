@@ -6,7 +6,6 @@ import unittest
 import warnings
 from unittest import mock
 
-import numpy as np
 import pandas as pd
 
 from idxsig import paper
@@ -74,9 +73,10 @@ class ScorerV2(unittest.TestCase):
         self.assertAlmostEqual(b["entry_cost_rate"], a["entry_cost_rate"])
         # after a 1:10 reverse split the shares really are sold at 10x: the exit tier is the one at that price
         self.assertAlmostEqual(b["exit_price_as_traded"], 10 * a["exit_price_as_traded"], places=6)
-        gross = (
-            lambda t: (1 + t["net_return"]) * (1 + t["entry_cost_rate"]) / (1 - t["exit_cost_rate"])
-        )  # noqa: E731
+
+        def gross(t):
+            return (1 + t["net_return"]) * (1 + t["entry_cost_rate"]) / (1 - t["exit_cost_rate"])
+
         self.assertAlmostEqual(gross(a), gross(b), places=9)
 
     def test_uncorroborated_split_is_unscorable_with_the_reason(self):

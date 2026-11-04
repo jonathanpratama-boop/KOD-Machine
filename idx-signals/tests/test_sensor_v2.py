@@ -4,7 +4,6 @@ Each test names the failure it guards against."""
 
 from __future__ import annotations
 
-import json
 import tempfile
 import unittest
 import warnings
@@ -33,7 +32,7 @@ from tests.test_catalysts import (
     subs,
     us_market,
 )
-from tests.test_fam_form4 import D1, filing, line, owner, world
+from tests.test_fam_form4 import D1, filing, line, world
 from tests.test_fam_form4 import NOW as F4_NOW
 
 
@@ -489,11 +488,14 @@ class Sharp(unittest.TestCase):
 
     def test_holdings_increase_uses_the_post_transaction_amount(self):
         """Guards against: an increase computed against the wrong base, or invented when the holding is missing."""
-        post = lambda after: line(1000, 60.0).replace(
-            "</transactionAmounts>",
-            f"</transactionAmounts><postTransactionAmounts><sharesOwnedFollowingTransaction>"
-            f"<value>{after}</value></sharesOwnedFollowingTransaction></postTransactionAmounts>",
-        )
+
+        def post(after):
+            return line(1000, 60.0).replace(
+                "</transactionAmounts>",
+                f"</transactionAmounts><postTransactionAmounts><sharesOwnedFollowingTransaction>"
+                f"<value>{after}</value></sharesOwnedFollowingTransaction></postTransactionAmounts>",
+            )
+
         xml = f4.form4_xml(filing(1000, lines=[post(3000), post(5000)]))
         self.assertEqual(
             fs.holdings_increase(xml),

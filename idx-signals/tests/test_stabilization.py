@@ -7,7 +7,6 @@
 """
 
 import gzip
-import hashlib
 import json
 import subprocess
 import sys
@@ -16,7 +15,6 @@ import threading
 import unittest
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 
 from idxsig import catalysts, learner2, paper, results, speculation
