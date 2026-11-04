@@ -50,11 +50,6 @@ jobs:
         env:
           BEFORE: ${{ github.event.before }}
         run: python3 tools/check_shared_data.py --push "$BEFORE" "$GITHUB_SHA"
-      - name: Every code merge into the default branch adds a merge note (handoff/merges/)
-        if: github.event_name == 'push' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
-        env:
-          BEFORE: ${{ github.event.before }}
-        run: python3 tools/check_merge_notes.py --push "$BEFORE" "$GITHUB_SHA"
       - run: pip install -r idx-signals/requirements.txt -c idx-signals/constraints-research.txt
       - name: KOD verify (rebuild every card hash, check git anchors, TSA tokens and GitHub receipts)
         working-directory: kod-machine
@@ -67,6 +62,13 @@ jobs:
       - name: IDX runs match their recorded hashes
         working-directory: idx-signals
         run: python3 -m idxsig verify-runs
+      # Last, and also after a failed step, so a missing note and a failed verification each
+      # report on their own.
+      - name: Every code merge into the default branch adds a merge note (handoff/merges/)
+        if: ${{ !cancelled() && github.event_name == 'push' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: python3 tools/check_merge_notes.py --push "$BEFORE" "$GITHUB_SHA"
   code-tests:
     needs: integrity
     if: needs.integrity.outputs.run-tests == 'true'

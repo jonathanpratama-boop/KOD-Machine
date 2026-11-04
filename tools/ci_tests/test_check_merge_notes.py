@@ -154,6 +154,19 @@ class PaperLogScopeTests(unittest.TestCase):
         self.assertEqual(notes.code_paths(paths), paths[3:])
 
 
+class WorkflowTests(unittest.TestCase):
+    def test_merge_note_step_runs_last_in_integrity_and_after_a_failed_step(self):
+        workflow = (TOOLS.parent / ".github/workflows/checks.yml").read_text(encoding="utf-8")
+        integrity = workflow[
+            workflow.index("\n  integrity:\n") : workflow.index("\n  code-tests:\n")
+        ]
+        last_step = integrity.split("\n      - ")[-1]
+        self.assertIn(
+            'python3 tools/check_merge_notes.py --push "$BEFORE" "$GITHUB_SHA"', last_step
+        )
+        self.assertIn("if: ${{ !cancelled() && github.event_name == 'push' && ", last_step)
+
+
 class MergeHistoryTests(unittest.TestCase):
     def setUp(self):
         self.repo = self.new_repo()
