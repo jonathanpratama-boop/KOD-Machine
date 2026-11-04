@@ -143,6 +143,22 @@ class ClockVerificationTests(unittest.TestCase):
         self.assertEqual(check["status"], "VERIFIED")
         self.assertEqual(result["diagnostics"], [])
 
+    def test_v2_offset_is_stored_as_canonical_decimal_and_verifies(self):
+        # Each sample is the real line with field index 4 replaced by the printed value.
+        cases = {
+            "0.000000123": "1.23E-7",
+            "-0.000000001": "-1E-9",
+            "0.000000000": "0E-9",
+            "+0.002434953": "0.002434953",
+        }
+        for printed, stored in cases.items():
+            with self.subTest(printed):
+                clock = observe(self.root, edited(4, printed))
+                self.assertEqual(clock["offset_seconds"], stored)
+                result, check = self.verify(clock)
+                self.assertTrue(result["ok"])
+                self.assertEqual(check["status"], "VERIFIED")
+
     def test_v2_failed_record_verifies_only_when_raw_output_also_fails(self):
         result, check = self.verify(observe(self.root, INVENTED_13_FIELDS))
         self.assertTrue(result["ok"])

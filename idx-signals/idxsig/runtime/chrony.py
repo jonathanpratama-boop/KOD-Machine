@@ -8,15 +8,20 @@ dispersion, update interval and leap status. Field index 4 is the system time
 offset. Any other shape, a nonzero exit status, or a leap status other than
 ``Normal`` is a measurement failure with a stated reason; no other layout is tried.
 
+The offset is stored as the canonical ``Decimal`` string of field index 4. It is
+numerically exact and keeps chrony's sign, but it is not always chrony's text: a
+leading ``+`` is dropped, and with chrony's nine decimal places a magnitude below one
+microsecond, zero included, takes exponent form (``0.000000123`` is stored as
+``1.23E-7``, ``0.000000000`` as ``0E-9``).
+
 Clock evidence written before this version has no ``parser_version`` key. Its parser
 stored field index 3, the reference time, as the offset. Such records are verified
 as written and reported as OFFSET_FIELD_DEFECT_V1 beside the value this version reads
 from the same retained bytes; no stored record is rewritten.
 
 Not claimed: that the host clock is correct, that chrony's reference is accurate, or
-that the offset holds at any moment other than chrony's last update. The offset is
-stored with chrony's sign, as printed. Fields other than the offset are checked for
-shape only; their values are not used.
+that the offset holds at any moment other than chrony's last update. Fields other
+than the offset are checked for shape only; their values are not used.
 """
 
 from __future__ import annotations
