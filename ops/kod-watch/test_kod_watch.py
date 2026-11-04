@@ -215,6 +215,23 @@ class SlotModeTests(WatchTestCase):
             "next 2026-11-05T09:00Z (16:00 WIB)",
         )
 
+    def test_slot_is_judged_only_once_its_deadline_has_passed(self):
+        self.tree.captured(1, 2, 3, 4, 5)
+        margin = timedelta(seconds=PLAN["late_after_seconds"] + kod_watch.GRACE_SECONDS)
+        deadline = slot_time(6) + margin
+        self.assertPinged(
+            self.run_watch("slot", deadline),
+            SLOT_URL,
+            "KOD OK: slot 5 2026-11-05T05:00Z CAPTURED; slots 1-5 CAPTURED, 0 failed; "
+            "next 2026-11-05T09:00Z (16:00 WIB)",
+        )
+        self.assertPinged(
+            self.run_watch("slot", deadline + timedelta(microseconds=1)),
+            SLOT_URL + "/fail",
+            "KOD FAIL: slot 6 2026-11-05T09:00Z NOT_STARTED: no begin.json or end.json; "
+            "slots 1-5 CAPTURED, 1 failed (6 NOT_STARTED); next 2026-11-05T13:00Z (20:00 WIB)",
+        )
+
     def test_grace_is_configurable(self):
         self.tree.captured(1, 2, 3, 4, 5)
         run = self.run_watch("slot", at(6, 12), "--grace-seconds", "300")
@@ -347,12 +364,36 @@ class SlotModeTests(WatchTestCase):
             f"KOD FAIL: plan unreadable: {self.tree.plan}: No such file or directory",
         )
 
-    def test_invalid_plan_fails_with_reason(self):
-        broken = dict(PLAN, slots=PLAN["slots"][:2] + PLAN["slots"][3:])
-        self.tree.plan.write_text(json.dumps(broken))
-        run = self.run_watch("slot", at(6, 12))
-        self.assertEqual(run.requests[0][0].full_url, SLOT_URL + "/fail")
-        self.assertIn("plan invalid: slots 2 and 3 are not four hours apart", run.body)
+    def test_invalid_plans_fail_with_reason(self):
+        shifted = [kod_watch.stamp(slot_time(n) + timedelta(seconds=30)) for n in range(1, 31)]
+        late = "late_after_seconds must be a non-negative integer"
+        cases = [
+            ([], "plan is not a JSON object"),
+            (dict(PLAN, slots=[]), "slots must be a non-empty list"),
+            (dict(PLAN, late_after_seconds=True), late),
+            (dict(PLAN, late_after_seconds=-1), late),
+            (dict(PLAN, slots=[1, *PLAN["slots"][1:]]), "slot 1 is not a timestamp string"),
+            (
+                dict(PLAN, slots=[s.removesuffix("Z") for s in PLAN["slots"]]),
+                "slot 2026-11-04T13:00:00 has no UTC offset",
+            ),
+            (dict(PLAN, slots=shifted), "slot 2026-11-04T13:00:30Z is not on a whole minute"),
+            (
+                dict(PLAN, slots=PLAN["slots"][:2] + PLAN["slots"][3:]),
+                "slots 2 and 3 are not four hours apart",
+            ),
+        ]
+        for plan, reason in cases:
+            with self.subTest(reason=reason):
+                plan_bytes = json.dumps(plan).encode()
+                self.tree.plan.write_bytes(plan_bytes)
+                observed = hashlib.sha256(plan_bytes).hexdigest()[:12]
+                self.assertPinged(
+                    self.run_watch("slot", at(6, 12)),
+                    SLOT_URL + "/fail",
+                    f"KOD FAIL: plan sha256 {observed} differs from deployment record "
+                    f"bffe919924e5; plan invalid: {reason}",
+                )
 
     def test_unexpected_watcher_error_is_reported_as_failure(self):
         with mock.patch.object(kod_watch, "assess", side_effect=RuntimeError("boom")):
@@ -405,6 +446,20 @@ class DailyModeTests(WatchTestCase):
             "KOD 2026-11-06: slots 1-2,4-10 CAPTURED, 1 failed (3 MISSED), "
             "next 2026-11-06T05:00Z (12:00 WIB)",
         )
+
+    def test_failure_counts_until_its_deadline_is_exactly_a_day_old(self):
+        self.tree.captured(1, 2, 4, 5, 6, 7, 8)
+        self.tree.record(3, "MISSED")
+        margin = timedelta(seconds=PLAN["late_after_seconds"] + kod_watch.GRACE_SECONDS)
+        a_day_on = slot_time(3) + margin + timedelta(days=1)  # 2026-11-05T21:11:00Z
+        # Slot 9's own deadline is that same instant, so neither run judges slot 9.
+        body = (
+            "KOD 2026-11-05: slots 1-2,4-8 CAPTURED, 1 failed (3 MISSED), "
+            "next 2026-11-05T21:00Z (2026-11-06 04:00 WIB)"
+        )
+        just_inside = self.run_watch("daily", a_day_on - timedelta(microseconds=1))
+        self.assertPinged(just_inside, DAILY_URL + "/fail", body)
+        self.assertPinged(self.run_watch("daily", a_day_on), DAILY_URL, body)
 
     def test_halted_daily_line_pings_fail(self):
         self.tree.captured(1, 2, 3)
@@ -525,6 +580,15 @@ class PingTests(WatchTestCase):
                 self.assertEqual(network.requests, [])
                 self.assertIn(message, run.stderr)
                 self.assertIsNone(run.record)
+
+    def test_trailing_slash_is_dropped_before_fail_is_appended(self):
+        environ = dict(ENV, KOD_WATCH_SLOT_URL=SLOT_URL + "/")
+        self.tree.captured(1, 2, 3, 4, 5)
+        failing = self.run_watch("slot", at(6, 12), environ=environ)
+        self.assertEqual(failing.requests[0][0].full_url, SLOT_URL + "/fail")
+        self.tree.captured(6)
+        passing = self.run_watch("slot", at(6, 12), environ=environ)
+        self.assertEqual(passing.requests[0][0].full_url, SLOT_URL)
 
     def test_https_opener_verifies_certificates_and_refuses_redirects(self):
         contexts, built, opened = [], [], []
