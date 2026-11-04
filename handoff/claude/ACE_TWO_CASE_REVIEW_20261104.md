@@ -12,7 +12,7 @@ logs, recorded decimals) and re-ran Ace's offline audit scripts on a fresh copy.
 |---|---|
 | GMX 2024 as a **funded repurchase / payment-flow** record (not an enlarged fee share, not a burn, not a buy signal) | **UPHELD WITH CAVEATS** |
 | SUSHI 2 April 2026 as an **actual mint observation**, kept separate from the unproven December 2025 policy implementation | **UPHELD WITH CAVEATS** |
-| Package integrity | **UPHELD**: 241/241 package files, 97/97 GMX and 106/106 SUSHI raw files, and all 70 per-request receipts match their sha256; `audit_chain.py` and `audit_distribution.py` reproduce the retained reviews exactly apart from `reviewed_at` |
+| Package integrity | **UPHELD WITH CAVEATS**: 241/241 package files, 97/97 GMX and 106/106 SUSHI raw files, and all 70 per-request receipts match their sha256; `audit_chain.py` and `audit_distribution.py` reproduce the retained reviews exactly apart from `reviewed_at`. Caveats: one re-serialised SUSHI source file and self-reported server receipts (both below) |
 
 ## GMX: confirmed
 - FeeHandler `0x7EB417637a3E6d1C19E6d69158c47610b7a5d9B3` deployment and GMX token identity.
