@@ -305,7 +305,7 @@ class MergeHistoryTests(unittest.TestCase):
         self.assertIn("every merged commit was already on the branch", proc.stdout)
 
     def history_before_the_check(self, note: bool) -> tuple[Repo, dict[str, str]]:
-        """Code merges made before the check, then the merge that brings the check in."""
+        """A code merge before the check, one beside it, then the merge that brings it in."""
         repo = self.new_repo()
         shas = {"base": repo.commit("code", {RULES: "RULE = 1\n"})}
         self.branch("ancestor", {"idx-signals/idxsig/ancestor.py": "A = 1\n"}, repo)
@@ -314,40 +314,76 @@ class MergeHistoryTests(unittest.TestCase):
         shas["intro"] = repo.commit("introduce the check", {INTRO: "# stand-in\n"})
         repo.git("checkout", "-q", "main")
         self.branch("parallel", {"idx-signals/idxsig/parallel.py": "P = 1\n"}, repo)
-        shas["parallel"] = repo.merge("parallel", "Merge parallel")  # on main, without the check
+        shas["parallel"] = repo.merge("parallel", "Merge parallel")  # not an ancestor of it
         shas["head"] = repo.merge("check", "Merge check", {NOTE: filled()} if note else None)
         return repo, shas
 
-    def test_merges_made_before_the_check_are_exempt(self):
-        for note, code in ((True, 0), (False, 1)):
+    def test_only_merges_that_are_ancestors_of_the_check_are_exempt(self):
+        for note, failing in ((True, ["parallel"]), (False, ["parallel", "check"])):
             with self.subTest(note=note):
                 repo, shas = self.history_before_the_check(note)
                 proc = self.check("--push", shas["base"], shas["head"], repo=repo)
-                self.assertEqual(proc.returncode, code, proc.stdout)
-                for merge in ("ancestor", "parallel"):
-                    self.assertIn(
-                        f"{shas[merge][:12]} 'Merge {merge}': exempt: does not descend from the "
-                        f"commit that added {INTRO} ({shas['intro'][:12]})",
-                        proc.stdout,
-                    )
-                self.assertEqual(len(self.errors(proc)), code)  # only 'Merge check' can fail
+                self.assertEqual(proc.returncode, 1, proc.stdout)
+                self.assertIn(
+                    f"{shas['ancestor'][:12]} 'Merge ancestor': exempt: an ancestor of the commit "
+                    f"that added {INTRO} ({shas['intro'][:12]})",
+                    proc.stdout,
+                )
+                errors = self.errors(proc)
+                self.assertEqual(len(errors), len(failing), proc.stdout)
+                for error, merge in zip(errors, failing):
+                    self.assertIn(f"'Merge {merge}' changes code or configuration", error)
+                # As pushed in practice: 'Merge parallel' reached main before the check did, so
+                # the push that brings the check in reads only its own merge.
+                proc = self.check("--push", shas["parallel"], shas["head"], repo=repo)
+                self.assertEqual(proc.returncode, 0 if note else 1, proc.stdout)
+
+    def test_a_merge_made_on_a_clone_that_predates_the_check_is_checked(self):
+        repo, shas = self.history_before_the_check(note=True)
+        repo.git("checkout", "-q", "-b", "old", shas["base"])
+        repo.commit("work on old, branched before the check", {"idx-signals/idxsig/old.py": "O\n"})
+        repo.git("checkout", "-q", "-b", "clone", shas["base"])  # a clone still at base
+        late = repo.merge("old", "Merge old after the check is live")
+        synced = repo.merge("main", "Merge branch 'main' of origin")  # the pull before the push
+        proc = self.check("--push", shas["head"], synced, repo=repo)
+        self.assertEqual(proc.returncode, 1, proc.stdout)
+        [error] = self.errors(proc)
+        self.assertIn(
+            f"merge {late[:12]} 'Merge old after the check is live' changes code or "
+            "configuration (idx-signals/idxsig/old.py)",
+            error,
+        )
+        self.assertIn(
+            "'Merge branch 'main' of origin': no note needed: every merged commit was already",
+            proc.stdout,
+        )
 
     def test_since_commit_sets_the_introduction_explicitly(self):
         repo, shas = self.history_before_the_check(note=True)
-        proc = self.check(
-            "--push", shas["base"], shas["head"], "--since-commit", shas["base"], repo=repo
-        )
-        self.assertEqual(proc.returncode, 1, proc.stdout)
-        self.assertEqual(len(self.errors(proc)), 2)  # ancestor and parallel now need notes
-        before_the_check = f"{shas['ancestor']}..{shas['parallel']}"
-        for marker, problem in (
-            (shas["intro"], "is not an ancestor of"),
-            ("no-such-commit", "is not a commit in this repository"),
-        ):
+        for marker, exempt in ((shas["base"], []), (shas["head"], ["ancestor", "parallel"])):
             with self.subTest(marker=marker):
-                proc = self.check("--range", before_the_check, "--since-commit", marker, repo=repo)
-                self.assertEqual(proc.returncode, 2, proc.stdout)
-                self.assertIn(problem, proc.stdout)
+                proc = self.check(
+                    "--push", shas["base"], shas["head"], "--since-commit", marker, repo=repo
+                )
+                failing = {"ancestor", "parallel"} - set(exempt)
+                self.assertEqual(proc.returncode, 1 if failing else 0, proc.stdout)
+                self.assertEqual(len(self.errors(proc)), len(failing))
+                for merge in exempt:
+                    self.assertIn(
+                        f"'Merge {merge}': exempt: an ancestor of --since-commit {marker[:12]}",
+                        proc.stdout,
+                    )
+                self.assertIn("'Merge check': OK, note", proc.stdout)  # the marker is checked
+        # A marker outside the range head's history is allowed: ancestor is exempt, parallel not.
+        before_the_check = f"{shas['base']}..{shas['parallel']}"
+        proc = self.check("--range", before_the_check, "--since-commit", shas["intro"], repo=repo)
+        self.assertEqual(proc.returncode, 1, proc.stdout)
+        self.assertIn("'Merge ancestor': exempt", proc.stdout)
+        [error] = self.errors(proc)
+        self.assertIn("'Merge parallel' changes code", error)
+        proc = self.check("--range", before_the_check, "--since-commit", "no-such", repo=repo)
+        self.assertEqual(proc.returncode, 2, proc.stdout)
+        self.assertIn("'no-such' is not a commit in this repository", proc.stdout)
 
     def test_missing_introduction_is_an_error_only_when_a_merge_is_found(self):
         repo = self.new_repo()

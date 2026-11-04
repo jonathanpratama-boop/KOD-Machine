@@ -8,8 +8,10 @@ owner's six questions (handoff/merges/TEMPLATE.md). CI runs this on pushes to th
 What is checked, on the first-parent line of the range (the commits that landed on the branch):
   * Only merge commits (more than one parent). Non-merge commits are never checked, so the daily
     paper bots' log appends always pass.
-  * Exempt: a merge that does not descend from the check's introduction, a commit in the range
-    head's history that adds tools/check_merge_notes.py (or the commit given as --since-commit).
+  * Exempt: a merge made before the check existed, that is, a proper ancestor of its
+    introduction: the first commit in the range head's history that adds
+    tools/check_merge_notes.py (or the commit given as --since-commit). Every other merge is
+    checked, also one made after the check went live on a copy of the branch that predates it.
   * Exempt: a sync merge, whose merged-in commits were all on the branch already at BASE (for
     example a paper bot's `git pull` after a rejected push).
   * A note is needed when the merged-in diff (first parent to merge) touches any path outside
@@ -151,7 +153,7 @@ class Note:
 
 
 class Introduction:
-    """The check's introduction; a merge that does not descend from it is exempt."""
+    """The check's introduction; a merge that is a proper ancestor of it is exempt."""
 
     def __init__(self, since_commit: str | None, head: str):
         self._head = head
@@ -162,11 +164,6 @@ class Introduction:
             if sha is None:
                 raise ci_push.RangeError(
                     f"--since-commit {since_commit!r} is not a commit in this repository"
-                )
-            if not ci_push.is_ancestor(sha, head):
-                raise ci_push.RangeError(
-                    f"--since-commit {since_commit} is not an ancestor of {head[:12]}, "
-                    "so every merge in the range would be exempt"
                 )
             self._commits = [sha]
 
@@ -198,8 +195,11 @@ class Introduction:
             ]
         return self._commits
 
-    def covers(self, merge: str) -> bool:
-        return any(ci_push.is_ancestor(commit, merge) for commit in self.commits())
+    def exempts(self, merge: str) -> bool:
+        """True for a merge made before the check: a proper ancestor of an introduction commit."""
+        return any(
+            merge != commit and ci_push.is_ancestor(merge, commit) for commit in self.commits()
+        )
 
 
 def check(commits: ci_push.CommitRange, introduction: Introduction) -> int:
@@ -212,8 +212,8 @@ def check(commits: ci_push.CommitRange, introduction: Introduction) -> int:
     waiting = []  # (label, merge, code paths) of merges that need a note pushed with them
     for merge, parents in merges:
         label = f"{merge[:12]} '{ci_push.subject(merge)}'"
-        if not introduction.covers(merge):
-            print(f"merge notes: {label}: exempt: does not descend from {introduction.label}")
+        if introduction.exempts(merge):
+            print(f"merge notes: {label}: exempt: an ancestor of {introduction.label}")
             continue
         if already_on_branch(parents, commits.base):
             print(

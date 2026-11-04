@@ -36,14 +36,16 @@ lacked it: that run stays as the record.
   and forecast logs (`PAPER_LOGS` in the tool) and `handoff/merges/`.
 - **Sync merges:** every commit the merge brings in was already on the default branch before the push, for
   example a paper bot's `git pull` after a rejected push.
-- **Merges made before the check existed:** a merge is checked only when it descends from the commit that
-  added `tools/check_merge_notes.py`.
+- **Merges made before the check existed:** a merge that is an ancestor of the commit that added
+  `tools/check_merge_notes.py`. Any other merge is checked, also one made after the check went live on a
+  clone whose default branch predates it.
 
 ## The first merge that brings the check in
 
-That merge descends from the check, so it needs a note. Merge the integration branch into the default branch
-with one `--no-ff` merge carrying the note. A fast-forward instead puts the integration branch's own later
-merges on the default branch's first-parent line, and each of them then needs a note.
+That merge is not an ancestor of the check's introduction, so it needs a note. Merge the integration
+branch into the default branch with one `--no-ff` merge carrying the note. A fast-forward instead puts the
+integration branch's own merges on the default branch's first-parent line, and each one that is not an
+ancestor of the introduction then needs a note.
 
 ## Not covered
 
