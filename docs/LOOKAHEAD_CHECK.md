@@ -32,7 +32,12 @@ randomised, so a second seed adds confidence. Run both where the study allows.
 
 1. Put the deciding step in one function, `decide(data) -> DataFrame`, that takes the
    study's input table and returns one row per decision with a decision-time column and
-   key columns that identify each decision once. It must not read files or the clock.
+   key columns that identify each decision once. It must be pure: no files, no clock,
+   and no state kept between calls, such as a module-level cache. A statistic cached on
+   the first call is reused by every run, so all runs agree and a leak through it passes.
+   The returned table holds only what is decided at decision time: no realized outcomes,
+   labels or execution fills (a forward return, the next bar's entry price). Those are
+   known later, so once their lag is declared they correctly differ and read as a LEAK.
 2. Declare every column whose value on a row is only known later: forward returns,
    labels, "triggered within the next 72 hours" flags. Give each its lag, conservatively
    the horizon plus any maturity embargo. An undeclared label is invisible to the check
@@ -74,10 +79,13 @@ python3 tools/check_no_lookahead.py compare decisions_full.csv decisions_cut.csv
 
 Module mode executes the given study file and reads the data with `pandas.read_csv`
 defaults. A study whose own loader parses differently should call the library from its own
-test. While the study runs, `sys.argv` holds only the study's path and its `print` output
-goes to stderr, so stdout carries the JSON verdict alone. Every run executes a fresh copy
-of the study file, so a statistic cached in its globals on the first call cannot carry the
-full data into a cut run; state kept in modules it imports is shared and is not reset.
+test. The file's top-level code runs on every import, so never point module mode at a
+frozen research script, which may fetch data, write results or exit; put its deciding
+step in a new file that defines only `decide` and imports what it needs. While the study
+runs, `sys.argv` holds only the study's path and its `print` output goes to stderr, so
+stdout carries the JSON verdict alone. Every run executes a fresh copy of the study file,
+so a statistic cached in its globals on the first call cannot carry the full data into a
+cut run; state kept in modules it imports is shared and is not reset.
 
 Compare mode compares a value cell that reads as a decimal number by its exact value, with
 no rounding: an integer column that pandas wrote as `3.0` in the full-data file (because a
@@ -106,6 +114,12 @@ decisions compared and decisions differing.
 | `ONLY_IN_REFERENCE` | The full data made a decision that the cut data did not | Rows dropped because a future value is missing; a centred window's edge |
 | `ONLY_IN_CANDIDATE` | The cut data made a decision that the full data did not | A filter that excludes on later events, such as next-72-hour triggers |
 | `VALUE_DIFFERS` | Same decision, different value, or its decision time moved | Full-sample means or ranks, centred windows, refits on unmatured labels |
+
+Values from `decide` are compared exactly (`==`), with no tolerance. A float computed in a
+different summation order on the shorter table shows up as `VALUE_DIFFERS`; that false
+LEAK is the safe direction, but rule it out before reading one as look-ahead. If a study's
+arithmetic is not reproducible bit for bit, return a rounded score or the discrete
+decision it implies.
 
 ## What a PASS does and does not show
 

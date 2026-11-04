@@ -2,9 +2,11 @@
 
 A study under test is a function ``decide(data) -> decisions``. ``data`` is the study's
 input table with one time column. ``decisions`` is a table with a decision-time column
-and key columns that identify each decision once. Both checks run ``decide`` twice on
-the full data (the two runs must agree, or the check stops), then once per cutoff T on
-perturbed data, and compare every decision dated at or before T:
+and key columns that identify each decision once. ``decide`` must be pure: state kept
+between calls (a full-sample statistic cached on the first call) is shared by every run,
+so the runs agree and a leak through that state passes. Both checks run ``decide`` twice
+on the full data (the two runs must agree, or the check stops), then once per cutoff T
+on perturbed data, and compare every decision dated at or before T:
 
 * truncation removes the rows dated after T, and sets missing any lagged value not yet
   known at T (for example a forward return stored on its signal row);
