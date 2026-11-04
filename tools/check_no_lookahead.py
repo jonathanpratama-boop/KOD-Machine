@@ -4,7 +4,8 @@
 compare  Two decision CSV files written by a study: one from the full data, one from the
          same study on data cut at --cutoff. Cells are compared as the text written.
 module   A Python file defining decide(data) -> DataFrame, and its input as CSV: runs the
-         truncation and scramble checks of idxsig.lookahead at every --cutoff.
+         truncation and scramble checks of idxsig.lookahead at every --cutoff. Each run
+         executes a fresh copy of the file.
 
 Exit status: 0 PASS, 1 LEAK, 2 the check could not run (a JSON ERROR verdict names the
 reason; command-line usage errors are reported by argparse). A study that raises, or
@@ -77,6 +78,22 @@ def load_decide(path: Path):
     return decide
 
 
+def fresh_decide(path: Path):
+    """decide(data) that executes a fresh copy of the study file on every call.
+
+    Each run of a check then starts from the file's own top-level state, so a cache in
+    its globals (a full-sample statistic kept from the first call) cannot carry the full
+    data into a cut run. Modules the file imports are loaded once and shared by every
+    run; state kept in them is not reset.
+    """
+    load_decide(path)  # Refuse a file without decide before any check runs.
+
+    def decide(data: pd.DataFrame) -> pd.DataFrame:
+        return load_decide(path)(data)
+
+    return decide
+
+
 def parse_lag(text: str) -> tuple[str, pd.Timedelta]:
     """COLUMN=DURATION; a bare number is refused because pandas reads it as nanoseconds."""
     column, separator, duration = text.rpartition("=")
@@ -131,7 +148,7 @@ def run_module(args: argparse.Namespace, lookahead) -> list:
     study = Path(args.study)
     reports = []
     with as_script(study):
-        decide = load_decide(study)
+        decide = fresh_decide(study)
         if args.check in ("truncation", "both"):
             reports.append(lookahead.truncation_check(decide, data, **common))
         if args.check in ("scramble", "both"):

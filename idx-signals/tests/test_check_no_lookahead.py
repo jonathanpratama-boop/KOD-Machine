@@ -207,6 +207,19 @@ class CheckNoLookaheadCli(unittest.TestCase):
                 self.assertIn("raised SystemExit with code 0", verdict["error"])
                 self.assertIn("Traceback", stderr)
 
+    def test_a_statistic_cached_in_the_study_globals_cannot_hide_a_leak(self):
+        cached = (
+            "_MEANS = {}\n\n\n"
+            "def decide(data):\n"
+            "    d = data.sort_values(['asset', 'time'], kind='stable')\n"
+            "    if not _MEANS:  # a full-sample mean, cached on the first call\n"
+            "        _MEANS.update(d.groupby('asset').close.mean())\n"
+            "    return d.assign(score=d.close - d.asset.map(_MEANS))[['time', 'asset', 'score']]\n"
+        )
+        status, verdict, _ = self.module(self.write("cached.py", cached), prices())
+        self.assertEqual((status, verdict["verdict"]), (1, "LEAK"))
+        self.assertEqual([check["verdict"] for check in verdict["checks"]], ["LEAK", "LEAK"])
+
     def test_a_study_that_prints_leaves_stdout_to_the_json_verdict(self):
         chatty = STUDY.format(centre=False, drop_missing_label=False).replace(
             "def decide(data):\n", "def decide(data):\n    print('rows', len(data))\n"
