@@ -18,7 +18,8 @@ below is reported, unless the called name was imported from idxsig (the shared-l
                    start of a word, or a data-file suffix (.csv, .parquet, .pkl, .zip, .gz, .jsonl,
                    see DATA_PATH)
 
-Output: one GitHub ::warning annotation per call (file and line), then a summary line.
+Output: one GitHub ::warning annotation per call (file and line), then a summary line. A new
+script that cannot be scanned (a syntax error, or nesting too deep to parse) is one warning too.
 Exit status: 0, also when the range cannot be read (that is reported as a warning too); with
 --strict, 1 when anything was reported; 2 for invalid arguments.
 
@@ -77,7 +78,11 @@ class Finding:
 
 
 def scan(source: bytes, path: str) -> list[Finding]:
-    """Direct raw-data reads in one script; raises SyntaxError or ValueError if it cannot parse."""
+    """Direct raw-data reads in one script.
+
+    Raises SyntaxError or ValueError when the source does not parse, and RecursionError when it
+    nests too deeply for ast to parse or unparse.
+    """
     tree = ast.parse(source, filename=path)
     loaders = idxsig_names(tree)
     found = set()
@@ -202,8 +207,8 @@ def report(path: str, source: bytes) -> int:
     """Print one annotation per direct raw read in `path`; returns how many were printed."""
     try:
         findings = scan(source, path)
-    except (SyntaxError, ValueError) as exc:
-        message = f"{path} could not be parsed ({exc}); the shared data rule was not checked"
+    except (SyntaxError, ValueError, RecursionError) as exc:
+        message = f"{path} could not be scanned ({exc}); the shared data rule was not checked"
         print(ci_push.workflow_command("warning", message, file=path, title=TITLE))
         return 1
     for finding in findings:

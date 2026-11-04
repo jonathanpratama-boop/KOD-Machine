@@ -163,7 +163,20 @@ class AddedStudyScriptTests(unittest.TestCase):
         proc = self.repo.run("check_shared_data.py", "--push", self.base, head)
         self.assertEqual(proc.returncode, 0)
         [warning] = self.warnings(proc)
-        self.assertIn("could not be parsed", warning)
+        self.assertIn("run.py could not be scanned (invalid syntax", warning)
+
+    def test_study_too_deeply_nested_to_scan_is_reported_and_the_check_still_exits_0(self):
+        # 5,000 terms parse but are too deep to unparse; 30,000 are too deep to parse at all.
+        for terms in (5_000, 30_000):
+            with self.subTest(terms=terms):
+                source = "open(" + " + ".join(["'a'"] * terms) + ")\n"
+                path = f"idx-signals/research/DEEP_{terms}_v1/run.py"
+                before = self.repo.head()
+                head = self.repo.commit(f"deep study {terms}", {path: source})
+                proc = self.repo.run("check_shared_data.py", "--push", before, head)
+                self.assertEqual(proc.returncode, 0, proc.stderr)
+                [warning] = self.warnings(proc)
+                self.assertIn(f"{path} could not be scanned (maximum recursion depth", warning)
 
     def test_unreadable_range_warns_and_fails_only_when_strict(self):
         for args, code in ((["--range", "main..missing"], 0), (["--strict", "--range", "x..y"], 1)):
