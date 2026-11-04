@@ -95,7 +95,7 @@ def run_events(
             elif trades["status"][i] == STATUS.index("INCOMPLETE"):
                 held_until[n] = np.iinfo(np.int64).max
     keep = ~skipped
-    a_tick, a_sig = tick_idx[keep], sig_idx[keep]
+    a_sig = sig_idx[keep]
     control_mean = np.full(len(ev), np.nan)
     control_n = np.zeros(len(ev), dtype=int)
     level = np.full(len(ev), -1)
