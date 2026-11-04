@@ -487,6 +487,9 @@ class PingTests(WatchTestCase):
             "http://hc-ping.example/slot": "must be an https:// URL",
             "https://user:secret@hc-ping.example/slot": "without credentials, query or fragment",
             "https://hc-ping.example/slot?x=1": "without credentials, query or fragment",
+            # Bare suffixes: url + "/fail" would become a query or fragment of the success URL.
+            "https://hc-ping.example/slot?": "without credentials, query or fragment",
+            "https://hc-ping.example/slot#": "without credentials, query or fragment",
             "https://hc-ping.example": "must include the check path",
             "https://hc-ping.example/slot/fail": "base ping URL, not its /fail",
         }

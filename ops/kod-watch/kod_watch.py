@@ -327,7 +327,9 @@ def ping_url(environ, mode: str) -> str:
     parts = urllib.parse.urlsplit(value)
     if parts.scheme != "https" or any(character.isspace() for character in value):
         raise ConfigError(f"{name} must be an https:// URL without spaces")
-    if parts.username or parts.password or parts.query or parts.fragment or not parts.hostname:
+    # Test the raw text: a bare trailing "?" or "#" parses as an empty query or fragment, yet
+    # url + "/fail" would then become a query or fragment of the success URL.
+    if "?" in value or "#" in value or parts.username or parts.password or not parts.hostname:
         raise ConfigError(
             f"{name} must be https://host/path without credentials, query or fragment"
         )
