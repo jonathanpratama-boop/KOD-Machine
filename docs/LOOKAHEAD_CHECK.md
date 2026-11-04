@@ -113,7 +113,8 @@ depended on rows or declared values after T. It does **not** show:
 
 Each refusal raises `LookaheadCheckError` (exit 2 in the tool); a check that cannot run
 never reports PASS. An exception raised by the study itself propagates unchanged from the
-library; the tool turns it into an ERROR verdict and prints the traceback.
+library; the tool turns it into an ERROR verdict and prints the traceback. That includes
+`sys.exit`, at import or inside `decide`: its exit code 0 would otherwise read as PASS.
 
 | Input | Behaviour |
 | --- | --- |

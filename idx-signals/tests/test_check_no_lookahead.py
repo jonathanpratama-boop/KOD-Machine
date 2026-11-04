@@ -184,6 +184,26 @@ class CheckNoLookaheadCli(unittest.TestCase):
         )
         self.assertIn("Traceback", stderr)
 
+    def test_a_leaky_study_that_calls_sys_exit_is_an_error_verdict_never_a_pass(self):
+        leaky = "import sys\n" + STUDY.format(centre=True, drop_missing_label=False)
+        guard = (
+            "    if len(data) < 120:  # a study's 'too little data' guard\n        sys.exit(0)\n"
+        )
+        for name, source in (
+            ("exit_on_import.py", leaky + "\nsys.exit(0)\n"),
+            (
+                "exit_in_decide.py",
+                leaky.replace("def decide(data):\n", "def decide(data):\n" + guard),
+            ),
+        ):
+            with self.subTest(study=name):
+                status, verdict, stderr = self.module(self.write(name, source), prices())
+                self.assertEqual(
+                    (status, verdict["verdict"], verdict["error_type"]), (2, "ERROR", "SystemExit")
+                )
+                self.assertIn("raised SystemExit with code 0", verdict["error"])
+                self.assertIn("Traceback", stderr)
+
 
 if __name__ == "__main__":
     unittest.main()

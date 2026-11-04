@@ -7,10 +7,11 @@ module   A Python file defining decide(data) -> DataFrame, and its input as CSV:
          truncation and scramble checks of idxsig.lookahead at every --cutoff.
 
 Exit status: 0 PASS, 1 LEAK, 2 the check could not run (a JSON ERROR verdict names the
-reason; command-line usage errors are reported by argparse). A PASS does not show that
-the input data was available at its stated time; see docs/LOOKAHEAD_CHECK.md. Paper
-research only: nothing is fetched, ordered or written, but module mode executes the
-study file it is given.
+reason; command-line usage errors are reported by argparse). A study that raises, or
+calls sys.exit while it is imported or run, is an ERROR, never a PASS. A PASS does not
+show that the input data was available at its stated time; see docs/LOOKAHEAD_CHECK.md.
+Paper research only: nothing is fetched, ordered or written, but module mode executes
+the study file it is given.
 """
 
 from __future__ import annotations
@@ -166,6 +167,14 @@ def main(argv: list[str] | None = None) -> int:
         reports = (run_compare if args.mode == "compare" else run_module)(args, lookahead)
     except (UsageError, lookahead.LookaheadCheckError) as exc:
         payload.update(verdict="ERROR", error_type=type(exc).__name__, error=str(exc))
+    except SystemExit as exc:  # sys.exit at import or in decide(); its code 0 would read as PASS
+        traceback.print_exc(file=sys.stderr)
+        payload.update(
+            verdict="ERROR",
+            error_type="SystemExit",
+            error=f"the study raised SystemExit with code {exc.code!r}; a study file must "
+            "define decide(data) and return its decisions, not exit",
+        )
     except Exception as exc:  # The study's own failure is still an explicit, nonzero verdict.
         traceback.print_exc(file=sys.stderr)
         payload.update(verdict="ERROR", error_type=type(exc).__name__, error=str(exc))
