@@ -1,0 +1,18 @@
+{
+  "installed_at": "2026-11-04T12:32:33.510268+00:00",
+  "source_commit": "dbb27ea5c6a16c5b37c6f94b938a1509c2a9148e",
+  "source_export": "527 original source/config/test files; sparse export, not full Git history",
+  "plan_sha256": "bffe919924e56a48d49e92045f86e3ee4678ac5ae03aad8287ae8d6e6af6af6b",
+  "slots": 30,
+  "first_utc": "2026-11-04T13:00:00Z",
+  "last_utc": "2026-11-09T09:00:00Z",
+  "release_tests": 317,
+  "scheduler_tests": 8,
+  "real_commissioning": "COLLECTED: BTCUSDT and ETHUSDT, complete selected universe, 60 completed 1m bars each plus quotes and depth",
+  "backup_restore": "37 files restored byte-identical; restored timing integrity passed",
+  "strategy_enabled": false,
+  "offsite_backup": "Initial commissioning bundle downloaded to owner workspace; subsequent cohort backups remain on this server",
+  "inspection": "kod-status; journalctl -u kod-observe.service; /etc/kod/observation-plan.json",
+  "stop": "systemctl disable --now kod-observe.timer",
+  "no_new_paid_services": true
+}

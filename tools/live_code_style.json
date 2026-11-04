@@ -55,6 +55,8 @@
     "kod-machine/kod/workstation/web.py",
     "kod-machine/tests/test_ids.py",
     "kod-machine/workstation_tests/test_timing_operations.py",
+    "ops/kod-watch/kod_watch.py",
+    "ops/kod-watch/test_kod_watch.py",
     "tools/check_append_only.py",
     "tools/check_history_integrity.py",
     "tools/check_live_style.py",
