@@ -106,6 +106,20 @@ outputs. The combined anchor and linked-evidence suite passed twenty tests.
 
 ## Remaining limits
 
+The first full-checkout CI run verified 2,131 timestamp tokens and could not yet
+associate two detached Python-source tokens. It also found eight *reader errors*
+in the historical v1.4 repair bundle: the reader used current live paths instead
+of pinned upstream Git blobs and the retained final snapshot. A subsequent
+separate patch fixes those bindings. All eight affected rows and both remaining
+tokens passed targeted checks against original bytes; the two authority times
+were `2026-11-02T22:11:50Z`. Full before/after totals are retained by the subsequent
+CI workflow, not inferred from this targeted check. See
+[HISTORY_BINDING_FIX.json](validation/HISTORY_BINDING_FIX.json).
+
+The first full audit's hundreds of thousands of unavailable manifest entries
+mostly describe original archive downloads outside the checkout. They are real
+coverage gaps and have not been removed to make the verification look complete.
+
 - Full historical cryptographic verification needs original token and payload
   bytes, including records intentionally outside the checkout and Git LFS data.
 - Unknown manifest schemas stay `UNSUPPORTED`; add a documented adapter before

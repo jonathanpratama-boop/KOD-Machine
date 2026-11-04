@@ -25,6 +25,8 @@ from check_append_only import APPEND_ONLY, FROZEN_DIRS
 
 ROOT = Path(__file__).resolve().parents[1]
 HEX = re.compile(r"[0-9a-f]{64}")
+GIT_BLOB_HEX = re.compile(r"[0-9a-f]{40}")
+INTEGRATION_BUNDLE = "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4"
 
 
 def digest(data: bytes) -> str:
@@ -126,6 +128,46 @@ def _claims(value):
                 yield from _claims(child)
 
 
+def _bound_claims(manifest: str, payload):
+    """Keep archived source claims bound to their original objects or snapshot.
+
+    The reviewed v1.4 bundle's README declares the final snapshot directory.
+    Its source manifest separately pins upstream blobs and final affected files;
+    their repository-looking paths do not refer to today's live working tree.
+    """
+    if manifest == INTEGRATION_BUNDLE + "/final-tree-manifest.json":
+        for claim in _claims(payload):
+            yield claim, "bundle_snapshot"
+    elif manifest == INTEGRATION_BUNDLE + "/source-hash-manifest.json":
+        sections = payload.items() if isinstance(payload, dict) else [(None, payload)]
+        for section, value in sections:
+            if section in ("upstream_source_files", "original_crypto_protocols", "unchanged_files"):
+                binding = "git_blob"
+            elif section == "final_affected_files":
+                binding = "bundle_snapshot"
+            else:
+                binding = "unsupported_bundle_section"
+            for claim in _claims(value):
+                yield claim, binding
+    else:
+        for claim in _claims(payload):
+            yield claim, "file"
+
+
+def _original_blob(root: Path, claim: dict) -> bytes | None:
+    blob = claim.get("git_blob_sha")
+    if not isinstance(blob, str) or not GIT_BLOB_HEX.fullmatch(blob):
+        raise ValueError("invalid pinned Git blob")
+    proc = subprocess.run(["git", "cat-file", "blob", blob], cwd=root, capture_output=True)
+    if proc.returncode:
+        return None
+    data = proc.stdout
+    git_digest = hashlib.sha1(b"blob " + str(len(data)).encode("ascii") + b"\0" + data).hexdigest()
+    if git_digest != blob:
+        raise ValueError("pinned Git blob identity mismatch")
+    return data
+
+
 def _claim_path(root: Path, manifest: str, claim: dict) -> Path:
     # These adapters identify original historical layouts, not renamed files.
     if manifest == "kod-machine/kod/workstation/research_evidence/manifest.json":
@@ -144,6 +186,7 @@ def _claim_path(root: Path, manifest: str, claim: dict) -> Path:
 
 def verify_manifests(root: Path, paths: list[str]) -> list[dict]:
     results = []
+    blobs = {}
     for name in paths:
         if "manifest" not in name.lower() or not name.endswith((".json", ".jsonl", ".jsonl.gz")):
             continue
@@ -164,7 +207,7 @@ def verify_manifests(root: Path, paths: list[str]) -> list[dict]:
                 }
             )
             continue
-        claims = list(_claims(payload))
+        claims = list(_bound_claims(name, payload))
         if not claims:
             results.append(
                 {
@@ -173,17 +216,41 @@ def verify_manifests(root: Path, paths: list[str]) -> list[dict]:
                     "reason": "no supported path/SHA256 claims",
                 }
             )
-        for index, claim in enumerate(claims):
+        for index, (claim, binding) in enumerate(claims):
             row = {"manifest": name, "claim": index}
             try:
                 if not isinstance(claim["sha256"], str) or not HEX.fullmatch(claim["sha256"]):
                     raise LookupError("claim does not contain a SHA256 file digest")
-                target = _claim_path(root, name, claim)
-                row["path"] = target.relative_to(root).as_posix()
-                if not target.is_file():
-                    row.update(status="UNAVAILABLE", reason="referenced data is not present")
+                if binding == "unsupported_bundle_section":
+                    raise LookupError("historical bundle section has no supported source binding")
+                if binding == "git_blob":
+                    # No fallback to live files when a historical object is absent.
+                    row.update(
+                        path=claim["path"],
+                        source="git_blob",
+                        git_blob_sha=claim.get("git_blob_sha"),
+                    )
+                    safe_path(root, claim["path"])
+                    blob = claim.get("git_blob_sha")
+                    if blob not in blobs:
+                        blobs[blob] = _original_blob(root, claim)
+                    data = blobs[blob]
                 else:
-                    data = target.read_bytes()
+                    target = (
+                        safe_path(root, INTEGRATION_BUNDLE + "/snapshot/" + claim["path"])
+                        if binding == "bundle_snapshot"
+                        else _claim_path(root, name, claim)
+                    )
+                    row["path"] = target.relative_to(root).as_posix()
+                    data = target.read_bytes() if target.is_file() else None
+                if data is None:
+                    reason = (
+                        "pinned Git blob unavailable"
+                        if binding == "git_blob"
+                        else "referenced data is not present"
+                    )
+                    row.update(status="UNAVAILABLE", reason=reason)
+                else:
                     if data.startswith(b"version https://git-lfs.github.com/spec/v1\n"):
                         row.update(
                             status="UNAVAILABLE",
@@ -276,7 +343,7 @@ def verify_tokens(root: Path, paths: list[str], verifier=None) -> list[dict]:
         data = payloads.get(name)
         if data is None:
             original_name = token.name.rsplit(".", 2)[0]
-            if original_name.endswith((".json", ".jsonl", ".md")):
+            if original_name.endswith((".json", ".jsonl", ".md", ".py")):
                 direct = (
                     token.parent.parent / original_name
                     if token.parent.name == "timestamps"

@@ -60,17 +60,18 @@ remains a separate, unproven research question.
 
 ## Release evidence
 
-The complete local release gate passed on the final code tree. The following
-counts are disjoint suites; the focused checks repeated inside the release gate
-are not added again.
+The full runtime release gate passed locally and on GitHub before the archive-
+audit follow-up below. Runtime modules are unchanged by that follow-up, and all
+tooling tests were rerun after it. These are disjoint suites; repeated focused
+checks inside the release gate are not added again.
 
 | Suite | Result |
 | --- | --- |
 | `idx-signals`: complete unittest suite | 1,463 passed |
 | `kod-machine`: core unittest suite | 282 passed |
 | `kod-machine/workstation_tests` | 321 passed |
-| `tools/ci_tests` | 61 passed |
-| Total across those suites | 2,127 passed |
+| `tools/ci_tests`, including archive-audit follow-up | 67 passed |
+| Total across those suites | 2,133 passed |
 | Restartable economic and timing demonstrations | Passed, synthetic/offline |
 | Backup, new-directory restore and verification | Passed |
 | Ruff style/lint | All 62 managed files passed |
@@ -100,6 +101,29 @@ The dedicated branch workflow repeats the release checks and retains full-checko
 history reports. A local passing result is not a claim that an unobserved remote
 workflow has passed. [VALIDATION.json](VALIDATION.json) records the local evidence
 and published code-tree identity.
+
+## Full-checkout audit follow-up
+
+The first GitHub release run passed every software test but exposed eight false
+manifest failures in the untouched baseline. The new audit reader had compared
+an old v1.4 repair bundle's source claims with today's live files. Its archived
+README and manifests instead bind upstream rows to `git_blob_sha` and final rows
+to the bundle's `snapshot/` directory.
+
+The reader now uses those original bindings, verifies Git object identity and
+SHA-256, and never falls back to current source when an original object is missing.
+All eight rows passed a targeted verification against their original bytes.
+Six added regressions also require genuine tampering to fail and missing original
+objects to remain unavailable. The two detached Python-source tokens previously
+unassociated by the reader were verified offline against their exact original
+source bytes. Source files are read as data and never executed for this check.
+
+[HISTORY_BINDING_FIX.json](validation/HISTORY_BINDING_FIX.json) retains this
+targeted evidence and the initial CI counts. It does not invent full-run totals.
+The workflow now retains both before/after reports even if the baseline audit
+fails, then requires both statuses to pass. All manifest claims, unavailable
+archive entries and unsupported layouts remain in their original denominators.
+No historical record, manifest or token was repaired or rewritten.
 
 See [TIDY_REPORT.md](TIDY_REPORT.md) for source-pin preservation and before/after
 equivalence, [HISTORY_INTEGRITY.md](HISTORY_INTEGRITY.md) for explicit archival

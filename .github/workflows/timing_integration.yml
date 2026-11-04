@@ -44,8 +44,12 @@ jobs:
       - name: Before and after historical byte and timestamp coverage
         run: |
           git worktree add --detach "$RUNNER_TEMP/kod-before" c2e9c54ba85c591c2ed5628295159335667a1b84
-          python tools/check_history_integrity.py --root "$RUNNER_TEMP/kod-before" --snapshot "$RUNNER_TEMP/history-before-bytes.json" --report "$RUNNER_TEMP/history-before-audit.json"
-          python tools/check_history_integrity.py --compare "$RUNNER_TEMP/history-before-bytes.json" --report "$RUNNER_TEMP/history-after-audit.json"
+          kod_history_before_status=0
+          python tools/check_history_integrity.py --root "$RUNNER_TEMP/kod-before" --snapshot "$RUNNER_TEMP/history-before-bytes.json" --report "$RUNNER_TEMP/history-before-audit.json" || kod_history_before_status=$?
+          kod_history_after_status=0
+          python tools/check_history_integrity.py --compare "$RUNNER_TEMP/history-before-bytes.json" --report "$RUNNER_TEMP/history-after-audit.json" || kod_history_after_status=$?
+          test "$kod_history_before_status" -eq 0
+          test "$kod_history_after_status" -eq 0
       - name: Retain explicit verification coverage
         if: always()
         uses: actions/upload-artifact@v4

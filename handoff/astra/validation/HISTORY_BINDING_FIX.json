@@ -1,0 +1,241 @@
+{
+  "kind": "KOD-HISTORY-MANIFEST-BINDING-DIAGNOSTIC",
+  "source_workflow_run": 41804984595,
+  "source_job": 126489658400,
+  "source_artifact": 13309223522,
+  "source_commit": "c2e9c54ba85c591c2ed5628295159335667a1b84",
+  "original_full_ci_counts": {
+    "manifests": {
+      "VERIFIED": 461,
+      "UNAVAILABLE": 612984,
+      "UNSUPPORTED": 62425,
+      "FAIL": 8
+    },
+    "tokens": {
+      "VERIFIED": 2131,
+      "UNAVAILABLE": 2
+    }
+  },
+  "scope": "Targeted re-verification of the eight incorrectly bound historical manifest rows and two previously unassociated Python-source tokens. This is not a replacement full-checkout audit. Manifest claim objects are read from the original pinned GitHub manifest responses; payload bytes are individually verified against original Git blob identities. No historical repository file was rewritten.",
+  "diagnosis": "Historical repository-relative source paths were incorrectly resolved against live code. Upstream claims must bind pinned Git blobs; final bundle claims must bind the archived snapshot declared by the bundle README.",
+  "targeted_counts": {
+    "corrected_rows": {
+      "VERIFIED": 8
+    },
+    "python_source_tokens": {
+      "VERIFIED": 2
+    }
+  },
+  "corrected_rows": [
+    {
+      "original_audit": {
+        "manifest": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/final-tree-manifest.json",
+        "claim": 10,
+        "path": "idx-signals/idxsig/cli.py",
+        "status": "FAIL",
+        "reason": "SHA256 mismatch"
+      },
+      "correct_bound_audit": {
+        "manifest": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/final-tree-manifest.json",
+        "claim": 10,
+        "path": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/snapshot/idx-signals/idxsig/cli.py",
+        "status": "VERIFIED",
+        "reason": "original file SHA256 matches manifest"
+      }
+    },
+    {
+      "original_audit": {
+        "manifest": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/final-tree-manifest.json",
+        "claim": 127,
+        "path": "idx-signals/tests/test_paper_book.py",
+        "status": "FAIL",
+        "reason": "SHA256 mismatch"
+      },
+      "correct_bound_audit": {
+        "manifest": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/final-tree-manifest.json",
+        "claim": 127,
+        "path": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/snapshot/idx-signals/tests/test_paper_book.py",
+        "status": "VERIFIED",
+        "reason": "original file SHA256 matches manifest"
+      }
+    },
+    {
+      "original_audit": {
+        "manifest": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/source-hash-manifest.json",
+        "claim": 11,
+        "path": "idx-signals/idxsig/cli.py",
+        "status": "FAIL",
+        "reason": "SHA256 mismatch"
+      },
+      "correct_bound_audit": {
+        "manifest": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/source-hash-manifest.json",
+        "claim": 11,
+        "path": "idx-signals/idxsig/cli.py",
+        "source": "git_blob",
+        "git_blob_sha": "da373132d6903e2d346b257f37387d15ad17b76c",
+        "status": "VERIFIED",
+        "reason": "original file SHA256 matches manifest"
+      }
+    },
+    {
+      "original_audit": {
+        "manifest": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/source-hash-manifest.json",
+        "claim": 16,
+        "path": "idx-signals/idxsig/crypto_account.py",
+        "status": "FAIL",
+        "reason": "SHA256 mismatch"
+      },
+      "correct_bound_audit": {
+        "manifest": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/source-hash-manifest.json",
+        "claim": 16,
+        "path": "idx-signals/idxsig/crypto_account.py",
+        "source": "git_blob",
+        "git_blob_sha": "c651a71f7265226f7105fbdd205a806cfcc56b40",
+        "status": "VERIFIED",
+        "reason": "original file SHA256 matches manifest"
+      }
+    },
+    {
+      "original_audit": {
+        "manifest": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/source-hash-manifest.json",
+        "claim": 80,
+        "path": "idx-signals/tests/test_crypto_account.py",
+        "status": "FAIL",
+        "reason": "SHA256 mismatch"
+      },
+      "correct_bound_audit": {
+        "manifest": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/source-hash-manifest.json",
+        "claim": 80,
+        "path": "idx-signals/tests/test_crypto_account.py",
+        "source": "git_blob",
+        "git_blob_sha": "e5df4f55ef08466723b603819a58de8820ef94fb",
+        "status": "VERIFIED",
+        "reason": "original file SHA256 matches manifest"
+      }
+    },
+    {
+      "original_audit": {
+        "manifest": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/source-hash-manifest.json",
+        "claim": 91,
+        "path": "idx-signals/tests/test_paper_book.py",
+        "status": "FAIL",
+        "reason": "SHA256 mismatch"
+      },
+      "correct_bound_audit": {
+        "manifest": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/source-hash-manifest.json",
+        "claim": 91,
+        "path": "idx-signals/tests/test_paper_book.py",
+        "source": "git_blob",
+        "git_blob_sha": "7defe19212f3dec0a276103c03a08b345a215432",
+        "status": "VERIFIED",
+        "reason": "original file SHA256 matches manifest"
+      }
+    },
+    {
+      "original_audit": {
+        "manifest": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/source-hash-manifest.json",
+        "claim": 125,
+        "path": "idx-signals/idxsig/cli.py",
+        "status": "FAIL",
+        "reason": "SHA256 mismatch"
+      },
+      "correct_bound_audit": {
+        "manifest": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/source-hash-manifest.json",
+        "claim": 125,
+        "path": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/snapshot/idx-signals/idxsig/cli.py",
+        "status": "VERIFIED",
+        "reason": "original file SHA256 matches manifest"
+      }
+    },
+    {
+      "original_audit": {
+        "manifest": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/source-hash-manifest.json",
+        "claim": 231,
+        "path": "idx-signals/tests/test_paper_book.py",
+        "status": "FAIL",
+        "reason": "SHA256 mismatch"
+      },
+      "correct_bound_audit": {
+        "manifest": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/source-hash-manifest.json",
+        "claim": 231,
+        "path": "idx-signals/tests/test_paper_book.py",
+        "source": "git_blob",
+        "git_blob_sha": "7defe19212f3dec0a276103c03a08b345a215432",
+        "status": "VERIFIED",
+        "reason": "original file SHA256 matches manifest"
+      }
+    }
+  ],
+  "python_source_tokens": [
+    {
+      "path": "idx-signals/research/AVOID_TILT_v1/timestamps/run.py.freetsa.tsr",
+      "status": "VERIFIED",
+      "reason": "signature binds original payload under pinned trust chain",
+      "timestamp": "2026-11-02T22:11:50+00:00",
+      "payload_sha256": "47b72ed4a0247691264ef298f97dc99163f95b7b677a22fbd2b9162fe78637f5"
+    },
+    {
+      "path": "idx-signals/research/AVOID_TILT_v1/timestamps/run.py.sectigo.tsr",
+      "status": "VERIFIED",
+      "reason": "signature binds original payload under pinned trust chain",
+      "timestamp": "2026-11-02T22:11:50+00:00",
+      "payload_sha256": "47b72ed4a0247691264ef298f97dc99163f95b7b677a22fbd2b9162fe78637f5"
+    }
+  ],
+  "fetched_payloads": [
+    {
+      "key": "da373132d6903e2d346b257f37387d15ad17b76c",
+      "git_blob_sha": "da373132d6903e2d346b257f37387d15ad17b76c",
+      "sha256": "d0cea81dea0baa9c8a5af5756e5b2b3a42a91d082070824107ccc4a57ef6cd39",
+      "bytes": 85398
+    },
+    {
+      "key": "c651a71f7265226f7105fbdd205a806cfcc56b40",
+      "git_blob_sha": "c651a71f7265226f7105fbdd205a806cfcc56b40",
+      "sha256": "cca81549a89c59c6dbb2b652939c72b4e92f8a8c6287bda2f5a9c965cbb0104c",
+      "bytes": 27662
+    },
+    {
+      "key": "e5df4f55ef08466723b603819a58de8820ef94fb",
+      "git_blob_sha": "e5df4f55ef08466723b603819a58de8820ef94fb",
+      "sha256": "fb9ba04592b7f963b2039c92e540b6c658c0b7204dd15256e9e229c6b4575913",
+      "bytes": 14871
+    },
+    {
+      "key": "7defe19212f3dec0a276103c03a08b345a215432",
+      "git_blob_sha": "7defe19212f3dec0a276103c03a08b345a215432",
+      "sha256": "47e315c5c0f06974b3c9165354818f9109ccbd305d0e152346742515b8c66b70",
+      "bytes": 5115
+    },
+    {
+      "key": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/snapshot/idx-signals/idxsig/cli.py",
+      "git_blob_sha": "af22e56957d8a43065f63aeb4296d0df85efe3a8",
+      "sha256": "ea234dc5da58c196416df8e5db2a9d7560f5f38d3dda4d7afb34e7e835c177d2",
+      "bytes": 85418
+    },
+    {
+      "key": "handoff/ace-integration-20261101/old_repair/kod-integration-v1.4/snapshot/idx-signals/tests/test_paper_book.py",
+      "git_blob_sha": "7defe19212f3dec0a276103c03a08b345a215432",
+      "sha256": "47e315c5c0f06974b3c9165354818f9109ccbd305d0e152346742515b8c66b70",
+      "bytes": 5115
+    },
+    {
+      "key": "idx-signals/research/AVOID_TILT_v1/run.py",
+      "git_blob_sha": "a0a9d30382aad53bea609dd003401bb5fb9f794e",
+      "sha256": "47b72ed4a0247691264ef298f97dc99163f95b7b677a22fbd2b9162fe78637f5",
+      "bytes": 6298
+    },
+    {
+      "key": "idx-signals/research/AVOID_TILT_v1/timestamps/run.py.freetsa.tsr",
+      "git_blob_sha": "346960f1e720217748911dbef774a4cb05194984",
+      "sha256": "3acc22628b584ac9d609f36904fdf54bcd492f1fc2a78dee41a5924c59690e72",
+      "bytes": 4643
+    },
+    {
+      "key": "idx-signals/research/AVOID_TILT_v1/timestamps/run.py.sectigo.tsr",
+      "git_blob_sha": "ab9e36e1febc366c3c971fba14ce262355af06db",
+      "sha256": "cfaf98954061b39d93e8358d7a35328d728f3690fc68f0210778b4879bce4e4d",
+      "bytes": 6636
+    }
+  ]
+}

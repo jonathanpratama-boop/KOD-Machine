@@ -7,6 +7,7 @@ import importlib.util
 import json
 from pathlib import Path
 import sys
+import subprocess
 import tempfile
 import unittest
 
@@ -78,6 +79,103 @@ class HistoryAuditTests(unittest.TestCase):
     def test_manifest_cannot_read_outside_repository(self):
         self.write("manifest.json", json.dumps({"path": "../private", "sha256": "a" * 64}).encode())
         self.assertEqual(audit.verify_manifests(self.root, ["manifest.json"])[0]["status"], "FAIL")
+
+    def original_blob(self, data):
+        subprocess.run(["git", "init", "-q", str(self.root)], check=True, capture_output=True)
+        return (
+            subprocess.run(
+                ["git", "hash-object", "-w", "--stdin"],
+                cwd=self.root,
+                input=data,
+                check=True,
+                capture_output=True,
+            )
+            .stdout.decode()
+            .strip()
+        )
+
+    def test_historical_source_uses_pinned_blob_despite_edited_live_file(self):
+        name = audit.INTEGRATION_BUNDLE + "/source-hash-manifest.json"
+        original = b"original upstream source\n"
+        claim = {
+            "path": "idx-signals/idxsig/cli.py",
+            "sha256": audit.digest(original),
+            "git_blob_sha": self.original_blob(original),
+        }
+        self.write(claim["path"], b"subsequent live changes\n")
+        self.write(name, json.dumps({"upstream_source_files": [claim]}).encode())
+        result = audit.verify_manifests(self.root, [name])[0]
+        self.assertEqual(result["status"], "VERIFIED")
+        self.assertEqual(result["source"], "git_blob")
+        # A real mismatch against the declared immutable source still fails.
+        claim["sha256"] = audit.digest(b"wrong hash")
+        self.write(name, json.dumps({"upstream_source_files": [claim]}).encode())
+        self.assertEqual(audit.verify_manifests(self.root, [name])[0]["status"], "FAIL")
+
+    def test_missing_pinned_blob_never_falls_back_to_matching_live_file(self):
+        name = audit.INTEGRATION_BUNDLE + "/source-hash-manifest.json"
+        claim = {
+            "path": "idx-signals/idxsig/cli.py",
+            "sha256": audit.digest(b"matching live bytes"),
+            "git_blob_sha": "a" * 40,
+        }
+        self.write(claim["path"], b"matching live bytes")
+        self.write(name, json.dumps({"unchanged_files": [claim]}).encode())
+        result = audit.verify_manifests(self.root, [name])[0]
+        self.assertEqual(result["status"], "UNAVAILABLE")
+        self.assertEqual(result["reason"], "pinned Git blob unavailable")
+
+    def test_final_bundle_claims_only_check_archived_snapshot(self):
+        path = "idx-signals/idxsig/cli.py"
+        data = b"historical final candidate\n"
+        claim = {"path": path, "sha256": audit.digest(data)}
+        final = audit.INTEGRATION_BUNDLE + "/final-tree-manifest.json"
+        source = audit.INTEGRATION_BUNDLE + "/source-hash-manifest.json"
+        snapshot = audit.INTEGRATION_BUNDLE + "/snapshot/" + path
+        self.write(final, json.dumps([claim]).encode())
+        self.write(source, json.dumps({"final_affected_files": [claim]}).encode())
+        self.write(path, data)
+        self.assertEqual(
+            [x["status"] for x in audit.verify_manifests(self.root, [final, source])],
+            ["UNAVAILABLE", "UNAVAILABLE"],
+        )
+        self.write(snapshot, data)
+        self.write(path, b"new live source")
+        self.assertEqual(
+            [x["status"] for x in audit.verify_manifests(self.root, [final, source])],
+            ["VERIFIED", "VERIFIED"],
+        )
+        self.write(snapshot, b"tampered archived snapshot")
+        self.assertEqual(
+            [x["status"] for x in audit.verify_manifests(self.root, [final, source])],
+            ["FAIL", "FAIL"],
+        )
+
+    def test_unknown_bundle_section_retains_unsupported_claim(self):
+        name = audit.INTEGRATION_BUNDLE + "/source-hash-manifest.json"
+        claim = {"path": "idx-signals/idxsig/cli.py", "sha256": audit.digest(b"data")}
+        self.write(claim["path"], b"data")
+        self.write(name, json.dumps({"unknown_section": [claim]}).encode())
+        self.assertEqual(audit.verify_manifests(self.root, [name])[0]["status"], "UNSUPPORTED")
+
+    def test_historical_binding_rejects_unsafe_paths(self):
+        name = audit.INTEGRATION_BUNDLE + "/final-tree-manifest.json"
+        self.write(name, json.dumps([{"path": "../../private", "sha256": "a" * 64}]).encode())
+        self.assertEqual(audit.verify_manifests(self.root, [name])[0]["status"], "FAIL")
+
+    def test_detached_python_token_binds_original_source_bytes(self):
+        source = "idx-signals/research/EXAMPLE/run.py"
+        token = "idx-signals/research/EXAMPLE/timestamps/run.py.freetsa.tsr"
+        data = b"raise RuntimeError('source must never be executed')\n"
+        self.write(source, data)
+        self.write(token, b"fixture:" + data)
+        self.assertEqual(
+            audit.verify_tokens(self.root, [token], FixtureVerifier())[0]["status"], "VERIFIED"
+        )
+        self.write(source, data + b"# subsequent edit\n")
+        self.assertEqual(
+            audit.verify_tokens(self.root, [token], FixtureVerifier())[0]["status"], "FAIL"
+        )
 
     def test_digest_token_requires_a_recomputed_original_record(self):
         body = {"type": "FORECAST", "id": "synthetic", "prev_hash": None}
