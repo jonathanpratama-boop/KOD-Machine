@@ -1,0 +1,301 @@
+{% extends "base.html" %}
+{% block title %}Decision inspector · KOD{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <div>
+<div class="eyebrow">KOD / SAVED OBSERVATIONS</div>
+<h1>Decision inspector<span class="title-dot">.</span>
+</h1>
+<p>Follow one attempt from observation to its recorded outcome.</p>
+</div>
+  <a class="button secondary" href="/timing">Back to Timing</a>
+</div>
+{% if inspect_error %}
+<section class="panel ops-unavailable" role="status">
+<span class="badge amber">UNAVAILABLE</span>
+<h2>No verified attempt view</h2>
+<p>{{ inspect_error }}</p>
+</section>
+{% else %}
+{% set view = inspection %}{% set attempt = view.attempt %}
+{% if attempt.evidence_kind == 'synthetic' %}
+<div class="ops-demo" role="status">
+<strong>SYNTHETIC DEMONSTRATION</strong>
+<span>These observations are fixtures. Their prices and timings are not market results.</span>
+</div>
+{% endif %}
+<section class="ops-run">
+<div>
+<span>Attempt</span>
+<b>{{ attempt.id }}</b>
+</div>
+<div>
+<span>Detector / operation</span>
+<b>{{ attempt.detector_version }}</b>
+</div>
+<div>
+<span>Evidence</span>
+<b>{{ attempt.evidence_kind }}</b>
+</div>
+<span class="badge neutral">{{ attempt.status }}</span>
+</section>
+{% if view.chronology_status == 'DECLARED_REPORT_ONLY' %}
+<div class="ops-demo" role="status">
+<strong>DECLARED / UNVERIFIED CHRONOLOGY</strong>
+<span>The report hash matches its contents, but the original timing journal is unavailable. Timestamps below are declarations; linked price and execution claims are withheld.</span>
+</div>
+{% else %}
+<p class="ops-caption">Chronology and interval summary match retained journal records at the report cutoff. Local integrity does not independently prove observation time.</p>
+{% endif %}
+<div class="context-banner">
+<strong>Recorded research · no entry permission</strong>
+<span>Missing stages remain unknown. Simulated fills are never brokerage confirmations.</span>
+</div>
+
+<section class="panel">
+  <div class="panel-heading">
+<div>
+<h2>What happened</h2>
+<p>{{ attempt.reason or 'No reason was retained for this attempt.' }}</p>
+</div>
+</div>
+  <dl class="ops-facts">
+<dt>Actually recorded</dt>
+<dd>{{ attempt.recorded_at|moment }}</dd>
+<dt>Report cutoff</dt>
+<dd>{{ view.report_cutoff|moment }}</dd>
+<dt>Source</dt>
+<dd>{{ attempt.source }}</dd>
+<dt>Verified clock assessment</dt>
+<dd>{{ view.clock_assessment.status }} · {{ view.clock_assessment.reason }}</dd>
+</dl>
+  {% if view.clock_assessment.get('system_time_offset_seconds') is not none %}
+<dl class="ops-facts">
+<dt>System-time offset</dt>
+<dd>{{ view.clock_assessment.system_time_offset_seconds }} s</dd>
+<dt>Conditional error bound</dt>
+<dd>{{ view.clock_assessment.conditional_error_bound_seconds }} s</dd>
+</dl>
+{% endif %}
+  {% if view.clock_assessment.get('original_claim_valid') is sameas false and attempt.clock.get('offset_seconds') is not none %}
+<p class="inspector-warning">The original clock-offset claim is unverified or incorrect. Retained historical bytes are unchanged; use the separate assessment above.</p>
+{% endif %}
+  <details class="ops-details">
+<summary>Original clock declaration · historical record</summary>
+<pre>{{ attempt.clock|ops_pretty }}</pre>
+<pre>{{ view.clock_assessment|ops_pretty }}</pre>
+</details>
+  {% if view.details.get('clock_conflicts') %}
+<p class="inspector-warning">
+<strong>CLOCK CONFLICT</strong> · {{ view.details.clock_conflicts|join(', ') }}. Signed clock differences are not predictive lead.</p>
+{% endif %}
+</section>
+
+<section class="panel">
+  <div class="panel-heading">
+<div>
+<h2>Captured price window</h2>
+<p>{{ view.price_reason }}</p>
+</div>
+<span class="badge neutral">{{ view.price_status|replace('_', ' ') }}</span>
+</div>
+  {% if view.capture %}
+  <form class="inspector-select" method="get" action="/timing/attempt">
+    <input type="hidden" name="id" value="{{ attempt.id }}">
+    <label for="symbol">Instrument</label>
+<select name="symbol" id="symbol">
+{% for item in view.symbols %}
+<option value="{{ item }}" {% if item == view.symbol %}selected{% endif %}>{{ item }}</option>
+{% endfor %}
+</select>
+<button class="button secondary" type="submit">Show observations</button>
+  </form>
+  <dl class="ops-facts">
+<dt>Bar resolution</dt>
+<dd>{{ view.capture.interval }}</dd>
+<dt>Coverage</dt>
+<dd>{{ view.capture.coverage|ops_brief }}</dd>
+<dt>Captured window</dt>
+<dd>{{ view.capture.window_start_at|moment }} → {{ view.capture.window_end_at|moment }}</dd>
+<dt>Capture owner</dt>
+<dd>{{ view.capture_owner }}</dd>
+</dl>
+  {% if view.plot %}
+  <figure class="inspector-chart">
+    <svg viewBox="0 0 920 310" role="img" aria-labelledby="price-title price-description">
+      <title id="price-title">{{ view.symbol }} retained closing prices</title>
+      <desc id="price-description">{{ view.bars|length }} shown of {{ view.retained_bars }} retained bars. Price ranges from {{ view.plot.minimum }} to {{ view.plot.maximum }} USDT. Gaps break the line. Exact values and receipt times appear in the table below.</desc>
+      <line class="inspector-grid" x1="60" y1="50" x2="860" y2="50"/>
+<line class="inspector-grid" x1="60" y1="150" x2="860" y2="150"/>
+<line class="inspector-grid" x1="60" y1="250" x2="860" y2="250"/>
+      <text class="inspector-axis" x="60" y="30">{{ view.plot.maximum }} USDT</text>
+<text class="inspector-axis" x="60" y="274">{{ view.plot.minimum }} USDT</text>
+      {% for segment in view.plot.segments %}
+<polyline class="inspector-price" points="{{ segment }}"/>
+{% endfor %}
+      {% for point in view.plot.points %}
+<circle class="inspector-point" cx="{{ point.x }}" cy="{{ point.y }}" r="3">
+<title>{{ point.bar_end_at }} · close {{ point.close }} · received {{ point.received_at }}</title>
+</circle>
+{% endfor %}
+      {% for marker in view.plot.markers %}
+<line class="inspector-marker" x1="{{ marker.x }}" y1="45" x2="{{ marker.x }}" y2="255">
+<title>{{ marker.label }} · {{ marker.at }} · no price inferred</title>
+</line>
+{% endfor %}
+      <text class="inspector-axis" x="60" y="299">{{ view.plot.start }}</text>
+<text class="inspector-axis" x="860" y="299" text-anchor="end">{{ view.plot.end }}</text>
+    </svg>
+    <figcaption>Bar positions use source bar-end time. Data became available only at the retained receipt time. Dashed markers show recorded stages inside this window; they do not assign a price to a decision or fill. Clock uncertainty remains applicable.</figcaption>
+  </figure>
+  <details class="ops-details">
+<summary>Exact bar values · {{ view.bars|length }} shown / {{ view.retained_bars }} retained</summary>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Source bar end</th>
+<th>Close (USDT)</th>
+<th>Local receipt</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+{% for bar in view.bars %}
+<tr>
+<td>{{ bar.bar_end_at|moment }}</td>
+<td>{{ bar.close }}</td>
+<td>{{ bar.received_at|moment }}</td>
+<td class="ops-id">{{ bar.evidence_id }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</details>
+  {% else %}
+<p class="ops-copy">No verified complete bars for this instrument. No price path is drawn.</p>
+{% endif %}
+  {% if view.quotes %}
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Quote receipt</th>
+<th>Bid / ask (USDT)</th>
+<th>Displayed size</th>
+<th>Source clock</th>
+</tr>
+</thead>
+<tbody>
+{% for quote in view.quotes %}
+<tr>
+<td>{{ quote.received_at|moment }}</td>
+<td>{{ quote.bid }} / {{ quote.ask }}</td>
+<td>{{ quote.bid_size }} / {{ quote.ask_size }}</td>
+<td>{{ quote.source_time_status }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+<p class="ops-copy">Top-of-book observations are indicative. They do not establish an achievable fill at the owner's venue.</p>
+{% endif %}
+  {% if view.capture.failures %}
+<details class="ops-details">
+<summary>Collection failures · {{ view.capture.failures|length }}</summary>
+<pre>{{ view.capture.failures|ops_pretty }}</pre>
+</details>
+{% endif %}
+  <details class="ops-details">
+<summary>Membership coverage and clock evidence</summary>
+<pre>{{ view.capture.symbol_status|ops_pretty }}</pre>
+<pre>{{ view.capture.clock_integrity|ops_pretty }}</pre>
+</details>
+  {% endif %}
+</section>
+
+<section class="panel">
+  <div class="panel-heading">
+<div>
+<h2>Observation and decision timeline</h2>
+<p>Known times are ordered chronologically. The order displayed does not prove synchronized source and local clocks.</p>
+</div>
+</div>
+  <ol class="inspector-timeline">
+{% for stage in view.timeline %}
+<li class="{% if not stage.at %}unknown{% endif %}">
+<span>{{ stage.name|capitalize }}</span>
+<time>{{ stage.at|moment }}</time>
+</li>
+{% endfor %}
+</ol>
+  {% if attempt.get('source_time') %}
+<p class="ops-copy">Separate source event time: {{ attempt.source_time|moment }}. This is distinct from the local receipt.</p>
+{% endif %}
+  <div class="table-wrap inspector-intervals">
+<table>
+<thead>
+<tr>
+<th>Measured interval</th>
+<th>Seconds</th>
+</tr>
+</thead>
+<tbody>
+{% for name,value in view.details.get('seconds', {}).items() %}
+<tr>
+<td>{{ name|replace('_', ' ') }}</td>
+<td>{{ value|number if value is not none else 'Unknown' }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="panel">
+<div class="panel-heading">
+<div>
+<h2>Simulated execution</h2>
+<p>Processing clocks and economic quote times have different meanings.</p>
+</div>
+</div>
+{% if view.fill %}
+<dl class="ops-facts">
+<dt>Matched fill</dt>
+<dd>{{ view.fill.id }}</dd>
+<dt>Instrument / side</dt>
+<dd>{{ view.fill.symbol }} / {{ view.fill.side }}</dd>
+<dt>Quantity × price</dt>
+<dd>{{ view.fill.quantity }} × {{ view.fill.price }}</dd>
+<dt>Fee</dt>
+<dd>{{ view.fill.fee }}</dd>
+<dt>Original quote receipt</dt>
+<dd>{{ view.fill.received_at|moment }}</dd>
+<dt>Economic fill record</dt>
+<dd>{{ view.fill.fill_recorded_at|moment }}</dd>
+<dt>Processing completion</dt>
+<dd>{{ attempt.fill_at|moment }}</dd>
+</dl>
+<p class="ops-copy">The displayed simulated fill matches the timing record's retained hash. It is not a real order or guaranteed fill.</p>
+{% elif view.fill_error %}
+<p class="ops-copy">UNAVAILABLE · {{ view.fill_error }}</p>
+{% else %}
+<p class="ops-copy">No linked simulated fill. A missing fill does not become a zero-price execution.</p>
+{% endif %}
+</section>
+
+<details class="ops-integrity">
+<summary>Evidence links and complete record</summary>
+<p>Report digest {{ view.snapshot_sha256 }}. All views are read-only.</p>
+<dl class="ops-facts">
+{% for name,value in attempt.links.items() %}
+<dt>{{ name|replace('_', ' ') }}</dt>
+<dd>{{ value|ops_brief }}</dd>
+{% endfor %}
+</dl>
+<pre>{{ attempt|ops_pretty }}</pre>
+<pre>{{ view.details|ops_pretty }}</pre>
+</details>
+{% endif %}
+{% endblock %}

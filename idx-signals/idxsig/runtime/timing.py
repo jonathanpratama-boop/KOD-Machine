@@ -18,6 +18,7 @@ from uuid import uuid4
 from ..timing_capture import append_attempt, make_attempt, read_attempts, summarize
 from ..timing_capture import verify as verify_attempts
 from .data import parse_time, utc_text
+from .clock import PARSER_VERSION, parse_tracking
 from .storage import atomic_json, digest, immutable_json, locked, read_json
 
 BOARD_SCHEMA = "KOD_TIMING_BOARD_V1"
@@ -34,7 +35,9 @@ def clock_observation(root, *, clock=now, runner=subprocess.run):
     Absence of chrony is UNKNOWN, not a zero offset. The raw local observation is
     retained. Exchange server time is a different clock and is never called NTP.
     """
-    at = clock()
+    # Attempt validation uses UTC Z timestamps. Persist the same spelling in
+    # hashed clock evidence so equivalent caller offsets cannot break linkage.
+    at = utc_text(parse_time(clock()))
     result = {"status": "UNKNOWN", "offset_seconds": None, "observed_at": at, "evidence_id": None}
     executable = shutil.which("chronyc")
     if executable is None:
@@ -44,7 +47,8 @@ def clock_observation(root, *, clock=now, runner=subprocess.run):
             [executable, "-c", "tracking"], capture_output=True, text=True, timeout=2, check=False
         )
         evidence = {
-            "observed_at": clock(),
+            "parser_version": PARSER_VERSION,
+            "observed_at": utc_text(parse_time(clock())),
             "command": "chronyc -c tracking",
             "returncode": process.returncode,
             "stdout": process.stdout[:16384],
@@ -53,20 +57,14 @@ def clock_observation(root, *, clock=now, runner=subprocess.run):
         identity = "clock_" + digest(evidence)
         with locked(root):
             immutable_json(Path(root) / "timing" / "clocks" / (identity + ".json"), evidence)
-        fields = process.stdout.strip().split(",")
-        # chronyc CSV: reference ID,stratum,reference time,system offset,...,leap.
-        from decimal import Decimal
-
-        offset = Decimal(fields[3]) if len(fields) >= 13 else None
-        if (
-            process.returncode == 0
-            and offset is not None
-            and offset.is_finite()
-            and fields[-1].strip() == "Normal"
-        ):
+        try:
+            measurement = parse_tracking(evidence["stdout"], evidence["returncode"])
+        except ValueError:
+            measurement = None
+        if measurement is not None:
             return {
                 "status": "MEASURED_EXTERNAL",
-                "offset_seconds": str(offset),
+                "offset_seconds": measurement["system_time_offset_seconds"],
                 "observed_at": evidence["observed_at"],
                 "evidence_id": identity,
             }
@@ -74,7 +72,7 @@ def clock_observation(root, *, clock=now, runner=subprocess.run):
             status="MEASUREMENT_FAILED", observed_at=evidence["observed_at"], evidence_id=identity
         )
     except (OSError, subprocess.SubprocessError, ValueError, ArithmeticError):
-        result.update(status="MEASUREMENT_FAILED", observed_at=clock())
+        result.update(status="MEASUREMENT_FAILED", observed_at=utc_text(parse_time(clock())))
     return result
 
 
