@@ -42,6 +42,21 @@ ONLY_IN_REFERENCE = "ONLY_IN_REFERENCE"
 ONLY_IN_CANDIDATE = "ONLY_IN_CANDIDATE"
 VALUE_DIFFERS = "VALUE_DIFFERS"
 SCRAMBLE_KINDS = "fiub"  # numpy float, signed and unsigned integer, bool
+# pandas nullable dtypes: numbers and bools whose missing value is pd.NA. The canonical
+# panel (idxsig.panel.load) holds its prices and volumes as Int64.
+NULLABLE_DTYPES = (
+    pd.Int8Dtype,
+    pd.Int16Dtype,
+    pd.Int32Dtype,
+    pd.Int64Dtype,
+    pd.UInt8Dtype,
+    pd.UInt16Dtype,
+    pd.UInt32Dtype,
+    pd.UInt64Dtype,
+    pd.Float32Dtype,
+    pd.Float64Dtype,
+    pd.BooleanDtype,
+)
 
 Decide = Callable[[pd.DataFrame], pd.DataFrame]
 
@@ -86,7 +101,12 @@ class CutoffResult:
 
 @dataclass(frozen=True)
 class LookaheadReport:
-    """Everything one check compared, in cutoff order, with the settings it used."""
+    """Everything one check compared, in cutoff order, with the settings it used.
+
+    For scramble, ``scrambled_columns`` and ``unscrambled_columns`` together name every
+    data column, so a column the noise never reached is stated, not implied; both are
+    empty for the other checks.
+    """
 
     check: str
     time_column: str
@@ -95,6 +115,7 @@ class LookaheadReport:
     assume_utc: bool
     input_rows: int | None
     scrambled_columns: tuple[str, ...]
+    unscrambled_columns: tuple[str, ...]
     value_lags: tuple[tuple[str, str], ...]
     seed: int | None
     missing_share: float | None
@@ -380,6 +401,7 @@ def compare_decisions(
         assume_utc=assume_utc,
         input_rows=None,
         scrambled_columns=(),
+        unscrambled_columns=(),
         value_lags=(),
         seed=None,
         missing_share=None,
@@ -399,6 +421,20 @@ def _input(data, time_column: str, assume_utc: bool) -> pd.Series:
     return _utc_series(data[time_column], f"data column {time_column!r}", assume_utc)
 
 
+def _scrambleable(dtype) -> bool:
+    """A numpy float, integer or bool dtype, or a pandas nullable one."""
+    if isinstance(dtype, np.dtype):
+        return dtype.kind in SCRAMBLE_KINDS
+    return isinstance(dtype, NULLABLE_DTYPES)
+
+
+def _can_be_missing(dtype) -> bool:
+    """A numpy float dtype (NaN) or a pandas nullable dtype (pd.NA)."""
+    if isinstance(dtype, np.dtype):
+        return dtype.kind == "f"
+    return isinstance(dtype, NULLABLE_DTYPES)
+
+
 def _lags(value_lags, data: pd.DataFrame, time_column: str) -> dict[str, pd.Timedelta]:
     """Columns whose value on a row dated t is first known at t + lag."""
     if value_lags is None:
@@ -409,10 +445,11 @@ def _lags(value_lags, data: pd.DataFrame, time_column: str) -> dict[str, pd.Time
     for column, lag in value_lags.items():
         if column not in data.columns or column == time_column:
             raise LookaheadCheckError(f"lagged column {column!r} is not a data value column")
-        if data[column].dtype.kind != "f" or not isinstance(data[column].dtype, np.dtype):
+        if not _can_be_missing(data[column].dtype):
             raise LookaheadCheckError(
-                f"lagged column {column!r} has dtype {data[column].dtype}; it must be a numpy "
-                "float column so a value not yet known can be set missing"
+                f"lagged column {column!r} has dtype {data[column].dtype}, which cannot hold a "
+                "missing value; store it as a numpy float or pandas nullable column (a flag as "
+                "astype('boolean')) so a value not yet known can be set missing"
             )
         if not isinstance(lag, timedelta) or pd.isna(lag) or lag <= timedelta(0):
             raise LookaheadCheckError(
@@ -485,6 +522,7 @@ def _report(
     results: list[CutoffResult],
     lags: dict[str, pd.Timedelta],
     scrambled_columns: tuple[str, ...] = (),
+    unscrambled_columns: tuple[str, ...] = (),
     seed: int | None = None,
     missing_share: float | None = None,
 ) -> LookaheadReport:
@@ -496,6 +534,7 @@ def _report(
         assume_utc=assume_utc,
         input_rows=len(data),
         scrambled_columns=scrambled_columns,
+        unscrambled_columns=unscrambled_columns,
         value_lags=tuple((c, lag.isoformat()) for c, lag in lags.items()),
         seed=seed,
         missing_share=missing_share,
@@ -536,9 +575,7 @@ def truncation_check(
     for cutoff, keep, hidden, removed, blanked in plans:
         cut = data.copy(deep=True)
         for column, mask in hidden.items():
-            values = cut[column].to_numpy(copy=True)
-            values[mask] = np.nan
-            cut[column] = values
+            cut[column] = cut[column].mask(mask)  # NaN or pd.NA; the dtype is kept
         cut = cut.iloc[np.flatnonzero(keep)]
         label = f"decisions on data cut at {_iso(cutoff)}"
         candidate = _same_columns(
@@ -551,15 +588,28 @@ def truncation_check(
 
 
 def _scrambled(data: pd.DataFrame, time_column: str, columns) -> tuple[str, ...]:
-    def eligible(column: str) -> bool:
-        dtype = data[column].dtype
-        return isinstance(dtype, np.dtype) and dtype.kind in SCRAMBLE_KINDS
+    """The named columns, or by default every scrambleable column except the time column.
 
+    A default column that holds numbers in a dtype this module cannot scramble (pyarrow,
+    sparse, complex) is refused: skipping it would let a leak through it pass unseen.
+    """
     if columns is None:
-        chosen = tuple(c for c in data.columns if c != time_column and eligible(c))
+        chosen = []
+        for column in data.columns:
+            if column == time_column:
+                continue
+            dtype = data[column].dtype
+            if _scrambleable(dtype):
+                chosen.append(column)
+            elif pd.api.types.is_numeric_dtype(dtype) or pd.api.types.is_bool_dtype(dtype):
+                raise LookaheadCheckError(
+                    f"column {column!r} holds numbers in dtype {dtype}, which cannot be "
+                    "scrambled; convert it to a numpy or pandas nullable dtype, or name the "
+                    "columns to scramble with columns=[...]"
+                )
         if not chosen:
-            raise LookaheadCheckError("data has no numpy numeric or bool column to scramble")
-        return chosen
+            raise LookaheadCheckError("data has no numeric or bool column to scramble")
+        return tuple(chosen)
     if isinstance(columns, str) or not isinstance(columns, Sequence) or not columns:
         raise LookaheadCheckError("columns must be a nonempty sequence of column names")
     if len(set(columns)) != len(columns):
@@ -567,29 +617,44 @@ def _scrambled(data: pd.DataFrame, time_column: str, columns) -> tuple[str, ...]
     for column in columns:
         if column not in data.columns or column == time_column:
             raise LookaheadCheckError(f"scrambled column {column!r} is not a data value column")
-        if not eligible(column):
+        if not _scrambleable(data[column].dtype):
             raise LookaheadCheckError(
                 f"scrambled column {column!r} has dtype {data[column].dtype}; only numpy "
-                "float, integer and bool columns can be scrambled"
+                "float, integer and bool columns and pandas nullable Int, UInt, Float and "
+                "boolean columns can be scrambled"
             )
     return tuple(columns)
 
 
-def _noise(values: np.ndarray, count: int, rng: np.random.Generator, missing_share: float):
-    """Seeded values over the column's observed range; floats also become missing."""
-    kind = values.dtype.kind
-    if kind == "b":
-        return rng.integers(0, 2, size=count).astype(bool)
-    if kind in "iu":
-        low, high = int(values.min()), int(values.max())
-        return rng.integers(low, max(high, low + 1), size=count, endpoint=True, dtype=values.dtype)
-    finite = values[np.isfinite(values)]
-    low, high = (float(finite.min()), float(finite.max())) if finite.size else (0.0, 1.0)
-    if low == high:
-        low, high = low - 1.0, high + 1.0
-    noise = rng.uniform(low, high, size=count)
-    noise[rng.random(count) < missing_share] = np.nan
-    return noise.astype(values.dtype)
+def _noise(values: pd.Series, count: int, rng: np.random.Generator, missing_share: float):
+    """``count`` seeded values over the column's observed range, in the column's dtype.
+
+    A column that can hold a missing value (numpy float, every pandas nullable dtype)
+    also has each drawn value set missing with probability ``missing_share``.
+    """
+    dtype = values.dtype
+    numpy_dtype = dtype if isinstance(dtype, np.dtype) else dtype.numpy_dtype
+    observed = values.dropna().to_numpy(dtype=numpy_dtype)
+    if numpy_dtype.kind == "b":
+        noise = rng.integers(0, 2, size=count).astype(bool)
+    elif numpy_dtype.kind in "iu":
+        low, high = (int(observed.min()), int(observed.max())) if observed.size else (0, 1)
+        noise = rng.integers(low, max(high, low + 1), size=count, endpoint=True, dtype=numpy_dtype)
+    else:
+        finite = observed[np.isfinite(observed)]
+        low, high = (float(finite.min()), float(finite.max())) if finite.size else (0.0, 1.0)
+        if low == high:
+            low, high = low - 1.0, high + 1.0
+        noise = rng.uniform(low, high, size=count).astype(numpy_dtype)
+    if not _can_be_missing(dtype):
+        return noise
+    missing = rng.random(count) < missing_share
+    if isinstance(dtype, np.dtype):
+        noise[missing] = np.nan
+        return noise
+    noise = pd.array(noise, dtype=dtype)
+    noise[missing] = pd.NA
+    return noise
 
 
 def scramble_check(
@@ -608,13 +673,16 @@ def scramble_check(
 ) -> LookaheadReport:
     """Rerun ``decide`` with every value after each cutoff replaced by seeded noise.
 
-    Rows, the time column and unscrambled columns (by default every column that is not
-    numpy numeric or bool, such as identifiers) are kept, so presence of later rows is
-    unchanged; truncation is the check for that. A value on a row dated t counts as after
-    the cutoff when t + lag > cutoff (lag zero unless given). Integers and bools get
-    uniform draws over the column's observed range; floats get the same plus a
-    ``missing_share`` chance of becoming missing. Noise for each (cutoff, column) pair is
-    drawn from ``numpy.random.default_rng([seed, cutoff number, column position])``.
+    ``columns`` defaults to every numpy or pandas nullable numeric or bool column except
+    the time column; a column holding numbers in any other dtype is refused, not skipped.
+    Rows, the time column and every unscrambled column (such as text identifiers) are
+    kept, so presence of later rows is unchanged; truncation is the check for that. The
+    report names both sets. A value on a row dated t counts as after the cutoff when
+    t + lag > cutoff (lag zero unless given). Numbers and bools get uniform draws over the
+    column's observed range, in the column's own dtype; a column that can hold a missing
+    value (numpy float, pandas nullable) also gets a ``missing_share`` chance of becoming
+    missing. Noise for each (cutoff, column) pair is drawn from
+    ``numpy.random.default_rng([seed, cutoff number, column position])``.
     """
     if isinstance(seed, bool) or not isinstance(seed, int) or seed < 0:
         raise LookaheadCheckError("seed must be a nonnegative integer")
@@ -644,9 +712,9 @@ def scramble_check(
     for number, cutoff, after, replaced in plans:
         noisy = data.copy(deep=True)
         for column, mask in after.items():
-            values = noisy[column].to_numpy(copy=True)
+            values = noisy[column].array.copy()
             rng = np.random.default_rng([seed, number, data.columns.get_loc(column)])
-            values[mask] = _noise(values, int(mask.sum()), rng, missing_share)
+            values[mask] = _noise(noisy[column], int(mask.sum()), rng, missing_share)
             noisy[column] = values
         label = f"decisions on data scrambled after {_iso(cutoff)}"
         candidate = _same_columns(
@@ -663,6 +731,7 @@ def scramble_check(
         results,
         lags,
         scrambled_columns=chosen,
+        unscrambled_columns=tuple(c for c in data.columns if c not in chosen),
         seed=seed,
         missing_share=float(missing_share),
     )

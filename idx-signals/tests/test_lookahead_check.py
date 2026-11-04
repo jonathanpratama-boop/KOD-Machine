@@ -7,11 +7,16 @@ on its signal row. Inputs the check cannot interpret are refused, never guessed.
 """
 
 from datetime import timedelta
+import hashlib
+import json
+from pathlib import Path
+import tempfile
 import unittest
 
 import numpy as np
 import pandas as pd
 
+from idxsig import panel
 from idxsig.lookahead import (
     COMPARE,
     ONLY_IN_CANDIDATE,
@@ -89,6 +94,66 @@ LEAKS = {
     "rows dropped when the future close is missing": study(trailing, drop_missing_future=True),
 }
 CHECKS = (truncation_check, scramble_check)
+
+
+def panel_rows(days: int = 60) -> pd.DataFrame:
+    """Seeded rows as ``idxsig.panel.load`` returns them, plus one merged numpy float column.
+
+    The rows pass through a temporary panel file and manifest, so the dtypes are the
+    loader's own: naive session dates, object tickers and pandas nullable Int64 prices.
+    """
+    rng = np.random.default_rng(20261105)
+    dates = pd.bdate_range("2025-01-02", periods=days).strftime("%Y-%m-%d")
+    frames = []
+    for ticker in ("ASII", "BBCA", "TLKM"):
+        close = np.round(5000 * np.exp(np.cumsum(rng.normal(0, 0.02, days)))).astype(int)
+        volume = rng.integers(100_000, 1_000_000, days)
+        prices_as_traded = {c: close for c in ("previous", "open", "high", "low", "close")}
+        frames.append(
+            pd.DataFrame(
+                {
+                    "date": dates,
+                    "ticker": ticker,
+                    "source": "idx_mirror",
+                    **prices_as_traded,
+                    "volume": volume,
+                    "value": close * volume,
+                    "frequency": rng.integers(100, 2000, days),
+                    "listed_shares": 10**9,
+                    "tradable_shares": 6 * 10**8,
+                }
+            )
+        )
+    with tempfile.TemporaryDirectory() as tmp:
+        path, manifest = Path(tmp, "panel.csv"), Path(tmp, "panel.json")
+        pd.concat(frames, ignore_index=True).to_csv(path, index=False)
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        manifest.write_text(json.dumps({"panel": str(path), "sha256": digest}))
+        rows, _, _ = panel.load(manifest)
+    return rows.assign(foreign_net=rng.normal(0, 1, len(rows)))
+
+
+def panel_study(signal, *, drop_missing_flag: bool = False):
+    """The toy study on panel rows: long when the close is above a per-ticker signal."""
+
+    def decide(rows: pd.DataFrame) -> pd.DataFrame:
+        d = rows.sort_values(["ticker", "date"], kind="stable")
+        if drop_missing_flag:
+            d = d[d.up3.notna()]
+        close = d.close.astype(float)
+        d = d.assign(score=close.groupby(d.ticker).transform(signal)).dropna(subset=["score"])
+        return d.assign(long=d.close.astype(float) > d.score)[["date", "ticker", "score", "long"]]
+
+    return decide
+
+
+PANEL = dict(
+    data_time_column="date",
+    time_column="date",
+    key_columns=("date", "ticker"),
+    cutoffs=("2025-02-03", "2025-03-03"),
+    assume_utc=True,
+)
 
 
 class Spy:
@@ -182,6 +247,7 @@ class CleanTwinPasses(unittest.TestCase):
         report = scramble_check(CLEAN, prices(), cutoffs=CUTOFFS, **COLUMNS)
         self.assertEqual((report.check, report.verdict), (SCRAMBLE, "PASS"))
         self.assertEqual(report.scrambled_columns, ("close", "volume"))
+        self.assertEqual(report.unscrambled_columns, ("time", "asset"))
         self.assertEqual((report.seed, report.missing_share), (0, 0.25))
         self.assertEqual([c.values_replaced for c in report.cutoffs], [150, 90, 42])
         self.assertTrue(all(c.rows_removed is None for c in report.cutoffs))
@@ -240,6 +306,58 @@ class WhatDecideSees(unittest.TestCase):
                 data = prices()
                 self.assertEqual(check(editing, data, cutoffs=CUTOFFS, **COLUMNS).verdict, "PASS")
                 pd.testing.assert_frame_equal(data, prices())
+
+
+class PandasNullableColumns(unittest.TestCase):
+    """The canonical panel holds prices as pandas nullable Int64; scramble must reach them."""
+
+    def test_the_panel_loader_gives_nullable_prices_and_naive_dates(self):
+        rows = panel_rows()
+        self.assertEqual((str(rows.close.dtype), str(rows.date.dtype)), ("Int64", "datetime64[ns]"))
+
+    def test_a_centred_window_on_panel_prices_fails_scramble_by_default(self):
+        report = scramble_check(panel_study(centred), panel_rows(), **PANEL)
+        self.assertEqual(report.verdict, "LEAK")
+        self.assertEqual(report.first_leak.first_difference.column, "score")
+        self.assertEqual(report.scrambled_columns, (*panel.INT_COLUMNS, "foreign_net"))
+        self.assertEqual(report.unscrambled_columns, ("date", "ticker", "source"))
+
+    def test_scrambled_nullable_columns_keep_their_dtype_and_gain_missing_values(self):
+        spy, rows = Spy(panel_study(trailing)), panel_rows()
+        self.assertEqual(scramble_check(spy, rows, **PANEL).verdict, "PASS")
+        for seen, cutoff in zip(spy.inputs[2:], PANEL["cutoffs"]):
+            after = (rows.date > pd.Timestamp(cutoff)).to_numpy()
+            self.assertEqual(seen.dtypes.tolist(), rows.dtypes.tolist())
+            pd.testing.assert_frame_equal(seen[~after], rows[~after])
+            noisy = seen.close[after]
+            self.assertTrue(noisy.isna().any())
+            self.assertLess((noisy.dropna() == rows.close[after][noisy.notna()]).mean(), 0.05)
+            self.assertTrue(noisy.dropna().between(rows.close.min(), rows.close.max()).all())
+
+    def test_a_nullable_flag_known_later_is_set_missing_once_its_lag_is_declared(self):
+        rows = panel_rows()
+        flagged = rows.assign(up3=rows.groupby("ticker").close.shift(-3) > rows.close)
+        lag = {"up3": timedelta(days=5)}  # three sessions span at most five days
+        for check in CHECKS:
+            with self.subTest(check=check.__name__):
+                leaky = panel_study(trailing, drop_missing_flag=True)
+                self.assertEqual(check(leaky, flagged, value_lags=lag, **PANEL).verdict, "LEAK")
+                clean = panel_study(trailing)
+                self.assertEqual(check(clean, flagged, value_lags=lag, **PANEL).verdict, "PASS")
+        spy = Spy(panel_study(trailing))
+        truncation_check(spy, flagged, value_lags=lag, **PANEL)
+        for seen, cutoff in zip(spy.inputs[2:], PANEL["cutoffs"]):
+            self.assertEqual(str(seen.up3.dtype), "boolean")
+            self.assertTrue(seen.up3[seen.date + lag["up3"] > pd.Timestamp(cutoff)].isna().all())
+
+    def test_numbers_in_a_dtype_it_cannot_scramble_are_refused_not_skipped(self):
+        rows = panel_rows()
+        sparse = rows.assign(spread=pd.arrays.SparseArray(np.zeros(len(rows))))
+        with self.assertRaisesRegex(LookaheadCheckError, r"'spread' holds numbers in dtype Sparse"):
+            scramble_check(panel_study(centred), sparse, **PANEL)
+        named = scramble_check(panel_study(centred), sparse, columns=["close"], **PANEL)
+        self.assertEqual(named.verdict, "LEAK")
+        self.assertIn("spread", named.unscrambled_columns)
 
 
 class CompareDecisions(unittest.TestCase):
@@ -448,7 +566,7 @@ class EdgeCases(unittest.TestCase):
             ({"missing_share": 1.0}, r"\[0, 1\)"),
             ({"seed": -1}, "nonnegative integer"),
             ({"seed": True}, "nonnegative integer"),
-            ({"value_lags": {"volume": timedelta(days=1)}}, "must be a numpy float column"),
+            ({"value_lags": {"volume": timedelta(days=1)}}, "cannot hold a missing value"),
             ({"value_lags": {"close": timedelta(0)}}, "positive timedelta"),
             ({"value_lags": {"close": 3}}, "positive timedelta"),
             ({"value_lags": ["close"]}, "must map column names"),

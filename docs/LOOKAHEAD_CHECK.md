@@ -37,6 +37,8 @@ randomised, so a second seed adds confidence. Run both where the study allows.
    labels, "triggered within the next 72 hours" flags. Give each its lag, conservatively
    the horizon plus any maturity embargo. An undeclared label is invisible to the check
    (`test_a_label_on_its_signal_row_is_caught_once_its_lag_is_declared` shows exactly that).
+   A lagged column must be able to hold a missing value: a numpy float column or a pandas
+   nullable one (`Int64`, `Float64`, `boolean`). Store a flag as `astype("boolean")`.
 3. Choose three to five cutoffs across the decision period, each after the first decision
    and before the last input time. Put at least one inside a refit or rebalance period,
    after its refit date: a refit that peeks ahead changes only the decisions made after it.
@@ -74,9 +76,13 @@ Module mode executes the given study file and reads the data with `pandas.read_c
 defaults. A study whose own loader parses differently should call the library from its own
 test. Compare mode reads every cell as the text written, so both files must come from the
 same code; only an empty cell counts as missing. Scramble options are `--seed` (default 0),
-`--scramble-columns` (default: every numpy numeric or bool column except the time column)
-and `--missing-share` (default 0.25). The tool prints one JSON verdict and exits 0 for
-PASS, 1 for LEAK and 2 when the check could not run.
+`--scramble-columns` and `--missing-share` (default 0.25). By default scramble reaches
+every numpy or pandas nullable numeric or bool column except the time column, so the
+canonical panel's `Int64` prices are scrambled; a column holding numbers in any other
+dtype (pyarrow, sparse, complex) is refused rather than skipped. The report lists
+`scrambled_columns` and `unscrambled_columns`, which together name every data column.
+The tool prints one JSON verdict and exits 0 for PASS, 1 for LEAK and 2 when the check
+could not run.
 
 ## Reading a verdict
 
@@ -118,6 +124,8 @@ library; the tool turns it into an ERROR verdict and prints the traceback.
 | Duplicate or missing decision keys, keys only in the index | Refused, naming the first offending key or row |
 | A study that gives different decisions on identical input | Refused as not deterministic |
 | A cutoff before the first decision, or one that removes or replaces nothing | Refused: it would compare or change nothing |
+| Numbers in a dtype scramble cannot reach (pyarrow, sparse, complex) | Refused by the default scramble selection; name `columns` to leave them out explicitly |
+| A lag on a column that cannot hold a missing value (numpy int or bool) | Refused; store it as float or a pandas nullable dtype |
 | A study that edits its input in place | Harmless: each run receives its own copy |
 
 ## Validation and scope
@@ -131,6 +139,8 @@ python3 -m unittest tests.test_lookahead_check tests.test_check_no_lookahead -v
 The tests run synthetic, seeded toys only. A centred rolling mean, a full-sample mean and
 rows dropped when the future close is missing must each FAIL truncation and scramble; the
 trailing-window twin must PASS both; a forward label stored on its signal row must FAIL once
-its lag is declared. No historical study was run and no frozen research file was edited.
+its lag is declared. The centred window must also FAIL scramble on rows read through
+`idxsig.panel.load`, whose prices are pandas `Int64`. No historical study was run and no
+frozen research file was edited.
 Adding "passes check_no_lookahead" to every new protocol and marking old studies in the
 experiment catalog (Fix 2, items 4 to 6) are separate changes.

@@ -138,11 +138,15 @@ def parser() -> argparse.ArgumentParser:
         action="append",
         default=[],
         metavar="COLUMN=DURATION",
-        help="float column first known DURATION after its row time, e.g. fwd3=3D (repeatable)",
+        help="column first known DURATION after its row time, e.g. fwd3=3D (repeatable)",
     )
-    module.add_argument("--scramble-columns", nargs="+", help="default: numpy numeric and bool")
+    module.add_argument(
+        "--scramble-columns", nargs="+", help="default: numpy and pandas nullable numbers, bools"
+    )
     module.add_argument("--seed", type=int, help="scramble noise seed (default 0)")
-    module.add_argument("--missing-share", type=float, help="share of float noise set missing")
+    module.add_argument(
+        "--missing-share", type=float, help="share of noise set missing where a column can hold it"
+    )
     for mode in (compare, module):
         mode.add_argument("--time-column", required=True, help="decision-time column")
         mode.add_argument("--key-columns", nargs="+", required=True, help="one decision per key")
