@@ -9,8 +9,8 @@ from pathlib import Path
 
 from .account import PaperAccount, SYMBOLS, _bars, signals, _quote, operation_id, apply, initial, _scenario
 from .data import load_recorded_snapshot, parse_time, utc_text, capture_raw_evidence
-from .storage import (locked, canonical, digest, read_json, atomic_json, immutable_json,
-                      read_receipts, append_receipt, write_snapshot, read_snapshot)
+from .storage import (locked, digest, read_json, atomic_json, immutable_json,
+                      read_receipts, append_receipt, read_snapshot)
 from .strategy import require_paper_profile, registry
 from ..market_context import build_context, discover_candidates
 from ..experiment_catalog import load_catalog
@@ -107,7 +107,7 @@ def _commit(root, envelope, receipts):
     return _projected(root, envelope)
 
 
-def _run_once(root, snapshot_path, profile_path, as_of, evidence_root=None, *, _captured=False):
+def _run_once(root, snapshot_path, profile_path, as_of, evidence_root=None, *, _captured=False, _trace=None):
     """Replay one explicit recorded cutoff. A replay never counts as forward proof.
 
     Crashes after individual account writes are resumed only with the same cycle.
@@ -123,6 +123,8 @@ def _run_once(root, snapshot_path, profile_path, as_of, evidence_root=None, *, _
         if forward != _captured:
             raise ValueError("forward capture and recorded replay must use separate profiles and runtime roots")
         input_hash, profile_hash = digest(original), digest(profile)
+        if _trace is not None and _trace.record["links"].get("input_sha256") != input_hash:
+            raise ValueError("processing input changed after its observed read")
         identifier = "run_" + digest({"version": VERSION, "input": input_hash, "profile": profile_hash, "as_of": as_of})[:32]
         pending_path = root / "pending.json"
         if pending_path.exists() and read_json(pending_path)["run_id"] != identifier:
@@ -145,9 +147,18 @@ def _run_once(root, snapshot_path, profile_path, as_of, evidence_root=None, *, _
         account = PaperAccount(root / "account", profile)
         _metadata(account.profile, snapshot)
         context = build_context(snapshot, as_of)
+        if _trace is not None:
+            _trace.mark("features_ready_at")
         discovered = discover_candidates(snapshot, context, as_of)
+        if _trace is not None:
+            _trace.extras["discovered"] = len(discovered)
+            if discovered:
+                _trace.mark("detected_at")
         experiments = load_catalog(REPO_ROOT)
         history = _history(account)
+        before_account = account.ledger.state() or {}
+        before_fills = {r["id"] for r in before_account.get("fills", [])}
+        before_intents = {r["id"] for r in before_account.get("intents", [])}
         # Simulate all account-specific validation before the first durable write.
         # Invalid ticks, conflicting retries and backwards clocks must not strand a cycle.
         known = {row["id"]: row["command"] for row in history}
@@ -201,10 +212,17 @@ def _run_once(root, snapshot_path, profile_path, as_of, evidence_root=None, *, _
             decision_status = "BLOCKED"
         else:
             decision_status = account.decide(signal_day, bars, as_of, run_id=identifier)["status"]
+            if _trace is not None:
+                _trace.mark("decision_at")
         account.mark(as_of)
         if account.verify()["initialized"] and not any(r["id"] == "daily:" + as_of[:10] for r in history):
             account.daily_mark(as_of[:10], as_of)
         raw_account = account.snapshot(as_of)
+        if _trace is not None:
+            _trace.record["links"]["paper_new_fills_json"] = json.dumps(
+                [r["id"] for r in raw_account.get("fills", []) if r["id"] not in before_fills])
+            _trace.record["links"]["paper_new_intents_json"] = json.dumps(
+                [r["id"] for r in raw_account.get("intents", []) if r["id"] not in before_intents])
         candidates = {c["id"]: c for c in (previous or {}).get("candidates", [])}
         for c in discovered:
             c = dict(c, id=c["candidate_id"], detected_at=as_of, reasons=[c["detection_reason"]],
@@ -237,10 +255,27 @@ def _run_once(root, snapshot_path, profile_path, as_of, evidence_root=None, *, _
         return _commit(root, envelope, receipts)
 
 
-def run_once(root, snapshot_path, profile_path, as_of, evidence_root=None, *, _captured=False):
+def run_once(root, snapshot_path, profile_path, as_of, evidence_root=None, *, _captured=False, scheduled_at=None):
+    from .timing import processing_attempt
+
+    trace = processing_attempt(root, snapshot_path, scheduled_at=scheduled_at, captured=_captured)
     try:
-        return _run_once(root, snapshot_path, profile_path, as_of, evidence_root, _captured=_captured)
+        result = _run_once(root, snapshot_path, profile_path, as_of, evidence_root,
+                           _captured=_captured, _trace=trace)
+        run = result["payload"]["run"]
+        from .timing_paper import observe_paper_timing
+        observe_paper_timing(root, payload=result["payload"], trace_record=trace.record,
+                            process_quote_at=trace.record["received_at"], processed_at=trace.clock())
+        state = "BLOCKED" if run["decision_status"] == "BLOCKED" else "COMPLETED"
+        if trace.extras.get("discovered") == 0 and trace.record["decision_at"] is None:
+            state = "NO_TRIGGER"
+        trace.finish(state, links={"run_id": run["id"], "economic_cutoff": run["as_of"],
+                     "decision_status": run["decision_status"]},
+                     reason="Actual processing clock; economic references and historical fills remain unchanged.")
+        return result
     except (ValueError, OSError, KeyError) as exc:
+        if trace.record["status"] == "STARTED":
+            trace.finish("FAILED", reason=type(exc).__name__)
         with locked(root):
             atomic_json(Path(root) / "last_attempt.json", {"status": "FAILED", "as_of": as_of,
                         "recorded_at": now(), "error": str(exc), "account_may_have_partial_cycle": (Path(root) / "pending.json").exists()})
@@ -272,7 +307,10 @@ def verify(root):
         matching = [r for r in receipts if r.get("snapshot_sha256") == base["sha256"]]
         if not matching:
             raise ValueError("current snapshot has no completed run receipt")
+        from .timing import verify_timing
+        timing = verify_timing(root)
         return {**report, "runs": len(receipts), "snapshot_sha256": snapshot["sha256"],
+                "timing": timing,
                 "recovery_required": (root / "pending.json").exists(),
                 "evidence_type": profile["evidence_type"], "forward_trial_days": 0,
                 "run": snapshot["payload"]["run"],

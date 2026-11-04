@@ -27,6 +27,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Retain actual scheduler start separately from the intended UTC slot
+        run: python tools/record_schedule_attempt.py --output "$RUNNER_TEMP/kod-schedule" --event "$GITHUB_EVENT_NAME" --reference-utc 02:41 --phase begin
       - run: pip install --quiet pandas numpy
       - name: Fetch BTC/ETH spot daily klines (recent months, outside the repo)
         working-directory: handoff/fresh-eyes-2026-11-01/backtests
@@ -49,3 +51,13 @@ jobs:
           git diff --cached --quiet && exit 0
           git commit -m "TREND_CORE paper log $(date -u +%Y-%m-%d) [skip ci]"
           git push
+      - name: Retain completion or failure without changing the paper ledger
+        if: always()
+        run: python tools/record_schedule_attempt.py --output "$RUNNER_TEMP/kod-schedule" --event "$GITHUB_EVENT_NAME" --reference-utc 02:41 --phase complete --status '${{ job.status }}'
+      - name: Preserve scheduler evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trend-schedule-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/kod-schedule/*.json
+          if-no-files-found: warn

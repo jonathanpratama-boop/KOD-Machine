@@ -15,6 +15,7 @@
   <div class="sidebar-label">Research desk</div>
   <nav aria-label="Main navigation">
     <a href="/today" {% if page == 'today' %}aria-current="page"{% endif %}><span class="nav-icon">◌</span> Today</a>
+    <a href="/timing" {% if page == 'timing' %}aria-current="page"{% endif %}><span class="nav-icon">◷</span> Timing</a>
     <a href="/candidates" {% if page in ['candidates', 'candidate'] %}aria-current="page"{% endif %}><span class="nav-icon">⌁</span> Candidates</a>
     <a href="/market-map" {% if page == 'market_map' %}aria-current="page"{% endif %}><span class="nav-icon">◎</span> Market map</a>
     <a href="/paper-portfolio" {% if page == 'paper_portfolio' %}aria-current="page"{% endif %}><span class="nav-icon">▥</span> Paper portfolio</a>

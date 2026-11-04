@@ -36,7 +36,10 @@ from .store import Store
 from .forecasts import ForecastArchive, ForecastUnavailable
 from .replay import ReplayArchive, ReplayUnavailable
 from .research import ResearchArchive, ResearchUnavailable
-from .operations import OperationsArchive, OperationsUnavailable, health_rows, brief
+from .operations import (
+    OperationsArchive, OperationsUnavailable, TimingArchive, health_rows, brief,
+    timing_timeline, timing_context_views,
+)
 
 ASSETS = Path(__file__).resolve().parent
 MAX_BODY = 10 * 1024 * 1024
@@ -551,6 +554,31 @@ def create_app(
     @app.get("/today", response_class=HTMLResponse)
     def today(request: Request):
         return operations_page(request, "today")
+
+    @app.get("/timing", response_class=HTMLResponse)
+    def timing_page(request: Request):
+        context = {"page": "timing", "timing_error": None}
+        try:
+            snapshot = TimingArchive(app.state.runtime_root).snapshot()
+            payload = snapshot["payload"]
+            candidate_ids, run_id = set(), None
+            try:
+                operations = OperationsArchive(app.state.runtime_root).snapshot()["payload"]
+                candidate_ids = {row["id"] for row in operations["candidates"]}
+                run_id = operations["run"].get("id")
+            except OperationsUnavailable:
+                pass
+            details = {row["id"]: row for row in payload["summary"]["records"]}
+            attempts = sorted(payload["attempts"], key=lambda row: row["recorded_at"], reverse=True)
+            context.update(snapshot=snapshot, timing=payload, summary=payload["summary"],
+                           attempts=attempts[:100], retained_count=len(attempts), details=details,
+                           context_views=timing_context_views(payload),
+                           timeline=timing_timeline, owned_candidate_ids=candidate_ids,
+                           owned_run_id=run_id,
+                           synthetic=any(row["evidence_kind"] == "synthetic" for row in attempts))
+        except OperationsUnavailable as exc:
+            context["timing_error"] = str(exc)
+        return render(request, "timing.html", **context)
 
     @app.get("/candidates", response_class=HTMLResponse)
     def candidates_page(request: Request, q: str = "", state: str = ""):

@@ -1,6 +1,6 @@
 # Timing research: attribution first, one new hypothesis at a time
 
-Status on 4 November 2026: **research infrastructure implemented; no new market-data study run; no entry permission**.
+Status on 4 November 2026: **connected timing instrumentation implemented; no new market-data study run; no entry permission**.
 The source reports below were read and their copied bytes verified against Git blob hashes. Their underlying per-event
 results have not been independently recomputed in this engineering release. Original detectors, logs, protocols,
 results, failures and holdout exposure remain intact.
@@ -32,6 +32,15 @@ Two related sources at `f26fcce828714bebaa4afd3b8563b1ba7312f501` narrow the opt
   pre-event signal is untradeable. Its eToro cost example is a historical assumption, not a verified current fee quote.
 
 ## Primary next experiment: attribute the delay before choosing a new detector
+
+Update: normal runtime processing and paper intents now emit linked timing
+records automatically. Bounded intraday observation, context preparation and
+post-availability quote assessments are implemented beside the original daily
+logic. See `handoff/astra/TIMING_BUILD.md`. The standalone command below remains
+available for compatible historical diagnostic input. The proposals later in
+this document remain hypotheses, subject to the existing early-entry close rule;
+this engineering pass does not authorize a new historical or prospective
+strategy comparison.
 
 Use `python -m idxsig.timing_research attempts.json` from `idx-signals`. This deterministic offline command emits
 stage delays, known/unknown denominators, and separate detector/evidence cohorts. Input is `{as_of, records}`;

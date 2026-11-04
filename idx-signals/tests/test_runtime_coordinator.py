@@ -1,5 +1,4 @@
 """System invariants across input validation, journal replay and workstation output."""
-import copy
 import json
 from pathlib import Path
 import tempfile
@@ -7,8 +6,8 @@ import unittest
 from unittest.mock import patch
 
 from idxsig.runtime import coordinator as c
-from idxsig.runtime.demo import fixtures, demo, T0, T1
-from idxsig.runtime.storage import atomic_json, read_json, read_receipts
+from idxsig.runtime.demo import fixtures, T0, T1
+from idxsig.runtime.storage import atomic_json, read_json
 
 
 class CoordinatorTests(unittest.TestCase):
@@ -149,7 +148,7 @@ class CoordinatorTests(unittest.TestCase):
             return raw, record, stamp
 
         with patch("idxsig.runtime.collect._fetch", side_effect=source):
-            result = capture(self.root)
+            result = capture(self.root, timestamp_decisions=False)
         payload = result["payload"]
         self.assertEqual(payload["run"]["mode"], "FORWARD_PAPER_CAPTURE")
         self.assertEqual(len(payload["account"]["fills"]), 2)

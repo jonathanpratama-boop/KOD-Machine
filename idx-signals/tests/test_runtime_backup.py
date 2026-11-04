@@ -81,6 +81,28 @@ class BackupTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             backup(self.root, self.root / 'recursive.zip')
 
+    def test_started_timing_attempt_survives_backup_without_invented_completion(self):
+        from idxsig.runtime.timing import Attempt
+        from idxsig.runtime.timing_evidence import verify_linked_evidence
+        from idxsig.timing_capture import read_attempts
+
+        clock = lambda: "2026-11-04T00:30:00Z"
+        with patch("idxsig.runtime.timing.shutil.which", return_value=None):
+            attempt = Attempt(self.root, detector="BACKUP_FIXTURE_V1", source="synthetic",
+                              kind="synthetic", members=["BTCUSDT"], clock=clock)
+        original = read_attempts(self.root)
+        self.assertEqual(original[0]["status"], "STARTED")
+        backup(self.root, self.archive)
+        restore(self.archive, self.restored)
+        recovered = read_attempts(self.restored)
+        self.assertEqual(recovered, original)
+        self.assertTrue(verify_linked_evidence(self.restored, recovered)["ok"])
+        self.assertIsNone(recovered[0]["decision_at"])
+        self.assertIsNone(recovered[0]["fill_at"])
+        # Completing the original cannot revise the already-published backup.
+        attempt.finish("NO_TRIGGER")
+        self.assertEqual(read_attempts(self.restored)[0]["status"], "STARTED")
+
 
 if __name__ == '__main__':
     unittest.main()

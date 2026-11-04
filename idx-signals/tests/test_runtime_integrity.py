@@ -113,6 +113,8 @@ class RuntimeIntegrityTests(unittest.TestCase):
     def test_capture_two_mocked_public_observations_keeps_causal_fills(self):
         from idxsig.runtime.capture import capture
         from idxsig.runtime.coordinator import verify
+        from idxsig.timing_capture import read_attempts
+        from tests.test_time_anchor import FixtureStamper
         today = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
         info = {"symbols": [{"symbol": symbol, "baseAsset": symbol[:-4], "quoteAsset": "USDT",
                  "status": "TRADING", "isSpotTradingAllowed": True, "filters": [
@@ -136,10 +138,12 @@ class RuntimeIntegrityTests(unittest.TestCase):
                    kind=kind, request={**params, "request_started_at": started})
             return raw, ev, started
 
-        with tempfile.TemporaryDirectory() as folder:
+        stamper = FixtureStamper()
+        with tempfile.TemporaryDirectory() as folder, patch(
+                "idxsig.runtime.time_anchor._checker", return_value=stamper):
             with patch("idxsig.runtime.collect._fetch", side_effect=public_fixture), patch(
                     "urllib.request.OpenerDirector.open", side_effect=AssertionError("unexpected network")):
-                result = capture(folder)
+                result = capture(folder, timestamp_decisions=True)
             account_view = result["payload"]["account"]
             self.assertEqual(len(account_view["fills"]), 2)
             for fill in account_view["fills"]:
@@ -148,6 +152,12 @@ class RuntimeIntegrityTests(unittest.TestCase):
                 self.assertIsNone(fill["source_time"])
                 self.assertTrue(fill["simulation_only"])
             self.assertEqual(verify(folder)["runs"], 2)
+            trace = next(row for row in read_attempts(folder) if row["detector_version"] == "KOD_PUBLIC_CAPTURE_V1")
+            self.assertNotEqual(trace["links"]["decision_run_id"], trace["links"]["run_id"])
+            anchored = storage.read_json(Path(folder) / "timing" / "anchors" / trace["links"]["anchor_id"] / "payload.json")
+            self.assertEqual(anchored["run_id"], trace["links"]["decision_run_id"])
+            self.assertEqual(trace["links"]["run_id"], result["payload"]["run"]["id"])
+            self.assertEqual(stamper.calls, 1)
 
 
 if __name__ == "__main__":

@@ -17,6 +17,11 @@ FOCUSED = (
     'tests.test_runtime_account', 'tests.test_runtime_data_context',
     'tests.test_runtime_backup', 'tests.test_runtime_coordinator',
     'tests.test_runtime_integrity', 'tests.test_runtime_candidates', 'tests.test_timing_research',
+    'tests.test_timing_capture', 'tests.test_timing_context', 'tests.test_timing_integration',
+    'tests.test_timing_evidence', 'tests.test_time_anchor', 'tests.test_runtime_timing_paper',
+    'tests.test_timing_processing_boundary',
+    'tests.test_intraday_capture', 'tests.test_market_time', 'tests.test_binance_blocks',
+    'tests.test_source_clock_and_blocks', 'tests.test_research_controls',
     'tests.test_research_evaluation', 'tests.test_experiment_catalog',
     'tests.test_crypto_account', 'tests.test_crypto_account_concurrency',
     'tests.test_crypto_replay', 'tests.test_paper_account', 'tests.test_paper_account_report',
@@ -36,6 +41,7 @@ def main(argv=None):
     args = parser.parse_args(argv)
     run(['-m', 'unittest', *FOCUSED], REPO / 'idx-signals')
     run(['-m', 'unittest', 'discover', '-s', 'workstation_tests', '-p', 'test_operations.py'], REPO / 'kod-machine')
+    run(['-m', 'unittest', 'discover', '-s', 'workstation_tests', '-p', 'test_timing_operations.py'], REPO / 'kod-machine')
     with tempfile.TemporaryDirectory(prefix='kod-release-') as base:
         root = Path(base) / 'runtime'
         command = ['-m', 'idxsig.runtime', '--root', str(root)]
@@ -57,6 +63,16 @@ def main(argv=None):
         sys.path.insert(0, str(REPO / 'kod-machine'))
         from kod.workstation.operations import OperationsArchive
         OperationsArchive(restored).snapshot()
+        # Independently exercise the new timing-only route and its joined records.
+        timing_root = Path(base) / 'timing-runtime'
+        timing_command = ['-m', 'idxsig.runtime', '--root', str(timing_root)]
+        first = run([*timing_command, 'timing-demo'], capture=True)
+        second = run([*timing_command, 'timing-demo'], capture=True)
+        if first != second:
+            raise AssertionError('timing demo retry changed its sealed fixture result')
+        run([*timing_command, 'timing-status'], capture=True)
+        from kod.workstation.operations import TimingArchive
+        TimingArchive(timing_root).snapshot()
     if args.mode == 'full':
         run(['-m', 'unittest'], REPO / 'idx-signals')
         run(['-m', 'unittest'], REPO / 'kod-machine')

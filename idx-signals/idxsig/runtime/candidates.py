@@ -203,7 +203,12 @@ def _normalize(value):
 
 
 def project(root, candidate_rows, as_of):
-    """Overlay assessments known by cutoff, preserving detector and audit records."""
+    """Overlay assessments by analytical cutoff, preserving original records.
+
+    ``as_of`` selects the market/evidence cutoff used in an assessment. Its
+    actual recording time is the separate ``recorded_at`` field; this view is
+    not a reconstruction of which assessments existed at a historical time.
+    """
     cutoff = parse_time(as_of)
     latest = {}
     for row in assessments(root):
@@ -297,4 +302,17 @@ must cover all assessment evidence; run a new explicit cycle for newer evidence.
         payload["assessment_projection"] = {**verify_assessments(root),
             "base_snapshot_sha256": payload.get("assessment_projection", {}).get("base_snapshot_sha256", snapshot["sha256"])}
         write_snapshot(root, payload)
-        return record
+        from ..timing_capture import make_attempt, append_attempt
+        observation = make_attempt("assessment_timing:" + record["id"],
+            detector_version="CANDIDATE_ASSESSMENT_TIMING_V1",
+            universe_snapshot_id=payload["run"].get("input_sha256") or payload["assessment_projection"]["base_snapshot_sha256"], evidence_id=record["id"],
+            evidence_kind="synthetic" if payload["run"].get("synthetic") else "recorded",
+            recorded_at=record["recorded_at"], status="REJECTED" if record["state"] == "REJECTED" else "DECIDED",
+            source="ANALYST_DECLARATION", times={"decision_at": record["recorded_at"]},
+            links={"candidate_id": record["candidate_id"], "assessment_id": record["id"],
+                   "run_id": payload["run"]["id"], "analytical_cutoff": record["as_of"]},
+            reason="Actual assessment recording time; first detection and source publication remain separate.")
+        append_attempt(root, observation, _locked=True)
+    from .timing import publish_board
+    publish_board(root)
+    return record

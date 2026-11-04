@@ -1,5 +1,4 @@
 """Offline account integration: economic invariants and adversarial event order."""
-import copy
 import hashlib
 import importlib.util
 import json
