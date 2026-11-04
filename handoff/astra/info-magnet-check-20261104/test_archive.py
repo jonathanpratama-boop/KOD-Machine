@@ -196,5 +196,37 @@ class ArchiveTests(unittest.TestCase):
             with self.assertRaisesRegex(DataError,'ambiguous duplicate'):
                 a.bar('JUPUSDT',HOUR)
 
+    def test_microsecond_units_with_exact_last_millisecond_close(self):
+        # Literal A2Z 2026-04-01T02 timestamps, with invented OHLC only.
+        opened=datetime(2026,4,1,2,tzinfo=UTC)
+        r=['1775008800000000','10','12','9','11','100','1775012399999000','1050','4','50','525','0']
+        raw=zipped([r],name='A2ZUSDT-1h-2026-04.csv')
+        bar=decode_zip(raw,'A2ZUSDT','2026-04')[opened]
+        self.assertEqual(bar['close_timestamp_precision'],'ms')
+        self.assertEqual(bar['timestamp_unit'],'us')
+        self.assertEqual(bar['close_time'],opened+timedelta(hours=1)-timedelta(milliseconds=1))
+        self.assertEqual(bar['nominal_interval_end'],opened+timedelta(hours=1))
+        self.assertEqual(bar['close_exclusive'],opened+timedelta(hours=1))
+        self.assertEqual(bar['source_resolution_exclusive_end'],opened+timedelta(hours=1)-timedelta(microseconds=999))
+
+    def test_exact_hour_with_wild_close_does_not_block_unrelated_valid_hour(self):
+        # An incorrect source close outside its named open-hour is localized to
+        # that exact open-hour, never usable itself and never treated as absent.
+        for wrong_end in [HOUR-timedelta(seconds=1),HOUR+timedelta(hours=8)]:
+            bad=row();bad[6]=epoch(wrong_end)
+            with tempfile.TemporaryDirectory() as tmp:
+                a,calls=self.fixture(tmp,rows=[bad,row(HOUR+timedelta(hours=1))])
+                self.assertEqual(a.bar('JUPUSDT',HOUR+timedelta(hours=1))['open_time'],HOUR+timedelta(hours=1))
+                with self.assertRaisesRegex(DataError,'requested hour is incomplete'):
+                    a.bar('JUPUSDT',HOUR)
+
+    def test_us_close_precision_does_not_accept_other_truncation(self):
+        for difference in [timedelta(milliseconds=2),timedelta(milliseconds=1334)]:
+            bad=row(HOUR,'us');bad[6]=epoch(HOUR+timedelta(hours=1)-difference,'us')
+            with tempfile.TemporaryDirectory() as tmp:
+                a,calls=self.fixture(tmp,rows=[bad])
+                with self.assertRaisesRegex(DataError,'requested hour is incomplete'):
+                    a.bar('JUPUSDT',HOUR)
+
 
 if __name__ == '__main__': unittest.main()

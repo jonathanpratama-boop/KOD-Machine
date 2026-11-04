@@ -18,5 +18,47 @@
     }
   ],
   "interpretation": "An internal monthly row is shorter than one complete hour; it must remain unresolved when requested, without invalidating other complete requested hours.",
-  "economic_rules_changed": false
+  "economic_rules_changed": false,
+  "followup_precision_and_localization_probes": [
+    {
+      "symbol": "SKLUSDT",
+      "requested_hour": "2021-12-15T03:00:00+00:00",
+      "status": "VALID_COMPLETE_HOUR",
+      "source_open": "2021-12-15T03:00:00+00:00",
+      "source_inclusive_close": "2021-12-15T03:59:59.999000+00:00",
+      "nominal_interval_end": "2021-12-15T04:00:00+00:00",
+      "timestamp_unit": "ms",
+      "close_timestamp_precision": "ms",
+      "archive_sha256": "fa2f034791ad7e988eff973735c161458a16f8b1ac628925774d88fd361d533e"
+    },
+    {
+      "symbol": "YGGUSDT",
+      "requested_hour": "2021-12-15T03:00:00+00:00",
+      "status": "VALID_COMPLETE_HOUR",
+      "source_open": "2021-12-15T03:00:00+00:00",
+      "source_inclusive_close": "2021-12-15T03:59:59.999000+00:00",
+      "nominal_interval_end": "2021-12-15T04:00:00+00:00",
+      "timestamp_unit": "ms",
+      "close_timestamp_precision": "ms",
+      "archive_sha256": "1e8cdcf9ee7c6eabd4f512c5cc6c36aa501d0b09a96d688aaceea9cb90e98ce1"
+    },
+    {
+      "symbol": "A2ZUSDT",
+      "requested_hour": "2026-04-01T02:00:00+00:00",
+      "status": "VALID_COMPLETE_HOUR",
+      "source_open": "2026-04-01T02:00:00+00:00",
+      "source_inclusive_close": "2026-04-01T02:59:59.999000+00:00",
+      "nominal_interval_end": "2026-04-01T03:00:00+00:00",
+      "timestamp_unit": "us",
+      "close_timestamp_precision": "ms",
+      "archive_sha256": "bb5142214b13ec48c915a4527641436825d1da0172994973fec78f3b8a5b5677"
+    },
+    {
+      "symbol": "NEARUSDT",
+      "requested_hour": "2021-12-24T04:00:00+00:00",
+      "status": "STILL_UNRESOLVED_INCOMPLETE_HOUR",
+      "error": "requested hour is incomplete in verified archive: {\"close_epoch\": \"1640321998665\", \"close_time\": \"2021-12-24T04:59:58.665000+00:00\", \"csv_row\": 557, \"nominal_interval_end\": \"2021-12-24T05:00:00+00:00\", \"open_epoch\": \"1640318400000\", \"open_time\": \"2021-12-24T04:00:00+00:00\", \"reason\": \"bar is not one completed UTC hour\", \"source_resolution_exclusive_end\": \"2021-12-24T04:59:58.666000+00:00\"}"
+    }
+  ],
+  "precision_rule": "An exact-hour open may use an inclusive close at nominal end minus precisely 1 microsecond or 1 millisecond in microsecond-valued source data; preserve actual timestamp and nominal endpoint separately."
 }

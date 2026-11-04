@@ -110,21 +110,32 @@ def decode_zip(raw, symbol, month, archive_sha256=None, *, invalid_hours=None):
         closed, close_unit = _epoch(row[6])
         if open_unit != close_unit:
             raise DataError('mixed timestamp units within one bar')
-        end = closed + timedelta(microseconds=1000 if close_unit == 'ms' else 1)
+        raw_end = closed + timedelta(microseconds=1000 if close_unit == 'ms' else 1)
+        nominal_end = opened.replace(minute=0, second=0, microsecond=0) + timedelta(hours=1)
+        # Microsecond-valued archives can retain millisecond-resolution inclusive
+        # closes. Accept only the exact final microsecond or final millisecond,
+        # preserving the actual source timestamp and its precision explicitly.
+        last_us = nominal_end - timedelta(microseconds=1)
+        last_ms = nominal_end - timedelta(milliseconds=1)
+        precision = 'us' if close_unit == 'us' and closed == last_us else 'ms'
+        accepted_close = closed == last_ms or (close_unit == 'us' and closed == last_us)
         if opened.strftime('%Y-%m') != month:
             raise DataError('bar does not belong to named archive month')
-        if opened.minute or opened.second or opened.microsecond or end - opened != timedelta(hours=1):
+        if opened.minute or opened.second or opened.microsecond or not accepted_close:
             # Verified monthly archives sometimes include a short/incomplete
             # hour. Preserve it as unresolved, but do not let an unrelated bad
             # hour invalidate otherwise valid requested hours in that month.
             bucket = opened.replace(minute=0, second=0, microsecond=0)
-            if invalid_hours is None or not (bucket <= opened < end <= bucket + timedelta(hours=1)):
+            exact_open = opened == bucket
+            localized_partial = bucket <= opened < raw_end <= bucket + timedelta(hours=1)
+            if invalid_hours is None or not (exact_open or localized_partial):
                 raise DataError('bar is not one completed UTC hour')
             if bucket in bars or bucket in invalid_hours:
                 raise DataError('ambiguous duplicate complete/incomplete hour')
             invalid_hours[bucket] = {'reason':'bar is not one completed UTC hour',
                 'csv_row':row_number, 'open_time':opened.isoformat(),
-                'close_time':closed.isoformat(), 'close_exclusive':end.isoformat(),
+                'close_time':closed.isoformat(), 'source_resolution_exclusive_end':raw_end.isoformat(),
+                'nominal_interval_end':nominal_end.isoformat(),
                 'open_epoch':row[0], 'close_epoch':row[6]}
             continue
         if invalid_hours is not None and opened in invalid_hours:
@@ -135,7 +146,9 @@ def decode_zip(raw, symbol, month, archive_sha256=None, *, invalid_hours=None):
         if opened in bars:
             raise DataError('duplicate hourly bar')
         bars[opened] = {'symbol': symbol, 'open_time': opened, 'close_time': closed,
-            'close_exclusive': end, **values, 'base_volume': _number(row[5]),
+            'close_exclusive': nominal_end, 'nominal_interval_end': nominal_end,
+            'source_resolution_exclusive_end': raw_end, 'timestamp_unit': close_unit,
+            'close_timestamp_precision': precision, **values, 'base_volume': _number(row[5]),
             'quote_volume': _number(row[7]), 'archive_sha256': archive_sha256 or _sha(raw)}
     return bars
 
