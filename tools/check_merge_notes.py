@@ -40,7 +40,8 @@ itself, or a feature branch that merged the default branch in and was pushed as 
 branch, passes without a note, as a direct push would. The answers are the architect's
 statements: the check verifies that they are given, not that they are true, and it does not
 check that the merge commit message names the architect. A failed run records the problem; it
-does not undo the push. Standard library only: CI runs it before installing requirements.
+does not undo the push. Standard library only: its tests run in CI before requirements are
+installed.
 """
 
 from __future__ import annotations

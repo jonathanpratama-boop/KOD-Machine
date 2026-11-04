@@ -9,8 +9,8 @@ Two ways to name the commits, shared by the push-time checks in tools/:
                        a ::notice. No other input falls back; anything else is a RangeError.
 
 Not claimed: a head-only fallback reads less than the push may contain (earlier commits pushed
-with a new branch or a force-push are not read). Standard library only: CI runs the checks before
-installing requirements.
+with a new branch or a force-push are not read). Standard library only: CI runs the shared-data
+check, and the tests of both checks, before installing requirements.
 """
 
 from __future__ import annotations
