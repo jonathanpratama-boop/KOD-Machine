@@ -82,55 +82,76 @@ class ResearchTests(unittest.TestCase):
 
     def test_missing_artifact(self):
         (self.root/'sequence.json').unlink()
-        with self.assertRaises(ResearchUnavailable):self.archive.study('sequence')
+        with self.assertRaises(ResearchUnavailable):
+            self.archive.study('sequence')
 
     def test_tampered_artifact(self):
-        with (self.root/'sequence.json').open('ab') as f:f.write(b' ')
-        with self.assertRaises(ResearchUnavailable):self.archive.study('sequence')
+        with (self.root/'sequence.json').open('ab') as f:
+            f.write(b' ')
+        with self.assertRaises(ResearchUnavailable):
+            self.archive.study('sequence')
 
     def test_malformed_and_bad_schema(self):
         for value in ([], {}, {'created_at':'invalid'}, {'created_at':'2026-10-30T00:00:00Z','test':[]}):
             self.replace('sequence',value)
-            with self.assertRaises(ResearchUnavailable):self.archive.study('sequence')
+            with self.assertRaises(ResearchUnavailable):
+                self.archive.study('sequence')
 
     def test_inconsistent_denominators(self):
         raw = self.archive.study('sequence')['raw']
         raw['shortlists']['early']['sequence']['false_alerts_known'] = 0
         self.replace('sequence',raw)
-        with self.assertRaises(ResearchUnavailable):self.archive.study('sequence')
+        with self.assertRaises(ResearchUnavailable):
+            self.archive.study('sequence')
 
     def test_traversal_and_unknown(self):
         for name in ('../sequence','/tmp/sequence','sequence.json','unknown','a/b',None):
-            with self.assertRaises(ResearchUnavailable):self.archive.study(name)
+            with self.assertRaises(ResearchUnavailable):
+                self.archive.study(name)
 
     def test_bad_cutoff(self):
         for cutoff in ('not a date','2026-10-30', '2026-10-30T00:00:00'):
-            with self.assertRaises(ResearchUnavailable):self.archive.study('sequence',cutoff)
+            with self.assertRaises(ResearchUnavailable):
+                self.archive.study('sequence',cutoff)
 
     def test_missing_or_duplicate_manifest(self):
         p=self.root/'manifest.json'
-        entries=json.loads(p.read_text()); entries.append(entries[0]);p.write_text(json.dumps(entries))
-        with self.assertRaises(ResearchUnavailable):self.archive.studies()
+        entries=json.loads(p.read_text())
+        entries.append(entries[0])
+        p.write_text(json.dumps(entries))
+        with self.assertRaises(ResearchUnavailable):
+            self.archive.studies()
         p.unlink()
-        with self.assertRaises(ResearchUnavailable):self.archive.studies()
+        with self.assertRaises(ResearchUnavailable):
+            self.archive.studies()
 
     def test_symlink_escape(self):
-        p=self.root/'sequence.json'; outside=Path(self.tmp.name)/'outside.json'
-        outside.write_bytes(p.read_bytes());p.unlink();p.symlink_to(outside)
-        with self.assertRaises(ResearchUnavailable):self.archive.study('sequence')
+        p=self.root/'sequence.json'
+        outside=Path(self.tmp.name)/'outside.json'
+        outside.write_bytes(p.read_bytes())
+        p.unlink()
+        p.symlink_to(outside)
+        with self.assertRaises(ResearchUnavailable):
+            self.archive.study('sequence')
 
     def test_gate_changes_fail_closed(self):
-        raw=self.archive.study('e6')['raw'];raw['gates']['P1_pressure']['passed']=True
+        raw=self.archive.study('e6')['raw']
+        raw['gates']['P1_pressure']['passed']=True
         self.replace('e6',raw)
-        with self.assertRaises(ResearchUnavailable):self.archive.study('e6')
+        with self.assertRaises(ResearchUnavailable):
+            self.archive.study('e6')
 
     def test_execution_and_e6_count_bounds(self):
-        raw=self.archive.study('execution')['raw'];raw['rule_trades']['scored']=1000
+        raw=self.archive.study('execution')['raw']
+        raw['rule_trades']['scored']=1000
         self.replace('execution',raw)
-        with self.assertRaises(ResearchUnavailable):self.archive.study('execution')
-        raw=self.archive.study('e6')['raw'];raw['arms']['P1_pressure']['scored']=1000000
+        with self.assertRaises(ResearchUnavailable):
+            self.archive.study('execution')
+        raw=self.archive.study('e6')['raw']
+        raw['arms']['P1_pressure']['scored']=1000000
         self.replace('e6',raw)
-        with self.assertRaises(ResearchUnavailable):self.archive.study('e6')
+        with self.assertRaises(ResearchUnavailable):
+            self.archive.study('e6')
 
     def test_required_numeric_fields_fail_closed(self):
         from copy import deepcopy
@@ -149,27 +170,37 @@ class ResearchTests(unittest.TestCase):
         for name,path in cases:
             for value in ('DELETE',None,'invalid',float('nan'),float('inf'),True):
                 with self.subTest(name=name,path=path,value=value):
-                    raw=deepcopy(originals[name]);target=raw
-                    for key in path[:-1]:target=target[key]
-                    if value=='DELETE':del target[path[-1]]
-                    else:target[path[-1]]=value
+                    raw=deepcopy(originals[name])
+                    target=raw
+                    for key in path[:-1]:
+                        target=target[key]
+                    if value=='DELETE':
+                        del target[path[-1]]
+                    else:
+                        target[path[-1]]=value
                     self.replace(name,raw)
-                    with self.assertRaises(ResearchUnavailable):self.archive.study(name)
+                    with self.assertRaises(ResearchUnavailable):
+                        self.archive.study(name)
 
     def test_required_calibration_and_baseline_shapes(self):
         from copy import deepcopy
         original=self.archive.study('sequence')['raw']
         for key in ('calibration','probability_metrics','paired_precision_differences'):
-            raw=deepcopy(original);raw[key]={};self.replace('sequence',raw)
-            with self.assertRaises(ResearchUnavailable):self.archive.study('sequence')
+            raw=deepcopy(original)
+            raw[key]={}
+            self.replace('sequence',raw)
+            with self.assertRaises(ResearchUnavailable):
+                self.archive.study('sequence')
 
     def test_invalid_bounds_and_episode_totals(self):
         from copy import deepcopy
         original=self.archive.study('sequence')['raw']
         for key,value in (('precision_lower_bound',.9),('precision_upper_bound',-1),('episodes_caught',999999)):
-            raw=deepcopy(original);raw['shortlists']['early']['sequence'][key]=value
+            raw=deepcopy(original)
+            raw['shortlists']['early']['sequence'][key]=value
             self.replace('sequence',raw)
-            with self.assertRaises(ResearchUnavailable):self.archive.study('sequence')
+            with self.assertRaises(ResearchUnavailable):
+                self.archive.study('sequence')
 
     def test_interval_conclusion_is_derived(self):
         raw=self.archive.study('sequence')['raw']
@@ -180,10 +211,12 @@ class ResearchTests(unittest.TestCase):
         self.assertNotIn('includes zero',str(result['limitations']))
         raw['paired_precision_differences']['early']['sequence_minus_summary'].update(lower95=.1,upper95=.02)
         self.replace('sequence',raw)
-        with self.assertRaises(ResearchUnavailable):self.archive.study('sequence')
+        with self.assertRaises(ResearchUnavailable):
+            self.archive.study('sequence')
 
     def test_catalog_does_not_disclose_e6_conclusion(self):
         self.assertNotIn('failed',str(self.archive.studies()).lower())
         self.assertNotIn('failed',self.archive.study('e6','2020-01-01T00:00:00Z')['title'].lower())
 
-if __name__ == '__main__':unittest.main()
+if __name__ == '__main__':
+    unittest.main()
