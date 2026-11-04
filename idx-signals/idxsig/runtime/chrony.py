@@ -19,6 +19,12 @@ stored field index 3, the reference time, as the offset. Such records are verifi
 as written and reported as OFFSET_FIELD_DEFECT_V1 beside the value this version reads
 from the same retained bytes; no stored record is rewritten.
 
+Compatibility runs one way only. A verifier from before this version, such as the one
+at commit ``dbb27ea5c``, compares field index 3 (the reference time) with the stored
+offset and so rejects measured version 2 records. A journal that holds version 2 clock
+evidence must be verified with this code or later, and this code's capture writers must
+not append to a root that an older verifier still checks.
+
 Not claimed: that the host clock is correct, that chrony's reference is accurate, or
 that the offset holds at any moment other than chrony's last update. Fields other
 than the offset are checked for shape only; their values are not used.
