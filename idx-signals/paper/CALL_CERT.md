@@ -1,6 +1,6 @@
 # Certified dump calls (shadow, beside LEARNER v2.4)
 
-Generated 2026-11-03T22:58:15Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
+Generated 2026-11-04T22:58:09Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
 
 ## The three plain answers
 
