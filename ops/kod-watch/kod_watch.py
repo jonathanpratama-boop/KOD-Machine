@@ -424,9 +424,20 @@ def main(
     parser.add_argument("--schedule", type=Path, default=SCHEDULE, help="receipts (read only)")
     parser.add_argument("--deployment", type=Path, default=DEPLOYMENT, help="deployment record")
     parser.add_argument(
-        "--grace-seconds", type=_grace, default=GRACE_SECONDS, help="added to late_after_seconds"
+        "--grace-seconds",
+        type=_grace,
+        default=GRACE_SECONDS,
+        help=(
+            f"added to late_after_seconds before a slot is judged (default {GRACE_SECONDS}); "
+            "with the deployed plan (600 s) the :12 slot timer judges the slot it follows "
+            "only while this is below 120"
+        ),
     )
-    parser.add_argument("--dry-run", action="store_true", help="print the ping; send nothing")
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="print the ping; send nothing (the ping URL is still read and checked)",
+    )
     args = parser.parse_args(argv)
     try:
         url = ping_url(environ, args.mode)

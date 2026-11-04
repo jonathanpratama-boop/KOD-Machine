@@ -57,7 +57,8 @@ Every run prints one JSON line to the journal: `mode`, `as_of`, `result` (`OK`, 
 `QUIET`), `body`, `target` (the URL with its secret path replaced by `...`), `dry_run`,
 `delivered`, `attempts` and `errors`. Exit status: 0 when the ping was delivered, nothing was
 due to be sent, or `--dry-run` was used; 1 when the ping was not delivered after 4 attempts; 2
-when the URL configuration is unusable (nothing is sent).
+when the URL configuration is unusable (nothing is sent). `--dry-run` still reads and checks the
+ping URL, so a dry run also proves that `/etc/kod/watch.env` is usable.
 
 ## Design decisions
 
