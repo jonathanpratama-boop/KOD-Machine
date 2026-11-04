@@ -23,6 +23,11 @@ scheduler files are unchanged, using the deployment's own checksum list.
 Do steps 4 to 8 at least 20 minutes away from a slot time. Slots run at 01, 05, 09, 13, 17 and
 21 UTC, which is 08, 12, 16, 20, 00 and 04 WIB.
 
+Work on the server in a root shell over SSH (`ssh root@<server>`). The `scp` commands use the
+same login, and step 4 stages the kit in `/root`, which only root can enter. A plain `sudo`
+changes nothing in a root shell; it marks the commands that need root. `sudo -u kod` runs a
+command as the `kod` user, as the watch itself runs.
+
 ## 1. Pre-flight on the server (read-only)
 
 ```sh
@@ -85,6 +90,15 @@ On the Mac, from a checkout of the reviewed commit:
 
 ```sh
 shasum -a 256 ops/kod-watch/kod_watch.py ops/kod-watch/systemd/*
+ssh root@<server> 'test ! -e /root/kod-watch-kit' && echo "staging path is free"
+```
+
+Copy only after it prints `staging path is free`. If it prints nothing, an earlier staging copy
+is still there: `scp -r` would put the new kit inside it as `/root/kod-watch-kit/kod-watch`, and
+the digests below would read the old files. Remove it on the server with
+`rm -r /root/kod-watch-kit` and run the line again. Then copy:
+
+```sh
 scp -r ops/kod-watch root@<server>:/root/kod-watch-kit
 ```
 
@@ -112,7 +126,12 @@ sudo systemctl daemon-reload
 ```
 
 `systemd-analyze verify` must print nothing. systemd ignores a misspelt hardening line with
-only a warning, so any output means stop and report.
+only a warning, so any output means stop and report. Then remove the staging copy. Everything
+the watch runs is now in `/opt/kod/watch` and `/etc/systemd/system`:
+
+```sh
+cd /root && rm -r /root/kod-watch-kit
+```
 
 ## 5. Dry run (sends nothing)
 
@@ -225,8 +244,10 @@ sudo rmdir /opt/kod/watch
 sudo rm /etc/kod/watch.env
 ```
 
-Pause or delete both checks, then run step 9 again. Rollback touches nothing that the scheduler
-uses. To stop alerts without uninstalling, disable the timers and pause the checks.
+If step 4 stopped before its last command, also remove the staging copy with
+`rm -r /root/kod-watch-kit`. Pause or delete both checks, then run step 9 again. Rollback
+touches nothing that the scheduler uses. To stop alerts without uninstalling, disable the timers
+and pause the checks.
 
 ## Off-server copy of the cohort
 
@@ -242,14 +263,24 @@ account, so it does not protect against losing that account. The backup image al
 `/etc/kod/watch.env`.
 
 **Copy to the owner's Mac with scp after the cohort.** The copy only reads the server, so it can
-also be repeated mid-cohort, away from slot times. On the Mac:
+also be repeated mid-cohort, away from slot times. Each copy goes into a new folder named after
+the UTC minute it starts, so a repeat never merges into an earlier copy or nests inside it. On
+the Mac, in one Terminal window:
 
 ```sh
-mkdir -p ~/KOD-offserver/cohort-2026-11-04
-scp -p 'root@<server>:/var/lib/kod/backups/*.zip' ~/KOD-offserver/cohort-2026-11-04/
-scp -rp root@<server>:/var/lib/kod/schedule ~/KOD-offserver/cohort-2026-11-04/schedule
+dest="$HOME/KOD-offserver/$(date -u +%Y%m%dT%H%MZ)"
+mkdir -p "$HOME/KOD-offserver" && mkdir "$dest" && echo "new copy folder: $dest"
+```
+
+Go on only after it prints `new copy folder: ...`. `mkdir` refuses a folder that already
+exists, which happens only for a second copy started in the same UTC minute: wait a minute and
+run both lines again. Then, in the same window:
+
+```sh
+scp -p 'root@<server>:/var/lib/kod/backups/*.zip' "$dest/"
+scp -rp root@<server>:/var/lib/kod/schedule "$dest/"
 scp -p root@<server>:/etc/kod/observation-plan.json root@<server>:/opt/kod/audit/DEPLOYMENT.json \
-  ~/KOD-offserver/cohort-2026-11-04/
+  "$dest/"
 ```
 
 The archives hold the runtime root `/var/lib/kod/timing-forward`. `observe.py`'s receipts live
@@ -258,7 +289,7 @@ outside it, in `/var/lib/kod/schedule`, so they need the second command. Do not 
 loosen KOD's file permissions to make scp work.
 
 Verify the copy. Compare `sudo sha256sum /var/lib/kod/backups/*.zip` on the server with
-`shasum -a 256 ~/KOD-offserver/cohort-2026-11-04/*.zip` on the Mac; each digest must match.
+`shasum -a 256 "$dest"/*.zip` on the Mac, in the same window; each digest must match.
 Optionally, prove that the newest archive restores. Use a checkout of commit `dbb27ea5c` with the
 runtime requirements installed, and follow `docs/RUNTIME.md` ("Backup and recovery"): `restore`
 into a new directory, then `verify`. **Owner check: a verified copy exists somewhere other than
