@@ -21,6 +21,7 @@ started. Original research outcomes are not replaced by synthetic test results.
 | External timestamp verification could bind the final fill run instead of the original decision batch | Retain `decision_run_id` separately from the final `run_id`; verify the original sealed payload against the decision | Fully mocked external authority; enabled-anchor regression; no market request |
 | Scheduler declaration could be confused with actual start | Add start/completion artifacts to the existing daily workflow with an explicitly inferred slot basis | Schedule, manual invocation, retry, missing-start and clock-reversal tests; original cron unchanged |
 | Old labels and aliases could become ambiguous during future cleanup | Preserve all original names now; add an empty, append-only, dated ID alias registry and resolver | Alias collision/cycle/as-of regressions; no invented historical migrations |
+| Input receipt could include setup delay, or malformed input could escape logging | Measure the invocation before reading and receipt immediately after; retain failed malformed inputs and reject a changed input before economic writes | Four processing-boundary regressions; original economic inputs and outputs retain their identities |
 
 Detailed research-claim corrections and the actual Hermes/Claude branch gaps are
 in [PATCHES_RESEARCH.md](PATCHES_RESEARCH.md) and [BRANCH_GAPS.md](BRANCH_GAPS.md).
@@ -46,12 +47,59 @@ The change makes avoidable delay measurable and keeps timing evidence attached
 to the right decision. Whether an earlier feasible decision improves net returns
 remains a separate, unproven research question.
 
+## Published change groups
+
+| Change group | Commit |
+| --- | --- |
+| Protocol and branch ownership | `81fa91c158b0053aa345b969316b8bb981e5f0ee` |
+| Timestamp units, identities, provider refusals, source clocks and past-only controls | `595ff49bdc010e5b344efe6e231b83464955a04f` |
+| Append-only guard and dated identity resolver | `3002d03c0eb9dd5a55ef49edb04595c3e8e9d256` |
+| Timing journal, paper intent linkage, intraday evidence, anchors, context, source board, scheduler receipts and UI | `58d36dcfd86729d2c6c78c1bc9b527423ebbd623` |
+| Test clock and docstring cleanup before the mechanical boundary | `c235321afbc52fb09d9620bb40c7b3514af83388`, `a45b116195212bfc75983f3aad649cf02d1ae63a` |
+| Mechanical-only formatting | `50ef4379243ca1edb8e729bb2ebdfe6826980700` |
+
 ## Release evidence
 
-Final counts and tree checks will be recorded here after the complete release
-gate and mechanical-only tidy. Intermediate failures were used to repair actual
-integration defects and hydrate missing original test fixtures; an incomplete
-checkout was not counted as a successful full test run.
+The complete local release gate passed on the final code tree. The following
+counts are disjoint suites; the focused checks repeated inside the release gate
+are not added again.
+
+| Suite | Result |
+| --- | --- |
+| `idx-signals`: complete unittest suite | 1,463 passed |
+| `kod-machine`: core unittest suite | 282 passed |
+| `kod-machine/workstation_tests` | 321 passed |
+| `tools/ci_tests` | 61 passed |
+| Total across those suites | 2,127 passed |
+| Restartable economic and timing demonstrations | Passed, synthetic/offline |
+| Backup, new-directory restore and verification | Passed |
+| Ruff style/lint | All 62 managed files passed |
+| Append-only range check | Passed |
+| Original protected Git identities | 4,080 unchanged; zero changed |
+
+Commands: `python tools/check_runtime_release.py --mode full`,
+`python -m unittest discover -s tools/ci_tests`,
+`python tools/check_live_style.py`, and
+`python tools/check_append_only.py --range c2e9c54ba85c591c2ed5628295159335667a1b84..HEAD`.
+The environment used CPython 3.12, the repository runtime requirements and
+Ruff 0.14.3; `OPENBLAS_NUM_THREADS=1` bounded the local test workers.
+
+The release gate's final output was:
+
+```json
+{"ok": true, "mode": "full", "network": false, "scope": "engineering invariants; synthetic paper run; backup/restore", "profitability_validated": false}
+```
+
+Intermediate failures exposed integration defects and missing original test
+fixtures. Fifty-seven missing fixtures were restored from their original Git
+blobs with hash checks; no original result was regenerated. The focused rerun
+of the affected legacy tests passed all 64 tests, without skips. This is separate
+from the complete final suite and is not added to the total above.
+
+The dedicated branch workflow repeats the release checks and retains full-checkout
+history reports. A local passing result is not a claim that an unobserved remote
+workflow has passed. [VALIDATION.json](VALIDATION.json) records the local evidence
+and published code-tree identity.
 
 See [TIDY_REPORT.md](TIDY_REPORT.md) for source-pin preservation and before/after
 equivalence, [HISTORY_INTEGRITY.md](HISTORY_INTEGRITY.md) for explicit archival

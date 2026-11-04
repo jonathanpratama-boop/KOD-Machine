@@ -1,7 +1,8 @@
 # Timing pass: compatibility-preserving tidy
 
-Status: style tooling prepared; mechanical formatting and final before/after comparison pending.
-This report must be completed with the actual formatting commit and command results before claiming the tidy passed.
+Status: mechanical cleanup completed and equivalence checks passed. The maintained
+scope is 62 Python files: 52 reformatted and 10 already formatted. Eleven
+byte-pinned source/configuration files remained unchanged.
 
 ## Scope and preservation
 
@@ -51,5 +52,34 @@ that every RFC 3161 token has been cryptographically verified. Full token and si
 availability, unsupported formats, and exact verification counts belong in
 `HISTORY_INTEGRITY.md` and the integrity reports. No unavailable payload is counted as a pass.
 
-Final results: pending the separate formatting step. No profitability claim follows
-from formatting equivalence, historical preservation or successful software tests.
+## Final results
+
+The mechanical commit is
+[`50ef4379243ca1edb8e729bb2ebdfe6826980700`](https://github.com/jonathanpratama-boop/KOD-Machine/commit/50ef4379243ca1edb8e729bb2ebdfe6826980700),
+with tree `d24fef076aaa3750da9ceeed19646ee30cc8a1ae`. The separately committed
+pre-tidy tree is `72c862e7f7f63df810f4c6277f6e15d27eff301d`.
+
+| Check | Before / after result |
+| --- | --- |
+| Python abstract syntax trees | All 62 identical; zero differing fields |
+| Fixed-input economic snapshot | Byte-for-byte identical |
+| Snapshot SHA-256 | `1472e134bbc1e9c5538c0c1994cfa532734a64220eee203fd5c5eeb4dbf3c58b` on both sides |
+| Pre-tidy journal read by post-tidy code | Passed |
+| Byte-pinned implementations/configuration | All 11 unchanged |
+| Formatter and linter | 62 files accepted; all checks passed |
+| Original protected Git tree entries | All 4,080 unchanged; zero changes |
+| Alias migration entries | Zero; original public names and paths retained |
+
+Two docstring indentation changes were separated into an earlier documentation
+commit because their literal strings change the Python syntax tree. A new test's
+clock fixture was also cleaned up before the final equivalence boundary. Neither
+change is concealed inside the mechanical-only comparison.
+
+Local commits were published through the repository connector. Publication
+recreated commit metadata, so local and published commit IDs differ; every
+published file tree was checked against the corresponding local tree. The tree
+identities and comparisons, not an assumed equality of commit IDs, bind the
+tested files to the published branch.
+
+No profitability claim follows from formatting equivalence, historical
+preservation or successful software tests.
