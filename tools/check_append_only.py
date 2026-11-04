@@ -43,6 +43,10 @@ import subprocess
 import sys
 
 FROZEN_DIRS = (
+    "handoff/astra/protocols/",
+    "costs/",
+    "docs/schemas/",
+    "schemas/",
     "idx-signals/results/runs/",
     "idx-signals/data/manifests/",
     "idx-signals/data/corporate_actions/ca_registry-",
@@ -51,15 +55,12 @@ FROZEN_DIRS = (
     "idx-signals/research/",
     "idx-signals/paper/scans/",
     "idx-signals/paper/timestamps/",
-    "kod-machine/registry/cards/",
-    "kod-machine/registry/scans/",
-    "kod-machine/registry/evidence/",
-    "kod-machine/registry/evidence-v2/",
-    "kod-machine/registry/timestamps/",
+    "kod-machine/registry/",
     "kod-machine/tsa/",
     "kod-machine/research/",
 )
 APPEND_ONLY = (
+    "registry/ids/ID_MAP.jsonl",
     "idx-signals/results/RUNS.jsonl",
     "idx-signals/data/corporate_actions/manual.csv",
     "idx-signals/paper/ledger.jsonl",
@@ -90,24 +91,40 @@ def git(*args: str, check: bool = True) -> bytes:
 
 def blob(ref: str | None, path: str) -> bytes:
     spec = f":{path}" if ref is None else f"{ref}:{path}"
-    return git("show", spec, check=False)
+    # A failed read must never masquerade as an empty historical prefix.
+    return git("show", spec)
+
+
+def changes(raw: bytes):
+    """Read git's NUL format; tabs/newlines in a path cannot evade protection."""
+    fields = iter(raw.split(b"\0"))
+    for field in fields:
+        if not field:
+            continue
+        code = field.decode("ascii")
+        count = 2 if code[0] in ("R", "C") else 1
+        try:
+            paths = [next(fields).decode("utf-8", "surrogateescape") for _ in range(count)]
+        except StopIteration as exc:
+            raise SystemExit("git returned an incomplete diff record") from exc
+        if any(not path for path in paths):
+            raise SystemExit("git returned an empty diff path")
+        yield code, paths
 
 
 def check(old: str, new: str | None) -> list[str]:
     """Compare tree `old` with commit `new`, or with the index when `new` is None."""
-    args = ["diff", "--name-status", "-M"] + (["--cached", old] if new is None else [old, new])
+    args = ["diff", "--name-status", "-z", "-M"] + (
+        ["--cached", old] if new is None else [old, new]
+    )
     problems = []
-    for line in git(*args).decode().splitlines():
-        parts = line.split("\t")
-        code, paths = parts[0], parts[1:]
+    for code, paths in changes(git(*args)):
         kind = code[0]
         source = paths[0]
         label = new[:12] if new else "staged"
         if kind == "A":
             continue
-        if source.startswith(FROZEN_DIRS):
-            problems.append(f"{label}: {code} {' -> '.join(paths)} (frozen record)")
-            continue
+        # Explicit logs may grow within a frozen directory; all other bytes stay fixed.
         if source in APPEND_ONLY:
             if kind != "M":
                 problems.append(f"{label}: {code} {' -> '.join(paths)} (append-only log)")
@@ -115,6 +132,8 @@ def check(old: str, new: str | None) -> list[str]:
             before, after = blob(old, source), blob(new, source)
             if not after.startswith(before):
                 problems.append(f"{label}: {source} rewrites earlier lines (append-only log)")
+        elif source.startswith(FROZEN_DIRS):
+            problems.append(f"{label}: {code} {' -> '.join(paths)} (frozen record)")
     return problems
 
 

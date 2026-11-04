@@ -3,6 +3,7 @@
 Synthetic fixtures are explicitly labelled. Public snapshots require verified raw
 objects; a missing observation is never silently replaced by a zero or a later one.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -12,6 +13,8 @@ from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
+
+from ..market_time import binance_datetime
 
 SCHEMA_VERSION = "KOD_RECORDED_SNAPSHOT_V1"
 VENUE = "BINANCE_SPOT"
@@ -37,8 +40,14 @@ def utc_text(value: datetime) -> str:
     return value.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
-def number(value: Any, field: str, *, positive: bool = False,
-           nonnegative: bool = True, nullable: bool = False) -> str | None:
+def number(
+    value: Any,
+    field: str,
+    *,
+    positive: bool = False,
+    nonnegative: bool = True,
+    nullable: bool = False,
+) -> str | None:
     if value is None and nullable:
         return None
     if isinstance(value, bool) or value is None:
@@ -66,8 +75,15 @@ def _write_immutable(path: Path, body: bytes) -> None:
             raise SnapshotError(f"immutable evidence conflict: {path.name}")
 
 
-def capture_raw_evidence(raw: bytes, evidence_root: str | Path, *, source_url: str,
-                         received_at: str, kind: str, request: dict | None = None) -> dict:
+def capture_raw_evidence(
+    raw: bytes,
+    evidence_root: str | Path,
+    *,
+    source_url: str,
+    received_at: str,
+    kind: str,
+    request: dict | None = None,
+) -> dict:
     """Persist the exact response bytes and a receipt. Repeated content is safe.
 
     Different retrievals of identical bytes have distinct evidence IDs so their
@@ -78,9 +94,15 @@ def capture_raw_evidence(raw: bytes, evidence_root: str | Path, *, source_url: s
         raise SnapshotError("raw evidence must be bytes")
     digest = hashlib.sha256(raw).hexdigest()
     relative = f"objects/{digest[:2]}/{digest}.json"
-    metadata = {"sha256": digest, "path": relative, "received_at": received_at,
-                "source_url": source_url, "kind": kind, "request": request or {},
-                "size_bytes": len(raw)}
+    metadata = {
+        "sha256": digest,
+        "path": relative,
+        "received_at": received_at,
+        "source_url": source_url,
+        "kind": kind,
+        "request": request or {},
+        "size_bytes": len(raw),
+    }
     identity = hashlib.sha256(_canonical(metadata)).hexdigest()
     record = {"evidence_id": "ev_" + identity, **metadata}
     root = Path(evidence_root)
@@ -105,6 +127,7 @@ def _identity(row: dict) -> str:
 def _json(raw: bytes | str) -> Any:
     def reject(value):
         raise SnapshotError(f"non-finite JSON constant: {value}")
+
     def unique(items):
         result = {}
         for key, value in items:
@@ -112,13 +135,16 @@ def _json(raw: bytes | str) -> Any:
                 raise SnapshotError(f"duplicate JSON key: {key}")
             result[key] = value
         return result
+
     try:
         return json.loads(raw, parse_constant=reject, object_pairs_hook=unique)
     except (ValueError, UnicodeDecodeError) as exc:
         raise SnapshotError("invalid JSON snapshot/evidence") from exc
 
 
-def _evidence(snapshot: dict, root: Path | None, cutoff: datetime, required: bool) -> tuple[dict, dict]:
+def _evidence(
+    snapshot: dict, root: Path | None, cutoff: datetime, required: bool
+) -> tuple[dict, dict]:
     records, payloads = {}, {}
     if required and root is None:
         raise SnapshotError("public_market snapshot requires evidence_root")
@@ -144,7 +170,9 @@ def _evidence(snapshot: dict, root: Path | None, cutoff: datetime, required: boo
             raise SnapshotError(f"raw evidence hash mismatch: {eid}")
         if entry.get("size_bytes") != len(raw):
             raise SnapshotError(f"raw evidence length mismatch: {eid}")
-        receipt_identity = hashlib.sha256(_canonical({k: v for k, v in entry.items() if k != "evidence_id"})).hexdigest()
+        receipt_identity = hashlib.sha256(
+            _canonical({k: v for k, v in entry.items() if k != "evidence_id"})
+        ).hexdigest()
         if eid != "ev_" + receipt_identity:
             raise SnapshotError(f"evidence receipt hash mismatch: {eid}")
         receipt = root / "receipts" / f"{receipt_identity}.json"
@@ -155,10 +183,11 @@ def _evidence(snapshot: dict, root: Path | None, cutoff: datetime, required: boo
 
 
 def _milliseconds(value: Any) -> str:
-    ts = Decimal(str(value))
-    # Binance API default is milliseconds; archived microseconds are supported.
-    scale = Decimal(1_000_000 if ts >= Decimal(10) ** 14 else 1000)
-    return utc_text(datetime.fromtimestamp(float(ts / scale), timezone.utc))
+    # Retain the historical helper name while normalizing ms/us per observation.
+    try:
+        return utc_text(binance_datetime(value))
+    except ValueError as exc:
+        raise SnapshotError(str(exc)) from exc
 
 
 def _same_numbers(row: dict, expected: dict) -> None:
@@ -173,7 +202,13 @@ def _verify_public_row(row: dict, row_type: str, evidence: dict, payloads: dict)
         raise SnapshotError(f"{row_type}: missing verified raw evidence")
     meta, raw = evidence[eid], payloads[eid]
     source_url = urlparse(meta.get("source_url", ""))
-    if source_url.scheme != "https" or source_url.hostname != "api.binance.com" or source_url.username or source_url.password or source_url.port not in (None, 443):
+    if (
+        source_url.scheme != "https"
+        or source_url.hostname != "api.binance.com"
+        or source_url.username
+        or source_url.password
+        or source_url.port not in (None, 443)
+    ):
         raise SnapshotError("public evidence is not from the fixed supported Binance host")
     stamp = row.get("metadata_received_at") if row_type == "instrument" else row.get("received_at")
     if parse_time(stamp) != parse_time(meta["received_at"]):
@@ -181,19 +216,36 @@ def _verify_public_row(row: dict, row_type: str, evidence: dict, payloads: dict)
     if row["venue"] != VENUE:
         raise SnapshotError("no raw reconciliation adapter for this public venue")
     if row_type == "bar":
-        if meta.get("kind") != "binance_klines" or meta.get("request", {}).get("symbol") != row["symbol"]:
+        if (
+            meta.get("kind") != "binance_klines"
+            or meta.get("request", {}).get("symbol") != row["symbol"]
+        ):
             raise SnapshotError("bar raw source identity mismatch")
         match = [r for r in raw if _milliseconds(r[0]) == row["open_time"]]
         if len(match) != 1 or _milliseconds(match[0][6]) != row["close_time"]:
             raise SnapshotError("bar time differs from raw evidence")
         r = match[0]
-        _same_numbers(row, dict(zip(("open", "high", "low", "close", "base_volume", "quote_volume"),
-                                   (r[1], r[2], r[3], r[4], r[5], r[7]))))
+        _same_numbers(
+            row,
+            dict(
+                zip(
+                    ("open", "high", "low", "close", "base_volume", "quote_volume"),
+                    (r[1], r[2], r[3], r[4], r[5], r[7]),
+                )
+            ),
+        )
     elif row_type == "quote":
         if meta.get("kind") != "binance_book_ticker" or raw.get("symbol") != row["symbol"]:
             raise SnapshotError("quote raw source identity mismatch")
-        _same_numbers(row, {"bid": raw["bidPrice"], "ask": raw["askPrice"],
-                            "bid_size": raw["bidQty"], "ask_size": raw["askQty"]})
+        _same_numbers(
+            row,
+            {
+                "bid": raw["bidPrice"],
+                "ask": raw["askPrice"],
+                "bid_size": raw["bidQty"],
+                "ask_size": raw["askQty"],
+            },
+        )
         if row.get("source_time") is not None:
             raise SnapshotError("Binance bookTicker has no source timestamp; do not invent one")
         raw_start = meta.get("request", {}).get("request_started_at")
@@ -206,17 +258,31 @@ def _verify_public_row(row: dict, row_type: str, evidence: dict, payloads: dict)
         if len(match) != 1:
             raise SnapshotError("instrument not present in raw exchange metadata")
         r = match[0]
-        for key, source_key in (("base_asset", "baseAsset"), ("quote_asset", "quoteAsset"), ("trading_status", "status")):
+        for key, source_key in (
+            ("base_asset", "baseAsset"),
+            ("quote_asset", "quoteAsset"),
+            ("trading_status", "status"),
+        ):
             if row[key] != r[source_key]:
                 raise SnapshotError("instrument identity/status differs from raw metadata")
         filters = {x["filterType"]: x for x in r.get("filters", [])}
-        expected = {"tick_size": filters.get("PRICE_FILTER", {}).get("tickSize"),
-                    "lot_step": filters.get("LOT_SIZE", {}).get("stepSize"),
-                    "min_notional": filters.get("NOTIONAL", filters.get("MIN_NOTIONAL", {})).get("minNotional")}
-        expected.update({key: filters.get(source_filter, {}).get(source_key)
-                         for key, source_filter, source_key in (("min_qty", "LOT_SIZE", "minQty"),
-                                                               ("max_qty", "LOT_SIZE", "maxQty"),
-                                                               ("max_notional", "NOTIONAL", "maxNotional"))})
+        expected = {
+            "tick_size": filters.get("PRICE_FILTER", {}).get("tickSize"),
+            "lot_step": filters.get("LOT_SIZE", {}).get("stepSize"),
+            "min_notional": filters.get("NOTIONAL", filters.get("MIN_NOTIONAL", {})).get(
+                "minNotional"
+            ),
+        }
+        expected.update(
+            {
+                key: filters.get(source_filter, {}).get(source_key)
+                for key, source_filter, source_key in (
+                    ("min_qty", "LOT_SIZE", "minQty"),
+                    ("max_qty", "LOT_SIZE", "maxQty"),
+                    ("max_notional", "NOTIONAL", "maxNotional"),
+                )
+            }
+        )
         for key, value in expected.items():
             if value is None:
                 if row.get(key) is not None:
@@ -225,8 +291,9 @@ def _verify_public_row(row: dict, row_type: str, evidence: dict, payloads: dict)
                 _same_numbers(row, {key: value})
 
 
-def load_recorded_snapshot(path: str | Path, as_of: str | datetime,
-                           evidence_root: str | Path | None = None) -> dict:
+def load_recorded_snapshot(
+    path: str | Path, as_of: str | datetime, evidence_root: str | Path | None = None
+) -> dict:
     """Validate a snapshot at an explicit cutoff; never silently drop future data.
 
     The collector excludes a forming candle before publication. Any future row
@@ -251,8 +318,9 @@ def load_recorded_snapshot(path: str | Path, as_of: str | datetime,
     for key in ("instruments", "bars", "quotes"):
         if not isinstance(original.get(key), list):
             raise SnapshotError(f"{key} must be a list")
-    records, payloads = _evidence(original, Path(evidence_root) if evidence_root else None, cutoff,
-                                  kind == "public_market")
+    records, payloads = _evidence(
+        original, Path(evidence_root) if evidence_root else None, cutoff, kind == "public_market"
+    )
     instruments, bars, quotes = [], [], []
     identities = set()
     for raw in original["instruments"]:
@@ -286,7 +354,9 @@ def load_recorded_snapshot(path: str | Path, as_of: str | datetime,
         if ident not in identities:
             raise SnapshotError("bar has unknown instrument")
         r["instrument_id"] = ident
-        times = {k: parse_time(r.get(k), f"bar.{k}") for k in ("open_time", "close_time", "received_at")}
+        times = {
+            k: parse_time(r.get(k), f"bar.{k}") for k in ("open_time", "close_time", "received_at")
+        }
         if not times["open_time"] < times["close_time"] <= times["received_at"] <= cutoff:
             raise SnapshotError("bar is incomplete, future, or received before close")
         r.update({k: utc_text(v) for k, v in times.items()})
@@ -294,7 +364,11 @@ def load_recorded_snapshot(path: str | Path, as_of: str | datetime,
             r[key] = number(r.get(key), key, positive=True)
         for key in ("base_volume", "quote_volume"):
             r[key] = number(r.get(key), key, nullable=True)
-        if Decimal(r["low"]) > min(Decimal(r["open"]), Decimal(r["close"])) or Decimal(r["high"]) < max(Decimal(r["open"]), Decimal(r["close"])) or Decimal(r["low"]) > Decimal(r["high"]):
+        if (
+            Decimal(r["low"]) > min(Decimal(r["open"]), Decimal(r["close"]))
+            or Decimal(r["high"]) < max(Decimal(r["open"]), Decimal(r["close"]))
+            or Decimal(r["low"]) > Decimal(r["high"])
+        ):
             raise SnapshotError("invalid OHLC bounds")
         key = (ident, r["open_time"])
         if key in seen_bars:
@@ -352,14 +426,25 @@ def load_recorded_snapshot(path: str | Path, as_of: str | datetime,
             stale_bars.append(ident)
     missing_bars = sorted(identities - set(latest))
     quoted = {r["instrument_id"] for r in quotes}
-    result = {**original, "as_of": utc_text(cutoff), "captured_at": utc_text(captured),
-              "evidence_type": kind, "instruments": instruments, "bars": bars, "quotes": quotes,
-              "snapshot_sha256": hashlib.sha256(snapshot_bytes).hexdigest(),
-              "validation": {"status": "VALIDATED", "evidence_verified": kind == "public_market",
-                             "missing_bar_instruments": missing_bars,
-                             "missing_quote_instruments": sorted(identities - quoted),
-                             "stale_bar_instruments": stale_bars, "stale_quote_observations": stale_quotes,
-                             "unknown_quote_source_times": unknown_quote_times,
-                             "future_rows_excluded": 0,
-                             "session_model": "24/7 UTC; no invented exchange session"}}
+    result = {
+        **original,
+        "as_of": utc_text(cutoff),
+        "captured_at": utc_text(captured),
+        "evidence_type": kind,
+        "instruments": instruments,
+        "bars": bars,
+        "quotes": quotes,
+        "snapshot_sha256": hashlib.sha256(snapshot_bytes).hexdigest(),
+        "validation": {
+            "status": "VALIDATED",
+            "evidence_verified": kind == "public_market",
+            "missing_bar_instruments": missing_bars,
+            "missing_quote_instruments": sorted(identities - quoted),
+            "stale_bar_instruments": stale_bars,
+            "stale_quote_observations": stale_quotes,
+            "unknown_quote_source_times": unknown_quote_times,
+            "future_rows_excluded": 0,
+            "session_model": "24/7 UTC; no invented exchange session",
+        },
+    }
     return result

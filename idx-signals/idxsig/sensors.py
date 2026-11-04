@@ -296,7 +296,9 @@ def emitennews_dilution(
     today: str | None = None,
 ) -> tuple[list[dict], bytes]:
     """EmitenNews headlines (public sitemap; robots.txt allows it) about new shares: rights issues, private placements, convertible bonds,
-    warrants. Only the last `days` days by the sitemap's lastmod. A watch flag only: IDX_DILUTION_v1 tested a different event (the day new shares
+    warrants. Only the last `days` days through `today` by the sitemap's lastmod.
+    Lastmod is modification evidence, not a publication timestamp; posted_at stays unknown.
+    A watch flag only: IDX_DILUTION_v1 tested a different event (the day new shares
     reach IDX's listed-share count, 2023, 15 trades, see its ERRATA_1), and no test has yet scored these announcements."""
     day = today or _utc()[:10]
     raw = fetcher(f"https://www.emitennews.com/sitemap-{year or int(day[:4])}.xml")
@@ -305,7 +307,7 @@ def emitennews_dilution(
     alerts = []
     for slug, lastmod in EN_SLUG.findall(raw.decode("utf-8", "replace")):
         words = dilution_kinds(slug)
-        if not words or lastmod[:10] < cutoff:
+        if not words or not cutoff <= lastmod[:10] <= day:
             continue
         syms = sorted(
             {
@@ -317,11 +319,18 @@ def emitennews_dilution(
         alerts.append(
             {
                 "source_id": slug,
-                "posted_at": lastmod[:10],
+                "posted_at": None,
                 "symbols": syms,
                 "text": slug.replace("-", " ")[:TEXT_MAX],
                 "url": f"https://www.emitennews.com/news/{slug}",
-                "extra": {"kind": words, "market": "IDX"},
+                "extra": {
+                    "kind": words,
+                    "market": "IDX",
+                    "source_modified_at": lastmod,
+                    "source_time_role": "SITEMAP_LASTMOD",
+                    "publication_time_status": "UNKNOWN",
+                    "adapter_version": "emitennews-sitemap-v2",
+                },
             }
         )
     return alerts, raw

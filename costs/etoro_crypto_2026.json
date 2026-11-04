@@ -1,0 +1,42 @@
+{
+  "schema_version": "KOD_COST_PROFILE_V1",
+  "id": "ETORO_CRYPTO_OWNER_ASSUMPTION_20261104_V1",
+  "version": 1,
+  "venue": "ETORO",
+  "quote_currency": "USD",
+  "valid_from": "2026-11-04T00:00:00Z",
+  "valid_until": null,
+  "validity_meaning": "Prospective research-assumption applicability from this date; not an asserted date of a broker fee change.",
+  "buy_fee_fraction": "0.01",
+  "sell_fee_fraction": "0.01",
+  "buy_slippage_fraction": null,
+  "sell_slippage_fraction": null,
+  "fx_cost_fraction": null,
+  "spread_convention": "OBSERVED_BID_ASK",
+  "verification_status": "OWNER_REPORTED_ASSUMPTION",
+  "account_applicability": "UNKNOWN",
+  "verified_at": null,
+  "source_reviewed_on": "2026-11-04",
+  "max_quote_age_seconds": 30,
+  "sources": [
+    {
+      "kind": "owner_instruction",
+      "reference": "KOD timing-build brief, 2026-11-04",
+      "claim": "Approximately one percent per side, plus spread; this is an assumption for research."
+    },
+    {
+      "kind": "official_public_schedule",
+      "url": "https://www.etoro.com/trading/fees/",
+      "reviewed_on": "2026-11-04",
+      "claim": "Published manual-crypto commissions depend on Club tier and monthly volume; the public schedule does not establish this owner's current account rate."
+    }
+  ],
+  "limitations": [
+    "Owner entity, residence, product, Club tier, account fee quote and volume tier have not been verified.",
+    "No verified owner-venue quote/depth adapter is supplied by this profile.",
+    "A Binance quote cannot establish eToro spread, market access, fill or fees.",
+    "The quote currency is USD. Owner account FX, settlement and conversion costs remain UNKNOWN.",
+    "Some products may be CFDs depending on jurisdiction. This paper-only profile grants no access or order permission.",
+    "Fees are applied to each leg's notional. A two-percent shorthand is not substituted for executable round-trip accounting."
+  ]
+}

@@ -38,6 +38,7 @@ TERMS = "Binance public market data (data-api.binance.vision); research use"
 
 
 def _get(url: str, retries: int = 6) -> tuple[int, bytes]:
+    """Retry transient server failures only; access/rate blocks end this pull."""
     for attempt in range(retries):
         try:
             with urllib.request.urlopen(
@@ -45,7 +46,7 @@ def _get(url: str, retries: int = 6) -> tuple[int, bytes]:
             ) as resp:
                 return resp.status, resp.read()
         except urllib.error.HTTPError as exc:
-            if exc.code not in (418, 429, 500, 502, 503, 504) or attempt == retries - 1:
+            if exc.code not in (500, 502, 503, 504) or attempt == retries - 1:
                 return exc.code, exc.read()
         except (urllib.error.URLError, TimeoutError, ConnectionError):
             if attempt == retries - 1:

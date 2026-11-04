@@ -13,7 +13,7 @@ idx-signals/data/raw/
 idx-signals/data/panel/
 
 # Local analyst workstation state is separate from the frozen research ledger.
-runtime/
+/runtime/
 kod-machine/.venv/
 .venv-workstation/
 

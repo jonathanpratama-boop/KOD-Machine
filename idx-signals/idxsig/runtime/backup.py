@@ -1,4 +1,5 @@
 """Bounded, checksum-verified local runtime archives. No network or scheduling."""
+
 from __future__ import annotations
 
 import ctypes
@@ -23,9 +24,15 @@ MAX_FILES = 100000
 
 def _name(name):
     path = PurePosixPath(name)
-    if (not name or "\\" in name or "\x00" in name or path.is_absolute()
-            or any(part in ("", ".", "..") for part in name.split("/"))
-            or ":" in name or name == MANIFEST):
+    if (
+        not name
+        or "\\" in name
+        or "\x00" in name
+        or path.is_absolute()
+        or any(part in ("", ".", "..") for part in name.split("/"))
+        or ":" in name
+        or name == MANIFEST
+    ):
         raise ValueError("unsafe or reserved archive path")
     return path
 
@@ -63,7 +70,10 @@ def backup(root, destination):
     os.close(fd)
     files, total = {}, 0
     try:
-        with locked(root), zipfile.ZipFile(temporary, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        with (
+            locked(root),
+            zipfile.ZipFile(temporary, "w", compression=zipfile.ZIP_DEFLATED) as archive,
+        ):
             for path in sorted(root.rglob("*")):
                 if path.is_symlink():
                     raise ValueError("runtime backup refuses symbolic links")
@@ -89,8 +99,13 @@ def backup(root, destination):
         with open(temporary, "rb") as stream:
             os.fsync(stream.fileno())
         _publish(temporary, destination)
-        return {"ok": True, "archive": str(destination), "files": len(files), "bytes": total,
-                "manifest_sha256": hashlib.sha256(canonical(manifest)).hexdigest()}
+        return {
+            "ok": True,
+            "archive": str(destination),
+            "files": len(files),
+            "bytes": total,
+            "manifest_sha256": hashlib.sha256(canonical(manifest)).hexdigest(),
+        }
     finally:
         if os.path.exists(temporary):
             os.unlink(temporary)
@@ -113,14 +128,22 @@ def restore(archive, destination):
     with zipfile.ZipFile(archive, "r") as bundle:
         entries = bundle.infolist()
         names = [entry.filename for entry in entries]
-        if len(names) != len(set(names)) or names.count(MANIFEST) != 1 or len(names) > MAX_FILES + 1:
+        if (
+            len(names) != len(set(names))
+            or names.count(MANIFEST) != 1
+            or len(names) > MAX_FILES + 1
+        ):
             raise ValueError("duplicate, missing manifest or excessive archive entries")
         total = 0
         for entry in entries:
             if entry.filename != MANIFEST:
                 _name(entry.filename)
             mode = (entry.external_attr >> 16) & 0xFFFF
-            if entry.is_dir() or (stat.S_IFMT(mode) not in (0, stat.S_IFREG)) or entry.flag_bits & 1:
+            if (
+                entry.is_dir()
+                or (stat.S_IFMT(mode) not in (0, stat.S_IFREG))
+                or entry.flag_bits & 1
+            ):
                 raise ValueError("only ordinary unencrypted files may be restored")
             total += entry.file_size
             if entry.file_size > MAX_FILE_BYTES or total > MAX_TOTAL_BYTES:
@@ -133,7 +156,11 @@ def restore(archive, destination):
             raise ValueError("manifest/archive membership mismatch")
         for name, info in files.items():
             body = bundle.read(name)
-            if not isinstance(info, dict) or len(body) != info.get("bytes") or hashlib.sha256(body).hexdigest() != info.get("sha256"):
+            if (
+                not isinstance(info, dict)
+                or len(body) != info.get("bytes")
+                or hashlib.sha256(body).hexdigest() != info.get("sha256")
+            ):
                 raise ValueError("backup content checksum mismatch")
         destination.parent.mkdir(parents=True, exist_ok=True)
         temporary = Path(tempfile.mkdtemp(prefix=".kod-restore-", dir=destination.parent))
@@ -143,12 +170,22 @@ def restore(archive, destination):
                 path.parent.mkdir(parents=True, exist_ok=True)
                 with path.open("xb") as stream:
                     body = bundle.read(name)
-                    if len(body) != files[name]["bytes"] or hashlib.sha256(body).hexdigest() != files[name]["sha256"]:
+                    if (
+                        len(body) != files[name]["bytes"]
+                        or hashlib.sha256(body).hexdigest() != files[name]["sha256"]
+                    ):
                         raise ValueError("archive changed during restore")
                     stream.write(body)
                     stream.flush()
                     os.fsync(stream.fileno())
-            for directory in [*sorted((p for p in temporary.rglob("*") if p.is_dir()), key=lambda p: len(p.parts), reverse=True), temporary]:
+            for directory in [
+                *sorted(
+                    (p for p in temporary.rglob("*") if p.is_dir()),
+                    key=lambda p: len(p.parts),
+                    reverse=True,
+                ),
+                temporary,
+            ]:
                 fd = os.open(directory, os.O_RDONLY)
                 try:
                     os.fsync(fd)
@@ -158,6 +195,10 @@ def restore(archive, destination):
         finally:
             if temporary.exists():
                 shutil.rmtree(temporary)
-    return {"ok": True, "root": str(destination), "files": len(files),
-            "manifest_sha256": hashlib.sha256(canonical(manifest)).hexdigest(),
-            "next_action": "Run runtime verify before resuming paper cycles"}
+    return {
+        "ok": True,
+        "root": str(destination),
+        "files": len(files),
+        "manifest_sha256": hashlib.sha256(canonical(manifest)).hexdigest(),
+        "next_action": "Run runtime verify before resuming paper cycles",
+    }

@@ -1,0 +1,498 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kod:schema:timing-attempt:v1",
+  "title": "KOD timing observation v1",
+  "description": "Normalized UTC timing records. Cross-field chronology, immutable revisions, evidence references, and as-of rules are additionally enforced by idxsig.timing_capture.validate_attempt. Prospective is a declared cohort, not external proof. No entry permission. Protocol: handoff/astra/protocols/TIMING_CAPTURE_v1/PROTOCOL.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "detector_version",
+    "universe_snapshot_id",
+    "evidence_id",
+    "evidence_kind",
+    "recorded_at",
+    "status",
+    "source",
+    "entry_permission",
+    "scheduled_at",
+    "started_at",
+    "published_at",
+    "received_at",
+    "features_ready_at",
+    "detected_at",
+    "decision_at",
+    "executable_at",
+    "fill_at",
+    "source_time",
+    "reason",
+    "threshold",
+    "clock",
+    "durations_ns",
+    "links",
+    "prices",
+    "external_timestamp"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "KOD_TIMING_ATTEMPT_V1"
+    },
+    "id": {
+      "$ref": "#/$defs/text"
+    },
+    "detector_version": {
+      "$ref": "#/$defs/text"
+    },
+    "universe_snapshot_id": {
+      "$ref": "#/$defs/text"
+    },
+    "evidence_id": {
+      "$ref": "#/$defs/text"
+    },
+    "evidence_kind": {
+      "enum": [
+        "synthetic",
+        "recorded",
+        "prospective"
+      ]
+    },
+    "recorded_at": {
+      "$ref": "#/$defs/utc"
+    },
+    "status": {
+      "enum": [
+        "STARTED",
+        "COMPLETED",
+        "PARTIAL",
+        "FAILED",
+        "BLOCKED",
+        "NO_TRIGGER",
+        "DETECTED",
+        "DECIDED",
+        "NO_ACTION",
+        "REJECTED",
+        "EXPIRED",
+        "FILLED",
+        "UNKNOWN"
+      ]
+    },
+    "source": {
+      "$ref": "#/$defs/text"
+    },
+    "entry_permission": {
+      "const": false
+    },
+    "scheduled_at": {
+      "$ref": "#/$defs/nullableTime"
+    },
+    "started_at": {
+      "$ref": "#/$defs/nullableTime"
+    },
+    "published_at": {
+      "$ref": "#/$defs/nullableTime"
+    },
+    "received_at": {
+      "$ref": "#/$defs/nullableTime"
+    },
+    "features_ready_at": {
+      "$ref": "#/$defs/nullableTime"
+    },
+    "detected_at": {
+      "$ref": "#/$defs/nullableTime"
+    },
+    "decision_at": {
+      "$ref": "#/$defs/nullableTime"
+    },
+    "executable_at": {
+      "$ref": "#/$defs/nullableTime"
+    },
+    "fill_at": {
+      "$ref": "#/$defs/nullableTime"
+    },
+    "source_time": {
+      "$ref": "#/$defs/nullableTime"
+    },
+    "reason": {
+      "$ref": "#/$defs/nullableText"
+    },
+    "threshold": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "at",
+        "basis",
+        "evidence_id",
+        "reference_at"
+      ],
+      "properties": {
+        "at": {
+          "$ref": "#/$defs/nullableTime"
+        },
+        "basis": {
+          "enum": [
+            "UNKNOWN",
+            "COMPLETED_BAR",
+            "QUOTE"
+          ]
+        },
+        "evidence_id": {
+          "$ref": "#/$defs/nullableText"
+        },
+        "reference_at": {
+          "$ref": "#/$defs/nullableTime"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "at": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "basis": {
+                "const": "UNKNOWN"
+              },
+              "evidence_id": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "basis": {
+                "enum": [
+                  "COMPLETED_BAR",
+                  "QUOTE"
+                ]
+              },
+              "evidence_id": {
+                "$ref": "#/$defs/text"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "clock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "offset_seconds",
+        "observed_at",
+        "evidence_id"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "UNKNOWN",
+            "MEASURED_EXTERNAL",
+            "MEASUREMENT_FAILED"
+          ]
+        },
+        "offset_seconds": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/decimal"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "observed_at": {
+          "$ref": "#/$defs/nullableTime"
+        },
+        "evidence_id": {
+          "$ref": "#/$defs/nullableText"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "MEASURED_EXTERNAL"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "offset_seconds": {
+                "$ref": "#/$defs/decimal"
+              },
+              "observed_at": {
+                "$ref": "#/$defs/utc"
+              },
+              "evidence_id": {
+                "$ref": "#/$defs/text"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "offset_seconds": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "durations_ns": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/text"
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "type": "null"
+          }
+        ]
+      }
+    },
+    "links": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/text"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/nullableText"
+      }
+    },
+    "prices": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "scheduled_at": {
+          "$ref": "#/$defs/price"
+        },
+        "started_at": {
+          "$ref": "#/$defs/price"
+        },
+        "published_at": {
+          "$ref": "#/$defs/price"
+        },
+        "received_at": {
+          "$ref": "#/$defs/price"
+        },
+        "features_ready_at": {
+          "$ref": "#/$defs/price"
+        },
+        "detected_at": {
+          "$ref": "#/$defs/price"
+        },
+        "decision_at": {
+          "$ref": "#/$defs/price"
+        },
+        "executable_at": {
+          "$ref": "#/$defs/price"
+        },
+        "fill_at": {
+          "$ref": "#/$defs/price"
+        }
+      }
+    },
+    "external_timestamp": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "NOT_REQUESTED",
+            "UNAVAILABLE",
+            "PRESENT_UNVERIFIED"
+          ]
+        },
+        "evidence_id": {
+          "$ref": "#/$defs/nullableText"
+        },
+        "token_sha256": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "$ref": "#/$defs/nullableText"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "PRESENT_UNVERIFIED"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "evidence_id",
+              "token_sha256"
+            ],
+            "properties": {
+              "evidence_id": {
+                "$ref": "#/$defs/text"
+              },
+              "token_sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "evidence_id": {
+                "type": "null"
+              },
+              "token_sha256": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "FILLED"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "fill_at": {
+            "$ref": "#/$defs/utc"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "DECIDED"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "decision_at": {
+            "$ref": "#/$defs/utc"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "DETECTED"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "detected_at": {
+            "$ref": "#/$defs/utc"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?=.*\\S)[^\\r\\n\\u0000]+$"
+    },
+    "utc": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "(?:Z|\\+00:00)$"
+    },
+    "nullableTime": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/utc"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullableText": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/text"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "decimal": {
+      "type": "string",
+      "pattern": "^-?(?:0|[1-9][0-9]*)(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?$"
+    },
+    "positiveDecimal": {
+      "type": "string",
+      "pattern": "^(?:[1-9][0-9]*(?:\\.[0-9]+)?|0\\.[0-9]*[1-9][0-9]*)(?:[eE][+-]?[0-9]+)?$"
+    },
+    "price": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "price",
+        "venue",
+        "symbol",
+        "currency",
+        "evidence_id",
+        "observed_at"
+      ],
+      "properties": {
+        "price": {
+          "$ref": "#/$defs/positiveDecimal"
+        },
+        "venue": {
+          "$ref": "#/$defs/text"
+        },
+        "symbol": {
+          "$ref": "#/$defs/text"
+        },
+        "currency": {
+          "$ref": "#/$defs/text"
+        },
+        "evidence_id": {
+          "$ref": "#/$defs/text"
+        },
+        "observed_at": {
+          "$ref": "#/$defs/utc"
+        }
+      }
+    }
+  }
+}

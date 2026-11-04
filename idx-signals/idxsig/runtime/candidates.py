@@ -4,6 +4,7 @@ Assessment evidence is an analyst declaration, not provider verification. The
 detector record and earlier assessments remain intact. Entry eligibility cannot
 be granted by this research-only workflow.
 """
+
 from __future__ import annotations
 
 import copy
@@ -18,8 +19,13 @@ from .storage import canonical, digest, locked, read_snapshot, write_snapshot
 
 SCHEMA = "KOD_CANDIDATE_ASSESSMENT_V1"
 STATES = {"DETECTED", "RESEARCHED", "CONDITIONAL_READY", "ENTRY_ELIGIBLE", "REJECTED", "EXPIRED"}
-CHANGES = {"NEW_EVENT", "PRICE_OR_CONDITION_CHANGE", "CORRECTED_INPUT",
-           "NEWLY_FOUND_OLD_INFORMATION", "CHANGED_INFERENCE"}
+CHANGES = {
+    "NEW_EVENT",
+    "PRICE_OR_CONDITION_CHANGE",
+    "CORRECTED_INPUT",
+    "NEWLY_FOUND_OLD_INFORMATION",
+    "CHANGED_INFERENCE",
+}
 TRANSITIONS = {
     "DETECTED": {"DETECTED", "RESEARCHED", "REJECTED", "EXPIRED"},
     "RESEARCHED": {"RESEARCHED", "CONDITIONAL_READY", "REJECTED", "EXPIRED"},
@@ -54,8 +60,16 @@ def _conditional_plan(plan, evidence_ids):
     """Check complete declared prerequisites; their truth remains analyst-attested."""
     if not isinstance(plan, dict) or plan.get("side") != "LONG":
         raise ValueError("conditional plan requires explicit LONG side")
-    required = ("entry_lower", "entry_upper", "protective_price", "loss_budget",
-                "ordinary_loss", "stress_loss", "gap_loss", "round_trip_cost_fraction")
+    required = (
+        "entry_lower",
+        "entry_upper",
+        "protective_price",
+        "loss_budget",
+        "ordinary_loss",
+        "stress_loss",
+        "gap_loss",
+        "round_trip_cost_fraction",
+    )
     numbers = {}
     for key in required:
         try:
@@ -67,25 +81,51 @@ def _conditional_plan(plan, evidence_ids):
         numbers[key] = value
     low, high, protection = (numbers[k] for k in ("entry_lower", "entry_upper", "protective_price"))
     if not 0 < protection < low <= high or (high - protection) / high > Decimal("0.05"):
-        raise ValueError("conditional entry bounds require structural protection within 5% at upper bound")
+        raise ValueError(
+            "conditional entry bounds require structural protection within 5% at upper bound"
+        )
     if numbers["loss_budget"] <= 0 or numbers["ordinary_loss"] > numbers["loss_budget"]:
         raise ValueError("ordinary loss must fit a positive confirmed budget")
     if not numbers["ordinary_loss"] <= numbers["stress_loss"] <= numbers["gap_loss"]:
         raise ValueError("stress and gap loss assumptions must not understate ordinary loss")
     if numbers["round_trip_cost_fraction"] >= 1:
         raise ValueError("invalid cost assumption")
-    for key in ("trigger", "invalidation", "protection_basis", "target_action", "cancellation", "horizon"):
+    for key in (
+        "trigger",
+        "invalidation",
+        "protection_basis",
+        "target_action",
+        "cancellation",
+        "horizon",
+    ):
         _text(plan.get(key), "plan." + key)
     checks = plan.get("essential_evidence")
-    names = {"identity", "broker_product_access", "risk_budget", "economics", "structural_protection",
-             "depth_spread_costs", "broker_orders", "monitoring", "cash_alternatives"}
-    if not isinstance(checks, dict) or set(checks) != names or any(v not in evidence_ids for v in checks.values()):
+    names = {
+        "identity",
+        "broker_product_access",
+        "risk_budget",
+        "economics",
+        "structural_protection",
+        "depth_spread_costs",
+        "broker_orders",
+        "monitoring",
+        "cash_alternatives",
+    }
+    if (
+        not isinstance(checks, dict)
+        or set(checks) != names
+        or any(v not in evidence_ids for v in checks.values())
+    ):
         raise ValueError("every essential prerequisite needs a retained evidence id")
     waiting = plan.get("pending_conditions")
     if not isinstance(waiting, list) or not waiting:
         raise ValueError("conditional readiness needs a named future event, quote or trigger")
     for item in waiting:
-        if not isinstance(item, dict) or item.get("kind") not in {"FUTURE_RESULT", "QUOTE", "TRIGGER"}:
+        if not isinstance(item, dict) or item.get("kind") not in {
+            "FUTURE_RESULT",
+            "QUOTE",
+            "TRIGGER",
+        }:
             raise ValueError("only future results, quotes and triggers may remain unresolved")
         _text(item.get("condition"), "pending condition")
 
@@ -102,16 +142,26 @@ def assessments(root):
         raise ValueError("torn assessment journal; restore verified backup")
     rows, previous, latest, ids = [], None, {}, set()
     for line in raw.splitlines():
-        row = json.loads(line, object_pairs_hook=_pairs,
-                         parse_constant=lambda x: (_ for _ in ()).throw(ValueError("nonfinite assessment JSON")))
+        row = json.loads(
+            line,
+            object_pairs_hook=_pairs,
+            parse_constant=lambda x: (_ for _ in ()).throw(ValueError("nonfinite assessment JSON")),
+        )
         if not isinstance(row, dict):
             raise ValueError("invalid assessment journal record")
         body = {k: v for k, v in row.items() if k != "record_hash"}
-        if row.get("schema_version") != SCHEMA or row.get("sequence") != len(rows) + 1 or row.get("prev_hash") != previous or digest(body) != row.get("record_hash"):
+        if (
+            row.get("schema_version") != SCHEMA
+            or row.get("sequence") != len(rows) + 1
+            or row.get("prev_hash") != previous
+            or digest(body) != row.get("record_hash")
+        ):
             raise ValueError("assessment journal integrity failure")
         identifier = row["candidate_id"]
         prior = latest.get(identifier)
-        if row.get("version") != (prior["version"] + 1 if prior else 1) or row.get("supersedes") != (prior["id"] if prior else None):
+        if row.get("version") != (prior["version"] + 1 if prior else 1) or row.get(
+            "supersedes"
+        ) != (prior["id"] if prior else None):
             raise ValueError("assessment version chain failure")
         if row["id"] in ids:
             raise ValueError("duplicate assessment identity")
@@ -123,17 +173,35 @@ def assessments(root):
 
 def verify_assessments(root):
     rows = assessments(root)
-    return {"ok": True, "assessments": len(rows),
-            "head_hash": rows[-1]["record_hash"] if rows else None,
-            "entry_permission": False}
+    return {
+        "ok": True,
+        "assessments": len(rows),
+        "head_hash": rows[-1]["record_hash"] if rows else None,
+        "entry_permission": False,
+    }
 
 
 def _normalize(value):
     if not isinstance(value, dict):
         raise ValueError("assessment must be an object")
-    allowed = {"candidate_id", "state", "as_of", "owner", "reason", "mechanism", "counterarguments",
-               "evidence", "blockers", "clearing_evidence", "expires_at", "recheck_at", "plan",
-               "supersedes", "change_kind", "strategy_id"}
+    allowed = {
+        "candidate_id",
+        "state",
+        "as_of",
+        "owner",
+        "reason",
+        "mechanism",
+        "counterarguments",
+        "evidence",
+        "blockers",
+        "clearing_evidence",
+        "expires_at",
+        "recheck_at",
+        "plan",
+        "supersedes",
+        "change_kind",
+        "strategy_id",
+    }
     if set(value) - allowed:
         raise ValueError("unknown assessment fields: " + ", ".join(sorted(set(value) - allowed)))
     out = copy.deepcopy(value)
@@ -142,7 +210,9 @@ def _normalize(value):
     if out["state"] not in STATES:
         raise ValueError("unknown candidate state")
     if out["state"] == "ENTRY_ELIGIBLE":
-        raise ValueError("no approved selective-repricing entry policy; assessment cannot grant entry eligibility")
+        raise ValueError(
+            "no approved selective-repricing entry policy; assessment cannot grant entry eligibility"
+        )
     cutoff = parse_time(out.get("as_of"), "assessment.as_of")
     out["as_of"] = utc_text(cutoff)
     out["strategy_id"] = out.get("strategy_id", "SELECTIVE_REPRICING")
@@ -156,8 +226,16 @@ def _normalize(value):
         raise ValueError("evidence must be a list")
     seen = set()
     for item in evidence:
-        if not isinstance(item, dict) or set(item) != {"id", "source", "available_at", "observed_at", "statement"}:
-            raise ValueError("evidence requires id, source, available_at, observed_at and statement")
+        if not isinstance(item, dict) or set(item) != {
+            "id",
+            "source",
+            "available_at",
+            "observed_at",
+            "statement",
+        }:
+            raise ValueError(
+                "evidence requires id, source, available_at, observed_at and statement"
+            )
         for key in ("id", "source", "statement"):
             item[key] = _text(item[key], "evidence." + key)
         if item["id"] in seen:
@@ -169,7 +247,9 @@ def _normalize(value):
             raise ValueError("evidence is unavailable or observed after assessment cutoff")
         item["available_at"], item["observed_at"] = utc_text(available), utc_text(observed)
     out["evidence"] = evidence
-    if out["state"] in {"RESEARCHED", "CONDITIONAL_READY"} and (not evidence or not out["counterarguments"]):
+    if out["state"] in {"RESEARCHED", "CONDITIONAL_READY"} and (
+        not evidence or not out["counterarguments"]
+    ):
         raise ValueError("research requires evidence and a competing explanation")
     out["expires_at"] = out.get("expires_at")
     if out["expires_at"] is not None:
@@ -203,7 +283,12 @@ def _normalize(value):
 
 
 def project(root, candidate_rows, as_of):
-    """Overlay assessments known by cutoff, preserving detector and audit records."""
+    """Overlay assessments by analytical cutoff, preserving original records.
+
+    ``as_of`` selects the market/evidence cutoff used in an assessment. Its
+    actual recording time is the separate ``recorded_at`` field; this view is
+    not a reconstruction of which assessments existed at a historical time.
+    """
     cutoff = parse_time(as_of)
     latest = {}
     for row in assessments(root):
@@ -224,14 +309,30 @@ def project(root, candidate_rows, as_of):
             item["assessment"] = copy.deepcopy(record)
             item["assessment_id"] = record["id"]
             item["assessment_version"] = record["version"]
-            for key in ("owner", "mechanism", "counterarguments", "blockers", "clearing_evidence", "expires_at", "recheck_at", "plan"):
+            for key in (
+                "owner",
+                "mechanism",
+                "counterarguments",
+                "blockers",
+                "clearing_evidence",
+                "expires_at",
+                "recheck_at",
+                "plan",
+            ):
                 item[key] = copy.deepcopy(record[key])
             item["assessment_reason"] = record["reason"]
             expiry = record.get("expires_at")
-            if expiry and cutoff >= parse_time(expiry) and item["state"] not in {"REJECTED", "EXPIRED"}:
+            if (
+                expiry
+                and cutoff >= parse_time(expiry)
+                and item["state"] not in {"REJECTED", "EXPIRED"}
+            ):
                 item["state"] = "EXPIRED"
-                item["expiry_projection"] = {"expires_at": expiry, "evaluated_at": utc_text(cutoff),
-                                             "original_assessment_state": record["state"]}
+                item["expiry_projection"] = {
+                    "expires_at": expiry,
+                    "evaluated_at": utc_text(cutoff),
+                    "original_assessment_state": record["state"],
+                }
         item["entry_permission"] = False
         out.append(item)
     return out
@@ -240,9 +341,9 @@ def project(root, candidate_rows, as_of):
 def record_assessment(root, assessment):
     """Append one revision for a retained candidate and refresh its read-only view.
 
-Retrying the same normalized request returns the first record unchanged. A
-revision names its preceding assessment ID in ``supersedes``. Snapshot cutoff
-must cover all assessment evidence; run a new explicit cycle for newer evidence.
+    Retrying the same normalized request returns the first record unchanged. A
+    revision names its preceding assessment ID in ``supersedes``. Snapshot cutoff
+    must cover all assessment evidence; run a new explicit cycle for newer evidence.
     """
     request = _normalize(assessment)
     request_hash = digest(request)
@@ -253,13 +354,24 @@ must cover all assessment evidence; run a new explicit cycle for newer evidence.
         snapshot = read_snapshot(root)
         payload = snapshot["payload"]
         cutoff = parse_time(payload["run"]["as_of"])
-        if parse_time(request["as_of"]) > cutoff or parse_time(request["as_of"]) > datetime.now(timezone.utc):
+        if parse_time(request["as_of"]) > cutoff or parse_time(request["as_of"]) > datetime.now(
+            timezone.utc
+        ):
             raise ValueError("assessment cutoff exceeds the recorded market view or current clock")
         candidates = payload["candidates"]
-        candidate = next((c for c in candidates if c.get("id", c.get("candidate_id")) == request["candidate_id"]), None)
+        candidate = next(
+            (
+                c
+                for c in candidates
+                if c.get("id", c.get("candidate_id")) == request["candidate_id"]
+            ),
+            None,
+        )
         if candidate is None:
             raise ValueError("candidate is not in the retained verified queue")
-        if parse_time(request["as_of"]) < parse_time(candidate.get("detected_at", candidate["as_of"])):
+        if parse_time(request["as_of"]) < parse_time(
+            candidate.get("detected_at", candidate["as_of"])
+        ):
             raise ValueError("assessment precedes detection")
         rows = assessments(root)
         record = next((r for r in rows if r["request_hash"] == request_hash), None)
@@ -268,21 +380,43 @@ must cover all assessment evidence; run a new explicit cycle for newer evidence.
             prior = history[-1] if history else None
             if request["supersedes"] != (prior["id"] if prior else None):
                 raise ValueError("revision must name the latest superseded assessment")
-            previous_state = prior["state"] if prior else candidate.get("detector_state", "DETECTED")
+            previous_state = (
+                prior["state"] if prior else candidate.get("detector_state", "DETECTED")
+            )
             if prior and parse_time(request["as_of"]) < parse_time(prior["as_of"]):
                 raise ValueError("assessment revision cannot move cutoff backwards")
-            if prior and prior.get("expires_at") and parse_time(request["as_of"]) >= parse_time(prior["expires_at"]) and previous_state != "REJECTED":
+            if (
+                prior
+                and prior.get("expires_at")
+                and parse_time(request["as_of"]) >= parse_time(prior["expires_at"])
+                and previous_state != "REJECTED"
+            ):
                 previous_state = "EXPIRED"
             if request["state"] not in TRANSITIONS.get(previous_state, set()):
                 raise ValueError("forbidden candidate state transition")
-            if previous_state == "REJECTED" and request["state"] == "RESEARCHED" and (request["change_kind"] == "CHANGED_INFERENCE" or request["evidence"] == prior["evidence"]):
-                raise ValueError("reopening rejected research requires changed evidence, not another opinion")
-            record = {**request, "id": "ASSESSMENT:" + request_hash, "request_hash": request_hash,
-                      "schema_version": SCHEMA, "sequence": len(rows) + 1,
-                      "version": prior["version"] + 1 if prior else 1,
-                      "recorded_at": utc_text(datetime.now(timezone.utc)),
-                      "entry_permission": False, "evidence_verification": "ANALYST_DECLARATION",
-                      "prev_hash": rows[-1]["record_hash"] if rows else None}
+            if (
+                previous_state == "REJECTED"
+                and request["state"] == "RESEARCHED"
+                and (
+                    request["change_kind"] == "CHANGED_INFERENCE"
+                    or request["evidence"] == prior["evidence"]
+                )
+            ):
+                raise ValueError(
+                    "reopening rejected research requires changed evidence, not another opinion"
+                )
+            record = {
+                **request,
+                "id": "ASSESSMENT:" + request_hash,
+                "request_hash": request_hash,
+                "schema_version": SCHEMA,
+                "sequence": len(rows) + 1,
+                "version": prior["version"] + 1 if prior else 1,
+                "recorded_at": utc_text(datetime.now(timezone.utc)),
+                "entry_permission": False,
+                "evidence_verification": "ANALYST_DECLARATION",
+                "prev_hash": rows[-1]["record_hash"] if rows else None,
+            }
             record["record_hash"] = digest(record)
             with (root / "candidate_assessments.jsonl").open("ab") as stream:
                 stream.write(canonical(record) + b"\n")
@@ -294,7 +428,36 @@ must cover all assessment evidence; run a new explicit cycle for newer evidence.
             finally:
                 os.close(directory)
         payload["candidates"] = project(root, candidates, payload["run"]["as_of"])
-        payload["assessment_projection"] = {**verify_assessments(root),
-            "base_snapshot_sha256": payload.get("assessment_projection", {}).get("base_snapshot_sha256", snapshot["sha256"])}
+        payload["assessment_projection"] = {
+            **verify_assessments(root),
+            "base_snapshot_sha256": payload.get("assessment_projection", {}).get(
+                "base_snapshot_sha256", snapshot["sha256"]
+            ),
+        }
         write_snapshot(root, payload)
-        return record
+        from ..timing_capture import make_attempt, append_attempt
+
+        observation = make_attempt(
+            "assessment_timing:" + record["id"],
+            detector_version="CANDIDATE_ASSESSMENT_TIMING_V1",
+            universe_snapshot_id=payload["run"].get("input_sha256")
+            or payload["assessment_projection"]["base_snapshot_sha256"],
+            evidence_id=record["id"],
+            evidence_kind="synthetic" if payload["run"].get("synthetic") else "recorded",
+            recorded_at=record["recorded_at"],
+            status="REJECTED" if record["state"] == "REJECTED" else "DECIDED",
+            source="ANALYST_DECLARATION",
+            times={"decision_at": record["recorded_at"]},
+            links={
+                "candidate_id": record["candidate_id"],
+                "assessment_id": record["id"],
+                "run_id": payload["run"]["id"],
+                "analytical_cutoff": record["as_of"],
+            },
+            reason="Actual assessment recording time; first detection and source publication remain separate.",
+        )
+        append_attempt(root, observation, _locked=True)
+    from .timing import publish_board
+
+    publish_board(root)
+    return record

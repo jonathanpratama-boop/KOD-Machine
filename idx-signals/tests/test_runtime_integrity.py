@@ -1,4 +1,5 @@
 """Adversarial boundaries shared by the operating runner and market adapters."""
+
 import copy
 from datetime import datetime, timedelta, timezone
 import hashlib
@@ -18,24 +19,39 @@ class RuntimeIntegrityTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / "snapshot.json"
             text = json.dumps(fixture())
-            path.write_text(text.replace('"evidence_kind": "synthetic"',
-                                         '"evidence_kind": "public_market", "evidence_kind": "synthetic"'))
+            path.write_text(
+                text.replace(
+                    '"evidence_kind": "synthetic"',
+                    '"evidence_kind": "public_market", "evidence_kind": "synthetic"',
+                )
+            )
             with self.assertRaises(data.SnapshotError):
                 data.load_recorded_snapshot(path, AS_OF)
 
     def test_snapshot_digest_identifies_exact_parsed_bytes(self):
         raw = json.dumps(fixture()).encode()
-        with patch.object(Path, "read_bytes", side_effect=[raw, b"changed"] ) as read:
+        with patch.object(Path, "read_bytes", side_effect=[raw, b"changed"]) as read:
             result = data.load_recorded_snapshot("unused.json", AS_OF)
         self.assertEqual(read.call_count, 1)
         self.assertEqual(result["snapshot_sha256"], hashlib.sha256(raw).hexdigest())
 
     def test_quote_cannot_smuggle_future_processing_clock(self):
         obj = fixture(("BTCUSDT",))
-        obj["quotes"] = [{"venue": "BINANCE_SPOT", "symbol": "BTCUSDT", "bid": "100", "ask": "101",
-                          "bid_size": "10", "ask_size": "10", "received_at": AS_OF,
-                          "at": "2099-01-01T00:00:00Z", "source_time": None,
-                          "evidence_id": "synthetic", "observation_id": "q1"}]
+        obj["quotes"] = [
+            {
+                "venue": "BINANCE_SPOT",
+                "symbol": "BTCUSDT",
+                "bid": "100",
+                "ask": "101",
+                "bid_size": "10",
+                "ask_size": "10",
+                "received_at": AS_OF,
+                "at": "2099-01-01T00:00:00Z",
+                "source_time": None,
+                "evidence_id": "synthetic",
+                "observation_id": "q1",
+            }
+        ]
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / "snapshot.json"
             path.write_text(json.dumps(obj))
@@ -43,23 +59,49 @@ class RuntimeIntegrityTests(unittest.TestCase):
                 data.load_recorded_snapshot(path, AS_OF)
 
     def test_public_instrument_must_keep_raw_economic_limits(self):
-        raw = {"symbols": [{"symbol": "BTCUSDT", "baseAsset": "BTC", "quoteAsset": "USDT",
-                "status": "TRADING", "filters": [
-                    {"filterType": "PRICE_FILTER", "tickSize": ".01"},
-                    {"filterType": "LOT_SIZE", "stepSize": ".001", "minQty": ".001", "maxQty": "10"},
-                    {"filterType": "NOTIONAL", "minNotional": "5", "maxNotional": "1000"}]}]}
+        raw = {
+            "symbols": [
+                {
+                    "symbol": "BTCUSDT",
+                    "baseAsset": "BTC",
+                    "quoteAsset": "USDT",
+                    "status": "TRADING",
+                    "filters": [
+                        {"filterType": "PRICE_FILTER", "tickSize": ".01"},
+                        {
+                            "filterType": "LOT_SIZE",
+                            "stepSize": ".001",
+                            "minQty": ".001",
+                            "maxQty": "10",
+                        },
+                        {"filterType": "NOTIONAL", "minNotional": "5", "maxNotional": "1000"},
+                    ],
+                }
+            ]
+        }
         with tempfile.TemporaryDirectory() as folder:
-            ev = data.capture_raw_evidence(json.dumps(raw).encode(), folder,
-                    source_url="https://api.binance.com/api/v3/exchangeInfo", received_at=AS_OF,
-                    kind="binance_exchange_info")
-            obj = fixture(("BTCUSDT",)); obj.update(bars=[], evidence_kind="public_market", evidence=[ev])
-            obj["instruments"][0].update(metadata_received_at=AS_OF, evidence_id=ev["evidence_id"],
-                    min_qty=".001", max_qty="10", max_notional="1000")
+            ev = data.capture_raw_evidence(
+                json.dumps(raw).encode(),
+                folder,
+                source_url="https://api.binance.com/api/v3/exchangeInfo",
+                received_at=AS_OF,
+                kind="binance_exchange_info",
+            )
+            obj = fixture(("BTCUSDT",))
+            obj.update(bars=[], evidence_kind="public_market", evidence=[ev])
+            obj["instruments"][0].update(
+                metadata_received_at=AS_OF,
+                evidence_id=ev["evidence_id"],
+                min_qty=".001",
+                max_qty="10",
+                max_notional="1000",
+            )
             path = Path(folder) / "snapshot.json"
             path.write_text(json.dumps(obj))
             data.load_recorded_snapshot(path, AS_OF, folder)
             for key in ("min_qty", "max_qty", "max_notional"):
-                omitted = copy.deepcopy(obj); del omitted["instruments"][0][key]
+                omitted = copy.deepcopy(obj)
+                del omitted["instruments"][0][key]
                 path.write_text(json.dumps(omitted))
                 with self.subTest(key=key), self.assertRaises(data.SnapshotError):
                     data.load_recorded_snapshot(path, AS_OF, folder)
@@ -103,8 +145,9 @@ class RuntimeIntegrityTests(unittest.TestCase):
             raw = path.read_text()
             # The ordinary JSON parser would discard the first duplicate and
             # reconstruct exactly the original, valid hashed command.
-            altered = raw.replace('"initial_cash":"1000"',
-                                  '"initial_cash":"999999","initial_cash":"1000"', 1)
+            altered = raw.replace(
+                '"initial_cash":"1000"', '"initial_cash":"999999","initial_cash":"1000"', 1
+            )
             self.assertNotEqual(raw, altered)
             path.write_text(altered)
             with self.assertRaisesRegex(ValueError, "duplicate"):
@@ -113,41 +156,109 @@ class RuntimeIntegrityTests(unittest.TestCase):
     def test_capture_two_mocked_public_observations_keeps_causal_fills(self):
         from idxsig.runtime.capture import capture
         from idxsig.runtime.coordinator import verify
+        from idxsig.timing_capture import read_attempts
+        from tests.test_time_anchor import FixtureStamper
+
         today = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
-        info = {"symbols": [{"symbol": symbol, "baseAsset": symbol[:-4], "quoteAsset": "USDT",
-                 "status": "TRADING", "isSpotTradingAllowed": True, "filters": [
-                    {"filterType": "PRICE_FILTER", "tickSize": ".01"},
-                    {"filterType": "LOT_SIZE", "stepSize": ".001", "minQty": ".001", "maxQty": "1000"},
-                    {"filterType": "NOTIONAL", "minNotional": "5", "maxNotional": "100000"}]}
-                 for symbol in account.SYMBOLS]}
+        info = {
+            "symbols": [
+                {
+                    "symbol": symbol,
+                    "baseAsset": symbol[:-4],
+                    "quoteAsset": "USDT",
+                    "status": "TRADING",
+                    "isSpotTradingAllowed": True,
+                    "filters": [
+                        {"filterType": "PRICE_FILTER", "tickSize": ".01"},
+                        {
+                            "filterType": "LOT_SIZE",
+                            "stepSize": ".001",
+                            "minQty": ".001",
+                            "maxQty": "1000",
+                        },
+                        {"filterType": "NOTIONAL", "minNotional": "5", "maxNotional": "100000"},
+                    ],
+                }
+                for symbol in account.SYMBOLS
+            ]
+        }
         candles = []
         for n in range(120):
-            opened = today - timedelta(days=120-n)
+            opened = today - timedelta(days=120 - n)
             price = str(100 + n)
-            candles.append([int(opened.timestamp()*1000), price, str(101+n), str(99+n), price,
-                            "100", int((opened+timedelta(days=1,milliseconds=-1)).timestamp()*1000), "100000"])
+            candles.append(
+                [
+                    int(opened.timestamp() * 1000),
+                    price,
+                    str(101 + n),
+                    str(99 + n),
+                    price,
+                    "100",
+                    int((opened + timedelta(days=1, milliseconds=-1)).timestamp() * 1000),
+                    "100000",
+                ]
+            )
 
         def public_fixture(path, params, evidence_root, kind, **kwargs):
             started = data.utc_text(datetime.now(timezone.utc))
-            raw = info if kind == "binance_exchange_info" else candles if kind == "binance_klines" else {
-                "symbol": params["symbol"], "bidPrice": "220", "askPrice": "220", "bidQty": "100", "askQty": "100"}
-            ev = data.capture_raw_evidence(json.dumps(raw).encode(), evidence_root,
-                   source_url="https://api.binance.com"+path, received_at=data.utc_text(datetime.now(timezone.utc)),
-                   kind=kind, request={**params, "request_started_at": started})
+            raw = (
+                info
+                if kind == "binance_exchange_info"
+                else candles
+                if kind == "binance_klines"
+                else {
+                    "symbol": params["symbol"],
+                    "bidPrice": "220",
+                    "askPrice": "220",
+                    "bidQty": "100",
+                    "askQty": "100",
+                }
+            )
+            ev = data.capture_raw_evidence(
+                json.dumps(raw).encode(),
+                evidence_root,
+                source_url="https://api.binance.com" + path,
+                received_at=data.utc_text(datetime.now(timezone.utc)),
+                kind=kind,
+                request={**params, "request_started_at": started},
+            )
             return raw, ev, started
 
-        with tempfile.TemporaryDirectory() as folder:
-            with patch("idxsig.runtime.collect._fetch", side_effect=public_fixture), patch(
-                    "urllib.request.OpenerDirector.open", side_effect=AssertionError("unexpected network")):
-                result = capture(folder)
+        stamper = FixtureStamper()
+        with (
+            tempfile.TemporaryDirectory() as folder,
+            patch("idxsig.runtime.time_anchor._checker", return_value=stamper),
+        ):
+            with (
+                patch("idxsig.runtime.collect._fetch", side_effect=public_fixture),
+                patch(
+                    "urllib.request.OpenerDirector.open",
+                    side_effect=AssertionError("unexpected network"),
+                ),
+            ):
+                result = capture(folder, timestamp_decisions=True)
             account_view = result["payload"]["account"]
             self.assertEqual(len(account_view["fills"]), 2)
             for fill in account_view["fills"]:
                 order = next(o for o in account_view["orders"] if o["id"] == fill["intent_id"])
-                self.assertLess(data.parse_time(order["made_at"]), data.parse_time(fill["received_at"]))
+                self.assertLess(
+                    data.parse_time(order["made_at"]), data.parse_time(fill["received_at"])
+                )
                 self.assertIsNone(fill["source_time"])
                 self.assertTrue(fill["simulation_only"])
             self.assertEqual(verify(folder)["runs"], 2)
+            trace = next(
+                row
+                for row in read_attempts(folder)
+                if row["detector_version"] == "KOD_PUBLIC_CAPTURE_V1"
+            )
+            self.assertNotEqual(trace["links"]["decision_run_id"], trace["links"]["run_id"])
+            anchored = storage.read_json(
+                Path(folder) / "timing" / "anchors" / trace["links"]["anchor_id"] / "payload.json"
+            )
+            self.assertEqual(anchored["run_id"], trace["links"]["decision_run_id"])
+            self.assertEqual(trace["links"]["run_id"], result["payload"]["run"]["id"])
+            self.assertEqual(stamper.calls, 1)
 
 
 if __name__ == "__main__":

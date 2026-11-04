@@ -1,0 +1,33 @@
+{
+  "schema_version": "KOD_COST_PROFILE_V1",
+  "id": "HERMES_CRYPTO_003_PER_SIDE_LEGACY_V1",
+  "version": 1,
+  "venue": "HISTORICAL_STUDY_PROXY",
+  "quote_currency": "USDT",
+  "valid_from": "2026-11-04T00:00:00Z",
+  "valid_until": null,
+  "validity_meaning": "New descriptive wrapper for a preserved historical assumption; never changes original results or their date.",
+  "buy_fee_fraction": "0.003",
+  "sell_fee_fraction": "0.003",
+  "buy_slippage_fraction": null,
+  "sell_slippage_fraction": null,
+  "fx_cost_fraction": null,
+  "spread_convention": "OBSERVED_BID_ASK",
+  "verification_status": "HISTORICAL_STUDY_ASSUMPTION",
+  "account_applicability": "UNKNOWN",
+  "verified_at": null,
+  "source_reviewed_on": "2026-11-04",
+  "max_quote_age_seconds": 30,
+  "sources": [
+    {
+      "kind": "preserved_research_protocol",
+      "path": "docs/research_sources/hermes_20261104/03_PROTOCOL_COMBO_HOLDOUT_v1.md",
+      "original_commit": "c7c84127e94b6debf691d321fa553377dc4af575"
+    }
+  ],
+  "limitations": [
+    "Describes the old three-tenths-percent assumption, not a verified broker fee schedule.",
+    "No corrected historical return series or trade replay is produced.",
+    "Original protocols, labels, hashes and recorded values remain authoritative for original studies."
+  ]
+}

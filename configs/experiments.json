@@ -230,9 +230,9 @@
     },
     {
       "id": "TIMING_ATTRIBUTION_v1",
-      "status": "PLANNED",
-      "evidence_level": "PROTOCOL_ONLY",
-      "summary": "Offline stage-delay diagnostic implemented; next 30 scheduled attempts proposed before selecting a new detector. No trial started.",
+      "status": "OBSERVATION_READY",
+      "evidence_level": "ENGINEERING_TESTED",
+      "summary": "Automatic runtime, per-intent paper, failed-attempt and source-request timing connected; synthetic end-to-end validation only. No prospective market trial started.",
       "live_eligible": false,
       "sources": [
         {
@@ -242,9 +242,117 @@
         }
       ],
       "limitations": [
-        "Synthetic tests establish engineering behavior only.",
-        "Source availability and actual queue coverage must be evidenced.",
-        "Early ignition, peer participation and prepared catalysts remain hypotheses; no new market result."
+        "Operational delays are descriptive, not predictive edge.",
+        "Old research references, detectors and economics remain unchanged.",
+        "The early-entry close rule still applies; no new historical study was run."
+      ]
+    },
+    {
+      "id": "TIMING_CAPTURE_v1",
+      "status": "OBSERVATION_READY",
+      "evidence_level": "ENGINEERING_TESTED",
+      "summary": "Connected prospective instrumentation with retained membership, missing observations, immutable timing history and read-only Timing view.",
+      "live_eligible": false,
+      "sources": [
+        {
+          "path": "handoff/astra/protocols/TIMING_CAPTURE_v1/PROTOCOL.md",
+          "ref_type": "working_tree",
+          "ref": null
+        }
+      ],
+      "limitations": [
+        "Synthetic engineering evidence only; no claim of profitable or independent prospective results.",
+        "New schedules, trial promotion and real orders are not enabled."
+      ]
+    },
+    {
+      "id": "CLOCK_INTEGRITY_v1",
+      "status": "OBSERVATION_READY",
+      "evidence_level": "ENGINEERING_TESTED",
+      "summary": "Host-clock measurement when available, monotonic durations, distinct exchange clock skew and opt-in external decision-batch anchors.",
+      "live_eligible": false,
+      "sources": [
+        {
+          "path": "handoff/astra/protocols/TIMING_CAPTURE_v1/PROTOCOL.md",
+          "ref_type": "working_tree",
+          "ref": null
+        }
+      ],
+      "limitations": [
+        "Synthetic engineering evidence only; no claim of profitable or independent prospective results.",
+        "New schedules, trial promotion and real orders are not enabled."
+      ]
+    },
+    {
+      "id": "INTRADAY_OBSERVATION_v1",
+      "status": "OBSERVATION_READY",
+      "evidence_level": "ENGINEERING_TESTED",
+      "summary": "Finite scheduled completed-bar and quote/depth capture. No ignition detector, strategy or orders.",
+      "live_eligible": false,
+      "sources": [
+        {
+          "path": "handoff/astra/protocols/TIMING_CAPTURE_v1/PROTOCOL.md",
+          "ref_type": "working_tree",
+          "ref": null
+        }
+      ],
+      "limitations": [
+        "Synthetic engineering evidence only; no claim of profitable or independent prospective results.",
+        "New schedules, trial promotion and real orders are not enabled."
+      ]
+    },
+    {
+      "id": "CATALYST_PREPARATION_v1",
+      "status": "OBSERVATION_READY",
+      "evidence_level": "ENGINEERING_TESTED",
+      "summary": "Supplied source-backed event versions and prewritten research branches with exact availability cutoffs.",
+      "live_eligible": false,
+      "sources": [
+        {
+          "path": "handoff/astra/protocols/TIMING_CAPTURE_v1/PROTOCOL.md",
+          "ref_type": "working_tree",
+          "ref": null
+        }
+      ],
+      "limitations": [
+        "Synthetic engineering evidence only; no claim of profitable or independent prospective results.",
+        "New schedules, trial promotion and real orders are not enabled."
+      ]
+    },
+    {
+      "id": "SHADOW_EXECUTABILITY_v1",
+      "status": "OBSERVATION_READY",
+      "evidence_level": "ENGINEERING_TESTED",
+      "summary": "Post-availability quote checks alongside original forecast labels; owner venue and costs remain explicit.",
+      "live_eligible": false,
+      "sources": [
+        {
+          "path": "handoff/astra/protocols/TIMING_CAPTURE_v1/PROTOCOL.md",
+          "ref_type": "working_tree",
+          "ref": null
+        }
+      ],
+      "limitations": [
+        "Synthetic engineering evidence only; no claim of profitable or independent prospective results.",
+        "New schedules, trial promotion and real orders are not enabled."
+      ]
+    },
+    {
+      "id": "AVOID_OBSERVATIONS_v1",
+      "status": "OBSERVATION_READY",
+      "evidence_level": "ENGINEERING_TESTED",
+      "summary": "Source-backed hypothesis observations; no universal veto, automatic ranking or sixty-decision trial.",
+      "live_eligible": false,
+      "sources": [
+        {
+          "path": "handoff/astra/protocols/TIMING_CAPTURE_v1/PROTOCOL.md",
+          "ref_type": "working_tree",
+          "ref": null
+        }
+      ],
+      "limitations": [
+        "Synthetic engineering evidence only; no claim of profitable or independent prospective results.",
+        "New schedules, trial promotion and real orders are not enabled."
       ]
     }
   ]

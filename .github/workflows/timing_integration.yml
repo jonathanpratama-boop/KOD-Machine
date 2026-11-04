@@ -1,0 +1,59 @@
+name: Timing integration review
+
+on:
+  push:
+    branches: ['astra/timing-integration-*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: timing-review-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  timing-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            requirements-runtime.txt
+            constraints-runtime.txt
+            idx-signals/requirements.txt
+            idx-signals/constraints-research.txt
+      - run: python -m pip install -r requirements-runtime.txt ruff==0.14.3
+      - name: Preserve original history and code identities
+        run: |
+          git config core.hooksPath .githooks
+          python tools/check_append_only.py --range c2e9c54ba85c591c2ed5628295159335667a1b84..HEAD
+          python tools/check_live_style.py
+      - name: Full offline engineering release
+        run: python tools/check_runtime_release.py --mode full
+      - name: Tooling regression tests
+        run: python -m unittest discover -s tools/ci_tests -v
+      - name: Before and after historical byte and timestamp coverage
+        run: |
+          git worktree add --detach "$RUNNER_TEMP/kod-before" c2e9c54ba85c591c2ed5628295159335667a1b84
+          kod_history_before_status=0
+          python tools/check_history_integrity.py --root "$RUNNER_TEMP/kod-before" --snapshot "$RUNNER_TEMP/history-before-bytes.json" --report "$RUNNER_TEMP/history-before-audit.json" || kod_history_before_status=$?
+          kod_history_after_status=0
+          python tools/check_history_integrity.py --compare "$RUNNER_TEMP/history-before-bytes.json" --report "$RUNNER_TEMP/history-after-audit.json" || kod_history_after_status=$?
+          test "$kod_history_before_status" -eq 0
+          test "$kod_history_after_status" -eq 0
+      - name: Retain explicit verification coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: timing-history-coverage-${{ github.run_id }}
+          path: ${{ runner.temp }}/history-*.json
+          if-no-files-found: warn

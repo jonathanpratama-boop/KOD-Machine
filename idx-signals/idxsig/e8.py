@@ -64,9 +64,12 @@ def load(manifest: Path, last_hour: pd.Timestamp = LAST_HOUR) -> tuple[e6.Hourly
         parts = []
         for r in sorted(rs, key=lambda r: r["month"]):
             df = e6._read_zip(PKG_ROOT / "data" / "raw" / r["file"])
-            unit = "us" if df["open_time"].max() > 1e14 else "ms"
+            from .market_time import binance_datetimes, binance_time_unit
+
+            units = {binance_time_unit(value) for value in df["open_time"]}
+            unit = next(iter(units)) if len(units) == 1 else "mixed"
             checks["unit"][unit] = checks["unit"].get(unit, 0) + 1
-            ts = pd.to_datetime(df["open_time"], unit=unit, utc=True)
+            ts = binance_datetimes(df["open_time"])
             checks["nonmonotonic_files"] += int(not ts.is_monotonic_increasing)
             checks["off_hour_bars"] += int(((ts.dt.minute != 0) | (ts.dt.second != 0)).sum())
             df["t"] = ts

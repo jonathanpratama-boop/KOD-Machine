@@ -60,7 +60,7 @@ DAY = 86_400_000
 
 # ---------------------------------------------------------------------------------- network
 def _get(url: str, retries: int = 3, timeout: int = 25):
-    """GET JSON with a few retries. A 418/429 (ban or rate limit) is not retried: stop and say so."""
+    """GET JSON with bounded retries; access blocks and rate limits stop immediately."""
     last = None
     for attempt in range(retries):
         try:
@@ -68,6 +68,8 @@ def _get(url: str, retries: int = 3, timeout: int = 25):
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 return json.loads(resp.read())
         except urllib.error.HTTPError as exc:
+            if exc.code in (403, 451):
+                raise RuntimeError(f"access blocked by Binance (HTTP {exc.code}) on {url}") from exc
             if exc.code in (418, 429):
                 raise RuntimeError(f"rate limited by Binance (HTTP {exc.code}) on {url}") from exc
             last = exc
