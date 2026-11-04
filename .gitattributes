@@ -1,2 +1,4 @@
 idx-signals/data/archive/**/*.tar.xz filter=lfs diff=lfs merge=lfs -text
 idx-signals/data/archive/**/*.csv.gz filter=lfs diff=lfs merge=lfs -text
+# Real captured samples are exact outside bytes: no checkout may convert their line endings.
+idx-signals/tests/fixtures/real/** -text
