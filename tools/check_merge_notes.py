@@ -16,6 +16,10 @@ What is checked, on the first-parent line of the range (the commits that landed 
     PAPER_LOGS and handoff/merges/.
   * The note is added by the merge's own diff (in the merge commit or on the merged branch), or by
     a non-merge commit in the same range; one note satisfies one merge.
+  * Both count only what is new to the branch since BASE: a changed path whose content equals
+    BASE's, and a note that BASE already has, are left out. So a merge made on a stale copy of the
+    branch (first parent older than BASE) neither needs a note for code that reached the branch
+    before the push nor reuses a note that an earlier merge added.
   * A note is valid when its name is a calendar date plus a lowercase slug, and each of Q1..Q6 has
     exactly one "Answer:" line (yes, no or n.a.) and one filled "Evidence:" line; Q4 answers yes
     and has one "Architect:" line. Every note offered for a merge is validated.
@@ -215,7 +219,7 @@ def check(commits: ci_push.CommitRange, introduction: Introduction) -> int:
                 f"branch at {commits.base[:12]}"
             )
             continue
-        own = added_notes(parents[0], merge)
+        own = added_notes(parents[0], merge, commits.base)
         errors = [error for error in map(note_error, own) if error]
         for error in errors:
             print(error)
@@ -224,7 +228,7 @@ def check(commits: ci_push.CommitRange, introduction: Introduction) -> int:
             if not errors:
                 print(f"merge notes: {label}: OK, note {', '.join(note.path for note in own)}")
             continue
-        needed = code_paths(ci_push.changed_paths(parents[0], merge))
+        needed = code_paths(new_to_branch(parents[0], merge, commits.base))
         if needed:
             waiting.append((label, merge, needed))
         else:
@@ -232,7 +236,7 @@ def check(commits: ci_push.CommitRange, introduction: Introduction) -> int:
                 f"merge notes: {label}: no note needed: it changes only paper logs and merge notes"
             )
     if waiting:
-        failures += pair_range_notes(line, waiting)
+        failures += pair_range_notes(line, waiting, commits.base)
     if failures:
         print(f"merge notes: FAIL, {failures} problem(s) in {commits}")
         return 1
@@ -249,14 +253,14 @@ def already_on_branch(parents: list[str], base: str | None) -> bool:
 
 
 def pair_range_notes(
-    line: list[tuple[str, list[str]]], waiting: list[tuple[str, str, list[str]]]
+    line: list[tuple[str, list[str]]], waiting: list[tuple[str, str, list[str]]], base: str | None
 ) -> int:
     """Give each waiting merge a note added by a non-merge commit in the range; count failures."""
     offered = [
         note
         for sha, parents in line
         if len(parents) <= 1
-        for note in added_notes(parents[0] if parents else ci_push.EMPTY_TREE, sha)
+        for note in added_notes(parents[0] if parents else ci_push.EMPTY_TREE, sha, base)
     ]
     failures, valid = 0, []
     for note in offered:
@@ -278,8 +282,25 @@ def pair_range_notes(
     return failures
 
 
-def added_notes(old: str, new: str) -> list[Note]:
-    added = ci_push.changed_paths(old, new, added_only=True, under=NOTE_DIR)
+def new_to_branch(
+    old: str, new: str, base: str | None, *, added_only: bool = False, under: str = ""
+) -> list[str]:
+    """The paths `new` changes against `old` that it also changes against BASE.
+
+    With added_only, the paths it adds against both, so a note BASE already has never counts.
+    Against a first parent older than BASE the diff also shows what reached the branch between
+    that parent and BASE; those paths match BASE and are dropped. A head-only read (no BASE)
+    keeps every path.
+    """
+    paths = ci_push.changed_paths(old, new, added_only=added_only, under=under)
+    if base is None:
+        return paths
+    new_paths = set(ci_push.changed_paths(base, new, added_only=added_only, under=under))
+    return [path for path in paths if path in new_paths]
+
+
+def added_notes(old: str, new: str, base: str | None) -> list[Note]:
+    added = new_to_branch(old, new, base, added_only=True, under=NOTE_DIR)
     return [Note(path, new) for path in added if path not in NOT_NOTES]
 
 

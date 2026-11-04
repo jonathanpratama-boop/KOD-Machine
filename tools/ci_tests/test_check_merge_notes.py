@@ -250,6 +250,35 @@ class MergeHistoryTests(unittest.TestCase):
             error,
         )
 
+    def test_merge_on_a_stale_first_parent_counts_only_what_is_new_to_the_branch(self):
+        stale = self.repo.head()
+        earlier_note = "handoff/merges/2026-11-03-feature-one.md"
+        self.branch(
+            "feature/one", {"idx-signals/idxsig/one.py": "ONE = 1\n", earlier_note: filled()}
+        )
+        published = self.repo.merge("feature/one", "Merge feature/one")
+        self.assertEqual(self.check("--push", stale, published).returncode, 0)
+        two = "idx-signals/idxsig/two.py"
+        cases = {  # what feature/two adds on top of `published`, and the expected result
+            "code": ({two: "TWO = 1\n"}, 1, f"changes code or configuration ({two}) but adds no"),
+            "noted": ({two: "TWO = 1\n", NOTE: filled()}, 0, f"OK, note {NOTE}\n"),
+            "paper": ({}, 0, "no note needed: it changes only paper logs and merge notes"),
+        }
+        for kind, (files, code, expected) in cases.items():
+            with self.subTest(kind=kind):
+                self.repo.git("checkout", "-q", "-b", f"feature/two-{kind}", published)
+                self.repo.append(LEDGER, f'{{"scan": "{kind}"}}\n')
+                self.repo.commit(f"work on feature/two-{kind}", files)
+                self.repo.git("checkout", "-q", "-b", f"stale-{kind}", stale)
+                merge = self.repo.merge(f"feature/two-{kind}", f"Merge feature/two-{kind}")
+                # The merged branch contains `published`, so the push is a fast-forward.
+                self.repo.git("merge-base", "--is-ancestor", published, merge)
+                proc = self.check("--push", published, merge)
+                self.assertEqual(proc.returncode, code, proc.stdout)
+                self.assertIn(expected, proc.stdout)
+                self.assertNotIn(earlier_note, proc.stdout)
+                self.repo.git("checkout", "-q", "main")
+
     def test_merge_of_paper_logs_and_notes_only_needs_no_note(self):
         before = self.repo.head()
         self.repo.git("checkout", "-q", "-b", "paper", "main")
