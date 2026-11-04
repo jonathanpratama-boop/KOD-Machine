@@ -94,14 +94,16 @@ class ScopeTests(unittest.TestCase):
     def test_api_error_runs(self):
         def fail(path): raise TimeoutError('secret must not be logged')
         selected,reason=ci.decide('push',event(),fail,lambda a,b: [('M',next(iter(ci.FORECAST_LOGS)))])
-        self.assertTrue(selected);self.assertNotIn('secret',reason)
+        self.assertTrue(selected)
+        self.assertNotIn('secret',reason)
 
     def test_malformed_api_runs(self):
         self.assertTrue(self.decide(get=lambda p: {},changes=[('M',next(iter(ci.FORECAST_LOGS)))]))
 
     def test_wrong_parent_sha_or_workflow_runs(self):
         for field,value in (('head_sha',B),('path','.github/workflows/other.yml'),('event','pull_request')):
-            r=run(A,'push');r[field]=value
+            r=run(A,'push')
+            r[field]=value
             with self.subTest(field=field):
                 self.assertTrue(self.decide(get=api(pushes=[r]),changes=[('M',next(iter(ci.FORECAST_LOGS)))]))
 
@@ -120,11 +122,13 @@ class ScopeTests(unittest.TestCase):
         self.assertTrue(self.decide(data=event('refs/tags/v1'),get=api(pushes=[run(A,'push')]),changes=[('M',next(iter(ci.FORECAST_LOGS)))]))
 
     def test_invalid_head_runs(self):
-        e=event();e['after']='not-a-sha'
+        e=event()
+        e['after']='not-a-sha'
         self.assertTrue(self.decide(data=e))
 
     def test_invalid_repository_runs_without_api(self):
-        e=event();e['repository']['full_name']='../evil'
+        e=event()
+        e['repository']['full_name']='../evil'
         self.assertTrue(self.decide(data=e,get=lambda p:self.fail('invalid repository used')))
 
     def test_diff_error_runs(self):
@@ -133,14 +137,16 @@ class ScopeTests(unittest.TestCase):
 
     def test_output_fails_open_on_bad_event(self):
         with tempfile.TemporaryDirectory() as td:
-            p=Path(td);(p/'event').write_text('{')
+            p=Path(td)
+            (p/'event').write_text('{')
             with patch.dict(os.environ,{'GITHUB_EVENT_PATH':str(p/'event'),'GITHUB_OUTPUT':str(p/'output')}):
                 ci.main()
             self.assertEqual((p/'output').read_text(),'run-tests=true\n')
 
     def test_forecast_allowlist_is_append_only_protected(self):
         spec=importlib.util.spec_from_file_location('append_only',ROOT/'tools/check_append_only.py')
-        module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+        module=importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
         self.assertTrue(ci.FORECAST_LOGS <= set(module.APPEND_ONLY))
 
 
@@ -148,19 +154,35 @@ class GitDiffTests(unittest.TestCase):
     def test_multi_commit_and_rename_detection(self):
         with tempfile.TemporaryDirectory() as td:
             def git(*args): return subprocess.check_output(['git','-C',td,*args],stderr=subprocess.DEVNULL).decode().strip()
-            git('init');git('config','user.name','Test');git('config','user.email','test@local')
-            p=Path(td);(p/'start').write_text('one');git('add','.');git('commit','-m','start');before=git('rev-parse','HEAD')
-            (p/'code.py').write_text('x=1');git('add','.');git('commit','-m','code')
-            (p/'start').rename(p/'renamed');git('add','-A');git('commit','-m','rename');after=git('rev-parse','HEAD')
+            git('init')
+            git('config','user.name','Test')
+            git('config','user.email','test@local')
+            p=Path(td)
+            (p/'start').write_text('one')
+            git('add','.')
+            git('commit','-m','start')
+            before=git('rev-parse','HEAD')
+            (p/'code.py').write_text('x=1')
+            git('add','.')
+            git('commit','-m','code')
+            (p/'start').rename(p/'renamed')
+            git('add','-A')
+            git('commit','-m','rename')
+            after=git('rev-parse','HEAD')
             old=os.getcwd()
             try:
                 os.chdir(td)
                 changes=ci.changed_files(before,after)
-                self.assertIn(('A','code.py'),changes);self.assertIn(('D','start'),changes)
+                self.assertIn(('A','code.py'),changes)
+                self.assertIn(('D','start'),changes)
                 self.assertIn(('A','renamed'),changes)
-                with self.assertRaises(subprocess.CalledProcessError): ci.changed_files(after,before)
-                with self.assertRaises(ValueError): ci.changed_files('0'*40,after)
-            finally: os.chdir(old)
+                with self.assertRaises(subprocess.CalledProcessError):
+                    ci.changed_files(after,before)
+                with self.assertRaises(ValueError):
+                    ci.changed_files('0'*40,after)
+            finally:
+                os.chdir(old)
 
 
-if __name__ == '__main__': unittest.main()
+if __name__ == '__main__':
+    unittest.main()
