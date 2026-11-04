@@ -43,10 +43,26 @@ def resolve_futures_symbol(symbol: str, *, at: str | None = None) -> dict:
         moment = moment.astimezone(timezone.utc)
     match = next((item for item in CONTRACT_MAPPINGS if item.futures_symbol == symbol), None)
     if match is None:
-        return {"status": "UNMAPPED", "futures_symbol": symbol, "spot_symbol": None,
-                "base_units_per_contract": None, "availability": "UNKNOWN"}
-    if moment is not None and moment < datetime.fromisoformat(match.effective_from.replace("Z", "+00:00")):
-        return {"status": "NOT_YET_EFFECTIVE", "futures_symbol": symbol, "spot_symbol": None,
-                "base_units_per_contract": None, "availability": "UNKNOWN"}
-    return {**asdict(match), "status": "MAPPED", "availability": "REQUIRES_AS_OF_EXCHANGE_METADATA",
-            "funding_rate_multiplier": 1}
+        return {
+            "status": "UNMAPPED",
+            "futures_symbol": symbol,
+            "spot_symbol": None,
+            "base_units_per_contract": None,
+            "availability": "UNKNOWN",
+        }
+    if moment is not None and moment < datetime.fromisoformat(
+        match.effective_from.replace("Z", "+00:00")
+    ):
+        return {
+            "status": "NOT_YET_EFFECTIVE",
+            "futures_symbol": symbol,
+            "spot_symbol": None,
+            "base_units_per_contract": None,
+            "availability": "UNKNOWN",
+        }
+    return {
+        **asdict(match),
+        "status": "MAPPED",
+        "availability": "REQUIRES_AS_OF_EXCHANGE_METADATA",
+        "funding_rate_multiplier": 1,
+    }

@@ -1,4 +1,5 @@
 """System invariants across input validation, journal replay and workstation output."""
+
 import json
 from pathlib import Path
 import tempfile
@@ -64,7 +65,9 @@ class CoordinatorTests(unittest.TestCase):
 
     def test_interruption_after_fills_recovers_without_duplicates(self):
         self.run_cycle(0)
-        with patch.object(c.PaperAccount, "mark", side_effect=OSError("simulated interrupted write")):
+        with patch.object(
+            c.PaperAccount, "mark", side_effect=OSError("simulated interrupted write")
+        ):
             with self.assertRaises(OSError):
                 self.run_cycle(1)
         self.assertTrue((self.root / "pending.json").exists())
@@ -94,7 +97,9 @@ class CoordinatorTests(unittest.TestCase):
         atomic_json(self.paths[1], self.snapshots[1])
         second = self.run_cycle(1)
         self.assertEqual(second["payload"]["candidates"], first["payload"]["candidates"])
-        self.assertTrue(all(g["coverage"] == 1 for g in second["payload"]["market_context"]["groups"]))
+        self.assertTrue(
+            all(g["coverage"] == 1 for g in second["payload"]["market_context"]["groups"])
+        )
 
     def test_forward_profile_cannot_be_backdated_with_once(self):
         self.profile["execution_mode"] = "FORWARD_PAPER_CAPTURE"
@@ -112,8 +117,15 @@ class CoordinatorTests(unittest.TestCase):
         from contextlib import redirect_stderr
         from idxsig.runtime.__main__ import main
         from idxsig.runtime.collect import PublicDataUnavailable
+
         errors = io.StringIO()
-        with patch("idxsig.runtime.capture.collect_binance_spot", side_effect=PublicDataUnavailable("HTTP 451")), redirect_stderr(errors):
+        with (
+            patch(
+                "idxsig.runtime.capture.collect_binance_spot",
+                side_effect=PublicDataUnavailable("HTTP 451"),
+            ),
+            redirect_stderr(errors),
+        ):
             result = main(["--root", str(self.root), "capture"])
         self.assertEqual(result, 1)
         self.assertEqual(json.loads(errors.getvalue())["status"], "BLOCKED")
@@ -125,26 +137,70 @@ class CoordinatorTests(unittest.TestCase):
         from datetime import datetime, timedelta, timezone
         from idxsig.runtime.capture import capture
         from idxsig.runtime.data import capture_raw_evidence, utc_text
+
         today = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
-        info = {"symbols": [{"symbol": symbol, "baseAsset": symbol[:-4], "quoteAsset": "USDT", "status": "TRADING",
-                              "isSpotTradingAllowed": True,
-                              "filters": [{"filterType": "PRICE_FILTER", "tickSize": ".01"},
-                                          {"filterType": "LOT_SIZE", "stepSize": ".001", "minQty": ".001", "maxQty": "100"},
-                                          {"filterType": "MIN_NOTIONAL", "minNotional": "5"}]}
-                             for symbol in ("BTCUSDT", "ETHUSDT")]}
+        info = {
+            "symbols": [
+                {
+                    "symbol": symbol,
+                    "baseAsset": symbol[:-4],
+                    "quoteAsset": "USDT",
+                    "status": "TRADING",
+                    "isSpotTradingAllowed": True,
+                    "filters": [
+                        {"filterType": "PRICE_FILTER", "tickSize": ".01"},
+                        {
+                            "filterType": "LOT_SIZE",
+                            "stepSize": ".001",
+                            "minQty": ".001",
+                            "maxQty": "100",
+                        },
+                        {"filterType": "MIN_NOTIONAL", "minNotional": "5"},
+                    ],
+                }
+                for symbol in ("BTCUSDT", "ETHUSDT")
+            ]
+        }
         candles = []
         for index in range(40):
-            opening = today - timedelta(days=40-index)
+            opening = today - timedelta(days=40 - index)
             px = str(100 + index)
-            candles.append([int(opening.timestamp()*1000), px, str(101+index), str(99+index), px, "10000",
-                            int((opening+timedelta(days=1,milliseconds=-1)).timestamp()*1000), "1000000"])
+            candles.append(
+                [
+                    int(opening.timestamp() * 1000),
+                    px,
+                    str(101 + index),
+                    str(99 + index),
+                    px,
+                    "10000",
+                    int((opening + timedelta(days=1, milliseconds=-1)).timestamp() * 1000),
+                    "1000000",
+                ]
+            )
 
         def source(path, params, evidence_root, kind, **kwargs):
-            raw = info if kind == "binance_exchange_info" else candles if kind == "binance_klines" else {
-                "symbol": params["symbol"], "bidPrice": "139.00", "askPrice": "139.01", "bidQty": "100", "askQty": "100"}
+            raw = (
+                info
+                if kind == "binance_exchange_info"
+                else candles
+                if kind == "binance_klines"
+                else {
+                    "symbol": params["symbol"],
+                    "bidPrice": "139.00",
+                    "askPrice": "139.01",
+                    "bidQty": "100",
+                    "askQty": "100",
+                }
+            )
             stamp = utc_text(datetime.now(timezone.utc))
-            record = capture_raw_evidence(json.dumps(raw).encode(), evidence_root, source_url="https://api.binance.com"+path,
-                                           received_at=stamp, kind=kind, request={**params,"request_started_at":stamp})
+            record = capture_raw_evidence(
+                json.dumps(raw).encode(),
+                evidence_root,
+                source_url="https://api.binance.com" + path,
+                received_at=stamp,
+                kind=kind,
+                request={**params, "request_started_at": stamp},
+            )
             return raw, record, stamp
 
         with patch("idxsig.runtime.collect._fetch", side_effect=source):
@@ -156,5 +212,7 @@ class CoordinatorTests(unittest.TestCase):
         intents = {r["id"]: r for r in payload["account"]["orders"]}
         for fill in payload["account"]["fills"]:
             self.assertGreater(fill["received_at"], intents[fill["intent_id"]]["made_at"])
-        self.assertNotIn("max_notional", read_json(self.root/"profile.json")["instruments"]["BTCUSDT"])
+        self.assertNotIn(
+            "max_notional", read_json(self.root / "profile.json")["instruments"]["BTCUSDT"]
+        )
         self.assertTrue(c.verify(self.root)["ok"])

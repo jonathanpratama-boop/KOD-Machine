@@ -54,7 +54,7 @@ def main(argv: list[str] | None = None) -> int:
     paths, _ = load_scope()
     prefix = [sys.executable, "-m", "ruff"]
     if not args.lint_only:
-        command = [*prefix, "format", *( [] if args.format else ["--check"]), *paths]
+        command = [*prefix, "format", *([] if args.format else ["--check"]), *paths]
         subprocess.run(command, cwd=ROOT, check=True)
     subprocess.run([*prefix, "check", *paths], cwd=ROOT, check=True)
     load_scope()  # Formatting must not have changed a preserved anchor.

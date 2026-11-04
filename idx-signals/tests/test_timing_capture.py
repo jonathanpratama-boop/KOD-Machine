@@ -5,8 +5,14 @@ import unittest
 from pathlib import Path
 
 from idxsig.timing_capture import (
-    append_attempt, from_legacy, legacy_records, make_attempt, read_attempts,
-    summarize, validate_attempt, verify,
+    append_attempt,
+    from_legacy,
+    legacy_records,
+    make_attempt,
+    read_attempts,
+    summarize,
+    validate_attempt,
+    verify,
 )
 from idxsig.timing_research import diagnose
 
@@ -21,12 +27,21 @@ T6 = "2026-11-04T00:00:06Z"
 
 def attempt(identifier="a", **overrides):
     values = dict(
-        detector_version="FIXED_COMPARATOR_v1", universe_snapshot_id="u1",
-        evidence_id="e1", evidence_kind="synthetic", recorded_at=T5,
-        status="DECIDED", source="fixture", times={
-            "scheduled_at": T0, "started_at": T0, "published_at": T0,
-            "received_at": T1, "features_ready_at": T2,
-            "detected_at": T3, "decision_at": T4,
+        detector_version="FIXED_COMPARATOR_v1",
+        universe_snapshot_id="u1",
+        evidence_id="e1",
+        evidence_kind="synthetic",
+        recorded_at=T5,
+        status="DECIDED",
+        source="fixture",
+        times={
+            "scheduled_at": T0,
+            "started_at": T0,
+            "published_at": T0,
+            "received_at": T1,
+            "features_ready_at": T2,
+            "detected_at": T3,
+            "decision_at": T4,
         },
     )
     values.update(overrides)
@@ -46,9 +61,12 @@ class TimingCaptureTests(unittest.TestCase):
         self.assertFalse(report["entry_permission"])
 
     def test_synthetic_recorded_and_prospective_not_pooled(self):
-        rows = [attempt(), attempt("b", evidence_kind="recorded"),
-                attempt("c", evidence_kind="prospective"),
-                attempt("d", detector_version="OTHER_v1")]
+        rows = [
+            attempt(),
+            attempt("b", evidence_kind="recorded"),
+            attempt("c", evidence_kind="prospective"),
+            attempt("d", detector_version="OTHER_v1"),
+        ]
         report = summarize(rows, as_of=T5)
         self.assertEqual(len(report["cohorts"]), 4)
         self.assertEqual(len(report["source_latency"]), 3)
@@ -69,13 +87,23 @@ class TimingCaptureTests(unittest.TestCase):
             validate_attempt(row)
 
     def test_empty_wrong_container_types_are_not_silently_defaulted(self):
-        for field in ("times", "threshold", "clock", "durations_ns", "links", "prices", "external_timestamp"):
+        for field in (
+            "times",
+            "threshold",
+            "clock",
+            "durations_ns",
+            "links",
+            "prices",
+            "external_timestamp",
+        ):
             with self.subTest(field=field), self.assertRaises(ValueError):
                 attempt(**{field: []})
 
     def test_recorded_receipt_can_precede_replay_start(self):
-        row = attempt(evidence_kind="recorded", times={"received_at": T0, "started_at": T1,
-                                                       "features_ready_at": T2, "decision_at": T3})
+        row = attempt(
+            evidence_kind="recorded",
+            times={"received_at": T0, "started_at": T1, "features_ready_at": T2, "decision_at": T3},
+        )
         self.assertEqual(row["received_at"], T0)
         with self.assertRaisesRegex(ValueError, "precedes"):
             attempt(times={"started_at": T3, "features_ready_at": T2}, status="COMPLETED")
@@ -103,7 +131,9 @@ class TimingCaptureTests(unittest.TestCase):
         report = summarize([row], as_of=T5)
         self.assertEqual(report["source_latency"][0]["clock_conflicts"], 1)
         self.assertEqual(report["source_latency"][0]["lag"]["unknown"], 1)
-        self.assertEqual(report["records"][0]["signed_clock_differences_seconds"]["source_to_receipt"], -5)
+        self.assertEqual(
+            report["records"][0]["signed_clock_differences_seconds"]["source_to_receipt"], -5
+        )
         self.assertIsNone(report["records"][0]["seconds"]["source_to_receipt"])
 
     def test_threshold_requires_real_basis_evidence_and_causal_time(self):
@@ -115,20 +145,45 @@ class TimingCaptureTests(unittest.TestCase):
         ):
             with self.assertRaises(ValueError):
                 attempt(threshold=threshold)
-        row = attempt(threshold={"at": T0, "basis": "COMPLETED_BAR", "evidence_id": "bar1", "reference_at": None})
+        row = attempt(
+            threshold={
+                "at": T0,
+                "basis": "COMPLETED_BAR",
+                "evidence_id": "bar1",
+                "reference_at": None,
+            }
+        )
         detail = summarize([row], as_of=T5)["records"][0]
         self.assertIsNone(detail["seconds"]["threshold"])
         self.assertEqual(detail["seconds"]["collection_after_threshold"], 1)
 
     def test_clock_measurement_needs_evidence_and_time(self):
         with self.assertRaises(ValueError):
-            attempt(clock={"status": "MEASURED_EXTERNAL", "offset_seconds": 0.1,
-                           "observed_at": T0, "evidence_id": None})
+            attempt(
+                clock={
+                    "status": "MEASURED_EXTERNAL",
+                    "offset_seconds": 0.1,
+                    "observed_at": T0,
+                    "evidence_id": None,
+                }
+            )
         with self.assertRaises(ValueError):
-            attempt(clock={"status": "UNKNOWN", "offset_seconds": 0,
-                           "observed_at": None, "evidence_id": None})
-        row = attempt(clock={"status": "MEASURED_EXTERNAL", "offset_seconds": "-0.125",
-                             "observed_at": T0, "evidence_id": "clock-receipt"})
+            attempt(
+                clock={
+                    "status": "UNKNOWN",
+                    "offset_seconds": 0,
+                    "observed_at": None,
+                    "evidence_id": None,
+                }
+            )
+        row = attempt(
+            clock={
+                "status": "MEASURED_EXTERNAL",
+                "offset_seconds": "-0.125",
+                "observed_at": T0,
+                "evidence_id": "clock-receipt",
+            }
+        )
         self.assertEqual(row["clock"]["offset_seconds"], "-0.125")
 
     def test_monotonic_duration_independent_of_wall_clock_lag(self):
@@ -145,27 +200,56 @@ class TimingCaptureTests(unittest.TestCase):
             attempt(external_timestamp={"status": "VERIFIED"})
         with self.assertRaises(ValueError):
             attempt(external_timestamp={"status": "PRESENT_UNVERIFIED"})
-        row = attempt(external_timestamp={"status": "PRESENT_UNVERIFIED", "token_sha256": "a" * 64,
-                                          "evidence_id": "tsa-receipt"})
-        self.assertEqual(summarize([row], as_of=T5)["external_timestamp_statuses"], {"PRESENT_UNVERIFIED": 1})
+        row = attempt(
+            external_timestamp={
+                "status": "PRESENT_UNVERIFIED",
+                "token_sha256": "a" * 64,
+                "evidence_id": "tsa-receipt",
+            }
+        )
+        self.assertEqual(
+            summarize([row], as_of=T5)["external_timestamp_statuses"], {"PRESENT_UNVERIFIED": 1}
+        )
 
     def test_prices_require_time_identity_and_never_become_profit(self):
-        first = {"price": "100", "venue": "proxy", "symbol": "A", "currency": "USD",
-                 "evidence_id": "q1", "observed_at": T3}
+        first = {
+            "price": "100",
+            "venue": "proxy",
+            "symbol": "A",
+            "currency": "USD",
+            "evidence_id": "q1",
+            "observed_at": T3,
+        }
         second = dict(first, price="102", observed_at=T4, evidence_id="q2")
         row = attempt(prices={"detected_at": first, "decision_at": second})
         detail = summarize([row], as_of=T5)["records"][0]
         self.assertEqual(detail["price_drift_fraction"]["detected_at_to_decision_at"], "0.02")
-        mismatch = attempt(prices={"detected_at": first, "decision_at": dict(second, venue="another")})
-        self.assertIsNone(summarize([mismatch], as_of=T5)["records"][0]["price_drift_fraction"]["detected_at_to_decision_at"])
+        mismatch = attempt(
+            prices={"detected_at": first, "decision_at": dict(second, venue="another")}
+        )
+        self.assertIsNone(
+            summarize([mismatch], as_of=T5)["records"][0]["price_drift_fraction"][
+                "detected_at_to_decision_at"
+            ]
+        )
         with self.assertRaisesRegex(ValueError, "unavailable"):
             attempt(prices={"detected_at": dict(first, observed_at=T4)})
 
     def test_nonfinite_and_boolean_prices_rejected(self):
         for bad in ("NaN", "Infinity", True, 0, -1):
             with self.assertRaises(ValueError):
-                attempt(prices={"detected_at": {"price": bad, "venue": "proxy", "symbol": "A",
-                                                "currency": "USD", "evidence_id": "q1", "observed_at": T3}})
+                attempt(
+                    prices={
+                        "detected_at": {
+                            "price": bad,
+                            "venue": "proxy",
+                            "symbol": "A",
+                            "currency": "USD",
+                            "evidence_id": "q1",
+                            "observed_at": T3,
+                        }
+                    }
+                )
 
     def test_immutable_journal_retry_revision_and_as_of_read(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -187,8 +271,12 @@ class TimingCaptureTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             row = attempt()
             append_attempt(directory, row)
-            for key, value in (("decision_at", T5), ("evidence_id", "other"),
-                               ("universe_snapshot_id", "later-universe"), ("recorded_at", T4)):
+            for key, value in (
+                ("decision_at", T5),
+                ("evidence_id", "other"),
+                ("universe_snapshot_id", "later-universe"),
+                ("recorded_at", T4),
+            ):
                 changed = copy.deepcopy(row)
                 changed[key] = value
                 with self.assertRaises(ValueError):
@@ -204,11 +292,17 @@ class TimingCaptureTests(unittest.TestCase):
 
     def test_unknown_threshold_revision_preserves_known_reference(self):
         with tempfile.TemporaryDirectory() as directory:
-            row = attempt(threshold={"at": None, "basis": "UNKNOWN", "evidence_id": None,
-                                     "reference_at": T0})
+            row = attempt(
+                threshold={"at": None, "basis": "UNKNOWN", "evidence_id": None, "reference_at": T0}
+            )
             append_attempt(directory, row)
             changed = copy.deepcopy(row)
-            changed["threshold"] = {"at": T2, "basis": "QUOTE", "evidence_id": "q1", "reference_at": T1}
+            changed["threshold"] = {
+                "at": T2,
+                "basis": "QUOTE",
+                "evidence_id": "q1",
+                "reference_at": T1,
+            }
             with self.assertRaisesRegex(ValueError, "reference_at"):
                 append_attempt(directory, changed)
             changed["threshold"]["reference_at"] = T0
@@ -226,8 +320,12 @@ class TimingCaptureTests(unittest.TestCase):
             self.assertEqual(list(outside.iterdir()), [])
 
     def test_status_cannot_regress_or_erase_completed_decision(self):
-        for original, changed in (("DECIDED", "STARTED"), ("COMPLETED", "DETECTED"),
-                                  ("NO_ACTION", "UNKNOWN"), ("BLOCKED", "DECIDED")):
+        for original, changed in (
+            ("DECIDED", "STARTED"),
+            ("COMPLETED", "DETECTED"),
+            ("NO_ACTION", "UNKNOWN"),
+            ("BLOCKED", "DECIDED"),
+        ):
             with self.subTest(original=original), tempfile.TemporaryDirectory() as directory:
                 row = attempt(status=original)
                 append_attempt(directory, row)
@@ -240,15 +338,21 @@ class TimingCaptureTests(unittest.TestCase):
                 attempt(external_timestamp={"status": status, "token_sha256": "a" * 64})
 
     def test_old_input_receipt_without_publication_never_becomes_source_lag(self):
-        row = attempt(times={"started_at": T2, "received_at": T2, "decision_at": T4},
-                      links={"original_capture_at": T0}, source="RETAINED_INPUT_READ")
+        row = attempt(
+            times={"started_at": T2, "received_at": T2, "decision_at": T4},
+            links={"original_capture_at": T0},
+            source="RETAINED_INPUT_READ",
+        )
         report = summarize([row], as_of=T5)
         self.assertIsNone(report["source_latency"][0]["lag"]["median_seconds"])
         self.assertEqual(report["source_latency"][0]["lag"]["unknown"], 1)
 
     def test_status_cannot_claim_unobserved_decision_detection_or_fill(self):
         for status in ("DETECTED", "DECIDED", "FILLED"):
-            with self.subTest(status=status), self.assertRaisesRegex(ValueError, "requires an observed"):
+            with (
+                self.subTest(status=status),
+                self.assertRaisesRegex(ValueError, "requires an observed"),
+            ):
                 attempt(status=status, times={"received_at": T1})
 
     def test_journal_sequence_and_version_are_strict_integers(self):
@@ -258,7 +362,9 @@ class TimingCaptureTests(unittest.TestCase):
             with self.subTest(field=field), tempfile.TemporaryDirectory() as directory:
                 envelope = append_attempt(directory, attempt())
                 envelope[field] = True
-                envelope["record_hash"] = digest({k: v for k, v in envelope.items() if k != "record_hash"})
+                envelope["record_hash"] = digest(
+                    {k: v for k, v in envelope.items() if k != "record_hash"}
+                )
                 (Path(directory) / "timing/attempts.jsonl").write_bytes(canonical(envelope) + b"\n")
                 artifact = Path(directory) / "timing/records" / (envelope["record_hash"] + ".json")
                 artifact.write_bytes(canonical(envelope) + b"\n")
@@ -272,7 +378,9 @@ class TimingCaptureTests(unittest.TestCase):
                 journal = Path(directory) / "timing/attempts.jsonl"
                 artifact = Path(directory) / "timing/records" / (item["record_hash"] + ".json")
                 if kind == "journal":
-                    journal.write_bytes(journal.read_bytes().replace(b'"sequence":1', b'"sequence":2'))
+                    journal.write_bytes(
+                        journal.read_bytes().replace(b'"sequence":1', b'"sequence":2')
+                    )
                 elif kind == "torn":
                     journal.write_bytes(journal.read_bytes()[:-1])
                 elif kind == "artifact":
@@ -296,7 +404,9 @@ class TimingCaptureTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             append_attempt(directory, attempt())
             journal = Path(directory) / "timing/attempts.jsonl"
-            journal.write_bytes(journal.read_bytes().replace(b'"sequence":1', b'"sequence":1,"sequence":1'))
+            journal.write_bytes(
+                journal.read_bytes().replace(b'"sequence":1', b'"sequence":1,"sequence":1')
+            )
             with self.assertRaisesRegex(ValueError, "duplicate"):
                 verify(directory)
 
@@ -312,10 +422,18 @@ class TimingCaptureTests(unittest.TestCase):
             self.assertEqual(verify(Path(directory) / "restored"), saved)
 
     def test_legacy_round_trip_preserves_original_diagnostic(self):
-        old = {"id": "legacy", "detector_version": "v0", "evidence_kind": "recorded",
-               "universe_snapshot_id": "u", "evidence_id": "e",
-               "published_at": T0, "received_at": T1, "detected_at": T2, "decision_at": T3,
-               "outcome": {"gain": 900, "time": "2030-01-01T00:00:00Z"}}
+        old = {
+            "id": "legacy",
+            "detector_version": "v0",
+            "evidence_kind": "recorded",
+            "universe_snapshot_id": "u",
+            "evidence_id": "e",
+            "published_at": T0,
+            "received_at": T1,
+            "detected_at": T2,
+            "decision_at": T3,
+            "outcome": {"gain": 900, "time": "2030-01-01T00:00:00Z"},
+        }
         before = json.dumps(old, sort_keys=True)
         new = from_legacy(old, recorded_at=T5)
         self.assertEqual(diagnose([old], as_of=T5), diagnose(legacy_records([new]), as_of=T5))

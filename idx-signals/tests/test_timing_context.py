@@ -166,9 +166,7 @@ class TimingContextTests(unittest.TestCase):
 
     def test_post_availability_quote_checks_and_price_units(self):
         q = quote()
-        r = shadow_executability(
-            decision(), q, profile(), as_of=AT, requested_quantity="2"
-        )
+        r = shadow_executability(decision(), q, profile(), as_of=AT, requested_quantity="2")
         assert r["status"] == "OBSERVED"
         assert r["fill_at"] is None
         assert r["depth_scope"] == "TOP_OF_BOOK_ONLY"
@@ -196,9 +194,7 @@ class TimingContextTests(unittest.TestCase):
         assert "REQUEST_PRECEDES_AVAILABILITY" in r["reasons"]
 
     def test_proxy_does_not_prove_owner_venue_executability(self):
-        r = shadow_executability(
-            decision(), quote(), profile(), as_of=AT, owner_venue="ETORO"
-        )
+        r = shadow_executability(decision(), quote(), profile(), as_of=AT, owner_venue="ETORO")
         assert r["status"] == "PROXY_ONLY"
         assert r["owner_venue_executable"] is False
         assert r["cost_scope"] == "QUOTE_VENUE_ONLY"
@@ -220,9 +216,7 @@ class TimingContextTests(unittest.TestCase):
             assert reason in result["reasons"]
         d = decision()
         d["expires_at"] = AT
-        assert (
-            shadow_executability(d, quote(), profile(), as_of=AT)["status"] == "EXPIRED"
-        )
+        assert shadow_executability(d, quote(), profile(), as_of=AT)["status"] == "EXPIRED"
 
     def test_insufficient_displayed_size_blocks_whole_size_claim(self):
         result = shadow_executability(
@@ -283,9 +277,7 @@ class TimingContextTests(unittest.TestCase):
     def test_calendar_revision_supersedes_without_mutating_old_event(self):
         old = event()
         revision = event()
-        revision.update(
-            version=2, supersedes=old["id"] + ":v1", event_at="2026-11-04T02:00:00Z"
-        )
+        revision.update(version=2, supersedes=old["id"] + ":v1", event_at="2026-11-04T02:00:00Z")
         result = calendar_board([old, revision], as_of=AT)
         assert result["events"][0]["version"] == 2
         assert old["event_at"] == "2026-11-04T01:00:00Z"
@@ -370,9 +362,7 @@ class TimingContextTests(unittest.TestCase):
         assert result["forecast_record_hash"] == forecast["record_hash"]
         q = quote()
         q.update(received_at="2026-11-04T00:00:00Z", request_started_at=None)
-        assert (
-            shadow_executability(result, q, profile(), as_of=AT)["status"] == "REJECTED"
-        )
+        assert shadow_executability(result, q, profile(), as_of=AT)["status"] == "REJECTED"
         with self.assertRaisesRegex(ValueError, "seal"):
             premove_shadow_decision(
                 forecast,

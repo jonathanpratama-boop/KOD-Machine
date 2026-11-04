@@ -110,7 +110,9 @@ def changes(raw: bytes):
 
 def check(old: str, new: str | None) -> list[str]:
     """Compare tree `old` with commit `new`, or with the index when `new` is None."""
-    args = ["diff", "--name-status", "-z", "-M"] + (["--cached", old] if new is None else [old, new])
+    args = ["diff", "--name-status", "-z", "-M"] + (
+        ["--cached", old] if new is None else [old, new]
+    )
     problems = []
     for code, paths in changes(git(*args)):
         kind = code[0]

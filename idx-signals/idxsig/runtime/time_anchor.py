@@ -63,10 +63,16 @@ def _aware(value: str) -> datetime:
 def verify_anchor(root, identifier: str, *, verifier=None) -> dict:
     """Verify exact original payload and every available token without network IO."""
     folder = _folder(root, identifier)
-    result = {"schema_version": SCHEMA, "anchor_id": identifier,
-              "status": "UNAVAILABLE", "payload_sha256": identifier,
-              "tokens": [], "errors": [], "earliest_verified_at": None,
-              "before_outcome_window": None}
+    result = {
+        "schema_version": SCHEMA,
+        "anchor_id": identifier,
+        "status": "UNAVAILABLE",
+        "payload_sha256": identifier,
+        "tokens": [],
+        "errors": [],
+        "earliest_verified_at": None,
+        "before_outcome_window": None,
+    }
     try:
         if (folder / "manifest.json").is_symlink():
             raise ValueError("manifest symlink is not an original file")
@@ -75,9 +81,13 @@ def verify_anchor(root, identifier: str, *, verifier=None) -> dict:
         if payload_path.is_symlink():
             raise ValueError("payload symlink is not an original file")
         payload = payload_path.read_bytes()
-        if (manifest.get("schema_version") != SCHEMA or manifest.get("anchor_id") != identifier
-                or manifest.get("payload_sha256") != identifier or manifest.get("payload_file") != "payload.json"
-                or hashlib.sha256(payload).hexdigest() != identifier):
+        if (
+            manifest.get("schema_version") != SCHEMA
+            or manifest.get("anchor_id") != identifier
+            or manifest.get("payload_sha256") != identifier
+            or manifest.get("payload_file") != "payload.json"
+            or hashlib.sha256(payload).hexdigest() != identifier
+        ):
             raise ValueError("anchor manifest or payload hash mismatch")
         decision = json.loads(payload)
         if not isinstance(decision, dict):
@@ -89,7 +99,9 @@ def verify_anchor(root, identifier: str, *, verifier=None) -> dict:
         result["errors"].append("original payload or manifest unavailable")
         return result
     except (OSError, ValueError, TypeError):
-        result.update(status="FAIL", errors=["original payload or manifest failed integrity checks"])
+        result.update(
+            status="FAIL", errors=["original payload or manifest failed integrity checks"]
+        )
         return result
     verifier = verifier if verifier is not None else _checker()
     tokens = sorted(folder.glob("*.tsr"))
@@ -115,15 +127,27 @@ def verify_anchor(root, identifier: str, *, verifier=None) -> dict:
             except FileNotFoundError:
                 token["reason"] = "OpenSSL or pinned certificate unavailable"
             except Exception as exc:
-                token.update(status="FAIL", reason="timestamp verification failed: " + type(exc).__name__)
+                token.update(
+                    status="FAIL", reason="timestamp verification failed: " + type(exc).__name__
+                )
         result["tokens"].append(token)
     statuses = {row["status"] for row in result["tokens"]}
-    result["status"] = "FAIL" if "FAIL" in statuses else "VERIFIED" if statuses == {"VERIFIED"} else "PARTIAL" if verified else "UNAVAILABLE"
+    result["status"] = (
+        "FAIL"
+        if "FAIL" in statuses
+        else "VERIFIED"
+        if statuses == {"VERIFIED"}
+        else "PARTIAL"
+        if verified
+        else "UNAVAILABLE"
+    )
     if verified:
         first = min(verified)
         result["earliest_verified_at"] = first.isoformat()
         if decision.get("decision_at") is not None:
-            result["timestamp_minus_decision_seconds"] = (first - _aware(decision["decision_at"])).total_seconds()
+            result["timestamp_minus_decision_seconds"] = (
+                first - _aware(decision["decision_at"])
+            ).total_seconds()
         if decision.get("outcome_window_start") is not None:
             result["before_outcome_window"] = first < _aware(decision["outcome_window_start"])
     return result
@@ -145,20 +169,35 @@ def anchor_batch(root, payload: dict, *, enabled: bool = False, stamper=None) ->
     data = canonical(payload)
     identifier = hashlib.sha256(data).hexdigest()
     if not enabled:
-        return {"schema_version": SCHEMA, "anchor_id": identifier, "status": "DISABLED",
-                "payload_sha256": identifier, "tokens": []}
+        return {
+            "schema_version": SCHEMA,
+            "anchor_id": identifier,
+            "status": "DISABLED",
+            "payload_sha256": identifier,
+            "tokens": [],
+        }
     folder = _folder(root, identifier)
     checker = stamper if stamper is not None else _checker()
-    manifest = {"schema_version": SCHEMA, "anchor_id": identifier,
-                "payload_sha256": identifier, "payload_file": "payload.json"}
+    manifest = {
+        "schema_version": SCHEMA,
+        "anchor_id": identifier,
+        "payload_sha256": identifier,
+        "payload_file": "payload.json",
+    }
     with exclusive_lock(folder / "anchor"):
         _same_bytes(folder / "payload.json", data)
         _same_bytes(folder / "manifest.json", canonical(manifest) + b"\n")
         if checker is None:
-            return {**manifest, "status": "UNAVAILABLE", "tokens": [],
-                    "errors": ["timestamp module unavailable; original payload retained"]}
+            return {
+                **manifest,
+                "status": "UNAVAILABLE",
+                "tokens": [],
+                "errors": ["timestamp module unavailable; original payload retained"],
+            }
         names = tuple(getattr(checker, "authorities", ()))
-        if not names or any(not isinstance(name, str) or not AUTHORITY.fullmatch(name) for name in names):
+        if not names or any(
+            not isinstance(name, str) or not AUTHORITY.fullmatch(name) for name in names
+        ):
             raise ValueError("timestamper must declare safe authority names")
         existing = verify_anchor(root, identifier, verifier=checker)
         if existing["status"] == "FAIL":
@@ -186,11 +225,18 @@ def anchor_batch(root, payload: dict, *, enabled: bool = False, stamper=None) ->
         if missing and result["status"] == "VERIFIED":
             result["status"] = "PARTIAL"
         result["missing_authorities"] = missing
-        receipt = {"schema_version": SCHEMA, "anchor_id": identifier,
-                   "attempted_at": started_at, "completed_at": _utc(),
-                   "duration_ns": time.monotonic_ns() - start,
-                   "requested_authorities": list(names), "written_authorities": written,
-                   "status": result["status"], "missing_authorities": missing, "errors": errors}
+        receipt = {
+            "schema_version": SCHEMA,
+            "anchor_id": identifier,
+            "attempted_at": started_at,
+            "completed_at": _utc(),
+            "duration_ns": time.monotonic_ns() - start,
+            "requested_authorities": list(names),
+            "written_authorities": written,
+            "status": result["status"],
+            "missing_authorities": missing,
+            "errors": errors,
+        }
         _same_bytes(folder / "attempts" / (uuid.uuid4().hex + ".json"), canonical(receipt) + b"\n")
         result["errors"].extend(errors)
         return result

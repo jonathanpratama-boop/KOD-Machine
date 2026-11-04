@@ -20,8 +20,11 @@ DETECTOR = "PAPER_INTENT_TIMING_V1"
 def _ids(trace, key):
     encoded = trace.get("links", {}).get(key)
     values = json.loads(encoded) if encoded is not None else []
-    if (not isinstance(values, list) or any(not isinstance(v, str) or not v for v in values)
-            or len(values) != len(set(values))):
+    if (
+        not isinstance(values, list)
+        or any(not isinstance(v, str) or not v for v in values)
+        or len(values) != len(set(values))
+    ):
         raise ValueError("invalid new paper identity list: " + key)
     return set(values)
 
@@ -34,14 +37,16 @@ def _identity(profile, profile_hash, order):
         raise ValueError("unsupported paper side")
     if parse_time(order["expires_at"]) <= parse_time(order["made_at"]):
         raise ValueError("paper intent expiry must follow creation")
-    return "paper_intent_" + digest({"profile": profile, "profile_sha256": profile_hash,
-                                     "intent_id": order["id"]})
+    return "paper_intent_" + digest(
+        {"profile": profile, "profile_sha256": profile_hash, "intent_id": order["id"]}
+    )
 
 
 def _filled(row, item, *, is_new, process_quote_at, processed_at, run_id):
     links = row["links"]
     fill_links = {
-        "fill_id": item["id"], "logical_fill_recorded_at": item["fill_recorded_at"],
+        "fill_id": item["id"],
+        "logical_fill_recorded_at": item["fill_recorded_at"],
         "original_quote_observed_at": item["observed_at"],
         "original_quote_received_at": item["received_at"],
         "fill_observation_id": item["observation_id"],
@@ -62,9 +67,13 @@ def _filled(row, item, *, is_new, process_quote_at, processed_at, run_id):
             quote_at = utc_text(parse_time(process_quote_at))
             if row["decision_at"] is None or parse_time(quote_at) > parse_time(row["decision_at"]):
                 row["executable_at"] = quote_at
-                links["executable_clock_basis"] = "ACTUAL_INPUT_PROCESSING_OBSERVATION_NOT_EXCHANGE_TIME"
+                links["executable_clock_basis"] = (
+                    "ACTUAL_INPUT_PROCESSING_OBSERVATION_NOT_EXCHANGE_TIME"
+                )
             else:
-                links["executable_clock_basis"] = "UNKNOWN_PROCESSING_QUOTE_NOT_AFTER_ACTUAL_DECISION"
+                links["executable_clock_basis"] = (
+                    "UNKNOWN_PROCESSING_QUOTE_NOT_AFTER_ACTUAL_DECISION"
+                )
     else:
         links["fill_clock_basis"] = "UNKNOWN_ORIGINAL_PROCESSING_TIME_RETAINED_ECONOMIC_LABEL_ONLY"
 
@@ -97,8 +106,11 @@ def observe_paper_timing(root, *, payload, trace_record, process_quote_at, proce
         by_order[order["id"]] = (identity, order)
     by_fill, fill_ids = {}, set()
     for item in fills:
-        if (not isinstance(item, dict) or item.get("simulation_only") is not True
-                or item.get("intent_id") not in by_order):
+        if (
+            not isinstance(item, dict)
+            or item.get("simulation_only") is not True
+            or item.get("intent_id") not in by_order
+        ):
             raise ValueError("paper fill lacks a retained simulated intent")
         if item["id"] in fill_ids or item["intent_id"] in by_fill:
             raise ValueError("duplicate paper fill identity")
@@ -111,48 +123,80 @@ def observe_paper_timing(root, *, payload, trace_record, process_quote_at, proce
         raise ValueError("new paper identities absent from supplied account")
     prepared, retained = [], []
     with locked(root):
-        prior = {row["id"]: row for row in read_attempts(root) if row["detector_version"] == DETECTOR}
+        prior = {
+            row["id"]: row for row in read_attempts(root) if row["detector_version"] == DETECTOR
+        }
         for intent_id, (identity, order) in by_order.items():
             previous = prior.get(identity)
-            common = {"profile_id": profile, "profile_sha256": profile_hash,
-                      "intent_id": intent_id, "intent_symbol": order["symbol"],
-                      "intent_side": order["side"], "logical_intent_made_at": order["made_at"],
-                      "logical_intent_expires_at": order["expires_at"]}
+            common = {
+                "profile_id": profile,
+                "profile_sha256": profile_hash,
+                "intent_id": intent_id,
+                "intent_symbol": order["symbol"],
+                "intent_side": order["side"],
+                "logical_intent_made_at": order["made_at"],
+                "logical_intent_expires_at": order["expires_at"],
+            }
             if previous:
                 if any(previous["links"].get(key) != value for key, value in common.items()):
                     raise ValueError("paper intent identity changed")
-                new_event = (intent_id in new_intents
-                             or by_fill.get(intent_id, {}).get("id") in new_fills)
+                new_event = (
+                    intent_id in new_intents or by_fill.get(intent_id, {}).get("id") in new_fills
+                )
                 if new_event and previous["evidence_kind"] != trace_record["evidence_kind"]:
                     raise ValueError("paper timing evidence kind cannot change")
                 row = copy.deepcopy(previous)
             else:
-                row = make_attempt(identity, detector_version=DETECTOR,
-                    universe_snapshot_id=trace_record["universe_snapshot_id"], evidence_id=identity,
-                    evidence_kind=trace_record["evidence_kind"], recorded_at=processed_at,
-                    status="UNKNOWN", source="KOD_PAPER_ACCOUNT",
-                    links={**common, "parent_attempt_id": trace_record["id"],
-                           "first_observed_run_id": run["id"],
-                           "first_processing_attempt_id": trace_record["id"]},
-                    reason="Processing observations for simulated paper events; economic labels preserved separately.")
+                row = make_attempt(
+                    identity,
+                    detector_version=DETECTOR,
+                    universe_snapshot_id=trace_record["universe_snapshot_id"],
+                    evidence_id=identity,
+                    evidence_kind=trace_record["evidence_kind"],
+                    recorded_at=processed_at,
+                    status="UNKNOWN",
+                    source="KOD_PAPER_ACCOUNT",
+                    links={
+                        **common,
+                        "parent_attempt_id": trace_record["id"],
+                        "first_observed_run_id": run["id"],
+                        "first_processing_attempt_id": trace_record["id"],
+                    },
+                    reason="Processing observations for simulated paper events; economic labels preserved separately.",
+                )
             # A later fill can reach this observer first. An independently
             # measured original decision may then fill an UNKNOWN clock without
             # relabelling a terminal fill or borrowing a later cycle's decision.
             # Liquidations have no strategy-decision clock here.
-            if (row["decision_at"] is None and intent_id in new_intents
-                    and intent_id.startswith("decision:") and order["made_at"] == run["as_of"]
-                    and trace_record.get("decision_at")):
+            if (
+                row["decision_at"] is None
+                and intent_id in new_intents
+                and intent_id.startswith("decision:")
+                and order["made_at"] == run["as_of"]
+                and trace_record.get("decision_at")
+            ):
                 row["decision_at"] = utc_text(parse_time(trace_record["decision_at"]))
                 if row["status"] == "UNKNOWN":
                     row["status"] = "DECIDED"
-                row["links"].update(decision_clock_basis="ACTUAL_DECISION_PROCESSING_COMPLETION_UPPER_BOUND",
-                                    decision_processing_attempt_id=trace_record["id"])
+                row["links"].update(
+                    decision_clock_basis="ACTUAL_DECISION_PROCESSING_COMPLETION_UPPER_BOUND",
+                    decision_processing_attempt_id=trace_record["id"],
+                )
             item = by_fill.get(intent_id)
             if item:
-                _filled(row, item, is_new=item["id"] in new_fills,
-                        process_quote_at=process_quote_at, processed_at=processed_at, run_id=run["id"])
-            elif ("fill_id" not in row["links"] and "paper_terminal_status" not in row["links"]
-                    and order["status"] not in {"PENDING", "IOC_COMPLETE"}):
+                _filled(
+                    row,
+                    item,
+                    is_new=item["id"] in new_fills,
+                    process_quote_at=process_quote_at,
+                    processed_at=processed_at,
+                    run_id=run["id"],
+                )
+            elif (
+                "fill_id" not in row["links"]
+                and "paper_terminal_status" not in row["links"]
+                and order["status"] not in {"PENDING", "IOC_COMPLETE"}
+            ):
                 # Expiry/cancellation times are not inferred from an old label.
                 row["status"] = "EXPIRED" if order["status"] == "EXPIRED" else "REJECTED"
                 row["links"].setdefault("paper_terminal_status", order["status"])
@@ -166,4 +210,8 @@ def observe_paper_timing(root, *, payload, trace_record, process_quote_at, proce
         for row in prepared:
             append_attempt(root, row, _locked=True)
             retained.append(row["id"])
-    return {"intent_attempt_ids": retained, "new_observations": len(prepared), "entry_permission": False}
+    return {
+        "intent_attempt_ids": retained,
+        "new_observations": len(prepared),
+        "entry_permission": False,
+    }

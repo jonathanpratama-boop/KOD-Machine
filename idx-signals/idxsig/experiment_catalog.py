@@ -3,17 +3,32 @@
 This small registry replaces status guesses from a directory name, an old README,
 or an open PR. A report is evidence of a reported result, not a successful rerun.
 """
+
 from __future__ import annotations
 
 import json
 from pathlib import Path, PurePosixPath
 import re
 
-STATUSES = {"RESEARCH_CLOSED", "RESEARCH_CORRECTION_PENDING", "RESEARCH_COLLECTION",
-            "PAPER_SIGNAL_LOG", "PAPER_TRIAL", "PLANNED", "OBSERVATION_READY"}
-EVIDENCE_LEVELS = {"REPORTED_RETROSPECTIVE", "REPORTED_RETROSPECTIVE_WITH_DEFECT",
-                   "DESCRIPTIVE_RETROSPECTIVE", "PROSPECTIVE_SIGNALS_ONLY",
-                   "PROSPECTIVE_TRIAL", "PROTOCOL_ONLY", "OWNER_DECISION", "ENGINEERING_TESTED"}
+STATUSES = {
+    "RESEARCH_CLOSED",
+    "RESEARCH_CORRECTION_PENDING",
+    "RESEARCH_COLLECTION",
+    "PAPER_SIGNAL_LOG",
+    "PAPER_TRIAL",
+    "PLANNED",
+    "OBSERVATION_READY",
+}
+EVIDENCE_LEVELS = {
+    "REPORTED_RETROSPECTIVE",
+    "REPORTED_RETROSPECTIVE_WITH_DEFECT",
+    "DESCRIPTIVE_RETROSPECTIVE",
+    "PROSPECTIVE_SIGNALS_ONLY",
+    "PROSPECTIVE_TRIAL",
+    "PROTOCOL_ONLY",
+    "OWNER_DECISION",
+    "ENGINEERING_TESTED",
+}
 
 
 def _safe_relative(value):
@@ -47,14 +62,20 @@ def load_catalog(repo_root) -> list[dict]:
             raise ValueError(f"invalid status/evidence level for {identifier}")
         if item.get("live_eligible") is not False:
             raise ValueError("this research catalog cannot grant live eligibility")
-        if not isinstance(item.get("limitations"), list) or not isinstance(item.get("sources"), list) or not item["sources"]:
+        if (
+            not isinstance(item.get("limitations"), list)
+            or not isinstance(item.get("sources"), list)
+            or not item["sources"]
+        ):
             raise ValueError("each record needs explicit sources and limitations")
         missing = []
         for source in item["sources"]:
             path = _safe_relative(source.get("path"))
             ref_type = source.get("ref_type", "git_commit")
             if ref_type == "git_commit":
-                if not isinstance(source.get("ref"), str) or not re.fullmatch(r"[0-9a-f]{40}", source["ref"]):
+                if not isinstance(source.get("ref"), str) or not re.fullmatch(
+                    r"[0-9a-f]{40}", source["ref"]
+                ):
                     raise ValueError("source ref must be an observed full git commit")
             elif ref_type == "working_tree":
                 if source.get("ref") is not None:

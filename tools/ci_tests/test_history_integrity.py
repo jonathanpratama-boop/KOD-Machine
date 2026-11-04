@@ -44,7 +44,9 @@ class HistoryAuditTests(unittest.TestCase):
         self.write(ledger, b"old\n")
         baseline = audit.snapshot(self.root, [frozen, ledger])
         self.write(ledger, b"old\nnew\n")
-        self.assertTrue(all(x["status"] == "VERIFIED" for x in audit.compare_snapshot(self.root, baseline)))
+        self.assertTrue(
+            all(x["status"] == "VERIFIED" for x in audit.compare_snapshot(self.root, baseline))
+        )
         self.write(frozen, b"rewritten")
         self.assertEqual(audit.compare_snapshot(self.root, baseline)[0]["status"], "FAIL")
 
@@ -57,8 +59,11 @@ class HistoryAuditTests(unittest.TestCase):
     def test_manifests_check_original_bytes_and_missing_data(self):
         manifest = "idx-signals/data/manifests/example.jsonl"
         self.write("idx-signals/data/a.bin", b"original")
-        rows = [{"manifest": "example"}, {"path": "data/a.bin", "sha256": audit.digest(b"original")},
-                {"path": "data/unavailable.bin", "sha256": "a" * 64}]
+        rows = [
+            {"manifest": "example"},
+            {"path": "data/a.bin", "sha256": audit.digest(b"original")},
+            {"path": "data/unavailable.bin", "sha256": "a" * 64},
+        ]
         self.write(manifest, "\n".join(json.dumps(x) for x in rows).encode())
         checked = audit.verify_manifests(self.root, [manifest])
         self.assertEqual([x["status"] for x in checked], ["VERIFIED", "UNAVAILABLE"])
@@ -84,7 +89,9 @@ class HistoryAuditTests(unittest.TestCase):
         results = audit.verify_tokens(self.root, [ledger, token], FixtureVerifier())
         self.assertEqual(results[0]["status"], "VERIFIED")
         self.write(ledger, json.dumps({**body, "id": "rewritten", "record_hash": digest}).encode())
-        statuses = [x["status"] for x in audit.verify_tokens(self.root, [ledger, token], FixtureVerifier())]
+        statuses = [
+            x["status"] for x in audit.verify_tokens(self.root, [ledger, token], FixtureVerifier())
+        ]
         self.assertEqual(statuses, ["FAIL", "UNAVAILABLE"])
 
     def test_registry_token_uses_original_canonical_line(self):
@@ -93,19 +100,33 @@ class HistoryAuditTests(unittest.TestCase):
         token = "kod-machine/registry/timestamps/case/OLD_1.freetsa.tsr"
         self.write(ledger, json.dumps(row).encode())
         self.write(token, b"fixture:" + audit._canonical(row))
-        self.assertEqual(audit.verify_tokens(self.root, [ledger, token], FixtureVerifier())[0]["status"], "VERIFIED")
+        self.assertEqual(
+            audit.verify_tokens(self.root, [ledger, token], FixtureVerifier())[0]["status"],
+            "VERIFIED",
+        )
 
     def test_missing_token_or_payload_is_unavailable(self):
         token = f"idx-signals/paper/timestamps/{'a' * 64}.freetsa.tsr"
-        self.assertEqual(audit.verify_tokens(self.root, [token], FixtureVerifier())[0]["status"], "UNAVAILABLE")
+        self.assertEqual(
+            audit.verify_tokens(self.root, [token], FixtureVerifier())[0]["status"], "UNAVAILABLE"
+        )
         self.write(token, b"invalid")
-        self.assertEqual(audit.verify_tokens(self.root, [token], FixtureVerifier())[0]["status"], "UNAVAILABLE")
+        self.assertEqual(
+            audit.verify_tokens(self.root, [token], FixtureVerifier())[0]["status"], "UNAVAILABLE"
+        )
 
     def test_bad_signature_and_empty_audit_cannot_pass(self):
         self.write("example.json", b"original")
         self.write("example.json.freetsa.tsr", b"invalid")
-        self.assertEqual(audit.verify_tokens(self.root, ["example.json.freetsa.tsr"], FixtureVerifier())[0]["status"], "FAIL")
-        self.assertEqual(audit.report(self.root, [], verifier=FixtureVerifier())["status"], "PARTIAL")
+        self.assertEqual(
+            audit.verify_tokens(self.root, ["example.json.freetsa.tsr"], FixtureVerifier())[0][
+                "status"
+            ],
+            "FAIL",
+        )
+        self.assertEqual(
+            audit.report(self.root, [], verifier=FixtureVerifier())["status"], "PARTIAL"
+        )
 
     def test_snapshot_writer_is_exclusive(self):
         output = self.root / "snapshot.json"

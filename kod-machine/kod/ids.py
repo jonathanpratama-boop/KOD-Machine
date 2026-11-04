@@ -54,7 +54,12 @@ def load_aliases(registry_path: Path | str = DEFAULT_MAP) -> list[dict]:
                 _path_name(original)
                 _path_name(alias)
             since = parse_ts(row["since"])
-            if datetime.fromisoformat(row["since"].replace("Z", "+00:00")).utcoffset().total_seconds() != 0:
+            if (
+                datetime.fromisoformat(row["since"].replace("Z", "+00:00"))
+                .utcoffset()
+                .total_seconds()
+                != 0
+            ):
                 raise ValueError("alias effective time must be stored in UTC")
             if not re.fullmatch(r"[0-9a-f]{40}", row["commit"]):
                 raise ValueError("alias commit must identify an existing full commit")

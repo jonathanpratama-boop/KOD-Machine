@@ -9,25 +9,35 @@ import unittest
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[2]
-spec = importlib.util.spec_from_file_location("record_schedule_attempt", ROOT / "tools/record_schedule_attempt.py")
+spec = importlib.util.spec_from_file_location(
+    "record_schedule_attempt", ROOT / "tools/record_schedule_attempt.py"
+)
 schedule = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(schedule)
 
-ENV = {"GITHUB_RUN_ID": "123456", "GITHUB_RUN_ATTEMPT": "1", "GITHUB_SHA": "a" * 40,
-       "GITHUB_TOKEN": "secret-not-for-receipts", "KOD_SEC_CONTACT": "private-not-for-receipts"}
+ENV = {
+    "GITHUB_RUN_ID": "123456",
+    "GITHUB_RUN_ATTEMPT": "1",
+    "GITHUB_SHA": "a" * 40,
+    "GITHUB_TOKEN": "secret-not-for-receipts",
+    "KOD_SEC_CONTACT": "private-not-for-receipts",
+}
 T0 = "2026-11-04T02:41:00Z"
 T1 = "2026-11-04T02:42:00Z"
 
 
 class ScheduleAttemptTests(unittest.TestCase):
     def record(self, output, phase="begin", at=T0, **kwargs):
-        values = dict(event="schedule", reference_utc="02:41", phase=phase,
-                      environment=ENV, clock=lambda: at)
+        values = dict(
+            event="schedule", reference_utc="02:41", phase=phase, environment=ENV, clock=lambda: at
+        )
         values.update(kwargs)
         return schedule.record_attempt(output, **values)
 
     def test_daily_reference_rollover_never_points_to_future(self):
-        result = schedule.infer_slot("2026-11-04T01:00:00Z", event="schedule", reference_utc="02:41")
+        result = schedule.infer_slot(
+            "2026-11-04T01:00:00Z", event="schedule", reference_utc="02:41"
+        )
         self.assertEqual(result["inferred_slot_at"], "2026-11-03T02:41:00Z")
         self.assertEqual(result["delay_from_inferred_slot_seconds"], 80340)
         self.assertIsNone(result["platform_scheduled_at"])
@@ -66,7 +76,12 @@ class ScheduleAttemptTests(unittest.TestCase):
             self.assertEqual(last["status"], "FAILURE")
             self.assertEqual(last["wall_elapsed_seconds"], 60)
             self.assertEqual(last["begin_sha256"], first["sha256"])
-            self.assertEqual(self.record(directory, phase="complete", at="2026-11-04T02:43:00Z", status="FAILURE"), last)
+            self.assertEqual(
+                self.record(
+                    directory, phase="complete", at="2026-11-04T02:43:00Z", status="FAILURE"
+                ),
+                last,
+            )
             with self.assertRaisesRegex(ValueError, "conflicting"):
                 self.record(directory, phase="complete", at=T1, status="success")
 
@@ -150,8 +165,23 @@ class ScheduleAttemptTests(unittest.TestCase):
             self.record(ROOT / "schedule-receipts-not-created")
 
     def test_cli_errors_do_not_echo_malformed_environment_values(self):
-        with tempfile.TemporaryDirectory() as directory, patch.dict(schedule.os.environ, {**ENV, "GITHUB_SHA": "sensitive-invalid"}), redirect_stdout(io.StringIO()) as output:
-            code = schedule.main(["--output", directory, "--event", "schedule", "--reference-utc", "02:41", "--phase", "begin"])
+        with (
+            tempfile.TemporaryDirectory() as directory,
+            patch.dict(schedule.os.environ, {**ENV, "GITHUB_SHA": "sensitive-invalid"}),
+            redirect_stdout(io.StringIO()) as output,
+        ):
+            code = schedule.main(
+                [
+                    "--output",
+                    directory,
+                    "--event",
+                    "schedule",
+                    "--reference-utc",
+                    "02:41",
+                    "--phase",
+                    "begin",
+                ]
+            )
         self.assertEqual(code, 1)
         self.assertNotIn("sensitive-invalid", output.getvalue())
         self.assertEqual(json.loads(output.getvalue())["status"], "RECEIPT_UNAVAILABLE")

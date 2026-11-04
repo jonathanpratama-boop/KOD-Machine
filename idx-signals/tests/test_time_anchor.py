@@ -45,12 +45,17 @@ class TimeAnchorTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name) / "runtime"
-        self.payload = {"decision_at": "2026-11-04T00:00:00Z", "candidates": ["synthetic"],
-                        "outcome_window_start": "2026-11-04T00:30:00Z"}
+        self.payload = {
+            "decision_at": "2026-11-04T00:00:00Z",
+            "candidates": ["synthetic"],
+            "outcome_window_start": "2026-11-04T00:30:00Z",
+        }
 
     def test_disabled_does_not_create_files_or_call_authority(self):
         stamper = FixtureStamper()
-        self.assertEqual(anchor_batch(self.root, self.payload, stamper=stamper)["status"], "DISABLED")
+        self.assertEqual(
+            anchor_batch(self.root, self.payload, stamper=stamper)["status"], "DISABLED"
+        )
         self.assertFalse(self.root.exists())
         self.assertEqual(stamper.calls, 0)
 
@@ -67,9 +72,13 @@ class TimeAnchorTests(unittest.TestCase):
         self.assertEqual(before, {str(p): p.read_bytes() for p in folder.rglob("*") if p.is_file()})
 
     def test_failed_attempt_retains_payload_and_late_retry_stays_late(self):
-        first = anchor_batch(self.root, self.payload, enabled=True, stamper=FixtureStamper(fail=True))
+        first = anchor_batch(
+            self.root, self.payload, enabled=True, stamper=FixtureStamper(fail=True)
+        )
         self.assertEqual(first["status"], "UNAVAILABLE")
-        result = anchor_batch(self.root, self.payload, enabled=True, stamper=FixtureStamper(late=True))
+        result = anchor_batch(
+            self.root, self.payload, enabled=True, stamper=FixtureStamper(late=True)
+        )
         self.assertEqual(result["anchor_id"], first["anchor_id"])
         self.assertFalse(result["before_outcome_window"])
         self.assertEqual(result["timestamp_minus_decision_seconds"], 3660)
@@ -81,7 +90,9 @@ class TimeAnchorTests(unittest.TestCase):
         result = anchor_batch(self.root, self.payload, enabled=True, stamper=stamper)
         path = self.root / "timing" / "anchors" / result["anchor_id"] / "payload.json"
         path.write_bytes(b"changed")
-        self.assertEqual(verify_anchor(self.root, result["anchor_id"], verifier=stamper)["status"], "FAIL")
+        self.assertEqual(
+            verify_anchor(self.root, result["anchor_id"], verifier=stamper)["status"], "FAIL"
+        )
         with self.assertRaises(ValueError):
             anchor_batch(self.root, self.payload, enabled=True, stamper=stamper)
         self.assertEqual(stamper.calls, 1)
@@ -90,7 +101,9 @@ class TimeAnchorTests(unittest.TestCase):
         with patch("idxsig.runtime.time_anchor._checker", return_value=None):
             result = anchor_batch(self.root, self.payload, enabled=True)
         self.assertEqual(result["status"], "UNAVAILABLE")
-        self.assertTrue((self.root / "timing" / "anchors" / result["anchor_id"] / "payload.json").is_file())
+        self.assertTrue(
+            (self.root / "timing" / "anchors" / result["anchor_id"] / "payload.json").is_file()
+        )
 
     def test_missing_anchor_and_unsafe_ids(self):
         self.assertEqual(verify_anchor(self.root, "a" * 64)["status"], "UNAVAILABLE")

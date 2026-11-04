@@ -51,16 +51,24 @@ class IdentifierTests(unittest.TestCase):
         self.assertEqual(load_aliases(self.path)[0]["schema_version"], 1)
 
     def test_invalid_maps_fail(self):
-        for change in ({"schema_version": 2}, {"since": "2026-11-04"}, {"commit": "unknown"},
-                       {"since": "2026-11-04T07:00:00+07:00"}, {"kind": "money"}):
+        for change in (
+            {"schema_version": 2},
+            {"since": "2026-11-04"},
+            {"commit": "unknown"},
+            {"since": "2026-11-04T07:00:00+07:00"},
+            {"kind": "money"},
+        ):
             with self.subTest(change=change):
                 self.write({**self.row, **change})
                 with self.assertRaises(ValueError):
                     load_aliases(self.path)
 
     def test_rebinding_chaining_and_cycles_fail(self):
-        for change in ({"old": "E7"}, {"old": self.row["new"], "new": "third-name"},
-                       {"old": self.row["new"], "new": "E6"}):
+        for change in (
+            {"old": "E7"},
+            {"old": self.row["new"], "new": "third-name"},
+            {"old": self.row["new"], "new": "E6"},
+        ):
             with self.subTest(change=change):
                 self.write(self.row, {**self.row, **change})
                 with self.assertRaises(ValueError):

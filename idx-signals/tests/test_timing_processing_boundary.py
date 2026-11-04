@@ -29,11 +29,18 @@ class ProcessingBoundaryTests(unittest.TestCase):
     def test_read_receipt_precedes_membership_and_clock_probe_completion(self):
         source = self.base / "source.json"
         atomic_json(source, self.snapshots[0])
-        values = iter(["2026-11-04T00:00:00Z", "2026-11-04T00:00:01Z",
-                       "2026-11-04T00:00:05Z", "2026-11-04T00:00:06Z"])
+        values = iter(
+            [
+                "2026-11-04T00:00:00Z",
+                "2026-11-04T00:00:01Z",
+                "2026-11-04T00:00:05Z",
+                "2026-11-04T00:00:06Z",
+            ]
+        )
         ticks = iter([100, 160])
-        trace = processing_attempt(self.root, source, clock=lambda: next(values),
-                                   monotonic_ns=lambda: next(ticks))
+        trace = processing_attempt(
+            self.root, source, clock=lambda: next(values), monotonic_ns=lambda: next(ticks)
+        )
         self.assertEqual(trace.record["started_at"], "2026-11-04T00:00:00Z")
         self.assertEqual(trace.record["received_at"], "2026-11-04T00:00:01Z")
         self.assertEqual(trace.record["clock"]["observed_at"], "2026-11-04T00:00:05Z")

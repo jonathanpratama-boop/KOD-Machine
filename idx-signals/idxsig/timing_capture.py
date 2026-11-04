@@ -25,21 +25,50 @@ SCHEMA = "KOD_TIMING_ATTEMPT_V1"
 JOURNAL_SCHEMA = "KOD_TIMING_JOURNAL_V1"
 REPORT_SCHEMA = "KOD_TIMING_CAPTURE_REPORT_V1"
 TIME_FIELDS = (
-    "scheduled_at", "started_at", "published_at", "received_at",
-    "features_ready_at", "detected_at", "decision_at", "executable_at", "fill_at",
+    "scheduled_at",
+    "started_at",
+    "published_at",
+    "received_at",
+    "features_ready_at",
+    "detected_at",
+    "decision_at",
+    "executable_at",
+    "fill_at",
 )
 LOCAL_STAGES = (
-    "started_at", "received_at", "features_ready_at", "detected_at",
-    "decision_at", "executable_at", "fill_at",
+    "started_at",
+    "received_at",
+    "features_ready_at",
+    "detected_at",
+    "decision_at",
+    "executable_at",
+    "fill_at",
 )
 STATUSES = {
-    "STARTED", "COMPLETED", "PARTIAL", "FAILED", "BLOCKED", "NO_TRIGGER",
-    "DETECTED", "DECIDED", "NO_ACTION", "REJECTED", "EXPIRED", "FILLED", "UNKNOWN",
+    "STARTED",
+    "COMPLETED",
+    "PARTIAL",
+    "FAILED",
+    "BLOCKED",
+    "NO_TRIGGER",
+    "DETECTED",
+    "DECIDED",
+    "NO_ACTION",
+    "REJECTED",
+    "EXPIRED",
+    "FILLED",
+    "UNKNOWN",
 }
 KINDS = {"synthetic", "recorded", "prospective"}
 IDENTITY_FIELDS = (
-    "schema_version", "id", "detector_version", "universe_snapshot_id",
-    "evidence_id", "evidence_kind", "source", "entry_permission",
+    "schema_version",
+    "id",
+    "detector_version",
+    "universe_snapshot_id",
+    "evidence_id",
+    "evidence_kind",
+    "source",
+    "entry_permission",
 )
 
 
@@ -66,12 +95,24 @@ def _utc(value: Any, name: str) -> str | None:
 
 
 def make_attempt(
-    identifier: str, *, detector_version: str, universe_snapshot_id: str,
-    evidence_id: str, evidence_kind: str, recorded_at: str, status: str,
-    source: str, times: dict | None = None, threshold: dict | None = None,
-    clock: dict | None = None, links: dict | None = None, prices: dict | None = None,
-    durations_ns: dict | None = None, external_timestamp: dict | None = None,
-    source_time: str | None = None, reason: str | None = None,
+    identifier: str,
+    *,
+    detector_version: str,
+    universe_snapshot_id: str,
+    evidence_id: str,
+    evidence_kind: str,
+    recorded_at: str,
+    status: str,
+    source: str,
+    times: dict | None = None,
+    threshold: dict | None = None,
+    clock: dict | None = None,
+    links: dict | None = None,
+    prices: dict | None = None,
+    durations_ns: dict | None = None,
+    external_timestamp: dict | None = None,
+    source_time: str | None = None,
+    reason: str | None = None,
 ) -> dict:
     """Create a normalized version-one record without observing or inventing time.
 
@@ -83,24 +124,40 @@ def make_attempt(
     supplied = {} if times is None else times
     if not isinstance(supplied, dict) or set(supplied) - set(TIME_FIELDS):
         raise ValueError("unknown timing stage")
-    return validate_attempt({
-        "schema_version": SCHEMA, "id": identifier,
-        "detector_version": detector_version,
-        "universe_snapshot_id": universe_snapshot_id, "evidence_id": evidence_id,
-        "evidence_kind": evidence_kind, "recorded_at": recorded_at,
-        "status": status, "source": source, "entry_permission": False,
-        **{key: supplied.get(key) for key in TIME_FIELDS},
-        "source_time": source_time,
-        "threshold": threshold if threshold is not None else {"at": None, "basis": "UNKNOWN", "evidence_id": None,
-                                   "reference_at": None},
-        "clock": clock if clock is not None else {"status": "UNKNOWN", "offset_seconds": None,
-                           "observed_at": None, "evidence_id": None},
-        "durations_ns": {} if durations_ns is None else durations_ns,
-        "links": {} if links is None else links,
-        "prices": {} if prices is None else prices,
-        "external_timestamp": external_timestamp if external_timestamp is not None else {"status": "NOT_REQUESTED"},
-        "reason": reason,
-    })
+    return validate_attempt(
+        {
+            "schema_version": SCHEMA,
+            "id": identifier,
+            "detector_version": detector_version,
+            "universe_snapshot_id": universe_snapshot_id,
+            "evidence_id": evidence_id,
+            "evidence_kind": evidence_kind,
+            "recorded_at": recorded_at,
+            "status": status,
+            "source": source,
+            "entry_permission": False,
+            **{key: supplied.get(key) for key in TIME_FIELDS},
+            "source_time": source_time,
+            "threshold": threshold
+            if threshold is not None
+            else {"at": None, "basis": "UNKNOWN", "evidence_id": None, "reference_at": None},
+            "clock": clock
+            if clock is not None
+            else {
+                "status": "UNKNOWN",
+                "offset_seconds": None,
+                "observed_at": None,
+                "evidence_id": None,
+            },
+            "durations_ns": {} if durations_ns is None else durations_ns,
+            "links": {} if links is None else links,
+            "prices": {} if prices is None else prices,
+            "external_timestamp": external_timestamp
+            if external_timestamp is not None
+            else {"status": "NOT_REQUESTED"},
+            "reason": reason,
+        }
+    )
 
 
 def validate_attempt(value: dict) -> dict:
@@ -108,10 +165,22 @@ def validate_attempt(value: dict) -> dict:
     if not isinstance(value, dict) or value.get("schema_version") != SCHEMA:
         raise ValueError("unsupported timing attempt schema")
     row = copy.deepcopy(value)
-    expected = set(IDENTITY_FIELDS) | set(TIME_FIELDS) | {
-        "recorded_at", "status", "source_time", "threshold", "clock", "durations_ns",
-        "links", "prices", "external_timestamp", "reason",
-    }
+    expected = (
+        set(IDENTITY_FIELDS)
+        | set(TIME_FIELDS)
+        | {
+            "recorded_at",
+            "status",
+            "source_time",
+            "threshold",
+            "clock",
+            "durations_ns",
+            "links",
+            "prices",
+            "external_timestamp",
+            "reason",
+        }
+    )
     if set(row) != expected:
         raise ValueError("timing attempt fields differ from version-one schema")
     for key in IDENTITY_FIELDS:
@@ -127,7 +196,9 @@ def validate_attempt(value: dict) -> dict:
         row[key] = _utc(row[key], key)
         if row[key] is not None and parse_time(row[key]) > cutoff:
             raise ValueError(f"{key}: observation is after recorded_at")
-    required_stage = {"FILLED": "fill_at", "DECIDED": "decision_at", "DETECTED": "detected_at"}.get(row["status"])
+    required_stage = {"FILLED": "fill_at", "DECIDED": "decision_at", "DETECTED": "detected_at"}.get(
+        row["status"]
+    )
     if required_stage is not None and row[required_stage] is None:
         raise ValueError(f"{row['status']} requires an observed {required_stage}")
     # Publication and schedule are distinct clocks. Their signed lag is reported
@@ -145,7 +216,10 @@ def validate_attempt(value: dict) -> dict:
     row["source_time"] = _utc(row["source_time"], "source_time")
     threshold = row["threshold"]
     if not isinstance(threshold, dict) or set(threshold) != {
-        "at", "basis", "evidence_id", "reference_at",
+        "at",
+        "basis",
+        "evidence_id",
+        "reference_at",
     }:
         raise ValueError("threshold requires at, basis, evidence_id and reference_at")
     if threshold["basis"] not in {"UNKNOWN", "COMPLETED_BAR", "QUOTE"}:
@@ -168,7 +242,10 @@ def validate_attempt(value: dict) -> dict:
             raise ValueError("threshold evidence is after detection")
     clock = row["clock"]
     if not isinstance(clock, dict) or set(clock) != {
-        "status", "offset_seconds", "observed_at", "evidence_id",
+        "status",
+        "offset_seconds",
+        "observed_at",
+        "evidence_id",
     }:
         raise ValueError("clock requires explicit status, offset, time and evidence")
     if clock["status"] not in {"UNKNOWN", "MEASURED_EXTERNAL", "MEASUREMENT_FAILED"}:
@@ -201,10 +278,22 @@ def validate_attempt(value: dict) -> dict:
     if not isinstance(row["prices"], dict):
         raise ValueError("prices must be an object")
     for stage, quote in row["prices"].items():
-        if stage not in TIME_FIELDS or not isinstance(quote, dict) or set(quote) != {
-            "price", "venue", "symbol", "currency", "evidence_id", "observed_at",
-        }:
-            raise ValueError("stage price requires exact price, identity, evidence and observation fields")
+        if (
+            stage not in TIME_FIELDS
+            or not isinstance(quote, dict)
+            or set(quote)
+            != {
+                "price",
+                "venue",
+                "symbol",
+                "currency",
+                "evidence_id",
+                "observed_at",
+            }
+        ):
+            raise ValueError(
+                "stage price requires exact price, identity, evidence and observation fields"
+            )
         quote["price"] = str(_finite(quote["price"], "price", positive=True))
         for key in ("venue", "symbol", "currency", "evidence_id"):
             _text(quote[key], "price." + key)
@@ -215,7 +304,9 @@ def validate_attempt(value: dict) -> dict:
             raise ValueError("price was unavailable at its stage")
     stamp = row["external_timestamp"]
     if not isinstance(stamp, dict) or stamp.get("status") not in {
-        "NOT_REQUESTED", "UNAVAILABLE", "PRESENT_UNVERIFIED",
+        "NOT_REQUESTED",
+        "UNAVAILABLE",
+        "PRESENT_UNVERIFIED",
     }:
         raise ValueError("external timestamp requires a truthful supported evidence status")
     if set(stamp) - {"status", "evidence_id", "token_sha256", "reason"}:
@@ -223,7 +314,11 @@ def validate_attempt(value: dict) -> dict:
     if stamp["status"] == "PRESENT_UNVERIFIED":
         _text(stamp.get("evidence_id"), "external_timestamp.evidence_id")
         sha = stamp.get("token_sha256")
-        if not isinstance(sha, str) or len(sha) != 64 or any(c not in "0123456789abcdef" for c in sha):
+        if (
+            not isinstance(sha, str)
+            or len(sha) != 64
+            or any(c not in "0123456789abcdef" for c in sha)
+        ):
             raise ValueError("external timestamp token sha256 required")
     elif stamp.get("token_sha256") is not None or stamp.get("evidence_id") is not None:
         raise ValueError("unavailable external timestamp cannot claim a token")
@@ -265,17 +360,26 @@ def _revision(previous: dict, current: dict) -> None:
         }[key]
         if unknown:
             marker = "basis" if key == "threshold" else "status"
-            _preserves({name: value for name, value in initial.items() if name != marker},
-                       current[key], key)
+            _preserves(
+                {name: value for name, value in initial.items() if name != marker},
+                current[key],
+                key,
+            )
         else:
             _preserves(initial, current[key], key)
-    if previous["status"] in {"FAILED", "REJECTED", "EXPIRED", "FILLED", "NO_TRIGGER"} and previous["status"] != current["status"]:
+    if (
+        previous["status"] in {"FAILED", "REJECTED", "EXPIRED", "FILLED", "NO_TRIGGER"}
+        and previous["status"] != current["status"]
+    ):
         raise ValueError("terminal timing attempt requires a new attempt identity")
     if previous["status"] != "STARTED" and current["status"] == "STARTED":
         raise ValueError("timing attempt cannot regress to started")
     if previous["status"] != "UNKNOWN" and current["status"] == "UNKNOWN":
         raise ValueError("timing attempt cannot erase its known status")
-    if previous["status"] in {"COMPLETED", "NO_ACTION", "BLOCKED"} and current["status"] not in {previous["status"], "FILLED"}:
+    if previous["status"] in {"COMPLETED", "NO_ACTION", "BLOCKED"} and current["status"] not in {
+        previous["status"],
+        "FILLED",
+    }:
         raise ValueError("completed timing attempt requires a new attempt identity")
 
 
@@ -299,27 +403,38 @@ def _journal(root: str | Path) -> list[dict]:
         raise ValueError("torn timing journal; preserve and restore verified backup")
     records, latest, previous = [], {}, None
     for line in raw.splitlines():
-        envelope = json.loads(line, object_pairs_hook=_unique,
-                              parse_constant=lambda _: (_ for _ in ()).throw(ValueError("nonfinite timing JSON")))
+        envelope = json.loads(
+            line,
+            object_pairs_hook=_unique,
+            parse_constant=lambda _: (_ for _ in ()).throw(ValueError("nonfinite timing JSON")),
+        )
         if not isinstance(envelope, dict):
             raise ValueError("invalid timing journal envelope")
         body = {key: value for key, value in envelope.items() if key != "record_hash"}
-        if (envelope.get("schema_version") != JOURNAL_SCHEMA
-                or type(envelope.get("sequence")) is not int
-                or envelope.get("sequence") != len(records) + 1
-                or envelope.get("prev_hash") != previous
-                or digest(body) != envelope.get("record_hash")):
+        if (
+            envelope.get("schema_version") != JOURNAL_SCHEMA
+            or type(envelope.get("sequence")) is not int
+            or envelope.get("sequence") != len(records) + 1
+            or envelope.get("prev_hash") != previous
+            or digest(body) != envelope.get("record_hash")
+        ):
             raise ValueError("timing journal integrity failure")
         row = validate_attempt(envelope.get("attempt"))
         prior = latest.get(row["id"])
-        if type(envelope.get("version")) is not int or envelope.get("version") != (prior["version"] + 1 if prior else 1):
+        if type(envelope.get("version")) is not int or envelope.get("version") != (
+            prior["version"] + 1 if prior else 1
+        ):
             raise ValueError("timing revision sequence failure")
         if envelope.get("supersedes") != (prior["record_hash"] if prior else None):
             raise ValueError("timing revision parent failure")
         if prior:
             _revision(prior["attempt"], row)
         artifact = path.parent / "records" / (envelope["record_hash"] + ".json")
-        if artifact.is_symlink() or not artifact.exists() or artifact.read_bytes() != canonical(envelope) + b"\n":
+        if (
+            artifact.is_symlink()
+            or not artifact.exists()
+            or artifact.read_bytes() != canonical(envelope) + b"\n"
+        ):
             raise ValueError("timing immutable artifact missing or changed")
         latest[row["id"]] = envelope
         previous = envelope["record_hash"]
@@ -344,7 +459,8 @@ def append_attempt(root: str | Path, record: dict, *, _locked: bool = False) -> 
         if prior:
             _revision(prior["attempt"], row)
         body = {
-            "schema_version": JOURNAL_SCHEMA, "sequence": len(records) + 1,
+            "schema_version": JOURNAL_SCHEMA,
+            "sequence": len(records) + 1,
             "version": prior["version"] + 1 if prior else 1,
             "supersedes": prior["record_hash"] if prior else None,
             "prev_hash": records[-1]["record_hash"] if records else None,
@@ -383,11 +499,15 @@ def read_attempts(root: str | Path, *, as_of: str | None = None) -> list[dict]:
 
 def verify(root: str | Path) -> dict:
     records = _journal(root)
-    return {"ok": True, "schema_version": JOURNAL_SCHEMA,
-            "attempts": len({r["attempt"]["id"] for r in records}), "revisions": len(records),
-            "head_hash": records[-1]["record_hash"] if records else None,
-            "entry_permission": False,
-            "external_verification": "LOCAL_HASH_CHAIN_ONLY"}
+    return {
+        "ok": True,
+        "schema_version": JOURNAL_SCHEMA,
+        "attempts": len({r["attempt"]["id"] for r in records}),
+        "revisions": len(records),
+        "head_hash": records[-1]["record_hash"] if records else None,
+        "entry_permission": False,
+        "external_verification": "LOCAL_HASH_CHAIN_ONLY",
+    }
 
 
 def _seconds(start: str | None, end: str | None) -> float | None:
@@ -396,10 +516,13 @@ def _seconds(start: str | None, end: str | None) -> float | None:
 
 def _statistics(values: list[float | None]) -> dict:
     known = sorted(v for v in values if v is not None)
-    return {"known": len(known), "unknown": len(values) - len(known),
-            "median_seconds": statistics.median(known) if known else None,
-            "p95_seconds": known[max(0, math.ceil(len(known) * 0.95) - 1)] if known else None,
-            "max_seconds": max(known) if known else None}
+    return {
+        "known": len(known),
+        "unknown": len(values) - len(known),
+        "median_seconds": statistics.median(known) if known else None,
+        "p95_seconds": known[max(0, math.ceil(len(known) * 0.95) - 1)] if known else None,
+        "max_seconds": max(known) if known else None,
+    }
 
 
 def _details(row: dict) -> dict:
@@ -417,19 +540,30 @@ def _details(row: dict) -> dict:
     }
     signed = {name: _seconds(*pair) for name, pair in pairs.items()}
     conflicts = [name for name, value in signed.items() if value is not None and value < 0]
-    seconds = {name: (value if value is None or value >= 0 else None) for name, value in signed.items()}
+    seconds = {
+        name: (value if value is None or value >= 0 else None) for name, value in signed.items()
+    }
     price_drift = {}
     for before, after in zip(LOCAL_STAGES, LOCAL_STAGES[1:]):
         first, second = row["prices"].get(before), row["prices"].get(after)
-        comparable = first and second and all(first[k] == second[k] for k in ("venue", "symbol", "currency"))
+        comparable = (
+            first and second and all(first[k] == second[k] for k in ("venue", "symbol", "currency"))
+        )
         price_drift[f"{before}_to_{after}"] = (
             str(Decimal(second["price"]) / Decimal(first["price"]) - 1) if comparable else None
         )
-    return {"id": row["id"], "status": row["status"], "seconds": seconds,
-            "signed_clock_differences_seconds": signed, "clock_conflicts": conflicts,
-            "monotonic_seconds": {k: value / 1_000_000_000 if value is not None else None
-                                  for k, value in row["durations_ns"].items()},
-            "price_drift_fraction": price_drift}
+    return {
+        "id": row["id"],
+        "status": row["status"],
+        "seconds": seconds,
+        "signed_clock_differences_seconds": signed,
+        "clock_conflicts": conflicts,
+        "monotonic_seconds": {
+            k: value / 1_000_000_000 if value is not None else None
+            for k, value in row["durations_ns"].items()
+        },
+        "price_drift_fraction": price_drift,
+    }
 
 
 def summarize(records: list[dict], *, as_of: str) -> dict:
@@ -449,50 +583,95 @@ def summarize(records: list[dict], *, as_of: str) -> dict:
     details = {r["id"]: _details(r) for r in rows}
     cohorts = []
     for kind, detector in sorted({(r["evidence_kind"], r["detector_version"]) for r in rows}):
-        subset = [r for r in rows if (r["evidence_kind"], r["detector_version"]) == (kind, detector)]
+        subset = [
+            r for r in rows if (r["evidence_kind"], r["detector_version"]) == (kind, detector)
+        ]
         keys = list(details[subset[0]["id"]]["seconds"])
-        cohorts.append({"evidence_kind": kind, "detector_version": detector,
-                        "attempts": len(subset), "statuses": dict(Counter(r["status"] for r in subset)),
-                        "stages": {key: _statistics([details[r["id"]]["seconds"][key] for r in subset]) for key in keys}})
+        cohorts.append(
+            {
+                "evidence_kind": kind,
+                "detector_version": detector,
+                "attempts": len(subset),
+                "statuses": dict(Counter(r["status"] for r in subset)),
+                "stages": {
+                    key: _statistics([details[r["id"]]["seconds"][key] for r in subset])
+                    for key in keys
+                },
+            }
+        )
     board = []
     for kind, source in sorted({(r["evidence_kind"], r["source"]) for r in rows}):
         subset = [r for r in rows if (r["evidence_kind"], r["source"]) == (kind, source)]
         values = [details[r["id"]]["seconds"]["source_to_receipt"] for r in subset]
-        board.append({"source": source, "evidence_kind": kind, "attempts": len(subset),
-                      "lag": _statistics(values),
-                      "clock_conflicts": sum("source_to_receipt" in details[r["id"]]["clock_conflicts"] for r in subset),
-                      "failures": sum(r["status"] in {"FAILED", "BLOCKED"} for r in subset)})
-    return {"schema_version": REPORT_SCHEMA, "as_of": utc_text(cutoff),
-            "status": "DESCRIPTIVE_ONLY", "entry_permission": False, "attempts": len(rows),
-            "statuses": dict(Counter(r["status"] for r in rows)),
-            "missing_stages": {k: sum(r[k] is None for r in rows) for k in TIME_FIELDS},
-            "clock_statuses": dict(Counter(r["clock"]["status"] for r in rows)),
-            "external_timestamp_statuses": dict(Counter(r["external_timestamp"]["status"] for r in rows)),
-            "cohorts": cohorts, "source_latency": board, "records": list(details.values()),
-            "limitations": [
-                "All retained attempts are counted; collection scope must be established by producer receipts.",
-                "Unknown timestamps remain null; negative cross-clock differences are conflicts, not lead time.",
-                "Stage durations overlap and must not be summed as independent causes.",
-                "Monotonic durations are process-local measurements, independent of wall-clock offset.",
-                "Local hashes and supplied timestamp metadata do not independently prove prospective availability.",
-                "Descriptive latency and price drift do not establish executable returns or a trading edge.",
-            ]}
+        board.append(
+            {
+                "source": source,
+                "evidence_kind": kind,
+                "attempts": len(subset),
+                "lag": _statistics(values),
+                "clock_conflicts": sum(
+                    "source_to_receipt" in details[r["id"]]["clock_conflicts"] for r in subset
+                ),
+                "failures": sum(r["status"] in {"FAILED", "BLOCKED"} for r in subset),
+            }
+        )
+    return {
+        "schema_version": REPORT_SCHEMA,
+        "as_of": utc_text(cutoff),
+        "status": "DESCRIPTIVE_ONLY",
+        "entry_permission": False,
+        "attempts": len(rows),
+        "statuses": dict(Counter(r["status"] for r in rows)),
+        "missing_stages": {k: sum(r[k] is None for r in rows) for k in TIME_FIELDS},
+        "clock_statuses": dict(Counter(r["clock"]["status"] for r in rows)),
+        "external_timestamp_statuses": dict(
+            Counter(r["external_timestamp"]["status"] for r in rows)
+        ),
+        "cohorts": cohorts,
+        "source_latency": board,
+        "records": list(details.values()),
+        "limitations": [
+            "All retained attempts are counted; collection scope must be established by producer receipts.",
+            "Unknown timestamps remain null; negative cross-clock differences are conflicts, not lead time.",
+            "Stage durations overlap and must not be summed as independent causes.",
+            "Monotonic durations are process-local measurements, independent of wall-clock offset.",
+            "Local hashes and supplied timestamp metadata do not independently prove prospective availability.",
+            "Descriptive latency and price drift do not establish executable returns or a trading edge.",
+        ],
+    }
 
 
 def from_legacy(record: dict, *, recorded_at: str, source: str = "LEGACY_TIMING_INPUT") -> dict:
     """Adapt a legacy diagnostic row in memory; retain its original bytes elsewhere."""
-    return make_attempt(record["id"], detector_version=record["detector_version"],
-                        universe_snapshot_id=record["universe_snapshot_id"], evidence_id=record["evidence_id"],
-                        evidence_kind=record["evidence_kind"], recorded_at=recorded_at,
-                        status="UNKNOWN", source=source,
-                        times={k: record.get(k) for k in TIME_FIELDS},
-                        reason="Legacy diagnostic import; no missing status or threshold was inferred.")
+    return make_attempt(
+        record["id"],
+        detector_version=record["detector_version"],
+        universe_snapshot_id=record["universe_snapshot_id"],
+        evidence_id=record["evidence_id"],
+        evidence_kind=record["evidence_kind"],
+        recorded_at=recorded_at,
+        status="UNKNOWN",
+        source=source,
+        times={k: record.get(k) for k in TIME_FIELDS},
+        reason="Legacy diagnostic import; no missing status or threshold was inferred.",
+    )
 
 
 def legacy_records(records: list[dict]) -> list[dict]:
     """Export only original diagnostic fields for callers that retain its API."""
     from .timing_research import STAGES
 
-    return [{key: row[key] for key in ("id", "detector_version", "universe_snapshot_id",
-                                      "evidence_id", "evidence_kind", *STAGES)}
-            for row in (validate_attempt(r) for r in records)]
+    return [
+        {
+            key: row[key]
+            for key in (
+                "id",
+                "detector_version",
+                "universe_snapshot_id",
+                "evidence_id",
+                "evidence_kind",
+                *STAGES,
+            )
+        }
+        for row in (validate_attempt(r) for r in records)
+    ]

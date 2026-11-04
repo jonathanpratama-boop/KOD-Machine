@@ -90,10 +90,7 @@ def validate_calendar_event(event: dict, *, as_of: str) -> dict:
     if (
         source.username
         or source.password
-        or (
-            source.scheme != "https"
-            and not (synthetic and source.scheme == "synthetic")
-        )
+        or (source.scheme != "https" and not (synthetic and source.scheme == "synthetic"))
     ):
         raise ValueError("credential-free source URL required")
     if not source.netloc:
@@ -102,9 +99,7 @@ def validate_calendar_event(event: dict, *, as_of: str) -> dict:
         ZoneInfo(value["source_timezone"])
     except ZoneInfoNotFoundError as exc:
         raise ValueError("unknown source timezone") from exc
-    value["received_at"] = _observed_time(
-        value.get("received_at"), "received_at", cutoff
-    )
+    value["received_at"] = _observed_time(value.get("received_at"), "received_at", cutoff)
     if value.get("published_at") is not None:
         value["published_at"] = _observed_time(
             value["published_at"], "published_at", value["received_at"]
@@ -139,13 +134,8 @@ def prepare_event(event: dict, branches: list[dict], *, prepared_at: str) -> dic
     """Freeze research branches before a known event; cannot prepare retroactively."""
     prepared_at = _stamp(prepared_at, "prepared_at")
     event = validate_calendar_event(event, as_of=prepared_at)
-    if (
-        event["time_precision"] not in {"EXACT", "WINDOW"}
-        or event["status"] != "SCHEDULED"
-    ):
-        raise ValueError(
-            "known scheduled time required to establish preparation before event"
-        )
+    if event["time_precision"] not in {"EXACT", "WINDOW"} or event["status"] != "SCHEDULED":
+        raise ValueError("known scheduled time required to establish preparation before event")
     if parse_time(prepared_at) >= parse_time(event["event_at"]):
         raise ValueError("preparation must be before the event/window starts")
     if not isinstance(branches, list) or not branches:
@@ -179,9 +169,7 @@ def prepare_event(event: dict, branches: list[dict], *, prepared_at: str) -> dic
     return {"id": "preparation_" + digest(value)[:32], **value}
 
 
-def calendar_board(
-    events: list[dict], *, as_of: str, horizon_seconds: int = 86400
-) -> dict:
+def calendar_board(events: list[dict], *, as_of: str, horizon_seconds: int = 86400) -> dict:
     """Project latest declared versions. Date-only events never imply an exact due time."""
     cutoff = parse_time(as_of)
     if type(horizon_seconds) is not int or horizon_seconds <= 0:
@@ -211,11 +199,7 @@ def calendar_board(
             seconds = (parse_time(value["event_at"]) - cutoff).total_seconds()
             end = parse_time(value.get("window_end") or value["event_at"])
             state = (
-                "ELAPSED"
-                if end < cutoff
-                else "DUE"
-                if seconds <= horizon_seconds
-                else "SCHEDULED"
+                "ELAPSED" if end < cutoff else "DUE" if seconds <= horizon_seconds else "SCHEDULED"
             )
         value.update(timing_state=state, seconds_until_event=seconds)
         rows.append(value)
@@ -270,10 +254,7 @@ def validate_cost_profile(profile: dict, *, as_of: str) -> dict:
             raise ValueError("cost fraction must be below one")
     if value.get("spread_convention") != "OBSERVED_BID_ASK":
         raise ValueError("spread must be counted once through observed bid/ask")
-    if (
-        type(value.get("max_quote_age_seconds")) is not int
-        or value["max_quote_age_seconds"] <= 0
-    ):
+    if type(value.get("max_quote_age_seconds")) is not int or value["max_quote_age_seconds"] <= 0:
         raise ValueError("positive quote age bound required")
     if not isinstance(value.get("sources"), list) or not value["sources"]:
         raise ValueError("cost profile needs source/assumption references")
@@ -335,18 +316,14 @@ def shadow_executability(
     It grants no entry permission and does not establish owner account access.
     Historical outcome-label opens and pre-decision requests cannot qualify.
     """
-    if not isinstance(decision, dict) or (
-        quote is not None and not isinstance(quote, dict)
-    ):
+    if not isinstance(decision, dict) or (quote is not None and not isinstance(quote, dict)):
         raise ValueError("decision and optional quote objects required")
     cutoff = parse_time(as_of)
     did = _text(decision.get("id"), "decision.id")
     for key in ("symbol", "venue"):
         _text(decision.get(key), "decision." + key)
     when = parse_time(decision.get("decision_at"), "decision_at")
-    available = parse_time(
-        decision.get("available_at") or decision["decision_at"], "available_at"
-    )
+    available = parse_time(decision.get("available_at") or decision["decision_at"], "available_at")
     expiry = parse_time(decision.get("expires_at"), "expires_at")
     if when > available or available > cutoff or expiry <= available:
         raise ValueError("invalid decision availability/expiry chronology")
@@ -440,9 +417,7 @@ def shadow_executability(
         reasons.append("NO_DISPLAYED_ASK_LIQUIDITY")
     result.update(bid=str(bid), ask=str(ask), bid_size=bid_size, ask_size=ask_size)
     if requested_quantity is not None:
-        quantity = Decimal(
-            number(requested_quantity, "requested_quantity", positive=True)
-        )
+        quantity = Decimal(number(requested_quantity, "requested_quantity", positive=True))
         result["requested_quantity"] = str(quantity)
         if ask_size is None:
             reasons.append("MISSING_DISPLAYED_SIZE")
@@ -502,9 +477,7 @@ def validate_avoid_observation(record: dict, *, as_of: str) -> dict:
     checks = {}
     for key in sorted(AVOID_CHECKS):
         item = copy.deepcopy(
-            raw_checks.get(
-                key, {"status": "UNKNOWN", "evidence_id": None, "available_at": None}
-            )
+            raw_checks.get(key, {"status": "UNKNOWN", "evidence_id": None, "available_at": None})
         )
         if not isinstance(item, dict):
             raise ValueError("avoid check object required")
@@ -564,10 +537,7 @@ def premove_shadow_decision(
     ):
         raise ValueError("original PREMOVE_SHADOW_v1 forecast required")
     original_hash = _text(forecast.get("record_hash"), "forecast.record_hash")
-    if (
-        digest({k: v for k, v in forecast.items() if k != "record_hash"})
-        != original_hash
-    ):
+    if digest({k: v for k, v in forecast.items() if k != "record_hash"}) != original_hash:
         raise ValueError("forecast record hash mismatch")
     if symbol not in forecast.get("candidates", {}):
         raise ValueError("instrument was not in the frozen forecast universe")
@@ -610,15 +580,10 @@ def premove_shadow_decision(
 
 def build_timing_context(payload: dict, *, as_of: str) -> dict:
     """Validate a supplied context pack for the runtime's immutable evidence store."""
-    if (
-        not isinstance(payload, dict)
-        or payload.get("schema_version") != "KOD_TIMING_CONTEXT_V1"
-    ):
+    if not isinstance(payload, dict) or payload.get("schema_version") != "KOD_TIMING_CONTEXT_V1":
         raise ValueError("unsupported timing context schema")
     _stamp(as_of, "as_of")
-    if payload.get("as_of") is not None and parse_time(payload["as_of"]) != parse_time(
-        as_of
-    ):
+    if payload.get("as_of") is not None and parse_time(payload["as_of"]) != parse_time(as_of):
         raise ValueError("context cutoff differs from supplied as_of")
     collections = (
         "calendar_events",
@@ -629,10 +594,7 @@ def build_timing_context(payload: dict, *, as_of: str) -> dict:
     for key in collections:
         if not isinstance(payload.get(key, []), list):
             raise ValueError(f"{key}: list required")
-    events = [
-        validate_calendar_event(e, as_of=as_of)
-        for e in payload.get("calendar_events", [])
-    ]
+    events = [validate_calendar_event(e, as_of=as_of) for e in payload.get("calendar_events", [])]
     by_record = {e["record_id"]: e for e in events}
     preparations = []
     for item in payload.get("preparations", []):
@@ -643,9 +605,7 @@ def build_timing_context(payload: dict, *, as_of: str) -> dict:
             raise ValueError("preparation references missing calendar event version")
         prepared_at = _observed_time(item.get("prepared_at"), "prepared_at", as_of)
         preparations.append(
-            prepare_event(
-                by_record[event_id], item.get("branches"), prepared_at=prepared_at
-            )
+            prepare_event(by_record[event_id], item.get("branches"), prepared_at=prepared_at)
         )
     shadow = []
     for item in payload.get("shadow_checks", []):
@@ -670,8 +630,7 @@ def build_timing_context(payload: dict, *, as_of: str) -> dict:
             )
         )
     avoid = [
-        validate_avoid_observation(r, as_of=as_of)
-        for r in payload.get("avoid_observations", [])
+        validate_avoid_observation(r, as_of=as_of) for r in payload.get("avoid_observations", [])
     ]
     return {
         "schema_version": "KOD_TIMING_CONTEXT_V1",

@@ -13,7 +13,11 @@ from unittest.mock import patch
 from fastapi.testclient import TestClient
 
 from kod.workstation.operations import (
-    OperationsUnavailable, TimingArchive, TIMING_SCHEMA, TIMING_STAGES, canonical,
+    OperationsUnavailable,
+    TimingArchive,
+    TIMING_SCHEMA,
+    TIMING_STAGES,
+    canonical,
     timing_context_views,
 )
 from kod.workstation.web import create_app
@@ -24,33 +28,62 @@ T2 = "2026-11-04T00:00:02Z"
 
 
 def timing_payload():
-    stats = {"known": 1, "unknown": 0, "median_seconds": 1,
-             "p95_seconds": 1, "max_seconds": 1}
+    stats = {"known": 1, "unknown": 0, "median_seconds": 1, "p95_seconds": 1, "max_seconds": 1}
     row = {
-        "schema_version": "KOD_TIMING_ATTEMPT_V1", "id": "attempt-1",
-        "detector_version": "FIXED_v1", "universe_snapshot_id": "membership-1",
-        "evidence_id": "receipt-1", "evidence_kind": "synthetic", "source": "fixture-source",
-        "recorded_at": T2, "status": "NO_TRIGGER", "entry_permission": False,
+        "schema_version": "KOD_TIMING_ATTEMPT_V1",
+        "id": "attempt-1",
+        "detector_version": "FIXED_v1",
+        "universe_snapshot_id": "membership-1",
+        "evidence_id": "receipt-1",
+        "evidence_kind": "synthetic",
+        "source": "fixture-source",
+        "recorded_at": T2,
+        "status": "NO_TRIGGER",
+        "entry_permission": False,
         **{name: None for name in TIMING_STAGES},
-        "scheduled_at": T0, "received_at": T1,
+        "scheduled_at": T0,
+        "received_at": T1,
         "threshold": {"at": None, "basis": "UNKNOWN", "evidence_id": None, "reference_at": None},
-        "clock": {"status": "UNKNOWN"}, "external_timestamp": {"status": "NOT_REQUESTED"},
+        "clock": {"status": "UNKNOWN"},
+        "external_timestamp": {"status": "NOT_REQUESTED"},
         "links": {"run_id": "run-1", "candidate_id": "candidate-1"},
         "reason": "No actual trigger was observed.",
     }
     return {
-        "as_of": T2, "attempts": [row], "calendar": [], "shadow": [],
+        "as_of": T2,
+        "attempts": [row],
+        "calendar": [],
+        "shadow": [],
         "clock": {"status": "UNKNOWN"},
         "integrity": {"ok": True, "entry_permission": False, "attempts": 1, "revisions": 1},
         "summary": {
-            "schema_version": "KOD_TIMING_CAPTURE_REPORT_V1", "as_of": T2,
-            "entry_permission": False, "attempts": 1, "statuses": {"NO_TRIGGER": 1},
+            "schema_version": "KOD_TIMING_CAPTURE_REPORT_V1",
+            "as_of": T2,
+            "entry_permission": False,
+            "attempts": 1,
+            "statuses": {"NO_TRIGGER": 1},
             "missing_stages": {name: int(row[name] is None) for name in TIMING_STAGES},
-            "clock_statuses": {"UNKNOWN": 1}, "external_timestamp_statuses": {"NOT_REQUESTED": 1},
-            "cohorts": [{"evidence_kind": "synthetic", "detector_version": "FIXED_v1",
-                         "attempts": 1, "statuses": {"NO_TRIGGER": 1}, "stages": {"receipt_to_features": stats}}],
-            "source_latency": [{"source": "fixture-source", "evidence_kind": "synthetic", "attempts": 1,
-                                "lag": stats, "clock_conflicts": 0, "failures": 0}],
+            "clock_statuses": {"UNKNOWN": 1},
+            "external_timestamp_statuses": {"NOT_REQUESTED": 1},
+            "cohorts": [
+                {
+                    "evidence_kind": "synthetic",
+                    "detector_version": "FIXED_v1",
+                    "attempts": 1,
+                    "statuses": {"NO_TRIGGER": 1},
+                    "stages": {"receipt_to_features": stats},
+                }
+            ],
+            "source_latency": [
+                {
+                    "source": "fixture-source",
+                    "evidence_kind": "synthetic",
+                    "attempts": 1,
+                    "lag": stats,
+                    "clock_conflicts": 0,
+                    "failures": 0,
+                }
+            ],
             "records": [{"id": "attempt-1", "seconds": {"analyst": None}}],
             "limitations": ["No profitability claim."],
         },
@@ -64,15 +97,25 @@ class TimingOperationsTests(unittest.TestCase):
         self.root = Path(self.tmp.name)
         self.runtime = self.root / "runtime"
         self.report = self.runtime / "timing/report.json"
-        self.client = TestClient(create_app(self.root / "workstation", offline=True,
-                                           testing=True, runtime_root=self.runtime))
+        self.client = TestClient(
+            create_app(
+                self.root / "workstation", offline=True, testing=True, runtime_root=self.runtime
+            )
+        )
         self.addCleanup(self.client.close)
 
     def write(self, value=None):
         payload = timing_payload() if value is None else value
         self.report.parent.mkdir(parents=True, exist_ok=True)
-        self.report.write_text(json.dumps({"schema_version": TIMING_SCHEMA, "payload": payload,
-                                         "sha256": hashlib.sha256(canonical(payload)).hexdigest()}))
+        self.report.write_text(
+            json.dumps(
+                {
+                    "schema_version": TIMING_SCHEMA,
+                    "payload": payload,
+                    "sha256": hashlib.sha256(canonical(payload)).hexdigest(),
+                }
+            )
+        )
         return payload
 
     def test_missing_report_is_unknown_and_get_does_not_create_runtime(self):
@@ -85,8 +128,10 @@ class TimingOperationsTests(unittest.TestCase):
     def test_intraday_only_root_renders_without_account_or_network(self):
         self.write()
         before = self.report.read_bytes()
-        with patch("socket.create_connection", side_effect=AssertionError("network forbidden")), \
-             patch("socket.getaddrinfo", side_effect=AssertionError("network forbidden")):
+        with (
+            patch("socket.create_connection", side_effect=AssertionError("network forbidden")),
+            patch("socket.getaddrinfo", side_effect=AssertionError("network forbidden")),
+        ):
             page = self.client.get("/timing")
         self.assertEqual(page.status_code, 200)
         self.assertIn("SYNTHETIC DEMONSTRATION INCLUDED", page.text)
@@ -97,7 +142,14 @@ class TimingOperationsTests(unittest.TestCase):
         self.assertIn("No post-decision quote assessments", page.text)
         self.assertNotIn("No verified timing view", page.text)
         self.assertEqual(self.report.read_bytes(), before)
-        self.assertEqual([p.relative_to(self.runtime).as_posix() for p in self.runtime.rglob("*") if p.is_file()], ["timing/report.json"])
+        self.assertEqual(
+            [
+                p.relative_to(self.runtime).as_posix()
+                for p in self.runtime.rglob("*")
+                if p.is_file()
+            ],
+            ["timing/report.json"],
+        )
 
     def test_tampered_hash_withholds_all_payload_fields(self):
         self.write()
@@ -136,7 +188,7 @@ class TimingOperationsTests(unittest.TestCase):
 
     def test_duplicate_keys_nonfinite_and_oversize_refused(self):
         self.write()
-        for raw in ('{"schema_version":"a","schema_version":"b"}', '{"payload":NaN}', 'not json'):
+        for raw in ('{"schema_version":"a","schema_version":"b"}', '{"payload":NaN}', "not json"):
             self.report.write_text(raw)
             with self.assertRaises(OperationsUnavailable):
                 TimingArchive(self.runtime).snapshot()
@@ -164,7 +216,10 @@ class TimingOperationsTests(unittest.TestCase):
     def test_xss_and_unowned_references_never_become_links(self):
         payload = timing_payload()
         payload["attempts"][0]["reason"] = "<script>alert(1)</script>"
-        payload["attempts"][0]["links"] = {"candidate_id": "javascript:alert(1)", "url": "https://evil.example"}
+        payload["attempts"][0]["links"] = {
+            "candidate_id": "javascript:alert(1)",
+            "url": "https://evil.example",
+        }
         payload["calendar"] = [{"id": "<img src=x onerror=alert(1)>"}]
         self.write(payload)
         page = self.client.get("/timing").text
@@ -182,8 +237,15 @@ class TimingOperationsTests(unittest.TestCase):
         legacy = payload()
         legacy["run"]["id"] = "run-1"
         legacy["candidates"][0]["id"] = "candidate-1"
-        (self.runtime / "snapshot.json").write_text(json.dumps({"schema_version": SCHEMA,
-            "payload": legacy, "sha256": hashlib.sha256(canonical(legacy)).hexdigest()}))
+        (self.runtime / "snapshot.json").write_text(
+            json.dumps(
+                {
+                    "schema_version": SCHEMA,
+                    "payload": legacy,
+                    "sha256": hashlib.sha256(canonical(legacy)).hexdigest(),
+                }
+            )
+        )
         page = self.client.get("/timing").text
         self.assertIn('href="/candidate/candidate-1"', page)
         self.assertIn('href="/today">run-1', page)
@@ -191,21 +253,29 @@ class TimingOperationsTests(unittest.TestCase):
 
     def test_context_join_preserves_cohort_and_actual_retention_time(self):
         payload = timing_payload()
-        item = {"recorded_at": T1, "as_of": T0, "context": {
-            "calendar": {"events": [{"id": "<script>event</script>", "event_at": T2,
-                                      "timing_state": "UPCOMING"}]},
-            "preparations": [{"branch": "UPPER_AND_LOWER"}],
-            "shadow": [{"decision_id": "decision-1", "status": "INDICATIVE_ONLY"}],
-            "avoid": [{"liquidity": "UNKNOWN"}],
-            "source_validation": "Declarations only.",
-        }}
+        item = {
+            "recorded_at": T1,
+            "as_of": T0,
+            "context": {
+                "calendar": {
+                    "events": [
+                        {"id": "<script>event</script>", "event_at": T2, "timing_state": "UPCOMING"}
+                    ]
+                },
+                "preparations": [{"branch": "UPPER_AND_LOWER"}],
+                "shadow": [{"decision_id": "decision-1", "status": "INDICATIVE_ONLY"}],
+                "avoid": [{"liquidity": "UNKNOWN"}],
+                "source_validation": "Declarations only.",
+            },
+        }
         identity = hashlib.sha256(canonical(item)).hexdigest()
         payload["contexts"] = [item]
         payload["attempts"][0]["detector_version"] = "CONTEXT_PREPARATION_V1"
         payload["attempts"][0]["links"]["context_id"] = identity
         view = timing_context_views(payload)[0]
-        self.assertEqual((view["evidence_kind"], view["recorded_at"], view["as_of"]),
-                         ("synthetic", T1, T0))
+        self.assertEqual(
+            (view["evidence_kind"], view["recorded_at"], view["as_of"]), ("synthetic", T1, T0)
+        )
         self.write(payload)
         page = self.client.get("/timing").text
         self.assertIn("Analytical cutoff", page)
@@ -266,8 +336,15 @@ class TimingOperationsTests(unittest.TestCase):
 
         self.runtime.mkdir()
         legacy = payload()
-        (self.runtime / "snapshot.json").write_text(json.dumps({"schema_version": SCHEMA,
-            "payload": legacy, "sha256": hashlib.sha256(canonical(legacy)).hexdigest()}))
+        (self.runtime / "snapshot.json").write_text(
+            json.dumps(
+                {
+                    "schema_version": SCHEMA,
+                    "payload": legacy,
+                    "sha256": hashlib.sha256(canonical(legacy)).hexdigest(),
+                }
+            )
+        )
         before = (self.runtime / "snapshot.json").read_bytes()
         self.assertIn("RUN-TEST", self.client.get("/today").text)
         self.assertIn("No verified timing view", self.client.get("/timing").text)
@@ -286,8 +363,13 @@ class TimingOperationsTests(unittest.TestCase):
 
     def test_actual_timing_demo_renders_with_original_account_routes(self):
         repository = Path(__file__).resolve().parents[2]
-        subprocess.run([sys.executable, "-m", "idxsig.runtime", "--root", str(self.runtime), "timing-demo"],
-                       cwd=repository / "idx-signals", check=True, capture_output=True, text=True)
+        subprocess.run(
+            [sys.executable, "-m", "idxsig.runtime", "--root", str(self.runtime), "timing-demo"],
+            cwd=repository / "idx-signals",
+            check=True,
+            capture_output=True,
+            text=True,
+        )
         before = self.report.read_bytes()
         snapshot = TimingArchive(self.runtime).snapshot()
         page = self.client.get("/timing")

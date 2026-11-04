@@ -53,8 +53,11 @@ def inventory(root: Path, tree_inventory: Path | None = None) -> list[str]:
     proc = subprocess.run(["git", "ls-files", "-z"], cwd=root, capture_output=True)
     if proc.returncode == 0:
         return sorted(p.decode("utf-8", "surrogateescape") for p in proc.stdout.split(b"\0") if p)
-    return sorted(p.relative_to(root).as_posix() for p in root.rglob("*") if p.is_file()
-                  and ".git" not in p.relative_to(root).parts)
+    return sorted(
+        p.relative_to(root).as_posix()
+        for p in root.rglob("*")
+        if p.is_file() and ".git" not in p.relative_to(root).parts
+    )
 
 
 def snapshot(root: Path, paths: list[str]) -> dict:
@@ -64,10 +67,19 @@ def snapshot(root: Path, paths: list[str]) -> dict:
             continue
         path = safe_path(root, name)
         data = path.read_bytes() if path.is_file() else None
-        rows.append({"path": name, "bytes": len(data) if data is not None else None,
-                     "sha256": digest(data) if data is not None else None})
-    return {"schema_version": 1, "kind": "KOD-HISTORY-BYTE-SNAPSHOT",
-            "files": rows, "available": sum(row["sha256"] is not None for row in rows)}
+        rows.append(
+            {
+                "path": name,
+                "bytes": len(data) if data is not None else None,
+                "sha256": digest(data) if data is not None else None,
+            }
+        )
+    return {
+        "schema_version": 1,
+        "kind": "KOD-HISTORY-BYTE-SNAPSHOT",
+        "files": rows,
+        "available": sum(row["sha256"] is not None for row in rows),
+    }
 
 
 def compare_snapshot(root: Path, baseline: dict) -> list[dict]:
@@ -84,9 +96,13 @@ def compare_snapshot(root: Path, baseline: dict) -> list[dict]:
         else:
             data = path.read_bytes()
             if name in APPEND_ONLY:
-                data = data[:original["bytes"]]
+                data = data[: original["bytes"]]
             same = digest(data) == original["sha256"] and len(data) == original["bytes"]
-            status, reason = ("VERIFIED", "original bytes preserved") if same else ("FAIL", "original bytes changed")
+            status, reason = (
+                ("VERIFIED", "original bytes preserved")
+                if same
+                else ("FAIL", "original bytes changed")
+            )
         rows.append({"path": name, "status": status, "reason": reason})
     return rows
 
@@ -133,16 +149,30 @@ def verify_manifests(root: Path, paths: list[str]) -> list[dict]:
             continue
         path = safe_path(root, name)
         if not path.is_file():
-            results.append({"manifest": name, "status": "UNAVAILABLE", "reason": "manifest bytes unavailable"})
+            results.append(
+                {"manifest": name, "status": "UNAVAILABLE", "reason": "manifest bytes unavailable"}
+            )
             continue
         try:
             payload = _json_payload(path)
         except (OSError, ValueError, UnicodeError) as exc:
-            results.append({"manifest": name, "status": "FAIL", "reason": type(exc).__name__ + ": invalid manifest"})
+            results.append(
+                {
+                    "manifest": name,
+                    "status": "FAIL",
+                    "reason": type(exc).__name__ + ": invalid manifest",
+                }
+            )
             continue
         claims = list(_claims(payload))
         if not claims:
-            results.append({"manifest": name, "status": "UNSUPPORTED", "reason": "no supported path/SHA256 claims"})
+            results.append(
+                {
+                    "manifest": name,
+                    "status": "UNSUPPORTED",
+                    "reason": "no supported path/SHA256 claims",
+                }
+            )
         for index, claim in enumerate(claims):
             row = {"manifest": name, "claim": index}
             try:
@@ -155,21 +185,30 @@ def verify_manifests(root: Path, paths: list[str]) -> list[dict]:
                 else:
                     data = target.read_bytes()
                     if data.startswith(b"version https://git-lfs.github.com/spec/v1\n"):
-                        row.update(status="UNAVAILABLE", reason="Git LFS pointer; original payload unavailable")
+                        row.update(
+                            status="UNAVAILABLE",
+                            reason="Git LFS pointer; original payload unavailable",
+                        )
                     elif digest(data) != claim["sha256"]:
                         row.update(status="FAIL", reason="SHA256 mismatch")
                     else:
-                        row.update(status="VERIFIED", reason="original file SHA256 matches manifest")
+                        row.update(
+                            status="VERIFIED", reason="original file SHA256 matches manifest"
+                        )
             except LookupError as exc:
                 row.update(status="UNSUPPORTED", reason=str(exc))
             except (ValueError, OSError, KeyError, TypeError) as exc:
-                row.update(status="FAIL", reason=type(exc).__name__ + ": invalid or unsafe hash claim")
+                row.update(
+                    status="FAIL", reason=type(exc).__name__ + ": invalid or unsafe hash claim"
+                )
             results.append(row)
     return results
 
 
 def _canonical(value: dict) -> bytes:
-    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode(
+        "utf-8"
+    )
 
 
 def token_payloads(root: Path, paths: list[str]) -> tuple[dict[str, bytes], list[dict]]:
@@ -184,19 +223,37 @@ def token_payloads(root: Path, paths: list[str]) -> tuple[dict[str, bytes], list
             for row in _json_payload(root / name):
                 if paper and isinstance(row, dict) and "record_hash" in row:
                     original = row["record_hash"]
-                    rebuilt = digest(_canonical({k: v for k, v in row.items() if k != "record_hash"}))
+                    rebuilt = digest(
+                        _canonical({k: v for k, v in row.items() if k != "record_hash"})
+                    )
                     if rebuilt != original:
-                        failures.append({"path": name, "status": "FAIL", "reason": "record_hash does not match original record"})
+                        failures.append(
+                            {
+                                "path": name,
+                                "status": "FAIL",
+                                "reason": "record_hash does not match original record",
+                            }
+                        )
                         continue
                     for authority in ("freetsa", "sectigo"):
-                        payloads[f"idx-signals/paper/timestamps/{original}.{authority}.tsr"] = original.encode("ascii")
+                        payloads[f"idx-signals/paper/timestamps/{original}.{authority}.tsr"] = (
+                            original.encode("ascii")
+                        )
                 elif registry:
                     record_name = row["record_id"].replace(":", "_")
                     kind = row["kind"].lower()
                     for authority in ("freetsa", "sectigo"):
-                        payloads[f"kod-machine/registry/timestamps/{kind}/{record_name}.{authority}.tsr"] = _canonical(row)
+                        payloads[
+                            f"kod-machine/registry/timestamps/{kind}/{record_name}.{authority}.tsr"
+                        ] = _canonical(row)
         except (ValueError, TypeError, KeyError, UnicodeError):
-            failures.append({"path": name, "status": "FAIL", "reason": "signed-payload ledger cannot be decoded"})
+            failures.append(
+                {
+                    "path": name,
+                    "status": "FAIL",
+                    "reason": "signed-payload ledger cannot be decoded",
+                }
+            )
     return payloads, failures
 
 
@@ -206,6 +263,7 @@ def verify_tokens(root: Path, paths: list[str], verifier=None) -> list[dict]:
         sys.path.insert(0, str(root / "kod-machine"))
         try:
             from kod.timestamp import RFC3161Timestamper
+
             verifier = RFC3161Timestamper()
         except ImportError:
             pass
@@ -219,41 +277,72 @@ def verify_tokens(root: Path, paths: list[str], verifier=None) -> list[dict]:
         if data is None:
             original_name = token.name.rsplit(".", 2)[0]
             if original_name.endswith((".json", ".jsonl", ".md")):
-                direct = token.parent.parent / original_name if token.parent.name == "timestamps" else token.parent / original_name
+                direct = (
+                    token.parent.parent / original_name
+                    if token.parent.name == "timestamps"
+                    else token.parent / original_name
+                )
                 if direct.is_file() and direct.resolve().is_relative_to(root.resolve()):
                     data = direct.read_bytes()
         if not token.is_file():
             row.update(status="UNAVAILABLE", reason="token bytes unavailable")
         elif data is None:
-            row.update(status="UNAVAILABLE", reason="original signed payload association unavailable")
+            row.update(
+                status="UNAVAILABLE", reason="original signed payload association unavailable"
+            )
         elif verifier is None:
             row.update(status="UNAVAILABLE", reason="offline RFC3161 verifier unavailable")
         else:
             try:
                 stamp = verifier.verify(authority, token.read_bytes(), data)
-                row.update(status="VERIFIED", reason="signature binds original payload under pinned trust chain",
-                           timestamp=stamp.isoformat(), payload_sha256=digest(data))
+                row.update(
+                    status="VERIFIED",
+                    reason="signature binds original payload under pinned trust chain",
+                    timestamp=stamp.isoformat(),
+                    payload_sha256=digest(data),
+                )
             except FileNotFoundError:
-                row.update(status="UNAVAILABLE", reason="verifier or pinned certificate unavailable")
+                row.update(
+                    status="UNAVAILABLE", reason="verifier or pinned certificate unavailable"
+                )
             except Exception as exc:
-                row.update(status="FAIL", reason="RFC3161 verification failed: " + type(exc).__name__)
+                row.update(
+                    status="FAIL", reason="RFC3161 verification failed: " + type(exc).__name__
+                )
         results.append(row)
     return results
 
 
 def report(root: Path, paths: list[str], baseline: dict | None = None, *, verifier=None) -> dict:
-    sections = {"manifests": verify_manifests(root, paths), "tokens": verify_tokens(root, paths, verifier)}
+    sections = {
+        "manifests": verify_manifests(root, paths),
+        "tokens": verify_tokens(root, paths, verifier),
+    }
     if baseline is not None:
         sections["preservation"] = compare_snapshot(root, baseline)
     counts = {key: dict(Counter(row["status"] for row in rows)) for key, rows in sections.items()}
     statuses = {row["status"] for rows in sections.values() for row in rows}
-    status = "FAIL" if "FAIL" in statuses else "PARTIAL" if statuses - {"VERIFIED"} or not statuses else "VERIFIED"
-    return {"schema_version": 1, "kind": "KOD-HISTORY-AUDIT", "status": status,
-            "generated_at": datetime.now(timezone.utc).isoformat(), "counts": counts, **sections,
-            "limits": ["No archive data is fetched or rewritten.",
-                       "Signature verification proves payload binding, not tradability or timely prediction.",
-                       "Only explicit supported manifest layouts are checked; unsupported coverage remains visible.",
-                       "Use existing domain verifiers for ledger chains, schemas and outcome chronology."]}
+    status = (
+        "FAIL"
+        if "FAIL" in statuses
+        else "PARTIAL"
+        if statuses - {"VERIFIED"} or not statuses
+        else "VERIFIED"
+    )
+    return {
+        "schema_version": 1,
+        "kind": "KOD-HISTORY-AUDIT",
+        "status": status,
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "counts": counts,
+        **sections,
+        "limits": [
+            "No archive data is fetched or rewritten.",
+            "Signature verification proves payload binding, not tradability or timely prediction.",
+            "Only explicit supported manifest layouts are checked; unsupported coverage remains visible.",
+            "Use existing domain verifiers for ledger chains, schemas and outcome chronology.",
+        ],
+    }
 
 
 def main(argv=None) -> int:
@@ -262,7 +351,9 @@ def main(argv=None) -> int:
     parser.add_argument("--tree-inventory", type=Path)
     parser.add_argument("--snapshot", type=Path, help="write original-byte inventory before edits")
     parser.add_argument("--compare", type=Path, help="compare with a previously saved snapshot")
-    parser.add_argument("--report", type=Path, help="write detailed verification and coverage report")
+    parser.add_argument(
+        "--report", type=Path, help="write detailed verification and coverage report"
+    )
     parser.add_argument("--require-complete", action="store_true")
     args = parser.parse_args(argv)
     root = args.root.resolve()
@@ -278,7 +369,11 @@ def main(argv=None) -> int:
         with args.report.open("x", encoding="utf-8") as stream:
             stream.write(json.dumps(result, indent=2) + "\n")
     print(json.dumps({"status": result["status"], "counts": result["counts"]}, sort_keys=True))
-    return 1 if result["status"] == "FAIL" or (args.require_complete and result["status"] != "VERIFIED") else 0
+    return (
+        1
+        if result["status"] == "FAIL" or (args.require_complete and result["status"] != "VERIFIED")
+        else 0
+    )
 
 
 if __name__ == "__main__":

@@ -37,8 +37,13 @@ from .forecasts import ForecastArchive, ForecastUnavailable
 from .replay import ReplayArchive, ReplayUnavailable
 from .research import ResearchArchive, ResearchUnavailable
 from .operations import (
-    OperationsArchive, OperationsUnavailable, TimingArchive, health_rows, brief,
-    timing_timeline, timing_context_views,
+    OperationsArchive,
+    OperationsUnavailable,
+    TimingArchive,
+    health_rows,
+    brief,
+    timing_timeline,
+    timing_context_views,
 )
 
 ASSETS = Path(__file__).resolve().parent
@@ -390,8 +395,14 @@ def _policy_query(policy):
 
 
 def create_app(
-    data_dir, offline=False, service=None, *, testing=False, replay_db=None, forecast_dir=None,
-    runtime_root=None
+    data_dir,
+    offline=False,
+    service=None,
+    *,
+    testing=False,
+    replay_db=None,
+    forecast_dir=None,
+    runtime_root=None,
 ):
     """Build an app with explicit runtime state; no import-time IO or collection."""
     app = FastAPI(title="KOD Workstation", docs_url=None, redoc_url=None)
@@ -411,6 +422,7 @@ def create_app(
     signing_key = secrets.token_bytes(32)
     templates = Jinja2Templates(directory=str(ASSETS / "templates"))
     templates.env.filters.update(moment=_display_time, number=_number)
+
     def ops_percent(value):
         if value is None:
             return "—"
@@ -423,8 +435,9 @@ def create_app(
     templates.env.filters.update(
         ops_brief=brief,
         ops_percent=ops_percent,
-        ops_pretty=lambda value: json.dumps(value, sort_keys=True, ensure_ascii=False, indent=2,
-                                           allow_nan=False),
+        ops_pretty=lambda value: json.dumps(
+            value, sort_keys=True, ensure_ascii=False, indent=2, allow_nan=False
+        ),
     )
     templates.env.globals.update(
         show=dossier_model.display,
@@ -510,16 +523,35 @@ def create_app(
         """Render a verified runner projection. Reading never changes operational state."""
         titles = {
             "today": ("Today", "Review the latest recorded run, its coverage and the work ahead."),
-            "candidates": ("Candidates", "Inspect detections, supporting evidence and unresolved blockers."),
-            "candidate": ("Candidate detail", "Trace the recorded observation through context, blockers and plan."),
-            "market_map": ("Market map", "See which groups participated in the recorded market move."),
-            "paper_portfolio": ("Paper portfolio", "Inspect simulated cash, positions, orders and fills."),
-            "experiments": ("Experiments", "Track research status without turning an experiment into a trading policy."),
+            "candidates": (
+                "Candidates",
+                "Inspect detections, supporting evidence and unresolved blockers.",
+            ),
+            "candidate": (
+                "Candidate detail",
+                "Trace the recorded observation through context, blockers and plan.",
+            ),
+            "market_map": (
+                "Market map",
+                "See which groups participated in the recorded market move.",
+            ),
+            "paper_portfolio": (
+                "Paper portfolio",
+                "Inspect simulated cash, positions, orders and fills.",
+            ),
+            "experiments": (
+                "Experiments",
+                "Track research status without turning an experiment into a trading policy.",
+            ),
         }
         title, description = titles[page]
         context = {
-            "page": page, "ops_title": title, "ops_description": description,
-            "ops_error": None, "query": query[:200].strip(), "selected_state": state,
+            "page": page,
+            "ops_title": title,
+            "ops_description": description,
+            "ops_error": None,
+            "query": query[:200].strip(),
+            "selected_state": state,
             "selected_status": status,
         }
         try:
@@ -530,22 +562,35 @@ def create_app(
             experiments = payload["experiments"]
             pattern = context["query"].casefold()
             context.update(
-                snapshot=snap, payload=payload, sources=health_rows(payload["health"]),
-                synthetic=bool(run.get("synthetic")) or str(run.get("mode", "")).lower()
-                    in {"demo", "synthetic", "synthetic_demo", "fixture"},
+                snapshot=snap,
+                payload=payload,
+                sources=health_rows(payload["health"]),
+                synthetic=bool(run.get("synthetic"))
+                or str(run.get("mode", "")).lower()
+                in {"demo", "synthetic", "synthetic_demo", "fixture"},
                 blocked_count=sum(bool(c.get("blockers")) for c in candidates),
                 states=sorted({str(c.get("state", "UNKNOWN")) for c in candidates}),
-                candidates=[c for c in candidates if (not state or c.get("state") == state)
-                            and (not pattern or pattern in brief(c).casefold())],
+                candidates=[
+                    c
+                    for c in candidates
+                    if (not state or c.get("state") == state)
+                    and (not pattern or pattern in brief(c).casefold())
+                ],
                 groups=payload["market_context"].get("groups", []),
                 experiment_statuses=sorted({str(e.get("status", "UNKNOWN")) for e in experiments}),
-                experiments=[e for e in experiments if (not status or e.get("status") == status)
-                             and (not pattern or pattern in brief(e).casefold())],
+                experiments=[
+                    e
+                    for e in experiments
+                    if (not status or e.get("status") == status)
+                    and (not pattern or pattern in brief(e).casefold())
+                ],
             )
             if candidate_id is not None:
                 candidate = next((c for c in candidates if c["id"] == candidate_id), None)
                 if candidate is None:
-                    raise HTTPException(404, "Candidate not found in the recorded runtime snapshot.")
+                    raise HTTPException(
+                        404, "Candidate not found in the recorded runtime snapshot."
+                    )
                 context["candidate"] = candidate
         except OperationsUnavailable as exc:
             context["ops_error"] = str(exc)
@@ -570,12 +615,19 @@ def create_app(
                 pass
             details = {row["id"]: row for row in payload["summary"]["records"]}
             attempts = sorted(payload["attempts"], key=lambda row: row["recorded_at"], reverse=True)
-            context.update(snapshot=snapshot, timing=payload, summary=payload["summary"],
-                           attempts=attempts[:100], retained_count=len(attempts), details=details,
-                           context_views=timing_context_views(payload),
-                           timeline=timing_timeline, owned_candidate_ids=candidate_ids,
-                           owned_run_id=run_id,
-                           synthetic=any(row["evidence_kind"] == "synthetic" for row in attempts))
+            context.update(
+                snapshot=snapshot,
+                timing=payload,
+                summary=payload["summary"],
+                attempts=attempts[:100],
+                retained_count=len(attempts),
+                details=details,
+                context_views=timing_context_views(payload),
+                timeline=timing_timeline,
+                owned_candidate_ids=candidate_ids,
+                owned_run_id=run_id,
+                synthetic=any(row["evidence_kind"] == "synthetic" for row in attempts),
+            )
         except OperationsUnavailable as exc:
             context["timing_error"] = str(exc)
         return render(request, "timing.html", **context)

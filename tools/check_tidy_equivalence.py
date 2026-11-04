@@ -68,7 +68,8 @@ def compare(before: dict, after: dict) -> dict:
         "different_fields": differences,
         "managed_files": len(before["managed_ast_sha256"]),
         "original_journal_readable": bool(original_verification["ok"]),
-        "snapshot_bytes_equal": encoded(before["synthetic_snapshot"]) == encoded(after["synthetic_snapshot"]),
+        "snapshot_bytes_equal": encoded(before["synthetic_snapshot"])
+        == encoded(after["synthetic_snapshot"]),
         "scope": "formatting equivalence and synthetic history compatibility; not profitability",
     }
 
@@ -84,7 +85,15 @@ def main(argv: list[str] | None = None) -> int:
         report = compare(before, result)
         print(json.dumps(report, sort_keys=True))
         return 0 if report["ok"] and report["original_journal_readable"] else 1
-    print(json.dumps({"ok": True, "managed_files": len(result["managed_ast_sha256"]), "synthetic_snapshot_sha256": result["synthetic_snapshot_sha256"]}))
+    print(
+        json.dumps(
+            {
+                "ok": True,
+                "managed_files": len(result["managed_ast_sha256"]),
+                "synthetic_snapshot_sha256": result["synthetic_snapshot_sha256"],
+            }
+        )
+    )
     return 0
 
 

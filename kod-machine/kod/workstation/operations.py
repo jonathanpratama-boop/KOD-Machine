@@ -20,8 +20,15 @@ DEFAULT_ROOT = Path(__file__).resolve().parents[3] / "runtime" / "kod"
 SECTIONS = ("run", "health", "candidates", "market_context", "account", "experiments")
 TIMING_SCHEMA = "KOD_TIMING_BOARD_V1"
 TIMING_STAGES = (
-    "scheduled_at", "started_at", "published_at", "received_at", "features_ready_at",
-    "detected_at", "decision_at", "executable_at", "fill_at",
+    "scheduled_at",
+    "started_at",
+    "published_at",
+    "received_at",
+    "features_ready_at",
+    "detected_at",
+    "decision_at",
+    "executable_at",
+    "fill_at",
 )
 
 
@@ -100,13 +107,19 @@ class OperationsArchive:
         try:
             if path.is_symlink() or path.stat().st_size > 65536:
                 raise ValueError("unsupported attempt record")
-            value = json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=_unique_pairs,
-                               parse_constant=_nonfinite)
+            value = json.loads(
+                path.read_text(encoding="utf-8"),
+                object_pairs_hook=_unique_pairs,
+                parse_constant=_nonfinite,
+            )
             if not isinstance(value, dict) or value.get("status") not in {"FAILED", "COMPLETED"}:
                 raise ValueError("invalid attempt status")
             return value
         except (OSError, UnicodeError, ValueError, RecursionError):
-            return {"status": "UNREADABLE", "error": "The latest attempt record could not be read; current run health is unknown."}
+            return {
+                "status": "UNREADABLE",
+                "error": "The latest attempt record could not be read; current run health is unknown.",
+            }
 
     def snapshot(self) -> dict:
         path = self.root / "snapshot.json"
@@ -137,8 +150,12 @@ class OperationsArchive:
         if not isinstance(digest, str) or not hmac.compare_digest(computed, digest):
             raise OperationsUnavailable("The runtime snapshot failed its integrity check.")
         _validate(payload)
-        return {"payload": payload, "sha256": computed, "schema_version": SCHEMA,
-                "last_attempt": self.last_attempt()}
+        return {
+            "payload": payload,
+            "sha256": computed,
+            "schema_version": SCHEMA,
+            "last_attempt": self.last_attempt(),
+        }
 
 
 def _timing_time(value, name):
@@ -165,7 +182,9 @@ def _timing_stats(value):
         _timing_count(value.get(key), key)
     for key in ("median_seconds", "p95_seconds", "max_seconds"):
         number = value.get(key)
-        if number is not None and (isinstance(number, bool) or not isinstance(number, (int, float)) or number < 0):
+        if number is not None and (
+            isinstance(number, bool) or not isinstance(number, (int, float)) or number < 0
+        ):
             raise OperationsUnavailable("Timing delays must be nonnegative numbers or unknown.")
 
 
@@ -184,13 +203,18 @@ def _validate_timing(payload):
     if "entry_permission" in payload and payload["entry_permission"] is not False:
         raise OperationsUnavailable("The timing board cannot grant entry permission.")
     summary = payload["summary"]
-    if summary.get("schema_version") != "KOD_TIMING_CAPTURE_REPORT_V1" or summary.get("entry_permission") is not False:
+    if (
+        summary.get("schema_version") != "KOD_TIMING_CAPTURE_REPORT_V1"
+        or summary.get("entry_permission") is not False
+    ):
         raise OperationsUnavailable("The timing summary has an unsupported research schema.")
     if _timing_time(summary.get("as_of"), "summary cutoff") != cutoff:
         raise OperationsUnavailable("The timing board and summary cutoffs disagree.")
     _timing_count(summary.get("attempts"), "attempts")
     if summary["attempts"] != len(payload["attempts"]):
-        raise OperationsUnavailable("The timing attempt denominator disagrees with the retained records.")
+        raise OperationsUnavailable(
+            "The timing attempt denominator disagrees with the retained records."
+        )
     for key in ("statuses", "missing_stages", "clock_statuses", "external_timestamp_statuses"):
         if not isinstance(summary.get(key), dict):
             raise OperationsUnavailable(f"The timing {key} must be an object.")
@@ -212,7 +236,10 @@ def _validate_timing(payload):
         _timing_count(row.get("attempts"), "source attempts")
         _timing_stats(row.get("lag"))
     for row in payload["attempts"]:
-        if row.get("schema_version") != "KOD_TIMING_ATTEMPT_V1" or row.get("entry_permission") is not False:
+        if (
+            row.get("schema_version") != "KOD_TIMING_ATTEMPT_V1"
+            or row.get("entry_permission") is not False
+        ):
             raise OperationsUnavailable("The timing attempt has an unsupported research schema.")
         observed = _timing_time(row.get("recorded_at"), "recorded_at")
         if observed > cutoff:
@@ -225,11 +252,17 @@ def _validate_timing(payload):
                 raise OperationsUnavailable(f"Timing attempt {key} must be an object.")
         if any(value is not None and not isinstance(value, str) for value in row["links"].values()):
             raise OperationsUnavailable("Timing links must contain identifiers or unknown values.")
-        if row["threshold"].get("at") is not None and _timing_time(row["threshold"]["at"], "threshold") > observed:
+        if (
+            row["threshold"].get("at") is not None
+            and _timing_time(row["threshold"]["at"], "threshold") > observed
+        ):
             raise OperationsUnavailable("A threshold observation is after its record cutoff.")
         if row.get("evidence_kind") not in {"synthetic", "recorded", "prospective"}:
             raise OperationsUnavailable("Unknown timing evidence kind.")
-    if payload["integrity"].get("ok") is not True or payload["integrity"].get("entry_permission") is not False:
+    if (
+        payload["integrity"].get("ok") is not True
+        or payload["integrity"].get("entry_permission") is not False
+    ):
         raise OperationsUnavailable("The timing producer did not report verified local integrity.")
     if "contexts" in payload:
         _records(payload["contexts"], "timing contexts")
@@ -252,18 +285,23 @@ class TimingArchive(OperationsArchive):
         path = self.root / "timing" / "report.json"
         try:
             if path.parent.is_symlink() or path.is_symlink() or not path.is_file():
-                raise OperationsUnavailable("No timing report is available. Run an explicit instrumented attempt to create one.")
+                raise OperationsUnavailable(
+                    "No timing report is available. Run an explicit instrumented attempt to create one."
+                )
             with path.open("rb") as stream:
                 raw = stream.read(MAX_BYTES + 1)
             if len(raw) > MAX_BYTES:
                 raise OperationsUnavailable("The timing report exceeds the supported size.")
-            envelope = json.loads(raw.decode("utf-8"), object_pairs_hook=_unique_pairs,
-                                  parse_constant=_nonfinite)
+            envelope = json.loads(
+                raw.decode("utf-8"), object_pairs_hook=_unique_pairs, parse_constant=_nonfinite
+            )
             if not isinstance(envelope, dict) or envelope.get("schema_version") != TIMING_SCHEMA:
                 raise OperationsUnavailable("The timing report uses an unsupported schema.")
             payload = envelope.get("payload")
             computed = hashlib.sha256(canonical(payload)).hexdigest()
-            if not isinstance(envelope.get("sha256"), str) or not hmac.compare_digest(computed, envelope["sha256"]):
+            if not isinstance(envelope.get("sha256"), str) or not hmac.compare_digest(
+                computed, envelope["sha256"]
+            ):
                 raise OperationsUnavailable("The timing report failed its integrity check.")
             _validate_timing(payload)
         except OperationsUnavailable:
@@ -277,10 +315,16 @@ def timing_timeline(attempt):
     """Sort observed timestamps only; keep unknown stages explicit at the end."""
     stages = [{"name": key.replace("_", " "), "at": attempt.get(key)} for key in TIMING_STAGES]
     threshold = attempt.get("threshold", {})
-    stages.append({"name": "observable threshold (" + str(threshold.get("basis", "UNKNOWN")) + ")",
-                   "at": threshold.get("at")})
-    known = sorted((row for row in stages if row["at"] is not None),
-                   key=lambda row: _timing_time(row["at"], row["name"]))
+    stages.append(
+        {
+            "name": "observable threshold (" + str(threshold.get("basis", "UNKNOWN")) + ")",
+            "at": threshold.get("at"),
+        }
+    )
+    known = sorted(
+        (row for row in stages if row["at"] is not None),
+        key=lambda row: _timing_time(row["at"], row["name"]),
+    )
     return known + [row for row in stages if row["at"] is None]
 
 
@@ -297,24 +341,47 @@ def timing_context_views(payload):
             calendar.extend(row.get("events", [row]))
         if not calendar and not payload["shadow"]:
             return []
-        return [{"id": "LEGACY_FLATTENED_CONTEXT", "evidence_kind": "UNKNOWN",
-                 "recorded_at": None, "as_of": None, "calendar": calendar,
-                 "preparations": [], "shadow": payload["shadow"], "avoid": [],
-                 "source_validation": "Context provenance is unavailable in this older projection."}]
+        return [
+            {
+                "id": "LEGACY_FLATTENED_CONTEXT",
+                "evidence_kind": "UNKNOWN",
+                "recorded_at": None,
+                "as_of": None,
+                "calendar": calendar,
+                "preparations": [],
+                "shadow": payload["shadow"],
+                "avoid": [],
+                "source_validation": "Context provenance is unavailable in this older projection.",
+            }
+        ]
     views = []
     for item in contexts:
         identity = hashlib.sha256(canonical(item)).hexdigest()
-        kinds = {row["evidence_kind"] for row in payload["attempts"]
-                 if row["links"].get("context_id") == identity
-                 and row.get("detector_version") == "CONTEXT_PREPARATION_V1"}
+        kinds = {
+            row["evidence_kind"]
+            for row in payload["attempts"]
+            if row["links"].get("context_id") == identity
+            and row.get("detector_version") == "CONTEXT_PREPARATION_V1"
+        }
         context = item["context"]
-        views.append({"id": identity, "evidence_kind": next(iter(kinds)) if len(kinds) == 1 else "UNKNOWN",
-                      "recorded_at": item["recorded_at"], "as_of": item["as_of"],
-                      "calendar": context["calendar"].get("events", []),
-                      "preparations": context.get("preparations", []),
-                      "shadow": context.get("shadow", []), "avoid": context.get("avoid", []),
-                      "source_validation": context.get("source_validation", "Source verification unknown.")})
-    return sorted(views, key=lambda row: _timing_time(row["recorded_at"], "context record"), reverse=True)
+        views.append(
+            {
+                "id": identity,
+                "evidence_kind": next(iter(kinds)) if len(kinds) == 1 else "UNKNOWN",
+                "recorded_at": item["recorded_at"],
+                "as_of": item["as_of"],
+                "calendar": context["calendar"].get("events", []),
+                "preparations": context.get("preparations", []),
+                "shadow": context.get("shadow", []),
+                "avoid": context.get("avoid", []),
+                "source_validation": context.get(
+                    "source_validation", "Source verification unknown."
+                ),
+            }
+        )
+    return sorted(
+        views, key=lambda row: _timing_time(row["recorded_at"], "context record"), reverse=True
+    )
 
 
 def health_rows(health) -> list[dict]:
@@ -329,9 +396,7 @@ def health_rows(health) -> list[dict]:
             for name, value in health["sources"].items()
         ]
     return [
-        {"name": name, **value}
-        for name, value in health.items()
-        if isinstance(value, dict)
+        {"name": name, **value} for name, value in health.items() if isinstance(value, dict)
     ] or ([health] if health else [])
 
 

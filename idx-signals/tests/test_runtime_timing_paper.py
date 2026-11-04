@@ -11,26 +11,52 @@ from idxsig.timing_capture import read_attempts
 
 
 def fixture():
-    order = {"id": "decision:2026-11-03:BTCUSDT", "symbol": "BTCUSDT", "side": "BUY",
-             "made_at": "2026-11-04T00:00:10Z", "expires_at": "2026-11-04T01:00:10Z",
-             "status": "PENDING"}
-    payload = {"run": {"id": "cycle1", "as_of": "2026-11-04T00:00:10Z",
-                       "profile_sha256": "a" * 64},
-               "account": {"profile": "PAPER_TEST", "currency": "USDT",
-                           "simulation_only": True, "orders": [order], "fills": []}}
-    trace = {"id": "processing1", "evidence_kind": "synthetic",
-             "universe_snapshot_id": "membership:test", "decision_at": "2026-11-04T00:00:11Z",
-             "links": {"paper_new_intents_json": json.dumps([order["id"]]),
-                       "paper_new_fills_json": "[]"}}
+    order = {
+        "id": "decision:2026-11-03:BTCUSDT",
+        "symbol": "BTCUSDT",
+        "side": "BUY",
+        "made_at": "2026-11-04T00:00:10Z",
+        "expires_at": "2026-11-04T01:00:10Z",
+        "status": "PENDING",
+    }
+    payload = {
+        "run": {"id": "cycle1", "as_of": "2026-11-04T00:00:10Z", "profile_sha256": "a" * 64},
+        "account": {
+            "profile": "PAPER_TEST",
+            "currency": "USDT",
+            "simulation_only": True,
+            "orders": [order],
+            "fills": [],
+        },
+    }
+    trace = {
+        "id": "processing1",
+        "evidence_kind": "synthetic",
+        "universe_snapshot_id": "membership:test",
+        "decision_at": "2026-11-04T00:00:11Z",
+        "links": {
+            "paper_new_intents_json": json.dumps([order["id"]]),
+            "paper_new_fills_json": "[]",
+        },
+    }
     return payload, trace
 
 
 def fill(order):
-    return {"id": "fill:" + order["id"], "intent_id": order["id"], "symbol": "BTCUSDT",
-            "side": "BUY", "price": "100", "quantity": "1", "simulation_only": True,
-            "fill_recorded_at": "2026-11-04T00:00:20Z", "observed_at": "2026-11-04T00:00:20Z",
-            "received_at": "2026-11-04T00:00:20Z", "source_evidence_id": "quote:test",
-            "observation_id": "observation:2"}
+    return {
+        "id": "fill:" + order["id"],
+        "intent_id": order["id"],
+        "symbol": "BTCUSDT",
+        "side": "BUY",
+        "price": "100",
+        "quantity": "1",
+        "simulation_only": True,
+        "fill_recorded_at": "2026-11-04T00:00:20Z",
+        "observed_at": "2026-11-04T00:00:20Z",
+        "received_at": "2026-11-04T00:00:20Z",
+        "source_evidence_id": "quote:test",
+        "observation_id": "observation:2",
+    }
 
 
 class PaperTimingTest(unittest.TestCase):
@@ -40,8 +66,13 @@ class PaperTimingTest(unittest.TestCase):
         self.root = Path(self.tmp.name)
 
     def observe(self, payload, trace, done="2026-11-04T00:00:12Z", quote=None):
-        return observe_paper_timing(self.root, payload=payload, trace_record=trace,
-                                   process_quote_at=quote, processed_at=done)
+        return observe_paper_timing(
+            self.root,
+            payload=payload,
+            trace_record=trace,
+            process_quote_at=quote,
+            processed_at=done,
+        )
 
     def test_same_intent_links_later_fill_to_original_actual_decision(self):
         payload, trace = fixture()
@@ -51,8 +82,14 @@ class PaperTimingTest(unittest.TestCase):
         item = fill(later["account"]["orders"][0])
         later["account"]["fills"] = [item]
         later["account"]["orders"][0]["status"] = "IOC_COMPLETE"
-        trace.update(id="processing2", decision_at="2026-11-04T00:00:22Z",
-                     links={"paper_new_intents_json": "[]", "paper_new_fills_json": json.dumps([item["id"]])})
+        trace.update(
+            id="processing2",
+            decision_at="2026-11-04T00:00:22Z",
+            links={
+                "paper_new_intents_json": "[]",
+                "paper_new_fills_json": json.dumps([item["id"]]),
+            },
+        )
         self.observe(later, trace, "2026-11-04T00:00:23Z", "2026-11-04T00:00:21Z")
         row = read_attempts(self.root)[0]
         self.assertEqual(row["decision_at"], "2026-11-04T00:00:11Z")
@@ -112,7 +149,9 @@ class PaperTimingTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.observe(broken, trace)
         broken = copy.deepcopy(payload)
-        broken["account"]["fills"] = [{**fill(broken["account"]["orders"][0]), "intent_id": "missing"}]
+        broken["account"]["fills"] = [
+            {**fill(broken["account"]["orders"][0]), "intent_id": "missing"}
+        ]
         with self.assertRaises(ValueError):
             self.observe(broken, trace)
 
@@ -147,8 +186,11 @@ class PaperTimingTest(unittest.TestCase):
         item = fill(later["account"]["orders"][0])
         later["account"]["fills"] = [item]
         later["account"]["orders"][0]["status"] = "IOC_COMPLETE"
-        trace.update(id="processing2", decision_at=None,
-                     links={"paper_new_fills_json": json.dumps([item["id"]])})
+        trace.update(
+            id="processing2",
+            decision_at=None,
+            links={"paper_new_fills_json": json.dumps([item["id"]])},
+        )
         self.observe(later, trace, "2026-11-04T00:00:23Z", "2026-11-04T00:00:21Z")
         self.assertIsNone(read_attempts(self.root)[0]["decision_at"])
         self.observe(original, original_trace, "2026-11-04T00:00:24Z")

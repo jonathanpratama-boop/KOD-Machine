@@ -1,4 +1,5 @@
 """Atomic snapshots and append-only run receipts; no network or order routing."""
+
 from __future__ import annotations
 
 import contextlib
@@ -13,7 +14,9 @@ SNAPSHOT_VERSION = "KOD_RUNTIME_SNAPSHOT_V1"
 
 
 def canonical(value):
-    return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False).encode("utf-8")
+    return json.dumps(
+        value, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False
+    ).encode("utf-8")
 
 
 def digest(value):
@@ -30,8 +33,11 @@ def _pairs(items):
 
 
 def read_json(path):
-    return json.loads(Path(path).read_text(encoding="utf-8"), object_pairs_hook=_pairs,
-                      parse_constant=lambda x: (_ for _ in ()).throw(ValueError(f"nonfinite JSON: {x}")))
+    return json.loads(
+        Path(path).read_text(encoding="utf-8"),
+        object_pairs_hook=_pairs,
+        parse_constant=lambda x: (_ for _ in ()).throw(ValueError(f"nonfinite JSON: {x}")),
+    )
 
 
 @contextlib.contextmanager
@@ -123,6 +129,8 @@ def write_snapshot(root, payload):
 
 def read_snapshot(root):
     envelope = read_json(Path(root) / "snapshot.json")
-    if envelope.get("schema_version") != SNAPSHOT_VERSION or envelope.get("sha256") != digest(envelope.get("payload")):
+    if envelope.get("schema_version") != SNAPSHOT_VERSION or envelope.get("sha256") != digest(
+        envelope.get("payload")
+    ):
         raise ValueError("snapshot integrity/schema failure")
     return envelope

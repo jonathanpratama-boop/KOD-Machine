@@ -10,7 +10,13 @@ from idxsig.runtime.backup import backup, restore
 from idxsig.runtime.demo import fixtures, T0
 from idxsig.runtime.intraday import PublicResponse
 from idxsig.runtime.storage import atomic_json, read_json
-from idxsig.runtime.timing import Attempt, capture_intraday, publish_board, retain_context, timing_status
+from idxsig.runtime.timing import (
+    Attempt,
+    capture_intraday,
+    publish_board,
+    retain_context,
+    timing_status,
+)
 from idxsig.runtime.timing_demo import timing_demo, DEMO_TIME
 from idxsig.runtime.data import utc_text
 from idxsig.timing_capture import read_attempts
@@ -45,13 +51,22 @@ class TimingIntegrationTests(unittest.TestCase):
         backup(self.root, bundle)
         recovered = Path(self.tmp.name) / "restored"
         restore(bundle, recovered)
-        self.assertEqual(timing_status(self.root)["integrity"], timing_status(recovered)["integrity"])
+        self.assertEqual(
+            timing_status(self.root)["integrity"], timing_status(recovered)["integrity"]
+        )
         self.assertTrue(coordinator.verify(recovered)["ok"])
 
     def test_provider_block_retains_parent_and_failed_request_no_fake_market(self):
         fetcher = Mock(return_value=PublicResponse(451, b"unavailable"))
-        result = capture_intraday(self.root, scheduled_at=utc_text(DEMO_TIME), symbols=["BTCUSDT"],
-            bars=2, clock=lambda: utc_text(DEMO_TIME), fetcher=fetcher, evidence_kind="synthetic")
+        result = capture_intraday(
+            self.root,
+            scheduled_at=utc_text(DEMO_TIME),
+            symbols=["BTCUSDT"],
+            bars=2,
+            clock=lambda: utc_text(DEMO_TIME),
+            fetcher=fetcher,
+            evidence_kind="synthetic",
+        )
         self.assertEqual(fetcher.call_count, 1)
         self.assertEqual(result["capture"]["status"], "BLOCKED")
         rows = read_attempts(self.root)
@@ -86,7 +101,9 @@ class TimingIntegrationTests(unittest.TestCase):
         self.assertIsNone(rows[1]["decision_at"])
 
     def test_finish_retry_recovers_projection_failure_without_duplicate_append(self):
-        attempt = Attempt(self.root, detector="TEST", source="synthetic", kind="synthetic", members=[])
+        attempt = Attempt(
+            self.root, detector="TEST", source="synthetic", kind="synthetic", members=[]
+        )
         with patch("idxsig.runtime.timing.publish_board", side_effect=OSError("projection failed")):
             with self.assertRaises(OSError):
                 attempt.finish("NO_TRIGGER")
