@@ -96,8 +96,9 @@ sha256sum kod_watch.py systemd/*
 python3 -I -B -m unittest discover -s /root/kod-watch-kit
 ```
 
-The five digests must equal the Mac's, and the tests must end with `Ran 37 tests` and `OK`. The
-tests write only to temporary directories and send nothing. Then install:
+The five digests must equal the Mac's, and the test run must end with the line `OK`. Anything
+else (`FAILED`, an error, or no tests run) means stop and report. The tests write only to
+temporary directories and send nothing. Then install:
 
 ```sh
 sudo install -d -m 0755 -o root -g root /opt/kod/watch

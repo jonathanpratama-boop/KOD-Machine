@@ -129,5 +129,5 @@ From the repository root (no network; every ping goes to an injected fake):
 python3 -m unittest discover -s ops/kod-watch -v
 ```
 
-The suite (37 tests) passes on CPython 3.12.3 and 3.13.17. `systemd-analyze verify` (systemd 255)
-accepts the four unit files without warnings.
+The suite passes on CPython 3.12.3 and 3.13.17. `systemd-analyze verify` (systemd 255) accepts
+the four unit files without warnings.
