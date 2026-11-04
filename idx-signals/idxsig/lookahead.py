@@ -249,14 +249,25 @@ def _key_columns(key_columns: Sequence[str], time_column: str) -> tuple[str, ...
     return tuple(key_columns)
 
 
+def _labels(table: pd.DataFrame, label: str) -> None:
+    """Column labels must be distinct strings: reports name columns in typed text fields."""
+    if not table.columns.is_unique:
+        raise LookaheadCheckError(f"{label} has duplicate column names")
+    for column in table.columns:
+        if not isinstance(column, str):
+            raise LookaheadCheckError(
+                f"{label} has a column label {column} ({type(column).__name__}) that is not "
+                "a string; rename its columns, for example with .rename(columns=str)"
+            )
+
+
 def _decisions(
     table, label: str, time_column: str, key_columns: tuple[str, ...], assume_utc: bool
 ) -> _Decisions:
     """Validate one decision table; the index is ignored, keys must be columns."""
     if not isinstance(table, pd.DataFrame):
         raise LookaheadCheckError(f"{label} must be a pandas DataFrame, not {type(table).__name__}")
-    if not table.columns.is_unique:
-        raise LookaheadCheckError(f"{label} has duplicate column names")
+    _labels(table, label)
     absent = [c for c in (time_column, *key_columns) if c not in table.columns]
     if absent:
         raise LookaheadCheckError(
@@ -420,8 +431,7 @@ def _input(data, time_column: str, assume_utc: bool) -> pd.Series:
         raise LookaheadCheckError(f"data must be a pandas DataFrame, not {type(data).__name__}")
     if data.empty:
         raise LookaheadCheckError("data is empty; there is nothing to cut at a cutoff")
-    if not data.columns.is_unique:
-        raise LookaheadCheckError("data has duplicate column names")
+    _labels(data, "data")
     if time_column not in data.columns:
         raise LookaheadCheckError(f"data lacks its time column {time_column!r}")
     return _utc_series(data[time_column], f"data column {time_column!r}", assume_utc)

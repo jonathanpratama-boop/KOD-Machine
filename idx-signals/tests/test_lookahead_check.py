@@ -569,6 +569,23 @@ class EdgeCases(unittest.TestCase):
                 lambda d: CLEAN(d).set_index("asset"), prices(), cutoffs=CUTOFFS, **COLUMNS
             )
 
+    def test_column_labels_must_be_strings_so_every_report_is_json(self):
+        def numbered(data: pd.DataFrame) -> pd.DataFrame:
+            decisions = CLEAN(data)
+            decisions[np.int64(7)] = 1.0
+            return decisions
+
+        report = scramble_check(CLEAN, prices(), cutoffs=CUTOFFS, **COLUMNS)
+        self.assertEqual(json.loads(json.dumps(report.to_dict()))["verdict"], "PASS")
+        for decide, data, message in (
+            (numbered, prices(), r"decisions on the full data has a column label 7 \(int64\)"),
+            (CLEAN, prices().rename(columns={"volume": 3}), r"data has a column label 3 \(int\)"),
+        ):
+            for check in CHECKS:
+                with self.subTest(message=message, check=check.__name__):
+                    with self.assertRaisesRegex(LookaheadCheckError, message):
+                        check(decide, data, cutoffs=CUTOFFS, **COLUMNS)
+
     def test_nondeterministic_or_malformed_studies_are_refused(self):
         def random(data: pd.DataFrame) -> pd.DataFrame:
             return CLEAN(data).assign(score=lambda d: np.random.default_rng().random(len(d)))
