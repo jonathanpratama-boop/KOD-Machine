@@ -17,6 +17,7 @@ the study file it is given.
 from __future__ import annotations
 
 import argparse
+import contextlib
 import hashlib
 import importlib.util
 import json
@@ -42,6 +43,23 @@ def read_csv(path: Path, **options) -> pd.DataFrame:
     if not path.is_file():
         raise UsageError(f"{path} does not exist")
     return pd.read_csv(path, **options)
+
+
+@contextlib.contextmanager
+def as_script(study: Path):
+    """While the study runs, sys.argv holds only its path and its prints go to stderr.
+
+    Module-level code that reads sys.argv then sees no arguments rather than this tool's
+    own, and stdout carries nothing but the JSON verdict. Output written straight to file
+    descriptor 1 (a subprocess, C code) bypasses sys.stdout and is not redirected.
+    """
+    argv = sys.argv
+    sys.argv = [str(study)]
+    try:
+        with contextlib.redirect_stdout(sys.stderr):
+            yield
+    finally:
+        sys.argv = argv
 
 
 def load_decide(path: Path):
@@ -101,7 +119,6 @@ def run_module(args: argparse.Namespace, lookahead) -> list:
     lags = dict(parse_lag(text) for text in args.lag)
     if len(lags) != len(args.lag):
         raise UsageError("each --lag column may be given once")
-    decide = load_decide(Path(args.study))
     data = read_csv(Path(args.data))
     common = dict(
         data_time_column=args.data_time_column,
@@ -111,11 +128,14 @@ def run_module(args: argparse.Namespace, lookahead) -> list:
         value_lags=lags,
         assume_utc=args.assume_utc,
     )
+    study = Path(args.study)
     reports = []
-    if args.check in ("truncation", "both"):
-        reports.append(lookahead.truncation_check(decide, data, **common))
-    if args.check in ("scramble", "both"):
-        reports.append(lookahead.scramble_check(decide, data, **common, **scramble))
+    with as_script(study):
+        decide = load_decide(study)
+        if args.check in ("truncation", "both"):
+            reports.append(lookahead.truncation_check(decide, data, **common))
+        if args.check in ("scramble", "both"):
+            reports.append(lookahead.scramble_check(decide, data, **common, **scramble))
     return reports
 
 
@@ -155,6 +175,13 @@ def parser() -> argparse.ArgumentParser:
     return root
 
 
+def error_verdict(head: dict, error_type: str, error: str) -> str:
+    """One JSON ERROR verdict; every field is text, so it always encodes."""
+    return json.dumps(
+        {**head, "verdict": "ERROR", "error_type": error_type, "error": error}, indent=2
+    )
+
+
 def main(argv: list[str] | None = None) -> int:
     args = parser().parse_args(argv)
     library = str(ROOT / "idx-signals")
@@ -162,29 +189,26 @@ def main(argv: list[str] | None = None) -> int:
         sys.path.insert(0, library)  # The study file may import idxsig as well.
     from idxsig import lookahead
 
-    payload = {"version": lookahead.VERSION, "mode": args.mode}
-    try:
+    head = {"version": lookahead.VERSION, "mode": args.mode}
+    try:  # The verdict is written inside the try: a failure to write it is an ERROR too.
         reports = (run_compare if args.mode == "compare" else run_module)(args, lookahead)
+        verdict = "LEAK" if any(report.verdict == "LEAK" for report in reports) else "PASS"
+        checks = [report.to_dict() for report in reports]
+        text = json.dumps({**head, "verdict": verdict, "checks": checks}, indent=2)
     except (UsageError, lookahead.LookaheadCheckError) as exc:
-        payload.update(verdict="ERROR", error_type=type(exc).__name__, error=str(exc))
+        verdict, text = "ERROR", error_verdict(head, type(exc).__name__, str(exc))
     except SystemExit as exc:  # sys.exit at import or in decide(); its code 0 would read as PASS
         traceback.print_exc(file=sys.stderr)
-        payload.update(
-            verdict="ERROR",
-            error_type="SystemExit",
-            error=f"the study raised SystemExit with code {exc.code!r}; a study file must "
-            "define decide(data) and return its decisions, not exit",
+        message = (
+            f"the study raised SystemExit with code {exc.code!r}; a study file must define "
+            "decide(data) and return its decisions, not exit"
         )
+        verdict, text = "ERROR", error_verdict(head, "SystemExit", message)
     except Exception as exc:  # The study's own failure is still an explicit, nonzero verdict.
         traceback.print_exc(file=sys.stderr)
-        payload.update(verdict="ERROR", error_type=type(exc).__name__, error=str(exc))
-    else:
-        leak = any(report.verdict == "LEAK" for report in reports)
-        payload.update(
-            verdict="LEAK" if leak else "PASS", checks=[report.to_dict() for report in reports]
-        )
-    print(json.dumps(payload, indent=2))
-    return EXIT_STATUS[payload["verdict"]]
+        verdict, text = "ERROR", error_verdict(head, type(exc).__name__, str(exc))
+    print(text)
+    return EXIT_STATUS[verdict]
 
 
 if __name__ == "__main__":

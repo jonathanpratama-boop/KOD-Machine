@@ -74,7 +74,8 @@ python3 tools/check_no_lookahead.py compare decisions_full.csv decisions_cut.csv
 
 Module mode executes the given study file and reads the data with `pandas.read_csv`
 defaults. A study whose own loader parses differently should call the library from its own
-test. Compare mode reads every cell as the text written, so both files must come from the
+test. While the study runs, `sys.argv` holds only the study's path and its `print` output
+goes to stderr, so stdout carries the JSON verdict alone. Compare mode reads every cell as the text written, so both files must come from the
 same code; only an empty cell counts as missing. Scramble options are `--seed` (default 0),
 `--scramble-columns` and `--missing-share` (default 0.25). By default scramble reaches
 every numpy or pandas nullable numeric or bool column except the time column and the

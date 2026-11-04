@@ -9,11 +9,14 @@ import importlib.util
 import io
 import json
 from pathlib import Path
+import sys
 import tempfile
 import unittest
+from unittest import mock
 
 import pandas as pd
 
+from idxsig import lookahead
 from tests.test_lookahead_check import CLEAN, CUTOFFS, LEAKS, labelled, prices
 
 TOOL = Path(__file__).resolve().parents[2] / "tools" / "check_no_lookahead.py"
@@ -203,6 +206,38 @@ class CheckNoLookaheadCli(unittest.TestCase):
                 )
                 self.assertIn("raised SystemExit with code 0", verdict["error"])
                 self.assertIn("Traceback", stderr)
+
+    def test_a_study_that_prints_leaves_stdout_to_the_json_verdict(self):
+        chatty = STUDY.format(centre=False, drop_missing_label=False).replace(
+            "def decide(data):\n", "def decide(data):\n    print('rows', len(data))\n"
+        )
+        study = self.write("chatty.py", chatty + "\nprint('loaded')\n")
+        status, verdict, stderr = self.module(study, prices())  # json.loads reads all stdout
+        self.assertEqual((status, verdict["verdict"]), (0, "PASS"))
+        self.assertIn("loaded\nrows 120\n", stderr)
+
+    def test_the_study_sees_only_its_own_path_in_sys_argv(self):
+        clean = STUDY.format(centre=False, drop_missing_label=False)
+        reads_argv = (
+            "\nimport sys\n\nif sys.argv != [__file__]:\n"
+            "    raise RuntimeError(f'study saw argv {sys.argv}')\n"
+        )
+        study = self.write("reads_argv.py", clean + reads_argv)
+        tool_argv = [str(TOOL), "module", study]  # what a study sees when the tool is a process
+        with mock.patch.object(sys, "argv", tool_argv):
+            status, verdict, _ = self.module(study, prices())
+            self.assertEqual(sys.argv, tool_argv)
+        self.assertEqual((status, verdict["verdict"]), (0, "PASS"), verdict.get("error"))
+
+    def test_a_verdict_that_cannot_be_written_is_an_error_not_exit_status_one(self):
+        unwritable = TypeError("Object of type int64 is not JSON serializable")
+        with mock.patch.object(lookahead.LookaheadReport, "to_dict", side_effect=unwritable):
+            status, verdict, stderr = self.module(self.study(), prices())
+        self.assertEqual(
+            (status, verdict["verdict"], verdict["error_type"]), (2, "ERROR", "TypeError")
+        )
+        self.assertEqual(set(verdict), {"version", "mode", "verdict", "error_type", "error"})
+        self.assertIn("Traceback", stderr)
 
 
 if __name__ == "__main__":
