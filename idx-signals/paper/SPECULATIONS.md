@@ -1,6 +1,6 @@
 # Speculation Register (KOD-SPEC-REGISTER-v1.1, protocol sha256 b0e9b6d9b533)
 
-Generated 2026-11-04T10:30:22Z from `paper/speculations.jsonl`: 84 sets sealed, 44 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
+Generated 2026-11-04T10:30:58Z from `paper/speculations.jsonl`: 84 sets sealed, 48 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
 
 Windows: **BASE5**: the frozen plan: the validated harness plan, prospectively, beside twins; **PATH20**: the 20-session price path of the candidate and its twins; no plan; **NEXT1**: the next session's close of the candidate and its twins; no plan.
 
@@ -16,7 +16,7 @@ Projection (labelled): sessions of resolved sets needed for t >= 3 if the true p
 |---|---:|---:|---:|---:|
 | 0.151 (validation trade sd 0.1967 (run 20261009T050040Z_MOONSHOT_E1_D1_v1.1), paired, / sqrt(sets per session)) | 513 | 82 | 21 | 18 |
 
-PATH20 windows resolved: 0; NEXT1: 6.
+PATH20 windows resolved: 0; NEXT1: 10.
 
 | Statement | Graded | Realised rate | Twins' rate | Mean prior | Brier (register) | Brier (0.5) | Brier (running) |
 |---|---:|---:|---:|---:|---:|---:|---:|
@@ -26,9 +26,9 @@ PATH20 windows resolved: 0; NEXT1: 6.
 | BEATS_TWINS_5 | 0 | | | | | | |
 | RUN30_20 | 0 | | | | | | |
 | DOUBLE_20 | 0 | | | | | | |
-| DOWN10_1 | 6 | 0.000 | 0.000 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
-| UP10_1 | 6 | 0.000 | 0.033 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
-| BEATS_TWINS_1 | 6 | 0.000 | 0.533 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| DOWN10_1 | 10 | 0.000 | 0.000 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| UP10_1 | 10 | 0.200 | 0.020 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
+| BEATS_TWINS_1 | 10 | 0.300 | 0.520 | 0.500 | 0.2500 | 0.2500 | 0.2500 |
 
 ## US: 62 sets over 6 signal sessions (2026-10-27 .. 2026-11-03, 10.33 sets per scan)
 
@@ -408,10 +408,6 @@ Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside 
 
 | Set | Window | Status | Candidate | Net | Twins mean | Diff | Cone (candidate / twins' rate) |
 |---|---|---|---|---:|---:|---:|---|
-| US-2026-10-29-G2_RET30-BURU | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.33, UP10_1=0/0.00, BEATS_TWINS_1=0 |
-| US-2026-10-29-G2_RET30-ADT | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=1/0.40 |
-| US-2026-10-29-G2_RET30-GKOS | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
-| US-2026-10-29-G2_RET30-XCH | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.20, UP10_1=1/0.00, BEATS_TWINS_1=1/0.60 |
 | US-2026-10-29-G2_RET30-NCPL | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
 | US-2026-10-29-G2_RET30-KPLT | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
 | CRYPTO-2026-10-29-G2_RET30-PARTI | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.20, UP10_1=0/0.20, BEATS_TWINS_1=0/0.60 |
@@ -448,4 +444,8 @@ Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside 
 | US-2026-11-02-G2_RET30-VCIG | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=1/0.20, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
 | US-2026-11-02-G2_RET30-MF | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.20, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
 | CRYPTO-2026-10-28-G2_RET30-INIT | BASE5 | RESOLVED | TRADED | -43.66% | -9.33% | -34.34% | RUN30_5=0/0.20, FADE10_5=1/0.60, GAIN0_5=0/0.20, BEATS_TWINS_5=0/0.40 |
+| 2026-11-03-F1_ARA-TMPO | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=1/0.00, BEATS_TWINS_1=1/0.40 |
+| 2026-11-03-F1_ARA-FLMC | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=1/0.60 |
+| 2026-11-03-F1_ARA-AIMS | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=1/0.00, BEATS_TWINS_1=1/0.40 |
+| 2026-11-03-F1_ARA-BSWD | NEXT1 | RESOLVED | PATH | n/a | n/a | n/a | DOWN10_1=0/0.00, UP10_1=0/0.00, BEATS_TWINS_1=0/0.60 |
 
