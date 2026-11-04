@@ -59,6 +59,7 @@ NULLABLE_DTYPES = (
 )
 
 Decide = Callable[[pd.DataFrame], pd.DataFrame]
+Cutoffs = Sequence | pd.Index | pd.Series | np.ndarray
 
 
 class LookaheadCheckError(ValueError):
@@ -188,8 +189,8 @@ def _timestamp(value, label: str, assume_utc: bool) -> pd.Timestamp:
             f"{label} must hold timestamps or ISO 8601 text, not {type(value).__name__} "
             f"({value!r}); epoch numbers are refused because their unit is ambiguous"
         )
-    try:
-        stamp = pd.Timestamp(value)
+    try:  # pandas parses str but not its numpy subclass, which numpy string arrays yield
+        stamp = pd.Timestamp(str(value) if isinstance(value, str) else value)
     except (TypeError, ValueError) as exc:
         raise LookaheadCheckError(f"{label} has an unparseable time {value!r}") from exc
     if pd.isna(stamp):
@@ -222,9 +223,14 @@ def _utc_series(values: pd.Series, label: str, assume_utc: bool) -> pd.Series:
     ).astype("datetime64[ns, UTC]")
 
 
-def _cutoffs(values: Sequence, assume_utc: bool) -> tuple[pd.Timestamp, ...]:
+def _cutoffs(values: Cutoffs, assume_utc: bool) -> tuple[pd.Timestamp, ...]:
+    if isinstance(values, (pd.Index, pd.Series, np.ndarray)) and values.ndim == 1:
+        values = list(values)
     if isinstance(values, (str, bytes)) or not isinstance(values, Sequence) or not values:
-        raise LookaheadCheckError("cutoffs must be a nonempty sequence of times")
+        raise LookaheadCheckError(
+            "cutoffs must be a nonempty sequence, pandas Index or Series, or "
+            "one-dimensional numpy array of times"
+        )
     stamps = [_timestamp(value, "cutoff", assume_utc) for value in values]
     if len(set(stamps)) != len(stamps):
         raise LookaheadCheckError("cutoffs must be distinct")
@@ -549,7 +555,7 @@ def truncation_check(
     data_time_column: str,
     time_column: str,
     key_columns: Sequence[str],
-    cutoffs: Sequence,
+    cutoffs: Cutoffs,
     value_lags: Mapping[str, timedelta] | None = None,
     assume_utc: bool = False,
 ) -> LookaheadReport:
@@ -674,7 +680,7 @@ def scramble_check(
     data_time_column: str,
     time_column: str,
     key_columns: Sequence[str],
-    cutoffs: Sequence,
+    cutoffs: Cutoffs,
     seed: int = 0,
     columns: Sequence[str] | None = None,
     value_lags: Mapping[str, timedelta] | None = None,

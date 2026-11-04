@@ -580,6 +580,13 @@ class EdgeCases(unittest.TestCase):
         with self.assertRaisesRegex(LookaheadCheckError, "must be callable"):
             truncation_check(None, prices(), cutoffs=CUTOFFS, **COLUMNS)
 
+    def test_cutoffs_may_be_a_pandas_index_or_series_or_a_numpy_array(self):
+        expected = truncation_check(CLEAN, prices(), cutoffs=CUTOFFS, **COLUMNS).cutoffs
+        for cutoffs in (pd.DatetimeIndex(CUTOFFS), pd.Series(CUTOFFS), np.array(CUTOFFS)):
+            with self.subTest(type=type(cutoffs).__name__):
+                report = truncation_check(CLEAN, prices(), cutoffs=cutoffs, **COLUMNS)
+                self.assertEqual(report.cutoffs, expected)
+
     def test_uninformative_or_malformed_cutoffs_are_refused(self):
         for cutoffs, message in (
             (["2026-02-09T00:00:00Z"], "changes no input value"),
@@ -587,6 +594,8 @@ class EdgeCases(unittest.TestCase):
             ([CUTOFFS[0], CUTOFFS[0]], "distinct"),
             (CUTOFFS[0], "nonempty sequence"),
             ([], "nonempty sequence"),
+            (pd.DatetimeIndex([]), "nonempty sequence"),
+            (np.array([CUTOFFS]), "one-dimensional numpy array"),
         ):
             with self.subTest(cutoffs=cutoffs):
                 with self.assertRaisesRegex(LookaheadCheckError, message):
