@@ -96,6 +96,8 @@ class RunEventsTests(unittest.TestCase):
         )
         row = res[res.entry_date != ""].iloc[0]
         j = int(np.searchsorted(self.dates, np.datetime64(row.entry_date, "D")))
+        signal = int(np.searchsorted(self.dates, np.datetime64(row.public_date, "D")))
+        self.assertEqual(j, signal + 1)  # the first session after the public date
         open_ = self.df[
             (self.df.ticker == row.ticker) & (self.df.date == pd.Timestamp(row.entry_date))
         ].open.iloc[0]
