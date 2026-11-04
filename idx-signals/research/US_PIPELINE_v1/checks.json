@@ -1,0 +1,356 @@
+{
+  "approval": {
+    "by_market": {
+      "CRYPTO": {
+        "matching_runs_in_order": [
+          "20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1"
+        ],
+        "old_lookup_resolved_to": "20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1",
+        "pin": {
+          "config_sha256": "86bd8d48ef6c350fdd665b8f69549cabee9e3d2d624ee9e0bd1189d1cfb1c0e4",
+          "execution": "idxsig-harness: entry at the next open, exit at the 5th close, no stop",
+          "run_id": "20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1"
+        }
+      },
+      "IDX": {
+        "matching_runs_in_order": [
+          "20261008T000401Z_MOONSHOT_E1_D1_v1.1"
+        ],
+        "old_lookup_resolved_to": "20261008T000401Z_MOONSHOT_E1_D1_v1.1",
+        "pin": {
+          "config_sha256": "34a0d8d719218e1064c199c079bb524f30f4f8443809053389281671740b85db",
+          "execution": "idxsig-harness: entry at the next close, exit at the 5th close, no stop",
+          "run_id": "20261008T000401Z_MOONSHOT_E1_D1_v1.1"
+        }
+      },
+      "US": {
+        "matching_runs_in_order": [
+          "20261008T060443Z_MOONSHOT_E2_US_D1_v1",
+          "20261008T100026Z_MOONSHOT_E2_US_D1_v1",
+          "20261008T100411Z_MOONSHOT_E2_US_D1_v1",
+          "20261008T100745Z_MOONSHOT_E2_US_D1_v1",
+          "20261008T101132Z_MOONSHOT_E2_US_D1_v1",
+          "20261008T113137Z_MOONSHOT_E2_US_D1_v1",
+          "20261008T113335Z_MOONSHOT_E2_US_D1_v1",
+          "20261008T115327Z_MOONSHOT_E2_US_D1_v1",
+          "20261008T115656Z_MOONSHOT_E2_US_D1_v1"
+        ],
+        "old_lookup_resolved_to": "20261008T115656Z_MOONSHOT_E2_US_D1_v1",
+        "pin": null
+      }
+    },
+    "note": "no recorded decision was a BUY; the change of resolution never altered a decision",
+    "recorded_decisions": {
+      "NOT EXECUTABLE": 2,
+      "PASS": 16
+    },
+    "recorded_scans": [
+      {
+        "cited_run": "20261008T000401Z_MOONSHOT_E1_D1_v1.1",
+        "market": "IDX",
+        "scan_id": "SCAN-2026-10-07-F1_ARA"
+      },
+      {
+        "cited_run": "20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1",
+        "market": "CRYPTO",
+        "scan_id": "SCAN-CRYPTO-2026-10-07-G2_RET30"
+      },
+      {
+        "cited_run": "20261008T060443Z_MOONSHOT_E2_US_D1_v1",
+        "market": "US",
+        "scan_id": "SCAN-US-2026-10-07-G2_RET30"
+      },
+      {
+        "cited_run": "20261008T000401Z_MOONSHOT_E1_D1_v1.1",
+        "market": "IDX",
+        "scan_id": "SCAN-2026-10-08-F1_ARA"
+      }
+    ]
+  },
+  "fill_b_v2_rerun": {
+    "fill_model": "B2",
+    "matched_random": {
+      "difference": -0.0022324767185486257,
+      "observed": -0.009730304055056935,
+      "p_value_one_sided": 0.6218905472636815,
+      "percentile_of_observed": 38.0,
+      "random_mean": -0.007497827336508309,
+      "random_p2_5": -0.019630616312015767,
+      "random_p50": -0.007403577745978414,
+      "random_p97_5": 0.005759062420710116
+    },
+    "previous_fill_model": "B (FILL-B-v1)",
+    "previous_matched_random": {
+      "difference": -0.0022489567125415473,
+      "observed": -0.009730304055056935,
+      "p_value_one_sided": 0.6218905472636815,
+      "percentile_of_observed": 38.0,
+      "random_mean": -0.007481347342515388,
+      "random_p2_5": -0.019630616312015767,
+      "random_p50": -0.00740829622522924,
+      "random_p97_5": 0.005899707761054378
+    },
+    "previous_rule_avg_net_return": -0.009730304055056935,
+    "previous_run": "20261008T115656Z_MOONSHOT_E2_US_D1_v1",
+    "previous_scored": 536,
+    "rule_avg_net_return": -0.009730304055056935,
+    "run": "20261008T165454Z_MOONSHOT_E2_US_D1_v1",
+    "scored": 536,
+    "status_transitions": {}
+  },
+  "panel_manifest": "data/manifests/panel_us_repair-20261008T114805Z.json",
+  "panel_manifest_sha256": "705ca354492f45d63a2fb15e0b4db1d334c490a9ac8749d606adfc9622d94039",
+  "panel_rebuild_under_reconcile_v1": {
+    "how": "build_us_repair with the v3 inputs into an ignored directory, 2026-10-08; not committed",
+    "result": "identical panel bytes (sha256 equal) and identical 669-name quarantine",
+    "triggered_after_read_through": 399
+  },
+  "paper_ledger_sha256": "b556d95df94f621c412d74994d76550bb037671437657ca1980278b97c889e50",
+  "paper_stop_distances": [
+    {
+      "decision": "PASS",
+      "decision_id": "SCAN-2026-10-07-F1_ARA-PGLI",
+      "invalidation": 360.0,
+      "max_chase_price": 434.0,
+      "policy": "PAPER-POLICY-v1",
+      "signal_close": 396.0,
+      "stop_distance_at_max_permitted_entry": 0.17050691244239635,
+      "stop_distance_from_signal_close": 0.09090909090909094,
+      "violates_5pct_rule_at_max_entry": true
+    },
+    {
+      "decision": "PASS",
+      "decision_id": "SCAN-2026-10-07-F1_ARA-GTBO",
+      "invalidation": 210.0,
+      "max_chase_price": 230.0,
+      "policy": "PAPER-POLICY-v1",
+      "signal_close": 210.0,
+      "stop_distance_at_max_permitted_entry": 0.08695652173913049,
+      "stop_distance_from_signal_close": 0.0,
+      "violates_5pct_rule_at_max_entry": true
+    },
+    {
+      "decision": "PASS",
+      "decision_id": "SCAN-2026-10-07-F1_ARA-AKKU",
+      "invalidation": 60.0,
+      "max_chase_price": 78.0,
+      "policy": "PAPER-POLICY-v1",
+      "signal_close": 71.0,
+      "stop_distance_at_max_permitted_entry": 0.23076923076923073,
+      "stop_distance_from_signal_close": 0.15492957746478875,
+      "violates_5pct_rule_at_max_entry": true
+    },
+    {
+      "decision": "PASS",
+      "decision_id": "SCAN-CRYPTO-2026-10-07-G2_RET30-MET",
+      "invalidation": 0.37858,
+      "max_chase_price": 0.48994000000000004,
+      "policy": "PAPER-POLICY-v3",
+      "signal_close": 0.4454,
+      "stop_distance_at_max_permitted_entry": 0.2272931379352574,
+      "stop_distance_from_signal_close": 0.15002245172878304,
+      "violates_5pct_rule_at_max_entry": true
+    },
+    {
+      "decision": "PASS",
+      "decision_id": "SCAN-US-2026-10-07-G2_RET30-PFAI",
+      "invalidation": 4.3,
+      "max_chase_price": 5.57,
+      "policy": "PAPER-POLICY-v3",
+      "signal_close": 5.070000171661377,
+      "stop_distance_at_max_permitted_entry": 0.2280071813285458,
+      "stop_distance_from_signal_close": 0.15187379597446005,
+      "violates_5pct_rule_at_max_entry": true
+    },
+    {
+      "decision": "PASS",
+      "decision_id": "SCAN-US-2026-10-07-G2_RET30-BIYA",
+      "invalidation": 1.95,
+      "max_chase_price": 2.52,
+      "policy": "PAPER-POLICY-v3",
+      "signal_close": 2.299999952316284,
+      "stop_distance_at_max_permitted_entry": 0.22619047619047616,
+      "stop_distance_from_signal_close": 0.15217389546630478,
+      "violates_5pct_rule_at_max_entry": true
+    },
+    {
+      "decision": "PASS",
+      "decision_id": "SCAN-US-2026-10-07-G2_RET30-TOPP",
+      "invalidation": 0.1509,
+      "max_chase_price": 0.1892,
+      "policy": "PAPER-POLICY-v3",
+      "signal_close": 0.1720000058412552,
+      "stop_distance_at_max_permitted_entry": 0.20243128964059198,
+      "stop_distance_from_signal_close": 0.1226744483993164,
+      "violates_5pct_rule_at_max_entry": true
+    },
+    {
+      "decision": "PASS",
+      "decision_id": "SCAN-US-2026-10-07-G2_RET30-SBFM",
+      "invalidation": 0.5949,
+      "max_chase_price": 0.7699,
+      "policy": "PAPER-POLICY-v3",
+      "signal_close": 0.699999988079071,
+      "stop_distance_at_max_permitted_entry": 0.22730224704507085,
+      "stop_distance_from_signal_close": 0.150142842669876,
+      "violates_5pct_rule_at_max_entry": true
+    },
+    {
+      "decision": "PASS",
+      "decision_id": "SCAN-US-2026-10-07-G2_RET30-SXTC",
+      "invalidation": 2.4,
+      "max_chase_price": 3.11,
+      "policy": "PAPER-POLICY-v3",
+      "signal_close": 2.8299999237060547,
+      "stop_distance_at_max_permitted_entry": 0.22829581993569137,
+      "stop_distance_from_signal_close": 0.1519434400347771,
+      "violates_5pct_rule_at_max_entry": true
+    },
+    {
+      "decision": "PASS",
+      "decision_id": "SCAN-US-2026-10-07-G2_RET30-CPHI",
+      "invalidation": 0.7225,
+      "max_chase_price": 0.935,
+      "policy": "PAPER-POLICY-v3",
+      "signal_close": 0.8500000238418579,
+      "stop_distance_at_max_permitted_entry": 0.2272727272727273,
+      "stop_distance_from_signal_close": 0.15000002384185718,
+      "violates_5pct_rule_at_max_entry": true
+    },
+    {
+      "decision": "PASS",
+      "decision_id": "SCAN-US-2026-10-07-G2_RET30-NCPL",
+      "invalidation": 1.35,
+      "max_chase_price": 1.74,
+      "policy": "PAPER-POLICY-v3",
+      "signal_close": 1.590000033378601,
+      "stop_distance_at_max_permitted_entry": 0.22413793103448265,
+      "stop_distance_from_signal_close": 0.15094341405051637,
+      "violates_5pct_rule_at_max_entry": true
+    },
+    {
+      "decision": "PASS",
+      "decision_id": "SCAN-2026-10-08-F1_ARA-ARII",
+      "invalidation": 384.0,
+      "max_chase_price": 496.0,
+      "policy": "PAPER-POLICY-v3",
+      "signal_close": 452.0,
+      "stop_distance_at_max_permitted_entry": 0.22580645161290325,
+      "stop_distance_from_signal_close": 0.1504424778761062,
+      "violates_5pct_rule_at_max_entry": true
+    },
+    {
+      "decision": "PASS",
+      "decision_id": "SCAN-2026-10-08-F1_ARA-MCAS",
+      "invalidation": 240.0,
+      "max_chase_price": 312.0,
+      "policy": "PAPER-POLICY-v3",
+      "signal_close": 284.0,
+      "stop_distance_at_max_permitted_entry": 0.23076923076923073,
+      "stop_distance_from_signal_close": 0.15492957746478875,
+      "violates_5pct_rule_at_max_entry": true
+    },
+    {
+      "decision": "PASS",
+      "decision_id": "SCAN-2026-10-08-F1_ARA-PEVE",
+      "invalidation": 350.0,
+      "max_chase_price": 452.0,
+      "policy": "PAPER-POLICY-v3",
+      "signal_close": 412.0,
+      "stop_distance_at_max_permitted_entry": 0.2256637168141593,
+      "stop_distance_from_signal_close": 0.15048543689320393,
+      "violates_5pct_rule_at_max_entry": true
+    },
+    {
+      "decision": "PASS",
+      "decision_id": "SCAN-2026-10-08-F1_ARA-SAFE",
+      "invalidation": 765.0,
+      "max_chase_price": 995.0,
+      "policy": "PAPER-POLICY-v3",
+      "signal_close": 905.0,
+      "stop_distance_at_max_permitted_entry": 0.23115577889447236,
+      "stop_distance_from_signal_close": 0.15469613259668513,
+      "violates_5pct_rule_at_max_entry": true
+    },
+    {
+      "decision": "PASS",
+      "decision_id": "SCAN-2026-10-08-F1_ARA-NAYZ",
+      "invalidation": 99.0,
+      "max_chase_price": 115.0,
+      "policy": "PAPER-POLICY-v3",
+      "signal_close": 105.0,
+      "stop_distance_at_max_permitted_entry": 0.13913043478260867,
+      "stop_distance_from_signal_close": 0.05714285714285716,
+      "violates_5pct_rule_at_max_entry": true
+    }
+  ],
+  "reconciliation": {
+    "v2 (Codex reaudit)": {
+      "events_relevant_to_panel_names": 1594,
+      "inputs_bound_by_sha256": true,
+      "of_which_without_any_record_and_not_panel_names": 175,
+      "provider_events_after_window_start_all_names": 1769,
+      "status_counts": {
+        "MENTION_ONLY": 780,
+        "NOT_A_SPLIT": 136,
+        "NO_CIK": 1,
+        "NO_EVIDENCE": 27,
+        "RATIO_CONFIRMED": 411,
+        "VERIFIED": 239
+      },
+      "unresolved": 0
+    },
+    "v3 (shares)": {
+      "events_relevant_to_panel_names": 1594,
+      "inputs_bound_by_sha256": true,
+      "of_which_without_any_record_and_not_panel_names": 175,
+      "provider_events_after_window_start_all_names": 1769,
+      "status_counts": {
+        "MENTION_ONLY": 579,
+        "NOT_A_SPLIT": 136,
+        "NO_CIK": 1,
+        "NO_EVIDENCE": 25,
+        "RATIO_CONFIRMED": 271,
+        "SHARES_CONFIRMED": 343,
+        "VERIFIED": 239
+      },
+      "unresolved": 0
+    }
+  },
+  "replay_2023_exec_us_v1": {
+    "csv": "replay_2023_exec_us_v1.csv",
+    "csv_sha256": "0ea68d06d34b2aa21a360ba09645c94ef8416ef29f78b6ca9c0c18138fe97169",
+    "exec_spec": {
+      "capacity_window": 20,
+      "chase_limit": 0.1,
+      "equity_usd": 10000.0,
+      "exec_version": "EXEC-US-v1",
+      "exit_after_sessions": 5,
+      "max_participation": 0.1,
+      "max_position_fraction": 0.2,
+      "max_stop_distance": 0.05,
+      "risk_fraction": 0.01
+    },
+    "exec_spec_sha256": "a8d71edf5066605ae7311360d242dcf71f9e7ba92627eba8a1cc8f9744cba30c",
+    "exit_reasons": {
+      "STOP": 61,
+      "STOP_GAP_AT_OPEN": 4,
+      "TIME_EXIT_AT_CLOSE": 14
+    },
+    "filled": 79,
+    "filled_avg_net_excluding_quarantined": 0.07216735036336673,
+    "filled_avg_net_return": 0.009721852322251798,
+    "filled_excluding_quarantined": 33,
+    "filled_median_net_return": -0.03578478049163769,
+    "note": "descriptive replay; no random baseline; not approval evidence",
+    "signals": 1683,
+    "status_counts": {
+      "FILLED": 79,
+      "PENDING": 12,
+      "REJECTED_AT_OR_BELOW_STOP": 116,
+      "REJECTED_NOT_TRADED": 23,
+      "REJECTED_NO_PLAN": 83,
+      "REJECTED_STOP_TOO_WIDE": 1370
+    }
+  }
+}

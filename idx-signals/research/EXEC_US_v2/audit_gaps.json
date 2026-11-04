@@ -1,0 +1,238 @@
+{
+ "_witnesses": {
+  "old_code_52507b7": {
+   "idx_evidence_run_chosen_by_old_lookup": "20261009T050040Z_MOONSHOT_E1_D1_v1.1",
+   "old_tradeable_edge_predicate": "bool(trading.get(\"p_one_sided\") is not None and trading[\"p_one_sided\"] < p.min_validated_lift_p)",
+   "old_predicate_on_a_losing_strategy_beating_a_worse_baseline": true
+  },
+  "legacy_sizing_paths_now": {
+   "backtest_fill_C": "SKIP_LIQUIDITY",
+   "paper_v4_plan": {
+    "status": "PLANNED",
+    "shares": 19,
+    "capacity_unit": "shares"
+   },
+   "exec_us_v2_plan": {
+    "outcome": "PLANNED",
+    "shares": 19,
+    "capacity_unit": "USD traded value",
+    "binding_limit": "risk"
+   }
+  }
+ },
+ "input_hash_binding_and_complete_reconciliation": {
+  "tests": [
+   {
+    "test": "tests.test_us_pipeline.Verification.test_missing_record_is_unresolved_not_accepted",
+    "before_commit": "52507b7",
+    "before": {
+     "result": "ERROR",
+     "why": "ImportError: cannot import name 'exec_us' from 'idxsig' (/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/audit_gaps_zlp_37ro/52507b7/idx-signals/idxsig/__init__.py)"
+    },
+    "now": "PASS",
+    "fails_before_passes_now": true
+   },
+   {
+    "test": "tests.test_us_pipeline.Verification.test_duplicate_records_are_unresolved",
+    "before_commit": "52507b7",
+    "before": {
+     "result": "ERROR",
+     "why": "ImportError: cannot import name 'exec_us' from 'idxsig' (/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/audit_gaps_zlp_37ro/52507b7/idx-signals/idxsig/__init__.py)"
+    },
+    "now": "PASS",
+    "fails_before_passes_now": true
+   },
+   {
+    "test": "tests.test_us_pipeline.Verification.test_record_from_a_different_payload_is_unresolved",
+    "before_commit": "52507b7",
+    "before": {
+     "result": "ERROR",
+     "why": "ImportError: cannot import name 'exec_us' from 'idxsig' (/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/audit_gaps_zlp_37ro/52507b7/idx-signals/idxsig/__init__.py)"
+    },
+    "now": "PASS",
+    "fails_before_passes_now": true
+   },
+   {
+    "test": "tests.test_us_pipeline.Verification.test_inputs_are_bound_by_hash_not_name",
+    "before_commit": "52507b7",
+    "before": {
+     "result": "ERROR",
+     "why": "ImportError: cannot import name 'exec_us' from 'idxsig' (/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/audit_gaps_zlp_37ro/52507b7/idx-signals/idxsig/__init__.py)"
+    },
+    "now": "PASS",
+    "fails_before_passes_now": true
+   }
+  ],
+  "status": "FIXED"
+ },
+ "evidence_restricted_to_permitted_research_dates": {
+  "tests": [
+   {
+    "test": "tests.test_us_pipeline.Verification.test_share_count_records_inside_the_window_are_not_accepted",
+    "before_commit": "52507b7",
+    "before": {
+     "result": "ERROR",
+     "why": "ImportError: cannot import name 'exec_us' from 'idxsig' (/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/audit_gaps_zlp_37ro/52507b7/idx-signals/idxsig/__init__.py)"
+    },
+    "now": "PASS",
+    "fails_before_passes_now": true
+   },
+   {
+    "test": "tests.test_us_pipeline.Verification.test_share_counts_refused_for_a_panel_reading_past_their_window",
+    "before_commit": "52507b7",
+    "before": {
+     "result": "ERROR",
+     "why": "ImportError: cannot import name 'exec_us' from 'idxsig' (/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/audit_gaps_zlp_37ro/52507b7/idx-signals/idxsig/__init__.py)"
+    },
+    "now": "PASS",
+    "fails_before_passes_now": true
+   },
+   {
+    "test": "tests.test_contract.SameContractBothWays.test_research_window_is_enforced",
+    "before_commit": "d62de40",
+    "before": {
+     "result": "ERROR",
+     "why": "ImportError: cannot import name 'contract' from 'idxsig' (/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/audit_gaps_zlp_37ro/d62de40/idx-signals/idxsig/__init__.py)"
+    },
+    "now": "PASS",
+    "fails_before_passes_now": true
+   }
+  ],
+  "status": "FIXED"
+ },
+ "consistent_share_units_in_capacity": {
+  "tests": [
+   {
+    "test": "tests.test_us_pipeline.Capacity.test_forward_and_reverse_splits_keep_capacity_in_entry_units",
+    "before_commit": "52507b7",
+    "before": {
+     "result": "ERROR",
+     "why": "ImportError: cannot import name 'exec_us' from 'idxsig' (/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/audit_gaps_zlp_37ro/52507b7/idx-signals/idxsig/__init__.py)"
+    },
+    "now": "PASS",
+    "fails_before_passes_now": true
+   },
+   {
+    "test": "tests.test_us_pipeline.Capacity.test_a_split_between_signal_and_entry_converts_the_shares",
+    "before_commit": "52507b7",
+    "before": {
+     "result": "ERROR",
+     "why": "ImportError: cannot import name 'exec_us' from 'idxsig' (/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/audit_gaps_zlp_37ro/52507b7/idx-signals/idxsig/__init__.py)"
+    },
+    "now": "PASS",
+    "fails_before_passes_now": true
+   },
+   {
+    "test": "tests.test_contract.Units.test_split_between_decision_and_execution",
+    "before_commit": "d62de40",
+    "before": {
+     "result": "ERROR",
+     "why": "ImportError: cannot import name 'contract' from 'idxsig' (/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/audit_gaps_zlp_37ro/d62de40/idx-signals/idxsig/__init__.py)"
+    },
+    "now": "PASS",
+    "fails_before_passes_now": true
+   }
+  ],
+  "status": "FIXED"
+ },
+ "explicitly_pinned_approval_evidence": {
+  "tests": [
+   {
+    "test": "tests.test_us_pipeline.Approval.test_changed_config_or_other_execution_is_not_approved",
+    "before_commit": "52507b7",
+    "before": {
+     "result": "ERROR",
+     "why": "ImportError: cannot import name 'exec_us' from 'idxsig' (/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/audit_gaps_zlp_37ro/52507b7/idx-signals/idxsig/__init__.py)"
+    },
+    "now": "PASS",
+    "fails_before_passes_now": true
+   },
+   {
+    "test": "tests.test_us_pipeline.Approval.test_appending_a_run_does_not_change_the_evidence",
+    "before_commit": "52507b7",
+    "before": {
+     "result": "ERROR",
+     "why": "ImportError: cannot import name 'exec_us' from 'idxsig' (/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/audit_gaps_zlp_37ro/52507b7/idx-signals/idxsig/__init__.py)"
+    },
+    "now": "PASS",
+    "fails_before_passes_now": true
+   }
+  ],
+  "status": "FIXED"
+ },
+ "positive_net_separate_from_significance": {
+  "tests": [
+   {
+    "test": "tests.test_us_pipeline.Approval.test_a_losing_strategy_beating_a_worse_baseline_is_not_approved",
+    "before_commit": "52507b7",
+    "before": {
+     "result": "ERROR",
+     "why": "ImportError: cannot import name 'exec_us' from 'idxsig' (/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/audit_gaps_zlp_37ro/52507b7/idx-signals/idxsig/__init__.py)"
+    },
+    "now": "PASS",
+    "fails_before_passes_now": true
+   },
+   {
+    "test": "tests.test_us_pipeline.Approval.test_positive_but_not_above_baseline_is_not_approved",
+    "before_commit": "52507b7",
+    "before": {
+     "result": "ERROR",
+     "why": "ImportError: cannot import name 'exec_us' from 'idxsig' (/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/audit_gaps_zlp_37ro/52507b7/idx-signals/idxsig/__init__.py)"
+    },
+    "now": "PASS",
+    "fails_before_passes_now": true
+   }
+  ],
+  "status": "FIXED"
+ },
+ "planned_order_separate_from_realized_fill (Hermes)": {
+  "tests": [
+   {
+    "test": "tests.test_contract.Liquidity.test_entry_session_volume_bounds_the_fill",
+    "before_commit": "d62de40",
+    "before": {
+     "result": "ERROR",
+     "why": "ImportError: cannot import name 'contract' from 'idxsig' (/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/audit_gaps_zlp_37ro/d62de40/idx-signals/idxsig/__init__.py)"
+    },
+    "now": "PASS",
+    "fails_before_passes_now": true
+   },
+   {
+    "test": "tests.test_contract.Liquidity.test_no_trade_on_the_entry_session",
+    "before_commit": "d62de40",
+    "before": {
+     "result": "ERROR",
+     "why": "ImportError: cannot import name 'contract' from 'idxsig' (/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/audit_gaps_zlp_37ro/d62de40/idx-signals/idxsig/__init__.py)"
+    },
+    "now": "PASS",
+    "fails_before_passes_now": true
+   }
+  ],
+  "status": "FIXED"
+ },
+ "one_sizing_contract_for_replay_and_paper (Hermes)": {
+  "tests": [
+   {
+    "test": "tests.test_contract.SameContractBothWays.test_forward_scoring_equals_replay_on_identical_inputs",
+    "before_commit": "d62de40",
+    "before": {
+     "result": "ERROR",
+     "why": "ImportError: cannot import name 'contract' from 'idxsig' (/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/audit_gaps_zlp_37ro/d62de40/idx-signals/idxsig/__init__.py)"
+    },
+    "now": "PASS",
+    "fails_before_passes_now": true
+   },
+   {
+    "test": "tests.test_contract.Capital.test_simultaneous_signals_share_cash_by_priority_without_leverage",
+    "before_commit": "d62de40",
+    "before": {
+     "result": "ERROR",
+     "why": "ImportError: cannot import name 'contract' from 'idxsig' (/tmp/claude-0/-home-user-KOD-Machine/74d3ac27-b8ad-5917-a6c3-ea51c410b250/scratchpad/audit_gaps_zlp_37ro/d62de40/idx-signals/idxsig/__init__.py)"
+    },
+    "now": "PASS",
+    "fails_before_passes_now": true
+   }
+  ],
+  "status": "FIXED"
+ }
+}

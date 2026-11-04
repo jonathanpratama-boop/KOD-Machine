@@ -1,0 +1,12 @@
+{
+ "id": "LEARNER_v2_2_BRIER_registered",
+ "experiment": "LEARNER_v2.2",
+ "date": "2026-10-29",
+ "hypothesis": "prospective: the learner's sealed raw forecasts beat a climatology anchor (the same fit with an intercept only) on skill statements: beats the twins, the stated mechanism, both, and the stock's own pump, dump or pump and dump (each only when most of its twins did not make the same move); mean Brier gain per 4-week block of resolution > 0, one-sided t with an overlap-robust (truncated, small-sample corrected) standard error, scored only on outcomes resolved after each forecast",
+ "one_sided_p": null,
+ "p_source": "no look yet; looks at 60, 120, 240, 480, 960, 1920 scored pairs with t_min 3.75, 3, 3, 3, 3, 3, minimum 4-week blocks 15, 15, 15, 30, 60, 120 (research/LEARNER_v2/protocol_v2_2.json 'claim')",
+ "variants_searched": 0,
+ "outcome": "PENDING (prospective; registered before any outcome existed)",
+ "counted": false,
+ "registered": "2026-10-29"
+}

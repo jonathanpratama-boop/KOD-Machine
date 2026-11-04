@@ -1,0 +1,145 @@
+--- reviewed_v2_original_dbda12d461cb601693d6fa77737b8e0f955c9b0f2b7732841a2d9488f6c834c3
++++ paper_reference_core
+@@ -1,7 +1,7 @@
+-"""Offline TREND_CORE v2 candidate. Synthetic evidence only; no network or order API.
++"""Versioned Coinbase USD reference profile of reviewed v2 account; no order API.
+ 
+ A small event adapter around the existing paper_cash_v1 Decimal fill and ledger
+-primitives. Not a historical bar backtester. Read PAPER_PROTOCOL_v2_CANDIDATE.md.
++primitives. Not a historical bar backtester. Read ADAPTER_SPEC.md.
+ """
+ from __future__ import annotations
+ 
+@@ -26,8 +26,8 @@
+ _core = importlib.util.module_from_spec(_spec)
+ _spec.loader.exec_module(_core)
+ D = Decimal
+-SYMBOLS = ("BTCUSDT", "ETHUSDT")
+-VERSION = "TREND_CORE_PAPER_v2_CANDIDATE"
++SYMBOLS = ("BTC-USD", "ETH-USD")
++VERSION = "COINBASE_EXCHANGE_USD_REFERENCE_v1"
+ 
+ 
+ def wire(x):
+@@ -69,7 +69,7 @@
+ 
+ 
+ def bundle_pins():
+-    paths = ["paper_candidate.py", "PAPER_PROTOCOL_v2_CANDIDATE.md", "PROTOCOL_ADDENDUM_1.md",
++    paths = ["paper_reference_core.py", "ADAPTER_SPEC.md", "ADAPTER_ADDENDUM_1.md", "ADAPTER_ADDENDUM_2.md", "adapter.py", "run_once.py",
+              "vendor/paper_cash_accounting.py"]
+     return {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in paths}
+ 
+@@ -97,11 +97,8 @@
+ 
+ 
+ def unpack(e, at):
+-    if set(e) != {"kind", "payload", "received_at", "payload_sha256"} or e["kind"] != "synthetic":
+-        raise ValueError("only synthetic evidence supported; external adapter unimplemented")
+-    if sha(e["payload"]) != e["payload_sha256"] or utc(e["received_at"]) > utc(at):
+-        raise ValueError("evidence hash mismatch or future receipt")
+-    return copy.deepcopy(e["payload"])
++    from adapter import validate_evidence
++    return copy.deepcopy(validate_evidence(e, at))
+ 
+ 
+ def fresh_quote(st, symbol, at):
+@@ -212,7 +209,7 @@
+             if bar["day"] != expected.isoformat():
+                 raise ValueError("missing/duplicate/nonconsecutive day")
+             close_at = datetime.combine(expected + timedelta(days=1), datetime.min.time(), timezone.utc)
+-            if not close_at <= utc(bar["published_at"]) <= utc(bar["received_at"]) <= utc(e["received_at"]) <= utc(at):
++            if bar["first_public_at"] is not None or not close_at <= utc(bar["available_at"]) == utc(bar["received_at"]) <= utc(e["received_at"]) <= utc(at):
+                 raise ValueError("noncausal bar availability")
+             if bar["source_sha256"] != sha({"day": bar["day"], "close": bar["close"]}):
+                 raise ValueError("bar content hash mismatch")
+@@ -259,13 +256,16 @@
+ 
+ 
+ def initial(c):
+-    if c.get("mode") != "synthetic_spot_only":
+-        raise ValueError("only offline synthetic spot mode supported")
++    if c.get("mode") != "coinbase_exchange_usd_reference_simulation":
++        raise ValueError("explicit USD reference simulation mode required")
++    from adapter import SCENARIO
++    if c["scenario"] != SCENARIO: raise ValueError("profile scenario mismatch")
+     s = scenario_record(c["scenario"])
+     cash = number(c["initial_cash"], positive=True)
+     utc(c["at"])
+     st = {"version": VERSION, "account_id": c["account_id"], "scenario": s,
+           "scenario_sha256": sha(s), "pins": bundle_pins(), "cash_total": cash,
++          "quote_currency": "USD", "source_profile": VERSION,
+           "holdings": dict.fromkeys(SYMBOLS, D(0)), "quotes": {}, "intents": [],
+           "peak": cash, "maximum_observed_drawdown": D(0), "kill": None,
+           "daily": [], "clock": c["at"], "realized_fees": D(0), "fills": []}
+@@ -288,7 +288,7 @@
+     if op == "observe":
+         e = c["evidence"]
+         q = unpack(e, at)
+-        if q.get("venue") != "SYNTHETIC_SPOT" or q.get("product") != "spot" or q.get("symbol") not in SYMBOLS:
++        if q.get("venue") != "COINBASE_EXCHANGE_REFERENCE" or q.get("product") != "spot" or q.get("symbol") not in SYMBOLS:
+             raise ValueError("unsupported venue / product / symbol")
+         if not utc(q["observed_at"]) <= utc(e["received_at"]) <= utc(at):
+             raise ValueError("quote received before observation or in future")
+@@ -299,6 +299,8 @@
+         previous = st["quotes"].get(q["symbol"])
+         if previous and utc(q["observed_at"]) < utc(previous["payload"]["observed_at"]):
+             raise ValueError("out-of-order quote")
++        if previous and (q["source_sequence"] < previous["payload"]["source_sequence"] or utc(q["source_observed_at"]) < utc(previous["payload"]["source_observed_at"])):
++            raise ValueError("regressing source book sequence/time")
+         st["quotes"][q["symbol"]] = copy.deepcopy(e)
+         # Observe risk BEFORE filling pending buys; kill never fills at triggering quote.
+         risk(st, at, oid)
+@@ -309,6 +311,9 @@
+                 continue
+             if not utc(o["made_at"]) < utc(q["observed_at"]) <= utc(e["received_at"]) <= utc(at) < utc(o["expires_at"]) or fresh_quote(st, q["symbol"], at) is None:
+                 result["blocked"].append({"intent": o["id"], "reason": "INELIGIBLE_TIME"})
++                continue
++            if not utc(q["request_started_at"]) > utc(o["made_at"]) or not utc(q["source_observed_at"]) > utc(o["made_at"]):
++                result["blocked"].append({"intent": o["id"], "reason": "REFERENCE_OBSERVATION_NOT_POST_INTENT"})
+                 continue
+             size = q.get("ask_qty" if o["side"] == "BUY" else "bid_qty")
+             if size is None:
+@@ -330,9 +335,14 @@
+                 if o["reserved"] == 0:
+                     result["blocked"].append({"intent": o["id"], "reason": "WAITING_FOR_ACTUAL_CASH"})
+                     continue
+-                sized = _core.buy_size(o["reserved"], ask, fee, slip, precision)
++                sized = _core.buy_size(o["reserved"], number(q["modeled_ask"]), fee, "0", precision)
+                 qty = min(sized["units"], limit).quantize(step, rounding=ROUND_FLOOR)
+-                px = ask*(1+number(slip))
++                px = number(q["modeled_ask"])
++                if qty * px < number(q["rules"]["min_market_funds"]):
++                    o.update(status="IOC_REJECTED_MIN_NOTIONAL", reserved=D(0))
++                    result["blocked"].append({"intent": o["id"], "reason": "MIN_MARKET_FUNDS"})
++                    reserve(st)
++                    continue
+                 cost = _core.cash_round(qty*px*number(fee))
+                 debit = qty*px+cost
+                 st["cash_total"] -= debit
+@@ -340,8 +350,13 @@
+                 cash_change = -debit
+             else:
+                 qty = min(o["quantity"], st["holdings"][q["symbol"]], limit).quantize(step, rounding=ROUND_FLOOR)
+-                liquid = _core.liquidation([qty], bid, fee, slip)
+-                px, cost = bid*(1-number(slip)), liquid["commission"]
++                px = number(q["modeled_bid"])
++                if qty * px < number(q["rules"]["min_market_funds"]):
++                    o.update(status="IOC_REJECTED_MIN_NOTIONAL", reserved=D(0))
++                    result["blocked"].append({"intent": o["id"], "reason": "MIN_MARKET_FUNDS"})
++                    continue
++                liquid = _core.liquidation([qty], px, fee, "0")
++                cost = liquid["commission"]
+                 cash_change = liquid["net"]
+                 st["cash_total"] += cash_change
+                 st["holdings"][q["symbol"]] -= qty
+@@ -353,7 +368,8 @@
+                     "cash_change": cash_change, "observation_id": oid,
+                     "observed_at": q["observed_at"], "received_at": e["received_at"],
+                     "fill_recorded_at": at, "available_quantity": limit,
+-                    "evidence": "synthetic_top_of_book_quantity_scenario",
++                    "evidence": "public_reference_top_book_10pct_cap_not_actual_execution",
++                    "source_profile": VERSION, "quote_currency": "USD",
+                     "scenario_sha256": st["scenario_sha256"]}
+                 st["fills"].append(fill)
+                 result["fills"].append(fill)

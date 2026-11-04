@@ -1,0 +1,65 @@
+{
+  "started_at": "2026-11-01T11:34:27.503333+00:00",
+  "source_pins": {
+    "daily_core.py": "b5f8c1b23efdbb9b4b0c3aa11eceee3a431295bf7fef1459a6b7083628965700",
+    "daily_adapter.py": "ddb7f76ef7515d23a107bb16d79494830370fa831edb49e2e2b2f0e1e2623ca5",
+    "history_inputs.py": "ca4c7a66b3fbb0831cd7cb8b48243902b41948d3f6ac4edd7f6298e15183a154",
+    "replay.py": "8c08857a1d2e018551be51b99dbd618ae6c84cadb8871fa4622245502a70587d",
+    "PROTOCOL_v1.md": "cbd57e64af5135e480196eca5d22e35d741ab2fb7767197ba7ea7f54786180fd",
+    "PROTOCOL_ADDENDUM_1.md": "a45485ac5e7115097def5d9a59fc8a6bb4117713dc8ee582a190d77b0ec2b47d",
+    "vendor/paper_cash_accounting.py": "29688797f6738e4aa02ca87403a5a90d60dec0bca54cffab36a4a4a7e266f8a6"
+  },
+  "clearance": {
+    "approved_for_canonical_historical_run": true,
+    "requires_parent_go": true,
+    "historical_rows_read_by_reviewer": false,
+    "historical_outcomes_computed_by_reviewer": false,
+    "reviewer": "audit_account_concurrency",
+    "review_report_sha256": "0a4878b6f0377fe51dbc0622c8b9c0e3d2f5366f3151b9297876a6c90b415da7",
+    "source_pins": {
+      "daily_core.py": "b5f8c1b23efdbb9b4b0c3aa11eceee3a431295bf7fef1459a6b7083628965700",
+      "daily_adapter.py": "ddb7f76ef7515d23a107bb16d79494830370fa831edb49e2e2b2f0e1e2623ca5",
+      "history_inputs.py": "ca4c7a66b3fbb0831cd7cb8b48243902b41948d3f6ac4edd7f6298e15183a154",
+      "replay.py": "8c08857a1d2e018551be51b99dbd618ae6c84cadb8871fa4622245502a70587d",
+      "PROTOCOL_v1.md": "cbd57e64af5135e480196eca5d22e35d741ab2fb7767197ba7ea7f54786180fd",
+      "PROTOCOL_ADDENDUM_1.md": "a45485ac5e7115097def5d9a59fc8a6bb4117713dc8ee582a190d77b0ec2b47d",
+      "vendor/paper_cash_accounting.py": "29688797f6738e4aa02ca87403a5a90d60dec0bca54cffab36a4a4a7e266f8a6"
+    },
+    "input_allowlist_sha256": "dcda45f36489eeb0b914cb8cb7ecf359178d3be386f4ac7abbc001821f72213d",
+    "input_manifest_sha256": "6b5cbe0b8be894a82980cc5110fb7fc4a501b3b7cea3c2e3e66e1c8cc29dd629",
+    "partitions": {
+      "development": [
+        "2017-09-26",
+        "2023-01-01"
+      ],
+      "validation": [
+        "2023-01-01",
+        "2026-09-30"
+      ]
+    },
+    "policies": [
+      "TREND_V2_SHARED",
+      "PASSIVE_50_50_RISK_MATCHED",
+      "CONVENTIONAL_50_50_BUY_HOLD_NO_KILL",
+      "CASH"
+    ],
+    "scope": "One canonical exploratory run only on already-existing pinned local archives after validation. No download, optimization, extra policy, live quote/execution claim or new holdout claim."
+  },
+  "partitions": {
+    "development": [
+      "2017-09-26",
+      "2023-01-01"
+    ],
+    "validation": [
+      "2023-01-01",
+      "2026-09-30"
+    ]
+  },
+  "policies": [
+    "TREND_V2_SHARED",
+    "PASSIVE_50_50_RISK_MATCHED",
+    "CONVENTIONAL_50_50_BUY_HOLD_NO_KILL",
+    "CASH"
+  ],
+  "classification": "EXPLORATORY_REUSED_DATA_DAILY_APPROXIMATION"
+}

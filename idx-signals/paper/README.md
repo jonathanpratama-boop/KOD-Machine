@@ -42,6 +42,25 @@ scored by the harness's execution model so the outcome is what the validation ru
 recorded. No pair has been validated (E3 discovery admitted none), so v4 decides exactly as v3
 did. Decisions keep the policy they were made under.
 
+`PAPER-POLICY-v5` (drafted 2026-10-09 in PR #3 as "v4" and renamed when PR #6's v4 reached the
+base branch first; prospective: decisions already recorded keep their policy) applies
+Jonathan's risk constraint in every market. The invalidation is defined first (the signal session's
+low, floored to the tick). The highest permitted entry follows from it (stop / 0.95, never above the
+signal close x 1.10), so the stop is at most 5% below any accepted fill. Size, costs and caps are
+computed at that permitted entry (hypothetical accounts: $10,000, Rp100m, 10,000 USDT). An entry
+outside the band is rejected, never chased: a $100 signal with a $95 stop accepts an open of at
+most $100, and an open of $110 is rejected. US plans and outcomes run through `idxsig/exec_us.py`
+(EXEC-US-v1, scorer `paper-score-v4`), the same code as the historical replay: entry at the next
+open, a resting stop (filled at the stop, or at the open on a gap through it), a market-on-close
+time exit placed in advance, and costs at each fill's as-traded price. IDX and crypto keep the v3
+entry and close-based exit scoring inside the v5 band (a known limitation). v5 does not use
+v4's E3 rule: while a validated E3 pair exists, the IDX scan fails instead of deciding, because
+v5 does not define how a plan without a chase limit meets the 5% stop rule. Approval is
+`APPROVAL-v2`. Each market's evidence is pinned to one run and its config sha256
+(`paper.APPROVAL_PINS`), so appending a run cannot change it. The pinned run must have tested the
+execution the plans use. It must also beat matched entries at p < 0.05 with a positive average
+net return above the baseline. US has no pin yet, because no evidence run exists under EXEC-US-v1.
+
 Versions behind every call. Each SCAN and DECISION names its detector (rule id, version, module
 SHA-256), policy (id and SHA-256), data manifest (and its SHA-256) and, from 2026-10-08 09:30 UTC,
 its `preprocessing`. The three scans before that field existed used: SCAN-2026-10-07-F1_ARA
@@ -72,6 +91,60 @@ unverified; `RATIO_CONFIRMED` is diagnostic only. New repair panels reject v1 sc
 coverage files; recheck their evidence first. The conservative parser can miss valid events
 with unsupported wording, which need further evidence review. Earlier outcomes and research
 artifacts retain their original versions; corrections are new records.
+
+## Speculation register (`paper/speculations.jsonl`, `idxsig.speculation`, protocol `research/SPECULATION_REGISTER_v1/`)
+
+Added 2026-10-28 (`KOD-SPEC-REGISTER-v1`). Speculative design applied to the ledger: for every candidate of the frozen
+detectors, before its entry, a **speculation set** is sealed (hash-chained, RFC 3161 stamped, pushed) with a cone of dated,
+falsifiable statements about the next 5 and 20 sessions, each with the probability the frozen 2023 evidence gives it; the
+frozen plan (`BASE5`) applied to the candidate and to five matched twins drawn from the scan's own features file; and a tag.
+When the bars arrive, each statement is graded (Brier, beside an uninformed 0.5 and the register's running base rate, and
+beside the twins' rate) and the plan is scored against its twins. It **never feeds a decision**, carries **no variant of a
+retired entry** (owner decisions of 2026-10-17 and 2026-10-22: descriptive logging only), reads no holdout and places no
+order. A set sealed after its entry cutoff is refused; `paper-verify` checks every cutoff, every binding to the ledger and
+the chain. `paper/SPECULATIONS.md` is the derived report (statistics, calibration, the latest sets as cards).
+
+```sh
+python3 -m idxsig speculate --market <M> --commit        # after paper-scan, before the entry cutoff
+python3 -m idxsig speculate-score --market <M> --commit  # after paper-score; reuses its bars (--max-age-hours 8)
+python3 -m idxsig speculate-report                       # rewrites paper/SPECULATIONS.md
+```
+
+## Catalyst register (`paper/catalysts.jsonl`, `idxsig.catalysts`, protocol `research/CATALYST_REGISTER_v1/`)
+
+Added 2026-10-28 (`KOD-CATALYST-REGISTER-v1`, the owner's go on `handoff/precatalyst-program/PROGRAM_v1.md`). The
+speculation register run over dated **event lists** instead of scan candidates. **SEC13D** (counted at its looks): every
+original Schedule 13D on EDGAR is listed in a `BATCH` record with a status; each one that passes the issuer rules gets a
+`CATALYST_SET` sealed before the next US open, with the 20-session yardstick plan (`H20`), five matched event-free twins,
+a cone and a coverage class: `FIRE`, or `ABSTAIN` when the issuer filed for dilution in the last 20 sessions, already rose
+15% since the filing, or is worth under USD 50 million. The test runs on FIRE sets only, with two primaries (mean edge
+over the twins, and the win rate against the twins' median), at 60/120/240 pairs (t at least 3.75, 3.0, 3.0) and then
+480/960/1,920 (t at least 3.0), with a futility stop from 240 (`research/CATALYST_REGISTER_v1/prereg_2.json`). **IDX_INDEX** (descriptive): IDX30/LQ45/IDX80 changes from a sourced events file, with a run-up window to the
+rebalancing close and a 20-session window after it. **DILUTION_RECENT** tags are sealed for new US and IDX speculation sets
+before their cutoff (metadata only). It never feeds a decision, reads no holdout, places no order and changes nothing in
+`ledger.jsonl` or `speculations.jsonl`; `paper-verify` checks its chain, cutoffs, batch listings and bindings.
+`paper/CATALYSTS.md` is the derived report. EDGAR needs the declared contact inline (`KOD_SEC_CONTACT=...`), never a file.
+
+Later families, each with its own frozen `research/CATALYST_FAMILIES/<family>/protocol.json` and counted looks:
+**DILUTION_8K** (8-K Item 3.02, the avoid side) and **FORM4** (insider purchases, test 26 replicated) from 2026-10-28;
+from 2026-10-29 two families built from a parent's sets of the same run (`handoff/decisions/2026-10-29_sensor_v2.md`):
+**SEC13D_V2** (SEC13D's filings with the cover-page market value when XBRL has no share count, Item 4 and 5(c) tags,
+20 twins, H20 and H60) and **FORM4_SHARP** (FORM4 events by a top executive or of USD 100-500k, no recent dilution, not a
+routine trader; 20 twins; H60 primary). Their cones carry **mechanism statements** resolved from EDGAR or the register's
+own batches rather than prices (`MECH_13DA_UP_60`: the filer raises its stake within 60 days; `MECH_SECOND_BUY_20`:
+another insider buys within 20 sessions); `catalyst-score` resolves them, EDGAR ones only with the declared contact.
+
+```sh
+python3 -m idxsig catalyst-seal --family SEC13D --commit          # after paper-scan --market US, before 09:15 New York
+python3 -m idxsig catalyst-seal --family SEC13D_V2 --commit       # right after SEC13D (built from its sets)
+python3 -m idxsig catalyst-seal --family DILUTION_8K --commit
+python3 -m idxsig catalyst-seal --family FORM4 --commit           # mornings: yesterday's EDGAR daily form index
+python3 -m idxsig catalyst-seal --family FORM4_SHARP --commit     # right after FORM4 (built from its sets)
+python3 -m idxsig catalyst-seal --family IDX_INDEX --events research/CATALYST_REGISTER_v1/events/<file> --commit
+python3 -m idxsig catalyst-tag --commit                            # after speculate, before the set's cutoff
+python3 -m idxsig catalyst-score --market <US|IDX> --commit        # after paper-score; reuses its bars
+python3 -m idxsig catalyst-report                                  # rewrites paper/CATALYSTS.md
+```
 
 ## Crypto microstructure side-car (`paper/microstructure/`, `idxsig.microstructure`)
 

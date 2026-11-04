@@ -1,0 +1,12 @@
+{
+ "id": "LEARNER_v2_BRIER_registered",
+ "experiment": "LEARNER_v2",
+ "date": "2026-10-29",
+ "hypothesis": "prospective: the learner's sealed raw forecasts beat a climatology anchor (the same fit with an intercept only) on skill statements (beats the twins, the stated mechanism, both), per-session mean Brier gain > 0, one-sided t, scored only on outcomes resolved after each forecast",
+ "one_sided_p": null,
+ "p_source": "no look yet; looks at 60, 120, 240, 480, 960, 1920 scored pairs with t_min 3.75, 3, 3, 3, 3, 3 (research/LEARNER_v2/protocol.json 'claim')",
+ "variants_searched": 0,
+ "outcome": "PENDING (prospective; registered before any outcome existed)",
+ "counted": false,
+ "registered": "2026-10-29"
+}

@@ -75,8 +75,13 @@ def _ts(value, name: str, required: bool = False) -> datetime | None:
         raise EvidenceError(f"{name}: {exc}") from exc
 
 
-def grade_ceiling(source_type: str, publication: datetime | None, cutoff: datetime,
-                  existence_verified: bool, content_verified: bool) -> str:
+def grade_ceiling(
+    source_type: str,
+    publication: datetime | None,
+    cutoff: datetime,
+    existence_verified: bool,
+    content_verified: bool,
+) -> str:
     dated = publication is not None and publication <= cutoff
     if source_type == "RETROSPECTIVE" or not dated:
         return "D"
@@ -87,15 +92,29 @@ def grade_ceiling(source_type: str, publication: datetime | None, cutoff: dateti
     return "C"
 
 
-def build_object(meta: dict, now: datetime, content_sha256: str | None, archived_copy: str | None,
-                 stamps: list[dict], other_objects: dict) -> dict:
+def build_object(
+    meta: dict,
+    now: datetime,
+    content_sha256: str | None,
+    archived_copy: str | None,
+    stamps: list[dict],
+    other_objects: dict,
+) -> dict:
     """Validate an evidence declaration and return the frozen object (without its id).
 
     `stamps` are verified external timestamps on content_sha256: [{"authority", "time"}].
     `other_objects` maps existing v2 evidence ids to their frozen objects (for corroboration).
     Raises EvidenceError on anything inconsistent; never downgrades silently."""
-    for key in ("source_url", "source_type", "publisher", "document_type", "evidence_grade",
-                "existence_method", "content_method", "provenance"):
+    for key in (
+        "source_url",
+        "source_type",
+        "publisher",
+        "document_type",
+        "evidence_grade",
+        "existence_method",
+        "content_method",
+        "provenance",
+    ):
         if not str(meta.get(key) or "").strip():
             raise EvidenceError(f"{key} is required")
     source_type = meta["source_type"].upper()
@@ -127,9 +146,13 @@ def build_object(meta: dict, now: datetime, content_sha256: str | None, archived
         raise EvidenceError("archive_time needs the archive_url it came from")
     if publication is not None:
         if not basis:
-            raise EvidenceError("publication_time needs publication_time_basis: where that time comes from")
+            raise EvidenceError(
+                "publication_time needs publication_time_basis: where that time comes from"
+            )
         if any(word in basis.lower() for word in RETRIEVAL_WORDS):
-            raise EvidenceError("publication_time_basis describes a retrieval; retrieval time is not a publication time")
+            raise EvidenceError(
+                "publication_time_basis describes a retrieval; retrieval time is not a publication time"
+            )
         if publication > retrieval:
             raise EvidenceError("publication_time is after retrieval_time")
         if publication > cutoff and not (source_type == "RETROSPECTIVE" and grade == "D"):
@@ -145,37 +168,61 @@ def build_object(meta: dict, now: datetime, content_sha256: str | None, archived
     stamp_ok = [s for s in stamps if parse_ts(s["time"]) <= cutoff]
     if existence_method == "PRIMARY_SOURCE_TIMESTAMP":
         if source_type != "PRIMARY" or publication is None or publication > cutoff:
-            raise EvidenceError("PRIMARY_SOURCE_TIMESTAMP needs a PRIMARY source with a publication_time by the cutoff")
+            raise EvidenceError(
+                "PRIMARY_SOURCE_TIMESTAMP needs a PRIMARY source with a publication_time by the cutoff"
+            )
     elif existence_method == "CONTEMPORANEOUS_ARCHIVE":
         if not archive_url or archive_time is None or archive_time > cutoff:
-            raise EvidenceError("CONTEMPORANEOUS_ARCHIVE needs archive_url and an archive_time at or before the cutoff")
+            raise EvidenceError(
+                "CONTEMPORANEOUS_ARCHIVE needs archive_url and an archive_time at or before the cutoff"
+            )
     elif existence_method == "EXTERNAL_TIMESTAMP_RECEIPT":
         if not content_sha256 or not stamp_ok:
-            raise EvidenceError("EXTERNAL_TIMESTAMP_RECEIPT needs the bytes and an external timestamp at or before the cutoff")
+            raise EvidenceError(
+                "EXTERNAL_TIMESTAMP_RECEIPT needs the bytes and an external timestamp at or before the cutoff"
+            )
     elif existence_method == "CORROBORATED_CONTEMPORANEOUS":
         others = [other_objects.get(i) for i in corroborated_by]
         if len(corroborated_by) < 2 or any(o is None for o in others):
-            raise EvidenceError("CORROBORATED_CONTEMPORANEOUS needs corroborated_by: two or more recorded evidence ids")
+            raise EvidenceError(
+                "CORROBORATED_CONTEMPORANEOUS needs corroborated_by: two or more recorded evidence ids"
+            )
         if len({o["publisher"] for o in others}) < 2:
-            raise EvidenceError("corroborating evidence must come from at least two different publishers")
+            raise EvidenceError(
+                "corroborating evidence must come from at least two different publishers"
+            )
         for o in others:
-            if o["publication_time"] is None or parse_ts(o["publication_time"]) > cutoff or o["evidence_grade"] == "D":
-                raise EvidenceError("each corroborating object must be dated at or before the cutoff and not grade D")
+            if (
+                o["publication_time"] is None
+                or parse_ts(o["publication_time"]) > cutoff
+                or o["evidence_grade"] == "D"
+            ):
+                raise EvidenceError(
+                    "each corroborating object must be dated at or before the cutoff and not grade D"
+                )
     existence_verified = existence_method != "NONE"
 
     if content_method == "CONTEMPORANEOUS_ARCHIVE_HASH_MATCH":
         if not content_sha256 or not archive_url or archive_time is None or archive_time > cutoff:
-            raise EvidenceError("CONTEMPORANEOUS_ARCHIVE_HASH_MATCH needs the archived bytes, archive_url and an "
-                                "archive_time at or before the cutoff")
+            raise EvidenceError(
+                "CONTEMPORANEOUS_ARCHIVE_HASH_MATCH needs the archived bytes, archive_url and an "
+                "archive_time at or before the cutoff"
+            )
     elif content_method == "EXTERNAL_TIMESTAMP_RECEIPT":
         if not content_sha256 or not stamp_ok:
-            raise EvidenceError("content EXTERNAL_TIMESTAMP_RECEIPT needs the bytes timestamped at or before the cutoff")
+            raise EvidenceError(
+                "content EXTERNAL_TIMESTAMP_RECEIPT needs the bytes timestamped at or before the cutoff"
+            )
     content_verified = content_method != "NONE"
 
     if claimed_existence is not None and bool(claimed_existence) != existence_verified:
-        raise EvidenceError(f"existence_verified={claimed_existence} disagrees with existence_method {existence_method}")
+        raise EvidenceError(
+            f"existence_verified={claimed_existence} disagrees with existence_method {existence_method}"
+        )
     if claimed_content is not None and bool(claimed_content) != content_verified:
-        raise EvidenceError(f"content_verified={claimed_content} disagrees with content_method {content_method}")
+        raise EvidenceError(
+            f"content_verified={claimed_content} disagrees with content_method {content_method}"
+        )
 
     ceiling = grade_ceiling(source_type, publication, cutoff, existence_verified, content_verified)
     if grade < ceiling:  # 'A' < 'B' < 'C' < 'D'
@@ -214,7 +261,9 @@ def evidence_id(obj: dict) -> str:
     return sha256_obj(obj)
 
 
-def citation_problems(horizons: dict, objects: dict, integrity: str, opened_at: datetime) -> list[str]:
+def citation_problems(
+    horizons: dict, objects: dict, integrity: str, opened_at: datetime
+) -> list[str]:
     """Rules for a card's citations. `objects` maps v2 evidence ids to frozen objects plus
     their recorded_at. Strict cards: every known fact cites evidence that was public at the
     set's cutoff, none of it grade D, and primary claims cite verified primary documents."""
@@ -231,7 +280,9 @@ def citation_problems(horizons: dict, objects: dict, integrity: str, opened_at: 
         for fact in sorted(set(cited) - set(facts)):
             problems.append(f"{horizon}: evidence cites {fact!r}, which is not a fact in this set")
         for fact in sorted(set(claims) - set(facts)):
-            problems.append(f"{horizon}: fact_grades names {fact!r}, which is not a fact in this set")
+            problems.append(
+                f"{horizon}: fact_grades names {fact!r}, which is not a fact in this set"
+            )
         for fact, value in facts.items():
             ids = cited.get(fact) or []
             if not isinstance(ids, list):
@@ -247,35 +298,54 @@ def citation_problems(horizons: dict, objects: dict, integrity: str, opened_at: 
             for eid in ids:
                 obj = objects.get(eid)
                 if obj is None:
-                    problems.append(f"{horizon}: {fact!r} cites {eid[:16]}, which is not a recorded v2 evidence object")
+                    problems.append(
+                        f"{horizon}: {fact!r} cites {eid[:16]}, which is not a recorded v2 evidence object"
+                    )
                     continue
                 if parse_ts(obj["recorded_at"]) > opened_at:
-                    problems.append(f"{horizon}: {fact!r} cites evidence {eid[:12]} recorded after the open")
+                    problems.append(
+                        f"{horizon}: {fact!r} cites evidence {eid[:12]} recorded after the open"
+                    )
                     continue
                 pub = obj["publication_time"]
                 if obj["evidence_grade"] == "D":
                     if strict:
-                        problems.append(f"{horizon}: {fact!r} cites grade D (retrospective) evidence {eid[:12]}; "
-                                        f"a strict record needs evidence that was public at the cutoff")
+                        problems.append(
+                            f"{horizon}: {fact!r} cites grade D (retrospective) evidence {eid[:12]}; "
+                            f"a strict record needs evidence that was public at the cutoff"
+                        )
                         continue
                 elif pub is None or parse_ts(pub) > cutoff:
-                    problems.append(f"{horizon}: {fact!r} cites evidence {eid[:12]} not published by the "
-                                    f"{horizon} cutoff {fmt_ts(cutoff)}")
+                    problems.append(
+                        f"{horizon}: {fact!r} cites evidence {eid[:12]} not published by the "
+                        f"{horizon} cutoff {fmt_ts(cutoff)}"
+                    )
                     continue
                 if strict and parse_ts(obj["as_of_cutoff"]) > cutoff:
-                    problems.append(f"{horizon}: {fact!r} cites evidence {eid[:12]} graded as of "
-                                    f"{obj['as_of_cutoff']}, after this set's cutoff")
+                    problems.append(
+                        f"{horizon}: {fact!r} cites evidence {eid[:12]} graded as of "
+                        f"{obj['as_of_cutoff']}, after this set's cutoff"
+                    )
                     continue
                 usable.append(obj)
-            if strict and value is True and fact in PRIMARY_CLAIM_FACTS and not any(
-                o["source_type"] == "PRIMARY" and o["existence_verified"] for o in usable
+            if (
+                strict
+                and value is True
+                and fact in PRIMARY_CLAIM_FACTS
+                and not any(
+                    o["source_type"] == "PRIMARY" and o["existence_verified"] for o in usable
+                )
             ):
-                problems.append(f"{horizon}: {fact!r} = true claims a primary document but cites no PRIMARY "
-                                f"evidence with verified existence")
+                problems.append(
+                    f"{horizon}: {fact!r} = true claims a primary document but cites no PRIMARY "
+                    f"evidence with verified existence"
+                )
             if fact in claims:
                 claimed = str(claims[fact]).upper()
                 best = min((o["evidence_grade"] for o in usable), default="E")
                 if claimed not in GRADES or claimed < best:
-                    problems.append(f"{horizon}: fact {fact!r} claims grade {claimed}, but its usable evidence "
-                                    f"supports at most {best if best != 'E' else 'nothing'}")
+                    problems.append(
+                        f"{horizon}: fact {fact!r} claims grade {claimed}, but its usable evidence "
+                        f"supports at most {best if best != 'E' else 'nothing'}"
+                    )
     return problems

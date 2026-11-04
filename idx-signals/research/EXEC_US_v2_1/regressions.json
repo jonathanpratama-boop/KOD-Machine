@@ -1,0 +1,70 @@
+{
+ "v2_commit": "21eb6aa961710227313278ac97b2cf15a5a08576",
+ "P1 saved orders keyed by row number": [
+  {
+   "test": "tests.test_contract.AceReview.test_saved_orders_follow_the_ticker_not_the_row",
+   "at_21eb6aa": {
+    "result": "ERROR",
+    "why": "ValueError: not enough values to unpack (expected 1, got 0)"
+   },
+   "now": "PASS"
+  },
+  {
+   "test": "tests.test_contract.AceReview.test_a_rolling_window_download_is_not_already_processed",
+   "at_21eb6aa": {
+    "result": "ERROR",
+    "why": "ValueError: session 2024-01-31 already processed"
+   },
+   "now": "PASS"
+  }
+ ],
+ "P1 split re-adjustment corrupts holdings": [
+  {
+   "test": "tests.test_contract.AceReview.test_a_split_readjusted_download_keeps_the_holding",
+   "at_21eb6aa": {
+    "result": "FAIL",
+    "why": "AssertionError: Tuples differ: ('STOP_GAP_AT_OPEN', '2024-02-02') != ('TIME_EXIT_AT_CLOSE', '2024-02-06')"
+   },
+   "now": "PASS"
+  }
+ ],
+ "P2 exit cost taken at the entry tier": [
+  {
+   "test": "tests.test_contract.AceReview.test_planned_risk_covers_the_exit_cost_tier_at_the_stop",
+   "at_21eb6aa": {
+    "result": "FAIL",
+    "why": "AssertionError: np.float64(106.08103285000016) not less than or equal to 99.957403001"
+   },
+   "now": "PASS"
+  }
+ ],
+ "P2 exits fill on zero-volume sessions": [
+  {
+   "test": "tests.test_contract.AceReview.test_no_exit_on_a_session_without_trades",
+   "at_21eb6aa": {
+    "result": "FAIL",
+    "why": "AssertionError: Tuples differ: ('STOP', '2024-02-06') != ('TIME_EXIT_ROLLED', '2024-02-07')"
+   },
+   "now": "PASS"
+  }
+ ],
+ "P2 demo replays one session too many": {
+  "v2_demo_line": "return full.slice(lo, hi + 1), meta",
+  "v2_declared": [
+   "2023-09-25",
+   "2023-10-20"
+  ],
+  "v2_processed": [
+   "2023-09-25",
+   "2023-10-23",
+   21
+  ],
+  "v2_1_processed": [
+   "2023-09-25",
+   "2023-10-20",
+   20
+  ],
+  "window_test_now": "PASS",
+  "note": "bounds() already returns an exclusive end; v2 added one more and processed 2023-10-23"
+ }
+}

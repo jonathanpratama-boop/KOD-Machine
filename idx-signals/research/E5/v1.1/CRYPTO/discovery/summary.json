@@ -1,0 +1,137 @@
+{
+  "a1_gate": {
+    "lift_ci95_excludes_1": false,
+    "passed": false,
+    "reasons": [
+      "lift vs matched 0.9970089730807579 below 2.0",
+      "p vs matched 0.5422885572139303 not below 0.05"
+    ]
+  },
+  "claims": "Historical research on assumed costs, daily-bar fills and a survivor-only US universe; 6 fits and 2 primaries were pre-registered and nothing else was searched; nothing here is prospective performance, no probability or trade is asserted, nothing grants entry permission, and no real orders exist.",
+  "code": {
+    "commit": "5d7be0c3da8837f398df2f9cfe55234eba8094b3",
+    "dirty": false
+  },
+  "computed_at": "2026-10-14T17:06:26+00:00",
+  "constant_columns": [
+    "zero20_r",
+    "zero20_r2",
+    "ara"
+  ],
+  "detector_module_sha256": "ecaf348607c35e030fbf679cd3552c421f4c7209f48922980f66588fb5bea7b9",
+  "evaluable_ticker_days": 221453,
+  "files": [
+    "model.json",
+    "thresholds.json",
+    "stage1.json",
+    "flags.csv",
+    "univariate.csv",
+    "plans.csv",
+    "gates.json",
+    "runs/<RunConfig market>/<arm>_<run>.json"
+  ],
+  "fits": {
+    "D": {
+      "converged": true,
+      "deviance": 100773.29002539338,
+      "lambda": 34.477000000000004,
+      "n_negatives_sampled": 20775,
+      "n_positives": 13702,
+      "n_rows_used": 34477
+    },
+    "U": {
+      "converged": true,
+      "deviance": 91029.18206213029,
+      "lambda": 33.229,
+      "n_negatives_sampled": 20913,
+      "n_positives": 12316,
+      "n_rows_used": 33229
+    }
+  },
+  "freeze": "no admissible arm on CRYPTO: nothing to validate; the ranker may still be frozen for the prospective sidecar (e5-freeze sets no SELECTED entry)",
+  "frozen_before_analysis": true,
+  "holdout": "sealed: never loaded; every window end is checked against the validation end before a Study or RunConfig exists, and the harness refuses it again",
+  "market": "CRYPTO",
+  "panel_format": "panel-global-v1",
+  "panel_manifest": "panel_crypto-20261008T003354Z.json",
+  "panel_sha256": "3dc12749c7cce635a68ef4f152ec21c3b3d24eb6b02665c799aa24e513963d7d",
+  "precondition": {
+    "accepted_deviation": false,
+    "status": "REPRODUCED"
+  },
+  "primaries": {
+    "P1": [
+      "IDX",
+      "A"
+    ],
+    "P2": [
+      "CRYPTO",
+      "B"
+    ]
+  },
+  "protocol_id": "KOD-GLOBAL-E5-v1.1",
+  "protocol_sha256": "61968b8c8bc11927f94d8ec7b60dc8d235b5f085532aa2176fb975d92cd65be5",
+  "registry_sha256": null,
+  "runtime": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "python": "3.13.16"
+  },
+  "search_size": "6 fits, 2 arms x 3 markets, 2 primaries, no threshold/lambda/feature search; stated in every output",
+  "selected_arm": null,
+  "stage": "discovery",
+  "stage1_gates": {
+    "A": {
+      "judged": true,
+      "passed": false,
+      "reasons": [
+        "paired plan-window excess -0.012540153410727724 not positive",
+        "cluster-bootstrap p 0.805919408059194 not below 0.025",
+        "mean excess in 2021 not positive (423 flags)",
+        "mean excess in 2022 not positive (132 flags)"
+      ]
+    },
+    "B": {
+      "judged": true,
+      "passed": false,
+      "reasons": [
+        "cluster-bootstrap p 0.41885811418858115 not below 0.025"
+      ]
+    }
+  },
+  "stage2_admissibility": {},
+  "stage2_runs": 0,
+  "study_options": {
+    "panel_format": "panel-global-v1",
+    "pool_keys": [
+      "price_band",
+      "liquidity",
+      "volatility",
+      "market_cap"
+    ],
+    "pool_units": "panel",
+    "pool_version": "v3"
+  },
+  "thresholds": {
+    "A": -1.3456903236220739,
+    "B": 0.9602340380213406
+  },
+  "window": {
+    "end": "2022-12-31",
+    "first_period_session": "2020-07-01",
+    "last_period_session": "2022-12-31",
+    "lead_in_sessions": 65,
+    "lead_in_short": false,
+    "listed_before": {
+      "definition": "sessions since the name's first present session in the pinned panel that fall before the window start",
+      "left_censored_names": 83,
+      "panel_first_session": "2020-01-01"
+    },
+    "period": "discovery",
+    "period_end": "2022-12-31",
+    "period_start": "2020-07-01",
+    "start": "2020-04-27",
+    "study_end": "2022-12-31",
+    "warmup_sessions": 65
+  }
+}

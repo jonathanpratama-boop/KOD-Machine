@@ -1,0 +1,56 @@
+{
+  "baseline_reproduction": {
+    "INPUT_VALIDATION.json": "0b15eb87040dd984078ed4542df8e4567d1f6517912281b7f8bc419bac51c493",
+    "development_TREND_V2_SHARED.jsonl": "9350eab20ab03d7965c531145706b1d64033f9d8d5da1531801d34165607b381",
+    "development_TREND_V2_SHARED_summary.json": "4982c0eee3bfc7f4bf05085ab3c9e06fa23096c5d3f8ec655d1cc5e0aee26258",
+    "validation_TREND_V2_SHARED.jsonl": "4d89c2cb569399dd070e0ba50606ad72e01e8fedd4aaee3455a2022652c77d5c",
+    "validation_TREND_V2_SHARED_summary.json": "99dc863479e4955d70710bba7c03fb507453f39146f991f4c2372fe3ad36df97"
+  },
+  "challenger_engine_differs_only_in": [
+    "daily_core.py"
+  ],
+  "classification": "REUSED_DATA_DIAGNOSTIC_NOT_INDEPENDENT_VALIDATION",
+  "files_sha256": {
+    "CHALLENGER.diff": "2987bfddff1d477d41e86370e58c99c704667ce810a6d15de40f5032f529c741",
+    "PROTOCOL.md": "bc5e621efd930b7f9240f960e6f53d808bf633aae3c9b52d788407aae734a20c",
+    "challenger_engine/PROTOCOL_ADDENDUM_1.md": "a45485ac5e7115097def5d9a59fc8a6bb4117713dc8ee582a190d77b0ec2b47d",
+    "challenger_engine/PROTOCOL_v1.md": "cbd57e64af5135e480196eca5d22e35d741ab2fb7767197ba7ea7f54786180fd",
+    "challenger_engine/daily_adapter.py": "ddb7f76ef7515d23a107bb16d79494830370fa831edb49e2e2b2f0e1e2623ca5",
+    "challenger_engine/daily_core.py": "38a58acd39e9bd8652d67a26774d76bfd05adb328d1df517bb7300a7b3f9629a",
+    "challenger_engine/history_inputs.py": "ca4c7a66b3fbb0831cd7cb8b48243902b41948d3f6ac4edd7f6298e15183a154",
+    "challenger_engine/replay.py": "8c08857a1d2e018551be51b99dbd618ae6c84cadb8871fa4622245502a70587d",
+    "challenger_engine/vendor/paper_cash_accounting.py": "29688797f6738e4aa02ca87403a5a90d60dec0bca54cffab36a4a4a7e266f8a6",
+    "compare.py": "89f0f68f86754c7be9f05e1cc991554b1395900b5c0d212a63ea81f7ea7b87a2",
+    "logs/baseline_reproduction_check.log": "164abc70c2a9b66cd0382349e2ad6f48233df13d376b5a0772f3c384fc09ce3f",
+    "logs/baseline_run.log": "6ba7c6d0afbb2591c346d4fe73cb3cb4d6e435c95d6bca2c79cde0851e8d6de5",
+    "logs/compare_selftest.log": "e4f76f6042f63403901a699ff6e2b61135eb2f455303b7f25e1e3c054e9ae02c",
+    "logs/harness_check.log": "96c6cdac078b0be34dd03bcf21e8756430be4644f8ee010779ddc771952a975b",
+    "logs/harness_check_comparison.log": "b95cbe16b05e2487dea17e236acc7167c9a137ace402fbb139c695b7c71101d4",
+    "run_challenger.py": "8321ae716e956da5720ea7f639cc8473ff9509bd8c38565787ab1d1053e9e8cf"
+  },
+  "frozen_before": "any challenger journal or result exists",
+  "inputs": {
+    "archives": 220,
+    "bytes": 465071,
+    "input_allowlist.json": "dcda45f36489eeb0b914cb8cb7ecf359178d3be386f4ac7abbc001821f72213d",
+    "original_spot_manifest.jsonl": "6b5cbe0b8be894a82980cc5110fb7fc4a501b3b7cea3c2e3e66e1c8cc29dd629",
+    "snapshot_sha256": "6b6a0e9324819da0bf709c58df3effae596ba92001cc88151e028ff86c72a511"
+  },
+  "published_RESULTS_json_sha256": "142c1074cf4c861e800304fee5752746cd510bbeb8ecb407d413ea83affd324f",
+  "published_engine_sha256": {
+    "PROTOCOL_ADDENDUM_1.md": "a45485ac5e7115097def5d9a59fc8a6bb4117713dc8ee582a190d77b0ec2b47d",
+    "PROTOCOL_v1.md": "cbd57e64af5135e480196eca5d22e35d741ab2fb7767197ba7ea7f54786180fd",
+    "daily_adapter.py": "ddb7f76ef7515d23a107bb16d79494830370fa831edb49e2e2b2f0e1e2623ca5",
+    "daily_core.py": "b5f8c1b23efdbb9b4b0c3aa11eceee3a431295bf7fef1459a6b7083628965700",
+    "history_inputs.py": "ca4c7a66b3fbb0831cd7cb8b48243902b41948d3f6ac4edd7f6298e15183a154",
+    "replay.py": "8c08857a1d2e018551be51b99dbd618ae6c84cadb8871fa4622245502a70587d",
+    "vendor/paper_cash_accounting.py": "29688797f6738e4aa02ca87403a5a90d60dec0bca54cffab36a4a4a7e266f8a6"
+  },
+  "reading_rule": {
+    "per_partition": true,
+    "pooling": false,
+    "protected_capital": "challenger sampled max drawdown >= baseline + 5 percentage points, or challenger end NAV <= baseline - 1000 USDT",
+    "suppressed_returns": "challenger end NAV >= baseline end NAV + 1000 USDT"
+  },
+  "study": "SHARPE_KILL_ABLATION_20261101"
+}

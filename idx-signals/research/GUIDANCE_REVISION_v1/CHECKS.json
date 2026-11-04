@@ -1,0 +1,18 @@
+{
+  "checked_at_utc": "2026-10-17T07:21:58.742052+00:00",
+  "focused_guidance_tests": {
+    "count": 14,
+    "status": "PASS"
+  },
+  "repository_tests": {
+    "count": 257,
+    "status": "PASS",
+    "runtime": "Python 3.12.14 + isolated copies of existing exchange_calendars 4.5.6 pure-Python dependencies"
+  },
+  "first_attempt": {
+    "runtime": "Python 3.9",
+    "result": "249 tests passed; two older E9 test imports require Python >=3.10"
+  },
+  "decision_readback": "PASS",
+  "strategy_outcomes_run": false
+}

@@ -23,9 +23,21 @@ YEARS = e3.years_of(PROTO["periods"]["discovery"])
 
 
 def row(**kw):
-    base = {"plan_id": "x", "detector": "F1_ARA", "entry_rule": "fixed", "entry_window": 1, "exit_rule": "fixed",
-            "holding_days": 5, "scored": 500, "avg_net_return": 0.02, "p_one_sided_vs_matched": 0.005,
-            "scored_2021": 300, "avg_net_return_2021": 0.03, "scored_2022": 200, "avg_net_return_2022": 0.01}
+    base = {
+        "plan_id": "x",
+        "detector": "F1_ARA",
+        "entry_rule": "fixed",
+        "entry_window": 1,
+        "exit_rule": "fixed",
+        "holding_days": 5,
+        "scored": 500,
+        "avg_net_return": 0.02,
+        "p_one_sided_vs_matched": 0.005,
+        "scored_2021": 300,
+        "avg_net_return_2021": 0.03,
+        "scored_2022": 200,
+        "avg_net_return_2022": 0.01,
+    }
     base.update(kw)
     return base
 
@@ -47,15 +59,27 @@ class ProtocolTests(unittest.TestCase):
         for p in grid:
             self.assertIn(p["entry_rule"], ENTRY_RULES)
             self.assertIn(p["exit_rule"], EXIT_RULES)
-            self.assertGreaterEqual(p["holding_days"], 2)  # with 1 every exit rule is the fixed exit
+            self.assertGreaterEqual(
+                p["holding_days"], 2
+            )  # with 1 every exit rule is the fixed exit
         ref = PROTO["selection"]["reference_plan"]
-        self.assertIn(e3.plan_id(ref["detector"], ref), {e3.plan_id(ref["detector"], p) for p in grid})
+        self.assertIn(
+            e3.plan_id(ref["detector"], ref), {e3.plan_id(ref["detector"], p) for p in grid}
+        )
 
     def test_harness_config_follows_the_protocol(self):
-        plan = {"entry_rule": "confirm", "entry_window": 3, "exit_rule": "stop_ref", "holding_days": 3}
+        plan = {
+            "entry_rule": "confirm",
+            "entry_window": 3,
+            "exit_rule": "stop_ref",
+            "holding_days": 3,
+        }
         cfg = e3.harness_config(PROTO, "E3_CAND_F1_ARA", "discovery", plan)
         self.assertEqual((cfg.start, cfg.end), tuple(PROTO["periods"]["discovery"]))
-        self.assertEqual((cfg.entry_rule, cfg.entry_window, cfg.exit_rule, cfg.holding_days), ("confirm", 3, "stop_ref", 3))
+        self.assertEqual(
+            (cfg.entry_rule, cfg.entry_window, cfg.exit_rule, cfg.holding_days),
+            ("confirm", 3, "stop_ref", 3),
+        )
         self.assertEqual((cfg.fill_model, cfg.ca_mode, cfg.units), ("C", "registry", "panel"))
         self.assertEqual(cfg.notional, PROTO["harness"]["notional_idr"])
         bare = e3.harness_config(PROTO, "MOONSHOT_E3_D1", "validation")
@@ -83,10 +107,18 @@ class CandidateRuleTests(unittest.TestCase):
         reg = rules.registry()
         for name in moonshot_e3.CANDIDATES:
             sig = reg[moonshot_e3.candidate_rule_id(name)].compute(m)
-            np.testing.assert_array_equal(np.nan_to_num(sig, nan=-1), np.where(m.tradeable, theirs[name], -1))
+            np.testing.assert_array_equal(
+                np.nan_to_num(sig, nan=-1), np.where(m.tradeable, theirs[name], -1)
+            )
 
     def test_selected_tuple_round_trips_into_a_plan(self):
-        chosen = row(detector="F8_ARA_EARLY", entry_rule="confirm", entry_window=3, exit_rule="stop_ref", holding_days=3)
+        chosen = row(
+            detector="F8_ARA_EARLY",
+            entry_rule="confirm",
+            entry_window=3,
+            exit_rule="stop_ref",
+            holding_days=3,
+        )
         self.assertEqual(e3.selected_tuple(chosen), ("F8_ARA_EARLY", "confirm", 3, "stop_ref", 3))
 
 
@@ -94,19 +126,34 @@ class SelectionTests(unittest.TestCase):
     def test_admissibility_reasons(self):
         self.assertEqual(e3.admissibility(row(), PROTO, YEARS), [])
         self.assertTrue(any("scored" in r for r in e3.admissibility(row(scored=199), PROTO, YEARS)))
-        self.assertTrue(any("not positive" in r for r in e3.admissibility(row(avg_net_return=0.0), PROTO, YEARS)))
-        self.assertTrue(any("p vs matched" in r for r in e3.admissibility(row(p_one_sided_vs_matched=0.05), PROTO, YEARS)))
-        self.assertTrue(any("2022" in r for r in e3.admissibility(row(avg_net_return_2022=-0.01), PROTO, YEARS)))
-        self.assertEqual(e3.admissibility(row(scored_2022=49, avg_net_return_2022=-0.01), PROTO, YEARS), [])
+        self.assertTrue(
+            any(
+                "not positive" in r for r in e3.admissibility(row(avg_net_return=0.0), PROTO, YEARS)
+            )
+        )
+        self.assertTrue(
+            any(
+                "p vs matched" in r
+                for r in e3.admissibility(row(p_one_sided_vs_matched=0.05), PROTO, YEARS)
+            )
+        )
+        self.assertTrue(
+            any("2022" in r for r in e3.admissibility(row(avg_net_return_2022=-0.01), PROTO, YEARS))
+        )
+        self.assertEqual(
+            e3.admissibility(row(scored_2022=49, avg_net_return_2022=-0.01), PROTO, YEARS), []
+        )
         self.assertTrue(e3.admissibility(row(p_one_sided_vs_matched=None), PROTO, YEARS))
 
     def test_select_takes_the_best_admissible_plan(self):
-        table = pd.DataFrame([
-            row(plan_id="a", avg_net_return=0.05, p_one_sided_vs_matched=0.2),   # not admissible
-            row(plan_id="b", avg_net_return=0.03, scored=400),
-            row(plan_id="c", avg_net_return=0.03, scored=600),                    # tie: more trades
-            row(plan_id="d", avg_net_return=0.01),
-        ])
+        table = pd.DataFrame(
+            [
+                row(plan_id="a", avg_net_return=0.05, p_one_sided_vs_matched=0.2),  # not admissible
+                row(plan_id="b", avg_net_return=0.03, scored=400),
+                row(plan_id="c", avg_net_return=0.03, scored=600),  # tie: more trades
+                row(plan_id="d", avg_net_return=0.01),
+            ]
+        )
         self.assertEqual(e3.select(table, PROTO, YEARS)["plan_id"], "c")
         none = pd.DataFrame([row(plan_id="a", avg_net_return=-0.01)])
         self.assertIsNone(e3.select(none, PROTO, YEARS))
@@ -132,9 +179,16 @@ class HarnessCacheTests(unittest.TestCase):
             from tests.support import synthetic_registry
 
             reg = synthetic_registry(df, meta)
-            b = run(RunConfig("CACHED", random_draws=10), df, meta, ca_registry=reg, signal_cache=cache)["summary"]
-            c = run(RunConfig("CACHED", random_draws=10, holding_days=2, exit_rule="first_down"), df, meta,
-                    ca_registry=reg, signal_cache=cache)["summary"]
+            b = run(
+                RunConfig("CACHED", random_draws=10), df, meta, ca_registry=reg, signal_cache=cache
+            )["summary"]
+            c = run(
+                RunConfig("CACHED", random_draws=10, holding_days=2, exit_rule="first_down"),
+                df,
+                meta,
+                ca_registry=reg,
+                signal_cache=cache,
+            )["summary"]
         self.assertEqual(len(cache), 1)
         self.assertEqual(a["rule_trades"], b["rule_trades"])
         self.assertEqual(a["signals"], b["signals"])
@@ -143,8 +197,10 @@ class HarnessCacheTests(unittest.TestCase):
 
     def test_plan_row_reads_a_summary(self):
         df, meta = random_walk_panel()
-        rule = dataclasses.replace(module_rule("ROWED", EDGE_BODY), plan={"entry_rule": "unlock", "entry_window": 2,
-                                                                          "exit_rule": "fixed"})
+        rule = dataclasses.replace(
+            module_rule("ROWED", EDGE_BODY),
+            plan={"entry_rule": "unlock", "entry_window": 2, "exit_rule": "fixed"},
+        )
         with with_rule(rule):
             s = run_synthetic(RunConfig("ROWED", random_draws=10), df, meta)["summary"]
         plan = {"entry_rule": "unlock", "entry_window": 2, "exit_rule": "fixed", "holding_days": 5}

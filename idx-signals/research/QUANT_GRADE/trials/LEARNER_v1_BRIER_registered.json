@@ -1,0 +1,12 @@
+{
+ "id": "LEARNER_v1_BRIER_registered",
+ "experiment": "LEARNER_v1",
+ "date": "2026-10-29",
+ "hypothesis": "prospective: the learner's published forecasts beat the sealed priors on the catalyst cone statements (per-session mean Brier improvement > 0, one-sided t), scored only on outcomes resolved after each forecast",
+ "one_sided_p": null,
+ "p_source": "no look yet; looks at 60, 120, 240, 480, 960, 1920 scored pairs (research/LEARNER_v1/protocol.json 'claim')",
+ "variants_searched": 0,
+ "outcome": "PENDING (prospective; registered before any outcome existed)",
+ "counted": false,
+ "registered": "2026-10-29"
+}

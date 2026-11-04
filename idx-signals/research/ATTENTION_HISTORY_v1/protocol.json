@@ -1,0 +1,40 @@
+{
+  "protocol_id": "KOD-ATTENTION-HISTORY-v1",
+  "frozen": "2026-10-29, before any attention feature was computed for any event and before any Reddit post beyond the plan's coverage sample was downloaded",
+  "owner_instruction": "Yes to all (handoff/github-finds/PLAN_v2.md decision 2: run the Reddit attention study on 2020-2023 history)",
+  "prior_look": "handoff/github-finds/PLAN_v2.md section 2 counted, for 23 sampled events, whether any r/wallstreetbets title named the ticker (10 of 23); no outcome column was read",
+  "question": "On US stocks that just closed 30% or more higher, does retail attention on r/wallstreetbets add out-of-time discrimination to LEARNER v2.4's own 33 features, for its headline statement (the next session closes 10% lower, on its own) and its companion (the 5-session plan ends 10% down, on its own)?",
+  "events": {"file": "research/LEARNER_v2/warmstart_v4/events_us.csv.gz", "sha256": "e13eae758ee610bc6caec87e65ebdc86924ea17dd3026c6660983075cad68faf"},
+  "reddit": {"source": "Arctic Shift archive API, https://arctic-shift.photon-reddit.com/api/posts/search, subreddit wallstreetbets, fields created_utc and title only",
+             "window": "posts created 2019-11-01T00:00:00Z to 2023-12-30T00:00:00Z",
+             "build": "build.py pages through each UTC day; every day file is stored gzipped under data/raw/reddit/wsb/ (git-ignored) and its sha256 recorded in results/REDDIT_MANIFEST.json before run.py reads it",
+             "comments": "not used (titles only)"},
+  "matching": {
+    "rule": "a title names ticker T when it contains T as a whole token (no letter or digit on either side), case-sensitive, optionally prefixed by $",
+    "dollar_only": ["tickers of one or two letters", "tickers in the stoplist", "any title whose letters are more than half upper case (shouting titles), where only $T counts"],
+    "stoplist": ["DD", "YOLO", "CEO", "CFO", "IPO", "ATH", "EOD", "ETF", "SEC", "FDA", "USA", "IMO", "LOL", "WSB", "GDP", "CPI", "FED", "ITM", "OTM", "EPS", "EV", "TA", "FOMO", "HODL", "APE", "APES", "MOON", "BUY", "SELL", "HOLD", "CALL", "PUT", "ALL", "NEW", "NOW", "ONE", "BIG", "LOW", "HIGH", "IT", "ON", "ARE", "FOR", "THE", "AND", "NEXT", "BEST", "LOVE", "REAL", "OPEN", "PLAY", "RUN", "FUN", "CASH", "GOLD", "TECH", "LIFE", "GAIN", "LOSS", "RIP", "BULL", "BEAR", "SAFE", "WISH", "CAN", "OUT", "NOT", "BEN", "NICE", "GOOD", "VERY", "WOW", "WAY", "SAVE", "EDIT", "LINK", "POST", "PUMP", "DUMP", "SQUEEZE", "SHORT", "LONG", "STOCK", "STOCKS", "MONEY", "AMEN", "OPTIONS", "UP", "DOWN"]
+  },
+  "timing": "an event's signal session d is the +30% close; LEARNER v2.4 forecasts after that close. Every feature uses posts created before d at 20:00 UTC (the US close in summer, an hour before it in winter)",
+  "blocks": {
+    "BASE": "LEARNER v2.4's 33 features exactly as in the event file",
+    "ATTN": {"features": {
+        "wsb_pre5": "log(1 + posts naming the ticker created from d-5 00:00 UTC to d 00:00 UTC)",
+        "wsb_day": "log(1 + posts naming the ticker created from d 00:00 UTC to d 20:00 UTC)",
+        "wsb_surge": "log((day count + 1) / (mean daily count over d-30 00:00 .. d 00:00 + 1))",
+        "wsb_any": "1 when any post named the ticker from d-5 00:00 to d 20:00 UTC"},
+      "added_to": "BASE"},
+    "SETTLE": "not part of v1 (fails-to-deliver data needs its own feasibility count; PLAN_v2 made it optional)"
+  },
+  "folds": {"A": {"fit": ["2020-01-02", "2021-12-31"], "score": ["2022-01-01", "2022-12-31"]},
+            "B": {"fit": ["2020-01-02", "2022-12-31"], "score": ["2023-01-01", "2023-12-29"]},
+            "note": "TA_HISTORY_v1's folds; 2021 (the meme-stock year) is in both fits and in no score set"},
+  "model": "as TA_HISTORY_v1: penalised logistic regression, standardised on the fold's fit rows, intercept precision 1/1.5^2, slope precision 16; nothing tuned",
+  "metrics": "as TA_HISTORY_v1: per-fold AUC, pooled by positive-negative pairs; paired delta AUC(BASE + ATTN) - AUC(BASE); week-cluster bootstrap, 2,000 resamples, seed 20261029; Brier gain beside it",
+  "decision_rule": {"tests": ["ATTN on NEXT_DUMP10_1", "ATTN on DUMP10_5"],
+                    "adds": "Holm over the two at 0.05 rejects delta <= 0 and the pooled Brier gain over BASE is above zero",
+                    "otherwise": "DOES NOT ADD for that statement"},
+  "descriptive": ["coverage of each feature by year", "standardised coefficients per fold", "the AUC of ATTN alone"],
+  "use": "a block that ADDS becomes a candidate for a frozen LEARNER v2.5, considered only at v2.4's first claim look (30 populated sessions); a live version that reads the archive nightly needs the owner's approval, already given conditionally (PLAN_v2 decision 3). Nothing here changes v2.4, any ledger, register or frozen protocol",
+  "counted_trial": "research/QUANT_GRADE/trials/ATTENTION_HISTORY_v1.json (2 variants, Holm), its result in ATTENTION_HISTORY_v1_result.json",
+  "limitations": ["survivor-only US prices", "titles only; comments and other subreddits are not read", "a third-party archive: posts deleted before archiving are missing", "the meme-stock era (2021) is fit-only; 2022-2023 attention is lower, which can only shrink the gain", "a ticker that is an English word can still match by accident"]
+}

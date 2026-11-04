@@ -1,0 +1,92 @@
+[
+  {
+    "path": "idx-signals/idxsig/cli.py",
+    "sha256": "ea234dc5da58c196416df8e5db2a9d7560f5f38d3dda4d7afb34e7e835c177d2",
+    "candidate_equal": true
+  },
+  {
+    "path": "idx-signals/idxsig/crypto_account.py",
+    "sha256": "16aefa3609b8ab3ee76b490e094d3b1be4db17b2588b637206b8bfa13b62af5a",
+    "candidate_equal": true
+  },
+  {
+    "path": "idx-signals/idxsig/paper_execution_feasibility.py",
+    "sha256": "7094472352cf554ef9e896e6926e4930733a807b0b15036f06df1e226e58a151",
+    "candidate_equal": true
+  },
+  {
+    "path": "idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_2.md",
+    "sha256": "87be8522c24b50fa0707382991fff268a633c2a8e92c40ef90359b666f28e332",
+    "candidate_equal": true
+  },
+  {
+    "path": "idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_3.md",
+    "sha256": "6e397a1de122de19fb8d272621679fccf649a56c88713d628b4e4f237aa5c6d4",
+    "candidate_equal": true
+  },
+  {
+    "path": "idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_4.md",
+    "sha256": "0ca3f3e692b7efb9a387925005c584bbeb1d43100048b4c6d46bda65a1351ca4",
+    "candidate_equal": true
+  },
+  {
+    "path": "idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json",
+    "sha256": "91a15db636485ad91250217b99452c1c2af3cd9f032a9fbff5003b916f2bf26a",
+    "candidate_equal": true
+  },
+  {
+    "path": "idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_3.json",
+    "sha256": "01352c9e9e3ca63b3b4e6d0b0141c4e7fa18dcec4cb6d6f0a60a7a281d8f78d7",
+    "candidate_equal": true
+  },
+  {
+    "path": "idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_4.json",
+    "sha256": "d1f0adb9cdfc40942b9c46f17a41f9e464e513f1dfcc626d002c70d560ca08ed",
+    "candidate_equal": true
+  },
+  {
+    "path": "idx-signals/research/PAPER_EXECUTION_FEASIBILITY_v1/FILTER_EVIDENCE_EXTENSION.md",
+    "sha256": "8adc30c90cc21da704eeffe2c32d8eed49a712e4e27fbb7ee1eaef6f5528742c",
+    "candidate_equal": true
+  },
+  {
+    "path": "idx-signals/research/PAPER_EXECUTION_FEASIBILITY_v1/SPEC.md",
+    "sha256": "fe30c2feeed1249f3bcddb1bdff081b602d96324b3000c330dcd74d9d5cd596c",
+    "candidate_equal": true
+  },
+  {
+    "path": "idx-signals/tests/test_crypto_account.py",
+    "sha256": "7115669d3ed6418200f5eae25ad317981f549c31c7c71aa72b1d9923dd2b9c4c",
+    "candidate_equal": true
+  },
+  {
+    "path": "idx-signals/tests/test_crypto_account_concurrency.py",
+    "sha256": "f0638ce2e093d0d56c86ec4aedcb14e9c0d3f2645e2503729e2e255842eff14f",
+    "candidate_equal": true
+  },
+  {
+    "path": "idx-signals/tests/test_crypto_policy_price_validation.py",
+    "sha256": "defe4e0632da107b32a225a5f1978dbd0f3f0ef5e666c383e9042848ac764bb9",
+    "candidate_equal": true
+  },
+  {
+    "path": "idx-signals/tests/test_crypto_quote_validation.py",
+    "sha256": "ab12ffd41d47fc07fea997e8b0dbceff1efc9b80a3354791f4fa27260600d99d",
+    "candidate_equal": true
+  },
+  {
+    "path": "idx-signals/tests/test_crypto_valuation_asof.py",
+    "sha256": "9673a1b23e9cd79839209f9a2d569c02ebf2b91d73016291457a75870e3733ce",
+    "candidate_equal": true
+  },
+  {
+    "path": "idx-signals/tests/test_paper_execution_feasibility.py",
+    "sha256": "5c96046466c797aa2aa7a410eaea4a8282c8564546be6ca523ac87a98f1f4e8e",
+    "candidate_equal": true
+  },
+  {
+    "path": "idx-signals/tests/test_paper_execution_filter_evidence.py",
+    "sha256": "cc21708a63901d72736e99047e3124f6e13a6728f081c2c34d290b15ba8cfe93",
+    "candidate_equal": true
+  }
+]

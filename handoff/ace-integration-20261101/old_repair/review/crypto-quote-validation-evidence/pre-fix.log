@@ -1,0 +1,271 @@
+FFFFFFFFFFFFFFFE.
+======================================================================
+ERROR: test_invalid_quote_preserves_existing_position_and_does_not_crash_midcycle (tests.test_crypto_quote_validation.InvalidQuotes.test_invalid_quote_preserves_existing_position_and_does_not_crash_midcycle)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_quote_validation.py", line 63, in test_invalid_quote_preserves_existing_position_and_does_not_crash_midcycle
+    run = self.run_cycle([{**decision,'decision_id':'independent-next'}])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_account.py", line 82, in run_cycle
+    return ca.cycle(cands, self.m.fetch, self.m.clock, self.append)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/idxsig/crypto_account.py", line 512, in cycle
+    decided = put(decide(lines(), cands, now))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/idxsig/crypto_account.py", line 296, in decide
+    qty = floor8(
+          ^^^^^^^
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/idxsig/crypto_account.py", line 92, in floor8
+    return math.floor(x * 1e8 + 1e-6) / 1e8
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+OverflowError: cannot convert float infinity to integer
+
+======================================================================
+FAIL: test_http_infinity_becomes_recorded_error_not_order (tests.test_crypto_quote_validation.InvalidQuotes.test_http_infinity_becomes_recorded_error_not_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_quote_validation.py", line 44, in test_http_infinity_becomes_recorded_error_not_order
+    self.assertEqual(self.kinds(run), [(ca.DECLINE, 'NO_FRESH_QUOTE')])
+AssertionError: Lists differ: [('ACCT_ORDER', '')] != [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+First differing element 0:
+('ACCT_ORDER', '')
+('ACCT_DECLINE', 'NO_FRESH_QUOTE')
+
+- [('ACCT_ORDER', '')]
++ [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+======================================================================
+FAIL: test_http_parser_rejects_invalid_bid_ask_before_returning (tests.test_crypto_quote_validation.InvalidQuotes.test_http_parser_rejects_invalid_bid_ask_before_returning) (bid=inf, ask=inf)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_quote_validation.py", line 37, in test_http_parser_rejects_invalid_bid_ask_before_returning
+    with self.assertRaises(ValueError): ca.book_ticker('AAAUSDT')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_http_parser_rejects_invalid_bid_ask_before_returning (tests.test_crypto_quote_validation.InvalidQuotes.test_http_parser_rejects_invalid_bid_ask_before_returning) (bid=99, ask=inf)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_quote_validation.py", line 37, in test_http_parser_rejects_invalid_bid_ask_before_returning
+    with self.assertRaises(ValueError): ca.book_ticker('AAAUSDT')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_current_quote_cannot_fall_back_to_valid_recent_cache (tests.test_crypto_quote_validation.InvalidQuotes.test_invalid_current_quote_cannot_fall_back_to_valid_recent_cache)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_quote_validation.py", line 52, in test_invalid_current_quote_cannot_fall_back_to_valid_recent_cache
+    self.assertEqual(self.kinds(run), [(ca.DECLINE,'NO_FRESH_QUOTE')])
+AssertionError: Lists differ: [('ACCT_ORDER', '')] != [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+First differing element 0:
+('ACCT_ORDER', '')
+('ACCT_DECLINE', 'NO_FRESH_QUOTE')
+
+- [('ACCT_ORDER', '')]
++ [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+======================================================================
+FAIL: test_invalid_injected_books_decline_without_quotes_orders_or_reservations (tests.test_crypto_quote_validation.InvalidQuotes.test_invalid_injected_books_decline_without_quotes_orders_or_reservations) (bid=nan, ask=100)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_quote_validation.py", line 27, in test_invalid_injected_books_decline_without_quotes_orders_or_reservations
+    self.assertEqual(self.kinds(run), [(ca.DECLINE, 'NO_FRESH_QUOTE')])
+AssertionError: Lists differ: [('ACCT_ORDER', ''), ('ACCT_ENTRY', 'FILLED')] != [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+First differing element 0:
+('ACCT_ORDER', '')
+('ACCT_DECLINE', 'NO_FRESH_QUOTE')
+
+First list contains 1 additional elements.
+First extra element 1:
+('ACCT_ENTRY', 'FILLED')
+
+- [('ACCT_ORDER', ''), ('ACCT_ENTRY', 'FILLED')]
++ [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+======================================================================
+FAIL: test_invalid_injected_books_decline_without_quotes_orders_or_reservations (tests.test_crypto_quote_validation.InvalidQuotes.test_invalid_injected_books_decline_without_quotes_orders_or_reservations) (bid=99, ask=nan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_quote_validation.py", line 27, in test_invalid_injected_books_decline_without_quotes_orders_or_reservations
+    self.assertEqual(self.kinds(run), [(ca.DECLINE, 'NO_FRESH_QUOTE')])
+AssertionError: Lists differ: [('ACCT_ORDER', '')] != [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+First differing element 0:
+('ACCT_ORDER', '')
+('ACCT_DECLINE', 'NO_FRESH_QUOTE')
+
+- [('ACCT_ORDER', '')]
++ [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+======================================================================
+FAIL: test_invalid_injected_books_decline_without_quotes_orders_or_reservations (tests.test_crypto_quote_validation.InvalidQuotes.test_invalid_injected_books_decline_without_quotes_orders_or_reservations) (bid=inf, ask=inf)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_quote_validation.py", line 27, in test_invalid_injected_books_decline_without_quotes_orders_or_reservations
+    self.assertEqual(self.kinds(run), [(ca.DECLINE, 'NO_FRESH_QUOTE')])
+AssertionError: Lists differ: [('ACCT_ORDER', '')] != [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+First differing element 0:
+('ACCT_ORDER', '')
+('ACCT_DECLINE', 'NO_FRESH_QUOTE')
+
+- [('ACCT_ORDER', '')]
++ [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+======================================================================
+FAIL: test_invalid_injected_books_decline_without_quotes_orders_or_reservations (tests.test_crypto_quote_validation.InvalidQuotes.test_invalid_injected_books_decline_without_quotes_orders_or_reservations) (bid=99, ask=inf)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_quote_validation.py", line 27, in test_invalid_injected_books_decline_without_quotes_orders_or_reservations
+    self.assertEqual(self.kinds(run), [(ca.DECLINE, 'NO_FRESH_QUOTE')])
+AssertionError: Lists differ: [('ACCT_ORDER', '')] != [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+First differing element 0:
+('ACCT_ORDER', '')
+('ACCT_DECLINE', 'NO_FRESH_QUOTE')
+
+- [('ACCT_ORDER', '')]
++ [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+======================================================================
+FAIL: test_invalid_injected_books_decline_without_quotes_orders_or_reservations (tests.test_crypto_quote_validation.InvalidQuotes.test_invalid_injected_books_decline_without_quotes_orders_or_reservations) (bid=-inf, ask=100)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_quote_validation.py", line 27, in test_invalid_injected_books_decline_without_quotes_orders_or_reservations
+    self.assertEqual(self.kinds(run), [(ca.DECLINE, 'NO_FRESH_QUOTE')])
+AssertionError: Lists differ: [('ACCT_ORDER', ''), ('ACCT_ENTRY', 'FILLED')] != [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+First differing element 0:
+('ACCT_ORDER', '')
+('ACCT_DECLINE', 'NO_FRESH_QUOTE')
+
+First list contains 1 additional elements.
+First extra element 1:
+('ACCT_ENTRY', 'FILLED')
+
+- [('ACCT_ORDER', ''), ('ACCT_ENTRY', 'FILLED')]
++ [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+======================================================================
+FAIL: test_invalid_injected_books_decline_without_quotes_orders_or_reservations (tests.test_crypto_quote_validation.InvalidQuotes.test_invalid_injected_books_decline_without_quotes_orders_or_reservations) (bid=99, ask=-inf)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_quote_validation.py", line 27, in test_invalid_injected_books_decline_without_quotes_orders_or_reservations
+    self.assertEqual(self.kinds(run), [(ca.DECLINE, 'NO_FRESH_QUOTE')])
+AssertionError: Lists differ: [('ACCT_ORDER', ''), ('ACCT_ENTRY', 'FILLED')] != [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+First differing element 0:
+('ACCT_ORDER', '')
+('ACCT_DECLINE', 'NO_FRESH_QUOTE')
+
+First list contains 1 additional elements.
+First extra element 1:
+('ACCT_ENTRY', 'FILLED')
+
+- [('ACCT_ORDER', ''), ('ACCT_ENTRY', 'FILLED')]
++ [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+======================================================================
+FAIL: test_invalid_injected_books_decline_without_quotes_orders_or_reservations (tests.test_crypto_quote_validation.InvalidQuotes.test_invalid_injected_books_decline_without_quotes_orders_or_reservations) (bid=0, ask=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_quote_validation.py", line 27, in test_invalid_injected_books_decline_without_quotes_orders_or_reservations
+    self.assertEqual(self.kinds(run), [(ca.DECLINE, 'NO_FRESH_QUOTE')])
+AssertionError: Lists differ: [('ACCT_ORDER', ''), ('ACCT_ENTRY', 'FILLED')] != [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+First differing element 0:
+('ACCT_ORDER', '')
+('ACCT_DECLINE', 'NO_FRESH_QUOTE')
+
+First list contains 1 additional elements.
+First extra element 1:
+('ACCT_ENTRY', 'FILLED')
+
+- [('ACCT_ORDER', ''), ('ACCT_ENTRY', 'FILLED')]
++ [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+======================================================================
+FAIL: test_invalid_injected_books_decline_without_quotes_orders_or_reservations (tests.test_crypto_quote_validation.InvalidQuotes.test_invalid_injected_books_decline_without_quotes_orders_or_reservations) (bid=-1, ask=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_quote_validation.py", line 27, in test_invalid_injected_books_decline_without_quotes_orders_or_reservations
+    self.assertEqual(self.kinds(run), [(ca.DECLINE, 'NO_FRESH_QUOTE')])
+AssertionError: Lists differ: [('ACCT_ORDER', ''), ('ACCT_ENTRY', 'FILLED')] != [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+First differing element 0:
+('ACCT_ORDER', '')
+('ACCT_DECLINE', 'NO_FRESH_QUOTE')
+
+First list contains 1 additional elements.
+First extra element 1:
+('ACCT_ENTRY', 'FILLED')
+
+- [('ACCT_ORDER', ''), ('ACCT_ENTRY', 'FILLED')]
++ [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+======================================================================
+FAIL: test_invalid_injected_books_decline_without_quotes_orders_or_reservations (tests.test_crypto_quote_validation.InvalidQuotes.test_invalid_injected_books_decline_without_quotes_orders_or_reservations) (bid=1, ask=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_quote_validation.py", line 27, in test_invalid_injected_books_decline_without_quotes_orders_or_reservations
+    self.assertEqual(self.kinds(run), [(ca.DECLINE, 'NO_FRESH_QUOTE')])
+AssertionError: Lists differ: [('ACCT_ORDER', ''), ('ACCT_ENTRY', 'FILLED')] != [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+First differing element 0:
+('ACCT_ORDER', '')
+('ACCT_DECLINE', 'NO_FRESH_QUOTE')
+
+First list contains 1 additional elements.
+First extra element 1:
+('ACCT_ENTRY', 'FILLED')
+
+- [('ACCT_ORDER', ''), ('ACCT_ENTRY', 'FILLED')]
++ [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+======================================================================
+FAIL: test_invalid_injected_books_decline_without_quotes_orders_or_reservations (tests.test_crypto_quote_validation.InvalidQuotes.test_invalid_injected_books_decline_without_quotes_orders_or_reservations) (bid=1, ask=-1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_quote_validation.py", line 27, in test_invalid_injected_books_decline_without_quotes_orders_or_reservations
+    self.assertEqual(self.kinds(run), [(ca.DECLINE, 'NO_FRESH_QUOTE')])
+AssertionError: Lists differ: [('ACCT_ORDER', ''), ('ACCT_ENTRY', 'FILLED')] != [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+First differing element 0:
+('ACCT_ORDER', '')
+('ACCT_DECLINE', 'NO_FRESH_QUOTE')
+
+First list contains 1 additional elements.
+First extra element 1:
+('ACCT_ENTRY', 'FILLED')
+
+- [('ACCT_ORDER', ''), ('ACCT_ENTRY', 'FILLED')]
++ [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+======================================================================
+FAIL: test_invalid_injected_books_decline_without_quotes_orders_or_reservations (tests.test_crypto_quote_validation.InvalidQuotes.test_invalid_injected_books_decline_without_quotes_orders_or_reservations) (bid=101, ask=100)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_quote_validation.py", line 27, in test_invalid_injected_books_decline_without_quotes_orders_or_reservations
+    self.assertEqual(self.kinds(run), [(ca.DECLINE, 'NO_FRESH_QUOTE')])
+AssertionError: Lists differ: [('ACCT_ORDER', ''), ('ACCT_ENTRY', 'FILLED')] != [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+First differing element 0:
+('ACCT_ORDER', '')
+('ACCT_DECLINE', 'NO_FRESH_QUOTE')
+
+First list contains 1 additional elements.
+First extra element 1:
+('ACCT_ENTRY', 'FILLED')
+
+- [('ACCT_ORDER', ''), ('ACCT_ENTRY', 'FILLED')]
++ [('ACCT_DECLINE', 'NO_FRESH_QUOTE')]
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.031s
+
+FAILED (failures=15, errors=1)

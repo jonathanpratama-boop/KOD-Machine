@@ -1,0 +1,37 @@
+{
+ "review_id": "IDX-MAJOR-2026-11-02",
+ "family": "IDX_INDEX",
+ "what": "IDX major review of IDX30, LQ45 and IDX80; constituents in force 2 November 2026 to 29 January 2027",
+ "announced": "2026-10-26 or 2026-10-27 (sources differ: Kontan's search snippet says Monday 26 October, IDX Channel and Liputan6 say Tuesday 27 October)",
+ "effective": "2026-11-02",
+ "written": "2026-10-28, before the first set of this review was sealed",
+ "official_source": "not read: idx.co.id answers HTTP 403 (Cloudflare) to this container; every entry below comes from news articles read on 2026-10-28",
+ "sources": {
+  "liputan6": {"url": "https://www.liputan6.com/saham/read/8321863/daftar-saham-lq45-terbaru-ada-smgr", "read": "2026-10-28", "says": "LQ45: 'saham yang masuk jajaran indeks LQ45 yakni PT Semen Indonesia Tbk (SMGR)', 'saham yang keluar ... yakni PT Surya Citra Media Tbk (SCMA)'. IDX30: 'saham yang baru masuk yakni PT Indosat Tbk (ISAT) dan PT Bukit Asam Tbk (PTBA)', 'saham yang keluar yakni ... (PGEO) dan PT Unilever Indonesia Tbk (UNVR)'. IDX80 ('antara lain', so possibly incomplete): in AALI, TINS, TKIM; out HEAL, MIKA, SMRA. Its printed 45-name LQ45 list still contains CUAN and has typos (SMGR printed as PTBA)."},
+  "idxchannel": {"url": "https://www.idxchannel.com/market-news/bei-evaluasi-indeks-lq45-dan-idx80-ini-daftar-saham-penghuni-terbaru", "read": "2026-10-28", "says": "LQ45: ELSA and SMGR 'masuk sebagai penghuni baru dengan bobot ... 0,17 persen dan 0,37 persen'; 'konstituen yang keluar indeks yakni PT Petrindo Jaya Kreasi Tbk (CUAN) dan PT Surya Citra Media Tbk (SCMA)'. A related headline on the page: 'BEI Rombak IDX30, ISAT-PTBA Masuk dan PGEO-UNVR Tersingkir'."},
+  "kontan": {"url": "https://investasi.kontan.co.id/news/bei-rombak-idx30-lq45-dan-idx80-ini-saham-yang-masuk-dan-keluar", "read": "2026-10-28 (HTTP 403 to the fetcher; title and search snippets only)", "says": "headline 'BEI Rombak IDX30, LQ45 dan IDX80, Ini Saham yang Masuk dan Keluar'; snippet: SMGR enters LQ45, SCMA leaves"},
+  "mediakompeten": {"url": "https://www.mediakompeten.co.id/bei-keluarkan-cuan-indeks-lq45-idx80", "read": "2026-10-28 (HTTP 520 to the fetcher; title only)", "says": "headline 'BEI Keluarkan CUAN dari Indeks LQ45 dan IDX80'"}
+ },
+ "changes": [
+  {"ticker": "SMGR", "index": "LQ45", "change": "ADD", "confidence": "CONFIRMED", "sources": ["liputan6", "idxchannel", "kontan"]},
+  {"ticker": "ELSA", "index": "LQ45", "change": "ADD", "confidence": "SINGLE_SOURCE", "sources": ["idxchannel"], "note": "a second LQ45 addition is forced by the index's 45 names if two leave, but its identity rests on one article"},
+  {"ticker": "SCMA", "index": "LQ45", "change": "DELETE", "confidence": "CONFIRMED", "sources": ["liputan6", "idxchannel", "kontan"]},
+  {"ticker": "CUAN", "index": "LQ45", "change": "DELETE", "confidence": "CONFIRMED", "sources": ["idxchannel", "mediakompeten"], "conflict": "Liputan6's printed 45-name list still contains CUAN"},
+  {"ticker": "CUAN", "index": "IDX80", "change": "DELETE", "confidence": "SINGLE_SOURCE", "sources": ["mediakompeten"]},
+  {"ticker": "ISAT", "index": "IDX30", "change": "ADD", "confidence": "CONFIRMED", "sources": ["liputan6", "idxchannel"]},
+  {"ticker": "PTBA", "index": "IDX30", "change": "ADD", "confidence": "CONFIRMED", "sources": ["liputan6", "idxchannel"]},
+  {"ticker": "PGEO", "index": "IDX30", "change": "DELETE", "confidence": "CONFIRMED", "sources": ["liputan6", "idxchannel"]},
+  {"ticker": "UNVR", "index": "IDX30", "change": "DELETE", "confidence": "CONFIRMED", "sources": ["liputan6", "idxchannel"]},
+  {"ticker": "AALI", "index": "IDX80", "change": "ADD", "confidence": "SINGLE_SOURCE", "sources": ["liputan6"]},
+  {"ticker": "TINS", "index": "IDX80", "change": "ADD", "confidence": "SINGLE_SOURCE", "sources": ["liputan6"]},
+  {"ticker": "TKIM", "index": "IDX80", "change": "ADD", "confidence": "SINGLE_SOURCE", "sources": ["liputan6"]},
+  {"ticker": "HEAL", "index": "IDX80", "change": "DELETE", "confidence": "SINGLE_SOURCE", "sources": ["liputan6"]},
+  {"ticker": "MIKA", "index": "IDX80", "change": "DELETE", "confidence": "SINGLE_SOURCE", "sources": ["liputan6"]},
+  {"ticker": "SMRA", "index": "IDX80", "change": "DELETE", "confidence": "SINGLE_SOURCE", "sources": ["liputan6"]}
+ ],
+ "not_sealed": [
+  {"what": "SMDR added to IDX80", "why": "named only in a search engine's summary of several articles; no article read says it"},
+  {"what": "the rest of the IDX80 changes", "why": "Liputan6 lists them with 'antara lain' (among others); the full list needs the IDX announcement"},
+  {"what": "81 high-shareholding-concentration (HSC) stocks removed from the JCI calculation from 2 November 2026", "why": "no list of the 81 names was readable from this container"}
+ ]
+}

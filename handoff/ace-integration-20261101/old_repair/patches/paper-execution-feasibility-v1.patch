@@ -1,0 +1,486 @@
+From a455362e7723121c3a7e9095afc6c9f88204424a Mon Sep 17 00:00:00 2001
+From: Ace <ace@local>
+Date: Sun, 1 Nov 2026 01:46:36 +0700
+Subject: [PATCH] Add disconnected Decimal paper execution feasibility
+ estimator
+
+---
+ .../idxsig/paper_execution_feasibility.py     | 216 ++++++++++++++++++
+ .../PAPER_EXECUTION_FEASIBILITY_v1/SPEC.md    |  86 +++++++
+ .../tests/test_paper_execution_feasibility.py | 148 ++++++++++++
+ 3 files changed, 450 insertions(+)
+ create mode 100644 idx-signals/idxsig/paper_execution_feasibility.py
+ create mode 100644 idx-signals/research/PAPER_EXECUTION_FEASIBILITY_v1/SPEC.md
+ create mode 100644 idx-signals/tests/test_paper_execution_feasibility.py
+
+diff --git a/idx-signals/idxsig/paper_execution_feasibility.py b/idx-signals/idxsig/paper_execution_feasibility.py
+new file mode 100644
+index 0000000..0d7ce82
+--- /dev/null
++++ b/idx-signals/idxsig/paper_execution_feasibility.py
+@@ -0,0 +1,216 @@
++"""Pure, paper-only LIMIT/IOC displayed-depth feasibility estimator.
++
++No network, authentication, broker, persistence or strategy integration. Not an
++exchange acceptance check or a promise of fills. See the companion SPEC.md.
++"""
++
++from dataclasses import dataclass
++from datetime import datetime, timedelta
++from decimal import Decimal, ROUND_CEILING, ROUND_FLOOR, localcontext
++from typing import Literal, Mapping
++
++D = Decimal
++ZERO = D("0")
++
++
++@dataclass(frozen=True)
++class FilterSnapshot:
++    symbol: str
++    observed_at: datetime
++    source: str
++    filters: tuple[Mapping[str, str], ...]
++
++
++@dataclass(frozen=True)
++class BookSnapshot:
++    symbol: str
++    observed_at: datetime
++    source: str
++    bids: tuple[tuple[Decimal, Decimal], ...]
++    asks: tuple[tuple[Decimal, Decimal], ...]
++
++
++@dataclass(frozen=True)
++class Intent:
++    symbol: str
++    side: Literal["BUY", "SELL"]
++    quantity: Decimal
++    limit_price: Decimal
++    placed_at: datetime
++
++
++@dataclass(frozen=True)
++class Estimate:
++    status: str
++    reason: str
++    quantity: Decimal = ZERO
++    limit_price: Decimal = ZERO
++    filled: Decimal = ZERO
++    unfilled: Decimal = ZERO
++    notional: Decimal = ZERO
++    fee_quote: Decimal = ZERO
++    fee_rate: Decimal = ZERO
++    fills: tuple[tuple[Decimal, Decimal], ...] = ()
++
++
++class Invalid(ValueError):
++    pass
++
++
++def _number(value, *, string=False):
++    if string:
++        if not isinstance(value, str):
++            raise Invalid("FILTER_NUMBER_MUST_BE_STRING")
++        try:
++            value = D(value)
++        except Exception as exc:
++            raise Invalid("INVALID_NUMBER") from exc
++    if not isinstance(value, Decimal) or not value.is_finite():
++        raise Invalid("INVALID_NUMBER")
++    if len(value.as_tuple().digits) > 28 or abs(value.as_tuple().exponent) > 18:
++        raise Invalid("NUMBER_PRECISION_UNSUPPORTED")
++    if value < ZERO:
++        raise Invalid("NEGATIVE_NUMBER")
++    return value
++
++
++def _aware(t):
++    if not isinstance(t, datetime) or t.tzinfo is None or t.utcoffset() is None:
++        raise Invalid("TIMEZONE_REQUIRED")
++
++
++def _recent(t, now, age, name):
++    _aware(t)
++    if not isinstance(age, timedelta) or age < timedelta(0):
++        raise Invalid("INVALID_MAX_AGE")
++    if t > now:
++        raise Invalid(f"FUTURE_{name}")
++    if now - t > age:
++        raise Invalid(f"STALE_{name}")
++
++
++def _filters(snapshot):
++    required = {"PRICE_FILTER": ("minPrice", "maxPrice", "tickSize"),
++                "LOT_SIZE": ("minQty", "maxQty", "stepSize"),
++                "MIN_NOTIONAL": ("minNotional",),
++                "NOTIONAL": ("minNotional", "maxNotional")}
++    found = {}
++    for row in snapshot.filters:
++        name = row.get("filterType")
++        if name not in required:
++            raise Invalid(f"UNSUPPORTED_FILTER:{name}")
++        if name in found:
++            raise Invalid(f"DUPLICATE_FILTER:{name}")
++        if any(k not in row for k in required[name]):
++            raise Invalid(f"MISSING_FILTER_FIELD:{name}")
++        found[name] = {k: _number(row[k], string=True) for k in required[name]}
++    if not {"PRICE_FILTER", "LOT_SIZE"} <= found.keys():
++        raise Invalid("MISSING_PRICE_OR_LOT_FILTER")
++    if not ({"MIN_NOTIONAL", "NOTIONAL"} & found.keys()):
++        raise Invalid("MISSING_NOTIONAL_FILTER")
++    lot = found["LOT_SIZE"]
++    if lot["stepSize"] <= 0 or lot["maxQty"] <= 0 or lot["minQty"] > lot["maxQty"]:
++        raise Invalid("UNSUPPORTED_OR_INVALID_LOT_FILTER")
++    price = found["PRICE_FILTER"]
++    if price["maxPrice"] and price["minPrice"] > price["maxPrice"]:
++        raise Invalid("INVALID_PRICE_BOUNDS")
++    n = found.get("NOTIONAL")
++    if n and (n["maxNotional"] <= 0 or n["minNotional"] > n["maxNotional"]):
++        raise Invalid("INVALID_NOTIONAL_BOUNDS")
++    return found
++
++
++def _levels(levels, descending):
++    if len(levels) > 10000:
++        raise Invalid("TOO_MANY_LEVELS")
++    prior = None
++    for price, qty in levels:
++        _number(price)
++        _number(qty)
++        if price <= 0:
++            raise Invalid("INVALID_BOOK_PRICE")
++        if prior is not None and (price >= prior if descending else price <= prior):
++            raise Invalid("UNSORTED_OR_DUPLICATE_LEVEL")
++        prior = price
++
++
++def estimate(intent: Intent, book: BookSnapshot | None, filters: FilterSnapshot | None,
++             *, now: datetime, max_book_age: timedelta, max_filter_age: timedelta,
++             fee_rate: Decimal) -> Estimate:
++    """Round quantity down; buy limit down / sell limit up. Walk one snapshot once.
++
++    Caller supplies observed filters and an explicit quote-currency fee assumption.
++    Unconsumed IOC quantity does not rest in this model. Never reuse the same book
++    independently for multiple orders and then add fills: liquidity is not reserved.
++    """
++    try:
++        with localcontext() as ctx:
++            ctx.prec = 160
++            return _estimate(intent, book, filters, now, max_book_age, max_filter_age, fee_rate)
++    except Invalid as exc:
++        return Estimate("REJECTED", str(exc))
++
++
++def _estimate(intent, book, filters, now, book_age, filter_age, fee):
++    _aware(now)
++    _aware(intent.placed_at)
++    if intent.placed_at > now:
++        raise Invalid("FUTURE_INTENT")
++    if book is None or filters is None:
++        raise Invalid("MISSING_BOOK_OR_FILTERS")
++    if not intent.symbol or intent.symbol != book.symbol or intent.symbol != filters.symbol:
++        raise Invalid("SYMBOL_MISMATCH")
++    if not book.source or not filters.source:
++        raise Invalid("MISSING_PROVENANCE")
++    _recent(book.observed_at, now, book_age, "BOOK")
++    _recent(filters.observed_at, now, filter_age, "FILTERS")
++    if book.observed_at < intent.placed_at:
++        raise Invalid("BOOK_BEFORE_INTENT")
++    if filters.observed_at > intent.placed_at:
++        raise Invalid("FILTERS_AFTER_INTENT")
++    if intent.side not in ("BUY", "SELL"):
++        raise Invalid("UNSUPPORTED_SIDE")
++    qty, price, fee = _number(intent.quantity), _number(intent.limit_price), _number(fee)
++    if not qty or not price or fee >= 1:
++        raise Invalid("INVALID_INTENT_OR_FEE")
++    fs = _filters(filters)
++    pf, lot = fs["PRICE_FILTER"], fs["LOT_SIZE"]
++    step, tick = lot["stepSize"], pf["tickSize"]
++    qty = (qty / step).to_integral_value(rounding=ROUND_FLOOR) * step
++    if tick:  # Binance explicitly allows zero tickSize to disable this rule.
++        rounding = ROUND_FLOOR if intent.side == "BUY" else ROUND_CEILING
++        price = (price / tick).to_integral_value(rounding=rounding) * tick
++    if qty <= 0 or not lot["minQty"] <= qty <= lot["maxQty"]:
++        raise Invalid("LOT_SIZE")
++    if price <= 0 or (pf["minPrice"] and price < pf["minPrice"]) or (pf["maxPrice"] and price > pf["maxPrice"]):
++        raise Invalid("PRICE_FILTER")
++    order_notional = price * qty
++    for name in ("MIN_NOTIONAL", "NOTIONAL"):
++        if name in fs and order_notional < fs[name]["minNotional"]:
++            raise Invalid("MIN_NOTIONAL")
++    if "NOTIONAL" in fs and order_notional > fs["NOTIONAL"]["maxNotional"]:
++        raise Invalid("MAX_NOTIONAL")
++    _levels(book.bids, True)
++    _levels(book.asks, False)
++    if not book.bids or not book.asks:
++        raise Invalid("MISSING_BOOK_SIDE")
++    if book.bids[0][0] >= book.asks[0][0]:
++        raise Invalid("CROSSED_OR_LOCKED_BOOK")
++    remaining, notional, fills = qty, ZERO, []
++    reason = "INSUFFICIENT_DISPLAYED_DEPTH"
++    for p, available in (book.asks if intent.side == "BUY" else book.bids):
++        if (p > price if intent.side == "BUY" else p < price):
++            reason = "LIMIT_PRICE"
++            break
++        # Conservative: do not assume odd-lot dust can be combined across levels.
++        take = (min(remaining, available) / step).to_integral_value(rounding=ROUND_FLOOR) * step
++        if take:
++            fills.append((p, take))
++            notional += p * take
++            remaining -= take
++        if remaining == 0:
++            break
++    filled = qty - remaining
++    status = "COMPLETE" if remaining == 0 else "PARTIAL" if filled else "UNFILLED"
++    return Estimate(status, "DISPLAYED_DEPTH_ONLY" if not remaining else reason,
++                    qty, price, filled, remaining, notional, notional * fee, fee, tuple(fills))
+diff --git a/idx-signals/research/PAPER_EXECUTION_FEASIBILITY_v1/SPEC.md b/idx-signals/research/PAPER_EXECUTION_FEASIBILITY_v1/SPEC.md
+new file mode 100644
+index 0000000..24e8188
+--- /dev/null
++++ b/idx-signals/research/PAPER_EXECUTION_FEASIBILITY_v1/SPEC.md
+@@ -0,0 +1,86 @@
++# Paper execution feasibility v1 — local, disconnected prototype
++
++## Scope and API
++
++`idxsig.paper_execution_feasibility.estimate(intent, book, filters, *, now,
++max_book_age, max_filter_age, fee_rate) -> Estimate` is a pure function for a
++single plain LIMIT/IOC-style base-quantity intent. All prices and quantities are
++Decimal, never float. It accepts timestamped `BookSnapshot` and `FilterSnapshot`
++objects supplied by the caller. It does not fetch anything, route orders, reserve
++cash/liquidity, update a strategy, or write any ledger. No credentials exist here.
++
++The caller must retain the original inputs and public-data provenance together
++with each estimate. Filter and book timestamps mean **when locally observed**,
++not an inferred exchange event time. Required ordering is
++`filters.observed_at <= intent.placed_at <= book.observed_at <= now`.
++Book and filter maximum ages are caller-supplied, independent, nonnegative values.
++Unknown age, missing data, future data and timezone-naive timestamps fail closed.
++
++Outputs include normalized quantity/limit, per-level assumed fills, unfilled
++quantity, gross quote notional and quote-currency fee under the supplied rate.
++States are REJECTED, UNFILLED, PARTIAL or COMPLETE; every state has a reason.
++COMPLETE means only that this snapshot displayed sufficient eligible depth.
++It is **not** exchange acceptance or a guaranteed execution.
++
++## Filter subset (not complete Binance parity)
++
++Rules checked against official Binance spot documentation on 2026-10-31:
++https://github.com/binance/binance-spot-api-docs/blob/master/filters.md
++
++- PRICE_FILTER: enabled minimum/maximum and tick multiples. An explicitly zero
++  price bound or tick disables that component; missing fields are not zero.
++- LOT_SIZE: quantity minimum/maximum and step multiples. Missing or zero lot
++  steps are unsupported and rejected, not guessed.
++- MIN_NOTIONAL / NOTIONAL: limit price times normalized order quantity against
++  applicable minimum/maximum. At least one notional filter must be present.
++  Market-order flags do not apply because this estimator supports only limits.
++- Unsupported or duplicate filter types fail closed. Do **not** strip observed
++  filters to force a result. Most real symbols may remain unsupported until
++  percentage-price, account/exchange/asset limits and their required evidence are
++  implemented. Even supported symbol filters do not prove account eligibility.
++
++Quantity rounds downward; BUY limits downward and SELL limits upward to the
++observed increments. Bounds and notional are checked **after** rounding. This is
++a disclosed intent normalization, not a claim that the exchange rounds requests.
++Decimals are constrained to 28 significant digits and exponent magnitude <=18;
++unsupported precision and nonfinite/negative values are explicitly rejected.
++
++## Depth and reuse decision
++
++Inspected existing `microstructure.book_fill` and retained its best-first,
++consume-only-displayed-depth algorithm. Its float arithmetic, buy quote-budget
++semantics and lack of limit/filter validation make direct reuse unsafe for exact
++base-quantity filter checks. The new narrow Decimal walker is cross-checked
++against that existing utility on an equivalent complete-fill fixture. Existing
++microstructure code is byte-identical; no second collector is introduced.
++
++Books must be strictly ordered with no duplicate price levels, positive prices,
++nonnegative quantities, both sides present and no locked/crossed top-of-book.
++Consumption is capped by each displayed quantity and the normalized limit.
++Each level's usable quantity rounds down to a lot; dust is not combined across
++levels (intentionally conservative). Residual IOC quantity is explicitly unfilled,
++not silently booked later. A valid order can have a partial execution worth less
++than order-level minimum notional; that is not retroactively rejected.
++
++Fee rate is mandatory, finite and in [0,1); fees are assumed paid in quote
++currency on consumed notional, with no discount or actual account-tier claim.
++No queue priority, latency, cancellation races, hidden liquidity, market impact,
++funding availability, exchange balance, fee rounding or actual fee asset is
++modelled. The snapshot is an optimistic upper bound on available displayed
++liquidity, not evidence it will remain there. Repeated independent estimates on
++the same snapshot **must not be summed**: this function does not share consumption
++across orders. Testnet depth is not evidence of production liquidity.
++
++## Verification
++
++`python -m unittest tests.test_paper_execution_feasibility`
++
++20 synthetic adversarial tests cover min/max notional, quantity and price rounding,
++missing/zero increments, unsupported filters, partial and absent fills, insufficient
++depth, dust, fee accounting, stale/missing/future inputs, timestamp ordering,
++malformed books, nonfinite numbers, disabled price constraints and bounded fills.
++The combined 63-test suite includes the separately reviewed v1.2 repair and frozen
++US account preservation tests. All run with socket connections prohibited.
++
++No strategy, account, historical protocol, production ledger or research dataset
++is modified; this prototype is not integrated, activated or remotely published.
+diff --git a/idx-signals/tests/test_paper_execution_feasibility.py b/idx-signals/tests/test_paper_execution_feasibility.py
+new file mode 100644
+index 0000000..49d527c
+--- /dev/null
++++ b/idx-signals/tests/test_paper_execution_feasibility.py
+@@ -0,0 +1,148 @@
++"""Adversarial synthetic fixtures: no exchange requests, orders or ledger writes."""
++import unittest
++from dataclasses import replace
++from datetime import datetime, timedelta, timezone
++from decimal import Decimal as D
++
++from idxsig.paper_execution_feasibility import BookSnapshot, FilterSnapshot, Intent, estimate
++
++T = datetime(2026, 10, 31, 18, tzinfo=timezone.utc)
++
++
++class Feasibility(unittest.TestCase):
++    def setUp(self):
++        self.rows = (
++            {"filterType": "PRICE_FILTER", "minPrice": "0.01", "maxPrice": "10000", "tickSize": "0.05"},
++            {"filterType": "LOT_SIZE", "minQty": "0.1", "maxQty": "100", "stepSize": "0.1"},
++            {"filterType": "MIN_NOTIONAL", "minNotional": "10"},
++            {"filterType": "NOTIONAL", "minNotional": "10", "maxNotional": "10000"},
++        )
++        self.filters = FilterSnapshot("AAAUSDT", T - timedelta(seconds=1), "fixture/exchangeInfo", self.rows)
++        self.book = BookSnapshot("AAAUSDT", T, "fixture/depth",
++                                 ((D("99"), D("2")), (D("98"), D("3"))),
++                                 ((D("100"), D("1")), (D("101"), D("2"))))
++        self.intent = Intent("AAAUSDT", "BUY", D("2"), D("102"), T)
++
++    def run_estimate(self, **kw):
++        args = dict(intent=self.intent, book=self.book, filters=self.filters, now=T,
++                    max_book_age=timedelta(seconds=5), max_filter_age=timedelta(minutes=1), fee_rate=D("0.001"))
++        args.update(kw)
++        return estimate(**args)
++
++    def filters_with(self, index, **fields):
++        rows = list(self.rows)
++        rows[index] = {**rows[index], **fields}
++        return replace(self.filters, filters=tuple(rows))
++
++    def test_complete_depth_fee_and_no_input_mutation(self):
++        out = self.run_estimate()
++        self.assertEqual((out.status, out.filled, out.notional, out.fee_quote), ("COMPLETE", D("2"), D("201"), D("0.201")))
++        self.assertEqual(out.fills, ((D("100"), D("1")), (D("101"), D("1"))))
++        self.assertEqual(self.book.asks[-1][1], D("2"))
++
++    def test_existing_microstructure_depth_walk_agrees_in_simple_case(self):
++        # Reuse the existing walker as a cross-check, not float arithmetic for filters.
++        from idxsig.microstructure import book_fill
++        old = book_fill([(100., 1.), (101., 2.)], 201., 99.5, "buy")
++        out = self.run_estimate()
++        self.assertTrue(old["complete"])
++        self.assertAlmostEqual(old["vwap"], float(out.notional / out.filled))
++
++    def test_buy_rounding_never_increases_price_or_quantity(self):
++        out = self.run_estimate(intent=replace(self.intent, quantity=D("2.09"), limit_price=D("101.049")))
++        self.assertEqual((out.quantity, out.limit_price), (D("2.0"), D("101.00")))
++
++    def test_sell_rounds_limit_up_and_walks_bids(self):
++        out = self.run_estimate(intent=replace(self.intent, side="SELL", quantity=D("2.99"), limit_price=D("97.981")))
++        self.assertEqual((out.quantity, out.limit_price, out.notional), (D("2.9"), D("98.00"), D("286.2")))
++
++    def test_min_notional_checked_after_rounding(self):
++        out = self.run_estimate(intent=replace(self.intent, quantity=D("0.199"), limit_price=D("99.99")))
++        self.assertEqual(out.reason, "MIN_NOTIONAL")
++
++    def test_max_notional_and_quantity_bounds(self):
++        self.assertEqual(self.run_estimate(filters=self.filters_with(3, maxNotional="100")).reason, "MAX_NOTIONAL")
++        self.assertEqual(self.run_estimate(intent=replace(self.intent, quantity=D("100.1"))).reason, "LOT_SIZE")
++        self.assertEqual(self.run_estimate(intent=replace(self.intent, quantity=D("0.09"))).reason, "LOT_SIZE")
++
++    def test_missing_filter_or_step_rejected(self):
++        for rows in (self.rows[1:], self.rows[:2], (self.rows[0], {"filterType": "LOT_SIZE", "minQty": "0.1", "maxQty": "100"}, self.rows[2])):
++            with self.subTest(rows=rows):
++                self.assertEqual(self.run_estimate(filters=replace(self.filters, filters=rows)).status, "REJECTED")
++
++    def test_zero_lot_step_fails_closed_but_zero_price_tick_is_disabled(self):
++        self.assertEqual(self.run_estimate(filters=self.filters_with(1, stepSize="0")).status, "REJECTED")
++        out = self.run_estimate(filters=self.filters_with(0, tickSize="0"), intent=replace(self.intent, limit_price=D("101.019")))
++        self.assertEqual(out.limit_price, D("101.019"))
++        self.assertEqual(out.status, "COMPLETE")
++
++    def test_unknown_and_duplicate_filters_fail_closed(self):
++        for row in ({"filterType": "PERCENT_PRICE"}, self.rows[0]):
++            self.assertEqual(self.run_estimate(filters=replace(self.filters, filters=self.rows + (row,))).status, "REJECTED")
++
++    def test_partial_depth_and_unfilled_rest_are_explicit(self):
++        out = self.run_estimate(intent=replace(self.intent, quantity=D("4")))
++        self.assertEqual((out.status, out.filled, out.unfilled, out.reason), ("PARTIAL", D("3"), D("1"), "INSUFFICIENT_DISPLAYED_DEPTH"))
++        self.assertEqual(out.fee_quote, out.notional * D("0.001"))
++
++    def test_limit_bounded_partial_and_no_touch(self):
++        out = self.run_estimate(intent=replace(self.intent, limit_price=D("100")))
++        self.assertEqual((out.status, out.filled, out.reason), ("PARTIAL", D("1"), "LIMIT_PRICE"))
++        out = self.run_estimate(intent=replace(self.intent, limit_price=D("99")))
++        self.assertEqual((out.status, out.filled, out.reason, out.fee_quote), ("UNFILLED", D("0"), "LIMIT_PRICE", D("0")))
++
++    def test_dust_and_zero_displayed_quantity_not_invented(self):
++        book = replace(self.book, asks=((D("100"), D("0.09")), (D("101"), D("0"))))
++        out = self.run_estimate(book=book)
++        self.assertEqual((out.status, out.filled), ("UNFILLED", D("0")))
++
++    def test_stale_book_and_filters(self):
++        self.assertEqual(self.run_estimate(now=T + timedelta(seconds=6)).reason, "STALE_BOOK")
++        self.assertEqual(self.run_estimate(filters=replace(self.filters, observed_at=T - timedelta(minutes=2))).reason, "STALE_FILTERS")
++
++    def test_future_book_filters_and_intent(self):
++        later = T + timedelta(seconds=1)
++        self.assertEqual(self.run_estimate(book=replace(self.book, observed_at=later)).reason, "FUTURE_BOOK")
++        self.assertEqual(self.run_estimate(filters=replace(self.filters, observed_at=later)).reason, "FUTURE_FILTERS")
++        self.assertEqual(self.run_estimate(intent=replace(self.intent, placed_at=later)).reason, "FUTURE_INTENT")
++
++    def test_book_before_intent_and_filters_after_intent(self):
++        self.assertEqual(self.run_estimate(book=replace(self.book, observed_at=T - timedelta(seconds=1))).reason, "BOOK_BEFORE_INTENT")
++        self.assertEqual(self.run_estimate(intent=replace(self.intent, placed_at=T - timedelta(seconds=2))).reason, "FILTERS_AFTER_INTENT")
++
++    def test_missing_data_identity_and_timezone(self):
++        for kw in ({"book": None}, {"filters": None}, {"book": replace(self.book, symbol="BBB")}, {"now": T.replace(tzinfo=None)}, {"book": replace(self.book, source="")}):
++            with self.subTest(kw=kw):
++                self.assertEqual(self.run_estimate(**kw).status, "REJECTED")
++
++    def test_malformed_books_and_nonfinite_inputs(self):
++        for asks in (((D("100"), D("1")), (D("100"), D("2"))), ((D("100"), D("-1")),), ((D("98"), D("1")),), ()):
++            with self.subTest(asks=asks):
++                self.assertEqual(self.run_estimate(book=replace(self.book, asks=asks)).status, "REJECTED")
++        for n in (D("NaN"), D("Infinity"), D("-1"), 1.01):
++            self.assertEqual(self.run_estimate(intent=replace(self.intent, quantity=n)).status, "REJECTED")
++
++    def test_invalid_filter_numbers_and_fees(self):
++        for n in ("NaN", "-1", "garbage", 0.1):
++            self.assertEqual(self.run_estimate(filters=self.filters_with(0, tickSize=n)).status, "REJECTED")
++        for fee in (D("1"), D("-0.1"), D("NaN")):
++            self.assertEqual(self.run_estimate(fee_rate=fee).status, "REJECTED")
++
++    def test_disabled_price_bounds_and_invalid_bounds(self):
++        self.assertEqual(self.run_estimate(filters=self.filters_with(0, minPrice="0", maxPrice="0")).status, "COMPLETE")
++        self.assertEqual(self.run_estimate(filters=self.filters_with(0, minPrice="200", maxPrice="100")).status, "REJECTED")
++        self.assertEqual(self.run_estimate(filters=self.filters_with(3, minNotional="20000")).status, "REJECTED")
++
++    def test_filled_never_exceeds_request_or_displayed_depth(self):
++        for raw in ("0.1", "0.29", "1", "2.01", "3", "4", "10"):
++            out = self.run_estimate(intent=replace(self.intent, quantity=D(raw)))
++            self.assertLessEqual(out.filled, out.quantity)
++            self.assertEqual(out.filled + out.unfilled, out.quantity)
++            self.assertLessEqual(out.filled, D("3"))
++            for price, qty in out.fills:
++                self.assertLessEqual(qty, dict(self.book.asks)[price])
++                self.assertLessEqual(price, out.limit_price)
++
++
++if __name__ == "__main__":
++    unittest.main()
+-- 
+2.52.0
+

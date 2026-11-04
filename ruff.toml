@@ -1,0 +1,39 @@
+# One formatter/linter configuration for maintained first-party Python.
+# tools/live_code_style.json is the explicit adoption boundary; historical and
+# self-pinned code remains byte-identical and is never passed to the formatter.
+required-version = "==0.14.3"
+target-version = "py312"
+line-length = 100
+force-exclude = true
+extend-exclude = [
+  "idx-signals/research",
+  "idx-signals/results",
+  "idx-signals/data",
+  "idx-signals/paper",
+  "kod-machine/research",
+  "kod-machine/registry",
+  "kod-machine/tsa",
+  "handoff",
+  "**/vendor/**",
+  "idx-signals/idxsig/runtime/account.py",
+  "idx-signals/idxsig/premove.py",
+  "idx-signals/idxsig/premove_core.py",
+  "idx-signals/idxsig/premove_shadow.py",
+  "idx-signals/idxsig/paper_account.py",
+  "idx-signals/idxsig/crypto_account.py",
+]
+
+[lint]
+select = ["E4", "E7", "E9", "F"]
+
+[lint.per-file-ignores]
+# Existing research-runner expressions are intentionally outside this tidy's
+# behavioral scope. New timing modules receive the complete rule set above.
+"idx-signals/idxsig/e6.py" = ["E731", "F841"]
+"idx-signals/idxsig/e8.py" = ["E731", "F841"]
+"idx-signals/idxsig/microstructure.py" = ["E731"]
+
+[format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"

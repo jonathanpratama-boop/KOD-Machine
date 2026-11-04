@@ -1,0 +1,260 @@
+{
+ "made_at": "2026-10-31T15:03:14Z",
+ "verdict": "REBUILT RANKINGS MATCH THE PUBLISHED RUN",
+ "run_artifacts": {
+  "REPORT.md": {
+   "present": true,
+   "sha256_matches": true
+  },
+  "SOURCE.json": {
+   "present": true,
+   "sha256_matches": true
+  },
+  "daily.csv.gz": {
+   "present": false,
+   "expected_sha256": "0677abaddb49a59dedcdda1c775355f9a76856897d5e7c61d834899e816da4ac"
+  },
+  "forecasts.csv.gz": {
+   "present": false,
+   "expected_sha256": "18a7b08bbdce615b801daf551d624e9f67aea4aadb4b54135f044e5304aa6c67"
+  },
+  "models.json": {
+   "present": true,
+   "sha256_matches": true
+  },
+  "shortlists.csv.gz": {
+   "present": false,
+   "expected_sha256": "84b377f9b589a63396d67213d8512800d76219cea95bedd8fb0c203f3be860a2"
+  },
+  "summary.json": {
+   "present": true,
+   "sha256_matches": true
+  }
+ },
+ "panel_sha256": "f1dfd57d26a7a98781bd5fcbf18db3203778d24c51c46b4d4f92963dc9b75766",
+ "test_rows": 119176,
+ "labelled_rows": 117371,
+ "decision_days": 365,
+ "temperatures": {
+  "summary": 1.0,
+  "sequence": 1.0,
+  "shuffled": 1.0
+ },
+ "checks": {
+  "probability_metrics/summary": {
+   "rebuilt": {
+    "n": 117371,
+    "log_loss": 0.20810778177642608,
+    "brier_multiclass": 0.08045509794154379,
+    "up_brier": 0.025578174192133617
+   },
+   "published": {
+    "brier_multiclass": 0.08045509794154378,
+    "log_loss": 0.20810778177642603,
+    "n": 117371,
+    "up_brier": 0.025578174192133613
+   },
+   "match": true
+  },
+  "probability_metrics/sequence": {
+   "rebuilt": {
+    "n": 117371,
+    "log_loss": 0.2090839238763288,
+    "brier_multiclass": 0.08003441597780496,
+    "up_brier": 0.02529687600208226
+   },
+   "published": {
+    "brier_multiclass": 0.08003441597780496,
+    "log_loss": 0.20908392387632876,
+    "n": 117371,
+    "up_brier": 0.025296876002082257
+   },
+   "match": true
+  },
+  "shortlist/all/summary": {
+   "same_rows_as_premove_shortlist": true,
+   "rebuilt": {
+    "candidate_windows": 119176,
+    "selected": 1825,
+    "known_selected": 1799,
+    "up_hits": 61,
+    "false_alerts_known": 1738,
+    "censored_selected": 26,
+    "precision_lower_bound": 0.033424657534246574,
+    "precision_upper_bound": 0.04767123287671233,
+    "precision_known": 0.0339077265147304,
+    "known_episodes": 926,
+    "episodes_caught": 34,
+    "episodes_missed": 892,
+    "positive_alerts_after_episode_started": 3,
+    "episode_recall_known": 0.0367170626349892,
+    "median_earliest_alert_lead_days": 4.0,
+    "mean_earliest_alert_lead_days": 3.5294117647058822,
+    "calendar_days": 365,
+    "days_with_selection": 365
+   },
+   "published": {
+    "calendar_days": 365,
+    "candidate_windows": 119176,
+    "censored_selected": 26,
+    "days_with_selection": 365,
+    "episode_recall_known": 0.0367170626349892,
+    "episodes_caught": 34,
+    "episodes_missed": 892,
+    "false_alerts_known": 1738,
+    "known_episodes": 926,
+    "known_selected": 1799,
+    "mean_earliest_alert_lead_days": 3.5294117647058822,
+    "median_earliest_alert_lead_days": 4.0,
+    "positive_alerts_after_episode_started": 3,
+    "precision_known": 0.0339077265147304,
+    "precision_lower_bound": 0.033424657534246574,
+    "precision_upper_bound": 0.04767123287671233,
+    "selected": 1825,
+    "up_hits": 61
+   },
+   "match": true
+  },
+  "shortlist/all/sequence": {
+   "same_rows_as_premove_shortlist": true,
+   "rebuilt": {
+    "candidate_windows": 119176,
+    "selected": 1825,
+    "known_selected": 1797,
+    "up_hits": 80,
+    "false_alerts_known": 1717,
+    "censored_selected": 28,
+    "precision_lower_bound": 0.043835616438356165,
+    "precision_upper_bound": 0.05917808219178082,
+    "precision_known": 0.044518642181413465,
+    "known_episodes": 926,
+    "episodes_caught": 48,
+    "episodes_missed": 878,
+    "positive_alerts_after_episode_started": 4,
+    "episode_recall_known": 0.05183585313174946,
+    "median_earliest_alert_lead_days": 3.5,
+    "mean_earliest_alert_lead_days": 3.3541666666666665,
+    "calendar_days": 365,
+    "days_with_selection": 365
+   },
+   "published": {
+    "calendar_days": 365,
+    "candidate_windows": 119176,
+    "censored_selected": 28,
+    "days_with_selection": 365,
+    "episode_recall_known": 0.05183585313174946,
+    "episodes_caught": 48,
+    "episodes_missed": 878,
+    "false_alerts_known": 1717,
+    "known_episodes": 926,
+    "known_selected": 1797,
+    "mean_earliest_alert_lead_days": 3.3541666666666665,
+    "median_earliest_alert_lead_days": 3.5,
+    "positive_alerts_after_episode_started": 4,
+    "precision_known": 0.044518642181413465,
+    "precision_lower_bound": 0.043835616438356165,
+    "precision_upper_bound": 0.05917808219178082,
+    "selected": 1825,
+    "up_hits": 80
+   },
+   "match": true
+  },
+  "shortlist/early/summary": {
+   "same_rows_as_premove_shortlist": true,
+   "rebuilt": {
+    "candidate_windows": 113365,
+    "selected": 1825,
+    "known_selected": 1799,
+    "up_hits": 60,
+    "false_alerts_known": 1739,
+    "censored_selected": 26,
+    "precision_lower_bound": 0.03287671232876712,
+    "precision_upper_bound": 0.047123287671232875,
+    "precision_known": 0.033351862145636464,
+    "known_episodes": 911,
+    "episodes_caught": 35,
+    "episodes_missed": 876,
+    "positive_alerts_after_episode_started": 2,
+    "episode_recall_known": 0.038419319429198684,
+    "median_earliest_alert_lead_days": 4.0,
+    "mean_earliest_alert_lead_days": 3.5428571428571427,
+    "calendar_days": 365,
+    "days_with_selection": 365
+   },
+   "published": {
+    "calendar_days": 365,
+    "candidate_windows": 113365,
+    "censored_selected": 26,
+    "days_with_selection": 365,
+    "episode_recall_known": 0.038419319429198684,
+    "episodes_caught": 35,
+    "episodes_missed": 876,
+    "false_alerts_known": 1739,
+    "known_episodes": 911,
+    "known_selected": 1799,
+    "mean_earliest_alert_lead_days": 3.5428571428571427,
+    "median_earliest_alert_lead_days": 4.0,
+    "positive_alerts_after_episode_started": 2,
+    "precision_known": 0.033351862145636464,
+    "precision_lower_bound": 0.03287671232876712,
+    "precision_upper_bound": 0.047123287671232875,
+    "selected": 1825,
+    "up_hits": 60
+   },
+   "match": true
+  },
+  "shortlist/early/sequence": {
+   "same_rows_as_premove_shortlist": true,
+   "rebuilt": {
+    "candidate_windows": 113365,
+    "selected": 1825,
+    "known_selected": 1798,
+    "up_hits": 76,
+    "false_alerts_known": 1722,
+    "censored_selected": 27,
+    "precision_lower_bound": 0.041643835616438356,
+    "precision_upper_bound": 0.056438356164383564,
+    "precision_known": 0.042269187986651836,
+    "known_episodes": 911,
+    "episodes_caught": 46,
+    "episodes_missed": 865,
+    "positive_alerts_after_episode_started": 2,
+    "episode_recall_known": 0.050493962678375415,
+    "median_earliest_alert_lead_days": 4.0,
+    "mean_earliest_alert_lead_days": 3.4347826086956523,
+    "calendar_days": 365,
+    "days_with_selection": 365
+   },
+   "published": {
+    "calendar_days": 365,
+    "candidate_windows": 113365,
+    "censored_selected": 27,
+    "days_with_selection": 365,
+    "episode_recall_known": 0.050493962678375415,
+    "episodes_caught": 46,
+    "episodes_missed": 865,
+    "false_alerts_known": 1722,
+    "known_episodes": 911,
+    "known_selected": 1798,
+    "mean_earliest_alert_lead_days": 3.4347826086956523,
+    "median_earliest_alert_lead_days": 4.0,
+    "positive_alerts_after_episode_started": 2,
+    "precision_known": 0.042269187986651836,
+    "precision_lower_bound": 0.041643835616438356,
+    "precision_upper_bound": 0.056438356164383564,
+    "selected": 1825,
+    "up_hits": 76
+   },
+   "match": true
+  }
+ },
+ "forecasts_rows_digest": "18136460649657840356",
+ "shortlists_sha256": "a6a5bd99252e569578f1442f1c163a65f3f435f189292af8c6335ec4ad74fe79",
+ "code_sha256": {
+  "rankings.py": "2625c7adb44d456f7793e0b5f492d8914ff97d61d95b1f525d79dc4c5afbdca6",
+  "premove.py": "53d161019b9df1c79ef9a738120c4930c56c4cdfcccb284fe0392ae08aebff8c",
+  "premove_core.py": "c76686dc5272ef920698fd5f0a85277c1501ed863260b547bcb78e91b16d8c62",
+  "premove_shadow.py": "3bed4b67225fa50dcbf71e6e56113c333ad201385e9ca1cf9a69bcc32ebc59ad"
+ },
+ "note": "premove.py and premove_core.py differ in bytes from the run's recorded hashes only by formatting (commit 5534f49); their syntax trees are identical to commit 8c73b3a, whose files carry the recorded hashes."
+}

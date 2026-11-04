@@ -1,0 +1,23 @@
+{
+ "protocol_id": "KOD-CATALYST-SEC13D-KILL-TEST-2020-2023-v1",
+ "panel_sha256": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b",
+ "files": {
+  "research/CATALYST_REGISTER_v1/KILL_TEST_2020_2023/PROTOCOL.md": "25e4b9dd5de52cef44a10c5f2a1390ecd62884e934f60292b9442d122e8f86c3",
+  "research/CATALYST_REGISTER_v1/KILL_TEST_2020_2023/protocol.json": "10b1a3b72f1106c381e30ca28ebc9dc7cba33446cf46b37ceb1fc901d3f6f2f4",
+  "research/CATALYST_REGISTER_v1/KILL_TEST_2020_2023/kt_lib.py": "7e257df38033558e17bf854b5ebd402b3ba4cc66a02aeda0c688f28c7cb0fa82",
+  "research/CATALYST_REGISTER_v1/KILL_TEST_2020_2023/run.py": "133ff0ebf2ad2d254bece721a6b45de56082cfd7d5794e04f04ce99d8c890d86",
+  "research/CATALYST_REGISTER_v1/KILL_TEST_2020_2023/collect.py": "3ceb59fe28d777b5c8fce7d3013316cae3bf70cb2ef1c4adcc6fc6ab4fd19bf2",
+  "research/CATALYST_REGISTER_v1/KILL_TEST_2020_2023/events.csv.gz": "202f50ddd8b26e55df2b26a99d907053fbe886a35a67fabc5006a0e54e95db2a",
+  "data/manifests/panel_us_repair-20261008T114805Z.json": "705ca354492f45d63a2fb15e0b4db1d334c490a9ac8749d606adfc9622d94039",
+  "idxsig/catalysts.py": "ad292c51f9feba15520105c197ce1c99c89155c9c56825c473db85146f35dd0d",
+  "idxsig/catalyst.py": "83194b029e372b6be711722fdcc5f799cc28af0512abeb0a5e3892ec4e0af19d",
+  "idxsig/event_study.py": "7de0d1ea92dbed9794fce11384aeac1f7f8d2fc279e8f09dafd7d282019c0a4e",
+  "idxsig/idx_events.py": "18498f1a31219fd2b954537d989d33851f990a856b7bacadddbdd01fd9197111",
+  "idxsig/execution.py": "04111c66f391a8456d67129bec8e57208a6e3e8d2b9d362033893e542e7636a2",
+  "idxsig/controls.py": "18d84a692640f1508d765f8bd233566fbe2677745c38222aa65c99285859d087",
+  "idxsig/market.py": "b956576fec19dbac3164bd8181e63f6b579d138aa42016d11af35103832c6d9f",
+  "idxsig/profiles.py": "e670d7bff5ef3042d7b7fa4cebf1a8ebe44e25c5dd0c1bc1f89fa7bb36b7f5f9",
+  "idxsig/backtest.py": "5e9bb4849aac69af5bb470d616e27e33bbab5cd7ffc16f9973fda92b48714ae3",
+  "idxsig/global_panel.py": "ecf05a09b6765555a832914f48e0bb1dc0687fafde74b6269297863bdcad3468"
+ }
+}

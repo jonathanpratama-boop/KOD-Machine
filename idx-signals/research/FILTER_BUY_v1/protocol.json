@@ -1,0 +1,47 @@
+{
+ "study_id": "FILTER_BUY_v1",
+ "frozen_at": "2026-10-30T21:43:58Z",
+ "question": "does skipping the spikes KOD v2.4 expects to dump next day improve buying US +30% spikes?",
+ "periods": {
+  "A": {
+   "label": "2026-04-01..2026-10-28",
+   "forecasts": "research/REPLAY_UNITS_v2/results_A/forecasts.csv.gz"
+  },
+  "B": {
+   "label": "2025-11-03..2026-03-31",
+   "forecasts": "research/REPLAY_UNITS_v2/results_B/forecasts.csv.gz"
+  }
+ },
+ "buy": "long at the open of s+1; H1 sold at that close, H5 (descriptive) at the close of s+5",
+ "costs": {
+  "CHEAP": 0.002,
+  "TYPICAL": 0.006,
+  "BRUTAL": 0.015
+ },
+ "filter": "flagged = top 33% of the period's spikes by raw v2.4 dump probability; kept = the rest",
+ "primary": "per period, TYPICAL cost, H1: mean(kept) - mean(all) > 0 with one-sided 95% session-bootstrap lower bound > 0; verdict needs both periods",
+ "bootstrap": {
+  "unit": "signal session",
+  "resamples": 2000,
+  "seed": 20261031
+ },
+ "beside_it": [
+  "mean of flagged, kept and all at every cost",
+  "H5",
+  "certified calls as the flag",
+  "whether buying the kept spikes is profitable (never a pass criterion)"
+ ],
+ "limits": [
+  "both periods' forecasts were already read once for AUC (REPLAY_UNITS_v2), not for returns",
+  "survivorship: names delisted since are absent, which flatters buying",
+  "open and close prints, not fills; small caps may not fill at the open"
+ ],
+ "inputs": {
+  "research/REPLAY_UNITS_v2/results_A/forecasts.csv.gz": "4812a65221e124e5023a40f230128c8dd270f5b91272cf9fd1f0b30140296391",
+  "research/REPLAY_UNITS_v2/results_B/forecasts.csv.gz": "8c997e6ff2ff6715b008bb6cac4ff87499fe4a968c473c18f0de99daeab74835",
+  "data/manifests/yahoo_us_replay-20261030T071025Z.jsonl": "fe1ef19e7bb75bdf72a146809d7d298378323fb48d9a4da016a91408de6d069f"
+ },
+ "code": {
+  "research/FILTER_BUY_v1/run.py": "fe111dc09a131f131edf36175d8bb602bdcb8aaf9b80073882ceef6870289eeb"
+ }
+}

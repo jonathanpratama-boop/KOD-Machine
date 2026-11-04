@@ -1,0 +1,69 @@
+{
+  "initial_cash": "10000",
+  "end_account": {
+    "cash_total": "20592.76937267666925000000",
+    "cash_reserved": "0",
+    "cash_available": "20592.76937267666925000000",
+    "holdings": {
+      "BTCUSDT": "0E-8",
+      "ETHUSDT": "0E-8"
+    },
+    "nav": "20592.76937267666925000000",
+    "gross_value": "0",
+    "gross_fraction": "0E+20",
+    "missing_marks": [],
+    "nav_basis": "daily_open_reference_NOT_BBO"
+  },
+  "growth": "1.05927693726766692500",
+  "CAGR": 0.146952526629607,
+  "sampled_max_drawdown": "0.1541684092760982675411533361",
+  "daily_vol_annualized": 0.126324291135652,
+  "daily_Sharpe": 1.1475105864381918,
+  "Sharpe_zero_variance": false,
+  "days": 1923,
+  "daily_samples": 1924,
+  "fills": 228,
+  "paid_fees": "88.69",
+  "modeled_slippage": "44.36001660903075000000",
+  "traded_notional": "88714.67030836685715000000",
+  "normalized_turnover": "5.504278978186698355333656749",
+  "annualized_normalized_turnover": "1.044753940217444045604152217",
+  "kill": {
+    "at": "2018-03-15T00:00:00Z",
+    "reason": "NEGATIVE_TRAILING_90_DAY_SHARPE",
+    "trigger": "daily:2018-03-15"
+  },
+  "liquidation": {
+    "first_kill_liquidation_at": "2018-03-16T00:00:00Z",
+    "last_kill_liquidation_at": "2018-03-16T00:00:00Z",
+    "kill_to_first_fill_days": 1.0,
+    "kill_fill_count": 1,
+    "preplanned_terminal_fill_count": 0,
+    "remaining_holdings": {
+      "BTCUSDT": "0E-8",
+      "ETHUSDT": "0E-8"
+    }
+  },
+  "exposure": {
+    "basis": "daily_postfill_open_reference",
+    "minimum": "0",
+    "maximum": "0.9292395423216281716649931253",
+    "mean": "0.03304545294023920953212056849",
+    "invested_samples": 144,
+    "samples": 1924
+  },
+  "pending_intents": [],
+  "first_fill": "2017-10-06T00:00:00Z",
+  "last_fill": "2018-03-16T00:00:00Z",
+  "reconciliation": "PASS",
+  "journal": {
+    "events": 2612,
+    "last_record_hash": "06bb24ea627fc478326d850ccf7101b550927f562a8c6bcbb5cd4f2610a1b86c",
+    "final_state_sha256": "49b4c7f1eb143fdcb727d8efcb092965417f359bc8c49992f292712f37e87334",
+    "journal_sha256": "9350eab20ab03d7965c531145706b1d64033f9d8d5da1531801d34165607b381",
+    "replay": "PASS"
+  },
+  "policy": "TREND_V2_SHARED",
+  "start": "2017-09-26",
+  "terminal_open": "2023-01-01"
+}

@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kod:timing-context:v1",
+  "title": "KOD timing preparation and executability context input",
+  "description": "Structure only. idxsig.timing_context additionally enforces causal times, source availability, costs, revisions and quote eligibility. No orders or entry permission.",
+  "type": "object",
+  "required": ["schema_version"],
+  "properties": {
+    "schema_version": {"const": "KOD_TIMING_CONTEXT_V1"},
+    "as_of": {"type": "string", "format": "date-time"},
+    "calendar_events": {"type": "array", "items": {"$ref": "#/$defs/event"}},
+    "preparations": {"type": "array", "items": {"$ref": "#/$defs/preparation"}},
+    "avoid_observations": {"type": "array", "items": {"$ref": "#/$defs/avoid"}},
+    "shadow_checks": {"type": "array", "items": {"$ref": "#/$defs/shadow"}}
+  },
+  "$defs": {
+    "time": {"type": "string", "format": "date-time"},
+    "nullableTime": {"anyOf": [{"$ref": "#/$defs/time"}, {"type": "null"}]},
+    "event": {
+      "type": "object",
+      "required": ["schema_version", "id", "version", "family", "instrument_id", "time_precision", "source_timezone", "received_at", "evidence_id", "source_url", "evidence_kind", "status"],
+      "properties": {
+        "schema_version": {"const": "KOD_CATALYST_CALENDAR_V1"},
+        "id": {"type": "string", "minLength": 1},
+        "version": {"type": "integer", "minimum": 1},
+        "supersedes": {"type": ["string", "null"]},
+        "family": {"enum": ["EARNINGS", "TOKEN_UNLOCK", "GOVERNANCE", "INDEX_REBALANCE", "EXCHANGE_NOTICE", "OTHER_DATED"]},
+        "instrument_id": {"type": "string", "minLength": 1},
+        "time_precision": {"enum": ["EXACT", "WINDOW", "DATE_ONLY", "UNKNOWN"]},
+        "event_at": {"$ref": "#/$defs/nullableTime"},
+        "window_end": {"$ref": "#/$defs/nullableTime"},
+        "event_date": {"type": "string", "format": "date"},
+        "source_timezone": {"type": "string", "minLength": 1},
+        "published_at": {"$ref": "#/$defs/nullableTime"},
+        "received_at": {"$ref": "#/$defs/time"},
+        "evidence_id": {"type": "string", "minLength": 1},
+        "source_url": {"type": "string", "format": "uri"},
+        "evidence_kind": {"enum": ["synthetic", "recorded", "prospective"]},
+        "status": {"enum": ["SCHEDULED", "CANCELLED"]}
+      }
+    },
+    "preparation": {
+      "type": "object",
+      "required": ["event_record_id", "prepared_at", "branches"],
+      "properties": {
+        "event_record_id": {"type": "string", "minLength": 1},
+        "prepared_at": {"$ref": "#/$defs/time"},
+        "branches": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "required": ["id", "condition", "mechanism", "action"],
+            "properties": {
+              "id": {"type": "string", "minLength": 1},
+              "condition": {"type": "string", "minLength": 1},
+              "mechanism": {"type": "string", "minLength": 1},
+              "action": {"enum": ["RESEARCH", "NO_ACTION", "RECHECK"]}
+            }
+          }
+        }
+      }
+    },
+    "avoid": {
+      "type": "object",
+      "required": ["schema_version", "id", "decision_id", "as_of", "checks"],
+      "properties": {
+        "schema_version": {"const": "KOD_AVOID_OBSERVATION_V1"},
+        "id": {"type": "string", "minLength": 1},
+        "decision_id": {"type": "string", "minLength": 1},
+        "as_of": {"$ref": "#/$defs/time"},
+        "checks": {
+          "type": "object",
+          "propertyNames": {"enum": ["wild_volatility", "lone_spike", "recent_30pct_spike", "share_issuance", "crowded_short"]},
+          "additionalProperties": {
+            "type": "object", "required": ["status"],
+            "properties": {
+              "status": {"enum": ["PRESENT", "ABSENT", "UNKNOWN"]},
+              "evidence_id": {"type": ["string", "null"]},
+              "available_at": {"$ref": "#/$defs/nullableTime"}
+            }
+          }
+        }
+      }
+    },
+    "shadow": {
+      "type": "object",
+      "required": ["cost_profile"],
+      "oneOf": [{"required": ["decision"]}, {"required": ["premove_forecast", "premove_availability"]}],
+      "properties": {
+        "decision": {"type": "object", "required": ["id", "decision_at", "expires_at", "symbol", "venue"]},
+        "quote": {"type": ["object", "null"]},
+        "cost_profile": {"type": "object", "required": ["schema_version", "id", "version", "venue", "quote_currency", "valid_from", "verification_status", "account_applicability", "spread_convention", "max_quote_age_seconds", "sources"]},
+        "owner_venue": {"type": ["string", "null"]},
+        "requested_quantity": {"type": ["string", "number", "null"]},
+        "premove_forecast": {"type": "object"},
+        "premove_availability": {"type": "object", "required": ["symbol", "observed_at", "availability_evidence_id", "expires_at"]}
+      }
+    }
+  }
+}

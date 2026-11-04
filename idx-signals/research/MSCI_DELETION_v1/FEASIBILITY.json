@@ -1,0 +1,55 @@
+{
+ "study": "MSCI_DELETION_v1",
+ "computed_at": "2026-11-01T00:16:55Z",
+ "what": "event and status counts only; the harness computes returns internally and none is printed, saved or looked at",
+ "panel_sha256": "9d3a0718c95f9e885c4f8310cf68bf5e75021c366c454f73389d7fae75c02877",
+ "registry_sha256": "659da375e4586deab958e22dc242d7be6966ebc226bfefe8ce7ce85eb51f1e6c",
+ "rows_after_end_dropped": 600920,
+ "discovery": {
+  "deletion_events": 46,
+  "by_kind": {
+   "SC_EXIT": 31,
+   "ST_TO_SC": 12,
+   "ST_EXIT": 3
+  },
+  "mapped_to_panel": 46,
+  "status_counts": {
+   "EXITED": 40,
+   "SKIP_LIQUIDITY": 5,
+   "SKIP_NOT_TRADED": 1
+  },
+  "scored_with_controls": 40,
+  "reviews_with_a_scored_trade": 8,
+  "entry_sessions": {
+   "Nov19": "2019-11-26",
+   "May20": "2020-05-29",
+   "Nov20": "2020-11-30",
+   "Feb21": "2021-02-26",
+   "May21": "2021-05-27",
+   "Nov21": "2021-11-30",
+   "May22": "2022-05-31",
+   "Nov22": "2022-11-30"
+  }
+ },
+ "screen_2023": {
+  "deletion_events": 14,
+  "by_kind": {
+   "SC_EXIT": 12,
+   "ST_EXIT": 2
+  },
+  "mapped_to_panel": 14,
+  "status_counts": {
+   "EXITED": 7,
+   "INCOMPLETE": 6,
+   "SKIP_NOT_TRADED": 1
+  },
+  "scored_with_controls": 7,
+  "reviews_with_a_scored_trade": 3,
+  "entry_sessions": {
+   "Feb23": "2023-02-28",
+   "May23": "2023-05-31",
+   "Aug23": "2023-08-31",
+   "Nov23": "2023-11-30"
+  }
+ }
+}

@@ -1,0 +1,125 @@
+{
+ "protocol_id": "KOD-CATALYST-FAMILY-FORM4-v1",
+ "version": "1.0",
+ "frozen": "2026-10-28",
+ "family": "FORM4",
+ "market": "US",
+ "counted": true,
+ "owner_decision": "2026-10-28, the owner: 'merge PR #16 and do 1, 2, 3, 4, 5' (item 3); handoff/decisions/2026-10-28c_proof_program.md",
+ "ledger": "paper/catalysts.jsonl (the Catalyst Register's chain)",
+ "question": "a prospective replication of US_INSIDER_BUY (counted test 26: open-market purchases by officers or directors, USD 50k or more, no 10b5-1 plan; 20-session excess +1.01%, t 2.83; 60-session +1.80%, t 2.87; survivor-only, LEAN_WITHOUT_SIZE): does the 20-session plan beat matched twins on events defined exactly as test 26 did, in the market as it is now?",
+ "direction": 1,
+ "event": "a Form 4 (EDGAR form type exactly '4'; '4/A' is not used) whose XML has at least one purchase line: a nonDerivativeTransaction with transactionCode 'P', transactionAcquiredDisposedCode 'A', a security title that research/US_INSIDER_BUY/ib_lib.is_common accepts, shares > 0 and price per share > 0; a reporting owner who is an officer or a director (isOfficer or isDirector true; 10% owners or 'other' only are not events); no 10b5-1 flag (an aff10b5One element equal to 1 or true excludes the filing); purchase lines totalling at least USD 50,000 (shares x price)",
+ "source": "the EDGAR daily form index https://www.sec.gov/Archives/edgar/daily-index/<YYYY>/QTR<q>/form.<YYYYMMDD>.idx (form type '4' lines; sha256 recorded) for each NYSE session date not yet covered by an earlier FORM4 batch, from the window start; each listed filing's full text https://www.sec.gov/Archives/<File Name> (the XML inside, sha256 recorded); a date whose index is not yet published is left for the next batch",
+ "window_start": "2026-10-29",
+ "public_date": "the filing date of the index (the data sets carry no acceptance time; as test 26)",
+ "batches": "every batch is recorded, also an empty one: the index dates read, the Form 4 filings read and their statuses (SEALED, or SKIP_NOT_PURCHASE grouped as counts, SKIP_NO_TICKER, SKIP_NOT_IN_UNIVERSE, SKIP_NOT_OPERATING, SKIP_REPEAT_90D, SKIP_LATE); only filings that are purchase events are listed one by one, the others are counted by reason",
+ "issuer": {
+  "universe": "a ticker of the issuer CIK (company_tickers_exchange.json, sha256 recorded per batch), the first in SEC order that is fresh and eligible in the US paper scan of the signal session (else SKIP_NOT_IN_UNIVERSE; no ticker: SKIP_NO_TICKER); an operating issuer by catalysts.is_operating (a 10-K, 10-Q, 20-F or 40-F in 550 days, no fund report; else SKIP_NOT_OPERATING)",
+  "repeat": "a set of this family on the same issuer sealed in the 90 calendar days before (the chain starts at the window start, so the first 90 days have a shorter history than test 26's) -> SKIP_REPEAT_90D; several qualifying filings of one issuer on one date are one event (the first by accession number, the values summed)"
+ },
+ "timing": {
+  "entry_session": "the first NYSE session whose 09:15 New York time is after the sealing time (catalysts.NYSE_HOLIDAYS, 2026-2027)",
+  "signal_session": "the NYSE session before the entry session; the US paper scan of that session must exist",
+  "entry_cutoff": "09:15 New York time of the entry session; a set sealed later is refused",
+  "late": "a filing date before the signal session -> SKIP_LATE (the register missed the session the plan would have entered)"
+ },
+ "plan": {
+  "window": "H20",
+  "kind": "plan",
+  "entry": "the entry session's opening print",
+  "entry_window": 1,
+  "holding_sessions": 20,
+  "exit": "the close of the 20th session after entry",
+  "costs": "the US profile's fees and cost tiers (EXEC-US-v1)",
+  "stop": "none",
+  "role": "a yardstick, not a strategy"
+ },
+ "coverage": "every sealed set is FIRE (a replication of test 26's event definition, no new filter); descriptive tags: total purchase value, number of owners, a top-executive title (ib_lib's _TOP pattern on the officer title), the days from the last transaction to the filing",
+ "twins": "speculation.draw_twins on the signal session's US features, excluding the batch's event tickers and the scan's candidates, seeded as above; taken in that order, a name is a twin if it is an operating issuer and has no original Schedule 13D in the 90 days before sealing (as SEC13D); at most 15 checked; the first 5 that pass. Twins are not screened for insider purchases (that would need every twin's Form 4 history)",
+ "cone": [
+  {
+   "id": "BEATS_TWINS_20",
+   "statement": "the plan's net return is above the twins' median net return",
+   "prior": 0.5,
+   "prior_source": "the null",
+   "resolves_with": "H20"
+  },
+  {
+   "id": "GAIN0_20",
+   "statement": "the plan's net return after costs is above zero",
+   "prior": "running",
+   "resolves_with": "H20"
+  },
+  {
+   "id": "FADE10_20",
+   "statement": "the plan's net return is at or below -10%",
+   "prior": "running",
+   "resolves_with": "H20"
+  },
+  {
+   "id": "RUN30_20",
+   "statement": "a close in the 20 sessions after the signal session is at least 1.30 x the signal close",
+   "prior": "running",
+   "resolves_with": "H20"
+  }
+ ],
+ "decision": {
+  "sample": "sets of this family, window H20, RESOLVED with a paired difference",
+  "primaries": {
+   "MEAN": {
+    "what": "per-session mean of (plan net - twins' mean net), one-sided t against 0",
+    "signed_by_direction": true,
+    "eligible_extra": "the plan's mean net after costs > 0"
+   },
+   "WIN_RATE": {
+    "what": "per-session share of sets beating the twins' median (BEATS_TWINS_20), one-sided t against 0.5",
+    "statement": "BEATS_TWINS_20",
+    "eligible_extra": "the plan's mean net after costs > 0"
+   }
+  },
+  "require_positive_mean_net": true,
+  "looks": {
+   "n": [
+    60,
+    120,
+    240,
+    480,
+    960,
+    1920
+   ],
+   "t_min": [
+    3.75,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0
+   ],
+   "min_sessions": [
+    15,
+    15,
+    15,
+    30,
+    60,
+    120
+   ],
+   "source": "the same design as research/CATALYST_REGISTER_v1/prereg_2.json (Lan-DeMets O'Brien-Fleming-type spending at 60/120/240 with the t >= 3.0 floor, then t >= 3.0)"
+  },
+  "at_a_look": {
+   "eligible": "t >= that look's t_min, one-sided p < 0.05, estimate > 0, and the primary's eligible_extra",
+   "futility": "from the 240 look on, a primary whose estimate is <= 0 stops: FAIL (futility)",
+   "fail": "a primary not eligible at the 1920 look fails",
+   "confirmed": "eligible at a look and at the next look",
+   "family": "the family stops when both primaries have stopped"
+  },
+  "counted": "each look adds research/QUANT_GRADE/trials/CATALYST_FAMILY_FORM4_<MEAN|WIN_RATE>_n<look>.json (counted)"
+ },
+ "forbidden": [
+  "a backtest of this family",
+  "reading a sealed holdout",
+  "changing a rule after the first set of this family is sealed",
+  "backfilling",
+  "any order, any change to PAPER-POLICY-v4 or ledger.jsonl"
+ ]
+}

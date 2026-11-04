@@ -1,0 +1,145 @@
+{
+ "study_id": "CRYPTO_TUNE_v1",
+ "frozen_at": "2026-10-30T11:09:42Z",
+ "label": "S_NEXT_DUMP10",
+ "features": [
+  "s_ret1",
+  "s_ret5",
+  "s_ret20",
+  "s_dd60",
+  "log_volr",
+  "s_cpos",
+  "log_adv",
+  "gap",
+  "vol20_pre",
+  "spike_z",
+  "log_price",
+  "spikes60",
+  "streak",
+  "dist_high252",
+  "log_age",
+  "breadth",
+  "mkt_ret"
+ ],
+ "feature_sets": {
+  "ALL": [
+   "s_ret1",
+   "s_ret5",
+   "s_ret20",
+   "s_dd60",
+   "log_volr",
+   "s_cpos",
+   "log_adv",
+   "gap",
+   "vol20_pre",
+   "spike_z",
+   "log_price",
+   "spikes60",
+   "streak",
+   "dist_high252",
+   "log_age",
+   "breadth",
+   "mkt_ret"
+  ],
+  "P0": [
+   "s_ret1",
+   "s_ret5",
+   "s_ret20",
+   "s_dd60",
+   "log_volr",
+   "s_cpos",
+   "log_adv"
+  ],
+  "P0_P1": [
+   "s_ret1",
+   "s_ret5",
+   "s_ret20",
+   "s_dd60",
+   "log_volr",
+   "s_cpos",
+   "log_adv",
+   "gap",
+   "vol20_pre",
+   "spike_z",
+   "log_price",
+   "spikes60",
+   "streak",
+   "dist_high252",
+   "log_age",
+   "breadth",
+   "mkt_ret"
+  ],
+  "BENCH": [
+   "vol20_pre",
+   "spike_z",
+   "s_ret1",
+   "mkt_ret",
+   "breadth"
+  ],
+  "NO_LEVEL": [
+   "s_ret1",
+   "s_ret5",
+   "s_ret20",
+   "s_dd60",
+   "log_volr",
+   "s_cpos",
+   "gap",
+   "vol20_pre",
+   "spike_z",
+   "spikes60",
+   "streak",
+   "dist_high252",
+   "log_age",
+   "breadth",
+   "mkt_ret"
+  ]
+ },
+ "split": {
+  "TRAIN": [
+   "2020-01-01",
+   "2022-12-31"
+  ],
+  "VALIDATE": [
+   "2023-01-01",
+   "2023-12-31"
+  ],
+  "REFIT_FOR_CONFIRM": [
+   "2020-01-01",
+   "2023-12-31"
+  ],
+  "CONFIRM": [
+   "2024-01-01",
+   "2026-10-06"
+  ]
+ },
+ "confirm_build": "PATH_HISTORY_v1/build2.py build_market('CRYPTO') on the pinned crypto panel rows 2023-09-01..2026-10-06, events kept from 2024-01-01; built only by --confirm",
+ "n_scenarios": 814,
+ "scenarios_sha256": "0ad8f97ef2438a80fb42d5f23f2e3c9838bb425a5212ca1d7fcb82ed3499f819",
+ "selection": "BEST = highest VALIDATE AUC (ties: lower id); TOP10 = mean of the ten highest; both refit on 2020-2023",
+ "baseline": "BENCH = logistic l2=1 on vol20_pre, spike_z, s_ret1, mkt_ret, breadth (v2.4's benchmark block), refit on 2020-2023",
+ "bar": "a candidate IMPROVES on the benchmark when Holm over the two candidates rejects on the one-sided session-bootstrap p of AUC(candidate) - AUC(BENCH) <= 0 (2.5% then 5%); BEATS CHANCE when z >= 3",
+ "bootstrap": {
+  "unit": "signal session",
+  "resamples": 2000,
+  "seed": 20261030
+ },
+ "honesty": [
+  "VALIDATE is optimistic by construction; only CONFIRM is reported as skill",
+  "crypto 2024 onward is sealed; read once here, on the owner's instruction; nothing tuned on it",
+  "IDX is excluded on the owner's instruction (no-trade zone)",
+  "survivorship: the panel's pair list is the archive's, delisted pairs included where the archive kept them"
+ ],
+ "environment": "pinned venv: scikit-learn 1.9.1, lightgbm 4.7.0, pandas 2.2.3, numpy 2.3.5",
+ "inputs": {
+  "research/PATH_HISTORY_v1/results/events.csv.gz": "0a876f8ced91e7bb940e57ccad45a31ac2789656734c7e191299c121aa18e8c7"
+ },
+ "code": {
+  "research/CRYPTO_TUNE_v1/tune.py": "ce373bfc179a590ab85d60670fb2643d9dbf220b17c79c8045be12c690ff2ae9",
+  "research/TUNE_SWEEP_v1/tune.py": "b4352191b579e4f8e7c220487f5a4164b4c3cc5c0249c99483d49637426be1ba",
+  "research/PATH_HISTORY_v1/build2.py": "552eb2782fd534d3b9b960ede31eec6de5a99669202ee901d54231605914c61c",
+  "idxsig/speculation.py": "85042402e5d0040356e7d37d7240421bc679a371be51a4bad20438a3759047f3",
+  "idxsig/rules/moonshot_g.py": "b050c4d37d9104309b32e70a7e81682ee3029da3a6a0654dae6ac41414abb794",
+  "idxsig/global_panel.py": "2234f5e24a06854b85eb3379dd7d9e1958e0a498c31f410acc9811c7448c79d0",
+  "idxsig/learner2.py": "671f86848ad5ee0a9bd3488a17b788c3459f5499c82a39386bef2dc611f2b9e6"
+ }
+}

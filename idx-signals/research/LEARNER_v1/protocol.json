@@ -1,0 +1,102 @@
+{
+ "protocol_id": "KOD-LEARNER-v1",
+ "frozen": "2026-10-29",
+ "frozen_before": "every outcome it can learn from: no RESOLUTION record exists in paper/catalysts.jsonl (the first H20 window ends 2026-11-27), so the learner is defined before any data it will be trained or judged on",
+ "owner_decision": "2026-10-29, the owner: 'The machine should self learn to understand how to triangulate a pre catalyst as accurately as possible and i want the machine to become confident. I also want the machine to detect the catalyst based on accurate predictions, not being lucky that its going up.'",
+ "what_it_learns": "for every cone statement of every sealed catalyst set (and the joint TRIANGULATED statement where a family has a mechanism statement), how far the set's own features should move the sealed prior; one model per statement id, pooled across families so that evidence from one source informs another",
+ "ledger": "paper/learner.jsonl, hash-chained and timestamped like the other ledgers, append-only",
+ "data": {
+  "inputs": "only fields sealed in the CATALYST_SET before its entry cutoff (the features list); never a price after the signal session",
+  "targets": "cone outcomes of RESOLUTION records whose resolved_at is before the forecast time; TRIANGULATED is true when both of its component statements resolved true, false when either resolved false, and not used while either is ungraded",
+  "no_peeking": "every forecast records the hash of the weights it used; paper-verify retrains from the resolutions dated before the forecast and must reproduce that hash"
+ },
+ "features": [
+  "family one-hot (SEC13D, SEC13D_V2, DILUTION_8K, FORM4, FORM4_SHARP, IDX_INDEX)",
+  "coverage FIRE",
+  "ret1, ret5, ret20, dd60 (clipped to -1..1)",
+  "log volume ratio",
+  "close position in the day's range",
+  "log10 20-day traded value / 10",
+  "log10 close / 3",
+  "log10 purchase value / 7 and its presence",
+  "top executive",
+  "owners (capped at 5) / 5",
+  "lag from trade to filing / 30 (capped at 1)",
+  "largest holdings increase (capped at 5) / 5 and its presence",
+  "Item 4 strong intent",
+  "accepted during the signal session",
+  "log10 market value / 10 and its presence",
+  "DILUTION_RECENT",
+  "MICROCAP",
+  "direction"
+ ],
+ "model": {
+  "kind": "logistic regression with the sealed prior's logit as an offset, so a coefficient is an adjustment to the prior",
+  "penalty": "L2, lambda 20, on every coefficient including the intercept adjustment: with little data the learner stays at the prior",
+  "fit": "iteratively reweighted least squares, at most 50 iterations, tolerance 1e-10",
+  "min_rows": 20,
+  "probability_clip": [
+   0.01,
+   0.99
+  ]
+ },
+ "triangles": {
+  "SEC13D_V2": [
+   "MECH_13DA_UP_60",
+   "BEATS_TWINS_20"
+  ],
+  "FORM4_SHARP": [
+   "MECH_SECOND_BUY_20",
+   "BEATS_TWINS_60"
+  ],
+  "prior": "the product of the two components' sealed priors"
+ },
+ "earned_confidence": {
+  "rule": "published = sigmoid(logit(prior) + alpha x (logit(raw) - logit(prior))): the learner speaks with the confidence it has earned",
+  "alpha": "min(1, n / 300) x clip(skill / 0.05, 0, 1), where n and skill come from the learner's own earlier raw forecasts that have since resolved: skill = 1 - Brier(raw) / Brier(sealed prior) on the same statements",
+  "meaning": "alpha 0 means the learner has not yet proven it beats the sealed priors and publishes them unchanged; alpha 1 means at least 300 resolved forecasts with a Brier skill of 5% or more"
+ },
+ "timing": "learner-forecast runs after the catalyst-seal steps and before each set's entry cutoff; one forecast per set; a set past its cutoff is never forecast",
+ "scoring": {
+  "forward_only": "a forecast is scored only against outcomes that resolved after it was made",
+  "reported": "Brier and log score of sealed prior, raw and published per statement; reliability in ten bins; alpha over time",
+  "earned_not_lucky": "a gain (GAIN0_k true) is EARNED when the same set also beat its twins over the same horizon (BEATS_TWINS_k true) and, for a family with a mechanism statement, the mechanism happened; otherwise LUCKY (the market or sector carried it, or the stated catalyst never came). The report states both counts.",
+  "detection": "among TRIANGULATED and BEATS_TWINS forecasts, the realised rate of the learner's top fifth against the family base rate"
+ },
+ "claim": {
+  "statistic": "per-session mean of (Brier of the sealed prior - Brier of the published forecast) over every scored (forecast, statement) pair, one-sided t against 0",
+  "looks": [
+   60,
+   120,
+   240,
+   480,
+   960,
+   1920
+  ],
+  "t_min": [
+   3.75,
+   3.0,
+   3.0,
+   3.0,
+   3.0,
+   3.0
+  ],
+  "min_sessions": [
+   15,
+   15,
+   15,
+   30,
+   60,
+   120
+  ],
+  "eligible": "t >= that look's t_min and one-sided p < 0.05: the learner beats the sealed priors (ELIGIBLE FOR OWNER REVIEW)",
+  "futility": "from the 240 look, a mean at or below 0 is FAIL (futility): the learner adds nothing to the frozen priors",
+  "trial_file": "research/QUANT_GRADE/trials/LEARNER_v1_BRIER_registered.json (pending), a counted file per look"
+ },
+ "never": [
+  "change a family rule, prior, twin draw, resolution or ledger line",
+  "feed back into any family's sealing (the families stay frozen; the learner sits beside them)",
+  "use an outcome resolved after its forecast",
+  "place or simulate an order"
+ ]
+}

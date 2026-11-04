@@ -1,0 +1,17 @@
+{
+ "file": "protocol.json",
+ "sha256": "15f9d30b8e268519038969333ce0466ab7d6e92284d09385edfbc5658963729a",
+ "tokens": [
+  {
+   "authority": "freetsa",
+   "token": "protocol.json.freetsa.tsr",
+   "time": "2026-10-31T23:06:18+00:00"
+  },
+  {
+   "authority": "sectigo",
+   "token": "protocol.json.sectigo.tsr",
+   "time": "2026-10-31T23:06:18+00:00"
+  }
+ ],
+ "errors": []
+}

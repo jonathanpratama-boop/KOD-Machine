@@ -1,0 +1,25 @@
+{
+  "source_base": "7aad4311eb89f713107c96659c2000034bfa9c10",
+  "ordered_patches": [
+    {
+      "patch": "crypto-failed-fetch-v1.2.patch",
+      "sha256": "2ff0d932719529b9e1323ae9fc97140ed3dd5993523902d71dc573bea4d1c731"
+    },
+    {
+      "patch": "paper-execution-feasibility-v1.patch",
+      "sha256": "a4c5fe637c68d10e8d3d0b59e7bcdf1a0c212de7d98c18d535373438f0045d11"
+    },
+    {
+      "patch": "paper-execution-filter-evidence.patch",
+      "sha256": "c5c09d282eb8fd4511fc6d69a460dbabb01c14f0dedc9e7fc6e84f5782b8388c"
+    },
+    {
+      "patch": "crypto-quote-validation-v1.3.patch",
+      "sha256": "41dcf9301d5cc0196812bdaf1e3b97be88fa69b9ef02ea039353f03e582ce4b6"
+    },
+    {
+      "patch": "crypto-phase-cas-v1.4.patch",
+      "sha256": "25e0ca5c1dac9a8e0d51b60de631055196ffb1150a3c86a1039bc943e0750afe"
+    }
+  ]
+}

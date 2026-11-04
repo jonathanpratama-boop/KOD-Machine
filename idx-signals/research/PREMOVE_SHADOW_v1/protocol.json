@@ -1,0 +1,67 @@
+{
+ "trial_id": "PREMOVE_SHADOW_v1",
+ "frozen_at": "2026-10-30T21:34:04Z",
+ "decision": "Owner, 2026-10-30: retain sequence as a frozen research challenger, keep summary as the default research baseline, and run one preregistered prospective shadow trial with a shuffled control.",
+ "arms": {
+  "summary": "PR #19 frozen summary model (models.json), temperature from summary.json",
+  "sequence": "PR #19 frozen sequence model (models.json), temperature from summary.json",
+  "shuffled": "control_model.json: the sequence recipe fitted on 2020-2021 with each row's 20-day window shuffled separately (one permutation per row, the day's return, range and volume kept together; premove_shadow.shuffle_windows); temperature chosen on 2022 by log loss"
+ },
+ "same_for_every_arm": {
+  "universe": "the crypto routine's Binance USDT pull (trading pairs), non-stable, non-leveraged (global_panel.STABLE / LEVERAGED, the benchmark's own exclusion)",
+  "eligibility": "premove_core.build_examples unchanged: 60 consecutive valid days, median prior 20-day quote volume >= 100,000 USDT, finite features; only completed bars",
+  "target": "PR #19 unchanged: entry = next UTC day's open (label reference only), barrier b = max(log 1.10, 3 x 20-day sd x sqrt 5), first daily close beyond +/-b within 5 days",
+  "budget": "five names per arm per day, highest upside probability, ties by ticker",
+  "populations": {
+   "early": "ret1 < 10% and ret5 < 20% (primary)",
+   "all": "every eligible candidate"
+  }
+ },
+ "timing": "each day's forecast is sealed after that UTC day closes (crypto routine, about 00:25 UTC) and before its outcome bars exist; the label's entry reference is that 00:00 UTC open, which no feature reads. The ledger is hash-chained and externally timestamped.",
+ "trial": {
+  "first_decision": "2026-10-30",
+  "last_decision": "2027-10-29",
+  "final_outcomes_due": "2027-11-05",
+  "stopping": "fixed: no early stop, no extension, no performance-based change"
+ },
+ "analysis": {
+  "primary": "early-population daily hit rate, sequence minus summary (censored alerts count as non-hits)",
+  "bootstrap": {
+   "block": 10,
+   "draws": 2000,
+   "seed": 20261031
+  },
+  "uncertainty": "paired moving calendar-block bootstrap of daily hit-rate differences, 95% interval",
+  "reported_beside": [
+   "distinct episodes caught",
+   "duplicate alerts",
+   "matched-episode lead",
+   "censoring counts",
+   "probability quality (Brier, log loss) of every candidate",
+   "the all-candidates population"
+  ]
+ },
+ "promotion_hurdle": {
+  "min_difference": 0.01,
+  "rule": "sequence becomes the default research baseline only if, at the end, its early hit rate beats summary's by at least 1 percentage point, the paired 95% interval is above zero, and it catches more distinct episodes; otherwise summary stays the default",
+  "temporal_order": "attributing the gain to the ORDER of days additionally needs sequence to beat the shuffled control with a paired 95% interval above zero",
+  "note": "a research hurdle, not economic breakeven; neither arm has shown trading profit"
+ },
+ "honesty": [
+  "12 months may be inconclusive: the retrospective +0.88 point difference had a 95% interval of -0.22 to +1.81; detecting a stable advantage of that size could take about 2.5 to 3 years. An inconclusive end leaves summary as the default; the trial is not extended until it becomes significant.",
+  "the live universe is today's trading pairs, not the archive catalogue the models were fitted on",
+  "the control was fitted on a re-collected vintage (2026-10-30T21:31:39.617319Z) whose panel is byte-identical to PR #19's input: True; its refit of the frozen arms on that vintage is recorded in control_model.json",
+  "the live USDT universe now includes tokenized US-stock pairs (for example AAPLB, SPYB) that did not exist in the 2020-2023 training catalogue; the benchmark's universe rule includes them and is kept unchanged for every arm (seen in the pre-freeze dry run of 2026-10-29, before any outcome)",
+  "paper only: no orders, no execution or profit claim"
+ ],
+ "pins": {
+  "idxsig/premove_shadow.py": "3bed4b67225fa50dcbf71e6e56113c333ad201385e9ca1cf9a69bcc32ebc59ad",
+  "idxsig/premove_core.py": "c76686dc5272ef920698fd5f0a85277c1501ed863260b547bcb78e91b16d8c62",
+  "idxsig/premove.py": "53d161019b9df1c79ef9a738120c4930c56c4cdfcccb284fe0392ae08aebff8c",
+  "research/PREMOVE_SEQUENCE_v1/runs/20261030T024900Z/models.json": "e6dff0b91e5328b14c9440ef41c1b13f8d5549b6f34c582f643853c94a9844c5",
+  "research/PREMOVE_SEQUENCE_v1/runs/20261030T024900Z/summary.json": "7bf727510581d095a259bc99dc0f66e50e798876bdf41e4fa48cd04c1c0c8261",
+  "research/PREMOVE_SEQUENCE_v1/protocol.json": "bd3bcd7857c78ed2c71bf4266fff27ca62f66b40124ceb9f727a4bf1283568b4",
+  "research/PREMOVE_SHADOW_v1/control_model.json": "394b67ef64c18eeb42cc0ff0e1c8df154fdbc9ba3dbff87ac9a2a18441d2a26b",
+  "research/PREMOVE_SHADOW_v1/fit_control.py": "a957353670e93e50264a0150177b0ff504f9455f30b5dc53ac2b367f5b2d482b"
+ }
+}

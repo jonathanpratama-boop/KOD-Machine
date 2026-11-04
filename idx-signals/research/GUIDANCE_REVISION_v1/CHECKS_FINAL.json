@@ -1,0 +1,18 @@
+{
+  "checked_at_utc": "2026-10-17T07:32:20.162525+00:00",
+  "guidance_tests": 16,
+  "idx_repository_tests": 259,
+  "kod_tests": 96,
+  "status": "PASS",
+  "clean_runtime": {
+    "python": "3.12.14",
+    "pandas": "2.3.3",
+    "numpy": "2.5.4",
+    "exchange_calendars": "4.5.6"
+  },
+  "source_and_chain_readback": "PASS",
+  "original_decisions_changed": false,
+  "rule_audit": "PASS",
+  "recorded_run_hashes": "PASS",
+  "note": "IDX suite and final decision verifier were run with freshly resolved isolated dependencies. KOD tests passed before this calendar-only repair; its code is unchanged."
+}

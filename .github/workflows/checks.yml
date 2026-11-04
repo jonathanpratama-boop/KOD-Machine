@@ -3,64 +3,142 @@ name: checks
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
   actions: read  # KOD reads GitHub's own workflow-run records as server-side timestamp receipts
 
+env:
+  OPENBLAS_NUM_THREADS: "1"
+
 jobs:
-  workstation:
+  # Never add workflow-level concurrency or trigger path filters: every push is
+  # timestamp evidence, including forecast-only pushes and superseded commits.
+  integrity:
     runs-on: ubuntu-latest
+    outputs:
+      run-tests: ${{ steps.scope.outputs.run-tests }}
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - run: python3 -m pip install -r kod-machine/requirements-workstation.txt
-      - name: Audit optional application dependencies against known advisories
-        run: |
-          python3 -m pip install pip-audit==2.10.1
-          python3 -m pip_audit -r kod-machine/requirements-workstation.txt --progress-spinner off
-      - name: Optional workstation integration, recovery, source-boundary and web tests
-        working-directory: kod-machine
-        run: python3 -m unittest discover -s workstation_tests -v
-      - name: Four preserved real-company releases replay offline
-        working-directory: kod-machine
-        run: python3 -m kod.workstation demo --data-dir "$RUNNER_TEMP/kod-workstation-demo"
-  checks:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - run: pip install -r idx-signals/requirements.txt
-      - name: No past run, manifest, registry, card or log line was edited (whole history)
-        run: python3 tools/check_append_only.py --all
-      - name: KOD tests
-        working-directory: kod-machine
-        run: python3 -m unittest
-      - name: KOD verify (rebuild every card hash, check git anchors, TSA tokens and GitHub receipts)
-        working-directory: kod-machine
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python3 -m kod verify
+          fetch-depth: 0  # Required by --all and KOD git-anchor verification.
       - name: GitHub receipt for this very commit (server-side created_at, exact head_sha)
         if: github.event_name == 'push'
         working-directory: kod-machine
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 -m kod receipt-selftest --sha "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID"
-      - name: IDX harness tests
-        working-directory: idx-signals
-        run: python3 -m unittest
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            idx-signals/requirements.txt
+            idx-signals/constraints-research.txt
+      - name: CI routing regression tests
+        run: python3 -m unittest discover -s tools/ci_tests -v
+      - name: Select expensive tests (uncertainty runs tests)
+        id: scope
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 tools/ci_scope.py
+      - name: No past run, manifest, registry, card or log line was edited (whole history)
+        run: python3 tools/check_append_only.py --all
+      - run: pip install -r idx-signals/requirements.txt -c idx-signals/constraints-research.txt
+      - name: KOD verify (rebuild every card hash, check git anchors, TSA tokens and GitHub receipts)
+        working-directory: kod-machine
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 -m kod verify
       - name: IDX rules pass the causal-source audit
         working-directory: idx-signals
         run: python3 -m idxsig rules
       - name: IDX runs match their recorded hashes
         working-directory: idx-signals
         run: python3 -m idxsig verify-runs
+  code-tests:
+    needs: integrity
+    if: needs.integrity.outputs.run-tests == 'true'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-code-tests-${{ github.event_name }}-${{ github.ref }}
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Keep history until all test fixture dependencies are proven shallow-safe.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            idx-signals/requirements.txt
+            idx-signals/constraints-research.txt
+      - run: pip install -r idx-signals/requirements.txt -c idx-signals/constraints-research.txt
+      - name: KOD tests
+        working-directory: kod-machine
+        run: python3 -m unittest
+      - name: IDX harness tests
+        working-directory: idx-signals
+        run: python3 -m unittest
+  workstation:
+    needs: integrity
+    if: needs.integrity.outputs.run-tests == 'true'
+    concurrency:
+      group: ${{ github.workflow }}-workstation-${{ github.event_name }}-${{ github.ref }}
+      cancel-in-progress: true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            requirements-runtime.txt
+            constraints-runtime.txt
+            kod-machine/requirements-workstation.txt
+            idx-signals/requirements.txt
+            idx-signals/constraints-research.txt
+      - run: python3 -m pip install -r requirements-runtime.txt
+      - name: Audit optional application dependencies against known advisories
+        run: |
+          python3 -m pip install pip-audit==2.10.1
+          python3 -m pip_audit -r kod-machine/requirements-workstation.txt --progress-spinner off
+      - name: Runtime paper integration, restart and verified recovery
+        run: python3 tools/check_runtime_release.py
+      - name: Optional workstation integration, recovery, source-boundary and web tests
+        working-directory: kod-machine
+        run: python3 -m unittest discover -s workstation_tests -v
+      - name: Four preserved real-company releases replay offline
+        working-directory: kod-machine
+        run: python3 -m kod.workstation demo --data-dir "$RUNNER_TEMP/kod-workstation-demo"
+      - name: Analyst-task evaluation (fails on a material error or answers that differ between two fresh runs)
+        working-directory: kod-machine
+        run: python3 evaluation/run_eval.py --runs 2
+  # Preserve the existing required-check name: success means integrity plus
+  # successful suites, or an explicit routing/baseline decision.
+  checks:
+    if: always()
+    needs: [integrity, code-tests, workstation]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require every selected check
+        env:
+          INTEGRITY: ${{ needs.integrity.result }}
+          SELECTED: ${{ needs.integrity.outputs.run-tests }}
+          CODE: ${{ needs.code-tests.result }}
+          WORKSTATION: ${{ needs.workstation.result }}
+        run: |
+          test "$INTEGRITY" = success
+          if [ "$SELECTED" = true ]; then
+            test "$CODE" = success
+            test "$WORKSTATION" = success
+          else
+            test "$SELECTED" = false
+            test "$CODE" = skipped
+            test "$WORKSTATION" = skipped
+          fi

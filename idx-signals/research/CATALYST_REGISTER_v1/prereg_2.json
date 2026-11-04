@@ -1,0 +1,29 @@
+{
+ "id": "KOD-CATALYST-REGISTER-v1-PREREG-2",
+ "frozen": "2026-10-28",
+ "frozen_before": "the first SEC13D set and every SEC13D outcome; no SEC13D record existed when this file was committed",
+ "owner_decision": "2026-10-28, the owner: 'merge PR #16 and do 1, 2, 3, 4, 5' (items 1 and 2 of the session's proposal: a win-rate primary, and pre-declared extended looks); handoff/decisions/2026-10-28c_proof_program.md",
+ "applies_to": "family SEC13D of research/CATALYST_REGISTER_v1/protocol.json, which stays unchanged; this file replaces only its decision_rule 'looks', 'fail' and 'counted' entries, and adds a second primary on the same records",
+ "why": "power: one sealed set's paired difference has a spread near 0.21 (US_INSIDER_BUY 20-session returns), so at t >= 3 the smallest provable mean edge is 8.5% at 60 sets, 4.3% at 240, 2.1% at 960 and 1.5% at 1,920, and the smallest provable win rate against twins is 69%, 60%, 55% and 53%; the literature's 13D drift is 1-3% per event",
+ "sample": "FIRE sets of family SEC13D, window H20, status RESOLVED with a paired difference (at least one twin traded)",
+ "primaries": {
+  "MEAN": {"what": "as protocol.json: per-session mean of (plan net - twins' mean net), one-sided t against 0, df = sessions - 1", "estimate": "mean of the per-session means", "eligible_extra": "the plan's mean net return after costs on these sets > 0"},
+  "WIN_RATE": {"what": "per set, a win is the plan's net above the twins' median net (the cone statement BEATS_TWINS_20); per-session share of wins, one-sided t of the session shares against 0.5, df = sessions - 1; the exact binomial p of all wins against 0.5 is reported beside it, descriptively (sets of one session are not independent)", "estimate": "mean session share - 0.5", "eligible_extra": "the plan's mean net return after costs on these sets > 0 (a high win rate with a losing mean is never eligible)"}
+ },
+ "looks": {
+  "n": [60, 120, 240, 480, 960, 1920],
+  "t_min": [3.75, 3.0, 3.0, 3.0, 3.0, 3.0],
+  "min_sessions": [15, 15, 15, 30, 60, 120],
+  "note": "60/120/240 and their boundaries are protocol.json's; 480/960/1920 are pre-declared now and continue the same records; the t >= 3.0 floor binds at every extension look"
+ },
+ "at_a_look": {
+  "eligible": "t >= that look's t_min, one-sided p < 0.05, estimate > 0, and the primary's eligible_extra",
+  "futility": "from the 240 look on, a primary whose estimate is <= 0 stops: FAIL (futility) for that primary",
+  "fail": "a primary not eligible at the 1920 look fails",
+  "confirmed": "eligible at a look and at the next look",
+  "family": "the family stops when both primaries have stopped (futility, FAIL or confirmed); sealing may continue descriptively only if the owner says so"
+ },
+ "error": "each primary has at most six looks at t >= 3.0 or stricter (one-sided normal tail 0.00135 at 3.0), so the chance that a null primary is ever eligible is at most 0.81% (Bonferroni over looks), at most 1.62% for the family; every look of every primary is a counted trial in research/QUANT_GRADE/trials, so the register's Holm adjustment sees all of them",
+ "counted": "each look adds research/QUANT_GRADE/trials/CATALYST_REGISTER_v1_SEC13D_FIRE_<MEAN|WIN_RATE>_n<look>.json (counted); test numbers follow the order in which counted trial files are added",
+ "binding": "every SEC13D CATALYST_SET sealed from now carries this file's id and sha256 under 'preregistration'; paper-verify refuses a set whose recorded sha256 differs from this file"
+}

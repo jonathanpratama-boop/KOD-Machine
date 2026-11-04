@@ -1,0 +1,47 @@
+{
+  "protocol_id": "KOD-TA-HISTORY-v1",
+  "frozen": "2026-10-29, before any new indicator was computed for any event and before any result of this study existed",
+  "owner_instruction": "run it: do the research-backed price indicators, and the popular chart indicators, add anything to the one live question",
+  "question": "On US stocks that just closed 30% or more higher, do (a) the price indicators with the strongest published evidence and (b) the popular chart indicators add out-of-time discrimination to LEARNER v2.3's own features, for its headline statement (the next session closes 10% lower, on its own) and its companion (the 5-session plan ends 10% down, on its own)?",
+  "events": {"file": "research/LEARNER_v2/warmstart_v3/events_us.csv.gz", "sha256": "d24f3f2a947f71448c77dc580ab92e2d16ad0e8d2d84b049314dc76686425b69",
+             "what": "the 6,225 US events of research/PATH_HISTORY_v1 (2020-2023) with v2.3's 29 features and both labels, as v2.3's warm start; nothing from 2024 on is read (the panel ends 2023-12-29)"},
+  "prices": {"manifest": "data/manifests/panel_us_repair-20261008T114805Z.json", "manifest_sha256": "705ca354492f45d63a2fb15e0b4db1d334c490a9ac8749d606adfc9622d94039",
+             "panel_sha256": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b",
+             "chain": "every indicator reads the reference chain (cumulative close over the exchange's previous close), highs and lows scaled onto it, through the close of the signal session d"},
+  "blocks": {
+    "BASE": "LEARNER v2.3's 29 features exactly as in the event file (P0, P1, E_US)",
+    "RESEARCH": {"features": {
+        "max20": "the largest single-session return in the 20 sessions before d (d-20..d-1, at least 15 present): the lottery effect, Bali, Cakici & Whitelaw (2011)",
+        "near_high252": "the level at d over its maximum over the 252 sessions ending at d (at least 200 present): George & Hwang (2004)",
+        "mom_12_1": "the level at d-21 over the level at d-252, minus 1 (both present): Jegadeesh & Titman (1993), the 12-1 convention",
+        "has_year": "1 when near_high252 and mom_12_1 could be computed (the panel starts 2020-01-02, so most 2020 events have neither)"},
+      "added_to": "BASE"},
+    "CHART": {"features": {
+        "rsi14": "Wilder's RSI over 14 sessions on the chain closes through d",
+        "macd_hist": "(EMA12 - EMA26) - EMA9 of that difference, at d, over the level at d",
+        "stoch_k14": "(close - lowest low) / (highest high - lowest low) over the 14 sessions ending at d",
+        "bollinger_b": "(close - (MA20 - 2 sd20)) / (4 sd20) at d"},
+      "added_to": "BASE"},
+    "missing": "an indicator that cannot be computed is 0 after scaling (RESEARCH carries has_year)"
+  },
+  "folds": {"A": {"fit": ["2020-01-02", "2021-12-31"], "score": ["2022-01-01", "2022-12-31"]},
+            "B": {"fit": ["2020-01-02", "2022-12-31"], "score": ["2023-01-01", "2023-12-29"]},
+            "note": "2023 was the test year of PATH_HISTORY_v1, whose result chose v2.3's features; BASE was chosen on it, which can only favour BASE, never the new blocks. Fold A adds a test year that chose nothing"},
+  "model": "penalised logistic regression per statement, block and fold: features standardised on the fold's fit rows, an unpenalised-in-effect intercept (precision 1/1.5^2), precision 16 on every slope (learner2's LAMBDA_SHARED); Newton with step-halving; nothing tuned",
+  "statements": {"NEXT_DUMP10_1": "y_NEXT_DUMP10_1 of the event file", "DUMP10_5": "y_DUMP10_5 of the event file (ungraded rows dropped)"},
+  "metrics": {
+    "auc": "per fold; pooled = the folds' AUCs weighted by their numbers of positive-negative pairs",
+    "delta": "paired: AUC(BASE + block) - AUC(BASE) on the same scored rows; pooled the same way",
+    "uncertainty": "cluster bootstrap over the ISO weeks of the signal session within each fold, 2,000 resamples, seed 20261029, the same resamples for both models; one-sided p for delta <= 0 = (resamples with pooled delta <= 0 + 1) / 2,001",
+    "brier": "the pooled Brier gain of BASE + block over BASE, reported beside it"
+  },
+  "decision_rule": {
+    "tests": ["RESEARCH on NEXT_DUMP10_1", "RESEARCH on DUMP10_5", "CHART on NEXT_DUMP10_1", "CHART on DUMP10_5"],
+    "adds": "Holm over the four at 0.05 rejects delta <= 0 and the pooled Brier gain over BASE is above zero",
+    "otherwise": "DOES NOT ADD for that statement (a result about these indicators on this question)",
+    "descriptive": "BASE + RESEARCH + CHART together; each indicator's standardised coefficient; the AUC of each block alone"
+  },
+  "use": "a block that ADDS becomes a candidate for a separately frozen LEARNER v2.4 challenger (the RESEARCH block needs a one-year live price pull); one that does not stays out. Nothing here changes v2.3, any ledger, register or frozen protocol",
+  "counted_trial": "research/QUANT_GRADE/trials/TA_HISTORY_v1.json (4 variants, Holm), the result in TA_HISTORY_v1_result.json: one trial",
+  "limitations": ["survivor-only US prices (delisted names absent)", "daily bars only", "the 12-month indicators exist for few 2020 events, so fold A fits them on 2021 events mostly", "the chart indicators at d include the spike day itself, which dominates every short window (by construction, as a chartist would see the chart that evening)"]
+}

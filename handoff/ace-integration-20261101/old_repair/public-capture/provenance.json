@@ -1,0 +1,15 @@
+{
+  "purpose": "one bounded public execution feasibility capture; no orders/account/credentials",
+  "url": "https://data-api.binance.vision/api/v3/exchangeInfo?symbols=%5B%22BTCUSDT%22,%22ETHUSDT%22,%22BEAMXUSDT%22%5D",
+  "request_start_utc": "2026-10-31T18:50:25.383796+00:00",
+  "pairs": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "BEAMXUSDT"
+  ],
+  "http_status": 200,
+  "received_utc": "2026-10-31T18:50:32.215443+00:00",
+  "sha256": "db2481cd867413f1dafb55ae520ded9296603b1b359bf7dd0500c90b99ba3f65",
+  "bytes": 15190,
+  "status": "captured"
+}

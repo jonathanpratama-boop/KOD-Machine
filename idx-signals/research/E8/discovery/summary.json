@@ -1,0 +1,160 @@
+{
+  "protocol_id": "KOD-CRYPTO-E8-v1",
+  "stage": "discovery",
+  "protocol_sha256": "6304b1fb0d07adca9f26474a77dc03e0fcac95c900a812b680f67609cdef011d",
+  "manifest": "binance_1h-20261015T182940Z.jsonl",
+  "manifest_sha256": "2587a63ce26034e1d54670579f8843150f640407a6df0338f35537bd30d20adf",
+  "last_hour_read": "2022-12-31 23:00:00+00:00",
+  "code_commit": "f23e1f564d7c4d13832ec09e6968c640db5ccd9b",
+  "warning_list_matches_feasibility_v1_1": true,
+  "leader_triggers": 2511,
+  "report": {
+    "events": 1206,
+    "scored": 1206,
+    "no_entry": 0,
+    "no_controls": 0,
+    "distinct_weeks": 116,
+    "distinct_coins": 266,
+    "missing_end": 1,
+    "match_levels": {
+      "liquidity+volatility": 925,
+      "liquidity": 281
+    },
+    "information": {
+      "mean_R72": 0.005563112567507342,
+      "median_R72": -0.010409048803081244,
+      "mean_ctrl_R72": 0.0012052093763450494,
+      "mean_excess": 0.004357903191162294,
+      "vs_controls": {
+        "estimate": 0.004357903191162294,
+        "ci95": [
+          -0.00281293811087944,
+          0.011600060671992025
+        ],
+        "p_one_sided": 0.1136886311368863,
+        "weeks": 116,
+        "resamples": 10000
+      }
+    },
+    "moonshot": {
+      "U20_rate": 0.17827529021558872,
+      "U20_ctrl_rate": 0.15944859038142623,
+      "U20_difference": {
+        "estimate": 0.018826699834162523,
+        "ci95": [
+          -0.005280952815984026,
+          0.043702554162777546
+        ],
+        "p_one_sided": 0.0660933906609339,
+        "weeks": 116,
+        "resamples": 10000
+      },
+      "U30_rate": 0.10033167495854063,
+      "U30_ctrl_rate": 0.07788142620232172,
+      "U30_difference": {
+        "estimate": 0.022450248756218903,
+        "ci95": [
+          0.0014750899001589927,
+          0.04374453382932606
+        ],
+        "p_one_sided": 0.017198280171982803,
+        "weeks": 116,
+        "resamples": 10000
+      }
+    },
+    "trading_plan": {
+      "mean_net": 0.0009166504747364328,
+      "median_net": -0.021289059032024216,
+      "mean_net_vs_zero": {
+        "estimate": 0.0009166504747364305,
+        "ci95": [
+          -0.008798435907117609,
+          0.011030734309109662
+        ],
+        "p_one_sided": 0.43595640435956406,
+        "weeks": 116,
+        "resamples": 10000
+      },
+      "mean_ctrl_net": -0.004003297150630839,
+      "mean_net_minus_ctrl": 0.004919947625367271,
+      "win_rate": 0.41127694859038144,
+      "win_rate_wilson95": [
+        0.38382999348335284,
+        0.4392873262042371
+      ],
+      "mean_win": 0.10787087427980602,
+      "mean_loss": -0.07380066643697414,
+      "worst_1pct": -0.10538384845463611,
+      "worst_trade": -0.10538384845463622,
+      "best_trade": 0.19520958083832385,
+      "exit_reasons": {
+        "TIMEOUT": 598,
+        "STOP": 402,
+        "TAKE_PROFIT": 206
+      },
+      "exposure": {
+        "max_concurrent_positions": 17,
+        "mean_holding_hours": 51.8134328358209,
+        "share_of_hours_with_a_position": 0.700666207213416,
+        "per_trade_capital": 0.05,
+        "cumulative_net_at_5pct_per_trade": 0.05527402362660853,
+        "max_drawdown_at_5pct_per_trade": -0.3893413804670111,
+        "capacity_usd_at_1pct_of_hourly_volume": {
+          "median": 3105.6668147007294,
+          "p10": 637.2702270541668
+        }
+      }
+    },
+    "by_year": {
+      "2020": {
+        "scored": 37,
+        "mean_excess": 0.03215455282175386,
+        "mean_net": 0.04178763846573018
+      },
+      "2021": {
+        "scored": 699,
+        "mean_excess": 0.010023559602608615,
+        "mean_net": 0.00869785926682796
+      },
+      "2022": {
+        "scored": 470,
+        "mean_excess": -0.006256500783162956,
+        "mean_net": -0.013873331443005578
+      }
+    },
+    "without_two_busiest_weeks": {
+      "weeks_dropped": [
+        202106,
+        202146
+      ],
+      "scored": 1150,
+      "mean_excess": 0.002636705378267248
+    },
+    "latency_one_hour": {
+      "scored": 1206,
+      "mean_excess": 0.0029875994092572696
+    },
+    "by_link_tercile": {
+      "low": 5.857719684331586e-05,
+      "mid": 0.015670250424405837,
+      "high": -0.0026551180477622743
+    }
+  },
+  "gates": {
+    "G0_sample": true,
+    "G1_information": false,
+    "G2_moonshot": false,
+    "G3_trading": false,
+    "G4_consistency": false,
+    "G5_robustness": true
+  },
+  "decision": "FAIL",
+  "high_win_rate": false,
+  "unscorable_share": 0.0,
+  "started": "2026-10-16T16:25:37+00:00",
+  "finished": "2026-10-16T16:27:17+00:00",
+  "claims": {
+    "allowed": "whether this exact rule and plan beat matched non-linked coins in 2020-07..2022 Binance spot data under the stated costs",
+    "not_allowed": "prospective performance, results for other markets, horizons, links or plans, or a claim that no spillover exists anywhere if it fails"
+  }
+}

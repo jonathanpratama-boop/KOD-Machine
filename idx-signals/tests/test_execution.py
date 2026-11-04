@@ -9,7 +9,12 @@ FLAT_NET = (1 - 0.0025) / (1 + 0.0015) - 1
 
 
 def one(m, ticker=0, signal=2, **cfg):
-    out = execute(m, np.array([ticker]), np.array([signal]), ExecConfig(holding_days=cfg.pop("holding", 3), **cfg))
+    out = execute(
+        m,
+        np.array([ticker]),
+        np.array([signal]),
+        ExecConfig(holding_days=cfg.pop("holding", 3), **cfg),
+    )
     return {k: v[0] for k, v in out.items()}
 
 

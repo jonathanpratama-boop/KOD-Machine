@@ -1,4 +1,5 @@
 """Synthetic tests for the helpers in research/E9/run_test.py (no data, no network)."""
+
 import importlib.util
 import unittest
 from pathlib import Path
@@ -9,7 +10,9 @@ from idxsig import execution
 from idxsig.market import Fees
 from idxsig.profiles import PROFILES
 
-spec = importlib.util.spec_from_file_location("e9_run_test", Path(__file__).resolve().parents[1] / "research" / "E9" / "run_test.py")
+spec = importlib.util.spec_from_file_location(
+    "e9_run_test", Path(__file__).resolve().parents[1] / "research" / "E9" / "run_test.py"
+)
 R = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(R)
 TIERS = PROFILES["US"].cost_tiers
@@ -19,16 +22,27 @@ class Costs(unittest.TestCase):
     def test_tiers_match_the_harness(self):
         p = np.array([0.2, 0.999, 1.0, 4.99, 5.0, 19.99, 20.0, 400.0])
         self.assertTrue(np.array_equal(R.tier_cost(p, TIERS), execution._tier_costs(p, TIERS)))
-        self.assertEqual(list(R.tier_cost(p, TIERS)), [0.015, 0.015, 0.005, 0.005, 0.0015, 0.0015, 0.0005, 0.0005])
+        self.assertEqual(
+            list(R.tier_cost(p, TIERS)),
+            [0.015, 0.015, 0.005, 0.005, 0.0015, 0.0015, 0.0005, 0.0005],
+        )
 
     def test_net_formula(self):
         f = Fees(0.0, 2.78e-05)
         got = R.net_return(np.array([0.10]), np.array([0.5]), np.array([30.0]), f, TIERS)
         self.assertAlmostEqual(got[0], 1.10 * (1 - 2.78e-05 - 0.0005) / 1.015 - 1, places=15)
-        got = R.net_return(np.array([0.10]), np.array([0.5]), np.array([30.0]), f, TIERS, extra=0.005)
+        got = R.net_return(
+            np.array([0.10]), np.array([0.5]), np.array([30.0]), f, TIERS, extra=0.005
+        )
         self.assertAlmostEqual(got[0], 1.10 * (1 - 2.78e-05 - 0.0005 - 0.005) / 1.02 - 1, places=15)
-        got = R.net_return(np.array([0.10, 0.10]), np.array([30.0, 30.0]), np.array([30.0, 30.0]), f, TIERS,
-                           flat=(np.array([True, False]), 0.015))
+        got = R.net_return(
+            np.array([0.10, 0.10]),
+            np.array([30.0, 30.0]),
+            np.array([30.0, 30.0]),
+            f,
+            TIERS,
+            flat=(np.array([True, False]), 0.015),
+        )
         self.assertAlmostEqual(got[0], 1.10 * (1 - 2.78e-05 - 0.015) / 1.015 - 1, places=15)
         self.assertAlmostEqual(got[1], 1.10 * (1 - 2.78e-05 - 0.0005) / 1.0005 - 1, places=15)
 
@@ -43,7 +57,9 @@ class Overlap(unittest.TestCase):
     def test_an_incomplete_trade_holds_to_the_end(self):
         inc = execution.STATUS.index("INCOMPLETE")
         tr = {"exit_idx": np.array([-1, 9]), "status": np.array([inc, 0])}
-        self.assertEqual(R.overlap_skips(tr, np.array([0, 0]), np.array([3, 40]), 1).tolist(), [False, True])
+        self.assertEqual(
+            R.overlap_skips(tr, np.array([0, 0]), np.array([3, 40]), 1).tolist(), [False, True]
+        )
 
 
 class Statistics(unittest.TestCase):
@@ -77,8 +93,10 @@ class Statistics(unittest.TestCase):
         x = R.exposure([0, 2, 10], [5, 6, 12], [0.10, -0.20, 0.05], 5000.0, 100000.0)
         self.assertEqual(x["max_concurrent_positions"], 2)
         self.assertAlmostEqual(x["total_pnl_usd"], 5000 * (0.10 - 0.20 + 0.05))
-        self.assertAlmostEqual(x["max_drawdown_usd"], -1000.0)   # +500, then -1000 at the second exit
-        self.assertEqual(x["sessions_with_a_position"], 10)       # sessions 0-6 and 10-12
+        self.assertAlmostEqual(
+            x["max_drawdown_usd"], -1000.0
+        )  # +500, then -1000 at the second exit
+        self.assertEqual(x["sessions_with_a_position"], 10)  # sessions 0-6 and 10-12
 
 
 if __name__ == "__main__":

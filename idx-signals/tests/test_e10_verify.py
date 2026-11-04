@@ -36,13 +36,25 @@ class VerifyAgainstRunnerTest(unittest.TestCase):
         opn = close * np.exp(rng.normal(0, 0.02, close.shape))
         low = np.minimum(opn, close) * (1 - rng.uniform(0, 0.04, close.shape))
         uf = np.ones(close.shape)
-        uf[:, 3] = 0.25                                   # as-traded price a quarter of the adjusted one
+        uf[:, 3] = 0.25  # as-traded price a quarter of the adjusted one
         rows = []
         for i, d in enumerate(dates):
             for j, t in enumerate(names):
-                rows.append((d, t, opn[i, j], max(opn[i, j], close[i, j]) * 1.01, low[i, j], close[i, j],
-                             rng.uniform(6e5, 5e6), uf[i, j]))
-        panel = pd.DataFrame(rows, columns=["date", "ticker", "open", "high", "low", "close", "value", "unit_factor"])
+                rows.append(
+                    (
+                        d,
+                        t,
+                        opn[i, j],
+                        max(opn[i, j], close[i, j]) * 1.01,
+                        low[i, j],
+                        close[i, j],
+                        rng.uniform(6e5, 5e6),
+                        uf[i, j],
+                    )
+                )
+        panel = pd.DataFrame(
+            rows, columns=["date", "ticker", "open", "high", "low", "close", "value", "unit_factor"]
+        )
         (root / "data" / "panel").mkdir(parents=True)
         panel_path = root / "data" / "panel" / "panel.csv.gz"
         panel.to_csv(panel_path, index=False)
@@ -51,10 +63,27 @@ class VerifyAgainstRunnerTest(unittest.TestCase):
         ev, rel = [], []
         for k in range(60):
             e = 30 + 5 * k
-            when = (f"{dates[e - 1]}T16:30:00", f"{dates[e]}T08:00:00", f"{dates[e - 1]}T11:00:00")[k % 3]
-            ev.append({"accession": f"a{k}", "ticker": names[k % 40], "class": ("RAISE", "MAINTAIN", "CUT")[k % 3],
-                       "kind": "dollar", "level_change": 0.02, "acceptance_ny": when})
-            rel.append({"accession": f"a{k}", "ticker": names[k % 40], "status": "OK", "acceptance_ny": when})
+            when = (f"{dates[e - 1]}T16:30:00", f"{dates[e]}T08:00:00", f"{dates[e - 1]}T11:00:00")[
+                k % 3
+            ]
+            ev.append(
+                {
+                    "accession": f"a{k}",
+                    "ticker": names[k % 40],
+                    "class": ("RAISE", "MAINTAIN", "CUT")[k % 3],
+                    "kind": "dollar",
+                    "level_change": 0.02,
+                    "acceptance_ny": when,
+                }
+            )
+            rel.append(
+                {
+                    "accession": f"a{k}",
+                    "ticker": names[k % 40],
+                    "status": "OK",
+                    "acceptance_ny": when,
+                }
+            )
         pd.DataFrame(ev).to_csv(e10 / "feasibility" / "events.csv.gz", index=False)
         pd.DataFrame(rel).to_csv(e10 / "feasibility" / "releases.csv.gz", index=False)
         (e10 / "protocol.json").write_text(json.dumps({"hashes": {}}))

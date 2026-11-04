@@ -1,0 +1,56 @@
+{
+ "study_id": "ALERT_ATTRIBUTION_v1",
+ "frozen_at": "2026-10-31T15:40:33Z",
+ "asked_by": "Ace, 2026-10-31: evaluate every original top-five alert individually with the SAME frozen entry, exit and cost assumptions, without portfolio admission limits; label each 'admitted' or 'skipped'; do not change stops, targets, models or rankings",
+ "status": "attribution study on 2023 (already-studied data), simulation only; not investable, not a strategy, no permission to buy; 2024 data never read",
+ "inputs": {
+  "alerts": "CRYPTO_REPLAY_v1 rankings/shortlists_2023.csv.gz, population early, 1,825 per arm, arms summary, sequence, shuffled (control)",
+  "account_labels": "CRYPTO_REPLAY_v1 run/trades_BASE_<arm>.csv.gz: decision ORDER = admitted, SKIP_* = skipped with the reason",
+  "panel_sha256": "f1dfd57d26a7a98781bd5fcbf18db3203778d24c51c46b4d4f92963dc9b75766",
+  "volatility": "vol20 = 20-day std of daily log close returns through the signal day (the model's own vol20 definition), from bars before the decision only"
+ },
+ "isolated_trade": {
+  "engine": "idxsig.crypto_replay.run with a one-alert shortlist and CRYPTO_REPLAY_v1's BASE Policy, equity 10,000 at the decision; the same code path as the account",
+  "notional_usd": 946.1417549086428,
+  "policy": {
+   "start_cash": 10000.0,
+   "risk": 0.005,
+   "max_risk": 0.015,
+   "max_new_per_day": 3,
+   "stop": 0.05,
+   "target": 0.1,
+   "hold_bars": 5,
+   "fee": 0.001,
+   "slip": 0.001,
+   "entry_delay": 0,
+   "loss_fraction": 0.05284620379620375
+  }
+ },
+ "analyses": [
+  "A per arm: isolated outcomes of all alerts: fills, exit reasons, entry-day stops, mean and median net return, win rate, gross (pre-cost) vs net mean, cost per trade",
+  "B per arm: by frozen rank 1..5 and by within-arm score quintile: mean net return, win rate, model hit rate; Spearman rho between score and net return; top-minus-bottom quintile mean",
+  "C per arm: admitted vs skipped (and by skip reason): n, mean and median net return, win rate; skipped-minus-admitted mean with a signal-day bootstrap 95% interval; the same on the first alert of each consecutive-day run of one coin (overlapping alerts collapsed)",
+  "D per arm: cross-tab of the model's own label (hit = barrier up first on closes within 5 days; non-hit; censored) against the isolated trade outcome (TARGET, STOP, TIME_EXIT win/loss, other): P(target | hit), P(stop | hit), P(hit | target), entry-day stop rate",
+  "E per arm: entry-day stop rate and mean net return by vol20 tercile; share of alerts whose model barrier (max(10%, 3 vol20 sqrt5)) exceeds the 10% target; the stop in units of daily vol",
+  "F reproduce Ace's figures from the account ledgers (hits admitted, entry-day stops, cost attribution)"
+ ],
+ "verdict_rules": {
+  "Q1": "YES if, in both model arms, Spearman rho > 0 and the top score quintile's mean net return exceeds the bottom's; NO if neither; MIXED otherwise",
+  "Q2": "CROWDED OUT if skipped alerts' mean net return exceeds admitted alerts' with the bootstrap interval above zero in a model arm; NOT CROWDED OUT if the interval is below zero or includes zero",
+  "Q3": "the trade matches the forecast if P(target before stop | model hit) >= 0.5; otherwise the predicted event does not translate into this trade"
+ },
+ "honesty": [
+  "overlapping alerts: the same coin alerted on consecutive days is evaluated once per alert, so runs are over-weighted; analysis C also collapses them",
+  "isolated trades ignore cash and risk limits by design; their sum is not a portfolio result",
+  "daily bars, modelled costs, one already-studied year"
+ ],
+ "pins": {
+  "idxsig/crypto_replay.py": "aa04635e569a251cbec79eed68f17a51fc2bacb9cbe52f35e4568d54b807264a",
+  "research/ALERT_ATTRIBUTION_v1/attribution.py": "d4835f6032df5e9e8147f3d898d54a9eea99739a36d662f2998144d180cf6b8f",
+  "research/CRYPTO_REPLAY_v1/protocol.json": "6bd3564154d383a74ea8f4b591fc4f625e9f96a43124b67dd37c92a0108e6c44",
+  "research/CRYPTO_REPLAY_v1/rankings/shortlists_2023.csv.gz": "a6a5bd99252e569578f1442f1c163a65f3f435f189292af8c6335ec4ad74fe79",
+  "research/CRYPTO_REPLAY_v1/run/trades_BASE_summary.csv.gz": "179a64201a790ffacb792ab89b66d5b05ee761da6b5c75167f94c28e68ec8bea",
+  "research/CRYPTO_REPLAY_v1/run/trades_BASE_sequence.csv.gz": "dd3447b93f20a7eb652beee38794f3491fb732aa14a3691ca076e25b26c29555",
+  "research/CRYPTO_REPLAY_v1/run/trades_BASE_shuffled.csv.gz": "792fd4bcc4b8be288a1077f20c07bb82513c5b88af068f92331b76e29687ae3c"
+ }
+}

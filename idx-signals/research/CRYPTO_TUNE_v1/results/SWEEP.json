@@ -1,0 +1,41 @@
+{
+ "ran_at": "2026-10-30T11:13:38Z",
+ "train_n": 1452,
+ "validate_n": 268,
+ "scenarios": 814,
+ "failed": 0,
+ "best": {
+  "id": "C0078",
+  "family": "lightgbm",
+  "features": "ALL",
+  "params": "{\"num_leaves\": 7, \"learning_rate\": 0.05, \"n_estimators\": 100, \"min_child_samples\": 20, \"feature_fraction\": 1.0, \"bagging_fraction\": 0.7}",
+  "auc": 0.6992944803462382
+ },
+ "top10_ids": [
+  "C0078",
+  "C0043",
+  "C0079",
+  "C0750",
+  "C0757",
+  "C0041",
+  "C0688",
+  "C0738",
+  "C0754",
+  "C0756"
+ ],
+ "bench_validate_auc": 0.6464101499970356,
+ "auc_spread": {
+  "max": 0.6992944803462382,
+  "median": 0.6679314638050632,
+  "min": 0.5969051995019862
+ },
+ "by_family_best": {
+  "extra": 0.6962,
+  "hist_gb": 0.6959,
+  "knn": 0.6759,
+  "lightgbm": 0.6993,
+  "logistic": 0.6813,
+  "mlp": 0.6744,
+  "rf": 0.6948
+ }
+}

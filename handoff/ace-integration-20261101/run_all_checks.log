@@ -1,0 +1,256 @@
+== repair v1.4 affected tests (idx-signals)
+.................................................................................................................
+----------------------------------------------------------------------
+Ran 113 tests in 1.183s
+
+OK
+== trend paper-account v2 (30 tests, normal and -O, plus 2 process races)
+test_actual_daily_negative_sharpe_kills_before_drawdown (test_candidate.CandidateTests.test_actual_daily_negative_sharpe_kills_before_drawdown) ... ok
+test_actual_holdings_drift_requires_rebalance (test_candidate.CandidateTests.test_actual_holdings_drift_requires_rebalance) ... ok
+test_bar_completeness_and_future_publication (test_candidate.CandidateTests.test_bar_completeness_and_future_publication) ... ok
+test_buy_fails_closed_when_other_held_mark_stale (test_candidate.CandidateTests.test_buy_fails_closed_when_other_held_mark_stale) ... ok
+test_cash_fixture_1000_and_10000 (test_candidate.CandidateTests.test_cash_fixture_1000_and_10000) ... ok
+test_concurrent_same_operation_only_once (test_candidate.CandidateTests.test_concurrent_same_operation_only_once) ... ok
+test_first_peak_and_persistent_kill_no_same_quote_liquidation (test_candidate.CandidateTests.test_first_peak_and_persistent_kill_no_same_quote_liquidation) ... ok
+test_future_receipt_and_wrong_product_rejected (test_candidate.CandidateTests.test_future_receipt_and_wrong_product_rejected) ... ok
+test_missing_cycles_and_late_daily_not_reconstructed (test_candidate.CandidateTests.test_missing_cycles_and_late_daily_not_reconstructed) ... ok
+test_partial_fill_quantity_and_fees (test_candidate.CandidateTests.test_partial_fill_quantity_and_fees) ... ok
+test_replay_retry_and_conflict (test_candidate.CandidateTests.test_replay_retry_and_conflict) ... ok
+test_same_time_and_past_midnight_do_not_fill (test_candidate.CandidateTests.test_same_time_and_past_midnight_do_not_fill) ... ok
+test_sells_before_buys_across_symbols_not_quote_arrival_order (test_candidate.CandidateTests.test_sells_before_buys_across_symbols_not_quote_arrival_order) ... ok
+test_sharpe_clean_window_missing_and_zero_variance (test_candidate.CandidateTests.test_sharpe_clean_window_missing_and_zero_variance) ... ok
+test_torn_tampered_and_changed_code_refused (test_candidate.CandidateTests.test_torn_tampered_and_changed_code_refused) ... ok
+test_uncertain_fsync_retry_establishes_new_durability_barrier (test_candidate.CandidateTests.test_uncertain_fsync_retry_establishes_new_durability_barrier) ... ok
+test_unknown_liquidity_no_fill_and_expiry (test_candidate.CandidateTests.test_unknown_liquidity_no_fill_and_expiry) ... ok
+test_unknown_mark_propagates_not_cost (test_candidate.CandidateTests.test_unknown_mark_propagates_not_cost) ... ok
+test_complete_append_then_fsync_error_retry_does_not_duplicate (test_independent.Independent.test_complete_append_then_fsync_error_retry_does_not_duplicate) ... ok
+test_missing_daily_nav_and_exact_warmup (test_independent.Independent.test_missing_daily_nav_and_exact_warmup) ... ok
+test_no_automatic_kill_reset_after_correction_metadata (test_independent.Independent.test_no_automatic_kill_reset_after_correction_metadata) ... ok
+test_partial_append_fails_closed_without_truncating_existing_bytes (test_independent.Independent.test_partial_append_fails_closed_without_truncating_existing_bytes) ... ok
+test_partial_kill_residual_persisted_and_no_duplicate_quote_fill (test_independent.Independent.test_partial_kill_residual_persisted_and_no_duplicate_quote_fill) ... ok
+test_rebalance_waits_for_other_symbol_pending_sale (test_independent.Independent.test_rebalance_waits_for_other_symbol_pending_sale) ... ok
+test_replay_state_and_conflicting_retry_bytes_unchanged (test_independent.Independent.test_replay_state_and_conflicting_retry_bytes_unchanged) ... ok
+test_reused_core_and_initial_protocol_hash_identity (test_independent.Independent.test_reused_core_and_initial_protocol_hash_identity) ... ok
+test_shared_cash_conservation_and_allin_fill_fees (test_independent.Independent.test_shared_cash_conservation_and_allin_fill_fees) ... ok
+test_unknown_aggregate_nav_blocks_buy_until_marks_recover (test_independent.Independent.test_unknown_aggregate_nav_blocks_buy_until_marks_recover) ... ok
+test_unknown_depth_then_sub_precision_ioc_never_invents_units (test_independent.Independent.test_unknown_depth_then_sub_precision_ioc_never_invents_units) ... ok
+test_wrong_venue_instrument_and_future_source_rejected_atomically (test_independent.Independent.test_wrong_venue_instrument_and_future_source_rejected_atomically) ... ok
+
+----------------------------------------------------------------------
+Ran 30 tests in 1.096s
+
+OK
+test_actual_daily_negative_sharpe_kills_before_drawdown (test_candidate.CandidateTests.test_actual_daily_negative_sharpe_kills_before_drawdown) ... ok
+test_actual_holdings_drift_requires_rebalance (test_candidate.CandidateTests.test_actual_holdings_drift_requires_rebalance) ... ok
+test_bar_completeness_and_future_publication (test_candidate.CandidateTests.test_bar_completeness_and_future_publication) ... ok
+test_buy_fails_closed_when_other_held_mark_stale (test_candidate.CandidateTests.test_buy_fails_closed_when_other_held_mark_stale) ... ok
+test_cash_fixture_1000_and_10000 (test_candidate.CandidateTests.test_cash_fixture_1000_and_10000) ... ok
+test_concurrent_same_operation_only_once (test_candidate.CandidateTests.test_concurrent_same_operation_only_once) ... ok
+test_first_peak_and_persistent_kill_no_same_quote_liquidation (test_candidate.CandidateTests.test_first_peak_and_persistent_kill_no_same_quote_liquidation) ... ok
+test_future_receipt_and_wrong_product_rejected (test_candidate.CandidateTests.test_future_receipt_and_wrong_product_rejected) ... ok
+test_missing_cycles_and_late_daily_not_reconstructed (test_candidate.CandidateTests.test_missing_cycles_and_late_daily_not_reconstructed) ... ok
+test_partial_fill_quantity_and_fees (test_candidate.CandidateTests.test_partial_fill_quantity_and_fees) ... ok
+test_replay_retry_and_conflict (test_candidate.CandidateTests.test_replay_retry_and_conflict) ... ok
+test_same_time_and_past_midnight_do_not_fill (test_candidate.CandidateTests.test_same_time_and_past_midnight_do_not_fill) ... ok
+test_sells_before_buys_across_symbols_not_quote_arrival_order (test_candidate.CandidateTests.test_sells_before_buys_across_symbols_not_quote_arrival_order) ... ok
+test_sharpe_clean_window_missing_and_zero_variance (test_candidate.CandidateTests.test_sharpe_clean_window_missing_and_zero_variance) ... ok
+test_torn_tampered_and_changed_code_refused (test_candidate.CandidateTests.test_torn_tampered_and_changed_code_refused) ... ok
+test_uncertain_fsync_retry_establishes_new_durability_barrier (test_candidate.CandidateTests.test_uncertain_fsync_retry_establishes_new_durability_barrier) ... ok
+test_unknown_liquidity_no_fill_and_expiry (test_candidate.CandidateTests.test_unknown_liquidity_no_fill_and_expiry) ... ok
+test_unknown_mark_propagates_not_cost (test_candidate.CandidateTests.test_unknown_mark_propagates_not_cost) ... ok
+test_complete_append_then_fsync_error_retry_does_not_duplicate (test_independent.Independent.test_complete_append_then_fsync_error_retry_does_not_duplicate) ... ok
+test_missing_daily_nav_and_exact_warmup (test_independent.Independent.test_missing_daily_nav_and_exact_warmup) ... ok
+test_no_automatic_kill_reset_after_correction_metadata (test_independent.Independent.test_no_automatic_kill_reset_after_correction_metadata) ... ok
+test_partial_append_fails_closed_without_truncating_existing_bytes (test_independent.Independent.test_partial_append_fails_closed_without_truncating_existing_bytes) ... ok
+test_partial_kill_residual_persisted_and_no_duplicate_quote_fill (test_independent.Independent.test_partial_kill_residual_persisted_and_no_duplicate_quote_fill) ... ok
+test_rebalance_waits_for_other_symbol_pending_sale (test_independent.Independent.test_rebalance_waits_for_other_symbol_pending_sale) ... ok
+test_replay_state_and_conflicting_retry_bytes_unchanged (test_independent.Independent.test_replay_state_and_conflicting_retry_bytes_unchanged) ... ok
+test_reused_core_and_initial_protocol_hash_identity (test_independent.Independent.test_reused_core_and_initial_protocol_hash_identity) ... ok
+test_shared_cash_conservation_and_allin_fill_fees (test_independent.Independent.test_shared_cash_conservation_and_allin_fill_fees) ... ok
+test_unknown_aggregate_nav_blocks_buy_until_marks_recover (test_independent.Independent.test_unknown_aggregate_nav_blocks_buy_until_marks_recover) ... ok
+test_unknown_depth_then_sub_precision_ioc_never_invents_units (test_independent.Independent.test_unknown_depth_then_sub_precision_ioc_never_invents_units) ... ok
+test_wrong_venue_instrument_and_future_source_rejected_atomically (test_independent.Independent.test_wrong_venue_instrument_and_future_source_rejected_atomically) ... ok
+
+----------------------------------------------------------------------
+Ran 30 tests in 1.060s
+
+OK
+{"case": "duplicate fill observation", "cash_total": "5000.0100008953845", "child_exitcodes": [0, 0], "fills": 1, "gross_fraction": "0.4993745313100913131379168585", "new_rows": 1, "replay": "verified", "reserved": "5000.0", "workers": [{"fills": 1, "status": "ok"}, {"fills": 1, "status": "ok"}]}
+{"case": "disjoint coin fills", "cash_total": "0.0200017907690", "child_exitcodes": [0, 0], "fills": 2, "gross_fraction": "0.9999979948184892654870218362", "new_rows": 2, "replay": "verified", "reserved": "0", "workers": [{"fills": 1, "status": "ok"}, {"fills": 1, "status": "ok"}]}
+== deterministic fixture demo, run twice (a retry must not add fills)
+journals unchanged on retry
+== reference adapter + connected run_once path (48 tests, normal and -O; network blocked)
+test_book_identity_quantity_tick_and_source_clock (test_adapter.AdapterTests.test_book_identity_quantity_tick_and_source_clock) ... ok
+test_cached_preclose_response_cannot_be_mislabeled_closed (test_adapter.AdapterTests.test_cached_preclose_response_cannot_be_mislabeled_closed) ... ok
+test_cash_signal_does_not_force_trade (test_adapter.AdapterTests.test_cash_signal_does_not_force_trade) ... ok
+test_default_transport_preserves_managed_routing_and_blocks_origin_auth (test_adapter.AdapterTests.test_default_transport_preserves_managed_routing_and_blocks_origin_auth) ... ok
+test_duplicate_headers_and_response_delay_age (test_adapter.AdapterTests.test_duplicate_headers_and_response_delay_age) ... ok
+test_endpoint_specific_latency_cache_and_effective_metadata_age (test_adapter.AdapterTests.test_endpoint_specific_latency_cache_and_effective_metadata_age) ... ok
+test_gaps_duplicates_empty_bars (test_adapter.AdapterTests.test_gaps_duplicates_empty_bars) ... ok
+test_http_refusal_preserved_stops_without_retry (test_adapter.AdapterTests.test_http_refusal_preserved_stops_without_retry) ... ok
+test_no_fill_past_source_or_request_unknown_size_or_minimum (test_adapter.AdapterTests.test_no_fill_past_source_or_request_unknown_size_or_minimum) ... ok
+test_origin_and_endpoint_allowlist (test_adapter.AdapterTests.test_origin_and_endpoint_allowlist) ... ok
+test_original_core_and_synthetic_default_unchanged (test_adapter.AdapterTests.test_original_core_and_synthetic_default_unchanged) ... ok
+test_payload_cannot_relabel_or_modify_raw_data (test_adapter.AdapterTests.test_payload_cannot_relabel_or_modify_raw_data) ... ok
+test_pending_buy_blocked_unknown_other_mark (test_adapter.AdapterTests.test_pending_buy_blocked_unknown_other_mark) ... ok
+test_product_unknowns_block (test_adapter.AdapterTests.test_product_unknowns_block) ... ok
+test_receipt_hash_clock_cache (test_adapter.AdapterTests.test_receipt_hash_clock_cache) ... ok
+test_redirect_refused (test_adapter.AdapterTests.test_redirect_refused) ... ok
+test_regressing_source_sequence_or_time_fails_closed (test_adapter.AdapterTests.test_regressing_source_sequence_or_time_fails_closed) ... ok
+test_shared_cash_actual_future_quote_fill_and_replay (test_adapter.AdapterTests.test_shared_cash_actual_future_quote_fill_and_replay) ... ok
+test_transport_errors_do_not_echo_possible_ambient_credentials (test_adapter.AdapterTests.test_transport_errors_do_not_echo_possible_ambient_credentials) ... ok
+test_warmup_no_publication_claim_and_bars_are_latest (test_adapter.AdapterTests.test_warmup_no_publication_claim_and_bars_are_latest) ... ok
+test_cash_cycle_only_6_gets (test_run_once.OneShotTests.test_cash_cycle_only_6_gets) ... ok
+test_default_programmatic_path_requires_clearance_without_network (test_run_once.OneShotTests.test_default_programmatic_path_requires_clearance_without_network) ... ok
+test_directory_cannot_be_reused_to_recapture (test_run_once.OneShotTests.test_directory_cannot_be_reused_to_recapture) ... ok
+test_full_mock_cycle_8_gets_and_no_backfill (test_run_once.OneShotTests.test_full_mock_cycle_8_gets_and_no_backfill) ... ok
+test_refused_source_one_request_no_account_no_retry (test_run_once.OneShotTests.test_refused_source_one_request_no_account_no_retry) ... ok
+test_review_clearance_must_match_every_source_pin (test_run_once.OneShotTests.test_review_clearance_must_match_every_source_pin) ... ok
+test_transport_budget_hard_limit_eight (test_run_once.OneShotTests.test_transport_budget_hard_limit_eight) ... ok
+test_401_403_429_and_redirect_status_stop_one_call_no_retry (test_independent.Independent.test_401_403_429_and_redirect_status_stop_one_call_no_retry) ... ok
+test_actual_synthetic_usdt_journal_cannot_be_opened_as_usd_profile (test_independent.Independent.test_actual_synthetic_usdt_journal_cannot_be_opened_as_usd_profile) ... ok
+test_candle_column_mapping_closed_contiguous_reversed_rows (test_independent.Independent.test_candle_column_mapping_closed_contiguous_reversed_rows) ... ok
+test_equal_sequence_newer_observation_permitted (test_independent.Independent.test_equal_sequence_newer_observation_permitted) ... ok
+test_original_core_identity_and_unchanged_shared_reducers (test_independent.Independent.test_original_core_identity_and_unchanged_shared_reducers) ... ok
+test_oversized_response_preserved_bounded_then_stopped (test_independent.Independent.test_oversized_response_preserved_bounded_then_stopped) ... ok
+test_partial_capture_refusal_keeps_held_paper_state_no_rollback (test_independent.Independent.test_partial_capture_refusal_keeps_held_paper_state_no_rollback) ... ok
+test_post_decision_receipt_cannot_relabel_pre_decision_source_or_request (test_independent.Independent.test_post_decision_receipt_cannot_relabel_pre_decision_source_or_request) ... ok
+test_programmatic_default_capture_requires_clearance_before_transport (test_independent.Independent.test_programmatic_default_capture_requires_clearance_before_transport) ... ok
+test_raw_receipt_binds_normalized_policy_fields (test_independent.Independent.test_raw_receipt_binds_normalized_policy_fields) ... ok
+test_regressed_source_sequence_or_time_rejected_without_mutation (test_independent.Independent.test_regressed_source_sequence_or_time_rejected_without_mutation) ... ok
+test_shared_cash_profile_costs_and_mixed_journal_rejection (test_independent.Independent.test_shared_cash_profile_costs_and_mixed_journal_rejection) ... ok
+test_standard_managed_routing_preserved_no_endpoint_auth_or_netrc (test_independent.Independent.test_standard_managed_routing_preserved_no_endpoint_auth_or_netrc) ... ok
+test_timezone_missing_http_date_rejected_not_assumed_local (test_independent.Independent.test_timezone_missing_http_date_rejected_not_assumed_local) ... ok
+test_wrong_origin_paths_query_never_reach_transport (test_independent.Independent.test_wrong_origin_paths_query_never_reach_transport) ... ok
+test_age_transit_plus_residence_not_omitted_or_doubled (test_freshness.Freshness.test_age_transit_plus_residence_not_omitted_or_doubled) ... ok
+test_bad_or_ambiguous_age_date_headers_rejected (test_freshness.Freshness.test_bad_or_ambiguous_age_date_headers_rejected) ... ok
+test_closed_at_receipt_but_http_date_preclose_rejected (test_freshness.Freshness.test_closed_at_receipt_but_http_date_preclose_rejected) ... ok
+test_date_age_not_summed_and_absent_age_uses_date (test_freshness.Freshness.test_date_age_not_summed_and_absent_age_uses_date) ... ok
+test_preserved_header_pairs_cannot_hide_duplicate_or_mismatch (test_freshness.Freshness.test_preserved_header_pairs_cannot_hide_duplicate_or_mismatch) ... ok
+test_role_latency_bound_and_clock_jump (test_freshness.Freshness.test_role_latency_bound_and_clock_jump) ... ok
+
+----------------------------------------------------------------------
+Ran 48 tests in 0.819s
+
+OK
+test_book_identity_quantity_tick_and_source_clock (test_adapter.AdapterTests.test_book_identity_quantity_tick_and_source_clock) ... ok
+test_cached_preclose_response_cannot_be_mislabeled_closed (test_adapter.AdapterTests.test_cached_preclose_response_cannot_be_mislabeled_closed) ... ok
+test_cash_signal_does_not_force_trade (test_adapter.AdapterTests.test_cash_signal_does_not_force_trade) ... ok
+test_default_transport_preserves_managed_routing_and_blocks_origin_auth (test_adapter.AdapterTests.test_default_transport_preserves_managed_routing_and_blocks_origin_auth) ... ok
+test_duplicate_headers_and_response_delay_age (test_adapter.AdapterTests.test_duplicate_headers_and_response_delay_age) ... ok
+test_endpoint_specific_latency_cache_and_effective_metadata_age (test_adapter.AdapterTests.test_endpoint_specific_latency_cache_and_effective_metadata_age) ... ok
+test_gaps_duplicates_empty_bars (test_adapter.AdapterTests.test_gaps_duplicates_empty_bars) ... ok
+test_http_refusal_preserved_stops_without_retry (test_adapter.AdapterTests.test_http_refusal_preserved_stops_without_retry) ... ok
+test_no_fill_past_source_or_request_unknown_size_or_minimum (test_adapter.AdapterTests.test_no_fill_past_source_or_request_unknown_size_or_minimum) ... ok
+test_origin_and_endpoint_allowlist (test_adapter.AdapterTests.test_origin_and_endpoint_allowlist) ... ok
+test_original_core_and_synthetic_default_unchanged (test_adapter.AdapterTests.test_original_core_and_synthetic_default_unchanged) ... ok
+test_payload_cannot_relabel_or_modify_raw_data (test_adapter.AdapterTests.test_payload_cannot_relabel_or_modify_raw_data) ... ok
+test_pending_buy_blocked_unknown_other_mark (test_adapter.AdapterTests.test_pending_buy_blocked_unknown_other_mark) ... ok
+test_product_unknowns_block (test_adapter.AdapterTests.test_product_unknowns_block) ... ok
+test_receipt_hash_clock_cache (test_adapter.AdapterTests.test_receipt_hash_clock_cache) ... ok
+test_redirect_refused (test_adapter.AdapterTests.test_redirect_refused) ... ok
+test_regressing_source_sequence_or_time_fails_closed (test_adapter.AdapterTests.test_regressing_source_sequence_or_time_fails_closed) ... ok
+test_shared_cash_actual_future_quote_fill_and_replay (test_adapter.AdapterTests.test_shared_cash_actual_future_quote_fill_and_replay) ... ok
+test_transport_errors_do_not_echo_possible_ambient_credentials (test_adapter.AdapterTests.test_transport_errors_do_not_echo_possible_ambient_credentials) ... ok
+test_warmup_no_publication_claim_and_bars_are_latest (test_adapter.AdapterTests.test_warmup_no_publication_claim_and_bars_are_latest) ... ok
+test_cash_cycle_only_6_gets (test_run_once.OneShotTests.test_cash_cycle_only_6_gets) ... ok
+test_default_programmatic_path_requires_clearance_without_network (test_run_once.OneShotTests.test_default_programmatic_path_requires_clearance_without_network) ... ok
+test_directory_cannot_be_reused_to_recapture (test_run_once.OneShotTests.test_directory_cannot_be_reused_to_recapture) ... ok
+test_full_mock_cycle_8_gets_and_no_backfill (test_run_once.OneShotTests.test_full_mock_cycle_8_gets_and_no_backfill) ... ok
+test_refused_source_one_request_no_account_no_retry (test_run_once.OneShotTests.test_refused_source_one_request_no_account_no_retry) ... ok
+test_review_clearance_must_match_every_source_pin (test_run_once.OneShotTests.test_review_clearance_must_match_every_source_pin) ... ok
+test_transport_budget_hard_limit_eight (test_run_once.OneShotTests.test_transport_budget_hard_limit_eight) ... ok
+test_401_403_429_and_redirect_status_stop_one_call_no_retry (test_independent.Independent.test_401_403_429_and_redirect_status_stop_one_call_no_retry) ... ok
+test_actual_synthetic_usdt_journal_cannot_be_opened_as_usd_profile (test_independent.Independent.test_actual_synthetic_usdt_journal_cannot_be_opened_as_usd_profile) ... ok
+test_candle_column_mapping_closed_contiguous_reversed_rows (test_independent.Independent.test_candle_column_mapping_closed_contiguous_reversed_rows) ... ok
+test_equal_sequence_newer_observation_permitted (test_independent.Independent.test_equal_sequence_newer_observation_permitted) ... ok
+test_original_core_identity_and_unchanged_shared_reducers (test_independent.Independent.test_original_core_identity_and_unchanged_shared_reducers) ... ok
+test_oversized_response_preserved_bounded_then_stopped (test_independent.Independent.test_oversized_response_preserved_bounded_then_stopped) ... ok
+test_partial_capture_refusal_keeps_held_paper_state_no_rollback (test_independent.Independent.test_partial_capture_refusal_keeps_held_paper_state_no_rollback) ... ok
+test_post_decision_receipt_cannot_relabel_pre_decision_source_or_request (test_independent.Independent.test_post_decision_receipt_cannot_relabel_pre_decision_source_or_request) ... ok
+test_programmatic_default_capture_requires_clearance_before_transport (test_independent.Independent.test_programmatic_default_capture_requires_clearance_before_transport) ... ok
+test_raw_receipt_binds_normalized_policy_fields (test_independent.Independent.test_raw_receipt_binds_normalized_policy_fields) ... ok
+test_regressed_source_sequence_or_time_rejected_without_mutation (test_independent.Independent.test_regressed_source_sequence_or_time_rejected_without_mutation) ... ok
+test_shared_cash_profile_costs_and_mixed_journal_rejection (test_independent.Independent.test_shared_cash_profile_costs_and_mixed_journal_rejection) ... ok
+test_standard_managed_routing_preserved_no_endpoint_auth_or_netrc (test_independent.Independent.test_standard_managed_routing_preserved_no_endpoint_auth_or_netrc) ... ok
+test_timezone_missing_http_date_rejected_not_assumed_local (test_independent.Independent.test_timezone_missing_http_date_rejected_not_assumed_local) ... ok
+test_wrong_origin_paths_query_never_reach_transport (test_independent.Independent.test_wrong_origin_paths_query_never_reach_transport) ... ok
+test_age_transit_plus_residence_not_omitted_or_doubled (test_freshness.Freshness.test_age_transit_plus_residence_not_omitted_or_doubled) ... ok
+test_bad_or_ambiguous_age_date_headers_rejected (test_freshness.Freshness.test_bad_or_ambiguous_age_date_headers_rejected) ... ok
+test_closed_at_receipt_but_http_date_preclose_rejected (test_freshness.Freshness.test_closed_at_receipt_but_http_date_preclose_rejected) ... ok
+test_date_age_not_summed_and_absent_age_uses_date (test_freshness.Freshness.test_date_age_not_summed_and_absent_age_uses_date) ... ok
+test_preserved_header_pairs_cannot_hide_duplicate_or_mismatch (test_freshness.Freshness.test_preserved_header_pairs_cannot_hide_duplicate_or_mismatch) ... ok
+test_role_latency_bound_and_clock_jump (test_freshness.Freshness.test_role_latency_bound_and_clock_jump) ... ok
+
+----------------------------------------------------------------------
+Ran 48 tests in 0.756s
+
+OK
+== historical shared-account proof: 27 tests, then verify the frozen journals from the pinned archive
+test_90_day_sharpe_kill_waits_for_later_open_and_never_resets (test_daily.DailyTests.test_90_day_sharpe_kill_waits_for_later_open_and_never_resets) ... ok
+test_atomic_mark_cannot_be_overwritten (test_daily.DailyTests.test_atomic_mark_cannot_be_overwritten) ... ok
+test_capacity_known_at_creation_and_frozen (test_daily.DailyTests.test_capacity_known_at_creation_and_frozen) ... ok
+test_cash_control_and_zero_variance_sharpe (test_daily.DailyTests.test_cash_control_and_zero_variance_sharpe) ... ok
+test_conventional_control_explicitly_has_no_kill (test_daily.DailyTests.test_conventional_control_explicitly_has_no_kill) ... ok
+test_kill_initial_peak_and_later_only_liquidation (test_daily.DailyTests.test_kill_initial_peak_and_later_only_liquidation) ... ok
+test_no_manufactured_midnight_availability_or_future_tail_effect (test_daily.DailyTests.test_no_manufactured_midnight_availability_or_future_tail_effect) ... ok
+test_offline_writer_replay_reconciliation_and_terminal_fees (test_daily.DailyTests.test_offline_writer_replay_reconciliation_and_terminal_fees) ... ok
+test_original_v2_bytes_preserved (test_daily.DailyTests.test_original_v2_bytes_preserved) ... ok
+test_passive_does_not_refill_partial_entry (test_daily.DailyTests.test_passive_does_not_refill_partial_entry) ... ok
+test_signal_weights_exact_v2_and_full_session_delay (test_daily.DailyTests.test_signal_weights_exact_v2_and_full_session_delay) ... ok
+test_terminal_plan_cannot_be_moved (test_daily.DailyTests.test_terminal_plan_cannot_be_moved) ... ok
+test_zero_variance_negative_returns_and_insufficient_history (test_daily.DailyTests.test_zero_variance_negative_returns_and_insufficient_history) ... ok
+test_cash_fees_and_holdings_reconcile_independently (test_independent.Independent.test_cash_fees_and_holdings_reconcile_independently) ... ok
+test_duplicate_retry_and_conflict_cannot_duplicate_decision (test_independent.Independent.test_duplicate_retry_and_conflict_cannot_duplicate_decision) ... ok
+test_fixed_availability_cannot_be_moved_to_midnight (test_independent.Independent.test_fixed_availability_cannot_be_moved_to_midnight) ... ok
+test_future_open_gap_changes_quantity_not_frozen_buy_budget (test_independent.Independent.test_future_open_gap_changes_quantity_not_frozen_buy_budget) ... ok
+test_input_snapshot_mix_and_atomic_missing_mark_reject (test_independent.Independent.test_input_snapshot_mix_and_atomic_missing_mark_reject) ... ok
+test_kill_residual_capacity_is_frozen_and_never_same_open (test_independent.Independent.test_kill_residual_capacity_is_frozen_and_never_same_open) ... ok
+test_missing_current_marks_propagate_unknown_nav (test_independent.Independent.test_missing_current_marks_propagate_unknown_nav) ... ok
+test_sell_quantity_frozen_at_decision_despite_later_price (test_independent.Independent.test_sell_quantity_frozen_at_decision_despite_later_price) ... ok
+test_sharpe_requires_91_clean_samples_and_missing_resets (test_independent.Independent.test_sharpe_requires_91_clean_samples_and_missing_resets) ... ok
+test_signal_and_sharpe_parity_with_original_v2 (test_independent.Independent.test_signal_and_sharpe_parity_with_original_v2) ... ok
+test_terminal_capacity_residual_is_not_forced_flat (test_independent.Independent.test_terminal_capacity_residual_is_not_forced_flat) ... ok
+test_terminal_close_volume_and_later_rows_never_affect_result (test_independent.Independent.test_terminal_close_volume_and_later_rows_never_affect_result) ... ok
+test_terminal_reporting_does_not_relabel_kill_intents (test_independent.Independent.test_terminal_reporting_does_not_relabel_kill_intents) ... ok
+test_torn_or_tampered_offline_journal_is_not_silently_recovered (test_independent.Independent.test_torn_or_tampered_offline_journal_is_not_silently_recovered) ... ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 3.006s
+
+OK
+test_90_day_sharpe_kill_waits_for_later_open_and_never_resets (test_daily.DailyTests.test_90_day_sharpe_kill_waits_for_later_open_and_never_resets) ... ok
+test_atomic_mark_cannot_be_overwritten (test_daily.DailyTests.test_atomic_mark_cannot_be_overwritten) ... ok
+test_capacity_known_at_creation_and_frozen (test_daily.DailyTests.test_capacity_known_at_creation_and_frozen) ... ok
+test_cash_control_and_zero_variance_sharpe (test_daily.DailyTests.test_cash_control_and_zero_variance_sharpe) ... ok
+test_conventional_control_explicitly_has_no_kill (test_daily.DailyTests.test_conventional_control_explicitly_has_no_kill) ... ok
+test_kill_initial_peak_and_later_only_liquidation (test_daily.DailyTests.test_kill_initial_peak_and_later_only_liquidation) ... ok
+test_no_manufactured_midnight_availability_or_future_tail_effect (test_daily.DailyTests.test_no_manufactured_midnight_availability_or_future_tail_effect) ... ok
+test_offline_writer_replay_reconciliation_and_terminal_fees (test_daily.DailyTests.test_offline_writer_replay_reconciliation_and_terminal_fees) ... ok
+test_original_v2_bytes_preserved (test_daily.DailyTests.test_original_v2_bytes_preserved) ... ok
+test_passive_does_not_refill_partial_entry (test_daily.DailyTests.test_passive_does_not_refill_partial_entry) ... ok
+test_signal_weights_exact_v2_and_full_session_delay (test_daily.DailyTests.test_signal_weights_exact_v2_and_full_session_delay) ... ok
+test_terminal_plan_cannot_be_moved (test_daily.DailyTests.test_terminal_plan_cannot_be_moved) ... ok
+test_zero_variance_negative_returns_and_insufficient_history (test_daily.DailyTests.test_zero_variance_negative_returns_and_insufficient_history) ... ok
+test_cash_fees_and_holdings_reconcile_independently (test_independent.Independent.test_cash_fees_and_holdings_reconcile_independently) ... ok
+test_duplicate_retry_and_conflict_cannot_duplicate_decision (test_independent.Independent.test_duplicate_retry_and_conflict_cannot_duplicate_decision) ... ok
+test_fixed_availability_cannot_be_moved_to_midnight (test_independent.Independent.test_fixed_availability_cannot_be_moved_to_midnight) ... ok
+test_future_open_gap_changes_quantity_not_frozen_buy_budget (test_independent.Independent.test_future_open_gap_changes_quantity_not_frozen_buy_budget) ... ok
+test_input_snapshot_mix_and_atomic_missing_mark_reject (test_independent.Independent.test_input_snapshot_mix_and_atomic_missing_mark_reject) ... ok
+test_kill_residual_capacity_is_frozen_and_never_same_open (test_independent.Independent.test_kill_residual_capacity_is_frozen_and_never_same_open) ... ok
+test_missing_current_marks_propagate_unknown_nav (test_independent.Independent.test_missing_current_marks_propagate_unknown_nav) ... ok
+test_sell_quantity_frozen_at_decision_despite_later_price (test_independent.Independent.test_sell_quantity_frozen_at_decision_despite_later_price) ... ok
+test_sharpe_requires_91_clean_samples_and_missing_resets (test_independent.Independent.test_sharpe_requires_91_clean_samples_and_missing_resets) ... ok
+test_signal_and_sharpe_parity_with_original_v2 (test_independent.Independent.test_signal_and_sharpe_parity_with_original_v2) ... ok
+test_terminal_capacity_residual_is_not_forced_flat (test_independent.Independent.test_terminal_capacity_residual_is_not_forced_flat) ... ok
+test_terminal_close_volume_and_later_rows_never_affect_result (test_independent.Independent.test_terminal_close_volume_and_later_rows_never_affect_result) ... ok
+test_terminal_reporting_does_not_relabel_kill_intents (test_independent.Independent.test_terminal_reporting_does_not_relabel_kill_intents) ... ok
+test_torn_or_tampered_offline_journal_is_not_silently_recovered (test_independent.Independent.test_torn_or_tampered_offline_journal_is_not_silently_recovered) ... ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 2.772s
+
+OK
+verify_results: exit 0
+142c1074cf4c861e800304fee5752746cd510bbeb8ecb407d413ea83affd324f  historical_shared_account_results_20261101T1134/RESULTS.json
+ALL CHECKS PASSED

@@ -33,7 +33,14 @@ LICENSE = (
     "Mirror: CC BY-NC 4.0 (wildangunawan/Dataset-Saham-IDX). Underlying data: PT Bursa Efek "
     "Indonesia; non-commercial use only, cite the source and the access date."
 )
-PATHS = ("Saham/Semua", "List Emiten", "info.json", "LICENSE.md", "Keterangan Nama Kolom.md", "README.md")
+PATHS = (
+    "Saham/Semua",
+    "List Emiten",
+    "info.json",
+    "LICENSE.md",
+    "Keterangan Nama Kolom.md",
+    "README.md",
+)
 
 
 def _git(cwd: Path, *args: str) -> str:
@@ -64,7 +71,9 @@ def fetch(commit: str = PINNED_COMMIT, log=print) -> Path:
     cache = RAW / "idx_mirror" / "_git"
     out = RAW / "idx_mirror" / commit[:12]
     if out.exists() and any(out.iterdir()):
-        raise FileExistsError(f"{rel(out)} already holds this commit; its manifest is in data/manifests")
+        raise FileExistsError(
+            f"{rel(out)} already holds this commit; its manifest is in data/manifests"
+        )
     cache.mkdir(parents=True, exist_ok=True)
     if not (cache / ".git").exists():
         _git(cache, "init", "-q")
@@ -107,4 +116,6 @@ def fetch(commit: str = PINNED_COMMIT, log=print) -> Path:
         "raw_dir": rel(out),
         "license": LICENSE,
     }
-    return write_manifest(f"idx_mirror-{downloaded_at.replace('-', '').replace(':', '')}.jsonl", header, records)
+    return write_manifest(
+        f"idx_mirror-{downloaded_at.replace('-', '').replace(':', '')}.jsonl", header, records
+    )

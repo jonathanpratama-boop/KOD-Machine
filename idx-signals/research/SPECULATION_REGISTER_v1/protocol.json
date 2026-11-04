@@ -1,0 +1,75 @@
+{
+  "protocol_id": "KOD-SPEC-REGISTER-v1",
+  "version": 1,
+  "frozen": "2026-10-28",
+  "ledger": "paper/speculations.jsonl",
+  "purpose": "Seal, before the entry, a cone of falsifiable statements with priors and the frozen plan for every candidate of the frozen detectors, the plan also applied to five matched twins drawn from the same scan; grade the statements and score the plan against the twins when the future arrives. Prospective only. No orders, no change to the paper policy, no variant of a retired entry, no holdout.",
+  "owner_decisions_respected": [
+    "handoff/decisions/2026-10-17_retire_G2_RET30_crypto_entry.md: no further exit, sizing or filter variants on the crypto entry; descriptive logging allowed",
+    "handoff/decisions/2026-10-22_close_US_plus30_line_and_take_the_blueprint_next_step.md: no further buy-side variant of the US entry, including a delayed entry and a regime filter; descriptive logging allowed"
+  ],
+  "markets": {
+    "IDX": {"detector_rule_id": "MOONSHOT_E1_D1", "selected": "F1_ARA", "fixed_entry": "next session close",
+            "sealing_cutoff": "01:45 UTC of the entry session", "excluded_decisions": ["NOT EXECUTABLE"],
+            "min_close": 50},
+    "US": {"detector_rule_id": "MOONSHOT_E2_US_D1", "selected": "G2_RET30", "fixed_entry": "next session open",
+           "sealing_cutoff": "13:30 UTC of the entry session", "excluded_decisions": ["NOT EXECUTABLE"]},
+    "CRYPTO": {"detector_rule_id": "MOONSHOT_E2_CRYPTO_D1", "selected": "G2_RET30",
+               "fixed_entry": "Binance spot quote at sealing time (candidate and twins)",
+               "sealing_cutoff": "02:00 UTC of the day after the signal day", "excluded_decisions": ["NOT EXECUTABLE"]}
+  },
+  "windows": {
+    "BASE5": {"kind": "plan", "what": "the frozen plan: the validated harness plan, prospectively, beside twins",
+              "entry": "fixed", "entry_window": 1, "exit": "fixed", "holding_sessions": 5},
+    "PATH20": {"kind": "path", "what": "the 20-session price path of the candidate and its twins; no plan",
+               "horizon": 20}
+  },
+  "plan_rules": {
+    "direction": "long, one unit",
+    "costs": "idxsig/profiles.py per market; US and crypto tiers at the price as traded",
+    "roll": "an exit on a session where a sale is impossible rolls to the next session where it is",
+    "data_end": "a name whose bars end before its exit, with the market's bars >= 10 sessions past the target, is sold at its last traded close",
+    "levels": "compared on the reference chain (cumulative close/previous)",
+    "redenomination": "CRYPTO: a close/previous ratio > 10 or < 0.1 inside the window makes the candidate UNRESOLVABLE and drops a twin",
+    "twins": "the plan is applied identically to each twin (its own signal close and fill conditions)"
+  },
+  "cone": [
+    {"id": "RUN30_5", "statement": "a close in s+1..s+5 is >= 1.30 x the signal close", "resolves_with": "BASE5",
+     "prior": {"IDX": 0.1831275720164609, "US": 0.15370018975332067, "CRYPTO": 0.18456375838926176},
+     "prior_source": "E30 precision: research/E1/validation/result.json sha256 388e8111..., research/E2/US/validation/result.json d7f05fcc..., research/E2/CRYPTO/validation/result.json 1b8c3bc4..."},
+    {"id": "FADE10_5", "statement": "the BASE5 net return is <= -0.10", "resolves_with": "BASE5",
+     "prior": {"IDX": 0.359, "US": 0.403, "CRYPTO": 0.511},
+     "prior_source": "share of scored trades with net_return <= -0.10 in results/runs/20261009T050040Z_MOONSHOT_E1_D1_v1.1 (n 251), 20261008T115656Z_MOONSHOT_E2_US_D1_v1 (n 536), 20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1 (n 264)"},
+    {"id": "GAIN0_5", "statement": "the BASE5 net return is > 0", "resolves_with": "BASE5",
+     "prior": {"IDX": 0.311, "US": 0.425, "CRYPTO": 0.314},
+     "prior_source": "share of scored trades with net_return > 0 in the same runs"},
+    {"id": "BEATS_TWINS_5", "statement": "the BASE5 net return exceeds the median BASE5 net return of the twins that traded", "resolves_with": "BASE5",
+     "prior": {"IDX": 0.5, "US": 0.5, "CRYPTO": 0.5}, "prior_source": "the null"},
+    {"id": "RUN30_20", "statement": "a close in s+1..s+20 is >= 1.30 x the signal close", "resolves_with": "PATH20",
+     "prior": "running", "prior_source": "the register's running base rate in the market; 0.5 while fewer than 20 resolved"},
+    {"id": "DOUBLE_20", "statement": "a close in s+1..s+20 is >= 2.00 x the signal close", "resolves_with": "PATH20",
+     "prior": "running", "prior_source": "the register's running base rate in the market; 0.5 while fewer than 20 resolved"}
+  ],
+  "running_prior_min_n": 20,
+  "twins": {"count": 5, "features": ["price_band", "liquidity", "momentum", "drawdown"], "min_pool": 5,
+            "seed": "int(sha256('KOD-SPEC-REGISTER-v1:' + decision_id)[:8], 16)",
+            "pool": "fresh and eligible on the signal session, not flagged by the selected detector, not a candidate, close > 0 (IDX >= 50)"},
+  "tag": {"hot_day": "flags of the selected detector in this scan > median of the previous 20 scans' counts; null below 10 earlier scans; metadata only, nothing reported conditional on it"},
+  "resolution": {"scorer": "spec-resolve-v1", "units": "paper-score-v3 rules (split records after the signal, SEC-corroborated for US; never price ratios)",
+                 "windows_after_signal": {"BASE5": 6, "PATH20": 20},
+                 "data": "live bars pulled after each session only; no panel holdout segment is read"},
+  "decision_rule": {
+    "question": "does the frozen plan's net return exceed its twins' prospectively?",
+    "unit": "signal session (sets of one session averaged first)",
+    "test": "one-sided t on per-session mean paired differences, df = sessions - 1",
+    "looks": [60, 120, 240], "min_sessions": 15,
+    "family": "one plan per market (Holm over one member is the raw p)",
+    "eligible": "p < 0.05 and t >= 3.0 and mean net return after costs > 0",
+    "confirmed": "eligible at a look and at the next look",
+    "fail": "not eligible at the 240 look",
+    "trial_file": "research/QUANT_GRADE/trials/SPECULATION_REGISTER_v1_<market>_BASE5_n<look>.json at every look",
+    "promotion": "never automatic: evidence for the owner; any policy change is the owner's and a new PAPER-POLICY version"
+  },
+  "forbidden": ["new plans, statements, priors or thresholds in v1", "backfill or retroactive sets", "any holdout read",
+                "tuning on running numbers", "orders", "changes to PAPER-POLICY-v4 or ledger.jsonl", "any variant of a retired entry"]
+}

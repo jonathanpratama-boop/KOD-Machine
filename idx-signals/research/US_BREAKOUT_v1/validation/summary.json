@@ -1,0 +1,213 @@
+{
+ "experiment": "US_BREAKOUT_v1",
+ "window": "validation",
+ "dates": [
+  "2023-01-03",
+  "2023-12-29"
+ ],
+ "code": {
+  "commit": "6e13c9eeeed54e64bb67d3070017302567f57878",
+  "dirty": false,
+  "dirty_files": []
+ },
+ "protocol_sha256": "0cb6a3df9f8b83aff5f8831b822b32e15565d5ef516d98c78555d56a7fdc353c",
+ "panel_sha256": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b",
+ "panel_manifest_sha256": "705ca354492f45d63a2fb15e0b4db1d334c490a9ac8749d606adfc9622d94039",
+ "counts": {
+  "raw_signals_in_window": 72694,
+  "cooldown_skipped": 53791,
+  "ineligible_price_or_liquidity": 5908,
+  "eligible_signals": 12995,
+  "unmatched_signals": 2,
+  "controls_drawn": 129589
+ },
+ "signal_outcomes": {
+  "FILLED": 11833,
+  "UNFILLED_OPEN_ABOVE_LIMIT": 1012,
+  "OPEN": 118,
+  "REJECTED_SIZE_ZERO": 32
+ },
+ "control_outcomes": {
+  "FILLED": 117837,
+  "UNFILLED_OPEN_ABOVE_LIMIT": 9941,
+  "OPEN": 1553,
+  "REJECTED_SIZE_ZERO": 256,
+  "UNFILLED_NOT_TRADED": 2
+ },
+ "signal_exit_reasons": {
+  "STOP": 6638,
+  "TIME_EXIT_AT_CLOSE": 2854,
+  "STOP_AT_OPEN_ON_ENTRY": 1964,
+  "STOP_GAP_AT_OPEN": 377
+ },
+ "control_exit_reasons": {
+  "STOP": 64436,
+  "TIME_EXIT_AT_CLOSE": 30363,
+  "STOP_AT_OPEN_ON_ENTRY": 19449,
+  "STOP_GAP_AT_OPEN": 3589
+ },
+ "primary": {
+  "filled_signal_trades": 11833,
+  "filled_control_trades": 117837,
+  "dropped_signal_trades_no_control_in_cell": 0,
+  "signal_mean_net": -0.0017982975286842712,
+  "control_weighted_mean_net": -0.001379170131757839,
+  "D": -0.0004191273969264321,
+  "signal_median_net": -0.005620812671793784,
+  "control_median_net": -0.005454206580259229,
+  "signal_hit_rate": 0.19944223780951575,
+  "control_hit_rate": 0.20586912429881957,
+  "D_ci95": [
+   -0.0011541100185611948,
+   0.000346744447862119
+  ],
+  "signal_mean_ci95": [
+   -0.0030997291722486366,
+   -0.00042683948119109374
+  ],
+  "bootstrap_p_one_sided_D_le_0": 0.8555722138930535,
+  "sessions": 249,
+  "cells": 20
+ },
+ "S1_verified_units_only": {
+  "filled_signal_trades": 11336,
+  "filled_control_trades": 113030,
+  "dropped_signal_trades_no_control_in_cell": 0,
+  "signal_mean_net": -0.0018487877614954313,
+  "control_weighted_mean_net": -0.001442845907979977,
+  "D": -0.00040594185351545443,
+  "signal_median_net": -0.00568055748588866,
+  "control_median_net": -0.0054624748662006695,
+  "signal_hit_rate": 0.19918842625264643,
+  "control_hit_rate": 0.20494558966646023,
+  "D_ci95": [
+   -0.0011510844281411546,
+   0.0003603626628838091
+  ],
+  "signal_mean_ci95": [
+   -0.003162306689801185,
+   -0.0004461641778403202
+  ],
+  "bootstrap_p_one_sided_D_le_0": 0.847576211894053,
+  "sessions": 249,
+  "cells": 20
+ },
+ "S2_stop_slippage_1pct": {
+  "filled_signal_trades": 11833,
+  "filled_control_trades": 117837,
+  "dropped_signal_trades_no_control_in_cell": 0,
+  "signal_mean_net": -0.007331983665313827,
+  "control_weighted_mean_net": -0.006772921734179358,
+  "D": -0.0005590619311344686,
+  "signal_median_net": -0.01472529111636122,
+  "control_median_net": -0.014524237189906315,
+  "signal_hit_rate": 0.19944223780951575,
+  "control_hit_rate": 0.20586912429881957,
+  "D_ci95": [
+   -0.0013581675361742324,
+   0.00025303020489763316
+  ],
+  "signal_mean_ci95": [
+   -0.008762989424291264,
+   -0.005805926626575369
+  ],
+  "bootstrap_p_one_sided_D_le_0": 0.912543728135932,
+  "sessions": 249,
+  "cells": 20
+ },
+ "S3_adv_5m": {
+  "filled_signal_trades": 9331,
+  "filled_control_trades": 93084,
+  "dropped_signal_trades_no_control_in_cell": 0,
+  "signal_mean_net": -0.001242272812189148,
+  "control_weighted_mean_net": -0.0010481452991307793,
+  "D": -0.00019412751305836868,
+  "signal_median_net": -0.005184085567954283,
+  "control_median_net": -0.005060401174541852,
+  "signal_hit_rate": 0.20372950380452257,
+  "control_hit_rate": 0.20648016845000214,
+  "D_ci95": [
+   -0.0009556989957144622,
+   0.000612721143301648
+  ],
+  "signal_mean_ci95": [
+   -0.0025794062401075647,
+   0.00021911523591251988
+  ],
+  "bootstrap_p_one_sided_D_le_0": 0.6806596701649176,
+  "sessions": 249,
+  "cells": 12
+ },
+ "by_half": {
+  "H1": {
+   "filled_signal_trades": 5772,
+   "filled_control_trades": 57490,
+   "dropped_signal_trades_no_control_in_cell": 0,
+   "signal_mean_net": -0.0021997788977930043,
+   "control_weighted_mean_net": -0.0014810563818666968,
+   "D": -0.0007187225159263075,
+   "signal_median_net": -0.0056294123033190195,
+   "control_median_net": -0.005346798417139677,
+   "signal_hit_rate": 0.18295218295218296,
+   "control_hit_rate": 0.19678204905200905,
+   "D_ci95": [
+    -0.001639397478484277,
+    0.00020012516085318277
+   ],
+   "signal_mean_ci95": [
+    -0.004175667537812832,
+    -0.00018506840825605216
+   ],
+   "bootstrap_p_one_sided_D_le_0": 0.9410294852573713,
+   "sessions": 124,
+   "cells": 20
+  },
+  "H2": {
+   "filled_signal_trades": 6061,
+   "filled_control_trades": 60347,
+   "dropped_signal_trades_no_control_in_cell": 0,
+   "signal_mean_net": -0.001415959554340828,
+   "control_weighted_mean_net": -0.0012783502763509184,
+   "D": -0.00013760927798990965,
+   "signal_median_net": -0.0056195980437001814,
+   "control_median_net": -0.005531358782150726,
+   "signal_hit_rate": 0.21514601550899193,
+   "control_hit_rate": 0.21452599135002567,
+   "D_ci95": [
+    -0.001257411136048878,
+    0.001013105837754411
+   ],
+   "signal_mean_ci95": [
+    -0.0032264080752978657,
+    0.0005706968931344328
+   ],
+   "bootstrap_p_one_sided_D_le_0": 0.5942028985507246,
+   "sessions": 125,
+   "cells": 20
+  }
+ },
+ "decision_rule": {
+  "1_at_least_200_matched_filled_signal_trades": true,
+  "2_mean_net_positive": false,
+  "3_D_positive_and_p_below_0.05": false,
+  "4_D_positive_in_S1_and_S2": false
+ },
+ "verdict": "NO EDGE ESTABLISHED",
+ "account_level_run": {
+  "sessions": 250,
+  "starting_cash_usd": 10000.0,
+  "end_cash_usd": 0.5746700984610218,
+  "open_positions": 5,
+  "working_orders": 6,
+  "equity_at_end_usd": 11186.78102651006,
+  "exited_trades": 950,
+  "net_pnl_usd_exited": 1190.694013971077,
+  "outcomes": {
+   "REJECTED_INSUFFICIENT_CASH": 11908,
+   "FILLED": 950,
+   "UNFILLED_OPEN_ABOVE_LIMIT": 97,
+   "REJECTED_SIZE_ZERO": 29
+  },
+  "note": "descriptive: one shared $10,000 account, priority by liquidity; not part of the decision rule"
+ }
+}

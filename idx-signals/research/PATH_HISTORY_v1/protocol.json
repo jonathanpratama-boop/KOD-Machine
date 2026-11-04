@@ -1,0 +1,85 @@
+{
+  "protocol_id": "KOD-PATH-HISTORY-v1",
+  "version": "1",
+  "frozen": "2026-10-29, before any outcome of any event below was computed or read",
+  "owner_instruction": "speedrun: answer in days, from history, whether the machine can tell which spiking stocks make their own pump, dump or next-day move, and which free features help",
+  "question": "Among the Speculation Register's own spiking stocks, does a model fitted on earlier years tell apart, on later years, the ones that make the move on their own (most twins do not)? Which free feature blocks add discrimination?",
+  "data": {
+    "US": {"manifest": "data/manifests/panel_us_repair-20261008T114805Z.json", "manifest_sha256": "705ca354492f45d63a2fb15e0b4db1d334c490a9ac8749d606adfc9622d94039",
+           "panel_sha256": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b", "rows_read": ["2020-01-02", "2023-12-29"]},
+    "CRYPTO": {"manifest": "data/manifests/panel_crypto-20261008T003354Z.json", "manifest_sha256": "9cf6e5c73bbf8bff56a6b3ed89b337159b0ef7c3270f8d71c358ca6e879d8038",
+               "panel_sha256": "3dc12749c7cce635a68ef4f152ec21c3b3d24eb6b02665c799aa24e513963d7d", "rows_read": ["2020-01-01", "2023-12-31"]},
+    "IDX": {"manifest": "data/manifests/panel-20261007T225823Z.json", "manifest_sha256": "941cf83715ee69188969e1c5aab4e2b12622a5fb361381e86dffe8e505545a74",
+            "panel_sha256": "9d3a0718c95f9e885c4f8310cf68bf5e75021c366c454f73389d7fae75c02877",
+            "rows_read": [["2019-07-29", "2023-12-29"], ["2025-02-24", "2026-10-06"]]},
+    "sealed": "US and crypto 2024 onward, IDX 2024-01-02..2025-02-21: rows outside rows_read are dropped before any market is built; each IDX segment is built from its own rows only",
+    "code_pins": {"idxsig/speculation.py": "b612667addf48d1d9e58ae16318eb2485d7f74eeb0ee5658ae1b40f541ef8fb7",
+                  "idxsig/learner2.py": "2ca167c4461805a4406c42c5452a39227955f43b420649acdd89795f16b16a92",
+                  "idxsig/rules/moonshot_g.py": "b050c4d37d9104309b32e70a7e81682ee3029da3a6a0654dae6ac41414abb794",
+                  "idxsig/rules/moonshot_e1.py": "425684b7fa2ef1ff05210a1e28df62f904d49131885fc9d0276929579a1928e9",
+                  "research/SPECULATION_REGISTER_v1/protocol.json": "c0ec3bbfa9489c6965344131d5638747aec46a92d12bbfdc6b88e6c7fdb56bc8"}
+  },
+  "events": {
+    "detector": {"US": "G2_RET30 (moonshot_g): day return >= +30%", "CRYPTO": "G2_RET30 (moonshot_g)",
+                 "IDX": "F1_ARA (moonshot_e1): close locked at the upper auto-rejection limit, close >= Rp50"},
+    "eligible": "tradeable on the signal session, more than 20 present sessions of history in the segment, and at least 21 sessions of the segment after it (20-session windows inside)",
+    "population_note": "every eligible detector event, not only the live register's executable subset (the live NOT EXECUTABLE rule depends on a policy version and on live quotes)",
+    "counts_at_freeze": {"US": 6225, "CRYPTO": 1720, "IDX_2019_2023": 3136, "IDX_2025_2026": 3480,
+                         "note": "feasibility count of detector events only; no outcome read"}
+  },
+  "split": {
+    "train": "signal sessions up to 2022-12-31 (US 2020-2022, crypto 2020-2022, IDX 2019-07..2022-12)",
+    "test": "signal sessions from 2023-01-01 (US and crypto 2023; IDX 2023 and the whole 2025-02-24.. segment)",
+    "rule": "everything fitted (scaling, model, context tables, anchors) uses train rows only; test rows are scored once"
+  },
+  "twins": "speculation.draw_twins on the session's own feature frame (the scan's columns: fresh, eligible, the detector flag, close, previous, adv20_value, ret20, dd60, volr), 5 twins, seed speculation.twin_seed('PATH-HISTORY-v1:<market>:<session>:<ticker>')",
+  "outcomes": {
+    "BASE5": "speculation.simulate with the register's plan (entry_window 1, holding 5) for the stock and each twin; crypto entry quote = the open of the next UTC day (the live register uses a quote at sealing time)",
+    "cone": "speculation.statement_outcome: RUN30_5, FADE10_5, GAIN0_5, BEATS_TWINS_5, RUN30_20, DOUBLE_20, with the twins' rate as in speculation.cone_outcomes",
+    "own_moves": "as learner2.own_move: PUMP30_k = RUN30_k on its own, PUMP100_20 = DOUBLE_20 on its own, DUMP10_5 = FADE10_5 on its own, PUMP_AND_DUMP_5 = both PUMP30_5 and DUMP10_5; on its own = fewer than half of the graded twins made the same move; ungraded when it happened and no twin was graded",
+    "next_session": {
+      "r1": "level(d+1) / level(d) - 1 on the split-adjusted level, the session after the signal; ungraded when the stock has no bar at d+1",
+      "NEXT_DUMP10": "r1 <= -0.10 on its own (fewer than half of the twins with a bar at d+1 have r1 <= -0.10)",
+      "NEXT_RUN10": "r1 >= +0.10 on its own",
+      "NEXT_LOSES": "r1 below the median r1 of the twins with a bar at d+1 (at least 3)"
+    },
+    "primary": ["DUMP10_5", "PUMP30_5", "NEXT_DUMP10", "NEXT_LOSES"],
+    "secondary": ["PUMP_AND_DUMP_5", "PUMP30_20", "PUMP100_20", "NEXT_RUN10", "BEATS_TWINS_5"]
+  },
+  "features": {
+    "P0": "the learner's own price features for a speculation set (learner2.features with direction +1): s_ret1, s_ret5, s_ret20, s_dd60, log_volr, s_cpos, log_adv",
+    "P1": "P0 plus, from the stock's bars through the close of d: gap (open / previous close - 1), vol20 (20-session sd of log returns), log_price, spikes60 (detector days of the stock in the 60 sessions before d), streak (consecutive up closes ending at d, capped at 10), dist_high252 (level / its 252-session max - 1), log_age (log of present sessions so far), breadth (log1p of the market's detector events on d), mkt_ret (the market's median day return on d); IDX also ara_streak (consecutive ARA closes ending at d)",
+    "E_US": "P1 plus, for US stocks, EDGAR and FINRA data published before 09:00 New York of d+1 (the entry open): news (an 8-K, 8-K/A or 6-K accepted after 16:00 New York of d-1), offering90 (S-1, S-1/A, S-1MEF, F-1, F-1/A, S-3, F-3, S-3ASR, 424B1, 424B3, 424B4 or 424B5 accepted in the 90 days before), shelf3y (S-3, F-3 or S-3ASR in the 3 years before), atm12m (424B5 in the 365 days before), revsplit12m (a reverse split in the 252 sessions before: the panel's as-traded level jumps by 1.5x or more at a provider split record), short_ratio (FINRA Reg SHO consolidated daily file for d: ShortVolume / TotalVolume) and short_abn (short_ratio minus the stock's median over its previous 20 files), log_turnover (as-traded volume on d / shares outstanding from the XBRL frame dei:EntityCommonStockSharesOutstanding of the latest calendar quarter that ended at least 120 days before d; missing when a split record falls between that quarter end and d), log_shares, has_edgar, has_short, has_shares",
+    "CONTEXT": "P1 plus a context prior per statement (the keyboard idea: a smoothed frequency of what followed the same context in training, like a language model's next-word probability): context = (market, spikes60 0/1/2+, streak 1/2/3+, gap <10%/10-30%/>=30%, and for US news 0/1 and offering90-or-atm12m 0/1); P_ctx = (hits + 20 p_market) / (n + 20) over train rows (leave-one-out for train rows themselves); feature = logit(P_ctx) - logit(p_market)",
+    "missing": "a missing value is 0 after scaling, with its has_ flag where listed"
+  },
+  "model": {
+    "form": "penalised logistic regression per statement and feature block: shared slopes plus market-specific deviations, market intercepts; E_US on US rows only",
+    "penalties": "features standardised on train rows; precision 16 on shared slopes, 25 on market deviations, 1/1.5^2 on intercepts (learner2's LAMBDA_SHARED, LAMBDA_TASK, LAMBDA_ICPT); nothing tuned",
+    "fit": "Newton with step-halving to a gradient norm below 1e-8; an error on non-convergence",
+    "anchor": "the train base rate of the statement per market (climatology)"
+  },
+  "evaluation": {
+    "on": "test rows with the statement graded",
+    "metrics": "AUC (Mann-Whitney); Brier gain over the anchor (mean of anchor Brier - model Brier) and Brier skill (1 - model / anchor); per statement and block, pooled and per market",
+    "uncertainty": "cluster bootstrap over ISO weeks of the signal session, 2000 resamples, seed 20261029; one-sided p for AUC <= 0.5 = (resamples with AUC <= 0.5 + 1) / 2001",
+    "increments": "paired cluster-bootstrap delta AUC of each block over P0 (P1, CONTEXT pooled; E_US against P1 on US rows), 95% interval"
+  },
+  "decision_rule": {
+    "primary": "for each primary statement, block P1 pooled: LEARNABLE when Holm over the four primary statements at 0.05 rejects AUC <= 0.5 and the test Brier gain over the anchor is above zero; otherwise NOT_LEARNABLE_WITH_THESE_FEATURES (not a verdict on the goal)",
+    "blocks": "descriptive: a block adds when its paired delta-AUC 95% interval is above zero",
+    "speed": "descriptive: each LEARNABLE statement's test AUC is read against the gate simulations committed with this study (weekly gate and daily next-session gate) for the expected time until the live learner can earn confidence"
+  },
+  "use": "design input for a separately frozen LEARNER v2.3: which feature blocks enter, and a PATH warm start from these events (capped as the v2.2 warm start is). Nothing here changes a live ledger, prior, twin draw, family rule or frozen protocol; v2.3 is judged on its own prospective record",
+  "counted_trial": "research/QUANT_GRADE/trials/PATH_HISTORY_v1.json, 4 primary statements (Holm)",
+  "limitations": [
+    "US prices are survivor-only (Nasdaq Trader snapshot of 2026-10-08): names delisted before then are absent, and the worst dumps are among them",
+    "crypto pairs that Binance dropped from exchangeInfo are absent",
+    "daily bars only: no intraday path, no halts",
+    "crypto entry at the next day's open, not a sealing-time quote",
+    "8-K timing approximates news: a press release without an 8-K is missed",
+    "shares outstanding lag the signal by at least 120 days, which understates the float after recent dilution",
+    "FINRA consolidated short volume includes market makers' short sales",
+    "IDX 2025-2026 has many more ARA days than 2019-2023: a regime change the out-of-time test includes on purpose"
+  ]
+}

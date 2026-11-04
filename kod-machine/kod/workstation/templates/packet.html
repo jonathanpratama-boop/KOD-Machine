@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Decision packet · {{ company.ticker }} · KOD{% endblock %}
+{% block content %}
+{% set dec = body.decision %}
+<div class="breadcrumbs"><a href="/">Event inbox</a><span>/</span><a href="/company/{{ company.id }}">{{ company.ticker }}</a><span>/</span>Decision packet</div>
+<div class="page-heading"><div><div class="eyebrow">DECISION PACKET · {{ body.schema }}</div><h1 class="lighter-title">{{ body.question }}</h1>
+<div class="identity-line"><span>recorded {{ dec.recorded_at|moment }} by {{ dec.author }}</span><span>cutoff {{ body.policy.cutoff|moment }} · {{ body.policy.mode }} · {{ body.policy.policy_version }}</span><span>{{ body.view|replace('_', ' ') }} view</span><span class="hash">SHA-256 {{ stored.packet_sha256 }}</span></div></div>
+<div class="button-group"><a class="button secondary" href="/packet/{{ stored.id }}.md">↓ Markdown</a><a class="button secondary" href="/packet/{{ stored.id }}.json">↓ JSON</a><a class="button secondary" href="/packet/{{ stored.id }}?reproduce=1">Reproduce</a></div></div>
+{% if check %}<div class="context-banner"><strong>{{ 'Reproduced' if check.reproduced else 'Differs from the workspace now' }}</strong><span>{{ check.note }}{% if check.differences %}: {{ check.differences|join(', ') }}{% if check.detail %} ({{ check.detail|join(', ') }}){% endif %}{% endif %}.</span></div>{% endif %}
+{% if dec.hindsight_note %}<div class="notice">{{ dec.hindsight_note|capitalize }}.</div>{% endif %}
+<section class="panel"><div class="panel-heading"><div><h2>Decision</h2></div></div><div class="dossier-facts"><p><b>Choice</b> {{ dec.choice }}</p><p><b>Rationale</b> {{ dec.rationale }}</p>
+<p><b>Review</b> {{ dec.review_date or 'no date' }} · {{ dec.review_condition or 'no condition' }}</p>{% if dec.resolution_rule %}<p><b>Resolution rule</b> {{ dec.resolution_rule }}</p>{% endif %}</div></section>
+<section class="panel"><div class="panel-heading"><div><h2>Thesis conditions at the cutoff</h2></div></div>
+{% for t in body.theses %}<ul class="issue-list"><li><b>{{ t.thesis.title }} · version {{ t.version.version }}</b><span>{{ t.version.statement }}</span></li>
+{% for e in t.evaluations %}{% set c = t.version.conditions|selectattr('id', 'equalto', e.condition_id)|first %}<li><b>{{ e.status|replace('_', ' ') }} · {{ e.label }}</b><span>{{ describe(c.expression) }}</span>
+{% for step in e.trace %}<span class="trace-line">{{ step.left.label }} = {{ shown(step.left) }} {{ step.op }} {{ step.right.label }} = {{ shown(step.right) }} → {{ step.result|replace('_', ' ') }}{% if step.reason %} ({{ step.reason }}){% endif %}{% for side in ('left', 'right') %}{% if step[side].note %} [{{ step[side].note }}]{% endif %}{% endfor %}{% for side in ('left', 'right') %}{% set at = step[side].sources.assumption_trace %}{% if at %} · from {{ at.scenario }} assumptions v{{ at.version }}{% if at.changed %} (changed: {% for ch in at.changed %}{{ ch.assumption }} {{ ch['from'] }} → {{ ch['to'] }}{% if not loop.last %}; {% endif %}{% endfor %}){% endif %}{% endif %}{% endfor %}</span>{% endfor %}</li>{% endfor %}</ul>
+{% else %}<p class="panel-footnote">No thesis was current at this cutoff.</p>{% endfor %}</section>
+<section class="panel"><div class="panel-heading"><div><h2>What it rested on</h2><p>Frozen with the decision; the dossier below is the stored read model, not a recomputation.</p></div></div>
+<div class="dossier-facts"><p><b>Evidence</b> {{ body.evidence_ids|length }} observations, {{ body.calculation_ids|length }} calculations</p><p><b>Open conflicts</b> {{ body.unresolved|length }}</p>
+<p><b>Scenario assumptions</b> {% for v in body.assumption_versions.values() %}{{ v.scenario }} '{{ v.name }}' v{{ v.version }}{% if not loop.last %}; {% endif %}{% else %}none saved by the cutoff{% endfor %}</p>
+<p><b>Price</b> {% if body.price %}{{ body.price.close }} {{ body.price.currency }} on {{ body.price.observed_on }} ({{ body.price.adjustment }}, {{ body.price.source }}){% else %}no eligible price{% endif %}</p>
+<p><b>Supported changes</b> {% for c in body.dossier.changes if c.key in body.dossier.supported_changes %}{{ c.label }}: {{ show(c.value, c.unit) }}{% for k in ('duration_note', 'concept_note') %}{% if c[k] %} ({{ c[k] }}){% endif %}{% endfor %}{% if not loop.last %}; {% endif %}{% else %}none{% endfor %}</p>
+<p class="small-muted">{{ body.export_note }}</p></div></section>
+{% endblock %}

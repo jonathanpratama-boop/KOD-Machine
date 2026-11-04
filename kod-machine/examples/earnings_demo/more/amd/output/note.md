@@ -3,7 +3,7 @@
 > Research aid only. Not a recommendation, forecast or entry permission. It opened no case, wrote no ledger and placed no order.
 
 - **Event:** earnings announcement (official release)  
-- **Reporting period:** Q3 2024  
+- **Reporting period:** Q3 2024, stated by the release: 'Reports Third Quarter 2024'  
 - **Information cutoff:** 2024-10-29T22:00:00Z (mode: public)
 - **Historical reconstruction:** documents are admitted by their publication time only. This does not show what KOD possessed at the cutoff; the files were retrieved later (see Sources).
 
@@ -34,34 +34,34 @@ No headline paragraph matched the supported wording ('reported ... quarter ended
 
 ### A. Actual vs prior-period actual
 
-Calculation from the comparative columns printed in the same release. The prior figure is the company's reported number for that period, not an expectation.
+Calculation from the current release's comparative columns or the explicitly identified earlier release. Each row identifies both sources; the prior actual is a reported number, not an expectation.
 
-| Metric | Basis | Unit | Current | Prior period | Prior actual | Difference | Change % | Relation | Agrees with the release's printed change |
-|---|---|---|---|---|---|---|---|---|---|
-| Diluted EPS | GAAP | USD per share | 0.47 | Q3 2023 | 0.18 | 0.29 | 161.11 | YEAR\_OVER\_YEAR | yes (printed: Up 161%) |
-| Diluted EPS | GAAP | USD per share | 0.47 | Q2 2024 | 0.16 | 0.31 | 193.75 | SEQUENTIAL | yes (printed: Up 194%) |
-| Diluted EPS | NON-GAAP | USD per share | 0.92 | Q3 2023 | 0.7 | 0.22 | 31.43 | YEAR\_OVER\_YEAR | yes (printed: Up 31%) |
-| Diluted EPS | NON-GAAP | USD per share | 0.92 | Q2 2024 | 0.69 | 0.23 | 33.33 | SEQUENTIAL | yes (printed: Up 33%) |
-| Gross margin | GAAP | % | 50 | Q3 2023 | 47 | 3 percentage points | n/a | YEAR\_OVER\_YEAR | yes (printed: Up 3 ppts) |
-| Gross margin | GAAP | % | 50 | Q2 2024 | 49 | 1 percentage points | n/a | SEQUENTIAL | yes (printed: Up 1 ppt) |
-| Gross margin | NON-GAAP | % | 54 | Q3 2023 | 51 | 3 percentage points | n/a | YEAR\_OVER\_YEAR | yes (printed: Up 3 ppts) |
-| Gross margin | NON-GAAP | % | 54 | Q2 2024 | 53 | 1 percentage points | n/a | SEQUENTIAL | yes (printed: Up 1 ppt) |
-| Net income | GAAP | USD millions | 771 | Q3 2023 | 299 | 472 | 157.86 | YEAR\_OVER\_YEAR | yes (printed: Up 158%) |
-| Net income | GAAP | USD millions | 771 | Q2 2024 | 265 | 506 | 190.94 | SEQUENTIAL | yes (printed: Up 191%) |
-| Net income | NON-GAAP | USD millions | 1504 | Q3 2023 | 1135 | 369 | 32.51 | YEAR\_OVER\_YEAR | yes (printed: Up 33%) |
-| Net income | NON-GAAP | USD millions | 1504 | Q2 2024 | 1126 | 378 | 33.57 | SEQUENTIAL | yes (printed: Up 34%) |
-| Operating expenses | GAAP | USD millions | 2709 | Q3 2023 | 2533 | 176 | 6.95 | YEAR\_OVER\_YEAR | yes (printed: Up 7%) |
-| Operating expenses | GAAP | USD millions | 2709 | Q2 2024 | 2605 | 104 | 3.99 | SEQUENTIAL | yes (printed: Up 4%) |
-| Operating expenses | NON-GAAP | USD millions | 1956 | Q3 2023 | 1697 | 259 | 15.26 | YEAR\_OVER\_YEAR | yes (printed: Up 15%) |
-| Operating expenses | NON-GAAP | USD millions | 1956 | Q2 2024 | 1847 | 109 | 5.9 | SEQUENTIAL | yes (printed: Up 6%) |
-| Operating income | GAAP | USD millions | 724 | Q3 2023 | 224 | 500 | 223.21 | YEAR\_OVER\_YEAR | yes (printed: Up 223%) |
-| Operating income | GAAP | USD millions | 724 | Q2 2024 | 269 | 455 | 169.14 | SEQUENTIAL | yes (printed: Up 169%) |
-| Operating income | NON-GAAP | USD millions | 1715 | Q3 2023 | 1276 | 439 | 34.4 | YEAR\_OVER\_YEAR | yes (printed: Up 34%) |
-| Operating income | NON-GAAP | USD millions | 1715 | Q2 2024 | 1264 | 451 | 35.68 | SEQUENTIAL | yes (printed: Up 36%) |
-| Revenue | GAAP | USD millions | 6819 | Q3 2023 | 5800 | 1019 | 17.57 | YEAR\_OVER\_YEAR | yes (printed: Up 18%) |
-| Revenue | GAAP | USD millions | 6819 | Q2 2024 | 5835 | 984 | 16.86 | SEQUENTIAL | yes (printed: Up 17%) |
-| Revenue | NON-GAAP | USD millions | 6819 | Q3 2023 | 5800 | 1019 | 17.57 | YEAR\_OVER\_YEAR | yes (printed: Up 18%) |
-| Revenue | NON-GAAP | USD millions | 6819 | Q2 2024 | 5835 | 984 | 16.86 | SEQUENTIAL | yes (printed: Up 17%) |
+| Metric | Basis | Unit | Current | Prior period | Prior actual | Difference | Change % | Relation | Agrees with the release's printed change | Source |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Diluted EPS | GAAP | USD per share | 0.47 | Q3 2023 | 0.18 | 0.29 | 161.11 | YEAR\_OVER\_YEAR | yes (printed: Up 161%) | comparative column printed in the current release; actual: current release, table 1, row 10 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 1, row 10 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Diluted EPS | GAAP | USD per share | 0.47 | Q2 2024 | 0.16 | 0.31 | 193.75 | SEQUENTIAL | yes (printed: Up 194%) | comparative column printed in the current release; actual: current release, table 1, row 10 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 1, row 10 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Diluted EPS | NON-GAAP | USD per share | 0.92 | Q3 2023 | 0.7 | 0.22 | 31.43 | YEAR\_OVER\_YEAR | yes (printed: Up 31%) | comparative column printed in the current release; actual: current release, table 2, row 10 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 2, row 10 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Diluted EPS | NON-GAAP | USD per share | 0.92 | Q2 2024 | 0.69 | 0.23 | 33.33 | SEQUENTIAL | yes (printed: Up 33%) | comparative column printed in the current release; actual: current release, table 2, row 10 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 2, row 10 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Gross margin | GAAP | % | 50 | Q3 2023 | 47 | 3 percentage points | n/a | YEAR\_OVER\_YEAR | yes (printed: Up 3 ppts) | comparative column printed in the current release; actual: current release, table 1, row 5 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 1, row 5 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Gross margin | GAAP | % | 50 | Q2 2024 | 49 | 1 percentage points | n/a | SEQUENTIAL | yes (printed: Up 1 ppt) | comparative column printed in the current release; actual: current release, table 1, row 5 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 1, row 5 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Gross margin | NON-GAAP | % | 54 | Q3 2023 | 51 | 3 percentage points | n/a | YEAR\_OVER\_YEAR | yes (printed: Up 3 ppts) | comparative column printed in the current release; actual: current release, table 2, row 5 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 2, row 5 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Gross margin | NON-GAAP | % | 54 | Q2 2024 | 53 | 1 percentage points | n/a | SEQUENTIAL | yes (printed: Up 1 ppt) | comparative column printed in the current release; actual: current release, table 2, row 5 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 2, row 5 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Net income | GAAP | USD millions | 771 | Q3 2023 | 299 | 472 | 157.86 | YEAR\_OVER\_YEAR | yes (printed: Up 158%) | comparative column printed in the current release; actual: current release, table 1, row 9 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 1, row 9 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Net income | GAAP | USD millions | 771 | Q2 2024 | 265 | 506 | 190.94 | SEQUENTIAL | yes (printed: Up 191%) | comparative column printed in the current release; actual: current release, table 1, row 9 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 1, row 9 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Net income | NON-GAAP | USD millions | 1504 | Q3 2023 | 1135 | 369 | 32.51 | YEAR\_OVER\_YEAR | yes (printed: Up 33%) | comparative column printed in the current release; actual: current release, table 2, row 9 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 2, row 9 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Net income | NON-GAAP | USD millions | 1504 | Q2 2024 | 1126 | 378 | 33.57 | SEQUENTIAL | yes (printed: Up 34%) | comparative column printed in the current release; actual: current release, table 2, row 9 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 2, row 9 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Operating expenses | GAAP | USD millions | 2709 | Q3 2023 | 2533 | 176 | 6.95 | YEAR\_OVER\_YEAR | yes (printed: Up 7%) | comparative column printed in the current release; actual: current release, table 1, row 6 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 1, row 6 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Operating expenses | GAAP | USD millions | 2709 | Q2 2024 | 2605 | 104 | 3.99 | SEQUENTIAL | yes (printed: Up 4%) | comparative column printed in the current release; actual: current release, table 1, row 6 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 1, row 6 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Operating expenses | NON-GAAP | USD millions | 1956 | Q3 2023 | 1697 | 259 | 15.26 | YEAR\_OVER\_YEAR | yes (printed: Up 15%) | comparative column printed in the current release; actual: current release, table 2, row 6 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 2, row 6 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Operating expenses | NON-GAAP | USD millions | 1956 | Q2 2024 | 1847 | 109 | 5.9 | SEQUENTIAL | yes (printed: Up 6%) | comparative column printed in the current release; actual: current release, table 2, row 6 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 2, row 6 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Operating income | GAAP | USD millions | 724 | Q3 2023 | 224 | 500 | 223.21 | YEAR\_OVER\_YEAR | yes (printed: Up 223%) | comparative column printed in the current release; actual: current release, table 1, row 7 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 1, row 7 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Operating income | GAAP | USD millions | 724 | Q2 2024 | 269 | 455 | 169.14 | SEQUENTIAL | yes (printed: Up 169%) | comparative column printed in the current release; actual: current release, table 1, row 7 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 1, row 7 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Operating income | NON-GAAP | USD millions | 1715 | Q3 2023 | 1276 | 439 | 34.4 | YEAR\_OVER\_YEAR | yes (printed: Up 34%) | comparative column printed in the current release; actual: current release, table 2, row 7 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 2, row 7 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Operating income | NON-GAAP | USD millions | 1715 | Q2 2024 | 1264 | 451 | 35.68 | SEQUENTIAL | yes (printed: Up 36%) | comparative column printed in the current release; actual: current release, table 2, row 7 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 2, row 7 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Revenue | GAAP | USD millions | 6819 | Q3 2023 | 5800 | 1019 | 17.57 | YEAR\_OVER\_YEAR | yes (printed: Up 18%) | comparative column printed in the current release; actual: current release, table 1, row 3 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 1, row 3 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Revenue | GAAP | USD millions | 6819 | Q2 2024 | 5835 | 984 | 16.86 | SEQUENTIAL | yes (printed: Up 17%) | comparative column printed in the current release; actual: current release, table 1, row 3 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 1, row 3 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Revenue | NON-GAAP | USD millions | 6819 | Q3 2023 | 5800 | 1019 | 17.57 | YEAR\_OVER\_YEAR | yes (printed: Up 18%) | comparative column printed in the current release; actual: current release, table 2, row 3 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 2, row 3 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
+| Revenue | NON-GAAP | USD millions | 6819 | Q2 2024 | 5835 | 984 | 16.86 | SEQUENTIAL | yes (printed: Up 17%) | comparative column printed in the current release; actual: current release, table 2, row 3 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>; prior: current release, table 2, row 3 <https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm> |
 
 ### B. Actual vs earlier company guidance
 
@@ -69,7 +69,7 @@ Guidance is the company's own outlook issued before the period, taken from the c
 
 | Metric | Basis | Unit | Actual | Guided midpoint | Guided range | Difference vs midpoint | Diff % | Position | Guidance quote |
 |---|---|---|---|---|---|---|---|---|---|
-| Revenue | GAAP and NON-GAAP (identical) | USD millions | 6819 | 6700 | 6400 to 7000 | 119 | 1.78 | WITHIN\_RANGE | For the third quarter of 2024, AMD expects revenue to be approximately $6.7 billion, plus or minus $300 million |
+| Revenue | GAAP and NON-GAAP (identical) | USD millions (assumed) | 6819 | 6700 | 6400 to 7000 | 119 | 1.78 | WITHIN\_RANGE | For the third quarter of 2024, AMD expects revenue to be approximately $6.7 billion, plus or minus $300 million |
 | Gross margin | NON-GAAP | % | 54 | 53.5 | point estimate (approximately) | 0.5 | n/a | NO\_RANGE\_GIVEN | Non-GAAP gross margin is expected to be approximately 53.5% |
 
 
@@ -81,7 +81,7 @@ Guidance is the company's own outlook issued before the period, taken from the c
 
 | Metric | Basis | Target period | Midpoint | Range | Quote |
 |---|---|---|---|---|---|
-| Revenue | UNSTATED | Q4 2024 | 7500 (USD millions) | 7200 to 7800 | For the fourth quarter of 2024, AMD expects revenue to be approximately $7.5 billion, plus or minus $300 million |
+| Revenue | UNSTATED | Q4 2024 | 7500 (USD millions) (currency assumed from "$") | 7200 to 7800 | For the fourth quarter of 2024, AMD expects revenue to be approximately $7.5 billion, plus or minus $300 million |
 | Gross margin | NON-GAAP | Q4 2024 | 54 (%) | point estimate (approximately) | Non-GAAP gross margin is expected to be approximately 54% |
 
 ## Calculations and interpretation
@@ -92,14 +92,12 @@ Calculations are the differences above. **Interpretation: none offered.** This t
 
 - Check: headline revenue vs table revenue: consistent.
 - Check: headline UNSTATED diluted EPS vs table: consistent.
-- COLUMN\_DURATION\_UNKNOWN (table 7): some dated columns have no 'Three/Twelve Months Ended' heading above them (5 dated columns under 2 duration headings); their values are not read
-- UNIT\_SCALE\_UNSTATED (table 9): no 'in millions/thousands' statement found for this table; amounts are kept unscaled and flagged
-- COLUMN\_DURATION\_UNKNOWN (table 10): some dated columns have no 'Three/Twelve Months Ended' heading above them (5 dated columns under 2 duration headings); their values are not read
-- COLUMN\_DURATION\_UNKNOWN (table 13): some dated columns have no 'Three/Twelve Months Ended' heading above them (5 dated columns under 2 duration headings); their values are not read
-- Comparison document: COLUMN\_DURATION\_UNKNOWN (table 7): some dated columns have no 'Three/Twelve Months Ended' heading above them (5 dated columns under 2 duration headings); their values are not read
-- Comparison document: COLUMN\_DURATION\_UNKNOWN (table 10): some dated columns have no 'Three/Twelve Months Ended' heading above them (5 dated columns under 2 duration headings); their values are not read
+- COLUMN\_DURATION\_UNKNOWN (table 8): dated column(s) September 28, 2024, December 30, 2023: no 'Three/Twelve Months Ended' heading above it; their values are not read
+- BREAKDOWN\_ROWS\_NOT\_READ (table 10): 10 recognised row(s) below 'Segment and Category Information(1)' are parts of the company (segments, categories or regions), not the company figure; not read
+- Comparison document: COLUMN\_DURATION\_UNKNOWN (table 8): dated column(s) June 29, 2024, December 30, 2023: no 'Three/Twelve Months Ended' heading above it; their values are not read
+- Comparison document: BREAKDOWN\_ROWS\_NOT\_READ (table 10): 9 recognised row(s) below 'Segment and Category Information(1)' are parts of the company (segments, categories or regions), not the company figure; not read
 - Prior-period figures printed in the current release vs the earlier release: 11 of 11 agree.
-- Currency is read from the "$" sign and assumed to be US dollars unless the user overrode it; confirm in the filing.
+- Reporting currency of the current-period figures: USD; assumed from the "$" sign because no currency statement was found (confirm in the filing, or record it explicitly).
 - Only the summary table and the outlook bullets are read. Segment results, reconciliations and management commentary are not extracted.
 - Supplied times and quotes are assertions; the tool does not authenticate the source or prove historical availability.
 
@@ -119,4 +117,4 @@ Calculations are the differences above. **Interpretation: none offered.** This t
 - current: [https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm](<https://www.sec.gov/Archives/edgar/data/2488/000000248824000161/q32024991.htm>)
 - comparison: [https://www.sec.gov/Archives/edgar/data/2488/000000248824000121/q22024991.htm](<https://www.sec.gov/Archives/edgar/data/2488/000000248824000121/q22024991.htm>)
 
-Workbench bundle SHA-256: `e0c34545d112bbe0feddccecc4691f27a69ea245f201ab353d83047d7e311ba6`. Generated by `kod.earnings` (KOD-EARNINGS-NOTE-v1).
+Workbench bundle SHA-256: `ebc62ef6e80effc6f9c3227a3a0a8e4cf0df7565a5147193c6bf140b4834a837`. Generated by `kod.earnings` (KOD-EARNINGS-NOTE-v1).

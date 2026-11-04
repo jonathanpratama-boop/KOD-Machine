@@ -1,0 +1,103 @@
+{
+ "jump_vs_pull": {
+  "agree": 37,
+  "disagree": 1,
+  "cases": [
+   [
+    "GLE",
+    "2026-10-08",
+    "0.1",
+    "pull",
+    "False",
+    "jump",
+    "True"
+   ]
+  ]
+ },
+ "by_session": [
+  {
+   "pull_session": "2026-10-07",
+   "checked": 49,
+   "match": 49,
+   "mismatch": 0,
+   "mismatched": []
+  },
+  {
+   "pull_session": "2026-10-12",
+   "checked": 41,
+   "match": 40,
+   "mismatch": 1,
+   "mismatched": [
+    "CAPS"
+   ]
+  },
+  {
+   "pull_session": "2026-10-15",
+   "checked": 38,
+   "match": 36,
+   "mismatch": 2,
+   "mismatched": [
+    "CAPS",
+    "OBAI"
+   ]
+  },
+  {
+   "pull_session": "2026-10-16",
+   "checked": 37,
+   "match": 36,
+   "mismatch": 1,
+   "mismatched": [
+    "CAPS"
+   ]
+  },
+  {
+   "pull_session": "2026-10-20",
+   "checked": 30,
+   "match": 30,
+   "mismatch": 0,
+   "mismatched": []
+  },
+  {
+   "pull_session": "2026-10-21",
+   "checked": 29,
+   "match": 29,
+   "mismatch": 0,
+   "mismatched": []
+  },
+  {
+   "pull_session": "2026-10-23",
+   "checked": 23,
+   "match": 23,
+   "mismatch": 0,
+   "mismatched": []
+  },
+  {
+   "pull_session": "2026-10-26",
+   "checked": 7,
+   "match": 7,
+   "mismatch": 0,
+   "mismatched": []
+  },
+  {
+   "pull_session": "2026-10-28",
+   "checked": 4,
+   "match": 4,
+   "mismatch": 0,
+   "mismatched": []
+  },
+  {
+   "pull_session": "2026-10-28",
+   "checked": 4,
+   "match": 4,
+   "mismatch": 0,
+   "mismatched": []
+  }
+ ],
+ "decisions": {
+  "jump:True": 676,
+  "pull:True": 41,
+  "pull:False": 9,
+  "jump:False": 11,
+  "no evidence:False": 1
+ }
+}

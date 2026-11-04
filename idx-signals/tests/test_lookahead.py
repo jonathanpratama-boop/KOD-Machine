@@ -46,26 +46,33 @@ class PrefixFirst(unittest.TestCase):
         for d in (25, 47, 89):
             part = signal_array(rule, src.view(d))
             k = src.rows_at(d)
-            np.testing.assert_array_equal(src.unorder(np.vstack([part, np.full((m.shape[0] - k, d + 1), np.nan)]))[:, d],
-                                          sig[:, d])
+            np.testing.assert_array_equal(
+                src.unorder(np.vstack([part, np.full((m.shape[0] - k, d + 1), np.nan)]))[:, d],
+                sig[:, d],
+            )
         self.assertEqual(info["prefix_calls"], m.shape[1])
         self.assertGreater(np.nansum(sig), 0)
 
     def test_global_normalisation_is_refused(self):
         """Guards against: z-scoring each name with its whole-history mean and std (uses future prices)."""
-        rule = module_rule("ZSCORE", """
+        rule = module_rule(
+            "ZSCORE",
+            """
             def compute(m):
                 close = np.where(m.present, m.close, np.nan)
                 z = (close - np.nanmean(close, axis=1, keepdims=True)) / np.nanstd(close, axis=1, keepdims=True)
                 return np.where(m.tradeable, (z > 1).astype(float), np.nan)
-        """)
+        """,
+        )
         with self.assertRaisesRegex(LookaheadError, "reads data from after the close"):
             causal_signals(rule, market())
 
     def test_truncation_aware_rule_cannot_leak(self):
         """Guards against: a rule that behaves causally whenever it is handed a shortened window
         (as the old check did) and peeks only on the full run."""
-        rule = module_rule("SNEAKY", """
+        rule = module_rule(
+            "SNEAKY",
+            """
             FULL = 90
             def compute(m):
                 close = np.where(m.present, m.close, np.nan)
@@ -73,19 +80,23 @@ class PrefixFirst(unittest.TestCase):
                     return np.where(m.tradeable, 0.0, np.nan)
                 tomorrow = np.concatenate([close[:, 1:], close[:, -1:]], axis=1)
                 return np.where(m.tradeable, (tomorrow > close).astype(float), np.nan)
-        """)
+        """,
+        )
         with self.assertRaises(LookaheadError):
             causal_signals(rule, market())
 
     def test_names_listed_later_are_invisible(self):
         """Guards against: a rule that depends on how many names will exist (future IPOs), which the old
         check missed because truncation kept every row."""
-        rule = module_rule("HEADCOUNT", """
+        rule = module_rule(
+            "HEADCOUNT",
+            """
             def compute(m):
                 close = np.where(m.present, m.close, np.nan)
                 threshold = 100 * m.shape[0]
                 return np.where(m.tradeable, (close > threshold).astype(float), np.nan)
-        """)
+        """,
+        )
         m = market(ipo={3: 40, 7: 70})
         old = signal_array(rule, m)  # what the old row-preserving truncation compared against
         for d in (10, 50):
@@ -102,82 +113,118 @@ class SourceAudit(unittest.TestCase):
 
     def test_stateful_cache_is_refused(self):
         """Guards against: a module-level cache filled by one call and read by another."""
-        self.refused("""
+        self.refused(
+            """
             _CACHE = {}
             def compute(m):
                 return np.where(m.tradeable, 0.0, np.nan)
-        """, "module-level values must be literals")
-        self.refused("""
+        """,
+            "module-level values must be literals",
+        )
+        self.refused(
+            """
             def compute(m, seen=[]):
                 return np.where(m.tradeable, 0.0, np.nan)
-        """, "default arguments must be literals")
-        self.refused("""
+        """,
+            "default arguments must be literals",
+        )
+        self.refused(
+            """
             def compute(m):
                 compute.last = m.close
                 return np.where(m.tradeable, 0.0, np.nan)
-        """, "attribute assignment")
-        self.refused("""
+        """,
+            "attribute assignment",
+        )
+        self.refused(
+            """
             STATE = 0
             def compute(m):
                 global STATE
                 return np.where(m.tradeable, 0.0, np.nan)
-        """, "global")
+        """,
+            "global",
+        )
 
     def test_reading_files_is_refused(self):
         """Guards against: a rule that loads the panel itself and reads tomorrow's close."""
-        self.refused(f"""
+        self.refused(
+            f"""
             def compute(m):
                 raw = open({PANEL_FILE!r}).read()
                 return np.where(m.tradeable, 0.0, np.nan)
-        """, "`open` is not allowed")
-        self.refused("""
+        """,
+            "`open` is not allowed",
+        )
+        self.refused(
+            """
             import pandas as pd
             def compute(m):
                 pd.read_csv("x")
                 return np.where(m.tradeable, 0.0, np.nan)
-        """, "read_csv")
-        self.refused("""
+        """,
+            "read_csv",
+        )
+        self.refused(
+            """
             import os
             def compute(m):
                 return np.where(m.tradeable, 0.0, np.nan)
-        """, "import of os")
+        """,
+            "import of os",
+        )
 
     def test_data_held_in_closures_or_import_time_state_is_refused(self):
         """Guards against: data loaded at import time, or a closure built by a factory, carrying the future."""
-        self.refused("""
+        self.refused(
+            """
             def make():
                 data = np.zeros(3)
                 def inner(m):
                     return np.where(m.tradeable, 0.0, np.nan)
                 return inner
             compute = make()
-        """, "module-level values must be literals")
-        self.refused("""
+        """,
+            "module-level values must be literals",
+        )
+        self.refused(
+            """
             DATA = np.zeros((1000, 1000))  # stands in for np.load(<panel>) at import time
             def compute(m):
                 return np.where(m.tradeable, 0.0, np.nan)
-        """, "module-level values must be literals")
+        """,
+            "module-level values must be literals",
+        )
 
     def test_frame_walking_is_refused(self):
         """Guards against: reaching the caller's full arrays through the call stack."""
-        self.refused("""
+        self.refused(
+            """
             import sys
             def compute(m):
                 full = sys._getframe(2).f_locals
                 return np.where(m.tradeable, 0.0, np.nan)
-        """, "_getframe")
-        self.refused("""
+        """,
+            "_getframe",
+        )
+        self.refused(
+            """
             def compute(m):
                 try:
                     raise ValueError
                 except ValueError as e:
                     caller = e.__traceback__.tb_frame.f_back
                 return np.where(m.tradeable, 0.0, np.nan)
-        """, "dunder attribute")
-        self.refused("""
+        """,
+            "dunder attribute",
+        )
+        self.refused(
+            """
             def compute(m):
                 return np.where(m.close.base[:, 1:] > 0, 0.0, np.nan)
-        """, "base")
+        """,
+            "base",
+        )
 
     def test_the_audit_is_not_vacuous(self):
         """Guards against: an audit so strict that it rejects real rules (then it would be switched off)."""
@@ -202,7 +249,7 @@ class RuntimeSandbox(unittest.TestCase):
         msg = self.blocked(f"""
             def compute(m):
                 try:
-                    open({str(PKG_ROOT / 'data' / 'manifests')!r} + "/x.json").read()
+                    open({str(PKG_ROOT / "data" / "manifests")!r} + "/x.json").read()
                 except Exception:
                     pass
                 return np.where(m.tradeable, 0.0, np.nan)
@@ -212,9 +259,15 @@ class RuntimeSandbox(unittest.TestCase):
     def test_frame_and_heap_walks_are_blocked(self):
         """Guards against: sys._getframe, traceback frames and gc.get_objects reaching the full market."""
         header = "import numpy as np\nimport sys\nimport gc\n\n"
-        for body in ("    sys._getframe(1)\n", "    gc.get_objects()\n",
-                     "    try:\n        raise ValueError\n    except ValueError as e:\n        e.__traceback__.tb_frame\n"):
-            self.blocked("def compute(m):\n" + body + "    return np.where(m.tradeable, 0.0, np.nan)\n", header=header)
+        for body in (
+            "    sys._getframe(1)\n",
+            "    gc.get_objects()\n",
+            "    try:\n        raise ValueError\n    except ValueError as e:\n        e.__traceback__.tb_frame\n",
+        ):
+            self.blocked(
+                "def compute(m):\n" + body + "    return np.where(m.tradeable, 0.0, np.nan)\n",
+                header=header,
+            )
 
     def test_view_is_read_only_and_has_no_registry(self):
         """Guards against: a rule writing into the arrays execution uses, reading the corporate-action
@@ -254,9 +307,18 @@ class ReviewPR1(unittest.TestCase):
         """Closes: operator.attrgetter / dataclasses.sys.modules["builtins"].getattr reaching private
         state, and `import idxsig.market` binding the whole idxsig package (and so the sandbox)."""
         for body, pattern in (
-            ("import operator\ndef compute(m):\n    return operator.attrgetter('x')(m)\n", "operator"),
-            ("import dataclasses\ndef compute(m):\n    return dataclasses.sys.modules\n", "dataclasses"),
-            ("import idxsig.market\ndef compute(m):\n    return m.close\n", "binds its parent package"),
+            (
+                "import operator\ndef compute(m):\n    return operator.attrgetter('x')(m)\n",
+                "operator",
+            ),
+            (
+                "import dataclasses\ndef compute(m):\n    return dataclasses.sys.modules\n",
+                "dataclasses",
+            ),
+            (
+                "import idxsig.market\ndef compute(m):\n    return m.close\n",
+                "binds its parent package",
+            ),
             ("import numpy as np\ndef compute(m):\n    return np.sys\n", r"\.sys is not allowed"),
         ):
             problems = " ".join(audit_source(body))
@@ -264,13 +326,16 @@ class ReviewPR1(unittest.TestCase):
 
     def test_switching_the_sandbox_off_is_detected(self):
         """Closes: a rule turning the sandbox's active flag off to read a data file unseen."""
-        rule = module_rule("OFF", f"""
+        rule = module_rule(
+            "OFF",
+            f"""
             def compute(m):
                 from idxsig.rules import sandbox
                 sandbox._STATE["active"] = False
-                open({str(PKG_ROOT / 'data' / 'corporate_actions' / 'manual.csv')!r}).read()
+                open({str(PKG_ROOT / "data" / "corporate_actions" / "manual.csv")!r}).read()
                 return np.where(m.tradeable, 0.0, np.nan)
-        """)
+        """,
+        )
         with self.assertRaisesRegex(LookaheadError, "state was changed"):
             causal_signals(rule, market(), audit=False)
 

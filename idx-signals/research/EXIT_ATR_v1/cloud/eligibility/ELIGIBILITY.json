@@ -1,0 +1,109 @@
+{
+ "stage": "eligibility only: no exit price read, no return computed",
+ "panel": {
+  "file": "data/panel/panel_crypto-20261008T003354Z.csv.gz",
+  "sha256": "3dc12749c7cce635a68ef4f152ec21c3b3d24eb6b02665c799aa24e513963d7d",
+  "rows": 773512
+ },
+ "hourly": {
+  "manifest": "binance_1h-20261015T182940Z.jsonl",
+  "manifest_sha256": "2587a63ce26034e1d54670579f8843150f640407a6df0338f35537bd30d20adf",
+  "last_hour_read": "2022-12-31 23:00:00+00:00",
+  "symbols_loaded": 351
+ },
+ "entries": {
+  "signals.csv": "c64f1916dfff560c6e012834f2a93ecbb9d64e32e9e12a296ff7f49e948eefd4",
+  "controls.csv.gz": "7c389ae0d82b4f3438f3d767ddc532f9a3324a825367f434f733eb37420442d3",
+  "entries_meta.json": "dfd65ca1a7b90a37a5c754c05e1f758248ca6fe6fbd4677c70002d403f6c8a7d"
+ },
+ "signals": {
+  "attempted": 1257,
+  "by_status": {
+   "EXITED": 1241,
+   "SKIP_LOT": 11,
+   "EXIT_DATA_END": 3,
+   "INCOMPLETE": 2
+  },
+  "scored_by_original_model": 1244,
+  "coverage_of_scored": {
+   "COMPLETE": 1150,
+   "GAPS": 91,
+   "TRUNCATED": 3
+  },
+  "excluded_by_first_reason": {
+   "ATR_WARMUP": 55,
+   "NOT_FILLED": 11,
+   "UNIT_OR_ASSET_CHANGE": 8,
+   "INCOMPLETE_BOUNDARY": 2
+  },
+  "atr_invalid_among_scored": 62,
+  "unit_change_among_scored": 8,
+  "unit_change_and_atr_invalid": 7,
+  "unresolved_unfi_among_eligible": 1,
+  "eligible": 1181,
+  "eligible_distinct_coins": 307,
+  "eligible_coverage": {
+   "COMPLETE": 1095,
+   "GAPS": 83,
+   "TRUNCATED": 3
+  },
+  "eligible_by_entry_year": {
+   "2020": 89,
+   "2021": 718,
+   "2022": 374
+  }
+ },
+ "controls": {
+  "attempted": 251400,
+  "by_status": {
+   "EXITED": 248675,
+   "SKIP_LOT": 1768,
+   "EXIT_DATA_END": 468,
+   "INCOMPLETE": 369,
+   "SKIP_LIQUIDITY": 108,
+   "SKIP_NOT_TRADED": 12
+  },
+  "scored_by_original_model": 249143,
+  "coverage_of_scored": {
+   "COMPLETE": 230669,
+   "GAPS": 17969,
+   "TRUNCATED": 505
+  },
+  "excluded_by_first_reason": {
+   "ATR_WARMUP": 3474,
+   "NOT_FILLED": 1888,
+   "INCOMPLETE_BOUNDARY": 369,
+   "UNIT_OR_ASSET_CHANGE": 214
+  },
+  "atr_invalid_among_scored": 3524,
+  "unit_change_among_scored": 214,
+  "unit_change_and_atr_invalid": 50,
+  "unresolved_unfi_among_eligible": 62,
+  "eligible": 245455,
+  "eligible_distinct_coins": 342,
+  "eligible_coverage": {
+   "COMPLETE": 227272,
+   "GAPS": 17678,
+   "TRUNCATED": 505
+  },
+  "eligible_by_entry_year": {
+   "2020": 20903,
+   "2021": 147454,
+   "2022": 77098
+  }
+ },
+ "eligible_signals_with_no_eligible_control": 0,
+ "eligible_controls_per_eligible_signal": {
+  "median": 200.0,
+  "min": 26
+ },
+ "atr_over_entry_price_eligible_signals": {
+  "p10": 0.0851556928927977,
+  "median": 0.1245655023078238,
+  "p90": 0.25974317131571323
+ },
+ "initial_stop_at_or_below_zero_eligible": {
+  "signals": 62,
+  "controls": 12809
+ }
+}

@@ -1,0 +1,3 @@
+{"account_problems": [], "case": "duplicate decisions", "chain_problems": [], "daily_order_cap": 3, "decision_times": ["2026-11-01T00:30:02Z"], "distinct_decisions": 3, "fail_closed": null, "orders": 3, "reserved": 2887.49999772, "risk": 149.99999988, "risk_cap": 150.0}
+{"account_problems": [], "case": "disjoint decisions", "chain_problems": [], "daily_order_cap": 3, "decision_times": ["2026-11-01T00:30:02Z"], "distinct_decisions": 3, "fail_closed": null, "orders": 3, "reserved": 2887.49999772, "risk": 149.99999988, "risk_cap": 150.0}
+{"expected_head_control": "ledger head changed; recompute the proposal against the current prefix", "bytes_unchanged": true}

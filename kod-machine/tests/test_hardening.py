@@ -24,7 +24,12 @@ from tests.support import T0, Clock, Lab, prospective_card
 
 ROOT = Path(__file__).resolve().parents[1]
 SEED = ROOT / "seeds" / "retrospective_cases.json"
-OUTCOME = {"window_label": "5 sessions", "outcome_label": "REPRICED_UP", "window_return_pct": 9.1, "source": "test close series"}
+OUTCOME = {
+    "window_label": "5 sessions",
+    "outcome_label": "REPRICED_UP",
+    "window_return_pct": 9.1,
+    "source": "test close series",
+}
 
 
 class LabTest(unittest.TestCase):
@@ -36,8 +41,14 @@ class LabTest(unittest.TestCase):
     def tearDown(self):
         self.lab.cleanup()
 
-    def card(self, case_id="KOD-P-T-1", cutoff_offset=timedelta(minutes=-20),
-             start_offset=timedelta(hours=1), length=timedelta(days=5), **kw):
+    def card(
+        self,
+        case_id="KOD-P-T-1",
+        cutoff_offset=timedelta(minutes=-20),
+        start_offset=timedelta(hours=1),
+        length=timedelta(days=5),
+        **kw,
+    ):
         cutoff = self.clock() + cutoff_offset
         start = self.clock() + start_offset
         kw.setdefault("evidence", [self.lab.evidence_id])
@@ -66,7 +77,10 @@ class Rule1ProspectiveOpenTiming(LabTest):
 
     def test_cutoff_more_than_one_hour_after_open_is_refused(self):
         with self.assertRaisesRegex(LedgerError, "within 1:00:00"):
-            open_and_evaluate(self.ledger, self.card(cutoff_offset=timedelta(hours=2), start_offset=timedelta(hours=3)))
+            open_and_evaluate(
+                self.ledger,
+                self.card(cutoff_offset=timedelta(hours=2), start_offset=timedelta(hours=3)),
+            )
 
     def test_cutoff_inside_one_hour_is_accepted(self):
         digest = open_and_evaluate(self.ledger, self.card(cutoff_offset=timedelta(minutes=-59)))
@@ -148,7 +162,9 @@ class Rule2Close(LabTest):
         self.clock.moment = self.window_end
         self.ledger.close_case("KOD-P-T-1", {**OUTCOME, "card_sha": self.digest})
         with self.assertRaisesRegex(LedgerError, "already recorded"):
-            self.ledger.close_case("KOD-P-T-1", {**OUTCOME, "outcome_label": "NO_REPRICE", "card_sha": self.digest})
+            self.ledger.close_case(
+                "KOD-P-T-1", {**OUTCOME, "outcome_label": "NO_REPRICE", "card_sha": self.digest}
+            )
 
     def test_retrospective_close_also_needs_card_sha(self):
         card = json.loads(SEED.read_text())["cases"][0]
@@ -193,13 +209,22 @@ class Rule3VerifyAndGitAnchor(LabTest):
         conn.close()
 
     def test_edited_case_row_fails_verify(self):
-        self._tamper("UPDATE cases SET story_hypothesis = 'rewritten after the outcome' WHERE case_id = 'KOD-P-T-1'")
+        self._tamper(
+            "UPDATE cases SET story_hypothesis = 'rewritten after the outcome' WHERE case_id = 'KOD-P-T-1'"
+        )
         result = self.verify()
         self.assertFalse(result["ok"])
-        self.assertTrue(any("KOD-P-T-1" in f["subject"] and "hash to" in f["message"] for f in result["findings"]))
+        self.assertTrue(
+            any(
+                "KOD-P-T-1" in f["subject"] and "hash to" in f["message"]
+                for f in result["findings"]
+            )
+        )
 
     def test_edited_information_set_fails_verify(self):
-        self._tamper("UPDATE information_sets SET payload_json = '{}' WHERE set_id = 'KOD-P-T-1:T-24H'")
+        self._tamper(
+            "UPDATE information_sets SET payload_json = '{}' WHERE set_id = 'KOD-P-T-1:T-24H'"
+        )
         self.assertFalse(self.verify()["ok"])
 
     def test_rewritten_hash_everywhere_in_the_db_still_fails_against_git(self):
@@ -210,17 +235,24 @@ class Rule3VerifyAndGitAnchor(LabTest):
         # Recompute the forged hash and write it into every DB copy.
         from kod.ledger import freeze_card, frozen_evaluations
         from kod.hashing import sha256_obj
+
         row = dict(self.ledger.rows("SELECT * FROM cases WHERE case_id = 'KOD-P-T-1'")[0])
-        sets = {r["horizon"]: json.loads(r["payload_json"]) for r in self.ledger.rows(
-            "SELECT * FROM information_sets WHERE case_id = 'KOD-P-T-1'")}
+        sets = {
+            r["horizon"]: json.loads(r["payload_json"])
+            for r in self.ledger.rows("SELECT * FROM information_sets WHERE case_id = 'KOD-P-T-1'")
+        }
         critic = dict(self.ledger.rows("SELECT * FROM critic_notes WHERE case_id = 'KOD-P-T-1'")[0])
-        evals = frozen_evaluations(self.ledger.rows("SELECT * FROM detector_evaluations WHERE case_id = 'KOD-P-T-1'"))
+        evals = frozen_evaluations(
+            self.ledger.rows("SELECT * FROM detector_evaluations WHERE case_id = 'KOD-P-T-1'")
+        )
         forged = sha256_obj(freeze_card(row, sets, critic, row["card_hash_version"], evals))
         self._tamper("UPDATE cases SET card_sha = ? WHERE case_id = 'KOD-P-T-1'", (forged,))
         self._tamper("UPDATE anchors SET anchored_sha = ? WHERE record_id = 'KOD-P-T-1'", (forged,))
         result = self.verify()
         self.assertFalse(result["ok"])
-        self.assertTrue(any("does not contain this hash" in f["message"] for f in result["findings"]))
+        self.assertTrue(
+            any("does not contain this hash" in f["message"] for f in result["findings"])
+        )
 
     def test_registry_line_removed_from_git_fails_verify(self):
         path = self.lab.registry / "opens.jsonl"
@@ -251,9 +283,12 @@ class Rule3VerifyAndGitAnchor(LabTest):
         open_and_evaluate(self.ledger, self.card(case_id="KOD-P-GITDATE"))
         result = self.verify()
         self.assertTrue(result["ok"], result["findings"])
-        self.assertTrue(any(
-            f["subject"] == "case KOD-P-GITDATE" and "git commit date" in f["message"] for f in result["findings"]
-        ))
+        self.assertTrue(
+            any(
+                f["subject"] == "case KOD-P-GITDATE" and "git commit date" in f["message"]
+                for f in result["findings"]
+            )
+        )
 
     def test_tampered_timestamp_token_fails_verify(self):
         token = next((self.lab.registry / "timestamps" / "case").glob("KOD-P-T-1.*.tsr"))
@@ -265,7 +300,11 @@ class Rule3VerifyAndGitAnchor(LabTest):
 
     def test_anchor_failure_rolls_back_the_open(self):
         with tempfile.TemporaryDirectory() as outside:
-            ledger = Ledger(Path(outside) / "kod.db", anchor=GitAnchor(Path(outside) / "registry"), clock=self.clock)
+            ledger = Ledger(
+                Path(outside) / "kod.db",
+                anchor=GitAnchor(Path(outside) / "registry"),
+                clock=self.clock,
+            )
             with self.assertRaisesRegex(LedgerError, "git anchor failed"):
                 open_and_evaluate(ledger, self.card(case_id="KOD-P-T-2", facts={}, evidence=None))
             self.assertEqual(ledger.rows("SELECT * FROM cases"), [])
@@ -275,7 +314,9 @@ class Rule3VerifyAndGitAnchor(LabTest):
         (self.lab.registry / "opens.jsonl").write_text("tampered\n")
         with self.assertRaisesRegex(LedgerError, "uncommitted edits"):
             open_and_evaluate(self.ledger, self.card(case_id="KOD-P-T-3"))
-        self.assertEqual(len(self.ledger.rows("SELECT * FROM cases WHERE case_id = 'KOD-P-T-3'")), 0)
+        self.assertEqual(
+            len(self.ledger.rows("SELECT * FROM cases WHERE case_id = 'KOD-P-T-3'")), 0
+        )
 
 
 def scan_payload(clock, entries, scan_id="SCAN-T-1", hit_label="REPRICED_UP"):
@@ -284,7 +325,10 @@ def scan_payload(clock, entries, scan_id="SCAN-T-1", hit_label="REPRICED_UP"):
         "scanner": "ASTRA",
         "universe_id": "IDX-TEST",
         "decision_cutoff": fmt_ts(clock() - timedelta(minutes=5)),
-        "outcome_window": {"start": fmt_ts(clock() + timedelta(hours=1)), "end": fmt_ts(clock() + timedelta(days=5))},
+        "outcome_window": {
+            "start": fmt_ts(clock() + timedelta(hours=1)),
+            "end": fmt_ts(clock() + timedelta(days=5)),
+        },
         "hit_label": hit_label,
         "entries": entries,
     }
@@ -350,7 +394,9 @@ class Rule4ScanLogAndLift(LabTest):
 
     def test_unknown_scan_entry_link_is_refused(self):
         with self.assertRaisesRegex(LedgerError, "unknown scan entry"):
-            open_and_evaluate(self.ledger, self.card(case_id="KOD-P-X", scan_entry_id="SCAN-T-1:ZZZZ"))
+            open_and_evaluate(
+                self.ledger, self.card(case_id="KOD-P-X", scan_entry_id="SCAN-T-1:ZZZZ")
+            )
 
     def test_scan_close_rules(self):
         with self.assertRaisesRegex(LedgerError, "outcome window ends"):
@@ -389,15 +435,21 @@ class Rule4ScanLogAndLift(LabTest):
 
     def test_prospective_detector_table_has_no_signal_side(self):
         start = self.clock() + timedelta(hours=1)
-        open_and_evaluate(self.ledger, self.card(case_id="KOD-P-YES", facts={"dated_catalyst_known": True}))
+        open_and_evaluate(
+            self.ledger, self.card(case_id="KOD-P-YES", facts={"dated_catalyst_known": True})
+        )
         self.lab.push_head()
         sha_yes = self.ledger.rows("SELECT card_sha FROM cases WHERE case_id = 'KOD-P-YES'")[0][0]
-        open_and_evaluate(self.ledger, self.card(case_id="KOD-P-NO", facts={"dated_catalyst_known": False}))
+        open_and_evaluate(
+            self.ledger, self.card(case_id="KOD-P-NO", facts={"dated_catalyst_known": False})
+        )
         self.lab.push_head()
         sha_no = self.ledger.rows("SELECT card_sha FROM cases WHERE case_id = 'KOD-P-NO'")[0][0]
         self.clock.moment = start + timedelta(days=5)
         self.ledger.close_case("KOD-P-YES", {**OUTCOME, "card_sha": sha_yes})
-        self.ledger.close_case("KOD-P-NO", {**OUTCOME, "outcome_label": "NO_REPRICE", "card_sha": sha_no})
+        self.ledger.close_case(
+            "KOD-P-NO", {**OUTCOME, "outcome_label": "NO_REPRICE", "card_sha": sha_no}
+        )
         rows = {r["detector"]: r for r in self.report()["detector_table"]}
         cat = rows["DATED_CATALYST_KNOWN"]
         self.assertEqual(cat["signal_hit_rate"], 1.0)

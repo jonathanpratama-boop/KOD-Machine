@@ -32,8 +32,10 @@ class RunStoreTests(unittest.TestCase):
 
     def test_run_is_written_once_hashed_and_read_only(self):
         run_dir = self.write()
-        self.assertEqual(sorted(p.name for p in run_dir.iterdir()),
-                         ["REPORT.md", "random_draws.csv", "summary.json", "trades.csv.gz"])
+        self.assertEqual(
+            sorted(p.name for p in run_dir.iterdir()),
+            ["REPORT.md", "random_draws.csv", "summary.json", "trades.csv.gz"],
+        )
         for p in run_dir.iterdir():
             self.assertEqual(stat.S_IMODE(p.stat().st_mode) & 0o222, 0)
         line = json.loads((self.root / "RUNS.jsonl").read_text().splitlines()[0])
@@ -62,7 +64,9 @@ class RunStoreTests(unittest.TestCase):
     def test_unindexed_run_directory_fails_verify(self):
         self.write()
         (self.root / "runs" / "stray").mkdir()
-        self.assertTrue(any("not in RUNS.jsonl" in p for p in verify_runs(self.root, use_git=False)))
+        self.assertTrue(
+            any("not in RUNS.jsonl" in p for p in verify_runs(self.root, use_git=False))
+        )
 
 
 class AppendOnlyGuardTests(unittest.TestCase):
@@ -83,10 +87,14 @@ class AppendOnlyGuardTests(unittest.TestCase):
         self.tmp.cleanup()
 
     def git(self, *args):
-        return subprocess.run(["git", *args], cwd=self.repo, check=True, capture_output=True, text=True)
+        return subprocess.run(
+            ["git", *args], cwd=self.repo, check=True, capture_output=True, text=True
+        )
 
     def guard(self, *args):
-        return subprocess.run(["python3", str(GUARD), *args], cwd=self.repo, capture_output=True, text=True)
+        return subprocess.run(
+            ["python3", str(GUARD), *args], cwd=self.repo, capture_output=True, text=True
+        )
 
     def test_appending_passes(self):
         with (self.repo / "idx-signals" / "results" / "RUNS.jsonl").open("a") as fh:
@@ -95,14 +103,18 @@ class AppendOnlyGuardTests(unittest.TestCase):
         self.assertEqual(self.guard("--staged").returncode, 0)
 
     def test_editing_a_past_run_fails(self):
-        (self.repo / "idx-signals" / "results" / "runs" / "r1" / "summary.json").write_text('{"better": true}\n')
+        (self.repo / "idx-signals" / "results" / "runs" / "r1" / "summary.json").write_text(
+            '{"better": true}\n'
+        )
         self.git("add", "-A")
         result = self.guard("--staged")
         self.assertEqual(result.returncode, 1)
         self.assertIn("frozen record", result.stderr)
 
     def test_rewriting_the_index_fails_in_history_check(self):
-        (self.repo / "idx-signals" / "results" / "RUNS.jsonl").write_text('{"run_id":"r1","hit_rate":0.9}\n')
+        (self.repo / "idx-signals" / "results" / "RUNS.jsonl").write_text(
+            '{"run_id":"r1","hit_rate":0.9}\n'
+        )
         self.git("commit", "-q", "-am", "rewrite")
         result = self.guard("--all")
         self.assertEqual(result.returncode, 1)

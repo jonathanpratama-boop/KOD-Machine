@@ -1,0 +1,497 @@
+"""Append-only run store.
+
+Each run gets a new directory results/runs/<run_id>/ written with exclusive-create opens
+and then made read-only. Its file hashes go into one new line of results/RUNS.jsonl. A
+run directory is never written twice; an existing run id is an error. `verify_runs`
+re-hashes every file, checks the index against git HEAD (it may only grow), and fails on
+any edit or deletion. tools/check_append_only.py enforces the same rule on every commit.
+"""
+
+from __future__ import annotations
+
+import csv
+import math
+import platform
+from datetime import date
+from importlib.metadata import PackageNotFoundError, version as package_version
+from numbers import Integral
+import gzip
+import io
+import json
+import os
+import stat
+import subprocess
+from pathlib import Path
+
+import numpy as np
+
+from .provenance import (
+    PKG_ROOT,
+    exclusive_lock,
+    publish_bytes,
+    rel,
+    sha256_bytes,
+    sha256_file,
+    utc_stamp,
+)
+
+RESULTS = PKG_ROOT / "results"
+RUNS = RESULTS / "runs"
+INDEX = RESULTS / "RUNS.jsonl"
+
+
+class DirtyTreeError(RuntimeError):
+    pass
+
+
+def _git(*args: str, check: bool = True) -> str:
+    proc = subprocess.run(["git", *args], cwd=PKG_ROOT, capture_output=True, text=True)
+    if check and proc.returncode != 0:
+        raise RuntimeError(f"git {' '.join(args)}: {proc.stderr.strip()}")
+    return proc.stdout
+
+
+def code_state() -> dict:
+    try:
+        head = _git("rev-parse", "HEAD").strip()
+        dirty = _git("status", "--porcelain", "--", "idxsig").strip()
+    except (RuntimeError, FileNotFoundError):
+        return {"commit": None, "dirty": None}
+    return {"commit": head, "dirty": bool(dirty)}
+
+
+def _jsonable(obj):
+    if isinstance(obj, dict):
+        return {k: _jsonable(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_jsonable(v) for v in obj]
+    if isinstance(obj, (np.integer,)):
+        return int(obj)
+    if isinstance(obj, (np.floating,)):
+        return None if np.isnan(obj) else float(obj)
+    if isinstance(obj, float) and obj != obj:
+        return None
+    return obj
+
+
+def _pct(x) -> str:
+    return "—" if x is None else f"{100 * x:+.2f}%"
+
+
+def _rate(x) -> str:
+    return "—" if x is None else f"{100 * x:.1f}%"
+
+
+def _vs(label: str, base: dict | None) -> str:
+    if not base:
+        return f"{label}: no comparison."
+    return (
+        f"{label}: {_pct(base.get('difference'))} (rule at percentile "
+        f"{base.get('percentile_of_observed', float('nan')):.1f} of draws, one-sided p = "
+        f"{base.get('p_value_one_sided', float('nan')):.3f})."
+    )
+
+
+def _dist_cell(base: dict, fmt) -> str:
+    if not base:
+        return "—"
+    return (
+        f"{fmt(base.get('random_mean'))} (95% of draws {fmt(base.get('random_p2_5'))} .. "
+        f"{fmt(base.get('random_p97_5'))})"
+    )
+
+
+def render_report(run_id: str, summary: dict) -> str:
+    r, sig = summary["rule_trades"], summary["signals"]
+    mt, rnd = summary["random_matched"], summary["random"]
+    u, rule = summary["universe"], summary["rule"]
+    look = summary["lookahead_check"]
+    lines = [
+        f"# Run {run_id}",
+        "",
+        f"Rule: **{rule['rule_id']} {rule['version']}** ({rule['kind']}), holding {rule['holding_days']} sessions",
+        f"Rule SHA-256: `{rule['sha256']}`",
+        f"Code: `{summary['code']['commit']}`{' (dirty)' if summary['code']['dirty'] else ''}",
+        f"Panel: `{summary['panel']['panel_sha256']}`",
+        f"Window: {u['first_session']} .. {u['last_session']} ({u['sessions']} sessions, "
+        f"{u['tickers_in_window']} tickers, {u['tickers_ending_inside_window']} stop trading inside the window)",
+        "",
+        "> " + rule["text"].replace("\n", "\n> "),
+        "",
+        "## Result",
+        "",
+        "| | Rule | Matched random (primary) | Same-session random |",
+        "|---|---:|---:|---:|",
+        f"| Signals | {sig['total']} (rate {_rate(sig['signal_rate'])} of evaluable ticker-sessions) | — | — |",
+        f"| Attempted (after overlap skip) | {sig['attempted']} | {mt['draws']} draws × {sig['attempted']} | "
+        f"{rnd['draws']} draws × {sig['attempted']} |",
+        f"| Filled | {r['filled']} ({_rate(r['fill_rate'])}) | {_rate(mt['pooled']['fill_rate'])} | "
+        f"{_rate(rnd['pooled']['fill_rate'])} |",
+        f"| Scored trades | {r['scored']} | {mt['pooled']['scored']} | {rnd['pooled']['scored']} |",
+        f"| Hit rate (net return > 0) | {_rate(r['hit_rate'])} | {_dist_cell(mt['hit_rate'], _rate)} | "
+        f"{_dist_cell(rnd['hit_rate'], _rate)} |",
+        f"| Average net return | {_pct(r['avg_net_return'])} | {_dist_cell(mt['avg_net_return'], _pct)} | "
+        f"{_dist_cell(rnd['avg_net_return'], _pct)} |",
+        f"| Median net return | {_pct(r['median_net_return'])} | {_pct(mt['pooled']['median_net_return'])} | "
+        f"{_pct(rnd['pooled']['median_net_return'])} |",
+        "",
+        _vs("Average return vs matched random", mt["avg_net_return"]),
+        _vs("Hit rate vs matched random", mt["hit_rate"]),
+        _vs("Average return vs same-session random", rnd["avg_net_return"]),
+        _vs("Hit rate vs same-session random", rnd["hit_rate"]),
+        "",
+        "Matched controls found at: "
+        + ", ".join(f"{k} {v}" for k, v in mt.get("match_level_used", {}).items()),
+        "",
+        "Status counts (rule): " + ", ".join(f"{k} {v}" for k, v in r["status_counts"].items()),
+        "",
+        "Status counts (matched random, pooled): "
+        + ", ".join(f"{k} {v}" for k, v in mt["pooled"]["status_counts"].items()),
+        "",
+        "## By signal year",
+        "",
+        "| Year | Attempts | Scored | Hit rate | Avg net | Matched hit rate | Matched avg net | Same-session avg net |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|",
+    ]
+    for y in summary["by_year"]:
+        lines.append(
+            f"| {y['year']} | {y['attempts']} | {y['scored']} | {_rate(y['hit_rate'])} | {_pct(y['avg_net_return'])} | "
+            f"{_rate(y.get('random_matched_hit_rate'))} | {_pct(y.get('random_matched_avg_net_return'))} | "
+            f"{_pct(y.get('random_avg_net_return'))} |"
+        )
+    c = summary["config"]
+    if look["mode"] == "exhaustive":
+        look_text = f"exhaustive: the rule was recomputed on all {look['sessions_checked']} prefixes; 0 signals changed"
+    elif look["mode"].startswith("prefix-first"):
+        look_text = (
+            f"{look['mode']}: causal by construction. Each signal is column d of a call given only sessions "
+            f"0..d and the names listed by d ({look['prefix_calls']} calls); source audit "
+            f"{look['source_audit']}; {look['sandbox']}; a full-window call matched every prefix-built signal"
+        )
+    else:
+        look_text = "sampled at " + ", ".join(look["truncated_after"]) + " (not a proof)"
+    lines += _quality_lines(summary)
+    lines += [
+        "",
+        "## Execution",
+        "",
+        f"- {summary['execution']['price']}, entry lag {c['entry_lag']}",
+        *(
+            [f"- Plan: {summary['execution']['plan_text']}"]
+            if summary["execution"].get("plan_text")
+            else []
+        ),
+        f"- 100-share lots, notional Rp {c['notional']:,.0f} per trade, at most {c['max_participation']:.0%} of session volume",
+        f"- Fees: buy {c['fee_buy']:.2%}, sell {c['fee_sell']:.2%}",
+        f"- {summary['execution']['auto_rejection']}",
+        f"- Corporate actions: {summary['execution']['corporate_actions']}",
+        f"- Overlap: {c['overlap']}; names that stop trading exit at {c['data_end_exit']}",
+        f"- Lookahead check: {look_text}",
+        "",
+        "## Warnings",
+        "",
+    ]
+    lines += [f"- {w}" for w in summary["warnings"]] or ["- none"]
+    lines.append("")
+    return "\n".join(lines)
+
+
+def _quality_lines(summary: dict) -> list[str]:
+    out = []
+    dq = summary.get("data_quality")
+    if dq:
+        out += [
+            "",
+            "## Data quality",
+            "",
+            "Sessions by tier: "
+            + ", ".join(f"{k} {v}" for k, v in dq["sessions_by_tier"].items())
+            + f" (panel format {dq['panel_format']})",
+            "",
+        ]
+        out += [
+            f"- {t['tier']} {t['from']} .. {t['to']}: {t['source']}, survivorship {t['survivorship']}, "
+            f"corporate actions from {t['corporate_actions']}"
+            for t in dq["tiers"]
+        ]
+        out += ["", "Known limitations:", ""] + [f"- {x}" for x in dq["known_limitations"]]
+    ca = summary.get("corporate_action_model")
+    if ca and ca.get("mode") == "registry":
+        counts = ca.get("resets_in_window") or {}
+        out += [
+            "",
+            "## Corporate actions",
+            "",
+            f"Registry `{ca.get('registry_manifest')}` ({ca.get('registry_version')}), file SHA-256 "
+            f"`{ca.get('registry_sha256')}`.",
+            f"Reference resets in the window: {counts.get('resets', 0)}; share-scaled (verified split / reverse "
+            f"split / stock dividend) {counts.get('share_scaled', 0)}; verified rights issues "
+            f"{counts.get('rights_issue', 0)}; unresolved {counts.get('unresolved', 0)} (of which missing from the "
+            f"registry {counts.get('missing_from_registry', 0)}).",
+        ]
+    controls = (summary.get("random_matched") or {}).get("controls")
+    if controls:
+        out += [
+            "",
+            "## Matched controls",
+            "",
+            f"Controls {controls['version']}; full match (every feature) for "
+            f"{_rate(controls['full_match_share'])} of attempts; pool minimum {controls['min_pool']}.",
+            "",
+            "| Priority | Feature | Known for signalled name | Matched on | Availability |",
+            "|---:|---|---:|---:|---|",
+        ]
+        for name, f in controls["features"].items():
+            out.append(
+                f"| {f['priority']} | {name}: {f['description']} | {_rate(f['known_share'])} | "
+                f"{_rate(f['matched_share'])} | {f['availability']} |"
+            )
+        out += [
+            "",
+            "Not matched on (no point-in-time data): "
+            + "; ".join(f"{k}: {v}" for k, v in controls["not_available"].items()),
+        ]
+    return out
+
+
+def chronology_problems(summary: dict, trades, *, require_economics: bool = False) -> list[str]:
+    """Every way a run could claim an impossible execution: a configured entry lag below one session, a trade entered at
+    or before its signal date, or exited before its entry. `trades` is any iterable of row mappings carrying
+    signal_date, entry_date and exit_date (a DataFrame's records or a CSV reader). The chain of custody checks that
+    stored files are unchanged; this checks that what they store could have happened."""
+    problems = []
+    lag = (summary.get("config") or {}).get("entry_lag")
+    if lag is not None and (isinstance(lag, bool) or not isinstance(lag, Integral) or lag < 1):
+        problems.append(f"config entry_lag {lag} must be an integer >= 1 session")
+    for row in trades:
+        dates = []
+        for key in ("signal_date", "entry_date", "exit_date"):
+            value = row.get(key)
+            if value is None or value == "":
+                dates.append(None)
+                continue
+            try:
+                dates.append(date.fromisoformat(str(value)))
+            except (TypeError, ValueError):
+                problems.append(f"{row.get('ticker')}: invalid {key} {value!r}")
+                dates.append(None)
+        signal, entry, exit_ = dates
+        if entry and signal and entry <= signal:
+            problems.append(
+                f"{row.get('ticker')}: entered {entry} at or before its signal {signal}"
+            )
+        if exit_ and entry and exit_ < entry:
+            problems.append(f"{row.get('ticker')}: exited {exit_} before its entry {entry}")
+        if row.get("status") in ("EXITED", "EXIT_DATA_END"):
+            if not all(dates):
+                problems.append(
+                    f"{row.get('ticker')}: scored trade is missing valid execution dates"
+                )
+            for field in ("entry_price", "shares", "exit_price"):
+                # Older stored formats may lack a field; verify every available one.
+                if field not in row:
+                    if require_economics:
+                        problems.append(f"{row.get('ticker')}: scored trade is missing {field}")
+                    continue
+                try:
+                    value = float(row[field])
+                except (TypeError, ValueError):
+                    value = float("nan")
+                zero_exit = (
+                    field == "exit_price"
+                    and row.get("status") == "EXIT_DATA_END"
+                    and (summary.get("config") or {}).get("data_end_exit") == "zero"
+                )
+                if not math.isfinite(value) or value < 0 or (value == 0 and not zero_exit):
+                    problems.append(f"{row.get('ticker')}: scored trade has invalid {field}")
+            for field in ("gross_return", "net_return"):
+                if field not in row:
+                    continue
+                try:
+                    value = float(row[field])
+                except (TypeError, ValueError):
+                    value = float("nan")
+                if not math.isfinite(value):
+                    problems.append(f"{row.get('ticker')}: scored trade has invalid {field}")
+    return problems
+
+
+def _stored_chronology(run_dir: Path) -> list[str]:
+    summary_path, trades_path = run_dir / "summary.json", run_dir / "trades.csv.gz"
+    if not (summary_path.exists() and trades_path.exists()):
+        return []
+    summary = json.loads(summary_path.read_text(encoding="utf-8"))
+    with gzip.open(trades_path, "rt", encoding="utf-8", newline="") as fh:
+        return chronology_problems(summary, csv.DictReader(fh))
+
+
+def _write_exclusive(path: Path, data: bytes) -> str:
+    with path.open("xb") as fh:
+        fh.write(data)
+    path.chmod(stat.S_IRUSR | stat.S_IRGRP | stat.S_IROTH)
+    return sha256_bytes(data)
+
+
+def runtime_environment() -> dict:
+    libraries = {}
+    for name in ("numpy", "pandas", "beautifulsoup4", "lxml", "exchange_calendars"):
+        try:
+            libraries[name] = package_version(name)
+        except PackageNotFoundError:
+            libraries[name] = None
+    return {
+        "python": platform.python_version(),
+        "platform": platform.platform(),
+        "libraries": libraries,
+        "execution_validation": "IDXSIG-EXEC-VALIDATION-v2",
+    }
+
+
+def write_run(
+    output: dict, *, allow_dirty: bool = False, commit: bool = True, root: Path | None = None
+) -> Path:
+    runs = (root / "runs") if root else RUNS
+    index = (root / "RUNS.jsonl") if root else INDEX
+    state = code_state()
+    if state["dirty"] and not allow_dirty:
+        raise DirtyTreeError(
+            "idxsig/ has uncommitted changes; commit the code first so the run names the code it ran"
+        )
+    summary = dict(output["summary"])
+    impossible = chronology_problems(
+        summary, output["trades"].to_dict("records"), require_economics=True
+    )
+    if impossible:
+        raise ValueError(
+            "refusing to store a run that is not chronological: " + "; ".join(impossible[:5])
+        )
+    summary["code"] = state
+    summary["environment"] = runtime_environment()
+    created = utc_stamp()
+    rule = summary["rule"]
+    run_id = f"{created.replace('-', '').replace(':', '')}_{rule['rule_id']}_{rule['version']}"
+    summary["run_id"] = run_id
+    summary["created_at"] = created
+    summary = _jsonable(summary)
+    run_dir = runs / run_id
+    run_dir.mkdir(parents=True, exist_ok=False)
+
+    files = {}
+    files["summary.json"] = _write_exclusive(
+        run_dir / "summary.json", (json.dumps(summary, indent=2, sort_keys=True) + "\n").encode()
+    )
+    buf = io.BytesIO()
+    with gzip.GzipFile(fileobj=buf, mode="wb", mtime=0) as gz:
+        gz.write(output["trades"].to_csv(index=False, float_format="%.10g").encode())
+    files["trades.csv.gz"] = _write_exclusive(run_dir / "trades.csv.gz", buf.getvalue())
+    files["random_draws.csv"] = _write_exclusive(
+        run_dir / "random_draws.csv",
+        output["draws"].to_csv(index=False, float_format="%.10g").encode(),
+    )
+    files["REPORT.md"] = _write_exclusive(
+        run_dir / "REPORT.md", render_report(run_id, summary).encode()
+    )
+    r = summary["rule_trades"]
+    avg = summary["random"]["avg_net_return"] or {}
+    matched = summary["random_matched"]["avg_net_return"] or {}
+    line = {
+        "run_id": run_id,
+        "created_at": created,
+        "rule_id": rule["rule_id"],
+        "rule_version": rule["version"],
+        "rule_kind": rule["kind"],
+        "rule_sha256": rule["sha256"],
+        "code_commit": state["commit"],
+        "code_dirty": state["dirty"],
+        "panel_sha256": summary["panel"]["panel_sha256"],
+        "window": [summary["universe"]["first_session"], summary["universe"]["last_session"]],
+        "holding_days": rule["holding_days"],
+        "plan": summary["execution"].get("plan"),
+        "signals": summary["signals"]["total"],
+        "scored": r["scored"],
+        "hit_rate": r["hit_rate"],
+        "avg_net_return": r["avg_net_return"],
+        "matched_random_avg_net_return": matched.get("random_mean"),
+        "p_value_avg_return_vs_matched": matched.get("p_value_one_sided"),
+        "random_avg_net_return": avg.get("random_mean"),
+        "p_value_avg_return": avg.get("p_value_one_sided"),
+        "dir": rel(run_dir) if not root else str(run_dir),
+        "files": files,
+    }
+    with exclusive_lock(index):
+        prefix = index.read_bytes() if index.exists() else b""
+        if prefix and not prefix.endswith(b"\n"):
+            raise ValueError("RUNS index has an incomplete final line; refusing to append")
+        publish_bytes(
+            index,
+            prefix + (json.dumps(_jsonable(line), sort_keys=True) + "\n").encode(),
+            replace=True,
+        )
+    if commit:
+        trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "").strip()
+        message = (
+            f"idxsig run {run_id}\n\n{rule['rule_id']} {rule['version']}: {summary['signals']['total']} signals, "
+            f"{r['scored']} scored, hit rate {_rate(r['hit_rate'])}, avg net {_pct(r['avg_net_return'])} "
+            f"vs matched random {_pct(matched.get('random_mean'))}, same-session random {_pct(avg.get('random_mean'))}"
+        )
+        if trailer:
+            message += "\n\n" + trailer
+        paths = [rel(run_dir), rel(index)]
+        _git("add", "--", *paths)
+        _git("commit", "-q", "-m", message, "--only", "--", *paths)
+    return run_dir
+
+
+def verify_runs(root: Path | None = None, use_git: bool = True) -> list[str]:
+    runs = (root / "runs") if root else RUNS
+    index = (root / "RUNS.jsonl") if root else INDEX
+    problems = []
+    lines = index.read_text(encoding="utf-8").splitlines() if index.exists() else []
+    seen = set()
+    for n, raw in enumerate(lines, 1):
+        try:
+            entry = json.loads(raw)
+        except json.JSONDecodeError:
+            problems.append(f"RUNS.jsonl line {n} is not JSON")
+            continue
+        run_id = entry["run_id"]
+        if run_id in seen:
+            problems.append(f"run {run_id} is listed twice")
+        seen.add(run_id)
+        run_dir = runs / run_id
+        if not run_dir.is_dir():
+            problems.append(f"run {run_id}: directory missing")
+            continue
+        on_disk = {p.name for p in run_dir.iterdir()}
+        for name, digest in entry["files"].items():
+            path = run_dir / name
+            if not path.exists():
+                problems.append(f"run {run_id}: {name} missing")
+            elif sha256_file(path) != digest:
+                problems.append(f"run {run_id}: {name} was edited after the run")
+        extra = on_disk - set(entry["files"])
+        if extra:
+            problems.append(f"run {run_id}: files not in the index: {sorted(extra)}")
+        problems += [f"run {run_id}: {p}" for p in _stored_chronology(run_dir)]
+    if runs.exists():
+        for d in sorted(p for p in runs.iterdir() if p.is_dir()):
+            if d.name not in seen:
+                problems.append(f"run directory {d.name} is not in RUNS.jsonl")
+    if use_git and root is None:
+        try:
+            committed = _git(
+                "show", f"HEAD:./{rel(index)}", check=False
+            )  # ./ = relative to idx-signals/
+            current = index.read_text(encoding="utf-8") if index.exists() else ""
+            if committed and not current.startswith(committed):
+                problems.append(
+                    "RUNS.jsonl no longer starts with the committed RUNS.jsonl: earlier lines were changed"
+                )
+            changed = _git("diff", "--name-status", "HEAD", "--", rel(runs), check=False)
+            for row in changed.splitlines():
+                code, _, name = row.partition("\t")
+                if code[:1] in ("M", "D", "R"):
+                    problems.append(f"committed run file changed: {code} {name}")
+        except FileNotFoundError:
+            pass
+    return problems

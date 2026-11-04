@@ -1,0 +1,90 @@
+{
+  "code": {
+    "commit": "eb8f4c9d3d6c4f2ff242cf1747d388b802a72acd",
+    "dirty": false
+  },
+  "computed_at": "2026-10-13T21:26:10+00:00",
+  "consequence": "no paper policy change; this plan family is exhausted for these detectors",
+  "criteria": {
+    "consequence_if_failed": "no paper policy change; the short-side plan family, with and without the regime condition, is exhausted for these detectors in that market",
+    "consequence_if_passed": "as v1: a paper policy version may underwrite paper SHORT ON TRIGGER decisions for the pair, scored prospectively; no real orders",
+    "max_p5_loss": -0.5,
+    "max_p_one_sided_vs_matched": 0.05,
+    "max_share_liquidated": 0.02,
+    "min_hit_rate": 0.5,
+    "min_scored": 100,
+    "on": "validation only, one recorded harness run of MOONSHOT_E4_D1 per market",
+    "pass_if": [
+      "scored trades >= min_scored",
+      "average net return > 0",
+      "one-sided p < max_p_one_sided_vs_matched against matched random shorts",
+      "hit rate >= min_hit_rate",
+      "5th percentile of trade net returns >= max_p5_loss",
+      "share liquidated <= max_share_liquidated"
+    ],
+    "regime_note": "a _BEAR detector fires only in bear sessions; 2023 had few, so min_scored may fail for the right reason, and that is a fail"
+  },
+  "detector_module_sha256": "07df6afb3e92333d04c5be6145b84c27aa85e388a6a7927aad4a1c9cb77eca1f",
+  "holdout": "sealed: never loaded; the study window ends at the validation period",
+  "market": "CRYPTO",
+  "panel_manifest": "panel_crypto-20261013T205803Z.json",
+  "panel_sha256": "1fec989bc929268f290d73ae60e4216f37de866ec30e00fba645b665dc2b6e14",
+  "passed": false,
+  "plan_text": "sell short at the first open in s+1..s+3 that is above the signal close (into a bounce); buy back at the first close above its own reference price (an up day), else at the close of the 2th session after entry; carry charged per session held",
+  "protocol_id": "KOD-GLOBAL-E4-v2",
+  "protocol_sha256": "193fa68e29789f0ae77ce06e757f5647bb4f302e8f4b3ef823c5207f245f6cd3",
+  "result": {
+    "attempted": 53,
+    "avg_net_return": -0.01497099501804879,
+    "avg_net_return_2023": -0.01497099501804879,
+    "detector": "G2_RET30_BEAR",
+    "entry_rule": "pullback",
+    "entry_window": 3,
+    "exit_rule": "first_up",
+    "fill_rate": 0.6415094339622641,
+    "filled": 34,
+    "hit_rate": 0.6764705882352942,
+    "holding_days": 2,
+    "matched_random_avg_net_return": -0.0022015088887593097,
+    "matched_random_p2_5": -0.03636398496401087,
+    "matched_random_p97_5": 0.02883593320036684,
+    "mean_worst_10": -0.48660539764304706,
+    "median_net_return": 0.0929811573813128,
+    "p1_net_return": -1.0068349999999997,
+    "p5_net_return": -1.0061749999999996,
+    "p_one_sided_vs_matched": 0.7810945273631841,
+    "p_one_sided_vs_same_session": 0.8955223880597015,
+    "plan_id": "G2_RET30_BEAR|pullback3|first_up|h2",
+    "rule_sha256": "f5585be5d967dfabd98d24f02eef1857362457e23f22ff0e4b25b7208fde9d67",
+    "same_session_random_avg_net_return": -0.0017179913689142584,
+    "scored": 34,
+    "scored_2023": 34,
+    "share_below_minus_20pct": 0.17647058823529413,
+    "share_liquidated": 0.08823529411764706,
+    "signals": 57,
+    "status_counts": "{\"EXITED\": 34, \"SKIP_NO_TRIGGER\": 19}",
+    "worst_net_return": -1.007
+  },
+  "run_dir": "results/runs/20261013T212610Z_MOONSHOT_E4_D1_v1",
+  "run_id": "20261013T212610Z_MOONSHOT_E4_D1_v1",
+  "runtime": {
+    "numpy": "2.5.4",
+    "pandas": "3.0.6",
+    "python": "3.15.0"
+  },
+  "selected": [
+    "G2_RET30_BEAR",
+    "pullback",
+    3,
+    "first_up",
+    2
+  ],
+  "short_side": {
+    "carry_per_session": 0.0005,
+    "liquidation": 1.0,
+    "liquidation_note": "isolated margin: liquidated at the first session whose high is 100% above the entry, losing that fraction of the sold notional plus fees and carry",
+    "note": "short side assumed: a perpetual-futures short at the spot reference price, funding 0.05% per UTC day paid by the short (a conservative stand-in: after a pump longs usually pay), 0.1% fee + 0.1% slippage per side; perpetuals may not exist for every pair, and liquidation risk is not modelled"
+  },
+  "side": "short",
+  "stage": "validation"
+}

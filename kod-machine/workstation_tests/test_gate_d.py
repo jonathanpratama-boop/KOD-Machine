@@ -1,0 +1,875 @@
+"""Gate D: the company dossier (longitudinal history, meaningful comparisons, provenance) and cutoff-aware archive search, on real preserved SEC responses."""
+
+from decimal import Decimal
+import gzip
+import json
+from pathlib import Path
+import re
+import tempfile
+import unittest
+
+from kod.workstation import dossier, financials, search
+from kod.workstation.domain import canonical, identity
+from kod.workstation.policy import DAY_END, STRICT, AsOfPolicy
+from kod.workstation.services import ResearchService
+from kod.workstation.store import Store
+
+ROOT = Path(__file__).resolve().parents[1]
+CF = ROOT / "examples" / "companyfacts"
+SOURCES = {(s["ticker"], s["kind"]): s for s in json.loads((CF / "SOURCES.json").read_text())}
+CIKS = {
+    "NVDA": "1045810",
+    "AAPL": "320193",
+    "AMD": "2488",
+    "MSFT": "789019",
+    "TXN": "97476",
+    "COST": "909832",
+    "JPM": "19617",
+    "PLUG": "1093691",
+}
+NOW = "2026-10-23T12:00:00Z"
+
+
+def policy(cutoff, mode="public", version=DAY_END):
+    return AsOfPolicy.parse(cutoff, mode, version)
+
+
+class Case(unittest.TestCase):
+    def setUp(self):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        self.store = Store(Path(tmp.name) / "ws")
+        self.service = ResearchService(self.store, clock=lambda: NOW)
+
+    def company(self, ticker):
+        sec = self.store.upsert_security(ticker, ticker, cik=CIKS[ticker])
+        facts, subs = SOURCES[(ticker, "companyfacts")], SOURCES[(ticker, "submissions")]
+        self.service.import_companyfacts(
+            sec["id"],
+            gzip.decompress((CF / facts["fixture"]).read_bytes()),
+            facts["url"],
+            observed_at=facts["observed_at"],
+            submissions=gzip.decompress((CF / subs["fixture"]).read_bytes()),
+            submissions_url=subs["url"],
+        )
+        return sec
+
+    def build(self, sec, cutoff, mode="public", view="as_reported", version=DAY_END):
+        return dossier.build(self.service, sec["id"], policy(cutoff, mode, version), view)
+
+    @staticmethod
+    def change(d, key):
+        return next(c for c in d["changes"] if c["key"] == key)
+
+
+class ComparisonTests(Case):
+    def test_a_stock_split_never_distorts_per_share_or_share_count_changes(self):
+        nvda = self.company("NVDA")
+        d = self.build(
+            nvda, "2024-09-01T00:00:00Z"
+        )  # NVIDIA's 10-for-1 split took effect in June 2024
+        eps, shares = self.change(d, "eps_diluted_yoy"), self.change(d, "diluted_shares_yoy")
+        self.assertEqual(d["latest_quarter_end"], "2024-07-28")
+        self.assertEqual(eps["status"], "ok")
+        self.assertAlmostEqual(
+            float(eps["value"]), 168.0, places=1
+        )  # 0.67 vs the split-adjusted 0.25 the same 10-Q presents
+        self.assertIn("same filing", eps["comparison_basis"])
+        self.assertLess(
+            abs(float(shares["value"])), 2
+        )  # not +900% against the pre-split count first reported in 2023
+        self.assertIn("same filing", shares["comparison_basis"])
+
+    def test_without_a_same_filing_comparative_share_measures_are_withheld_and_flows_flagged(self):
+        nvda = self.company("NVDA")
+        d = self.build(nvda, "2024-09-01T00:00:00Z")
+        s = dossier._Series(
+            "eps_diluted", [], [], dossier._Index([]), policy("2024-09-01T00:00:00Z"), "as_reported"
+        )
+        self.assertEqual(s.comparable_pair("2024-07-28"), (None, None, "no current quarter figure"))
+        # Remove the current 10-Q's comparatives: per-share falls back to nothing, revenue to a flagged fallback.
+        repo = financials.FinancialRepository(self.store)
+        pol = policy("2024-09-01T00:00:00Z")
+        eligible = [
+            o
+            for o in repo.observations(nvda["id"], None, pol)
+            if not (o.accession == "0001045810-24-000264" and o.period.end_date == "2023-07-30")
+        ]
+        figures = financials.resolve([o for o in eligible if o.provider == "sec_companyfacts"], pol)
+        index = dossier._Index(eligible)
+        eps = dossier._Series("eps_diluted", figures, eligible, index, pol, "as_reported")
+        cur, prior, how = eps.comparable_pair("2024-07-28")
+        self.assertIsNone(prior)
+        self.assertIn("stock split", how)
+        rev = dossier._Series("revenue", figures, eligible, index, pol, "as_reported")
+        cur, prior, how = rev.comparable_pair("2024-07-28")
+        self.assertEqual(prior.value, Decimal("13507000000"))
+        self.assertIn("not presented in the current filing", how)
+        self.assertTrue(d)
+
+    def test_a_fourth_quarter_is_compared_using_comparatives_from_the_same_two_filings(self):
+        nvda = self.company("NVDA")
+        d = self.build(nvda, "2025-03-01T00:00:00Z")
+        rev = self.change(d, "revenue_yoy")
+        self.assertEqual(d["latest_quarter_end"], "2025-01-26")
+        self.assertIn(
+            "derived from the comparatives presented in the same filings", rev["comparison_basis"]
+        )
+        self.assertAlmostEqual(float(rev["value"]), (39331 - 22103) / 22103 * 100, places=3)
+        self.assertTrue(rev["derived_inputs"])
+        self.assertEqual(
+            self.change(d, "eps_diluted_yoy")["status"], "missing"
+        )  # Q4 EPS is never annual minus nine months
+        self.assertIn("not additive", self.change(d, "eps_diluted_yoy")["reasons"][0])
+
+    def test_margins_change_in_points_and_a_loss_base_is_not_divided_by(self):
+        amd = self.company("AMD")
+        d = self.build(amd, "2024-08-15T00:00:00Z")
+        margin = self.change(d, "operating_margin_yoy")
+        self.assertEqual((margin["unit"], margin["status"]), ("percentage points", "ok"))
+        self.assertAlmostEqual(float(margin["value"]), (269 / 5835 - (-20) / 5359) * 100, places=3)
+        plug = self.company("PLUG")
+        p = self.build(plug, "2024-12-01T00:00:00Z")
+        self.assertEqual(
+            self.change(p, "net_income_yoy")["status"], "not_applicable"
+        )  # Plug Power's year-ago quarter was a loss
+        self.assertEqual(self.change(p, "cash_conversion_fy")["status"], "not_applicable")
+
+    def test_a_bank_gets_no_operating_company_cash_flow_ratios(self):
+        jpm = self.company("JPM")
+        d = self.build(jpm, NOW, "observed")
+        self.assertIs(d["coverage"]["business_type"]["supported"], False)
+        for key in ("cash_conversion_fy", "capex_intensity_fy", "cfo_minus_capex_fy"):
+            self.assertEqual(self.change(d, key)["status"], "not_applicable")
+            self.assertIn("bank", self.change(d, key)["reasons"][0])
+
+    def test_supported_changes_follow_the_published_catalog_order(self):
+        aapl = self.company("AAPL")
+        d = self.build(aapl, NOW, "observed")
+        order = [k for k, *_ in dossier.CHANGES]
+        self.assertEqual(
+            d["supported_changes"],
+            [k for k in order if self.change(d, k)["status"] == "ok"][: dossier.SUPPORTED_SHOWN],
+        )
+        self.assertEqual([c["key"] for c in d["changes"]], order)
+
+
+class RevisionTests(Case):
+    def test_as_reported_and_latest_views_and_the_restatement_question(self):
+        aapl = self.company("AAPL")
+        first = self.build(aapl, "2010-02-01T00:00:00Z")
+        latest = self.build(aapl, "2010-02-01T00:00:00Z", view="latest")
+
+        def fy2008(d):
+            return next(
+                c
+                for c in d["history"]["annual"]["net_income"]
+                if c["period"]["end"] == "2008-09-27"
+            )
+
+        self.assertEqual(fy2008(first)["value"], "4834000000")
+        self.assertEqual(fy2008(latest)["value"], "6119000000")
+        self.assertEqual(fy2008(first)["revisions"][0]["form"], "10-K/A")
+        self.assertTrue(
+            any("10-K/A" in q["text"] and "Net income" in q["text"] for q in first["questions"])
+            or any(r["label"] == "Net income" and r["form"] == "10-K/A" for r in first["revisions"])
+        )
+
+    def test_a_restated_annual_figure_is_not_differenced_with_an_unrestated_nine_months(self):
+        aapl = self.company("AAPL")
+        first = self.build(aapl, "2010-02-01T00:00:00Z")
+        latest = self.build(aapl, "2010-02-01T00:00:00Z", view="latest")
+        q4 = lambda d: next(
+            (c for c in d["history"]["quarterly"]["revenue"] if c["period"]["end"] == "2008-09-27"),
+            None,
+        )  # noqa: E731
+        self.assertEqual((q4(first)["status"], q4(first)["value"]), ("derived", "7895000000"))
+        self.assertEqual(q4(latest)["status"], "not_derivable")
+        self.assertIn("accounting vintages", " ".join(q4(latest)["reasons"]))
+
+    def test_rounding_differences_are_not_revisions(self):
+        nvda = self.company("NVDA")
+        d = self.build(
+            nvda, "2016-06-01T00:00:00Z"
+        )  # fiscal 2014 revenue: 4,130,162 thousand, later shown as 4,130 million
+        cells = [c for cells in d["history"]["annual"].values() for c in cells]
+        self.assertTrue(
+            all(
+                not financials.same_within_rounding(Decimal(c["value"]), Decimal(r["value"]))
+                for c in cells
+                for r in c["revisions"]
+            )
+        )
+        self.assertTrue(
+            any(c["rounding_differences"] for c in cells)
+        )  # later filings rounding to millions are counted, not listed as revisions
+        self.assertTrue(
+            financials.same_within_rounding(Decimal("4130162000"), Decimal("4130000000"))
+        )
+        self.assertFalse(
+            financials.same_within_rounding(Decimal("24006000000"), Decimal("24578000000"))
+        )
+        self.assertFalse(financials.same_within_rounding(Decimal("2.48"), Decimal("0.25")))
+
+
+class CutoffInvarianceTests(Case):
+    def amendment(self, sec, value="99999000000", filed="2024-12-15"):
+        """Record a synthetic later amendment restating NVIDIA's fiscal 2024 revenue (an observation of a made-up document)."""
+        doc = self.store.save_document(
+            sec["id"],
+            b'{"synthetic": "amendment"}',
+            "amendment.json",
+            "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json",
+            published_at=None,
+            published_basis="synthetic test amendment",
+            observed_at=NOW,
+            role="other",
+            association="user_asserted",
+            provider="test",
+            extraction_status="companyfacts",
+            metadata={"kind": "test"},
+        )
+        p = financials.period("12 months", start="2023-01-30", end="2024-01-28")
+        oid = identity("fob", "synthetic", value)
+        row = {
+            "id": oid,
+            "provider": "sec_companyfacts",
+            "issuer_id": None,
+            "security_id": sec["id"],
+            "concept": "Revenues",
+            "taxonomy": "us-gaap",
+            "metric": "revenue",
+            "metric_version": 1,
+            "raw_value": value,
+            "value": value,
+            "unit": "currency",
+            "scale": 1,
+            "currency": "USD",
+            "currency_basis": "UNIT_OF_MEASURE",
+            "period_id": p.id,
+            "basis": "GAAP",
+            "context": "consolidated (companyfacts whole entity)",
+            "dimensions_available": 0,
+            "accession": "0009999999-24-000001",
+            "form": "10-K/A",
+            "filed": filed,
+            "amendment": 1,
+            "source_document_id": doc["id"],
+            "source_sha256": doc["sha256"],
+            "evidence": canonical({"json_pointer": "/synthetic"}),
+            "published_at": None,
+            "publication_date": filed,
+            "publication_precision": "date",
+            "publication_basis": "synthetic",
+            "observed_at": NOW,
+            "recorded_at": NOW,
+            "parser_version": "test",
+            "mapping_version": "test",
+            "flags": "[]",
+        }
+        self.store.record_observations([p], [row])
+        return oid
+
+    def test_a_later_amendment_changes_nothing_at_an_earlier_cutoff(self):
+        nvda = self.company("NVDA")
+        before = {
+            view: json.dumps(self.build(nvda, "2024-09-01T00:00:00Z", view=view), sort_keys=True)
+            for view in ("as_reported", "latest")
+        }
+        md_before = dossier.render_markdown(self.build(nvda, "2024-09-01T00:00:00Z"))
+        oid = self.amendment(nvda)
+        for view in ("as_reported", "latest"):
+            self.assertEqual(
+                json.dumps(self.build(nvda, "2024-09-01T00:00:00Z", view=view), sort_keys=True),
+                before[view],
+            )
+        self.assertEqual(
+            dossier.render_markdown(self.build(nvda, "2024-09-01T00:00:00Z")), md_before
+        )
+        later = self.build(nvda, "2025-01-01T00:00:00Z", view="latest")
+        fy = next(
+            c for c in later["history"]["annual"]["revenue"] if c["period"]["end"] == "2024-01-28"
+        )
+        self.assertEqual(fy["observation_ids"], [oid])
+        self.assertTrue(fy["revisions"])
+
+    def test_the_strict_policy_admits_no_date_only_filing(self):
+        nvda = self.company("NVDA")
+        d = self.build(nvda, NOW, "observed", version=STRICT)
+        self.assertEqual(d["coverage"]["eligible_observations"], 0)
+        self.assertIn("never eligible", d["coverage"]["policy_note"])
+        self.assertEqual(d["supported_changes"], [])
+
+    def test_observed_mode_needs_the_download_before_the_cutoff(self):
+        nvda = self.company("NVDA")
+        self.assertEqual(
+            self.build(nvda, "2025-06-01T00:00:00Z", "observed")["coverage"][
+                "eligible_observations"
+            ],
+            0,
+        )
+        self.assertGreater(
+            self.build(nvda, "2025-06-01T00:00:00Z", "public")["coverage"]["eligible_observations"],
+            0,
+        )
+
+
+class ReviewRegressionTests(Case):
+    """Reproduced findings of the independent Gate D review (semantics and information-time lenses)."""
+
+    def cell(self, d, group, metric, end):
+        return next(
+            (c for c in d["history"][group].get(metric, []) if c["period"]["end"] == end), None
+        )
+
+    def test_a_longer_filing_that_restates_the_shorter_period_blocks_the_difference(self):
+        d = self.build(self.company("NVDA"), "2017-01-01T00:00:00Z")
+        c = self.cell(
+            d, "quarterly", "operating_cash_flow", "2016-10-30"
+        )  # 951m (Q3 10-Q) minus 493m (Q2 10-Q) would mix vintages: the Q3 10-Q shows 519m
+        self.assertEqual((c["status"], c["value"]), ("not_derivable", None))
+        self.assertIn("re-presents the shorter period at 519000000", c["reasons"][0])
+
+    def test_negatively_tagged_capex_is_never_differenced(self):
+        d = self.build(self.company("TXN"), "2010-03-01T00:00:00Z")
+        c = self.cell(
+            d, "quarterly", "capex", "2009-12-31"
+        )  # would have been 753m - (-317m) = 1,070m
+        self.assertEqual(c["status"], "not_derivable")
+        self.assertIn("CAPEX_NEGATIVE_AS_REPORTED", c["flags"])
+
+    def test_likely_scale_errors_are_not_used(self):
+        d = self.build(self.company("PLUG"), "2013-05-01T00:00:00Z")
+        self.assertEqual(
+            self.cell(d, "quarterly", "revenue", "2012-12-31")["status"], "suspect"
+        )  # 5,696 in a thousands-scaled table, untagged
+        margin = self.change(d, "operating_margin_yoy")
+        self.assertGreater(
+            float(margin["value"]), -1000
+        )  # not the -110,788 pp built on the mis-scaled revenue
+
+    def test_the_latest_view_names_the_filing_of_the_revised_value(self):
+        d = self.build(self.company("AAPL"), "2010-02-01T00:00:00Z", view="latest")
+        r = next(
+            r
+            for r in d["revisions"]
+            if r["label"] == "Net income" and r["period"].endswith("2009-09-26")
+        )
+        self.assertEqual(
+            (r["first"], r["later"], r["form"], r["filed"]),
+            ("5704000000", "8235000000", "10-K/A", "2010-01-25"),
+        )
+
+    def test_no_false_statement_about_a_banks_net_income(self):
+        d = self.build(self.company("JPM"), NOW, "observed")
+        self.assertFalse([q for q in d["questions"] if "zero or negative" in q["text"]])
+
+    def test_per_share_precision_is_at_least_a_cent(self):
+        self.assertFalse(
+            financials.same_within_rounding(Decimal("0.4"), Decimal("0.41"), "currency/share")
+        )
+        self.assertTrue(
+            financials.same_within_rounding(Decimal("0.4"), Decimal("0.404"), "currency/share")
+        )
+        d = self.build(self.company("NVDA"), "2017-01-01T00:00:00Z")
+        q2 = self.cell(
+            d, "quarterly", "eps_diluted", "2016-07-31"
+        )  # 0.40 restated to 0.41 (ASU 2016-09)
+        self.assertEqual([r["value"] for r in q2["revisions"]], ["0.41"])
+
+    def test_each_series_is_compared_at_the_latest_quarter_or_marked_missing(self):
+        d = self.build(self.company("JPM"), "2024-09-01T00:00:00Z")
+        self.assertEqual(
+            d["latest_quarter_end"], "2024-06-30"
+        )  # JPM stopped tagging quarterly revenue after 2014
+        self.assertEqual(self.change(d, "net_income_yoy")["status"], "ok")
+        rev = self.change(d, "revenue_yoy")
+        self.assertEqual(rev["status"], "missing")
+        self.assertIn("its latest quarter ends 2014-12-31", rev["reasons"][0])
+
+    def test_different_revenue_line_items_are_not_revisions_of_each_other(self):
+        d = self.build(self.company("COST"), "2015-06-01T00:00:00Z", view="latest")
+        fy = self.cell(d, "annual", "revenue", "2014-08-31")
+        self.assertEqual(
+            (fy["value"], fy["revisions"]), ("112640000000", [])
+        )  # total revenue; net sales (110,212m) is a different line item
+        self.assertFalse(
+            [
+                r
+                for r in d["revisions"]
+                if r["label"] == "Revenue" and r["period"].endswith("2014-08-31")
+            ]
+        )
+
+    def test_quarter_on_quarter_is_withheld_across_a_basis_change(self):
+        d = self.build(
+            self.company("MSFT"), "2017-11-20T00:00:00Z"
+        )  # ASC 606 adopted with full retrospective restatement
+        qoq = self.change(d, "revenue_qoq")
+        self.assertEqual(qoq["status"], "incompatible")
+        self.assertIn("basis change", qoq["reasons"][0])
+        self.assertEqual(self.change(d, "revenue_yoy")["status"], "ok")
+
+    def test_unequal_period_lengths_are_noted(self):
+        aapl = self.company("AAPL")
+        d = self.build(aapl, "2024-03-01T00:00:00Z")  # a 13-week quarter against a 14-week one
+        change = self.change(d, "revenue_yoy")
+        self.assertIn("91 vs 98 days", change["duration_note"])
+        self.assertIn(
+            "91 vs 98 days", dossier.render_markdown(d)
+        )  # shown wherever the change is shown, not only in the JSON
+        from fastapi.testclient import TestClient
+        from kod.workstation.web import create_app
+
+        client = TestClient(
+            create_app(self.store.root, offline=True, service=self.service, testing=True)
+        )
+        query = {"as_of": "2024-03-01T00:00:00Z", "mode": "public"}
+        self.assertIn(
+            "91 vs 98 days", client.get(f"/company/{aapl['id']}/dossier", params=query).text
+        )
+        self.assertIn(
+            "91 vs 98 days",
+            client.get(
+                f"/company/{aapl['id']}/dossier/calculation/{change['calculation_id']}",
+                params=query,
+            ).text,
+        )
+
+    def test_a_sixteen_week_fourth_quarter_is_derived_and_its_length_shown(self):
+        # Found by the analyst-task evaluation (evaluation/REPORT.md): Costco's 24- and 36-week year-to-date figures were not used, so its 16-week
+        # fourth quarter was never derived and the dossier compared the third quarter as if it were the latest.
+        d = self.build(self.company("COST"), "2024-11-15T00:00:00Z")
+        self.assertEqual(d["latest_quarter_end"], "2024-09-01")
+        q4 = self.cell(d, "quarterly", "revenue", "2024-09-01")
+        self.assertEqual(
+            (q4["status"], q4["value"]), ("derived", "79697000000")
+        )  # 254,453m (52 weeks) - 174,756m (36 weeks)
+        yoy, qoq = self.change(d, "revenue_yoy"), self.change(d, "revenue_qoq")
+        self.assertAlmostEqual(
+            float(yoy["value"]), (79697 / 78939 - 1) * 100, places=6
+        )  # against 242,290m - 163,351m, both from the same two filings
+        self.assertIn("112 vs 119 days", yoy["duration_note"])
+        self.assertIn("112 vs 84 days", qoq["duration_note"])
+        self.assertIsNone(self.cell(d, "quarterly", "revenue", "2024-07-01"))
+
+    def test_a_derived_capex_quarter_is_never_negative(self):
+        d = self.build(self.company("PLUG"), "2013-06-01T00:00:00Z")
+        c = self.cell(
+            d, "quarterly", "capex", "2012-12-31"
+        )  # the 10-K's annual capex is below the 10-Q's nine months
+        self.assertEqual((c["status"], c["value"]), ("not_derivable", None))
+        self.assertIn("negative capital expenditure", c["reasons"][0])
+
+    def test_later_metadata_and_reinterpretations_leave_an_earlier_observed_view_unchanged(self):
+        jpm = self.store.upsert_security("JPM", "JPM", cik=CIKS["JPM"])
+        facts = SOURCES[("JPM", "companyfacts")]
+        self.service.import_companyfacts(
+            jpm["id"],
+            gzip.decompress((CF / facts["fixture"]).read_bytes()),
+            facts["url"],
+            observed_at=facts["observed_at"],
+        )
+        cutoff = "2026-10-23T08:00:00Z"
+        before = json.dumps(self.build(jpm, cutoff, "observed"), sort_keys=True)
+        subs = SOURCES[("JPM", "submissions")]  # a submissions response downloaded after the cutoff
+        self.service.import_companyfacts(
+            jpm["id"],
+            gzip.decompress((CF / facts["fixture"]).read_bytes()),
+            facts["url"],
+            observed_at="2026-10-23T11:00:00Z",
+            submissions=gzip.decompress((CF / subs["fixture"]).read_bytes()),
+            submissions_url=subs["url"],
+        )
+        self.assertEqual(json.dumps(self.build(jpm, cutoff, "observed"), sort_keys=True), before)
+        self.assertIs(
+            self.build(jpm, NOW, "observed")["coverage"]["business_type"]["supported"], False
+        )
+
+    def test_an_issuer_link_recorded_later_does_not_pull_filings_into_an_earlier_observed_view(
+        self,
+    ):
+        import kod.workstation.store as store_module
+
+        self.company("AAPL")
+        original = store_module.utc_now
+        self.addCleanup(setattr, store_module, "utc_now", original)
+        store_module.utc_now = lambda: "2026-10-23T10:00:00Z"
+        listing = self.store.upsert_security("AAPL", "Apple listing without CIK", venue="XFRA")
+        before = json.dumps(self.build(listing, "2026-10-23T11:00:00Z", "observed"), sort_keys=True)
+        store_module.utc_now = (
+            lambda: "2026-10-23T12:30:00Z"
+        )  # the CIK, and so the issuer link, is recorded after the cutoff
+        self.store.upsert_security(
+            "AAPL", "Apple listing without CIK", cik=CIKS["AAPL"], venue="XFRA"
+        )
+        after = self.build(listing, "2026-10-23T11:00:00Z", "observed")
+        self.assertEqual(json.dumps(after, sort_keys=True), before)
+        self.assertEqual(
+            (after["coverage"]["eligible_observations"], after["company"]["cik"]), (0, None)
+        )
+        self.assertGreater(
+            self.build(listing, "2026-10-23T13:00:00Z", "observed")["coverage"][
+                "eligible_observations"
+            ],
+            0,
+        )
+
+    def test_snapshot_frames_are_not_exported_at_a_cutoff(self):
+        d = self.build(self.company("NVDA"), "2024-09-01T00:00:00Z")
+        self.assertFalse([o for o in d["observations"].values() if "frame" in o["evidence"]])
+
+
+RELEASE = """<html><body><h1>Acme Reports Third Quarter 2024 Results</h1><p>{body}</p><p>GAAP</p><p>Amounts in millions</p><table>
+<tr><td></td><td>Q3 2024</td><td>Q3 2023</td></tr><tr><td>Revenue</td><td>$120</td><td>$100</td></tr></table></body></html>"""
+
+
+class SearchTests(Case):
+    def setUp(self):
+        super().setUp()
+        self.acme = self.store.upsert_security("ACME", "Acme Corp")
+
+    def add(self, body, published, name="r.htm", security=None):
+        return self.service.ingest(
+            (security or self.acme)["id"],
+            RELEASE.format(body=body).encode(),
+            name,
+            "https://example.com/" + name,
+            published_at=published,
+            retrieved_at=published,
+        )
+
+    def run_search(self, query, cutoff, **kw):
+        return search.search(
+            self.store, self.service.archive, query, policy(cutoff, "observed"), **kw
+        )
+
+    def test_future_sources_are_excluded_before_ranking_and_do_not_move_scores(self):
+        self.add(
+            "Widget demand grew in Europe while gadget demand fell.",
+            "2024-10-01T20:00:00Z",
+            "a.htm",
+        )
+        self.add("Gadget inventory rose.", "2024-10-02T20:00:00Z", "b.htm")
+        before = self.run_search("widget demand", "2024-11-01T00:00:00Z")
+        self.add(
+            "Widget widget widget demand demand: a later release mentioning widgets often.",
+            "2025-02-01T20:00:00Z",
+            "future.htm",
+        )
+        after = self.run_search("widget demand", "2024-11-01T00:00:00Z")
+        self.assertEqual(before, after)  # results, scores and counts alike
+        later = self.run_search("widget demand", "2025-03-01T00:00:00Z")
+        self.assertEqual(later["results"][0]["filename"], "future.htm")
+        self.assertNotEqual(
+            later["results"][1]["score"], before["results"][0]["score"]
+        )  # corpus statistics include the new source only from its date
+
+    def test_repeated_copies_count_once_and_list_every_source(self):
+        self.add(
+            "Widget demand grew strongly this quarter in every region we serve.",
+            "2024-10-01T20:00:00Z",
+            "a.htm",
+        )
+        other = self.store.upsert_security("ACM2", "Acme Holdings")
+        self.add(
+            "Widget demand grew strongly this quarter in every region we serve.",
+            "2024-10-01T21:00:00Z",
+            "copy.htm",
+            other,
+        )
+        r = self.run_search("widget demand", "2024-11-01T00:00:00Z")
+        hit = r["results"][0]
+        self.assertEqual(len(hit["also_in"]), 1)
+        self.assertEqual(
+            r["coverage"]["distinct_passages"],
+            r["coverage"]["passages"] - r["coverage"]["passages"] // 2,
+        )
+
+    def test_filters_period_and_company(self):
+        self.add("Widget demand grew.", "2024-10-01T20:00:00Z", "a.htm")
+        other = self.store.upsert_security("OTHR", "Other Corp")
+        self.add("Widget demand fell.", "2024-10-01T20:00:00Z", "o.htm", other)
+        self.assertEqual(
+            {
+                x["ticker"]
+                for x in self.run_search(
+                    "widget", "2024-11-01T00:00:00Z", security_ids=[other["id"]]
+                )["results"]
+            },
+            {"OTHR"},
+        )
+        self.assertEqual(
+            len(self.run_search("widget", "2024-11-01T00:00:00Z", period="Q3 2024")["results"]), 2
+        )
+        none = self.run_search("widget", "2024-11-01T00:00:00Z", period="Q2 2024")
+        self.assertEqual(
+            (none["results"], none["coverage"]["excluded"]), ([], {"outside_period_filter": 2})
+        )
+        with self.assertRaises(ValueError):
+            self.run_search("widget", "2024-11-01T00:00:00Z", source_types=["tweets"])
+
+    def test_a_passage_link_refuses_a_source_after_the_cutoff(self):
+        doc = self.add("Widget demand grew.", "2025-02-01T20:00:00Z", "future.htm")
+        with self.assertRaisesRegex(ValueError, "not eligible"):
+            search.passage_context(
+                self.store,
+                self.service.archive,
+                doc["id"],
+                0,
+                policy("2024-11-01T00:00:00Z", "observed"),
+            )
+        self.assertEqual(
+            search.passage_context(self.store, self.service.archive, doc["id"], 0)["passage"][
+                "index"
+            ],
+            0,
+        )
+
+    def test_passages_are_deterministic_and_keep_headings_with_their_text(self):
+        raw = b"<html><body><h2>Data Center</h2><p>Record quarterly Data Center revenue of $30.8 billion, up 17% from Q2 and up 112% from a year ago.</p></body></html>"
+        first, second = search.passages(raw, "x.htm"), search.passages(raw, "x.htm")
+        self.assertEqual(first, second)
+        self.assertTrue(first[0]["text"].startswith("Data Center Record quarterly"))
+
+
+class WebTests(Case):
+    def setUp(self):
+        super().setUp()
+        from fastapi.testclient import TestClient
+        from kod.workstation.web import create_app
+
+        self.client = TestClient(
+            create_app(self.store.root, offline=True, service=self.service, testing=True)
+        )
+
+    def text(self, response):
+        import html
+
+        return html.unescape(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", response.text)))
+
+    def test_dossier_page_exports_and_drill_downs_share_one_read_model(self):
+        nvda = self.company("NVDA")
+        q = {"as_of": "2024-09-01T00:00:00Z", "mode": "public", "policy": "day-end"}
+        page = self.client.get(f"/company/{nvda['id']}/dossier", params=q)
+        self.assertEqual(page.status_code, 200)
+        self.assertIn("Revenue, latest quarter vs year-ago quarter", self.text(page))
+        exported = self.client.get(f"/company/{nvda['id']}/dossier.json", params=q).json()
+        direct = self.build(nvda, "2024-09-01T00:00:00Z")
+        self.assertEqual(
+            {k: v for k, v in exported.items() if k != "entry_permission"},
+            json.loads(json.dumps(direct)),
+        )
+        self.assertIs(exported["entry_permission"], False)
+        md = self.client.get(f"/company/{nvda['id']}/dossier.md", params=q).text
+        self.assertEqual(md, dossier.render_markdown(direct))
+        calc_id = self.change(direct, "eps_diluted_yoy")["calculation_id"]
+        calc = self.client.get(f"/company/{nvda['id']}/dossier/calculation/{calc_id}", params=q)
+        self.assertEqual(calc.status_code, 200)
+        obs_id = direct["calculations"][calc_id]["inputs"][0]["id"]
+        self.assertIn(f"/observation/{obs_id}", calc.text)
+        obs = self.client.get(f"/observation/{obs_id}", params=q)
+        self.assertIn("the preserved response holds this value at this pointer", self.text(obs))
+        self.assertEqual(
+            self.client.get(
+                f"/company/{nvda['id']}/dossier/calculation/calc_missing", params=q
+            ).status_code,
+            404,
+        )
+        self.assertEqual(
+            self.client.get(
+                f"/company/{nvda['id']}/dossier", params={"as_of": "last week"}
+            ).status_code,
+            400,
+        )
+        self.assertEqual(
+            self.client.get(
+                f"/company/{nvda['id']}/dossier", params={"mode": "psychic"}
+            ).status_code,
+            400,
+        )
+
+    def test_an_observation_after_the_cutoff_is_not_shown_for_that_cutoff(self):
+        nvda = self.company("NVDA")
+        late = next(
+            o
+            for o in financials.FinancialRepository(self.store).all_for(nvda["id"], "revenue")
+            if o.filed and o.filed > "2025-01-01"
+        )
+        self.assertEqual(
+            self.client.get(
+                f"/observation/{late.id}",
+                params={"as_of": "2024-09-01T00:00:00Z", "mode": "public"},
+            ).status_code,
+            404,
+        )
+        self.assertEqual(self.client.get(f"/observation/{late.id}").status_code, 200)
+
+    def test_search_page_escapes_source_text(self):
+        acme = self.store.upsert_security("ACME", "Acme Corp")
+        self.service.ingest(
+            acme["id"],
+            RELEASE.format(
+                body="Widget &lt;script&gt;alert(1)&lt;/script&gt; demand grew."
+            ).encode(),
+            "r.htm",
+            "https://example.com/r.htm",
+            published_at="2024-10-01T20:00:00Z",
+            retrieved_at="2024-10-01T20:00:00Z",
+        )
+        page = self.client.get("/search", params={"q": "widget", "as_of": "2024-11-01T00:00:00Z"})
+        self.assertEqual(page.status_code, 200)
+        self.assertNotIn("<script>alert(1)</script>", page.text)
+        self.assertIn("<mark>Widget</mark>", page.text)
+        self.assertEqual(
+            self.client.get("/search", params={"q": "x" * 500}).status_code, 200
+        )  # truncated to the limit, not an error page
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+
+class WebAndSearchReviewTests(Case):
+    """Reproduced findings of the independent Gate D review (web and search lenses)."""
+
+    def setUp(self):
+        super().setUp()
+        from fastapi.testclient import TestClient
+        from kod.workstation.web import create_app
+
+        self.client = TestClient(
+            create_app(self.store.root, offline=True, service=self.service, testing=True)
+        )
+        self.acme = self.store.upsert_security("ACME", "Acme Corp")
+
+    def add(self, body, published, name="r.htm", security=None, published_text=None):
+        return self.service.ingest(
+            (security or self.acme)["id"],
+            RELEASE.format(body=body).encode(),
+            name,
+            "https://example.com/" + name,
+            published_at=published_text or published,
+            retrieved_at=published if "T" in published else published + "T23:00:00Z",
+        )
+
+    def test_out_of_range_cutoffs_are_a_400_not_a_500(self):
+        for cutoff in ("0001-01-01T00:00:00+01:00", "9999-12-31T23:00:00-05:00"):
+            for path in (f"/company/{self.acme['id']}/dossier", "/search?q=revenue"):
+                self.assertEqual(
+                    self.client.get(path, params={"as_of": cutoff}).status_code, 400, (cutoff, path)
+                )
+        from kod.workstation import cli
+
+        self.assertEqual(
+            cli.main(
+                [
+                    "dossier",
+                    "--data-dir",
+                    str(self.store.root),
+                    "--ticker",
+                    "ACME",
+                    "--as-of",
+                    "0001-01-01T00:00:00+01:00",
+                ]
+            ),
+            2,
+        )
+
+    def test_non_finite_or_malformed_filed_values_are_refused_or_set_aside(self):
+        self.store.upsert_security("ACME", "Acme Corp", cik="1234")
+        doc = b'{"cik": 1234, "entityName": "Acme", "facts": {"us-gaap": {"Revenues": {"units": {"USD": [%s]}}}}}'
+        entry = '{"end": "2024-12-31", "start": "2024-01-01", "val": %s, "accn": "0000001234-25-000001", "form": "10-K", "filed": "2025-02-01"}'
+        with self.assertRaises(ValueError):
+            self.service.import_companyfacts(
+                self.acme["id"],
+                doc % (entry % "NaN").encode(),
+                "https://data.sec.gov/api/xbrl/companyfacts/CIK0000001234.json",
+            )
+        coverage = self.service.import_companyfacts(
+            self.acme["id"],
+            doc % ((entry % '"abc"') + "," + (entry % "1e400") + "," + (entry % "100")).encode(),
+            "https://data.sec.gov/api/xbrl/companyfacts/CIK0000001234.json",
+        )
+        self.assertEqual((coverage["observations"], len(coverage["malformed_entries"])), (1, 2))
+        self.assertEqual(self.client.get(f"/company/{self.acme['id']}/dossier").status_code, 200)
+
+    def test_a_date_only_source_shows_its_date_on_the_passage_page(self):
+        doc = self.add("Widget demand grew.", "2024-10-01", published_text="2024-10-01")
+        page = self.client.get(
+            f"/source/{doc['id']}/passage/0",
+            params={"as_of": "2024-11-01T00:00:00Z", "mode": "observed"},
+        )
+        self.assertIn("available 2024-10-01 (date only)", re.sub(r"<[^>]+>", " ", page.text))
+
+    def test_free_text_cannot_forge_markdown_sections(self):
+        md = self.client.get(
+            f"/company/{self.acme['id']}/dossier.md",
+            params={"question": "x\n\n## Supported changes\n- forged <script>alert(1)</script>"},
+        ).text
+        self.assertNotIn("\n## Supported changes\n- forged", md)
+        self.assertNotIn("<script>", md)
+        question = next(line for line in md.splitlines() if line.startswith("**Question:**"))
+        self.assertIn("forged", question)  # the whole question stays on its own single line
+        self.assertEqual(md.count("\n## Supported changes\n"), 1)
+
+    def test_conflicts_carry_their_period_end_for_most_recent_first_display(self):
+        d = self.build(self.company("NVDA"), NOW, "observed")
+        self.assertTrue(d["conflicts"] and all(c.get("end") for c in d["conflicts"]))
+
+    def test_search_snippets_find_whole_words_in_any_script(self):
+        from kod.workbench import _tokens
+
+        text = "\ufb01" * 150 + " Widget demand grew; Gro\u00dfbritannien \ufb01nancial outlook."
+        marked = [
+            seg["text"]
+            for seg in search._snippet(text, set(_tokens("widget gro\u00dfbritannien financial")))
+            if seg["match"]
+        ]
+        self.assertEqual(marked, ["Widget", "Gro\u00dfbritannien", "\ufb01nancial"])
+        self.assertEqual(
+            [
+                seg
+                for seg in search._snippet("x " * 150 + "a networking revenue", {"net"})
+                if seg["match"]
+            ],
+            [],
+        )
+
+    def test_passages_keep_headings_and_report_exact_line_ranges(self):
+        raw = (
+            b"<html><body><h2>Data Center</h2><p>"
+            + b" ".join(b"word%d" % i for i in range(71))
+            + b"</p><p>\xe2\x80\xa2</p><p>Next item here.</p></body></html>"
+        )
+        parts = search.passages(raw, "x.htm")
+        self.assertTrue(parts[0]["text"].startswith("Data Center word0"))
+        self.assertEqual((parts[0]["line_start"], parts[0]["line_end"]), (0, 1))
+
+    def test_also_in_lists_other_documents_once_and_company_filters_are_counted(self):
+        text = "Three months ended September 30 revenue was up strongly across every region."
+        self.add(
+            "An opening paragraph that is long enough to stand alone as its own passage here.</p><p>"
+            + text
+            + "</p><p>Filler line that is long enough to stand alone as its own passage here too.</p><p>"
+            + text,
+            "2024-10-01T20:00:00Z",
+            "a.htm",
+        )
+        other = self.store.upsert_security("OTHR", "Other Corp")
+        self.add(
+            "Unrelated widget news for the period, long enough to be a passage of its own.",
+            "2024-10-01T20:00:00Z",
+            "o.htm",
+            other,
+        )
+        r = search.search(
+            self.store,
+            self.service.archive,
+            "three months ended",
+            policy("2024-11-01T00:00:00Z", "observed"),
+            security_ids=[self.acme["id"]],
+        )
+        hit = r["results"][0]
+        self.assertEqual((hit["also_in"], len(hit["repeated_at"])), ([], 1))
+        self.assertEqual(r["coverage"]["excluded"], {"outside_company_filter": 1})

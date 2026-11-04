@@ -1,0 +1,13 @@
+{
+ "id": "RECENT_REPLAY_v1_registered",
+ "experiment": "RECENT_REPLAY_v1",
+ "date": "2026-10-30",
+ "hypothesis": "replay of LEARNER v2.4 over US +30% spikes 2026-04-01..2026-10-28 (1718 events built before outcomes): raw NEXT_DUMP10_1 forecasts rank the next-session dumpers above the others, AUC > 0.5 with z >= 3.75 at the 250 look, 3.0 at 500 and 1000 (protocol_v2_4.json 'claim')",
+ "one_sided_p": null,
+ "p_source": "research/RECENT_REPLAY_v1/protocol.json",
+ "variants_searched": 0,
+ "outcome": "PENDING (frozen before any outcome was read)",
+ "counted": false,
+ "registered": "2026-10-30",
+ "sealed_data_read": "US 2026-04-01..2026-10-28 outcomes, once, on the owner's instruction of 2026-10-30"
+}

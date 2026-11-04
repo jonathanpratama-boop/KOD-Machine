@@ -1,0 +1,32 @@
+test_90_day_sharpe_kill_waits_for_later_open_and_never_resets (test_daily.DailyTests.test_90_day_sharpe_kill_waits_for_later_open_and_never_resets) ... ok
+test_atomic_mark_cannot_be_overwritten (test_daily.DailyTests.test_atomic_mark_cannot_be_overwritten) ... ok
+test_capacity_known_at_creation_and_frozen (test_daily.DailyTests.test_capacity_known_at_creation_and_frozen) ... ok
+test_cash_control_and_zero_variance_sharpe (test_daily.DailyTests.test_cash_control_and_zero_variance_sharpe) ... ok
+test_conventional_control_explicitly_has_no_kill (test_daily.DailyTests.test_conventional_control_explicitly_has_no_kill) ... ok
+test_kill_initial_peak_and_later_only_liquidation (test_daily.DailyTests.test_kill_initial_peak_and_later_only_liquidation) ... ok
+test_no_manufactured_midnight_availability_or_future_tail_effect (test_daily.DailyTests.test_no_manufactured_midnight_availability_or_future_tail_effect) ... ok
+test_offline_writer_replay_reconciliation_and_terminal_fees (test_daily.DailyTests.test_offline_writer_replay_reconciliation_and_terminal_fees) ... ok
+test_original_v2_bytes_preserved (test_daily.DailyTests.test_original_v2_bytes_preserved) ... ok
+test_passive_does_not_refill_partial_entry (test_daily.DailyTests.test_passive_does_not_refill_partial_entry) ... ok
+test_signal_weights_exact_v2_and_full_session_delay (test_daily.DailyTests.test_signal_weights_exact_v2_and_full_session_delay) ... ok
+test_terminal_plan_cannot_be_moved (test_daily.DailyTests.test_terminal_plan_cannot_be_moved) ... ok
+test_zero_variance_negative_returns_and_insufficient_history (test_daily.DailyTests.test_zero_variance_negative_returns_and_insufficient_history) ... ok
+test_cash_fees_and_holdings_reconcile_independently (test_independent.Independent.test_cash_fees_and_holdings_reconcile_independently) ... ok
+test_duplicate_retry_and_conflict_cannot_duplicate_decision (test_independent.Independent.test_duplicate_retry_and_conflict_cannot_duplicate_decision) ... ok
+test_fixed_availability_cannot_be_moved_to_midnight (test_independent.Independent.test_fixed_availability_cannot_be_moved_to_midnight) ... ok
+test_future_open_gap_changes_quantity_not_frozen_buy_budget (test_independent.Independent.test_future_open_gap_changes_quantity_not_frozen_buy_budget) ... ok
+test_input_snapshot_mix_and_atomic_missing_mark_reject (test_independent.Independent.test_input_snapshot_mix_and_atomic_missing_mark_reject) ... ok
+test_kill_residual_capacity_is_frozen_and_never_same_open (test_independent.Independent.test_kill_residual_capacity_is_frozen_and_never_same_open) ... ok
+test_missing_current_marks_propagate_unknown_nav (test_independent.Independent.test_missing_current_marks_propagate_unknown_nav) ... ok
+test_sell_quantity_frozen_at_decision_despite_later_price (test_independent.Independent.test_sell_quantity_frozen_at_decision_despite_later_price) ... ok
+test_sharpe_requires_91_clean_samples_and_missing_resets (test_independent.Independent.test_sharpe_requires_91_clean_samples_and_missing_resets) ... ok
+test_signal_and_sharpe_parity_with_original_v2 (test_independent.Independent.test_signal_and_sharpe_parity_with_original_v2) ... ok
+test_terminal_capacity_residual_is_not_forced_flat (test_independent.Independent.test_terminal_capacity_residual_is_not_forced_flat) ... ok
+test_terminal_close_volume_and_later_rows_never_affect_result (test_independent.Independent.test_terminal_close_volume_and_later_rows_never_affect_result) ... ok
+test_terminal_reporting_does_not_relabel_kill_intents (test_independent.Independent.test_terminal_reporting_does_not_relabel_kill_intents) ... ok
+test_torn_or_tampered_offline_journal_is_not_silently_recovered (test_independent.Independent.test_torn_or_tampered_offline_journal_is_not_silently_recovered) ... ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 1.929s
+
+OK

@@ -14,7 +14,9 @@ from idxsig import e1
 
 def jumpy_panel(n=40, s=820, seed=3):
     rng = np.random.default_rng(seed)
-    dates = pd.to_datetime(np.busday_offset(np.datetime64("2020-11-02", "D"), np.arange(s), roll="forward"))
+    dates = pd.to_datetime(
+        np.busday_offset(np.datetime64("2020-11-02", "D"), np.arange(s), roll="forward")
+    )
     rows = []
     for i in range(n):
         price, left = float(rng.choice([150, 480, 1500])), 0
@@ -28,16 +30,43 @@ def jumpy_panel(n=40, s=820, seed=3):
             else:
                 step = float(np.clip(rng.normal(0, 0.02), -0.06, 0.06))
             price = max(round(prev * (1 + step)), 50)
-            rows.append({"date": dates[d], "ticker": f"S{i:03d}", "source": "synthetic", "previous": int(prev),
-                         "open": pd.NA, "high": int(max(prev, price)), "low": int(min(prev, price)),
-                         "close": int(price), "volume": vol, "value": int(vol * price), "frequency": 100,
-                         "listed_shares": 10**9, "tradable_shares": 10**9})
+            rows.append(
+                {
+                    "date": dates[d],
+                    "ticker": f"S{i:03d}",
+                    "source": "synthetic",
+                    "previous": int(prev),
+                    "open": pd.NA,
+                    "high": int(max(prev, price)),
+                    "low": int(min(prev, price)),
+                    "close": int(price),
+                    "volume": vol,
+                    "value": int(vol * price),
+                    "frequency": 100,
+                    "listed_shares": 10**9,
+                    "tradable_shares": 10**9,
+                }
+            )
     df = pd.DataFrame(rows)
-    for c in ("previous", "open", "high", "low", "close", "volume", "value", "frequency", "listed_shares",
-              "tradable_shares"):
+    for c in (
+        "previous",
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "value",
+        "frequency",
+        "listed_shares",
+        "tradable_shares",
+    ):
         df[c] = df[c].astype("Int64")
-    return df, {"sha256": "synthetic", "panel": "synthetic", "source_boundary": str(dates[-1].date()),
-                "format": "panel-v2"}
+    return df, {
+        "sha256": "synthetic",
+        "panel": "synthetic",
+        "source_boundary": str(dates[-1].date()),
+        "format": "panel-v2",
+    }
 
 
 class E1Mechanics(unittest.TestCase):
@@ -83,8 +112,13 @@ class E1Mechanics(unittest.TestCase):
         st = self.study
         events = st.episodes("discovery", 0.30).head(20)
         ctrl = st.matched_controls(events, "discovery")
-        merged = ctrl.merge(events.reset_index().rename(columns={"index": "event_index"})[["event_index", "date", "ticker"]],
-                            on="event_index", suffixes=("", "_event"))
+        merged = ctrl.merge(
+            events.reset_index().rename(columns={"index": "event_index"})[
+                ["event_index", "date", "ticker"]
+            ],
+            on="event_index",
+            suffixes=("", "_event"),
+        )
         self.assertTrue((merged["date"] == merged["date_event"]).all())
         self.assertTrue((merged["ticker"] != merged["ticker_event"]).all())
         self.assertTrue((ctrl["r5max"] < 0.30).all())
@@ -96,7 +130,9 @@ class E1Mechanics(unittest.TestCase):
         chosen = e1.Study.select(table)
         adm = table[table["admissible"]]
         self.assertTrue((adm["flags"] >= 200).all())
-        self.assertEqual(chosen, adm.sort_values(["E30_lift", "flags"], ascending=False).iloc[0]["rule"])
+        self.assertEqual(
+            chosen, adm.sort_values(["E30_lift", "flags"], ascending=False).iloc[0]["rule"]
+        )
         self.assertIsNone(e1.Study.select(table.assign(admissible=False)))
 
     def test_stage_outputs_are_never_overwritten(self):
@@ -119,8 +155,13 @@ class E2OnOtherMarkets(unittest.TestCase):
         for col in ("frequency", "listed_shares", "tradable_shares"):
             df[col] = np.nan
         meta = {**meta, "format": "panel-global-v1"}
-        st = e1.Study(df, meta, protocol_path=e1.PKG_ROOT / "research" / "E2" / "protocol.json", profile=US,
-                      family_module=moonshot_g)
+        st = e1.Study(
+            df,
+            meta,
+            protocol_path=e1.PKG_ROOT / "research" / "E2" / "protocol.json",
+            profile=US,
+            family_module=moonshot_g,
+        )
         self.assertFalse(st.m.lock_up.any())
         out = Path(tempfile.mkdtemp())
         summary = e1.run_discovery(st, out / "disc")

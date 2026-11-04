@@ -1,0 +1,24 @@
+{
+ "sapienza": {
+  "repo": "https://github.com/SystemsLab-Sapienza/pump-and-dump-dataset",
+  "url": "https://raw.githubusercontent.com/SystemsLab-Sapienza/pump-and-dump-dataset/master/pump_telegram.csv",
+  "licence": "MIT",
+  "committed_as": "data/pump_telegram_sapienza.csv",
+  "sha256": "7ca4d2ac21b02888a269af6dd8a56415074d86f1e5e51e5de314f536a6a3b593",
+  "cite": "La Morgia, Mei, Sassi, Stefa, Pump and Dumps in the Bitcoin Era, ICCCN 2020, doi 10.1109/ICCCN49398.2020.9209660"
+ },
+ "ardia": {
+  "repo": "https://github.com/ArdiaD/PumpDump",
+  "url": "https://raw.githubusercontent.com/ArdiaD/PumpDump/master/data/list_pd_events.csv",
+  "licence": "none stated; README asks for citation and the data DOI; fetched at build time, not redistributed",
+  "sha256": "a442e470b7f7c4d8bc06071c3faf9194155fc55c225f639999ea5083edd97938",
+  "cite": "Ardia and Bluteau, Twitter and cryptocurrency pump-and-dumps, International Review of Financial Analysis 95 (2024) 103479"
+ },
+ "bayi_hu": {
+  "repo": "https://github.com/Bayi-Hu/Pump-and-Dump-Detection-on-Cryptocurrency",
+  "url": "https://raw.githubusercontent.com/Bayi-Hu/Pump-and-Dump-Detection-on-Cryptocurrency/master/Data/Telegram/Labeled/PD_logs_cleaned.txt",
+  "licence": "none stated; fetched at build time, not redistributed",
+  "sha256": "22fb861c9dec8521690d3bd0cff5d88937770ff10266325c542c8d77ff086544",
+  "cite": "Hu et al., Sequence-Based Target Coin Prediction for Cryptocurrency Pump-and-Dump, SIGMOD 2023"
+ }
+}

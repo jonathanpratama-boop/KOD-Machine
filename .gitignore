@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
 .pytest_cache/
+*.lock
 
 # KOD scratch databases (the ledger itself is kod-machine/var/kod.db and is committed)
 kod-machine/var/*.db
@@ -12,6 +13,11 @@ idx-signals/data/raw/
 idx-signals/data/panel/
 
 # Local analyst workstation state is separate from the frozen research ledger.
-runtime/
+/runtime/
 kod-machine/.venv/
 .venv-workstation/
+
+# Runtime credentials are supplied through the environment, never repository data.
+.env
+.env.*
+!.env.example

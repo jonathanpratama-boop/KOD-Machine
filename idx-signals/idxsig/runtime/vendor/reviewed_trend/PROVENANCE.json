@@ -1,0 +1,19 @@
+{
+  "source_repository": "jonathanpratama-boop/KOD-Machine",
+  "source_commit": "9bf18a7c6270ae31e60b7fa2cf041674b7f27977",
+  "source_prefix": "handoff/ace-integration-20261101/paper_v2/KOD_trend_paper_v2_reviewed_20261101/trend_core_paper_v2_candidate_20261101/",
+  "original_files": {
+    "PAPER_PROTOCOL_v2_CANDIDATE.md": "94a6508600ae50766c7ab9efdd74bb069e41076c575a94f68b0f58f31be5b22c",
+    "PROTOCOL_ADDENDUM_1.md": "e371b30f1f536b75732879e12cf941f445fdaa41b79f5b72b6148daa553ecf95",
+    "paper_candidate.py": "dbda12d461cb601693d6fa77737b8e0f955c9b0f2b7732841a2d9488f6c834c3",
+    "vendor/paper_cash_accounting.py": "29688797f6738e4aa02ca87403a5a90d60dec0bca54cffab36a4a4a7e266f8a6"
+  },
+  "adapter": "../../account.py",
+  "profile_changes": [
+    "Explicit synthetic/public_market profiles and input lineage; no source relabeling",
+    "Venue tick/lot/minimum/maximum constraints at simulated fill",
+    "Recorded observations use actual receipt time, source timestamp remains nullable",
+    "Same shared-cash signal/allocation/risk/journal semantics; legacy bytes unchanged"
+  ],
+  "verification": "Source preservation only; runtime tests are separate evidence."
+}

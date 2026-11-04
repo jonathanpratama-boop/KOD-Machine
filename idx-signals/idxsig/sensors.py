@@ -30,8 +30,14 @@ LOG = SENSORS_DIR / "sensors.jsonl"
 RAW = SENSORS_DIR / "raw"
 UA = "KOD-Machine research harness (owner-operated; sensors.py)"
 DEFAULT_HANDLES = ("unusualwhales.bsky.social",)
-DEFAULT_KEYWORDS = ("fast track", "breakthrough therapy", "definitive agreement", "merger agreement",
-                    "contract award", "FDA approval")
+DEFAULT_KEYWORDS = (
+    "fast track",
+    "breakthrough therapy",
+    "definitive agreement",
+    "merger agreement",
+    "contract award",
+    "FDA approval",
+)
 CASHTAG = re.compile(r"\$([A-Z]{1,5})\b")
 PAREN = re.compile(r"\(([A-Z]{1,6})\)")
 TEXT_MAX = 500
@@ -51,11 +57,18 @@ def _abs(raw_path: str) -> Path:
 
 
 def _utc(moment: datetime | None = None) -> str:
-    return (moment or datetime.now(timezone.utc)).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+    return (
+        (moment or datetime.now(timezone.utc))
+        .replace(microsecond=0)
+        .isoformat()
+        .replace("+00:00", "Z")
+    )
 
 
 def fetch(url: str, user_agent: str = UA, timeout: int = 30) -> bytes:
-    req = urllib.request.Request(url, headers={"User-Agent": user_agent, "Accept": "application/json"})
+    req = urllib.request.Request(
+        url, headers={"User-Agent": user_agent, "Accept": "application/json"}
+    )
     with urllib.request.urlopen(req, timeout=timeout) as resp:
         return resp.read()
 
@@ -79,6 +92,7 @@ def symbols_in(text: str) -> list[str]:
 # Each source returns (alerts, raw_bytes). An alert: source_id, posted_at (the source's own time, or None), symbols,
 # text, url, extra.
 
+
 def bluesky(handle: str, limit: int = 100, fetcher=fetch) -> tuple[list[dict], bytes]:
     q = urllib.parse.urlencode({"actor": handle, "limit": limit, "filter": "posts_no_replies"})
     raw = fetcher(f"https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?{q}")
@@ -90,9 +104,16 @@ def bluesky(handle: str, limit: int = 100, fetcher=fetch) -> tuple[list[dict], b
         rec = post.get("record", {})
         text = rec.get("text", "")
         rkey = post["uri"].rsplit("/", 1)[-1]
-        alerts.append({"source_id": post["uri"], "posted_at": rec.get("createdAt"), "symbols": symbols_in(text),
-                       "text": text[:TEXT_MAX], "url": f"https://bsky.app/profile/{post['author']['handle']}/post/{rkey}",
-                       "extra": {"likes": post.get("likeCount"), "reposts": post.get("repostCount")}})
+        alerts.append(
+            {
+                "source_id": post["uri"],
+                "posted_at": rec.get("createdAt"),
+                "symbols": symbols_in(text),
+                "text": text[:TEXT_MAX],
+                "url": f"https://bsky.app/profile/{post['author']['handle']}/post/{rkey}",
+                "extra": {"likes": post.get("likeCount"), "reposts": post.get("repostCount")},
+            }
+        )
     return alerts, raw
 
 
@@ -101,21 +122,40 @@ def stocktwits_trending(fetcher=fetch, today: str | None = None) -> tuple[list[d
     day = today or _utc()[:10]
     alerts = []
     for rank, s in enumerate(json.loads(raw).get("symbols", []), start=1):
-        alerts.append({"source_id": f"{day}:{s['symbol']}", "posted_at": None, "symbols": [s["symbol"]],
-                       "text": f"StockTwits trending #{rank}: {s.get('title', '')}",
-                       "url": f"https://stocktwits.com/symbol/{s['symbol']}", "extra": {"rank": rank}})
+        alerts.append(
+            {
+                "source_id": f"{day}:{s['symbol']}",
+                "posted_at": None,
+                "symbols": [s["symbol"]],
+                "text": f"StockTwits trending #{rank}: {s.get('title', '')}",
+                "url": f"https://stocktwits.com/symbol/{s['symbol']}",
+                "extra": {"rank": rank},
+            }
+        )
     return alerts, raw
 
 
-def edgar_8k(keywords=DEFAULT_KEYWORDS, days: int = 3, fetcher=fetch, today: str | None = None,
-             user_agent: str | None = None) -> tuple[list[dict], bytes]:
+def edgar_8k(
+    keywords=DEFAULT_KEYWORDS,
+    days: int = 3,
+    fetcher=fetch,
+    today: str | None = None,
+    user_agent: str | None = None,
+) -> tuple[list[dict], bytes]:
     end = datetime.fromisoformat(today) if today else datetime.now(timezone.utc)
     start = (end - timedelta(days=days)).date().isoformat()
     ua = user_agent or os.environ.get("IDXSIG_SEC_USER_AGENT") or UA
     pages, alerts, seen = [], [], set()
     for kw in keywords:
-        q = urllib.parse.urlencode({"q": f'"{kw}"', "forms": "8-K", "dateRange": "custom", "startdt": start,
-                                    "enddt": end.date().isoformat()})
+        q = urllib.parse.urlencode(
+            {
+                "q": f'"{kw}"',
+                "forms": "8-K",
+                "dateRange": "custom",
+                "startdt": start,
+                "enddt": end.date().isoformat(),
+            }
+        )
         raw = fetcher(f"https://efts.sec.gov/LATEST/search-index?{q}", user_agent=ua)
         pages.append({"keyword": kw, "response": json.loads(raw)})
         for hit in pages[-1]["response"].get("hits", {}).get("hits", []):
@@ -130,10 +170,22 @@ def edgar_8k(keywords=DEFAULT_KEYWORDS, days: int = 3, fetcher=fetch, today: str
                 syms += [s for s in PAREN.findall(n) if not s.startswith("CIK")]
             cik = (src.get("ciks") or [""])[0].lstrip("0")
             doc = hit.get("_id", "").split(":")[-1]
-            alerts.append({"source_id": adsh, "posted_at": src.get("file_date"), "symbols": list(dict.fromkeys(syms)),
-                           "text": f"8-K matching \"{kw}\": {'; '.join(names)[:TEXT_MAX]}",
-                           "url": f"https://www.sec.gov/Archives/edgar/data/{cik}/{adsh.replace('-', '')}/{doc}" if cik else "",
-                           "extra": {"keyword": kw, "form": src.get("form"), "period_ending": src.get("period_ending")}})
+            alerts.append(
+                {
+                    "source_id": adsh,
+                    "posted_at": src.get("file_date"),
+                    "symbols": list(dict.fromkeys(syms)),
+                    "text": f'8-K matching "{kw}": {"; ".join(names)[:TEXT_MAX]}',
+                    "url": f"https://www.sec.gov/Archives/edgar/data/{cik}/{adsh.replace('-', '')}/{doc}"
+                    if cik
+                    else "",
+                    "extra": {
+                        "keyword": kw,
+                        "form": src.get("form"),
+                        "period_ending": src.get("period_ending"),
+                    },
+                }
+            )
     return alerts, json.dumps(pages, sort_keys=True).encode()
 
 
@@ -144,15 +196,24 @@ def coingecko_trending(fetcher=fetch, today: str | None = None) -> tuple[list[di
     for rank, c in enumerate(json.loads(raw).get("coins", []), start=1):
         it = c.get("item", {})
         sym = str(it.get("symbol", "")).upper()
-        alerts.append({"source_id": f"{day}:{it.get('id')}", "posted_at": None, "symbols": [sym] if sym else [],
-                       "text": f"CoinGecko trending #{rank}: {it.get('name')} ({sym}), market-cap rank {it.get('market_cap_rank')}",
-                       "url": f"https://www.coingecko.com/en/coins/{it.get('id')}", "extra": {"rank": rank}})
+        alerts.append(
+            {
+                "source_id": f"{day}:{it.get('id')}",
+                "posted_at": None,
+                "symbols": [sym] if sym else [],
+                "text": f"CoinGecko trending #{rank}: {it.get('name')} ({sym}), market-cap rank {it.get('market_cap_rank')}",
+                "url": f"https://www.coingecko.com/en/coins/{it.get('id')}",
+                "extra": {"rank": rank},
+            }
+        )
     return alerts, raw
 
 
 def binance_listings(fetcher=fetch) -> tuple[list[dict], bytes]:
-    url = ("https://www.binance.com/bapi/composite/v1/public/cms/article/list/query?type=1&pageNo=1&pageSize=20"
-           "&catalogId=48")
+    url = (
+        "https://www.binance.com/bapi/composite/v1/public/cms/article/list/query?type=1&pageNo=1&pageSize=20"
+        "&catalogId=48"
+    )
     raw = fetcher(url)
     alerts = []
     for cat in json.loads(raw).get("data", {}).get("catalogs", []):
@@ -160,10 +221,16 @@ def binance_listings(fetcher=fetch) -> tuple[list[dict], bytes]:
             title = a.get("title", "")
             ms = a.get("releaseDate")
             posted = _utc(datetime.fromtimestamp(ms / 1000, timezone.utc)) if ms else None
-            alerts.append({"source_id": str(a.get("code")), "posted_at": posted,
-                           "symbols": [s for s in re.findall(r"\(([A-Z0-9]{2,10})\)", title)], "text": title[:TEXT_MAX],
-                           "url": f"https://www.binance.com/en/support/announcement/{a.get('code')}",
-                           "extra": {"catalog": cat.get("catalogName")}})
+            alerts.append(
+                {
+                    "source_id": str(a.get("code")),
+                    "posted_at": posted,
+                    "symbols": [s for s in re.findall(r"\(([A-Z0-9]{2,10})\)", title)],
+                    "text": title[:TEXT_MAX],
+                    "url": f"https://www.binance.com/en/support/announcement/{a.get('code')}",
+                    "extra": {"catalog": cat.get("catalogName")},
+                }
+            )
     return alerts, raw
 
 
@@ -180,19 +247,31 @@ ISSUE_VERBS = {"penerbitan", "terbitkan", "menerbitkan"}
 
 def dilution_kinds(slug: str) -> list[str]:
     words = slug.lower().split("-")
+
     def has(seq):
         n = len(seq)
-        return any(tuple(words[i:i + n]) == seq for i in range(len(words) - n + 1))
+        return any(tuple(words[i : i + n]) == seq for i in range(len(words) - n + 1))
+
     kinds = [k for k, seqs in DILUTION_PHRASES.items() if any(has(q) for q in seqs)]
-    if has(("saham", "baru")) and ISSUE_VERBS & set(words):  # "new shares" only next to an issuing verb
+    if has(("saham", "baru")) and ISSUE_VERBS & set(
+        words
+    ):  # "new shares" only next to an issuing verb
         kinds.append("new_shares")
-    if "private_placement" in kinds and has(("tanpa", "hmetd")) and not (has(("rights", "issue")) or has(("right", "issue"))):
-        kinds = [k for k in kinds if k != "rights_issue"]      # "tanpa HMETD" (without pre-emptive rights) is a placement, not a rights issue
+    if (
+        "private_placement" in kinds
+        and has(("tanpa", "hmetd"))
+        and not (has(("rights", "issue")) or has(("right", "issue")))
+    ):
+        kinds = [
+            k for k in kinds if k != "rights_issue"
+        ]  # "tanpa HMETD" (without pre-emptive rights) is a placement, not a rights issue
     return kinds
 
 
-EN_STOP = {"AKSI"}                                    # ticker codes that are also common Indonesian headline words
-EN_SLUG = re.compile(r"<loc>https://www\.emitennews\.com/news/([^<]+)</loc>\s*<lastmod>([^<]+)</lastmod>")
+EN_STOP = {"AKSI"}  # ticker codes that are also common Indonesian headline words
+EN_SLUG = re.compile(
+    r"<loc>https://www\.emitennews\.com/news/([^<]+)</loc>\s*<lastmod>([^<]+)</lastmod>"
+)
 
 
 def idx_tickers(root: Path | None = None) -> set[str]:
@@ -201,14 +280,25 @@ def idx_tickers(root: Path | None = None) -> set[str]:
     codes = {f.stem.upper() for f in (root / "raw" / "idx_mirror").glob("*/Saham/Semua/*.csv")}
     extra = root / "universe" / "extra_tickers.csv"
     if extra.exists():
-        codes |= {ln.split(",")[0].strip().upper() for ln in extra.read_text().splitlines()[1:] if ln.strip()}
+        codes |= {
+            ln.split(",")[0].strip().upper()
+            for ln in extra.read_text().splitlines()[1:]
+            if ln.strip()
+        }
     return codes
 
 
-def emitennews_dilution(tickers: set[str] | None = None, year: int | None = None, days: int = 7, fetcher=fetch,
-                        today: str | None = None) -> tuple[list[dict], bytes]:
+def emitennews_dilution(
+    tickers: set[str] | None = None,
+    year: int | None = None,
+    days: int = 7,
+    fetcher=fetch,
+    today: str | None = None,
+) -> tuple[list[dict], bytes]:
     """EmitenNews headlines (public sitemap; robots.txt allows it) about new shares: rights issues, private placements, convertible bonds,
-    warrants. Only the last `days` days by the sitemap's lastmod. A watch flag only: IDX_DILUTION_v1 tested a different event (the day new shares
+    warrants. Only the last `days` days through `today` by the sitemap's lastmod.
+    Lastmod is modification evidence, not a publication timestamp; posted_at stays unknown.
+    A watch flag only: IDX_DILUTION_v1 tested a different event (the day new shares
     reach IDX's listed-share count, 2023, 15 trades, see its ERRATA_1), and no test has yet scored these announcements."""
     day = today or _utc()[:10]
     raw = fetcher(f"https://www.emitennews.com/sitemap-{year or int(day[:4])}.xml")
@@ -217,11 +307,32 @@ def emitennews_dilution(tickers: set[str] | None = None, year: int | None = None
     alerts = []
     for slug, lastmod in EN_SLUG.findall(raw.decode("utf-8", "replace")):
         words = dilution_kinds(slug)
-        if not words or lastmod[:10] < cutoff:
+        if not words or not cutoff <= lastmod[:10] <= day:
             continue
-        syms = sorted({t.upper() for t in slug.split("-") if t.upper() in codes and len(t) == 4 and t.upper() not in EN_STOP})
-        alerts.append({"source_id": slug, "posted_at": lastmod[:10], "symbols": syms, "text": slug.replace("-", " ")[:TEXT_MAX],
-                       "url": f"https://www.emitennews.com/news/{slug}", "extra": {"kind": words, "market": "IDX"}})
+        syms = sorted(
+            {
+                t.upper()
+                for t in slug.split("-")
+                if t.upper() in codes and len(t) == 4 and t.upper() not in EN_STOP
+            }
+        )
+        alerts.append(
+            {
+                "source_id": slug,
+                "posted_at": None,
+                "symbols": syms,
+                "text": slug.replace("-", " ")[:TEXT_MAX],
+                "url": f"https://www.emitennews.com/news/{slug}",
+                "extra": {
+                    "kind": words,
+                    "market": "IDX",
+                    "source_modified_at": lastmod,
+                    "source_time_role": "SITEMAP_LASTMOD",
+                    "publication_time_status": "UNKNOWN",
+                    "adapter_version": "emitennews-sitemap-v2",
+                },
+            }
+        )
     return alerts, raw
 
 
@@ -239,10 +350,20 @@ def default_sources(handles=DEFAULT_HANDLES, keywords=DEFAULT_KEYWORDS, fetcher=
 def known_ids(path: Path = LOG) -> set[tuple[str, str]]:
     if not path.exists():
         return set()
-    return {(r["source"], r["source_id"]) for r in paper.ledger_lines(path) if r.get("type") == "SENSOR_ALERT"}
+    return {
+        (r["source"], r["source_id"])
+        for r in paper.ledger_lines(path)
+        if r.get("type") == "SENSOR_ALERT"
+    }
 
 
-def pull(sources: dict, log: Path = LOG, raw_dir: Path = RAW, timestamper=None, now: datetime | None = None) -> dict:
+def pull(
+    sources: dict,
+    log: Path = LOG,
+    raw_dir: Path = RAW,
+    timestamper=None,
+    now: datetime | None = None,
+) -> dict:
     """Run every source; one source's failure does not lose the others. Returns the pull summary."""
     stamp = _utc(now)
     folder = raw_dir / stamp.replace("-", "").replace(":", "")
@@ -266,16 +387,40 @@ def pull(sources: dict, log: Path = LOG, raw_dir: Path = RAW, timestamper=None, 
                 continue
             seen.add((name, a["source_id"]))
             new += 1
-            records.append({"type": "SENSOR_ALERT", "source": name, "source_id": a["source_id"],
-                            "posted_at": a.get("posted_at"), "observed_at": stamp, "symbols": a.get("symbols", []),
-                            "text": a.get("text", "")[:TEXT_MAX], "url": a.get("url", ""), "extra": a.get("extra", {}),
-                            "raw_path": _rel(path), "raw_sha256": sha})
+            records.append(
+                {
+                    "type": "SENSOR_ALERT",
+                    "source": name,
+                    "source_id": a["source_id"],
+                    "posted_at": a.get("posted_at"),
+                    "observed_at": stamp,
+                    "symbols": a.get("symbols", []),
+                    "text": a.get("text", "")[:TEXT_MAX],
+                    "url": a.get("url", ""),
+                    "extra": a.get("extra", {}),
+                    "raw_path": _rel(path),
+                    "raw_sha256": sha,
+                }
+            )
         counts[name] = {"items": len(alerts), "new": new}
-    records.append({"type": "SENSOR_PULL", "observed_at": stamp, "counts": counts, "errors": errors,
-                    "raw_dir": _rel(folder)})
+    records.append(
+        {
+            "type": "SENSOR_PULL",
+            "observed_at": stamp,
+            "counts": counts,
+            "errors": errors,
+            "raw_dir": _rel(folder),
+        }
+    )
     stored = paper.append(records, path=log, timestamper=timestamper)
-    return {"stamp": stamp, "records": len(stored), "alerts_new": sum(c["new"] for c in counts.values()),
-            "counts": counts, "errors": errors, "head": stored[-1]["record_hash"]}
+    return {
+        "stamp": stamp,
+        "records": len(stored),
+        "alerts_new": sum(c["new"] for c in counts.values()),
+        "counts": counts,
+        "errors": errors,
+        "head": stored[-1]["record_hash"],
+    }
 
 
 def verify(log: Path = LOG) -> list[str]:

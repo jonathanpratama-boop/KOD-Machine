@@ -18,13 +18,20 @@ def proto_for(snapshot: Path) -> dict:
 
 class IntlTests(unittest.TestCase):
     def test_universe_maps_symbols_and_skips_others(self):
-        rows = [{"InstrumentTypeID": 5, "ExchangeID": 21, "SymbolFull": "00001.HK"},
-                {"InstrumentTypeID": 5, "ExchangeID": 21, "SymbolFull": "1810.HK"},
-                {"InstrumentTypeID": 5, "ExchangeID": 31, "SymbolFull": "BHP.ASX"},
-                {"InstrumentTypeID": 5, "ExchangeID": 11, "SymbolFull": "BMPS-old"},
-                {"InstrumentTypeID": 5, "ExchangeID": 7, "SymbolFull": "VOD.L", "IsInternalInstrument": True},
-                {"InstrumentTypeID": 1, "ExchangeID": 6, "SymbolFull": "EURUSD"},
-                {"InstrumentTypeID": 5, "ExchangeID": 6, "SymbolFull": "SAP.DE"}]
+        rows = [
+            {"InstrumentTypeID": 5, "ExchangeID": 21, "SymbolFull": "00001.HK"},
+            {"InstrumentTypeID": 5, "ExchangeID": 21, "SymbolFull": "1810.HK"},
+            {"InstrumentTypeID": 5, "ExchangeID": 31, "SymbolFull": "BHP.ASX"},
+            {"InstrumentTypeID": 5, "ExchangeID": 11, "SymbolFull": "BMPS-old"},
+            {
+                "InstrumentTypeID": 5,
+                "ExchangeID": 7,
+                "SymbolFull": "VOD.L",
+                "IsInternalInstrument": True,
+            },
+            {"InstrumentTypeID": 1, "ExchangeID": 6, "SymbolFull": "EURUSD"},
+            {"InstrumentTypeID": 5, "ExchangeID": 6, "SymbolFull": "SAP.DE"},
+        ]
         with tempfile.TemporaryDirectory() as d:
             snap = Path(d) / "i.json"
             snap.write_text(json.dumps({"InstrumentDisplayDatas": rows}))

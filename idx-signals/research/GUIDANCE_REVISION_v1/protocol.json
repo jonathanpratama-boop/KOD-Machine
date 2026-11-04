@@ -1,0 +1,68 @@
+{
+  "protocol_id": "GUIDANCE-REVISION-v1",
+  "mode": "SHADOW_PAPER_ONLY",
+  "base_commit": "8bfd2385791f01a367769eae991102a86fbc35ba",
+  "universe": [
+    {
+      "ticker": "AAL",
+      "cik": 6201,
+      "instrument_id": 1451,
+      "issuer_name": "American Airlines Group"
+    },
+    {
+      "ticker": "MATX",
+      "cik": 3453,
+      "instrument_id": 8996,
+      "issuer_name": "Matson"
+    },
+    {
+      "ticker": "ACU",
+      "cik": 2098,
+      "instrument_id": 1047887,
+      "issuer_name": "Acme United"
+    },
+    {
+      "ticker": "ABT",
+      "cik": 1800,
+      "instrument_id": null,
+      "issuer_name": "Abbott Laboratories"
+    },
+    {
+      "ticker": "AEP",
+      "cik": 4904,
+      "instrument_id": 1595,
+      "issuer_name": "American Electric Power"
+    },
+    {
+      "ticker": "AXP",
+      "cik": 4962,
+      "instrument_id": 1009,
+      "issuer_name": "American Express"
+    },
+    {
+      "ticker": "AMD",
+      "cik": 2488,
+      "instrument_id": 1832,
+      "issuer_name": "Advanced Micro Devices"
+    }
+  ],
+  "bootstrap_days": 7,
+  "prior_days": 400,
+  "prior_package_cap": 8,
+  "hold_sessions": 20,
+  "processing_delay_minutes": 15,
+  "entry_time_et": "09:45",
+  "max_source_to_entry_sessions": 2,
+  "quote_max_age_seconds": 60,
+  "max_spread_fraction": 0.005,
+  "stop_fraction": 0.05,
+  "capital_usd": 10000,
+  "max_notional_fraction": 0.1,
+  "risk_fraction": 0.005,
+  "max_positions": 1,
+  "commission_per_side_usd": 2,
+  "slippage_per_side_fraction": 0.001,
+  "extra_stress_per_side_fraction": 0.0025,
+  "max_draft_documents_per_run": 80,
+  "real_orders_allowed": false
+}

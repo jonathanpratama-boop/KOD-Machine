@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Archive search · KOD{% endblock %}
+{% block content %}
+<div class="breadcrumbs"><a href="/">Event inbox</a><span>/</span>Archive search</div>
+<div class="page-heading"><div><div class="eyebrow">ARCHIVE SEARCH</div><h1>Search preserved sources<span class="title-dot">.</span></h1><p>Only passages from sources eligible at the cutoff are searched, ranked and quoted.</p></div></div>
+<form class="filter-bar panel" method="get" action="/search" role="search">
+<label class="search-label">Words <input name="q" value="{{ q }}" maxlength="200" placeholder="e.g. data center revenue" required></label>
+<label>Company <select name="company"><option value="">All companies</option>{% for s in securities %}<option value="{{ s.id }}" {% if s.id == selected %}selected{% endif %}>{{ s.ticker }}</option>{% endfor %}</select></label>
+<label>Reported period <input name="period" value="{{ period }}" maxlength="60" placeholder="e.g. Q3 FY25"></label>
+<label>Source <select name="source"><option value="">All text sources</option>{% for key, label in source_types|dictsort %}<option value="{{ key }}" {% if key == source %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+<label class="date-label">Cutoff <input name="as_of" value="{{ policy.as_dict().cutoff }}" maxlength="40"></label>
+<label>Mode <select name="mode"><option value="observed" {% if policy.mode == 'observed' %}selected{% endif %}>Observed</option><option value="public" {% if policy.mode == 'public' %}selected{% endif %}>Public reconstruction</option></select></label>
+<label>Availability <select name="policy"><option value="day-end" {% if policy_name == 'day-end' %}selected{% endif %}>Day end</option><option value="strict" {% if policy_name == 'strict' %}selected{% endif %}>Exact times</option></select></label>
+<button class="button" type="submit">Search</button></form>
+{% if result %}
+<section class="panel"><div class="panel-heading"><div><h2>{{ result.coverage.matches }} matching passage{{ '' if result.coverage.matches == 1 else 's' }}</h2>
+<p>{{ result.coverage.documents_searched }} sources searched · {{ result.coverage.distinct_passages }} distinct passages{% for reason, n in result.coverage.excluded|dictsort %} · {{ n }} {{ reason|replace('_', ' ') }}{% endfor %}</p></div><span class="badge neutral">{{ result.index_version }}</span></div>
+{% if result.results %}<ol class="search-results">{% for r in result.results %}<li>
+<p class="snippet">{% for s in r.snippet %}{% if s.match %}<mark>{{ s.text }}</mark>{% else %}{{ s.text }}{% endif %}{% endfor %}</p>
+<p class="source-line"><b>{{ r.ticker }}</b> · {{ r.filename }}{% if r.period %} · {{ r.period }}{% endif %} · available {{ r.published_at|moment if r.published_at else (r.publication_date ~ ' (date only)' if r.publication_date else 'unknown') }} · observed {{ r.observed_at|moment }} · score {{ '%.2f'|format(r.score) }}{% if r.also_in %} · also in {{ r.also_in|length }} other source{{ '' if r.also_in|length == 1 else 's' }}{% endif %}</p>
+<p class="document-links"><a href="/source/{{ r.document_id }}/passage/{{ r.passage_index }}?{{ query }}">Passage in context →</a><a href="/source/{{ r.document_id }}" target="_blank" rel="noopener">Saved source ↗</a>{% if safe_url(r.source_url) and 'example.invalid' not in r.source_url %}<a href="{{ safe_url(r.source_url) }}" target="_blank" rel="noopener noreferrer">Original URL ↗</a>{% endif %}</p></li>{% endfor %}</ol>
+{% else %}<div class="empty-state compact"><h3>No eligible passage matches</h3><p>Sources after the cutoff are not searched. Try other words, another company or a later cutoff.</p></div>{% endif %}
+<p class="panel-footnote">{{ result.ranking }}. Only sources eligible at the cutoff are searched or counted; JSON API responses and filing headers are not text passages.</p></section>
+{% else %}<div class="empty-state"><h3>Search the preserved archive</h3><p>Releases and exhibits you preserved are split into passages and ranked with the workbench's BM25. JSON API responses and filing headers are evidence but not text passages.</p></div>{% endif %}
+{% endblock %}

@@ -1,0 +1,73 @@
+{
+ "study_id": "ADMISSION_HOLDOUT_v1",
+ "frozen_at": "2026-10-31T18:39:28Z",
+ "authorisation": "owner, 2026-10-31: 'I give you permission' to read 2024-01-01..2026-10-29 daily crypto bars for one frozen test of the fresh 10-15% admission rule",
+ "frozen_before": "any 2024+ bar was collected for this study",
+ "previously_read_2024_plus": [
+  "CRYPTO_TUNE_v1: daily bars around +30% spike days, 2024-01..2026-10 (owner-authorised)",
+  "BINANCE_ANN_1S_HOLDOUT: seconds-level windows around futures-launch announcements, 2024+",
+  "no pre-move ranking or account study has read 2024+; the bars are not pristine, the question is"
+ ],
+ "window": {
+  "decisions": "2024-01-01..2026-10-29",
+  "warm_up_bars": "2023-07-01..2023-12-31 (features only)",
+  "not_read": "2026-10-30 onward (PREMOVE_SHADOW_v1 prospective trial)"
+ },
+ "rule_under_test": "ADMISSION_v1 challenger, unchanged: same daily early top five, fresh (not in yesterday's original top five), 0.10 <= p < 0.15, no refill, original order",
+ "baseline": "ADMISSION_v1 baseline, unchanged: the daily early top five in score order",
+ "scoring": "frozen PREMOVE_SEQUENCE_v1 summary and sequence coefficients and temperatures on the collected panel (premove_core.build_examples, eligibility unchanged); top five per day by probability desc, ticker asc; the 2023-12-31 list supplies freshness for 2024-01-01 and is not traded",
+ "engine": "idxsig/crypto_replay.py unchanged (audited), including its risk convention: at most three pending or open positions at 0.5% planned risk each",
+ "cases": {
+  "BASE": {
+   "start_cash": 10000.0,
+   "risk": 0.005,
+   "max_risk": 0.015,
+   "max_new_per_day": 3,
+   "stop": 0.05,
+   "target": 0.1,
+   "hold_bars": 5,
+   "fee": 0.001,
+   "slip": 0.001,
+   "entry_delay": 0,
+   "loss_fraction": 0.05284620379620375
+  },
+  "DOUBLE_COSTS": {
+   "start_cash": 10000.0,
+   "risk": 0.005,
+   "max_risk": 0.015,
+   "max_new_per_day": 3,
+   "stop": 0.05,
+   "target": 0.1,
+   "hold_bars": 5,
+   "fee": 0.002,
+   "slip": 0.002,
+   "entry_delay": 0,
+   "loss_fraction": 0.05568483033932148
+  }
+ },
+ "verdict": {
+  "per_case": "IMPROVES if challenger ending equity > baseline and its max drawdown is not deeper; WORSE if ending equity < baseline; MIXED otherwise (ADMISSION_v1's rule)",
+  "overall": "CONFIRMED only if IMPROVES in both models and both cost cases; otherwise NOT CONFIRMED",
+  "also_reported": "paired circular block bootstrap of daily return differences, monthly and yearly returns, concentration, exposure and return per unit of exposure; baseline and challenger vs cash"
+ },
+ "honesty": [
+  "the universe is today's archive catalogue (survivorship flatters buying)",
+  "daily bars and modelled costs; touched prices are not guaranteed fills",
+  "one test: no reruns, no variants, whatever the result"
+ ],
+ "pins": {
+  "idxsig/crypto_replay.py": "aa04635e569a251cbec79eed68f17a51fc2bacb9cbe52f35e4568d54b807264a",
+  "idxsig/premove.py": "53d161019b9df1c79ef9a738120c4930c56c4cdfcccb284fe0392ae08aebff8c",
+  "idxsig/premove_core.py": "c76686dc5272ef920698fd5f0a85277c1501ed863260b547bcb78e91b16d8c62",
+  "idxsig/premove_shadow.py": "3bed4b67225fa50dcbf71e6e56113c333ad201385e9ca1cf9a69bcc32ebc59ad",
+  "research/ADMISSION_v1/admission.py": "396cef9341685dcceca582b5c4362af63c9df38b9bf1fa773ebd35a013d41394",
+  "research/ADMISSION_v1/protocol.json": "0a624aa2c342d35fc13c1c9eb114473c6f3965565edcb0b991b77e12514f8a03",
+  "research/ADMISSION_HOLDOUT_v1/holdout.py": "41459bc31f733314049ca536065114d4e2e332027e4e5b01ece9ef5148327dcc",
+  "research/ADMISSION_HOLDOUT_v1/collect.py": "50e69b7b1b85f3c3c09b6fc3c51cc2ef70ad614924a69b7a7c3d3e6c1b7a838d",
+  "tools/collect_premove_crypto.py": "c66f6e03edef063fc6e76a0a8adfea3f1a9f7d84e5ca81202087080d0be1fcd0",
+  "tests/test_admission_holdout.py": "6742e1678b8d1865b991f9590ae7e83c746e2f98bbef8faf8a30329910b106ed",
+  "research/PREMOVE_SEQUENCE_v1/runs/20261030T024900Z/models.json": "e6dff0b91e5328b14c9440ef41c1b13f8d5549b6f34c582f643853c94a9844c5",
+  "research/PREMOVE_SEQUENCE_v1/runs/20261030T024900Z/summary.json": "7bf727510581d095a259bc99dc0f66e50e798876bdf41e4fa48cd04c1c0c8261",
+  "research/PREMOVE_SHADOW_v1/protocol.json": "3dcc3a4987e6b047da72bc84632d59e52f9456b8f1a0b34f8f0b424a8bbc643c"
+ }
+}

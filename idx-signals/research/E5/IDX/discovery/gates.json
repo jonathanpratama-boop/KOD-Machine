@@ -1,0 +1,43 @@
+{
+  "a1": {
+    "lift_ci95_excludes_1": false,
+    "passed": false,
+    "reasons": [
+      "lift vs matched 1.009721700671757 below 2.0",
+      "p vs matched 0.46766169154228854 not below 0.05"
+    ]
+  },
+  "freeze": "no admissible arm on IDX: nothing to validate; the ranker may still be frozen for the prospective sidecar (e5-freeze sets no SELECTED entry)",
+  "market": "IDX",
+  "selected_arm": null,
+  "stage1": {
+    "A": {
+      "judged": true,
+      "passed": false,
+      "reasons": [
+        "cluster-bootstrap p 0.06469353064693531 not below 0.025"
+      ]
+    },
+    "B": {
+      "judged": true,
+      "passed": true,
+      "reasons": []
+    }
+  },
+  "stage2": {
+    "B": {
+      "admissible": false,
+      "judged": true,
+      "reasons": [
+        "scored 9 < 200",
+        "average net return not positive",
+        "p vs matched random 0.47761194029850745 not below 0.05",
+        "paired net excess -0.0005952956468479771 not positive",
+        "paired net p 0.551944805519448 not below 0.025",
+        "exit-capacity subset: scored 2 < 200",
+        "exit-capacity subset: average net return not positive",
+        "exit-capacity subset: paired net p 0.7579242075792421 not below 0.025"
+      ]
+    }
+  }
+}

@@ -1,0 +1,116 @@
+{
+ "study_id": "CRYPTO_REPLAY_v1",
+ "frozen_at": "2026-10-31T15:07:37Z",
+ "status": "a separate hypothetical test of the frozen PREMOVE_SEQUENCE_v1 rankings: every day's frozen top-five early-population shortlist is offered to the account in rank order and the account limits decide which names enter. It is not a replay of the live crypto paper policy (which decides PASS) and grants no permission to activate buys. Retrospective development evidence on 2023, a year KOD has studied before; NOT untouched validation. Simulation only: no orders. 2024 data is never opened, not even to finish year-end trades: positions open at the end of 2023-12-31 stay unresolved, valued at their last 2023 close.",
+ "question": "Under one fixed account and execution policy, does trading the frozen sequence model's daily shortlist end 2023 with more simulated equity than the frozen summary model's, the shuffled control's and cash, after modelled costs and under conservative assumptions?",
+ "rankings": {
+  "source": "PREMOVE_SEQUENCE_v1 run 20261030T024900Z; its forecasts.csv.gz and shortlists.csv.gz are not in the repository (owner's external archive KOD-premove-results-20261030.tar.gz), so they were rebuilt with the frozen coefficients and temperatures, no fitting, and verified against summary.json: both models' probability metrics to 1e-12 and every shortlist count, both populations (rankings/VERIFY.json)",
+  "arms": {
+   "summary": "frozen summary-feature model (models.json)",
+   "sequence": "frozen sequence-enhanced model (models.json)",
+   "shuffled": "frozen shuffled-sequence control (PREMOVE_SHADOW_v1/control_model.json, fitted on 2020-2022 only; not part of the PR #19 run artifacts, included as the control)",
+   "cash": "no trades"
+  },
+  "population": "early (ret1 < 10% and ret5 < 20% on the signal day: the pre-move question's population, primary in PREMOVE_SHADOW_v1; PR #19 reported it beside 'all'); five names per day, frozen rank order (upside probability descending, ticker ascending); the account limits decide which enter",
+  "timing": "a ranking dated d uses bars through the close of UTC day d (premove_core.build_examples); orders are decided after that close"
+ },
+ "policy": {
+  "BASE": {
+   "start_cash": 10000.0,
+   "risk": 0.005,
+   "max_risk": 0.015,
+   "max_new_per_day": 3,
+   "stop": 0.05,
+   "target": 0.1,
+   "hold_bars": 5,
+   "fee": 0.001,
+   "slip": 0.001,
+   "entry_delay": 0,
+   "loss_fraction": 0.05284620379620375
+  },
+  "ENTRY_DELAY_1": {
+   "start_cash": 10000.0,
+   "risk": 0.005,
+   "max_risk": 0.015,
+   "max_new_per_day": 3,
+   "stop": 0.05,
+   "target": 0.1,
+   "hold_bars": 5,
+   "fee": 0.001,
+   "slip": 0.001,
+   "entry_delay": 1,
+   "loss_fraction": 0.05284620379620375
+  },
+  "DOUBLE_COSTS": {
+   "start_cash": 10000.0,
+   "risk": 0.005,
+   "max_risk": 0.015,
+   "max_new_per_day": 3,
+   "stop": 0.05,
+   "target": 0.1,
+   "hold_bars": 5,
+   "fee": 0.002,
+   "slip": 0.002,
+   "entry_delay": 0,
+   "loss_fraction": 0.05568483033932148
+  },
+  "DELAY_AND_DOUBLE": {
+   "start_cash": 10000.0,
+   "risk": 0.005,
+   "max_risk": 0.015,
+   "max_new_per_day": 3,
+   "stop": 0.05,
+   "target": 0.1,
+   "hold_bars": 5,
+   "fee": 0.002,
+   "slip": 0.002,
+   "entry_delay": 1,
+   "loss_fraction": 0.05568483033932148
+  }
+ },
+ "policy_text": [
+  "spot, long only, no leverage, no shorts; 10,000 simulated USDT per arm and scenario",
+  "order = market buy at the entry day's open for a USDT notional reserved at the decision, sized so the loss if the stop fills at its level is 0.5% of equity at the decision",
+  "aggregate planned risk <= 1.5%: the sum of the planned risk fractions (0.5% of equity at each order's own decision) of pending orders and open positions, i.e. at most three at once",
+  "at most 3 new orders per decision day; no second concurrent order or position in one coin; free cash must cover the notional; candidates in frozen rank order",
+  "entry fill = open x (1 + slippage); stop 5% below and target 10% above that fill",
+  "exits bar by bar, entry bar = bar 1: gap open <= stop exits at the open; gap open >= target exits at the target; a bar touching both is resolved stop-first and counted; else the touched level; else the close of bar 5; every exit pays slippage and fee",
+  "missing or invalid bars: an entry without its bar is rejected; a held position waits; a time exit rolls to the next valid close; positions open when the data ends are unresolved, valued at their last valid close; orders whose entry day is after the data are unfilled",
+  "no averaging down, stop widening, overrides or parameter search"
+ ],
+ "scenarios": {
+  "BASE": "next UTC open, 0.1% fee + 0.1% slippage per side (primary, idealized)",
+  "ENTRY_DELAY_1": "one additional bar before entry (predeclared sensitivity)",
+  "DOUBLE_COSTS": "0.2% fee + 0.2% slippage per side",
+  "DELAY_AND_DOUBLE": "both"
+ },
+ "primary": "BASE",
+ "comparison": {
+  "headline": "end equity and net return of sequence versus summary under the same scenario; then versus the shuffled control and cash",
+  "uncertainty": "paired circular moving-block bootstrap of daily equity-return differences ({'block_days': 10, 'draws': 2000, 'seed': 20261031}); descriptive",
+  "no_selection": "all four scenarios are reported; none is chosen after seeing results"
+ },
+ "predictive_vs_executable": "ranking quality (published shortlist hit counts) is reported beside account results and never substituted for them",
+ "honesty": [
+  "daily bars cannot show intraday order, queue position or depth: a touched price is not a guaranteed fill; stop-first ambiguity is conservative but not exact",
+  "the universe is today's archive catalogue: delisted coins are missing (survivorship flatters buying)",
+  "costs are assumptions, not measured fills",
+  "one year, few trades: no statistical certainty"
+ ],
+ "inputs": {
+  "panel_sha256": "f1dfd57d26a7a98781bd5fcbf18db3203778d24c51c46b4d4f92963dc9b75766"
+ },
+ "pins": {
+  "idxsig/crypto_replay.py": "aa04635e569a251cbec79eed68f17a51fc2bacb9cbe52f35e4568d54b807264a",
+  "research/CRYPTO_REPLAY_v1/replay.py": "26ac50782fdf64c5a2d147b22574c2c66baea26fb90d90241b405be6680ebcc5",
+  "research/CRYPTO_REPLAY_v1/rankings.py": "2625c7adb44d456f7793e0b5f492d8914ff97d61d95b1f525d79dc4c5afbdca6",
+  "research/CRYPTO_REPLAY_v1/report.py": "56e997bf89a723fa138de9d240baf9d8f1a121a78b8fe5b4540c2cfa51a773c3",
+  "tests/test_crypto_replay.py": "e969b9f907256afcd6c1a1fd35dbac4a496ca83f67a89d73db89693154d56184",
+  "research/CRYPTO_REPLAY_v1/rankings/shortlists_2023.csv.gz": "a6a5bd99252e569578f1442f1c163a65f3f435f189292af8c6335ec4ad74fe79",
+  "research/CRYPTO_REPLAY_v1/rankings/VERIFY.json": "a9f89dd7d2268927cd03158cfe2c49ae91abb9a031e4beb7b54deade54a1a11e",
+  "research/PREMOVE_SEQUENCE_v1/runs/20261030T024900Z/models.json": "e6dff0b91e5328b14c9440ef41c1b13f8d5549b6f34c582f643853c94a9844c5",
+  "research/PREMOVE_SEQUENCE_v1/runs/20261030T024900Z/summary.json": "7bf727510581d095a259bc99dc0f66e50e798876bdf41e4fa48cd04c1c0c8261",
+  "research/PREMOVE_SHADOW_v1/control_model.json": "394b67ef64c18eeb42cc0ff0e1c8df154fdbc9ba3dbff87ac9a2a18441d2a26b",
+  "idxsig/paper_account.py": "2d7cbc536695d0298b3bfa508824bd5e68ea8c6566800e59a0681666dbb00bfd"
+ }
+}

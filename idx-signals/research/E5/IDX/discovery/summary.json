@@ -1,0 +1,137 @@
+{
+  "a1_gate": {
+    "lift_ci95_excludes_1": false,
+    "passed": false,
+    "reasons": [
+      "lift vs matched 1.009721700671757 below 2.0",
+      "p vs matched 0.46766169154228854 not below 0.05"
+    ]
+  },
+  "claims": "Historical research on assumed costs, daily-bar fills and a survivor-only US universe; 6 fits and 2 primaries were pre-registered and nothing else was searched; nothing here is prospective performance, no probability or trade is asserted, nothing grants entry permission, and no real orders exist.",
+  "code": {
+    "commit": "06c2dda133d34c610834a9320449036bde9d6f1b",
+    "dirty": false
+  },
+  "computed_at": "2026-10-14T15:57:42+00:00",
+  "constant_columns": [],
+  "detector_module_sha256": "530b3509392eba442ad6c7d4a565a06836dd45ca4608ed01bcf510297cdf43aa",
+  "evaluable_ticker_days": 323304,
+  "files": [
+    "model.json",
+    "thresholds.json",
+    "stage1.json",
+    "flags.csv",
+    "univariate.csv",
+    "plans.csv",
+    "gates.json",
+    "runs/<RunConfig market>/<arm>_<run>.json"
+  ],
+  "fits": {
+    "D": {
+      "converged": true,
+      "deviance": 46014.505324286656,
+      "lambda": 37.796,
+      "n_negatives_sampled": 31723,
+      "n_positives": 6073,
+      "n_rows_used": 37796
+    },
+    "U": {
+      "converged": true,
+      "deviance": 53898.75166723902,
+      "lambda": 37.795,
+      "n_negatives_sampled": 31723,
+      "n_positives": 6072,
+      "n_rows_used": 37795
+    }
+  },
+  "freeze": "no admissible arm on IDX: nothing to validate; the ranker may still be frozen for the prospective sidecar (e5-freeze sets no SELECTED entry)",
+  "frozen_before_analysis": true,
+  "holdout": "sealed: never loaded; every window end is checked against the validation end before a Study or RunConfig exists, and the harness refuses it again",
+  "market": "IDX",
+  "panel_format": "panel-v2",
+  "panel_manifest": "panel-20261007T225823Z.json",
+  "panel_sha256": "9d3a0718c95f9e885c4f8310cf68bf5e75021c366c454f73389d7fae75c02877",
+  "precondition": {
+    "accepted_deviation": false,
+    "status": "REPRODUCED"
+  },
+  "primaries": {
+    "P1": [
+      "IDX",
+      "A"
+    ],
+    "P2": [
+      "CRYPTO",
+      "B"
+    ]
+  },
+  "protocol_id": "KOD-GLOBAL-E5-v1",
+  "protocol_sha256": "53b2ec815a0cc0922298d77968842140db7445afd3de2a08837aefdbfec413ad",
+  "registry_sha256": "659da375e4586deab958e22dc242d7be6966ebc226bfefe8ce7ce85eb51f1e6c",
+  "runtime": {
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "python": "3.13.16"
+  },
+  "search_size": "6 fits, 2 arms x 3 markets, 2 primaries, no threshold/lambda/feature search; stated in every output",
+  "selected_arm": null,
+  "stage": "discovery",
+  "stage1_gates": {
+    "A": {
+      "judged": true,
+      "passed": false,
+      "reasons": [
+        "cluster-bootstrap p 0.06469353064693531 not below 0.025"
+      ]
+    },
+    "B": {
+      "judged": true,
+      "passed": true,
+      "reasons": []
+    }
+  },
+  "stage2_admissibility": {
+    "B": {
+      "admissible": false,
+      "judged": true,
+      "reasons": [
+        "scored 9 < 200",
+        "average net return not positive",
+        "p vs matched random 0.47761194029850745 not below 0.05",
+        "paired net excess -0.0005952956468479771 not positive",
+        "paired net p 0.551944805519448 not below 0.025",
+        "exit-capacity subset: scored 2 < 200",
+        "exit-capacity subset: average net return not positive",
+        "exit-capacity subset: paired net p 0.7579242075792421 not below 0.025"
+      ]
+    }
+  },
+  "stage2_runs": 4,
+  "study_options": {
+    "panel_format": "panel-v2",
+    "pool_keys": [
+      "price_band",
+      "liquidity",
+      "volatility",
+      "market_cap"
+    ],
+    "pool_units": "panel",
+    "pool_version": "v3"
+  },
+  "thresholds": {
+    "A": -1.6961101638741447,
+    "B": 2.2563144741849994
+  },
+  "window": {
+    "end": "2022-12-30",
+    "first_period_session": "2021-01-22",
+    "last_period_session": "2022-12-30",
+    "lead_in_sessions": 65,
+    "lead_in_short": false,
+    "period": "discovery",
+    "period_end": "2022-12-30",
+    "period_start": "2021-01-22",
+    "start": "2020-10-13",
+    "warmup_sessions": 65
+  }
+}

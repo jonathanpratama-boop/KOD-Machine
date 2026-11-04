@@ -1,0 +1,175 @@
+{
+ "protocol_id": "KOD-CATALYST-REGISTER-v1",
+ "version": "1.0",
+ "frozen": "2026-10-28",
+ "ledger": "paper/catalysts.jsonl",
+ "owner_decision": "2026-10-28, the owner on the four calls of handoff/precatalyst-program/PROGRAM_v1.md section 7: 'okay yeah just do all four i guess' (handoff/decisions/2026-10-28b_precatalyst_four_calls.md)",
+ "purpose": "seal, before the entry, a cone of dated statements, a frozen yardstick plan and five matched twins for every event of a catalyst family whose direction is set by its mechanism; grade them when the future arrives; for the counted family, test once per look whether the plan beats its twins on the sets the pre-registered abstention rule lets fire",
+ "families": {
+  "SEC13D": {
+   "counted": true,
+   "market": "US",
+   "event": "an original Schedule 13D (EDGAR form type exactly 'SCHEDULE 13D'; not 'SCHEDULE 13D/A', not 13G) naming a subject company",
+   "source": "EDGAR current-filings Atom feed, https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&type=SCHEDULE%2013D&company=&dateb=&owner=include&start=<k>&count=100&output=atom, entries with category 'SCHEDULE 13D' and role '(Subject)'; the entry's <updated> value is the acceptance time (New York time with its UTC offset)",
+   "window_start": "2026-10-28T00:00:00-04:00",
+   "batches": "every batch is recorded, also one with no new filing: it reads the feed (up to 5 pages, newest first, stopping at a page older than window_start or than the previous batch's newest entry) and lists every original accepted at or after window_start and not listed by an earlier batch, with a status: SEALED or a SKIP reason. A batch whose oldest feed entry is newer than the previous batch's newest entry records a coverage gap; missed filings are never backfilled",
+   "issuer": {
+    "ticker": "the subject CIK's tickers in https://www.sec.gov/files/company_tickers_exchange.json (fetched by the batch, sha256 recorded), the first of them (SEC order) that is fresh and eligible in the features file of the US paper scan of the signal session; none -> SKIP_NOT_IN_UNIVERSE (no ticker at all -> SKIP_NO_TICKER)",
+    "repeat": "another original Schedule 13D on the same subject filed in the 90 calendar days before this one (subject's submissions JSON, https://data.sec.gov/submissions/CIK##########.json) -> SKIP_REPEAT_90D",
+    "operating": "the subject's submissions show a 10-K, 10-Q, 20-F or 40-F (or /A) filed in the 550 days up to the sealing date and no investment-company report (N-CSR, N-CSRS, NPORT-P, N-CEN, or /A) in those days; otherwise -> SKIP_NOT_OPERATING (funds, shells without reports)"
+   },
+   "timing": {
+    "entry_session": "the first New York Stock Exchange session whose 09:15 New York time is after the sealing time; sessions are weekdays except the NYSE holidays of 2026-2027 as exchange_calendars 4.5.6 (XNYS) lists them, copied into idxsig.catalysts.NYSE_HOLIDAYS (a date outside 2026-2027 stops the register: a v2 extends the list)",
+    "signal_session": "the NYSE session before the entry session; the US paper scan of that session must exist (its features file gives the signal close, the twins and the universe)",
+    "entry_cutoff": "09:15 New York time of the entry session; a set sealed later is refused",
+    "late": "accepted at or before 16:00 New York time of the NYSE session before the signal session -> SKIP_LATE (the register missed its window)"
+   },
+   "plan": {
+    "window": "H20",
+    "kind": "plan",
+    "entry": "the entry session's opening print",
+    "entry_window": 1,
+    "holding_sessions": 20,
+    "exit": "the close of the 20th session after entry (rolls while not sellable, as speculation.simulate)",
+    "costs": "the US profile's fees and per-side cost tiers (EXEC-US-v1), as the Speculation Register",
+    "stop": "none",
+    "role": "a yardstick, not a strategy"
+   },
+   "abstention": {
+    "class": "FIRE unless any rule below holds, then ABSTAIN (all rules evaluated and recorded; inputs sealed with the set)",
+    "rules": {
+     "DILUTION_RECENT": "the subject's submissions list a filing that idxsig.catalyst.is_dilution counts (424B1-8, S-1, S-3, F-1, F-3 and their /A, MEF, ASR forms, EFFECT, or an 8-K or 8-K/A with Item 3.02) with filingDate from the 19th weekday before the signal session through the sealing date",
+     "MOVED_ALREADY": "the signal close is at least 1.15 x the close of the last session ending before acceptance (accepted after the signal session's 16:00 close: ratio 1)",
+     "MICROCAP": "market value below USD 50 million: the latest dei:EntityCommonStockSharesOutstanding fact (data.sec.gov companyconcept; latest 'end', then latest 'filed', filed on or before the sealing date) times the signal close; no fact -> MV_UNKNOWN, which also abstains"
+    }
+   },
+   "twins": {
+    "draw": "speculation.draw_twins on the signal session's US features (band, liquidity quintile, momentum tercile, drawdown tercile; fresh, eligible, not flagged by the scan's selected detector), excluding every ticker of the batch's events and the scan's candidates; the full matched pool is permuted with seed int(sha256('KOD-CATALYST-REGISTER-v1:' + set_id)[:8], 16)",
+    "event_free": "taken in permutation order, a name is a twin if its CIK (company_tickers_exchange) is an operating issuer by the 'issuer.operating' rule and has no original Schedule 13D on it in the 90 days before sealing; at most 15 names are checked; the first 5 that pass are the twins (fewer are recorded as they are)"
+   },
+   "cone": [
+    {
+     "id": "GAIN0_20",
+     "statement": "the plan's net return after costs is above zero",
+     "prior": 0.55,
+     "prior_source": "literature, weak and declared: Brav, Jiang, Partnoy & Thomas (2008) report positive mean abnormal returns around 13D filings with post-filing drift; no share of positive outcomes is reported there, and 0.55 is this protocol's own choice",
+     "resolves_with": "H20"
+    },
+    {
+     "id": "BEATS_TWINS_20",
+     "statement": "the plan's net return is above the twins' median net return",
+     "prior": 0.5,
+     "prior_source": "the null",
+     "resolves_with": "H20"
+    },
+    {
+     "id": "FADE10_20",
+     "statement": "the plan's net return is at or below -10%",
+     "prior": "running",
+     "resolves_with": "H20"
+    },
+    {
+     "id": "RUN30_20",
+     "statement": "a close in the 20 sessions after the signal session is at least 1.30 x the signal close",
+     "prior": "running",
+     "resolves_with": "H20"
+    }
+   ],
+   "tags": {
+    "item4": "descriptive only: the length of Item 4 (transactionPurpose) of the filing's primary_doc.xml and the intent words it contains (board, merger, acquisition, strategic alternatives, sale of the, proxy, nominate, director, change of control, going private, take private, letter); never a rule"
+   },
+   "decision_rule": {
+    "question": "on FIRE sets, does the plan's net return exceed the mean of its twins' net returns prospectively?",
+    "unit": "signal session (the paired differences of one session averaged first)",
+    "test": "one-sided t on per-session mean paired differences, df = sessions - 1",
+    "looks": [
+     60,
+     120,
+     240
+    ],
+    "min_sessions": 15,
+    "boundaries": {
+     "method": "Lan-DeMets O'Brien-Fleming-type spending, alpha(f) = 2 - 2 Phi(1.959964 / sqrt(f)), at information fractions 0.25, 0.5, 1.0, with the project's t >= 3.0 as a floor",
+     "t_min": [
+      3.75,
+      3.0,
+      3.0
+     ],
+     "note": "the spending boundaries are 3.750, 2.538 and 1.645; the floor binds at the second and third looks"
+    },
+    "eligible": "at a look: t >= that look's t_min, one-sided p < 0.05, and the plan's mean net return after costs on FIRE sets > 0",
+    "confirmed": "eligible at a look and at the next look",
+    "fail": "not eligible at the 240 look",
+    "counted": "each look adds research/QUANT_GRADE/trials/CATALYST_REGISTER_v1_SEC13D_FIRE_n<look>.json (counted); the first is the project's test 31",
+    "abstain_sets": "scored and reported beside FIRE sets with the same statistics, descriptive: they grade the abstention rule itself"
+   }
+  },
+  "IDX_INDEX": {
+   "counted": false,
+   "market": "IDX",
+   "event": "a scheduled change of an IDX index's constituents (IDX30, LQ45, IDX80) announced by the exchange with an effective date",
+   "source": "an events file research/CATALYST_REGISTER_v1/events/IDX_INDEX_<effective date>.json, written before the first set of that review is sealed, listing every change found with its sources (idx.co.id answers HTTP 403 to this container, so the sources are news articles or the owner's own copy of the announcement) and a confidence: CONFIRMED (two independent sources, or one source whose list is forced by the index's fixed size) or SINGLE_SOURCE; its sha256 is sealed in every set",
+   "direction": "+1 for a name only added, -1 for a name only removed; a name both added to one index and removed from another is not sealed",
+   "timing": {
+    "signal_session": "the IDX session of the latest IDX paper scan before sealing",
+    "entry_cutoff": "01:45 UTC of the session after the signal session (as the Speculation Register's IDX cutoff)",
+    "effective": "the review's effective date; its last session before is the passive funds' rebalancing close"
+   },
+   "windows": {
+    "RUNUP": {
+     "kind": "plan",
+     "entry": "the closing auction of the session after the signal session",
+     "exit": "the close of the last session before the effective date",
+     "entry_window": 1,
+     "holding_sessions": "sessions from the entry to the last session before the effective date (weekdays)"
+    },
+    "POST20": {
+     "kind": "plan",
+     "entry": "the close of the last session before the effective date",
+     "entry_window": "sessions from the signal session to that close",
+     "holding_sessions": 20
+    }
+   },
+   "costs": "the IDX paper policy's fees, ARA/ARB locks and closing-auction entry, as the Speculation Register's IDX plan",
+   "twins": "speculation.draw_twins on the signal session's IDX features (as the Speculation Register, names under Rp 50 excluded), excluding every name of the events file; seed as SEC13D; no event-free check (no free IDX filing feed)",
+   "cone": [
+    {
+     "id": "WITH_FLOW_RUNUP",
+     "statement": "in RUNUP, (plan net - twins' mean net) has the sign of the change (+ added, - removed)",
+     "prior": 0.5,
+     "prior_source": "the null; the index effect (Shleifer 1986; Harris & Gurel 1986) is documented in other markets and decades, no IDX base rate is on record",
+     "resolves_with": "RUNUP"
+    },
+    {
+     "id": "REVERSAL_POST20",
+     "statement": "in POST20, (plan net - twins' mean net) has the opposite sign of the change",
+     "prior": 0.5,
+     "prior_source": "the null; post-effective reversal is reported for the S&P 500 (Harris & Gurel 1986) and found absent elsewhere",
+     "resolves_with": "POST20"
+    }
+   ],
+   "reading": "descriptive only: one review is a handful of names; it is reported, never tested, and changes nothing"
+  }
+ },
+ "tags": {
+  "DILUTION_RECENT": {
+   "applies_to": "every SPECULATION_SET of paper/speculations.jsonl for US or IDX sealed while this protocol is in force, as a TAG record in paper/catalysts.jsonl sealed before that set's entry cutoff and bound to its record hash",
+   "US": "the SEC13D rule DILUTION_RECENT applied to the set's ticker (CIK from company_tickers_exchange) with the set's signal session",
+   "IDX": "an EmitenNews headline (public sitemap https://www.emitennews.com/sitemap-<year>.xml, slug and lastmod) that sensors.dilution_kinds counts and that names the set's ticker, with lastmod in the 28 calendar days up to the sealing date",
+   "CRYPTO": "not applicable (no free unlock calendar; DefiLlama answers HTTP 402)",
+   "use": "metadata only, like the Speculation Register's hot_day tag: it changes no cone, plan, twin, decision or policy, and the Speculation Register's frozen protocol is unchanged"
+  }
+ },
+ "resolution": {
+  "bars": "the paper scorer's recent pull for the market (paper.load_recent, purpose 'scoring'), units reconciled as speculation._units_for (split records, SEC-corroborated for US; never a price ratio)",
+  "unresolvable": "a recorded close that does not reconcile with the scoring bars, or no bars for the name: UNRESOLVABLE (a twin: DROPPED)",
+  "records": "one RESOLUTION per (set, window) once the bars cover the window; never edited; a correction is a new RESOLUTION whose 'revises' names the earlier one"
+ },
+ "forbidden": [
+  "a backtest of any family before or during the register",
+  "reading a sealed holdout (IDX 2024-01-02..2025-02-21; US and crypto 2024-01-01 onward) for this register",
+  "changing a rule, a prior, a window, the abstention rule or a look after the first SEC13D set is sealed (a change is a v2 protocol with its own trial files)",
+  "backfilling a missed filing",
+  "any order, any change to PAPER-POLICY-v4, ledger.jsonl or speculations.jsonl, any new scheduled task"
+ ]
+}

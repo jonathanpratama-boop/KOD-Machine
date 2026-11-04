@@ -1,0 +1,72 @@
+{
+ "study_id": "SCORE_VALUE_v1",
+ "frozen_at": "2026-10-31T15:49:46Z",
+ "asked_by": "Ace, 2026-10-31: the next research problem is how scores translate into trade value and admission priority; execute until the issue is narrower or resolved; no strategy changes",
+ "status": "attribution study on 2023 (already-studied data), simulation only; not investable, not a strategy, no permission to buy; 2024 data never read; any threshold or priority rule the curves suggest is a hypothesis for a fresh period, not a result",
+ "candidates": "every eligible 2023 early-population coin-day scored with the frozen coefficients and temperatures (no fitting); the top five per day must reproduce CRYPTO_REPLAY_v1's pinned shortlists",
+ "isolated_trade": {
+  "who": "every candidate with predicted upside probability >= 5% under any arm, plus every shortlisted alert",
+  "engine": "idxsig.crypto_replay.run, one alert, CRYPTO_REPLAY_v1 BASE policy, equity 10,000",
+  "policy": {
+   "start_cash": 10000.0,
+   "risk": 0.005,
+   "max_risk": 0.015,
+   "max_new_per_day": 3,
+   "stop": 0.05,
+   "target": 0.1,
+   "hold_bars": 5,
+   "fee": 0.001,
+   "slip": 0.001,
+   "entry_delay": 0,
+   "loss_fraction": 0.05284620379620375
+  },
+  "notional_usd": 946.1417549086428
+ },
+ "bins": [
+  0,
+  0.01,
+  0.02,
+  0.03,
+  0.05,
+  0.075,
+  0.1,
+  0.15,
+  0.2,
+  0.3,
+  1.0
+ ],
+ "thresholds": [
+  0.05,
+  0.075,
+  0.1,
+  0.15,
+  0.2,
+  0.3
+ ],
+ "analyses": "A  calibration: realized hit rate by predicted-probability bin on all early candidates, per arm; the shortlist's\n     mean predicted probability against its realized hit rate\n  B  global threshold curve: candidates with p >= t (any day, no budget): count, days, hit rate, mean and median\n     isolated net return, and the same on first alerts of consecutive-day runs\n  C  admission timing: isolated outcomes of all five alerts on days the account could admit versus days it could not\n  D  rank anatomy: predicted p, repeat share, volatility, hit rate and isolated net by rank 1..5\n  E  value accounting: EV per alert = P(hit) x net(hit) + P(non-hit) x net(non-hit); the EV the predicted\n     probabilities implied; the hit rate needed for 1% net per trade at the observed payoffs",
+ "verdict_rules": {
+  "calibration": "OVERCONFIDENT AT THE TOP if, in every bin that holds shortlisted alerts, the realized hit rate is below half the bin's mean predicted probability, in both model arms",
+  "threshold": "reported for every threshold; a level is called PROMISING only if its mean isolated net return is >= 1.0% with >= 100 candidates in the year, in both model arms; promising means test it on a fresh period, nothing more",
+  "timing": "ENTERS AT BAD TIMES if, in both model arms, the five alerts on days the account admitted something average a lower isolated net return than on days it admitted nothing, with the signal-day bootstrap interval of the difference below zero"
+ },
+ "bootstrap": {
+  "draws": 2000,
+  "seed": 20261031,
+  "unit": "signal day"
+ },
+ "pins": {
+  "idxsig/crypto_replay.py": "aa04635e569a251cbec79eed68f17a51fc2bacb9cbe52f35e4568d54b807264a",
+  "idxsig/premove.py": "53d161019b9df1c79ef9a738120c4930c56c4cdfcccb284fe0392ae08aebff8c",
+  "idxsig/premove_core.py": "c76686dc5272ef920698fd5f0a85277c1501ed863260b547bcb78e91b16d8c62",
+  "idxsig/premove_shadow.py": "3bed4b67225fa50dcbf71e6e56113c333ad201385e9ca1cf9a69bcc32ebc59ad",
+  "research/SCORE_VALUE_v1/score_value.py": "f2485a8d1cf4bd238ebc96e6ba43c4e628cd1cffb2865fbae568335f1c67bb66",
+  "research/CRYPTO_REPLAY_v1/protocol.json": "6bd3564154d383a74ea8f4b591fc4f625e9f96a43124b67dd37c92a0108e6c44",
+  "research/CRYPTO_REPLAY_v1/rankings/shortlists_2023.csv.gz": "a6a5bd99252e569578f1442f1c163a65f3f435f189292af8c6335ec4ad74fe79",
+  "research/CRYPTO_REPLAY_v1/run/trades_BASE_summary.csv.gz": "179a64201a790ffacb792ab89b66d5b05ee761da6b5c75167f94c28e68ec8bea",
+  "research/CRYPTO_REPLAY_v1/run/trades_BASE_sequence.csv.gz": "dd3447b93f20a7eb652beee38794f3491fb732aa14a3691ca076e25b26c29555",
+  "research/CRYPTO_REPLAY_v1/run/trades_BASE_shuffled.csv.gz": "792fd4bcc4b8be288a1077f20c07bb82513c5b88af068f92331b76e29687ae3c",
+  "research/PREMOVE_SEQUENCE_v1/runs/20261030T024900Z/models.json": "e6dff0b91e5328b14c9440ef41c1b13f8d5549b6f34c582f643853c94a9844c5",
+  "research/PREMOVE_SEQUENCE_v1/runs/20261030T024900Z/summary.json": "7bf727510581d095a259bc99dc0f66e50e798876bdf41e4fa48cd04c1c0c8261",
+  "research/PREMOVE_SHADOW_v1/control_model.json": "394b67ef64c18eeb42cc0ff0e1c8df154fdbc9ba3dbff87ac9a2a18441d2a26b"
+ }
+}

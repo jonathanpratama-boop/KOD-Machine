@@ -1,0 +1,12 @@
+{
+ "id": "LEARNER_v2_3_NEXT_DUMP_registered",
+ "experiment": "LEARNER_v2.3",
+ "date": "2026-10-29",
+ "hypothesis": "prospective: for US Speculation Register sets (a day of +30% or more, sealed under register v1.1), LEARNER v2.3's sealed raw forecasts rank the stocks that close at least 10% lower at the next session, when fewer than half of their twins do (NEXT_DUMP10_1), above the others: AUC > 0.5, z >= 3.75 at the first look of 250 resolved pairs (30 sessions), 3.0 at 500 and 1000; the Brier gain over the base rate and over the volatility-and-context benchmark reported beside it",
+ "one_sided_p": null,
+ "p_source": "no look yet; research/LEARNER_v2/protocol_v2_3.json 'claim'",
+ "variants_searched": 0,
+ "outcome": "PENDING (prospective; registered before any eligible set existed)",
+ "counted": false,
+ "registered": "2026-10-29"
+}

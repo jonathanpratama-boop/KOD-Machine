@@ -1,0 +1,31 @@
+{
+ "study": "MSCI_DELETION_OOT_v1",
+ "computed_at": "2026-11-01T00:25:49Z",
+ "what": "counts only; no return printed, saved or looked at",
+ "panel_sha256": "9d3a0718c95f9e885c4f8310cf68bf5e75021c366c454f73389d7fae75c02877",
+ "registry_sha256": "659da375e4586deab958e22dc242d7be6966ebc226bfefe8ce7ce85eb51f1e6c",
+ "deletion_events": 51,
+ "by_kind": {
+  "SC_EXIT": 36,
+  "ST_EXIT": 8,
+  "ST_TO_SC": 7
+ },
+ "mapped_to_panel": 51,
+ "status_counts": {
+  "EXITED": 46,
+  "SKIP_NOT_TRADED": 2,
+  "SKIP_ARA_LOCK": 2,
+  "SKIP_LIQUIDITY": 1
+ },
+ "scored_with_controls": 46,
+ "reviews_with_a_scored_trade": 7,
+ "entry_sessions": {
+  "Feb25": "2025-02-28",
+  "May25": "2025-05-28",
+  "Aug25": "2025-08-26",
+  "Nov25": "2025-11-24",
+  "Feb26": "2026-02-27",
+  "May26": "2026-05-29",
+  "Aug26": "2026-08-31"
+ }
+}

@@ -53,7 +53,9 @@ class Run:
 
 
 def repository_from_git(repo_dir: Path | None = None) -> str | None:
-    proc = subprocess.run(["git", "remote", "get-url", "origin"], cwd=repo_dir, capture_output=True, text=True)
+    proc = subprocess.run(
+        ["git", "remote", "get-url", "origin"], cwd=repo_dir, capture_output=True, text=True
+    )
     if proc.returncode != 0:
         return None
     match = re.search(r"[:/]([^/:]+)/([^/]+?)(?:\.git)?/?$", proc.stdout.strip())
@@ -61,11 +63,25 @@ def repository_from_git(repo_dir: Path | None = None) -> str | None:
 
 
 class GitHubActionsClient:
-    def __init__(self, repository: str | None = None, token: str | None = None, api_url: str | None = None,
-                 repo_dir: Path | None = None, timeout: float = 20.0):
-        self.token = token if token is not None else (os.environ.get("KOD_GITHUB_TOKEN") or os.environ.get("GITHUB_TOKEN"))
-        self.repository = repository or os.environ.get("GITHUB_REPOSITORY") or repository_from_git(repo_dir)
-        self.api_url = (api_url or os.environ.get("GITHUB_API_URL") or "https://api.github.com").rstrip("/")
+    def __init__(
+        self,
+        repository: str | None = None,
+        token: str | None = None,
+        api_url: str | None = None,
+        repo_dir: Path | None = None,
+        timeout: float = 20.0,
+    ):
+        self.token = (
+            token
+            if token is not None
+            else (os.environ.get("KOD_GITHUB_TOKEN") or os.environ.get("GITHUB_TOKEN"))
+        )
+        self.repository = (
+            repository or os.environ.get("GITHUB_REPOSITORY") or repository_from_git(repo_dir)
+        )
+        self.api_url = (
+            api_url or os.environ.get("GITHUB_API_URL") or "https://api.github.com"
+        ).rstrip("/")
         self.timeout = timeout
 
     @property
@@ -99,11 +115,19 @@ class GitHubActionsClient:
 
     @staticmethod
     def _run(obj: dict, raw: bytes) -> Run:
-        return Run(str(obj["id"]), obj["head_sha"], obj["event"], parse_ts(obj["created_at"]),
-                   obj.get("html_url", ""), sha256_bytes(raw))
+        return Run(
+            str(obj["id"]),
+            obj["head_sha"],
+            obj["event"],
+            parse_ts(obj["created_at"]),
+            obj.get("html_url", ""),
+            sha256_bytes(raw),
+        )
 
     def runs_for_commit(self, sha: str) -> list[Run]:
-        body, _ = self._get(f"/repos/{self.repository}/actions/runs?head_sha={sha}&event=push&per_page=100")
+        body, _ = self._get(
+            f"/repos/{self.repository}/actions/runs?head_sha={sha}&event=push&per_page=100"
+        )
         runs = []
         for obj in body.get("workflow_runs", []):
             runs.append(self._run(obj, json.dumps(obj, sort_keys=True).encode()))
@@ -122,10 +146,18 @@ def earliest_exact(runs: list[Run], sha: str) -> Run | None:
 def remote_status(client, anchor_sha: str, deadline: str | None, recorded: list[dict]) -> dict:
     """Status of one anchor commit against GitHub. Never reads a time from the database
     without confirming it against the API."""
-    out = {"status": UNVERIFIED, "anchor_sha": anchor_sha, "reason": "", "remote_created_at": None,
-           "run_id": None, "url": None}
+    out = {
+        "status": UNVERIFIED,
+        "anchor_sha": anchor_sha,
+        "reason": "",
+        "remote_created_at": None,
+        "run_id": None,
+        "url": None,
+    }
     if client is None or not client.available:
-        out["reason"] = client.why_unavailable if client is not None else "no GitHub client configured"
+        out["reason"] = (
+            client.why_unavailable if client is not None else "no GitHub client configured"
+        )
         return out
     try:
         runs = client.runs_for_commit(anchor_sha)
@@ -137,12 +169,18 @@ def remote_status(client, anchor_sha: str, deadline: str | None, recorded: list[
                 except RemoteUnavailable:
                     live = None
             if live is None:
-                out["reason"] = f"recorded receipt run {rec['remote_event_id']} is no longer on GitHub"
+                out["reason"] = (
+                    f"recorded receipt run {rec['remote_event_id']} is no longer on GitHub"
+                )
                 continue
             if live.head_sha != anchor_sha or live.created_at != parse_ts(rec["remote_created_at"]):
-                out.update(status=MISMATCH, reason=(
-                    f"recorded receipt says run {rec['remote_event_id']} for {anchor_sha[:12]} at "
-                    f"{rec['remote_created_at']}; GitHub says {live.head_sha[:12]} at {fmt_ts(live.created_at)}"))
+                out.update(
+                    status=MISMATCH,
+                    reason=(
+                        f"recorded receipt says run {rec['remote_event_id']} for {anchor_sha[:12]} at "
+                        f"{rec['remote_created_at']}; GitHub says {live.head_sha[:12]} at {fmt_ts(live.created_at)}"
+                    ),
+                )
                 return out
     except RemoteUnavailable as exc:
         out["reason"] = str(exc)
@@ -153,8 +191,12 @@ def remote_status(client, anchor_sha: str, deadline: str | None, recorded: list[
         return out
     out.update(remote_created_at=fmt_ts(run.created_at), run_id=run.run_id, url=run.html_url)
     if deadline and run.created_at >= parse_ts(deadline):
-        out.update(status=LATE, reason=(
-            f"the commit first reached GitHub at {fmt_ts(run.created_at)}, not before {deadline}"))
+        out.update(
+            status=LATE,
+            reason=(
+                f"the commit first reached GitHub at {fmt_ts(run.created_at)}, not before {deadline}"
+            ),
+        )
         return out
     out.update(status=VERIFIED, reason="")
     return out

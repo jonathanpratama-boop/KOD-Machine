@@ -1,0 +1,974 @@
+{
+ "results": {
+  "BTCUSDT|T1a_donchian20_10|binance|dev": {
+   "CAGR": 0.6197,
+   "vol": 0.4833,
+   "Sharpe": 1.236,
+   "MaxDD": -0.5426,
+   "total": 12.3753,
+   "periods": 1963,
+   "trades_per_year": 8.2,
+   "time_in_market": 0.433,
+   "by_year": {
+    "2017": 1.2635,
+    "2018": -0.1222,
+    "2019": 0.6833,
+    "2020": 3.0151,
+    "2021": 0.6163,
+    "2022": -0.3838
+   },
+   "bh_Sharpe": 0.718,
+   "bh_MaxDD": -0.832,
+   "bh_CAGR": 0.2855
+  },
+  "BTCUSDT|T1a_donchian20_10|binance|val": {
+   "CAGR": 0.2518,
+   "vol": 0.3111,
+   "Sharpe": 0.876,
+   "MaxDD": -0.3834,
+   "total": 1.3204,
+   "periods": 1368,
+   "trades_per_year": 11.5,
+   "time_in_market": 0.499,
+   "by_year": {
+    "2023": 0.6087,
+    "2024": 0.5619,
+    "2025": -0.1204,
+    "2026": 0.0499
+   },
+   "bh_Sharpe": 1.162,
+   "bh_MaxDD": -0.5297,
+   "bh_CAGR": 0.5411
+  },
+  "BTCUSDT|T1a_donchian20_10|etoro|dev": {
+   "CAGR": 0.5103,
+   "vol": 0.4841,
+   "Sharpe": 1.091,
+   "MaxDD": -0.5998,
+   "total": 8.1853,
+   "periods": 1963,
+   "trades_per_year": 8.2,
+   "time_in_market": 0.433,
+   "by_year": {
+    "2017": 1.1875,
+    "2018": -0.166,
+    "2019": 0.5729,
+    "2020": 2.7807,
+    "2021": 0.4979,
+    "2022": -0.4348
+   },
+   "bh_Sharpe": 0.718,
+   "bh_MaxDD": -0.832,
+   "bh_CAGR": 0.2855
+  },
+  "BTCUSDT|T1a_donchian20_10|etoro|val": {
+   "CAGR": 0.135,
+   "vol": 0.3126,
+   "Sharpe": 0.56,
+   "MaxDD": -0.443,
+   "total": 0.6074,
+   "periods": 1368,
+   "trades_per_year": 11.5,
+   "time_in_market": 0.499,
+   "by_year": {
+    "2023": 0.4645,
+    "2024": 0.41,
+    "2025": -0.1992,
+    "2026": -0.028
+   },
+   "bh_Sharpe": 1.162,
+   "bh_MaxDD": -0.5297,
+   "bh_CAGR": 0.5411
+  },
+  "BTCUSDT|T1b_tsmom28_hold5|binance|dev": {
+   "CAGR": 0.6128,
+   "vol": 0.5327,
+   "Sharpe": 1.161,
+   "MaxDD": -0.6805,
+   "total": 12.0732,
+   "periods": 1963,
+   "trades_per_year": 12.3,
+   "time_in_market": 0.512,
+   "by_year": {
+    "2017": 2.1347,
+    "2018": -0.505,
+    "2019": 0.6356,
+    "2020": 3.0438,
+    "2021": 1.2016,
+    "2022": -0.4214
+   },
+   "bh_Sharpe": 0.718,
+   "bh_MaxDD": -0.832,
+   "bh_CAGR": 0.2855
+  },
+  "BTCUSDT|T1b_tsmom28_hold5|binance|val": {
+   "CAGR": 0.3285,
+   "vol": 0.35,
+   "Sharpe": 0.985,
+   "MaxDD": -0.395,
+   "total": 1.8997,
+   "periods": 1368,
+   "trades_per_year": 14.7,
+   "time_in_market": 0.607,
+   "by_year": {
+    "2023": 1.1535,
+    "2024": 0.3126,
+    "2025": 0.2042,
+    "2026": -0.1481
+   },
+   "bh_Sharpe": 1.162,
+   "bh_MaxDD": -0.5297,
+   "bh_CAGR": 0.5411
+  },
+  "BTCUSDT|T1b_tsmom28_hold5|etoro|dev": {
+   "CAGR": 0.4527,
+   "vol": 0.5334,
+   "Sharpe": 0.964,
+   "MaxDD": -0.7397,
+   "total": 6.4502,
+   "periods": 1963,
+   "trades_per_year": 12.3,
+   "time_in_market": 0.512,
+   "by_year": {
+    "2017": 2.1083,
+    "2018": -0.579,
+    "2019": 0.4515,
+    "2020": 2.7455,
+    "2021": 1.075,
+    "2022": -0.4953
+   },
+   "bh_Sharpe": 0.718,
+   "bh_MaxDD": -0.832,
+   "bh_CAGR": 0.2855
+  },
+  "BTCUSDT|T1b_tsmom28_hold5|etoro|val": {
+   "CAGR": 0.1716,
+   "vol": 0.3528,
+   "Sharpe": 0.624,
+   "MaxDD": -0.4353,
+   "total": 0.8104,
+   "periods": 1368,
+   "trades_per_year": 14.7,
+   "time_in_market": 0.607,
+   "by_year": {
+    "2023": 0.9942,
+    "2024": 0.1534,
+    "2025": 0.0496,
+    "2026": -0.2501
+   },
+   "bh_Sharpe": 1.162,
+   "bh_MaxDD": -0.5297,
+   "bh_CAGR": 0.5411
+  },
+  "BTCUSDT|T1c_sma10_40|binance|dev": {
+   "CAGR": 0.691,
+   "vol": 0.5397,
+   "Sharpe": 1.241,
+   "MaxDD": -0.6223,
+   "total": 15.867,
+   "periods": 1963,
+   "trades_per_year": 10.0,
+   "time_in_market": 0.49,
+   "by_year": {
+    "2017": 2.2542,
+    "2018": -0.4396,
+    "2019": 1.0608,
+    "2020": 3.0049,
+    "2021": 1.0902,
+    "2022": -0.4638
+   },
+   "bh_Sharpe": 0.718,
+   "bh_MaxDD": -0.832,
+   "bh_CAGR": 0.2855
+  },
+  "BTCUSDT|T1c_sma10_40|binance|val": {
+   "CAGR": 0.3743,
+   "vol": 0.333,
+   "Sharpe": 1.12,
+   "MaxDD": -0.3726,
+   "total": 2.2927,
+   "periods": 1368,
+   "trades_per_year": 10.4,
+   "time_in_market": 0.567,
+   "by_year": {
+    "2023": 0.9328,
+    "2024": 0.585,
+    "2025": 0.0295,
+    "2026": 0.044
+   },
+   "bh_Sharpe": 1.162,
+   "bh_MaxDD": -0.5297,
+   "bh_CAGR": 0.5411
+  },
+  "BTCUSDT|T1c_sma10_40|etoro|dev": {
+   "CAGR": 0.5517,
+   "vol": 0.5412,
+   "Sharpe": 1.08,
+   "MaxDD": -0.6706,
+   "total": 9.6197,
+   "periods": 1963,
+   "trades_per_year": 10.0,
+   "time_in_market": 0.49,
+   "by_year": {
+    "2017": 2.2272,
+    "2018": -0.5112,
+    "2019": 0.8914,
+    "2020": 2.7406,
+    "2021": 0.9692,
+    "2022": -0.5167
+   },
+   "bh_Sharpe": 0.718,
+   "bh_MaxDD": -0.832,
+   "bh_CAGR": 0.2855
+  },
+  "BTCUSDT|T1c_sma10_40|etoro|val": {
+   "CAGR": 0.258,
+   "vol": 0.3331,
+   "Sharpe": 0.854,
+   "MaxDD": -0.4039,
+   "total": 1.3639,
+   "periods": 1368,
+   "trades_per_year": 10.4,
+   "time_in_market": 0.567,
+   "by_year": {
+    "2023": 0.7913,
+    "2024": 0.4679,
+    "2025": -0.0703,
+    "2026": -0.033
+   },
+   "bh_Sharpe": 1.162,
+   "bh_MaxDD": -0.5297,
+   "bh_CAGR": 0.5411
+  },
+  "BTCUSDT|T1d_sma200|binance|dev": {
+   "CAGR": 0.1561,
+   "vol": 0.4404,
+   "Sharpe": 0.55,
+   "MaxDD": -0.6437,
+   "total": 1.1818,
+   "periods": 1963,
+   "trades_per_year": 6.0,
+   "time_in_market": 0.377,
+   "by_year": {
+    "2017": 0.0,
+    "2018": -0.3501,
+    "2019": 0.5687,
+    "2020": 1.7331,
+    "2021": -0.2169,
+    "2022": 0.0
+   },
+   "bh_Sharpe": 0.718,
+   "bh_MaxDD": -0.832,
+   "bh_CAGR": 0.2855
+  },
+  "BTCUSDT|T1d_sma200|binance|val": {
+   "CAGR": 0.394,
+   "vol": 0.3767,
+   "Sharpe": 1.068,
+   "MaxDD": -0.3198,
+   "total": 2.4726,
+   "periods": 1368,
+   "trades_per_year": 8.8,
+   "time_in_market": 0.654,
+   "by_year": {
+    "2023": 0.9376,
+    "2024": 0.808,
+    "2025": -0.1773,
+    "2026": 0.2049
+   },
+   "bh_Sharpe": 1.162,
+   "bh_MaxDD": -0.5297,
+   "bh_CAGR": 0.5411
+  },
+  "BTCUSDT|T1d_sma200|etoro|dev": {
+   "CAGR": 0.0986,
+   "vol": 0.4415,
+   "Sharpe": 0.434,
+   "MaxDD": -0.6973,
+   "total": 0.6579,
+   "periods": 1963,
+   "trades_per_year": 6.0,
+   "time_in_market": 0.377,
+   "by_year": {
+    "2017": 0.0,
+    "2018": -0.3723,
+    "2019": 0.5166,
+    "2020": 1.6177,
+    "2021": -0.3348,
+    "2022": 0.0
+   },
+   "bh_Sharpe": 0.718,
+   "bh_MaxDD": -0.832,
+   "bh_CAGR": 0.2855
+  },
+  "BTCUSDT|T1d_sma200|etoro|val": {
+   "CAGR": 0.2932,
+   "vol": 0.3774,
+   "Sharpe": 0.868,
+   "MaxDD": -0.375,
+   "total": 1.6214,
+   "periods": 1368,
+   "trades_per_year": 8.8,
+   "time_in_market": 0.654,
+   "by_year": {
+    "2023": 0.857,
+    "2024": 0.6603,
+    "2025": -0.2886,
+    "2026": 0.1952
+   },
+   "bh_Sharpe": 1.162,
+   "bh_MaxDD": -0.5297,
+   "bh_CAGR": 0.5411
+  },
+  "BTCUSDT|T5i_channel10|binance|dev": {
+   "CAGR": 0.6197,
+   "vol": 0.4833,
+   "Sharpe": 1.236,
+   "MaxDD": -0.5426,
+   "total": 12.3753,
+   "periods": 1963,
+   "trades_per_year": 8.2,
+   "time_in_market": 0.433,
+   "by_year": {
+    "2017": 1.2635,
+    "2018": -0.1222,
+    "2019": 0.6833,
+    "2020": 3.0151,
+    "2021": 0.6163,
+    "2022": -0.3838
+   },
+   "bh_Sharpe": 0.718,
+   "bh_MaxDD": -0.832,
+   "bh_CAGR": 0.2855
+  },
+  "BTCUSDT|T5i_channel10|binance|val": {
+   "CAGR": 0.2518,
+   "vol": 0.3111,
+   "Sharpe": 0.876,
+   "MaxDD": -0.3834,
+   "total": 1.3204,
+   "periods": 1368,
+   "trades_per_year": 11.5,
+   "time_in_market": 0.499,
+   "by_year": {
+    "2023": 0.6087,
+    "2024": 0.5619,
+    "2025": -0.1204,
+    "2026": 0.0499
+   },
+   "bh_Sharpe": 1.162,
+   "bh_MaxDD": -0.5297,
+   "bh_CAGR": 0.5411
+  },
+  "BTCUSDT|T5ii_atr2_trail|binance|dev": {
+   "CAGR": 0.4839,
+   "vol": 0.4285,
+   "Sharpe": 1.132,
+   "MaxDD": -0.5324,
+   "total": 7.354,
+   "periods": 1963,
+   "trades_per_year": 10.8,
+   "time_in_market": 0.316,
+   "by_year": {
+    "2017": 1.2635,
+    "2018": -0.075,
+    "2019": 0.4981,
+    "2020": 2.3873,
+    "2021": 0.3177,
+    "2022": -0.4033
+   },
+   "bh_Sharpe": 0.718,
+   "bh_MaxDD": -0.832,
+   "bh_CAGR": 0.2855
+  },
+  "BTCUSDT|T5ii_atr2_trail|binance|val": {
+   "CAGR": 0.2326,
+   "vol": 0.2928,
+   "Sharpe": 0.859,
+   "MaxDD": -0.3637,
+   "total": 1.1899,
+   "periods": 1368,
+   "trades_per_year": 13.6,
+   "time_in_market": 0.422,
+   "by_year": {
+    "2023": 1.0465,
+    "2024": 0.4142,
+    "2025": -0.0846,
+    "2026": -0.1734
+   },
+   "bh_Sharpe": 1.162,
+   "bh_MaxDD": -0.5297,
+   "bh_CAGR": 0.5411
+  },
+  "BTCUSDT|T5iii_fixed5pct_plus_channel|binance|dev": {
+   "CAGR": 0.7177,
+   "vol": 0.456,
+   "Sharpe": 1.411,
+   "MaxDD": -0.4894,
+   "total": 17.3442,
+   "periods": 1963,
+   "trades_per_year": 9.3,
+   "time_in_market": 0.349,
+   "by_year": {
+    "2017": 1.2635,
+    "2018": -0.0979,
+    "2019": 0.8236,
+    "2020": 2.6577,
+    "2021": 1.2067,
+    "2022": -0.3897
+   },
+   "bh_Sharpe": 0.718,
+   "bh_MaxDD": -0.832,
+   "bh_CAGR": 0.2855
+  },
+  "BTCUSDT|T5iii_fixed5pct_plus_channel|binance|val": {
+   "CAGR": 0.2802,
+   "vol": 0.3039,
+   "Sharpe": 0.964,
+   "MaxDD": -0.3421,
+   "total": 1.5239,
+   "periods": 1368,
+   "trades_per_year": 12.0,
+   "time_in_market": 0.468,
+   "by_year": {
+    "2023": 0.6087,
+    "2024": 0.6195,
+    "2025": -0.0126,
+    "2026": -0.0188
+   },
+   "bh_Sharpe": 1.162,
+   "bh_MaxDD": -0.5297,
+   "bh_CAGR": 0.5411
+  },
+  "BTCUSDT|T5iv_time10|binance|dev": {
+   "CAGR": 0.3994,
+   "vol": 0.419,
+   "Sharpe": 1.007,
+   "MaxDD": -0.5078,
+   "total": 5.0934,
+   "periods": 1963,
+   "trades_per_year": 17.5,
+   "time_in_market": 0.285,
+   "by_year": {
+    "2017": 1.3979,
+    "2018": -0.1047,
+    "2019": 0.5715,
+    "2020": 1.2885,
+    "2021": -0.0325,
+    "2022": -0.1843
+   },
+   "bh_Sharpe": 0.718,
+   "bh_MaxDD": -0.832,
+   "bh_CAGR": 0.2855
+  },
+  "BTCUSDT|T5iv_time10|binance|val": {
+   "CAGR": 0.192,
+   "vol": 0.2617,
+   "Sharpe": 0.801,
+   "MaxDD": -0.3145,
+   "total": 0.9315,
+   "periods": 1368,
+   "trades_per_year": 19.5,
+   "time_in_market": 0.291,
+   "by_year": {
+    "2023": 0.4124,
+    "2024": 0.5375,
+    "2025": -0.097,
+    "2026": -0.015
+   },
+   "bh_Sharpe": 1.162,
+   "bh_MaxDD": -0.5297,
+   "bh_CAGR": 0.5411
+  },
+  "ETHUSDT|T1a_donchian20_10|binance|dev": {
+   "CAGR": 0.7078,
+   "vol": 0.6607,
+   "Sharpe": 1.139,
+   "MaxDD": -0.6816,
+   "total": 16.7837,
+   "periods": 1963,
+   "trades_per_year": 8.9,
+   "time_in_market": 0.407,
+   "by_year": {
+    "2017": 0.8161,
+    "2018": -0.2379,
+    "2019": -0.1706,
+    "2020": 3.0763,
+    "2021": 4.0609,
+    "2022": -0.249
+   },
+   "bh_Sharpe": 0.764,
+   "bh_MaxDD": -0.9397,
+   "bh_CAGR": 0.2917
+  },
+  "ETHUSDT|T1a_donchian20_10|binance|val": {
+   "CAGR": -0.076,
+   "vol": 0.3728,
+   "Sharpe": -0.027,
+   "MaxDD": -0.6241,
+   "total": -0.2565,
+   "periods": 1368,
+   "trades_per_year": 12.5,
+   "time_in_market": 0.395,
+   "by_year": {
+    "2023": 0.2519,
+    "2024": -0.0514,
+    "2025": -0.1544,
+    "2026": -0.2596
+   },
+   "bh_Sharpe": 0.653,
+   "bh_MaxDD": -0.6755,
+   "bh_CAGR": 0.2399
+  },
+  "ETHUSDT|T1a_donchian20_10|etoro|dev": {
+   "CAGR": 0.5827,
+   "vol": 0.6612,
+   "Sharpe": 1.024,
+   "MaxDD": -0.7316,
+   "total": 10.8132,
+   "periods": 1963,
+   "trades_per_year": 8.9,
+   "time_in_market": 0.407,
+   "by_year": {
+    "2017": 0.77,
+    "2018": -0.2885,
+    "2019": -0.2448,
+    "2020": 2.7737,
+    "2021": 3.772,
+    "2022": -0.3103
+   },
+   "bh_Sharpe": 0.764,
+   "bh_MaxDD": -0.9397,
+   "bh_CAGR": 0.2917
+  },
+  "ETHUSDT|T1a_donchian20_10|etoro|val": {
+   "CAGR": -0.17,
+   "vol": 0.3744,
+   "Sharpe": -0.312,
+   "MaxDD": -0.7124,
+   "total": -0.5026,
+   "periods": 1368,
+   "trades_per_year": 12.5,
+   "time_in_market": 0.395,
+   "by_year": {
+    "2023": 0.1387,
+    "2024": -0.1516,
+    "2025": -0.2361,
+    "2026": -0.326
+   },
+   "bh_Sharpe": 0.653,
+   "bh_MaxDD": -0.6755,
+   "bh_CAGR": 0.2399
+  },
+  "ETHUSDT|T1b_tsmom28_hold5|binance|dev": {
+   "CAGR": 0.6035,
+   "vol": 0.7198,
+   "Sharpe": 1.018,
+   "MaxDD": -0.7091,
+   "total": 11.675,
+   "periods": 1963,
+   "trades_per_year": 12.3,
+   "time_in_market": 0.509,
+   "by_year": {
+    "2017": 1.0238,
+    "2018": -0.296,
+    "2019": -0.1862,
+    "2020": 3.9355,
+    "2021": 2.1397,
+    "2022": -0.2945
+   },
+   "bh_Sharpe": 0.764,
+   "bh_MaxDD": -0.9397,
+   "bh_CAGR": 0.2917
+  },
+  "ETHUSDT|T1b_tsmom28_hold5|binance|val": {
+   "CAGR": 0.5051,
+   "vol": 0.4545,
+   "Sharpe": 1.121,
+   "MaxDD": -0.419,
+   "total": 3.6294,
+   "periods": 1368,
+   "trades_per_year": 14.7,
+   "time_in_market": 0.53,
+   "by_year": {
+    "2023": 0.5928,
+    "2024": 0.4804,
+    "2025": 0.8011,
+    "2026": 0.0901
+   },
+   "bh_Sharpe": 0.653,
+   "bh_MaxDD": -0.6755,
+   "bh_CAGR": 0.2399
+  },
+  "ETHUSDT|T1b_tsmom28_hold5|etoro|dev": {
+   "CAGR": 0.4442,
+   "vol": 0.7204,
+   "Sharpe": 0.873,
+   "MaxDD": -0.7696,
+   "total": 6.2201,
+   "periods": 1963,
+   "trades_per_year": 12.3,
+   "time_in_market": 0.509,
+   "by_year": {
+    "2017": 0.9381,
+    "2018": -0.3752,
+    "2019": -0.2717,
+    "2020": 3.5709,
+    "2021": 1.8103,
+    "2022": -0.3626
+   },
+   "bh_Sharpe": 0.764,
+   "bh_MaxDD": -0.9397,
+   "bh_CAGR": 0.2917
+  },
+  "ETHUSDT|T1b_tsmom28_hold5|etoro|val": {
+   "CAGR": 0.3274,
+   "vol": 0.4567,
+   "Sharpe": 0.843,
+   "MaxDD": -0.4863,
+   "total": 1.891,
+   "periods": 1368,
+   "trades_per_year": 14.7,
+   "time_in_market": 0.53,
+   "by_year": {
+    "2023": 0.3781,
+    "2024": 0.2792,
+    "2025": 0.6243,
+    "2026": 0.0096
+   },
+   "bh_Sharpe": 0.653,
+   "bh_MaxDD": -0.6755,
+   "bh_CAGR": 0.2399
+  },
+  "ETHUSDT|T1c_sma10_40|binance|dev": {
+   "CAGR": 0.8859,
+   "vol": 0.7178,
+   "Sharpe": 1.243,
+   "MaxDD": -0.6633,
+   "total": 29.3199,
+   "periods": 1963,
+   "trades_per_year": 9.3,
+   "time_in_market": 0.488,
+   "by_year": {
+    "2017": 1.0694,
+    "2018": -0.2632,
+    "2019": 0.2589,
+    "2020": 5.0844,
+    "2021": 2.8276,
+    "2022": -0.3217
+   },
+   "bh_Sharpe": 0.764,
+   "bh_MaxDD": -0.9397,
+   "bh_CAGR": 0.2917
+  },
+  "ETHUSDT|T1c_sma10_40|binance|val": {
+   "CAGR": 0.5018,
+   "vol": 0.4369,
+   "Sharpe": 1.145,
+   "MaxDD": -0.3678,
+   "total": 3.5907,
+   "periods": 1368,
+   "trades_per_year": 10.9,
+   "time_in_market": 0.521,
+   "by_year": {
+    "2023": 0.4123,
+    "2024": 0.3555,
+    "2025": 0.8023,
+    "2026": 0.3306
+   },
+   "bh_Sharpe": 0.653,
+   "bh_MaxDD": -0.6755,
+   "bh_CAGR": 0.2399
+  },
+  "ETHUSDT|T1c_sma10_40|etoro|dev": {
+   "CAGR": 0.742,
+   "vol": 0.7184,
+   "Sharpe": 1.132,
+   "MaxDD": -0.6912,
+   "total": 18.7896,
+   "periods": 1963,
+   "trades_per_year": 9.3,
+   "time_in_market": 0.488,
+   "by_year": {
+    "2017": 1.016,
+    "2018": -0.3241,
+    "2019": 0.1472,
+    "2020": 4.7306,
+    "2021": 2.547,
+    "2022": -0.3771
+   },
+   "bh_Sharpe": 0.764,
+   "bh_MaxDD": -0.9397,
+   "bh_CAGR": 0.2917
+  },
+  "ETHUSDT|T1c_sma10_40|etoro|val": {
+   "CAGR": 0.3686,
+   "vol": 0.4368,
+   "Sharpe": 0.932,
+   "MaxDD": -0.4226,
+   "total": 2.2416,
+   "periods": 1368,
+   "trades_per_year": 10.9,
+   "time_in_market": 0.521,
+   "by_year": {
+    "2023": 0.2862,
+    "2024": 0.1933,
+    "2025": 0.6847,
+    "2026": 0.2537
+   },
+   "bh_Sharpe": 0.653,
+   "bh_MaxDD": -0.6755,
+   "bh_CAGR": 0.2399
+  },
+  "ETHUSDT|T1d_sma200|binance|dev": {
+   "CAGR": 0.3072,
+   "vol": 0.6528,
+   "Sharpe": 0.751,
+   "MaxDD": -0.739,
+   "total": 3.2238,
+   "periods": 1963,
+   "trades_per_year": 5.6,
+   "time_in_market": 0.429,
+   "by_year": {
+    "2017": 0.0,
+    "2018": -0.4414,
+    "2019": 0.0686,
+    "2020": 1.0412,
+    "2021": 3.1369,
+    "2022": -0.1621
+   },
+   "bh_Sharpe": 0.764,
+   "bh_MaxDD": -0.9397,
+   "bh_CAGR": 0.2917
+  },
+  "ETHUSDT|T1d_sma200|binance|val": {
+   "CAGR": 0.2837,
+   "vol": 0.4422,
+   "Sharpe": 0.783,
+   "MaxDD": -0.3847,
+   "total": 1.5495,
+   "periods": 1368,
+   "trades_per_year": 6.7,
+   "time_in_market": 0.545,
+   "by_year": {
+    "2023": 0.4937,
+    "2024": 0.4846,
+    "2025": -0.0314,
+    "2026": 0.187
+   },
+   "bh_Sharpe": 0.653,
+   "bh_MaxDD": -0.6755,
+   "bh_CAGR": 0.2399
+  },
+  "ETHUSDT|T1d_sma200|etoro|dev": {
+   "CAGR": 0.2463,
+   "vol": 0.6533,
+   "Sharpe": 0.677,
+   "MaxDD": -0.7667,
+   "total": 2.2681,
+   "periods": 1963,
+   "trades_per_year": 5.6,
+   "time_in_market": 0.429,
+   "by_year": {
+    "2017": 0.0,
+    "2018": -0.4781,
+    "2019": 0.0148,
+    "2020": 0.8887,
+    "2021": 3.0005,
+    "2022": -0.1833
+   },
+   "bh_Sharpe": 0.764,
+   "bh_MaxDD": -0.9397,
+   "bh_CAGR": 0.2917
+  },
+  "ETHUSDT|T1d_sma200|etoro|val": {
+   "CAGR": 0.2129,
+   "vol": 0.4422,
+   "Sharpe": 0.655,
+   "MaxDD": -0.4207,
+   "total": 1.0616,
+   "periods": 1368,
+   "trades_per_year": 6.7,
+   "time_in_market": 0.545,
+   "by_year": {
+    "2023": 0.4316,
+    "2024": 0.411,
+    "2025": -0.1331,
+    "2026": 0.1772
+   },
+   "bh_Sharpe": 0.653,
+   "bh_MaxDD": -0.6755,
+   "bh_CAGR": 0.2399
+  },
+  "ETHUSDT|T5i_channel10|binance|dev": {
+   "CAGR": 0.7078,
+   "vol": 0.6607,
+   "Sharpe": 1.139,
+   "MaxDD": -0.6816,
+   "total": 16.7837,
+   "periods": 1963,
+   "trades_per_year": 8.9,
+   "time_in_market": 0.407,
+   "by_year": {
+    "2017": 0.8161,
+    "2018": -0.2379,
+    "2019": -0.1706,
+    "2020": 3.0763,
+    "2021": 4.0609,
+    "2022": -0.249
+   },
+   "bh_Sharpe": 0.764,
+   "bh_MaxDD": -0.9397,
+   "bh_CAGR": 0.2917
+  },
+  "ETHUSDT|T5i_channel10|binance|val": {
+   "CAGR": -0.076,
+   "vol": 0.3728,
+   "Sharpe": -0.027,
+   "MaxDD": -0.6241,
+   "total": -0.2565,
+   "periods": 1368,
+   "trades_per_year": 12.5,
+   "time_in_market": 0.395,
+   "by_year": {
+    "2023": 0.2519,
+    "2024": -0.0514,
+    "2025": -0.1544,
+    "2026": -0.2596
+   },
+   "bh_Sharpe": 0.653,
+   "bh_MaxDD": -0.6755,
+   "bh_CAGR": 0.2399
+  },
+  "ETHUSDT|T5ii_atr2_trail|binance|dev": {
+   "CAGR": 0.8013,
+   "vol": 0.5925,
+   "Sharpe": 1.288,
+   "MaxDD": -0.4905,
+   "total": 22.6934,
+   "periods": 1963,
+   "trades_per_year": 10.0,
+   "time_in_market": 0.329,
+   "by_year": {
+    "2017": 0.9591,
+    "2018": 0.1065,
+    "2019": 0.0199,
+    "2020": 2.0302,
+    "2021": 3.4285,
+    "2022": -0.2014
+   },
+   "bh_Sharpe": 0.764,
+   "bh_MaxDD": -0.9397,
+   "bh_CAGR": 0.2917
+  },
+  "ETHUSDT|T5ii_atr2_trail|binance|val": {
+   "CAGR": 0.0401,
+   "vol": 0.3513,
+   "Sharpe": 0.286,
+   "MaxDD": -0.6049,
+   "total": 0.1589,
+   "periods": 1368,
+   "trades_per_year": 13.1,
+   "time_in_market": 0.355,
+   "by_year": {
+    "2023": 0.2606,
+    "2024": -0.0649,
+    "2025": -0.0629,
+    "2026": 0.049
+   },
+   "bh_Sharpe": 0.653,
+   "bh_MaxDD": -0.6755,
+   "bh_CAGR": 0.2399
+  },
+  "ETHUSDT|T5iii_fixed5pct_plus_channel|binance|dev": {
+   "CAGR": 0.5413,
+   "vol": 0.6362,
+   "Sharpe": 0.997,
+   "MaxDD": -0.7227,
+   "total": 9.2453,
+   "periods": 1963,
+   "trades_per_year": 10.8,
+   "time_in_market": 0.373,
+   "by_year": {
+    "2017": 1.0279,
+    "2018": -0.3702,
+    "2019": -0.1262,
+    "2020": 1.2595,
+    "2021": 4.0609,
+    "2022": -0.1971
+   },
+   "bh_Sharpe": 0.764,
+   "bh_MaxDD": -0.9397,
+   "bh_CAGR": 0.2917
+  },
+  "ETHUSDT|T5iii_fixed5pct_plus_channel|binance|val": {
+   "CAGR": 0.1183,
+   "vol": 0.3539,
+   "Sharpe": 0.491,
+   "MaxDD": -0.3904,
+   "total": 0.5208,
+   "periods": 1368,
+   "trades_per_year": 12.5,
+   "time_in_market": 0.361,
+   "by_year": {
+    "2023": 0.3828,
+    "2024": 0.1441,
+    "2025": 0.1741,
+    "2026": -0.1813
+   },
+   "bh_Sharpe": 0.653,
+   "bh_MaxDD": -0.6755,
+   "bh_CAGR": 0.2399
+  },
+  "ETHUSDT|T5iv_time10|binance|dev": {
+   "CAGR": 0.5024,
+   "vol": 0.5261,
+   "Sharpe": 1.035,
+   "MaxDD": -0.4576,
+   "total": 7.9271,
+   "periods": 1963,
+   "trades_per_year": 17.5,
+   "time_in_market": 0.275,
+   "by_year": {
+    "2017": 0.1755,
+    "2018": 0.2178,
+    "2019": 0.3091,
+    "2020": 1.176,
+    "2021": 1.8397,
+    "2022": -0.229
+   },
+   "bh_Sharpe": 0.764,
+   "bh_MaxDD": -0.9397,
+   "bh_CAGR": 0.2917
+  },
+  "ETHUSDT|T5iv_time10|binance|val": {
+   "CAGR": -0.0521,
+   "vol": 0.3086,
+   "Sharpe": -0.02,
+   "MaxDD": -0.4862,
+   "total": -0.1816,
+   "periods": 1368,
+   "trades_per_year": 17.9,
+   "time_in_market": 0.254,
+   "by_year": {
+    "2023": 0.005,
+    "2024": -0.0219,
+    "2025": -0.1093,
+    "2026": -0.0653
+   },
+   "bh_Sharpe": 0.653,
+   "bh_MaxDD": -0.6755,
+   "bh_CAGR": 0.2399
+  }
+ },
+ "T1_verdicts": {
+  "BTCUSDT|T1a_donchian20_10": "WEAK",
+  "BTCUSDT|T1b_tsmom28_hold5": "WEAK",
+  "BTCUSDT|T1c_sma10_40": "WEAK",
+  "BTCUSDT|T1d_sma200": "FAIL",
+  "ETHUSDT|T1a_donchian20_10": "WEAK",
+  "ETHUSDT|T1b_tsmom28_hold5": "PASS",
+  "ETHUSDT|T1c_sma10_40": "PASS",
+  "ETHUSDT|T1d_sma200": "WEAK"
+ }
+}

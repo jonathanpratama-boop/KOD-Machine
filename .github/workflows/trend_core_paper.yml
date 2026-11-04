@@ -1,0 +1,63 @@
+name: TREND_CORE paper log (daily, paper only)
+
+# Appends one hash-chained line per coin per UTC day to handoff/fresh-eyes-2026-11-01/paper/ledger.jsonl.
+# Paper only: no exchange credentials, no orders. Raw Binance archive files are fetched into the runner's
+# temporary disk and never committed. A day whose daily file is not yet published is logged as MISSED.
+
+on:
+  schedule:
+    - cron: "41 2 * * *"   # 02:41 UTC = 09:41 WIB, after Binance publishes the previous day's daily file
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: trend-core-paper
+  cancel-in-progress: false
+
+jobs:
+  log:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Retain actual scheduler start separately from the intended UTC slot
+        run: python tools/record_schedule_attempt.py --output "$RUNNER_TEMP/kod-schedule" --event "$GITHUB_EVENT_NAME" --reference-utc 02:41 --phase begin
+      - run: pip install --quiet pandas numpy
+      - name: Fetch BTC/ETH spot daily klines (recent months, outside the repo)
+        working-directory: handoff/fresh-eyes-2026-11-01/backtests
+        env:
+          BINANCE_RAW: /tmp/binance
+        run: |
+          printf "BTCUSDT\nETHUSDT\n" > /tmp/majors2.txt
+          START=$(date -u -d "-120 days" +%Y-%m)
+          python3 fetch_binance_vision.py fetch spot klines /tmp/majors2.txt 1d "$START"
+      - name: Log the last completed UTC day
+        working-directory: handoff/fresh-eyes-2026-11-01/paper
+        env:
+          BINANCE_RAW: /tmp/binance
+        run: python3 log_decision.py
+      - name: Commit and push the ledger line
+        run: |
+          git config user.name "kod-paper-bot"
+          git config user.email "kod-paper-bot@users.noreply.github.com"
+          git add handoff/fresh-eyes-2026-11-01/paper/ledger.jsonl
+          git diff --cached --quiet && exit 0
+          git commit -m "TREND_CORE paper log $(date -u +%Y-%m-%d) [skip ci]"
+          git push
+      - name: Retain completion or failure without changing the paper ledger
+        if: always()
+        run: python tools/record_schedule_attempt.py --output "$RUNNER_TEMP/kod-schedule" --event "$GITHUB_EVENT_NAME" --reference-utc 02:41 --phase complete --status '${{ job.status }}'
+      - name: Preserve scheduler evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trend-schedule-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/kod-schedule/*.json
+          if-no-files-found: warn

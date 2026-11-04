@@ -1,0 +1,151 @@
+{
+ "artifacts_checked": 52,
+ "base": "c09a27ac94fccf6a33f12a0ee07e33f88238ace5",
+ "both_sides": {
+  "idx-signals/idxsig/backtest.py": {
+   "base_added_lines": 7,
+   "base_added_missing": [
+    "    fill_model: str = \"A\"  # \"A\": original (entry-session final volume); \"B\": decision-time capacity (open); \"C\": FILL-C-v1 (close)"
+   ],
+   "base_combined_by_hand": 1,
+   "common_lines_missing": [],
+   "pr_added_lines": 7,
+   "pr_added_missing": [
+    "    fill_model: str = \"A\"  # \"A\": original (entry-session final volume); \"B\": FILL-B-v1; \"B2\": FILL-B-v2"
+   ],
+   "pr_combined_by_hand": 1
+  },
+  "idx-signals/idxsig/cli.py": {
+   "base_added_lines": 3,
+   "base_added_missing": [
+    "    p_run.add_argument(\"--fill-model\", choices=(\"A\", \"B\", \"C\"), default=\"A\",",
+    "                       help=\"A: original (entry-session final volume, ex post); B: decision-time capacity \"",
+    "                            \"(open entries); C: FILL-C-v1, decision-time capacity for closing-auction entries\")"
+   ],
+   "base_combined_by_hand": 3,
+   "common_lines_missing": [],
+   "pr_added_lines": 2,
+   "pr_added_missing": [
+    "    p_run.add_argument(\"--fill-model\", choices=(\"A\", \"B\", \"B2\"), default=\"A\",",
+    "                       help=\"A: original (entry-session final volume, ex post); B: FILL-B-v1 (mixed units, reproduction only); B2: FILL-B-v2 (entry-session units)\")"
+   ],
+   "pr_combined_by_hand": 2
+  },
+  "idx-signals/idxsig/execution.py": {
+   "base_added_lines": 41,
+   "base_added_missing": [
+    "    fill_model: str = \"A\"  # \"A\" (original, ex-post entry-session volume), \"B\" (decision-time capacity,",
+    "    #                        open entries) or \"C\" (FILL-C-v1, decision-time capacity, close entries)",
+    "    if cfg.units not in (\"panel\", \"as_traded\") or cfg.fill_model not in (\"A\", \"B\", \"C\"):"
+   ],
+   "base_combined_by_hand": 3,
+   "common_lines_missing": [],
+   "pr_added_lines": 27,
+   "pr_added_missing": [
+    "    #                        mixed units; reproduction only) or \"B2\" (FILL-B-v2, entry-session units)",
+    "    if cfg.units not in (\"panel\", \"as_traded\") or cfg.fill_model not in (\"A\", \"B\", \"B2\"):"
+   ],
+   "pr_combined_by_hand": 2
+  },
+  "idx-signals/results/RUNS.jsonl": {
+   "base_added_lines": 1,
+   "base_added_missing": [],
+   "base_combined_by_hand": 0,
+   "common_lines_missing": [],
+   "pr_added_lines": 1,
+   "pr_added_missing": [],
+   "pr_combined_by_hand": 0
+  }
+ },
+ "fill_models_accepted": {
+  "A": {
+   "cli_accepts": true,
+   "execute_runs_and_exits": true
+  },
+  "B": {
+   "cli_accepts": true,
+   "execute_runs_and_exits": true
+  },
+  "B2": {
+   "cli_accepts": true,
+   "execute_runs_and_exits": true
+  },
+  "C": {
+   "cli_accepts": true,
+   "execute_runs_and_exits": true
+  }
+ },
+ "merge": "d62de40c4b3f91140279276a64dcf5a7bccfe47a",
+ "merge_base": "52507b7c02934457f495f92e78f5f562fb441d95",
+ "merge_tree_sha256": "2cfe292b52270d899c00b117718299290e1492ea9167dcf50cb011f7d039a37c",
+ "one_side": {
+  "idx-signals/data/manifests/binance_recent-20261009T002421Z.jsonl": "base",
+  "idx-signals/data/manifests/us_universe-20261008T224758Z.jsonl": "base",
+  "idx-signals/data/manifests/yahoo_us_recent-20261008T224758Z.jsonl": "base",
+  "idx-signals/idxsig/exec_us.py": "pr",
+  "idx-signals/idxsig/global_panel.py": "pr",
+  "idx-signals/idxsig/paper.py": "pr",
+  "idx-signals/idxsig/us_actions.py": "pr",
+  "idx-signals/paper/README.md": "pr",
+  "idx-signals/paper/ledger.jsonl": "base",
+  "idx-signals/paper/scans/SCAN-CRYPTO-2026-10-08-G2_RET30/features.csv.gz": "base",
+  "idx-signals/paper/scans/SCAN-US-2026-10-08-G2_RET30/features.csv.gz": "base",
+  "idx-signals/paper/timestamps/01db9c5b4f9a7ccddf675343855502d323f8d7b4236f9371642c02cff4e14157.freetsa.tsr": "base",
+  "idx-signals/paper/timestamps/01db9c5b4f9a7ccddf675343855502d323f8d7b4236f9371642c02cff4e14157.sectigo.tsr": "base",
+  "idx-signals/paper/timestamps/0a5d171a84080c5a7d6015e192cc5e6fa62692087037312dbd5ff1a3892ea793.freetsa.tsr": "base",
+  "idx-signals/paper/timestamps/0a5d171a84080c5a7d6015e192cc5e6fa62692087037312dbd5ff1a3892ea793.sectigo.tsr": "base",
+  "idx-signals/paper/timestamps/0f3dccd5a03950287ae9afebdd05b92d0193d768e476cc06c00d0dc2ed5db88e.freetsa.tsr": "base",
+  "idx-signals/paper/timestamps/0f3dccd5a03950287ae9afebdd05b92d0193d768e476cc06c00d0dc2ed5db88e.sectigo.tsr": "base",
+  "idx-signals/paper/timestamps/11fd3d331cb4dc049a5277a35bf6de10523f00d77683f53b4cecb260245e540a.freetsa.tsr": "base",
+  "idx-signals/paper/timestamps/11fd3d331cb4dc049a5277a35bf6de10523f00d77683f53b4cecb260245e540a.sectigo.tsr": "base",
+  "idx-signals/paper/timestamps/353cf0883aefbdf9acbae0b7419c76a10df8103ffb8cfe8c124de1d996de8d23.freetsa.tsr": "base",
+  "idx-signals/paper/timestamps/353cf0883aefbdf9acbae0b7419c76a10df8103ffb8cfe8c124de1d996de8d23.sectigo.tsr": "base",
+  "idx-signals/paper/timestamps/41dc3231f785b79a014b75b84d8d5a97dbd59a675cc136acfe722168b38a2913.freetsa.tsr": "base",
+  "idx-signals/paper/timestamps/41dc3231f785b79a014b75b84d8d5a97dbd59a675cc136acfe722168b38a2913.sectigo.tsr": "base",
+  "idx-signals/paper/timestamps/7d261e9c11ca3c998d1d1e3a552298a48a963f3a3e825cb997fa9162a2c4a85f.freetsa.tsr": "base",
+  "idx-signals/paper/timestamps/7d261e9c11ca3c998d1d1e3a552298a48a963f3a3e825cb997fa9162a2c4a85f.sectigo.tsr": "base",
+  "idx-signals/paper/timestamps/bdf79142a463c96100c7fd80f9df45949a4746a2a296c555f5dd847a3216ab2a.freetsa.tsr": "base",
+  "idx-signals/paper/timestamps/bdf79142a463c96100c7fd80f9df45949a4746a2a296c555f5dd847a3216ab2a.sectigo.tsr": "base",
+  "idx-signals/paper/timestamps/d9daa73064959a6c2c5940cbc378b2b7d5b7c3b9d6d887f0f2e8e6876dd1c31d.freetsa.tsr": "base",
+  "idx-signals/paper/timestamps/d9daa73064959a6c2c5940cbc378b2b7d5b7c3b9d6d887f0f2e8e6876dd1c31d.sectigo.tsr": "base",
+  "idx-signals/paper/timestamps/da78bc4031209344a92caa9d48c779836d4f4ea3b6420078eb2c1882a8507395.freetsa.tsr": "base",
+  "idx-signals/paper/timestamps/da78bc4031209344a92caa9d48c779836d4f4ea3b6420078eb2c1882a8507395.sectigo.tsr": "base",
+  "idx-signals/paper/timestamps/e2efba19de77fe3eb8f2fe4a56a61bbdf541f0635cdb6c29244e672918714d61.freetsa.tsr": "base",
+  "idx-signals/paper/timestamps/e2efba19de77fe3eb8f2fe4a56a61bbdf541f0635cdb6c29244e672918714d61.sectigo.tsr": "base",
+  "idx-signals/paper/timestamps/f6ab3035b9b5c56ff6b4de5cbde963ee04d600711cad4a37a541061d3b692756.freetsa.tsr": "base",
+  "idx-signals/paper/timestamps/f6ab3035b9b5c56ff6b4de5cbde963ee04d600711cad4a37a541061d3b692756.sectigo.tsr": "base",
+  "idx-signals/research/IDX_CAUSAL_CAPACITY_v1/PROTOCOL.md": "base",
+  "idx-signals/research/IDX_CAUSAL_CAPACITY_v1/RESULTS.md": "base",
+  "idx-signals/research/IDX_CAUSAL_CAPACITY_v1/compare.py": "base",
+  "idx-signals/research/IDX_CAUSAL_CAPACITY_v1/comparison.json": "base",
+  "idx-signals/research/IDX_CAUSAL_CAPACITY_v1/reproduce_a.json": "base",
+  "idx-signals/research/IDX_CAUSAL_CAPACITY_v1/reproduce_a.py": "base",
+  "idx-signals/research/US_BREAKOUT_v1/SPEC_DRAFT.md": "pr",
+  "idx-signals/research/US_PIPELINE_v1/README.md": "pr",
+  "idx-signals/research/US_PIPELINE_v1/WORKED_EXAMPLES.md": "pr",
+  "idx-signals/research/US_PIPELINE_v1/checks.json": "pr",
+  "idx-signals/research/US_PIPELINE_v1/checks.py": "pr",
+  "idx-signals/research/US_PIPELINE_v1/replay_2023_exec_us_v1.csv": "pr",
+  "idx-signals/research/US_PIPELINE_v1/replay_2023_exec_us_v1_full.json": "pr",
+  "idx-signals/research/US_PIPELINE_v1/worked_examples.py": "pr",
+  "idx-signals/results/runs/20261008T165454Z_MOONSHOT_E2_US_D1_v1/REPORT.md": "pr",
+  "idx-signals/results/runs/20261008T165454Z_MOONSHOT_E2_US_D1_v1/random_draws.csv": "pr",
+  "idx-signals/results/runs/20261008T165454Z_MOONSHOT_E2_US_D1_v1/summary.json": "pr",
+  "idx-signals/results/runs/20261008T165454Z_MOONSHOT_E2_US_D1_v1/trades.csv.gz": "pr",
+  "idx-signals/results/runs/20261009T050040Z_MOONSHOT_E1_D1_v1.1/REPORT.md": "base",
+  "idx-signals/results/runs/20261009T050040Z_MOONSHOT_E1_D1_v1.1/random_draws.csv": "base",
+  "idx-signals/results/runs/20261009T050040Z_MOONSHOT_E1_D1_v1.1/summary.json": "base",
+  "idx-signals/results/runs/20261009T050040Z_MOONSHOT_E1_D1_v1.1/trades.csv.gz": "base",
+  "idx-signals/tests/test_fill_c.py": "base",
+  "idx-signals/tests/test_paper.py": "pr",
+  "idx-signals/tests/test_paper_markets.py": "pr",
+  "idx-signals/tests/test_paper_scorer_v2.py": "pr",
+  "idx-signals/tests/test_us_pipeline.py": "pr",
+  "kod-machine/tests/test_mixed_version_ledger.py": "base"
+ },
+ "pr_head": "7774442f0df8960ccfe17311ac1f8561d497f13a",
+ "problems": [],
+ "result": "PRESERVED",
+ "runs_index_base_all_present": true,
+ "runs_index_pr_all_present": true
+}

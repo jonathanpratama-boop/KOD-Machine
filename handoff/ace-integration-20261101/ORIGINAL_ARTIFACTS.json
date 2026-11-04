@@ -1,0 +1,351 @@
+{
+  "created_utc": "2026-11-01T13:20:34.076640+00:00",
+  "purpose": "TRANSFER_ONLY_EXISTING_IMMUTABLE_ARTIFACTS",
+  "original_archives": [
+    {
+      "requested_input": "old_repair",
+      "path": "originals/KOD-engineering-checkpoint-20261031.zip",
+      "source_library_file_id": "libfile_5cfdd268ae4c819181d0792bc0b38bcd",
+      "source_library_version": 2,
+      "bytes": 976949,
+      "sha256": "aefad3ca7a2033962d5e2f303e698c73d526b5b5727da510ce1edc969ffdfe81",
+      "original_archive_bytes_preserved": true
+    },
+    {
+      "requested_input": "reviewed_paper_v2",
+      "path": "originals/KOD_trend_paper_v2_reviewed_20261101.zip",
+      "source_library_file_id": "libfile_b3671923ae14819181625c63d68a5efe",
+      "source_library_version": 0,
+      "bytes": 98531,
+      "sha256": "ccbd89add6ebfb3ae4389981df0a32c72f9927c48f6af0a1d37de6428866643b",
+      "original_archive_bytes_preserved": true
+    },
+    {
+      "requested_input": "historical_account_proof",
+      "path": "originals/KOD_historical_shared_account_proof_20261101.zip",
+      "source_library_file_id": "libfile_a96ef42eb358819199a648e9e455997e",
+      "source_library_version": 0,
+      "bytes": 5372821,
+      "sha256": "6ec9f6f87f02fac17d85e00aa92406c49c49349c43626ee317babfda18b93037",
+      "original_archive_bytes_preserved": true
+    }
+  ],
+  "reference_profile_existing_files": [
+    {
+      "path": "reference_profile/coinbase_reference_adapter_20261101/ADAPTER_ADDENDUM_1.md",
+      "source_relative_path": "coinbase_reference_adapter_20261101/ADAPTER_ADDENDUM_1.md",
+      "sha256": "5f2352ab32b41912d5f74d0edd89c38a78b8ae8bc9be53aa4eb8bcfde741faec",
+      "bytes": 2998
+    },
+    {
+      "path": "reference_profile/coinbase_reference_adapter_20261101/ADAPTER_ADDENDUM_2.md",
+      "source_relative_path": "coinbase_reference_adapter_20261101/ADAPTER_ADDENDUM_2.md",
+      "sha256": "dd0dd51791c820d51ef8153fda7a06d8e01928bbf2a36624fec2389c1ed50893",
+      "bytes": 3271
+    },
+    {
+      "path": "reference_profile/coinbase_reference_adapter_20261101/ADAPTER_SPEC.md",
+      "source_relative_path": "coinbase_reference_adapter_20261101/ADAPTER_SPEC.md",
+      "sha256": "051803482129e4c90e4b6b306b3e9f982c5ad093a39a591734ba34d7e67e96cc",
+      "bytes": 5217
+    },
+    {
+      "path": "reference_profile/coinbase_reference_adapter_20261101/CORE_PROFILE_DIFF.patch",
+      "source_relative_path": "coinbase_reference_adapter_20261101/CORE_PROFILE_DIFF.patch",
+      "sha256": "5e3b58794cff1273733dc35b0b4b10262752ea7b2d2c6a2bf7120d3444ef6c10",
+      "bytes": 8039
+    },
+    {
+      "path": "reference_profile/coinbase_reference_adapter_20261101/HANDOFF.md",
+      "source_relative_path": "coinbase_reference_adapter_20261101/HANDOFF.md",
+      "sha256": "5109440911d66ec3988943945037077d2ee8fdbffd7c0c7fee2200430deb1e09",
+      "bytes": 5089
+    },
+    {
+      "path": "reference_profile/coinbase_reference_adapter_20261101/README.md",
+      "source_relative_path": "coinbase_reference_adapter_20261101/README.md",
+      "sha256": "1e8dca6e2831be998b553b39cbb39956c9007809d2e165d7c3247b02c9a44e91",
+      "bytes": 5070
+    },
+    {
+      "path": "reference_profile/coinbase_reference_adapter_20261101/SOURCE_PINS.json",
+      "source_relative_path": "coinbase_reference_adapter_20261101/SOURCE_PINS.json",
+      "sha256": "197a3e95ac480b11e202e7ac0d99ed2860e8e87c5f58f114ce86b5f058903575",
+      "bytes": 764
+    },
+    {
+      "path": "reference_profile/coinbase_reference_adapter_20261101/TEST_RESULTS_NORMAL.txt",
+      "source_relative_path": "coinbase_reference_adapter_20261101/TEST_RESULTS_NORMAL.txt",
+      "sha256": "23c0f6dda3311474f65ba003c6cc5f491a85b106230bc9b7d508e1d7617c4673",
+      "bytes": 3593
+    },
+    {
+      "path": "reference_profile/coinbase_reference_adapter_20261101/TEST_RESULTS_OPTIMIZED.txt",
+      "source_relative_path": "coinbase_reference_adapter_20261101/TEST_RESULTS_OPTIMIZED.txt",
+      "sha256": "5d5eacf0014d0337527d41692f7860868f0d6713e255e45d5288faf5d21f06ab",
+      "bytes": 3593
+    },
+    {
+      "path": "reference_profile/coinbase_reference_adapter_20261101/adapter.py",
+      "source_relative_path": "coinbase_reference_adapter_20261101/adapter.py",
+      "sha256": "ad8425a4159d30e0e4cb0f0ec8f3a411b49c6e28b608836795721e2d4371f69d",
+      "bytes": 14456
+    },
+    {
+      "path": "reference_profile/coinbase_reference_adapter_20261101/paper_reference_core.py",
+      "source_relative_path": "coinbase_reference_adapter_20261101/paper_reference_core.py",
+      "sha256": "8c1920f9c89acd92ca51914a9f5ff8d3dfeeeb3b8f1c485f6c4c544b87af703e",
+      "bytes": 24722
+    },
+    {
+      "path": "reference_profile/coinbase_reference_adapter_20261101/run_once.py",
+      "source_relative_path": "coinbase_reference_adapter_20261101/run_once.py",
+      "sha256": "5e19b953f81e2bcd7acec0368d6c5d776fcb72309f333abe7615f9394b956d1c",
+      "bytes": 6636
+    },
+    {
+      "path": "reference_profile/coinbase_reference_adapter_20261101/tests/mock_fixtures.py",
+      "source_relative_path": "coinbase_reference_adapter_20261101/tests/mock_fixtures.py",
+      "sha256": "d9c22ca6c3d878133ff93bec4b623b5bee2be7f20b108f12159e8cb2d1c26615",
+      "bytes": 3113
+    },
+    {
+      "path": "reference_profile/coinbase_reference_adapter_20261101/tests/test_adapter.py",
+      "source_relative_path": "coinbase_reference_adapter_20261101/tests/test_adapter.py",
+      "sha256": "54e1fd2f326e053b9643a204f7faeff574f2895ed76ee542a6a4e126a57ce54f",
+      "bytes": 10644
+    },
+    {
+      "path": "reference_profile/coinbase_reference_adapter_20261101/tests/test_run_once.py",
+      "source_relative_path": "coinbase_reference_adapter_20261101/tests/test_run_once.py",
+      "sha256": "13e1bc5dbfe1fdc35a24bc450aef1e09e9aceaf1b9b7a90a9b155d9d940450c2",
+      "bytes": 4365
+    },
+    {
+      "path": "reference_profile/coinbase_reference_adapter_20261101/vendor/paper_candidate_v2_original.py",
+      "source_relative_path": "coinbase_reference_adapter_20261101/vendor/paper_candidate_v2_original.py",
+      "sha256": "dbda12d461cb601693d6fa77737b8e0f955c9b0f2b7732841a2d9488f6c834c3",
+      "bytes": 23516
+    },
+    {
+      "path": "reference_profile/coinbase_reference_adapter_20261101/vendor/paper_cash_accounting.py",
+      "source_relative_path": "coinbase_reference_adapter_20261101/vendor/paper_cash_accounting.py",
+      "sha256": "29688797f6738e4aa02ca87403a5a90d60dec0bca54cffab36a4a4a7e266f8a6",
+      "bytes": 8165
+    },
+    {
+      "path": "reference_profile/coinbase-independent-audit/REVIEW.md",
+      "source_relative_path": "coinbase-independent-audit/REVIEW.md",
+      "sha256": "00f1e8e2712a3d8f13f6f7253e2e317d33349368729f1ab2713c22c58c958631",
+      "bytes": 6106
+    },
+    {
+      "path": "reference_profile/coinbase-independent-audit/REVIEW_CLEARANCE.json",
+      "source_relative_path": "coinbase-independent-audit/REVIEW_CLEARANCE.json",
+      "sha256": "2ae08eceefe1a68851db7c3a30ff15546a3613505719f8ec4f2aa2c9acf6ac72",
+      "bytes": 1347
+    },
+    {
+      "path": "reference_profile/coinbase-independent-audit/combined-normal.txt",
+      "source_relative_path": "coinbase-independent-audit/combined-normal.txt",
+      "sha256": "b1420ed8962498dec6035b9d126aef17fc8413220dfa747e3694a876ddc03eb6",
+      "bytes": 6791
+    },
+    {
+      "path": "reference_profile/coinbase-independent-audit/combined-optimized.txt",
+      "source_relative_path": "coinbase-independent-audit/combined-optimized.txt",
+      "sha256": "42b0b965d240a0ba92f56f9cfa9ae4847460fdcfac054c91ccddfb82291137ba",
+      "bytes": 6791
+    },
+    {
+      "path": "reference_profile/coinbase-independent-audit/freshness-prefinal.txt",
+      "source_relative_path": "coinbase-independent-audit/freshness-prefinal.txt",
+      "sha256": "ed26e3b39142587b56684d4c85f66b54e0c6c76eb2b6f815fada1fbedba84685",
+      "bytes": 4531
+    },
+    {
+      "path": "reference_profile/coinbase-independent-audit/independent-normal.txt",
+      "source_relative_path": "coinbase-independent-audit/independent-normal.txt",
+      "sha256": "2f0f5fad2b2c8ddf95aa4268cedf1f34ad898436e812c8714954e03c46d76852",
+      "bytes": 2899
+    },
+    {
+      "path": "reference_profile/coinbase-independent-audit/initial-results.txt",
+      "source_relative_path": "coinbase-independent-audit/initial-results.txt",
+      "sha256": "5fbcf1f918cd7c6ce2a28b6c86fe609586947177dfedd2bbdacc4a54c16b4def",
+      "bytes": 4924
+    },
+    {
+      "path": "reference_profile/coinbase-independent-audit/original30-optimized-regression.txt",
+      "source_relative_path": "coinbase-independent-audit/original30-optimized-regression.txt",
+      "sha256": "34a835fc9f83d1f95ede2aff756d25c82a0265abc3d35f40572407a28523ce8a",
+      "bytes": 4313
+    },
+    {
+      "path": "reference_profile/coinbase-independent-audit/original30-regression.txt",
+      "source_relative_path": "coinbase-independent-audit/original30-regression.txt",
+      "sha256": "9a452d32487bf72189fe436f8b1bb74f9b7abf0edc4c49f326b17377c3d19a46",
+      "bytes": 4313
+    },
+    {
+      "path": "reference_profile/coinbase-independent-audit/run_combined.py",
+      "source_relative_path": "coinbase-independent-audit/run_combined.py",
+      "sha256": "013aa3a6c3b91bbf911f590ce18ca3521c23a1ee7e63dd2ef6aa7fdbac261896",
+      "bytes": 734
+    },
+    {
+      "path": "reference_profile/coinbase-independent-audit/test_freshness.py",
+      "source_relative_path": "coinbase-independent-audit/test_freshness.py",
+      "sha256": "1c36371a0faef021eabde97bcdc6d5ede3e51994e66f4e5d6dda69e4e0605ccf",
+      "bytes": 3139
+    },
+    {
+      "path": "reference_profile/coinbase-independent-audit/test_independent.py",
+      "source_relative_path": "coinbase-independent-audit/test_independent.py",
+      "sha256": "771f079666a726b016fa3f8233827ebe4822eebfc2d52f2159359e91c8796d43",
+      "bytes": 9157
+    },
+    {
+      "path": "reference_profile/coinbase_reference_capture_20261101T1107/input_exposure.json",
+      "source_relative_path": "coinbase_reference_capture_20261101T1107/input_exposure.json",
+      "sha256": "b04f9a89a349150e2b14944236a6527c16555886918e6490c61ce380114b943a",
+      "bytes": 140
+    },
+    {
+      "path": "reference_profile/coinbase_reference_capture_20261101T1107/outcome.json",
+      "source_relative_path": "coinbase_reference_capture_20261101T1107/outcome.json",
+      "sha256": "fb99c44dce6433c5d9be8e07c3de1bb9cf2c992b135fedbca7d5d61d20db091d",
+      "bytes": 542
+    },
+    {
+      "path": "reference_profile/coinbase_reference_capture_20261101T1107/responses/01_error.json",
+      "source_relative_path": "coinbase_reference_capture_20261101T1107/responses/01_error.json",
+      "sha256": "fd298ee3736c16934732bc21f3584271c293b297d611bf81239b4366041a257e",
+      "bytes": 451
+    },
+    {
+      "path": "reference_profile/coinbase_reference_capture_20261101T1107/run_manifest.json",
+      "source_relative_path": "coinbase_reference_capture_20261101T1107/run_manifest.json",
+      "sha256": "56b2dc9a226d048328f079d605b617d107ab3eebf77591deb7ebc8f3585e197c",
+      "bytes": 2663
+    },
+    {
+      "path": "reference_profile/trend_core_paper_v2_candidate_20261101/IMPLEMENTATION_REPAIR_NOTES.md",
+      "source_archive": "deliverables/KOD_trend_paper_v2_reviewed_20261101.zip",
+      "source_member": "KOD_trend_paper_v2_reviewed_20261101/trend_core_paper_v2_candidate_20261101/IMPLEMENTATION_REPAIR_NOTES.md",
+      "sha256": "089a49e883e91115a5a82b225e04bd1ff6eaef7b0600c941e393cac5a4bd10d5",
+      "bytes": 1885
+    },
+    {
+      "path": "reference_profile/trend_core_paper_v2_candidate_20261101/PAPER_PROTOCOL_v2_CANDIDATE.md",
+      "source_archive": "deliverables/KOD_trend_paper_v2_reviewed_20261101.zip",
+      "source_member": "KOD_trend_paper_v2_reviewed_20261101/trend_core_paper_v2_candidate_20261101/PAPER_PROTOCOL_v2_CANDIDATE.md",
+      "sha256": "94a6508600ae50766c7ab9efdd74bb069e41076c575a94f68b0f58f31be5b22c",
+      "bytes": 6998
+    },
+    {
+      "path": "reference_profile/trend_core_paper_v2_candidate_20261101/PROTOCOL_ADDENDUM_1.md",
+      "source_archive": "deliverables/KOD_trend_paper_v2_reviewed_20261101.zip",
+      "source_member": "KOD_trend_paper_v2_reviewed_20261101/trend_core_paper_v2_candidate_20261101/PROTOCOL_ADDENDUM_1.md",
+      "sha256": "e371b30f1f536b75732879e12cf941f445fdaa41b79f5b72b6148daa553ecf95",
+      "bytes": 1086
+    },
+    {
+      "path": "reference_profile/trend_core_paper_v2_candidate_20261101/README.md",
+      "source_archive": "deliverables/KOD_trend_paper_v2_reviewed_20261101.zip",
+      "source_member": "KOD_trend_paper_v2_reviewed_20261101/trend_core_paper_v2_candidate_20261101/README.md",
+      "sha256": "dc7e9ff5d3ca0fd109ed7a0b76618b573270bc0060d88fc0def7d67aee631f64",
+      "bytes": 5420
+    },
+    {
+      "path": "reference_profile/trend_core_paper_v2_candidate_20261101/SOURCE_PINS.json",
+      "source_archive": "deliverables/KOD_trend_paper_v2_reviewed_20261101.zip",
+      "source_member": "KOD_trend_paper_v2_reviewed_20261101/trend_core_paper_v2_candidate_20261101/SOURCE_PINS.json",
+      "sha256": "eb1d403ab6e07f1c63063f5fa65ea7158c70e528702d9cd1c4587f377630fe50",
+      "bytes": 1139
+    },
+    {
+      "path": "reference_profile/trend_core_paper_v2_candidate_20261101/V1_OPERATIONAL_AUDIT.md",
+      "source_archive": "deliverables/KOD_trend_paper_v2_reviewed_20261101.zip",
+      "source_member": "KOD_trend_paper_v2_reviewed_20261101/trend_core_paper_v2_candidate_20261101/V1_OPERATIONAL_AUDIT.md",
+      "sha256": "5f6444e0bff7a34915db13c27b225619a3da63a02ee866d99ab07528bcdae5bb",
+      "bytes": 4441
+    },
+    {
+      "path": "reference_profile/trend_core_paper_v2_candidate_20261101/demo.py",
+      "source_archive": "deliverables/KOD_trend_paper_v2_reviewed_20261101.zip",
+      "source_member": "KOD_trend_paper_v2_reviewed_20261101/trend_core_paper_v2_candidate_20261101/demo.py",
+      "sha256": "764d847542d5eb2162f194c6b943ef14321d755ff5e705adf6ae184c67cee184",
+      "bytes": 2130
+    },
+    {
+      "path": "reference_profile/trend_core_paper_v2_candidate_20261101/fixtures.py",
+      "source_archive": "deliverables/KOD_trend_paper_v2_reviewed_20261101.zip",
+      "source_member": "KOD_trend_paper_v2_reviewed_20261101/trend_core_paper_v2_candidate_20261101/fixtures.py",
+      "sha256": "db8e5cd4b225864daa2d5b5dca300247f25690bb7db3b072027ad037a807397c",
+      "bytes": 2145
+    },
+    {
+      "path": "reference_profile/trend_core_paper_v2_candidate_20261101/paper_candidate.py",
+      "source_archive": "deliverables/KOD_trend_paper_v2_reviewed_20261101.zip",
+      "source_member": "KOD_trend_paper_v2_reviewed_20261101/trend_core_paper_v2_candidate_20261101/paper_candidate.py",
+      "sha256": "dbda12d461cb601693d6fa77737b8e0f955c9b0f2b7732841a2d9488f6c834c3",
+      "bytes": 23516
+    },
+    {
+      "path": "reference_profile/trend_core_paper_v2_candidate_20261101/tests/test_candidate.py",
+      "source_archive": "deliverables/KOD_trend_paper_v2_reviewed_20261101.zip",
+      "source_member": "KOD_trend_paper_v2_reviewed_20261101/trend_core_paper_v2_candidate_20261101/tests/test_candidate.py",
+      "sha256": "eb8187b1790d4a3b04abae1dbc2b973c483bf6d7094dd1b7dcaba1bb7ae4dfd8",
+      "bytes": 13702
+    },
+    {
+      "path": "reference_profile/trend_core_paper_v2_candidate_20261101/v1/DUPLICATE_AUDIT_METADATA.json",
+      "source_archive": "deliverables/KOD_trend_paper_v2_reviewed_20261101.zip",
+      "source_member": "KOD_trend_paper_v2_reviewed_20261101/trend_core_paper_v2_candidate_20261101/v1/DUPLICATE_AUDIT_METADATA.json",
+      "sha256": "0e9ded269d8d9eb6a6b63ea59709caa6c1732a742c1be5f78c43907c2c1fa6bc",
+      "bytes": 1460
+    },
+    {
+      "path": "reference_profile/trend_core_paper_v2_candidate_20261101/v1/PAPER_PROTOCOL.md",
+      "source_archive": "deliverables/KOD_trend_paper_v2_reviewed_20261101.zip",
+      "source_member": "KOD_trend_paper_v2_reviewed_20261101/trend_core_paper_v2_candidate_20261101/v1/PAPER_PROTOCOL.md",
+      "sha256": "e48ddf92c37ec51ea3ba53aecfa0562f1e99d5939dbb365e6e1e9da1816b8812",
+      "bytes": 2434
+    },
+    {
+      "path": "reference_profile/trend_core_paper_v2_candidate_20261101/v1/PINS.json",
+      "source_archive": "deliverables/KOD_trend_paper_v2_reviewed_20261101.zip",
+      "source_member": "KOD_trend_paper_v2_reviewed_20261101/trend_core_paper_v2_candidate_20261101/v1/PINS.json",
+      "sha256": "555595b79ad8bbcd5612d48d04cb34f188f86a63464877c47f91cb5e9be28e47",
+      "bytes": 131
+    },
+    {
+      "path": "reference_profile/trend_core_paper_v2_candidate_20261101/v1/ledger.jsonl",
+      "source_archive": "deliverables/KOD_trend_paper_v2_reviewed_20261101.zip",
+      "source_member": "KOD_trend_paper_v2_reviewed_20261101/trend_core_paper_v2_candidate_20261101/v1/ledger.jsonl",
+      "sha256": "0b45dd59ed8f4dfb673c7cb4acd94844bdfe493a17f83597b0fbba0cf4556199",
+      "bytes": 1572
+    },
+    {
+      "path": "reference_profile/trend_core_paper_v2_candidate_20261101/v1/log_decision.py",
+      "source_archive": "deliverables/KOD_trend_paper_v2_reviewed_20261101.zip",
+      "source_member": "KOD_trend_paper_v2_reviewed_20261101/trend_core_paper_v2_candidate_20261101/v1/log_decision.py",
+      "sha256": "191110a3007ced5040f367e770392a09cbc8adfbed0cb28d37e2e9a839fc775b",
+      "bytes": 3177
+    },
+    {
+      "path": "reference_profile/trend_core_paper_v2_candidate_20261101/vendor/paper_cash_accounting.py",
+      "source_archive": "deliverables/KOD_trend_paper_v2_reviewed_20261101.zip",
+      "source_member": "KOD_trend_paper_v2_reviewed_20261101/trend_core_paper_v2_candidate_20261101/vendor/paper_cash_accounting.py",
+      "sha256": "29688797f6738e4aa02ca87403a5a90d60dec0bca54cffab36a4a4a7e266f8a6",
+      "bytes": 8165
+    }
+  ],
+  "excluded_reference_files": [
+    "__pycache__ directories",
+    "*.pyc interpreter caches"
+  ],
+  "no_product_code_changes": true,
+  "no_new_research_or_market_requests": true
+}

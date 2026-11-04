@@ -1,0 +1,1569 @@
+{
+  "base_commit": "7aad4311eb89f713107c96659c2000034bfa9c10",
+  "upstream_source_files": [
+    {
+      "path": "idx-signals/README.md",
+      "git_blob_sha": "66f5b85af50e6162b4802aa97ddb48c477777573",
+      "sha256": "5639cac18ee96c7ac31e84e98111c73a8be90ad0481be84da6e1fbeed4351f19",
+      "bytes": 26509
+    },
+    {
+      "path": "idx-signals/constraints-research.txt",
+      "git_blob_sha": "22b74e8df4352dad7a5d0e51f14c1f84b7b3fd07",
+      "sha256": "5f2aebeb9818d71d83fd919cbf0ea8bd7b8ab0445f453b2cbaa9a4d88dde816f",
+      "bytes": 246
+    },
+    {
+      "path": "idx-signals/requirements.txt",
+      "git_blob_sha": "c6203a730cdfc01ca542ed5f0ba4a07844c429c1",
+      "sha256": "9c0434832d20047d9a9fcc451935cf5ed7a4f277a2319e392663ba0cc3ddbf4e",
+      "bytes": 84
+    },
+    {
+      "path": "idx-signals/idxsig/__init__.py",
+      "git_blob_sha": "272b4772d2ef5a227c771e614db33d1331df5fa1",
+      "sha256": "2f04016eea982bf97ab28d35058617dae3209ec4d132e5abe925f8d5aaa35492",
+      "bytes": 90
+    },
+    {
+      "path": "idx-signals/idxsig/__main__.py",
+      "git_blob_sha": "e2f066e969037c353c9cd858b9d30e6e1ff50837",
+      "sha256": "0f211b66d65927802a5f49acd8e0df96029d07e507be8ca31ae28f7454be1db7",
+      "bytes": 85
+    },
+    {
+      "path": "idx-signals/idxsig/backtest.py",
+      "git_blob_sha": "a4a16da0248b45b0a25f77e17cc1dbba6f316081",
+      "sha256": "408cf8a5ccfe6e763d1a2a6dd6ed174cc6d06f700b164a339a1ee27559371e3c",
+      "bytes": 42592
+    },
+    {
+      "path": "idx-signals/idxsig/breakout.py",
+      "git_blob_sha": "325638218c7ddf1393a6770fbfb2da27ffe04433",
+      "sha256": "256b9f962b680e8218212ed32c48ec6aca92571542ffb85874d5d301f0d443f2",
+      "bytes": 3965
+    },
+    {
+      "path": "idx-signals/idxsig/calendar_us.py",
+      "git_blob_sha": "b28d68a60a784cd4c997b08ee606915850407111",
+      "sha256": "8c4af36c5a1443cfdbf51db26d4b9f3491880f19508ac48a0da374391b49d5fa",
+      "bytes": 3421
+    },
+    {
+      "path": "idx-signals/idxsig/call_cert.py",
+      "git_blob_sha": "942af4cd94cdb4ae44a539e6ac5a55058574074c",
+      "sha256": "74d8a672ff54cedd33ef8adf3c266fb40f0431200bdc59be0c99eb68a4108c33",
+      "bytes": 10724
+    },
+    {
+      "path": "idx-signals/idxsig/catalyst.py",
+      "git_blob_sha": "83d05a90f4eb193916fd40e39a87ca0875d98fa5",
+      "sha256": "dd176424227d6899f449b8f8353a11df8394c41353ddbe08ef01a3ebb3688609",
+      "bytes": 7777
+    },
+    {
+      "path": "idx-signals/idxsig/catalysts.py",
+      "git_blob_sha": "6dc9bc3e62d05848052243233151e8089d195829",
+      "sha256": "02141b71730e54e740620b3e70aa6f2b2eea685bbc0b1f7005ba49f833ba2c9b",
+      "bytes": 81803
+    },
+    {
+      "path": "idx-signals/idxsig/cli.py",
+      "git_blob_sha": "da373132d6903e2d346b257f37387d15ad17b76c",
+      "sha256": "d0cea81dea0baa9c8a5af5756e5b2b3a42a91d082070824107ccc4a57ef6cd39",
+      "bytes": 85398
+    },
+    {
+      "path": "idx-signals/idxsig/coinglass.py",
+      "git_blob_sha": "28a895194b7f537e28401ae85ceaeb7e2ece88b2",
+      "sha256": "985d388e2b98b6ba581a3c0ec310a595fc382ca7f1034bebb11fe463def22f95",
+      "bytes": 20116
+    },
+    {
+      "path": "idx-signals/idxsig/contract.py",
+      "git_blob_sha": "3409bc11d22d90c0a43ff3f5c1576e0b35ed336b",
+      "sha256": "eee06ea5a40464f4194f5d94a78867f8c9d53720c521dadc55ec2a602d1e5bac",
+      "bytes": 35047
+    },
+    {
+      "path": "idx-signals/idxsig/controls.py",
+      "git_blob_sha": "59c194bd1d3594b148d34baa09e4d1ad663d5f41",
+      "sha256": "5e5ca6fb5a981d0cf66600d971b2531ad34c854a90ad4ecfe9ab40cedf915c0c",
+      "bytes": 14690
+    },
+    {
+      "path": "idx-signals/idxsig/corporate_actions.py",
+      "git_blob_sha": "48b6751cfcee61d9a7bc8e61a4ee81bd1cf5c9be",
+      "sha256": "e5d638ae24c06b026d25cb393673d869ead2949a9aa230655bb3448a679823f0",
+      "bytes": 21141
+    },
+    {
+      "path": "idx-signals/idxsig/crypto_account.py",
+      "git_blob_sha": "c651a71f7265226f7105fbdd205a806cfcc56b40",
+      "sha256": "cca81549a89c59c6dbb2b652939c72b4e92f8a8c6287bda2f5a9c965cbb0104c",
+      "bytes": 27662
+    },
+    {
+      "path": "idx-signals/idxsig/crypto_replay.py",
+      "git_blob_sha": "4b78eb5e92c2134d29c7727d74761bfa0b79ff33",
+      "sha256": "aa04635e569a251cbec79eed68f17a51fc2bacb9cbe52f35e4568d54b807264a",
+      "bytes": 25309
+    },
+    {
+      "path": "idx-signals/idxsig/e1.py",
+      "git_blob_sha": "ae4521b65e4a7a770eaf2dc6920adfdb0082b102",
+      "sha256": "b91fd156b73c08325d01a4079ed2a5cf49229aeaa833e468baabb14c27e91cde",
+      "bytes": 32434
+    },
+    {
+      "path": "idx-signals/idxsig/e3.py",
+      "git_blob_sha": "774af13afa61a60f9d1e20eff29d79d5990f507e",
+      "sha256": "99ad824475f3f4781365ab3a51ca6f4e7f903cf00696e2e6ed56ce64306f0c5e",
+      "bytes": 17013
+    },
+    {
+      "path": "idx-signals/idxsig/e4.py",
+      "git_blob_sha": "4ce9a85769d47a9105be9dbd1bd797a1a211e5dd",
+      "sha256": "e5a43a81c7ea82161a47d23ebd2af138fa3763223a06e0830ed9ab439c7d889b",
+      "bytes": 16274
+    },
+    {
+      "path": "idx-signals/idxsig/e5.py",
+      "git_blob_sha": "01864023a4bfd527b4fce4c15576bf087204b0b9",
+      "sha256": "a8f25ab1f30db4891f4d1a58dd5c8f47626db22487239940208302e50e8cbbd1",
+      "bytes": 95720
+    },
+    {
+      "path": "idx-signals/idxsig/e6.py",
+      "git_blob_sha": "b382c2c29c200ef20e0ca577a4c173299a95885a",
+      "sha256": "07d5ba77a703731101b93b168e847fc217089887fb499942b3d40595c421758e",
+      "bytes": 23685
+    },
+    {
+      "path": "idx-signals/idxsig/e8.py",
+      "git_blob_sha": "b99f40223be7c702eb4ede7e490b3db1a493cb84",
+      "sha256": "90d34d787f5c15d04580bc3df1a92df02ec7fd9d69780b7f893a5b8b023b22b9",
+      "bytes": 25728
+    },
+    {
+      "path": "idx-signals/idxsig/event_study.py",
+      "git_blob_sha": "ff54b1ea39a605991979bb87a7dfe6cd7adbeb88",
+      "sha256": "22bba6ca16b88b3a113c762fcdbfab01c5a6518d0ebce7f6017df21e1f7788ca",
+      "bytes": 6600
+    },
+    {
+      "path": "idx-signals/idxsig/exec_us.py",
+      "git_blob_sha": "0b6c6517237170c22249231b03bdd54c5ceed530",
+      "sha256": "74f0277bf43dd33b8003b8b08cb8d04eae1e3308bebc225ed0a25592e2a11c56",
+      "bytes": 14246
+    },
+    {
+      "path": "idx-signals/idxsig/execution.py",
+      "git_blob_sha": "6ec72c4033f4781fa902b2ffb8298d1ec21fa6e4",
+      "sha256": "16c47aab157d55c68f797275eb12f0cfe1336f705ecec082e1b0b52ffaa87112",
+      "bytes": 46492
+    },
+    {
+      "path": "idx-signals/idxsig/exit_atr.py",
+      "git_blob_sha": "e87b44a1b3a10497ec1266062d6ae25365b669fa",
+      "sha256": "57a08ec8db8ff8a5ba40c5383849dca1606a7ee83d343ddf9bc76ea33f055c6d",
+      "bytes": 5553
+    },
+    {
+      "path": "idx-signals/idxsig/fam_dilution8k.py",
+      "git_blob_sha": "d0323155043ff4783f878785d8ba3fd2ed5dc563",
+      "sha256": "2c4e18f5ddc5672661709bb0327d0e0bce540a548dd09f94d6cca4b60ea827ea",
+      "bytes": 15777
+    },
+    {
+      "path": "idx-signals/idxsig/fam_form4.py",
+      "git_blob_sha": "18d0d93529becd950969b05561cd2fd367cc4548",
+      "sha256": "8195eb1d06c694471c32e54cd6cebb7173c48c5d39f1451f06affc0f86171902",
+      "bytes": 24826
+    },
+    {
+      "path": "idx-signals/idxsig/fam_form4_sharp.py",
+      "git_blob_sha": "3499590c7c55a9b5059e50f11e6aa1d2bfccba92",
+      "sha256": "42b50f104ed168685583e191f833214ed4e90c14adbb6c5f2d73ef38178a7315",
+      "bytes": 19568
+    },
+    {
+      "path": "idx-signals/idxsig/fam_sec13d_v2.py",
+      "git_blob_sha": "2fecaf6857ebc1b9f8906f49b9902f0b6840f6b9",
+      "sha256": "f879b1d2d325851d5641e063cacc73228b1622540c5ae799d1f6fdb5ad00a571",
+      "bytes": 17399
+    },
+    {
+      "path": "idx-signals/idxsig/flow_features.py",
+      "git_blob_sha": "24368061cf7c105c63c1756f144b821276de1a16",
+      "sha256": "658b53d066838b33d600c4dc869523ca02767a8604add78f68093197716b14f5",
+      "bytes": 4001
+    },
+    {
+      "path": "idx-signals/idxsig/global_panel.py",
+      "git_blob_sha": "80336794149534b2c290b3b39adc37b787fce9bd",
+      "sha256": "ebe4ef40b1e8bdb55063a2dfd5c9301f228fe3c9122f9a36f5b738f69a0587d7",
+      "bytes": 22920
+    },
+    {
+      "path": "idx-signals/idxsig/guidance.py",
+      "git_blob_sha": "5885babd28f5d0e5f3e94ee61a4a375002cef27d",
+      "sha256": "be55744bc69cd4cd43ed3bd390ab8bce71680d880f3b872e6bba2433d2eb531a",
+      "bytes": 7568
+    },
+    {
+      "path": "idx-signals/idxsig/guidance_paper.py",
+      "git_blob_sha": "066c09be012e3501bd057061deb2e40e8ab84aac",
+      "sha256": "2e9b1b83a9e9aaedd90d20642361773787e1ffa6d1689ef897f6ca051c73dc2d",
+      "bytes": 8970
+    },
+    {
+      "path": "idx-signals/idxsig/guidance_revision.py",
+      "git_blob_sha": "6b9615a0374ed3a937f6ef87bb0fb71d7874b49c",
+      "sha256": "b1647f63600da6bdd6bcd678fa57ccc384650ce62bced93391521816c1c07f42",
+      "bytes": 20843
+    },
+    {
+      "path": "idx-signals/idxsig/guidance_v2.py",
+      "git_blob_sha": "afa7a25394785bce4d87982db523f30b12ae933e",
+      "sha256": "7b62e34899e8e7a60151881f459e74926bafb2667dfaeb9debeb7882fc507115",
+      "bytes": 7473
+    },
+    {
+      "path": "idx-signals/idxsig/guidance_watch.py",
+      "git_blob_sha": "b851381b22e56fb8fc6cb43bb1cade7258b7a030",
+      "sha256": "66dde39a9bc4bec315621f75355cc5cdff394f149839ad5300ed83e489b0710b",
+      "bytes": 4609
+    },
+    {
+      "path": "idx-signals/idxsig/idea_grader.py",
+      "git_blob_sha": "b584be9a8a84239d76052ca0583647705e451883",
+      "sha256": "89b8c055a5353365224f0670379f1c2d6169dadbd5e66e9b8a4a1e8c5497fc9b",
+      "bytes": 11997
+    },
+    {
+      "path": "idx-signals/idxsig/idx_events.py",
+      "git_blob_sha": "831350f6cdfadbc4356cea3df3132d7dad08bf65",
+      "sha256": "db9190348b1f11542fdd7b5b1c2ee59a178d5a8865d8a24f70537fc943debfb3",
+      "bytes": 8321
+    },
+    {
+      "path": "idx-signals/idxsig/intl_panel.py",
+      "git_blob_sha": "8f8b5581de87b6638dc77932f79073275ddee8a0",
+      "sha256": "cb697650d41621ff77513d692a07d9f75555ef33a53c1c754ab1d9735e9380ef",
+      "bytes": 5818
+    },
+    {
+      "path": "idx-signals/idxsig/lead_ladder.py",
+      "git_blob_sha": "d0d14640b95ec8797019be5bc39d71b081e19ca0",
+      "sha256": "a79b6a5864482a4dead724573111ae957d039d2ed6c01ec5872b203c2e9e1dbb",
+      "bytes": 15218
+    },
+    {
+      "path": "idx-signals/idxsig/learner.py",
+      "git_blob_sha": "c367e9516696fb55c84c539fd2870d88ba0a1240",
+      "sha256": "c99dd9b2be9216b4e4c5ca57e95cfe02226029e3230a7443d024747f24a1a53e",
+      "bytes": 19958
+    },
+    {
+      "path": "idx-signals/idxsig/learner2.py",
+      "git_blob_sha": "291216f6b618197802754964f3361f8022b8faa1",
+      "sha256": "671f86848ad5ee0a9bd3488a17b788c3459f5499c82a39386bef2dc611f2b9e6",
+      "bytes": 63744
+    },
+    {
+      "path": "idx-signals/idxsig/learner3.py",
+      "git_blob_sha": "657233962be2f7db469b6264e1852314c5a3a199",
+      "sha256": "38951c27b6acd2d7fe9cc19c8a8a500a3ce7809f8aaf4b12823095fe089cfcd8",
+      "bytes": 54968
+    },
+    {
+      "path": "idx-signals/idxsig/learner_evaluation.py",
+      "git_blob_sha": "f0625ef3a792681e258a2730fc040288f48efda0",
+      "sha256": "75b31d515b629009c6ae9f66200b1602f709cbea57842a4050d6d486f8ba6eb0",
+      "bytes": 12742
+    },
+    {
+      "path": "idx-signals/idxsig/market.py",
+      "git_blob_sha": "32b208eb9dafdc503e153c32a3b1a62de89bc913",
+      "sha256": "e9e9328af46a871d6a8bc929ab10889f071bcdbef4be6d85f6fe1d26bd2f9cbc",
+      "bytes": 5133
+    },
+    {
+      "path": "idx-signals/idxsig/microstructure.py",
+      "git_blob_sha": "ea739054409d97927a23266b62cc6ecd6309ba0b",
+      "sha256": "5c9ea4962212b50f170d1c142c119b7cb1eebb77f2f36fba87c610f41a2eeff7",
+      "bytes": 24382
+    },
+    {
+      "path": "idx-signals/idxsig/multiple_testing.py",
+      "git_blob_sha": "bdf34e4ca5a2633d9a2a4dc394c767affb66c147",
+      "sha256": "9715c4ec9e1c1da80ace2218bbbda85f5f7d274c0654e23be7e512c476dffeea",
+      "bytes": 2620
+    },
+    {
+      "path": "idx-signals/idxsig/panel.py",
+      "git_blob_sha": "d7444e99b342583789d9d123f9bfdf43ded1a73d",
+      "sha256": "b37aa0399691ae941d2ece7090365a1faf68372c432afef199c432f435b3a36d",
+      "bytes": 17847
+    },
+    {
+      "path": "idx-signals/idxsig/paper.py",
+      "git_blob_sha": "474d89333788f9499ec114caf5dde34194e2fcdf",
+      "sha256": "c9c017d27f453e232ccc9db1401f9c83da9a544e6ef1422b7e7636f32fdeb624",
+      "bytes": 96210
+    },
+    {
+      "path": "idx-signals/idxsig/paper_account.py",
+      "git_blob_sha": "ea23f12facf9a349c8febb135f90e52683359714",
+      "sha256": "2d7cbc536695d0298b3bfa508824bd5e68ea8c6566800e59a0681666dbb00bfd",
+      "bytes": 25528
+    },
+    {
+      "path": "idx-signals/idxsig/paper_account_report.py",
+      "git_blob_sha": "a2dd3b6592b73095f82dd86d0d150f920e48d798",
+      "sha256": "67a259fd134b64fb770bce47bca1ee396772abd74cfda0d2c66d44f18a319cff",
+      "bytes": 8482
+    },
+    {
+      "path": "idx-signals/idxsig/paper_book.py",
+      "git_blob_sha": "4f1e96d7f54e1f7a770d18efeb73183f488d4aea",
+      "sha256": "90dfb98d71bdee9d28ac7c52799083869b6e5a802445bec8cbf6aedbcf642e12",
+      "bytes": 13815
+    },
+    {
+      "path": "idx-signals/idxsig/premove.py",
+      "git_blob_sha": "c2bf2e23f386f58fd18ed8cdd46ad37390bd51bb",
+      "sha256": "53d161019b9df1c79ef9a738120c4930c56c4cdfcccb284fe0392ae08aebff8c",
+      "bytes": 19379
+    },
+    {
+      "path": "idx-signals/idxsig/premove_core.py",
+      "git_blob_sha": "bfb8f13e6863f3865848abb43e7a0698080632eb",
+      "sha256": "c76686dc5272ef920698fd5f0a85277c1501ed863260b547bcb78e91b16d8c62",
+      "bytes": 17106
+    },
+    {
+      "path": "idx-signals/idxsig/premove_shadow.py",
+      "git_blob_sha": "e32143505c15a8e741e95f68f6e0966d6c2d0249",
+      "sha256": "3bed4b67225fa50dcbf71e6e56113c333ad201385e9ca1cf9a69bcc32ebc59ad",
+      "bytes": 19904
+    },
+    {
+      "path": "idx-signals/idxsig/price_units.py",
+      "git_blob_sha": "d58a296a17a2841ade52056f5b3edf05676c53a3",
+      "sha256": "5a2f27e035eaaf9e50ed8e498fd698f8a6a784e87c83682f3b843f60c8c6ac14",
+      "bytes": 2990
+    },
+    {
+      "path": "idx-signals/idxsig/profiles.py",
+      "git_blob_sha": "009192210a584bbb1430f079636c170c8c1599a6",
+      "sha256": "33bec7c27d6ba5cbe4eded96cb0ec301cab0be6c29f36cc67d1ece49e80228f5",
+      "bytes": 4291
+    },
+    {
+      "path": "idx-signals/idxsig/provenance.py",
+      "git_blob_sha": "effa9f65c5c84b1d48bbd18e50a07d83bfec21fd",
+      "sha256": "368a4a34e3c33a96f0f662b006ddcdfd96973dae527b8085a6cb4a9e33bdf182",
+      "bytes": 7349
+    },
+    {
+      "path": "idx-signals/idxsig/quality.py",
+      "git_blob_sha": "740a4b3f39dcf45aa827bd4b8fd15812e8b019b4",
+      "sha256": "ca2e88cec07b40ad6b394c1a1b24450a5081dc92ece54c447143b857dd09e533",
+      "bytes": 4565
+    },
+    {
+      "path": "idx-signals/idxsig/quant.py",
+      "git_blob_sha": "0feb7b3f3282c136971c6e925f57f9843911e42c",
+      "sha256": "d8775ee2f0752eca6d4c2c838c23e68f6c54efb3e17c05ce54628e95586ec142",
+      "bytes": 7154
+    },
+    {
+      "path": "idx-signals/idxsig/results.py",
+      "git_blob_sha": "d862f72b130b2289496404c02731593a5cfad48f",
+      "sha256": "60fc1b29813146c2e7000447323733ec6193f3a7a49fa28747e9d304be6d037b",
+      "bytes": 21191
+    },
+    {
+      "path": "idx-signals/idxsig/risk_control.py",
+      "git_blob_sha": "e1c94c49962b9dee82987592923e3b465c7a8e92",
+      "sha256": "c05ce112bd4820a9f98db7fc111fb87b80874ded95df0dd2b9bb31926a757368",
+      "bytes": 3374
+    },
+    {
+      "path": "idx-signals/idxsig/sensors.py",
+      "git_blob_sha": "43e0853a74fc5754955eebb99c4ff5164eab7c3c",
+      "sha256": "d4792439dbb4d69b1830aba7dbbdad6841ce9336b430bb252ce547afb62d22eb",
+      "bytes": 16613
+    },
+    {
+      "path": "idx-signals/idxsig/speculation.py",
+      "git_blob_sha": "c6ae4d56f1d8a5c1fd67f2b9bf9377fa2fa69093",
+      "sha256": "3fc543eb3ed1cdc810bac82749dbe9d7cf71115adca538459e7336c009937bd8",
+      "bytes": 51970
+    },
+    {
+      "path": "idx-signals/idxsig/us_actions.py",
+      "git_blob_sha": "3a84791507f94c566b2be6069eb5cd4f21c243ed",
+      "sha256": "b6302274d5308678f0fc1d75c13412636bc7619ae9eb3ea305ff466da6a1655c",
+      "bytes": 45090
+    },
+    {
+      "path": "idx-signals/idxsig/void.py",
+      "git_blob_sha": "0e6eaaa9a6f538a39389e89dfa0b77ce0dbc7d85",
+      "sha256": "03838dbbf49eab9c7e8d9ec256f36d2ef3d363e867bb5e304cf06b0554081595",
+      "bytes": 2425
+    },
+    {
+      "path": "idx-signals/tests/__init__.py",
+      "git_blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "idx-signals/tests/rulekit.py",
+      "git_blob_sha": "909a71fdd047251f16c7e0cf0e8c22fe5cec61b1",
+      "sha256": "d4547f47c46fb543a5364ee0238cc1f8e6ec49049b82c8301d8391d70449f33e",
+      "bytes": 1283
+    },
+    {
+      "path": "idx-signals/tests/support.py",
+      "git_blob_sha": "ddb9774ce4d745baff6e8cb8f5396962f98ad09d",
+      "sha256": "f421cb0af4037e1650f084081a2f8b3ba2778b719ff9e591bbebc7d8e7f6cfe2",
+      "bytes": 4501
+    },
+    {
+      "path": "idx-signals/tests/test_admission.py",
+      "git_blob_sha": "334688db8a240ea779c806c1eb42e587a7749c7c",
+      "sha256": "290813eab66c0e0ecde4177db3cec076e520d163a1fa2469e623f473a3e1ea4a",
+      "bytes": 4357
+    },
+    {
+      "path": "idx-signals/tests/test_backtest.py",
+      "git_blob_sha": "628de95d52cf09875547cc89211f257c259e460f",
+      "sha256": "4a63a6f3e6e5d7490617825f6fa66f57d5b46043d45eb959eecbba77a97342b2",
+      "bytes": 3745
+    },
+    {
+      "path": "idx-signals/tests/test_backtest_paired.py",
+      "git_blob_sha": "33f40f3634edb671c46eba78a8ab7a0902ec22d5",
+      "sha256": "bad333139cde297dba6ce756d91d9f9ec8ed0565aa43dbd1a553e92db981bbb3",
+      "bytes": 10710
+    },
+    {
+      "path": "idx-signals/tests/test_contract.py",
+      "git_blob_sha": "c2a9940bbd81378ef97d4979672f83419508b632",
+      "sha256": "7ca72a255c17999d98baf46ea70c17726208f167f2fb6407b836ef7eda54250f",
+      "bytes": 20628
+    },
+    {
+      "path": "idx-signals/tests/test_controls_quality.py",
+      "git_blob_sha": "1217d493a27d054ed0984c57bd80b10d6ac28e09",
+      "sha256": "b865802176b2e7ffcc8361c4e1a115778c30bfb76c2c7b08c0d7bf8fcb126443",
+      "bytes": 6237
+    },
+    {
+      "path": "idx-signals/tests/test_controls_v3.py",
+      "git_blob_sha": "4de684f1a630f23de5834c73261e11b01f0499a8",
+      "sha256": "0adf529142cf03fa6955a5923497ca49bc5c6f46226e60a313bbca70fb9b43a0",
+      "bytes": 20319
+    },
+    {
+      "path": "idx-signals/tests/test_controls_v4.py",
+      "git_blob_sha": "4a5d911b90f77186ce0c1130da8bb46db54b447a",
+      "sha256": "637faa6ac550ff790beaee2790fce5d2110c9ad8a907cdac6cbda5145cb64591",
+      "bytes": 8170
+    },
+    {
+      "path": "idx-signals/tests/test_corporate_actions.py",
+      "git_blob_sha": "f0a74be4279500dcbd0c7d9e7d4eed21e14d3ff1",
+      "sha256": "797913e2717bf0fcbe962686ffdf9ac925ca1db8043f4ab06a09981a723fff5f",
+      "bytes": 11235
+    },
+    {
+      "path": "idx-signals/tests/test_crypto_account.py",
+      "git_blob_sha": "e5df4f55ef08466723b603819a58de8820ef94fb",
+      "sha256": "fb9ba04592b7f963b2039c92e540b6c658c0b7204dd15256e9e229c6b4575913",
+      "bytes": 14871
+    },
+    {
+      "path": "idx-signals/tests/test_crypto_replay.py",
+      "git_blob_sha": "ae018e45188a78dabf9faf3c3a836b5d4f6e4b20",
+      "sha256": "e969b9f907256afcd6c1a1fd35dbac4a496ca83f67a89d73db89693154d56184",
+      "bytes": 14638
+    },
+    {
+      "path": "idx-signals/tests/test_execution.py",
+      "git_blob_sha": "2d5d3f39fbe41806a6a805a614d6f2cbe2463283",
+      "sha256": "c9bfa1650ee8c8e6d0217983fed9033e1800389171dd4aae993d1fe3af8c226b",
+      "bytes": 3901
+    },
+    {
+      "path": "idx-signals/tests/test_execution_repair.py",
+      "git_blob_sha": "66165b9cccde4b76f408cbbb1770247b2c155634",
+      "sha256": "2d3a32fc95a1e8dc4339f48a52c4d3c924ef8ee281560b89f2e5780c6402dda2",
+      "bytes": 11803
+    },
+    {
+      "path": "idx-signals/tests/test_fill_c.py",
+      "git_blob_sha": "bb794f24e83dacb51580c03a0077d90d5605dfb2",
+      "sha256": "f786b8f8e28c6fe66c36e1f93506ae62d13d725d49d55093b56055bf2b57ccfc",
+      "bytes": 6938
+    },
+    {
+      "path": "idx-signals/tests/test_market.py",
+      "git_blob_sha": "1037fccbbf3d0a1ad846940702b156d0efe36985",
+      "sha256": "6b9148a32743634433c7ce5fbd3affd40bfa624ae596c71cc848bb0267953218",
+      "bytes": 2569
+    },
+    {
+      "path": "idx-signals/tests/test_markets.py",
+      "git_blob_sha": "ce1e08a844b68578383525637fb77c62197ef29e",
+      "sha256": "a578ab0a09aad62bdae7ed8defb8736603fede9a129c29f1b0f2afd2a538d566",
+      "bytes": 5790
+    },
+    {
+      "path": "idx-signals/tests/test_multiple_testing.py",
+      "git_blob_sha": "c11634b416393a8b0ee15977829d70692cccfd28",
+      "sha256": "0e98fd7d3da3146d5e355e5bc18f12fca960eae9eda3dc019ec8b50eda566a12",
+      "bytes": 1518
+    },
+    {
+      "path": "idx-signals/tests/test_paper.py",
+      "git_blob_sha": "773fe923851b369aa94d0a93f0421d08a3bb6263",
+      "sha256": "e82ae2b81ce2dafe083959ba23b56019a098d9cb05cd90494e883222edc42cd0",
+      "bytes": 7832
+    },
+    {
+      "path": "idx-signals/tests/test_paper_account.py",
+      "git_blob_sha": "d5c21688c0e91131e6d64b763899102b28f107ef",
+      "sha256": "73c5acaa566bc6e3ac5d72d89419cd98f152aad54ca600d2e43a0c30b70460b3",
+      "bytes": 8807
+    },
+    {
+      "path": "idx-signals/tests/test_paper_account_report.py",
+      "git_blob_sha": "4c72f84c6e491a36dd9b97bc190f5e40101f4092",
+      "sha256": "f6c4aba50c5bccac928f6e41ffbfb3596cc5459f259c4907fbead02611ce9509",
+      "bytes": 6882
+    },
+    {
+      "path": "idx-signals/tests/test_paper_book.py",
+      "git_blob_sha": "7defe19212f3dec0a276103c03a08b345a215432",
+      "sha256": "47e315c5c0f06974b3c9165354818f9109ccbd305d0e152346742515b8c66b70",
+      "bytes": 5115
+    },
+    {
+      "path": "idx-signals/tests/test_paper_v4.py",
+      "git_blob_sha": "cb314225e66f26c769ba98fde9c93a60496939a8",
+      "sha256": "48b95d4c5167189b7b57815b1ab3a3b4de115d80a182878e89f1fea69605c19a",
+      "bytes": 11447
+    },
+    {
+      "path": "idx-signals/tests/test_price_units.py",
+      "git_blob_sha": "639d5c9b6f26c7c0510b8a8e8d2c0ec8c148677f",
+      "sha256": "fbf38d4fdc50593bb0af7cde85ebccb4ab82f68fa5f4b0cf472b3505be4244ee",
+      "bytes": 2974
+    },
+    {
+      "path": "idx-signals/tests/test_profiles_crypto_close.py",
+      "git_blob_sha": "1f937498bcf63b247d7b30396e4f8ff644a13ac1",
+      "sha256": "bd4f4eea2e2e5688fabd0f59691988df16a156fb66d342d5bff2d733b4aac7f0",
+      "bytes": 8307
+    },
+    {
+      "path": "idx-signals/tests/test_quant.py",
+      "git_blob_sha": "5f7292ad67ddad61c9bb94e4fb40dfa468b0b578",
+      "sha256": "3bf31ec7e2b7b446a76b1034f1e2a53aa4bad4f51f1f8f4ee0a5a6d55fc555e9",
+      "bytes": 4687
+    },
+    {
+      "path": "idx-signals/tests/test_results.py",
+      "git_blob_sha": "45e5ababc3dc22721814b382d6cbf8c6383d8467",
+      "sha256": "7376cab559df0c862c94a10ecf1214c9e3fed238689c11da4d64d21849c57089",
+      "bytes": 6321
+    },
+    {
+      "path": "idx-signals/tests/test_risk_control.py",
+      "git_blob_sha": "2dccecc1dbcf29ba060dc8d1872ccc1e5c538b89",
+      "sha256": "97e8beeb90cb9a3303cb17e847bd6f917aafa0bfb20757b72f157b195442077f",
+      "bytes": 2086
+    },
+    {
+      "path": "idx-signals/tests/test_session_guard.py",
+      "git_blob_sha": "f9fc4e51ba6ec650ad6f618efb306a62d295a715",
+      "sha256": "39aaa607b397cace50ef651f28c7436f735a6ff95ed6aa94b95700b9a5aa0054",
+      "bytes": 1934
+    },
+    {
+      "path": "idx-signals/tests/test_stabilization.py",
+      "git_blob_sha": "5cc9af132dc33a10a8dc07c5e9ddf0f42246a7a0",
+      "sha256": "5dbb202161df80e73f66075813a13755b361f303b2dbfc0a3a64dc04df5ed7e7",
+      "bytes": 8580
+    },
+    {
+      "path": "idx-signals/tests/test_verified_paper_units.py",
+      "git_blob_sha": "ebed8d77f99df190a50f9e28eedcfefd444665c0",
+      "sha256": "06ed4a8de57eff7c92873627a030609caad0e7e43e5509e9dc5a4113488a4bb5",
+      "bytes": 3649
+    },
+    {
+      "path": "idx-signals/idxsig/rules/__init__.py",
+      "git_blob_sha": "33732d87c5e7c5af11f896106998b9357e9a7c7c",
+      "sha256": "8de24bb8511dbd0d031eca9722cb1a7566449a9da847434330472d37b60f0d6f",
+      "bytes": 8589
+    },
+    {
+      "path": "idx-signals/idxsig/rules/audit.py",
+      "git_blob_sha": "47e79a19236dcaa476dc327526bae7ed34b30bfd",
+      "sha256": "601fe1a88c08dae8a4b27c88899d662d3847f8d8613b1d667d4cdae7a3b08481",
+      "bytes": 8984
+    },
+    {
+      "path": "idx-signals/idxsig/rules/moonshot_e1.py",
+      "git_blob_sha": "f2fa158305c3c9425d41d408b9df04d6a7bded1c",
+      "sha256": "425684b7fa2ef1ff05210a1e28df62f904d49131885fc9d0276929579a1928e9",
+      "bytes": 5079
+    },
+    {
+      "path": "idx-signals/idxsig/rules/moonshot_e3.py",
+      "git_blob_sha": "d6f7ba99da2dbf65989a39d2168a757445d19a71",
+      "sha256": "9317ea860e3e91c5d4a2b3afbd212013cb9e5da5eeecf95d964fcdf833f31698",
+      "bytes": 5067
+    },
+    {
+      "path": "idx-signals/idxsig/rules/moonshot_e4.py",
+      "git_blob_sha": "89973b7b7f43f44fe6fcc2967ebbedfed9efe02c",
+      "sha256": "07df6afb3e92333d04c5be6145b84c27aa85e388a6a7927aad4a1c9cb77eca1f",
+      "bytes": 7926
+    },
+    {
+      "path": "idx-signals/idxsig/rules/moonshot_e5.py",
+      "git_blob_sha": "41d748476e67f95f8cd472974353e0d8c68e1788",
+      "sha256": "ecaf348607c35e030fbf679cd3552c421f4c7209f48922980f66588fb5bea7b9",
+      "bytes": 21186
+    },
+    {
+      "path": "idx-signals/idxsig/rules/moonshot_g.py",
+      "git_blob_sha": "6b37a1ce984e93d596293785bc357b5c9d209828",
+      "sha256": "b050c4d37d9104309b32e70a7e81682ee3029da3a6a0654dae6ac41414abb794",
+      "bytes": 5548
+    },
+    {
+      "path": "idx-signals/idxsig/rules/placebo.py",
+      "git_blob_sha": "a66cc002b0e03a947c9ce9ede8c72df8521c5181",
+      "sha256": "4ae4e3c97b40248006f2439d3dd28f4af11683677f582e1aa4b1ad7fee73657e",
+      "bytes": 1503
+    },
+    {
+      "path": "idx-signals/idxsig/rules/sandbox.py",
+      "git_blob_sha": "3f305b4bc2887f1551f23ffa6911dc6d246e5e08",
+      "sha256": "eb26e14437224ae0a9c22cc94d119eb30670c44c717d626344baf0320322999f",
+      "bytes": 6489
+    },
+    {
+      "path": "idx-signals/idxsig/rules/user_rule.py",
+      "git_blob_sha": "354c6d0e079167e0cf7a02f2de986476dcc03ed8",
+      "sha256": "2284d2eb34cbb239ce4f5838ad4d384550c295bb71b9da5f4910c2b76db01b21",
+      "bytes": 1442
+    },
+    {
+      "path": "idx-signals/idxsig/sources/__init__.py",
+      "git_blob_sha": "083c9124b4fdc7437ae7fc6cda48229987a5fc9b",
+      "sha256": "43b646a75a54f7eacc8f4a078d946fa3d7859fe47c247305f39e25cdfbc1804b",
+      "bytes": 85
+    },
+    {
+      "path": "idx-signals/idxsig/sources/binance.py",
+      "git_blob_sha": "6a63084667f052c154675e6e59aef2a1c70d997e",
+      "sha256": "c76cc1990c78b643f58145697bd945cf9e2451aae39a5bb58b1cb63ef59c3243",
+      "bytes": 8635
+    },
+    {
+      "path": "idx-signals/idxsig/sources/coinglass.py",
+      "git_blob_sha": "7f7c57963db150e8a7d3670d37a20ff41550ef76",
+      "sha256": "5b747bedea821d41e1adddcc7c7d6cc27d888a0e84276526743207a9f17a92ac",
+      "bytes": 17226
+    },
+    {
+      "path": "idx-signals/idxsig/sources/idx_mirror.py",
+      "git_blob_sha": "80331db5330763dd18c06543f1d1916bbd2f2836",
+      "sha256": "14d3939c7e9b874306c7ba64fd9f7cb60fb5b6293748430592939e51946dfa32",
+      "bytes": 4873
+    },
+    {
+      "path": "idx-signals/idxsig/sources/resume.py",
+      "git_blob_sha": "508e17c462f58879a37bcd4cb131748f2cdb620d",
+      "sha256": "7d867b3149ff47d2ad1d2b9f883c1a02475b5a1fe800ad6a7d619ce46b446d3f",
+      "bytes": 3103
+    },
+    {
+      "path": "idx-signals/idxsig/sources/us_universe.py",
+      "git_blob_sha": "7719faeccdc32e406ae46008f1a991e26c17ff95",
+      "sha256": "34ba3d1810531453fe9afba756a7e4e08a50a6ff7508a669944928f1cedf5a88",
+      "bytes": 3810
+    },
+    {
+      "path": "idx-signals/idxsig/sources/yahoo.py",
+      "git_blob_sha": "01ba37587ae1e5a6e7db469635f7073264a4dbeb",
+      "sha256": "0a071f9ae80992246af6fffeeb82517e1966e6ad5f2c63c92055507b21cb4e8d",
+      "bytes": 8256
+    },
+    {
+      "path": "tools/check_append_only.py",
+      "git_blob_sha": "ee21078283e02dffe1b60277d8368077702ebb28",
+      "sha256": "3214b5b93e5be05831f493a500405bf4054b06aec224829685162cf1076ecfef",
+      "bytes": 6608
+    },
+    {
+      "path": "idx-signals/research/ADMISSION_v1/admission.py",
+      "git_blob_sha": "6aba2a03edfcdf160e5222b9fb3e350a040659ec",
+      "sha256": "396cef9341685dcceca582b5c4362af63c9df38b9bf1fa773ebd35a013d41394",
+      "bytes": 22586
+    },
+    {
+      "path": "idx-signals/research/PAPER_ACCOUNT_v1/protocol.json",
+      "git_blob_sha": "0a2587a7edd54f8a8659fd7e137d87a4b526d8de",
+      "sha256": "2a36e8777be15fc58886d8defbc174ea83892acb415db7e6e08b65f379186f0a",
+      "bytes": 3312
+    },
+    {
+      "path": "idx-signals/research/PAPER_BOOK_v1/protocol.json",
+      "git_blob_sha": "73a95b4003c7b9f3ef404fd2cae8b7095be1c866",
+      "sha256": "b5705c6efcf51f2683af8b88587356706623ec6290fe98363ce4c1d8acad4c64",
+      "bytes": 2557
+    },
+    {
+      "path": "idx-signals/research/EXEC_US_v2_1/demo.py",
+      "git_blob_sha": "14d4faa4b68171b615ada1cefa7a85b0a39cc9cb",
+      "sha256": "4d3ccf6b1cc53f67cd89cab9e55e377271f6dcd9bfa57ff243da8e070085adf7",
+      "bytes": 17906
+    }
+  ],
+  "original_crypto_protocols": [
+    {
+      "path": "idx-signals/research/CRYPTO_ACCOUNT_v1/protocol.json",
+      "git_blob_sha": "5928c9745b0e7d8af1b707d321740e1efc4ae3f1",
+      "sha256": "60ff96b071f10d41fa5537cc8915cccf0aea4143c948da3fd57baac6bdf4cce7"
+    },
+    {
+      "path": "idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json",
+      "git_blob_sha": "fb361708a3870d7339aaa2dee0ea57e47f0cf905",
+      "sha256": "b3021091f1f9220e8bd7514b37c0c61a6ddbd423839ec7a77219414152d0776d"
+    }
+  ],
+  "final_affected_files": [
+    {
+      "path": "idx-signals/idxsig/cli.py",
+      "sha256": "ea234dc5da58c196416df8e5db2a9d7560f5f38d3dda4d7afb34e7e835c177d2",
+      "candidate_equal": true
+    },
+    {
+      "path": "idx-signals/idxsig/crypto_account.py",
+      "sha256": "16aefa3609b8ab3ee76b490e094d3b1be4db17b2588b637206b8bfa13b62af5a",
+      "candidate_equal": true
+    },
+    {
+      "path": "idx-signals/idxsig/paper_execution_feasibility.py",
+      "sha256": "7094472352cf554ef9e896e6926e4930733a807b0b15036f06df1e226e58a151",
+      "candidate_equal": true
+    },
+    {
+      "path": "idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_2.md",
+      "sha256": "87be8522c24b50fa0707382991fff268a633c2a8e92c40ef90359b666f28e332",
+      "candidate_equal": true
+    },
+    {
+      "path": "idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_3.md",
+      "sha256": "6e397a1de122de19fb8d272621679fccf649a56c88713d628b4e4f237aa5c6d4",
+      "candidate_equal": true
+    },
+    {
+      "path": "idx-signals/research/CRYPTO_ACCOUNT_v1/CORRECTION_4.md",
+      "sha256": "0ca3f3e692b7efb9a387925005c584bbeb1d43100048b4c6d46bda65a1351ca4",
+      "candidate_equal": true
+    },
+    {
+      "path": "idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_2.json",
+      "sha256": "91a15db636485ad91250217b99452c1c2af3cd9f032a9fbff5003b916f2bf26a",
+      "candidate_equal": true
+    },
+    {
+      "path": "idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_3.json",
+      "sha256": "01352c9e9e3ca63b3b4e6d0b0141c4e7fa18dcec4cb6d6f0a60a7a281d8f78d7",
+      "candidate_equal": true
+    },
+    {
+      "path": "idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_4.json",
+      "sha256": "d1f0adb9cdfc40942b9c46f17a41f9e464e513f1dfcc626d002c70d560ca08ed",
+      "candidate_equal": true
+    },
+    {
+      "path": "idx-signals/research/PAPER_EXECUTION_FEASIBILITY_v1/FILTER_EVIDENCE_EXTENSION.md",
+      "sha256": "8adc30c90cc21da704eeffe2c32d8eed49a712e4e27fbb7ee1eaef6f5528742c",
+      "candidate_equal": true
+    },
+    {
+      "path": "idx-signals/research/PAPER_EXECUTION_FEASIBILITY_v1/SPEC.md",
+      "sha256": "fe30c2feeed1249f3bcddb1bdff081b602d96324b3000c330dcd74d9d5cd596c",
+      "candidate_equal": true
+    },
+    {
+      "path": "idx-signals/tests/test_crypto_account.py",
+      "sha256": "7115669d3ed6418200f5eae25ad317981f549c31c7c71aa72b1d9923dd2b9c4c",
+      "candidate_equal": true
+    },
+    {
+      "path": "idx-signals/tests/test_crypto_account_concurrency.py",
+      "sha256": "f0638ce2e093d0d56c86ec4aedcb14e9c0d3f2645e2503729e2e255842eff14f",
+      "candidate_equal": true
+    },
+    {
+      "path": "idx-signals/tests/test_crypto_policy_price_validation.py",
+      "sha256": "defe4e0632da107b32a225a5f1978dbd0f3f0ef5e666c383e9042848ac764bb9",
+      "candidate_equal": true
+    },
+    {
+      "path": "idx-signals/tests/test_crypto_quote_validation.py",
+      "sha256": "ab12ffd41d47fc07fea997e8b0dbceff1efc9b80a3354791f4fa27260600d99d",
+      "candidate_equal": true
+    },
+    {
+      "path": "idx-signals/tests/test_crypto_valuation_asof.py",
+      "sha256": "9673a1b23e9cd79839209f9a2d569c02ebf2b91d73016291457a75870e3733ce",
+      "candidate_equal": true
+    },
+    {
+      "path": "idx-signals/tests/test_paper_execution_feasibility.py",
+      "sha256": "5c96046466c797aa2aa7a410eaea4a8282c8564546be6ca523ac87a98f1f4e8e",
+      "candidate_equal": true
+    },
+    {
+      "path": "idx-signals/tests/test_paper_execution_filter_evidence.py",
+      "sha256": "cc21708a63901d72736e99047e3124f6e13a6728f081c2c34d290b15ba8cfe93",
+      "candidate_equal": true
+    }
+  ],
+  "unchanged_files": [
+    {
+      "path": "idx-signals/README.md",
+      "git_blob_sha": "66f5b85af50e6162b4802aa97ddb48c477777573",
+      "sha256": "5639cac18ee96c7ac31e84e98111c73a8be90ad0481be84da6e1fbeed4351f19",
+      "bytes": 26509
+    },
+    {
+      "path": "idx-signals/constraints-research.txt",
+      "git_blob_sha": "22b74e8df4352dad7a5d0e51f14c1f84b7b3fd07",
+      "sha256": "5f2aebeb9818d71d83fd919cbf0ea8bd7b8ab0445f453b2cbaa9a4d88dde816f",
+      "bytes": 246
+    },
+    {
+      "path": "idx-signals/requirements.txt",
+      "git_blob_sha": "c6203a730cdfc01ca542ed5f0ba4a07844c429c1",
+      "sha256": "9c0434832d20047d9a9fcc451935cf5ed7a4f277a2319e392663ba0cc3ddbf4e",
+      "bytes": 84
+    },
+    {
+      "path": "idx-signals/idxsig/__init__.py",
+      "git_blob_sha": "272b4772d2ef5a227c771e614db33d1331df5fa1",
+      "sha256": "2f04016eea982bf97ab28d35058617dae3209ec4d132e5abe925f8d5aaa35492",
+      "bytes": 90
+    },
+    {
+      "path": "idx-signals/idxsig/__main__.py",
+      "git_blob_sha": "e2f066e969037c353c9cd858b9d30e6e1ff50837",
+      "sha256": "0f211b66d65927802a5f49acd8e0df96029d07e507be8ca31ae28f7454be1db7",
+      "bytes": 85
+    },
+    {
+      "path": "idx-signals/idxsig/backtest.py",
+      "git_blob_sha": "a4a16da0248b45b0a25f77e17cc1dbba6f316081",
+      "sha256": "408cf8a5ccfe6e763d1a2a6dd6ed174cc6d06f700b164a339a1ee27559371e3c",
+      "bytes": 42592
+    },
+    {
+      "path": "idx-signals/idxsig/breakout.py",
+      "git_blob_sha": "325638218c7ddf1393a6770fbfb2da27ffe04433",
+      "sha256": "256b9f962b680e8218212ed32c48ec6aca92571542ffb85874d5d301f0d443f2",
+      "bytes": 3965
+    },
+    {
+      "path": "idx-signals/idxsig/calendar_us.py",
+      "git_blob_sha": "b28d68a60a784cd4c997b08ee606915850407111",
+      "sha256": "8c4af36c5a1443cfdbf51db26d4b9f3491880f19508ac48a0da374391b49d5fa",
+      "bytes": 3421
+    },
+    {
+      "path": "idx-signals/idxsig/call_cert.py",
+      "git_blob_sha": "942af4cd94cdb4ae44a539e6ac5a55058574074c",
+      "sha256": "74d8a672ff54cedd33ef8adf3c266fb40f0431200bdc59be0c99eb68a4108c33",
+      "bytes": 10724
+    },
+    {
+      "path": "idx-signals/idxsig/catalyst.py",
+      "git_blob_sha": "83d05a90f4eb193916fd40e39a87ca0875d98fa5",
+      "sha256": "dd176424227d6899f449b8f8353a11df8394c41353ddbe08ef01a3ebb3688609",
+      "bytes": 7777
+    },
+    {
+      "path": "idx-signals/idxsig/catalysts.py",
+      "git_blob_sha": "6dc9bc3e62d05848052243233151e8089d195829",
+      "sha256": "02141b71730e54e740620b3e70aa6f2b2eea685bbc0b1f7005ba49f833ba2c9b",
+      "bytes": 81803
+    },
+    {
+      "path": "idx-signals/idxsig/coinglass.py",
+      "git_blob_sha": "28a895194b7f537e28401ae85ceaeb7e2ece88b2",
+      "sha256": "985d388e2b98b6ba581a3c0ec310a595fc382ca7f1034bebb11fe463def22f95",
+      "bytes": 20116
+    },
+    {
+      "path": "idx-signals/idxsig/contract.py",
+      "git_blob_sha": "3409bc11d22d90c0a43ff3f5c1576e0b35ed336b",
+      "sha256": "eee06ea5a40464f4194f5d94a78867f8c9d53720c521dadc55ec2a602d1e5bac",
+      "bytes": 35047
+    },
+    {
+      "path": "idx-signals/idxsig/controls.py",
+      "git_blob_sha": "59c194bd1d3594b148d34baa09e4d1ad663d5f41",
+      "sha256": "5e5ca6fb5a981d0cf66600d971b2531ad34c854a90ad4ecfe9ab40cedf915c0c",
+      "bytes": 14690
+    },
+    {
+      "path": "idx-signals/idxsig/corporate_actions.py",
+      "git_blob_sha": "48b6751cfcee61d9a7bc8e61a4ee81bd1cf5c9be",
+      "sha256": "e5d638ae24c06b026d25cb393673d869ead2949a9aa230655bb3448a679823f0",
+      "bytes": 21141
+    },
+    {
+      "path": "idx-signals/idxsig/crypto_replay.py",
+      "git_blob_sha": "4b78eb5e92c2134d29c7727d74761bfa0b79ff33",
+      "sha256": "aa04635e569a251cbec79eed68f17a51fc2bacb9cbe52f35e4568d54b807264a",
+      "bytes": 25309
+    },
+    {
+      "path": "idx-signals/idxsig/e1.py",
+      "git_blob_sha": "ae4521b65e4a7a770eaf2dc6920adfdb0082b102",
+      "sha256": "b91fd156b73c08325d01a4079ed2a5cf49229aeaa833e468baabb14c27e91cde",
+      "bytes": 32434
+    },
+    {
+      "path": "idx-signals/idxsig/e3.py",
+      "git_blob_sha": "774af13afa61a60f9d1e20eff29d79d5990f507e",
+      "sha256": "99ad824475f3f4781365ab3a51ca6f4e7f903cf00696e2e6ed56ce64306f0c5e",
+      "bytes": 17013
+    },
+    {
+      "path": "idx-signals/idxsig/e4.py",
+      "git_blob_sha": "4ce9a85769d47a9105be9dbd1bd797a1a211e5dd",
+      "sha256": "e5a43a81c7ea82161a47d23ebd2af138fa3763223a06e0830ed9ab439c7d889b",
+      "bytes": 16274
+    },
+    {
+      "path": "idx-signals/idxsig/e5.py",
+      "git_blob_sha": "01864023a4bfd527b4fce4c15576bf087204b0b9",
+      "sha256": "a8f25ab1f30db4891f4d1a58dd5c8f47626db22487239940208302e50e8cbbd1",
+      "bytes": 95720
+    },
+    {
+      "path": "idx-signals/idxsig/e6.py",
+      "git_blob_sha": "b382c2c29c200ef20e0ca577a4c173299a95885a",
+      "sha256": "07d5ba77a703731101b93b168e847fc217089887fb499942b3d40595c421758e",
+      "bytes": 23685
+    },
+    {
+      "path": "idx-signals/idxsig/e8.py",
+      "git_blob_sha": "b99f40223be7c702eb4ede7e490b3db1a493cb84",
+      "sha256": "90d34d787f5c15d04580bc3df1a92df02ec7fd9d69780b7f893a5b8b023b22b9",
+      "bytes": 25728
+    },
+    {
+      "path": "idx-signals/idxsig/event_study.py",
+      "git_blob_sha": "ff54b1ea39a605991979bb87a7dfe6cd7adbeb88",
+      "sha256": "22bba6ca16b88b3a113c762fcdbfab01c5a6518d0ebce7f6017df21e1f7788ca",
+      "bytes": 6600
+    },
+    {
+      "path": "idx-signals/idxsig/exec_us.py",
+      "git_blob_sha": "0b6c6517237170c22249231b03bdd54c5ceed530",
+      "sha256": "74f0277bf43dd33b8003b8b08cb8d04eae1e3308bebc225ed0a25592e2a11c56",
+      "bytes": 14246
+    },
+    {
+      "path": "idx-signals/idxsig/execution.py",
+      "git_blob_sha": "6ec72c4033f4781fa902b2ffb8298d1ec21fa6e4",
+      "sha256": "16c47aab157d55c68f797275eb12f0cfe1336f705ecec082e1b0b52ffaa87112",
+      "bytes": 46492
+    },
+    {
+      "path": "idx-signals/idxsig/exit_atr.py",
+      "git_blob_sha": "e87b44a1b3a10497ec1266062d6ae25365b669fa",
+      "sha256": "57a08ec8db8ff8a5ba40c5383849dca1606a7ee83d343ddf9bc76ea33f055c6d",
+      "bytes": 5553
+    },
+    {
+      "path": "idx-signals/idxsig/fam_dilution8k.py",
+      "git_blob_sha": "d0323155043ff4783f878785d8ba3fd2ed5dc563",
+      "sha256": "2c4e18f5ddc5672661709bb0327d0e0bce540a548dd09f94d6cca4b60ea827ea",
+      "bytes": 15777
+    },
+    {
+      "path": "idx-signals/idxsig/fam_form4.py",
+      "git_blob_sha": "18d0d93529becd950969b05561cd2fd367cc4548",
+      "sha256": "8195eb1d06c694471c32e54cd6cebb7173c48c5d39f1451f06affc0f86171902",
+      "bytes": 24826
+    },
+    {
+      "path": "idx-signals/idxsig/fam_form4_sharp.py",
+      "git_blob_sha": "3499590c7c55a9b5059e50f11e6aa1d2bfccba92",
+      "sha256": "42b50f104ed168685583e191f833214ed4e90c14adbb6c5f2d73ef38178a7315",
+      "bytes": 19568
+    },
+    {
+      "path": "idx-signals/idxsig/fam_sec13d_v2.py",
+      "git_blob_sha": "2fecaf6857ebc1b9f8906f49b9902f0b6840f6b9",
+      "sha256": "f879b1d2d325851d5641e063cacc73228b1622540c5ae799d1f6fdb5ad00a571",
+      "bytes": 17399
+    },
+    {
+      "path": "idx-signals/idxsig/flow_features.py",
+      "git_blob_sha": "24368061cf7c105c63c1756f144b821276de1a16",
+      "sha256": "658b53d066838b33d600c4dc869523ca02767a8604add78f68093197716b14f5",
+      "bytes": 4001
+    },
+    {
+      "path": "idx-signals/idxsig/global_panel.py",
+      "git_blob_sha": "80336794149534b2c290b3b39adc37b787fce9bd",
+      "sha256": "ebe4ef40b1e8bdb55063a2dfd5c9301f228fe3c9122f9a36f5b738f69a0587d7",
+      "bytes": 22920
+    },
+    {
+      "path": "idx-signals/idxsig/guidance.py",
+      "git_blob_sha": "5885babd28f5d0e5f3e94ee61a4a375002cef27d",
+      "sha256": "be55744bc69cd4cd43ed3bd390ab8bce71680d880f3b872e6bba2433d2eb531a",
+      "bytes": 7568
+    },
+    {
+      "path": "idx-signals/idxsig/guidance_paper.py",
+      "git_blob_sha": "066c09be012e3501bd057061deb2e40e8ab84aac",
+      "sha256": "2e9b1b83a9e9aaedd90d20642361773787e1ffa6d1689ef897f6ca051c73dc2d",
+      "bytes": 8970
+    },
+    {
+      "path": "idx-signals/idxsig/guidance_revision.py",
+      "git_blob_sha": "6b9615a0374ed3a937f6ef87bb0fb71d7874b49c",
+      "sha256": "b1647f63600da6bdd6bcd678fa57ccc384650ce62bced93391521816c1c07f42",
+      "bytes": 20843
+    },
+    {
+      "path": "idx-signals/idxsig/guidance_v2.py",
+      "git_blob_sha": "afa7a25394785bce4d87982db523f30b12ae933e",
+      "sha256": "7b62e34899e8e7a60151881f459e74926bafb2667dfaeb9debeb7882fc507115",
+      "bytes": 7473
+    },
+    {
+      "path": "idx-signals/idxsig/guidance_watch.py",
+      "git_blob_sha": "b851381b22e56fb8fc6cb43bb1cade7258b7a030",
+      "sha256": "66dde39a9bc4bec315621f75355cc5cdff394f149839ad5300ed83e489b0710b",
+      "bytes": 4609
+    },
+    {
+      "path": "idx-signals/idxsig/idea_grader.py",
+      "git_blob_sha": "b584be9a8a84239d76052ca0583647705e451883",
+      "sha256": "89b8c055a5353365224f0670379f1c2d6169dadbd5e66e9b8a4a1e8c5497fc9b",
+      "bytes": 11997
+    },
+    {
+      "path": "idx-signals/idxsig/idx_events.py",
+      "git_blob_sha": "831350f6cdfadbc4356cea3df3132d7dad08bf65",
+      "sha256": "db9190348b1f11542fdd7b5b1c2ee59a178d5a8865d8a24f70537fc943debfb3",
+      "bytes": 8321
+    },
+    {
+      "path": "idx-signals/idxsig/intl_panel.py",
+      "git_blob_sha": "8f8b5581de87b6638dc77932f79073275ddee8a0",
+      "sha256": "cb697650d41621ff77513d692a07d9f75555ef33a53c1c754ab1d9735e9380ef",
+      "bytes": 5818
+    },
+    {
+      "path": "idx-signals/idxsig/lead_ladder.py",
+      "git_blob_sha": "d0d14640b95ec8797019be5bc39d71b081e19ca0",
+      "sha256": "a79b6a5864482a4dead724573111ae957d039d2ed6c01ec5872b203c2e9e1dbb",
+      "bytes": 15218
+    },
+    {
+      "path": "idx-signals/idxsig/learner.py",
+      "git_blob_sha": "c367e9516696fb55c84c539fd2870d88ba0a1240",
+      "sha256": "c99dd9b2be9216b4e4c5ca57e95cfe02226029e3230a7443d024747f24a1a53e",
+      "bytes": 19958
+    },
+    {
+      "path": "idx-signals/idxsig/learner2.py",
+      "git_blob_sha": "291216f6b618197802754964f3361f8022b8faa1",
+      "sha256": "671f86848ad5ee0a9bd3488a17b788c3459f5499c82a39386bef2dc611f2b9e6",
+      "bytes": 63744
+    },
+    {
+      "path": "idx-signals/idxsig/learner3.py",
+      "git_blob_sha": "657233962be2f7db469b6264e1852314c5a3a199",
+      "sha256": "38951c27b6acd2d7fe9cc19c8a8a500a3ce7809f8aaf4b12823095fe089cfcd8",
+      "bytes": 54968
+    },
+    {
+      "path": "idx-signals/idxsig/learner_evaluation.py",
+      "git_blob_sha": "f0625ef3a792681e258a2730fc040288f48efda0",
+      "sha256": "75b31d515b629009c6ae9f66200b1602f709cbea57842a4050d6d486f8ba6eb0",
+      "bytes": 12742
+    },
+    {
+      "path": "idx-signals/idxsig/market.py",
+      "git_blob_sha": "32b208eb9dafdc503e153c32a3b1a62de89bc913",
+      "sha256": "e9e9328af46a871d6a8bc929ab10889f071bcdbef4be6d85f6fe1d26bd2f9cbc",
+      "bytes": 5133
+    },
+    {
+      "path": "idx-signals/idxsig/microstructure.py",
+      "git_blob_sha": "ea739054409d97927a23266b62cc6ecd6309ba0b",
+      "sha256": "5c9ea4962212b50f170d1c142c119b7cb1eebb77f2f36fba87c610f41a2eeff7",
+      "bytes": 24382
+    },
+    {
+      "path": "idx-signals/idxsig/multiple_testing.py",
+      "git_blob_sha": "bdf34e4ca5a2633d9a2a4dc394c767affb66c147",
+      "sha256": "9715c4ec9e1c1da80ace2218bbbda85f5f7d274c0654e23be7e512c476dffeea",
+      "bytes": 2620
+    },
+    {
+      "path": "idx-signals/idxsig/panel.py",
+      "git_blob_sha": "d7444e99b342583789d9d123f9bfdf43ded1a73d",
+      "sha256": "b37aa0399691ae941d2ece7090365a1faf68372c432afef199c432f435b3a36d",
+      "bytes": 17847
+    },
+    {
+      "path": "idx-signals/idxsig/paper.py",
+      "git_blob_sha": "474d89333788f9499ec114caf5dde34194e2fcdf",
+      "sha256": "c9c017d27f453e232ccc9db1401f9c83da9a544e6ef1422b7e7636f32fdeb624",
+      "bytes": 96210
+    },
+    {
+      "path": "idx-signals/idxsig/paper_account.py",
+      "git_blob_sha": "ea23f12facf9a349c8febb135f90e52683359714",
+      "sha256": "2d7cbc536695d0298b3bfa508824bd5e68ea8c6566800e59a0681666dbb00bfd",
+      "bytes": 25528
+    },
+    {
+      "path": "idx-signals/idxsig/paper_account_report.py",
+      "git_blob_sha": "a2dd3b6592b73095f82dd86d0d150f920e48d798",
+      "sha256": "67a259fd134b64fb770bce47bca1ee396772abd74cfda0d2c66d44f18a319cff",
+      "bytes": 8482
+    },
+    {
+      "path": "idx-signals/idxsig/paper_book.py",
+      "git_blob_sha": "4f1e96d7f54e1f7a770d18efeb73183f488d4aea",
+      "sha256": "90dfb98d71bdee9d28ac7c52799083869b6e5a802445bec8cbf6aedbcf642e12",
+      "bytes": 13815
+    },
+    {
+      "path": "idx-signals/idxsig/premove.py",
+      "git_blob_sha": "c2bf2e23f386f58fd18ed8cdd46ad37390bd51bb",
+      "sha256": "53d161019b9df1c79ef9a738120c4930c56c4cdfcccb284fe0392ae08aebff8c",
+      "bytes": 19379
+    },
+    {
+      "path": "idx-signals/idxsig/premove_core.py",
+      "git_blob_sha": "bfb8f13e6863f3865848abb43e7a0698080632eb",
+      "sha256": "c76686dc5272ef920698fd5f0a85277c1501ed863260b547bcb78e91b16d8c62",
+      "bytes": 17106
+    },
+    {
+      "path": "idx-signals/idxsig/premove_shadow.py",
+      "git_blob_sha": "e32143505c15a8e741e95f68f6e0966d6c2d0249",
+      "sha256": "3bed4b67225fa50dcbf71e6e56113c333ad201385e9ca1cf9a69bcc32ebc59ad",
+      "bytes": 19904
+    },
+    {
+      "path": "idx-signals/idxsig/price_units.py",
+      "git_blob_sha": "d58a296a17a2841ade52056f5b3edf05676c53a3",
+      "sha256": "5a2f27e035eaaf9e50ed8e498fd698f8a6a784e87c83682f3b843f60c8c6ac14",
+      "bytes": 2990
+    },
+    {
+      "path": "idx-signals/idxsig/profiles.py",
+      "git_blob_sha": "009192210a584bbb1430f079636c170c8c1599a6",
+      "sha256": "33bec7c27d6ba5cbe4eded96cb0ec301cab0be6c29f36cc67d1ece49e80228f5",
+      "bytes": 4291
+    },
+    {
+      "path": "idx-signals/idxsig/provenance.py",
+      "git_blob_sha": "effa9f65c5c84b1d48bbd18e50a07d83bfec21fd",
+      "sha256": "368a4a34e3c33a96f0f662b006ddcdfd96973dae527b8085a6cb4a9e33bdf182",
+      "bytes": 7349
+    },
+    {
+      "path": "idx-signals/idxsig/quality.py",
+      "git_blob_sha": "740a4b3f39dcf45aa827bd4b8fd15812e8b019b4",
+      "sha256": "ca2e88cec07b40ad6b394c1a1b24450a5081dc92ece54c447143b857dd09e533",
+      "bytes": 4565
+    },
+    {
+      "path": "idx-signals/idxsig/quant.py",
+      "git_blob_sha": "0feb7b3f3282c136971c6e925f57f9843911e42c",
+      "sha256": "d8775ee2f0752eca6d4c2c838c23e68f6c54efb3e17c05ce54628e95586ec142",
+      "bytes": 7154
+    },
+    {
+      "path": "idx-signals/idxsig/results.py",
+      "git_blob_sha": "d862f72b130b2289496404c02731593a5cfad48f",
+      "sha256": "60fc1b29813146c2e7000447323733ec6193f3a7a49fa28747e9d304be6d037b",
+      "bytes": 21191
+    },
+    {
+      "path": "idx-signals/idxsig/risk_control.py",
+      "git_blob_sha": "e1c94c49962b9dee82987592923e3b465c7a8e92",
+      "sha256": "c05ce112bd4820a9f98db7fc111fb87b80874ded95df0dd2b9bb31926a757368",
+      "bytes": 3374
+    },
+    {
+      "path": "idx-signals/idxsig/sensors.py",
+      "git_blob_sha": "43e0853a74fc5754955eebb99c4ff5164eab7c3c",
+      "sha256": "d4792439dbb4d69b1830aba7dbbdad6841ce9336b430bb252ce547afb62d22eb",
+      "bytes": 16613
+    },
+    {
+      "path": "idx-signals/idxsig/speculation.py",
+      "git_blob_sha": "c6ae4d56f1d8a5c1fd67f2b9bf9377fa2fa69093",
+      "sha256": "3fc543eb3ed1cdc810bac82749dbe9d7cf71115adca538459e7336c009937bd8",
+      "bytes": 51970
+    },
+    {
+      "path": "idx-signals/idxsig/us_actions.py",
+      "git_blob_sha": "3a84791507f94c566b2be6069eb5cd4f21c243ed",
+      "sha256": "b6302274d5308678f0fc1d75c13412636bc7619ae9eb3ea305ff466da6a1655c",
+      "bytes": 45090
+    },
+    {
+      "path": "idx-signals/idxsig/void.py",
+      "git_blob_sha": "0e6eaaa9a6f538a39389e89dfa0b77ce0dbc7d85",
+      "sha256": "03838dbbf49eab9c7e8d9ec256f36d2ef3d363e867bb5e304cf06b0554081595",
+      "bytes": 2425
+    },
+    {
+      "path": "idx-signals/tests/__init__.py",
+      "git_blob_sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "idx-signals/tests/rulekit.py",
+      "git_blob_sha": "909a71fdd047251f16c7e0cf0e8c22fe5cec61b1",
+      "sha256": "d4547f47c46fb543a5364ee0238cc1f8e6ec49049b82c8301d8391d70449f33e",
+      "bytes": 1283
+    },
+    {
+      "path": "idx-signals/tests/support.py",
+      "git_blob_sha": "ddb9774ce4d745baff6e8cb8f5396962f98ad09d",
+      "sha256": "f421cb0af4037e1650f084081a2f8b3ba2778b719ff9e591bbebc7d8e7f6cfe2",
+      "bytes": 4501
+    },
+    {
+      "path": "idx-signals/tests/test_admission.py",
+      "git_blob_sha": "334688db8a240ea779c806c1eb42e587a7749c7c",
+      "sha256": "290813eab66c0e0ecde4177db3cec076e520d163a1fa2469e623f473a3e1ea4a",
+      "bytes": 4357
+    },
+    {
+      "path": "idx-signals/tests/test_backtest.py",
+      "git_blob_sha": "628de95d52cf09875547cc89211f257c259e460f",
+      "sha256": "4a63a6f3e6e5d7490617825f6fa66f57d5b46043d45eb959eecbba77a97342b2",
+      "bytes": 3745
+    },
+    {
+      "path": "idx-signals/tests/test_backtest_paired.py",
+      "git_blob_sha": "33f40f3634edb671c46eba78a8ab7a0902ec22d5",
+      "sha256": "bad333139cde297dba6ce756d91d9f9ec8ed0565aa43dbd1a553e92db981bbb3",
+      "bytes": 10710
+    },
+    {
+      "path": "idx-signals/tests/test_contract.py",
+      "git_blob_sha": "c2a9940bbd81378ef97d4979672f83419508b632",
+      "sha256": "7ca72a255c17999d98baf46ea70c17726208f167f2fb6407b836ef7eda54250f",
+      "bytes": 20628
+    },
+    {
+      "path": "idx-signals/tests/test_controls_quality.py",
+      "git_blob_sha": "1217d493a27d054ed0984c57bd80b10d6ac28e09",
+      "sha256": "b865802176b2e7ffcc8361c4e1a115778c30bfb76c2c7b08c0d7bf8fcb126443",
+      "bytes": 6237
+    },
+    {
+      "path": "idx-signals/tests/test_controls_v3.py",
+      "git_blob_sha": "4de684f1a630f23de5834c73261e11b01f0499a8",
+      "sha256": "0adf529142cf03fa6955a5923497ca49bc5c6f46226e60a313bbca70fb9b43a0",
+      "bytes": 20319
+    },
+    {
+      "path": "idx-signals/tests/test_controls_v4.py",
+      "git_blob_sha": "4a5d911b90f77186ce0c1130da8bb46db54b447a",
+      "sha256": "637faa6ac550ff790beaee2790fce5d2110c9ad8a907cdac6cbda5145cb64591",
+      "bytes": 8170
+    },
+    {
+      "path": "idx-signals/tests/test_corporate_actions.py",
+      "git_blob_sha": "f0a74be4279500dcbd0c7d9e7d4eed21e14d3ff1",
+      "sha256": "797913e2717bf0fcbe962686ffdf9ac925ca1db8043f4ab06a09981a723fff5f",
+      "bytes": 11235
+    },
+    {
+      "path": "idx-signals/tests/test_crypto_replay.py",
+      "git_blob_sha": "ae018e45188a78dabf9faf3c3a836b5d4f6e4b20",
+      "sha256": "e969b9f907256afcd6c1a1fd35dbac4a496ca83f67a89d73db89693154d56184",
+      "bytes": 14638
+    },
+    {
+      "path": "idx-signals/tests/test_execution.py",
+      "git_blob_sha": "2d5d3f39fbe41806a6a805a614d6f2cbe2463283",
+      "sha256": "c9bfa1650ee8c8e6d0217983fed9033e1800389171dd4aae993d1fe3af8c226b",
+      "bytes": 3901
+    },
+    {
+      "path": "idx-signals/tests/test_execution_repair.py",
+      "git_blob_sha": "66165b9cccde4b76f408cbbb1770247b2c155634",
+      "sha256": "2d3a32fc95a1e8dc4339f48a52c4d3c924ef8ee281560b89f2e5780c6402dda2",
+      "bytes": 11803
+    },
+    {
+      "path": "idx-signals/tests/test_fill_c.py",
+      "git_blob_sha": "bb794f24e83dacb51580c03a0077d90d5605dfb2",
+      "sha256": "f786b8f8e28c6fe66c36e1f93506ae62d13d725d49d55093b56055bf2b57ccfc",
+      "bytes": 6938
+    },
+    {
+      "path": "idx-signals/tests/test_market.py",
+      "git_blob_sha": "1037fccbbf3d0a1ad846940702b156d0efe36985",
+      "sha256": "6b9148a32743634433c7ce5fbd3affd40bfa624ae596c71cc848bb0267953218",
+      "bytes": 2569
+    },
+    {
+      "path": "idx-signals/tests/test_markets.py",
+      "git_blob_sha": "ce1e08a844b68578383525637fb77c62197ef29e",
+      "sha256": "a578ab0a09aad62bdae7ed8defb8736603fede9a129c29f1b0f2afd2a538d566",
+      "bytes": 5790
+    },
+    {
+      "path": "idx-signals/tests/test_multiple_testing.py",
+      "git_blob_sha": "c11634b416393a8b0ee15977829d70692cccfd28",
+      "sha256": "0e98fd7d3da3146d5e355e5bc18f12fca960eae9eda3dc019ec8b50eda566a12",
+      "bytes": 1518
+    },
+    {
+      "path": "idx-signals/tests/test_paper.py",
+      "git_blob_sha": "773fe923851b369aa94d0a93f0421d08a3bb6263",
+      "sha256": "e82ae2b81ce2dafe083959ba23b56019a098d9cb05cd90494e883222edc42cd0",
+      "bytes": 7832
+    },
+    {
+      "path": "idx-signals/tests/test_paper_account.py",
+      "git_blob_sha": "d5c21688c0e91131e6d64b763899102b28f107ef",
+      "sha256": "73c5acaa566bc6e3ac5d72d89419cd98f152aad54ca600d2e43a0c30b70460b3",
+      "bytes": 8807
+    },
+    {
+      "path": "idx-signals/tests/test_paper_account_report.py",
+      "git_blob_sha": "4c72f84c6e491a36dd9b97bc190f5e40101f4092",
+      "sha256": "f6c4aba50c5bccac928f6e41ffbfb3596cc5459f259c4907fbead02611ce9509",
+      "bytes": 6882
+    },
+    {
+      "path": "idx-signals/tests/test_paper_book.py",
+      "git_blob_sha": "7defe19212f3dec0a276103c03a08b345a215432",
+      "sha256": "47e315c5c0f06974b3c9165354818f9109ccbd305d0e152346742515b8c66b70",
+      "bytes": 5115
+    },
+    {
+      "path": "idx-signals/tests/test_paper_v4.py",
+      "git_blob_sha": "cb314225e66f26c769ba98fde9c93a60496939a8",
+      "sha256": "48b95d4c5167189b7b57815b1ab3a3b4de115d80a182878e89f1fea69605c19a",
+      "bytes": 11447
+    },
+    {
+      "path": "idx-signals/tests/test_price_units.py",
+      "git_blob_sha": "639d5c9b6f26c7c0510b8a8e8d2c0ec8c148677f",
+      "sha256": "fbf38d4fdc50593bb0af7cde85ebccb4ab82f68fa5f4b0cf472b3505be4244ee",
+      "bytes": 2974
+    },
+    {
+      "path": "idx-signals/tests/test_profiles_crypto_close.py",
+      "git_blob_sha": "1f937498bcf63b247d7b30396e4f8ff644a13ac1",
+      "sha256": "bd4f4eea2e2e5688fabd0f59691988df16a156fb66d342d5bff2d733b4aac7f0",
+      "bytes": 8307
+    },
+    {
+      "path": "idx-signals/tests/test_quant.py",
+      "git_blob_sha": "5f7292ad67ddad61c9bb94e4fb40dfa468b0b578",
+      "sha256": "3bf31ec7e2b7b446a76b1034f1e2a53aa4bad4f51f1f8f4ee0a5a6d55fc555e9",
+      "bytes": 4687
+    },
+    {
+      "path": "idx-signals/tests/test_results.py",
+      "git_blob_sha": "45e5ababc3dc22721814b382d6cbf8c6383d8467",
+      "sha256": "7376cab559df0c862c94a10ecf1214c9e3fed238689c11da4d64d21849c57089",
+      "bytes": 6321
+    },
+    {
+      "path": "idx-signals/tests/test_risk_control.py",
+      "git_blob_sha": "2dccecc1dbcf29ba060dc8d1872ccc1e5c538b89",
+      "sha256": "97e8beeb90cb9a3303cb17e847bd6f917aafa0bfb20757b72f157b195442077f",
+      "bytes": 2086
+    },
+    {
+      "path": "idx-signals/tests/test_session_guard.py",
+      "git_blob_sha": "f9fc4e51ba6ec650ad6f618efb306a62d295a715",
+      "sha256": "39aaa607b397cace50ef651f28c7436f735a6ff95ed6aa94b95700b9a5aa0054",
+      "bytes": 1934
+    },
+    {
+      "path": "idx-signals/tests/test_stabilization.py",
+      "git_blob_sha": "5cc9af132dc33a10a8dc07c5e9ddf0f42246a7a0",
+      "sha256": "5dbb202161df80e73f66075813a13755b361f303b2dbfc0a3a64dc04df5ed7e7",
+      "bytes": 8580
+    },
+    {
+      "path": "idx-signals/tests/test_verified_paper_units.py",
+      "git_blob_sha": "ebed8d77f99df190a50f9e28eedcfefd444665c0",
+      "sha256": "06ed4a8de57eff7c92873627a030609caad0e7e43e5509e9dc5a4113488a4bb5",
+      "bytes": 3649
+    },
+    {
+      "path": "idx-signals/idxsig/rules/__init__.py",
+      "git_blob_sha": "33732d87c5e7c5af11f896106998b9357e9a7c7c",
+      "sha256": "8de24bb8511dbd0d031eca9722cb1a7566449a9da847434330472d37b60f0d6f",
+      "bytes": 8589
+    },
+    {
+      "path": "idx-signals/idxsig/rules/audit.py",
+      "git_blob_sha": "47e79a19236dcaa476dc327526bae7ed34b30bfd",
+      "sha256": "601fe1a88c08dae8a4b27c88899d662d3847f8d8613b1d667d4cdae7a3b08481",
+      "bytes": 8984
+    },
+    {
+      "path": "idx-signals/idxsig/rules/moonshot_e1.py",
+      "git_blob_sha": "f2fa158305c3c9425d41d408b9df04d6a7bded1c",
+      "sha256": "425684b7fa2ef1ff05210a1e28df62f904d49131885fc9d0276929579a1928e9",
+      "bytes": 5079
+    },
+    {
+      "path": "idx-signals/idxsig/rules/moonshot_e3.py",
+      "git_blob_sha": "d6f7ba99da2dbf65989a39d2168a757445d19a71",
+      "sha256": "9317ea860e3e91c5d4a2b3afbd212013cb9e5da5eeecf95d964fcdf833f31698",
+      "bytes": 5067
+    },
+    {
+      "path": "idx-signals/idxsig/rules/moonshot_e4.py",
+      "git_blob_sha": "89973b7b7f43f44fe6fcc2967ebbedfed9efe02c",
+      "sha256": "07df6afb3e92333d04c5be6145b84c27aa85e388a6a7927aad4a1c9cb77eca1f",
+      "bytes": 7926
+    },
+    {
+      "path": "idx-signals/idxsig/rules/moonshot_e5.py",
+      "git_blob_sha": "41d748476e67f95f8cd472974353e0d8c68e1788",
+      "sha256": "ecaf348607c35e030fbf679cd3552c421f4c7209f48922980f66588fb5bea7b9",
+      "bytes": 21186
+    },
+    {
+      "path": "idx-signals/idxsig/rules/moonshot_g.py",
+      "git_blob_sha": "6b37a1ce984e93d596293785bc357b5c9d209828",
+      "sha256": "b050c4d37d9104309b32e70a7e81682ee3029da3a6a0654dae6ac41414abb794",
+      "bytes": 5548
+    },
+    {
+      "path": "idx-signals/idxsig/rules/placebo.py",
+      "git_blob_sha": "a66cc002b0e03a947c9ce9ede8c72df8521c5181",
+      "sha256": "4ae4e3c97b40248006f2439d3dd28f4af11683677f582e1aa4b1ad7fee73657e",
+      "bytes": 1503
+    },
+    {
+      "path": "idx-signals/idxsig/rules/sandbox.py",
+      "git_blob_sha": "3f305b4bc2887f1551f23ffa6911dc6d246e5e08",
+      "sha256": "eb26e14437224ae0a9c22cc94d119eb30670c44c717d626344baf0320322999f",
+      "bytes": 6489
+    },
+    {
+      "path": "idx-signals/idxsig/rules/user_rule.py",
+      "git_blob_sha": "354c6d0e079167e0cf7a02f2de986476dcc03ed8",
+      "sha256": "2284d2eb34cbb239ce4f5838ad4d384550c295bb71b9da5f4910c2b76db01b21",
+      "bytes": 1442
+    },
+    {
+      "path": "idx-signals/idxsig/sources/__init__.py",
+      "git_blob_sha": "083c9124b4fdc7437ae7fc6cda48229987a5fc9b",
+      "sha256": "43b646a75a54f7eacc8f4a078d946fa3d7859fe47c247305f39e25cdfbc1804b",
+      "bytes": 85
+    },
+    {
+      "path": "idx-signals/idxsig/sources/binance.py",
+      "git_blob_sha": "6a63084667f052c154675e6e59aef2a1c70d997e",
+      "sha256": "c76cc1990c78b643f58145697bd945cf9e2451aae39a5bb58b1cb63ef59c3243",
+      "bytes": 8635
+    },
+    {
+      "path": "idx-signals/idxsig/sources/coinglass.py",
+      "git_blob_sha": "7f7c57963db150e8a7d3670d37a20ff41550ef76",
+      "sha256": "5b747bedea821d41e1adddcc7c7d6cc27d888a0e84276526743207a9f17a92ac",
+      "bytes": 17226
+    },
+    {
+      "path": "idx-signals/idxsig/sources/idx_mirror.py",
+      "git_blob_sha": "80331db5330763dd18c06543f1d1916bbd2f2836",
+      "sha256": "14d3939c7e9b874306c7ba64fd9f7cb60fb5b6293748430592939e51946dfa32",
+      "bytes": 4873
+    },
+    {
+      "path": "idx-signals/idxsig/sources/resume.py",
+      "git_blob_sha": "508e17c462f58879a37bcd4cb131748f2cdb620d",
+      "sha256": "7d867b3149ff47d2ad1d2b9f883c1a02475b5a1fe800ad6a7d619ce46b446d3f",
+      "bytes": 3103
+    },
+    {
+      "path": "idx-signals/idxsig/sources/us_universe.py",
+      "git_blob_sha": "7719faeccdc32e406ae46008f1a991e26c17ff95",
+      "sha256": "34ba3d1810531453fe9afba756a7e4e08a50a6ff7508a669944928f1cedf5a88",
+      "bytes": 3810
+    },
+    {
+      "path": "idx-signals/idxsig/sources/yahoo.py",
+      "git_blob_sha": "01ba37587ae1e5a6e7db469635f7073264a4dbeb",
+      "sha256": "0a071f9ae80992246af6fffeeb82517e1966e6ad5f2c63c92055507b21cb4e8d",
+      "bytes": 8256
+    },
+    {
+      "path": "tools/check_append_only.py",
+      "git_blob_sha": "ee21078283e02dffe1b60277d8368077702ebb28",
+      "sha256": "3214b5b93e5be05831f493a500405bf4054b06aec224829685162cf1076ecfef",
+      "bytes": 6608
+    },
+    {
+      "path": "idx-signals/research/ADMISSION_v1/admission.py",
+      "git_blob_sha": "6aba2a03edfcdf160e5222b9fb3e350a040659ec",
+      "sha256": "396cef9341685dcceca582b5c4362af63c9df38b9bf1fa773ebd35a013d41394",
+      "bytes": 22586
+    },
+    {
+      "path": "idx-signals/research/PAPER_ACCOUNT_v1/protocol.json",
+      "git_blob_sha": "0a2587a7edd54f8a8659fd7e137d87a4b526d8de",
+      "sha256": "2a36e8777be15fc58886d8defbc174ea83892acb415db7e6e08b65f379186f0a",
+      "bytes": 3312
+    },
+    {
+      "path": "idx-signals/research/PAPER_BOOK_v1/protocol.json",
+      "git_blob_sha": "73a95b4003c7b9f3ef404fd2cae8b7095be1c866",
+      "sha256": "b5705c6efcf51f2683af8b88587356706623ec6290fe98363ce4c1d8acad4c64",
+      "bytes": 2557
+    },
+    {
+      "path": "idx-signals/research/EXEC_US_v2_1/demo.py",
+      "git_blob_sha": "14d4faa4b68171b615ada1cefa7a85b0a39cc9cb",
+      "sha256": "4d3ccf6b1cc53f67cd89cab9e55e377271f6dcd9bfa57ff243da8e070085adf7",
+      "bytes": 17906
+    }
+  ]
+}

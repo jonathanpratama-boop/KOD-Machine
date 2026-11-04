@@ -1,0 +1,34 @@
+FFF
+======================================================================
+FAIL: test_duplicate_candidates_recompute_to_empty_without_replayed_orders (tests.test_crypto_account_concurrency.Concurrency.test_duplicate_candidates_recompute_to_empty_without_replayed_orders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_account_concurrency.py", line 51, in test_duplicate_candidates_recompute_to_empty_without_replayed_orders
+    self.overlap(True)
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_account_concurrency.py", line 44, in overlap
+    self.assertEqual(len(conflicts),1)
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_disjoint_candidates_cannot_double_daily_or_risk_budget (tests.test_crypto_account_concurrency.Concurrency.test_disjoint_candidates_cannot_double_daily_or_risk_budget)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_account_concurrency.py", line 54, in test_disjoint_candidates_cannot_double_daily_or_risk_budget
+    self.overlap(False)
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_account_concurrency.py", line 44, in overlap
+    self.assertEqual(len(conflicts),1)
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_future_quote_cannot_change_present_mark_or_decision (tests.test_crypto_valuation_asof.AsOf.test_future_quote_cannot_change_present_mark_or_decision)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_valuation_asof.py", line 19, in test_future_quote_cannot_change_present_mark_or_decision
+    self.assertEqual(ca.mark(ca.lines(),now),expected_mark)
+AssertionError: {'typ[181 chars]ue': 1904.04, 'equity': 10951.07, 'realized': [279 chars]00Z'} != {'typ[181 chars]ue': 951.07, 'equity': 9998.1, 'realized': 0.0[275 chars]00Z'}
+Diff is 1244 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.012s
+
+FAILED (failures=3)

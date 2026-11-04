@@ -1,0 +1,19 @@
+{
+  "state": "STOPPED",
+  "requests_attempted": 4,
+  "successful_books": 3,
+  "failed_samples": 1,
+  "missing_samples": 176,
+  "scheduled_samples": 180,
+  "stop_reason": "EXTERNAL_RUNTIME_NETWORK_POLICY_BLOCK",
+  "runtime_error": "Unified exec process failed: Network access to \"https://data-api.binance.vision:443\" was blocked by policy.",
+  "error_observed_utc": "2026-10-31T19:06:43Z",
+  "process_check_utc": "2026-10-31T19:06:48Z",
+  "process_check": "No collector or timeout process remains",
+  "last_attempt_utc": "2026-10-31T19:04:20.879728+00:00",
+  "last_observation_utc": "2026-10-31T19:04:21.282578+00:00",
+  "original_deadline_utc": "2026-10-31T21:02:20.879511+00:00",
+  "reconciled_at_utc": "2026-10-31T19:07:19.521309+00:00",
+  "resume": "Not attempted; policy block honored. No alternate host, escalation, backfill or deadline extension.",
+  "meaning": "Three partial-run public book observations, not the planned two-hour sample. No eligibility, orders or profitability claims."
+}

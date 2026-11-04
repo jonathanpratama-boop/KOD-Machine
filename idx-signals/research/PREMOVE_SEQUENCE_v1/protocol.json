@@ -1,0 +1,68 @@
+{
+  "protocol_id": "KOD-PREMOVE-SEQUENCE-v1",
+  "purpose": "Retrospective learned-sequence challenger for fixed-budget pre-move discovery; extends E2/E5 rather than claiming pre-move research is new.",
+  "market": "CRYPTO",
+  "universe": "All non-stable, non-leveraged USDT spot instruments discoverable in the public Binance archive at collection time; current archive membership is retrospective, not a point-in-time universe.",
+  "periods": {
+    "train": [
+      "2020-01-01",
+      "2021-12-31"
+    ],
+    "calibration": [
+      "2022-01-01",
+      "2022-12-31"
+    ],
+    "test": [
+      "2023-01-01",
+      "2023-12-31"
+    ],
+    "holdout": "2024 onward remains unopened; 2023 was previously studied by KOD and is not an untouched research holdout."
+  },
+  "decision": "After each completed UTC daily bar; all eligible rows ranked before any future-label availability filter.",
+  "eligibility": {
+    "consecutive_history_days": 60,
+    "median_prior_20_day_quote_volume_usd": 100000,
+    "price_and_volume": "valid positive OHLC and positive current volume; no future-based spike deletion"
+  },
+  "target": {
+    "horizon_days": 5,
+    "entry": "next UTC day's open, used only for labels",
+    "barrier": "b=max(log(1.10),3*trailing_20_day_sd(log_returns)*sqrt(5)); upper=entry*exp(b), lower=entry*exp(-b)",
+    "first_passage": "First future daily close crossing either barrier; classes up_first/down_first/neither. This is close-based, not intrabar execution.",
+    "censoring": "Require all five consecutive future daily bars. Missing outcomes remain unknown, never negative. Unknown rows remain eligible for selection."
+  },
+  "models": {
+    "simple": "Equal-weight within-day percentile ranks of volume ratio and 20-day volatility",
+    "g2": "Existing E2 G2_RET30 flag first, then the same simple score; fixed-budget comparator, not E2's original trading policy",
+    "summary": "Unweighted ridge logistic class models on causal summary features",
+    "sequence": "Same summary features plus 8 PCA components of trailing 20-day normalized return/range/volume sequences; scaler/PCA trained only on train period",
+    "calibration": "Each fitted model chooses scalar temperature from [0.5,1,2,4] by multiclass log loss in calibration period only",
+    "ridge": 1
+  },
+  "evaluation": {
+    "top_k": 5,
+    "tie_break": "ticker ascending",
+    "populations": {
+      "all": "all causally eligible rows",
+      "early": "same pool excluding ret1>=10% or ret5>=20%; fixed, past-only exclusion to separate early detection from chasing an existing move"
+    },
+    "fit_purge": "Only known labels with label_end_date <= period end enter training/calibration; no labels cross a fold boundary",
+    "metrics": [
+      "selected known up hits / all selected (censored treated as non-hits, lower bound)",
+      "precision among known outcomes",
+      "censored selection fraction and precision bounds",
+      "known event recall and missed events",
+      "earliest-alert lead time",
+      "Brier score and log loss on known outcomes"
+    ],
+    "episodes": "Within each ticker, up-first hit dates no more than five days after an episode's first hit date share one episode; only episodes with eligible test decisions enter recall denominator.",
+    "uncertainty": "Paired 10-day moving-block bootstrap of daily shortlist hit-rate differences, 400 resamples, seed 20261030; sequence versus simple and summary reported separately."
+  },
+  "limits": [
+    "No profit or execution claims from forecast labels",
+    "Retrospective provider vintage, universe coverage and corporate-unit changes limit inference",
+    "Synthetic tests are not market evidence",
+    "No feature or parameter retuning on 2023 results"
+  ],
+  "code_and_data": "Every run records input hashes, protocol hash, source hashes, fit boundaries and model parameters; immutable publication."
+}

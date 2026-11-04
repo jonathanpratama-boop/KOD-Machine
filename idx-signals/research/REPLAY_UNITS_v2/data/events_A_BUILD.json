@@ -1,0 +1,5799 @@
+{
+ "built_at": "2026-10-30T11:27:20Z",
+ "manifest": "yahoo_us_replay-20261030T071025Z.jsonl",
+ "manifest_sha256": "fe1ef19e7bb75bdf72a146809d7d298378323fb48d9a4da016a91408de6d069f",
+ "pull": {
+  "first_session": "2025-09-25",
+  "last_session": "2026-10-29",
+  "sessions": 276,
+  "names": 5701,
+  "preprocessing": "causal (purpose=scoring): no row removed with a later bar"
+ },
+ "range": [
+  "2026-04-01",
+  "2026-10-28"
+ ],
+ "events": 1718,
+ "skipped": {
+  "no_twins": 0,
+  "features": 0
+ },
+ "per_session": {
+  "2026-04-01": {
+   "flagged": 15,
+   "built": 15
+  },
+  "2026-04-02": {
+   "flagged": 13,
+   "built": 13
+  },
+  "2026-04-06": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-04-07": {
+   "flagged": 20,
+   "built": 20
+  },
+  "2026-04-08": {
+   "flagged": 17,
+   "built": 17
+  },
+  "2026-04-09": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-04-10": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-04-13": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-04-14": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-04-15": {
+   "flagged": 16,
+   "built": 16
+  },
+  "2026-04-16": {
+   "flagged": 13,
+   "built": 13
+  },
+  "2026-04-17": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-04-20": {
+   "flagged": 16,
+   "built": 16
+  },
+  "2026-04-21": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-04-22": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-04-23": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-04-24": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2026-04-27": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-04-28": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2026-04-29": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2026-04-30": {
+   "flagged": 13,
+   "built": 13
+  },
+  "2026-05-01": {
+   "flagged": 9,
+   "built": 9
+  },
+  "2026-05-04": {
+   "flagged": 13,
+   "built": 13
+  },
+  "2026-05-05": {
+   "flagged": 18,
+   "built": 18
+  },
+  "2026-05-06": {
+   "flagged": 14,
+   "built": 14
+  },
+  "2026-05-07": {
+   "flagged": 16,
+   "built": 16
+  },
+  "2026-05-08": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-05-11": {
+   "flagged": 18,
+   "built": 18
+  },
+  "2026-05-12": {
+   "flagged": 14,
+   "built": 14
+  },
+  "2026-05-13": {
+   "flagged": 15,
+   "built": 15
+  },
+  "2026-05-14": {
+   "flagged": 19,
+   "built": 19
+  },
+  "2026-05-15": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-05-18": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-05-19": {
+   "flagged": 13,
+   "built": 13
+  },
+  "2026-05-20": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-05-21": {
+   "flagged": 19,
+   "built": 19
+  },
+  "2026-05-22": {
+   "flagged": 15,
+   "built": 15
+  },
+  "2026-05-26": {
+   "flagged": 19,
+   "built": 19
+  },
+  "2026-05-27": {
+   "flagged": 20,
+   "built": 20
+  },
+  "2026-05-28": {
+   "flagged": 24,
+   "built": 24
+  },
+  "2026-05-29": {
+   "flagged": 21,
+   "built": 21
+  },
+  "2026-06-01": {
+   "flagged": 19,
+   "built": 19
+  },
+  "2026-06-02": {
+   "flagged": 16,
+   "built": 16
+  },
+  "2026-06-03": {
+   "flagged": 16,
+   "built": 16
+  },
+  "2026-06-04": {
+   "flagged": 14,
+   "built": 14
+  },
+  "2026-06-05": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-06-08": {
+   "flagged": 16,
+   "built": 16
+  },
+  "2026-06-09": {
+   "flagged": 17,
+   "built": 17
+  },
+  "2026-06-10": {
+   "flagged": 26,
+   "built": 26
+  },
+  "2026-06-11": {
+   "flagged": 16,
+   "built": 16
+  },
+  "2026-06-12": {
+   "flagged": 7,
+   "built": 7
+  },
+  "2026-06-15": {
+   "flagged": 14,
+   "built": 14
+  },
+  "2026-06-16": {
+   "flagged": 16,
+   "built": 16
+  },
+  "2026-06-17": {
+   "flagged": 16,
+   "built": 16
+  },
+  "2026-06-18": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-06-22": {
+   "flagged": 13,
+   "built": 13
+  },
+  "2026-06-23": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-06-24": {
+   "flagged": 9,
+   "built": 9
+  },
+  "2026-06-25": {
+   "flagged": 7,
+   "built": 7
+  },
+  "2026-06-26": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-06-29": {
+   "flagged": 15,
+   "built": 15
+  },
+  "2026-06-30": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-07-01": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-07-02": {
+   "flagged": 9,
+   "built": 9
+  },
+  "2026-07-06": {
+   "flagged": 9,
+   "built": 9
+  },
+  "2026-07-07": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2026-07-08": {
+   "flagged": 6,
+   "built": 6
+  },
+  "2026-07-09": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-07-10": {
+   "flagged": 5,
+   "built": 5
+  },
+  "2026-07-13": {
+   "flagged": 5,
+   "built": 5
+  },
+  "2026-07-14": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2026-07-15": {
+   "flagged": 7,
+   "built": 7
+  },
+  "2026-07-16": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2026-07-17": {
+   "flagged": 5,
+   "built": 5
+  },
+  "2026-07-20": {
+   "flagged": 6,
+   "built": 6
+  },
+  "2026-07-21": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-07-22": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-07-23": {
+   "flagged": 13,
+   "built": 13
+  },
+  "2026-07-24": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2026-07-27": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2026-07-28": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-07-29": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-07-30": {
+   "flagged": 15,
+   "built": 15
+  },
+  "2026-07-31": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-08-03": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-08-04": {
+   "flagged": 14,
+   "built": 14
+  },
+  "2026-08-05": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-08-06": {
+   "flagged": 17,
+   "built": 17
+  },
+  "2026-08-07": {
+   "flagged": 19,
+   "built": 19
+  },
+  "2026-08-10": {
+   "flagged": 16,
+   "built": 16
+  },
+  "2026-08-11": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-08-12": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-08-13": {
+   "flagged": 16,
+   "built": 16
+  },
+  "2026-08-14": {
+   "flagged": 18,
+   "built": 18
+  },
+  "2026-08-17": {
+   "flagged": 9,
+   "built": 9
+  },
+  "2026-08-18": {
+   "flagged": 13,
+   "built": 13
+  },
+  "2026-08-19": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-08-20": {
+   "flagged": 9,
+   "built": 9
+  },
+  "2026-08-21": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-08-24": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-08-25": {
+   "flagged": 15,
+   "built": 15
+  },
+  "2026-08-26": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-08-27": {
+   "flagged": 7,
+   "built": 7
+  },
+  "2026-08-28": {
+   "flagged": 7,
+   "built": 7
+  },
+  "2026-08-31": {
+   "flagged": 6,
+   "built": 6
+  },
+  "2026-09-01": {
+   "flagged": 6,
+   "built": 6
+  },
+  "2026-09-02": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2026-09-03": {
+   "flagged": 9,
+   "built": 9
+  },
+  "2026-09-04": {
+   "flagged": 5,
+   "built": 5
+  },
+  "2026-09-08": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-09-09": {
+   "flagged": 6,
+   "built": 6
+  },
+  "2026-09-10": {
+   "flagged": 4,
+   "built": 4
+  },
+  "2026-09-11": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2026-09-14": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-09-15": {
+   "flagged": 9,
+   "built": 9
+  },
+  "2026-09-16": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-09-17": {
+   "flagged": 14,
+   "built": 14
+  },
+  "2026-09-18": {
+   "flagged": 16,
+   "built": 16
+  },
+  "2026-09-21": {
+   "flagged": 17,
+   "built": 17
+  },
+  "2026-09-22": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-09-23": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-09-24": {
+   "flagged": 14,
+   "built": 14
+  },
+  "2026-09-25": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-09-28": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-09-29": {
+   "flagged": 9,
+   "built": 9
+  },
+  "2026-09-30": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2026-10-01": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-10-02": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-10-05": {
+   "flagged": 16,
+   "built": 16
+  },
+  "2026-10-06": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-10-07": {
+   "flagged": 8,
+   "built": 8
+  },
+  "2026-10-08": {
+   "flagged": 7,
+   "built": 7
+  },
+  "2026-10-09": {
+   "flagged": 7,
+   "built": 7
+  },
+  "2026-10-12": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-10-13": {
+   "flagged": 14,
+   "built": 14
+  },
+  "2026-10-14": {
+   "flagged": 11,
+   "built": 11
+  },
+  "2026-10-15": {
+   "flagged": 6,
+   "built": 6
+  },
+  "2026-10-16": {
+   "flagged": 6,
+   "built": 6
+  },
+  "2026-10-19": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-10-20": {
+   "flagged": 10,
+   "built": 10
+  },
+  "2026-10-21": {
+   "flagged": 13,
+   "built": 13
+  },
+  "2026-10-22": {
+   "flagged": 12,
+   "built": 12
+  },
+  "2026-10-23": {
+   "flagged": 7,
+   "built": 7
+  },
+  "2026-10-26": {
+   "flagged": 4,
+   "built": 4
+  },
+  "2026-10-27": {
+   "flagged": 5,
+   "built": 5
+  },
+  "2026-10-28": {
+   "flagged": 14,
+   "built": 14
+  }
+ },
+ "output": "events_A.csv.gz",
+ "sha256": "5ae10d0ecc684df7b31a11cedb24460c41c29a5f094ab0a9efe7a5742e1665d6",
+ "coverage": {
+  "has_edgar": 0.9982537834691502,
+  "has_short": 0.9487776484284052,
+  "has_shares": 0.24970896391152503,
+  "filing_8k": 0.359720605355064,
+  "offering90": 0.4289871944121071,
+  "revsplit6m": 0.3538998835855646
+ },
+ "code_pins": {
+  "idxsig/learner3.py": "38951c27b6acd2d7fe9cc19c8a8a500a3ce7809f8aaf4b12823095fe089cfcd8",
+  "idxsig/learner2.py": "671f86848ad5ee0a9bd3488a17b788c3459f5499c82a39386bef2dc611f2b9e6",
+  "idxsig/speculation.py": "3fc543eb3ed1cdc810bac82749dbe9d7cf71115adca538459e7336c009937bd8",
+  "idxsig/paper.py": "c9c017d27f453e232ccc9db1401f9c83da9a544e6ef1422b7e7636f32fdeb624",
+  "idxsig/rules/moonshot_g.py": "b050c4d37d9104309b32e70a7e81682ee3029da3a6a0654dae6ac41414abb794",
+  "idxsig/global_panel.py": "ebe4ef40b1e8bdb55063a2dfd5c9301f228fe3c9122f9a36f5b738f69a0587d7",
+  "idxsig/execution.py": "16c47aab157d55c68f797275eb12f0cfe1336f705ecec082e1b0b52ffaa87112"
+ },
+ "sec_day_dir": "data/raw/sec/recent_replay_v1",
+ "edgar_responses": 1046,
+ "reads": "features only: no bar after the signal session, no plan, no outcome",
+ "units": "as_traded (frame prices x U, volume / U; U from split events effective after the session)",
+ "events_with_later_split": 334,
+ "split_decisions": [
+  {
+   "ticker": "ABTC",
+   "effective": "2026-07-06",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ACET",
+   "effective": "2025-12-30",
+   "ratio": 0.0625,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ADV",
+   "effective": "2026-03-27",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ADVB",
+   "effective": "2026-02-20",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AEHL",
+   "effective": "2026-03-05",
+   "ratio": 0.16666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AEHL",
+   "effective": "2026-08-10",
+   "ratio": 0.0625,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AEMD",
+   "effective": "2025-10-20",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AEMD",
+   "effective": "2026-08-04",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AERT",
+   "effective": "2026-06-12",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AGL",
+   "effective": "2026-03-31",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AGPU",
+   "effective": "2025-09-30",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AGRZ",
+   "effective": "2026-09-29",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AIFA",
+   "effective": "2026-06-12",
+   "ratio": 0.16666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AIFU",
+   "effective": "2026-06-16",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AIIO",
+   "effective": "2026-04-06",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AIM",
+   "effective": "2026-02-10",
+   "ratio": 1.031,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AIOS",
+   "effective": "2026-04-27",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AIRE",
+   "effective": "2026-04-30",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AIXI",
+   "effective": "2026-05-11",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AIXI",
+   "effective": "2026-09-08",
+   "ratio": 0.14285714285714285,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AKAN",
+   "effective": "2026-01-12",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AKAN",
+   "effective": "2026-04-13",
+   "ratio": 0.222,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AKTX",
+   "effective": "2026-03-31",
+   "ratio": 0.025,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ALIT",
+   "effective": "2026-07-01",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ALP",
+   "effective": "2026-09-09",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AMCR",
+   "effective": "2026-01-15",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AMIX",
+   "effective": "2026-06-24",
+   "ratio": 0.047619047619047616,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AMOD",
+   "effective": "2026-06-15",
+   "ratio": 0.025,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AMTD",
+   "effective": "2026-10-19",
+   "ratio": 0.016666666666666666,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "ANAB",
+   "effective": "2026-04-20",
+   "ratio": 1.5,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "APH",
+   "effective": "2026-09-03",
+   "ratio": 2.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "APUS",
+   "effective": "2026-07-24",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "APVO",
+   "effective": "2025-12-30",
+   "ratio": 0.05555555555555555,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ARBK",
+   "effective": "2025-12-12",
+   "ratio": 0.004629629629629629,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ARTL",
+   "effective": "2026-03-10",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ARTL",
+   "effective": "2026-08-31",
+   "ratio": 0.1111111111111111,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ASBP",
+   "effective": "2026-01-16",
+   "ratio": 0.025,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ASST",
+   "effective": "2026-02-06",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ATOS",
+   "effective": "2026-02-02",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ATPC",
+   "effective": "2026-02-10",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ATRO",
+   "effective": "2026-06-15",
+   "ratio": 1.253,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ATTT",
+   "effective": "2025-11-07",
+   "ratio": 0.0625,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ATXG",
+   "effective": "2026-03-30",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ATYR",
+   "effective": "2026-10-29",
+   "ratio": 0.025,
+   "rebased": false,
+   "by": "pull"
+  },
+  {
+   "ticker": "AURE",
+   "effective": "2026-02-19",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AUUD",
+   "effective": "2026-04-01",
+   "ratio": 0.129,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AVX",
+   "effective": "2026-06-15",
+   "ratio": 0.08333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AWP",
+   "effective": "2026-02-09",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AXG",
+   "effective": "2026-10-29",
+   "ratio": 0.005,
+   "rebased": false,
+   "by": "pull"
+  },
+  {
+   "ticker": "AXNX",
+   "effective": "2026-05-06",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AXNX",
+   "effective": "2026-10-22",
+   "ratio": 0.4,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "AZI",
+   "effective": "2025-12-12",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AZI",
+   "effective": "2026-03-23",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AZN",
+   "effective": "2026-02-02",
+   "ratio": 0.5,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "AZTR",
+   "effective": "2026-10-26",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "BANL",
+   "effective": "2026-07-20",
+   "ratio": 0.07692307692307693,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BARK",
+   "effective": "2026-04-01",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BCHT",
+   "effective": "2025-12-31",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BDAI",
+   "effective": "2026-04-06",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BDAI",
+   "effective": "2026-05-29",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BDAI",
+   "effective": "2026-07-06",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BDRX",
+   "effective": "2026-04-06",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BDRX",
+   "effective": "2026-10-26",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "BDX",
+   "effective": "2026-02-10",
+   "ratio": 1.272,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BENF",
+   "effective": "2025-12-15",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BGDE",
+   "effective": "2025-11-21",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BGM",
+   "effective": "2026-10-01",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BIAF",
+   "effective": "2026-08-24",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BIYA",
+   "effective": "2025-12-30",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BIYA",
+   "effective": "2026-07-13",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BJDX",
+   "effective": "2026-01-29",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BKNG",
+   "effective": "2026-04-06",
+   "ratio": 25.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BKT",
+   "effective": "2025-09-29",
+   "ratio": 1.008,
+   "rebased": false,
+   "by": "jump"
+  },
+  {
+   "ticker": "BKYI",
+   "effective": "2026-04-30",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BMGL",
+   "effective": "2026-06-22",
+   "ratio": 0.08333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BN",
+   "effective": "2025-10-10",
+   "ratio": 1.5,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BNAI",
+   "effective": "2025-12-12",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BNKK",
+   "effective": "2025-12-11",
+   "ratio": 0.02857142857142857,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BNT",
+   "effective": "2025-10-10",
+   "ratio": 1.5,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BOXL",
+   "effective": "2025-12-23",
+   "ratio": 0.16666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BOXL",
+   "effective": "2026-06-22",
+   "ratio": 0.16666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BRAI",
+   "effective": "2026-04-29",
+   "ratio": 3.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BRCC",
+   "effective": "2026-08-24",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BRNX",
+   "effective": "2026-01-26",
+   "ratio": 0.14285714285714285,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BRNX",
+   "effective": "2026-04-15",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BRNX",
+   "effective": "2026-08-13",
+   "ratio": 0.16666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BRTX",
+   "effective": "2026-09-08",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BTLN",
+   "effective": "2026-09-28",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BTOC",
+   "effective": "2026-10-15",
+   "ratio": 0.0625,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "BURU",
+   "effective": "2026-03-02",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BURU",
+   "effective": "2026-09-02",
+   "ratio": 0.025,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BUUU",
+   "effective": "2026-10-26",
+   "ratio": 10.0,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "BVC",
+   "effective": "2026-01-05",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BWAY",
+   "effective": "2026-03-04",
+   "ratio": 2.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BYAH",
+   "effective": "2026-02-20",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BYAH",
+   "effective": "2026-08-06",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "BYND",
+   "effective": "2026-08-14",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CALC",
+   "effective": "2026-08-31",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CANF",
+   "effective": "2026-01-05",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CANG",
+   "effective": "2025-11-17",
+   "ratio": 2.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CANG",
+   "effective": "2026-07-21",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CAPS",
+   "effective": "2026-10-19",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "CBSH",
+   "effective": "2025-12-02",
+   "ratio": 1.05,
+   "rebased": false,
+   "by": "jump"
+  },
+  {
+   "ticker": "CCHH",
+   "effective": "2026-07-13",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CCTG",
+   "effective": "2026-01-23",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CDLX",
+   "effective": "2026-06-08",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CDT",
+   "effective": "2025-10-13",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CDT",
+   "effective": "2026-03-27",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CDT",
+   "effective": "2026-07-20",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CDT",
+   "effective": "2026-09-29",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CDTG",
+   "effective": "2026-06-01",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CENN",
+   "effective": "2026-04-13",
+   "ratio": 0.016666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CETX",
+   "effective": "2025-09-29",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CETX",
+   "effective": "2026-06-05",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CETY",
+   "effective": "2025-10-06",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CGTL",
+   "effective": "2026-07-07",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CHAI",
+   "effective": "2025-10-07",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CHGA",
+   "effective": "2026-08-31",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CHR",
+   "effective": "2025-12-23",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CHR",
+   "effective": "2026-04-07",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CHSN",
+   "effective": "2026-05-07",
+   "ratio": 0.01,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CIIT",
+   "effective": "2026-03-20",
+   "ratio": 0.14285714285714285,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CIIT",
+   "effective": "2026-07-20",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CISS",
+   "effective": "2026-01-26",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CISS",
+   "effective": "2026-04-27",
+   "ratio": 0.14285714285714285,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CISS",
+   "effective": "2026-08-19",
+   "ratio": 0.025,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CLBK",
+   "effective": "2026-07-21",
+   "ratio": 2.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CLDI",
+   "effective": "2026-07-31",
+   "ratio": 0.0625,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CLGN",
+   "effective": "2026-09-04",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CLIK",
+   "effective": "2025-10-10",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CLIR",
+   "effective": "2026-03-16",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CLMB",
+   "effective": "2026-03-23",
+   "ratio": 4.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CMCSA",
+   "effective": "2026-01-05",
+   "ratio": 1.067,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CMCT",
+   "effective": "2026-03-26",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CMCT",
+   "effective": "2026-04-20",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CMND",
+   "effective": "2025-12-15",
+   "ratio": 0.025,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CMND",
+   "effective": "2026-05-21",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CMND",
+   "effective": "2026-10-05",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CNSY",
+   "effective": "2026-04-02",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "COCH",
+   "effective": "2026-10-26",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "CODX",
+   "effective": "2026-01-02",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "COOK",
+   "effective": "2026-03-18",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CPOP",
+   "effective": "2026-07-13",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CPOP",
+   "effective": "2026-09-14",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CRE",
+   "effective": "2026-02-13",
+   "ratio": 0.08333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CRESY",
+   "effective": "2025-11-28",
+   "ratio": 1.025,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CRIS",
+   "effective": "2026-07-06",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CRWD",
+   "effective": "2026-07-02",
+   "ratio": 4.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CSAI",
+   "effective": "2026-07-31",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CTNT",
+   "effective": "2026-04-29",
+   "ratio": 0.005,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CTNT",
+   "effective": "2026-09-28",
+   "ratio": 0.006666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CTSO",
+   "effective": "2026-09-08",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CTVA",
+   "effective": "2026-10-01",
+   "ratio": 6.665,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CUE",
+   "effective": "2026-04-24",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CUPR",
+   "effective": "2026-05-27",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CURX",
+   "effective": "2026-08-20",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CVNA",
+   "effective": "2026-05-08",
+   "ratio": 5.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CXAI",
+   "effective": "2026-08-18",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CYCU",
+   "effective": "2025-10-27",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "CYCU",
+   "effective": "2025-12-15",
+   "ratio": 1.018,
+   "rebased": false,
+   "by": "jump"
+  },
+  {
+   "ticker": "CYCU",
+   "effective": "2026-08-28",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "DAIC",
+   "effective": "2026-06-01",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "DBGI",
+   "effective": "2026-07-24",
+   "ratio": 0.025,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "DCOY",
+   "effective": "2026-03-09",
+   "ratio": 0.08333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "DCX",
+   "effective": "2025-11-03",
+   "ratio": 0.01,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "DCX",
+   "effective": "2026-01-22",
+   "ratio": 0.08333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "DCX",
+   "effective": "2026-09-28",
+   "ratio": 0.00625,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "DD",
+   "effective": "2025-11-03",
+   "ratio": 2.39,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "DD",
+   "effective": "2026-06-24",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "DFLI",
+   "effective": "2025-12-18",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "DFLI",
+   "effective": "2026-10-12",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "DFNS",
+   "effective": "2026-07-20",
+   "ratio": 0.008,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "DGNX",
+   "effective": "2026-04-28",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "DHY",
+   "effective": "2026-09-30",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "DIT",
+   "effective": "2026-03-23",
+   "ratio": 1.5,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "DKI",
+   "effective": "2026-10-22",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "DLXY",
+   "effective": "2026-09-28",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "DRK",
+   "effective": "2026-02-10",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "DSY",
+   "effective": "2026-02-23",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "DXST",
+   "effective": "2026-03-16",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "EDBL",
+   "effective": "2026-02-03",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "EDBL",
+   "effective": "2026-07-13",
+   "ratio": 0.022222222222222223,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "EDHL",
+   "effective": "2026-02-09",
+   "ratio": 0.0625,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "EDVA",
+   "effective": "2026-07-27",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "EEIQ",
+   "effective": "2026-02-17",
+   "ratio": 0.0625,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "EHGO",
+   "effective": "2026-04-20",
+   "ratio": 0.0625,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "EHGO",
+   "effective": "2026-10-21",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "EJH",
+   "effective": "2026-03-30",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ELAB",
+   "effective": "2026-01-06",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ELAB",
+   "effective": "2026-03-10",
+   "ratio": 0.16666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ELAB",
+   "effective": "2026-08-21",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ELPW",
+   "effective": "2025-12-26",
+   "ratio": 0.0625,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ELPW",
+   "effective": "2026-03-12",
+   "ratio": 0.0125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ELPW",
+   "effective": "2026-08-10",
+   "ratio": 0.022222222222222223,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ENHA",
+   "effective": "2026-10-29",
+   "ratio": 0.1,
+   "rebased": false,
+   "by": "pull"
+  },
+  {
+   "ticker": "ENLV",
+   "effective": "2026-07-09",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ENLV",
+   "effective": "2026-10-27",
+   "ratio": 0.0625,
+   "rebased": false,
+   "by": "pull"
+  },
+  {
+   "ticker": "ENVB",
+   "effective": "2025-10-28",
+   "ratio": 0.08333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "EOCN",
+   "effective": "2026-08-19",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "EPOW",
+   "effective": "2026-09-18",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ERNA",
+   "effective": "2026-05-04",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "EUDA",
+   "effective": "2026-03-23",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "EZGO",
+   "effective": "2025-11-21",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "EZGO",
+   "effective": "2026-05-19",
+   "ratio": 0.006666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "EZRA",
+   "effective": "2026-05-18",
+   "ratio": 0.025,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FBGL",
+   "effective": "2026-09-28",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FBLG",
+   "effective": "2026-03-30",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FCDH",
+   "effective": "2026-01-12",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FCHL",
+   "effective": "2026-03-23",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FCHL",
+   "effective": "2026-05-04",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FCUV",
+   "effective": "2026-02-09",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FCUV",
+   "effective": "2026-06-23",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FDX",
+   "effective": "2026-06-01",
+   "ratio": 1.241,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FEMY",
+   "effective": "2026-06-08",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FFAI",
+   "effective": "2026-07-24",
+   "ratio": 0.006666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FFTT",
+   "effective": "2026-08-11",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FGC",
+   "effective": "2026-02-13",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FGL",
+   "effective": "2026-02-10",
+   "ratio": 0.01,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FGL",
+   "effective": "2026-09-01",
+   "ratio": 0.01,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FLYE",
+   "effective": "2025-11-04",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FMFC",
+   "effective": "2026-10-13",
+   "ratio": 0.025,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "FNF",
+   "effective": "2025-12-17",
+   "ratio": 1.037,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FNGD",
+   "effective": "2026-02-09",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FNRN",
+   "effective": "2026-02-27",
+   "ratio": 1.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FRGT",
+   "effective": "2025-12-15",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FRGT",
+   "effective": "2026-05-18",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FRGT",
+   "effective": "2026-10-19",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "FRMM",
+   "effective": "2025-10-20",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FRSX",
+   "effective": "2026-02-26",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FTFT",
+   "effective": "2026-01-20",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FTFT",
+   "effective": "2026-07-13",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FTFT",
+   "effective": "2026-08-31",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FUBO",
+   "effective": "2026-03-24",
+   "ratio": 0.08333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FXHO",
+   "effective": "2025-11-21",
+   "ratio": 0.01,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FXHO",
+   "effective": "2026-02-17",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "FXHO",
+   "effective": "2026-06-22",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GAB",
+   "effective": "2026-03-02",
+   "ratio": 1.01,
+   "rebased": false,
+   "by": "jump"
+  },
+  {
+   "ticker": "GAME",
+   "effective": "2026-08-24",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GAUZ",
+   "effective": "2026-09-11",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GCDT",
+   "effective": "2026-10-07",
+   "ratio": 0.16666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GDC",
+   "effective": "2026-06-29",
+   "ratio": 0.004,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GGR",
+   "effective": "2025-10-06",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GIBO",
+   "effective": "2026-06-29",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GIPR",
+   "effective": "2026-07-10",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GLE",
+   "effective": "2026-10-08",
+   "ratio": 0.1,
+   "rebased": false,
+   "by": "pull"
+  },
+  {
+   "ticker": "GMEX",
+   "effective": "2026-01-08",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GMEX",
+   "effective": "2026-05-01",
+   "ratio": 0.14285714285714285,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GMEX",
+   "effective": "2026-07-02",
+   "ratio": 0.1111111111111111,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GMEX",
+   "effective": "2026-09-28",
+   "ratio": 0.1111111111111111,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GMM",
+   "effective": "2026-06-11",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GNLN",
+   "effective": "2026-04-06",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GNPX",
+   "effective": "2025-10-21",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GNPX",
+   "effective": "2026-07-16",
+   "ratio": 0.045454545454545456,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GORO",
+   "effective": "2026-07-10",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GOSS",
+   "effective": "2026-09-11",
+   "ratio": 0.0125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GOVX",
+   "effective": "2026-01-12",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GP",
+   "effective": "2026-10-19",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "GPMT",
+   "effective": "2026-10-06",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GPUS",
+   "effective": "2026-08-25",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GRI",
+   "effective": "2026-01-26",
+   "ratio": 0.03571428571428571,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GRML",
+   "effective": "2026-08-24",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GRNQ",
+   "effective": "2026-08-06",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GSIW",
+   "effective": "2026-03-06",
+   "ratio": 0.005,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GTBP",
+   "effective": "2026-09-08",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GURE",
+   "effective": "2025-10-27",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "GUTS",
+   "effective": "2026-10-05",
+   "ratio": 0.08333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "HAO",
+   "effective": "2026-05-21",
+   "ratio": 0.0078125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "HAO",
+   "effective": "2026-08-14",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "HBIO",
+   "effective": "2026-03-16",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "HCAI",
+   "effective": "2026-04-13",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "HCAI",
+   "effective": "2026-10-23",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "HCTI",
+   "effective": "2026-02-10",
+   "ratio": 0.016666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "HCTI",
+   "effective": "2026-10-26",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "HCWB",
+   "effective": "2026-06-30",
+   "ratio": 0.16666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "HERZ",
+   "effective": "2026-02-09",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "HKPD",
+   "effective": "2026-10-26",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "HLSQ",
+   "effective": "2025-11-25",
+   "ratio": 0.05263157894736842,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "HLSQ",
+   "effective": "2026-09-09",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "HODO",
+   "effective": "2026-06-01",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "HON",
+   "effective": "2025-10-30",
+   "ratio": 1.061,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "HON",
+   "effective": "2026-06-29",
+   "ratio": 0.9535,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "HOST",
+   "effective": "2026-08-31",
+   "ratio": 0.02857142857142857,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "HPP",
+   "effective": "2025-12-02",
+   "ratio": 0.14285714285714285,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "HTCR",
+   "effective": "2026-04-06",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "HUBC",
+   "effective": "2026-01-16",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "HUBC",
+   "effective": "2026-04-20",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "HUBC",
+   "effective": "2026-06-08",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "HUBC",
+   "effective": "2026-09-14",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IAF",
+   "effective": "2025-10-23",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IBG",
+   "effective": "2025-09-26",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IBG",
+   "effective": "2026-01-30",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IBO",
+   "effective": "2026-09-23",
+   "ratio": 0.079,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ICCM",
+   "effective": "2026-06-04",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ICON",
+   "effective": "2026-01-08",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ICU",
+   "effective": "2026-01-05",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IESC",
+   "effective": "2026-08-24",
+   "ratio": 2.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IGR",
+   "effective": "2026-09-08",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ILAG",
+   "effective": "2025-12-30",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IMCC",
+   "effective": "2026-08-27",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IMMP",
+   "effective": "2026-09-28",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IMUX",
+   "effective": "2026-04-27",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "INBS",
+   "effective": "2025-12-16",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "INCR",
+   "effective": "2026-08-24",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "INHD",
+   "effective": "2025-12-22",
+   "ratio": 0.041666666666666664,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "INHD",
+   "effective": "2026-05-04",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "INLF",
+   "effective": "2026-04-06",
+   "ratio": 0.0625,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "INLF",
+   "effective": "2026-07-06",
+   "ratio": 0.005,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "INTJ",
+   "effective": "2026-02-17",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "INTS",
+   "effective": "2026-02-19",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IOTR",
+   "effective": "2025-11-10",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IPDN",
+   "effective": "2026-09-14",
+   "ratio": 0.03333333333333333,
+   "rebased": false,
+   "by": "jump"
+  },
+  {
+   "ticker": "IPST",
+   "effective": "2025-11-05",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IPST",
+   "effective": "2026-04-23",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IPW",
+   "effective": "2025-10-27",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IPW",
+   "effective": "2026-05-22",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IPW",
+   "effective": "2026-08-07",
+   "ratio": 0.1111111111111111,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IPW",
+   "effective": "2026-10-26",
+   "ratio": 0.08333333333333333,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "IQST",
+   "effective": "2025-12-15",
+   "ratio": 1.017,
+   "rebased": false,
+   "by": "jump"
+  },
+  {
+   "ticker": "IRLA",
+   "effective": "2026-04-13",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IRLA",
+   "effective": "2026-06-30",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ISPC",
+   "effective": "2026-04-28",
+   "ratio": 0.025,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ITOC",
+   "effective": "2026-10-06",
+   "ratio": 0.0625,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IVF",
+   "effective": "2025-11-28",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IVF",
+   "effective": "2026-03-27",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IVF",
+   "effective": "2026-10-30",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "IXHL",
+   "effective": "2026-02-27",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "IZM",
+   "effective": "2026-09-15",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "JAGX",
+   "effective": "2026-04-30",
+   "ratio": 0.02857142857142857,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "JAGX",
+   "effective": "2026-09-17",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "JBDI",
+   "effective": "2026-06-30",
+   "ratio": 0.5,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "JDZG",
+   "effective": "2026-03-23",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "JDZG",
+   "effective": "2026-06-01",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "JEM",
+   "effective": "2026-04-13",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "JEM",
+   "effective": "2026-07-14",
+   "ratio": 0.08333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "JRI",
+   "effective": "2026-02-06",
+   "ratio": 1.007,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "JTAI",
+   "effective": "2026-04-08",
+   "ratio": 0.005,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "JTAI",
+   "effective": "2026-07-15",
+   "ratio": 10.548,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "JUNS",
+   "effective": "2026-08-07",
+   "ratio": 0.013333333333333334,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "JXG",
+   "effective": "2025-11-21",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "JYD",
+   "effective": "2025-10-13",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "JZ",
+   "effective": "2026-07-06",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "JZXN",
+   "effective": "2025-12-11",
+   "ratio": 0.025,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "KALA",
+   "effective": "2026-05-11",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "KAPA",
+   "effective": "2026-09-01",
+   "ratio": 0.14285714285714285,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "KIDZ",
+   "effective": "2026-03-10",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "KIDZ",
+   "effective": "2026-06-08",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "KIDZ",
+   "effective": "2026-08-13",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "KITT",
+   "effective": "2026-04-21",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "KITT",
+   "effective": "2026-09-25",
+   "ratio": 0.16666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "KLAC",
+   "effective": "2026-06-12",
+   "ratio": 10.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "KNDI",
+   "effective": "2026-10-16",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "KRSA",
+   "effective": "2026-09-09",
+   "ratio": 0.14285714285714285,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "KUST",
+   "effective": "2026-01-08",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "KUST",
+   "effective": "2026-04-22",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "KUST",
+   "effective": "2026-10-01",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "KXIN",
+   "effective": "2025-12-01",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "KXIN",
+   "effective": "2026-03-13",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LABT",
+   "effective": "2026-06-22",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LARK",
+   "effective": "2025-12-01",
+   "ratio": 1.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LBGJ",
+   "effective": "2026-03-27",
+   "ratio": 0.01,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LBGJ",
+   "effective": "2026-08-03",
+   "ratio": 0.005,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LCU",
+   "effective": "2026-09-14",
+   "ratio": 0.037037037037037035,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LEXX",
+   "effective": "2026-08-03",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LFT",
+   "effective": "2026-09-10",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LFWD",
+   "effective": "2026-02-24",
+   "ratio": 0.08333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LGCL",
+   "effective": "2025-10-13",
+   "ratio": 0.025,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LGCL",
+   "effective": "2026-09-01",
+   "ratio": 0.008,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LGHL",
+   "effective": "2025-11-26",
+   "ratio": 0.07692307692307693,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LGHL",
+   "effective": "2026-07-14",
+   "ratio": 0.1111111111111111,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LGHL",
+   "effective": "2026-09-10",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LGVN",
+   "effective": "2026-08-27",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LHSW",
+   "effective": "2026-06-22",
+   "ratio": 0.0625,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LHSW",
+   "effective": "2026-10-26",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "LILA",
+   "effective": "2026-06-17",
+   "ratio": 1.472,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LILAK",
+   "effective": "2026-06-17",
+   "ratio": 1.472,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LIMN",
+   "effective": "2026-08-21",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LINK",
+   "effective": "2025-10-29",
+   "ratio": 1.5,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LNKS",
+   "effective": "2026-04-06",
+   "ratio": 0.004,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LU",
+   "effective": "2026-10-23",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "LVO",
+   "effective": "2025-09-26",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LXEH",
+   "effective": "2026-04-20",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LXP",
+   "effective": "2025-11-11",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "LZMH",
+   "effective": "2026-05-22",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MASK",
+   "effective": "2026-03-16",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MBAI",
+   "effective": "2026-08-13",
+   "ratio": 0.14285714285714285,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MBRX",
+   "effective": "2025-12-01",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MBRX",
+   "effective": "2026-10-20",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "MDCX",
+   "effective": "2026-10-12",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "MEDS",
+   "effective": "2026-05-26",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "METCB",
+   "effective": "2026-03-13",
+   "ratio": 1.012,
+   "rebased": false,
+   "by": "jump"
+  },
+  {
+   "ticker": "METCB",
+   "effective": "2026-06-12",
+   "ratio": 1.012,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MF",
+   "effective": "2026-05-22",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MGF",
+   "effective": "2026-10-08",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "MGN",
+   "effective": "2026-09-08",
+   "ratio": 0.025,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MGN",
+   "effective": "2026-09-17",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MIDD",
+   "effective": "2026-07-07",
+   "ratio": 1.243,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MIN",
+   "effective": "2026-10-08",
+   "ratio": 0.16666666666666666,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "MKDW",
+   "effective": "2026-01-26",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MLEC",
+   "effective": "2026-01-05",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MLI",
+   "effective": "2026-07-01",
+   "ratio": 2.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MNDR",
+   "effective": "2026-06-29",
+   "ratio": 0.16666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MNST",
+   "effective": "2026-08-11",
+   "ratio": 2.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MNTS",
+   "effective": "2025-12-18",
+   "ratio": 0.056,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MOBX",
+   "effective": "2026-04-07",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MODD",
+   "effective": "2026-03-31",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MOVE",
+   "effective": "2025-10-10",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MOVE",
+   "effective": "2026-04-07",
+   "ratio": 1.358,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MPU",
+   "effective": "2026-09-16",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MQ",
+   "effective": "2026-07-01",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MRDN",
+   "effective": "2026-03-03",
+   "ratio": 0.08333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MSAI",
+   "effective": "2026-04-13",
+   "ratio": 0.025,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MSGK",
+   "effective": "2026-10-27",
+   "ratio": 1.328,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MSLE",
+   "effective": "2026-01-30",
+   "ratio": 0.08333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MSS",
+   "effective": "2026-04-24",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MSS",
+   "effective": "2026-07-22",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MTEN",
+   "effective": "2026-01-26",
+   "ratio": 0.005,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MTNB",
+   "effective": "2026-09-28",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MTVA",
+   "effective": "2025-12-05",
+   "ratio": 0.09090909090909091,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MVIS",
+   "effective": "2026-08-03",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MWG",
+   "effective": "2026-02-23",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MYPS",
+   "effective": "2026-10-01",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "MYSZ",
+   "effective": "2026-08-13",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NAKA",
+   "effective": "2026-05-22",
+   "ratio": 0.025,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NAMI",
+   "effective": "2026-06-25",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NCEL",
+   "effective": "2025-10-31",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NCEW",
+   "effective": "2025-11-14",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NCI",
+   "effective": "2026-05-19",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NCRA",
+   "effective": "2026-07-07",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NCT",
+   "effective": "2026-04-02",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NCT",
+   "effective": "2026-09-17",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NDLS",
+   "effective": "2026-02-18",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NEXR",
+   "effective": "2026-02-17",
+   "ratio": 0.07142857142857142,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NEXR",
+   "effective": "2026-07-31",
+   "ratio": 0.09090909090909091,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NFE",
+   "effective": "2026-09-14",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NFLX",
+   "effective": "2025-11-17",
+   "ratio": 10.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NIKI",
+   "effective": "2026-07-20",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NIPG",
+   "effective": "2026-07-06",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NIVF",
+   "effective": "2025-12-01",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NIVF",
+   "effective": "2026-01-26",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NIVF",
+   "effective": "2026-03-16",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NIVF",
+   "effective": "2026-07-06",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NIVF",
+   "effective": "2026-09-01",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NIVF",
+   "effective": "2026-10-12",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NIVF",
+   "effective": "2026-10-23",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "NMTC",
+   "effective": "2026-04-16",
+   "ratio": 0.16666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NOW",
+   "effective": "2025-12-18",
+   "ratio": 5.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NRDY",
+   "effective": "2026-08-19",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NRSN",
+   "effective": "2026-09-14",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NTCL",
+   "effective": "2026-07-06",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NUWE",
+   "effective": "2026-06-26",
+   "ratio": 0.02857142857142857,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NUWE",
+   "effective": "2026-10-27",
+   "ratio": 0.1111111111111111,
+   "rebased": false,
+   "by": "pull"
+  },
+  {
+   "ticker": "NVA",
+   "effective": "2025-10-29",
+   "ratio": 5.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NVNO",
+   "effective": "2026-01-20",
+   "ratio": 0.02857142857142857,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NVX",
+   "effective": "2026-08-27",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NXAT",
+   "effective": "2026-08-03",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NXGL",
+   "effective": "2026-10-12",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "NXL",
+   "effective": "2026-08-31",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NXPL",
+   "effective": "2026-04-13",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NXTS",
+   "effective": "2026-04-08",
+   "ratio": 0.14285714285714285,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NXTT",
+   "effective": "2026-08-10",
+   "ratio": 0.01,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NXXT",
+   "effective": "2026-09-14",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "NXXT",
+   "effective": "2026-10-30",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "OBAI",
+   "effective": "2026-10-19",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "OCG",
+   "effective": "2026-01-16",
+   "ratio": 0.004545454545454545,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "OCG",
+   "effective": "2026-04-27",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "OFAL",
+   "effective": "2026-07-31",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "OIO",
+   "effective": "2026-04-24",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "OLOX",
+   "effective": "2026-05-08",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "OMEX",
+   "effective": "2026-10-29",
+   "ratio": 0.04,
+   "rebased": false,
+   "by": "pull"
+  },
+  {
+   "ticker": "OMH",
+   "effective": "2026-08-31",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ONCO",
+   "effective": "2026-03-25",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ONCO",
+   "effective": "2026-05-21",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ONFO",
+   "effective": "2026-08-10",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ONMD",
+   "effective": "2026-09-29",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "OPAD",
+   "effective": "2026-06-09",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "OPNW",
+   "effective": "2026-09-29",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "OPTT",
+   "effective": "2026-09-14",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ORKT",
+   "effective": "2025-09-29",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PARA",
+   "effective": "2026-05-08",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PARA",
+   "effective": "2026-10-27",
+   "ratio": 0.1,
+   "rebased": false,
+   "by": "pull"
+  },
+  {
+   "ticker": "PASW",
+   "effective": "2026-10-23",
+   "ratio": 0.025,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "PAVM",
+   "effective": "2026-01-02",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PAVS",
+   "effective": "2025-12-18",
+   "ratio": 0.01,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PAVS",
+   "effective": "2026-03-31",
+   "ratio": 0.08333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PAVS",
+   "effective": "2026-06-29",
+   "ratio": 0.01,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PBM",
+   "effective": "2026-01-20",
+   "ratio": 0.16,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PBM",
+   "effective": "2026-02-02",
+   "ratio": 0.16,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PCLA",
+   "effective": "2026-01-26",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PCSA",
+   "effective": "2025-12-17",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PED",
+   "effective": "2026-03-13",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PFSA",
+   "effective": "2026-02-09",
+   "ratio": 0.013333333333333334,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PFSA",
+   "effective": "2026-07-07",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PFSA",
+   "effective": "2026-08-17",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PIPR",
+   "effective": "2026-03-24",
+   "ratio": 4.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PLRZ",
+   "effective": "2025-11-28",
+   "ratio": 0.16666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PMAX",
+   "effective": "2025-10-06",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PMAX",
+   "effective": "2026-04-17",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PMI",
+   "effective": "2026-08-03",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PMN",
+   "effective": "2025-11-28",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PN",
+   "effective": "2026-04-13",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "POAS",
+   "effective": "2026-10-12",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "POM",
+   "effective": "2026-06-22",
+   "ratio": 0.05555555555555555,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "POWL",
+   "effective": "2026-04-06",
+   "ratio": 3.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PPBT",
+   "effective": "2026-03-02",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PPCB",
+   "effective": "2026-05-18",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PPCB",
+   "effective": "2026-10-26",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "PRFX",
+   "effective": "2026-02-06",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PRHI",
+   "effective": "2026-06-02",
+   "ratio": 0.14285714285714285,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PRPL",
+   "effective": "2026-07-20",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PRTS",
+   "effective": "2026-05-26",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PSIG",
+   "effective": "2025-10-13",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PSNY",
+   "effective": "2025-12-09",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PSNYW",
+   "effective": "2025-12-09",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PSQH",
+   "effective": "2026-07-13",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PTLE",
+   "effective": "2026-02-27",
+   "ratio": 0.0125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PW",
+   "effective": "2026-06-03",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "PWCM",
+   "effective": "2026-07-13",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "QTI",
+   "effective": "2025-10-24",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "QTI",
+   "effective": "2025-10-27",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RAYA",
+   "effective": "2025-09-30",
+   "ratio": 0.004545454545454545,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RAYA",
+   "effective": "2026-04-20",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RBKB",
+   "effective": "2026-07-22",
+   "ratio": 1.397,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RBNE",
+   "effective": "2025-12-24",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RBNE",
+   "effective": "2026-07-09",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RCBC",
+   "effective": "2025-12-16",
+   "ratio": 10.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RCON",
+   "effective": "2026-08-18",
+   "ratio": 0.005,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RDGT",
+   "effective": "2026-04-08",
+   "ratio": 0.006666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "REAX",
+   "effective": "2026-08-25",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "REED",
+   "effective": "2025-11-03",
+   "ratio": 0.16666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RENX",
+   "effective": "2026-03-26",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RETO",
+   "effective": "2025-11-03",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RETO",
+   "effective": "2026-05-18",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RETO",
+   "effective": "2026-10-02",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "REVB",
+   "effective": "2026-01-28",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "REVB",
+   "effective": "2026-10-20",
+   "ratio": 0.14285714285714285,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "REZI",
+   "effective": "2026-08-04",
+   "ratio": 1.437,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RGR",
+   "effective": "2025-10-24",
+   "ratio": 0.374,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RJET",
+   "effective": "2025-11-25",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RLYB",
+   "effective": "2026-02-06",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RMTI",
+   "effective": "2026-07-01",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RNTZ",
+   "effective": "2026-04-06",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RPGL",
+   "effective": "2026-02-24",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RPGL",
+   "effective": "2026-05-28",
+   "ratio": 0.025,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RPGL",
+   "effective": "2026-09-25",
+   "ratio": 0.0625,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RPT",
+   "effective": "2025-12-31",
+   "ratio": 0.16666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RTB",
+   "effective": "2026-01-02",
+   "ratio": 0.02857142857142857,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RUBI",
+   "effective": "2025-12-02",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RUBI",
+   "effective": "2026-02-12",
+   "ratio": 0.12820512820512822,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RUBI",
+   "effective": "2026-04-09",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RUBI",
+   "effective": "2026-06-26",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RUBI",
+   "effective": "2026-10-06",
+   "ratio": 1.5,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RUBI",
+   "effective": "2026-10-30",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "RUSHA",
+   "effective": "2026-09-01",
+   "ratio": 1.5,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RUSHB",
+   "effective": "2026-09-01",
+   "ratio": 1.5,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RVSN",
+   "effective": "2026-02-03",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "RVSN",
+   "effective": "2026-02-04",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SBFM",
+   "effective": "2026-06-01",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SBFM",
+   "effective": "2026-10-26",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "SBS",
+   "effective": "2026-05-07",
+   "ratio": 5.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SCAG",
+   "effective": "2026-10-27",
+   "ratio": 0.06666666666666667,
+   "rebased": false,
+   "by": "pull"
+  },
+  {
+   "ticker": "SCCO",
+   "effective": "2025-11-12",
+   "ratio": 1.008,
+   "rebased": false,
+   "by": "jump"
+  },
+  {
+   "ticker": "SCCO",
+   "effective": "2026-02-10",
+   "ratio": 1.008,
+   "rebased": false,
+   "by": "jump"
+  },
+  {
+   "ticker": "SCCO",
+   "effective": "2026-05-13",
+   "ratio": 1.01,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SCCO",
+   "effective": "2026-08-11",
+   "ratio": 1.012,
+   "rebased": false,
+   "by": "jump"
+  },
+  {
+   "ticker": "SCLX",
+   "effective": "2026-06-16",
+   "ratio": 1.606,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SCNI",
+   "effective": "2026-08-21",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SCNX",
+   "effective": "2026-10-05",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SCWO",
+   "effective": "2025-12-26",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SCYX",
+   "effective": "2026-06-01",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SCZM",
+   "effective": "2025-12-10",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SDEV",
+   "effective": "2026-02-23",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SDOT",
+   "effective": "2026-05-27",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SEGG",
+   "effective": "2026-08-03",
+   "ratio": 0.14285714285714285,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SENS",
+   "effective": "2025-10-20",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SF",
+   "effective": "2026-02-27",
+   "ratio": 1.5,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SFBS",
+   "effective": "2026-08-21",
+   "ratio": 2.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SFHG",
+   "effective": "2026-02-27",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SFWL",
+   "effective": "2026-09-08",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SGLY",
+   "effective": "2026-07-27",
+   "ratio": 0.07142857142857142,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SGRX",
+   "effective": "2026-01-20",
+   "ratio": 0.016666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SGRX",
+   "effective": "2026-08-21",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SHFS",
+   "effective": "2026-09-30",
+   "ratio": 0.08333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SHPH",
+   "effective": "2026-06-11",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SILO",
+   "effective": "2026-06-03",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SKIN",
+   "effective": "2026-10-14",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "SKYE",
+   "effective": "2026-08-24",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SKYQ",
+   "effective": "2026-03-16",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SLE",
+   "effective": "2026-01-23",
+   "ratio": 0.08333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SLMT",
+   "effective": "2026-05-14",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SLXN",
+   "effective": "2026-05-29",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SMSI",
+   "effective": "2026-06-05",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SMTK",
+   "effective": "2026-08-21",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SMX",
+   "effective": "2025-10-23",
+   "ratio": 0.091,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SMX",
+   "effective": "2026-02-17",
+   "ratio": 0.204,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SMX",
+   "effective": "2026-06-01",
+   "ratio": 0.437,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SMXT",
+   "effective": "2026-08-13",
+   "ratio": 0.08333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SNAL",
+   "effective": "2026-07-06",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SNEX",
+   "effective": "2026-03-23",
+   "ratio": 1.5,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SNEX",
+   "effective": "2026-07-20",
+   "ratio": 1.5,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SNFCA",
+   "effective": "2026-07-10",
+   "ratio": 1.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SOAR",
+   "effective": "2025-12-26",
+   "ratio": 1.126,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SONM",
+   "effective": "2025-10-27",
+   "ratio": 0.05555555555555555,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SOWG",
+   "effective": "2026-04-24",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SPGI",
+   "effective": "2026-07-01",
+   "ratio": 1.057,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SPHL",
+   "effective": "2025-12-02",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SPRC",
+   "effective": "2026-03-04",
+   "ratio": 0.1111111111111111,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SRTM",
+   "effective": "2026-01-26",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SRTM",
+   "effective": "2026-04-20",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SRTM",
+   "effective": "2026-09-08",
+   "ratio": 0.16666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SRXH",
+   "effective": "2026-07-06",
+   "ratio": 0.016666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SSP",
+   "effective": "2025-12-08",
+   "ratio": 1.33,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "STFS",
+   "effective": "2026-03-13",
+   "ratio": 0.025,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "STKH",
+   "effective": "2026-07-27",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "STRO",
+   "effective": "2025-12-03",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SUGP",
+   "effective": "2026-08-06",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SUGP",
+   "effective": "2026-10-07",
+   "ratio": 0.16666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SVC",
+   "effective": "2026-07-07",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SVRE",
+   "effective": "2025-12-10",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SVRE",
+   "effective": "2026-02-25",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SVRN",
+   "effective": "2026-03-30",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SXTC",
+   "effective": "2026-02-03",
+   "ratio": 0.006666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SXTC",
+   "effective": "2026-08-10",
+   "ratio": 0.0125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "SXTC",
+   "effective": "2026-10-26",
+   "ratio": 0.01,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "SXTP",
+   "effective": "2026-01-20",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TANH",
+   "effective": "2026-09-04",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TDIC",
+   "effective": "2026-04-20",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TDIC",
+   "effective": "2026-06-15",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TDTH",
+   "effective": "2026-04-24",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TGL",
+   "effective": "2025-12-05",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "THH",
+   "effective": "2026-08-10",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TII",
+   "effective": "2025-11-03",
+   "ratio": 0.6666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TJGC",
+   "effective": "2026-05-26",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TLIH",
+   "effective": "2026-05-01",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TLRY",
+   "effective": "2025-12-02",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TNMG",
+   "effective": "2025-12-23",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TNMG",
+   "effective": "2026-09-08",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TNON",
+   "effective": "2026-08-10",
+   "ratio": 0.02857142857142857,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TOMZ",
+   "effective": "2026-07-20",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TOP",
+   "effective": "2026-08-03",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TOUR",
+   "effective": "2026-04-22",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TPET",
+   "effective": "2026-08-31",
+   "ratio": 0.1111111111111111,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TPL",
+   "effective": "2025-12-23",
+   "ratio": 3.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TR",
+   "effective": "2026-03-05",
+   "ratio": 1.03,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TRIB",
+   "effective": "2026-07-24",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TRNR",
+   "effective": "2026-02-24",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TRNR",
+   "effective": "2026-06-30",
+   "ratio": 0.14285714285714285,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TRT",
+   "effective": "2026-01-05",
+   "ratio": 2.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TRUG",
+   "effective": "2026-03-27",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TRUG",
+   "effective": "2026-09-29",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TVGN",
+   "effective": "2026-03-06",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "TWG",
+   "effective": "2026-10-26",
+   "ratio": 0.01,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "UCAR",
+   "effective": "2026-04-01",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "UCAR",
+   "effective": "2026-09-09",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "UK",
+   "effective": "2026-04-30",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "UL",
+   "effective": "2025-12-09",
+   "ratio": 0.888,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "UONE",
+   "effective": "2026-01-23",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "UONEK",
+   "effective": "2026-01-23",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "UP",
+   "effective": "2026-04-27",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "UPLD",
+   "effective": "2026-06-17",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "UZX",
+   "effective": "2026-09-21",
+   "ratio": 0.043478260869565216,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "VBIO",
+   "effective": "2026-08-31",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "VCIG",
+   "effective": "2026-02-27",
+   "ratio": 0.016666666666666666,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "VCIG",
+   "effective": "2026-08-24",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "VEEA",
+   "effective": "2026-08-31",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "VEEE",
+   "effective": "2026-05-04",
+   "ratio": 0.02702702702702703,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "VIVK",
+   "effective": "2026-03-24",
+   "ratio": 0.005,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "VIVK",
+   "effective": "2026-07-17",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "VIVK",
+   "effective": "2026-10-05",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "VJET",
+   "effective": "2026-10-05",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "VMAR",
+   "effective": "2026-01-14",
+   "ratio": 0.025,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "VMAR",
+   "effective": "2026-06-17",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "VMAR",
+   "effective": "2026-08-26",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "VNRX",
+   "effective": "2026-04-28",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "VRAX",
+   "effective": "2026-06-26",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "VSA",
+   "effective": "2025-12-22",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "VSA",
+   "effective": "2026-05-26",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "VWAV",
+   "effective": "2026-09-22",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WCT",
+   "effective": "2026-03-06",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WCT",
+   "effective": "2026-09-08",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WETO",
+   "effective": "2026-08-03",
+   "ratio": 0.01,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WFF",
+   "effective": "2026-04-13",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WFF",
+   "effective": "2026-10-30",
+   "ratio": 0.04,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "WHLR",
+   "effective": "2025-12-01",
+   "ratio": 0.5,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WHLR",
+   "effective": "2026-01-20",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WHLR",
+   "effective": "2026-04-20",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WHLR",
+   "effective": "2026-06-18",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WHLR",
+   "effective": "2026-07-28",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WHLR",
+   "effective": "2026-08-27",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WHLR",
+   "effective": "2026-09-22",
+   "ratio": 0.1111111111111111,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WKHS",
+   "effective": "2025-12-08",
+   "ratio": 0.08333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WLDS",
+   "effective": "2026-03-11",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WLDS",
+   "effective": "2026-06-22",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WLFC",
+   "effective": "2026-07-21",
+   "ratio": 3.0,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WNW",
+   "effective": "2026-04-06",
+   "ratio": 0.01,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WOK",
+   "effective": "2025-10-21",
+   "ratio": 0.01,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WOK",
+   "effective": "2025-12-29",
+   "ratio": 0.01,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WOK",
+   "effective": "2026-06-18",
+   "ratio": 0.01,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WORX",
+   "effective": "2026-04-10",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WORX",
+   "effective": "2026-08-04",
+   "ratio": 0.08333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WXM",
+   "effective": "2026-06-04",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "WYHG",
+   "effective": "2026-06-02",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "XAIR",
+   "effective": "2026-07-13",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "XBP",
+   "effective": "2025-12-15",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "XCH",
+   "effective": "2026-08-21",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "XFLT",
+   "effective": "2026-03-23",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "XHLD",
+   "effective": "2025-12-02",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "XLO",
+   "effective": "2026-03-16",
+   "ratio": 0.07142857142857142,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "XPON",
+   "effective": "2026-07-21",
+   "ratio": 0.08333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "XRTX",
+   "effective": "2026-04-06",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "XTLB",
+   "effective": "2026-03-25",
+   "ratio": 0.25,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "XXII",
+   "effective": "2026-01-26",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "XXII",
+   "effective": "2026-06-12",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "YAAS",
+   "effective": "2025-09-30",
+   "ratio": 0.0125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "YAAS",
+   "effective": "2026-07-30",
+   "ratio": 0.2,
+   "rebased": false,
+   "by": "jump"
+  },
+  {
+   "ticker": "YARW",
+   "effective": "2026-07-27",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "YDKG",
+   "effective": "2025-11-14",
+   "ratio": 0.01,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "YFOR",
+   "effective": "2026-03-23",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "YFOR",
+   "effective": "2026-06-23",
+   "ratio": 0.03333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "YHC",
+   "effective": "2026-07-13",
+   "ratio": 0.01,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "YHGJ",
+   "effective": "2025-10-01",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "YMAT",
+   "effective": "2026-07-10",
+   "ratio": 0.2,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "YMT",
+   "effective": "2026-05-18",
+   "ratio": 0.06666666666666667,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "YMT",
+   "effective": "2026-08-27",
+   "ratio": 0.0625,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "YXT",
+   "effective": "2026-07-14",
+   "ratio": 0.1,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "YYAI",
+   "effective": "2025-10-27",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "YYAI",
+   "effective": "2026-05-18",
+   "ratio": 0.025,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "YYAI",
+   "effective": "2026-08-17",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ZBAO",
+   "effective": "2026-10-12",
+   "ratio": 0.02,
+   "rebased": true,
+   "by": "pull"
+  },
+  {
+   "ticker": "ZCMD",
+   "effective": "2026-03-02",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ZCMD",
+   "effective": "2026-06-08",
+   "ratio": 0.03225806451612903,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ZCMD",
+   "effective": "2026-06-29",
+   "ratio": 0.3333333333333333,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ZCMD",
+   "effective": "2026-10-02",
+   "ratio": 0.5,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ZDAI",
+   "effective": "2026-02-19",
+   "ratio": 0.0625,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ZJYL",
+   "effective": "2026-03-16",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ZNB",
+   "effective": "2026-03-12",
+   "ratio": 0.01,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ZNB",
+   "effective": "2026-07-27",
+   "ratio": 0.125,
+   "rebased": true,
+   "by": "jump"
+  },
+  {
+   "ticker": "ZONE",
+   "effective": "2026-10-30",
+   "ratio": 0.016666666666666666,
+   "rebased": false,
+   "by": "no evidence"
+  },
+  {
+   "ticker": "ZOOZ",
+   "effective": "2026-06-01",
+   "ratio": 0.05,
+   "rebased": true,
+   "by": "jump"
+  }
+ ]
+}

@@ -1,0 +1,128 @@
+{
+ "protocol": "PROTOCOL_COMBO_HOLDOUT_v1.md @ GitHub ac14151",
+ "log": {
+  "hourly_files": 18562,
+  "hourly_fail": [],
+  "symbols_hourly": 669,
+  "grid_start": "2022-11-01 00:00:00+00:00",
+  "grid_end": "2026-10-31 23:00:00+00:00"
+ },
+ "events_total": 7134,
+ "events_no_outcome": 17,
+ "controls_total": 35560,
+ "all_ignitions": {
+  "n": 6971,
+  "X4_mean": -0.0295
+ },
+ "all_random": {
+  "n": 35330,
+  "X4_mean": -0.0047
+ },
+ "version_A": {
+  "version": "A",
+  "n": 968,
+  "n_no_window": 8,
+  "random_n": 596,
+  "mean": 0.011,
+  "mean_ci95": [
+   -0.013,
+   0.0352
+  ],
+  "median": -0.0798,
+  "pct_profit": 0.396,
+  "random_mean": -0.0094,
+  "diff_vs_random": 0.0205,
+  "diff_lb95": -0.0157,
+  "top5_share": 0.23,
+  "mean_without_top5": 0.0085,
+  "by_year": {
+   "2023": {
+    "n": 309,
+    "mean": -0.0039,
+    "median": -0.0804
+   },
+   "2024": {
+    "n": 499,
+    "mean": 0.0283,
+    "median": -0.0664
+   },
+   "2025": {
+    "n": 62,
+    "mean": -0.0697,
+    "median": -0.1911
+   },
+   "2026": {
+    "n": 98,
+    "mean": 0.0207,
+    "median": -0.0736
+   }
+  },
+  "secondary": {
+   "hold7d": -0.0186,
+   "runner": 0.276,
+   "reach100": 0.108,
+   "X5_trail30": -0.0115
+  },
+  "criteria": {
+   "mean_and_lb_positive": false,
+   "median_positive": false,
+   "beats_random": true,
+   "n30_and_no_bad_year": true
+  },
+  "verdict": "FAIL"
+ },
+ "version_B": {
+  "version": "B",
+  "n": 830,
+  "n_no_window": 5,
+  "random_n": 531,
+  "mean": 0.0121,
+  "mean_ci95": [
+   -0.0139,
+   0.0391
+  ],
+  "median": -0.0733,
+  "pct_profit": 0.394,
+  "random_mean": -0.01,
+  "diff_vs_random": 0.0222,
+  "diff_lb95": -0.0186,
+  "top5_share": 0.244,
+  "mean_without_top5": 0.0092,
+  "by_year": {
+   "2023": {
+    "n": 260,
+    "mean": -0.0102,
+    "median": -0.0786
+   },
+   "2024": {
+    "n": 485,
+    "mean": 0.0281,
+    "median": -0.0664
+   },
+   "2025": {
+    "n": 25,
+    "mean": -0.124,
+    "median": -0.2476
+   },
+   "2026": {
+    "n": 60,
+    "mean": 0.0367,
+    "median": -0.0899
+   }
+  },
+  "secondary": {
+   "hold7d": -0.02,
+   "runner": 0.269,
+   "reach100": 0.103,
+   "X5_trail30": -0.022
+  },
+  "criteria": {
+   "mean_and_lb_positive": false,
+   "median_positive": false,
+   "beats_random": true,
+   "n30_and_no_bad_year": false
+  },
+  "verdict": "FAIL"
+ },
+ "script_sha256": "33cd62303adc74171c5b786874df30af043c93909fb858a25222264bb732bea0"
+}

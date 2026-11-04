@@ -3,6 +3,7 @@
 Every number here answers one question: given how many things we have tried, how big must the next result be before
 it is distinguishable from the best of many noise results? Pure functions, stdlib only.
 """
+
 from __future__ import annotations
 
 from statistics import NormalDist

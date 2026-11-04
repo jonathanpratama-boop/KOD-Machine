@@ -1,0 +1,24 @@
+{
+  "purpose": "execution-assumption observation only; no signal, eligibility check, strategy training or P&L experiment",
+  "start_utc": "2026-10-31T19:02:20.879511+00:00",
+  "deadline_utc": "2026-10-31T21:02:20.879511+00:00",
+  "sample_sets": 60,
+  "interval_seconds": 120,
+  "pairs": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "BEAMXUSDT"
+  ],
+  "max_gets": 180,
+  "request_timeout_seconds": 20,
+  "depth_levels": 100,
+  "endpoint": "https://data-api.binance.vision/api/v3/depth",
+  "target_notionals_usdt": [
+    100,
+    1000
+  ],
+  "hypothetical_fee_per_side": 0.001,
+  "collector_sha256": "28105e6b7fa42f01d21816aecb9071fafcff167b28d92e1816d3584b3c44bae2",
+  "microstructure_sha256": "5c9ea4962212b50f170d1c142c119b7cb1eebb77f2f36fba87c610f41a2eeff7",
+  "rules": "Fixed slots, no backfill, no retries or host switches. 429 honors Retry-After; absent/invalid header stops. Access denial stops. Missing samples explicitly recorded. No api.binance.com or referencePrice access."
+}

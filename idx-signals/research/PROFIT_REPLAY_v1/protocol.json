@@ -1,0 +1,53 @@
+{
+ "study_id": "PROFIT_REPLAY_v1",
+ "frozen_at": "2026-10-30T09:22:21Z",
+ "question": "would RECENT_REPLAY_v1's certified next-day dump calls have made money as paper shorts after costs?",
+ "selection": "every row of the replay forecasts with cert_call true (182, chosen by call_cert before any outcome)",
+ "reference": "every replay spike shorted the same way (what shorting all spikes would have done), descriptive",
+ "trade": {
+  "entry": "short at the open of session s+1",
+  "H1": "cover at the close of s+1 (primary)",
+  "H5": "cover at the close of s+5 (descriptive)",
+  "gross_return": "(entry - exit) / entry; a missing or non-positive open or exit bar skips the trade (counted)",
+  "days_held": {
+   "H1": 1,
+   "H5": 5
+  }
+ },
+ "costs": {
+  "CHEAP": {
+   "trading": 0.002,
+   "borrow_per_day": 0.001
+  },
+  "TYPICAL": {
+   "trading": 0.006,
+   "borrow_per_day": 0.005
+  },
+  "BRUTAL": {
+   "trading": 0.015,
+   "borrow_per_day": 0.02
+  }
+ },
+ "costs_note": "borrow/locate charged for at least one day even on an intraday H1 round trip",
+ "bar": "TYPICAL: mean net H1 return per trade > 0 and its one-sided 95% lower bound (session bootstrap) > 0",
+ "bootstrap": {
+  "unit": "signal session",
+  "resamples": 2000,
+  "seed": 20261030
+ },
+ "known_limits": [
+  "no historical borrow availability: some names were not shortable; a pass is conditional on locating",
+  "open and close prints, not fills; no halt or squeeze path inside the day",
+  "the replay range was read once already (RECENT_REPLAY_v1): this is a go/no-go, not proof",
+  "survivorship: names delisted since are absent"
+ ],
+ "inputs": {
+  "research/RECENT_REPLAY_v1/results/forecasts.csv.gz": "721e31ec1ab17da56158bf4ad57d4c2a7c26c66628d9058429270516498259fe",
+  "research/RECENT_REPLAY_v1/protocol.json": "8b081365c0f84b540be829e233e166ac41f709f680833dca8506282c11f5663f",
+  "data/manifests/yahoo_us_replay-20261030T071025Z.jsonl": "fe1ef19e7bb75bdf72a146809d7d298378323fb48d9a4da016a91408de6d069f"
+ },
+ "code": {
+  "research/PROFIT_REPLAY_v1/run.py": "ebc7ef20baac189b47abf61ac331c141cfd4612d46831f0c6c322123a0acf7c6"
+ },
+ "manifest": "yahoo_us_replay-20261030T071025Z.jsonl"
+}

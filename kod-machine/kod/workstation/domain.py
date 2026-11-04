@@ -3,6 +3,7 @@
 The existing earnings/workbench engines remain the financial calculation core.
 These records protect the IO boundary without duplicating their arithmetic.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -15,7 +16,7 @@ from urllib.parse import urlsplit
 
 from ..hashing import fmt_ts, parse_ts
 
-APP_VERSION = "KOD-WORKSTATION-v1"
+APP_VERSION = "KOD-WORKSTATION-v2"
 ASSOCIATIONS = frozenset({"verified_from_filing_metadata", "user_asserted", "unresolved"})
 MAX_DOCUMENT_BYTES = 12 * 1024 * 1024
 
@@ -38,7 +39,15 @@ def canonical(value) -> str:
                 raise ValueError("non-finite decimal is not permitted")
             return str(item)
         raise TypeError(f"not a JSON domain value: {type(item).__name__}")
-    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False, default=encode)
+
+    return json.dumps(
+        value,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+        allow_nan=False,
+        default=encode,
+    )
 
 
 def identity(prefix: str, *values) -> str:
@@ -47,7 +56,9 @@ def identity(prefix: str, *values) -> str:
 
 def association(value: str) -> str:
     if value not in ASSOCIATIONS:
-        raise ValueError("association must be verified_from_filing_metadata, user_asserted or unresolved")
+        raise ValueError(
+            "association must be verified_from_filing_metadata, user_asserted or unresolved"
+        )
     return value
 
 
@@ -68,10 +79,19 @@ def source_url(value: str) -> str:
         port = parts.port
     except ValueError as exc:
         raise ValueError("source URL is invalid") from exc
-    if parts.scheme not in ("http", "https") or not parts.hostname or parts.username or parts.password:
+    if (
+        parts.scheme not in ("http", "https")
+        or not parts.hostname
+        or parts.username
+        or parts.password
+    ):
         raise ValueError("source URL must be an http(s) citation without credentials")
     if port is not None and port not in (80, 443):
         raise ValueError("source URL uses an unsupported port")
+    from ..earnings import has_dot_segments
+
+    if has_dot_segments(parts.path):
+        raise ValueError("source URL must not contain '.' or '..' path segments")
     return value
 
 
@@ -85,7 +105,11 @@ class Security:
     association: str = "user_asserted"
 
     def validated(self) -> "Security":
-        ticker, venue, currency = self.ticker.strip().upper(), self.venue.strip().upper(), self.currency.strip().upper()
+        ticker, venue, currency = (
+            self.ticker.strip().upper(),
+            self.venue.strip().upper(),
+            self.currency.strip().upper(),
+        )
         if not re.fullmatch(r"[A-Z0-9.^_\-]{1,32}", ticker):
             raise ValueError("ticker must contain 1–32 letters, digits or . ^ _ -")
         if not self.name.strip() or len(self.name) > 240:
@@ -94,7 +118,14 @@ class Security:
             raise ValueError("venue must contain 1–20 letters/digits")
         if not re.fullmatch(r"[A-Z]{3}|UNKNOWN", currency):
             raise ValueError("currency must be an ISO currency code or UNKNOWN")
-        return Security(ticker, self.name.strip(), cik_value(self.cik), venue, currency, association(self.association))
+        return Security(
+            ticker,
+            self.name.strip(),
+            cik_value(self.cik),
+            venue,
+            currency,
+            association(self.association),
+        )
 
 
 @dataclass(frozen=True, slots=True)

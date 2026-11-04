@@ -70,7 +70,14 @@ class FakeGitHub:
 
     def push(self, sha: str, at: datetime, event: str = "push") -> Run:
         self._next += 1
-        run = Run(str(self._next), sha, event, at, f"https://github.com/owner/repo/actions/runs/{self._next}", "0" * 64)
+        run = Run(
+            str(self._next),
+            sha,
+            event,
+            at,
+            f"https://github.com/owner/repo/actions/runs/{self._next}",
+            "0" * 64,
+        )
         self.runs.setdefault(sha, []).append(run)
         return run
 
@@ -131,13 +138,21 @@ class Lab:
         self.registry = self.repo / "registry"
         self.timestamper = FakeTimestamper(self.clock)
         self.github = FakeGitHub()
-        self.anchor = GitAnchor(self.registry, extra_env=self.git_dates, timestamper=self.timestamper)
+        self.anchor = GitAnchor(
+            self.registry, extra_env=self.git_dates, timestamper=self.timestamper
+        )
         self.ledger = Ledger(Path(self.tmp.name) / "kod.db", anchor=self.anchor, clock=self.clock)
         published = self.clock() - timedelta(days=40)
         self.evidence_id = self.add_evidence("Issuer announces earnings date.", published=published)
 
-    def add_evidence(self, text: str | None, published: datetime, name: str = "doc.html",
-                     as_of: datetime | None = None, **overrides) -> str:
+    def add_evidence(
+        self,
+        text: str | None,
+        published: datetime,
+        name: str = "doc.html",
+        as_of: datetime | None = None,
+        **overrides,
+    ) -> str:
         path = None
         if text is not None:
             path = Path(self.tmp.name) / name
@@ -154,20 +169,36 @@ class Lab:
         return {"GIT_AUTHOR_DATE": stamp, "GIT_COMMITTER_DATE": stamp}
 
     def git(self, *args: str) -> str:
-        return subprocess.run(["git", *args], cwd=self.repo, check=True, capture_output=True, text=True).stdout
+        return subprocess.run(
+            ["git", *args], cwd=self.repo, check=True, capture_output=True, text=True
+        ).stdout
 
     def cleanup(self) -> None:
         self.ledger.conn.close()
         self.tmp.cleanup()
 
 
-def prospective_card(case_id: str, cutoff: datetime, window_start: datetime, window_end: datetime,
-                     facts: dict | None = None, evidence: list[str] | None = None, **extra) -> dict:
-    facts = facts if facts is not None else {"dated_catalyst_known": True, "catalyst": "scheduled print"}
+def prospective_card(
+    case_id: str,
+    cutoff: datetime,
+    window_start: datetime,
+    window_end: datetime,
+    facts: dict | None = None,
+    evidence: list[str] | None = None,
+    **extra,
+) -> dict:
+    facts = (
+        facts
+        if facts is not None
+        else {"dated_catalyst_known": True, "catalyst": "scheduled print"}
+    )
 
     def info_set(delta):
-        payload = {"cutoff": fmt_ts(cutoff - delta), "reconstruction_status": "PARTIAL_PUBLIC",
-                   "facts": copy.deepcopy(facts)}
+        payload = {
+            "cutoff": fmt_ts(cutoff - delta),
+            "reconstruction_status": "PARTIAL_PUBLIC",
+            "facts": copy.deepcopy(facts),
+        }
         if evidence:
             payload["evidence"] = {k: list(evidence) for k, v in facts.items() if v is not None}
         return payload
@@ -190,7 +221,11 @@ def prospective_card(case_id: str, cutoff: datetime, window_start: datetime, win
         },
         "information_sets": {
             h: info_set(delta)
-            for h, delta in (("T-30D", timedelta(days=30)), ("T-72H", timedelta(hours=72)), ("T-24H", timedelta(hours=24)))
+            for h, delta in (
+                ("T-30D", timedelta(days=30)),
+                ("T-72H", timedelta(hours=72)),
+                ("T-24H", timedelta(hours=24)),
+            )
         },
     }
     card.update(extra)

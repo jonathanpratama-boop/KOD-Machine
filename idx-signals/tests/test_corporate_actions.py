@@ -27,22 +27,38 @@ def reset_market(ratio, at=5, price=1000.0, share_ratio=None, share_lag=0):
         a[k][0, at:] = a[k][0, at:] / ratio
     a["volume"][0, at:] *= ratio
     if share_ratio is not None:
-        a["listed_shares"][0, at + share_lag:] *= share_ratio
+        a["listed_shares"][0, at + share_lag :] *= share_ratio
     return rebuild(t, d, a)
 
 
 def yahoo(ticker, day, ratio):
-    return pd.DataFrame([{"ticker": ticker, "effective_date": day, "yahoo_ratio": ratio, "yahoo_text": f"{ratio}:1",
-                          "yahoo_downloaded_at": "2026-10-07T18:20:39Z"}])
+    return pd.DataFrame(
+        [
+            {
+                "ticker": ticker,
+                "effective_date": day,
+                "yahoo_ratio": ratio,
+                "yahoo_text": f"{ratio}:1",
+                "yahoo_downloaded_at": "2026-10-07T18:20:39Z",
+            }
+        ]
+    )
 
 
 def registry(m, events=None, manual=None, boundary=BOUNDARY):
-    return ca.classify(m, boundary, ca.empty_events() if events is None else events,
-                       pd.DataFrame(columns=ca.MANUAL_COLUMNS) if manual is None else manual, "2026-10-07T18:07:44Z")
+    return ca.classify(
+        m,
+        boundary,
+        ca.empty_events() if events is None else events,
+        pd.DataFrame(columns=ca.MANUAL_COLUMNS) if manual is None else manual,
+        "2026-10-07T18:07:44Z",
+    )
 
 
 def trade(m, ca_mode="registry"):
-    out = execute(m, np.array([0]), np.array([2]), ExecConfig(holding_days=4, ca_mode=ca_mode))  # held 3 -> 7
+    out = execute(
+        m, np.array([0]), np.array([2]), ExecConfig(holding_days=4, ca_mode=ca_mode)
+    )  # held 3 -> 7
     return {k: v[0] for k, v in out.items()}
 
 
@@ -51,7 +67,10 @@ class ShareScalingActions(unittest.TestCase):
         """Guards against: a verified 1:2 split read as a 50% loss, or scaled by a wrong ratio."""
         m = reset_market(2.0, share_ratio=2.0)
         reg = registry(m)
-        self.assertEqual(reg.loc[0, ["action_type", "verification_status"]].tolist(), ["STOCK_SPLIT", "VERIFIED_CORROBORATED"])
+        self.assertEqual(
+            reg.loc[0, ["action_type", "verification_status"]].tolist(),
+            ["STOCK_SPLIT", "VERIFIED_CORROBORATED"],
+        )
         r = trade(m.with_registry(reg))
         self.assertEqual(STATUS[r["status"]], "EXITED")
         self.assertAlmostEqual(r["share_factor"], 2.0)
@@ -61,7 +80,10 @@ class ShareScalingActions(unittest.TestCase):
         """Guards against: a 5:1 consolidation read as a 400% gain."""
         m = reset_market(0.2, share_ratio=0.2)
         reg = registry(m)
-        self.assertEqual(reg.loc[0, ["action_type", "verification_status"]].tolist(), ["REVERSE_SPLIT", "VERIFIED_CORROBORATED"])
+        self.assertEqual(
+            reg.loc[0, ["action_type", "verification_status"]].tolist(),
+            ["REVERSE_SPLIT", "VERIFIED_CORROBORATED"],
+        )
         r = trade(m.with_registry(reg))
         self.assertAlmostEqual(r["share_factor"], 0.2)
         self.assertAlmostEqual(r["net_return"], FLAT_NET)
@@ -73,7 +95,10 @@ class ShareScalingActions(unittest.TestCase):
         alone = registry(m)
         self.assertEqual(alone.loc[0, "verification_status"], "UNRESOLVED")
         both = registry(m, events=yahoo("T000", str(m.dates[5]), 2.0))
-        self.assertEqual(both.loc[0, ["action_type", "verification_status"]].tolist(), ["STOCK_SPLIT", "VERIFIED_CORROBORATED"])
+        self.assertEqual(
+            both.loc[0, ["action_type", "verification_status"]].tolist(),
+            ["STOCK_SPLIT", "VERIFIED_CORROBORATED"],
+        )
         self.assertEqual(both.loc[0, "listed_shares_lag"], 8)
 
     def test_declared_ratio_is_applied_not_the_snapped_reset(self):
@@ -90,17 +115,34 @@ class NonScalingActions(unittest.TestCase):
         later) crediting holders with 20% free shares."""
         m = reset_market(1.2, price=1200.0, share_ratio=1.5, share_lag=10)
         reg = registry(m)
-        self.assertEqual(reg.loc[0, ["action_type", "verification_status"]].tolist(),
-                         ["OTHER_REFERENCE_RESET", "UNRESOLVED"])
+        self.assertEqual(
+            reg.loc[0, ["action_type", "verification_status"]].tolist(),
+            ["OTHER_REFERENCE_RESET", "UNRESOLVED"],
+        )
         r = trade(m.with_registry(reg))
         self.assertEqual(STATUS[r["status"]], "CORP_ACTION_UNRESOLVED")
         self.assertTrue(np.isnan(r["net_return"]))
-        self.assertAlmostEqual(trade(m, ca_mode="value_preserving")["net_return"], FLAT_NET)  # the old free-share credit
-        primary = pd.DataFrame([{"ticker": "T000", "effective_date": str(m.dates[5]), "action_type": "RIGHTS_ISSUE",
-                                 "ratio": "", "source": "https://www.idx.co.id/example", "source_timestamp":
-                                 "2026-10-07T00:00:00Z", "notes": ""}])
+        self.assertAlmostEqual(
+            trade(m, ca_mode="value_preserving")["net_return"], FLAT_NET
+        )  # the old free-share credit
+        primary = pd.DataFrame(
+            [
+                {
+                    "ticker": "T000",
+                    "effective_date": str(m.dates[5]),
+                    "action_type": "RIGHTS_ISSUE",
+                    "ratio": "",
+                    "source": "https://www.idx.co.id/example",
+                    "source_timestamp": "2026-10-07T00:00:00Z",
+                    "notes": "",
+                }
+            ]
+        )
         reg = registry(m, manual=primary)
-        self.assertEqual(reg.loc[0, ["action_type", "verification_status"]].tolist(), ["RIGHTS_ISSUE", "VERIFIED_PRIMARY"])
+        self.assertEqual(
+            reg.loc[0, ["action_type", "verification_status"]].tolist(),
+            ["RIGHTS_ISSUE", "VERIFIED_PRIMARY"],
+        )
         self.assertEqual(STATUS[trade(m.with_registry(reg))["status"]], "CORP_ACTION_RIGHTS_ISSUE")
 
     def test_integer_reset_without_share_change_is_unknown(self):
@@ -109,9 +151,16 @@ class NonScalingActions(unittest.TestCase):
         m = reset_market(2.0)
         for events in (None, yahoo("T000", str(m.dates[5]), 2.0)):
             reg = registry(m, events=events)
-            self.assertEqual(reg.loc[0, ["action_type", "verification_status"]].tolist(), ["UNKNOWN", "UNRESOLVED"])
-            self.assertEqual(STATUS[trade(m.with_registry(reg))["status"]], "CORP_ACTION_UNRESOLVED")
-        self.assertEqual(STATUS[trade(m, ca_mode="exclude")["status"]], "EXITED")  # the old reading, kept for old runs
+            self.assertEqual(
+                reg.loc[0, ["action_type", "verification_status"]].tolist(),
+                ["UNKNOWN", "UNRESOLVED"],
+            )
+            self.assertEqual(
+                STATUS[trade(m.with_registry(reg))["status"]], "CORP_ACTION_UNRESOLVED"
+            )
+        self.assertEqual(
+            STATUS[trade(m, ca_mode="exclude")["status"]], "EXITED"
+        )  # the old reading, kept for old runs
 
     def test_single_source_reset_after_the_mirror_is_not_applied(self):
         """Guards against: Yahoo-era resets (derived from Yahoo's own split events) treated as verified."""
@@ -157,7 +206,9 @@ class RegistryFiles(unittest.TestCase):
                 path.write_text(f"# comment\n{header}\n{line}\n")
                 with self.assertRaisesRegex(ValueError, message):
                     ca.read_manual(path)
-            path.write_text(f"{header}\nT000,2024-01-09,STOCK_SPLIT,2,https://idx.co.id/a#frag,2026-10-07T00:00:00Z,\n")
+            path.write_text(
+                f"{header}\nT000,2024-01-09,STOCK_SPLIT,2,https://idx.co.id/a#frag,2026-10-07T00:00:00Z,\n"
+            )
             self.assertEqual(ca.read_manual(path).loc[0, "source"], "https://idx.co.id/a#frag")
 
     def test_committed_manual_file_has_no_invented_entries(self):
@@ -176,10 +227,24 @@ class SessionCalendar(unittest.TestCase):
         reference ignores, which turns every name traded that day into a false corporate action."""
         rows = []
         for i in range(10):
-            closes = {"2021-05-20": 100, "2021-05-21": 110, "2021-05-22": 120, "2021-05-24": 115, "2021-05-25": 116}
+            closes = {
+                "2021-05-20": 100,
+                "2021-05-21": 110,
+                "2021-05-22": 120,
+                "2021-05-24": 115,
+                "2021-05-25": 116,
+            }
             prev = 100
             for day, close in closes.items():
-                rows.append({"ticker": f"T{i}", "date": pd.Timestamp(day), "previous": prev, "close": close, "volume": 10})
+                rows.append(
+                    {
+                        "ticker": f"T{i}",
+                        "date": pd.Timestamp(day),
+                        "previous": prev,
+                        "close": close,
+                        "volume": 10,
+                    }
+                )
                 prev = close if day != "2021-05-22" else prev  # IDX prices 05-24 off 05-21
         bad = _reference_ignored_dates(pd.DataFrame(rows))
         self.assertEqual(list(bad), ["2021-05-22"])

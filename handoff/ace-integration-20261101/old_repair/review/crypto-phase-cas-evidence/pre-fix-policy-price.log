@@ -1,0 +1,100 @@
+EFEE.E
+======================================================================
+ERROR: test_invalid_policy_quote_declines_and_unrelated_candidate_continues (tests.test_crypto_policy_price_validation.PolicyPrice.test_invalid_policy_quote_declines_and_unrelated_candidate_continues) (quote=inf)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_policy_price_validation.py", line 17, in test_invalid_policy_quote_declines_and_unrelated_candidate_continues
+    run=self.run_cycle([fixtures._decision('AAA',quote=quote),fixtures._decision('BBB')])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_account.py", line 82, in run_cycle
+    return ca.cycle(cands, self.m.fetch, self.m.clock, self.append)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "v1.3-original-crypto_account.py", line 525, in cycle
+    and x["exit"] is None
+          ^^^^^^^^^^^^^^^^
+  File "v1.3-original-crypto_account.py", line 309, in decide
+    )
+      
+  File "v1.3-original-crypto_account.py", line 93, in floor8
+    def floor8(x: float) -> float:
+               ^^^^^^^^^^^^^^^^^^^^
+ValueError: cannot convert float NaN to integer
+
+======================================================================
+ERROR: test_invalid_policy_quote_declines_and_unrelated_candidate_continues (tests.test_crypto_policy_price_validation.PolicyPrice.test_invalid_policy_quote_declines_and_unrelated_candidate_continues) (quote='garbage')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_policy_price_validation.py", line 17, in test_invalid_policy_quote_declines_and_unrelated_candidate_continues
+    run=self.run_cycle([fixtures._decision('AAA',quote=quote),fixtures._decision('BBB')])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_account.py", line 82, in run_cycle
+    return ca.cycle(cands, self.m.fetch, self.m.clock, self.append)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "v1.3-original-crypto_account.py", line 525, in cycle
+    and x["exit"] is None
+          ^^^^^^^^^^^^^^^^
+  File "v1.3-original-crypto_account.py", line 296, in decide
+    "symbol": sym,
+      ^^^^^^^^^^^^^
+ValueError: could not convert string to float: 'garbage'
+
+======================================================================
+ERROR: test_invalid_policy_quote_declines_and_unrelated_candidate_continues (tests.test_crypto_policy_price_validation.PolicyPrice.test_invalid_policy_quote_declines_and_unrelated_candidate_continues) (quote='Infinity')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_policy_price_validation.py", line 17, in test_invalid_policy_quote_declines_and_unrelated_candidate_continues
+    run=self.run_cycle([fixtures._decision('AAA',quote=quote),fixtures._decision('BBB')])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_account.py", line 82, in run_cycle
+    return ca.cycle(cands, self.m.fetch, self.m.clock, self.append)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "v1.3-original-crypto_account.py", line 525, in cycle
+    and x["exit"] is None
+          ^^^^^^^^^^^^^^^^
+  File "v1.3-original-crypto_account.py", line 309, in decide
+    )
+      
+  File "v1.3-original-crypto_account.py", line 93, in floor8
+    def floor8(x: float) -> float:
+               ^^^^^^^^^^^^^^^^^^^^
+ValueError: cannot convert float NaN to integer
+
+======================================================================
+ERROR: test_missing_or_malformed_verified_price_declines (tests.test_crypto_policy_price_validation.PolicyPrice.test_missing_or_malformed_verified_price_declines)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_policy_price_validation.py", line 33, in test_missing_or_malformed_verified_price_declines
+    run=self.run_cycle([d])
+        ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_account.py", line 82, in run_cycle
+    return ca.cycle(cands, self.m.fetch, self.m.clock, self.append)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "v1.3-original-crypto_account.py", line 525, in cycle
+    and x["exit"] is None
+          ^^^^^^^^^^^^^^^^
+  File "v1.3-original-crypto_account.py", line 296, in decide
+    "symbol": sym,
+            ^^^^^^^
+AttributeError: 'str' object has no attribute 'get'
+
+======================================================================
+FAIL: test_invalid_policy_quote_declines_and_unrelated_candidate_continues (tests.test_crypto_policy_price_validation.PolicyPrice.test_invalid_policy_quote_declines_and_unrelated_candidate_continues) (quote=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/6c6e29d7a6a5/kod-crypto-repair/idx-signals/tests/test_crypto_policy_price_validation.py", line 18, in test_invalid_policy_quote_declines_and_unrelated_candidate_continues
+    self.assertEqual(self.kinds(run),[(ca.DECLINE,'NO_DECISION_PRICE'),(ca.ORDER,''),(ca.ENTRY,'FILLED')])
+AssertionError: Lists differ: [('ACCT_ORDER', ''), ('ACCT_ORDER', ''), ('ACCT_ENTRY', 'FILLED')] != [('ACCT_DECLINE', 'NO_DECISION_PRICE'), ('ACCT_OR[31 chars]ED')]
+
+First differing element 0:
+('ACCT_ORDER', '')
+('ACCT_DECLINE', 'NO_DECISION_PRICE')
+
+- [('ACCT_ORDER', ''), ('ACCT_ORDER', ''), ('ACCT_ENTRY', 'FILLED')]
++ [('ACCT_DECLINE', 'NO_DECISION_PRICE'),
++  ('ACCT_ORDER', ''),
++  ('ACCT_ENTRY', 'FILLED')]
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.030s
+
+FAILED (failures=1, errors=4)

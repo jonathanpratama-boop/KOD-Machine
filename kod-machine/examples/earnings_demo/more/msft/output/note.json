@@ -1,5 +1,6 @@
 {
   "schema_version": "KOD-EARNINGS-NOTE-v1",
+  "parser_version": "KOD-EARNINGS-PARSER-v3",
   "research_only": true,
   "entry_permission": false,
   "company": "Microsoft Corporation",
@@ -37,12 +38,12 @@
       "observed_basis": "retrieval time supplied by the user"
     }
   ],
-  "bundle_sha256": "4da5e18324102257ffc807421ff9935f4df32c020e411ae043a993fabe1f8f5c",
+  "bundle_sha256": "b9e8a68f7e9712fc72abb4312545d52741ff4875b0c0fa5e06128235c749a4a3",
   "workbench_report": {
     "schema_version": "KOD-WORKBENCH-REPORT-v1",
     "research_only": true,
     "entry_permission": false,
-    "input_bundle_sha256": "4da5e18324102257ffc807421ff9935f4df32c020e411ae043a993fabe1f8f5c",
+    "input_bundle_sha256": "b9e8a68f7e9712fc72abb4312545d52741ff4875b0c0fa5e06128235c749a4a3",
     "synthetic": false,
     "mode": "public",
     "availability_basis": "HISTORICAL_RECONSTRUCTION_PUBLICATION_ONLY",
@@ -95,8 +96,8 @@
             "publisher": "Microsoft Corporation",
             "source_kind": "PRIMARY",
             "source_family": "issuer-earnings-release",
-            "content_sha256": "2126026dad228b80f3c31e25d04b63330a46d5611b6d972285f1c4f97d85b3ea",
-            "normalized_sha256": "f130ac3e0a47760e644b1ee385b38ff0009d18812bbe0588e0ade2cfe0b72583",
+            "content_sha256": "cb54adb72e320ac33c69ff55d5a3e750de8b5af790631d0273728de07862e332",
+            "normalized_sha256": "1dca57f024d1038e8daf3bb03296c43eec6d18282d5891eb5e59a2ee03f68c98",
             "replaces_document_id": null,
             "published_at": "2024-10-30T20:04:07Z",
             "observed_at": "2026-10-22T15:22:44Z",
@@ -157,6 +158,52 @@
             ]
           },
           {
+            "metric": "eps_diluted [UNSTATED]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "2.99",
+                "source_quote": "Diluted | $3.30 | $2.99",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "eps_diluted [UNSTATED]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "3.3",
+                "source_quote": "Diluted | $3.30 | $2.99",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
             "metric": "net_income [GAAP]",
             "unit": "millions",
             "currency": "USD",
@@ -198,6 +245,52 @@
                 "role": "ACTUAL",
                 "value": "24667",
                 "source_quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "22291",
+                "source_quote": "Net income | $24,667 | $22,291",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "24667",
+                "source_quote": "Net income | $24,667 | $22,291",
                 "published_at": "2024-10-30T20:04:07Z"
               }
             ]
@@ -249,6 +342,52 @@
             ]
           },
           {
+            "metric": "operating_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "26895",
+                "source_quote": "Operating income | 30,552 | 26,895",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "30552",
+                "source_quote": "Operating income | 30,552 | 26,895",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
             "metric": "revenue [GAAP]",
             "unit": "millions",
             "currency": "USD",
@@ -293,6 +432,52 @@
                 "published_at": "2024-10-30T20:04:07Z"
               }
             ]
+          },
+          {
+            "metric": "revenue [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "56517",
+                "source_quote": "Total revenue | 65,585 | 56,517",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "65585",
+                "source_quote": "Total revenue | 65,585 | 56,517",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
           }
         ]
       },
@@ -330,8 +515,8 @@
             "publisher": "Microsoft Corporation",
             "source_kind": "PRIMARY",
             "source_family": "issuer-earnings-release",
-            "content_sha256": "01fa9bbcf5739d47e6677af7ddffee4ae12e555f1f771522003358f5f50bc9a7",
-            "normalized_sha256": "f09b1487cc861a4b7be0a8c8d8b3bd031040bb3edbf984b8b5e6c3c5e3b14727",
+            "content_sha256": "0f78ce69ef1560a3dfac7cb174623efd91523945ce127da08967d841c140e7cb",
+            "normalized_sha256": "08500c7580181cfefbe6f40c6ad0d3f1cae5a20b547160d57cf5000b9ae559d1",
             "replaces_document_id": null,
             "published_at": "2024-07-30T20:03:22Z",
             "observed_at": "2026-10-22T15:22:45Z",
@@ -382,8 +567,8 @@
             "publisher": "Microsoft Corporation",
             "source_kind": "PRIMARY",
             "source_family": "issuer-earnings-release",
-            "content_sha256": "2126026dad228b80f3c31e25d04b63330a46d5611b6d972285f1c4f97d85b3ea",
-            "normalized_sha256": "f130ac3e0a47760e644b1ee385b38ff0009d18812bbe0588e0ade2cfe0b72583",
+            "content_sha256": "cb54adb72e320ac33c69ff55d5a3e750de8b5af790631d0273728de07862e332",
+            "normalized_sha256": "1dca57f024d1038e8daf3bb03296c43eec6d18282d5891eb5e59a2ee03f68c98",
             "replaces_document_id": null,
             "published_at": "2024-10-30T20:04:07Z",
             "observed_at": "2026-10-22T15:22:44Z",
@@ -444,6 +629,52 @@
             ]
           },
           {
+            "metric": "eps_diluted [UNSTATED]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "2.99",
+                "source_quote": "Diluted | $3.30 | $2.99",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "eps_diluted [UNSTATED]",
+            "unit": "per_share",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "3.3",
+                "source_quote": "Diluted | $3.30 | $2.99",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
             "metric": "net_income [GAAP]",
             "unit": "millions",
             "currency": "USD",
@@ -485,6 +716,52 @@
                 "role": "ACTUAL",
                 "value": "24667",
                 "source_quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "22291",
+                "source_quote": "Net income | $24,667 | $22,291",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "net_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "24667",
+                "source_quote": "Net income | $24,667 | $22,291",
                 "published_at": "2024-10-30T20:04:07Z"
               }
             ]
@@ -536,6 +813,52 @@
             ]
           },
           {
+            "metric": "operating_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "26895",
+                "source_quote": "Operating income | 30,552 | 26,895",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "operating_income [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "30552",
+                "source_quote": "Operating income | 30,552 | 26,895",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
             "metric": "revenue [GAAP]",
             "unit": "millions",
             "currency": "USD",
@@ -580,6 +903,52 @@
                 "published_at": "2024-10-30T20:04:07Z"
               }
             ]
+          },
+          {
+            "metric": "revenue [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2023-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "PRIOR",
+                "value": "56517",
+                "source_quote": "Total revenue | 65,585 | 56,517",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
+          },
+          {
+            "metric": "revenue [UNSTATED]",
+            "unit": "millions",
+            "currency": "USD",
+            "period": "quarter ended 2024-09-30",
+            "status": "INSUFFICIENT_DATA",
+            "actual": null,
+            "consensus": null,
+            "difference": null,
+            "difference_pct": null,
+            "percent_basis": "100*(actual-consensus)/abs(consensus)",
+            "difference_pct_decimal_places": 12,
+            "reason": "Matching ACTUAL and CONSENSUS observations are required; units, currency and period are not converted.",
+            "evidence": [
+              {
+                "document_id": "current-release",
+                "role": "ACTUAL",
+                "value": "65585",
+                "source_quote": "Total revenue | 65,585 | 56,517",
+                "published_at": "2024-10-30T20:04:07Z"
+              }
+            ]
           }
         ]
       },
@@ -617,8 +986,8 @@
             "publisher": "Microsoft Corporation",
             "source_kind": "PRIMARY",
             "source_family": "issuer-earnings-release",
-            "content_sha256": "01fa9bbcf5739d47e6677af7ddffee4ae12e555f1f771522003358f5f50bc9a7",
-            "normalized_sha256": "f09b1487cc861a4b7be0a8c8d8b3bd031040bb3edbf984b8b5e6c3c5e3b14727",
+            "content_sha256": "0f78ce69ef1560a3dfac7cb174623efd91523945ce127da08967d841c140e7cb",
+            "normalized_sha256": "08500c7580181cfefbe6f40c6ad0d3f1cae5a20b547160d57cf5000b9ae559d1",
             "replaces_document_id": null,
             "published_at": "2024-07-30T20:03:22Z",
             "observed_at": "2026-10-22T15:22:45Z",
@@ -644,19 +1013,29 @@
   },
   "issues": [
     {
-      "code": "COLUMN_DURATION_UNKNOWN",
-      "where": "table 4",
-      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read"
+      "code": "UNIT_AMBIGUOUS",
+      "where": "table 4 row 22",
+      "detail": "gross margin without a % sign (a dollar amount?); not extracted"
     },
     {
       "code": "COLUMN_DURATION_UNKNOWN",
       "where": "table 5",
-      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read"
+      "detail": "dated column(s) 2024, 2023: its heading gives no month and day for the year; their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 6",
+      "detail": "dated column(s) September 30, 2024, June 30, 2024: no 'Three/Twelve Months Ended' heading above it; their values are not read"
     },
     {
       "code": "COLUMN_DURATION_UNKNOWN",
       "where": "table 7",
-      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read"
+      "detail": "dated column(s) 2024, 2023: its heading gives no month and day for the year; their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 8",
+      "detail": "dated column(s) 2024, 2023: its heading gives no month and day for the year; their values are not read"
     },
     {
       "code": "NO_OUTLOOK_FOUND",
@@ -671,7 +1050,15 @@
       "date": "2024-09-30",
       "quote": "quarter ended September 30, 2024"
     },
+    "quarter_ended_all": [
+      {
+        "quarter": null,
+        "date": "2024-09-30",
+        "quote": "quarter ended September 30, 2024"
+      }
+    ],
     "fiscal_quarter_title": null,
+    "reported_quarter": [],
     "revenue_headline": {
       "value": "65.6",
       "scale": "billion",
@@ -685,7 +1072,37 @@
         "headline": "Revenue was $65.6 billion",
         "table_value_millions": "65585"
       }
-    ]
+    ],
+    "resolution": {
+      "status": "RESOLVED",
+      "period": "quarter ended 2024-09-30",
+      "end": "2024-09-30",
+      "basis": "RELEASE_STATEMENT",
+      "evidence": [
+        "quarter ended September 30, 2024"
+      ],
+      "reason": null,
+      "candidates": [
+        "quarter ended 2023-09-30",
+        "quarter ended 2024-09-30"
+      ],
+      "aliases": []
+    }
+  },
+  "period_resolution": {
+    "status": "RESOLVED",
+    "period": "quarter ended 2024-09-30",
+    "end": "2024-09-30",
+    "basis": "RELEASE_STATEMENT",
+    "evidence": [
+      "quarter ended September 30, 2024"
+    ],
+    "aliases": [],
+    "release_reason": null
+  },
+  "analyst_inputs": {
+    "reporting_currency": null,
+    "period": null
   },
   "facts": [
     {
@@ -699,13 +1116,63 @@
         "table": 1,
         "row": 9,
         "label": "2024 As Reported (GAAP)",
-        "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+        "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 9,
+            "cell": 1,
+            "columns": [
+              0,
+              1
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 9,
+            "cell": 3,
+            "columns": [
+              2,
+              3
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 3,
+            "columns": [
+              2,
+              9
+            ]
+          },
+          {
+            "row": 5,
+            "cell": 3,
+            "columns": [
+              2,
+              3
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+        "document_name": "msft-ex99_1.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": "2024-09-30",
+      "period_end_basis": "column heading",
       "period_kind": "quarter"
     },
     {
@@ -719,13 +1186,63 @@
         "table": 1,
         "row": 9,
         "label": "2024 As Reported (GAAP)",
-        "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+        "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 9,
+            "cell": 1,
+            "columns": [
+              0,
+              1
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 9,
+            "cell": 5,
+            "columns": [
+              4,
+              5
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 3,
+            "columns": [
+              2,
+              9
+            ]
+          },
+          {
+            "row": 5,
+            "cell": 5,
+            "columns": [
+              4,
+              5
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+        "document_name": "msft-ex99_1.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": "2024-09-30",
+      "period_end_basis": "column heading",
       "period_kind": "quarter"
     },
     {
@@ -739,13 +1256,63 @@
         "table": 1,
         "row": 9,
         "label": "2024 As Reported (GAAP)",
-        "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+        "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 9,
+            "cell": 1,
+            "columns": [
+              0,
+              1
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 9,
+            "cell": 7,
+            "columns": [
+              6,
+              7
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 3,
+            "columns": [
+              2,
+              9
+            ]
+          },
+          {
+            "row": 5,
+            "cell": 7,
+            "columns": [
+              6,
+              7
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+        "document_name": "msft-ex99_1.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": "2024-09-30",
+      "period_end_basis": "column heading",
       "period_kind": "quarter"
     },
     {
@@ -759,16 +1326,360 @@
         "table": 1,
         "row": 9,
         "label": "2024 As Reported (GAAP)",
-        "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+        "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+        "unit": "per_share",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 9,
+            "cell": 1,
+            "columns": [
+              0,
+              1
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 9,
+            "cell": 9,
+            "columns": [
+              8,
+              9
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 3,
+            "columns": [
+              2,
+              9
+            ]
+          },
+          {
+            "row": 5,
+            "cell": 9,
+            "columns": [
+              8,
+              9
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+        "document_name": "msft-ex99_1.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": "2024-09-30",
+      "period_end_basis": "column heading",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "revenue",
+      "basis": "UNSTATED",
+      "period": "quarter ended 2024-09-30",
+      "value": "65585",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 4,
+        "row": 11,
+        "label": "Total revenue",
+        "quote": "Total revenue | 65,585 | 56,517",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 11,
+            "cell": 1,
+            "columns": [
+              0,
+              1
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 11,
+            "cell": 3,
+            "columns": [
+              2,
+              3
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 3,
+            "columns": [
+              2,
+              5
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 3,
+            "columns": [
+              2,
+              3
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+        "document_name": "msft-ex99_1.htm"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2024-09-30",
+      "period_end_basis": "column heading",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "UNSTATED",
+      "period": "quarter ended 2024-09-30",
+      "value": "30552",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 4,
+        "row": 28,
+        "label": "Operating income",
+        "quote": "Operating income | 30,552 | 26,895",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 28,
+            "cell": 1,
+            "columns": [
+              0,
+              1
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 28,
+            "cell": 3,
+            "columns": [
+              2,
+              3
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 3,
+            "columns": [
+              2,
+              5
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 3,
+            "columns": [
+              2,
+              3
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+        "document_name": "msft-ex99_1.htm"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2024-09-30",
+      "period_end_basis": "column heading",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "net_income",
+      "basis": "UNSTATED",
+      "period": "quarter ended 2024-09-30",
+      "value": "24667",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 4,
+        "row": 36,
+        "label": "Net income",
+        "quote": "Net income | $24,667 | $22,291",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 36,
+            "cell": 1,
+            "columns": [
+              0,
+              1
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 36,
+            "cell": 3,
+            "columns": [
+              2,
+              3
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 3,
+            "columns": [
+              2,
+              5
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 3,
+            "columns": [
+              2,
+              3
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+        "document_name": "msft-ex99_1.htm"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2024-09-30",
+      "period_end_basis": "column heading",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "eps_diluted",
+      "basis": "UNSTATED",
+      "period": "quarter ended 2024-09-30",
+      "value": "3.3",
+      "unit": "per_share",
+      "currency": "USD",
+      "evidence": {
+        "table": 4,
+        "row": 41,
+        "label": "Diluted",
+        "quote": "Diluted | $3.30 | $2.99",
+        "unit": "per_share",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 41,
+            "cell": 1,
+            "columns": [
+              0,
+              1
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 41,
+            "cell": 3,
+            "columns": [
+              2,
+              3
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 3,
+            "columns": [
+              2,
+              5
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 3,
+            "columns": [
+              2,
+              3
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+        "document_name": "msft-ex99_1.htm"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2024-09-30",
+      "period_end_basis": "column heading",
       "period_kind": "quarter"
     }
   ],
+  "reporting_currency": {
+    "currencies": [
+      "USD"
+    ],
+    "bases": [
+      "ASSUMED_FROM_$_SIGN"
+    ],
+    "statements": {},
+    "analyst_override": null
+  },
   "other_period_figures": [
     {
       "metric": "revenue",
@@ -781,13 +1692,63 @@
         "table": 1,
         "row": 8,
         "label": "2023 As Reported (GAAP)",
-        "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99"
+        "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 8,
+            "cell": 1,
+            "columns": [
+              0,
+              1
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 8,
+            "cell": 3,
+            "columns": [
+              2,
+              3
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 3,
+            "columns": [
+              2,
+              9
+            ]
+          },
+          {
+            "row": 5,
+            "cell": 3,
+            "columns": [
+              2,
+              3
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+        "document_name": "msft-ex99_1.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": "2023-09-30",
+      "period_end_basis": "column heading",
       "period_kind": "quarter"
     },
     {
@@ -801,13 +1762,63 @@
         "table": 1,
         "row": 8,
         "label": "2023 As Reported (GAAP)",
-        "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99"
+        "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 8,
+            "cell": 1,
+            "columns": [
+              0,
+              1
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 8,
+            "cell": 5,
+            "columns": [
+              4,
+              5
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 3,
+            "columns": [
+              2,
+              9
+            ]
+          },
+          {
+            "row": 5,
+            "cell": 5,
+            "columns": [
+              4,
+              5
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+        "document_name": "msft-ex99_1.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": "2023-09-30",
+      "period_end_basis": "column heading",
       "period_kind": "quarter"
     },
     {
@@ -821,13 +1832,63 @@
         "table": 1,
         "row": 8,
         "label": "2023 As Reported (GAAP)",
-        "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99"
+        "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 8,
+            "cell": 1,
+            "columns": [
+              0,
+              1
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 8,
+            "cell": 7,
+            "columns": [
+              6,
+              7
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 3,
+            "columns": [
+              2,
+              9
+            ]
+          },
+          {
+            "row": 5,
+            "cell": 7,
+            "columns": [
+              6,
+              7
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+        "document_name": "msft-ex99_1.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": "2023-09-30",
+      "period_end_basis": "column heading",
       "period_kind": "quarter"
     },
     {
@@ -841,13 +1902,347 @@
         "table": 1,
         "row": 8,
         "label": "2023 As Reported (GAAP)",
-        "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99"
+        "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99",
+        "unit": "per_share",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 8,
+            "cell": 1,
+            "columns": [
+              0,
+              1
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 8,
+            "cell": 9,
+            "columns": [
+              8,
+              9
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 3,
+            "columns": [
+              2,
+              9
+            ]
+          },
+          {
+            "row": 5,
+            "cell": 9,
+            "columns": [
+              8,
+              9
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+        "document_name": "msft-ex99_1.htm"
       },
       "method": "TABLE_ROW_LABEL_MATCH",
       "flags": [
         "CURRENCY_ASSUMED_USD_FROM_$_SIGN"
       ],
       "period_end": "2023-09-30",
+      "period_end_basis": "column heading",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "revenue",
+      "basis": "UNSTATED",
+      "period": "quarter ended 2023-09-30",
+      "value": "56517",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 4,
+        "row": 11,
+        "label": "Total revenue",
+        "quote": "Total revenue | 65,585 | 56,517",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 11,
+            "cell": 1,
+            "columns": [
+              0,
+              1
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 11,
+            "cell": 5,
+            "columns": [
+              4,
+              5
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 3,
+            "columns": [
+              2,
+              5
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 5,
+            "columns": [
+              4,
+              5
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+        "document_name": "msft-ex99_1.htm"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2023-09-30",
+      "period_end_basis": "column heading",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "operating_income",
+      "basis": "UNSTATED",
+      "period": "quarter ended 2023-09-30",
+      "value": "26895",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 4,
+        "row": 28,
+        "label": "Operating income",
+        "quote": "Operating income | 30,552 | 26,895",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 28,
+            "cell": 1,
+            "columns": [
+              0,
+              1
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 28,
+            "cell": 5,
+            "columns": [
+              4,
+              5
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 3,
+            "columns": [
+              2,
+              5
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 5,
+            "columns": [
+              4,
+              5
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+        "document_name": "msft-ex99_1.htm"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2023-09-30",
+      "period_end_basis": "column heading",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "net_income",
+      "basis": "UNSTATED",
+      "period": "quarter ended 2023-09-30",
+      "value": "22291",
+      "unit": "millions",
+      "currency": "USD",
+      "evidence": {
+        "table": 4,
+        "row": 36,
+        "label": "Net income",
+        "quote": "Net income | $24,667 | $22,291",
+        "unit": "millions",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 36,
+            "cell": 1,
+            "columns": [
+              0,
+              1
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 36,
+            "cell": 5,
+            "columns": [
+              4,
+              5
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 3,
+            "columns": [
+              2,
+              5
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 5,
+            "columns": [
+              4,
+              5
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+        "document_name": "msft-ex99_1.htm"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2023-09-30",
+      "period_end_basis": "column heading",
+      "period_kind": "quarter"
+    },
+    {
+      "metric": "eps_diluted",
+      "basis": "UNSTATED",
+      "period": "quarter ended 2023-09-30",
+      "value": "2.99",
+      "unit": "per_share",
+      "currency": "USD",
+      "evidence": {
+        "table": 4,
+        "row": 41,
+        "label": "Diluted",
+        "quote": "Diluted | $3.30 | $2.99",
+        "unit": "per_share",
+        "currency": "USD",
+        "currency_basis": "ASSUMED_FROM_$_SIGN",
+        "currency_quote": "$",
+        "alignment": "GRID",
+        "label_cells": [
+          {
+            "row": 41,
+            "cell": 1,
+            "columns": [
+              0,
+              1
+            ]
+          }
+        ],
+        "value_cells": [
+          {
+            "row": 41,
+            "cell": 5,
+            "columns": [
+              4,
+              5
+            ]
+          }
+        ],
+        "header_cells": [
+          {
+            "row": 2,
+            "cell": 3,
+            "columns": [
+              2,
+              5
+            ]
+          },
+          {
+            "row": 3,
+            "cell": 5,
+            "columns": [
+              4,
+              5
+            ]
+          }
+        ],
+        "document_id": "current-release",
+        "document_role": "current",
+        "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+        "document_name": "msft-ex99_1.htm"
+      },
+      "method": "TABLE_ROW_LABEL_MATCH",
+      "flags": [
+        "CURRENCY_ASSUMED_USD_FROM_$_SIGN",
+        "BASIS_NOT_STATED"
+      ],
+      "period_end": "2023-09-30",
+      "period_end_basis": "column heading",
       "period_kind": "quarter"
     }
   ],
@@ -871,17 +2266,246 @@
           "table": 1,
           "row": 9,
           "label": "2024 As Reported (GAAP)",
-          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+          "unit": "per_share",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 9,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 9,
+              "cell": 9,
+              "columns": [
+                8,
+                9
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                9
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 9,
+              "columns": [
+                8,
+                9
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
         },
         {
           "table": 1,
           "row": 8,
           "label": "2023 As Reported (GAAP)",
-          "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99"
+          "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99",
+          "unit": "per_share",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 8,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 8,
+              "cell": 9,
+              "columns": [
+                8,
+                9
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                9
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 9,
+              "columns": [
+                8,
+                9
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
         }
       ],
       "source": "comparative column printed in the current release",
-      "printed_change_check": null
+      "printed_change_check": null,
+      "currency_assumed": true
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "eps_diluted",
+      "basis": "UNSTATED",
+      "unit": "per_share",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-30",
+      "prior_period": "quarter ended 2023-09-30",
+      "actual": "3.3",
+      "prior_actual": "2.99",
+      "difference": "0.31",
+      "difference_unit": "per_share",
+      "difference_pct": "10.37",
+      "evidence": [
+        {
+          "table": 4,
+          "row": 41,
+          "label": "Diluted",
+          "quote": "Diluted | $3.30 | $2.99",
+          "unit": "per_share",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 41,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 41,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                5
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
+        },
+        {
+          "table": 4,
+          "row": 41,
+          "label": "Diluted",
+          "quote": "Diluted | $3.30 | $2.99",
+          "unit": "per_share",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 41,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 41,
+              "cell": 5,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                5
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 5,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": null,
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -902,17 +2526,246 @@
           "table": 1,
           "row": 9,
           "label": "2024 As Reported (GAAP)",
-          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 9,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 9,
+              "cell": 7,
+              "columns": [
+                6,
+                7
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                9
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 7,
+              "columns": [
+                6,
+                7
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
         },
         {
           "table": 1,
           "row": 8,
           "label": "2023 As Reported (GAAP)",
-          "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99"
+          "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 8,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 8,
+              "cell": 7,
+              "columns": [
+                6,
+                7
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                9
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 7,
+              "columns": [
+                6,
+                7
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
         }
       ],
       "source": "comparative column printed in the current release",
-      "printed_change_check": null
+      "printed_change_check": null,
+      "currency_assumed": true
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "net_income",
+      "basis": "UNSTATED",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-30",
+      "prior_period": "quarter ended 2023-09-30",
+      "actual": "24667",
+      "prior_actual": "22291",
+      "difference": "2376",
+      "difference_unit": "millions",
+      "difference_pct": "10.66",
+      "evidence": [
+        {
+          "table": 4,
+          "row": 36,
+          "label": "Net income",
+          "quote": "Net income | $24,667 | $22,291",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 36,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 36,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                5
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
+        },
+        {
+          "table": 4,
+          "row": 36,
+          "label": "Net income",
+          "quote": "Net income | $24,667 | $22,291",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 36,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 36,
+              "cell": 5,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                5
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 5,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": null,
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -933,17 +2786,246 @@
           "table": 1,
           "row": 9,
           "label": "2024 As Reported (GAAP)",
-          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 9,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 9,
+              "cell": 5,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                9
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 5,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
         },
         {
           "table": 1,
           "row": 8,
           "label": "2023 As Reported (GAAP)",
-          "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99"
+          "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 8,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 8,
+              "cell": 5,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                9
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 5,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
         }
       ],
       "source": "comparative column printed in the current release",
-      "printed_change_check": null
+      "printed_change_check": null,
+      "currency_assumed": true
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "operating_income",
+      "basis": "UNSTATED",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-30",
+      "prior_period": "quarter ended 2023-09-30",
+      "actual": "30552",
+      "prior_actual": "26895",
+      "difference": "3657",
+      "difference_unit": "millions",
+      "difference_pct": "13.6",
+      "evidence": [
+        {
+          "table": 4,
+          "row": 28,
+          "label": "Operating income",
+          "quote": "Operating income | 30,552 | 26,895",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 28,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 28,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                5
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
+        },
+        {
+          "table": 4,
+          "row": 28,
+          "label": "Operating income",
+          "quote": "Operating income | 30,552 | 26,895",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 28,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 28,
+              "cell": 5,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                5
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 5,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": null,
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -964,17 +3046,246 @@
           "table": 1,
           "row": 9,
           "label": "2024 As Reported (GAAP)",
-          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 9,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 9,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                9
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
         },
         {
           "table": 1,
           "row": 8,
           "label": "2023 As Reported (GAAP)",
-          "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99"
+          "quote": "2023 As Reported (GAAP) | $56,517 | $26,895 | $22,291 | $2.99",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 8,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 8,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                9
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
         }
       ],
       "source": "comparative column printed in the current release",
-      "printed_change_check": null
+      "printed_change_check": null,
+      "currency_assumed": true
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "YEAR_OVER_YEAR",
+      "metric": "revenue",
+      "basis": "UNSTATED",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-30",
+      "prior_period": "quarter ended 2023-09-30",
+      "actual": "65585",
+      "prior_actual": "56517",
+      "difference": "9068",
+      "difference_unit": "millions",
+      "difference_pct": "16.04",
+      "evidence": [
+        {
+          "table": 4,
+          "row": 11,
+          "label": "Total revenue",
+          "quote": "Total revenue | 65,585 | 56,517",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 11,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 11,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                5
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
+        },
+        {
+          "table": 4,
+          "row": 11,
+          "label": "Total revenue",
+          "quote": "Total revenue | 65,585 | 56,517",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 11,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 11,
+              "cell": 5,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                5
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 5,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
+        }
+      ],
+      "source": "comparative column printed in the current release",
+      "printed_change_check": null,
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -995,17 +3306,246 @@
           "table": 1,
           "row": 9,
           "label": "2024 As Reported (GAAP)",
-          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+          "unit": "per_share",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 9,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 9,
+              "cell": 9,
+              "columns": [
+                8,
+                9
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                9
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 9,
+              "columns": [
+                8,
+                9
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
         },
         {
           "table": 2,
           "row": 9,
           "label": "2024 As Reported (GAAP)",
-          "quote": "2024 As Reported (GAAP) | $64,727 | $27,925 | $22,036 | $2.95"
+          "quote": "2024 As Reported (GAAP) | $64,727 | $27,925 | $22,036 | $2.95",
+          "unit": "per_share",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 9,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 9,
+              "cell": 9,
+              "columns": [
+                8,
+                9
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                9
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 9,
+              "columns": [
+                8,
+                9
+              ]
+            }
+          ],
+          "document_id": "comparison-release",
+          "document_role": "comparison",
+          "source_version_id": "33a611b91bc16a9bc532a8dee7775012c37d302d1e1d392d3c03827cee5acaad",
+          "document_sha256": "33a611b91bc16a9bc532a8dee7775012c37d302d1e1d392d3c03827cee5acaad",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024087835/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
         }
       ],
       "source": "figure from the comparison release (not printed in the current release)",
-      "printed_change_check": null
+      "printed_change_check": null,
+      "currency_assumed": true
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "eps_diluted",
+      "basis": "UNSTATED",
+      "unit": "per_share",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-30",
+      "prior_period": "quarter ended 2024-06-30",
+      "actual": "3.3",
+      "prior_actual": "2.95",
+      "difference": "0.35",
+      "difference_unit": "per_share",
+      "difference_pct": "11.86",
+      "evidence": [
+        {
+          "table": 4,
+          "row": 41,
+          "label": "Diluted",
+          "quote": "Diluted | $3.30 | $2.99",
+          "unit": "per_share",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 41,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 41,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                5
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
+        },
+        {
+          "table": 6,
+          "row": 41,
+          "label": "Diluted",
+          "quote": "Diluted | $2.95 | $2.69 | $11.80 | $9.68",
+          "unit": "per_share",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 41,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 41,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                5
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "document_id": "comparison-release",
+          "document_role": "comparison",
+          "source_version_id": "33a611b91bc16a9bc532a8dee7775012c37d302d1e1d392d3c03827cee5acaad",
+          "document_sha256": "33a611b91bc16a9bc532a8dee7775012c37d302d1e1d392d3c03827cee5acaad",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024087835/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
+        }
+      ],
+      "source": "figure from the comparison release (not printed in the current release)",
+      "printed_change_check": null,
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -1026,17 +3566,246 @@
           "table": 1,
           "row": 9,
           "label": "2024 As Reported (GAAP)",
-          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 9,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 9,
+              "cell": 7,
+              "columns": [
+                6,
+                7
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                9
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 7,
+              "columns": [
+                6,
+                7
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
         },
         {
           "table": 2,
           "row": 9,
           "label": "2024 As Reported (GAAP)",
-          "quote": "2024 As Reported (GAAP) | $64,727 | $27,925 | $22,036 | $2.95"
+          "quote": "2024 As Reported (GAAP) | $64,727 | $27,925 | $22,036 | $2.95",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 9,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 9,
+              "cell": 7,
+              "columns": [
+                6,
+                7
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                9
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 7,
+              "columns": [
+                6,
+                7
+              ]
+            }
+          ],
+          "document_id": "comparison-release",
+          "document_role": "comparison",
+          "source_version_id": "33a611b91bc16a9bc532a8dee7775012c37d302d1e1d392d3c03827cee5acaad",
+          "document_sha256": "33a611b91bc16a9bc532a8dee7775012c37d302d1e1d392d3c03827cee5acaad",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024087835/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
         }
       ],
       "source": "figure from the comparison release (not printed in the current release)",
-      "printed_change_check": null
+      "printed_change_check": null,
+      "currency_assumed": true
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "net_income",
+      "basis": "UNSTATED",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-30",
+      "prior_period": "quarter ended 2024-06-30",
+      "actual": "24667",
+      "prior_actual": "22036",
+      "difference": "2631",
+      "difference_unit": "millions",
+      "difference_pct": "11.94",
+      "evidence": [
+        {
+          "table": 4,
+          "row": 36,
+          "label": "Net income",
+          "quote": "Net income | $24,667 | $22,291",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 36,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 36,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                5
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
+        },
+        {
+          "table": 6,
+          "row": 36,
+          "label": "Net income",
+          "quote": "Net income | $22,036 | $20,081 | $88,136 | $72,361",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 36,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 36,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                5
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "document_id": "comparison-release",
+          "document_role": "comparison",
+          "source_version_id": "33a611b91bc16a9bc532a8dee7775012c37d302d1e1d392d3c03827cee5acaad",
+          "document_sha256": "33a611b91bc16a9bc532a8dee7775012c37d302d1e1d392d3c03827cee5acaad",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024087835/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
+        }
+      ],
+      "source": "figure from the comparison release (not printed in the current release)",
+      "printed_change_check": null,
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -1057,17 +3826,246 @@
           "table": 1,
           "row": 9,
           "label": "2024 As Reported (GAAP)",
-          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 9,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 9,
+              "cell": 5,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                9
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 5,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
         },
         {
           "table": 2,
           "row": 9,
           "label": "2024 As Reported (GAAP)",
-          "quote": "2024 As Reported (GAAP) | $64,727 | $27,925 | $22,036 | $2.95"
+          "quote": "2024 As Reported (GAAP) | $64,727 | $27,925 | $22,036 | $2.95",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 9,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 9,
+              "cell": 5,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                9
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 5,
+              "columns": [
+                4,
+                5
+              ]
+            }
+          ],
+          "document_id": "comparison-release",
+          "document_role": "comparison",
+          "source_version_id": "33a611b91bc16a9bc532a8dee7775012c37d302d1e1d392d3c03827cee5acaad",
+          "document_sha256": "33a611b91bc16a9bc532a8dee7775012c37d302d1e1d392d3c03827cee5acaad",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024087835/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
         }
       ],
       "source": "figure from the comparison release (not printed in the current release)",
-      "printed_change_check": null
+      "printed_change_check": null,
+      "currency_assumed": true
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "operating_income",
+      "basis": "UNSTATED",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-30",
+      "prior_period": "quarter ended 2024-06-30",
+      "actual": "30552",
+      "prior_actual": "27925",
+      "difference": "2627",
+      "difference_unit": "millions",
+      "difference_pct": "9.41",
+      "evidence": [
+        {
+          "table": 4,
+          "row": 28,
+          "label": "Operating income",
+          "quote": "Operating income | 30,552 | 26,895",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 28,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 28,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                5
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
+        },
+        {
+          "table": 6,
+          "row": 28,
+          "label": "Operating income",
+          "quote": "Operating income | 27,925 | 24,254 | 109,433 | 88,523",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 28,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 28,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                5
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "document_id": "comparison-release",
+          "document_role": "comparison",
+          "source_version_id": "33a611b91bc16a9bc532a8dee7775012c37d302d1e1d392d3c03827cee5acaad",
+          "document_sha256": "33a611b91bc16a9bc532a8dee7775012c37d302d1e1d392d3c03827cee5acaad",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024087835/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
+        }
+      ],
+      "source": "figure from the comparison release (not printed in the current release)",
+      "printed_change_check": null,
+      "currency_assumed": true
     },
     {
       "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
@@ -1088,17 +4086,246 @@
           "table": 1,
           "row": 9,
           "label": "2024 As Reported (GAAP)",
-          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30"
+          "quote": "2024 As Reported (GAAP) | $65,585 | $30,552 | $24,667 | $3.30",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 9,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 9,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                9
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
         },
         {
           "table": 2,
           "row": 9,
           "label": "2024 As Reported (GAAP)",
-          "quote": "2024 As Reported (GAAP) | $64,727 | $27,925 | $22,036 | $2.95"
+          "quote": "2024 As Reported (GAAP) | $64,727 | $27,925 | $22,036 | $2.95",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 9,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 9,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                9
+              ]
+            },
+            {
+              "row": 5,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "document_id": "comparison-release",
+          "document_role": "comparison",
+          "source_version_id": "33a611b91bc16a9bc532a8dee7775012c37d302d1e1d392d3c03827cee5acaad",
+          "document_sha256": "33a611b91bc16a9bc532a8dee7775012c37d302d1e1d392d3c03827cee5acaad",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024087835/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
         }
       ],
       "source": "figure from the comparison release (not printed in the current release)",
-      "printed_change_check": null
+      "printed_change_check": null,
+      "currency_assumed": true
+    },
+    {
+      "label": "ACTUAL vs PRIOR-PERIOD ACTUAL",
+      "relation": "SEQUENTIAL",
+      "metric": "revenue",
+      "basis": "UNSTATED",
+      "unit": "millions",
+      "currency": "USD",
+      "current_period": "quarter ended 2024-09-30",
+      "prior_period": "quarter ended 2024-06-30",
+      "actual": "65585",
+      "prior_actual": "64727",
+      "difference": "858",
+      "difference_unit": "millions",
+      "difference_pct": "1.33",
+      "evidence": [
+        {
+          "table": 4,
+          "row": 11,
+          "label": "Total revenue",
+          "quote": "Total revenue | 65,585 | 56,517",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 11,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 11,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                5
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "document_id": "current-release",
+          "document_role": "current",
+          "source_version_id": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "document_sha256": "ea8bc94f7677d015265507c0ebbe4e899448954dd3ee8c75ddc512ab7ace2403",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024118955/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
+        },
+        {
+          "table": 6,
+          "row": 11,
+          "label": "Total revenue",
+          "quote": "Total revenue | 64,727 | 56,189 | 245,122 | 211,915",
+          "unit": "millions",
+          "currency": "USD",
+          "currency_basis": "ASSUMED_FROM_$_SIGN",
+          "currency_quote": "$",
+          "alignment": "GRID",
+          "label_cells": [
+            {
+              "row": 11,
+              "cell": 1,
+              "columns": [
+                0,
+                1
+              ]
+            }
+          ],
+          "value_cells": [
+            {
+              "row": 11,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "header_cells": [
+            {
+              "row": 2,
+              "cell": 3,
+              "columns": [
+                2,
+                5
+              ]
+            },
+            {
+              "row": 3,
+              "cell": 3,
+              "columns": [
+                2,
+                3
+              ]
+            }
+          ],
+          "document_id": "comparison-release",
+          "document_role": "comparison",
+          "source_version_id": "33a611b91bc16a9bc532a8dee7775012c37d302d1e1d392d3c03827cee5acaad",
+          "document_sha256": "33a611b91bc16a9bc532a8dee7775012c37d302d1e1d392d3c03827cee5acaad",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017024087835/msft-ex99_1.htm",
+          "document_name": "msft-ex99_1.htm"
+        }
+      ],
+      "source": "figure from the comparison release (not printed in the current release)",
+      "printed_change_check": null,
+      "currency_assumed": true
     }
   ],
   "guidance_comparisons": [],
@@ -1106,19 +4333,29 @@
   "consistency_with_comparison": [],
   "comparison_issues": [
     {
-      "code": "COLUMN_DURATION_UNKNOWN",
-      "where": "table 6",
-      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read"
+      "code": "UNIT_AMBIGUOUS",
+      "where": "table 6 row 22",
+      "detail": "gross margin without a % sign (a dollar amount?); not extracted"
     },
     {
       "code": "COLUMN_DURATION_UNKNOWN",
       "where": "table 7",
-      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read"
+      "detail": "dated column(s) 2024, 2023, 2024, 2023: its heading gives no month and day for the year; their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 8",
+      "detail": "dated column(s) June 30, 2024, June 30, 2023: no 'Three/Twelve Months Ended' heading above it; their values are not read"
     },
     {
       "code": "COLUMN_DURATION_UNKNOWN",
       "where": "table 9",
-      "detail": "some dated columns have no 'Three/Twelve Months Ended' heading above them; their values are not read"
+      "detail": "dated column(s) 2024, 2023, 2024, 2023: its heading gives no month and day for the year; their values are not read"
+    },
+    {
+      "code": "COLUMN_DURATION_UNKNOWN",
+      "where": "table 10",
+      "detail": "dated column(s) 2024, 2023, 2024, 2023: its heading gives no month and day for the year; their values are not read"
     },
     {
       "code": "NO_OUTLOOK_FOUND",

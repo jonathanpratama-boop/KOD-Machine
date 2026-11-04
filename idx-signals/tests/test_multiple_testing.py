@@ -28,8 +28,8 @@ class MultipleTestingTests(unittest.TestCase):
         self.assertGreater(mt.hurdle_z(100), mt.hurdle_z(10))
         self.assertGreater(mt.expected_max_z(300), mt.expected_max_z(15))
         self.assertAlmostEqual(mt.hurdle_z(20, method="sidak"), mt.hurdle_z(20), places=1)
-        self.assertEqual(mt.project_hurdle(5), 3.0)                  # the floor binds with few tries
-        self.assertGreater(mt.project_hurdle(1000), 3.0)             # the Bonferroni bar binds with many
+        self.assertEqual(mt.project_hurdle(5), 3.0)  # the floor binds with few tries
+        self.assertGreater(mt.project_hurdle(1000), 3.0)  # the Bonferroni bar binds with many
 
 
 if __name__ == "__main__":

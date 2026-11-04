@@ -1,0 +1,83 @@
+{
+  "schema_version": "KOD_TIMING_RELEASE_EVIDENCE_V1",
+  "recorded_at": "2026-11-04T09:07:33.256074+00:00",
+  "baseline_commit": "c2e9c54ba85c591c2ed5628295159335667a1b84",
+  "tested_code_tree": "d24fef076aaa3750da9ceeed19646ee30cc8a1ae",
+  "published_code_commit": "50ef4379243ca1edb8e729bb2ebdfe6826980700",
+  "published_code_tree_equals_tested_tree": true,
+  "local_tests": {
+    "idx_signals": 1463,
+    "kod_core": 282,
+    "workstation": 321,
+    "tooling": 61,
+    "total_disjoint": 2127,
+    "result": "PASS"
+  },
+  "full_release_gate": "PASS",
+  "style_lint": "PASS",
+  "append_only_range": "PASS",
+  "tidy_equivalence": {
+    "different_fields": [],
+    "managed_files": 62,
+    "ok": true,
+    "original_journal_readable": true,
+    "scope": "formatting equivalence and synthetic history compatibility; not profitability",
+    "snapshot_bytes_equal": true
+  },
+  "before_snapshot_sha256": "1472e134bbc1e9c5538c0c1994cfa532734a64220eee203fd5c5eeb4dbf3c58b",
+  "after_snapshot_sha256": "1472e134bbc1e9c5538c0c1994cfa532734a64220eee203fd5c5eeb4dbf3c58b",
+  "preserved_source_files": 11,
+  "protected_tree_preservation": {
+    "baseline_commit": "c2e9c54ba85c591c2ed5628295159335667a1b84",
+    "checked_commit": "20b43cacbac35e66ff68d7152dfd5cf2d6bf8156",
+    "baseline_blob_entries": 5269,
+    "protected_paths": 4080,
+    "unchanged_protected_paths": 4080,
+    "changed": [],
+    "proof": "Git tree entry identity; not cryptographic token verification"
+  },
+  "local_historical_cryptographic_coverage": {
+    "status": "PARTIAL",
+    "counts": {
+      "manifests": {
+        "VERIFIED": 9,
+        "UNAVAILABLE": 242,
+        "UNSUPPORTED": 3
+      },
+      "tokens": {
+        "UNAVAILABLE": 2133
+      },
+      "preservation": {
+        "UNAVAILABLE": 3657,
+        "VERIFIED": 423
+      }
+    }
+  },
+  "log_digests": {
+    "timing-release-final.log": {
+      "sha256": "1eecf64eb882332d1920535004c0cb8031527c88986df3c606c3bb414ce99be9",
+      "bytes": 11385
+    },
+    "timing-tools-final.log": {
+      "sha256": "1240c54c5f217fbf8bc83cc6fd92643abb92e4fb80669fe3f262aa7604b543be",
+      "bytes": 297
+    },
+    "timing-tidy-format-final.log": {
+      "sha256": "36b7b5bd0eeedf0a350e0e698ef5c3f931716a04e9c71c3b8beddff34f002747",
+      "bytes": 118
+    },
+    "timing-tidy-result-final.json": {
+      "sha256": "693f630c22a2fa33ae966dcf4f4fec23d612b5fa14a1f5eb5b091a9f16ecb5be",
+      "bytes": 213
+    },
+    "timing-frozen-tree-final.json": {
+      "sha256": "2f58db0b953cbebd8efd75473ec69163596ec8ec54c4fa569de80683b71ac349",
+      "bytes": 322
+    }
+  },
+  "market_trial_started": false,
+  "profitability_validated": false,
+  "live_orders_enabled": false,
+  "new_recurring_schedule_installed": false,
+  "remote_ci": "NOT_OBSERVED_AT_RECORDING"
+}

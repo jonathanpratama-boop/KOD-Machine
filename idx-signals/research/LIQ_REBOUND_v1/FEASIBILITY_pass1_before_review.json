@@ -1,0 +1,75 @@
+{
+ "study": "LIQ_REBOUND_v1",
+ "computed_at": "2026-10-31T22:40:44Z",
+ "what": "signal counts only; no return, no forward price, no outcome was computed (debounce assumes every position lasts entry_lag + 72h)",
+ "rule": "freeze the largest k in K_CANDIDATES whose DISCOVERY cascade_total >= 30 and cascade_episodes >= 8; if none qualifies, freeze the smallest k (the run will then probably be INCONCLUSIVE)",
+ "counts": {
+  "3.0": {
+   "discovery": {
+    "BTCUSDT_cascade": 13,
+    "BTCUSDT_droponly": 22,
+    "BTCUSDT_valid_hours": 18163,
+    "ETHUSDT_cascade": 4,
+    "ETHUSDT_droponly": 7,
+    "ETHUSDT_valid_hours": 7297,
+    "cascade_total": 17,
+    "cascade_episodes": 14
+   },
+   "screen_2023": {
+    "BTCUSDT_cascade": 3,
+    "BTCUSDT_droponly": 5,
+    "BTCUSDT_valid_hours": 8758,
+    "ETHUSDT_cascade": 5,
+    "ETHUSDT_droponly": 7,
+    "ETHUSDT_valid_hours": 8758,
+    "cascade_total": 8,
+    "cascade_episodes": 5
+   }
+  },
+  "2.5": {
+   "discovery": {
+    "BTCUSDT_cascade": 15,
+    "BTCUSDT_droponly": 29,
+    "BTCUSDT_valid_hours": 18163,
+    "ETHUSDT_cascade": 6,
+    "ETHUSDT_droponly": 12,
+    "ETHUSDT_valid_hours": 7297,
+    "cascade_total": 21,
+    "cascade_episodes": 16
+   },
+   "screen_2023": {
+    "BTCUSDT_cascade": 3,
+    "BTCUSDT_droponly": 9,
+    "BTCUSDT_valid_hours": 8758,
+    "ETHUSDT_cascade": 7,
+    "ETHUSDT_droponly": 12,
+    "ETHUSDT_valid_hours": 8758,
+    "cascade_total": 10,
+    "cascade_episodes": 7
+   }
+  },
+  "2.0": {
+   "discovery": {
+    "BTCUSDT_cascade": 16,
+    "BTCUSDT_droponly": 52,
+    "BTCUSDT_valid_hours": 18163,
+    "ETHUSDT_cascade": 7,
+    "ETHUSDT_droponly": 17,
+    "ETHUSDT_valid_hours": 7297,
+    "cascade_total": 23,
+    "cascade_episodes": 18
+   },
+   "screen_2023": {
+    "BTCUSDT_cascade": 5,
+    "BTCUSDT_droponly": 16,
+    "BTCUSDT_valid_hours": 8758,
+    "ETHUSDT_cascade": 10,
+    "ETHUSDT_droponly": 19,
+    "ETHUSDT_valid_hours": 8758,
+    "cascade_total": 15,
+    "cascade_episodes": 11
+   }
+  }
+ },
+ "chosen_sigma_k": 2.0
+}

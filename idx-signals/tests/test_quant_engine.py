@@ -6,7 +6,9 @@ import numpy as np
 import pandas as pd
 
 SPEC = importlib.util.spec_from_file_location(
-    "engine_run", Path(__file__).resolve().parents[1] / "research" / "QUANT_ENGINE_2005_2019" / "run.py")
+    "engine_run",
+    Path(__file__).resolve().parents[1] / "research" / "QUANT_ENGINE_2005_2019" / "run.py",
+)
 run = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(run)
 
@@ -15,8 +17,12 @@ def panel(seed=3, names=450, sessions=1700, effect=0.0):
     rng = np.random.default_rng(seed)
     dates = pd.bdate_range("2004-01-02", periods=sessions)
     sd = rng.uniform(0.01, 0.04, names)
-    r = rng.normal(0, sd, (sessions, names)) + effect * (0.025 - sd)        # calmer stocks drift up when effect > 0
-    adj = pd.DataFrame(100 * np.exp(np.cumsum(r, axis=0)), index=dates, columns=[f"S{i}" for i in range(names)])
+    r = rng.normal(0, sd, (sessions, names)) + effect * (
+        0.025 - sd
+    )  # calmer stocks drift up when effect > 0
+    adj = pd.DataFrame(
+        100 * np.exp(np.cumsum(r, axis=0)), index=dates, columns=[f"S{i}" for i in range(names)]
+    )
     return adj, adj.copy(), pd.DataFrame(np.full(adj.shape, 1e9), index=dates, columns=adj.columns)
 
 
@@ -38,7 +44,9 @@ class EnginePanelTests(unittest.TestCase):
         t = 30
         cut = adj.index.get_loc(P["meta"][t]["formed"])
         adj2 = adj.copy()
-        adj2.iloc[cut + 1:] *= np.random.default_rng(1).uniform(0.5, 2.0, adj2.iloc[cut + 1:].shape)
+        adj2.iloc[cut + 1 :] *= np.random.default_rng(1).uniform(
+            0.5, 2.0, adj2.iloc[cut + 1 :].shape
+        )
         P2 = run.build_panels(adj2, adj2.copy(), vol)
         for k in run.FEATURES:
             np.testing.assert_allclose(P[k][t], P2[k][t], equal_nan=True, err_msg=k)
@@ -49,8 +57,11 @@ class EnginePanelTests(unittest.TestCase):
         P = run.build_panels(adj, cl, vol)
         saved = run.FACTORS
         try:
-            fac = pd.DataFrame(np.random.default_rng(2).normal(0, 0.01, (len(adj), 5)), index=adj.index,
-                               columns=["Mkt-RF", "SMB", "HML", "RF", "MOM"])
+            fac = pd.DataFrame(
+                np.random.default_rng(2).normal(0, 0.01, (len(adj), 5)),
+                index=adj.index,
+                columns=["Mkt-RF", "SMB", "HML", "RF", "MOM"],
+            )
             tmp = Path(__file__).resolve().parent / "_tmp_factors.csv.gz"
             fac.to_csv(tmp)
             run.FACTORS = tmp
@@ -65,8 +76,15 @@ class EnginePanelTests(unittest.TestCase):
         # the planted drift is persistent, so trailing return (mom) legitimately carries some of it too: assert the
         # planted driver gets a clearly positive weight, not that it beats every correlated feature
         self.assertGreater(res["mean_ridge_weights"]["lowvol"], 0.05)
-        self.assertEqual(set(res["gates"]), {"G1_ic_t_ge_3_and_9_of_12_years", "G2_net_spread_positive_at_100k",
-                                             "G3_factor_alpha_t_ge_3", "G4_large_cap_ic_t_ge_2"})
+        self.assertEqual(
+            set(res["gates"]),
+            {
+                "G1_ic_t_ge_3_and_9_of_12_years",
+                "G2_net_spread_positive_at_100k",
+                "G3_factor_alpha_t_ge_3",
+                "G4_large_cap_ic_t_ge_2",
+            },
+        )
 
 
 if __name__ == "__main__":

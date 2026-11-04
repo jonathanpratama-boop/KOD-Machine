@@ -1,0 +1,41 @@
+{
+ "study_id": "PAPER_BOOK_v1",
+ "frozen_at": "2026-10-31T08:45:38Z",
+ "owner": "2026-10-31: 'set it up ... I just want to see how effective it is to trade on its own. Perhaps it needs my help to confirm sometimes. But I want this to be a money making machine.'",
+ "what": "Every US +30% spike that LEARNER v2.4 forecasts gets a sealed PLAN before the next session's 13:30 UTC open: DONT_BUY if v2.4's raw next-day dump probability >= cutoff, else BUY_OK. The owner may confirm BUY or SKIP before the same cutoff. The trade is the Speculation Register's BASE5 trade (buy at the next open, sell at the close five sessions later, profile costs); nothing is fetched or bought here.",
+ "cutoff": {
+  "value": 0.4626,
+  "source": "mean of the top-third cutoffs of v2.4's raw forecast in the two as-traded replays (FILTER_BUY_v1 RESULT.json: A 0.4486, B 0.4768); fixed, never re-ranked"
+ },
+ "first_signal": "2026-10-30 (its forecasts were sealed 2026-10-30T23:00Z; its entry cutoff is 2026-11-02T13:30Z, after this freeze; no outcome existed)",
+ "books": {
+  "KOD": "every BUY_OK",
+  "ALL": "every spike",
+  "AVOIDED": "every DONT_BUY",
+  "OWNER": "every spike the owner confirmed BUY"
+ },
+ "position": "$1,000 per position, paper",
+ "planned_look": {
+  "when": "the first 300 traded spikes in signal order, each verdict with >= 50; one look, no earlier verdict",
+  "dont_buy": "mean net(DONT_BUY) - mean net(BUY_OK) < 0 with one-sided 95% session-bootstrap upper bound < 0 -> DONT_BUY WORKS",
+  "money": "mean net(BUY_OK) > 0 with one-sided 95% lower bound > 0 -> KOD BOOK MAKES MONEY",
+  "bootstrap": {
+   "unit": "signal session",
+   "draws": 2000,
+   "seed": 20261031
+  }
+ },
+ "expectation_on_record": [
+  "history (FILTER_BUY_v1, ENTRY_TIMING_v1): the DONT_BUY third lost 6-8% over 5 days in both replays; buying the kept spikes was -0.8% and +1.0%: DONT_BUY is expected to work, the KOD book is NOT expected to make money",
+  "the live raw forecasts run higher than the replays' (on 2026-10-30, 8 of 11 are at or above the cutoff), so most spikes may be DONT_BUY"
+ ],
+ "limits": [
+  "paper only, no orders; open prints are not fills; small caps may not fill",
+  "the OWNER book is descriptive and has no pass mark"
+ ],
+ "pins": {
+  "idxsig/paper_book.py": "90dfb98d71bdee9d28ac7c52799083869b6e5a802445bec8cbf6aedbcf642e12",
+  "research/FILTER_BUY_v1/results/RESULT.json": "338a3cd4039e551af80fcdd1f369919f612f0679ca117959d56b51f41b1eee2f",
+  "research/LEARNER_v2/protocol_v2_4.json": "8132768cb6c16c8a06df94075fba4f37cf4911f260ec5e5379adadfabc456cea"
+ }
+}

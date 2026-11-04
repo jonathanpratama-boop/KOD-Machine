@@ -5,7 +5,8 @@ from pathlib import Path
 import numpy as np
 
 SPEC = importlib.util.spec_from_file_location(
-    "e10_run", Path(__file__).resolve().parents[1] / "research" / "E10" / "run_test.py")
+    "e10_run", Path(__file__).resolve().parents[1] / "research" / "E10" / "run_test.py"
+)
 run = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(run)
 
@@ -31,11 +32,14 @@ class EntryTests(unittest.TestCase):
 class TradeTests(unittest.TestCase):
     def setUp(self):
         n = 5
-        self.m = {"open": np.array([[10.0], [10.2], [10.1], [9.0], [9.5]]),
-                  "high": np.full((n, 1), 11.0),
-                  "low": np.array([[9.8], [9.9], [9.7], [8.8], [9.2]]),
-                  "close": np.array([[10.1], [10.0], [9.9], [9.1], [9.6]]),
-                  "value": np.full((n, 1), 1e6), "unit_factor": np.ones((n, 1))}
+        self.m = {
+            "open": np.array([[10.0], [10.2], [10.1], [9.0], [9.5]]),
+            "high": np.full((n, 1), 11.0),
+            "low": np.array([[9.8], [9.9], [9.7], [8.8], [9.2]]),
+            "close": np.array([[10.1], [10.0], [9.9], [9.1], [9.6]]),
+            "value": np.full((n, 1), 1e6),
+            "unit_factor": np.ones((n, 1)),
+        }
 
     def test_hold_exits_at_close(self):
         a, b, ta, tb, x = run.trade(self.m, 0, 0, 5)

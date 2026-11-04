@@ -1,0 +1,12 @@
+{
+ "id": "CALL_CERT_v1",
+ "experiment": "CALL_CERT_v1",
+ "date": "2026-10-29",
+ "hypothesis": "out of time, Learn then Test certificates on LEARNER v2.4's model (fit 2020-21, certify on 2022; refit through 2022, check on 2023) hold on 2023 for the DUMP call (losing rate <= 0.5) and the SAFE call (losing rate <= half the base rate), for NEXT_DUMP10_1 and DUMP10_5",
+ "one_sided_p": null,
+ "p_source": "pending: research/CALL_CERT_v1/results/RESULT.json",
+ "variants_searched": 4,
+ "outcome": "PENDING (registered before any prediction was computed)",
+ "counted": false,
+ "registered": "2026-10-29"
+}

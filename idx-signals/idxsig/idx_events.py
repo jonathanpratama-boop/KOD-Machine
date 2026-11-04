@@ -12,6 +12,7 @@ the publication time (WIB) to the harness's signal session s, and the harness bu
   - published later that day, or on a non-session day: bought at the close of the next session.
 Nothing here reads a price to decide which events count.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -23,15 +24,20 @@ import pandas as pd
 from . import controls
 from .execution import SCORED, STATUS, ExecConfig, Market, execute
 
-CUTOFF = (14, 30)            # a session-day publication at or before this WIB time can be bought at that day's close
-MIN_HISTORY = 60             # sessions of history a name needs to be an eligible control
+CUTOFF = (
+    14,
+    30,
+)  # a session-day publication at or before this WIB time can be bought at that day's close
+MIN_HISTORY = 60  # sessions of history a name needs to be an eligible control
 
 
 def signal_session(dates: np.ndarray, posted: pd.Timestamp) -> int | None:
     """Index of the harness signal session for an event published at `posted` (a tz-aware or naive WIB timestamp), or None if
     there is no earlier session to act from."""
     day = np.datetime64(posted.date(), "D")
-    k = int(np.searchsorted(dates, day, side="left"))           # first session on or after the publication day
+    k = int(
+        np.searchsorted(dates, day, side="left")
+    )  # first session on or after the publication day
     is_session = k < len(dates) and dates[k] == day
     in_time = (posted.hour, posted.minute) <= CUTOFF
     s = k if (is_session and not in_time) else k - 1
@@ -58,21 +64,34 @@ def evaluable_matrix(m: Market, min_history: int = MIN_HISTORY) -> np.ndarray:
 
 @dataclass(frozen=True)
 class Prepared:
-    m: Market                    # the window, with the corporate-action registry when one is given
-    feats: dict                  # matching features for the window (computed on the whole panel, then windowed)
-    evaluable: np.ndarray        # who can be a control at each session of the window (history counted on the whole panel)
+    m: Market  # the window, with the corporate-action registry when one is given
+    feats: dict  # matching features for the window (computed on the whole panel, then windowed)
+    evaluable: (
+        np.ndarray
+    )  # who can be a control at each session of the window (history counted on the whole panel)
     lo: int
     hi: int
 
 
-def prepare(df: pd.DataFrame, registry: pd.DataFrame | None, start: str, end: str, controls_version: str = "v2",
-            band_edges: tuple = (200, 5000), price_limits: bool = True) -> Prepared:
-    df = df[df["date"] <= pd.Timestamp(end)]                     # nothing after the window is ever loaded into the market
+def prepare(
+    df: pd.DataFrame,
+    registry: pd.DataFrame | None,
+    start: str,
+    end: str,
+    controls_version: str = "v2",
+    band_edges: tuple = (200, 5000),
+    price_limits: bool = True,
+) -> Prepared:
+    df = df[
+        df["date"] <= pd.Timestamp(end)
+    ]  # nothing after the window is ever loaded into the market
     full = Market.from_panel(df, price_limits=price_limits)
     if registry is not None:
         full = full.with_registry(registry)
     lo, hi = full.bounds(start, end)
-    feats = {k: v[:, lo:hi] for k, v in controls.features(full, controls_version, band_edges).items()}
+    feats = {
+        k: v[:, lo:hi] for k, v in controls.features(full, controls_version, band_edges).items()
+    }
     return Prepared(full.slice(lo, hi), feats, evaluable_matrix(full)[:, lo:hi], lo, hi)
 
 
@@ -83,8 +102,15 @@ def mean_over_scored(net: np.ndarray, scored: np.ndarray) -> np.ndarray:
     return np.where(n > 0, np.where(scored, net, 0.0).sum(0) / np.maximum(n, 1), np.nan)
 
 
-def run_events(prep: Prepared, events: pd.DataFrame, cfg: ExecConfig, draws: int = 200, seed: int = 20261007,
-               controls_version: str = "v2", overlap: str = "skip") -> pd.DataFrame:
+def run_events(
+    prep: Prepared,
+    events: pd.DataFrame,
+    cfg: ExecConfig,
+    draws: int = 200,
+    seed: int = 20261007,
+    controls_version: str = "v2",
+    overlap: str = "skip",
+) -> pd.DataFrame:
     """One row per mapped event: its execution, the mean of its matched controls under the same plan, and the excess.
     `status` is the harness status ("SKIP_OVERLAP" for an event while the same name is still held). Controls are `draws`
     replacement draws per event from the names that could have been bought that session in the same buckets."""
@@ -94,7 +120,7 @@ def run_events(prep: Prepared, events: pd.DataFrame, cfg: ExecConfig, draws: int
     tick_idx, sig_idx = ev["tick_idx"].to_numpy(np.int64), ev["sig_idx"].to_numpy(np.int64)
     trades = execute(m, tick_idx, sig_idx, cfg)
     skipped = np.zeros(len(ev), dtype=bool)
-    if overlap == "skip":                                        # as backtest.run: a signal while the name is still held
+    if overlap == "skip":  # as backtest.run: a signal while the name is still held
         held_until = {}
         for i, (n, s) in enumerate(zip(tick_idx, sig_idx)):
             if s + cfg.entry_lag <= held_until.get(n, -1):
@@ -109,12 +135,19 @@ def run_events(prep: Prepared, events: pd.DataFrame, cfg: ExecConfig, draws: int
     control_mean = np.full(len(ev), np.nan)
     control_n = np.zeros(len(ev), dtype=int)
     level = np.full(len(ev), -1)
-    drawable = keep.copy()                                       # an event needs at least one other name that could be bought
+    drawable = keep.copy()  # an event needs at least one other name that could be bought
     drawable[keep] = prep.evaluable[:, a_sig].sum(axis=0) >= 2
     if drawable.any():
         d_tick, d_sig = tick_idx[drawable], sig_idx[drawable]
-        matched, lvl = controls.matched_draws(prep.evaluable, prep.feats, d_tick, d_sig, draws,
-                                              np.random.default_rng(seed + 1), controls_version)
+        matched, lvl = controls.matched_draws(
+            prep.evaluable,
+            prep.feats,
+            d_tick,
+            d_sig,
+            draws,
+            np.random.default_rng(seed + 1),
+            controls_version,
+        )
         out = execute(m, matched.ravel(), np.broadcast_to(d_sig, matched.shape).ravel(), cfg)
         net = out["net_return"].reshape(draws, -1)
         scored = np.isin(out["status"], SCORED).reshape(draws, -1) & np.isfinite(net)
@@ -124,11 +157,19 @@ def run_events(prep: Prepared, events: pd.DataFrame, cfg: ExecConfig, draws: int
     day = lambda idx: np.where(idx >= 0, m.dates[np.maximum(idx, 0)].astype(str), "")  # noqa: E731
     status = np.where(skipped, "SKIP_OVERLAP", np.array(STATUS)[trades["status"]])
     scored_ev = np.isin(trades["status"], SCORED) & ~skipped
-    ev = ev.assign(signal_date=m.dates[sig_idx].astype(str), entry_date=day(trades["entry_idx"]), exit_date=day(trades["exit_idx"]),
-                   status=status, entry_price=trades["entry_price"], exit_price=trades["exit_price"],
-                   gross_return=np.where(scored_ev, trades["gross_return"], np.nan),
-                   net_return=np.where(scored_ev, trades["net_return"], np.nan),
-                   control_mean=control_mean, control_n=control_n, match_level=level)
+    ev = ev.assign(
+        signal_date=m.dates[sig_idx].astype(str),
+        entry_date=day(trades["entry_idx"]),
+        exit_date=day(trades["exit_idx"]),
+        status=status,
+        entry_price=trades["entry_price"],
+        exit_price=trades["exit_price"],
+        gross_return=np.where(scored_ev, trades["gross_return"], np.nan),
+        net_return=np.where(scored_ev, trades["net_return"], np.nan),
+        control_mean=control_mean,
+        control_n=control_n,
+        match_level=level,
+    )
     ev["excess"] = ev["net_return"] - ev["control_mean"]
     return ev
 

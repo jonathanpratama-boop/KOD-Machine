@@ -10,10 +10,26 @@ import pandas as pd
 
 from idxsig import paper
 
-VALIDATED = {"precision": 0.05, "lift_vs_matched_random": 5.0, "p_one_sided_vs_matched": 0.005,
-             "trading": {"p_one_sided": 0.01, "avg_net_return": 0.02, "matched_random_avg_net_return": 0.0, "run_id": "t"}}
-DETECTION_ONLY = {**VALIDATED, "trading": {"p_one_sided": 1.0, "avg_net_return": -0.0365,
-                                           "matched_random_avg_net_return": -0.006, "run_id": "t"}}
+VALIDATED = {
+    "precision": 0.05,
+    "lift_vs_matched_random": 5.0,
+    "p_one_sided_vs_matched": 0.005,
+    "trading": {
+        "p_one_sided": 0.01,
+        "avg_net_return": 0.02,
+        "matched_random_avg_net_return": 0.0,
+        "run_id": "t",
+    },
+}
+DETECTION_ONLY = {
+    **VALIDATED,
+    "trading": {
+        "p_one_sided": 1.0,
+        "avg_net_return": -0.0365,
+        "matched_random_avg_net_return": -0.006,
+        "run_id": "t",
+    },
+}
 
 
 def gframe(n=60, s=80, spike=None, price=10.0, volume=500_000, tail=None, gap=0.0, crypto=False):
@@ -22,7 +38,9 @@ def gframe(n=60, s=80, spike=None, price=10.0, volume=500_000, tail=None, gap=0.
     if crypto:
         dates = pd.date_range("2026-06-01", periods=s, freq="D")
     else:
-        dates = pd.to_datetime(np.busday_offset(np.datetime64("2026-06-01", "D"), np.arange(s), roll="forward"))
+        dates = pd.to_datetime(
+            np.busday_offset(np.datetime64("2026-06-01", "D"), np.arange(s), roll="forward")
+        )
     rows = []
     for i in range(n):
         p = float(price)
@@ -35,14 +53,31 @@ def gframe(n=60, s=80, spike=None, price=10.0, volume=500_000, tail=None, gap=0.
             if spike and tail is not None and i == spike[0] and d > spike[1]:
                 step, opening = tail, prev * (1 + gap) if d == spike[1] + 1 else prev
             p = round(prev * (1 + step), 4)
-            rows.append({"date": dates[d], "ticker": f"T{i:03d}", "source": "binance" if crypto else "yahoo",
-                         "previous": prev, "open": round(opening, 4), "high": max(prev, p, opening),
-                         "low": min(prev, p, opening), "close": p, "volume": vol, "value": vol * p,
-                         "frequency": np.nan, "listed_shares": np.nan, "tradable_shares": np.nan})
+            rows.append(
+                {
+                    "date": dates[d],
+                    "ticker": f"T{i:03d}",
+                    "source": "binance" if crypto else "yahoo",
+                    "previous": prev,
+                    "open": round(opening, 4),
+                    "high": max(prev, p, opening),
+                    "low": min(prev, p, opening),
+                    "close": p,
+                    "volume": vol,
+                    "value": vol * p,
+                    "frequency": np.nan,
+                    "listed_shares": np.nan,
+                    "tradable_shares": np.nan,
+                }
+            )
     return pd.DataFrame(rows)
 
 
-DATA = {"manifest": "synthetic", "manifest_sha256": "0" * 64, "http_status": {f"T{i:03d}": 200 for i in range(60)}}
+DATA = {
+    "manifest": "synthetic",
+    "manifest_sha256": "0" * 64,
+    "http_status": {f"T{i:03d}": 200 for i in range(60)},
+}
 
 
 class USPaper(unittest.TestCase):
@@ -50,7 +85,7 @@ class USPaper(unittest.TestCase):
         warnings.simplefilter("ignore")
 
     def test_no_signal_session_is_recorded_under_the_us_scan_id(self):
-        out = paper.scan_frame(gframe(), DATA, market="US")
+        out = paper.scan_frame(gframe(), DATA, market="US", policy=paper.POLICY_ID_V3)
         self.assertEqual(out["scan"]["result"], "NO SIGNAL")
         self.assertEqual(out["scan"]["market"], "US")
         self.assertTrue(out["scan"]["scan_id"].startswith("SCAN-US-"))
@@ -58,14 +93,26 @@ class USPaper(unittest.TestCase):
         self.assertEqual(out["decisions"], [])
 
     def test_failed_trading_validation_gives_pass_with_a_full_plan(self):
-        d = paper.scan_frame(gframe(spike=(7, 79)), DATA, validation=DETECTION_ONLY, market="US")["decisions"][0]
+        d = paper.scan_frame(
+            gframe(spike=(7, 79)),
+            DATA,
+            validation=DETECTION_ONLY,
+            market="US",
+            policy=paper.POLICY_ID_V3,
+        )["decisions"][0]
         self.assertEqual(d["decision"], "PASS")
         self.assertIn("buy at the next open", d["reason"])
         self.assertIn("opening print", d["plan"]["entry_trigger"])
         self.assertEqual(d["instrument"]["currency"], "USD")
 
     def test_us_sizing_stays_inside_the_risk_budget_in_whole_shares(self):
-        d = paper.scan_frame(gframe(spike=(7, 79)), DATA, validation=VALIDATED, market="US")["decisions"][0]
+        d = paper.scan_frame(
+            gframe(spike=(7, 79)),
+            DATA,
+            validation=VALIDATED,
+            market="US",
+            policy=paper.POLICY_ID_V3,
+        )["decisions"][0]
         self.assertEqual(d["decision"], "BUY ON TRIGGER")
         for sc in d["plan"]["scenarios"]:
             self.assertEqual(sc["shares"], int(sc["shares"]))
@@ -75,8 +122,13 @@ class USPaper(unittest.TestCase):
 
     def test_us_outcome_enters_at_the_next_open_not_the_close(self):
         base = gframe(spike=(7, 70))
-        dec = paper.scan_frame(base[base["date"] <= base["date"].unique()[70]], DATA, validation=VALIDATED,
-                               market="US")["decisions"][0]
+        dec = paper.scan_frame(
+            base[base["date"] <= base["date"].unique()[70]],
+            DATA,
+            validation=VALIDATED,
+            market="US",
+            policy=paper.POLICY_ID_V3,
+        )["decisions"][0]
         ran = gframe(spike=(7, 70), tail=0.04, gap=0.02)
         out = paper.score(dec, paper._market(ran, "US"))
         trade = out["execution"]["paper_trade"]
@@ -85,16 +137,22 @@ class USPaper(unittest.TestCase):
         self.assertEqual(trade["entry_basis"], "open")
         self.assertAlmostEqual(trade["entry_price"], float(m.open[n, 71]))
         self.assertEqual(trade["exit_reason"], "horizon")
-        self.assertEqual(trade["exit_session"], str(m.dates[76]))  # entry session + 5, as in the harness
+        self.assertEqual(
+            trade["exit_session"], str(m.dates[76])
+        )  # entry session + 5, as in the harness
         self.assertEqual(out["decision_verdict"], "PROFIT")
-
 
     def test_a_reverse_split_inside_the_window_does_not_change_the_outcome(self):
         """Guards against: the source rescaling a name's whole history after a reverse split, so
         the plan's stop and chase prices (decision-day units) are compared with prices 10x larger."""
         base = gframe(spike=(7, 70))
-        dec = paper.scan_frame(base[base["date"] <= base["date"].unique()[70]], DATA, validation=VALIDATED,
-                               market="US")["decisions"][0]
+        dec = paper.scan_frame(
+            base[base["date"] <= base["date"].unique()[70]],
+            DATA,
+            validation=VALIDATED,
+            market="US",
+            policy=paper.POLICY_ID_V3,
+        )["decisions"][0]
         ran = gframe(spike=(7, 70), tail=-0.03, gap=0.01)
         split = ran.copy()
         rows = split["ticker"] == "T007"
@@ -106,10 +164,15 @@ class USPaper(unittest.TestCase):
         self.assertAlmostEqual(scaled["price_scale"], 10.0)
         self.assertIn("price_scale_note", scaled)
         self.assertEqual(scaled["decision_verdict"], plain["decision_verdict"])
-        self.assertEqual(scaled["execution"]["paper_trade"]["exit_reason"],
-                         plain["execution"]["paper_trade"]["exit_reason"])
-        self.assertAlmostEqual(scaled["execution"]["paper_trade"]["net_return"],
-                               plain["execution"]["paper_trade"]["net_return"], places=9)
+        self.assertEqual(
+            scaled["execution"]["paper_trade"]["exit_reason"],
+            plain["execution"]["paper_trade"]["exit_reason"],
+        )
+        self.assertAlmostEqual(
+            scaled["execution"]["paper_trade"]["net_return"],
+            plain["execution"]["paper_trade"]["net_return"],
+            places=9,
+        )
 
 
 class CryptoPaper(unittest.TestCase):
@@ -117,8 +180,13 @@ class CryptoPaper(unittest.TestCase):
         warnings.simplefilter("ignore")
 
     def test_no_live_quote_means_not_executable(self):
-        d = paper.scan_frame(gframe(spike=(3, 79), crypto=True, price=2.0), DATA, validation=VALIDATED,
-                             market="CRYPTO")["decisions"][0]
+        d = paper.scan_frame(
+            gframe(spike=(3, 79), crypto=True, price=2.0),
+            DATA,
+            validation=VALIDATED,
+            market="CRYPTO",
+            policy=paper.POLICY_ID_V3,
+        )["decisions"][0]
         self.assertEqual(d["decision"], "NOT EXECUTABLE")
         self.assertIn("no live quote", d["reason"])
 
@@ -126,7 +194,14 @@ class CryptoPaper(unittest.TestCase):
         df = gframe(spike=(3, 79), crypto=True, price=2.0)
         close = float(df[(df["ticker"] == "T003")]["close"].iloc[-1])
         quotes = lambda tickers: {t: (close * 1.02, "2026-08-19T00:23:00Z") for t in tickers}  # noqa: E731
-        d = paper.scan_frame(df, DATA, validation=VALIDATED, market="CRYPTO", quotes=quotes)["decisions"][0]
+        d = paper.scan_frame(
+            df,
+            DATA,
+            validation=VALIDATED,
+            market="CRYPTO",
+            quotes=quotes,
+            policy=paper.POLICY_ID_V3,
+        )["decisions"][0]
         self.assertEqual(d["decision"], "BUY ON TRIGGER")
         self.assertAlmostEqual(d["verified_price"]["quote"], close * 1.02)
         self.assertIn("decision-time quote", d["plan"]["entry_trigger"])
@@ -138,7 +213,14 @@ class CryptoPaper(unittest.TestCase):
         df = gframe(spike=(3, 79), crypto=True, price=2.0)
         close = float(df[(df["ticker"] == "T003")]["close"].iloc[-1])
         quotes = lambda tickers: {t: (close * 1.25, "2026-08-19T00:23:00Z") for t in tickers}  # noqa: E731
-        d = paper.scan_frame(df, DATA, validation=VALIDATED, market="CRYPTO", quotes=quotes)["decisions"][0]
+        d = paper.scan_frame(
+            df,
+            DATA,
+            validation=VALIDATED,
+            market="CRYPTO",
+            quotes=quotes,
+            policy=paper.POLICY_ID_V3,
+        )["decisions"][0]
         self.assertEqual(d["decision"], "NOT EXECUTABLE")
         self.assertIn("above the chase limit", d["reason"])
 
@@ -153,15 +235,28 @@ class FrozenFeatures(unittest.TestCase):
         from unittest import mock
 
         warnings.simplefilter("ignore")
-        out = paper.scan_frame(gframe(spike=(7, 79)), DATA, validation=DETECTION_ONLY, market="US")
+        out = paper.scan_frame(
+            gframe(spike=(7, 79)),
+            DATA,
+            validation=DETECTION_ONLY,
+            market="US",
+            policy=paper.POLICY_ID_V3,
+        )
         original = paper.append
         digests = []
         for run in range(2):
-            with tempfile.TemporaryDirectory() as tmp, \
-                    mock.patch.object(paper, "SCANS", Path(tmp) / "scans"), \
-                    mock.patch.object(paper, "rel", str), \
-                    mock.patch.object(paper, "append", lambda recs, timestamper=None, _t=tmp:
-                                      original(recs, path=Path(_t) / "ledger.jsonl")):
+            with (
+                tempfile.TemporaryDirectory() as tmp,
+                mock.patch.object(paper, "SCANS", Path(tmp) / "scans"),
+                mock.patch.object(paper, "rel", str),
+                mock.patch.object(
+                    paper,
+                    "append",
+                    lambda recs, timestamper=None, _t=tmp: original(
+                        recs, path=Path(_t) / "ledger.jsonl"
+                    ),
+                ),
+            ):
                 rec = {**out, "scan": dict(out["scan"])}
                 paths = paper.record_scan(rec)
                 self.assertTrue(str(paths[0]).endswith("features.csv.gz"))
@@ -181,14 +276,24 @@ class PinnedPreprocessing(unittest.TestCase):
         from idxsig import global_panel
 
         warnings.simplefilter("ignore")
-        out = paper.scan_frame(gframe(spike=(7, 79)), DATA, validation=DETECTION_ONLY, market="US")
+        out = paper.scan_frame(
+            gframe(spike=(7, 79)),
+            DATA,
+            validation=DETECTION_ONLY,
+            market="US",
+            policy=paper.POLICY_ID_V3,
+        )
         self.assertEqual(out["scan"]["preprocessing"], "global-close-legacy-v1")
         self.assertEqual(out["decisions"][0]["preprocessing"], "global-close-legacy-v1")
-        with mock.patch.object(global_panel, "load_us", return_value=(gframe(), {})), \
-                mock.patch.object(global_panel, "_finish_legacy_v1", wraps=global_panel._finish_legacy_v1) as legacy, \
-                mock.patch.object(global_panel, "_finish", side_effect=AssertionError("v2 used live")), \
-                mock.patch.object(paper, "read_manifest", return_value=({}, [])), \
-                mock.patch.object(paper, "sha256_file", return_value="0" * 64):
+        with (
+            mock.patch.object(global_panel, "load_us", return_value=(gframe(), {})),
+            mock.patch.object(
+                global_panel, "_finish_legacy_v1", wraps=global_panel._finish_legacy_v1
+            ) as legacy,
+            mock.patch.object(global_panel, "_finish", side_effect=AssertionError("v2 used live")),
+            mock.patch.object(paper, "read_manifest", return_value=({}, [])),
+            mock.patch.object(paper, "sha256_file", return_value="0" * 64),
+        ):
             paper.load_recent(Path("x.jsonl"), "US")
         legacy.assert_called_once()
 
@@ -198,12 +303,24 @@ class CommittedEvidence(unittest.TestCase):
         """The decision gate must read the committed E2 validation and its harness run; if either is
         missed, a decision could be taken on detection alone."""
         for market in ("US", "CRYPTO"):
-            ev = paper.validation_evidence(market)
+            live = paper.validation_evidence(
+                market
+            )  # v4, in force: the latest matching validation run
+            self.assertIsNotNone(live["trading"], market)
+            self.assertGreaterEqual(live["trading"]["p_one_sided"], 0.05)
+            ev = paper.validation_evidence(market, policy=paper.POLICY_ID_V5)
             self.assertIsNotNone(ev, market)
             self.assertEqual(ev["rule"], "G2_RET30")
             self.assertLess(ev["p_one_sided_vs_matched"], 0.05)
-            self.assertIsNotNone(ev["trading"], market)
-            self.assertGreaterEqual(ev["trading"]["p_one_sided"], 0.05)
+            if market == "US":  # APPROVAL-v2: no evidence run is pinned for EXEC-US-v1 plans yet
+                self.assertIsNone(ev["trading"])
+            else:  # the pinned run, read by run id and checked against its configuration hash
+                self.assertEqual(ev["trading"]["run_id"], paper.APPROVAL_PINS[market]["run_id"])
+                self.assertEqual(
+                    ev["trading"]["config_sha256"], paper.APPROVAL_PINS[market]["config_sha256"]
+                )
+                self.assertGreaterEqual(ev["trading"]["p_one_sided"], 0.05)
+            self.assertFalse(paper.approval(ev, market)[0])
             self.assertEqual(paper.already_scanned("1999-01-01", market), False)
 
 

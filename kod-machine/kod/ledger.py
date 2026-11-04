@@ -32,7 +32,11 @@ DOCTRINE_VERSION = "KOD-DOCTRINE-v0"
 
 HORIZONS = ("T-30D", "T-72H", "T-24H")
 # Each information set's cutoff is exactly this far before the decision cutoff. Tolerance: none.
-HORIZON_OFFSETS = {"T-30D": timedelta(days=30), "T-72H": timedelta(hours=72), "T-24H": timedelta(hours=24)}
+HORIZON_OFFSETS = {
+    "T-30D": timedelta(days=30),
+    "T-72H": timedelta(hours=72),
+    "T-24H": timedelta(hours=24),
+}
 CARD_HASH_VERSION = "KOD-CARD-v3"
 CARD_HASH_VERSIONS = (None, "KOD-CARD-v1", "KOD-CARD-v2", CARD_HASH_VERSION)
 SCAN_HASH_VERSION = "KOD-SCAN-v3"
@@ -83,7 +87,9 @@ def frozen_evaluations(rows) -> list[dict]:
                 "detector": r["detector"],
                 "rule_version": r["rule_version"],
                 "status": r["status"],
-                "features": r["features"] if "features" in r.keys() else json.loads(r["features_json"]),
+                "features": r["features"]
+                if "features" in r.keys()
+                else json.loads(r["features_json"]),
             }
             for r in rows
         ),
@@ -91,8 +97,13 @@ def frozen_evaluations(rows) -> list[dict]:
     )
 
 
-def freeze_card(case: dict, information_sets: dict, critic: dict | None, version: str | None,
-                evaluations: list[dict] | None = None) -> dict:
+def freeze_card(
+    case: dict,
+    information_sets: dict,
+    critic: dict | None,
+    version: str | None,
+    evaluations: list[dict] | None = None,
+) -> dict:
     """The exact object whose SHA-256 is the card hash. Used at open and by `verify`."""
     if version is None:  # cards opened before migration 2
         return {
@@ -126,21 +137,25 @@ def freeze_card(case: dict, information_sets: dict, critic: dict | None, version
         "reconstruction_status": case["reconstruction_status"],
         "doctrine_sha": case["doctrine_sha"],
         "scan_entry_id": case.get("scan_entry_id"),
-        "critic": None if not critic else {
-            k: critic[k] for k in ("loss_path", "missing_evidence", "invalidation")
-        },
+        "critic": None
+        if not critic
+        else {k: critic[k] for k in ("loss_path", "missing_evidence", "invalidation")},
         "information_sets": {h: information_sets[h] for h in HORIZONS},
     }
     if version in ("KOD-CARD-v2", CARD_HASH_VERSION):
         frozen["detector_evaluations"] = frozen_evaluations(evaluations or [])
     if version == CARD_HASH_VERSION:
         frozen["integrity_level"] = case["integrity_level"]
-        frozen["detector"] = {"rule_version": case["detector_rule_version"],
-                              "code_sha256": case["detector_code_sha256"]}
+        frozen["detector"] = {
+            "rule_version": case["detector_rule_version"],
+            "code_sha256": case["detector_code_sha256"],
+        }
     return frozen
 
 
-def freeze_scan_entry(scan_id: str, entry: dict, evaluations: list[dict] | None, version: str | None) -> dict:
+def freeze_scan_entry(
+    scan_id: str, entry: dict, evaluations: list[dict] | None, version: str | None
+) -> dict:
     body = {
         "scan_id": scan_id,
         "symbol": entry["symbol"].upper(),
@@ -161,7 +176,10 @@ def freeze_scan(header: dict, entry_shas: dict, version: str | None) -> dict:
         "scanner": header["scanner"],
         "universe_id": header["universe_id"],
         "decision_cutoff": header["decision_cutoff"],
-        "outcome_window": {"start": header["outcome_window_start"], "end": header["outcome_window_end"]},
+        "outcome_window": {
+            "start": header["outcome_window_start"],
+            "end": header["outcome_window_end"],
+        },
         "hit_label": header["hit_label"],
         "rule_version": header["rule_version"],
         "entries": dict(sorted(entry_shas.items())),
@@ -192,10 +210,14 @@ def check_horizon_offsets(decision_cutoff: str, horizons: dict) -> list[str]:
     return problems
 
 
-def check_prospective_timing(now: datetime, decision_cutoff: str, window: dict | None, what: str) -> tuple[str, str]:
+def check_prospective_timing(
+    now: datetime, decision_cutoff: str, window: dict | None, what: str
+) -> tuple[str, str]:
     """Rule 1. The call is frozen within an hour of its cutoff, and before the outcome can start."""
     if not window or not window.get("start") or not window.get("end"):
-        raise LedgerError(f"{what} refused: outcome_window.start and outcome_window.end are required")
+        raise LedgerError(
+            f"{what} refused: outcome_window.start and outcome_window.end are required"
+        )
     try:
         cutoff = parse_ts(decision_cutoff)
         start = parse_ts(window["start"])
@@ -209,11 +231,17 @@ def check_prospective_timing(now: datetime, decision_cutoff: str, window: dict |
             f"{fmt_ts(now)}; it must be within {OPEN_TOLERANCE}"
         )
     if cutoff >= start:
-        raise LedgerError(f"{what} refused: decision_cutoff {fmt_ts(cutoff)} is not before the outcome window start {fmt_ts(start)}")
+        raise LedgerError(
+            f"{what} refused: decision_cutoff {fmt_ts(cutoff)} is not before the outcome window start {fmt_ts(start)}"
+        )
     if now >= start:
-        raise LedgerError(f"{what} refused: the outcome window started at {fmt_ts(start)}, before the open at {fmt_ts(now)}")
+        raise LedgerError(
+            f"{what} refused: the outcome window started at {fmt_ts(start)}, before the open at {fmt_ts(now)}"
+        )
     if end <= start:
-        raise LedgerError(f"{what} refused: outcome window end {fmt_ts(end)} is not after its start {fmt_ts(start)}")
+        raise LedgerError(
+            f"{what} refused: outcome window end {fmt_ts(end)} is not after its start {fmt_ts(start)}"
+        )
     return window["start"], window["end"]
 
 
@@ -331,7 +359,9 @@ class Ledger:
             self.conn.commit()
 
     def require_detector_unchanged(self, what: str) -> str:
-        row = self.rows("SELECT code_sha256 FROM detector_versions WHERE rule_version = ?", (RULE_VERSION,))[0]
+        row = self.rows(
+            "SELECT code_sha256 FROM detector_versions WHERE rule_version = ?", (RULE_VERSION,)
+        )[0]
         current = detector_source_sha()
         if current != row["code_sha256"]:
             raise LedgerError(
@@ -349,8 +379,12 @@ class Ledger:
     def evidence_objects(self) -> dict:
         """v2 evidence: frozen object plus recorded_at, keyed by evidence id."""
         return {
-            r["evidence_id"]: {**json.loads(r["object_json"]), "recorded_at": r["recorded_at"],
-                               "git_commit": r["git_commit"], "metadata_path": r["metadata_path"]}
+            r["evidence_id"]: {
+                **json.loads(r["object_json"]),
+                "recorded_at": r["recorded_at"],
+                "git_commit": r["git_commit"],
+                "metadata_path": r["metadata_path"],
+            }
             for r in self.rows("SELECT * FROM evidence_objects")
         }
 
@@ -375,19 +409,26 @@ class Ledger:
             stored = evidence_dir / f"{content_sha}{suffix}"
         now = self.now()
         stamps, tokens = [], {}
-        wants_stamp = "EXTERNAL_TIMESTAMP_RECEIPT" in (str(meta.get("existence_method", "")).upper(),
-                                                      str(meta.get("content_method", "")).upper())
+        wants_stamp = "EXTERNAL_TIMESTAMP_RECEIPT" in (
+            str(meta.get("existence_method", "")).upper(),
+            str(meta.get("content_method", "")).upper(),
+        )
         if wants_stamp and data:
             if self.anchor.timestamper is None:
-                raise LedgerError("evidence refused: EXTERNAL_TIMESTAMP_RECEIPT needs a timestamp authority")
+                raise LedgerError(
+                    "evidence refused: EXTERNAL_TIMESTAMP_RECEIPT needs a timestamp authority"
+                )
             for stamp in self.anchor.timestamper.stamp(content_sha.encode("ascii")):
                 stamps.append({"authority": stamp.authority, "time": fmt_ts(stamp.time)})
                 tokens[stamp.authority] = stamp.token
         try:
             obj = ev.build_object(
-                meta, now, content_sha,
+                meta,
+                now,
+                content_sha,
                 self.anchor.rel(stored) if stored else None,
-                stamps, self.evidence_objects(),
+                stamps,
+                self.evidence_objects(),
             )
         except ev.EvidenceError as exc:
             raise LedgerError(f"evidence refused: {exc}") from exc
@@ -395,8 +436,17 @@ class Ledger:
         if self.rows("SELECT 1 FROM evidence_objects WHERE evidence_id = ?", (evidence_id,)):
             raise LedgerError(f"evidence object {evidence_id} is already recorded; cite it by id")
         meta_path = evidence_dir / f"{evidence_id}.json"
-        files = {meta_path: (json.dumps({"evidence_id": evidence_id, **obj}, sort_keys=True, indent=2,
-                                        ensure_ascii=False) + "\n").encode("utf-8")}
+        files = {
+            meta_path: (
+                json.dumps(
+                    {"evidence_id": evidence_id, **obj},
+                    sort_keys=True,
+                    indent=2,
+                    ensure_ascii=False,
+                )
+                + "\n"
+            ).encode("utf-8")
+        }
         if stored and not stored.exists():
             files[stored] = data
         for authority, token in tokens.items():
@@ -404,7 +454,9 @@ class Ledger:
             if not token_path.exists():
                 files[token_path] = token
         try:
-            commit = self.anchor.store_files(files, f"kod evidence {evidence_id} grade {obj['evidence_grade']}")
+            commit = self.anchor.store_files(
+                files, f"kod evidence {evidence_id} grade {obj['evidence_grade']}"
+            )
             self.conn.execute(
                 """
                 INSERT INTO evidence_objects(evidence_id, evidence_hash_version, object_json, source_url, source_type,
@@ -413,14 +465,41 @@ class Ledger:
                   metadata_path, timestamps_json, git_commit, recorded_at)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
-                (evidence_id, obj["evidence_hash_version"], canonical(obj), obj["source_url"], obj["source_type"],
-                 obj["publisher"], obj["document_type"], obj["event_time"], obj["publication_time"],
-                 obj["retrieval_time"], obj["archive_time"], obj["as_of_cutoff"], obj["content_sha256"],
-                 obj["archived_copy"], obj["evidence_grade"], obj["grade_ceiling"], int(obj["existence_verified"]),
-                 int(obj["content_verified"]), self.anchor.rel(meta_path),
-                 json.dumps([{**s, "path": self.anchor.rel(evidence_dir / f"{content_sha}.{s['authority']}.tsr")}
-                             for s in stamps], sort_keys=True),
-                 commit, fmt_ts(now)),
+                (
+                    evidence_id,
+                    obj["evidence_hash_version"],
+                    canonical(obj),
+                    obj["source_url"],
+                    obj["source_type"],
+                    obj["publisher"],
+                    obj["document_type"],
+                    obj["event_time"],
+                    obj["publication_time"],
+                    obj["retrieval_time"],
+                    obj["archive_time"],
+                    obj["as_of_cutoff"],
+                    obj["content_sha256"],
+                    obj["archived_copy"],
+                    obj["evidence_grade"],
+                    obj["grade_ceiling"],
+                    int(obj["existence_verified"]),
+                    int(obj["content_verified"]),
+                    self.anchor.rel(meta_path),
+                    json.dumps(
+                        [
+                            {
+                                **s,
+                                "path": self.anchor.rel(
+                                    evidence_dir / f"{content_sha}.{s['authority']}.tsr"
+                                ),
+                            }
+                            for s in stamps
+                        ],
+                        sort_keys=True,
+                    ),
+                    commit,
+                    fmt_ts(now),
+                ),
             )
         except AnchorError as exc:
             self.conn.rollback()
@@ -453,7 +532,9 @@ class Ledger:
                 raise LedgerError(f"missing information set {horizon}")
         extra = sorted(set(horizons) - set(HORIZONS))
         if extra:
-            raise LedgerError(f"open refused: information sets must be exactly {HORIZONS}; unexpected {extra}")
+            raise LedgerError(
+                f"open refused: information sets must be exactly {HORIZONS}; unexpected {extra}"
+            )
         offset_problems = check_horizon_offsets(card["decision_cutoff"], horizons)
         if offset_problems:
             raise LedgerError("open refused: " + "; ".join(offset_problems))
@@ -461,7 +542,9 @@ class Ledger:
         window = card.get("outcome_window") or None
         if prospective:
             if self.anchor is None:
-                raise LedgerError("prospective open refused: no git anchor is configured for this ledger")
+                raise LedgerError(
+                    "prospective open refused: no git anchor is configured for this ledger"
+                )
             check_prospective_timing(now, card["decision_cutoff"], window, "prospective open")
         elif window:
             try:
@@ -469,12 +552,16 @@ class Ledger:
                     raise LedgerError("outcome window end is not after its start")
             except (KeyError, ValueError) as exc:
                 raise LedgerError(f"bad outcome_window: {exc}") from exc
-        problems = ev.citation_problems({h: horizons[h] for h in HORIZONS}, self.evidence_objects(), integrity, now)
+        problems = ev.citation_problems(
+            {h: horizons[h] for h in HORIZONS}, self.evidence_objects(), integrity, now
+        )
         if problems:
             raise LedgerError("open refused: " + "; ".join(problems))
         code_sha = self.require_detector_unchanged("open")
         scan_entry_id = card.get("scan_entry_id")
-        if scan_entry_id and not self.rows("SELECT 1 FROM scan_entries WHERE entry_id = ?", (scan_entry_id,)):
+        if scan_entry_id and not self.rows(
+            "SELECT 1 FROM scan_entries WHERE entry_id = ?", (scan_entry_id,)
+        ):
             raise LedgerError(f"unknown scan entry {scan_entry_id}")
         doctrine_sha = self.doctrine_sha
         case_id = card["case_id"]
@@ -515,11 +602,26 @@ class Ledger:
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
-                    case_id, opened_at, stored["symbol"], stored["venue"], stored["call_type"], doctrine_sha,
-                    stored["decision_cutoff"], stored["story_hypothesis"], stored["disposition"], card_sha,
-                    stored["universe_id"], stored["reconstruction_status"], card.get("notes", ""),
-                    stored["outcome_window_start"], stored["outcome_window_end"], scan_entry_id, CARD_HASH_VERSION,
-                    integrity, code_sha, RULE_VERSION,
+                    case_id,
+                    opened_at,
+                    stored["symbol"],
+                    stored["venue"],
+                    stored["call_type"],
+                    doctrine_sha,
+                    stored["decision_cutoff"],
+                    stored["story_hypothesis"],
+                    stored["disposition"],
+                    card_sha,
+                    stored["universe_id"],
+                    stored["reconstruction_status"],
+                    card.get("notes", ""),
+                    stored["outcome_window_start"],
+                    stored["outcome_window_end"],
+                    scan_entry_id,
+                    CARD_HASH_VERSION,
+                    integrity,
+                    code_sha,
+                    RULE_VERSION,
                 ),
             )
             for horizon in HORIZONS:
@@ -529,8 +631,15 @@ class Ledger:
                     INSERT INTO information_sets(set_id, case_id, horizon, cutoff, payload_json, set_sha, recorded_at)
                     VALUES (?, ?, ?, ?, ?, ?, ?)
                     """,
-                    (f"{case_id}:{horizon}", case_id, horizon, payload.get("cutoff", ""),
-                     json.dumps(payload, sort_keys=True), sha256_obj(payload), opened_at),
+                    (
+                        f"{case_id}:{horizon}",
+                        case_id,
+                        horizon,
+                        payload.get("cutoff", ""),
+                        json.dumps(payload, sort_keys=True),
+                        sha256_obj(payload),
+                        opened_at,
+                    ),
                 )
             for result in evaluations:
                 self.conn.execute(
@@ -538,8 +647,15 @@ class Ledger:
                     INSERT INTO detector_evaluations(eval_id, case_id, detector, rule_version, status, features_json, recorded_at)
                     VALUES (?, ?, ?, ?, ?, ?, ?)
                     """,
-                    (f"{case_id}:{result['detector']}:{result['rule_version']}", case_id, result["detector"],
-                     result["rule_version"], result["status"], json.dumps(result["features"], sort_keys=True), opened_at),
+                    (
+                        f"{case_id}:{result['detector']}:{result['rule_version']}",
+                        case_id,
+                        result["detector"],
+                        result["rule_version"],
+                        result["status"],
+                        json.dumps(result["features"], sort_keys=True),
+                        opened_at,
+                    ),
                 )
             if critic:
                 self.conn.execute(
@@ -547,8 +663,14 @@ class Ledger:
                     INSERT INTO critic_notes(note_id, case_id, loss_path, missing_evidence, invalidation, recorded_at)
                     VALUES (?, ?, ?, ?, ?, ?)
                     """,
-                    (f"{case_id}:critic", case_id, critic["loss_path"], critic["missing_evidence"],
-                     critic["invalidation"], opened_at),
+                    (
+                        f"{case_id}:critic",
+                        case_id,
+                        critic["loss_path"],
+                        critic["missing_evidence"],
+                        critic["invalidation"],
+                        opened_at,
+                    ),
                 )
             if self.anchor is not None:
                 line = {
@@ -583,7 +705,9 @@ class Ledger:
         now = self.now()
         window_end = row["outcome_window_end"]
         if row["call_type"] == "PROSPECTIVE" and not window_end:
-            raise LedgerError("close refused: prospective case has no pre-registered outcome window")
+            raise LedgerError(
+                "close refused: prospective case has no pre-registered outcome window"
+            )
         if window_end and now < parse_ts(window_end):
             raise LedgerError(
                 f"close refused: outcome window ends {window_end}; it is {fmt_ts(now)}"
@@ -601,9 +725,15 @@ class Ledger:
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
-                f"{case_id}:outcome", case_id, fmt_ts(now), outcome["window_label"],
-                outcome.get("window_return_pct"), outcome["outcome_label"], outcome["source"],
-                row["card_sha"], outcome.get("notes", ""),
+                f"{case_id}:outcome",
+                case_id,
+                fmt_ts(now),
+                outcome["window_label"],
+                outcome.get("window_return_pct"),
+                outcome["outcome_label"],
+                outcome["source"],
+                row["card_sha"],
+                outcome.get("notes", ""),
             ),
         )
         self.conn.commit()
@@ -614,7 +744,14 @@ class Ledger:
         """Rule 4. Every name a scanner evaluated is logged, flagged or not, opened or not."""
         if self.anchor is None:
             raise LedgerError("scan refused: no git anchor is configured for this ledger")
-        for key in ("scan_id", "scanner", "universe_id", "decision_cutoff", "outcome_window", "hit_label"):
+        for key in (
+            "scan_id",
+            "scanner",
+            "universe_id",
+            "decision_cutoff",
+            "outcome_window",
+            "hit_label",
+        ):
             if not scan.get(key):
                 raise LedgerError(f"scan refused: {key} is required")
         if scan["hit_label"] not in HIT_LABELS:
@@ -623,19 +760,32 @@ class Ledger:
         if not entries:
             raise LedgerError("scan refused: a scan with no entries has no base rate")
         now = self.now()
-        start, end = check_prospective_timing(now, scan["decision_cutoff"], scan["outcome_window"], "scan log")
+        start, end = check_prospective_timing(
+            now, scan["decision_cutoff"], scan["outcome_window"], "scan log"
+        )
         code_sha = self.require_detector_unchanged("scan")
         scan_id = scan["scan_id"]
         frozen_entries, entry_shas, entry_evals = {}, {}, {}
         for entry in entries:
             for key in ("symbol", "venue", "reconstruction_status"):
                 if not entry.get(key):
-                    raise LedgerError(f"scan refused: entry {entry.get('symbol')!r} is missing {key}")
+                    raise LedgerError(
+                        f"scan refused: entry {entry.get('symbol')!r} is missing {key}"
+                    )
             if not isinstance(entry.get("flagged"), bool):
-                raise LedgerError(f"scan refused: entry {entry['symbol']} needs flagged true or false")
+                raise LedgerError(
+                    f"scan refused: entry {entry['symbol']} needs flagged true or false"
+                )
             if not isinstance(entry.get("facts"), dict):
                 raise LedgerError(f"scan refused: entry {entry['symbol']} needs a facts object")
-            evals = evaluate({"T-24H": {"facts": entry["facts"], "reconstruction_status": entry["reconstruction_status"]}})
+            evals = evaluate(
+                {
+                    "T-24H": {
+                        "facts": entry["facts"],
+                        "reconstruction_status": entry["reconstruction_status"],
+                    }
+                }
+            )
             body = freeze_scan_entry(scan_id, entry, evals, SCAN_HASH_VERSION)
             entry_id = f"{scan_id}:{body['symbol']}"
             if entry_id in frozen_entries:
@@ -666,9 +816,22 @@ class Ledger:
                   scan_hash_version, detector_code_sha256)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
-                (scan_id, scanned_at, header["scanner"], header["universe_id"], header["decision_cutoff"],
-                 start, end, header["hit_label"], RULE_VERSION, len(frozen_entries), scan_sha, scan.get("notes", ""),
-                 SCAN_HASH_VERSION, code_sha),
+                (
+                    scan_id,
+                    scanned_at,
+                    header["scanner"],
+                    header["universe_id"],
+                    header["decision_cutoff"],
+                    start,
+                    end,
+                    header["hit_label"],
+                    RULE_VERSION,
+                    len(frozen_entries),
+                    scan_sha,
+                    scan.get("notes", ""),
+                    SCAN_HASH_VERSION,
+                    code_sha,
+                ),
             )
             for entry_id, body in frozen_entries.items():
                 self.conn.execute(
@@ -677,9 +840,17 @@ class Ledger:
                       facts_json, entry_sha, recorded_at)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
-                    (entry_id, scan_id, body["symbol"], body["venue"], int(body["flagged"]),
-                     body["reconstruction_status"], json.dumps(body["facts"], sort_keys=True),
-                     entry_shas[entry_id], scanned_at),
+                    (
+                        entry_id,
+                        scan_id,
+                        body["symbol"],
+                        body["venue"],
+                        int(body["flagged"]),
+                        body["reconstruction_status"],
+                        json.dumps(body["facts"], sort_keys=True),
+                        entry_shas[entry_id],
+                        scanned_at,
+                    ),
                 )
                 for result in entry_evals[entry_id]:
                     self.conn.execute(
@@ -687,9 +858,15 @@ class Ledger:
                         INSERT INTO scan_evaluations(eval_id, entry_id, detector, rule_version, status, features_json, recorded_at)
                         VALUES (?, ?, ?, ?, ?, ?, ?)
                         """,
-                        (f"{entry_id}:{result['detector']}:{result['rule_version']}", entry_id, result["detector"],
-                         result["rule_version"], result["status"], json.dumps(result["features"], sort_keys=True),
-                         scanned_at),
+                        (
+                            f"{entry_id}:{result['detector']}:{result['rule_version']}",
+                            entry_id,
+                            result["detector"],
+                            result["rule_version"],
+                            result["status"],
+                            json.dumps(result["features"], sort_keys=True),
+                            scanned_at,
+                        ),
                     )
             line = {
                 "scanner": header["scanner"],
@@ -726,13 +903,17 @@ class Ledger:
             raise LedgerError("scan close refused: scan hash does not match the frozen scan")
         now = self.now()
         if now < parse_ts(scan["outcome_window_end"]):
-            raise LedgerError(f"scan close refused: outcome window ends {scan['outcome_window_end']}; it is {fmt_ts(now)}")
+            raise LedgerError(
+                f"scan close refused: outcome window ends {scan['outcome_window_end']}; it is {fmt_ts(now)}"
+            )
         n = 0
         try:
             for outcome in payload.get("outcomes") or []:
                 entry_id = f"{scan_id}:{outcome['symbol'].upper()}"
                 if not self.rows("SELECT 1 FROM scan_entries WHERE entry_id = ?", (entry_id,)):
-                    raise LedgerError(f"scan close refused: {outcome['symbol']} was not in scan {scan_id}")
+                    raise LedgerError(
+                        f"scan close refused: {outcome['symbol']} was not in scan {scan_id}"
+                    )
                 try:
                     self.conn.execute(
                         """
@@ -740,11 +921,21 @@ class Ledger:
                           outcome_label, source, scan_sha_at_scan, notes)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                         """,
-                        (f"{entry_id}:outcome", entry_id, fmt_ts(now), outcome.get("window_return_pct"),
-                         outcome["outcome_label"], outcome["source"], scan["scan_sha"], outcome.get("notes", "")),
+                        (
+                            f"{entry_id}:outcome",
+                            entry_id,
+                            fmt_ts(now),
+                            outcome.get("window_return_pct"),
+                            outcome["outcome_label"],
+                            outcome["source"],
+                            scan["scan_sha"],
+                            outcome.get("notes", ""),
+                        ),
                     )
                 except sqlite3.IntegrityError as exc:
-                    raise LedgerError(f"scan close refused: {entry_id} already has an outcome or a bad label") from exc
+                    raise LedgerError(
+                        f"scan close refused: {entry_id} already has an outcome or a bad label"
+                    ) from exc
                 n += 1
         except BaseException:
             self.conn.rollback()
@@ -757,19 +948,32 @@ class Ledger:
     def record_receipt(self, kind: str, record_id: str, run, repository: str) -> str:
         """Append a GitHub receipt for an anchor. The receipt is a pointer to GitHub's own
         record; `verify` re-reads that record and never trusts the copy stored here."""
-        rows = self.rows("SELECT * FROM anchors WHERE kind = ? AND record_id = ?", (kind, record_id))
+        rows = self.rows(
+            "SELECT * FROM anchors WHERE kind = ? AND record_id = ?", (kind, record_id)
+        )
         if not rows:
             raise LedgerError(f"no anchor for {kind.lower()} {record_id}")
         anchor_sha = rows[0]["git_commit"]
         if run.head_sha != anchor_sha or run.event != "push":
-            raise LedgerError(f"receipt refused: run {run.run_id} is for {run.head_sha[:12]} ({run.event}), "
-                              f"not a push of anchor commit {anchor_sha[:12]}")
+            raise LedgerError(
+                f"receipt refused: run {run.run_id} is for {run.head_sha[:12]} ({run.event}), "
+                f"not a push of anchor commit {anchor_sha[:12]}"
+            )
         receipt_id = f"GITHUB_ACTIONS:{kind}:{record_id}:{run.run_id}"
         record = {
-            "receipt_id": receipt_id, "provider": "GITHUB_ACTIONS", "record_kind": kind, "record_id": record_id,
-            "anchor_sha": anchor_sha, "repository": repository, "remote_event_id": run.run_id,
-            "remote_head_sha": run.head_sha, "remote_event": run.event, "remote_created_at": fmt_ts(run.created_at),
-            "remote_url": run.html_url, "response_sha256": run.response_sha256, "fetched_at": fmt_ts(self.now()),
+            "receipt_id": receipt_id,
+            "provider": "GITHUB_ACTIONS",
+            "record_kind": kind,
+            "record_id": record_id,
+            "anchor_sha": anchor_sha,
+            "repository": repository,
+            "remote_event_id": run.run_id,
+            "remote_head_sha": run.head_sha,
+            "remote_event": run.event,
+            "remote_created_at": fmt_ts(run.created_at),
+            "remote_url": run.html_url,
+            "response_sha256": run.response_sha256,
+            "fetched_at": fmt_ts(self.now()),
             "verification_status": "FETCHED_EXACT_MATCH",
         }
         try:
@@ -784,7 +988,10 @@ class Ledger:
                 registry.parent.mkdir(parents=True, exist_ok=True)
                 registry.write_bytes(path_bytes)
                 try:
-                    self.anchor._commit([self.anchor.rel(registry)], f"kod receipt {kind.lower()} {record_id} run {run.run_id}")
+                    self.anchor._commit(
+                        [self.anchor.rel(registry)],
+                        f"kod receipt {kind.lower()} {record_id} run {run.run_id}",
+                    )
                 except Exception:
                     registry.write_bytes(existing)
                     raise
@@ -798,15 +1005,22 @@ class Ledger:
         return receipt_id
 
     def receipts_for(self, kind: str, record_id: str) -> list[dict]:
-        return [dict(r) for r in self.rows(
-            "SELECT * FROM remote_timestamp_receipts WHERE record_kind = ? AND record_id = ?", (kind, record_id))]
+        return [
+            dict(r)
+            for r in self.rows(
+                "SELECT * FROM remote_timestamp_receipts WHERE record_kind = ? AND record_id = ?",
+                (kind, record_id),
+            )
+        ]
 
     # -- integrity ----------------------------------------------------------
 
     def assert_immutable(self) -> None:
         guards = {
             r["tbl_name"]: r["n"]
-            for r in self.rows("SELECT tbl_name, COUNT(*) AS n FROM sqlite_master WHERE type = 'trigger' GROUP BY tbl_name")
+            for r in self.rows(
+                "SELECT tbl_name, COUNT(*) AS n FROM sqlite_master WHERE type = 'trigger' GROUP BY tbl_name"
+            )
         }
         for table in APPEND_ONLY_TABLES:
             if guards.get(table, 0) < 2:
@@ -829,16 +1043,28 @@ class Ledger:
     def rows(self, sql: str, params=()):
         return list(self.conn.execute(sql, params))
 
-    def _anchor(self, kind: str, record_id: str, sha: str, line: dict, body: dict, require_timestamp: bool) -> None:
-        receipt = self.anchor.anchor(kind, record_id, sha, line, body, require_timestamp=require_timestamp)
+    def _anchor(
+        self, kind: str, record_id: str, sha: str, line: dict, body: dict, require_timestamp: bool
+    ) -> None:
+        receipt = self.anchor.anchor(
+            kind, record_id, sha, line, body, require_timestamp=require_timestamp
+        )
         self.conn.execute(
             """
             INSERT INTO anchors(anchor_id, kind, record_id, anchored_sha, git_commit, registry_path, anchored_at,
               timestamps_json)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """,
-            (f"{kind}:{record_id}", kind, record_id, sha, receipt.commit, receipt.registry_path, receipt.committed_at,
-             json.dumps(receipt.timestamps, sort_keys=True)),
+            (
+                f"{kind}:{record_id}",
+                kind,
+                record_id,
+                sha,
+                receipt.commit,
+                receipt.registry_path,
+                receipt.committed_at,
+                json.dumps(receipt.timestamps, sort_keys=True),
+            ),
         )
         self.last_receipt = receipt
 

@@ -1,0 +1,28 @@
+{
+  "classification": "RETROSPECTIVE_REPRODUCTION_NOT_CONFIRMATION",
+  "started_utc": "2026-11-01T10:16:04.963430+00:00",
+  "finished_utc": "2026-11-01T10:16:05.517879+00:00",
+  "source_commit": "48d18b8ecae67bdeeb07a47f1772903a5381782b",
+  "allowlist_sha256": "dcda45f36489eeb0b914cb8cb7ecf359178d3be386f4ac7abbc001821f72213d",
+  "input_manifest_sha256": "6b5cbe0b8be894a82980cc5110fb7fc4a501b3b7cea3c2e3e66e1c8cc29dd629",
+  "original_code_sha256": {
+    "lib.py": "c7a923476ca328a3e062f474e43bfbf9e12362813d8d6db19d4e2b8a7477bedf",
+    "run_t1_t5.py": "89d39c6c2b8cc8c99ef55750fac60ed1088284ecbb1079a02849b2a35989d08c",
+    "results_t1_t5.json": "ada26c0497d18b47e85f77336a9dee38d4feac6aa74c1e5a27a5141a62925176"
+  },
+  "independent_code_sha256": "6a55a73283e0ca99dc9605114aeb79de1684c68b8f3e6831b44742b164471018",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "pandas": "2.2.3",
+  "commands": [
+    "python fresh_eyes_reproduction_20261101/fetch_exact_allowlist.py",
+    "python fresh_eyes_reproduction_20261101/reproduce_t1c.py"
+  ],
+  "scope": "T1c SMA10/40 only; BTC/ETH spot daily; no portfolio, volatility target, risk cap, kill rule, tuning or other variant",
+  "unchanged_original_conventions": [
+    "buy-and-hold zero fees",
+    "no forced terminal liquidation fee",
+    "costs subtracted from bar return",
+    "carried positions across dev/val split"
+  ],
+  "correction": "Only include initial wealth=1 in per-period drawdown high-water mark"
+}

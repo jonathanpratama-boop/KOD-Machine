@@ -1,0 +1,46 @@
+{
+ "study_id": "ENTRY_TIMING_v1",
+ "frozen_at": "2026-10-30T21:51:10Z",
+ "exploration": {
+  "period": "A 2026-04-01..2026-10-28",
+  "rules_tried": 120,
+  "selection": "highest one-sided 95% lower bound among rules with >= 200 trades",
+  "table": "results/explore_A.csv",
+  "table_sha256": "51ce5ee265306e9f985ab2b83eb51df0c9870deb081062a434f00ed5502eed00"
+ },
+ "frozen_rule": {
+  "delay": 1,
+  "hold": 1,
+  "group": "ALL",
+  "on_A": {
+   "trades": 1718,
+   "mean": 0.007263823256210892,
+   "median": -0.013207814293948567,
+   "win_rate": 0.44761350407450523,
+   "lower_95": -0.003923451988622538
+  }
+ },
+ "confirmation": {
+  "period": "B 2025-11-03..2026-03-31",
+  "pass": "mean net > 0 and one-sided 95% lower bound > 0",
+  "cost": 0.006,
+  "bootstrap": {
+   "unit": "signal session",
+   "resamples": 2000,
+   "seed": 20261031
+  }
+ },
+ "honesty": [
+  "the A figure is the best of many rules on one period: optimistic by construction",
+  "B's immediate-entry 5-day groups were seen in FILTER_BUY_v1; other rules on B are unseen",
+  "survivorship flatters buying; open prints are not fills; paper only"
+ ],
+ "inputs": {
+  "research/REPLAY_UNITS_v2/results_A/forecasts.csv.gz": "4812a65221e124e5023a40f230128c8dd270f5b91272cf9fd1f0b30140296391",
+  "research/REPLAY_UNITS_v2/results_B/forecasts.csv.gz": "8c997e6ff2ff6715b008bb6cac4ff87499fe4a968c473c18f0de99daeab74835",
+  "data/manifests/yahoo_us_replay-20261030T071025Z.jsonl": "fe1ef19e7bb75bdf72a146809d7d298378323fb48d9a4da016a91408de6d069f"
+ },
+ "code": {
+  "research/ENTRY_TIMING_v1/study.py": "90aa10c05f86ecc5e94a787916a2e81635b792e24d5be24bb83416691a2f7e85"
+ }
+}

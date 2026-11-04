@@ -1,0 +1,32 @@
+# python3 -m unittest -v tests.test_admission tests.test_crypto_replay  (2026-10-31T18:24:59Z)
+test_a_calendar_day_gap_makes_the_symbol_fresh_again (tests.test_admission.Filter.test_a_calendar_day_gap_makes_the_symbol_fresh_again) ... ok
+test_band_is_ten_inclusive_fifteen_exclusive (tests.test_admission.Filter.test_band_is_ten_inclusive_fifteen_exclusive) ... ok
+test_missing_prior_day_evidence_is_not_eligible (tests.test_admission.Filter.test_missing_prior_day_evidence_is_not_eligible) ... ok
+test_no_eligible_candidates_leaves_the_day_empty_and_never_refills (tests.test_admission.Filter.test_no_eligible_candidates_leaves_the_day_empty_and_never_refills) ... ok
+test_the_challenger_is_a_subset_of_the_original_five_keeping_ranks (tests.test_admission.Filter.test_the_challenger_is_a_subset_of_the_original_five_keeping_ranks) ... ok
+test_yesterdays_symbol_is_not_fresh_whatever_its_band_yesterday (tests.test_admission.Filter.test_yesterdays_symbol_is_not_fresh_whatever_its_band_yesterday) ... ok
+test_only_eligible_alerts_can_become_orders (tests.test_admission.ThroughTheEngine.test_only_eligible_alerts_can_become_orders) ... ok
+test_bars_from_panel_marks_missing_and_incomplete_bars_invalid (tests.test_crypto_replay.Machinery.test_bars_from_panel_marks_missing_and_incomplete_bars_invalid) ... ok
+test_cash_only_reference_is_flat (tests.test_crypto_replay.Machinery.test_cash_only_reference_is_flat) ... ok
+test_doubled_costs_lose_more_on_the_same_path (tests.test_crypto_replay.Machinery.test_doubled_costs_lose_more_on_the_same_path) ... ok
+test_duplicate_symbol_daily_limit_and_risk_limit (tests.test_crypto_replay.Machinery.test_duplicate_symbol_daily_limit_and_risk_limit) ... ok
+test_end_of_data_leaves_unresolved_and_unfilled (tests.test_crypto_replay.Machinery.test_end_of_data_leaves_unresolved_and_unfilled) ... ok
+test_entry_bar_stop_counts_as_bar_one (tests.test_crypto_replay.Machinery.test_entry_bar_stop_counts_as_bar_one) ... ok
+test_entry_delay_waits_one_more_bar (tests.test_crypto_replay.Machinery.test_entry_delay_waits_one_more_bar) ... ok
+test_insufficient_cash (tests.test_crypto_replay.Machinery.test_insufficient_cash) ... ok
+test_missing_bars_while_held_and_a_rolled_time_exit (tests.test_crypto_replay.Machinery.test_missing_bars_while_held_and_a_rolled_time_exit) ... ok
+test_missing_entry_bar_is_rejected_and_releases_cash (tests.test_crypto_replay.Machinery.test_missing_entry_bar_is_rejected_and_releases_cash) ... ok
+test_overlapping_positions_share_cash_and_reconcile (tests.test_crypto_replay.Machinery.test_overlapping_positions_share_cash_and_reconcile) ... ok
+test_repeat_runs_are_identical (tests.test_crypto_replay.Machinery.test_repeat_runs_are_identical) ... ok
+test_reservation_fill_fees_and_time_exit (tests.test_crypto_replay.Machinery.test_reservation_fill_fees_and_time_exit) ... ok
+test_stop_target_gap_and_ambiguous_bar (tests.test_crypto_replay.Machinery.test_stop_target_gap_and_ambiguous_bar) ... ok
+test_weekends_are_trading_days (tests.test_crypto_replay.Machinery.test_weekends_are_trading_days) ... ok
+test_a_small_loss_does_not_shrink_the_account_below_three_positions (tests.test_crypto_replay.ReviewFixes.test_a_small_loss_does_not_shrink_the_account_below_three_positions) ... ok
+test_an_open_gain_does_not_block_new_entries (tests.test_crypto_replay.ReviewFixes.test_an_open_gain_does_not_block_new_entries) ... ok
+test_the_audit_rederives_every_trade_and_catches_a_tampered_exit (tests.test_crypto_replay.ReviewFixes.test_the_audit_rederives_every_trade_and_catches_a_tampered_exit) ... ok
+test_year_end_positions_carry_valuation_bounds (tests.test_crypto_replay.ReviewFixes.test_year_end_positions_carry_valuation_bounds) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 1.093s
+
+OK

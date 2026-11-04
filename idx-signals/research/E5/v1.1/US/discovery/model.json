@@ -1,0 +1,547 @@
+{
+  "D_label": {
+    "P_D": 0.010491036066588043,
+    "P_U": 0.011326588739176859,
+    "evaluable_ticker_days": 2670089,
+    "rule": "fixed",
+    "threshold_min_ratio_minus_1": -0.23076923076923084
+  },
+  "coef_D": [
+    -0.3066075679611705,
+    -0.3066075679611705,
+    -0.38468144073299354,
+    -0.3860906148138732,
+    -0.0222080827598644,
+    -0.21173213586475215,
+    -0.1212884528562321,
+    0.03591060697710365,
+    1.6312251485285092,
+    -0.6990515956167005,
+    -0.10860138595695006,
+    0.21602527135555732,
+    -0.7061545619351657,
+    -0.08365976826262178,
+    -0.3543815447403794,
+    -0.09370181543107961,
+    -0.2249467956744985,
+    -0.3454334266833608,
+    0.3289750345051453,
+    0.3289750345051453,
+    0.566608516854311,
+    0.2690651758196693,
+    0.4717258312793963,
+    0.3408193729220392,
+    0.2825873172716573,
+    0.035984498612494635,
+    2.069991317680579,
+    0.015545437449923696,
+    0.10975472375471691,
+    0.3452522075646033,
+    -0.2275519679032066,
+    -0.14338936624672435,
+    0.4189084653996456,
+    0.1448792418774014,
+    0.0069649611596857884,
+    -0.12645598711917777,
+    0.3332787692254859,
+    0.0,
+    -0.3626319803453289,
+    -0.7061186406933561,
+    0.23587785746268125
+  ],
+  "coef_U": [
+    -0.2644371513659372,
+    -0.2644371513659372,
+    -0.25539617647401963,
+    -0.2741328410512543,
+    0.08677859517545022,
+    -0.06728139384730339,
+    -0.0564988501008007,
+    -0.13132455582497649,
+    1.6695896705816857,
+    -0.9712255954431269,
+    -0.255651507881132,
+    0.11732693871705967,
+    -0.0041746402164055405,
+    -0.7895880664365994,
+    -0.34335230267616323,
+    -0.02201852396090649,
+    -0.13700314436911334,
+    -0.23237595341091288,
+    0.35646495825986246,
+    0.35646495825986246,
+    0.46734934244898285,
+    0.36323573497500306,
+    0.29228725287959134,
+    0.19508829732364763,
+    0.10536747642007223,
+    -0.12210308359642225,
+    1.9085304372664056,
+    0.010583901485622197,
+    -0.05931403478371927,
+    0.17783084008280214,
+    -0.1968952031533448,
+    -0.297077058814454,
+    0.46210212888184465,
+    0.11195478368774031,
+    0.037066217563753716,
+    -0.23873661438953728,
+    0.6142864660848014,
+    0.0,
+    -0.2667140102021867,
+    -0.5692539936910329,
+    0.1988867515400095
+  ],
+  "constant_column_names": [
+    "ara"
+  ],
+  "constant_columns": {
+    "age_r": {
+      "constant": false,
+      "value": null
+    },
+    "age_r2": {
+      "constant": false,
+      "value": null
+    },
+    "ara": {
+      "constant": true,
+      "value": 0.0
+    },
+    "brk60": {
+      "constant": false,
+      "value": null
+    },
+    "cpos_r": {
+      "constant": false,
+      "value": null
+    },
+    "cpos_r2": {
+      "constant": false,
+      "value": null
+    },
+    "creep5v20_r": {
+      "constant": false,
+      "value": null
+    },
+    "creep5v20_r2": {
+      "constant": false,
+      "value": null
+    },
+    "dd60_r": {
+      "constant": false,
+      "value": null
+    },
+    "dd60_r2": {
+      "constant": false,
+      "value": null
+    },
+    "gap_r": {
+      "constant": false,
+      "value": null
+    },
+    "gap_r2": {
+      "constant": false,
+      "value": null
+    },
+    "logval20_r": {
+      "constant": false,
+      "value": null
+    },
+    "logval20_r2": {
+      "constant": false,
+      "value": null
+    },
+    "not_repriced": {
+      "constant": false,
+      "value": null
+    },
+    "quiet": {
+      "constant": false,
+      "value": null
+    },
+    "rebase": {
+      "constant": false,
+      "value": null
+    },
+    "rel1_r": {
+      "constant": false,
+      "value": null
+    },
+    "rel1_r2": {
+      "constant": false,
+      "value": null
+    },
+    "ret1_r": {
+      "constant": false,
+      "value": null
+    },
+    "ret1_r2": {
+      "constant": false,
+      "value": null
+    },
+    "ret20_r": {
+      "constant": false,
+      "value": null
+    },
+    "ret20_r2": {
+      "constant": false,
+      "value": null
+    },
+    "ret5_r": {
+      "constant": false,
+      "value": null
+    },
+    "ret5_r2": {
+      "constant": false,
+      "value": null
+    },
+    "rngr5_r": {
+      "constant": false,
+      "value": null
+    },
+    "rngr5_r2": {
+      "constant": false,
+      "value": null
+    },
+    "rngr_r": {
+      "constant": false,
+      "value": null
+    },
+    "rngr_r2": {
+      "constant": false,
+      "value": null
+    },
+    "up5_r": {
+      "constant": false,
+      "value": null
+    },
+    "up5_r2": {
+      "constant": false,
+      "value": null
+    },
+    "valr_r": {
+      "constant": false,
+      "value": null
+    },
+    "valr_r2": {
+      "constant": false,
+      "value": null
+    },
+    "vc10_60_r": {
+      "constant": false,
+      "value": null
+    },
+    "vc10_60_r2": {
+      "constant": false,
+      "value": null
+    },
+    "vol20_r": {
+      "constant": false,
+      "value": null
+    },
+    "vol20_r2": {
+      "constant": false,
+      "value": null
+    },
+    "volr_r": {
+      "constant": false,
+      "value": null
+    },
+    "volr_r2": {
+      "constant": false,
+      "value": null
+    },
+    "zero20_r": {
+      "constant": false,
+      "value": null
+    },
+    "zero20_r2": {
+      "constant": false,
+      "value": null
+    }
+  },
+  "evaluable_ticker_days": 2670089,
+  "feature_order": [
+    "ret1_r",
+    "rel1_r",
+    "ret5_r",
+    "ret20_r",
+    "volr_r",
+    "valr_r",
+    "rngr_r",
+    "cpos_r",
+    "vol20_r",
+    "dd60_r",
+    "up5_r",
+    "zero20_r",
+    "age_r",
+    "logval20_r",
+    "gap_r",
+    "creep5v20_r",
+    "rngr5_r",
+    "vc10_60_r",
+    "ret1_r2",
+    "rel1_r2",
+    "ret5_r2",
+    "ret20_r2",
+    "volr_r2",
+    "valr_r2",
+    "rngr_r2",
+    "cpos_r2",
+    "vol20_r2",
+    "dd60_r2",
+    "up5_r2",
+    "zero20_r2",
+    "age_r2",
+    "logval20_r2",
+    "gap_r2",
+    "creep5v20_r2",
+    "rngr5_r2",
+    "vc10_60_r2",
+    "brk60",
+    "ara",
+    "quiet",
+    "not_repriced",
+    "rebase"
+  ],
+  "fit_D": {
+    "coef": [
+      -0.3066075679611705,
+      -0.3066075679611705,
+      -0.38468144073299354,
+      -0.3860906148138732,
+      -0.0222080827598644,
+      -0.21173213586475215,
+      -0.1212884528562321,
+      0.03591060697710365,
+      1.6312251485285092,
+      -0.6990515956167005,
+      -0.10860138595695006,
+      0.21602527135555732,
+      -0.7061545619351657,
+      -0.08365976826262178,
+      -0.3543815447403794,
+      -0.09370181543107961,
+      -0.2249467956744985,
+      -0.3454334266833608,
+      0.3289750345051453,
+      0.3289750345051453,
+      0.566608516854311,
+      0.2690651758196693,
+      0.4717258312793963,
+      0.3408193729220392,
+      0.2825873172716573,
+      0.035984498612494635,
+      2.069991317680579,
+      0.015545437449923696,
+      0.10975472375471691,
+      0.3452522075646033,
+      -0.2275519679032066,
+      -0.14338936624672435,
+      0.4189084653996456,
+      0.1448792418774014,
+      0.0069649611596857884,
+      -0.12645598711917777,
+      0.3332787692254859,
+      0.0,
+      -0.3626319803453289,
+      -0.7061186406933561,
+      0.23587785746268125
+    ],
+    "converged": true,
+    "deviance": 253295.35852531894,
+    "feature_order": [
+      "ret1_r",
+      "rel1_r",
+      "ret5_r",
+      "ret20_r",
+      "volr_r",
+      "valr_r",
+      "rngr_r",
+      "cpos_r",
+      "vol20_r",
+      "dd60_r",
+      "up5_r",
+      "zero20_r",
+      "age_r",
+      "logval20_r",
+      "gap_r",
+      "creep5v20_r",
+      "rngr5_r",
+      "vc10_60_r",
+      "ret1_r2",
+      "rel1_r2",
+      "ret5_r2",
+      "ret20_r2",
+      "volr_r2",
+      "valr_r2",
+      "rngr_r2",
+      "cpos_r2",
+      "vol20_r2",
+      "dd60_r2",
+      "up5_r2",
+      "zero20_r2",
+      "age_r2",
+      "logval20_r2",
+      "gap_r2",
+      "creep5v20_r2",
+      "rngr5_r2",
+      "vc10_60_r2",
+      "brk60",
+      "ara",
+      "quiet",
+      "not_repriced",
+      "rebase"
+    ],
+    "intercept": -5.202811758101556,
+    "iterations": 25,
+    "label": "D",
+    "lambda": 292.219,
+    "max_abs_step_last": 1.5964746653673591e-15,
+    "n_negatives": 2642077,
+    "n_negatives_sampled": 264207,
+    "n_positives": 28012,
+    "n_rows_used": 292219,
+    "negative_weight": 10.0,
+    "seed": 20261015
+  },
+  "fit_U": {
+    "coef": [
+      -0.2644371513659372,
+      -0.2644371513659372,
+      -0.25539617647401963,
+      -0.2741328410512543,
+      0.08677859517545022,
+      -0.06728139384730339,
+      -0.0564988501008007,
+      -0.13132455582497649,
+      1.6695896705816857,
+      -0.9712255954431269,
+      -0.255651507881132,
+      0.11732693871705967,
+      -0.0041746402164055405,
+      -0.7895880664365994,
+      -0.34335230267616323,
+      -0.02201852396090649,
+      -0.13700314436911334,
+      -0.23237595341091288,
+      0.35646495825986246,
+      0.35646495825986246,
+      0.46734934244898285,
+      0.36323573497500306,
+      0.29228725287959134,
+      0.19508829732364763,
+      0.10536747642007223,
+      -0.12210308359642225,
+      1.9085304372664056,
+      0.010583901485622197,
+      -0.05931403478371927,
+      0.17783084008280214,
+      -0.1968952031533448,
+      -0.297077058814454,
+      0.46210212888184465,
+      0.11195478368774031,
+      0.037066217563753716,
+      -0.23873661438953728,
+      0.6142864660848014,
+      0.0,
+      -0.2667140102021867,
+      -0.5692539936910329,
+      0.1988867515400095
+    ],
+    "converged": true,
+    "deviance": 269948.8495526087,
+    "feature_order": [
+      "ret1_r",
+      "rel1_r",
+      "ret5_r",
+      "ret20_r",
+      "volr_r",
+      "valr_r",
+      "rngr_r",
+      "cpos_r",
+      "vol20_r",
+      "dd60_r",
+      "up5_r",
+      "zero20_r",
+      "age_r",
+      "logval20_r",
+      "gap_r",
+      "creep5v20_r",
+      "rngr5_r",
+      "vc10_60_r",
+      "ret1_r2",
+      "rel1_r2",
+      "ret5_r2",
+      "ret20_r2",
+      "volr_r2",
+      "valr_r2",
+      "rngr_r2",
+      "cpos_r2",
+      "vol20_r2",
+      "dd60_r2",
+      "up5_r2",
+      "zero20_r2",
+      "age_r2",
+      "logval20_r2",
+      "gap_r2",
+      "creep5v20_r2",
+      "rngr5_r2",
+      "vc10_60_r2",
+      "brk60",
+      "ara",
+      "quiet",
+      "not_repriced",
+      "rebase"
+    ],
+    "intercept": -5.060082919095276,
+    "iterations": 25,
+    "label": "U",
+    "lambda": 294.22700000000003,
+    "max_abs_step_last": 3.800091306973056e-15,
+    "n_negatives": 2639846,
+    "n_negatives_sampled": 263984,
+    "n_positives": 30243,
+    "n_rows_used": 294227,
+    "negative_weight": 10.0,
+    "seed": 20261015
+  },
+  "intercept_D": -5.202811758101556,
+  "intercept_U": -5.060082919095276,
+  "market": "US",
+  "panel_sha256": "8d3b7ce4be56d40b375ebac78b45be13910cbea492c29e456a417a6ae000cb4b",
+  "protocol_id": "KOD-GLOBAL-E5-v1.1",
+  "protocol_sha256": "61968b8c8bc11927f94d8ec7b60dc8d235b5f085532aa2176fb975d92cd65be5",
+  "study_options": {
+    "panel_format": "panel-global-v2-units",
+    "pool_keys": [
+      "price_band",
+      "liquidity",
+      "volatility",
+      "market_cap"
+    ],
+    "pool_units": "as_traded",
+    "pool_version": "v3"
+  },
+  "threshold_A": -2.0048715357534,
+  "threshold_B": 0.6964799931374168,
+  "window": {
+    "end": "2022-12-31",
+    "first_period_session": "2020-07-01",
+    "last_period_session": "2022-12-30",
+    "lead_in_sessions": 65,
+    "lead_in_short": false,
+    "listed_before": {
+      "definition": "sessions since the name's first present session in the pinned panel that fall before the window start",
+      "left_censored_names": 3785,
+      "panel_first_session": "2020-01-02"
+    },
+    "period": "discovery",
+    "period_end": "2022-12-31",
+    "period_start": "2020-07-01",
+    "start": "2020-03-30",
+    "study_end": "2022-12-31",
+    "warmup_sessions": 65
+  }
+}

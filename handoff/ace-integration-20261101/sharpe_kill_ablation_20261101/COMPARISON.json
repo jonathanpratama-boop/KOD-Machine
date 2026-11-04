@@ -1,0 +1,607 @@
+{
+  "classification": "REUSED_DATA_DIAGNOSTIC_NOT_INDEPENDENT_VALIDATION",
+  "partitions": {
+    "development": {
+      "baseline": {
+        "summary": {
+          "end_nav": 20592.76937267667,
+          "growth": 1.059276937267667,
+          "CAGR": 0.146952526629607,
+          "sampled_max_drawdown": 0.15416840927609826,
+          "daily_vol_annualized": 0.126324291135652,
+          "daily_Sharpe": 1.1475105864381918,
+          "fills": 228,
+          "paid_fees": 88.69,
+          "normalized_turnover": 5.504278978186698,
+          "mean_exposure": 0.03304545294023921,
+          "invested_samples": 144,
+          "samples": 1924,
+          "kill": {
+            "at": "2018-03-15T00:00:00Z",
+            "reason": "NEGATIVE_TRAILING_90_DAY_SHARPE",
+            "trigger": "daily:2018-03-15"
+          },
+          "liquidation": {
+            "first_kill_liquidation_at": "2018-03-16T00:00:00Z",
+            "last_kill_liquidation_at": "2018-03-16T00:00:00Z",
+            "kill_to_first_fill_days": 1.0,
+            "kill_fill_count": 1,
+            "preplanned_terminal_fill_count": 0,
+            "remaining_holdings": {
+              "BTCUSDT": "0E-8",
+              "ETHUSDT": "0E-8"
+            }
+          },
+          "remaining_holdings": {
+            "BTCUSDT": "0E-8",
+            "ETHUSDT": "0E-8"
+          },
+          "journal_sha256": "9350eab20ab03d7965c531145706b1d64033f9d8d5da1531801d34165607b381"
+        },
+        "invested": {
+          "return_days": 1923,
+          "invested_days": 144,
+          "time_invested_fraction": 0.0748829953198128,
+          "invested_mean_daily": 0.005308587002369563,
+          "invested_daily_vol": 0.023693103979458476,
+          "invested_vol_annualized": 0.4526561159492074
+        },
+        "close_drawdown": {
+          "max_drawdown_daily_open_marks": 0.15388803377628213,
+          "trough_date": "2018-03-15",
+          "peak_date": "2018-01-14"
+        },
+        "year_end_nav": {
+          "2017": 20113.71,
+          "2018": 20592.77,
+          "2019": 20592.77,
+          "2020": 20592.77,
+          "2021": 20592.77,
+          "2022": 20592.77,
+          "2023": 20592.77
+        },
+        "kill_cancelled_intents": [],
+        "kill_liquidation_fills": [
+          {
+            "at": "2018-03-16T00:00:00Z",
+            "symbol": "BTCUSDT",
+            "side": "SELL",
+            "quantity": 0.72896184,
+            "price": 8236.85951,
+            "fee": 6.0,
+            "intent_id": "liquidate:daily:2018-03-15:BTCUSDT"
+          }
+        ],
+        "kill_daily": {
+          "date": "2018-03-15",
+          "nav": 20560.24409662397,
+          "mdd_at_kill": 0.15416840927609826,
+          "growth_at_kill": 1.0560244096623972
+        },
+        "sharpe_rule_first_able_to_fire": "2017-12-25",
+        "sharpe_negative_days": 85,
+        "sharpe_negative_first": "2018-03-15",
+        "sharpe_negative_runs": 3
+      },
+      "challenger": {
+        "summary": {
+          "end_nav": 17716.060196580485,
+          "growth": 0.7716060196580486,
+          "CAGR": 0.114658854395983,
+          "sampled_max_drawdown": 0.27117580379823386,
+          "daily_vol_annualized": 0.14654141087572328,
+          "daily_Sharpe": 0.8131011153548274,
+          "fills": 321,
+          "paid_fees": 193.29,
+          "normalized_turnover": 10.72320909264774,
+          "mean_exposure": 0.049632897658300486,
+          "invested_samples": 199,
+          "samples": 1924,
+          "kill": {
+            "at": "2018-08-08T00:00:00Z",
+            "reason": "DRAWDOWN_AT_LEAST_25_PERCENT",
+            "trigger": "mark_batch:2018-08-08T00:00:00Z"
+          },
+          "liquidation": {
+            "first_kill_liquidation_at": "2018-08-09T00:00:00Z",
+            "last_kill_liquidation_at": "2018-08-09T00:00:00Z",
+            "kill_to_first_fill_days": 1.0,
+            "kill_fill_count": 1,
+            "preplanned_terminal_fill_count": 0,
+            "remaining_holdings": {
+              "BTCUSDT": "0E-8",
+              "ETHUSDT": "0E-8"
+            }
+          },
+          "remaining_holdings": {
+            "BTCUSDT": "0E-8",
+            "ETHUSDT": "0E-8"
+          },
+          "journal_sha256": "691b8eeba79a9c7277b3a383be09a6a604486d07ab14c6860087a7b47436d1e9"
+        },
+        "invested": {
+          "return_days": 1923,
+          "invested_days": 199,
+          "time_invested_fraction": 0.10348413936557463,
+          "invested_mean_daily": 0.0031639607835834754,
+          "invested_daily_vol": 0.023708100287342944,
+          "invested_vol_annualized": 0.4529426200090574
+        },
+        "close_drawdown": {
+          "max_drawdown_daily_open_marks": 0.2709342138049904,
+          "trough_date": "2018-08-09",
+          "peak_date": "2018-01-14"
+        },
+        "year_end_nav": {
+          "2017": 20113.71,
+          "2018": 17716.06,
+          "2019": 17716.06,
+          "2020": 17716.06,
+          "2021": 17716.06,
+          "2022": 17716.06,
+          "2023": 17716.06
+        },
+        "kill_cancelled_intents": [
+          {
+            "id": "decision:2018-08-06:BTCUSDT",
+            "symbol": "BTCUSDT",
+            "side": "BUY",
+            "made_at": "2018-08-07T00:01:00Z"
+          }
+        ],
+        "kill_liquidation_fills": [
+          {
+            "at": "2018-08-09T00:00:00Z",
+            "symbol": "BTCUSDT",
+            "side": "SELL",
+            "quantity": 1.06188443,
+            "price": 6280.128365,
+            "fee": 6.67,
+            "intent_id": "liquidate:mark_batch:2018-08-08T00:00:00Z:BTCUSDT"
+          }
+        ],
+        "kill_daily": {
+          "date": "2018-08-08",
+          "nav": 18190.49202417653,
+          "mdd_at_kill": 0.2516580672606846,
+          "growth_at_kill": 0.8190492024176528
+        },
+        "sharpe_rule_first_able_to_fire": "2017-12-25",
+        "sharpe_negative_days": 224,
+        "sharpe_negative_first": "2018-03-15",
+        "sharpe_negative_runs": 5
+      },
+      "first_divergence": {
+        "index": 0,
+        "baseline_op": "init:TREND_V2_SHARED:2017-09-26",
+        "challenger_op": "init:TREND_V2_SHARED:2017-09-26",
+        "date": "2017-09-26T00:00:00Z"
+      },
+      "first_daily_nav_difference": "2018-04-21",
+      "trades": {
+        "baseline_fills_total": 228,
+        "challenger_fills_total": 321,
+        "additional_fills": 93,
+        "baseline_fills_after_divergence": 228,
+        "challenger_fills_after_divergence": 321
+      },
+      "reading": {
+        "end_nav_difference_challenger_minus_baseline": -2876.709176096185,
+        "max_drawdown_difference_challenger_minus_baseline": 0.1170073945221356,
+        "suppressed_returns": false,
+        "protected_capital": true,
+        "label": "PROTECTED_CAPITAL",
+        "rule": "suppressed if challenger end NAV >= baseline + 1000; protected if challenger sampled max drawdown >= baseline + 5% or challenger end NAV <= baseline - 1000"
+      },
+      "benchmarks_from_published_run": {
+        "CASH": {
+          "end_nav": 10000.0,
+          "growth": 0.0,
+          "CAGR": 0.0,
+          "sampled_max_drawdown": 0.0,
+          "daily_vol_annualized": 0.0,
+          "daily_Sharpe": null,
+          "fills": 0,
+          "paid_fees": 0.0,
+          "normalized_turnover": 0.0,
+          "mean_exposure": 0.0,
+          "invested_samples": 0,
+          "samples": 1924,
+          "kill": null,
+          "liquidation": {
+            "first_kill_liquidation_at": null,
+            "last_kill_liquidation_at": null,
+            "kill_to_first_fill_days": null,
+            "kill_fill_count": 0,
+            "preplanned_terminal_fill_count": 0,
+            "remaining_holdings": {
+              "BTCUSDT": "0",
+              "ETHUSDT": "0"
+            }
+          },
+          "remaining_holdings": {
+            "BTCUSDT": "0",
+            "ETHUSDT": "0"
+          },
+          "journal_sha256": "764df41114720e150220a13f3a23f37f3437ba7e149a9dd64d7d7057da246bd3"
+        },
+        "PASSIVE_50_50_RISK_MATCHED": {
+          "end_nav": 17844.12712791118,
+          "growth": 0.7844127127911177,
+          "CAGR": 0.11618381033334146,
+          "sampled_max_drawdown": 0.27596436125513685,
+          "daily_vol_annualized": 0.18873029002501232,
+          "daily_Sharpe": 0.6776414976118581,
+          "fills": 4,
+          "paid_fees": 16.92,
+          "normalized_turnover": 1.146762103977643,
+          "mean_exposure": 0.042786786273612244,
+          "invested_samples": 130,
+          "samples": 1924,
+          "kill": {
+            "at": "2018-02-03T00:00:00Z",
+            "reason": "DRAWDOWN_AT_LEAST_25_PERCENT",
+            "trigger": "mark_batch:2018-02-03T00:00:00Z"
+          },
+          "liquidation": {
+            "first_kill_liquidation_at": "2018-02-04T00:00:00Z",
+            "last_kill_liquidation_at": "2018-02-04T00:00:00Z",
+            "kill_to_first_fill_days": 1.0,
+            "kill_fill_count": 2,
+            "preplanned_terminal_fill_count": 0,
+            "remaining_holdings": {
+              "BTCUSDT": "0E-8",
+              "ETHUSDT": "0E-8"
+            }
+          },
+          "remaining_holdings": {
+            "BTCUSDT": "0E-8",
+            "ETHUSDT": "0E-8"
+          },
+          "journal_sha256": "558a97da8e18b6849da77d0d9bf9edac69fd93375151e80d4cb0c028d61532ae"
+        },
+        "CONVENTIONAL_50_50_BUY_HOLD_NO_KILL": {
+          "end_nav": 24500.544000890266,
+          "growth": 1.4500544000890268,
+          "CAGR": 0.185409784954377,
+          "sampled_max_drawdown": 0.7169018535752373,
+          "daily_vol_annualized": 0.562798067378608,
+          "daily_Sharpe": 0.5868062810512948,
+          "fills": 4,
+          "paid_fees": 23.59,
+          "normalized_turnover": 1.229868128581725,
+          "mean_exposure": 0.6880803134969712,
+          "invested_samples": 1922,
+          "samples": 1924,
+          "kill": null,
+          "liquidation": {
+            "first_kill_liquidation_at": null,
+            "last_kill_liquidation_at": null,
+            "kill_to_first_fill_days": null,
+            "kill_fill_count": 0,
+            "preplanned_terminal_fill_count": 2,
+            "remaining_holdings": {
+              "BTCUSDT": "0E-8",
+              "ETHUSDT": "0E-8"
+            }
+          },
+          "remaining_holdings": {
+            "BTCUSDT": "0E-8",
+            "ETHUSDT": "0E-8"
+          },
+          "journal_sha256": "5dcc39310067c9c0c183850646c663e2cfd84d96162751e2aa59cbb45e7bb882"
+        }
+      }
+    },
+    "validation": {
+      "baseline": {
+        "summary": {
+          "end_nav": 12377.200523005236,
+          "growth": 0.23772005230052368,
+          "CAGR": 0.05855360411385391,
+          "sampled_max_drawdown": 0.1155083127869236,
+          "daily_vol_annualized": 0.12420951270048627,
+          "daily_Sharpe": 0.5196338303785428,
+          "fills": 180,
+          "paid_fees": 76.78,
+          "normalized_turnover": 6.557554351185196,
+          "mean_exposure": 0.06259952530994446,
+          "invested_samples": 89,
+          "samples": 1369,
+          "kill": {
+            "at": "2023-04-22T00:00:00Z",
+            "reason": "NEGATIVE_TRAILING_90_DAY_SHARPE",
+            "trigger": "daily:2023-04-22"
+          },
+          "liquidation": {
+            "first_kill_liquidation_at": "2023-04-23T00:00:00Z",
+            "last_kill_liquidation_at": "2023-04-23T00:00:00Z",
+            "kill_to_first_fill_days": 1.0,
+            "kill_fill_count": 2,
+            "preplanned_terminal_fill_count": 0,
+            "remaining_holdings": {
+              "BTCUSDT": "0E-8",
+              "ETHUSDT": "0E-8"
+            }
+          },
+          "remaining_holdings": {
+            "BTCUSDT": "0E-8",
+            "ETHUSDT": "0E-8"
+          },
+          "journal_sha256": "4d89c2cb569399dd070e0ba50606ad72e01e8fedd4aaee3455a2022652c77d5c"
+        },
+        "invested": {
+          "return_days": 1368,
+          "invested_days": 89,
+          "time_invested_fraction": 0.06505847953216375,
+          "invested_mean_daily": 0.00274823255711173,
+          "invested_daily_vol": 0.025483497720738154,
+          "invested_vol_annualized": 0.486861540348225
+        },
+        "close_drawdown": {
+          "max_drawdown_daily_open_marks": 0.11545140908142942,
+          "trough_date": "2023-03-28",
+          "peak_date": "2023-02-21"
+        },
+        "year_end_nav": {
+          "2023": 12377.2,
+          "2024": 12377.2,
+          "2025": 12377.2,
+          "2026": 12377.2
+        },
+        "kill_cancelled_intents": [],
+        "kill_liquidation_fills": [
+          {
+            "at": "2023-04-23T00:00:00Z",
+            "symbol": "BTCUSDT",
+            "side": "SELL",
+            "quantity": 0.25660959,
+            "price": 27802.941575,
+            "fee": 7.13,
+            "intent_id": "liquidate:daily:2023-04-22:BTCUSDT"
+          },
+          {
+            "at": "2023-04-23T00:00:00Z",
+            "symbol": "ETHUSDT",
+            "side": "SELL",
+            "quantity": 2.80535796,
+            "price": 1873.232915,
+            "fee": 5.26,
+            "intent_id": "liquidate:daily:2023-04-22:ETHUSDT"
+          }
+        ],
+        "kill_daily": {
+          "date": "2023-04-22",
+          "nav": 12182.368045966079,
+          "mdd_at_kill": 0.1155083127869236,
+          "growth_at_kill": 0.21823680459660788
+        },
+        "sharpe_rule_first_able_to_fire": "2023-04-01",
+        "sharpe_negative_days": 32,
+        "sharpe_negative_first": "2023-04-22",
+        "sharpe_negative_runs": 9
+      },
+      "challenger": {
+        "summary": {
+          "end_nav": 19339.99999954919,
+          "growth": 0.9339999999549188,
+          "CAGR": 0.192422800167807,
+          "sampled_max_drawdown": 0.30204286559219834,
+          "daily_vol_annualized": 0.2369810367511017,
+          "daily_Sharpe": 0.8601203077051326,
+          "fills": 693,
+          "paid_fees": 482.69,
+          "normalized_turnover": 30.745529810664724,
+          "mean_exposure": 0.2568376537888567,
+          "invested_samples": 388,
+          "samples": 1369,
+          "kill": {
+            "at": "2024-08-03T00:00:00Z",
+            "reason": "DRAWDOWN_AT_LEAST_25_PERCENT",
+            "trigger": "mark_batch:2024-08-03T00:00:00Z"
+          },
+          "liquidation": {
+            "first_kill_liquidation_at": "2024-08-04T00:00:00Z",
+            "last_kill_liquidation_at": "2024-08-04T00:00:00Z",
+            "kill_to_first_fill_days": 1.0,
+            "kill_fill_count": 2,
+            "preplanned_terminal_fill_count": 0,
+            "remaining_holdings": {
+              "BTCUSDT": "0E-8",
+              "ETHUSDT": "0E-8"
+            }
+          },
+          "remaining_holdings": {
+            "BTCUSDT": "0E-8",
+            "ETHUSDT": "0E-8"
+          },
+          "journal_sha256": "13087860c1bfe00d9292e953ecbf373e7780cc8b37fee389babac595da2ed0a2"
+        },
+        "invested": {
+          "return_days": 1368,
+          "invested_days": 388,
+          "time_invested_fraction": 0.28362573099415206,
+          "invested_mean_daily": 0.0019949122360507494,
+          "invested_daily_vol": 0.02325019164749064,
+          "invested_vol_annualized": 0.44419428772828773
+        },
+        "close_drawdown": {
+          "max_drawdown_daily_open_marks": 0.3020371762148951,
+          "trough_date": "2024-08-04",
+          "peak_date": "2024-03-12"
+        },
+        "year_end_nav": {
+          "2023": 17404.18,
+          "2024": 19340.0,
+          "2025": 19340.0,
+          "2026": 19340.0
+        },
+        "kill_cancelled_intents": [
+          {
+            "id": "decision:2024-08-01:BTCUSDT",
+            "symbol": "BTCUSDT",
+            "side": "BUY",
+            "made_at": "2024-08-02T00:01:00Z"
+          },
+          {
+            "id": "decision:2024-08-01:ETHUSDT",
+            "symbol": "ETHUSDT",
+            "side": "SELL",
+            "made_at": "2024-08-02T00:01:00Z"
+          }
+        ],
+        "kill_liquidation_fills": [
+          {
+            "at": "2024-08-04T00:00:00Z",
+            "symbol": "BTCUSDT",
+            "side": "SELL",
+            "quantity": 0.17675083,
+            "price": 60667.641005,
+            "fee": 10.72,
+            "intent_id": "liquidate:mark_batch:2024-08-03T00:00:00Z:BTCUSDT"
+          },
+          {
+            "at": "2024-08-04T00:00:00Z",
+            "symbol": "ETHUSDT",
+            "side": "SELL",
+            "quantity": 2.97542146,
+            "price": 2902.198175,
+            "fee": 8.64,
+            "intent_id": "liquidate:mark_batch:2024-08-03T00:00:00Z:ETHUSDT"
+          }
+        ],
+        "kill_daily": {
+          "date": "2024-08-03",
+          "nav": 19766.27375635837,
+          "mdd_at_kill": 0.2866591629147051,
+          "growth_at_kill": 0.9766273756358368
+        },
+        "sharpe_rule_first_able_to_fire": "2023-04-01",
+        "sharpe_negative_days": 294,
+        "sharpe_negative_first": "2023-04-22",
+        "sharpe_negative_runs": 10
+      },
+      "first_divergence": {
+        "index": 0,
+        "baseline_op": "init:TREND_V2_SHARED:2023-01-01",
+        "challenger_op": "init:TREND_V2_SHARED:2023-01-01",
+        "date": "2023-01-01T00:00:00Z"
+      },
+      "first_daily_nav_difference": "2023-04-23",
+      "trades": {
+        "baseline_fills_total": 180,
+        "challenger_fills_total": 693,
+        "additional_fills": 513,
+        "baseline_fills_after_divergence": 180,
+        "challenger_fills_after_divergence": 693
+      },
+      "reading": {
+        "end_nav_difference_challenger_minus_baseline": 6962.799476543953,
+        "max_drawdown_difference_challenger_minus_baseline": 0.18653455280527476,
+        "suppressed_returns": true,
+        "protected_capital": true,
+        "label": "BOTH",
+        "rule": "suppressed if challenger end NAV >= baseline + 1000; protected if challenger sampled max drawdown >= baseline + 5% or challenger end NAV <= baseline - 1000"
+      },
+      "benchmarks_from_published_run": {
+        "CASH": {
+          "end_nav": 10000.0,
+          "growth": 0.0,
+          "CAGR": 0.0,
+          "sampled_max_drawdown": 0.0,
+          "daily_vol_annualized": 0.0,
+          "daily_Sharpe": null,
+          "fills": 0,
+          "paid_fees": 0.0,
+          "normalized_turnover": 0.0,
+          "mean_exposure": 0.0,
+          "invested_samples": 0,
+          "samples": 1369,
+          "kill": null,
+          "liquidation": {
+            "first_kill_liquidation_at": null,
+            "last_kill_liquidation_at": null,
+            "kill_to_first_fill_days": null,
+            "kill_fill_count": 0,
+            "preplanned_terminal_fill_count": 0,
+            "remaining_holdings": {
+              "BTCUSDT": "0",
+              "ETHUSDT": "0"
+            }
+          },
+          "remaining_holdings": {
+            "BTCUSDT": "0",
+            "ETHUSDT": "0"
+          },
+          "journal_sha256": "df60aba06aa41ffac87a6cf12bd32ad16dab02f710b61b1ea6d4d89449c4957a"
+        },
+        "PASSIVE_50_50_RISK_MATCHED": {
+          "end_nav": 15037.86162458737,
+          "growth": 0.503786162458737,
+          "CAGR": 0.11500169311766162,
+          "sampled_max_drawdown": 0.19537082666868558,
+          "daily_vol_annualized": 0.17152315940975432,
+          "daily_Sharpe": 0.7194586031946532,
+          "fills": 4,
+          "paid_fees": 25.03,
+          "normalized_turnover": 1.9984986460550789,
+          "mean_exposure": 0.12125622209230393,
+          "invested_samples": 166,
+          "samples": 1369,
+          "kill": {
+            "at": "2023-06-16T00:00:00Z",
+            "reason": "NEGATIVE_TRAILING_90_DAY_SHARPE",
+            "trigger": "daily:2023-06-16"
+          },
+          "liquidation": {
+            "first_kill_liquidation_at": "2023-06-17T00:00:00Z",
+            "last_kill_liquidation_at": "2023-06-17T00:00:00Z",
+            "kill_to_first_fill_days": 1.0,
+            "kill_fill_count": 2,
+            "preplanned_terminal_fill_count": 0,
+            "remaining_holdings": {
+              "BTCUSDT": "0E-8",
+              "ETHUSDT": "0E-8"
+            }
+          },
+          "remaining_holdings": {
+            "BTCUSDT": "0E-8",
+            "ETHUSDT": "0E-8"
+          },
+          "journal_sha256": "69e7f69c6a915277e47c1f9c92c028946e89654b79aef28a0a16cbf4adcd38dd"
+        },
+        "CONVENTIONAL_50_50_BUY_HOLD_NO_KILL": {
+          "end_nav": 36220.207421334875,
+          "growth": 2.622020742133488,
+          "CAGR": 0.40972791670389275,
+          "sampled_max_drawdown": 0.5758003143790786,
+          "daily_vol_annualized": 0.4918289207381659,
+          "daily_Sharpe": 0.9430589400564802,
+          "fills": 4,
+          "paid_fees": 46.23,
+          "normalized_turnover": 1.9984994285108253,
+          "mean_exposure": 0.998538308240898,
+          "invested_samples": 1367,
+          "samples": 1369,
+          "kill": null,
+          "liquidation": {
+            "first_kill_liquidation_at": null,
+            "last_kill_liquidation_at": null,
+            "kill_to_first_fill_days": null,
+            "kill_fill_count": 0,
+            "preplanned_terminal_fill_count": 2,
+            "remaining_holdings": {
+              "BTCUSDT": "0E-8",
+              "ETHUSDT": "0E-8"
+            }
+          },
+          "remaining_holdings": {
+            "BTCUSDT": "0E-8",
+            "ETHUSDT": "0E-8"
+          },
+          "journal_sha256": "942effe4248f802f834000eb5981d90fc8712e050d606e49f8ce0e955eb3ad8a"
+        }
+      }
+    }
+  }
+}

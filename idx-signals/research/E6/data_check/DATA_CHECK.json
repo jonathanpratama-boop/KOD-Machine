@@ -1,0 +1,151 @@
+{
+  "manifest": "binance_1h-20261015T182940Z.jsonl",
+  "symbols": 406,
+  "files": 12032,
+  "download_failures": 0,
+  "excluded_stable_or_leveraged": 73,
+  "delisted_before_2023_12": 46,
+  "units": {
+    "ms": 406
+  },
+  "bad_taker_gt_quote_hours": 0,
+  "nonpositive_close_hours": 0,
+  "hours": 5687986,
+  "missing_hours_share_median": 0.0008593526210255442,
+  "same_hour_flow_return_corr": {
+    "coins": 346,
+    "median": 0.2711100055200347,
+    "share_positive": 1.0,
+    "p10": 0.1911524551218456,
+    "p90": 0.3567211098555686
+  },
+  "mean_return_by_flow_bin": [
+    {
+      "flow_lo": -1.0,
+      "flow_hi": -0.9,
+      "hours": 20410,
+      "mean_log_return": -0.0038295209825137374
+    },
+    {
+      "flow_lo": -0.9,
+      "flow_hi": -0.8,
+      "hours": 25593,
+      "mean_log_return": -0.004626023696757526
+    },
+    {
+      "flow_lo": -0.8,
+      "flow_hi": -0.7,
+      "hours": 41808,
+      "mean_log_return": -0.00522755313758392
+    },
+    {
+      "flow_lo": -0.7,
+      "flow_hi": -0.6,
+      "hours": 66911,
+      "mean_log_return": -0.005800700433713976
+    },
+    {
+      "flow_lo": -0.6,
+      "flow_hi": -0.5,
+      "hours": 105751,
+      "mean_log_return": -0.0063294612651912515
+    },
+    {
+      "flow_lo": -0.5,
+      "flow_hi": -0.3999999999999999,
+      "hours": 170369,
+      "mean_log_return": -0.006670078004677543
+    },
+    {
+      "flow_lo": -0.3999999999999999,
+      "flow_hi": -0.29999999999999993,
+      "hours": 275798,
+      "mean_log_return": -0.006784802502423631
+    },
+    {
+      "flow_lo": -0.29999999999999993,
+      "flow_hi": -0.19999999999999996,
+      "hours": 455968,
+      "mean_log_return": -0.006591199571149282
+    },
+    {
+      "flow_lo": -0.19999999999999996,
+      "flow_hi": -0.09999999999999998,
+      "hours": 765264,
+      "mean_log_return": -0.005710768161373363
+    },
+    {
+      "flow_lo": -0.09999999999999998,
+      "flow_hi": 0.0,
+      "hours": 1158334,
+      "mean_log_return": -0.0022770358121500397
+    },
+    {
+      "flow_lo": 0.0,
+      "flow_hi": 0.10000000000000009,
+      "hours": 1109383,
+      "mean_log_return": 0.004073329434704278
+    },
+    {
+      "flow_lo": 0.10000000000000009,
+      "flow_hi": 0.20000000000000018,
+      "hours": 654341,
+      "mean_log_return": 0.006650218835894178
+    },
+    {
+      "flow_lo": 0.20000000000000018,
+      "flow_hi": 0.30000000000000004,
+      "hours": 351657,
+      "mean_log_return": 0.006727748884631888
+    },
+    {
+      "flow_lo": 0.30000000000000004,
+      "flow_hi": 0.40000000000000013,
+      "hours": 196944,
+      "mean_log_return": 0.006494387437576887
+    },
+    {
+      "flow_lo": 0.40000000000000013,
+      "flow_hi": 0.5,
+      "hours": 115464,
+      "mean_log_return": 0.00626241042199496
+    },
+    {
+      "flow_lo": 0.5,
+      "flow_hi": 0.6000000000000001,
+      "hours": 69057,
+      "mean_log_return": 0.005938011227872332
+    },
+    {
+      "flow_lo": 0.6000000000000001,
+      "flow_hi": 0.7000000000000002,
+      "hours": 42876,
+      "mean_log_return": 0.005566775121506944
+    },
+    {
+      "flow_lo": 0.7000000000000002,
+      "flow_hi": 0.8,
+      "hours": 26776,
+      "mean_log_return": 0.004986616586047445
+    },
+    {
+      "flow_lo": 0.8,
+      "flow_hi": 0.9000000000000001,
+      "hours": 16404,
+      "mean_log_return": 0.0046419223424404065
+    },
+    {
+      "flow_lo": 0.9000000000000001,
+      "flow_hi": 1.0,
+      "hours": 15247,
+      "mean_log_return": 0.004131322606917842
+    }
+  ],
+  "eligible_coin_days_discovery_liquidity_only": 214015,
+  "eligible_coins_per_day": {
+    "min": 80,
+    "median": 250.0,
+    "max": 320
+  },
+  "expected_P1_ceiling": "top 5% of eligible coins per day before the participation, range, strength and debounce filters: about 10700 coin-days; the filters cut this further"
+}

@@ -1,0 +1,323 @@
+{
+ "schema": "KOD-ANALYST-EVAL-TASKS-v1",
+ "set": "holdout_v1",
+ "tasks": [
+  {
+   "id": "HO-DRMA",
+   "type": 3,
+   "kind": "guidance",
+   "real": true,
+   "overlaps_development": null,
+   "question": "What did Dermata Therapeutics report for its second quarter of 2026 (revenue, net income, diluted EPS, and year-over-year revenue growth), and how did the results compare with any outlook for that quarter published with its first-quarter 2026 results?",
+   "company": "DRMA",
+   "company_name": "Dermata Therapeutics, Inc.",
+   "ticker": "DRMA",
+   "venue": "XNAS",
+   "fixtures": "fixtures/drma",
+   "as_of": "2026-08-12T20:06:20Z",
+   "mode": "public",
+   "sources": "Q2 2026 release (EX-99.1, accession 0001493152-26-037124, fixtures/drma/cur.htm): \"reported financial results for the second quarter ended June 30, 2026\"; Statements of Operations, \"Quarter Ended June 30, ... In thousands, except share and per share data\": \"Net loss | $ | (2,967 |\" (2026 column; no noncontrolling interest line, so this is the amount attributable to the company), \"Net loss per common share, basic and diluted | $ | (0.74 |\". The release reports no revenue line (statement of operations starts at operating expenses), so the revenue fact and the year-over-year revenue comparison are omitted. Q1 2026 release (EX-99.1, accession 0001493152-26-022710, fixtures/drma/pri.htm): no numeric outlook for the second quarter (only a statement that cash resources are expected to fund operations into the first quarter of 2027) -> guidance_absent.",
+   "expect": {
+    "period_in": [
+     "quarter ended 2026-06-30",
+     "Q2 2026",
+     "Q2 FY26"
+    ],
+    "currency": "USD",
+    "facts": [
+     {
+      "metric": "net_income",
+      "amount": "-2967000",
+      "basis": "GAAP"
+     },
+     {
+      "metric": "eps_diluted",
+      "amount": "-0.74",
+      "basis": "GAAP"
+     }
+    ],
+    "prior": [],
+    "guidance_absent": true
+   },
+   "allowed_unavailable": []
+  },
+  {
+   "id": "HO-CHGG",
+   "type": 3,
+   "kind": "guidance",
+   "real": true,
+   "overlaps_development": null,
+   "question": "What did Chegg report for its second quarter of 2026 (revenue, net income, diluted EPS, and year-over-year revenue growth), and how did the results compare with any outlook for that quarter published with its first-quarter 2026 results?",
+   "company": "CHGG",
+   "company_name": "CHEGG, INC",
+   "ticker": "CHGG",
+   "venue": "XNYS",
+   "fixtures": "fixtures/chgg",
+   "as_of": "2026-08-07T12:08:15Z",
+   "mode": "public",
+   "sources": "Q2 2026 release (EX-99.01, accession 0001364954-26-000085, fixtures/chgg/cur.htm): \"today reported financial results for the quarter ended June 30, 2026\"; CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS \"(in thousands, except per share amounts)\", Three Months Ended June 30, 2026 | 2025: \"Net revenues | $ | 51,849 | $ | 105,120\", \"Net loss | $ | (2,951) | $ | (35,663)\" (no noncontrolling interest line), \"Net loss per share, basic and diluted | $ | (0.03) | $ | (0.33)\"; highlight \"Total Net Revenues of $51.8 million, a decrease of 51% year-over-year\". Q1 2026 release (EX-99.01, accession 0001364954-26-000045, fixtures/chgg/pri.htm), Business Outlook, Second Quarter 2026: \"Total Net Revenues in the range of $49 million to $50 million\" (also a Chegg Skilling revenue range, gross margin and adjusted EBITDA ranges, which are not total revenue/EPS and are ignored); no EPS outlook was given.",
+   "expect": {
+    "period_in": [
+     "quarter ended 2026-06-30",
+     "Q2 2026",
+     "Q2 FY26"
+    ],
+    "currency": "USD",
+    "facts": [
+     {
+      "metric": "revenue",
+      "amount": "51849000",
+      "basis": "GAAP"
+     },
+     {
+      "metric": "net_income",
+      "amount": "-2951000",
+      "basis": "GAAP"
+     },
+     {
+      "metric": "eps_diluted",
+      "amount": "-0.03",
+      "basis": "GAAP"
+     }
+    ],
+    "prior": [
+     {
+      "metric": "revenue",
+      "relation": "YEAR_OVER_YEAR",
+      "prior_amount": "105120000",
+      "growth_pct": "-50.68",
+      "growth_tolerance": "0.01"
+     }
+    ],
+    "guidance": [
+     {
+      "metric": "revenue",
+      "basis": "GAAP",
+      "low_amount": "49000000",
+      "high_amount": "50000000",
+      "position": "ABOVE_RANGE",
+      "actual_amount": "51849000"
+     }
+    ]
+   },
+   "allowed_unavailable": []
+  },
+  {
+   "id": "HO-NATL",
+   "type": 3,
+   "kind": "guidance",
+   "real": true,
+   "overlaps_development": null,
+   "question": "What did NCR Atleos report for its second quarter of 2026 (revenue, net income, diluted EPS, and year-over-year revenue growth), and how did the results compare with any outlook for that quarter published with its first-quarter 2026 results?",
+   "company": "NATL",
+   "company_name": "NCR Atleos Corp",
+   "ticker": "NATL",
+   "venue": "XNYS",
+   "fixtures": "fixtures/natl",
+   "as_of": "2026-08-06T10:30:48Z",
+   "mode": "public",
+   "sources": "Q2 2026 release (EX-99.1, accession 0001974138-26-000014, fixtures/natl/cur.htm): \"today reported second quarter 2026 results\"; CONSOLIDATED STATEMENTS OF OPERATIONS \"($ in millions, except per share amounts)\", Three Months 2026 | 2025: \"Total revenue | 1,103 | 1,102\", \"Net income | 65 | 38\", \"Net income attributable to Atleos | $ | 65 | $ | 39\" (attributable figure used; total net income is also 65 in 2026), \"Diluted | $ | 0.86 | $ | 0.52\"; text: \"Q2 Diluted Earnings per Share of $0.86\". Q1 2026 release (EX-99.1, accession 0001974138-26-000004, fixtures/natl/pri.htm): \"Atleos will not be hosting an earnings conference call to review the first quarter results or providing a financial outlook.\" -> guidance_absent.",
+   "expect": {
+    "period_in": [
+     "quarter ended 2026-06-30",
+     "Q2 2026",
+     "Q2 FY26"
+    ],
+    "currency": "USD",
+    "facts": [
+     {
+      "metric": "revenue",
+      "amount": "1103000000",
+      "basis": "GAAP"
+     },
+     {
+      "metric": "net_income",
+      "amount": "65000000",
+      "basis": "GAAP"
+     },
+     {
+      "metric": "eps_diluted",
+      "amount": "0.86",
+      "basis": "GAAP"
+     }
+    ],
+    "prior": [
+     {
+      "metric": "revenue",
+      "relation": "YEAR_OVER_YEAR",
+      "prior_amount": "1102000000",
+      "growth_pct": "0.09",
+      "growth_tolerance": "0.01"
+     }
+    ],
+    "guidance_absent": true
+   },
+   "allowed_unavailable": []
+  },
+  {
+   "id": "HO-SPIR",
+   "type": 3,
+   "kind": "guidance",
+   "real": true,
+   "overlaps_development": null,
+   "question": "What did Spire Global report for its second quarter of 2026 (revenue, net income, diluted EPS, and year-over-year revenue growth), and how did the results compare with any outlook for that quarter published with its first-quarter 2026 results?",
+   "company": "SPIR",
+   "company_name": "Spire Global, Inc.",
+   "ticker": "SPIR",
+   "venue": "XNYS",
+   "fixtures": "fixtures/spir",
+   "as_of": "2026-08-13T20:07:23Z",
+   "mode": "public",
+   "sources": "Q2 2026 release (EX-99.1, accession 0001193125-26-346835, fixtures/spir/cur.htm): \"announced results for its quarter ended June 30, 2026\"; CONSOLIDATED STATEMENTS OF OPERATIONS \"(In thousands, except share and per share amounts)\", Three Months Ended June 30, 2026 | 2025: \"Revenue | $ | 18,048 | $ | 19,182\", \"Net (loss) income | $ | (19,969 | ) | $ | 119,590\" (no noncontrolling interest line), \"Diluted | $ | (0.52 | ) | $ | 3.72\". Q1 2026 release (EX-99.1, accession 0001193125-26-221629, fixtures/spir/pri.htm): \"Beginning this quarter, Spire will no longer be providing quarterly financial guidance.\" Only full-year 2026 ranges are given (an annual-only outlook) -> guidance_absent.",
+   "expect": {
+    "period_in": [
+     "quarter ended 2026-06-30",
+     "Q2 2026",
+     "Q2 FY26"
+    ],
+    "currency": "USD",
+    "facts": [
+     {
+      "metric": "revenue",
+      "amount": "18048000",
+      "basis": "GAAP"
+     },
+     {
+      "metric": "net_income",
+      "amount": "-19969000",
+      "basis": "GAAP"
+     },
+     {
+      "metric": "eps_diluted",
+      "amount": "-0.52",
+      "basis": "GAAP"
+     }
+    ],
+    "prior": [
+     {
+      "metric": "revenue",
+      "relation": "YEAR_OVER_YEAR",
+      "prior_amount": "19182000",
+      "growth_pct": "-5.91",
+      "growth_tolerance": "0.01"
+     }
+    ],
+    "guidance_absent": true
+   },
+   "allowed_unavailable": []
+  },
+  {
+   "id": "HO-TDC",
+   "type": 3,
+   "kind": "guidance",
+   "real": true,
+   "overlaps_development": null,
+   "question": "What did Teradata report for its second quarter of 2026 (revenue, net income, diluted EPS, and year-over-year revenue growth), and how did the results compare with any outlook for that quarter published with its first-quarter 2026 results?",
+   "company": "TDC",
+   "company_name": "TERADATA CORP /DE/",
+   "ticker": "TDC",
+   "venue": "XNYS",
+   "fixtures": "fixtures/tdc",
+   "as_of": "2026-08-05T20:07:12Z",
+   "mode": "public",
+   "sources": "Q2 2026 release (EX-99.1, accession 0001628280-26-052549, fixtures/tdc/cur.htm): \"today announced its second quarter 2026 financial results\"; statement of operations \"(in millions, except per share amounts - unaudited)\", Three Months 2026 | 2025: \"Total revenue | 410 | 408\", \"Net income | $ | 46 | $ | 9\" (no noncontrolling interest line), Net income per common share \"Diluted | $ | 0.48 | $ | 0.09\"; text: \"Total revenue was $410 million versus $408 million\", \"GAAP diluted EPS was $0.48 versus $0.09 per share\". Q1 2026 release (EX-99.1, accession 0001628280-26-030514, fixtures/tdc/pri.htm), Outlook \"For the second quarter of 2026\": \"GAAP diluted EPS is expected to be in the range of $0.22 to $0.26 per share\" (GAAP entry used). The same outlook also gives \"Non-GAAP diluted EPS is expected to be in the range of $0.53 to $0.57 per share\" (cur actual non-GAAP diluted EPS $0.69, also above that range) and \"Total revenue in the range of -4% to -2% year-over-year\"; the revenue outlook is a percentage growth range, not an amount, so no revenue guidance entry is included.",
+   "expect": {
+    "period_in": [
+     "quarter ended 2026-06-30",
+     "Q2 2026",
+     "Q2 FY26"
+    ],
+    "currency": "USD",
+    "facts": [
+     {
+      "metric": "revenue",
+      "amount": "410000000",
+      "basis": "GAAP"
+     },
+     {
+      "metric": "net_income",
+      "amount": "46000000",
+      "basis": "GAAP"
+     },
+     {
+      "metric": "eps_diluted",
+      "amount": "0.48",
+      "basis": "GAAP"
+     }
+    ],
+    "prior": [
+     {
+      "metric": "revenue",
+      "relation": "YEAR_OVER_YEAR",
+      "prior_amount": "408000000",
+      "growth_pct": "0.49",
+      "growth_tolerance": "0.01"
+     }
+    ],
+    "guidance": [
+     {
+      "metric": "eps_diluted",
+      "basis": "GAAP",
+      "low_amount": "0.22",
+      "high_amount": "0.26",
+      "position": "ABOVE_RANGE",
+      "actual_amount": "0.48"
+     }
+    ]
+   },
+   "allowed_unavailable": []
+  },
+  {
+   "id": "HO-CBUS",
+   "type": 3,
+   "kind": "guidance",
+   "real": true,
+   "overlaps_development": null,
+   "question": "What did Cibus report for its second quarter of 2026 (revenue, net income, diluted EPS, and year-over-year revenue growth), and how did the results compare with any outlook for that quarter published with its first-quarter 2026 results?",
+   "company": "CBUS",
+   "company_name": "Cibus, Inc.",
+   "ticker": "CBUS",
+   "venue": "XNAS",
+   "fixtures": "fixtures/cbus",
+   "as_of": "2026-08-14T20:14:58Z",
+   "mode": "public",
+   "sources": "Q2 2026 release (EX-99.1, accession 0001628280-26-056731, fixtures/cbus/cur.htm): \"announced its financial results for the quarter ended June 30, 2026\"; CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS \"(Unaudited and in Thousands, Except Share and Per Share Amounts)\", Three Months Ended June 30, 2026 | 2025: \"Total revenue | 994 | 933\", \"Net loss | $ | (22,145) | $ | (26,558)\", \"Net loss attributable to Cibus, Inc. stockholders | $ | (22,145) | $ | (25,372)\" (attributable figure used; equals total net loss in 2026), \"Basic and diluted net loss per share of Class A common stock | $ | (0.29) | $ | (0.61)\". Q1 2026 release (EX-99.1, accession 0001628280-26-035105, fixtures/cbus/pri.htm): no numeric revenue or EPS outlook for the second quarter (only an annual net cash usage target of approximately $30 million or less) -> guidance_absent.",
+   "expect": {
+    "period_in": [
+     "quarter ended 2026-06-30",
+     "Q2 2026",
+     "Q2 FY26"
+    ],
+    "currency": "USD",
+    "facts": [
+     {
+      "metric": "revenue",
+      "amount": "994000",
+      "basis": "GAAP"
+     },
+     {
+      "metric": "net_income",
+      "amount": "-22145000",
+      "basis": "GAAP"
+     },
+     {
+      "metric": "eps_diluted",
+      "amount": "-0.29",
+      "basis": "GAAP"
+     }
+    ],
+    "prior": [
+     {
+      "metric": "revenue",
+      "relation": "YEAR_OVER_YEAR",
+      "prior_amount": "933000",
+      "growth_pct": "6.54",
+      "growth_tolerance": "0.01"
+     }
+    ],
+    "guidance_absent": true
+   },
+   "allowed_unavailable": []
+  }
+ ]
+}

@@ -1,0 +1,14 @@
+{
+  "created_at_utc": "2026-10-17T07:30:58.044077+00:00",
+  "original_commit": "2afc156b11283485c18d62f759fd97617f4fc97e",
+  "supersedes_code_repair": "918c6c4e15a740a2ec645c09a98a80eee6031332",
+  "reason": "CI installed pandas3; exchange_calendars4.5.6 uses pandas2 date-resolution behavior. Constrain pandas<3. Also use the explicitly bounded calendar sessions directly when date endpoints are nontrading days.",
+  "policy_changed": false,
+  "original_decision_changed": false,
+  "corrected_files": {
+    "idx-signals/idxsig/guidance.py": "32816a4a6868bec5921855d3fcfa71aab6764a0b7e469b7ee39dd7dfb9f5f99e",
+    "idx-signals/tests/test_guidance_revision.py": "8ae1007e117cdd3267076d04f7c0df9e7c580ab49771bc151e52609612121eb3"
+  },
+  "requirements_sha256": "17f68b43ff2fbac0c17dd1e1c2fdbcd2525369e00a3c8ecd9fba995be68c55eb",
+  "verifier_sha256": "4ee4a3070c8e215676fcafd60cd199c608461c1fcdb3f925895fa513a3f1da46"
+}

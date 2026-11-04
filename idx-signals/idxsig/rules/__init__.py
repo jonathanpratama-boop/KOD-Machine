@@ -58,10 +58,10 @@ class Rule:
 
 
 def registry() -> dict:
-    from . import moonshot_e1, moonshot_e3, moonshot_g, placebo, user_rule
+    from . import moonshot_e1, moonshot_e3, moonshot_e4, moonshot_e5, moonshot_g, placebo, user_rule
 
     out = {}
-    for module in (user_rule, placebo, moonshot_e1, moonshot_g, moonshot_e3):
+    for module in (user_rule, placebo, moonshot_e1, moonshot_g, moonshot_e3, moonshot_e4, moonshot_e5):
         found = module.rules() if hasattr(module, "rules") else [module.rule()]
         for rule in found:
             if rule is not None:
@@ -88,6 +88,10 @@ def get(rule_id: str) -> Rule:
 
 RULE_FIELDS = ("close", "prev", "high", "low", "volume", "value", "present", "tradeable", "lock_up", "lock_down",
                "listed_shares", "open")
+# Per-name (1-D) fields a rule may read beside the (names x sessions) RULE_FIELDS: how many sessions each
+# name was listed before the window's first session (execution.Market.listed_before), so listing age does
+# not depend on where the window starts (audit finding B, research/E5/v1.1).
+RULE_NAME_FIELDS = ("listed_before",)
 CAUSAL_MODE = "prefix-first-v1"
 
 
@@ -101,7 +105,7 @@ class RuleView:
     Every field is copied when the view is built, so nothing reachable from a view, by any
     route, extends past session `last` or covers a name not yet listed."""
 
-    __slots__ = ("tickers", "dates", "shape", *RULE_FIELDS)
+    __slots__ = ("tickers", "dates", "shape", *RULE_FIELDS, *RULE_NAME_FIELDS)
 
     def __init__(self, src: dict, tickers: np.ndarray, dates: np.ndarray, rows: int, last: int):
         self.tickers = _frozen(tickers[:rows])
@@ -109,9 +113,12 @@ class RuleView:
         self.shape = (rows, last + 1)
         for name in RULE_FIELDS:
             setattr(self, name, _frozen(src[name][:rows, : last + 1]))
+        for name in RULE_NAME_FIELDS:
+            setattr(self, name, _frozen(src[name][:rows]))
 
     def __getattr__(self, name):
-        raise AttributeError(f"RuleView has no {name!r}; a rule sees only {', '.join(RULE_FIELDS)}, tickers, dates")
+        raise AttributeError(f"RuleView has no {name!r}; a rule sees only {', '.join(RULE_FIELDS)}, "
+                             f"{', '.join(RULE_NAME_FIELDS)}, tickers, dates")
 
 
 def _frozen(a: np.ndarray) -> np.ndarray:
@@ -131,7 +138,7 @@ class CausalSource:
         self.order = np.lexsort((np.arange(len(first)), first))
         self.first = first[self.order]
         self.n_sessions = n_sessions
-        self.fields = {f: getattr(market, f)[self.order] for f in RULE_FIELDS}
+        self.fields = {f: getattr(market, f)[self.order] for f in (*RULE_FIELDS, *RULE_NAME_FIELDS)}
         self.tickers = market.tickers[self.order]
         self.dates = market.dates
 

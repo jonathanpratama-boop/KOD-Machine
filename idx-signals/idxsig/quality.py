@@ -1,17 +1,17 @@
 """Data-quality tiers. Every run reports how many of its sessions fall in each tier.
 
-  TIER_1  mirror first snapshot .. source boundary (2021-01-22 .. 2025-02-21 for the pinned
-          mirror). Exchange data (IDX daily summary). Survivorship-complete: a name that
-          delisted in this span is present to its last session. Reference prices are IDX's
-          own; daily share counts let the corporate-action registry corroborate splits.
-          The default backtest window.
-  TIER_2  panel start .. day before the first snapshot (2019-07-29 .. 2021-01-21). Same
-          exchange data, but survivor-biased: names that delisted before 2021-01-22 were
-          never captured.
-  TIER_3  after the source boundary (2025-02-24 ..). Yahoo daily bars. Survivor-only
-          (names delisted later stop at the boundary), reference prices rebuilt from
-          Yahoo's split events (single-source corporate actions, never share-scaled), no
-          share counts, no trade frequency.
+TIER_1  mirror first snapshot .. source boundary (2021-01-22 .. 2025-02-21 for the pinned
+        mirror). Exchange data (IDX daily summary). Survivorship-complete: a name that
+        delisted in this span is present to its last session. Reference prices are IDX's
+        own; daily share counts let the corporate-action registry corroborate splits.
+        The default backtest window.
+TIER_2  panel start .. day before the first snapshot (2019-07-29 .. 2021-01-21). Same
+        exchange data, but survivor-biased: names that delisted before 2021-01-22 were
+        never captured.
+TIER_3  after the source boundary (2025-02-24 ..). Yahoo daily bars. Survivor-only
+        (names delisted later stop at the boundary), reference prices rebuilt from
+        Yahoo's split events (single-source corporate actions, never share-scaled), no
+        share counts, no trade frequency.
 """
 
 from __future__ import annotations
@@ -42,16 +42,40 @@ def tiers(first_session: str, boundary: str, last_session: str) -> list[dict]:
     snap = _day(FIRST_SNAPSHOT)
     out = []
     if _day(first_session) < snap:
-        out.append({"tier": "TIER_2", "from": first_session, "to": (snap - timedelta(days=1)).isoformat(),
-                    "source": "idx_mirror", "survivorship": "survivor-biased (pre-snapshot delistings absent)",
-                    "corporate_actions": "exchange reference + share counts", "share_counts": True})
-    out.append({"tier": "TIER_1", "from": max(first_session, FIRST_SNAPSHOT), "to": boundary,
-                "source": "idx_mirror", "survivorship": "complete", "corporate_actions":
-                "exchange reference + share counts + Yahoo", "share_counts": True})
+        out.append(
+            {
+                "tier": "TIER_2",
+                "from": first_session,
+                "to": (snap - timedelta(days=1)).isoformat(),
+                "source": "idx_mirror",
+                "survivorship": "survivor-biased (pre-snapshot delistings absent)",
+                "corporate_actions": "exchange reference + share counts",
+                "share_counts": True,
+            }
+        )
+    out.append(
+        {
+            "tier": "TIER_1",
+            "from": max(first_session, FIRST_SNAPSHOT),
+            "to": boundary,
+            "source": "idx_mirror",
+            "survivorship": "complete",
+            "corporate_actions": "exchange reference + share counts + Yahoo",
+            "share_counts": True,
+        }
+    )
     if _day(last_session) > _day(boundary):
-        out.append({"tier": "TIER_3", "from": (_day(boundary) + timedelta(days=1)).isoformat(), "to": last_session,
-                    "source": "yahoo", "survivorship": "survivor-only",
-                    "corporate_actions": "Yahoo split events only (single source)", "share_counts": False})
+        out.append(
+            {
+                "tier": "TIER_3",
+                "from": (_day(boundary) + timedelta(days=1)).isoformat(),
+                "to": last_session,
+                "source": "yahoo",
+                "survivorship": "survivor-only",
+                "corporate_actions": "Yahoo split events only (single source)",
+                "share_counts": False,
+            }
+        )
     return sorted(out, key=lambda t: t["from"])
 
 
@@ -77,4 +101,7 @@ def composition_from(dates, tiers: list[dict]) -> dict:
     for d in dates.astype(str):
         tier = next((t["tier"] for t in tiers if t["from"] <= d <= t["to"]), "UNTIERED")
         counts[tier] = counts.get(tier, 0) + 1
-    return {"sessions_by_tier": dict(sorted(counts.items())), "lowest_tier": max(counts) if counts else None}
+    return {
+        "sessions_by_tier": dict(sorted(counts.items())),
+        "lowest_tier": max(counts) if counts else None,
+    }

@@ -1,0 +1,5 @@
+{"development": "NO_MATERIAL_EFFECT", "validation": "NO_MATERIAL_EFFECT"}
+development | divergence None | nav-diff None | extra fills 0 | label NO_MATERIAL_EFFECT
+   baseline: Sharpe rule able to fire 2017-12-25 | kill {'date': '2018-03-15', 'nav': 20560.24409662397, 'mdd_at_kill': 0.15416840927609826, 'growth_at_kill': 1.0560244096623972} | cancelled at kill 0 | liquidation fills 1 | invested 144 / 1923
+validation | divergence None | nav-diff None | extra fills 0 | label NO_MATERIAL_EFFECT
+   baseline: Sharpe rule able to fire 2023-04-01 | kill {'date': '2023-04-22', 'nav': 12182.368045966079, 'mdd_at_kill': 0.1155083127869236, 'growth_at_kill': 0.21823680459660788} | cancelled at kill 0 | liquidation fills 2 | invested 89 / 1368

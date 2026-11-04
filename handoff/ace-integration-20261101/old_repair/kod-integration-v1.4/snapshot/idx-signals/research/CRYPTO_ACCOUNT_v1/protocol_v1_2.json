@@ -1,0 +1,44 @@
+{
+ "study_id": "CRYPTO_ACCOUNT_v1",
+ "rules_version": "CRYPTO_ACCOUNT_v1.2",
+ "prepared_at": "2026-10-31T18:41:00Z",
+ "status": "local amendment candidate; not published or activated",
+ "source_commit": "41b8eb398b900da4cf251efe3971e31dae044ec9",
+ "supersedes": {
+  "file": "research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json",
+  "sha256": "b3021091f1f9220e8bd7514b37c0c61a6ddbd423839ec7a77219414152d0776d",
+  "kept_unchanged": true
+ },
+ "correction": "research/CRYPTO_ACCOUNT_v1/CORRECTION_2.md",
+ "changed": [
+  "A failed latest quote fetch at or before decision time blocks new orders and reservations even when a cached quote is younger than five minutes; DECLINE NO_FRESH_QUOTE includes the recorded failure.",
+  "Latest observation is determined by event timestamp with ledger order resolving same-second ties. A subsequent successful observation restores eligibility; future observations and errors cannot affect a current decision.",
+  "verify checks this gate for v1.2 orders against only the ledger prefix before that order; old-version records retain their original semantics."
+ ],
+ "unchanged": [
+  "Existing pending orders, reservations, fills, cancellations, expiry and exits use the v1.1 settlement rules. Failures do not fabricate quotes or erase already recorded valid observations.",
+  "Limits, sizing, fee, chase, stop distance, order life, holding period, policy decision source and PASS handling.",
+  "All historical ledger records, frozen v1 and v1.1 protocols, frozen US account files/pins, and existing research experiments. No production ledger was read or written for this local repair."
+ ],
+ "account": {
+  "start_cash_usdt": 10000.0,
+  "risk_per_position": 0.005,
+  "max_aggregate_planned_risk": 0.015,
+  "max_new_orders_per_utc_day": 3,
+  "max_position_fraction": 0.2,
+  "leverage": "none"
+ },
+ "fees": {
+  "taker_fee_per_side": 0.001,
+  "spread": "paid by buying at the ask and selling at the bid"
+ },
+ "pins": {
+  "idxsig/crypto_account.py": "a313e18076475d8f8f5ec287d7ae84ab5adb3b75b1190799f8b1a697eb000147",
+  "idxsig/paper_account.py": "2d7cbc536695d0298b3bfa508824bd5e68ea8c6566800e59a0681666dbb00bfd",
+  "research/PAPER_ACCOUNT_v1/protocol.json": "2a36e8777be15fc58886d8defbc174ea83892acb415db7e6e08b65f379186f0a",
+  "research/CRYPTO_ACCOUNT_v1/protocol.json": "60ff96b071f10d41fa5537cc8915cccf0aea4143c948da3fd57baac6bdf4cce7",
+  "research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json": "b3021091f1f9220e8bd7514b37c0c61a6ddbd423839ec7a77219414152d0776d"
+ },
+ "rechecked_head": "5eae447c1c16dcff3daf02da6bd6ee836069eaae",
+ "recheck": "crypto source, test and v1.1 protocol blobs unchanged"
+}

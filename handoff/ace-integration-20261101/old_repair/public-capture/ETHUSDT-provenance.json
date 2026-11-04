@@ -1,0 +1,9 @@
+{
+  "symbol": "ETHUSDT",
+  "url": "https://data-api.binance.vision/api/v3/depth?symbol=ETHUSDT&limit=100",
+  "request_start_utc": "2026-10-31 18:51:05.001019+00:00",
+  "http_status": 200,
+  "received_utc": "2026-10-31 18:51:07.888997+00:00",
+  "sha256": "d9f12b578bf313aade1d1c62b006c4e871033c9aef2f8a8d9dcfbf83f1f034b6",
+  "bytes": 6288
+}

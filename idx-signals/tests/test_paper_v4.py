@@ -13,10 +13,17 @@ from idxsig.rules import moonshot_e1, moonshot_e3
 from tests.test_paper import DATA, VALIDATED, frame
 
 PLAN = {"entry_rule": "confirm", "entry_window": 3, "exit_rule": "stop_ref", "holding_days": 3}
-E3 = {"detector": "F1_ARA", "plan": PLAN, "run_id": "t-e3", "protocol_id": "KOD-IDX-E3-v1",
-      "plan_text": "buy at the first close in s+1..s+3 above the signal close; sell at the first close at or below "
-                   "the signal session's reference price, else the close of the 3th session after entry",
-      "result": "research/E3/validation/result.json", "result_sha256": "0" * 64, "detection_path": None}
+E3 = {
+    "detector": "F1_ARA",
+    "plan": PLAN,
+    "run_id": "t-e3",
+    "protocol_id": "KOD-IDX-E3-v1",
+    "plan_text": "buy at the first close in s+1..s+3 above the signal close; sell at the first close at or below "
+    "the signal session's reference price, else the close of the 3th session after entry",
+    "result": "research/E3/validation/result.json",
+    "result_sha256": "0" * 64,
+    "detection_path": None,
+}
 SELECTED = ("F1_ARA", "confirm", 3, "stop_ref", 3)
 
 
@@ -53,7 +60,10 @@ def set_path(df, ticker, session, closes):
 class V4(unittest.TestCase):
     def setUp(self):
         warnings.simplefilter("ignore")
-        self.patches = [mock.patch.object(paper, "e3_plan", lambda: E3), mock.patch.object(moonshot_e3, "SELECTED", SELECTED)]
+        self.patches = [
+            mock.patch.object(paper, "e3_plan", lambda: E3),
+            mock.patch.object(moonshot_e3, "SELECTED", SELECTED),
+        ]
         for p in self.patches:
             p.start()
 
@@ -63,9 +73,14 @@ class V4(unittest.TestCase):
 
     def test_without_a_validated_pair_the_policy_is_v3s(self):
         """Guards against: v4 changing IDX decisions when E3 has not frozen and validated anything."""
-        self.assertEqual(paper.POLICY_ID, "PAPER-POLICY-v4")
-        with mock.patch.object(paper, "e3_plan", lambda: None), mock.patch.object(moonshot_e1, "SELECTED", "F3_VOL5_RET10"):
-            d = paper.scan_frame(frame(spike=(7, 79)), DATA, validation=VALIDATED)["decisions"][0]
+        self.assertEqual(paper.POLICY_ID_V4, "PAPER-POLICY-v4")
+        with (
+            mock.patch.object(paper, "e3_plan", lambda: None),
+            mock.patch.object(moonshot_e1, "SELECTED", "F3_VOL5_RET10"),
+        ):
+            d = paper.scan_frame(
+                frame(spike=(7, 79)), DATA, validation=VALIDATED, policy=paper.POLICY_ID_V4
+            )["decisions"][0]
         self.assertEqual(d["detector"]["rule_id"], "MOONSHOT_E1_D1")
         self.assertNotIn("execution_plan", d["plan"])
         self.assertIsNotNone(d["plan"]["max_chase_price"])
@@ -74,7 +89,7 @@ class V4(unittest.TestCase):
         """Guards against: a validated plan existing while decisions still describe the v3 next-close plan."""
         df = frame(spike=(7, 79))
         close = lock_at_ara(df, "T007", 79)
-        out = paper.scan_frame(df, DATA, validation=VALIDATED)
+        out = paper.scan_frame(df, DATA, validation=VALIDATED, policy=paper.POLICY_ID_V4)
         self.assertEqual(out["scan"]["detector"]["rule_id"], "MOONSHOT_E3_D1")
         self.assertEqual(out["scan"]["detector"]["selected"], "F1_ARA")
         self.assertTrue(out["scan"]["scan_id"].endswith("-F1_ARA"))
@@ -91,13 +106,15 @@ class V4(unittest.TestCase):
         self.assertIn(f"Rp{close:g}", plan["entry_trigger"])
         self.assertEqual(plan["horizon_sessions"], 3)
         self.assertIn(plan["entry_sessions"][-1], plan["expiry"])
-        previous = float(df.loc[(df["ticker"] == "T007") & (df["date"] == df["date"].max()), "previous"].iloc[0])
+        previous = float(
+            df.loc[(df["ticker"] == "T007") & (df["date"] == df["date"].max()), "previous"].iloc[0]
+        )
         self.assertAlmostEqual(plan["invalidation"], float(floor_tick(np.array([previous]))[0]))
         self.assertIn("reference price", plan["exit"])
         for sc in plan["scenarios"]:
             self.assertLessEqual(sc["max_planned_loss_idr"], sc["risk_budget_idr"] * 1.0001)
             self.assertEqual(sc["shares"] % 100, 0)
-        unvalidated = paper.scan_frame(df, DATA)["decisions"][0]
+        unvalidated = paper.scan_frame(df, DATA, policy=paper.POLICY_ID_V4)["decisions"][0]
         self.assertEqual(unvalidated["decision"], "PASS")
         self.assertEqual(unvalidated["plan"]["execution_plan"], PLAN)
 
@@ -107,7 +124,9 @@ class V4(unittest.TestCase):
         df = frame(spike=(7, 79))
         lock_at_ara(df, "T007", 79)
         with mock.patch.object(paper, "e3_plan", lambda: e3):
-            d = paper.scan_frame(df, DATA, validation=VALIDATED)["decisions"][0]
+            d = paper.scan_frame(df, DATA, validation=VALIDATED, policy=paper.POLICY_ID_V4)[
+                "decisions"
+            ][0]
         self.assertEqual(d["decision"], "BUY ON TRIGGER")
         self.assertIsNone(d["plan"]["invalidation"])
         self.assertGreater(d["plan"]["sizing_stop"], 0)
@@ -125,7 +144,9 @@ class V4(unittest.TestCase):
         world = self._world() if world is None else world
         dates = sorted(world["date"].unique())
         base = world[world["date"] <= dates[74]].copy()
-        return paper.scan_frame(base, DATA, validation=validation)["decisions"][0]
+        return paper.scan_frame(base, DATA, validation=validation, policy=paper.POLICY_ID_V4)[
+            "decisions"
+        ][0]
 
     def _bars(self, closes, s=84):
         world = self._world(s=s)
@@ -148,24 +169,33 @@ class V4(unittest.TestCase):
         self.assertEqual(trade["entry_lag_sessions"], 1)
         self.assertEqual(trade["entry_price"], up)
         self.assertEqual(trade["exit_reason"], "horizon")
-        self.assertAlmostEqual(trade["net_return"], ((up - 30) / up) * (1 - 0.0025) / (1 + 0.0015) - 1, places=6)
+        self.assertAlmostEqual(
+            trade["net_return"], ((up - 30) / up) * (1 - 0.0025) / (1 + 0.0015) - 1, places=6
+        )
         self.assertEqual(res["decision_verdict"], "LOSS")
         self.assertIn("plan-harness-v1", res["scoring_version"])
         # the stop: a close at or below the signal session's reference price ends the trade there. The
         # fall from +5% to the reference is more than one session's lower limit (15%), so take three.
-        with mock.patch.object(paper, "e3_plan", lambda: {**E3, "plan": {**PLAN, "holding_days": 5}}):
+        with mock.patch.object(
+            paper, "e3_plan", lambda: {**E3, "plan": {**PLAN, "holding_days": 5}}
+        ):
             d5 = self._decision()
         bars = self._bars([up, int(up * 0.9), int(up * 0.81), ref, ref + 5, ref, ref, ref])
         stopped = paper.score(d5, bars)
         self.assertEqual(stopped["execution"]["paper_trade"]["exit_reason"], "stop_ref")
         self.assertEqual(stopped["execution"]["paper_trade"]["entry_session"], str(bars.dates[75]))
         self.assertEqual(stopped["execution"]["paper_trade"]["exit_session"], str(bars.dates[78]))
-        self.assertAlmostEqual(stopped["execution"]["paper_trade"]["net_return"],
-                               (ref / up) * (1 - 0.0025) / (1 + 0.0015) - 1, places=6)
+        self.assertAlmostEqual(
+            stopped["execution"]["paper_trade"]["net_return"],
+            (ref / up) * (1 - 0.0025) / (1 + 0.0015) - 1,
+            places=6,
+        )
         # a stop session locked at the lower limit (a fall of more than 15% in one session): the sale
         # rolls to the next session where it is possible, and the outcome says so
         locked = paper.score(d5, self._bars([up, int(up * 0.9), ref, ref + 5, ref, ref, ref, ref]))
-        self.assertIn("stop_ref (rolled 1 session", locked["execution"]["paper_trade"]["exit_reason"])
+        self.assertIn(
+            "stop_ref (rolled 1 session", locked["execution"]["paper_trade"]["exit_reason"]
+        )
         self.assertEqual(locked["execution"]["paper_trade"]["exit_session"], str(bars.dates[78]))
         # no close above the signal close within three sessions: no trade, a BUY is NOT FILLED
         none = paper.score(d, self._bars([int(signal_close * 0.99)] * 7))
@@ -174,15 +204,25 @@ class V4(unittest.TestCase):
         self.assertEqual(none["decision_verdict"], "NOT FILLED")
         passed = self._decision(validation=None)
         self.assertEqual(passed["decision"], "PASS")
-        rejected = paper.score(passed, self._bars([up, int(up * 1.1), int(up * 1.2), int(up * 1.3)] + [int(up * 1.3)] * 3))
-        self.assertEqual(rejected["decision_verdict"], "MISSED GAIN (rejected, plan would have profited)")
+        rejected = paper.score(
+            passed,
+            self._bars([up, int(up * 1.1), int(up * 1.2), int(up * 1.3)] + [int(up * 1.3)] * 3),
+        )
+        self.assertEqual(
+            rejected["decision_verdict"], "MISSED GAIN (rejected, plan would have profited)"
+        )
 
     def test_open_plan_windows_are_not_scored(self):
         """Guards against: a conditional entry judged 'no trigger' before its window has elapsed."""
         d = self._decision()
-        self.assertIsNone(paper.score(d, self._bars([int(d["verified_price"]["close"] * 0.99)], s=76)))
+        self.assertIsNone(
+            paper.score(d, self._bars([int(d["verified_price"]["close"] * 0.99)], s=76))
+        )
         self.assertEqual(paper._span(d), 6)  # max(window 3 + hold 3, 1 + horizon 5)
-        wide = {**d, "plan": {**d["plan"], "execution_plan": {**PLAN, "entry_window": 3, "holding_days": 5}}}
+        wide = {
+            **d,
+            "plan": {**d["plan"], "execution_plan": {**PLAN, "entry_window": 3, "holding_days": 5}},
+        }
         self.assertEqual(paper._span(wide), 8)
         self.assertEqual(paper._span({"plan": {}}), 6)
 

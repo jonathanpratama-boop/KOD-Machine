@@ -1,0 +1,142 @@
+{
+  "scope": "ONE_CANONICAL_RUN_READ_ONLY_POSTRUN_AUDIT",
+  "input_snapshot_sha256": "6b6a0e9324819da0bf709c58df3effae596ba92001cc88151e028ff86c72a511",
+  "cases": {
+    "development/TREND_V2_SHARED": {
+      "status": "PASS",
+      "events": 2612,
+      "fills": 228,
+      "NAV": "20592.76937267666925000000",
+      "growth": "1.05927693726766692500",
+      "kill": {
+        "at": "2018-03-15T00:00:00Z",
+        "reason": "NEGATIVE_TRAILING_90_DAY_SHARPE",
+        "trigger": "daily:2018-03-15"
+      },
+      "first_liquidation": "2018-03-16T00:00:00Z",
+      "residual_holdings": {
+        "BTCUSDT": "0E-8",
+        "ETHUSDT": "0E-8"
+      },
+      "source_pins": "MATCH",
+      "journal_sha256": "9350eab20ab03d7965c531145706b1d64033f9d8d5da1531801d34165607b381"
+    },
+    "development/PASSIVE_50_50_RISK_MATCHED": {
+      "status": "PASS",
+      "events": 2323,
+      "fills": 4,
+      "NAV": "17844.12712791117715000000",
+      "growth": "0.78441271279111771500",
+      "kill": {
+        "at": "2018-02-03T00:00:00Z",
+        "reason": "DRAWDOWN_AT_LEAST_25_PERCENT",
+        "trigger": "mark_batch:2018-02-03T00:00:00Z"
+      },
+      "first_liquidation": "2018-02-04T00:00:00Z",
+      "residual_holdings": {
+        "BTCUSDT": "0E-8",
+        "ETHUSDT": "0E-8"
+      },
+      "source_pins": "MATCH",
+      "journal_sha256": "558a97da8e18b6849da77d0d9bf9edac69fd93375151e80d4cb0c028d61532ae"
+    },
+    "development/CONVENTIONAL_50_50_BUY_HOLD_NO_KILL": {
+      "status": "PASS",
+      "events": 7699,
+      "fills": 4,
+      "NAV": "24500.54400089026685000000",
+      "growth": "1.45005440008902668500",
+      "kill": null,
+      "first_liquidation": null,
+      "residual_holdings": {
+        "BTCUSDT": "0E-8",
+        "ETHUSDT": "0E-8"
+      },
+      "source_pins": "MATCH",
+      "journal_sha256": "5dcc39310067c9c0c183850646c663e2cfd84d96162751e2aa59cbb45e7bb882"
+    },
+    "development/CASH": {
+      "status": "PASS",
+      "events": 1925,
+      "fills": 0,
+      "NAV": "10000",
+      "growth": "0",
+      "kill": null,
+      "first_liquidation": null,
+      "residual_holdings": {
+        "BTCUSDT": "0",
+        "ETHUSDT": "0"
+      },
+      "source_pins": "MATCH",
+      "journal_sha256": "764df41114720e150220a13f3a23f37f3437ba7e149a9dd64d7d7057da246bd3"
+    },
+    "validation/TREND_V2_SHARED": {
+      "status": "PASS",
+      "events": 1821,
+      "fills": 180,
+      "NAV": "12377.20052300523680000000",
+      "growth": "0.23772005230052368000",
+      "kill": {
+        "at": "2023-04-22T00:00:00Z",
+        "reason": "NEGATIVE_TRAILING_90_DAY_SHARPE",
+        "trigger": "daily:2023-04-22"
+      },
+      "first_liquidation": "2023-04-23T00:00:00Z",
+      "residual_holdings": {
+        "BTCUSDT": "0E-8",
+        "ETHUSDT": "0E-8"
+      },
+      "source_pins": "MATCH",
+      "journal_sha256": "4d89c2cb569399dd070e0ba50606ad72e01e8fedd4aaee3455a2022652c77d5c"
+    },
+    "validation/PASSIVE_50_50_RISK_MATCHED": {
+      "status": "PASS",
+      "events": 1876,
+      "fills": 4,
+      "NAV": "15037.86162458737010000000",
+      "growth": "0.50378616245873701000",
+      "kill": {
+        "at": "2023-06-16T00:00:00Z",
+        "reason": "NEGATIVE_TRAILING_90_DAY_SHARPE",
+        "trigger": "daily:2023-06-16"
+      },
+      "first_liquidation": "2023-06-17T00:00:00Z",
+      "residual_holdings": {
+        "BTCUSDT": "0E-8",
+        "ETHUSDT": "0E-8"
+      },
+      "source_pins": "MATCH",
+      "journal_sha256": "69e7f69c6a915277e47c1f9c92c028946e89654b79aef28a0a16cbf4adcd38dd"
+    },
+    "validation/CONVENTIONAL_50_50_BUY_HOLD_NO_KILL": {
+      "status": "PASS",
+      "events": 5479,
+      "fills": 4,
+      "NAV": "36220.20742133487805000000",
+      "growth": "2.62202074213348780500",
+      "kill": null,
+      "first_liquidation": null,
+      "residual_holdings": {
+        "BTCUSDT": "0E-8",
+        "ETHUSDT": "0E-8"
+      },
+      "source_pins": "MATCH",
+      "journal_sha256": "942effe4248f802f834000eb5981d90fc8712e050d606e49f8ce0e955eb3ad8a"
+    },
+    "validation/CASH": {
+      "status": "PASS",
+      "events": 1370,
+      "fills": 0,
+      "NAV": "10000",
+      "growth": "0",
+      "kill": null,
+      "first_liquidation": null,
+      "residual_holdings": {
+        "BTCUSDT": "0",
+        "ETHUSDT": "0"
+      },
+      "source_pins": "MATCH",
+      "journal_sha256": "df60aba06aa41ffac87a6cf12bd32ad16dab02f710b61b1ea6d4d89449c4957a"
+    }
+  }
+}

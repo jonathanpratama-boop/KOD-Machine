@@ -1,0 +1,30 @@
+{
+ "built_at": "2026-10-29T12:26:57Z",
+ "inputs": {
+  "research/PATH_HISTORY_v1/results/events.csv.gz": "0a876f8ced91e7bb940e57ccad45a31ac2789656734c7e191299c121aa18e8c7",
+  "research/PATH_HISTORY_v1/data/us_filings.csv.gz": "9ff3171333be27eadd087f17a5527ef31b33b5a1f803c450ffcf770ff8557d7f",
+  "research/PATH_HISTORY_v1/data/us_shares.csv.gz": "342c6d47813ff113e4092fa1678df82e5ce3c13fa600535ad9d97066aaa19aff",
+  "research/PATH_HISTORY_v1/data/us_short.csv.gz": "9c3a8adc34c906b109fd061ace12e6c65a228bbed9c46a45f69e77e2df295e02",
+  "idxsig/learner3.py": "1b483b5d9a83efa1ae40f57aca9d21c3f34dbdb2f5e527792a6c352fbfdede96"
+ },
+ "events": 6225,
+ "skipped_not_in_panel": 0,
+ "output": "research/LEARNER_v2/warmstart_v3/events_us.csv.gz",
+ "sha256": "d24f3f2a947f71448c77dc580ab92e2d16ad0e8d2d84b049314dc76686425b69",
+ "labels": {
+  "y_NEXT_DUMP10_1": 6225,
+  "y_DUMP10_5": 5966
+ },
+ "rates": {
+  "y_NEXT_DUMP10_1": 0.3437751004016064,
+  "y_DUMP10_5": 0.4279249078109286
+ },
+ "coverage": {
+  "has_edgar": 0.9593574297188755,
+  "has_short": 0.6356626506024097,
+  "has_shares": 0.6772690763052209,
+  "filing_8k": 0.26843373493975903,
+  "offering90": 0.30409638554216867,
+  "revsplit6m": 0.07887550200803213
+ }
+}

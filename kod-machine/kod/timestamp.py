@@ -33,8 +33,15 @@ class Authority:
 
 
 AUTHORITIES = (
-    Authority("freetsa", "https://freetsa.org/tsr", TSA_DIR / "freetsa-cacert.pem", TSA_DIR / "freetsa-tsa.crt"),
-    Authority("sectigo", "https://timestamp.sectigo.com", TSA_DIR / "sectigo-usertrust-rsa-root.pem"),
+    Authority(
+        "freetsa",
+        "https://freetsa.org/tsr",
+        TSA_DIR / "freetsa-cacert.pem",
+        TSA_DIR / "freetsa-tsa.crt",
+    ),
+    Authority(
+        "sectigo", "https://timestamp.sectigo.com", TSA_DIR / "sectigo-usertrust-rsa-root.pem"
+    ),
 )
 
 
@@ -48,16 +55,22 @@ class Stamp:
 def _openssl(*args: str) -> str:
     proc = subprocess.run(["openssl", *args], capture_output=True, text=True)
     if proc.returncode != 0:
-        raise TimestampError(f"openssl {args[0]} {args[1]}: {(proc.stderr or proc.stdout).strip().splitlines()[-1:]}")
+        raise TimestampError(
+            f"openssl {args[0]} {args[1]}: {(proc.stderr or proc.stdout).strip().splitlines()[-1:]}"
+        )
     return proc.stdout
 
 
 def _parse_gen_time(text: str) -> datetime:
-    match = re.search(r"Time stamp: (\w{3})\s+(\d{1,2}) (\d{2}:\d{2}:\d{2})(?:\.\d+)? (\d{4}) GMT", text)
+    match = re.search(
+        r"Time stamp: (\w{3})\s+(\d{1,2}) (\d{2}:\d{2}:\d{2})(?:\.\d+)? (\d{4}) GMT", text
+    )
     if not match:
         raise TimestampError("token has no readable time")
     month, day, clock, year = match.groups()
-    return datetime.strptime(f"{month} {day} {clock} {year}", "%b %d %H:%M:%S %Y").replace(tzinfo=timezone.utc)
+    return datetime.strptime(f"{month} {day} {clock} {year}", "%b %d %H:%M:%S %Y").replace(
+        tzinfo=timezone.utc
+    )
 
 
 class RFC3161Timestamper:
@@ -72,16 +85,29 @@ class RFC3161Timestamper:
         with tempfile.TemporaryDirectory() as tmp:
             query = Path(tmp) / "q.tsq"
             (Path(tmp) / "data").write_bytes(data)
-            _openssl("ts", "-query", "-data", str(Path(tmp) / "data"), "-sha256", "-cert", "-out", str(query))
+            _openssl(
+                "ts",
+                "-query",
+                "-data",
+                str(Path(tmp) / "data"),
+                "-sha256",
+                "-cert",
+                "-out",
+                str(query),
+            )
             body = query.read_bytes()
             for authority in self.authorities.values():
                 try:
                     req = urllib.request.Request(
-                        authority.url, data=body, headers={"Content-Type": "application/timestamp-query"}
+                        authority.url,
+                        data=body,
+                        headers={"Content-Type": "application/timestamp-query"},
                     )
                     with urllib.request.urlopen(req, timeout=self.timeout) as resp:
                         token = resp.read()
-                    stamps.append(Stamp(authority.name, token, self.verify(authority.name, token, data)))
+                    stamps.append(
+                        Stamp(authority.name, token, self.verify(authority.name, token, data))
+                    )
                 except Exception as exc:  # one authority down must not hide the others
                     errors.append(f"{authority.name}: {exc}")
         self.last_errors = errors
@@ -96,7 +122,16 @@ class RFC3161Timestamper:
             tok, dat = Path(tmp) / "r.tsr", Path(tmp) / "data"
             tok.write_bytes(token)
             dat.write_bytes(data)
-            args = ["ts", "-verify", "-in", str(tok), "-data", str(dat), "-CAfile", str(authority.cafile)]
+            args = [
+                "ts",
+                "-verify",
+                "-in",
+                str(tok),
+                "-data",
+                str(dat),
+                "-CAfile",
+                str(authority.cafile),
+            ]
             if authority.untrusted:
                 args += ["-untrusted", str(authority.untrusted)]
             if "Verification: OK" not in _openssl(*args):

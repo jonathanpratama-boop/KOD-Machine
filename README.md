@@ -1,5 +1,11 @@
 # KOD-Machine
 
+The integrated paper operations and research workstation are described in
+[Operating architecture](docs/OPERATING_SYSTEM.md), with setup and recovery in
+[Runtime guide](docs/RUNTIME.md). Start with `python tools/kod.py runtime --root /tmp/kod-demo demo`
+after installing `requirements-runtime.txt`. [Timing research](docs/TIMING_RESEARCH.md)
+records Hermes' negative findings and the next bounded diagnostic. Synthetic checks do not establish an investment edge.
+
 Two research tools. Neither grants entry permission.
 
 | Directory | What it is |
@@ -29,6 +35,13 @@ Two research tools. Neither grants entry permission.
   frozen, no validation run, holdout untouched. The harness now has conditional entries and
   exits (`--entry-rule`, `--exit-rule`) and refuses detector runs that touch the holdout; paper
   policy v4 would carry a validated plan into IDX decisions and is dormant.
+- Experiment E4 (historical, `idx-signals/research/E4/REPORT.md` and `v2/REPORT.md`): the fade
+  on the short side, crypto. The harness now has a short side with liquidation and a
+  redenomination rule. v1: 144 short-side plans, none admissible (two trades in three win; every
+  plan lost in 2021 and nearly every plan won in 2022; the worst 1% lose more than the position).
+  v2, with a bear-regime condition: 31 of 288 admissible on discovery, and the selected pair
+  (70% hit rate, +5.8% per trade on 2020-22) failed its one validation test on 2023 (68% hit
+  rate, -1.5% average, three liquidations in 34 trades). No paper policy change; holdout untouched.
 - Prospective paper ledger (`idx-signals/paper/`), daily routines in all three markets: IDX
   since session 2026-10-07 (4 candidates: 3 PASS, 1 NOT EXECUTABLE), crypto and US since
   2026-10-07 (see the ledger). Every candidate so far is PASS or NOT EXECUTABLE because no
@@ -50,10 +63,11 @@ git config core.hooksPath .githooks
 manifest, a corporate-action registry, a KOD card, scan, evidence file or timestamp token, a
 pinned TSA certificate, or an earlier line of `RUNS.jsonl` / `opens.jsonl` / `scans.jsonl` /
 `receipts.jsonl` / `manual.csv`.
-CI (`.github/workflows/checks.yml`) runs it over the whole history, plus both test suites,
+CI (`.github/workflows/checks.yml`) runs it over the whole history on every push/PR, plus selected test suites,
 `kod verify` (with a read-only `GITHUB_TOKEN`, so GitHub receipts are checked),
 `kod receipt-selftest` for the commit being built, `idxsig rules` (source audit) and
-`idxsig verify-runs`.
+`idxsig verify-runs`. See [CI routing and timestamp safety](docs/CI_EFFICIENCY.md) for
+PR/default-branch test routing, forecast-only selection and uncancelled integrity checks.
 
 Branch protection and rulesets are not available for private repositories on GitHub Free,
 and the API reports this branch as unprotected, so a force-push is not prevented here. That

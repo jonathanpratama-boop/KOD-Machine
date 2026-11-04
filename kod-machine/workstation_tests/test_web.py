@@ -1,4 +1,5 @@
 """Behavioral checks for the actual local web forms and rendered research."""
+
 from __future__ import annotations
 
 import json
@@ -21,11 +22,11 @@ NOW = "2026-10-23T04:00:00Z"
 
 
 def release():
-    return b'''<html><body><p>Acme Announces Financial Results for Third Quarter Fiscal 2025</p>
+    return b"""<html><body><p>Acme Announces Financial Results for Third Quarter Fiscal 2025</p>
 <p>Acme reported results for the third quarter ended October 27, 2024.</p>
 <table><tr><td>GAAP</td></tr><tr><td>($ in millions, except earnings per share)</td><td>Q3 FY25</td><td>Q2 FY25</td><td>Q3 FY24</td></tr>
 <tr><td>Revenue</td><td>$110</td><td>$100</td><td>$90</td></tr><tr><td>Net income</td><td>$22</td><td>$20</td><td>$18</td></tr>
-<tr><td>Diluted earnings per share</td><td>$1.10</td><td>$1.00</td><td>$0.90</td></tr></table></body></html>'''
+<tr><td>Diluted earnings per share</td><td>$1.10</td><td>$1.00</td><td>$0.90</td></tr></table></body></html>"""
 
 
 class WebTests(unittest.TestCase):
@@ -50,11 +51,15 @@ class WebTests(unittest.TestCase):
         return self.client.post(path, data=data, files=files, **kwargs)
 
     def company(self, ticker="ACME", name="Acme Corp", cik=None):
-        return self.service.store.upsert_security(ticker, name, cik=cik, venue="XNAS", currency="USD")
+        return self.service.store.upsert_security(
+            ticker, name, cik=cik, venue="XNAS", currency="USD"
+        )
 
     def note(self):
         sec = self.company()
-        doc = self.service.ingest(sec["id"], release(), "release.htm", "https://example.com/release.htm", published_at=PUB)
+        doc = self.service.ingest(
+            sec["id"], release(), "release.htm", "https://example.com/release.htm", published_at=PUB
+        )
         saved = self.service.generate_note(sec["id"], doc["id"], as_of=NOW, mode="observed")
         return sec, doc, saved
 
@@ -69,19 +74,42 @@ class WebTests(unittest.TestCase):
         self.assertNotIn("api_key=", health.text)
 
     def test_full_form_journey_persists_note_annotation_and_export(self):
-        added = self.post("/watchlist", {"ticker": "ACME", "name": "Acme Corp", "venue": "XNAS", "currency": "USD"})
+        added = self.post(
+            "/watchlist",
+            {"ticker": "ACME", "name": "Acme Corp", "venue": "XNAS", "currency": "USD"},
+        )
         self.assertEqual(added.status_code, 200)
         sec = self.service.store.securities()[0]
-        uploaded = self.post(f"/company/{sec['id']}/upload", {"role": "current", "source_url": "https://example.com/release.htm", "published_at": PUB}, files={"document": ("release.htm", release(), "text/html")})
+        uploaded = self.post(
+            f"/company/{sec['id']}/upload",
+            {
+                "role": "current",
+                "source_url": "https://example.com/release.htm",
+                "published_at": PUB,
+            },
+            files={"document": ("release.htm", release(), "text/html")},
+        )
         self.assertIn("Source preserved and parsed", uploaded.text)
-        doc = next(d for d in self.service.store.documents(sec["id"]) if d["extraction_status"] == "parsed")
-        generated = self.post(f"/company/{sec['id']}/notes", {"current_id": doc["id"], "mode": "observed", "as_of": NOW})
+        doc = next(
+            d for d in self.service.store.documents(sec["id"]) if d["extraction_status"] == "parsed"
+        )
+        generated = self.post(
+            f"/company/{sec['id']}/notes",
+            {"current_id": doc["id"], "mode": "observed", "as_of": NOW},
+        )
         self.assertEqual(generated.status_code, 200, generated.text)
         self.assertIn("Reported figures", generated.text)
         self.assertIn("CONSENSUS UNKNOWN", generated.text)
         self.assertIn("110", generated.text)
         note = self.service.store.notes(sec["id"])[0]
-        annotated = self.post(f"/note/{note['id']}/annotations", {"thesis": "Demand may be improving", "invalidation": "Next revenue falls", "review_condition": "Next release"})
+        annotated = self.post(
+            f"/note/{note['id']}/annotations",
+            {
+                "thesis": "Demand may be improving",
+                "invalidation": "Next revenue falls",
+                "review_condition": "Next release",
+            },
+        )
         self.assertIn("new annotation version", annotated.text)
         restarted = TestClient(create_app(self.root, offline=True, testing=True))
         self.addCleanup(restarted.close)
@@ -95,12 +123,83 @@ class WebTests(unittest.TestCase):
         self.assertIn("User research annotation", markdown.text)
         self.assertIn("Demand may be improving", markdown.text)
 
+    def test_unresolved_period_is_visible_and_the_analyst_records_it_through_the_form(self):
+        sec = self.company()
+        unstated = (
+            release()
+            .replace(
+                b"Acme Announces Financial Results for Third Quarter Fiscal 2025",
+                b"Acme financial results",
+            )
+            .replace(b"for the third quarter ended October 27, 2024", b"for the period")
+        )
+        uploaded = self.post(
+            f"/company/{sec['id']}/upload",
+            {"role": "current", "source_url": "https://example.com/r.htm", "published_at": PUB},
+            files={"document": ("r.htm", unstated, "text/html")},
+        )
+        self.assertIn("does not establish which quarter it reports", uploaded.text)
+        page = self.client.get(f"/company/{sec['id']}").text
+        self.assertIn("needs review", page)
+        self.assertIn('name="period"', page)
+        doc = self.service.store.documents(sec["id"])[0]
+        withheld = self.post(
+            f"/company/{sec['id']}/notes",
+            {"current_id": doc["id"], "mode": "observed", "as_of": NOW},
+        )
+        self.assertIn("reported period is unresolved", withheld.text)
+        recorded = self.post(
+            f"/company/{sec['id']}/notes",
+            {
+                "current_id": doc["id"],
+                "mode": "observed",
+                "as_of": NOW,
+                "period": "Q3 FY25",
+                "reporting_currency": "usd",
+            },
+        )
+        self.assertEqual(recorded.status_code, 200, recorded.text)
+        self.assertIn("chosen by the analyst", recorded.text)
+        latest = self.service.store.notes(sec["id"])[0]
+        self.assertEqual(
+            self.service.store.note(latest["id"])["result"]["analyst_inputs"]["reporting_currency"][
+                "currency"
+            ],
+            "USD",
+        )
+
     def test_csrf_and_cross_origin_changes_are_refused(self):
-        self.assertEqual(self.client.post("/watchlist", data={"ticker": "EVIL", "name": "Bad"}).status_code, 403)
+        self.assertEqual(
+            self.client.post("/watchlist", data={"ticker": "EVIL", "name": "Bad"}).status_code, 403
+        )
         token = self.token()
-        cross = self.client.post("/watchlist", data={"csrf": token, "ticker": "EVIL", "name": "Bad"}, headers={"Origin": "https://evil.example"})
+        cross = self.client.post(
+            "/watchlist",
+            data={"csrf": token, "ticker": "EVIL", "name": "Bad"},
+            headers={"Origin": "https://evil.example"},
+        )
         self.assertEqual(cross.status_code, 403)
+        opaque = self.client.post(
+            "/watchlist",
+            data={"csrf": token, "ticker": "EVIL", "name": "Bad"},
+            headers={"Origin": "null"},
+        )
+        self.assertEqual(
+            opaque.status_code, 403
+        )  # an opaque origin (sandboxed frame, data: URL) stays refused
         self.assertFalse(self.service.store.securities())
+
+    def test_the_referrer_policy_lets_a_browser_send_its_own_origin(self):
+        # Under 'no-referrer' browsers send "Origin: null" on same-origin form posts, which the Origin check refuses: every form would fail in a real
+        # browser (found by the browser journey). 'same-origin' keeps referrers off cross-site requests.
+        self.assertEqual(self.client.get("/").headers["referrer-policy"], "same-origin")
+        same = self.client.post(
+            "/watchlist",
+            data={"csrf": self.token(), "ticker": "OKAY", "name": "Fine Corp"},
+            headers={"Origin": "http://testserver"},
+            follow_redirects=False,
+        )
+        self.assertEqual(same.status_code, 303)
 
     def test_default_app_rejects_untrusted_host(self):
         client = TestClient(create_app(self.root, offline=True), base_url="http://attacker.example")
@@ -109,16 +208,32 @@ class WebTests(unittest.TestCase):
 
     def test_offline_refresh_and_import_never_call_provider(self):
         sec = self.company()
-        with patch("socket.create_connection", side_effect=AssertionError("network forbidden")), patch("socket.getaddrinfo", side_effect=AssertionError("network forbidden")):
+        with (
+            patch("socket.create_connection", side_effect=AssertionError("network forbidden")),
+            patch("socket.getaddrinfo", side_effect=AssertionError("network forbidden")),
+        ):
             refreshed = self.post(f"/company/{sec['id']}/refresh")
-            imported = self.post(f"/company/{sec['id']}/import-url", {"source_url": "https://www.sec.gov/Archives/test.htm", "role": "current"})
+            imported = self.post(
+                f"/company/{sec['id']}/import-url",
+                {"source_url": "https://www.sec.gov/Archives/test.htm", "role": "current"},
+            )
         self.assertIn("SEC refresh is disabled", refreshed.text)
         self.assertIn("remote fetching is disabled", imported.text)
         self.assertFalse(self.service.store.documents(sec["id"]))
 
     def test_unsupported_html_is_preserved_and_cannot_be_selected_as_parsed(self):
         sec = self.company()
-        response = self.post(f"/company/{sec['id']}/upload", {"role": "current"}, files={"document": ("unknown.html", b"<html><p>Unsupported financial narrative</p></html>", "text/html")})
+        response = self.post(
+            f"/company/{sec['id']}/upload",
+            {"role": "current"},
+            files={
+                "document": (
+                    "unknown.html",
+                    b"<html><p>Unsupported financial narrative</p></html>",
+                    "text/html",
+                )
+            },
+        )
         self.assertIn("this layout was not parsed", response.text)
         doc = self.service.store.documents(sec["id"])[0]
         self.assertEqual(doc["extraction_status"], "unsupported")
@@ -127,7 +242,7 @@ class WebTests(unittest.TestCase):
 
     def test_document_and_annotation_text_is_escaped(self):
         sec, doc, note = self.note()
-        evil = '<script>alert(1)</script> [click](javascript:alert(1)) ![tracking](https://evil.example/x)'
+        evil = "<script>alert(1)</script> [click](javascript:alert(1)) ![tracking](https://evil.example/x)"
         response = self.post(f"/note/{note['id']}/annotations", {"thesis": evil})
         self.assertNotIn("<script>", response.text)
         self.assertIn("&lt;script&gt;", response.text)
@@ -138,8 +253,12 @@ class WebTests(unittest.TestCase):
 
     def test_unavailable_source_time_withholds_figures_in_html_and_json(self):
         sec = self.company()
-        doc = self.service.ingest(sec["id"], release(), "release.htm", "https://example.com/release.htm", published_at=PUB)
-        saved = self.service.generate_note(sec["id"], doc["id"], as_of="2024-01-01T00:00:00Z", mode="public")
+        doc = self.service.ingest(
+            sec["id"], release(), "release.htm", "https://example.com/release.htm", published_at=PUB
+        )
+        saved = self.service.generate_note(
+            sec["id"], doc["id"], as_of="2024-01-01T00:00:00Z", mode="public"
+        )
         response = self.client.get(f"/note/{saved['id']}")
         self.assertIn("WITHHELD BY CUTOFF", response.text)
         self.assertNotIn("Reported figures", response.text)
@@ -150,7 +269,10 @@ class WebTests(unittest.TestCase):
     def test_source_ownership_mismatch_cannot_generate_note(self):
         sec, doc, _ = self.note()
         other = self.company("OTHER", "Other Co")
-        response = self.post(f"/company/{other['id']}/notes", {"current_id": doc["id"], "mode": "observed", "as_of": NOW})
+        response = self.post(
+            f"/company/{other['id']}/notes",
+            {"current_id": doc["id"], "mode": "observed", "as_of": NOW},
+        )
         self.assertFalse(self.service.store.notes(other["id"]))
         self.assertIn("Other Co", response.text)
 
@@ -159,7 +281,11 @@ class WebTests(unittest.TestCase):
         self.assertEqual(self.client.get("/note/not-found").status_code, 404)
         self.assertEqual(self.client.get("/source/not-found").status_code, 404)
         sec = self.company()
-        response = self.post(f"/company/{sec['id']}/upload", {"role": "current", "source_url": "javascript:alert(1)"}, files={"document": ("release.htm", release(), "text/html")})
+        response = self.post(
+            f"/company/{sec['id']}/upload",
+            {"role": "current", "source_url": "javascript:alert(1)"},
+            files={"document": ("release.htm", release(), "text/html")},
+        )
         self.assertIn("valid http or https", response.text)
         self.assertFalse(self.service.store.documents(sec["id"]))
 
@@ -172,7 +298,14 @@ class WebTests(unittest.TestCase):
         self.assertEqual(self.client.get(f"/note/{note['id']}").status_code, 200)
 
     def test_input_length_and_body_size_limits(self):
-        response = self.client.post("/watchlist", content=b"x", headers={"Content-Length": str(MAX_BODY + 1), "Content-Type": "application/x-www-form-urlencoded"})
+        response = self.client.post(
+            "/watchlist",
+            content=b"x",
+            headers={
+                "Content-Length": str(MAX_BODY + 1),
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+        )
         self.assertEqual(response.status_code, 413)
         response = self.post("/watchlist", {"ticker": "ACME", "name": "x" * 181})
         self.assertIn("180-character", response.text)
@@ -182,7 +315,12 @@ class WebTests(unittest.TestCase):
         def chunks():
             for _ in range(11):
                 yield b"x" * (1024 * 1024)
-        response = self.client.post("/watchlist", content=chunks(), headers={"Content-Type": "application/x-www-form-urlencoded"})
+
+        response = self.client.post(
+            "/watchlist",
+            content=chunks(),
+            headers={"Content-Type": "application/x-www-form-urlencoded"},
+        )
         self.assertEqual(response.status_code, 413)
         self.assertFalse(self.service.store.securities())
 
@@ -191,7 +329,14 @@ class WebTests(unittest.TestCase):
         self.addCleanup(online.close)
         page = online.get("/")
         token = re.search(r'name="csrf" value="([^"]+)"', page.text).group(1)
-        identity = {"ticker": "AAPL", "name": "Apple Inc.", "cik": "0000320193", "venue": "XNAS", "currency": "USD", "association": "verified_from_filing_metadata"}
+        identity = {
+            "ticker": "AAPL",
+            "name": "Apple Inc.",
+            "cik": "0000320193",
+            "venue": "XNAS",
+            "currency": "USD",
+            "association": "verified_from_filing_metadata",
+        }
         raw = b'{"fields":["cik","name","ticker","exchange"],"data":[[320193,"Apple Inc.","AAPL","Nasdaq"]]}'
         with patch("kod.workstation.sources.SecClient") as client_type:
             client = client_type.return_value
@@ -209,24 +354,57 @@ class WebTests(unittest.TestCase):
         self.assertEqual(mapping["provider"], "sec_mapping")
         self.assertEqual(mapping["observed_at"], NOW)
         self.assertEqual(mapping["extraction_status"], "metadata")
-        self.assertEqual(mapping["source_url"], "https://www.sec.gov/files/company_tickers_exchange.json")
+        self.assertEqual(
+            mapping["source_url"], "https://www.sec.gov/files/company_tickers_exchange.json"
+        )
         self.assertEqual(self.service.store.raw(mapping["id"]), raw)
         self.assertNotIn("company_tickers_exchange.json", online.get("/").text)
 
     def test_metadata_headers_and_provider_metadata_are_not_release_events(self):
         sec, doc, _ = self.note()
-        self.service.store.save_document(sec["id"], b"<html>SEC header evidence</html>", "metadata_header_marker.html", "https://example.com/headers.html",
-                                         role="metadata", provider="local", observed_at=NOW, extraction_status="not_applicable")
-        self.service.store.save_document(sec["id"], b"{}", "submissions_marker.json", "https://data.sec.gov/submissions/CIK0000000001.json",
-                                         role="other", provider="sec_submissions", observed_at=NOW, extraction_status="not_applicable")
+        self.service.store.save_document(
+            sec["id"],
+            b"<html>SEC header evidence</html>",
+            "metadata_header_marker.html",
+            "https://example.com/headers.html",
+            role="metadata",
+            provider="local",
+            observed_at=NOW,
+            extraction_status="not_applicable",
+        )
+        self.service.store.save_document(
+            sec["id"],
+            b"{}",
+            "submissions_marker.json",
+            "https://data.sec.gov/submissions/CIK0000000001.json",
+            role="other",
+            provider="sec_submissions",
+            observed_at=NOW,
+            extraction_status="not_applicable",
+        )
         page = self.client.get("/")
         self.assertIn("release.htm", page.text)
         self.assertNotIn("metadata_header_marker", page.text)
         self.assertNotIn("submissions_marker", page.text)
 
     def test_job_failure_is_different_from_no_new_events(self):
-        self.service.store.record_job("sec", "ACME", "success", "Checked successfully; no new filings", started_at=PUB, finished_at=PUB, new_count=0)
-        self.service.store.record_job("sec", "ACME", "failed", "Source temporarily unavailable", started_at=NOW, finished_at=NOW)
+        self.service.store.record_job(
+            "sec",
+            "ACME",
+            "success",
+            "Checked successfully; no new filings",
+            started_at=PUB,
+            finished_at=PUB,
+            new_count=0,
+        )
+        self.service.store.record_job(
+            "sec",
+            "ACME",
+            "failed",
+            "Source temporarily unavailable",
+            started_at=NOW,
+            finished_at=NOW,
+        )
         health = self.client.get("/health")
         self.assertIn("Source temporarily unavailable", health.text)
         self.assertIn("Checked successfully; no new filings", health.text)
@@ -235,10 +413,27 @@ class WebTests(unittest.TestCase):
     @unittest.skipUnless((DEMO / "current_q3fy25pr.htm").exists(), "real fixture not materialized")
     def test_real_release_is_rendered_via_same_upload_and_note_routes(self):
         sec = self.company("NVDA", "NVIDIA Corporation", "1045810")
-        response = self.post(f"/company/{sec['id']}/upload", {"role": "current", "published_at": PUB, "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm"}, files={"document": ("q3fy25pr.htm", (DEMO / "current_q3fy25pr.htm").read_bytes(), "text/html")})
+        response = self.post(
+            f"/company/{sec['id']}/upload",
+            {
+                "role": "current",
+                "published_at": PUB,
+                "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581024000315/q3fy25pr.htm",
+            },
+            files={
+                "document": (
+                    "q3fy25pr.htm",
+                    (DEMO / "current_q3fy25pr.htm").read_bytes(),
+                    "text/html",
+                )
+            },
+        )
         self.assertIn("Source preserved and parsed", response.text)
         doc = self.service.store.documents(sec["id"])[0]
-        response = self.post(f"/company/{sec['id']}/notes", {"current_id": doc["id"], "mode": "observed", "as_of": NOW})
+        response = self.post(
+            f"/company/{sec['id']}/notes",
+            {"current_id": doc["id"], "mode": "observed", "as_of": NOW},
+        )
         self.assertIn("35,082", response.text)
         self.assertIn("0.78", response.text)
         self.assertIn("Evidence", response.text)
@@ -254,14 +449,32 @@ class DateOnlyEventTests(unittest.TestCase):
             service = ResearchService(Store(Path(d) / "w"), clock=lambda: NOW)
             store = service.store
             sec = store.upsert_security("NVDA", "NVIDIA Corporation", "1045810")
-            for acc, day in (("0001045810-24-000262", "2024-08-28"), ("0001045810-24-000315", "2024-11-20")):
-                store.save_event(sec["id"], acc, "8-K", f"8-K · {day}", "https://www.sec.gov/Archives/edgar/data/1045810/x/y.htm",
-                                 published_at=day, published_basis="SEC filing date only", observed_at=NOW)
-            self.assertEqual([e["external_id"] for e in store.events(sec["id"])], ["0001045810-24-000315", "0001045810-24-000262"])
-            client = TestClient(create_app(Path(d) / "w", offline=True, service=service, testing=True))
+            for acc, day in (
+                ("0001045810-24-000262", "2024-08-28"),
+                ("0001045810-24-000315", "2024-11-20"),
+            ):
+                store.save_event(
+                    sec["id"],
+                    acc,
+                    "8-K",
+                    f"8-K · {day}",
+                    "https://www.sec.gov/Archives/edgar/data/1045810/x/y.htm",
+                    published_at=day,
+                    published_basis="SEC filing date only",
+                    observed_at=NOW,
+                )
+            self.assertEqual(
+                [e["external_id"] for e in store.events(sec["id"])],
+                ["0001045810-24-000315", "0001045810-24-000262"],
+            )
+            client = TestClient(
+                create_app(Path(d) / "w", offline=True, service=service, testing=True)
+            )
             inbox = client.get("/").text
             self.assertIn("2024-11-20 (date only)", inbox)
-            self.assertLess(inbox.index("2024-11-20 (date only)"), inbox.index("2024-08-28 (date only)"))
+            self.assertLess(
+                inbox.index("2024-11-20 (date only)"), inbox.index("2024-08-28 (date only)")
+            )
             self.assertIn("2024-11-20 (date only)", client.get("/company/" + sec["id"]).text)
             self.assertNotIn("2024-08-28 (date only)", client.get("/?after=2024-09-01").text)
             client.close()

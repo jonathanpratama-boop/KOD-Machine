@@ -1,0 +1,174 @@
+{
+ "study": "PROFIT_REPLAY_v1",
+ "ran_at": "2026-10-30T09:24:56Z",
+ "skipped_no_entry": 0,
+ "groups": {
+  "CERTIFIED_CALLS": {
+   "trades": 182,
+   "mean_gap_at_entry": -0.08750224634788381,
+   "H1": {
+    "trades": 182,
+    "gross_mean": 0.011721221588053339,
+    "gross_median": 0.010658329258534584,
+    "win_rate_gross": 0.5384615384615384,
+    "worst_trade": -1.6963562753036436,
+    "best_trade": 0.9627733829688228,
+    "CHEAP": {
+     "net_mean": 0.008721221588053333,
+     "net_lower_95": -0.02871776456383273,
+     "win_rate": 0.532967032967033,
+     "per_1000_per_trade": 8.721221588053332,
+     "equal_weight_daily_total": -1.0000419679802406,
+     "max_drawdown": -1.0001406138263482
+    },
+    "TYPICAL": {
+     "net_mean": 0.0007212215880533279,
+     "net_lower_95": -0.036717764563832744,
+     "win_rate": 0.4945054945054945,
+     "per_1000_per_trade": 0.7212215880533279,
+     "equal_weight_daily_total": -0.9997551633445655,
+     "max_drawdown": -1.0075382624058329
+    },
+    "BRUTAL": {
+     "net_mean": -0.023278778411946675,
+     "net_lower_95": -0.06071776456383274,
+     "win_rate": 0.46703296703296704,
+     "per_1000_per_trade": -23.278778411946675,
+     "equal_weight_daily_total": -0.9998799877778733,
+     "max_drawdown": -1.0077464596364218
+    }
+   },
+   "H5": {
+    "trades": 179,
+    "gross_mean": 0.0951679116545376,
+    "gross_median": 0.1930894375919026,
+    "win_rate_gross": 0.6983240223463687,
+    "worst_trade": -2.194767322183753,
+    "best_trade": 0.9935167786258979,
+    "CHEAP": {
+     "net_mean": 0.08816791165453758,
+     "net_lower_95": 0.029478168042294473,
+     "win_rate": 0.6927374301675978,
+     "per_1000_per_trade": 88.16791165453758,
+     "equal_weight_daily_total": -0.8798101678649812,
+     "max_drawdown": -1.0620121949243375
+    },
+    "TYPICAL": {
+     "net_mean": 0.06416791165453758,
+     "net_lower_95": 0.005478168042294459,
+     "win_rate": 0.6759776536312849,
+     "per_1000_per_trade": 64.16791165453759,
+     "equal_weight_daily_total": -1.0048251832232538,
+     "max_drawdown": -1.0850559775243143
+    },
+    "BRUTAL": {
+     "net_mean": -0.019832088345462424,
+     "net_lower_95": -0.07852183195770553,
+     "win_rate": 0.5977653631284916,
+     "per_1000_per_trade": -19.832088345462424,
+     "equal_weight_daily_total": -0.9999814603139558,
+     "max_drawdown": -1.1020361404329642
+    }
+   }
+  },
+  "ALL_SPIKES": {
+   "trades": 1718,
+   "mean_gap_at_entry": -0.028514844776038925,
+   "H1": {
+    "trades": 1718,
+    "gross_mean": -0.013263823256210895,
+    "gross_median": 0.00720781429394862,
+    "win_rate_gross": 0.5203725261932479,
+    "worst_trade": -6.721943048576215,
+    "best_trade": 0.9627733829688228,
+    "CHEAP": {
+     "net_mean": -0.0162638232562109,
+     "net_lower_95": -0.02837050836404958,
+     "win_rate": 0.5139697322467986,
+     "per_1000_per_trade": -16.263823256210898,
+     "equal_weight_daily_total": -0.9384429856390756,
+     "max_drawdown": -0.9360419896781941
+    },
+    "TYPICAL": {
+     "net_mean": -0.024263823256210904,
+     "net_lower_95": -0.036370508364049585,
+     "win_rate": 0.4883585564610012,
+     "per_1000_per_trade": -24.263823256210905,
+     "equal_weight_daily_total": -0.981507849724826,
+     "max_drawdown": -0.9798303098846866
+    },
+    "BRUTAL": {
+     "net_mean": -0.0482638232562109,
+     "net_lower_95": -0.06037050836404958,
+     "win_rate": 0.4121071012805588,
+     "per_1000_per_trade": -48.2638232562109,
+     "equal_weight_daily_total": -0.9995287005120916,
+     "max_drawdown": -0.9994719321505643
+    }
+   },
+   "H5": {
+    "trades": 1688,
+    "gross_mean": 0.02478434704279104,
+    "gross_median": 0.1001464763994387,
+    "win_rate_gross": 0.6587677725118484,
+    "worst_trade": -4.362500503037173,
+    "best_trade": 0.9935167786258979,
+    "CHEAP": {
+     "net_mean": 0.01778434704279105,
+     "net_lower_95": -0.0038600551920882865,
+     "win_rate": 0.648696682464455,
+     "per_1000_per_trade": 17.78434704279105,
+     "equal_weight_daily_total": 1.3538364190930423,
+     "max_drawdown": -0.98952112567067
+    },
+    "TYPICAL": {
+     "net_mean": -0.006215652957208963,
+     "net_lower_95": -0.02786005519208829,
+     "win_rate": 0.6143364928909952,
+     "per_1000_per_trade": -6.215652957208962,
+     "equal_weight_daily_total": -0.9311046804547198,
+     "max_drawdown": -0.9965596059930427
+    },
+    "BRUTAL": {
+     "net_mean": -0.09021565295720897,
+     "net_lower_95": -0.11186005519208832,
+     "win_rate": 0.4745260663507109,
+     "per_1000_per_trade": -90.21565295720897,
+     "equal_weight_daily_total": -0.9999998777628774,
+     "max_drawdown": -0.999999785992952
+    }
+   }
+  }
+ },
+ "by_month_typical_H1": {
+  "2026-04": {
+   "trades": 20,
+   "net_mean": -0.04330083916347961
+  },
+  "2026-05": {
+   "trades": 28,
+   "net_mean": -0.07187013284911858
+  },
+  "2026-06": {
+   "trades": 45,
+   "net_mean": 0.0775729563660734
+  },
+  "2026-07": {
+   "trades": 20,
+   "net_mean": 0.04901969657691875
+  },
+  "2026-08": {
+   "trades": 25,
+   "net_mean": -0.13912141555824836
+  },
+  "2026-09": {
+   "trades": 26,
+   "net_mean": 0.02618487779746477
+  },
+  "2026-10": {
+   "trades": 18,
+   "net_mean": 0.07420524612672581
+  }
+ },
+ "verdict": "FAILS the go/no-go: not reliably profitable after typical costs"
+}

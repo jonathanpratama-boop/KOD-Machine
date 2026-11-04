@@ -1,0 +1,13 @@
+{
+ "id": "CATALYST_REGISTER_v1_SEC13D_KILL_TEST_2020_2023",
+ "experiment": "CATALYST_REGISTER_v1",
+ "date": "2026-10-29",
+ "hypothesis": "kill test: original Schedule 13D filings that the SEC13D abstention rule lets fire (2020-07 to 2023-11 entries) beat matched random entries over 20 sessions, bought at the open of the first session whose 09:15 New York is after acceptance; survivor-only prices (can fail, cannot confirm)",
+ "one_sided_p": 0.16613567119140013,
+ "variants_searched": 1,
+ "counted": true,
+ "registered": "2026-10-29",
+ "p_source": "research/CATALYST_REGISTER_v1/KILL_TEST_2020_2023/results/RESULT.json primary.p_one_sided (ISO-week cluster bootstrap t 0.97, 10000 resamples), normal one-sided",
+ "outcome": "NOT_KILLED (not a confirmation: survivor-only prices bias it upward)",
+ "note": "FIRE scored 412: mean excess +0.0101 (se 0.0104, 95% -0.0096 to +0.0310), median -0.0012, win rate 0.495. Descriptive classes in RESULT.json."
+}

@@ -36,14 +36,20 @@ def universe(market: str, proto: dict | None = None, snapshot: Path = ETORO) -> 
     rows = json.loads(snapshot.read_text(encoding="utf-8"))["InstrumentDisplayDatas"]
     out = set()
     for r in rows:
-        if r.get("InstrumentTypeID") != 5 or r.get("IsInternalInstrument") or r.get("ExchangeID") not in spec["exchange_ids"]:
+        if (
+            r.get("InstrumentTypeID") != 5
+            or r.get("IsInternalInstrument")
+            or r.get("ExchangeID") not in spec["exchange_ids"]
+        ):
             continue
         sym = r.get("SymbolFull") or ""
         if not sym.endswith(spec["etoro_suffix"]) or "-old" in sym.lower():
             continue
         base = sym[: -len(spec["etoro_suffix"])]
         if spec["yahoo_suffix"] == ".HK" and base.isdigit():
-            base = f"{int(base):04d}"  # eToro writes 00001 and 1810; Yahoo wants four digits (0001.HK)
+            base = (
+                f"{int(base):04d}"  # eToro writes 00001 and 1810; Yahoo wants four digits (0001.HK)
+            )
         if base:
             out.add(base)
     return sorted(out)
@@ -53,23 +59,45 @@ def profile(market: str, proto: dict | None = None) -> Profile:
     spec = (proto or protocol())["markets"][market]
     e = tuple(spec["band_edges"])
     names = (f"<{e[0]}", f"{e[0]}-{e[1]}", f"{e[1]}-{e[2]}", f">{e[2]}")
-    return Profile(market, spec["currency"], 1, False, e, names, 0.0, 0.0, (), 5_000.0, "open",
-                   f"eToro-listed stocks on the {market} exchange(s), Yahoo bars",
-                   "no cost model: used for separation tests only (LEAD_LADDER_INTL_v1)")
+    return Profile(
+        market,
+        spec["currency"],
+        1,
+        False,
+        e,
+        names,
+        0.0,
+        0.0,
+        (),
+        5_000.0,
+        "open",
+        f"eToro-listed stocks on the {market} exchange(s), Yahoo bars",
+        "no cost model: used for separation tests only (LEAD_LADDER_INTL_v1)",
+    )
 
 
 def fetch(market: str, proto: dict | None = None, workers: int = 2, log=print) -> Path:
     proto = proto or protocol()
     spec = proto["markets"][market]
-    return yahoo.fetch(universe(market, proto), prefix=f"yahoo_intl_{market.lower()}", suffix=spec["yahoo_suffix"],
-                       start=proto["fetch_start"], workers=workers, log=log)
+    return yahoo.fetch(
+        universe(market, proto),
+        prefix=f"yahoo_intl_{market.lower()}",
+        suffix=spec["yahoo_suffix"],
+        start=proto["fetch_start"],
+        workers=workers,
+        log=log,
+    )
 
 
 def build(market: str, manifest: Path, log=print) -> Path:
     problems = check_files(manifest)
     if problems:
-        raise RuntimeError(f"{manifest.name}: {len(problems)} files differ from the manifest, e.g. {problems[:3]}")
-    df, _ = global_panel.load_us(manifest)  # generic Yahoo chart reader (exchange gmtoffset from each response)
+        raise RuntimeError(
+            f"{manifest.name}: {len(problems)} files differ from the manifest, e.g. {problems[:3]}"
+        )
+    df, _ = global_panel.load_us(
+        manifest
+    )  # generic Yahoo chart reader (exchange gmtoffset from each response)
     panel, qa = global_panel._finish(df)
     PANEL_DIR.mkdir(parents=True, exist_ok=True)
     stamp = utc_stamp().replace("-", "").replace(":", "")
@@ -78,25 +106,49 @@ def build(market: str, manifest: Path, log=print) -> Path:
     out["date"] = out["date"].dt.strftime("%Y-%m-%d")
     out.to_csv(path, index=False, compression={"method": "gzip", "mtime": 0}, float_format="%.10g")
     first, last = panel["date"].min().date().isoformat(), panel["date"].max().date().isoformat()
-    surv = ("survivor-only and eToro-selected: the stocks eToro listed on 2026-10-16, with Yahoo history; names "
-            "delisted earlier are absent")
+    surv = (
+        "survivor-only and eToro-selected: the stocks eToro listed on 2026-10-16, with Yahoo history; names "
+        "delisted earlier are absent"
+    )
     meta = {
-        "format": global_panel.FORMAT, "market": f"INTL_{market}", "panel": rel(path), "sha256": sha256_file(path),
-        "built_at": utc_stamp(), "inputs": {manifest.name: {"sha256": sha256_file(manifest), "path": rel(manifest)}},
-        "rows": int(len(panel)), "tickers": int(panel["ticker"].nunique()), "sessions": int(panel["date"].nunique()),
-        "first_session": first, "last_session": last, "source_boundary": last,
+        "format": global_panel.FORMAT,
+        "market": f"INTL_{market}",
+        "panel": rel(path),
+        "sha256": sha256_file(path),
+        "built_at": utc_stamp(),
+        "inputs": {manifest.name: {"sha256": sha256_file(manifest), "path": rel(manifest)}},
+        "rows": int(len(panel)),
+        "tickers": int(panel["ticker"].nunique()),
+        "sessions": int(panel["date"].nunique()),
+        "first_session": first,
+        "last_session": last,
+        "source_boundary": last,
         "default_start": (panel["date"].min() + timedelta(days=120)).date().isoformat(),
         "survivorship": surv,
-        "quality_tiers": [{"tier": f"INTL_{market}_SURVIVOR", "from": first, "to": last, "source": "yahoo",
-                           "survivorship": surv, "corporate_actions": "split-adjusted by the source"}],
-        "known_limitations": [surv, "prices are split-adjusted by the source, not dividend-adjusted",
-                              "daily bars only", "no cost model in this panel's profile"],
+        "quality_tiers": [
+            {
+                "tier": f"INTL_{market}_SURVIVOR",
+                "from": first,
+                "to": last,
+                "source": "yahoo",
+                "survivorship": surv,
+                "corporate_actions": "split-adjusted by the source",
+            }
+        ],
+        "known_limitations": [
+            surv,
+            "prices are split-adjusted by the source, not dividend-adjusted",
+            "daily bars only",
+            "no cost model in this panel's profile",
+        ],
         "qa": qa,
     }
     mpath = MANIFESTS / f"panel_intl_{market.lower()}-{stamp}.json"
     with mpath.open("x", encoding="utf-8") as fh:
         fh.write(json.dumps(meta, indent=2, sort_keys=True) + "\n")
-    log(f"{market} panel {rel(path)} rows {meta['rows']} tickers {meta['tickers']} sessions {meta['sessions']}")
+    log(
+        f"{market} panel {rel(path)} rows {meta['rows']} tickers {meta['tickers']} sessions {meta['sessions']}"
+    )
     return mpath
 
 

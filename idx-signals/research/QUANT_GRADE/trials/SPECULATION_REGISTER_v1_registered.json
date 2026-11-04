@@ -1,0 +1,13 @@
+{
+ "id": "SPECULATION_REGISTER_v1_registered",
+ "experiment": "SPECULATION_REGISTER_v1",
+ "date": "2026-10-28",
+ "hypothesis": "prospective: the frozen plan's net return exceeds its matched twins' on sets sealed before the entry (one plan per market: IDX, US, CRYPTO); the cone's statements are graded for calibration (descriptive)",
+ "one_sided_p": null,
+ "p_source": "no look yet; a verdict is computed only at the pre-declared looks (n >= 60, 120, 240 resolved sets from >= 15 sessions) and each look adds its own trial file SPECULATION_REGISTER_v1_<market>_BASE5_n<look>.json",
+ "variants_searched": 0,
+ "outcome": "PENDING (prospective; registered before the first set was sealed)",
+ "note": "research/SPECULATION_REGISTER_v1/PROTOCOL.md. No backtest, no variant of a retired entry, no holdout. Counted at each look, one per market.",
+ "counted": false,
+ "registered": "2026-10-28"
+}
