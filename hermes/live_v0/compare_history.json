@@ -1,0 +1,89 @@
+{
+ "days": 3167,
+ "share_days_breadth_le_10pct": 0.25,
+ "share_days_breadth_le_10_and_btc_above_sma200": 0.089,
+ "share_days_fng_20_32": 0.245,
+ "lookalike_days": 63,
+ "lookalike_dates_sample": [
+  "2019-07-12",
+  "2019-07-24",
+  "2019-07-31",
+  "2019-08-23",
+  "2019-08-29",
+  "2019-09-02",
+  "2021-12-12",
+  "2021-12-21",
+  "2024-06-25",
+  "2025-02-25",
+  "2025-03-03",
+  "2025-03-08",
+  "2025-03-23",
+  "2025-10-15",
+  "2025-10-21",
+  "2025-11-01"
+ ],
+ "lookalike_years": {
+  "2019": 21,
+  "2021": 8,
+  "2023": 3,
+  "2024": 4,
+  "2025": 25,
+  "2026": 2
+ },
+ "after_lookalike": {
+  "btc_fwd7": {
+   "n": 61,
+   "mean": 2.6,
+   "median": 0.2,
+   "pos": 56
+  },
+  "btc_fwd30": {
+   "n": 61,
+   "mean": -4.8,
+   "median": -7.1,
+   "pos": 26
+  },
+  "alt_fwd7": {
+   "n": 61,
+   "mean": -1.5,
+   "median": -1.5,
+   "pos": 39
+  },
+  "alt_fwd30": {
+   "n": 61,
+   "mean": -14.8,
+   "median": -17.0,
+   "pos": 10
+  }
+ },
+ "after_all_days": {
+  "btc_fwd7": {
+   "n": 3160,
+   "mean": 0.8,
+   "median": 0.4,
+   "pos": 53
+  },
+  "btc_fwd30": {
+   "n": 3137,
+   "mean": 4.0,
+   "median": 1.6,
+   "pos": 54
+  },
+  "alt_fwd7": {
+   "n": 3160,
+   "mean": 0.5,
+   "median": 0.5,
+   "pos": 52
+  },
+  "alt_fwd30": {
+   "n": 3137,
+   "mean": 3.0,
+   "median": -2.0,
+   "pos": 47
+  }
+ },
+ "funding_prints": 2854110,
+ "share_funding_le_-1pct": 0.0009982095994898585,
+ "share_funding_le_-0.135pct": 0.013226890344100262,
+ "funding_percentile_of_-1.35pct": 0.0574
+}

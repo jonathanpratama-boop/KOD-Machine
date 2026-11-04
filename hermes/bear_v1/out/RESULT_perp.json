@@ -1,0 +1,1016 @@
+{
+ "mode": "perp",
+ "panel": [
+  698,
+  "2017-08-17",
+  "2026-10-31"
+ ],
+ "bear_weeks": {
+  "BEAR_btc_sma200": {
+   "2018-20": 80,
+   "2021-23": 77,
+   "2024-26": 57
+  },
+  "ALT_BEAR_breadth35": {
+   "2018-20": 75,
+   "2021-23": 83,
+   "2024-26": 82
+  }
+ },
+ "weekly": {
+  "BEAR_btc_sma200": {
+   "2018-20": {
+    "L_BTC": {
+     "n": 80,
+     "mean": 0.0024,
+     "median": 0.0168,
+     "pos": 0.562,
+     "worst": -0.333,
+     "best": 0.26,
+     "compounded": -0.205,
+     "maxdd": -0.666
+    },
+    "L_ALTS": {
+     "n": 80,
+     "mean": 0.0047,
+     "median": 0.0118,
+     "pos": 0.588,
+     "worst": -0.373,
+     "best": 0.371,
+     "compounded": -0.298,
+     "maxdd": -0.849
+    },
+    "S_ALTS": {
+     "n": 80,
+     "mean": -0.0049,
+     "median": 0.0,
+     "pos": 0.025,
+     "worst": -0.149,
+     "best": 0.353,
+     "compounded": -0.389,
+     "maxdd": -0.399
+    },
+    "S_WEAK": {
+     "n": 80,
+     "mean": -0.0024,
+     "median": 0.0,
+     "pos": 0.0,
+     "worst": -0.137,
+     "best": 0.0,
+     "compounded": -0.182,
+     "maxdd": -0.182
+    },
+    "L_LEADERS": {
+     "n": 80,
+     "mean": 0.0039,
+     "median": 0.0,
+     "pos": 0.075,
+     "worst": -0.66,
+     "best": 0.297,
+     "compounded": -0.191,
+     "maxdd": -0.66
+    },
+    "L_RS": {
+     "n": 80,
+     "mean": 0.0125,
+     "median": 0.0,
+     "pos": 0.138,
+     "worst": -0.287,
+     "best": 0.288,
+     "compounded": 1.27,
+     "maxdd": -0.287
+    },
+    "S_SPIKERS": {
+     "n": 80,
+     "mean": -0.0014,
+     "median": 0.0,
+     "pos": 0.012,
+     "worst": -0.109,
+     "best": 0.083,
+     "compounded": -0.117,
+     "maxdd": -0.184
+    },
+    "LS_LEADERS_WEAK": {
+     "n": 80,
+     "mean": 0.0,
+     "median": 0.0,
+     "pos": 0.0,
+     "worst": 0.0,
+     "best": 0.0,
+     "compounded": 0.0,
+     "maxdd": 0.0
+    },
+    "avg_names": {
+     "L_BTC": 1.0,
+     "L_ALTS": 11.7,
+     "S_ALTS": 2.6,
+     "S_WEAK": 0.1,
+     "L_LEADERS": 0.1,
+     "L_RS": 0.4,
+     "S_SPIKERS": 0.1,
+     "LS_LEADERS_WEAK": 0.0
+    }
+   },
+   "2021-23": {
+    "L_BTC": {
+     "n": 77,
+     "mean": 0.0005,
+     "median": -0.0027,
+     "pos": 0.481,
+     "worst": -0.226,
+     "best": 0.219,
+     "compounded": -0.18,
+     "maxdd": -0.657
+    },
+    "L_ALTS": {
+     "n": 77,
+     "mean": -0.0003,
+     "median": 0.007,
+     "pos": 0.506,
+     "worst": -0.297,
+     "best": 0.284,
+     "compounded": -0.426,
+     "maxdd": -0.809
+    },
+    "S_ALTS": {
+     "n": 77,
+     "mean": -0.0027,
+     "median": -0.0015,
+     "pos": 0.481,
+     "worst": -0.271,
+     "best": 0.299,
+     "compounded": -0.531,
+     "maxdd": -0.721
+    },
+    "S_WEAK": {
+     "n": 77,
+     "mean": 0.0002,
+     "median": 0.0,
+     "pos": 0.455,
+     "worst": -0.355,
+     "best": 0.289,
+     "compounded": -0.39,
+     "maxdd": -0.586
+    },
+    "L_LEADERS": {
+     "n": 77,
+     "mean": -0.0154,
+     "median": 0.0,
+     "pos": 0.247,
+     "worst": -0.537,
+     "best": 0.281,
+     "compounded": -0.831,
+     "maxdd": -0.831
+    },
+    "L_RS": {
+     "n": 77,
+     "mean": 0.0281,
+     "median": 0.0,
+     "pos": 0.403,
+     "worst": -0.372,
+     "best": 0.958,
+     "compounded": 1.095,
+     "maxdd": -0.673
+    },
+    "S_SPIKERS": {
+     "n": 77,
+     "mean": -0.0161,
+     "median": 0.0,
+     "pos": 0.455,
+     "worst": -0.817,
+     "best": 0.413,
+     "compounded": -0.974,
+     "maxdd": -0.98
+    },
+    "LS_LEADERS_WEAK": {
+     "n": 77,
+     "mean": -0.0096,
+     "median": 0.0,
+     "pos": 0.208,
+     "worst": -0.322,
+     "best": 0.235,
+     "compounded": -0.6,
+     "maxdd": -0.604
+    },
+    "avg_names": {
+     "L_BTC": 1.0,
+     "L_ALTS": 190.3,
+     "S_ALTS": 122.4,
+     "S_WEAK": 61.3,
+     "L_LEADERS": 1.3,
+     "L_RS": 5.3,
+     "S_SPIKERS": 6.0,
+     "LS_LEADERS_WEAK": 32.0
+    }
+   },
+   "2024-26": {
+    "L_BTC": {
+     "n": 57,
+     "mean": 0.007,
+     "median": 0.003,
+     "pos": 0.544,
+     "worst": -0.14,
+     "best": 0.236,
+     "compounded": 0.333,
+     "maxdd": -0.433
+    },
+    "L_ALTS": {
+     "n": 57,
+     "mean": 0.0009,
+     "median": -0.0016,
+     "pos": 0.491,
+     "worst": -0.181,
+     "best": 0.238,
+     "compounded": -0.139,
+     "maxdd": -0.67
+    },
+    "S_ALTS": {
+     "n": 57,
+     "mean": -0.0068,
+     "median": -0.0064,
+     "pos": 0.456,
+     "worst": -0.241,
+     "best": 0.175,
+     "compounded": -0.447,
+     "maxdd": -0.569
+    },
+    "S_WEAK": {
+     "n": 57,
+     "mean": -0.0106,
+     "median": -0.008,
+     "pos": 0.456,
+     "worst": -0.317,
+     "best": 0.196,
+     "compounded": -0.588,
+     "maxdd": -0.635
+    },
+    "L_LEADERS": {
+     "n": 57,
+     "mean": 0.0215,
+     "median": 0.0,
+     "pos": 0.474,
+     "worst": -0.406,
+     "best": 1.177,
+     "compounded": 0.463,
+     "maxdd": -0.661
+    },
+    "L_RS": {
+     "n": 57,
+     "mean": -0.0343,
+     "median": -0.0619,
+     "pos": 0.298,
+     "worst": -0.339,
+     "best": 0.721,
+     "compounded": -0.945,
+     "maxdd": -0.979
+    },
+    "S_SPIKERS": {
+     "n": 57,
+     "mean": 0.0107,
+     "median": -0.001,
+     "pos": 0.491,
+     "worst": -0.199,
+     "best": 0.195,
+     "compounded": 0.442,
+     "maxdd": -0.441
+    },
+    "LS_LEADERS_WEAK": {
+     "n": 57,
+     "mean": 0.0065,
+     "median": 0.0,
+     "pos": 0.421,
+     "worst": -0.244,
+     "best": 0.621,
+     "compounded": 0.127,
+     "maxdd": -0.46
+    },
+    "avg_names": {
+     "L_BTC": 1.0,
+     "L_ALTS": 176.2,
+     "S_ALTS": 160.8,
+     "S_WEAK": 93.1,
+     "L_LEADERS": 2.2,
+     "L_RS": 4.8,
+     "S_SPIKERS": 9.6,
+     "LS_LEADERS_WEAK": 79.2
+    }
+   },
+   "ALL": {
+    "L_BTC": {
+     "n": 214,
+     "mean": 0.003,
+     "median": 0.0049,
+     "pos": 0.528,
+     "worst": -0.333,
+     "best": 0.26,
+     "compounded": -0.131,
+     "maxdd": -0.666
+    },
+    "L_ALTS": {
+     "n": 214,
+     "mean": 0.0019,
+     "median": 0.0062,
+     "pos": 0.533,
+     "worst": -0.373,
+     "best": 0.371,
+     "compounded": -0.653,
+     "maxdd": -0.849
+    },
+    "S_ALTS": {
+     "n": 214,
+     "mean": -0.0046,
+     "median": 0.0,
+     "pos": 0.304,
+     "worst": -0.271,
+     "best": 0.353,
+     "compounded": -0.842,
+     "maxdd": -0.896
+    },
+    "S_WEAK": {
+     "n": 214,
+     "mean": -0.0036,
+     "median": 0.0,
+     "pos": 0.285,
+     "worst": -0.355,
+     "best": 0.289,
+     "compounded": -0.794,
+     "maxdd": -0.85
+    },
+    "L_LEADERS": {
+     "n": 214,
+     "mean": 0.0016,
+     "median": 0.0,
+     "pos": 0.243,
+     "worst": -0.66,
+     "best": 1.177,
+     "compounded": -0.8,
+     "maxdd": -0.955
+    },
+    "L_RS": {
+     "n": 214,
+     "mean": 0.0056,
+     "median": 0.0,
+     "pos": 0.276,
+     "worst": -0.372,
+     "best": 0.958,
+     "compounded": -0.74,
+     "maxdd": -0.979
+    },
+    "S_SPIKERS": {
+     "n": 214,
+     "mean": -0.0035,
+     "median": 0.0,
+     "pos": 0.299,
+     "worst": -0.817,
+     "best": 0.413,
+     "compounded": -0.966,
+     "maxdd": -0.987
+    },
+    "LS_LEADERS_WEAK": {
+     "n": 214,
+     "mean": -0.0017,
+     "median": 0.0,
+     "pos": 0.187,
+     "worst": -0.322,
+     "best": 0.621,
+     "compounded": -0.549,
+     "maxdd": -0.757
+    },
+    "avg_names": {
+     "L_BTC": 1.0,
+     "L_ALTS": 119.8,
+     "S_ALTS": 87.9,
+     "S_WEAK": 46.9,
+     "L_LEADERS": 1.1,
+     "L_RS": 3.3,
+     "S_SPIKERS": 4.7,
+     "LS_LEADERS_WEAK": 32.6
+    }
+   }
+  },
+  "ALT_BEAR_breadth35": {
+   "2018-20": {
+    "L_BTC": {
+     "n": 75,
+     "mean": 0.0058,
+     "median": 0.0161,
+     "pos": 0.56,
+     "worst": -0.333,
+     "best": 0.217,
+     "compounded": 0.047,
+     "maxdd": -0.603
+    },
+    "L_ALTS": {
+     "n": 75,
+     "mean": -0.0065,
+     "median": 0.0016,
+     "pos": 0.52,
+     "worst": -0.373,
+     "best": 0.371,
+     "compounded": -0.678,
+     "maxdd": -0.809
+    },
+    "S_ALTS": {
+     "n": 75,
+     "mean": -0.0031,
+     "median": 0.0,
+     "pos": 0.08,
+     "worst": -0.189,
+     "best": 0.353,
+     "compounded": -0.284,
+     "maxdd": -0.475
+    },
+    "S_WEAK": {
+     "n": 75,
+     "mean": -0.0051,
+     "median": 0.0,
+     "pos": 0.013,
+     "worst": -0.175,
+     "best": 0.037,
+     "compounded": -0.34,
+     "maxdd": -0.34
+    },
+    "L_LEADERS": {
+     "n": 75,
+     "mean": 0.0026,
+     "median": 0.0,
+     "pos": 0.067,
+     "worst": -0.66,
+     "best": 0.397,
+     "compounded": -0.29,
+     "maxdd": -0.662
+    },
+    "L_RS": {
+     "n": 75,
+     "mean": -0.0034,
+     "median": 0.0,
+     "pos": 0.027,
+     "worst": -0.265,
+     "best": 0.175,
+     "compounded": -0.275,
+     "maxdd": -0.388
+    },
+    "S_SPIKERS": {
+     "n": 75,
+     "mean": 0.0024,
+     "median": 0.0,
+     "pos": 0.053,
+     "worst": -0.109,
+     "best": 0.196,
+     "compounded": 0.159,
+     "maxdd": -0.187
+    },
+    "LS_LEADERS_WEAK": {
+     "n": 75,
+     "mean": 0.001,
+     "median": 0.0,
+     "pos": 0.027,
+     "worst": -0.045,
+     "best": 0.111,
+     "compounded": 0.07,
+     "maxdd": -0.045
+    },
+    "avg_names": {
+     "L_BTC": 1.0,
+     "L_ALTS": 15.8,
+     "S_ALTS": 6.2,
+     "S_WEAK": 0.4,
+     "L_LEADERS": 0.3,
+     "L_RS": 0.1,
+     "S_SPIKERS": 0.2,
+     "LS_LEADERS_WEAK": 0.3
+    }
+   },
+   "2021-23": {
+    "L_BTC": {
+     "n": 83,
+     "mean": 0.0063,
+     "median": 0.0043,
+     "pos": 0.506,
+     "worst": -0.226,
+     "best": 0.272,
+     "compounded": 0.334,
+     "maxdd": -0.63
+    },
+    "L_ALTS": {
+     "n": 83,
+     "mean": -0.0024,
+     "median": 0.0068,
+     "pos": 0.506,
+     "worst": -0.297,
+     "best": 0.369,
+     "compounded": -0.495,
+     "maxdd": -0.824
+    },
+    "S_ALTS": {
+     "n": 83,
+     "mean": -0.0013,
+     "median": -0.0034,
+     "pos": 0.47,
+     "worst": -0.354,
+     "best": 0.299,
+     "compounded": -0.452,
+     "maxdd": -0.502
+    },
+    "S_WEAK": {
+     "n": 83,
+     "mean": 0.0052,
+     "median": 0.0,
+     "pos": 0.494,
+     "worst": -0.191,
+     "best": 0.289,
+     "compounded": 0.05,
+     "maxdd": -0.533
+    },
+    "L_LEADERS": {
+     "n": 83,
+     "mean": -0.0133,
+     "median": 0.0,
+     "pos": 0.253,
+     "worst": -0.351,
+     "best": 0.278,
+     "compounded": -0.779,
+     "maxdd": -0.858
+    },
+    "L_RS": {
+     "n": 83,
+     "mean": 0.0181,
+     "median": 0.0,
+     "pos": 0.349,
+     "worst": -0.372,
+     "best": 0.958,
+     "compounded": -0.013,
+     "maxdd": -0.779
+    },
+    "S_SPIKERS": {
+     "n": 83,
+     "mean": 0.009,
+     "median": 0.0047,
+     "pos": 0.542,
+     "worst": -0.664,
+     "best": 0.413,
+     "compounded": -0.488,
+     "maxdd": -0.71
+    },
+    "LS_LEADERS_WEAK": {
+     "n": 83,
+     "mean": -0.0067,
+     "median": 0.0,
+     "pos": 0.241,
+     "worst": -0.164,
+     "best": 0.089,
+     "compounded": -0.47,
+     "maxdd": -0.508
+    },
+    "avg_names": {
+     "L_BTC": 1.0,
+     "L_ALTS": 186.7,
+     "S_ALTS": 125.4,
+     "S_WEAK": 61.3,
+     "L_LEADERS": 1.7,
+     "L_RS": 2.8,
+     "S_SPIKERS": 5.5,
+     "LS_LEADERS_WEAK": 35.6
+    }
+   },
+   "2024-26": {
+    "L_BTC": {
+     "n": 82,
+     "mean": 0.0044,
+     "median": 0.0017,
+     "pos": 0.524,
+     "worst": -0.151,
+     "best": 0.233,
+     "compounded": 0.196,
+     "maxdd": -0.48
+    },
+    "L_ALTS": {
+     "n": 82,
+     "mean": -0.0094,
+     "median": -0.0106,
+     "pos": 0.463,
+     "worst": -0.255,
+     "best": 0.267,
+     "compounded": -0.696,
+     "maxdd": -0.807
+    },
+    "S_ALTS": {
+     "n": 82,
+     "mean": 0.0049,
+     "median": 0.0046,
+     "pos": 0.512,
+     "worst": -0.282,
+     "best": 0.26,
+     "compounded": -0.018,
+     "maxdd": -0.548
+    },
+    "S_WEAK": {
+     "n": 82,
+     "mean": 0.0027,
+     "median": 0.0044,
+     "pos": 0.524,
+     "worst": -0.318,
+     "best": 0.269,
+     "compounded": -0.269,
+     "maxdd": -0.565
+    },
+    "L_LEADERS": {
+     "n": 82,
+     "mean": 0.0082,
+     "median": 0.0,
+     "pos": 0.402,
+     "worst": -0.406,
+     "best": 1.177,
+     "compounded": -0.27,
+     "maxdd": -0.834
+    },
+    "L_RS": {
+     "n": 82,
+     "mean": -0.0194,
+     "median": -0.0624,
+     "pos": 0.293,
+     "worst": -0.339,
+     "best": 0.721,
+     "compounded": -0.946,
+     "maxdd": -0.974
+    },
+    "S_SPIKERS": {
+     "n": 82,
+     "mean": 0.0226,
+     "median": 0.0244,
+     "pos": 0.598,
+     "worst": -0.361,
+     "best": 0.286,
+     "compounded": 2.635,
+     "maxdd": -0.548
+    },
+    "LS_LEADERS_WEAK": {
+     "n": 82,
+     "mean": 0.0067,
+     "median": 0.0,
+     "pos": 0.451,
+     "worst": -0.244,
+     "best": 0.621,
+     "compounded": 0.332,
+     "maxdd": -0.358
+    },
+    "avg_names": {
+     "L_BTC": 1.0,
+     "L_ALTS": 230.5,
+     "S_ALTS": 195.9,
+     "S_WEAK": 100.4,
+     "L_LEADERS": 3.6,
+     "L_RS": 3.4,
+     "S_SPIKERS": 8.1,
+     "LS_LEADERS_WEAK": 87.1
+    }
+   },
+   "ALL": {
+    "L_BTC": {
+     "n": 240,
+     "mean": 0.0055,
+     "median": 0.0044,
+     "pos": 0.529,
+     "worst": -0.333,
+     "best": 0.272,
+     "compounded": 0.67,
+     "maxdd": -0.63
+    },
+    "L_ALTS": {
+     "n": 240,
+     "mean": -0.006,
+     "median": -0.0014,
+     "pos": 0.496,
+     "worst": -0.373,
+     "best": 0.371,
+     "compounded": -0.951,
+     "maxdd": -0.96
+    },
+    "S_ALTS": {
+     "n": 240,
+     "mean": 0.0003,
+     "median": 0.0,
+     "pos": 0.362,
+     "worst": -0.354,
+     "best": 0.353,
+     "compounded": -0.615,
+     "maxdd": -0.848
+    },
+    "S_WEAK": {
+     "n": 240,
+     "mean": 0.0011,
+     "median": 0.0,
+     "pos": 0.354,
+     "worst": -0.318,
+     "best": 0.289,
+     "compounded": -0.494,
+     "maxdd": -0.71
+    },
+    "L_LEADERS": {
+     "n": 240,
+     "mean": -0.001,
+     "median": 0.0,
+     "pos": 0.246,
+     "worst": -0.66,
+     "best": 1.177,
+     "compounded": -0.886,
+     "maxdd": -0.961
+    },
+    "L_RS": {
+     "n": 240,
+     "mean": -0.0014,
+     "median": 0.0,
+     "pos": 0.229,
+     "worst": -0.372,
+     "best": 0.958,
+     "compounded": -0.961,
+     "maxdd": -0.991
+    },
+    "S_SPIKERS": {
+     "n": 240,
+     "mean": 0.0116,
+     "median": 0.0,
+     "pos": 0.408,
+     "worst": -0.664,
+     "best": 0.413,
+     "compounded": 1.158,
+     "maxdd": -0.802
+    },
+    "LS_LEADERS_WEAK": {
+     "n": 240,
+     "mean": 0.0003,
+     "median": 0.0,
+     "pos": 0.246,
+     "worst": -0.244,
+     "best": 0.621,
+     "compounded": -0.245,
+     "maxdd": -0.609
+    },
+    "avg_names": {
+     "L_BTC": 1.0,
+     "L_ALTS": 148.3,
+     "S_ALTS": 112.2,
+     "S_WEAK": 55.6,
+     "L_LEADERS": 1.9,
+     "L_RS": 2.2,
+     "S_SPIKERS": 4.7,
+     "LS_LEADERS_WEAK": 42.1
+    }
+   }
+  }
+ },
+ "events": {
+  "B_CAPITULATION_20d": {
+   "2018-20": {
+    "n": 17,
+    "mean": -0.043,
+    "median": -0.0351,
+    "pos": 0.412,
+    "worst": -0.429,
+    "best": 0.442,
+    "compounded": -0.709,
+    "maxdd": -0.718
+   },
+   "2021-23": {
+    "n": 17,
+    "mean": 0.0213,
+    "median": 0.0206,
+    "pos": 0.529,
+    "worst": -0.474,
+    "best": 0.453,
+    "compounded": -0.072,
+    "maxdd": -0.612
+   },
+   "2024-26": {
+    "n": 11,
+    "mean": -0.0084,
+    "median": -0.0297,
+    "pos": 0.364,
+    "worst": -0.158,
+    "best": 0.184,
+    "compounded": -0.159,
+    "maxdd": -0.45
+   },
+   "ALL": {
+    "n": 45,
+    "mean": -0.0102,
+    "median": -0.012,
+    "pos": 0.444,
+    "worst": -0.474,
+    "best": 0.453,
+    "compounded": -0.773,
+    "maxdd": -0.779
+   }
+  },
+  "B_FEAR_BTC_10d": {
+   "2018-20": {
+    "n": 15,
+    "mean": 0.0175,
+    "median": -0.0007,
+    "pos": 0.467,
+    "worst": -0.199,
+    "best": 0.206,
+    "compounded": 0.212,
+    "maxdd": -0.285
+   },
+   "2021-23": {
+    "n": 13,
+    "mean": 0.0215,
+    "median": 0.019,
+    "pos": 0.615,
+    "worst": -0.323,
+    "best": 0.246,
+    "compounded": 0.18,
+    "maxdd": -0.352
+   },
+   "2024-26": {
+    "n": 14,
+    "mean": -0.0085,
+    "median": -0.0009,
+    "pos": 0.429,
+    "worst": -0.135,
+    "best": 0.07,
+    "compounded": -0.139,
+    "maxdd": -0.172
+   },
+   "ALL": {
+    "n": 42,
+    "mean": 0.0101,
+    "median": 0.0007,
+    "pos": 0.5,
+    "worst": -0.323,
+    "best": 0.246,
+    "compounded": 0.232,
+    "maxdd": -0.415
+   }
+  },
+  "B_FEAR_BTC_20d": {
+   "2018-20": {
+    "n": 15,
+    "mean": 0.0612,
+    "median": 0.0238,
+    "pos": 0.667,
+    "worst": -0.281,
+    "best": 0.378,
+    "compounded": 1.062,
+    "maxdd": -0.392
+   },
+   "2021-23": {
+    "n": 13,
+    "mean": 0.0022,
+    "median": 0.0118,
+    "pos": 0.538,
+    "worst": -0.362,
+    "best": 0.353,
+    "compounded": -0.21,
+    "maxdd": -0.593
+   },
+   "2024-26": {
+    "n": 14,
+    "mean": 0.0101,
+    "median": 0.0221,
+    "pos": 0.571,
+    "worst": -0.123,
+    "best": 0.163,
+    "compounded": 0.113,
+    "maxdd": -0.123
+   },
+   "ALL": {
+    "n": 42,
+    "mean": 0.0259,
+    "median": 0.0183,
+    "pos": 0.595,
+    "worst": -0.362,
+    "best": 0.378,
+    "compounded": 0.813,
+    "maxdd": -0.593
+   }
+  },
+  "B_LEADER_DIP": {
+   "2018-20": {
+    "n": 1,
+    "mean": -0.1039,
+    "median": -0.1039,
+    "pos": 0.0,
+    "worst": -0.104,
+    "best": -0.104,
+    "compounded": -0.104,
+    "maxdd": 0.0
+   },
+   "2021-23": {
+    "n": 35,
+    "mean": -0.0006,
+    "median": -0.1446,
+    "pos": 0.314,
+    "worst": -0.69,
+    "best": 1.522,
+    "compounded": -0.94,
+    "maxdd": -0.991
+   },
+   "2024-26": {
+    "n": 46,
+    "mean": -0.1516,
+    "median": -0.1255,
+    "pos": 0.304,
+    "worst": -0.879,
+    "best": 0.583,
+    "compounded": -1.0,
+    "maxdd": -1.0
+   },
+   "ALL": {
+    "n": 82,
+    "mean": -0.0866,
+    "median": -0.1419,
+    "pos": 0.305,
+    "worst": -0.879,
+    "best": 1.522,
+    "compounded": -1.0,
+    "maxdd": -1.0
+   }
+  },
+  "F_ALL_SPIKES": {
+   "2018-20": {
+    "n": 2,
+    "mean": -0.0518,
+    "median": -0.0518,
+    "pos": 0.0,
+    "worst": -0.065,
+    "best": -0.039,
+    "compounded": -0.101,
+    "maxdd": -0.065
+   },
+   "2021-23": {
+    "n": 179,
+    "mean": -0.0762,
+    "median": 0.0347,
+    "pos": 0.536,
+    "worst": -4.885,
+    "best": 0.695,
+    "compounded": -1.0,
+    "maxdd": -1.0
+   },
+   "2024-26": {
+    "n": 179,
+    "mean": -0.0039,
+    "median": 0.0871,
+    "pos": 0.637,
+    "worst": -1.481,
+    "best": 0.794,
+    "compounded": -1.0,
+    "maxdd": -1.151
+   },
+   "ALL": {
+    "n": 360,
+    "mean": -0.0401,
+    "median": 0.0575,
+    "pos": 0.583,
+    "worst": -4.885,
+    "best": 0.794,
+    "compounded": -1.0,
+    "maxdd": -1.0
+   }
+  },
+  "F_FAILED_SPIKE": {
+   "2018-20": {
+    "n": 1,
+    "mean": -0.1143,
+    "median": -0.1143,
+    "pos": 0.0,
+    "worst": -0.114,
+    "best": -0.114,
+    "compounded": -0.114,
+    "maxdd": 0.0
+   },
+   "2021-23": {
+    "n": 107,
+    "mean": -0.0643,
+    "median": 0.0343,
+    "pos": 0.598,
+    "worst": -5.228,
+    "best": 0.38,
+    "compounded": -1.0,
+    "maxdd": -1.113
+   },
+   "2024-26": {
+    "n": 121,
+    "mean": -0.0241,
+    "median": 0.0543,
+    "pos": 0.636,
+    "worst": -1.078,
+    "best": 0.816,
+    "compounded": -1.0,
+    "maxdd": -1.001
+   },
+   "ALL": {
+    "n": 229,
+    "mean": -0.0433,
+    "median": 0.0463,
+    "pos": 0.616,
+    "worst": -5.228,
+    "best": 0.816,
+    "compounded": -1.0,
+    "maxdd": -1.098
+   }
+  }
+ }
+}

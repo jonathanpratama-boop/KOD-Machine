@@ -1,0 +1,580 @@
+{
+ "A_mood_all_periods": {
+  "ExtremeFear": {
+   "n": 2777,
+   "peak_med": 15.4,
+   "peak50_share": 16,
+   "hrs_to_peak_med": 18.0,
+   "dip72_med": -15.0,
+   "tp_hit": 16,
+   "net_mean": -4.8,
+   "net_med": -11.5
+  },
+  "Fear": {
+   "n": 2687,
+   "peak_med": 16.2,
+   "peak50_share": 17,
+   "hrs_to_peak_med": 28.0,
+   "dip72_med": -12.4,
+   "tp_hit": 17,
+   "net_mean": -3.7,
+   "net_med": -10.1
+  },
+  "Neutral": {
+   "n": 1687,
+   "peak_med": 14.2,
+   "peak50_share": 17,
+   "hrs_to_peak_med": 21.0,
+   "dip72_med": -12.4,
+   "tp_hit": 17,
+   "net_mean": -3.3,
+   "net_med": -10.7
+  },
+  "Greed": {
+   "n": 3534,
+   "peak_med": 17.4,
+   "peak50_share": 18,
+   "hrs_to_peak_med": 43.0,
+   "dip72_med": -12.4,
+   "tp_hit": 18,
+   "net_mean": -1.2,
+   "net_med": -7.9
+  },
+  "ExtremeGreed": {
+   "n": 1428,
+   "peak_med": 26.9,
+   "peak50_share": 29,
+   "hrs_to_peak_med": 102.0,
+   "dip72_med": -13.1,
+   "tp_hit": 29,
+   "net_mean": 8.2,
+   "net_med": 0.8
+  }
+ },
+ "A_mood_by_period": {
+  "2020-21|ExtremeFear": {
+   "n": 448,
+   "peak_med": 18.0,
+   "peak50_share": 16,
+   "hrs_to_peak_med": 39.0,
+   "dip72_med": -16.9,
+   "tp_hit": 16,
+   "net_mean": -3.9,
+   "net_med": -11.8
+  },
+  "2020-21|Fear": {
+   "n": 642,
+   "peak_med": 19.1,
+   "peak50_share": 19,
+   "hrs_to_peak_med": 43.0,
+   "dip72_med": -13.3,
+   "tp_hit": 19,
+   "net_mean": -4.8,
+   "net_med": -11.0
+  },
+  "2020-21|Neutral": {
+   "n": 288,
+   "peak_med": 25.6,
+   "peak50_share": 32,
+   "hrs_to_peak_med": 82.0,
+   "dip72_med": -11.7,
+   "tp_hit": 32,
+   "net_mean": 6.9,
+   "net_med": -0.9
+  },
+  "2020-21|Greed": {
+   "n": 829,
+   "peak_med": 26.1,
+   "peak50_share": 27,
+   "hrs_to_peak_med": 80.5,
+   "dip72_med": -12.6,
+   "tp_hit": 27,
+   "net_mean": 3.3,
+   "net_med": -3.7
+  },
+  "2020-21|ExtremeGreed": {
+   "n": 755,
+   "peak_med": 34.6,
+   "peak50_share": 36,
+   "hrs_to_peak_med": 143.0,
+   "dip72_med": -13.2,
+   "tp_hit": 37,
+   "net_mean": 13.8,
+   "net_med": 8.2
+  },
+  "2022|ExtremeFear": {
+   "n": 1245,
+   "peak_med": 17.0,
+   "peak50_share": 18,
+   "hrs_to_peak_med": 24.0,
+   "dip72_med": -14.4,
+   "tp_hit": 18,
+   "net_mean": -2.5,
+   "net_med": -8.3
+  },
+  "2022|Fear": {
+   "n": 738,
+   "peak_med": 14.9,
+   "peak50_share": 14,
+   "hrs_to_peak_med": 19.0,
+   "dip72_med": -12.6,
+   "tp_hit": 14,
+   "net_mean": -6.5,
+   "net_med": -11.6
+  },
+  "2022|Neutral": {
+   "n": 177,
+   "peak_med": 9.1,
+   "peak50_share": 12,
+   "hrs_to_peak_med": 7.0,
+   "dip72_med": -15.5,
+   "tp_hit": 12,
+   "net_mean": -16.2,
+   "net_med": -25.3
+  },
+  "2022|Greed": {
+   "n": 25,
+   "peak_med": 20.6,
+   "peak50_share": 24,
+   "hrs_to_peak_med": 63.0,
+   "dip72_med": -13.0,
+   "tp_hit": 24,
+   "net_mean": -7.4,
+   "net_med": -21.9
+  },
+  "2023-26|ExtremeFear": {
+   "n": 1084,
+   "peak_med": 12.5,
+   "peak50_share": 13,
+   "hrs_to_peak_med": 8.0,
+   "dip72_med": -15.2,
+   "tp_hit": 13,
+   "net_mean": -7.8,
+   "net_med": -14.2
+  },
+  "2023-26|Fear": {
+   "n": 1307,
+   "peak_med": 16.2,
+   "peak50_share": 18,
+   "hrs_to_peak_med": 32.0,
+   "dip72_med": -11.8,
+   "tp_hit": 18,
+   "net_mean": -1.7,
+   "net_med": -8.9
+  },
+  "2023-26|Neutral": {
+   "n": 1222,
+   "peak_med": 13.0,
+   "peak50_share": 14,
+   "hrs_to_peak_med": 20.0,
+   "dip72_med": -12.3,
+   "tp_hit": 14,
+   "net_mean": -3.8,
+   "net_med": -10.4
+  },
+  "2023-26|Greed": {
+   "n": 2680,
+   "peak_med": 15.4,
+   "peak50_share": 15,
+   "hrs_to_peak_med": 33.0,
+   "dip72_med": -12.3,
+   "tp_hit": 15,
+   "net_mean": -2.5,
+   "net_med": -8.7
+  },
+  "2023-26|ExtremeGreed": {
+   "n": 673,
+   "peak_med": 21.0,
+   "peak50_share": 20,
+   "hrs_to_peak_med": 55.0,
+   "dip72_med": -12.9,
+   "tp_hit": 20,
+   "net_mean": 1.9,
+   "net_med": -4.8
+  }
+ },
+ "A_mood_trend_subset": {
+  "ExtremeFear": {
+   "n": 11,
+   "peak_med": 20.1,
+   "peak50_share": 27,
+   "hrs_to_peak_med": 10.0,
+   "dip72_med": -12.9,
+   "tp_hit": 27,
+   "net_mean": -3.9,
+   "net_med": -13.2
+  },
+  "Fear": {
+   "n": 27,
+   "peak_med": 27.8,
+   "peak50_share": 26,
+   "hrs_to_peak_med": 76.0,
+   "dip72_med": -9.1,
+   "tp_hit": 26,
+   "net_mean": 2.9,
+   "net_med": -2.6
+  },
+  "Neutral": {
+   "n": 42,
+   "peak_med": 16.8,
+   "peak50_share": 21,
+   "hrs_to_peak_med": 61.5,
+   "dip72_med": -9.5,
+   "tp_hit": 21,
+   "net_mean": 4.5,
+   "net_med": -0.0
+  },
+  "Greed": {
+   "n": 315,
+   "peak_med": 21.4,
+   "peak50_share": 22,
+   "hrs_to_peak_med": 77.5,
+   "dip72_med": -11.7,
+   "tp_hit": 22,
+   "net_mean": 2.8,
+   "net_med": -2.0
+  },
+  "ExtremeGreed": {
+   "n": 253,
+   "peak_med": 23.9,
+   "peak50_share": 26,
+   "hrs_to_peak_med": 67.0,
+   "dip72_med": -13.5,
+   "tp_hit": 26,
+   "net_mean": 5.0,
+   "net_med": -5.5
+  }
+ },
+ "B_funding_coverage": {
+  "ignitions": 12118,
+  "with_perp_funding": 6113
+ },
+ "B_crowding_ignitions": {
+  "neg(shorts crowded)": {
+   "n": 1421,
+   "peak_med": 16.2,
+   "peak50_share": 15,
+   "hrs_to_peak_med": 24.5,
+   "dip72_med": -13.1,
+   "tp_hit": 15,
+   "net_mean": -3.9,
+   "net_med": -10.5
+  },
+  "neutral": {
+   "n": 3690,
+   "peak_med": 15.8,
+   "peak50_share": 16,
+   "hrs_to_peak_med": 39.0,
+   "dip72_med": -11.7,
+   "tp_hit": 16,
+   "net_mean": -2.5,
+   "net_med": -9.2
+  },
+  "positive": {
+   "n": 601,
+   "peak_med": 22.0,
+   "peak50_share": 22,
+   "hrs_to_peak_med": 84.5,
+   "dip72_med": -10.7,
+   "tp_hit": 22,
+   "net_mean": 4.8,
+   "net_med": -0.8
+  },
+  "high(longs crowded)": {
+   "n": 401,
+   "peak_med": 26.3,
+   "peak50_share": 28,
+   "hrs_to_peak_med": 108.0,
+   "dip72_med": -13.4,
+   "tp_hit": 28,
+   "net_mean": 5.3,
+   "net_med": -2.0
+  }
+ },
+ "B_crowding_by_period": {
+  "2020-21|neg(shorts crowded)": {
+   "n": 101,
+   "peak_med": 22.5,
+   "peak50_share": 21,
+   "hrs_to_peak_med": 74.0,
+   "dip72_med": -10.6,
+   "tp_hit": 21,
+   "net_mean": 4.8,
+   "net_med": 1.7
+  },
+  "2020-21|neutral": {
+   "n": 377,
+   "peak_med": 21.2,
+   "peak50_share": 18,
+   "hrs_to_peak_med": 115.0,
+   "dip72_med": -12.0,
+   "tp_hit": 18,
+   "net_mean": 1.3,
+   "net_med": -3.1
+  },
+  "2020-21|positive": {
+   "n": 204,
+   "peak_med": 27.2,
+   "peak50_share": 29,
+   "hrs_to_peak_med": 110.5,
+   "dip72_med": -9.9,
+   "tp_hit": 29,
+   "net_mean": 8.7,
+   "net_med": 1.4
+  },
+  "2020-21|high(longs crowded)": {
+   "n": 257,
+   "peak_med": 29.2,
+   "peak50_share": 33,
+   "hrs_to_peak_med": 119.0,
+   "dip72_med": -13.3,
+   "tp_hit": 33,
+   "net_mean": 7.9,
+   "net_med": 0.6
+  },
+  "2022|neg(shorts crowded)": {
+   "n": 161,
+   "peak_med": 20.2,
+   "peak50_share": 19,
+   "hrs_to_peak_med": 54.0,
+   "dip72_med": -11.4,
+   "tp_hit": 19,
+   "net_mean": -0.9,
+   "net_med": -7.7
+  },
+  "2022|neutral": {
+   "n": 344,
+   "peak_med": 14.2,
+   "peak50_share": 12,
+   "hrs_to_peak_med": 39.0,
+   "dip72_med": -11.1,
+   "tp_hit": 12,
+   "net_mean": -6.1,
+   "net_med": -11.1
+  },
+  "2023-26|neg(shorts crowded)": {
+   "n": 1159,
+   "peak_med": 15.0,
+   "peak50_share": 14,
+   "hrs_to_peak_med": 19.0,
+   "dip72_med": -13.4,
+   "tp_hit": 14,
+   "net_mean": -5.1,
+   "net_med": -11.7
+  },
+  "2023-26|neutral": {
+   "n": 2969,
+   "peak_med": 15.3,
+   "peak50_share": 16,
+   "hrs_to_peak_med": 33.0,
+   "dip72_med": -11.7,
+   "tp_hit": 16,
+   "net_mean": -2.5,
+   "net_med": -9.7
+  },
+  "2023-26|positive": {
+   "n": 394,
+   "peak_med": 20.4,
+   "peak50_share": 19,
+   "hrs_to_peak_med": 71.0,
+   "dip72_med": -11.2,
+   "tp_hit": 19,
+   "net_mean": 3.1,
+   "net_med": -1.2
+  },
+  "2023-26|high(longs crowded)": {
+   "n": 144,
+   "peak_med": 20.2,
+   "peak50_share": 19,
+   "hrs_to_peak_med": 90.5,
+   "dip72_med": -13.5,
+   "tp_hit": 19,
+   "net_mean": 0.7,
+   "net_med": -5.8
+  }
+ },
+ "B_crowding_x_mood": {
+  "ExtremeFear|neg(shorts crowded)": {
+   "n": 576,
+   "peak_med": 14.7,
+   "peak50_share": 14,
+   "hrs_to_peak_med": 17.0,
+   "dip72_med": -14.4,
+   "tp_hit": 14,
+   "net_mean": -6.1,
+   "net_med": -12.7
+  },
+  "ExtremeFear|neutral": {
+   "n": 761,
+   "peak_med": 14.4,
+   "peak50_share": 14,
+   "hrs_to_peak_med": 19.0,
+   "dip72_med": -14.2,
+   "tp_hit": 14,
+   "net_mean": -5.3,
+   "net_med": -11.8
+  },
+  "Fear|neg(shorts crowded)": {
+   "n": 407,
+   "peak_med": 16.8,
+   "peak50_share": 16,
+   "hrs_to_peak_med": 22.5,
+   "dip72_med": -12.6,
+   "tp_hit": 16,
+   "net_mean": -4.4,
+   "net_med": -11.5
+  },
+  "Fear|neutral": {
+   "n": 878,
+   "peak_med": 16.1,
+   "peak50_share": 15,
+   "hrs_to_peak_med": 46.0,
+   "dip72_med": -10.8,
+   "tp_hit": 15,
+   "net_mean": -3.9,
+   "net_med": -9.7
+  },
+  "Neutral|neg(shorts crowded)": {
+   "n": 142,
+   "peak_med": 12.7,
+   "peak50_share": 16,
+   "hrs_to_peak_med": 16.0,
+   "dip72_med": -11.3,
+   "tp_hit": 16,
+   "net_mean": -3.9,
+   "net_med": -10.8
+  },
+  "Neutral|neutral": {
+   "n": 645,
+   "peak_med": 13.6,
+   "peak50_share": 15,
+   "hrs_to_peak_med": 35.0,
+   "dip72_med": -10.7,
+   "tp_hit": 15,
+   "net_mean": -3.0,
+   "net_med": -10.0
+  },
+  "Neutral|positive": {
+   "n": 31,
+   "peak_med": 17.0,
+   "peak50_share": 23,
+   "hrs_to_peak_med": 23.0,
+   "dip72_med": -11.7,
+   "tp_hit": 23,
+   "net_mean": 0.6,
+   "net_med": -11.4
+  },
+  "Greed|neg(shorts crowded)": {
+   "n": 270,
+   "peak_med": 19.5,
+   "peak50_share": 15,
+   "hrs_to_peak_med": 67.5,
+   "dip72_med": -11.8,
+   "tp_hit": 15,
+   "net_mean": 0.1,
+   "net_med": -3.5
+  },
+  "Greed|neutral": {
+   "n": 1210,
+   "peak_med": 16.5,
+   "peak50_share": 16,
+   "hrs_to_peak_med": 47.0,
+   "dip72_med": -11.6,
+   "tp_hit": 16,
+   "net_mean": -1.4,
+   "net_med": -8.0
+  },
+  "Greed|positive": {
+   "n": 338,
+   "peak_med": 21.3,
+   "peak50_share": 22,
+   "hrs_to_peak_med": 76.0,
+   "dip72_med": -9.4,
+   "tp_hit": 22,
+   "net_mean": 4.5,
+   "net_med": -1.2
+  },
+  "Greed|high(longs crowded)": {
+   "n": 146,
+   "peak_med": 24.8,
+   "peak50_share": 25,
+   "hrs_to_peak_med": 105.5,
+   "dip72_med": -13.1,
+   "tp_hit": 25,
+   "net_mean": 2.2,
+   "net_med": -2.4
+  },
+  "ExtremeGreed|neutral": {
+   "n": 195,
+   "peak_med": 28.2,
+   "peak50_share": 26,
+   "hrs_to_peak_med": 119.0,
+   "dip72_med": -11.0,
+   "tp_hit": 26,
+   "net_mean": 9.8,
+   "net_med": 6.7
+  },
+  "ExtremeGreed|positive": {
+   "n": 205,
+   "peak_med": 24.5,
+   "peak50_share": 22,
+   "hrs_to_peak_med": 119.0,
+   "dip72_med": -11.8,
+   "tp_hit": 22,
+   "net_mean": 7.5,
+   "net_med": 2.1
+  },
+  "ExtremeGreed|high(longs crowded)": {
+   "n": 241,
+   "peak_med": 29.4,
+   "peak50_share": 31,
+   "hrs_to_peak_med": 109.0,
+   "dip72_med": -14.2,
+   "tp_hit": 31,
+   "net_mean": 8.4,
+   "net_med": -1.4
+  }
+ },
+ "C_spike_shorts_by_crowding": {
+  "neg(shorts crowded)": {
+   "n": 239,
+   "mean": -7.4,
+   "median": 4.1,
+   "win": 55,
+   "loss_over_50pct": 26,
+   "worst": -489
+  },
+  "neutral": {
+   "n": 99,
+   "mean": 1.7,
+   "median": 10.3,
+   "win": 64,
+   "loss_over_50pct": 9,
+   "worst": -148
+  },
+  "positive": {
+   "n": 7,
+   "mean": 10.6,
+   "median": 24.0,
+   "win": 71,
+   "loss_over_50pct": 0,
+   "worst": -42
+  },
+  "high(longs crowded)": {
+   "n": 2,
+   "mean": 6.1,
+   "median": 6.1,
+   "win": 100,
+   "loss_over_50pct": 0,
+   "worst": 2
+  }
+ },
+ "C_spike_shorts_all": {
+  "n": 360,
+  "mean": -4.0,
+  "median": 5.8,
+  "win": 58,
+  "loss_over_50pct": 37,
+  "worst": -489
+ }
+}

@@ -1,0 +1,156 @@
+{
+ "retrieved_utc": "2026-11-03T06:47:13.884467+00:00",
+ "regime": {
+  "fng_today": 26,
+  "fng_label": "Fear",
+  "fng_yesterday": 37,
+  "btc": {
+   "price": 76656.71,
+   "sma200": 73205.11515,
+   "above_sma200": true
+  },
+  "breadth_above_sma50": 0.093,
+  "coins_scanned": 221
+ },
+ "alerts": [
+  {
+   "symbol": "BMTUSDT",
+   "signal": "EARLY_1H",
+   "signal_hour_utc": "2026-11-03 04:00",
+   "hours_ago": 1,
+   "move_at_signal": 0.145,
+   "price_now_vs_signal": 0.02,
+   "uptrend": false,
+   "history_days": 259,
+   "recent_spiker": true,
+   "funding": -0.01351886,
+   "shorts_crowded": true,
+   "upbit_7d": [],
+   "quote_vol_24h": 5600003
+  },
+  {
+   "symbol": "HOTUSDT",
+   "signal": "IGNITION",
+   "signal_hour_utc": "2026-11-02 20:00",
+   "hours_ago": 9,
+   "move_at_signal": 0.13,
+   "price_now_vs_signal": -0.096,
+   "uptrend": true,
+   "history_days": 259,
+   "recent_spiker": false,
+   "funding": -0.00182804,
+   "shorts_crowded": true,
+   "upbit_7d": [],
+   "quote_vol_24h": 6808709
+  },
+  {
+   "symbol": "NOMUSDT",
+   "signal": "EARLY_1H",
+   "signal_hour_utc": "2026-11-02 17:00",
+   "hours_ago": 12,
+   "move_at_signal": 0.083,
+   "price_now_vs_signal": -0.09,
+   "uptrend": false,
+   "history_days": 259,
+   "recent_spiker": false,
+   "funding": 5e-05,
+   "shorts_crowded": false,
+   "upbit_7d": [],
+   "quote_vol_24h": 2845825
+  },
+  {
+   "symbol": "MITOUSDT",
+   "signal": "EARLY_1H",
+   "signal_hour_utc": "2026-11-02 12:00",
+   "hours_ago": 17,
+   "move_at_signal": 0.086,
+   "price_now_vs_signal": -0.182,
+   "uptrend": false,
+   "history_days": 259,
+   "recent_spiker": false,
+   "funding": 0.0,
+   "shorts_crowded": false,
+   "upbit_7d": [],
+   "quote_vol_24h": 3132276
+  },
+  {
+   "symbol": "GLMRUSDT",
+   "signal": "EARLY_1H",
+   "signal_hour_utc": "2026-11-02 10:00",
+   "hours_ago": 19,
+   "move_at_signal": 0.061,
+   "price_now_vs_signal": -0.081,
+   "uptrend": false,
+   "history_days": 259,
+   "recent_spiker": false,
+   "funding": 0.0,
+   "shorts_crowded": false,
+   "upbit_7d": [],
+   "quote_vol_24h": 1335497
+  },
+  {
+   "symbol": "MEGAUSDT",
+   "signal": "EARLY_1H",
+   "signal_hour_utc": "2026-11-02 10:00",
+   "hours_ago": 19,
+   "move_at_signal": 0.032,
+   "price_now_vs_signal": 0.026,
+   "uptrend": false,
+   "history_days": 187,
+   "recent_spiker": false,
+   "funding": 5e-05,
+   "shorts_crowded": false,
+   "upbit_7d": [],
+   "quote_vol_24h": 4735911
+  },
+  {
+   "symbol": "REDUSDT",
+   "signal": "EARLY_1H",
+   "signal_hour_utc": "2026-11-02 08:00",
+   "hours_ago": 21,
+   "move_at_signal": 0.048,
+   "price_now_vs_signal": -0.053,
+   "uptrend": false,
+   "history_days": 259,
+   "recent_spiker": false,
+   "funding": -3.37e-05,
+   "shorts_crowded": false,
+   "upbit_7d": [],
+   "quote_vol_24h": 3330375
+  },
+  {
+   "symbol": "OGNUSDT",
+   "signal": "EARLY_1H",
+   "signal_hour_utc": "2026-11-02 06:00",
+   "hours_ago": 23,
+   "move_at_signal": 0.093,
+   "price_now_vs_signal": -0.105,
+   "uptrend": false,
+   "history_days": 259,
+   "recent_spiker": false,
+   "funding": 5e-05,
+   "shorts_crowded": false,
+   "upbit_7d": [],
+   "quote_vol_24h": 3107808
+  }
+ ],
+ "upbit_7d": [
+  {
+   "time_utc": "2026-10-30T07:00:00+00:00",
+   "title": "\ube14\ub7ec(BLUR) \uac70\ub798\uc9c0\uc6d0 \uc885\ub8cc \uc548\ub0b4 (11/30 15:00)",
+   "tickers": [
+    "BLUR"
+   ],
+   "kind": "DELIST"
+  },
+  {
+   "time_utc": "2026-10-27T07:30:00+00:00",
+   "title": "\ub2d0\ub9ac\uc628(NIL) KRW \ub9c8\ucf13 \ub514\uc9c0\ud138 \uc790\uc0b0 \ucd94\uac00",
+   "tickers": [
+    "NIL"
+   ],
+   "kind": "LISTING"
+  }
+ ],
+ "input_sha256": "cf88efba885a8f0cb8dea3822dd0fc00d408bf9e8f934455b6bcba3098e2cac4"
+}

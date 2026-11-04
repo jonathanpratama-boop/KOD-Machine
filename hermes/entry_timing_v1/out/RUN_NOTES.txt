@@ -1,0 +1,1 @@
+2026-11-03 run 1 (disc) crashed before any outcome: A.stack resolved to DataFrame.stack (pandas method). Fixed to A["stack"]. Hold part ran with the original file (its scores come from holdout_trades.csv; the changed line is only executed for disc). New sha: ba65be32c200f48e2c1eb0285f535b27be65689886ec6ddc6e9f3cb3fabf06d0  entry_timing_v1.py

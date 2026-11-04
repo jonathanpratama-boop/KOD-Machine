@@ -1,0 +1,6 @@
+symbols 924
+files 21860
+/Users/jonathanpratama/.hermes/profiles/kod-machine/research/bear_v1/fetch_funding.py:29: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  json.dump(dict(retrieved_utc=dt.datetime.utcnow().isoformat() + "Z", symbols=len(syms), files=len(keys),
+done ok 21860 failed 0
+EXIT 0
