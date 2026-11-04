@@ -56,6 +56,24 @@ class AppendOnlyGuardTests(unittest.TestCase):
         self.baseline(name)
         self.assertTrue(self.staged(name, b"changed\n"))
 
+    def test_versioned_timing_contracts_require_new_paths(self):
+        names = (
+            "handoff/astra/protocols/EXAMPLE_v1/PROTOCOL.md",
+            "costs/example_v1.json",
+            "docs/schemas/example_v1.json",
+            "schemas/example_v1.json",
+        )
+        for name in names:
+            self.baseline(name)
+        for name in names:
+            with self.subTest(path=name):
+                self.assertTrue(self.staged(name, b"changed\n"))
+                self.git("reset", "--hard", "HEAD")
+                self.write(name.replace("v1", "v2"), b"new version\n")
+                self.git("add", ".")
+                self.assertEqual(guard.check("HEAD", None), [])
+                self.git("reset", "--hard", "HEAD")
+
     def test_newline_path_cannot_escape_protection(self):
         name = "idx-signals/research/a\nb.json"
         self.baseline(name)

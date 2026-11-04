@@ -70,8 +70,8 @@ checks inside the release gate are not added again.
 | `idx-signals`: complete unittest suite | 1,463 passed |
 | `kod-machine`: core unittest suite | 282 passed |
 | `kod-machine/workstation_tests` | 321 passed |
-| `tools/ci_tests`, including archive-audit follow-up | 67 passed |
-| Total across those suites | 2,133 passed |
+| `tools/ci_tests`, including archive-audit and contract-protection follow-ups | 68 passed |
+| Total across those suites | 2,134 passed |
 | Restartable economic and timing demonstrations | Passed, synthetic/offline |
 | Backup, new-directory restore and verification | Passed |
 | Ruff style/lint | All 62 managed files passed |
@@ -124,6 +124,12 @@ The workflow now retains both before/after reports even if the baseline audit
 fails, then requires both statuses to pass. All manifest claims, unavailable
 archive entries and unsupported layouts remain in their original denominators.
 No historical record, manifest or token was repaired or rewritten.
+
+The new engineering protocols, named cost profiles and versioned schema paths
+are also protected by the append-only hook. Corrections require new versioned
+paths; current configuration can point to the new version without changing the
+meaning of retained records. The new regression failed for all four namespaces
+before the guard extension and passes after it, while permitting new versions.
 
 See [TIDY_REPORT.md](TIDY_REPORT.md) for source-pin preservation and before/after
 equivalence, [HISTORY_INTEGRITY.md](HISTORY_INTEGRITY.md) for explicit archival

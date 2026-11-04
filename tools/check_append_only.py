@@ -43,6 +43,10 @@ import subprocess
 import sys
 
 FROZEN_DIRS = (
+    "handoff/astra/protocols/",
+    "costs/",
+    "docs/schemas/",
+    "schemas/",
     "idx-signals/results/runs/",
     "idx-signals/data/manifests/",
     "idx-signals/data/corporate_actions/ca_registry-",
