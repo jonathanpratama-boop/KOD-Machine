@@ -86,7 +86,8 @@ class BackupTests(unittest.TestCase):
         from idxsig.runtime.timing_evidence import verify_linked_evidence
         from idxsig.timing_capture import read_attempts
 
-        clock = lambda: "2026-11-04T00:30:00Z"
+        def clock():
+            return "2026-11-04T00:30:00Z"
         with patch("idxsig.runtime.timing.shutil.which", return_value=None):
             attempt = Attempt(self.root, detector="BACKUP_FIXTURE_V1", source="synthetic",
                               kind="synthetic", members=["BTCUSDT"], clock=clock)
