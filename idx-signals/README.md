@@ -154,6 +154,10 @@ data, closures, frame and heap walks. The placebo takes about 25 seconds over 98
 `--lookahead-cuts N` (legacy) records the full-window signals and checks N prefixes; the
 report says the signals are not causal by construction.
 
+Study scripts under `research/` do not pass through this engine. For them, `idxsig.lookahead`
+and `tools/check_no_lookahead.py` rerun a study's own decision function on truncated or
+scrambled data: see [the look-ahead check](../docs/LOOKAHEAD_CHECK.md).
+
 ## 3. Execution over the full universe
 
 The universe is every ticker in the panel window on every session where the rule is
