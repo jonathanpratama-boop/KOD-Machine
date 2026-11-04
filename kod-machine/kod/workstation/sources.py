@@ -18,7 +18,7 @@ from urllib.parse import urljoin, urlsplit
 from zoneinfo import ZoneInfo
 
 from kod import earnings
-from kod.hashing import fmt_ts, parse_ts, utc_now
+from kod.hashing import fmt_ts, utc_now
 
 ALLOWED_HOSTS = frozenset({"www.sec.gov", "sec.gov", "data.sec.gov"})
 MAX_BYTES = 12 * 1024 * 1024
