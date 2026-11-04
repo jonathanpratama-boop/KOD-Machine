@@ -1,0 +1,9 @@
+Review the completed two-case verification and EVENT-REGISTER.json against the attached raw evidence.
+
+GMX: confirm the official FeeHandler deployment/token identity; the successful25October2024 fee-funded purchase of25GMX for566.648207USDC; the30October withdrawal/distributor funding/actual staking reward claim; and the separation of the small reward claim from larger vesting proceeds restaked in the same transaction. The claiming staking account is a contract, not the official router or necessarily the external sender. Check that pooled tokens are not individually traced and that the old30%/27% fee share did not increase. This is a funded repurchase/payment-flow episode, not a newly enlarged fee entitlement or current buy signal.
+
+SUSHI: confirm the SUSHIPOWAH-to-SUSHI identity link, the7December2025 Signal and14–21December Implementation vote, and successful2April2026 mint of3,838,388.58612SUSHI. Check why deposit(125,0) and the legacy developer/reward mint split do not establish implementation of the5% policy. Keep the actual mint observation separate from the unverified policy-execution event. Failed historical state calls are retained; current supply was not used as historical before/after supply.
+
+Independently reproduce receipt/block membership, amounts and contract roles using independent/audit_chain.py and audit_distribution.py on a copy: those scripts write fresh review outputs, so preserve original review JSONs. Parent already replayed both on an isolated copy and retained PARENT-AUDIT-REPLAY.json. Check the package manifest and all raw source hashes.
+
+Give a concrete evidence-based verdict on each admission. No price-return backtest, prospective forecast, simulated fill or profitable edge has been claimed. Cloud start/end health receipts show timers active and frozen source intact; no server changes were made by this research.
