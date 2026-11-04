@@ -16,7 +16,8 @@ daily paper bots push their own log appends directly and never merge.
 
 `handoff/merges/<YYYY-MM-DD>-<slug>.md`: the UTC date of the merge, and the merged branch as the slug with
 `/` written as `-` (lowercase letters, digits, `.`, `_`, `-`). Example:
-`2026-11-04-claude-hopeful-hypatia-ktzpog.md`.
+`2026-11-04-claude-hopeful-hypatia-ktzpog.md`. Every Markdown file added here other than `README.md` and
+`TEMPLATE.md` is read as a note; other files, such as an image a note links to, are not.
 
 Copy `TEMPLATE.md` and replace every placeholder. Each of Q1 to Q6 keeps exactly one `Answer:` line (`yes`,
 `no` or `n.a.`) and one `Evidence:` line of one sentence. Q4 also keeps one `Architect:` line and must

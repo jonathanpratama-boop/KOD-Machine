@@ -237,6 +237,15 @@ class MergeHistoryTests(unittest.TestCase):
         [error] = self.errors(proc)
         self.assertIn(f"merge {second[:12]} 'Merge feature/b'", error)
 
+    def test_files_other_than_markdown_beside_a_note_are_not_notes(self):
+        before = self.repo.head()
+        extras = {"handoff/merges/.gitkeep": "", "handoff/merges/2026-11-04-diagram.png": "PNG"}
+        self.branch("feature/rules", {RULES: "RULE = 2\n", NOTE: filled(), **extras})
+        merge = self.repo.merge("feature/rules", "Merge feature/rules")
+        proc = self.check("--push", before, merge)
+        self.assertEqual(proc.returncode, 0, proc.stdout)
+        self.assertIn(f"OK, note {NOTE}\n", proc.stdout)
+
     def test_misnamed_note_is_rejected(self):
         before = self.repo.head()
         self.branch("feature/rules", {RULES: "RULE = 2\n", "handoff/merges/rules.md": filled()})

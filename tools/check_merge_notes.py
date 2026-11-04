@@ -22,6 +22,8 @@ What is checked, on the first-parent line of the range (the commits that landed 
     BASE's, and a note that BASE already has, are left out. So a merge made on a stale copy of the
     branch (first parent older than BASE) neither needs a note for code that reached the branch
     before the push nor reuses a note that an earlier merge added.
+  * A note is a Markdown file (*.md) added under handoff/merges/ other than README.md and
+    TEMPLATE.md; other files there, such as an image a note links to, are not notes.
   * A note is valid when its name is a calendar date plus a lowercase slug, and each of Q1..Q6 has
     exactly one "Answer:" line (yes, no or n.a.) and one filled "Evidence:" line; Q4 answers yes
     and has one "Architect:" line. Every note offered for a merge is validated.
@@ -303,7 +305,7 @@ def new_to_branch(
 
 def added_notes(old: str, new: str, base: str | None) -> list[Note]:
     added = new_to_branch(old, new, base, added_only=True, under=NOTE_DIR)
-    return [Note(path, new) for path in added if path not in NOT_NOTES]
+    return [Note(path, new) for path in added if path.endswith(".md") and path not in NOT_NOTES]
 
 
 def note_error(note: Note) -> str | None:
