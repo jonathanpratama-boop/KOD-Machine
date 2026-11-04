@@ -36,3 +36,4 @@ review log below; rows are never deleted, only given a new status line.
 
 ## Review log
 - 2026-11-04: list created after INFO_MAGNET_v0 failed its primary gate and early-entry research closed.
+- 2026-11-04: early-entry research closed (`handoff/decisions/2026-11-04_early_entry_closed.md`). Row 1 (other exchanges' listing notices) is excluded by that closure; INFO_MAGNET showed the listing move happens inside the notice hour.
