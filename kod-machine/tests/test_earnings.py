@@ -72,7 +72,6 @@ class RealDemoTests(unittest.TestCase):
         src = {s["file"]: s for s in json.loads((DEMO / "SOURCES.json").read_text())}
         for name, s in src.items():
             assert hashlib.sha256((DEMO / name).read_bytes()).hexdigest() == s["sha256"], name
-        pub = lambda f: earnings.sec_acceptance((DEMO / f).read_text())  # noqa: E731
         cls.cur = earnings.prepare_source(
             str(DEMO / "current_q3fy25pr.htm"),
             CUR_URL,

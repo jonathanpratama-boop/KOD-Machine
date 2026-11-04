@@ -20,7 +20,7 @@ from kod.hashing import fmt_ts
 from kod.ledger import Ledger, LedgerError
 from kod.score import build_report, render_markdown
 from kod.verify import verify
-from tests.support import T0, Clock, Lab, prospective_card
+from tests.support import Clock, Lab, prospective_card
 
 ROOT = Path(__file__).resolve().parents[1]
 SEED = ROOT / "seeds" / "retrospective_cases.json"
