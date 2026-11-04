@@ -1,0 +1,369 @@
+"""The merge-note rule blocks unexplained code merges, and never a paper bot's log append."""
+
+from __future__ import annotations
+
+from pathlib import Path
+import re
+import sys
+import tempfile
+import unittest
+
+TOOLS = Path(__file__).resolve().parents[1]
+sys.path[:0] = [str(TOOLS), str(TOOLS / "ci_tests")]
+
+import check_merge_notes as notes  # noqa: E402
+import ci_scope  # noqa: E402
+from git_fixture import ZERO_SHA, Repo  # noqa: E402
+
+TEMPLATE = (TOOLS.parent / "handoff/merges/TEMPLATE.md").read_text(encoding="utf-8")
+INTRO = "tools/check_merge_notes.py"
+LEDGER = "idx-signals/paper/ledger.jsonl"
+RULES = "idx-signals/idxsig/rules.py"
+NOTE = "handoff/merges/2026-11-04-feature.md"
+
+
+def filled(answer: str = "n.a.") -> str:
+    """TEMPLATE.md with every placeholder answered, as the architect would leave it."""
+    text = TEMPLATE.replace("Answer: yes | no | n.a.", f"Answer: {answer}")
+    return re.sub(r"(?m)^(Evidence|Architect): <.*>$", r"\1: recorded in the fixture", text)
+
+
+def without(text: str, start: str, end: str) -> str:
+    return text[: text.index(start)] + text[text.index(end) :]
+
+
+class NoteFormatTests(unittest.TestCase):
+    def test_filled_template_is_a_valid_note(self):
+        for answer in ("yes", "no", "n.a.", "Yes", "N.A."):
+            with self.subTest(answer=answer):
+                self.assertEqual(notes.note_problems(filled(answer)), [])
+
+    def test_template_as_committed_is_not_a_note(self):
+        problems = notes.note_problems(TEMPLATE)
+        self.assertEqual({p.split(":")[0] for p in problems}, {f"Q{n}" for n in range(1, 7)})
+        self.assertIn("Q1: Answer: 'yes | no | n.a.' is not one of yes, no, n.a.", problems)
+        self.assertIn("Q4: Architect: is not filled in", problems)
+
+    def test_missing_question_is_named(self):
+        text = without(filled(), "## Q5.", "## Q6.")
+        self.assertEqual(
+            notes.note_problems(text),
+            [
+                "Q5 is missing (Could the owner actually trade this, and could the result change "
+                "what the owner does?)"
+            ],
+        )
+
+    def test_answer_must_be_yes_no_or_na(self):
+        text = filled().replace("Answer: n.a.", "Answer: maybe", 1)
+        self.assertEqual(
+            notes.note_problems(text), ["Q1: Answer: 'maybe' is not one of yes, no, n.a."]
+        )
+
+    def test_each_question_has_exactly_one_filled_evidence_line(self):
+        evidence = "Evidence: recorded in the fixture"
+        q2 = filled().index("## Q2.")
+        cases = {
+            "": "Q2: needs exactly one Evidence: line, found 0",
+            f"{evidence}\n{evidence}": "Q2: needs exactly one Evidence: line, found 2",
+            "Evidence:": "Q2: Evidence: is not filled in",
+            "Evidence: <one line>": "Q2: Evidence: is not filled in",
+        }
+        for replacement, problem in cases.items():
+            with self.subTest(replacement=replacement):
+                text = filled()
+                text = text[:q2] + text[q2:].replace(evidence, replacement, 1)
+                self.assertEqual(notes.note_problems(text), [problem])
+
+    def test_architect_must_approve_and_be_named(self):
+        q4 = filled().index("## Q4.")
+        cases = {
+            ("Answer: yes", "Answer: no"): (
+                "Q4: the architect must approve a merge into the default branch (Answer: yes)"
+            ),
+            ("Architect: recorded in the fixture\n", ""): (
+                "Q4: needs exactly one Architect: line, found 0"
+            ),
+        }
+        for (old, new), problem in cases.items():
+            with self.subTest(change=old):
+                text = filled()
+                text = text[:q4] + text[q4:].replace(old, new, 1)
+                self.assertEqual(notes.note_problems(text), [problem])
+
+    def test_unexpected_lines_and_repeated_questions_are_rejected(self):
+        text = filled().replace("Answer: n.a.", "**Answer:** n.a.", 1)
+        self.assertEqual(
+            notes.note_problems(text),
+            [
+                "Q1: unexpected line '**Answer:** n.a.' (a question has one Answer: line and "
+                "one Evidence: line)",
+                "Q1: needs exactly one Answer: line, found 0",
+            ],
+        )
+        repeated = filled() + "\n## Q3. Again?\nAnswer: yes\nEvidence: twice\n"
+        self.assertEqual(notes.note_problems(repeated), ["Q3 appears more than once"])
+        self.assertEqual(
+            notes.note_problems(filled() + "\n## Q7. Extra?\n"), ["Q7 is not one of Q1..Q6"]
+        )
+
+    def test_free_text_outside_the_questions_and_heading_levels_are_allowed(self):
+        text = filled().replace("## Q6.", "### Q6:") + "\n## Notes\nAnything, any length.\n"
+        self.assertEqual(notes.note_problems(text), [])
+
+    def test_note_names_carry_a_calendar_date_and_a_lowercase_slug(self):
+        self.assertIsNone(
+            notes.name_problem("handoff/merges/2026-11-04-claude-hopeful-hypatia-ktzpog.md")
+        )
+        for path, problem in (
+            ("handoff/merges/2026-11-31-x.md", "the date 2026-11-31 is not a calendar date"),
+            ("handoff/merges/notes.md", "the name is not handoff/merges/<YYYY-MM-DD>-<slug>.md"),
+            ("handoff/merges/2026-11-04-Fix_34.md", "the name is not"),
+            ("handoff/merges/old/2026-11-04-x.md", "the name is not"),
+        ):
+            with self.subTest(path=path):
+                self.assertIn(problem, notes.name_problem(path))
+
+
+class PaperLogScopeTests(unittest.TestCase):
+    def test_every_forecast_log_is_a_paper_log(self):
+        self.assertTrue(ci_scope.FORECAST_LOGS <= notes.PAPER_LOGS)
+        self.assertIn("handoff/fresh-eyes-2026-11-01/paper/ledger.jsonl", notes.PAPER_LOGS)
+
+    def test_code_configuration_and_other_records_need_a_note(self):
+        paths = [
+            LEDGER,
+            "kod-machine/registry/opens.jsonl",
+            "handoff/merges/README.md",
+            RULES,
+            ".github/workflows/checks.yml",
+            "idx-signals/paper/code.py",
+            "idx-signals/data/corporate_actions/manual.csv",
+            "idx-signals/results/RUNS.jsonl",
+            "handoff/KOD_FIX_PLAN.md",
+        ]
+        self.assertEqual(notes.code_paths(paths), paths[3:])
+
+
+class MergeHistoryTests(unittest.TestCase):
+    def setUp(self):
+        self.repo = self.new_repo()
+        self.repo.commit("code and paper logs", {RULES: "RULE = 1\n", LEDGER: "{}\n"})
+        self.intro = self.repo.commit("introduce the check", {INTRO: "# stand-in\n"})
+
+    def new_repo(self) -> Repo:
+        temp = tempfile.TemporaryDirectory()
+        self.addCleanup(temp.cleanup)
+        return Repo(Path(temp.name))
+
+    def branch(self, name: str, files: dict[str, str], repo: Repo | None = None) -> None:
+        """Commit `files` on a new branch off main, then return to main."""
+        repo = repo or self.repo
+        repo.git("checkout", "-q", "-b", name, "main")
+        repo.commit(f"work on {name}", files)
+        repo.git("checkout", "-q", "main")
+
+    def check(self, *args: str, repo: Repo | None = None):
+        return (repo or self.repo).run("check_merge_notes.py", *args)
+
+    def errors(self, proc) -> list[str]:
+        return [line for line in proc.stdout.splitlines() if line.startswith("::error ")]
+
+    def test_bot_style_forecast_appends_pass(self):
+        before = self.repo.head()
+        self.repo.append(LEDGER, '{"scan": 1}\n')
+        self.repo.commit("paper scan", {"idx-signals/paper/timestamps/a.freetsa.tsr": "token"})
+        self.repo.append(LEDGER, '{"score": 1}\n')
+        head = self.repo.commit("paper score")
+        for args in (("--push", before, head), ("--push", ZERO_SHA, head)):
+            with self.subTest(args=args[1]):
+                proc = self.check(*args)
+                self.assertEqual(proc.returncode, 0, proc.stdout)
+                self.assertIn("no merge commits on the first-parent line", proc.stdout)
+
+    def test_non_merge_commits_are_never_checked(self):
+        before = self.repo.head()
+        head = self.repo.commit("direct code commit", {RULES: "RULE = 2\n"})
+        self.assertEqual(self.check("--push", before, head).returncode, 0)
+
+    def test_code_merge_without_a_note_fails_and_names_the_file_to_add(self):
+        before = self.repo.head()
+        self.branch("feature/rules", {RULES: "RULE = 2\n"})
+        merge = self.repo.merge("feature/rules", "Merge feature/rules")
+        proc = self.check("--push", before, merge)
+        self.assertEqual(proc.returncode, 1)
+        [error] = self.errors(proc)
+        self.assertIn(f"merge {merge[:12]} 'Merge feature/rules'", error)
+        self.assertIn(f"changes code or configuration ({RULES})", error)
+        self.assertIn("Add handoff/merges/2026-11-04-<slug>.md", error)
+        self.assertIn("copy handoff/merges/TEMPLATE.md", error)
+
+    def test_valid_note_on_the_branch_in_the_merge_or_pushed_with_it_passes(self):
+        for where in ("branch", "merge", "follow-up"):
+            with self.subTest(where=where):
+                before = self.repo.head()
+                name = f"feature/{where}"
+                note = {f"handoff/merges/2026-11-04-{where}.md": filled()}
+                code = {f"idx-signals/idxsig/{where}.py": "X = 1\n"}
+                self.branch(name, {**code, **(note if where == "branch" else {})})
+                head = self.repo.merge(name, f"Merge {name}", note if where == "merge" else None)
+                if where == "follow-up":
+                    head = self.repo.commit("merge note", note)
+                proc = self.check("--push", before, head)
+                self.assertEqual(proc.returncode, 0, proc.stdout)
+                self.assertIn(f"note handoff/merges/2026-11-04-{where}.md", proc.stdout)
+
+    def test_note_missing_a_question_fails(self):
+        before = self.repo.head()
+        self.branch(
+            "feature/rules", {RULES: "RULE = 2\n", NOTE: without(filled(), "## Q3.", "## Q4.")}
+        )
+        merge = self.repo.merge("feature/rules", "Merge feature/rules")
+        proc = self.check("--push", before, merge)
+        self.assertEqual(proc.returncode, 1)
+        [error] = self.errors(proc)
+        self.assertTrue(error.startswith(f"::error file={NOTE},title=Merge note invalid::"))
+        self.assertIn(f"(added by {merge[:12]}): Q3 is missing", error)
+
+    def test_one_note_covers_one_merge(self):
+        before = self.repo.head()
+        self.branch("feature/a", {"idx-signals/idxsig/a.py": "A = 1\n"})
+        self.repo.merge("feature/a", "Merge feature/a")
+        self.branch("feature/b", {"idx-signals/idxsig/b.py": "B = 1\n"})
+        second = self.repo.merge("feature/b", "Merge feature/b")
+        head = self.repo.commit("one note for two merges", {NOTE: filled()})
+        proc = self.check("--push", before, head)
+        self.assertEqual(proc.returncode, 1)
+        [error] = self.errors(proc)
+        self.assertIn(f"merge {second[:12]} 'Merge feature/b'", error)
+
+    def test_misnamed_note_is_rejected(self):
+        before = self.repo.head()
+        self.branch("feature/rules", {RULES: "RULE = 2\n", "handoff/merges/rules.md": filled()})
+        merge = self.repo.merge("feature/rules", "Merge feature/rules")
+        proc = self.check("--push", before, merge)
+        self.assertEqual(proc.returncode, 1)
+        [error] = self.errors(proc)
+        self.assertIn(
+            f"handoff/merges/rules.md (added by {merge[:12]}): the name is not "
+            "handoff/merges/<YYYY-MM-DD>-<slug>.md",
+            error,
+        )
+
+    def test_merge_of_paper_logs_and_notes_only_needs_no_note(self):
+        before = self.repo.head()
+        self.repo.git("checkout", "-q", "-b", "paper", "main")
+        self.repo.append(LEDGER, '{"scan": 2}\n')
+        self.repo.commit("paper scan on a branch", {"handoff/merges/README.md": "notes\n"})
+        self.repo.git("checkout", "-q", "main")
+        merge = self.repo.merge("paper", "Merge paper")
+        proc = self.check("--push", before, merge)
+        self.assertEqual(proc.returncode, 0, proc.stdout)
+        self.assertIn("no note needed: it changes only paper logs and merge notes", proc.stdout)
+
+    def test_sync_merge_of_commits_already_on_the_branch_needs_no_note(self):
+        self.repo.git("checkout", "-q", "-b", "bot", "main")
+        self.repo.append(LEDGER, '{"scan": 3}\n')
+        bot_commit = self.repo.commit("paper scan whose push was rejected")
+        self.repo.git("checkout", "-q", "main")
+        self.branch("feature/rules", {RULES: "RULE = 3\n", NOTE: filled()})
+        published = self.repo.merge("feature/rules", "Merge feature/rules")
+        self.repo.git("checkout", "-q", "bot")
+        synced = self.repo.merge("main", "Merge branch 'main' of origin")  # the bot's `git pull`
+        self.assertIn(RULES, self.repo.git("diff", "--name-only", bot_commit, synced))
+        proc = self.check("--push", published, synced)
+        self.assertEqual(proc.returncode, 0, proc.stdout)
+        self.assertIn("every merged commit was already on the branch", proc.stdout)
+
+    def history_before_the_check(self, note: bool) -> tuple[Repo, dict[str, str]]:
+        """Code merges made before the check, then the merge that brings the check in."""
+        repo = self.new_repo()
+        shas = {"base": repo.commit("code", {RULES: "RULE = 1\n"})}
+        self.branch("ancestor", {"idx-signals/idxsig/ancestor.py": "A = 1\n"}, repo)
+        shas["ancestor"] = repo.merge("ancestor", "Merge ancestor")  # an ancestor of the check
+        repo.git("checkout", "-q", "-b", "check", "main")
+        shas["intro"] = repo.commit("introduce the check", {INTRO: "# stand-in\n"})
+        repo.git("checkout", "-q", "main")
+        self.branch("parallel", {"idx-signals/idxsig/parallel.py": "P = 1\n"}, repo)
+        shas["parallel"] = repo.merge("parallel", "Merge parallel")  # on main, without the check
+        shas["head"] = repo.merge("check", "Merge check", {NOTE: filled()} if note else None)
+        return repo, shas
+
+    def test_merges_made_before_the_check_are_exempt(self):
+        for note, code in ((True, 0), (False, 1)):
+            with self.subTest(note=note):
+                repo, shas = self.history_before_the_check(note)
+                proc = self.check("--push", shas["base"], shas["head"], repo=repo)
+                self.assertEqual(proc.returncode, code, proc.stdout)
+                for merge in ("ancestor", "parallel"):
+                    self.assertIn(
+                        f"{shas[merge][:12]} 'Merge {merge}': exempt: does not descend from the "
+                        f"commit that added {INTRO} ({shas['intro'][:12]})",
+                        proc.stdout,
+                    )
+                self.assertEqual(len(self.errors(proc)), code)  # only 'Merge check' can fail
+
+    def test_since_commit_sets_the_introduction_explicitly(self):
+        repo, shas = self.history_before_the_check(note=True)
+        proc = self.check(
+            "--push", shas["base"], shas["head"], "--since-commit", shas["base"], repo=repo
+        )
+        self.assertEqual(proc.returncode, 1, proc.stdout)
+        self.assertEqual(len(self.errors(proc)), 2)  # ancestor and parallel now need notes
+        before_the_check = f"{shas['ancestor']}..{shas['parallel']}"
+        for marker, problem in (
+            (shas["intro"], "is not an ancestor of"),
+            ("no-such-commit", "is not a commit in this repository"),
+        ):
+            with self.subTest(marker=marker):
+                proc = self.check("--range", before_the_check, "--since-commit", marker, repo=repo)
+                self.assertEqual(proc.returncode, 2, proc.stdout)
+                self.assertIn(problem, proc.stdout)
+
+    def test_missing_introduction_is_an_error_only_when_a_merge_is_found(self):
+        repo = self.new_repo()
+        before = repo.commit("code", {RULES: "RULE = 1\n"})
+        repo.append(RULES, "RULE = 2\n")
+        head = repo.commit("direct commit")
+        self.assertEqual(self.check("--push", before, head, repo=repo).returncode, 0)
+        self.branch("feature/rules", {RULES: "RULE = 3\n"}, repo)
+        merge = repo.merge("feature/rules", "Merge feature/rules")
+        proc = self.check("--push", before, merge, repo=repo)
+        self.assertEqual(proc.returncode, 2)
+        self.assertIn(f"no commit in HEAD's history adds {INTRO}; pass --since-commit", proc.stdout)
+
+    def test_force_push_or_unknown_before_checks_only_the_head_commit(self):
+        self.repo.git("checkout", "-q", "-b", "gone", self.intro)
+        dropped = self.repo.commit("dropped by the force-push")
+        self.repo.git("checkout", "-q", "main")
+        self.branch("feature/rules", {RULES: "RULE = 2\n"})
+        merge = self.repo.merge("feature/rules", "Merge feature/rules")
+        for before, reason in (
+            (dropped, "is not an ancestor of"),
+            ("f" * 40, "is not in this clone"),
+        ):
+            with self.subTest(reason=reason):
+                proc = self.check("--push", before, merge)
+                self.assertEqual(proc.returncode, 1)
+                self.assertIn(reason, proc.stdout)
+                self.assertIn("reading only the head commit", proc.stdout)
+        self.repo.append(LEDGER, '{"scan": 4}\n')
+        head = self.repo.commit("paper scan after the force-push")
+        self.assertEqual(self.check("--push", dropped, head).returncode, 0)
+
+    def test_invalid_range_or_push_values_are_errors(self):
+        self.branch("feature/rules", {RULES: "RULE = 2\n"})
+        merge = self.repo.merge("feature/rules", "Merge feature/rules")
+        for args, problem in (
+            (("--range", f"{merge}..{self.intro}"), "is not an ancestor of"),
+            (("--range", "main"), "--range must be BASE..HEAD"),
+            (("--push", "main", merge), "before must be a 40-character commit id"),
+        ):
+            with self.subTest(args=args):
+                proc = self.check(*args)
+                self.assertEqual(proc.returncode, 2)
+                self.assertIn(problem, proc.stdout)
+
+
+if __name__ == "__main__":
+    unittest.main()

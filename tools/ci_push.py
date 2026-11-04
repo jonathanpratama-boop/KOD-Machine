@@ -127,6 +127,19 @@ def parents(sha: str) -> list[str]:
     return git("rev-list", "--parents", "-n", "1", sha).split()[1:]
 
 
+def first_parent_line(commits: CommitRange) -> list[tuple[str, list[str]]]:
+    """(commit, parents) on the first-parent line, oldest first: what landed on the branch."""
+    spec = (
+        [commits.head, "-n", "1"] if commits.base is None else [f"{commits.base}..{commits.head}"]
+    )
+    rows = git("rev-list", "--reverse", "--first-parent", "--parents", *spec).splitlines()
+    return [(fields[0], fields[1:]) for fields in map(str.split, rows) if fields]
+
+
+def subject(commit: str) -> str:
+    return git("log", "-1", "--format=%s", commit).strip()
+
+
 def compared_tree(commits: CommitRange) -> str:
     """What the range is compared against: BASE, else the head's first parent or the empty tree."""
     if commits.base is not None:
