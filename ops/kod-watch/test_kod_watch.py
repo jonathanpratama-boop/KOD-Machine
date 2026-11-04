@@ -133,6 +133,10 @@ class Run:
 
 class WatchTestCase(unittest.TestCase):
     def setUp(self):
+        self.fresh_tree()
+
+    def fresh_tree(self) -> None:
+        """Point self.tree at a new fake server tree in its own temporary directory."""
         temp = tempfile.TemporaryDirectory()
         self.addCleanup(temp.cleanup)
         self.root = Path(temp.name)
@@ -227,7 +231,7 @@ class SlotModeTests(WatchTestCase):
         ]
         for status, fields, clause in cases:
             with self.subTest(status=status):
-                self.setUp()
+                self.fresh_tree()
                 self.tree.captured(1, 2, 3, 4, 5)
                 self.tree.record(6, status, **fields)
                 run = self.run_watch("slot", at(6, 12))
