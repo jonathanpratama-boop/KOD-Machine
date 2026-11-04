@@ -89,8 +89,8 @@ class ArchiveTests(unittest.TestCase):
             self.assertEqual(len(entries),2)
             self.assertTrue(all(e['fetched_at'] and e['sha256'] for e in entries))
 
-    def fixture(self, tmp, *, bad_checksum=False, missing=False, fail=False):
-        data=zipped([row()]); calls=[]
+    def fixture(self, tmp, *, bad_checksum=False, missing=False, fail=False, rows=None):
+        data=zipped([row()] if rows is None else rows); calls=[]
         key='data/spot/monthly/klines/JUPUSDT/1h/JUPUSDT-1h-2025-01.zip'
         def opener(request, **kw):
             url=request.full_url; calls.append(url)
@@ -135,7 +135,8 @@ class ArchiveTests(unittest.TestCase):
             self.assertEqual(len(calls),3)
             self.assertEqual(len(results),20)
             entries=[json.loads(line) for line in a.manifest_path.read_text().splitlines()]
-            self.assertEqual(len(entries),3)
+            self.assertEqual(len(entries),4)
+            self.assertEqual(entries[-1]['kind'],'verified_hourly_archive')
 
     def test_cached_metadata_values_cannot_diverge_from_raw(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -151,6 +152,49 @@ class ArchiveTests(unittest.TestCase):
             with self.assertRaises(ValueError): a.bar('../JUPUSDT',HOUR)
             with self.assertRaises(ValueError): a.bar('JUPUSDT',HOUR.replace(tzinfo=None))
             with self.assertRaises(ValueError): a.bar('JUPUSDT',HOUR+timedelta(minutes=1))
+
+    def test_unrelated_short_hour_preserved_and_requested_short_hour_is_error(self):
+        bad = row(HOUR+timedelta(hours=2))
+        bad[6] = epoch(HOUR+timedelta(hours=3)-timedelta(milliseconds=1334))
+        with tempfile.TemporaryDirectory() as tmp:
+            a,calls=self.fixture(tmp,rows=[row(),bad])
+            self.assertEqual(str(a.bar('JUPUSDT',HOUR)['close']),'11')
+            self.assertIsNone(a.bar('JUPUSDT',HOUR+timedelta(hours=1)))
+            with self.assertRaisesRegex(DataError,'requested hour is incomplete'):
+                a.bar('JUPUSDT',HOUR+timedelta(hours=2))
+            provenance=next(Path(tmp).rglob('*.zip.receipt.json'))
+            info=json.loads(provenance.read_text())
+            self.assertEqual(len(info['invalid_hour_diagnostics']),1)
+            self.assertEqual(info['invalid_hour_diagnostics'][0]['csv_row'],2)
+            self.assertTrue(next(Path(tmp).rglob('*.zip')).exists())
+
+    def test_partial_listing_hour_is_error_not_missing_but_next_hour_usable(self):
+        partial=row(HOUR+timedelta(minutes=5))
+        partial[6]=epoch(HOUR+timedelta(hours=1)-timedelta(milliseconds=1))
+        with tempfile.TemporaryDirectory() as tmp:
+            a,calls=self.fixture(tmp,rows=[partial,row(HOUR+timedelta(hours=1))])
+            with self.assertRaisesRegex(DataError,'requested hour is incomplete'):
+                a.bar('JUPUSDT',HOUR)
+            self.assertEqual(a.bar('JUPUSDT',HOUR+timedelta(hours=1))['open_time'],HOUR+timedelta(hours=1))
+
+    def test_verified_raw_and_receipt_preserved_on_nonlocalized_parse_failure(self):
+        bad=row();bad[2]='NaN'
+        with tempfile.TemporaryDirectory() as tmp:
+            a,calls=self.fixture(tmp,rows=[bad])
+            with self.assertRaises(DataError): a.bar('JUPUSDT',HOUR)
+            self.assertEqual(len(list(Path(tmp).rglob('*.zip'))),1)
+            receipt=json.loads(next(Path(tmp).rglob('*.zip.receipt.json')).read_text())
+            self.assertEqual(receipt['parse_status'],'ERROR')
+            raw=next(Path(tmp).rglob('*.zip')).read_bytes()
+            self.assertEqual(hashlib.sha256(raw).hexdigest(),receipt['sha256'])
+
+    def test_ambiguous_multiple_rows_for_one_hour_not_silently_resolved(self):
+        partial=row(HOUR+timedelta(minutes=5))
+        partial[6]=epoch(HOUR+timedelta(hours=1)-timedelta(milliseconds=1))
+        with tempfile.TemporaryDirectory() as tmp:
+            a,calls=self.fixture(tmp,rows=[partial,row()])
+            with self.assertRaisesRegex(DataError,'ambiguous duplicate'):
+                a.bar('JUPUSDT',HOUR)
 
 
 if __name__ == '__main__': unittest.main()

@@ -79,8 +79,12 @@ def _number(value, *, positive=False):
     return n
 
 
-def decode_zip(raw, symbol, month, archive_sha256=None):
-    """Pure parser used by synthetic tests; per-row ms/us normalization."""
+def decode_zip(raw, symbol, month, archive_sha256=None, *, invalid_hours=None):
+    """Pure parser; optional invalid_hours retains only localizable partial hours.
+
+    Default direct use stays strict. Archive.bar never returns an incomplete hour
+    as missing: it raises DataError if that explicitly requested hour is invalid.
+    """
     name = f'{symbol}-1h-{month}.csv'
     try:
         with zipfile.ZipFile(io.BytesIO(raw)) as archive:
@@ -93,7 +97,7 @@ def decode_zip(raw, symbol, month, archive_sha256=None):
     except (zipfile.BadZipFile, UnicodeDecodeError, KeyError) as exc:
         raise DataError('invalid ZIP or CSV encoding') from exc
     bars = {}
-    for row in csv.reader(io.StringIO(text)):
+    for row_number, row in enumerate(csv.reader(io.StringIO(text)), 1):
         if not row:
             continue
         if row[0] in ('open_time', 'open_timestamp'):
@@ -107,10 +111,24 @@ def decode_zip(raw, symbol, month, archive_sha256=None):
         if open_unit != close_unit:
             raise DataError('mixed timestamp units within one bar')
         end = closed + timedelta(microseconds=1000 if close_unit == 'ms' else 1)
-        if opened.minute or opened.second or opened.microsecond or end - opened != timedelta(hours=1):
-            raise DataError('bar is not one completed UTC hour')
         if opened.strftime('%Y-%m') != month:
             raise DataError('bar does not belong to named archive month')
+        if opened.minute or opened.second or opened.microsecond or end - opened != timedelta(hours=1):
+            # Verified monthly archives sometimes include a short/incomplete
+            # hour. Preserve it as unresolved, but do not let an unrelated bad
+            # hour invalidate otherwise valid requested hours in that month.
+            bucket = opened.replace(minute=0, second=0, microsecond=0)
+            if invalid_hours is None or not (bucket <= opened < end <= bucket + timedelta(hours=1)):
+                raise DataError('bar is not one completed UTC hour')
+            if bucket in bars or bucket in invalid_hours:
+                raise DataError('ambiguous duplicate complete/incomplete hour')
+            invalid_hours[bucket] = {'reason':'bar is not one completed UTC hour',
+                'csv_row':row_number, 'open_time':opened.isoformat(),
+                'close_time':closed.isoformat(), 'close_exclusive':end.isoformat(),
+                'open_epoch':row[0], 'close_epoch':row[6]}
+            continue
+        if invalid_hours is not None and opened in invalid_hours:
+            raise DataError('ambiguous duplicate complete/incomplete hour')
         values = {k: _number(row[i], positive=True) for k, i in [('open',1),('high',2),('low',3),('close',4)]}
         if values['low'] > min(values['open'], values['close']) or values['high'] < max(values['open'], values['close']) or values['low'] > values['high']:
             raise DataError('inconsistent OHLC range')
@@ -283,21 +301,36 @@ class Archive:
                 raw, downloaded = self._get(BASE + key, 'hourly_archive')
             if _sha(raw) != expected.lower():
                 raise DataError('hourly archive differs from official checksum')
-            bars = decode_zip(raw, symbol, month, expected.lower())
+            # Persist checksum-verified originals before semantic parsing so a
+            # schema/row failure does not discard the evidence needed to audit it.
             if not reused:
                 self._write(path, raw)
-            record = {'kind':'verified_hourly_archive', 'url':BASE + key, 'verified_at':_stamp(),
+            record = {'kind':'verified_raw_archive', 'url':BASE + key, 'verified_at':_stamp(),
                 'sha256':expected.lower(), 'bytes':len(raw), 'cache_path':key, 'reused_file':reused,
-                'checksum_url':BASE + key + '.CHECKSUM', 'checksum_sha256':_sha(checksum_raw)}
+                'checksum_url':BASE + key + '.CHECKSUM', 'checksum_sha256':_sha(checksum_raw),
+                'parse_status':'NOT_PARSED_YET'}
             if not reused:
                 record['fetched_at'] = downloaded['fetched_at']
             self._write(provenance, (json.dumps(record, sort_keys=True, indent=2) + '\n').encode())
+            self._record(dict(record))
+            invalid_hours = {}
+            try:
+                bars = decode_zip(raw, symbol, month, expected.lower(), invalid_hours=invalid_hours)
+            except DataError as exc:
+                record.update(kind='archive_parse_error', parse_status='ERROR', parse_error=str(exc))
+                self._write(provenance, (json.dumps(record, sort_keys=True, indent=2) + '\n').encode())
+                self._record(record)
+                raise
+            record.update(kind='verified_hourly_archive', parse_status='PARSED',
+                invalid_hour_diagnostics=[dict(hour=hour.isoformat(), **detail) for hour,detail in sorted(invalid_hours.items())])
+            self._write(provenance, (json.dumps(record, sort_keys=True, indent=2) + '\n').encode())
             self._record(record)
+            result = (bars, invalid_hours)
             with self._mutex:
-                self._bar_cache[identity] = bars
+                self._bar_cache[identity] = result
                 while len(self._bar_cache) > self.max_cache_months:
                     self._bar_cache.popitem(last=False)
-            return bars
+            return result
 
     def bar(self, symbol, hourUTC):
         symbol = self._symbol(symbol)
@@ -311,4 +344,7 @@ class Archive:
         month = hour.strftime('%Y-%m')
         if month not in self.months(symbol):
             return None
-        return self._month(symbol, month).get(hour)
+        bars, invalid_hours = self._month(symbol, month)
+        if hour in invalid_hours:
+            raise DataError('requested hour is incomplete in verified archive: ' + json.dumps(invalid_hours[hour], sort_keys=True))
+        return bars.get(hour)

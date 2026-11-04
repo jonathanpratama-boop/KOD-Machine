@@ -1,0 +1,22 @@
+{
+  "schema": "INFO_MAGNET_ARCHIVE_TIMESTAMP_DIAGNOSTIC_V1",
+  "recorded_at": "2026-11-04T14:19:18.542877+00:00",
+  "probe_scope": "Timestamp columns only; no OHLC returns inspected by diagnostic",
+  "source_url": "https://data.binance.vision/data/spot/monthly/klines/NEARUSDT/1h/NEARUSDT-1h-2021-12.zip",
+  "official_checksum_url": "https://data.binance.vision/data/spot/monthly/klines/NEARUSDT/1h/NEARUSDT-1h-2021-12.zip.CHECKSUM",
+  "archive_sha256": "2d7c274084af14a044cbb2c53ae26fed4e6b4f5c2659ef0f46e605dc8536f5cc",
+  "official_checksum_verified": true,
+  "csv_rows": 744,
+  "invalid_rows": [
+    {
+      "csv_row": 557,
+      "open_epoch": "1640318400000",
+      "close_epoch": "1640321998665",
+      "open_utc": "2021-12-24T04:00:00+00:00",
+      "exclusive_end_utc": "2021-12-24T04:59:58.666000+00:00",
+      "duration_seconds": 3598.666
+    }
+  ],
+  "interpretation": "An internal monthly row is shorter than one complete hour; it must remain unresolved when requested, without invalidating other complete requested hours.",
+  "economic_rules_changed": false
+}

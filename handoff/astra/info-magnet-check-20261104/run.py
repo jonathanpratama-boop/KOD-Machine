@@ -23,7 +23,14 @@ def dump(path,obj):
     path=Path(path); tmp=path.with_suffix(path.suffix+'.tmp')
     tmp.write_text(json.dumps(obj,indent=2,sort_keys=True,allow_nan=False)+'\n');tmp.replace(path)
 
-def evaluate(event,archive,symbols):
+def _bar(archive,symbol,hour):
+    try:
+        return archive.bar(symbol,hour)
+    except (DownloadError,DataError,ValueError,OSError) as exc:
+        raise type(exc)(f'{symbol} {hour.isoformat()}: {exc}') from exc
+
+
+def evaluate(event,archive,symbols,target_symbols=None):
     row=dict(event)
     if not event['primary_krw']:
         row['status']='SECONDARY_MARKET_NOT_PRIMARY';return row
@@ -33,11 +40,11 @@ def evaluate(event,archive,symbols):
     if event['review_required']:
         row['status']='UNRESOLVED_NOTICE';return row
     symbol=event['symbol']
-    if symbol not in symbols:
+    if symbol not in (symbols if target_symbols is None else target_symbols):
         row['status']='UNMEASURABLE_NO_HISTORICAL_USDT_ARCHIVE';return row
     prior=notice.replace(minute=0,second=0,microsecond=0)-dt.timedelta(hours=1)
     try:
-        bar=archive.bar(symbol,prior)
+        bar=_bar(archive,symbol,prior)
         if bar is None:
             row['status']='UNMEASURABLE_NO_PRE_NOTICE_HOUR';return row
         row['eligibility_bar_at']=prior.isoformat()
@@ -48,7 +55,7 @@ def evaluate(event,archive,symbols):
         controls=[]; checked=0
         for candidate in pool:
             checked+=1
-            if archive.bar(candidate,prior) is not None:
+            if _bar(archive,candidate,prior) is not None:
                 controls.append(candidate)
                 if len(controls)==5:break
         row['control_eligibility_probes']=checked
@@ -64,7 +71,7 @@ def evaluate(event,archive,symbols):
             values={};missing=[]
             try:
                 for instrument in [symbol,*controls]:
-                    opened=archive.bar(instrument,entry);closed=archive.bar(instrument,end)
+                    opened=_bar(archive,instrument,entry);closed=_bar(archive,instrument,end)
                     if opened is None or closed is None:
                         missing.append(instrument);continue
                     values[instrument]=float(closed['close']/opened['open']-1)
@@ -99,7 +106,7 @@ def main():
     print(json.dumps({'stage':'notice_inventory_and_universe','notices':inventory['notice_count'],'primary_events':inventory['primary_krw_events'],'historical_symbols':len(all_symbols),'control_pool':len(symbols)}),flush=True)
     rows=[];lock=threading.Lock()
     with ThreadPoolExecutor(a.workers) as executor:
-        futures=[executor.submit(evaluate,e,archive,symbols) for e in inventory['events']]
+        futures=[executor.submit(evaluate,e,archive,symbols,target_symbols=all_symbols) for e in inventory['events']]
         for future in as_completed(futures):
             row=future.result();rows.append(row)
             with (out/'EVENTS.jsonl').open('a') as stream:stream.write(json.dumps(row,sort_keys=True,allow_nan=False)+'\n')

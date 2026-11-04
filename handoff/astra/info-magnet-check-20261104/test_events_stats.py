@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from events_stats import extract_tickers, notice_time, parse_archive, summarize_paired
+from events_stats import extract_tickers, extract_markets, notice_time, parse_archive, summarize_paired
 
 
 def notice(identity=1, title='테스트(AAA) KRW 마켓 디지털 자산 추가', at='2026-01-02T12:30:00+09:00'):
@@ -23,6 +23,34 @@ class NoticeParser(unittest.TestCase):
     def test_tickers_exclude_markets_dates_and_allow_numeric_prefix(self):
         self.assertEqual(extract_tickers('토큰(1INCH), 코인(ABC) (KRW, BTC, USDT 마켓) (11/30 15:00)'), ['1INCH','ABC'])
         self.assertEqual(extract_tickers('비트코인(BTC) (USDT)'), [])
+
+    def test_older_korean_name_and_ticker_parentheses_are_in_contract(self):
+        for name,ticker in [('도지코인','DOGE'),('휴먼스케이프','HUM'),('엘비알와이크레딧','LBC'),
+                            ('옵저버','OBSR'),('메타디움','META'),('비트코인캐시에이비씨','BCHA')]:
+            self.assertEqual(extract_tickers(f'원화 마켓 디지털 자산 추가 ({name} {ticker})'),[ticker])
+        self.assertEqual(extract_tickers('알파(한글ABC) 토큰명OUTSIDE'),['ABC'])
+        self.assertEqual(extract_tickers('코인 (mixedCase) (11/30 15:00) (KRW, BTC, USDT 마켓)'),[])
+        self.assertEqual(extract_tickers('KRW, BTC 마켓 디지털 자산 추가 (T) 및 이에 따른 NU 유의 종목 지정 안내 (NU <> T 스왑 사이트 추가 안내)'),['T'])
+
+    def test_background_swap_tokens_retained_as_explicit_annotation_exclusion(self):
+        with tempfile.TemporaryDirectory() as root:
+            self.write(root,'upbit',1,page([notice(2474,'KRW, BTC 마켓 디지털 자산 추가 (T) 및 이에 따른 NU 유의 종목 지정 안내 (NU <> T 스왑 사이트 추가 안내)')]))
+            result=parse_archive(root)
+            self.assertEqual([e['ticker'] for e in result['events']],['T'])
+            annotation=result['ignored_parenthetical_annotations'][0]
+            self.assertEqual(annotation['notice_id'],2474)
+            self.assertEqual(annotation['mentioned_tokens'],['NU','T'])
+            self.assertEqual(annotation['reason'],'BACKGROUND_OR_AMBIGUOUS_ANNOTATION_NOT_TICKER_LIST')
+
+    def test_korean_won_market_is_primary_without_expanding_title_family(self):
+        with tempfile.TemporaryDirectory() as root:
+            self.write(root,'upbit',1,page([notice(1882,'원화 마켓 디지털 자산 추가 (AXS, STX, FLOW, DAWN)')]))
+            result=parse_archive(root)
+            self.assertEqual(result['primary_krw_events'],4)
+            self.assertEqual(result['eligible_primary_notice_events'],4)
+            self.assertTrue(all(e['markets']==['KRW'] for e in result['events']))
+        self.assertEqual(extract_markets('원화 출금 안내'),[])
+        self.assertEqual(extract_markets('BTC 마켓 디지털 자산 추가'),['BTC'])
 
     def test_first_listed_kst_not_later_revision_and_strict_next_hour(self):
         with tempfile.TemporaryDirectory() as root:

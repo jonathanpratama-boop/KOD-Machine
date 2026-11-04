@@ -31,4 +31,15 @@ class Runner(unittest.TestCase):
         self.assertEqual(r['control_symbols'],r2['control_symbols']);self.assertNotIn('TARGETUSDT',r['control_symbols'])
         self.assertEqual(a.calls[0][1],dt.datetime(2024,1,2,0,tzinfo=UTC))
         self.assertEqual(r['status'],'SCORED')
+    def test_control_product_exclusion_does_not_exclude_event_target(self):
+        event={**EVENT,'symbol':'USDSUSDT','event_id':'UPBIT:6102:USDS'}
+        control_pool=[f'C{i}USDT' for i in range(1,7)]
+        result=evaluate(event,Fake(),control_pool,target_symbols=['USDSUSDT',*control_pool])
+        self.assertEqual(result['status'],'SCORED')
+        self.assertEqual(len(result['control_symbols']),5)
+        self.assertNotIn('USDSUSDT',result['control_symbols'])
+    def test_failure_identifies_instrument_and_hour(self):
+        result=evaluate(EVENT,Fake('secondary_error'),SYMBOLS)
+        self.assertIn('TARGETUSDT',result['horizons']['72']['error'])
+        self.assertIn((ENTRY+dt.timedelta(hours=71)).isoformat(),result['horizons']['72']['error'])
 if __name__=='__main__':unittest.main()

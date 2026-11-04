@@ -34,17 +34,40 @@ def notice_time(value):
     return parsed.astimezone(UTC)
 
 
-def extract_tickers(title):
+def _ticker_details(title):
     values = []
+    ignored = []
     for inside in re.findall(r'\(([^()]*)\)', title):
-        # Accept only whole ticker-like parentheses, never words embedded in
-        # explanatory Korean text or numeric dates/time annotations.
-        if not re.fullmatch(r'\s*[A-Z0-9]+(?:\s*[,/]\s*[A-Z0-9]+)*\s*', inside):
-            continue
-        for token in re.split(r'\s*[,/]\s*', inside.strip()):
+        inside = inside.strip()
+        # Ticker lists and the older "Korean name TICKER" form are in scope.
+        # Explanatory swap/network annotations are not additional listing assets:
+        # e.g. (T) followed by (NU <> T 스왑 사이트 추가 안내) lists T, not NU.
+        if re.fullmatch(r'[A-Z0-9]+(?:\s*[,/]\s*[A-Z0-9]+)*', inside):
+            tokens = re.split(r'\s*[,/]\s*', inside)
+        else:
+            named = re.fullmatch(r'[^A-Za-z0-9]+\s*([A-Z0-9]*[A-Z][A-Z0-9]*)', inside)
+            tokens = [named.group(1)] if named and re.search(r'[가-힣]', inside) else []
+            if not tokens:
+                mentioned = [t for t in re.findall(r'(?<![A-Za-z0-9])([A-Z0-9]*[A-Z][A-Z0-9]*)(?![A-Za-z0-9])', inside) if t not in MARKET_LABELS]
+                if mentioned:
+                    ignored.append({'parenthetical': inside, 'mentioned_tokens': mentioned,
+                                    'reason': 'BACKGROUND_OR_AMBIGUOUS_ANNOTATION_NOT_TICKER_LIST'})
+        for token in tokens:
             if token not in MARKET_LABELS and re.search('[A-Z]', token) and token not in values:
                 values.append(token)
-    return values
+    return values, ignored
+
+
+def extract_tickers(title):
+    return _ticker_details(title)[0]
+
+
+def extract_markets(title):
+    markets = set(re.findall(r'\b(?:KRW|BTC|USDT)\b', title))
+    # Older notices use the unambiguous Korean label for the KRW market.
+    if re.search(r'원화\s*마켓', title):
+        markets.add('KRW')
+    return sorted(markets)
 
 
 def _canonical(value):
@@ -130,6 +153,7 @@ def parse_archive(raw_dir):
                                     if p[k]['valid'] and isinstance(p[k].get('total_count'), int)})
     events = {}
     rejected = []
+    ignored_annotations = []
     unique_notice_ids = set()
     duplicate_event_occurrences = 0
     for notice, source_path in notices:
@@ -146,7 +170,11 @@ def parse_archive(raw_dir):
         if not isinstance(title, str) or FAMILY_TEXT not in title:
             rejected.append({**base, 'reason': 'OUTSIDE_FROZEN_TITLE_FAMILY'})
             continue
-        tickers = extract_tickers(title)
+        tickers, annotations = _ticker_details(title)
+        for annotation in annotations:
+            record = {**base, **annotation}
+            if record not in ignored_annotations:
+                ignored_annotations.append(record)
         if not tickers:
             rejected.append({**base, 'reason': 'NO_UNAMBIGUOUS_TICKER'})
             continue
@@ -155,7 +183,7 @@ def parse_archive(raw_dir):
         except (ValueError, TypeError):
             rejected.append({**base, 'reason': 'INVALID_FIRST_LISTED_AT'})
             continue
-        markets = sorted(set(re.findall(r'\b(?:KRW|BTC|USDT)\b', title)))
+        markets = extract_markets(title)
         material_versions = set()
         revision_values = []
         for value in versions[str(identity)]:
@@ -195,6 +223,7 @@ def parse_archive(raw_dir):
             'duplicate_event_occurrences': duplicate_event_occurrences,
             'declared_total_counts': declared_total_counts, 'missing_pages': missing_pages,
             'pages': pages, 'revision_checks': revision_checks, 'rejected_notices': rejected,
+            'ignored_parenthetical_annotations': ignored_annotations,
             'limitations': ['Notice eligibility is separate from Binance instrument/price eligibility.',
                             'Frozen title matching excludes later wording changes and other notice families.',
                             'Notice ID plus ticker is the event identity; one multi-market notice is not several independent events.']}
