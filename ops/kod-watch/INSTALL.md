@@ -4,6 +4,22 @@ For the operator (Ace). About one hour, plus the owner's few minutes for steps 2
 built and tested this kit offline and has never run it on the server: follow the expected outputs
 and stop at the first difference. [README.md](README.md) explains what the watch reports and why.
 
+## 0. Check the existing safeguard first
+
+On 2026-11-04 the server already ran a second timer, `kod-guard.timer` (every 10 minutes), installed by the
+operator during deployment (`KOD-TWO-CASE-REVIEW` package, `CLOUD-START.json` and `CLOUD-END.json`). Its job is not
+documented in this repository. Before installing anything, read it:
+
+```
+systemctl cat kod-guard.service kod-guard.timer
+journalctl -u kod-guard.service --no-pager -n 50
+```
+
+If `kod-guard` already alerts the owner's phone on a missed, failed or halted slot, install only what it lacks (for
+example the daily summary check and its timer, steps 2 and 8), so the owner does not receive two alerts for one
+failure. If it only records or halts locally, install the full kit below. Note the outcome in the operator's
+handoff.
+
 ## What changes, and what does not
 
 Adds new files only:
