@@ -359,7 +359,21 @@ class MergeHistoryTests(unittest.TestCase):
         merge = repo.merge("feature/rules", "Merge feature/rules")
         proc = self.check("--push", before, merge, repo=repo)
         self.assertEqual(proc.returncode, 2)
-        self.assertIn(f"no commit in HEAD's history adds {INTRO}; pass --since-commit", proc.stdout)
+        self.assertIn(
+            f"no commit in the history of {merge[:12]} adds {INTRO}; pass --since-commit",
+            proc.stdout,
+        )
+
+    def test_introduction_is_found_in_the_range_head_history_not_at_the_checkout(self):
+        repo = self.new_repo()
+        base = repo.commit("code", {RULES: "RULE = 1\n"})
+        self.branch("feature/rules", {RULES: "RULE = 2\n"}, repo)
+        merge = repo.merge("feature/rules", "Merge feature/rules")
+        repo.git("checkout", "-q", "-b", "later", "main")
+        repo.commit("introduce the check on the checked-out branch", {INTRO: "# stand-in\n"})
+        proc = self.check("--range", f"{base}..{merge}", repo=repo)
+        self.assertEqual(proc.returncode, 2, proc.stdout)
+        self.assertIn(f"no commit in the history of {merge[:12]} adds {INTRO}", proc.stdout)
 
     def test_force_push_or_unknown_before_checks_only_the_head_commit(self):
         self.repo.git("checkout", "-q", "-b", "gone", self.intro)

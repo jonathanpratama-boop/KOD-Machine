@@ -8,8 +8,8 @@ owner's six questions (handoff/merges/TEMPLATE.md). CI runs this on pushes to th
 What is checked, on the first-parent line of the range (the commits that landed on the branch):
   * Only merge commits (more than one parent). Non-merge commits are never checked, so the daily
     paper bots' log appends always pass.
-  * Exempt: a merge that does not descend from the check's introduction, a commit in HEAD's
-    history that adds tools/check_merge_notes.py (or the commit given as --since-commit).
+  * Exempt: a merge that does not descend from the check's introduction, a commit in the range
+    head's history that adds tools/check_merge_notes.py (or the commit given as --since-commit).
   * Exempt: a sync merge, whose merged-in commits were all on the branch already at BASE (for
     example a paper bot's `git pull` after a rejected push).
   * A note is needed when the merged-in diff (first parent to merge) touches any path outside
@@ -154,6 +154,7 @@ class Introduction:
     """The check's introduction; a merge that does not descend from it is exempt."""
 
     def __init__(self, since_commit: str | None, head: str):
+        self._head = head
         self._commits: list[str] | None = None
         self._explicit = since_commit is not None
         if since_commit is not None:
@@ -181,11 +182,12 @@ class Introduction:
         if self._commits is None:  # found lazily: a push without merges never needs it
             # -m also reports a merge that adds the file itself; a merge that only carries an
             # earlier addition descends from it and is dropped, leaving the earliest additions.
-            log = ci_push.git("log", "-m", "--diff-filter=A", "--format=%H", "HEAD", "--", TOOL)
+            log = ci_push.git("log", "-m", "--diff-filter=A", "--format=%H", self._head, "--", TOOL)
             found = list(dict.fromkeys(log.split()))
             if not found:
                 raise ci_push.RangeError(
-                    f"no commit in HEAD's history adds {TOOL}; pass --since-commit"
+                    f"no commit in the history of {self._head[:12]} adds {TOOL}; "
+                    "pass --since-commit"
                 )
             self._commits = [
                 commit
@@ -341,7 +343,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--since-commit",
         metavar="SHA",
-        help=f"the commit that introduced the check (default: found from {TOOL} in HEAD's history)",
+        help=f"the commit that introduced the check (default: the first to add {TOOL} in the "
+        "range head's history)",
     )
     args = parser.parse_args(argv)
     try:
