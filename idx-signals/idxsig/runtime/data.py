@@ -13,6 +13,8 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
+from ..market_time import binance_datetime
+
 SCHEMA_VERSION = "KOD_RECORDED_SNAPSHOT_V1"
 VENUE = "BINANCE_SPOT"
 
@@ -155,10 +157,11 @@ def _evidence(snapshot: dict, root: Path | None, cutoff: datetime, required: boo
 
 
 def _milliseconds(value: Any) -> str:
-    ts = Decimal(str(value))
-    # Binance API default is milliseconds; archived microseconds are supported.
-    scale = Decimal(1_000_000 if ts >= Decimal(10) ** 14 else 1000)
-    return utc_text(datetime.fromtimestamp(float(ts / scale), timezone.utc))
+    # Retain the historical helper name while normalizing ms/us per observation.
+    try:
+        return utc_text(binance_datetime(value))
+    except ValueError as exc:
+        raise SnapshotError(str(exc)) from exc
 
 
 def _same_numbers(row: dict, expected: dict) -> None:

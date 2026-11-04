@@ -15,6 +15,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from .market_time import binance_datetimes
+
 PKG_ROOT = Path(__file__).resolve().parents[1]
 E6_DIR = PKG_ROOT / "research" / "E6"
 PROTOCOL = E6_DIR / "protocol.json"
@@ -99,6 +101,9 @@ def build_hourly(frames: dict, last_hour: pd.Timestamp, start: pd.Timestamp = GR
 def load_manifest(
     manifest: Path, last_hour: pd.Timestamp = DISCOVERY_LAST_HOUR
 ) -> tuple[Hourly, dict]:
+    # Reject before opening even the manifest or any sealed archive bytes.
+    if last_hour >= pd.Timestamp("2024-01-01", tz="UTC"):
+        raise HoldoutError("E6 never reads 2024 or later")
     lines = [json.loads(x) for x in Path(manifest).read_text().splitlines()]
     head, recs = lines[0], lines[1:]
     by = {}
@@ -113,8 +118,7 @@ def load_manifest(
             for r in sorted(rs, key=lambda r: r["month"])
         ]
         df = pd.concat(parts, ignore_index=True)
-        unit = "us" if df["open_time"].max() > 1e14 else "ms"
-        df["t"] = pd.to_datetime(df["open_time"], unit=unit, utc=True)
+        df["t"] = binance_datetimes(df["open_time"])
         df = df.drop_duplicates("t").rename(columns={"tb_quote": "tb"})
         frames[sym] = df[["t", "open", "high", "low", "close", "quote", "tb"]]
     all_syms = sorted(
