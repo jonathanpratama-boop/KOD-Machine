@@ -252,6 +252,15 @@ class CleanTwinPasses(unittest.TestCase):
         self.assertEqual([c.values_replaced for c in report.cutoffs], [150, 90, 42])
         self.assertTrue(all(c.rows_removed is None for c in report.cutoffs))
 
+    def test_default_scramble_leaves_integer_decision_keys_alone(self):
+        numbered = prices().assign(asset=lambda d: d.asset.map({"A": 0, "B": 1, "C": 2}))
+        report = scramble_check(CLEAN, numbered, cutoffs=CUTOFFS, **COLUMNS)
+        self.assertEqual(report.verdict, "PASS")
+        self.assertEqual(report.scrambled_columns, ("close", "volume"))
+        self.assertEqual(report.unscrambled_columns, ("time", "asset"))
+        leak = scramble_check(LEAKS["centred rolling mean"], numbered, cutoffs=CUTOFFS, **COLUMNS)
+        self.assertEqual(leak.verdict, "LEAK")
+
 
 class WhatDecideSees(unittest.TestCase):
     def test_truncation_keeps_rows_at_or_before_cutoff_and_hides_unknown_labels(self):

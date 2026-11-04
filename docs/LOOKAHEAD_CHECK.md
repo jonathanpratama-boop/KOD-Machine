@@ -77,9 +77,10 @@ defaults. A study whose own loader parses differently should call the library fr
 test. Compare mode reads every cell as the text written, so both files must come from the
 same code; only an empty cell counts as missing. Scramble options are `--seed` (default 0),
 `--scramble-columns` and `--missing-share` (default 0.25). By default scramble reaches
-every numpy or pandas nullable numeric or bool column except the time column, so the
-canonical panel's `Int64` prices are scrambled; a column holding numbers in any other
-dtype (pyarrow, sparse, complex) is refused rather than skipped. The report lists
+every numpy or pandas nullable numeric or bool column except the time column and the
+decision key columns (an integer asset id stays as it is), so the canonical panel's
+`Int64` prices are scrambled; a column holding numbers in any other dtype (pyarrow,
+sparse, complex) is refused rather than skipped. The report lists
 `scrambled_columns` and `unscrambled_columns`, which together name every data column.
 The tool prints one JSON verdict and exits 0 for PASS, 1 for LEAK and 2 when the check
 could not run.

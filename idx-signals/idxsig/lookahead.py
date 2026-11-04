@@ -587,16 +587,20 @@ def truncation_check(
     return _report(TRUNCATION, time_column, keys, reference, assume_utc, data, results, lags)
 
 
-def _scrambled(data: pd.DataFrame, time_column: str, columns) -> tuple[str, ...]:
-    """The named columns, or by default every scrambleable column except the time column.
+def _scrambled(
+    data: pd.DataFrame, time_column: str, keys: tuple[str, ...], columns
+) -> tuple[str, ...]:
+    """The named columns, or by default every scrambleable column but the time and keys.
 
-    A default column that holds numbers in a dtype this module cannot scramble (pyarrow,
-    sparse, complex) is refused: skipping it would let a leak through it pass unseen.
+    Decision key columns that are also data columns identify rows (an integer asset id);
+    noise in them would only produce duplicate keys after the cutoff. A default column
+    that holds numbers in a dtype this module cannot scramble (pyarrow, sparse, complex)
+    is refused: skipping it would let a leak through it pass unseen.
     """
     if columns is None:
         chosen = []
         for column in data.columns:
-            if column == time_column:
+            if column == time_column or column in keys:
                 continue
             dtype = data[column].dtype
             if _scrambleable(dtype):
@@ -674,7 +678,8 @@ def scramble_check(
     """Rerun ``decide`` with every value after each cutoff replaced by seeded noise.
 
     ``columns`` defaults to every numpy or pandas nullable numeric or bool column except
-    the time column; a column holding numbers in any other dtype is refused, not skipped.
+    the time column and any decision key column; a column holding numbers in any other
+    dtype is refused, not skipped.
     Rows, the time column and every unscrambled column (such as text identifiers) are
     kept, so presence of later rows is unchanged; truncation is the check for that. The
     report names both sets. A value on a row dated t counts as after the cutoff when
@@ -695,7 +700,7 @@ def scramble_check(
     keys = _key_columns(key_columns, time_column)
     stamps = _cutoffs(cutoffs, assume_utc)
     times = _input(data, data_time_column, assume_utc)
-    chosen = _scrambled(data, data_time_column, columns)
+    chosen = _scrambled(data, data_time_column, keys, columns)
     lags = _lags(value_lags, data, data_time_column)
     unscrambled = sorted(set(lags) - set(chosen))
     if unscrambled:
