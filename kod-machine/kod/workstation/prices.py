@@ -136,13 +136,13 @@ def parse_csv(raw: bytes, meta: dict) -> dict:
             continue
         seen.add(day)
         close = _price(record.get("close"), "close", n, problems)
-        o, h, l = (
+        o, h, low = (
             _price(record.get(k), k, n, problems, required=False) for k in ("open", "high", "low")
         )
-        if any(v is not None for v in (o, h, l)) and None in (o, h, l):
+        if any(v is not None for v in (o, h, low)) and None in (o, h, low):
             problems.append(f"row {n}: open, high and low must be given together")
-        elif None not in (o, h, l, close) and not (
-            l <= min(o, close) and max(o, close) <= h and l <= h
+        elif None not in (o, h, low, close) and not (
+            low <= min(o, close) and max(o, close) <= h and low <= h
         ):
             problems.append(
                 f"row {n}: open/high/low/close are not coherent (low <= open, close <= high)"
@@ -161,7 +161,7 @@ def parse_csv(raw: bytes, meta: dict) -> dict:
                     "date": day,
                     "open": o,
                     "high": h,
-                    "low": l,
+                    "low": low,
                     "close": close,
                     "volume": volume or None,
                 }

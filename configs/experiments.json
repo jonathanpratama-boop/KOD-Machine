@@ -61,9 +61,9 @@
     },
     {
       "id": "NEIGHBOURS_v1",
-      "status": "RESEARCH_CORRECTION_PENDING",
-      "evidence_level": "REPORTED_RETROSPECTIVE_WITH_DEFECT",
-      "summary": "Original daily ridge comparison found no incremental peer/next-stop value; causal repair is implemented but corrected original-data evaluation has not run.",
+      "status": "RESEARCH_CLOSED",
+      "evidence_level": "REPORTED_RETROSPECTIVE",
+      "summary": "Original daily ridge comparison found no incremental peer/next-stop value; the single causal corrected run (2026-11-04) confirms both nulls at the 3-day horizon.",
       "live_eligible": false,
       "sources": [
         {
@@ -78,26 +78,49 @@
           "path": "idx-signals/research/NEIGHBOURS_v1/CORRECTION_2026-11-04.md",
           "ref_type": "working_tree",
           "ref": null
+        },
+        {
+          "path": "idx-signals/research/RESEARCH_CORRECTIONS_20261104/README.md",
+          "ref": "5e8aa0a86628d1e77363153c438626f6c6206972"
+        },
+        {
+          "path": "idx-signals/research/RESEARCH_CORRECTIONS_20261104/NEIGHBOURS_v1/RESULT.json",
+          "ref": "9a92319eb5916f4fa1152fe90064595b0aafab19"
+        },
+        {
+          "path": "idx-signals/research/RESEARCH_CORRECTIONS_20261104/comparison.json",
+          "ref": "6b1a25102ea73353dc370ab309cd4a87b7a45bb2"
+        },
+        {
+          "path": "idx-signals/research/RESEARCH_CORRECTIONS_20261104/REPORT.md",
+          "ref_type": "working_tree",
+          "ref": null
         }
       ],
       "reported_metrics": {
         "rows_test": 469339,
         "days_test": 2100,
         "B_minus_A_IC": -0.005151476405625808,
-        "C_minus_B_IC": -0.00010852970430927119
+        "C_minus_B_IC": -0.00010852970430927119,
+        "corrected_rows_test": 469938,
+        "corrected_days_test": 2100,
+        "corrected_B_minus_A_IC": -0.005283869888604292,
+        "corrected_C_minus_B_IC": -0.0001767904553558196
       },
       "limitations": [
-        "Future-complete labels changed the original ranking universe.",
-        "Report's 482598 row count conflicts with machine result's 469339 test rows.",
+        "The original run removed 599 test rows with a missing forward return before ranking; the corrected run keeps them.",
+        "Report's 482598 coin-days is the unfiltered rows.csv.gz row count (all dates), not the 469339 evaluated test rows.",
         "2023-26 already inspected; daily bars; one ridge/group specification.",
-        "Mean-per-pick returns are not portfolio performance."
+        "Mean-per-pick returns are not portfolio performance.",
+        "Corrected ICs and means are observed-only: 364 test rows lack a 3-day return; selections with unknown outcomes are INCOMPLETE.",
+        "Input rows.csv.gz is local-only (gitignored) and pinned by sha256 in the corrected RESULT.json."
       ]
     },
     {
       "id": "PRESSURE_v1",
-      "status": "RESEARCH_CORRECTION_PENDING",
-      "evidence_level": "REPORTED_RETROSPECTIVE_WITH_DEFECT",
-      "summary": "Original daily taker-pressure arm reported no incremental value; additive causal runner awaits intentional corrected evaluation.",
+      "status": "RESEARCH_CLOSED",
+      "evidence_level": "REPORTED_RETROSPECTIVE",
+      "summary": "Original daily taker-pressure arm reported no incremental value; the single causal corrected run (2026-11-04) confirms the null at the 3-day horizon.",
       "live_eligible": false,
       "sources": [
         {
@@ -108,13 +131,37 @@
           "path": "idx-signals/research/PRESSURE_v1/CORRECTION_2026-11-04.md",
           "ref_type": "working_tree",
           "ref": null
+        },
+        {
+          "path": "idx-signals/research/RESEARCH_CORRECTIONS_20261104/README.md",
+          "ref": "5e8aa0a86628d1e77363153c438626f6c6206972"
+        },
+        {
+          "path": "idx-signals/research/RESEARCH_CORRECTIONS_20261104/PRESSURE_v1/RESULT.json",
+          "ref": "9a92319eb5916f4fa1152fe90064595b0aafab19"
+        },
+        {
+          "path": "idx-signals/research/RESEARCH_CORRECTIONS_20261104/comparison.json",
+          "ref": "6b1a25102ea73353dc370ab309cd4a87b7a45bb2"
+        },
+        {
+          "path": "idx-signals/research/RESEARCH_CORRECTIONS_20261104/REPORT.md",
+          "ref_type": "working_tree",
+          "ref": null
         }
       ],
+      "reported_metrics": {
+        "P_minus_A_IC": -0.004259958534315294,
+        "corrected_rows_test": 469938,
+        "corrected_days_test": 2100,
+        "corrected_P_minus_A_IC": -0.004312287199705738
+      },
       "limitations": [
-        "Inherits original future-complete label selection.",
+        "The original run inherited the removal of test rows with a missing forward return; the corrected run keeps them.",
         "82 archive-file failures reported; missing feature ranks were neutral-imputed.",
         "Daily taker volume is not full order-book imbalance.",
-        "No new corrected-data result is claimed."
+        "Corrected ICs and means are observed-only, on previously inspected 2023-26 data; not a fresh holdout.",
+        "Input rows.csv.gz (NEIGHBOURS_v1) is local-only (gitignored) and pinned by sha256 in the corrected RESULT.json; taker.csv.gz is committed."
       ]
     },
     {

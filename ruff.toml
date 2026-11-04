@@ -21,6 +21,16 @@ extend-exclude = [
   "idx-signals/idxsig/premove_shadow.py",
   "idx-signals/idxsig/paper_account.py",
   "idx-signals/idxsig/crypto_account.py",
+  # Byte-pinned by frozen research records, which store each file's exact sha256 as the
+  # code that produced their results; editing them, even for lint, would break that proof.
+  "idx-signals/idxsig/call_cert.py",    # REPLAY_UNITS_v2/protocol_A.json
+  "idx-signals/idxsig/global_panel.py", # REPLAY_UNITS_v2/data/events_A_BUILD.json
+  "idx-signals/idxsig/idx_events.py",   # MSCI_DELETION_OOT_v1/protocol.json
+  "idx-signals/idxsig/learner2.py",     # CRYPTO_TUNE_v1/protocol.json
+  "idx-signals/idxsig/learner3.py",     # FRESH_SHORT_v1/data/events_BUILD.json
+  "idx-signals/idxsig/paper.py",        # REPLAY_UNITS_v2 code_pins (replay.py check_pins), CRYPTO_ACCOUNT_v1/protocol_v1_4.json
+  # 34 further live files are pinned the same way and are lint-clean, so they stay checked here;
+  # editing any of them still breaks its frozen record (list: handoff/claude/LINT_CLEANUP_20261104.md).
 ]
 
 [lint]

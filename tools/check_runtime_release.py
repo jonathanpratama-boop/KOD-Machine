@@ -36,6 +36,7 @@ FOCUSED = (
     "tests.test_timing_context",
     "tests.test_timing_integration",
     "tests.test_timing_evidence",
+    "tests.test_clock_real_sample",
     "tests.test_time_anchor",
     "tests.test_runtime_timing_paper",
     "tests.test_timing_processing_boundary",

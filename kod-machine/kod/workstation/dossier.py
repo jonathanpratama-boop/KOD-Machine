@@ -622,7 +622,7 @@ def _changes(
     out, records = [], {}
 
     def add(key, result: calc.CalculationResult, periods: str, extra=None):
-        label, measure = next((l, m) for k, l, m in CHANGES if k == key)
+        label, measure = next((lbl, m) for k, lbl, m in CHANGES if k == key)
         record = _calc_dict(result, policy, index, label)
         records[record["id"]] = record
         out.append(

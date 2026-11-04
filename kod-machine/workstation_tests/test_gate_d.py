@@ -179,10 +179,17 @@ class RevisionTests(Case):
         aapl = self.company("AAPL")
         first = self.build(aapl, "2010-02-01T00:00:00Z")
         latest = self.build(aapl, "2010-02-01T00:00:00Z", view="latest")
-        q4 = lambda d: next(
-            (c for c in d["history"]["quarterly"]["revenue"] if c["period"]["end"] == "2008-09-27"),
-            None,
-        )  # noqa: E731
+
+        def q4(d):
+            return next(
+                (
+                    c
+                    for c in d["history"]["quarterly"]["revenue"]
+                    if c["period"]["end"] == "2008-09-27"
+                ),
+                None,
+            )
+
         self.assertEqual((q4(first)["status"], q4(first)["value"]), ("derived", "7895000000"))
         self.assertEqual(q4(latest)["status"], "not_derivable")
         self.assertIn("accounting vintages", " ".join(q4(latest)["reasons"]))

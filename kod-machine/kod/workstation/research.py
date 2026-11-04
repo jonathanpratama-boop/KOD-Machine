@@ -168,9 +168,11 @@ class ResearchArchive:
 
         def finite_tree(obj, path=()):
             if isinstance(obj, dict):
-                for k, v in obj.items(): finite_tree(v, path + (k,))
+                for k, v in obj.items():
+                    finite_tree(v, path + (k,))
             elif isinstance(obj, list):
-                for i, v in enumerate(obj): finite_tree(v, path + (i,))
+                for i, v in enumerate(obj):
+                    finite_tree(v, path + (i,))
             elif isinstance(obj, float) and not math.isfinite(obj):
                 # Only the known legacy unbounded execution cost-tier cap is valid.
                 if not (study_id == 'execution' and len(path) == 4 and path[:2] == ('execution','cost_tiers') and path[3] == 0 and obj == float('inf')):
@@ -223,7 +225,8 @@ class ResearchArchive:
                 losses=calibration['candidate_log_losses']
                 if not isinstance(losses,dict) or not losses:
                     raise ValueError('missing calibration trials')
-                for loss in losses.values(): number(loss,0)
+                for loss in losses.values():
+                    number(loss,0)
             for stage in ('train','calibration'):
                 fit=raw['fit_periods'][stage]
                 counts(fit, ('rows',))
@@ -242,37 +245,46 @@ class ResearchArchive:
             if not isinstance(raw['period'],list) or len(raw['period']) != 2:
                 raise ValueError('invalid E6 period')
             for name in ('stage2','claims'):
-                if not isinstance(raw[name],str): raise ValueError('invalid E6 metadata')
+                if not isinstance(raw[name],str):
+                    raise ValueError('invalid E6 metadata')
             for arm in raw['arms'].values():
                 counts(arm, ('flags','scored','no_entry','no_controls','missing_end','distinct_coins'))
                 if arm['scored'] > arm['flags']:
                     raise ValueError('scored exceeds flagged population')
-                for key in ('mean_R120','median_R120','mean_ctrl_R120','mean_excess','E30_lift'): number(arm[key])
-                for key in ('E30_rate','E30_ctrl_rate'): number(arm[key],0,1)
+                for key in ('mean_R120','median_R120','mean_ctrl_R120','mean_excess','E30_lift'):
+                    number(arm[key])
+                for key in ('E30_rate','E30_ctrl_rate'):
+                    number(arm[key],0,1)
                 ci=arm['vs_matched']
                 pair=ci['ci95']
                 if not isinstance(pair,list) or len(pair)!=2 or number(pair[0])>number(pair[1]):
                     raise ValueError('invalid matched interval')
-                number(ci['estimate']);number(ci['p_one_sided'],0,1)
+                number(ci['estimate'])
+                number(ci['p_one_sided'],0,1)
             if not isinstance(raw['comparisons'],dict) or not raw['comparisons']:
                 raise ValueError('missing E6 comparisons')
             for ci in raw['comparisons'].values():
                 pair=ci['ci95']
                 if not isinstance(pair,list) or len(pair)!=2 or number(pair[0])>number(pair[1]):
                     raise ValueError('invalid comparison interval')
-                number(ci['estimate']);number(ci['p_one_sided'],0,1)
+                number(ci['estimate'])
+                number(ci['p_one_sided'],0,1)
         elif study_id == 'execution':
             for field in ('universe','signals','rule_trades','random_matched','random','execution','config','market','data_quality'):
-                if not isinstance(raw[field],dict): raise ValueError('invalid execution schema')
+                if not isinstance(raw[field],dict):
+                    raise ValueError('invalid execution schema')
             r=raw['rule_trades']
             counts(r, ('attempts','filled','scored','liquidated'))
             if not r['liquidated'] <= r['scored'] <= r['filled'] <= r['attempts']:
                 raise ValueError('inconsistent execution denominators')
-            number(r['hit_rate'],0,1);number(r['avg_net_return']);number(r['median_net_return'])
+            number(r['hit_rate'],0,1)
+            number(r['avg_net_return'])
+            number(r['median_net_return'])
             for name in ('random_matched','random'):
                 base=raw[name]
                 counts(base, ('draws',))
-                if base['draws']==0: raise ValueError('empty baseline')
+                if base['draws']==0:
+                    raise ValueError('empty baseline')
                 for metric in ('avg_net_return','hit_rate'):
                     values=base[metric]
                     for key in ('observed','random_mean','difference','random_p2_5','random_p97_5'):

@@ -579,6 +579,8 @@ def main(argv=None) -> int:
     args = parser.parse_args(argv)
 
     if args.cmd == "sensors":
+        import os
+
         from . import paper
         from . import sensors as sensors_mod
 

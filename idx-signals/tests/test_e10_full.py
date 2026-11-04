@@ -125,7 +125,6 @@ class EndToEndSmokeTest(unittest.TestCase):
     """main() on a synthetic panel in a scratch tree: wiring only, no claim about any result."""
 
     def test_main_runs_and_refuses_a_second_run(self):
-        import gzip
         import json
         import tempfile
 

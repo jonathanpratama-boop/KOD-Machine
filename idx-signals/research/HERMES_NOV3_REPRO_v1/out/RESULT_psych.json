@@ -1,0 +1,238 @@
+{
+ "n": 12190,
+ "missing_mood": 5,
+ "by_mood": {
+  "Extreme Fear": {
+   "n": 3031,
+   "peak_median": 0.15597014925373132,
+   "peak_hour_median": 17.0,
+   "reach50": 0.1603431210821511,
+   "x4_mean": -0.043760307598637894,
+   "x4_median": -0.11321219491708012
+  },
+  "Fear": {
+   "n": 2587,
+   "peak_median": 0.15828750981932438,
+   "peak_hour_median": 23.0,
+   "reach50": 0.16505604947816002,
+   "x4_mean": -0.0444451871289404,
+   "x4_median": -0.10505214057493806
+  },
+  "Neutral": {
+   "n": 1467,
+   "peak_median": 0.13743940690048473,
+   "peak_hour_median": 17.0,
+   "reach50": 0.1520109066121336,
+   "x4_mean": -0.04228533123229589,
+   "x4_median": -0.112483976641504
+  },
+  "Greed": {
+   "n": 3667,
+   "peak_median": 0.1757523645743766,
+   "peak_hour_median": 43.0,
+   "reach50": 0.18243796018543768,
+   "x4_mean": -0.007642112402538736,
+   "x4_median": -0.07629843588206442
+  },
+  "Extreme Greed": {
+   "n": 1433,
+   "peak_median": 0.26986977997305783,
+   "peak_hour_median": 101.0,
+   "reach50": 0.28960223307745986,
+   "x4_mean": 0.08229622960894535,
+   "x4_median": 0.008503726967042047
+  }
+ },
+ "by_mood_period": {
+  "2020-21": {
+   "Extreme Fear": {
+    "n": 503,
+    "peak_median": 0.17689711911202832,
+    "peak_hour_median": 24.0,
+    "reach50": 0.15308151093439365,
+    "x4_mean": -0.046148945955236255,
+    "x4_median": -0.12191839354734224
+   },
+   "Fear": {
+    "n": 596,
+    "peak_median": 0.19799166926482514,
+    "peak_hour_median": 45.0,
+    "reach50": 0.1929530201342282,
+    "x4_mean": -0.04456971903572634,
+    "x4_median": -0.09510556707610657
+   },
+   "Neutral": {
+    "n": 236,
+    "peak_median": 0.21331049985006234,
+    "peak_hour_median": 54.0,
+    "reach50": 0.24152542372881355,
+    "x4_mean": 0.01774019294528538,
+    "x4_median": -0.058446660576511544
+   },
+   "Greed": {
+    "n": 876,
+    "peak_median": 0.2711398312896376,
+    "peak_hour_median": 92.5,
+    "reach50": 0.2910958904109589,
+    "x4_mean": 0.05047011684507248,
+    "x4_median": -0.017177740264509966
+   },
+   "Extreme Greed": {
+    "n": 759,
+    "peak_median": 0.3467949328507476,
+    "peak_hour_median": 142.0,
+    "reach50": 0.3675889328063241,
+    "x4_mean": 0.13840631694749972,
+    "x4_median": 0.08216834386188654
+   }
+  },
+  "2022": {
+   "Extreme Fear": {
+    "n": 1315,
+    "peak_median": 0.1712820512820512,
+    "peak_hour_median": 23.0,
+    "reach50": 0.18022813688212927,
+    "x4_mean": -0.0212990388850713,
+    "x4_median": -0.08219009637753394
+   },
+   "Fear": {
+    "n": 740,
+    "peak_median": 0.13966262653884565,
+    "peak_hour_median": 15.0,
+    "reach50": 0.12567567567567567,
+    "x4_mean": -0.08147829808832122,
+    "x4_median": -0.1303769416570849
+   },
+   "Neutral": {
+    "n": 156,
+    "peak_median": 0.09745312802314232,
+    "peak_hour_median": 5.5,
+    "reach50": 0.12179487179487179,
+    "x4_mean": -0.15832783348313756,
+    "x4_median": -0.2513756268496796
+   },
+   "Greed": {
+    "n": 35,
+    "peak_median": 0.16700464446915686,
+    "peak_hour_median": 25.0,
+    "reach50": 0.2,
+    "x4_mean": -0.10268986550694857,
+    "x4_median": -0.23085034341213573
+   }
+  },
+  "2023-26": {
+   "Extreme Fear": {
+    "n": 1213,
+    "peak_median": 0.13684210526315788,
+    "peak_hour_median": 8.0,
+    "reach50": 0.14179719703215168,
+    "x4_mean": -0.06711981564890258,
+    "x4_median": -0.13619840478564305
+   },
+   "Fear": {
+    "n": 1251,
+    "peak_median": 0.15925503610794367,
+    "peak_hour_median": 25.0,
+    "reach50": 0.1750599520383693,
+    "x4_mean": -0.022479780952772366,
+    "x4_median": -0.09175018585142303
+   },
+   "Neutral": {
+    "n": 1075,
+    "peak_median": 0.12824675324675328,
+    "peak_hour_median": 17.0,
+    "reach50": 0.13674418604651162,
+    "x4_mean": -0.03862337156232183,
+    "x4_median": -0.10460422653607793
+   },
+   "Greed": {
+    "n": 2756,
+    "peak_median": 0.1532426499251145,
+    "peak_hour_median": 32.0,
+    "reach50": 0.147677793904209,
+    "x4_mean": -0.024906133252412862,
+    "x4_median": -0.08663385320208783
+   },
+   "Extreme Greed": {
+    "n": 674,
+    "peak_median": 0.2095866536397989,
+    "peak_hour_median": 52.0,
+    "reach50": 0.20178041543026706,
+    "x4_mean": 0.01910994431226468,
+    "x4_median": -0.04868982050185949
+   }
+  }
+ },
+ "alerts_by_funding": {
+  "crowded_longs": {
+   "n": 560,
+   "x4_mean": 0.050297022335944935,
+   "peak_hour_median": 101.5
+  },
+  "crowded_shorts": {
+   "n": 1634,
+   "x4_mean": -0.037948745205799855,
+   "peak_hour_median": 21.5
+  },
+  "normal": {
+   "n": 4185,
+   "x4_mean": -0.018621746833735766,
+   "peak_hour_median": 39.0
+  }
+ },
+ "alerts_with_funding": 6379,
+ "extreme_greed_by_funding": {
+  "crowded_longs": {
+   "n": 284,
+   "x4_mean": 0.08434171327275077
+  },
+  "crowded_shorts": {
+   "n": 23,
+   "x4_mean": 0.03172922961699109
+  },
+  "normal": {
+   "n": 369,
+   "x4_mean": 0.08941660062004861
+  }
+ },
+ "spike_shorts_proxy": {
+  "n": 726,
+  "by_funding": {
+   "crowded_longs": {
+    "n": 63,
+    "mean": -0.03953072296927522
+   },
+   "crowded_shorts": {
+    "n": 295,
+    "mean": 0.005908271758809626
+   },
+   "normal": {
+    "n": 63,
+    "mean": 0.04158910497416983
+   }
+  },
+  "losses_worse_than_50": 55,
+  "of_those_crowded_shorts": 28,
+  "of_those_no_funding": 16
+ },
+ "spike_shorts_perp": {
+  "n": 438,
+  "by_funding": {
+   "crowded_longs": {
+    "n": 63,
+    "mean": -0.037458704239116486
+   },
+   "crowded_shorts": {
+    "n": 295,
+    "mean": -0.0321147204784785
+   },
+   "normal": {
+    "n": 63,
+    "mean": 0.03835013370432857
+   }
+  },
+  "losses_worse_than_50": 46,
+  "of_those_crowded_shorts": 32,
+  "of_those_no_funding": 3
+ }
+}

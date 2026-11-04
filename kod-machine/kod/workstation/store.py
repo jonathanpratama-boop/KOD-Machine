@@ -26,7 +26,6 @@ from .domain import (
     canonical,
     identity,
     publication,
-    source_url,
     timestamp,
 )
 

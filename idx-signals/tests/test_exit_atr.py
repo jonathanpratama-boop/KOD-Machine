@@ -49,40 +49,40 @@ class ATR(unittest.TestCase):
 
 class Trail(unittest.TestCase):
     def test_initial_stop_and_touch_fill(self):
-        o, h, l, p = bars(10)
-        l[4] = 93.0  # 100 - 3 x 2 = 94 is touched in bar 4
-        r = X.trail(o, h, l, p, 100.0, 2.0)
+        o, h, lo, p = bars(10)
+        lo[4] = 93.0  # 100 - 3 x 2 = 94 is touched in bar 4
+        r = X.trail(o, h, lo, p, 100.0, 2.0)
         self.assertEqual((r["reason"], r["exit_bar"]), ("STOP", 4))
         self.assertAlmostEqual(r["initial_stop"], 94.0)
         self.assertAlmostEqual(r["exit_price"], 94.0)
 
     def test_gap_below_the_stop_fills_at_the_open(self):
-        o, h, l, p = bars(10)
-        o[3], h[3], l[3] = 90.0, 91.0, 89.0
-        r = X.trail(o, h, l, p, 100.0, 2.0)
+        o, h, lo, p = bars(10)
+        o[3], h[3], lo[3] = 90.0, 91.0, 89.0
+        r = X.trail(o, h, lo, p, 100.0, 2.0)
         self.assertEqual((r["reason"], r["exit_price"], r["exit_bar"]), ("STOP_GAP", 90.0, 3))
 
     def test_ratchet_activates_only_from_the_next_bar(self):
-        o, h, l, p = bars(10)
-        h[2], l[2] = 120.0, 99.0  # bar 2 makes a new high; within bar 2 the old stop (94) applies
-        o[3:], h[3:], l[3:] = 116.0, 116.0, 115.0
-        r_same = X.trail(o, h, l, p, 100.0, 2.0)
+        o, h, lo, p = bars(10)
+        h[2], lo[2] = 120.0, 99.0  # bar 2 makes a new high; within bar 2 the old stop (94) applies
+        o[3:], h[3:], lo[3:] = 116.0, 116.0, 115.0
+        r_same = X.trail(o, h, lo, p, 100.0, 2.0)
         self.assertEqual(
             r_same["reason"], "NOT_STOPPED"
         )  # bar 2's low 99 is above 94; 114 is not active yet
         self.assertAlmostEqual(r_same["final_stop"], 114.0)
-        l2 = l.copy()
+        l2 = lo.copy()
         l2[3] = 113.0  # bar 3 low under the raised stop 120 - 6 = 114
         r = X.trail(o, h, l2, p, 100.0, 2.0)
         self.assertEqual((r["reason"], r["exit_bar"]), ("STOP", 3))
         self.assertAlmostEqual(r["exit_price"], 114.0)
 
     def test_stop_never_moves_down(self):
-        o, h, l, p = bars(8)
+        o, h, lo, p = bars(8)
         h[1] = 110.0  # stop 104 from bar 2
-        o[2], h[2], l[2] = 106.0, 106.0, 105.0  # lower high: stop stays 104
-        o[3], h[3], l[3] = 105.0, 105.5, 103.5
-        r = X.trail(o, h, l, p, 100.0, 2.0)
+        o[2], h[2], lo[2] = 106.0, 106.0, 105.0  # lower high: stop stays 104
+        o[3], h[3], lo[3] = 105.0, 105.5, 103.5
+        r = X.trail(o, h, lo, p, 100.0, 2.0)
         self.assertEqual((r["reason"], r["exit_bar"]), ("STOP", 3))
         self.assertAlmostEqual(r["exit_price"], 104.0)
         self.assertEqual(r["raises"], 1)
@@ -95,32 +95,32 @@ class Trail(unittest.TestCase):
         self.assertIsNone(r["exit_price"])
 
     def test_missing_bars_skip_and_do_not_move_the_stop(self):
-        o, h, l, p = bars(8)
+        o, h, lo, p = bars(8)
         p[2:5] = False
         h[3] = 500.0  # inside missing bars: must be ignored
-        o[5], h[5], l[5] = 95.0, 96.0, 93.5
-        r = X.trail(o, h, l, p, 100.0, 2.0)
+        o[5], h[5], lo[5] = 95.0, 96.0, 93.5
+        r = X.trail(o, h, lo, p, 100.0, 2.0)
         self.assertEqual((r["reason"], r["exit_bar"]), ("STOP", 5))
         self.assertAlmostEqual(r["exit_price"], 94.0)
-        c = X.trail(o, h, l, p, 100.0, 2.0, conservative_gaps=True)
+        c = X.trail(o, h, lo, p, 100.0, 2.0, conservative_gaps=True)
         self.assertEqual((c["reason"], c["exit_price"]), ("STOP_GAP_WORST", 93.5))
         o[5] = 92.0
-        l[5] = 91.0
-        g = X.trail(o, h, l, p, 100.0, 2.0)
+        lo[5] = 91.0
+        g = X.trail(o, h, lo, p, 100.0, 2.0)
         self.assertEqual((g["reason"], g["exit_price"]), ("STOP_GAP", 92.0))
 
     def test_conservative_mode_changes_nothing_without_a_gap(self):
-        o, h, l, p = bars(10)
-        l[6] = 93.0
+        o, h, lo, p = bars(10)
+        lo[6] = 93.0
         self.assertEqual(
-            X.trail(o, h, l, p, 100.0, 2.0), X.trail(o, h, l, p, 100.0, 2.0, conservative_gaps=True)
+            X.trail(o, h, lo, p, 100.0, 2.0), X.trail(o, h, lo, p, 100.0, 2.0, conservative_gaps=True)
         )
 
     def test_deadline_bars_beyond_the_window_are_never_read(self):
-        o, h, l, p = bars(10)
-        a = X.trail(o[:6], h[:6], l[:6], p[:6], 100.0, 2.0)
-        l[7] = 1.0  # a crash after the deadline
-        b = X.trail(o[:6], h[:6], l[:6], p[:6], 100.0, 2.0)
+        o, h, lo, p = bars(10)
+        a = X.trail(o[:6], h[:6], lo[:6], p[:6], 100.0, 2.0)
+        lo[7] = 1.0  # a crash after the deadline
+        b = X.trail(o[:6], h[:6], lo[:6], p[:6], 100.0, 2.0)
         self.assertEqual(a, b)
         self.assertEqual(a["reason"], "NOT_STOPPED")
 
@@ -131,21 +131,21 @@ class Trail(unittest.TestCase):
             c = 100 * np.exp(np.cumsum(rng.normal(0, 0.01, n)))
             o = np.concatenate([[100.0], c[:-1]])
             h = np.maximum(o, c) * (1 + rng.uniform(0, 0.01, n))
-            l = np.minimum(o, c) * (1 - rng.uniform(0, 0.01, n))
+            lo = np.minimum(o, c) * (1 - rng.uniform(0, 0.01, n))
             p = rng.uniform(size=n) > 0.05
             p[0] = True
-            r = X.trail(o, h, l, p, 100.0, 1.0)
+            r = X.trail(o, h, lo, p, 100.0, 1.0)
             if r["exit_bar"] is None:
                 continue
             k = r["exit_bar"]
-            o2, h2, l2 = o.copy(), h.copy(), l.copy()
+            o2, h2, l2 = o.copy(), h.copy(), lo.copy()
             o2[k + 1 :] *= 3
             h2[k + 1 :] *= 0.1
             l2[k + 1 :] *= 0.01
             self.assertEqual(r, X.trail(o2, h2, l2, p, 100.0, 1.0))
             # and the decision path up to bar j never depends on bars after j
             j = int(rng.integers(0, n))
-            pre = X.trail(o[: j + 1], h[: j + 1], l[: j + 1], p[: j + 1], 100.0, 1.0)
+            pre = X.trail(o[: j + 1], h[: j + 1], lo[: j + 1], p[: j + 1], 100.0, 1.0)
             if pre["exit_bar"] is not None:
                 self.assertEqual(pre["exit_bar"], r["exit_bar"])
                 self.assertEqual(pre["exit_price"], r["exit_price"])
@@ -153,23 +153,23 @@ class Trail(unittest.TestCase):
 
 class Deadline(unittest.TestCase):
     def test_unstopped_trade_leaves_with_the_original_exit(self):
-        o, h, l, p = bars(120)
-        r = X.trailing_exit(o, h, l, p, 100.0, 2.0, original_exit_price=101.25)
+        o, h, lo, p = bars(120)
+        r = X.trailing_exit(o, h, lo, p, 100.0, 2.0, original_exit_price=101.25)
         self.assertEqual(
             (r["reason"], r["exit_price"], r["held_bars"]), ("NOT_STOPPED", 101.25, 120)
         )
 
     def test_stopped_trade_ignores_the_original_exit(self):
-        o, h, l, p = bars(120)
-        l[30] = 90.0
-        r = X.trailing_exit(o, h, l, p, 100.0, 2.0, original_exit_price=150.0)
+        o, h, lo, p = bars(120)
+        lo[30] = 90.0
+        r = X.trailing_exit(o, h, lo, p, 100.0, 2.0, original_exit_price=150.0)
         self.assertEqual((r["reason"], r["exit_price"], r["held_bars"]), ("STOP", 94.0, 31))
 
     def test_truncated_data_checks_stops_until_the_data_ends(self):
-        o, h, l, p = bars(120)
+        o, h, lo, p = bars(120)
         p[50:] = False  # hourly data ends early (delisting)
-        l[60] = 1.0  # never seen
-        r = X.trailing_exit(o, h, l, p, 100.0, 2.0, original_exit_price=99.0)
+        lo[60] = 1.0  # never seen
+        r = X.trailing_exit(o, h, lo, p, 100.0, 2.0, original_exit_price=99.0)
         self.assertEqual(
             (r["reason"], r["exit_price"], r["last_present_bar"]), ("NOT_STOPPED", 99.0, 49)
         )

@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import argparse
 import html
-from datetime import date, datetime, timedelta, timezone
+from datetime import date, datetime, timedelta
 from decimal import Decimal, InvalidOperation
 from html.parser import HTMLParser
 import json
@@ -25,7 +25,7 @@ from urllib.parse import quote, urlsplit
 import urllib.request
 from zoneinfo import ZoneInfo
 
-from .hashing import fmt_ts, parse_ts, sha256_bytes, sha256_text, utc_now
+from .hashing import fmt_ts, parse_ts, sha256_bytes, utc_now
 from . import workbench
 from .workbench import _decimal_string
 
@@ -1526,7 +1526,7 @@ def headline_checks(doc: dict, facts: list, period_override=None, published_at=N
     """Reads the release's headline sentence(s): the quarter and end date they state, the resolution of the reported period (see resolve_current), and whether the
     headline figures agree with that period's table figures."""
     text = " ".join(doc["lines"][:70])
-    para = next((l for l in doc["lines"][:70] if re.search(r"quarter ended", l) and re.search(r"revenue|net sales|results", l, re.I)), None)
+    para = next((line for line in doc["lines"][:70] if re.search(r"quarter ended", line) and re.search(r"revenue|net sales|results", line, re.I)), None)
     out = {"paragraph": para[:900] if para else None, "quarter_ended": None, "quarter_ended_all": [], "fiscal_quarter_title": None, "reported_quarter": [],
            "revenue_headline": None, "eps_headline": {}, "checks": [], "published_at": published_at}
     mentions = quarter_ended_mentions(doc)
@@ -2271,7 +2271,7 @@ def prepare_source(ref, source_url=None, published_at=None, sec_headers=None, re
         basis = "SEC acceptance time from the filing's own header (New York clock converted to UTC)" if published else "UNKNOWN: no publication time was supplied or found; download time is not substituted"
     doc = read_document(raw, Path(urlsplit(url).path).name or "document")
     m = re.search(r"<title>(.*?)</title>", raw.decode("utf-8", "replace"), re.I | re.S)
-    title = next((l for l in doc["lines"] if re.search(r"announces|reports|results", l, re.I)), None) or (" ".join(m.group(1).split()) if m else doc["name"])
+    title = next((line for line in doc["lines"] if re.search(r"announces|reports|results", line, re.I)), None) or (" ".join(m.group(1).split()) if m else doc["name"])
     return {"doc": doc, "source_url": url, "published_at": published, "published_basis": basis, "observed_at": observed, "observed_basis": observed_basis, "title": title[:200]}
 
 

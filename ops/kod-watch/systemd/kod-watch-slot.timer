@@ -1,0 +1,14 @@
+# Twelve minutes after each four-hourly slot: late_after_seconds (600) + grace (60) has passed.
+[Unit]
+Description=KOD watch: 12 minutes after each four-hourly observation slot
+Documentation=file:/opt/kod/watch/INSTALL.md
+
+[Timer]
+Unit=kod-watch-slot.service
+OnCalendar=*-*-* 01,05,09,13,17,21:12:00 UTC
+AccuracySec=1s
+RandomizedDelaySec=0
+Persistent=true
+
+[Install]
+WantedBy=timers.target

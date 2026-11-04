@@ -1,0 +1,42 @@
+Final verification of claude/hopeful-hypatia-ktzpog, 2026-11-04 (UTC), run by Claude on the integrated tree.
+Tree tested: f4491ccee Close early-entry research: INFO_MAGNET fails the pre-set close rule, independently verified (later commits change only handoff/claude/*.md).
+Interpreter: CPython 3.12.3 venv with requirements-runtime.txt and ruff 0.14.3; tools and ops suites also with system python3 (stdlib only).
+
+== idx-signals: python -m unittest discover -s tests
+Ran 1523 tests in 305.164s
+OK
+EXIT 0
+
+== kod-machine: python -m unittest discover -s tests
+Ran 282 tests in 21.149s
+OK
+EXIT 0
+
+== tools/ci_tests (system python3, stdlib only)
+Ran 113 tests in 9.824s
+OK
+EXIT 0
+
+== ops/kod-watch (system python3, stdlib only)
+Ran 41 tests in 0.356s
+OK
+EXIT 0
+
+== tools/check_runtime_release.py (focused, offline)
+Ran 304 tests in 8.953s
+OK
+Ran 10 tests in 2.257s
+OK
+Ran 14 tests in 2.493s
+OK
+{"ok": true, "mode": "focused", "network": false, "scope": "engineering invariants; synthetic paper run; backup/restore", "profitability_validated": false}
+EXIT 0
+
+== tools/check_live_style.py
+{"ok": true, "managed_files": 76, "formatted": false}
+EXIT 0
+
+== tools/check_append_only.py --range origin/claude/idx-signals-test-repo-ds0jw7..HEAD
+append-only: OK
+EXIT 0
+
