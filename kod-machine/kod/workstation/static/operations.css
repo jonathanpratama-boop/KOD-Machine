@@ -126,3 +126,14 @@
     font-size:13px
   }
 }
+
+/* Two interval columns fit a phone without hiding their values offscreen. */
+.inspector-intervals table {
+  min-width: 0;
+  width: 100%;
+}
+.inspector-intervals th:last-child,
+.inspector-intervals td:last-child {
+  text-align: right;
+  white-space: nowrap;
+}
