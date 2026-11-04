@@ -488,11 +488,14 @@ class Sharp(unittest.TestCase):
 
     def test_holdings_increase_uses_the_post_transaction_amount(self):
         """Guards against: an increase computed against the wrong base, or invented when the holding is missing."""
-        post = lambda after: line(1000, 60.0).replace(
-            "</transactionAmounts>",
-            f"</transactionAmounts><postTransactionAmounts><sharesOwnedFollowingTransaction>"
-            f"<value>{after}</value></sharesOwnedFollowingTransaction></postTransactionAmounts>",
-        )
+
+        def post(after):
+            return line(1000, 60.0).replace(
+                "</transactionAmounts>",
+                f"</transactionAmounts><postTransactionAmounts><sharesOwnedFollowingTransaction>"
+                f"<value>{after}</value></sharesOwnedFollowingTransaction></postTransactionAmounts>",
+            )
+
         xml = f4.form4_xml(filing(1000, lines=[post(3000), post(5000)]))
         self.assertEqual(
             fs.holdings_increase(xml),

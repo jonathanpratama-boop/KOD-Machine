@@ -38,7 +38,10 @@ def synth(n=30, days=120, seed=3, jump_day=100, jump_coin=0, group=(0, 1, 2, 3),
 
 def perturb_after(h, hour):
     later = np.arange(h.present.shape[1])[None, :] > hour
-    g = lambda a, m=1.7: np.where(later, a * m + 0.3, a)
+
+    def g(a, m=1.7):
+        return np.where(later, a * m + 0.3, a)
+
     present = h.present.copy()
     present[5, hour + 1 :] = False
     return e6.Hourly(
@@ -176,7 +179,10 @@ def one_coin(T=100, t=10, edits=None, absent=()):
         o[0, b], hi[0, b], lo[0, b], cl[0, b] = a, bh, bl, c
     pres = np.ones((1, T), dtype=bool)
     pres[0, list(absent)] = False
-    nan = lambda a: np.where(pres, a, np.nan)
+
+    def nan(a):
+        return np.where(pres, a, np.nan)
+
     return e6.Hourly(
         ["X"],
         START,
@@ -266,7 +272,10 @@ class Controls(unittest.TestCase):
         def bump(rows):
             later = np.zeros_like(h.present)
             later[list(rows), t1 + 1 :] = True
-            g = lambda a: np.where(later, a * 3, a)
+
+            def g(a):
+                return np.where(later, a * 3, a)
+
             return e6.Hourly(
                 h.symbols,
                 h.start,
@@ -298,7 +307,9 @@ class Controls(unittest.TestCase):
 
 class Gates(unittest.TestCase):
     def rep(self, **over):
-        b = lambda est, p: {"estimate": est, "p_one_sided": p}
+        def b(est, p):
+            return {"estimate": est, "p_one_sided": p}
+
         r = {
             "events": 400,
             "scored": 400,
