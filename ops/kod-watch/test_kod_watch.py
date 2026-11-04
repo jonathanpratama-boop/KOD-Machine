@@ -459,6 +459,20 @@ class PingTests(WatchTestCase):
         self.assertIn("kod-watch: ping not delivered after 4 attempts", run.stderr)
         self.assertNotIn("slot-check-0001", run.stderr)
 
+    def test_url_error_raised_while_sending_is_reported_not_raised(self):
+        # The URL stack raises ValueError subclasses for a URL it cannot encode: an empty host
+        # label ("hc-ping..example") fails IDNA encoding inside socket.getaddrinfo.
+        failures = [UnicodeError("label empty or too long") for _ in range(4)]
+        run = self.run_watch("slot", START - timedelta(hours=1), network=Network(*failures))
+        self.assertEqual(run.code, 1)
+        self.assertEqual(len(run.requests), 4)
+        self.assertFalse(run.record["delivered"])
+        self.assertEqual(
+            run.record["errors"],
+            [f"attempt {n}: UnicodeError: label empty or too long" for n in range(1, 5)],
+        )
+        self.assertIn("kod-watch: ping not delivered after 4 attempts", run.stderr)
+
     def test_dry_run_sends_nothing_and_redacts_the_url(self):
         self.tree.captured(1, 2, 3, 4, 5)
         out, err = io.StringIO(), io.StringIO()
@@ -485,6 +499,11 @@ class PingTests(WatchTestCase):
         cases = {
             "": "KOD_WATCH_SLOT_URL is not set",
             "http://hc-ping.example/slot": "must be an https:// URL",
+            "https://hc-ping.example/slot check": "visible ASCII only",
+            "https://hc-ping.example/ü-check": "visible ASCII only",
+            "https://hc-ping.example/slot\x00": "visible ASCII only",
+            "https://[hc-ping.example/slot": "is not a valid URL: Invalid IPv6 URL",
+            "https://hc-ping.example:99999/slot": "is not a valid URL: Port out of range",
             "https://user:secret@hc-ping.example/slot": "without credentials, query or fragment",
             "https://hc-ping.example/slot?x=1": "without credentials, query or fragment",
             # Bare suffixes: url + "/fail" would become a query or fragment of the success URL.

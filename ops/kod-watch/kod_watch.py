@@ -324,9 +324,19 @@ def ping_url(environ, mode: str) -> str:
     value = environ.get(name, "")
     if not value:
         raise ConfigError(f"{name} is not set; add it to /etc/kod/watch.env (see INSTALL.md)")
-    parts = urllib.parse.urlsplit(value)
-    if parts.scheme != "https" or any(character.isspace() for character in value):
-        raise ConfigError(f"{name} must be an https:// URL without spaces")
+    # Visible ASCII only: http.client cannot send other characters, and its error for a control
+    # character quotes the secret check path.
+    if not all("!" <= character <= "~" for character in value):
+        raise ConfigError(
+            f"{name} must be visible ASCII only: no spaces, control or non-ASCII characters"
+        )
+    try:
+        parts = urllib.parse.urlsplit(value)
+        parts.port  # raises ValueError unless the port is absent or a number from 0 to 65535
+    except ValueError as exc:
+        raise ConfigError(f"{name} is not a valid URL: {exc}") from None
+    if parts.scheme != "https":
+        raise ConfigError(f"{name} must be an https:// URL")
     # Test the raw text: a bare trailing "?" or "#" parses as an empty query or fragment, yet
     # url + "/fail" would then become a query or fragment of the success URL.
     if "?" in value or "#" in value or parts.username or parts.password or not parts.hostname:
@@ -367,7 +377,7 @@ def _describe(exc: Exception) -> str:
 
 
 def deliver(url: str, body: str, *, fail: bool, open_url, sleep) -> tuple[bool, int, list[str]]:
-    """POST to the ping (or /fail) URL with up to three retries; network errors are returned."""
+    """POST to the ping (or /fail) URL with up to three retries; errors are returned, not raised."""
     target = url + "/fail" if fail else url
     headers = {"Content-Type": "text/plain; charset=utf-8", "User-Agent": "kod-watch/1"}
     errors = []
@@ -378,7 +388,8 @@ def deliver(url: str, body: str, *, fail: bool, open_url, sleep) -> tuple[bool, 
         try:
             with open_url(request, TIMEOUT_SECONDS) as response:
                 status = response.status
-        except (OSError, http.client.HTTPException) as exc:
+        # ValueError: a URL the stdlib cannot encode, e.g. an empty host label failing IDNA.
+        except (OSError, http.client.HTTPException, ValueError) as exc:
             errors.append(f"attempt {attempt}: {_describe(exc)}")
             continue
         if 200 <= status < 300:

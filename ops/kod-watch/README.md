@@ -84,8 +84,10 @@ when the URL configuration is unusable (nothing is sent).
    nothing and log `QUIET`. A manual start inside that 4-hour window sends it again. Keeping no
    state means the units need no writable path.
 5. **Ping hygiene.** URLs come only from the environment (`/etc/kod/watch.env` through
-   `EnvironmentFile=`). They must be plain `https://host/path` URLs without credentials, query or
-   fragment, and must not already end in `/fail`. The watch follows the healthchecks.io
+   `EnvironmentFile=`). They must be plain `https://host/path` URLs in visible ASCII, without
+   credentials, query or fragment (no `?` or `#` at all), with a valid port if any, and must not
+   already end in `/fail`. A URL that breaks a rule stops the run before anything is sent; an
+   error the URL stack raises while sending is recorded like a network error. The watch follows the healthchecks.io
    convention: success is the URL, failure is the URL plus `/fail`, and the body is stored with the
    ping. Each attempt has a 10 s timeout; there are up to three retries after 2, 4 and 8 s.
    Certificates are verified and redirects are refused, so a ping cannot be downgraded to HTTP.
