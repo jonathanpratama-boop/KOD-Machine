@@ -245,9 +245,9 @@ def project(root, candidate_rows, as_of):
 def record_assessment(root, assessment):
     """Append one revision for a retained candidate and refresh its read-only view.
 
-Retrying the same normalized request returns the first record unchanged. A
-revision names its preceding assessment ID in ``supersedes``. Snapshot cutoff
-must cover all assessment evidence; run a new explicit cycle for newer evidence.
+    Retrying the same normalized request returns the first record unchanged. A
+    revision names its preceding assessment ID in ``supersedes``. Snapshot cutoff
+    must cover all assessment evidence; run a new explicit cycle for newer evidence.
     """
     request = _normalize(assessment)
     request_hash = digest(request)

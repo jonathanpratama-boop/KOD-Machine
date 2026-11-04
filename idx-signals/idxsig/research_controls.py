@@ -38,12 +38,12 @@ def past_only_control_pool(
 ) -> tuple[str, ...]:
     """Exclude only triggers observed in ``(at - lookback, at]``.
 
-``observed_at`` means the timestamp when the trigger became available to the
-collector. It must not be backdated to a price peak or an earlier source event.
-Future triggers and outcome fields never affect the returned pool. An empty
-pool stays empty; callers must record unavailable controls rather than select
-the treated instrument as its own control. A selection protocol must separately
-exclude the treated symbol and retain its universe/evidence identifiers.
+    ``observed_at`` means the timestamp when the trigger became available to the
+    collector. It must not be backdated to a price peak or an earlier source event.
+    Future triggers and outcome fields never affect the returned pool. An empty
+    pool stays empty; callers must record unavailable controls rather than select
+    the treated instrument as its own control. A selection protocol must separately
+    exclude the treated symbol and retain its universe/evidence identifiers.
     """
     cutoff = _timestamp(at)
     if not isinstance(lookback, timedelta) or lookback <= timedelta(0):
