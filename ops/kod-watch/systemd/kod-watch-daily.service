@@ -1,0 +1,29 @@
+# KOD watch, daily mode (ops/kod-watch). Reads KOD data only and has no ordering or dependency
+# on kod-observe.*: it cannot start, stop, delay or restart the observation scheduler.
+[Unit]
+Description=KOD watch: one-line daily cohort summary to the daily check (read-only)
+Documentation=file:/opt/kod/watch/INSTALL.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=kod
+Group=kod
+EnvironmentFile=/etc/kod/watch.env
+ExecStart=/usr/bin/python3 -I -B /opt/kod/watch/kod_watch.py daily --plan /etc/kod/observation-plan.json --schedule /var/lib/kod/schedule --deployment /opt/kod/audit/DEPLOYMENT.json
+TimeoutStartSec=120
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadOnlyPaths=/etc/kod /opt/kod /var/lib/kod
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+MemoryMax=64M
+CPUQuota=25%

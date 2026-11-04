@@ -581,6 +581,88 @@ class DeployedFixtureTests(unittest.TestCase):
         self.assertEqual(kod_watch.stamp(assessment.slots[-1].scheduled_at), "2026-11-09T09:00:00Z")
 
 
+INSTALLED = "/opt/kod/watch/kod_watch.py"
+DEPENDENCIES = frozenset(
+    "After Before Requires Requisite Wants BindsTo PartOf Upholds Conflicts OnFailure OnSuccess "
+    "PropagatesReloadTo ReloadPropagatedFrom".split()
+)
+
+
+def unit(name: str) -> dict[tuple[str, str], list[str]]:
+    """Directives of a systemd unit file as (section, key) -> values, in file order."""
+    entries, section = {}, None
+    for line in (HERE / "systemd" / name).read_text().splitlines():
+        line = line.strip()
+        if not line or line.startswith(("#", ";")):
+            continue
+        if line.startswith("[") and line.endswith("]"):
+            section = line[1:-1]
+            continue
+        key, separator, value = line.partition("=")
+        if not separator or section is None:
+            raise ValueError(f"{name}: not a directive: {line!r}")
+        entries.setdefault((section, key), []).append(value)
+    return entries
+
+
+class UnitFileTests(unittest.TestCase):
+    def test_services_run_as_kod_read_only_with_the_environment_file(self):
+        for mode in ("slot", "daily"):
+            with self.subTest(mode=mode):
+                service = unit(f"kod-watch-{mode}.service")
+                expected = {
+                    "Type": ["oneshot"],
+                    "User": ["kod"],
+                    "Group": ["kod"],
+                    "EnvironmentFile": ["/etc/kod/watch.env"],
+                    "ProtectSystem": ["strict"],
+                    "ReadOnlyPaths": ["/etc/kod /opt/kod /var/lib/kod"],
+                    "NoNewPrivileges": ["true"],
+                    "ExecStart": [
+                        f"/usr/bin/python3 -I -B {INSTALLED} {mode} --plan {kod_watch.PLAN} "
+                        f"--schedule {kod_watch.SCHEDULE} --deployment {kod_watch.DEPLOYMENT}"
+                    ],
+                }
+                for key, values in expected.items():
+                    self.assertEqual(service.get(("Service", key)), values, key)
+                self.assertNotIn(("Service", "ReadWritePaths"), service)
+                read_only = service[("Service", "ReadOnlyPaths")][0].split()
+                for path in (kod_watch.PLAN, kod_watch.SCHEDULE, kod_watch.DEPLOYMENT):
+                    self.assertTrue(any(path.is_relative_to(root) for root in read_only), path)
+
+    def test_watch_units_never_depend_on_the_observation_scheduler(self):
+        for name in sorted(p.name for p in (HERE / "systemd").iterdir()):
+            with self.subTest(unit=name):
+                for (_, key), values in unit(name).items():
+                    if key in DEPENDENCIES:
+                        self.assertFalse(any("kod-observe" in v for v in values), (key, values))
+
+    def test_timers(self):
+        expected = {
+            "slot": "*-*-* 01,05,09,13,17,21:12:00 UTC",
+            "daily": "*-*-* 01:30:00 UTC",
+        }
+        for mode, calendar in expected.items():
+            with self.subTest(mode=mode):
+                timer = unit(f"kod-watch-{mode}.timer")
+                self.assertEqual(timer[("Timer", "OnCalendar")], [calendar])
+                self.assertEqual(timer[("Timer", "Unit")], [f"kod-watch-{mode}.service"])
+                self.assertEqual(timer[("Timer", "Persistent")], ["true"])
+                self.assertEqual(timer[("Install", "WantedBy")], ["timers.target"])
+
+    def test_slot_timer_fires_after_the_slot_it_follows_is_judged(self):
+        calendar = unit("kod-watch-slot.timer")[("Timer", "OnCalendar")][0]
+        hours_text, minute, second = calendar.split()[1].split(":")
+        hours = sorted(int(hour) for hour in hours_text.split(","))
+        slots = [datetime.fromisoformat(s.replace("Z", "+00:00")) for s in PLAN["slots"]]
+        self.assertEqual(sorted({s.hour for s in slots}), hours)
+        self.assertEqual({(s.minute, s.second) for s in slots}, {(0, 0)})
+        self.assertEqual({b - a for a, b in zip(hours, hours[1:])}, {4})
+        self.assertEqual(kod_watch.SLOT_PERIOD, timedelta(hours=4))
+        offset = int(minute) * 60 + int(second)
+        self.assertGreater(offset, PLAN["late_after_seconds"] + kod_watch.GRACE_SECONDS)
+
+
 def snapshot(root: Path) -> dict:
     """Every path below root with its type, mode, size, mtime and content digest."""
     state = {}
