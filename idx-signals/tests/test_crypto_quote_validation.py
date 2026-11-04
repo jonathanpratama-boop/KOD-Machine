@@ -36,7 +36,8 @@ class InvalidQuotes(fixtures.Base):
         for bid, ask in BAD_BOOKS:
             payload = json.dumps({'bidPrice':bid, 'askPrice':ask}).encode()
             with self.subTest(bid=bid, ask=ask), mock.patch.object(ca.urllib.request, 'urlopen', return_value=io.BytesIO(payload)):
-                with self.assertRaises(ValueError): ca.book_ticker('AAAUSDT')
+                with self.assertRaises(ValueError):
+                    ca.book_ticker('AAAUSDT')
 
     def test_http_infinity_becomes_recorded_error_not_order(self):
         payload = b'{"bidPrice":"Infinity","askPrice":"Infinity"}'
@@ -98,4 +99,5 @@ class InvalidQuotes(fixtures.Base):
         self.assertEqual(ca.verify(),[])
 
 
-if __name__ == '__main__': unittest.main()
+if __name__ == '__main__':
+    unittest.main()
