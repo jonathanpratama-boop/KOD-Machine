@@ -36,6 +36,7 @@ from .store import Store
 from .forecasts import ForecastArchive, ForecastUnavailable
 from .replay import ReplayArchive, ReplayUnavailable
 from .research import ResearchArchive, ResearchUnavailable
+from .decision_inspector import DecisionInspector, clock_assessment
 from .operations import (
     OperationsArchive,
     OperationsUnavailable,
@@ -620,6 +621,10 @@ def create_app(
                 timing=payload,
                 summary=payload["summary"],
                 attempts=attempts[:100],
+                clock_reviews={
+                    row["id"]: clock_assessment(app.state.runtime_root, row)
+                    for row in attempts[:100]
+                },
                 retained_count=len(attempts),
                 details=details,
                 context_views=timing_context_views(payload),
@@ -631,6 +636,19 @@ def create_app(
         except OperationsUnavailable as exc:
             context["timing_error"] = str(exc)
         return render(request, "timing.html", **context)
+
+    @app.get("/timing/attempt", response_class=HTMLResponse)
+    def timing_attempt(request: Request, id: str, symbol: str | None = None):
+        context = {"page": "timing", "inspect_error": None}
+        try:
+            context["inspection"] = DecisionInspector(app.state.runtime_root).attempt(
+                id, symbol=symbol
+            )
+        except KeyError:
+            raise HTTPException(404, "Attempt not found in the retained timing report.")
+        except OperationsUnavailable as exc:
+            context["inspect_error"] = str(exc)
+        return render(request, "decision_inspector.html", **context)
 
     @app.get("/candidates", response_class=HTMLResponse)
     def candidates_page(request: Request, q: str = "", state: str = ""):

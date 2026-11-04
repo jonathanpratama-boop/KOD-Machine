@@ -29,8 +29,9 @@ chrony followed, not the KOD server), stratum, reference time, system time offse
 offset, RMS offset, frequency, residual frequency, skew, root delay, root dispersion, update
 interval and leap status. Field index 4 is the system time offset, `0.002434953` seconds.
 Field index 3 is the reference time, `1793795343.592268319`; the unversioned parser stored
-that value as the offset (defect `OFFSET_FIELD_DEFECT_V1`).
+that value as the offset. `idxsig.runtime.clock` (parser `CHRONY_TRACKING_CSV_14_V1`) reads field 4
+and reports such a record as `DERIVED_FROM_RETAINED_RAW`.
 
-`tests/test_chrony_tracking.py` rebuilds the production evidence object from these bytes and
+`tests/test_clock_real_sample.py` rebuilds the production evidence object from these bytes and
 checks that its hash is the evidence identity the production journal recorded, so the file
 cannot drift from the original without that test failing.

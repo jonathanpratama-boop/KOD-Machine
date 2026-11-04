@@ -6,6 +6,11 @@ The integrated paper operations and research workstation are described in
 after installing `requirements-runtime.txt`. [Timing research](docs/TIMING_RESEARCH.md)
 records Hermes' negative findings and the next bounded diagnostic. Synthetic checks do not establish an investment edge.
 
+For strategy interfaces, recorded-run validation, bounded research, simulation
+execution and the visual decision inspector, start with the
+[component guide and code map](docs/COMPONENTS.md). The `runtime`, `research` and
+`workstation` commands share one repository entry point: `python tools/kod.py`.
+
 Two research tools. Neither grants entry permission.
 
 | Directory | What it is |

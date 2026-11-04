@@ -21,6 +21,12 @@ deliverable a subagent could not write (the corrected-runs report).
 | 6 Alerts | `fix/6-watch-kit` | Accepted; 12 nits, all repaired | `ops/kod-watch/`: read-only dead-man's switch and daily line, systemd units, 41 stdlib tests, `INSTALL.md` for Ace (step 0 checks the existing `kod-guard` timer first) |
 | Close | (direct commits) | Two independent checks | INFO_MAGNET verified (`handoff/claude/INFO_MAGNET_VERIFICATION.md`); early-entry research **CLOSED** (`handoff/decisions/2026-11-04_early_entry_closed.md`); parking lot `handoff/timing/IDEA_PARKING_LOT.md` |
 
+
+**Update after PR #24 (merged into the default branch the same day):** the default branch fixed the same chrony defect
+independently in `idxsig/runtime/clock.py` (parser `CHRONY_TRACKING_CSV_14_V1`, which also reports an error bound).
+When merging the default branch back, Claude kept that parser and removed its own `runtime/chrony.py` so KOD has one
+chrony reader. The real server sample and its test (`tests/test_clock_real_sample.py`) now check `clock.py`.
+
 Final verification of the integrated branch: `handoff/claude/FINAL_CHECKS_20261104.txt`.
 
 ## Decisions left for the owner or the operator

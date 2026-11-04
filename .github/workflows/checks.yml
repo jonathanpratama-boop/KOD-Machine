@@ -117,7 +117,9 @@ jobs:
             kod-machine/requirements-workstation.txt
             idx-signals/requirements.txt
             idx-signals/constraints-research.txt
-      - run: python3 -m pip install -r requirements-runtime.txt
+      - run: python3 -m pip install -r requirements-runtime.txt ruff==0.14.3
+      - name: Maintain readable first-party code and preserved compatibility identities
+        run: python3 tools/check_live_style.py
       - name: Audit optional application dependencies against known advisories
         run: |
           python3 -m pip install pip-audit==2.10.1

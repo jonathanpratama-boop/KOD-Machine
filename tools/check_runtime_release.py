@@ -17,6 +17,14 @@ ENV = dict(
     os.environ, PYTHONPATH=os.pathsep.join((str(REPO / "idx-signals"), str(REPO / "kod-machine")))
 )
 FOCUSED = (
+    "tests.test_component_entrypoints",
+    "tests.test_components_strategy",
+    "tests.test_components_plan",
+    "tests.test_components_execution",
+    "tests.test_runtime_validation",
+    "tests.test_strategy_checks",
+    "tests.test_clock_integrity",
+    "tests.test_research_workflow",
     "tests.test_runtime_account",
     "tests.test_runtime_data_context",
     "tests.test_runtime_backup",
@@ -28,7 +36,7 @@ FOCUSED = (
     "tests.test_timing_context",
     "tests.test_timing_integration",
     "tests.test_timing_evidence",
-    "tests.test_chrony_tracking",
+    "tests.test_clock_real_sample",
     "tests.test_time_anchor",
     "tests.test_runtime_timing_paper",
     "tests.test_timing_processing_boundary",
@@ -76,6 +84,18 @@ def main(argv=None):
         ],
         REPO / "kod-machine",
     )
+    run(
+        [
+            "-m",
+            "unittest",
+            "discover",
+            "-s",
+            "workstation_tests",
+            "-p",
+            "test_decision_inspector.py",
+        ],
+        REPO / "kod-machine",
+    )
     with tempfile.TemporaryDirectory(prefix="kod-release-") as base:
         root = Path(base) / "runtime"
         command = ["-m", "idxsig.runtime", "--root", str(root)]
@@ -112,6 +132,16 @@ def main(argv=None):
         from kod.workstation.operations import TimingArchive
 
         TimingArchive(timing_root).snapshot()
+        validation = run([*command, "validate"], capture=True)
+        if validation["status"] != "PASS":
+            raise AssertionError("retained synthetic account failed isolated replay")
+        research_root = Path(base) / "research"
+        research = ["tools/kod.py", "research", "--root", str(research_root)]
+        researched = run([*research, "demo"], capture=True)
+        repeated = run([*research, "demo"], capture=True)
+        if researched["attempts_used"] != 1 or repeated["attempts_used"] != 1:
+            raise AssertionError("research retry consumed a duplicate hypothesis")
+        run([*research, "status"], capture=True)
     if args.mode == "full":
         run(["-m", "unittest"], REPO / "idx-signals")
         run(["-m", "unittest"], REPO / "kod-machine")

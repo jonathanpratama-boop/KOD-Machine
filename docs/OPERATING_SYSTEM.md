@@ -2,6 +2,10 @@
 
 The operating unit is an explicit run with a cutoff, retained membership, immutable inputs, a versioned paper profile and a verifiable output. Research findings, observational candidates and simulated transactions have separate authority. A screen rank cannot authorize a transaction.
 
+The [component guide](COMPONENTS.md) maps the optional validation, strategy,
+research-worker and simulation-executor interfaces. These extend the operating
+system without changing the pinned account or admitting new strategies.
+
 ```mermaid
 flowchart TD
     A[Explicit collection or recorded input] --> B[Evidence and cutoff checks]
