@@ -1,0 +1,199 @@
+{
+  "completed_at": "2026-11-04T14:30:19.031779+00:00",
+  "decision": "PRIMARY_GATE_FAIL",
+  "entry_permission": false,
+  "freeze_commit": "e97a93e",
+  "frozen_files": {
+    "files": {
+      "ADDENDUM.md": "43a2970a921dcef0f4a48ea2c7462556e0fea809affac5fb6b7ebed56caace9c",
+      "EXCLUSIONS.json": "a0b5099bdcdee9450f18189e7b30ab692df424e3d16b7d72417376018b927314"
+    },
+    "frozen_at": "2026-11-04T14:09:28.376119+00:00",
+    "historical_price_outcomes_inspected_for_this_run": false,
+    "original_plan_sha256": "92758d1df735862c193c27ccbf7bf9d6231e34055742233f2cdce2458d89809c",
+    "schema": "INFO_MAGNET_FREEZE_V1"
+  },
+  "limitations": [
+    "Hourly opens are proxies, not owner-venue executable quotes.",
+    "Static product exclusions and exact ticker mapping may miss historical identity changes.",
+    "Archive presence is a conservative measurability condition; archive updates and later-notice edits cannot establish historical availability.",
+    "No independent forward holdout or same-asset serial-dependence correction; no profitability certification.",
+    "Owner cost is a fixed additive 2% assumption; further spread, slippage, FX and access remain unverified."
+  ],
+  "notice_inventory_counts": {
+    "event_count": 190,
+    "notice_count": 806,
+    "primary_krw_events": 105
+  },
+  "original_source_commit": "b04d31d5af7e34fa2f8e016bfffa8db1ab7ba13b",
+  "primary": {
+    "bootstrap": {
+      "estimator": "event-weighted mean within sampled date clusters",
+      "interval": "percentile 2.5 and 97.5; linear percentile interpolation",
+      "reps": 10000,
+      "seed": 20261104,
+      "uncertainty_status": "ESTIMATED",
+      "unit": "UTC notice-date cluster"
+    },
+    "entry_permission": false,
+    "expected_primary_count": 75,
+    "formula": "event_gross_return - mean(five_control_gross_returns) - round_trip_cost_fraction",
+    "gate_checks": {
+      "at_least_30_events": true,
+      "no_unresolved_primary_outcomes": true,
+      "positive_mean_event_net_after_owner_cost": false,
+      "positive_owner_paired_excess_lower_95": false
+    },
+    "invalid_rows": [],
+    "limitations": [
+      "A pass qualifies only for the owner-authorized prospective paper test, never live entry.",
+      "This pilot uses historically seen price periods and is not an untouched confirmatory holdout.",
+      "Fewer than two dates cannot estimate date-cluster uncertainty."
+    ],
+    "mean_control_gross_return": -0.012542007397050452,
+    "mean_event_gross_return": -0.07800037382292409,
+    "mean_paired_gross_excess": -0.06545836642587365,
+    "n": 75,
+    "original_cost": {
+      "mean_event_net_return": -0.0840003738229241,
+      "mean_paired_net_excess": -0.07145836642587365,
+      "paired_net_excess_95_ci": [
+        -0.12548823674433537,
+        -0.006078131400183254
+      ],
+      "round_trip_cost_fraction": 0.006
+    },
+    "owner_cost": {
+      "mean_event_net_return": -0.09800037382292409,
+      "mean_paired_net_excess": -0.08545836642587365,
+      "paired_net_excess_95_ci": [
+        -0.13948823674433536,
+        -0.020078131400183254
+      ],
+      "round_trip_cost_fraction": 0.02
+    },
+    "pass_gate": false,
+    "schema": "INFO_MAGNET_PAIRED_STATS_V1",
+    "status": "EXPLORATORY_RETROSPECTIVE_PILOT",
+    "unresolved_primary": 0,
+    "utc_notice_date_clusters": 64
+  },
+  "primary_holding_hours": 24,
+  "schema": "INFO_MAGNET_FAST_PRIMARY_RESULT_V1",
+  "scope": "Exploratory retrospective primary tradability gate; not full reproduction of every original pilot diagnostic",
+  "secondary_holding_hours": {
+    "6": {
+      "bootstrap": {
+        "estimator": "event-weighted mean within sampled date clusters",
+        "interval": "percentile 2.5 and 97.5; linear percentile interpolation",
+        "reps": 10000,
+        "seed": 20261104,
+        "uncertainty_status": "ESTIMATED",
+        "unit": "UTC notice-date cluster"
+      },
+      "entry_permission": false,
+      "expected_primary_count": 75,
+      "formula": "event_gross_return - mean(five_control_gross_returns) - round_trip_cost_fraction",
+      "gate_checks": {
+        "at_least_30_events": true,
+        "no_unresolved_primary_outcomes": true,
+        "positive_mean_event_net_after_owner_cost": false,
+        "positive_owner_paired_excess_lower_95": false
+      },
+      "invalid_rows": [],
+      "limitations": [
+        "A pass qualifies only for the owner-authorized prospective paper test, never live entry.",
+        "This pilot uses historically seen price periods and is not an untouched confirmatory holdout.",
+        "Fewer than two dates cannot estimate date-cluster uncertainty."
+      ],
+      "mean_control_gross_return": -0.0034895656695965904,
+      "mean_event_gross_return": -0.023686235978602563,
+      "mean_paired_gross_excess": -0.02019667030900597,
+      "n": 75,
+      "original_cost": {
+        "mean_event_net_return": -0.029686235978602565,
+        "mean_paired_net_excess": -0.026196670309005972,
+        "paired_net_excess_95_ci": [
+          -0.07489273134153492,
+          0.043519024295922366
+        ],
+        "round_trip_cost_fraction": 0.006
+      },
+      "owner_cost": {
+        "mean_event_net_return": -0.043686235978602564,
+        "mean_paired_net_excess": -0.04019667030900597,
+        "paired_net_excess_95_ci": [
+          -0.08889273134153491,
+          0.02951902429592236
+        ],
+        "round_trip_cost_fraction": 0.02
+      },
+      "pass_gate": false,
+      "promotion_authority": false,
+      "schema": "INFO_MAGNET_PAIRED_STATS_V1",
+      "status": "EXPLORATORY_RETROSPECTIVE_PILOT",
+      "unresolved_primary": 0,
+      "utc_notice_date_clusters": 64
+    },
+    "72": {
+      "bootstrap": {
+        "estimator": "event-weighted mean within sampled date clusters",
+        "interval": "percentile 2.5 and 97.5; linear percentile interpolation",
+        "reps": 10000,
+        "seed": 20261104,
+        "uncertainty_status": "ESTIMATED",
+        "unit": "UTC notice-date cluster"
+      },
+      "entry_permission": false,
+      "expected_primary_count": 73,
+      "formula": "event_gross_return - mean(five_control_gross_returns) - round_trip_cost_fraction",
+      "gate_checks": {
+        "at_least_30_events": true,
+        "no_unresolved_primary_outcomes": true,
+        "positive_mean_event_net_after_owner_cost": false,
+        "positive_owner_paired_excess_lower_95": false
+      },
+      "invalid_rows": [],
+      "limitations": [
+        "A pass qualifies only for the owner-authorized prospective paper test, never live entry.",
+        "This pilot uses historically seen price periods and is not an untouched confirmatory holdout.",
+        "Fewer than two dates cannot estimate date-cluster uncertainty."
+      ],
+      "mean_control_gross_return": -0.010079570567262946,
+      "mean_event_gross_return": -0.1286683837197084,
+      "mean_paired_gross_excess": -0.11858881315244545,
+      "n": 73,
+      "original_cost": {
+        "mean_event_net_return": -0.1346683837197084,
+        "mean_paired_net_excess": -0.12458881315244545,
+        "paired_net_excess_95_ci": [
+          -0.1743981240570207,
+          -0.06806022095808467
+        ],
+        "round_trip_cost_fraction": 0.006
+      },
+      "owner_cost": {
+        "mean_event_net_return": -0.1486683837197084,
+        "mean_paired_net_excess": -0.13858881315244545,
+        "paired_net_excess_95_ci": [
+          -0.1883981240570207,
+          -0.08206022095808467
+        ],
+        "round_trip_cost_fraction": 0.02
+      },
+      "pass_gate": false,
+      "promotion_authority": false,
+      "schema": "INFO_MAGNET_PAIRED_STATS_V1",
+      "status": "EXPLORATORY_RETROSPECTIVE_PILOT",
+      "unresolved_primary": 0,
+      "utc_notice_date_clusters": 62
+    }
+  },
+  "status_counts": {
+    "SCORED": 75,
+    "SECONDARY_MARKET_NOT_PRIMARY": 85,
+    "UNMEASURABLE_NO_HISTORICAL_USDT_ARCHIVE": 22,
+    "UNMEASURABLE_NO_PRE_NOTICE_HOUR": 8
+  },
+  "unresolved_notice_exclusions": []
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "INFO_MAGNET_ARCHIVE_ENDPOINT_AUDIT_V1",
+  "independent_reviewer": "archive reviewer",
+  "rows": 190,
+  "unique_event_ids": 190,
+  "scored_primary": 75,
+  "unresolved_primary": 0,
+  "official_checksum_and_provenance_matched_archives": 498,
+  "requested_scored_hours_verified": 2223,
+  "distinct_primary_hours_verified": 1341,
+  "unrequested_malformed_rows_retained_not_used": 42,
+  "frozen_specification_and_source_hashes_preserved": true,
+  "price_scaling_applied": false,
+  "decision": "PRIMARY_GATE_FAIL"
+}

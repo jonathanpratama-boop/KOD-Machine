@@ -1,0 +1,199 @@
+{
+  "audit_pass": true,
+  "decision": "PRIMARY_GATE_FAIL",
+  "implementation_stats_function_used": false,
+  "independent_original_cost_95_ci": [
+    -0.12548823674433532,
+    -0.006078131400183253
+  ],
+  "independent_owner_95_ci": [
+    -0.13948823674433533,
+    -0.020078131400183254
+  ],
+  "limitations": [
+    "This confirms arithmetic and selected raw-price links, not untouched-holdout validity or executable broker returns.",
+    "Historical archive timestamp repairs were audited through original prices; economic criteria were unchanged."
+  ],
+  "mean_control_gross_return": -0.012542007397050452,
+  "mean_event_gross_return": -0.07800037382292409,
+  "mean_original_cost_net_event_return": -0.0840003738229241,
+  "mean_original_cost_paired_net_excess": -0.07145836642587365,
+  "mean_owner_net_event_return": -0.09800037382292409,
+  "mean_owner_paired_net_excess": -0.08545836642587365,
+  "n": 75,
+  "notice_date_clusters": 64,
+  "point_and_interval_match_stored": true,
+  "previously_unresolved_raw_zip_checks": [
+    {
+      "details": [
+        {
+          "entry_price": "10.77300000",
+          "exit_price": "9.77300000",
+          "prior_close_time": "2021-12-15T03:59:59.999000+00:00",
+          "prior_hour": "2021-12-15T03:00:00+00:00",
+          "raw_gross_return": -0.092824654228163,
+          "symbol": "NEARUSDT"
+        },
+        {
+          "entry_price": "5.21400000",
+          "exit_price": "5.21300000",
+          "prior_close_time": "2021-12-15T03:59:59.999000+00:00",
+          "prior_hour": "2021-12-15T03:00:00+00:00",
+          "raw_gross_return": -0.00019179133103183735,
+          "symbol": "ACMUSDT"
+        },
+        {
+          "entry_price": "0.82810000",
+          "exit_price": "0.84070000",
+          "prior_close_time": "2021-12-15T03:59:59.999000+00:00",
+          "prior_hour": "2021-12-15T03:00:00+00:00",
+          "raw_gross_return": 0.015215553677092139,
+          "symbol": "PNTUSDT"
+        },
+        {
+          "entry_price": "0.19850000",
+          "exit_price": "0.20760000",
+          "prior_close_time": "2021-12-15T03:59:59.999000+00:00",
+          "prior_hour": "2021-12-15T03:00:00+00:00",
+          "raw_gross_return": 0.04584382871536524,
+          "symbol": "SKLUSDT"
+        },
+        {
+          "entry_price": "0.22170000",
+          "exit_price": "0.21990000",
+          "prior_close_time": "2021-12-15T03:59:59.999000+00:00",
+          "prior_hour": "2021-12-15T03:00:00+00:00",
+          "raw_gross_return": -0.008119079837618403,
+          "symbol": "TVKUSDT"
+        },
+        {
+          "entry_price": "25.30000000",
+          "exit_price": "25.96000000",
+          "prior_close_time": "2021-12-15T03:59:59.999000+00:00",
+          "prior_hour": "2021-12-15T03:00:00+00:00",
+          "raw_gross_return": 0.02608695652173913,
+          "symbol": "ICPUSDT"
+        }
+      ],
+      "event_id": "UPBIT:2327:NEAR",
+      "official_zip_checksums_match": true,
+      "six_entry_exit_returns_match": true,
+      "six_pre_notice_bars_verified": true
+    },
+    {
+      "details": [
+        {
+          "entry_price": "6.06000000",
+          "exit_price": "5.49400000",
+          "prior_close_time": "2021-12-15T03:59:59.999000+00:00",
+          "prior_hour": "2021-12-15T03:00:00+00:00",
+          "raw_gross_return": -0.0933993399339934,
+          "symbol": "YGGUSDT"
+        },
+        {
+          "entry_price": "619.00000000",
+          "exit_price": "625.80000000",
+          "prior_close_time": "2021-12-15T03:59:59.999000+00:00",
+          "prior_hour": "2021-12-15T03:00:00+00:00",
+          "raw_gross_return": 0.01098546042003231,
+          "symbol": "AUTOUSDT"
+        },
+        {
+          "entry_price": "23.44000000",
+          "exit_price": "24.16000000",
+          "prior_close_time": "2021-12-15T03:59:59.999000+00:00",
+          "prior_hour": "2021-12-15T03:00:00+00:00",
+          "raw_gross_return": 0.030716723549488054,
+          "symbol": "AUCTIONUSDT"
+        },
+        {
+          "entry_price": "0.01771000",
+          "exit_price": "0.01805000",
+          "prior_close_time": "2021-12-15T03:59:59.999000+00:00",
+          "prior_hour": "2021-12-15T03:00:00+00:00",
+          "raw_gross_return": 0.019198193111236588,
+          "symbol": "REEFUSDT"
+        },
+        {
+          "entry_price": "0.01134000",
+          "exit_price": "0.01089000",
+          "prior_close_time": "2021-12-15T03:59:59.999000+00:00",
+          "prior_hour": "2021-12-15T03:00:00+00:00",
+          "raw_gross_return": -0.03968253968253968,
+          "symbol": "FUNUSDT"
+        },
+        {
+          "entry_price": "0.23550000",
+          "exit_price": "0.27030000",
+          "prior_close_time": "2021-12-15T03:59:59.999000+00:00",
+          "prior_hour": "2021-12-15T03:00:00+00:00",
+          "raw_gross_return": 0.14777070063694267,
+          "symbol": "HBARUSDT"
+        }
+      ],
+      "event_id": "UPBIT:2327:YGG",
+      "official_zip_checksums_match": true,
+      "six_entry_exit_returns_match": true,
+      "six_pre_notice_bars_verified": true
+    },
+    {
+      "details": [
+        {
+          "entry_price": "0.07852000",
+          "exit_price": "0.07478000",
+          "prior_close_time": "2026-03-31T01:59:59.999999+00:00",
+          "prior_hour": "2026-03-31T01:00:00+00:00",
+          "raw_gross_return": -0.04763117677024962,
+          "symbol": "SKYUSDT"
+        },
+        {
+          "entry_price": "0.40700000",
+          "exit_price": "0.40500000",
+          "prior_close_time": "2026-03-31T01:59:59.999999+00:00",
+          "prior_hour": "2026-03-31T01:00:00+00:00",
+          "raw_gross_return": -0.004914004914004914,
+          "symbol": "ACMUSDT"
+        },
+        {
+          "entry_price": "0.00018000",
+          "exit_price": "0.00008400",
+          "prior_close_time": "2026-03-31T01:59:59.999999+00:00",
+          "prior_hour": "2026-03-31T01:00:00+00:00",
+          "raw_gross_return": -0.5333333333333333,
+          "symbol": "A2ZUSDT"
+        },
+        {
+          "entry_price": "0.44600000",
+          "exit_price": "0.44600000",
+          "prior_close_time": "2026-03-31T01:59:59.999999+00:00",
+          "prior_hour": "2026-03-31T01:00:00+00:00",
+          "raw_gross_return": 0.0,
+          "symbol": "XNOUSDT"
+        },
+        {
+          "entry_price": "0.07700000",
+          "exit_price": "0.07700000",
+          "prior_close_time": "2026-03-31T01:59:59.999999+00:00",
+          "prior_hour": "2026-03-31T01:00:00+00:00",
+          "raw_gross_return": 0.0,
+          "symbol": "GTCUSDT"
+        },
+        {
+          "entry_price": "0.12200000",
+          "exit_price": "0.12400000",
+          "prior_close_time": "2026-03-31T01:59:59.999999+00:00",
+          "prior_hour": "2026-03-31T01:00:00+00:00",
+          "raw_gross_return": 0.01639344262295082,
+          "symbol": "HIGHUSDT"
+        }
+      ],
+      "event_id": "UPBIT:6102:SKY",
+      "official_zip_checksums_match": true,
+      "six_entry_exit_returns_match": true,
+      "six_pre_notice_bars_verified": true
+    }
+  ],
+  "result_file_sha256": "cef79af824209ba2665789f958bbbfe06cbf59dfd6b4d5d4d3e59bdfb056f2c9",
+  "schema": "INFO_MAGNET_INDEPENDENT_FINAL_AUDIT_V1",
+  "unresolved_primary": 0
+}
