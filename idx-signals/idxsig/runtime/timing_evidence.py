@@ -3,6 +3,12 @@
 A valid journal hash does not prove that its membership, clock, capture or context
 objects still exist. Generated local identifiers therefore require their original
 objects. External legacy identifiers remain declarations with explicit coverage.
+
+Clock evidence is re-read under the parser version it declares. Unversioned clock
+evidence keeps its original check, so records written before CHRONY_TRACKING_CSV_V2
+verify as written; each such measured offset is also reported as
+OFFSET_FIELD_DEFECT_V1 with the corrected reading. A diagnostic never changes ``ok``
+or ``complete`` and never rewrites a record.
 """
 
 from __future__ import annotations
@@ -13,6 +19,7 @@ import hashlib
 from pathlib import Path, PurePosixPath
 import re
 
+from .chrony import CHRONY_COMMAND, CHRONY_TRACKING_CSV_V2, read_tracking_v2, v1_offset_defect
 from .data import parse_time
 from .storage import canonical, digest, read_json
 
@@ -58,9 +65,11 @@ def verify_linked_evidence(root, rows: list[dict]) -> dict:
     Missing generated artifacts make ``ok`` false. Missing optional independent
     timestamp verification remains UNAVAILABLE and makes ``complete`` false.
     Caller-declared legacy identities do not pretend to verify local artifacts.
+    ``diagnostics`` lists verified records whose stored value is known defective.
     """
     root = Path(root).resolve()
     checks = []
+    diagnostics = []
     by_id = {row.get("id"): row for row in rows}
     memberships = {}
     captures = {}
@@ -166,18 +175,40 @@ def verify_linked_evidence(root, rows: list[dict]) -> dict:
                     raise ValueError("clock hash or observation time mismatch")
                 if parse_time(value["observed_at"]) > parse_time(row["recorded_at"]):
                     raise ValueError("clock observation is after retained attempt")
-                if value.get("command") != "chronyc -c tracking":
+                if value.get("command") != CHRONY_COMMAND:
                     raise ValueError("unsupported local clock measurement")
-                if clock.get("status") == "MEASURED_EXTERNAL":
-                    fields = value["stdout"].strip().split(",")
-                    if (
-                        value.get("returncode") != 0
-                        or len(fields) < 13
-                        or fields[-1].strip() != "Normal"
-                        or not Decimal(fields[3]).is_finite()
-                        or Decimal(fields[3]) != Decimal(clock["offset_seconds"])
+                if "parser_version" not in value:
+                    # Unversioned record: verified exactly as written; its defect is reported.
+                    if clock.get("status") == "MEASURED_EXTERNAL":
+                        fields = value["stdout"].strip().split(",")
+                        if (
+                            value.get("returncode") != 0
+                            or len(fields) < 13
+                            or fields[-1].strip() != "Normal"
+                            or not Decimal(fields[3]).is_finite()
+                            or Decimal(fields[3]) != Decimal(clock["offset_seconds"])
+                        ):
+                            raise ValueError("clock measurement differs from retained raw output")
+                        defect = v1_offset_defect(
+                            value["returncode"], value["stdout"], clock["offset_seconds"]
+                        )
+                        diagnostics.append(
+                            {"kind": "clock", "id": clock_id, "attempt_id": identity, **defect}
+                        )
+                elif value["parser_version"] == CHRONY_TRACKING_CSV_V2:
+                    reading = read_tracking_v2(value["returncode"], value["stdout"])
+                    if (clock.get("status"), clock.get("offset_seconds")) != (
+                        reading["status"],
+                        reading["offset_seconds"],
                     ):
-                        raise ValueError("clock measurement differs from retained raw output")
+                        raise ValueError(
+                            f"clock observation differs from the {CHRONY_TRACKING_CSV_V2} "
+                            "reading of its retained raw output"
+                        )
+                else:
+                    raise ValueError(
+                        f"unsupported clock parser version: {value['parser_version']!r}"
+                    )
                 return value
 
             check("clock", clock_id, clock_evidence, identity)
@@ -384,5 +415,6 @@ def verify_linked_evidence(root, rows: list[dict]) -> dict:
         },
         "checks": checks,
         "problems": failures,
+        "diagnostics": diagnostics,
         "entry_permission": False,
     }
