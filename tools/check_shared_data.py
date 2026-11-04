@@ -7,9 +7,13 @@ source rather than once per study. Existing study scripts are frozen records and
 
 Scope: Python files ADDED under idx-signals/research/ in the range (git diff --diff-filter=A
 --no-renames, so a moved file counts as new), read as committed at HEAD. In those files each call
-below is reported, unless the called name was imported from idxsig (the shared-loader route):
+below is reported, unless the called name was imported from idxsig (the shared-loader route).
+A name bound by an import is read as what it imports, by top-level package, so `from
+urllib.request import urlopen as fetch` makes fetch(...) a download and `import numpy as n` or
+`from numpy.lib.npyio import load` makes n.load(...) or load(...) an array read:
   tabular readers  read_csv, read_table, read_parquet, read_pickle, read_feather, read_json,
-                   read_excel, read_hdf, read_fwf, read_orc (pandas, polars, pyarrow, ...)
+                   read_excel, read_hdf, read_fwf, read_orc, and the lazy scan_csv, scan_ndjson,
+                   scan_parquet, scan_ipc (pandas, polars, pyarrow, ...)
   array readers    np.load, np.loadtxt, np.genfromtxt, np.fromfile
   archives         zipfile.ZipFile, tarfile.TarFile, tarfile.open, unless opened for writing
   downloads        urlopen, urlretrieve, and get/post/head/request/stream on requests or httpx
@@ -24,8 +28,9 @@ Exit status: 0, also when the range cannot be read (that is reported as a warnin
 --strict, 1 when anything was reported; 2 for invalid arguments.
 
 Not claimed: the check is static and heuristic. A path held in a neutrally named variable, or
-built in another module, is not resolved, so a file without warnings is not proof that it reads
-only through loaders, and a warning is not proof of a look-ahead defect. Whether a shared loader
+built in another module, is not resolved, and a read written as SQL text (duckdb, sqlite) is
+not seen, so a file without warnings is not proof that it reads only through loaders, and a
+warning is not proof of a look-ahead defect. Whether a shared loader
 exists for every source, and whether it is as-of aware, is outside this check. Standard library
 only: CI runs it before installing requirements.
 """
@@ -54,6 +59,10 @@ TABULAR_READERS = frozenset(
         "read_hdf",
         "read_fwf",
         "read_orc",
+        "scan_csv",
+        "scan_ndjson",
+        "scan_parquet",
+        "scan_ipc",
     }
 )
 ARRAY_READERS = frozenset({"load", "loadtxt", "genfromtxt", "fromfile"})
@@ -85,10 +94,11 @@ def scan(source: bytes, path: str) -> list[Finding]:
     """
     tree = ast.parse(source, filename=path)
     loaders = idxsig_names(tree)
+    imports = Imports.of(tree)
     found = set()
     for node in ast.walk(tree):
         if isinstance(node, ast.Call) and _root_name(node.func) not in loaders:
-            if _reads_raw_data(node):
+            if _reads_raw_data(node, imports):
                 found.add(Finding(node.lineno, _label(node.func)))
     return sorted(found)
 
@@ -107,15 +117,36 @@ def idxsig_names(tree: ast.AST) -> set[str]:
     return names
 
 
-def _reads_raw_data(call: ast.Call) -> bool:
+@dataclass(frozen=True)
+class Imports:
+    """What the import aliases of one script stand for."""
+
+    modules: dict[str, str]  # `import numpy as n`: n -> numpy
+    members: dict[str, tuple[str, str]]  # `from numpy import load as ld`: ld -> (numpy, load)
+
+    @classmethod
+    def of(cls, tree: ast.AST) -> Imports:
+        modules, members = {}, {}
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Import):
+                modules.update((a.asname, a.name) for a in node.names if a.asname)
+            elif isinstance(node, ast.ImportFrom) and node.level == 0 and node.module:
+                members.update((a.asname or a.name, (node.module, a.name)) for a in node.names)
+        return cls(modules, members)
+
+
+def _reads_raw_data(call: ast.Call, imports: Imports) -> bool:
     func = call.func
     if isinstance(func, ast.Name):
-        name, receiver = func.id, None
+        source, name = imports.members.get(func.id, (None, func.id))
+        receiver = None
     elif isinstance(func, ast.Attribute):
         name, receiver = func.attr, func.value
+        local = receiver.id if isinstance(receiver, ast.Name) else None
+        source = imports.modules.get(local, local)
     else:
         return False
-    module = receiver.id if isinstance(receiver, ast.Name) else None
+    module = source.partition(".")[0] if source else None  # the top-level package
     if name in TABULAR_READERS or name in DOWNLOADERS:
         return True
     if name in ARRAY_READERS:

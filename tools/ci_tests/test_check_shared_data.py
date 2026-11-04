@@ -34,6 +34,29 @@ RAW_STUDY = textwrap.dedent(
     grid = np.load(HERE / "grid.npy")
     """
 )
+ALIASED_STUDY = textwrap.dedent(
+    """\
+    from urllib.request import urlopen as fetch
+    from pandas import read_parquet as load_table
+    from numpy import load
+    import numpy as n
+    import requests as http
+    from requests.api import get
+    import polars as pl
+    from tarfile import open as open_tar
+
+    page = fetch("https://example.invalid/klines")
+    book = load_table("book.parquet")
+    grid = load(HERE / "grid.npy")
+    more = n.loadtxt(HERE / "grid.txt")
+    reply = http.get("https://example.invalid/book")
+    other = get("https://example.invalid/other")
+    lazy = pl.scan_parquet("trades.parquet")
+    rows = pl.scan_csv(HERE / "rows.csv")
+    events = pl.scan_ndjson(HERE / "events.ndjson")
+    archive = open_tar(HERE / "klines.tar")
+    """
+)
 CLEAN_STUDY = textwrap.dedent(
     """\
     import hashlib, json
@@ -41,6 +64,7 @@ CLEAN_STUDY = textwrap.dedent(
     from idxsig import panel
     from idxsig.runtime.storage import read_json
     import idxsig.global_panel as gp
+    from json import load as load_json
 
     HERE = Path(__file__).parent
     PROTO = json.loads((HERE / "protocol.json").read_text())
@@ -50,6 +74,7 @@ CLEAN_STUDY = textwrap.dedent(
     digest = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     with open(HERE / "out" / "rows.csv", "w") as handle:
         handle.write("a,b\\n")
+    settings = load_json(handle)
     archive_out = __import__("zipfile").ZipFile(HERE / "bundle.zip", "w")
     """
 )
@@ -70,6 +95,24 @@ class ScanTests(unittest.TestCase):
                 (13, "requests.get"),
                 (14, "(RAW / 'notes.txt').read_text"),
                 (15, "np.load"),
+            ],
+        )
+
+    def test_import_aliases_and_lazy_scans_are_resolved(self):
+        findings = shared.scan(ALIASED_STUDY.encode(), "run.py")
+        self.assertEqual(
+            [(f.line, f.call) for f in findings],
+            [
+                (10, "fetch"),
+                (11, "load_table"),
+                (12, "load"),
+                (13, "n.loadtxt"),
+                (14, "http.get"),
+                (15, "get"),
+                (16, "pl.scan_parquet"),
+                (17, "pl.scan_csv"),
+                (18, "pl.scan_ndjson"),
+                (19, "open_tar"),
             ],
         )
 
