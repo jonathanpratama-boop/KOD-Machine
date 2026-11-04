@@ -1,0 +1,34 @@
+{
+  "recorded_at": "2026-11-04T15:30:00.510046+00:00",
+  "protocol_commit": "875f477e44209a945fc83a06bcd944a9ee5f972a",
+  "protocol_sha256": "2d8987b9c991d1086ef38f15973057f883028d11aaae2eb8c19247f02d8c4a16",
+  "batch_charter_sha256": "e0e61993614c62dfb37e3929c48f1ce5356d8ae1ed2acbb793b81e6c528c98f4",
+  "hypotheses": [
+    {
+      "id": "H1",
+      "question": "holder cash return",
+      "stage": "NEEDS_EVENT_VERIFICATION",
+      "price_outcomes_read": false
+    },
+    {
+      "id": "H2",
+      "question": "new dilution or holder-value leakage",
+      "stage": "NEEDS_EVENT_VERIFICATION",
+      "price_outcomes_read": false
+    },
+    {
+      "id": "H3",
+      "question": "all-spot delisting warning",
+      "stage": "INSUFFICIENT_SOURCE_SAMPLE",
+      "price_outcomes_read": false
+    }
+  ],
+  "existing_cloud_experiment": "UNCHANGED",
+  "new_recurring_jobs": 0,
+  "real_orders": 0,
+  "closed_at": "2026-11-04T15:41:38.704203+00:00",
+  "batch_stage": "SOURCE_FEASIBILITY_COMPLETE",
+  "actual_return_tests_executed": 0,
+  "future_recurring_work_scheduled": false,
+  "next_priority": "Source-bound holder-cashflow register: one complete positive mechanism and one adverse counterexample before scaling."
+}
