@@ -18,7 +18,7 @@ deliverable a subagent could not write (the corrected-runs report).
 | 2b Corrected studies | `fix/2b-corrected-runs` | Blocked (report missing); report written by the integrator | NEIGHBOURS_v1 and PRESSURE_v1 corrected runs, one each: all three verdicts **CONFIRMED** (`idx-signals/research/RESEARCH_CORRECTIONS_20261104/REPORT.md`) |
 | 3 and 4 CI rules | `fix/34-ci-rules` | Blocked twice, repaired, rechecked: accepted | `tools/check_shared_data.py` (warning only, on new study files), `tools/check_merge_notes.py` (blocks a code merge into the default branch without a six-question note; bots exempt), `handoff/merges/` |
 | 4 and 5 Rules | (direct commits) | — | `handoff/KOD_RULES.md`, architect section in `handoff/AGENTS.md`, `handoff/decisions/2026-11-04_rules_and_architect.md`, `docs/PROTOCOL_TEMPLATE.md` (feasibility gate), `handoff/HUMAN_REVIEW_BRIEF.md` |
-| 6 Alerts | `fix/6-watch-kit` | Accepted; 12 nits, all repaired | `ops/kod-watch/`: read-only dead-man's switch and daily line, systemd units, 50+ stdlib tests, `INSTALL.md` for Ace (step 0 checks the existing `kod-guard` timer first) |
+| 6 Alerts | `fix/6-watch-kit` | Accepted; 12 nits, all repaired | `ops/kod-watch/`: read-only dead-man's switch and daily line, systemd units, 41 stdlib tests, `INSTALL.md` for Ace (step 0 checks the existing `kod-guard` timer first) |
 | Close | (direct commits) | Two independent checks | INFO_MAGNET verified (`handoff/claude/INFO_MAGNET_VERIFICATION.md`); early-entry research **CLOSED** (`handoff/decisions/2026-11-04_early_entry_closed.md`); parking lot `handoff/timing/IDEA_PARKING_LOT.md` |
 
 Final verification of the integrated branch: `handoff/claude/FINAL_CHECKS_20261104.txt`.
