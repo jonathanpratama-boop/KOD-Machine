@@ -1,6 +1,6 @@
 # KOD paper account (PAPER_ACCOUNT_v1)
 
-As of the latest record (2026-11-03T22:58:49Z). Paper only: no orders, no money. Protocol: `research/PAPER_ACCOUNT_v1/protocol.json`.
+As of the latest record (2026-11-04T22:58:31Z). Paper only: no orders, no money. Protocol: `research/PAPER_ACCOUNT_v1/protocol.json`.
 
 ## The three plain answers
 
@@ -13,16 +13,16 @@ As of the latest record (2026-11-03T22:58:49Z). Paper only: no orders, no money.
 | Arm | Cash | Reserved | Available | Open value | Equity | Realized | Unrealized | Pending | Filled | Rejected | Cancelled | Declined | Closed |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | BASE | $10,000.00 | $0.00 | $10,000.00 | $0.00 | $10,000.00 | $0.00 | $0.00 | 0 | 0 | 2 | 0 | 0 | 0 |
-| FIXED5 | $9,107.77 | $0.00 | $9,107.77 | $840.42 | $9,948.19 | -$47.79 | -$5.31 | 0 | 2 | 0 | 0 | 0 | 1 |
+| FIXED5 | $9,107.77 | $0.00 | $9,107.77 | $885.96 | $9,993.73 | -$47.79 | $40.16 | 0 | 2 | 0 | 0 | 0 | 1 |
 
 ## Open positions and valuation
 
-- FIXED5 FMC: $840.42, valued at the close of 2026-11-03 (-0.33% since entry)
+- FIXED5 FMC: $885.96, valued at the close of 2026-11-04 (+5.07% since entry)
 
 ## Drawdown (from recorded nightly marks only)
 
-- BASE: 0.00% across 3 mark(s)
-- FIXED5: -0.57% across 3 mark(s), trough at the close of 2026-11-03
+- BASE: 0.00% across 4 mark(s)
+- FIXED5: -0.57% across 4 mark(s), trough at the close of 2026-11-03
 
 ## Every decision
 
