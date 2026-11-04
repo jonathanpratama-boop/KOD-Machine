@@ -121,7 +121,7 @@ class ClockVerificationTests(unittest.TestCase):
         (check,) = [c for c in result["checks"] if c["kind"] == "clock"]
         return result, check
 
-    def legacy(self, stdout, offset):
+    def legacy(self, stdout, offset, *, status="MEASURED_EXTERNAL"):
         # The exact object the unversioned parser wrote: it has no parser_version key.
         evidence = {
             "observed_at": REAL_OBSERVED_AT,
@@ -131,7 +131,7 @@ class ClockVerificationTests(unittest.TestCase):
             "stderr": "",
         }
         return {
-            "status": "MEASURED_EXTERNAL",
+            "status": status,
             "offset_seconds": offset,
             "observed_at": REAL_OBSERVED_AT,
             "evidence_id": self.retain(evidence),
@@ -229,6 +229,14 @@ class ClockVerificationTests(unittest.TestCase):
         self.assertEqual(diagnostic["code"], "OFFSET_FIELD_DEFECT_V1")
         self.assertIsNone(diagnostic["corrected_offset_seconds"])
         self.assertIn("found 13", diagnostic["reason"])
+
+    def test_v1_failed_record_verifies_without_offset_defect(self):
+        # The unversioned parser stored no offset for an unsynchronised clock: none is defective.
+        clock = self.legacy(edited(13, "Not synchronised"), None, status="MEASUREMENT_FAILED")
+        result, check = self.verify(clock)
+        self.assertTrue(result["ok"])
+        self.assertEqual(check["status"], "VERIFIED")
+        self.assertEqual(result["diagnostics"], [])
 
     def test_v1_record_with_tampered_raw_output_fails(self):
         clock = self.legacy(edited(3, "1793795343.000000000"), REAL_V1_OFFSET)
