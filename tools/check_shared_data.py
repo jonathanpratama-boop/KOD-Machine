@@ -3,7 +3,10 @@
 
 Rule (handoff/KOD_FIX_PLAN.md, Fix 3): new studies load data only through shared loaders in
 idx-signals/idxsig, so that timestamp units, as-of cutoffs and provenance are handled once per
-source rather than once per study. Existing study scripts are frozen records and never flagged.
+source rather than once per study. Study scripts already on the pushed branch at BASE (BEFORE
+for --push) are never read. A script that arrives by merge counts as new, so the push that first
+brings another branch's older studies onto a branch reports them too; the summary line gives the
+full count.
 
 Scope: Python files ADDED under idx-signals/research/ in the range (git diff --diff-filter=A
 --no-renames, so a moved file counts as new), read as committed at HEAD. In those files each call
