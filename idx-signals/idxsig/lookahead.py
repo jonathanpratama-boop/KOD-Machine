@@ -631,25 +631,31 @@ def _scrambled(
 
 
 def _noise(values: pd.Series, count: int, rng: np.random.Generator, missing_share: float):
-    """``count`` seeded values over the column's observed range, in the column's dtype.
+    """``count`` seeded values in the column's dtype, drawn over its observed range.
 
-    A column that can hold a missing value (numpy float, every pandas nullable dtype)
-    also has each drawn value set missing with probability ``missing_share``.
+    Bools are fair coin flips. Numbers are uniform over [min, max] of the column's finite
+    values, with two fallbacks: a constant column draws from [v - 1, v + 1] (an integer
+    column only as far as its dtype's bounds), and a column with no finite value draws
+    from [0, 1]. A column that can hold a missing value (numpy float, every pandas
+    nullable dtype) also has each drawn value set missing with probability
+    ``missing_share``.
     """
     dtype = values.dtype
     numpy_dtype = dtype if isinstance(dtype, np.dtype) else dtype.numpy_dtype
     observed = values.dropna().to_numpy(dtype=numpy_dtype)
     if numpy_dtype.kind == "b":
         noise = rng.integers(0, 2, size=count).astype(bool)
-    elif numpy_dtype.kind in "iu":
-        low, high = (int(observed.min()), int(observed.max())) if observed.size else (0, 1)
-        noise = rng.integers(low, max(high, low + 1), size=count, endpoint=True, dtype=numpy_dtype)
     else:
         finite = observed[np.isfinite(observed)]
-        low, high = (float(finite.min()), float(finite.max())) if finite.size else (0.0, 1.0)
+        low, high = (finite.min().item(), finite.max().item()) if finite.size else (0, 1)
         if low == high:
-            low, high = low - 1.0, high + 1.0
-        noise = rng.uniform(low, high, size=count).astype(numpy_dtype)
+            low, high = low - 1, high + 1
+        if numpy_dtype.kind in "iu":
+            bounds = np.iinfo(numpy_dtype)
+            low, high = max(low, bounds.min), min(high, bounds.max)
+            noise = rng.integers(low, high, size=count, endpoint=True, dtype=numpy_dtype)
+        else:
+            noise = rng.uniform(low, high, size=count).astype(numpy_dtype)
     if not _can_be_missing(dtype):
         return noise
     missing = rng.random(count) < missing_share
@@ -679,12 +685,14 @@ def scramble_check(
 
     ``columns`` defaults to every numpy or pandas nullable numeric or bool column except
     the time column and any decision key column; a column holding numbers in any other
-    dtype is refused, not skipped.
-    Rows, the time column and every unscrambled column (such as text identifiers) are
-    kept, so presence of later rows is unchanged; truncation is the check for that. The
-    report names both sets. A value on a row dated t counts as after the cutoff when
-    t + lag > cutoff (lag zero unless given). Numbers and bools get uniform draws over the
-    column's observed range, in the column's own dtype; a column that can hold a missing
+    dtype is refused, not skipped. Rows, the time column and every unscrambled column
+    (such as text identifiers) are kept, so presence of later rows is unchanged;
+    truncation is the check for that. The report names both sets.
+
+    A value on a row dated t counts as after the cutoff when t + lag > cutoff (lag zero
+    unless given). Numbers and bools get uniform draws over the column's observed range,
+    in the column's own dtype; a constant column's range is widened by one on each side
+    and a column with no finite value draws from [0, 1]. A column that can hold a missing
     value (numpy float, pandas nullable) also gets a ``missing_share`` chance of becoming
     missing. Noise for each (cutoff, column) pair is drawn from
     ``numpy.random.default_rng([seed, cutoff number, column position])``.

@@ -293,6 +293,31 @@ class WhatDecideSees(unittest.TestCase):
             low, high = original.volume.min(), original.volume.max()
             self.assertTrue(seen.volume[after].between(low, high).all())
 
+    def test_constant_and_empty_columns_draw_noise_from_the_stated_fallback_ranges(self):
+        n = len(prices())
+        data = prices().assign(
+            ceiling=np.full(n, 127, dtype=np.int8),
+            floor=np.zeros(n, dtype=np.uint8),
+            level=2.5,
+            blank=np.nan,
+            counts=pd.array([7] * n, dtype="Int64"),
+        )
+        spy = Spy(CLEAN)
+        scramble_check(spy, data, cutoffs=CUTOFFS[:1], **COLUMNS)
+        after = (data.time > pd.Timestamp(CUTOFFS[0])).to_numpy()
+        for column, low, high in (
+            ("ceiling", 126, 127),  # [v - 1, v + 1] cut to the int8 bounds
+            ("floor", 0, 1),  # [v - 1, v + 1] cut to the uint8 bounds
+            ("level", 1.5, 3.5),
+            ("blank", 0.0, 1.0),  # no finite value
+            ("counts", 6, 8),
+        ):
+            with self.subTest(column=column):
+                noise = spy.inputs[2][column][after].dropna()
+                self.assertEqual(spy.inputs[2][column].dtype, data[column].dtype)
+                self.assertTrue(noise.between(low, high).all())
+                self.assertGreater(noise.nunique(), 1)
+
     def test_scramble_noise_is_reproducible_from_its_seed(self):
         first, again, other = Spy(CLEAN), Spy(CLEAN), Spy(CLEAN)
         reports = [
