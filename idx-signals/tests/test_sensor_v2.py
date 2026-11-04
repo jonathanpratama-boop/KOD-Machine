@@ -4,7 +4,6 @@ Each test names the failure it guards against."""
 
 from __future__ import annotations
 
-import json
 import tempfile
 import unittest
 import warnings
@@ -33,7 +32,7 @@ from tests.test_catalysts import (
     subs,
     us_market,
 )
-from tests.test_fam_form4 import D1, filing, line, owner, world
+from tests.test_fam_form4 import D1, filing, line, world
 from tests.test_fam_form4 import NOW as F4_NOW
 
 

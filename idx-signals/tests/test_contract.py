@@ -4,7 +4,6 @@ these check mechanics, not profitability.
 Each test names the failure it guards against."""
 
 import json
-import math
 import unittest
 
 import numpy as np

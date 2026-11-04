@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 from idxsig import idx_events as ie
-from idxsig.execution import ExecConfig, Market
+from idxsig.execution import ExecConfig
 
 from tests.support import random_walk_panel, synthetic_registry
 

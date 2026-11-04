@@ -7,7 +7,6 @@ from pathlib import Path
 from unittest import mock
 from urllib.parse import parse_qs, urlparse
 
-import numpy as np
 import pandas as pd
 
 from idxsig import microstructure as ms

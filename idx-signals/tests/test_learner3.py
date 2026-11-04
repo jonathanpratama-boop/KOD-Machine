@@ -293,7 +293,7 @@ class EndToEnd(unittest.TestCase):
 
     def run_days(self, upto: int) -> list[dict]:
         """Forecast each session's sets at 23:05 UTC of that session, on the records sealed by then."""
-        from datetime import datetime, timezone
+        from datetime import datetime
 
         lrecs = []
         for si in range(upto):

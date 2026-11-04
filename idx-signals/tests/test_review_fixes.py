@@ -16,7 +16,7 @@ import unittest
 import numpy as np
 import pandas as pd
 
-from idxsig import controls, rules
+from idxsig import controls
 from idxsig.backtest import LookaheadError, RunConfig
 from idxsig.execution import STATUS, ExecConfig, execute
 from idxsig.sources.idx_mirror import FIRST_SNAPSHOT

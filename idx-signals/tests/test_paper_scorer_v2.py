@@ -6,7 +6,6 @@ import unittest
 import warnings
 from unittest import mock
 
-import numpy as np
 import pandas as pd
 
 from idxsig import paper
