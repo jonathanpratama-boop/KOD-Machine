@@ -1,9 +1,18 @@
 # Real captured samples
 
-Each file here is the exact output of an outside source, captured by a KOD process and
-copied byte for byte. Nothing is edited, reformatted or invented. A new capture is a new
-file; an existing file is never changed. Tests that need a malformed variant derive it in
-the test from these bytes and say which edit they made.
+Each capture file here is the exact output of an outside source, captured by a KOD process
+and copied byte for byte. Nothing is edited, reformatted or invented. A new capture goes in
+a new file; a committed capture file is not edited. Tests that need a malformed variant
+derive it in the test from these bytes and say which edit they made.
+
+What enforces this, and what does not:
+
+- `.gitattributes` marks `idx-signals/tests/fixtures/real/**` `-text`, so no checkout
+  converts line endings.
+- The chrony capture is guarded by its test (see its section): an edited byte changes the
+  rebuilt evidence identity and the test fails.
+- No commit hook rejects an edit to a file here. `tools/check_append_only.py` does not list
+  this directory in `FROZEN_DIRS`; adding it is a policy change for the owner.
 
 ## `chronyc_tracking_20261104T123000Z.txt`
 
