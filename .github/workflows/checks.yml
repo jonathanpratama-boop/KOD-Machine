@@ -38,6 +38,8 @@ jobs:
             idx-signals/constraints-research.txt
       - name: CI routing regression tests
         run: python3 -m unittest discover -s tools/ci_tests -v
+      - name: KOD watch tests (ops/kod-watch, standard library only, no network)
+        run: python3 -m unittest discover -s ops/kod-watch -v
       - name: Select expensive tests (uncertainty runs tests)
         id: scope
         env:
