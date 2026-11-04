@@ -84,14 +84,14 @@ def trail(
             continue
         out["bars_seen"] += 1
         out["last_present_bar"] = b
-        o, h, l = open_[b], high[b], low[b]
-        if conservative_gaps and gap_before and l <= stop:
-            out.update(reason="STOP_GAP_WORST", exit_price=float(l), exit_bar=b)
+        o, h, lo = open_[b], high[b], low[b]
+        if conservative_gaps and gap_before and lo <= stop:
+            out.update(reason="STOP_GAP_WORST", exit_price=float(lo), exit_bar=b)
             break
         if o <= stop:
             out.update(reason="STOP_GAP", exit_price=float(o), exit_bar=b)
             break
-        if l <= stop:
+        if lo <= stop:
             out.update(reason="STOP", exit_price=float(stop), exit_bar=b)
             break
         gap_before = False

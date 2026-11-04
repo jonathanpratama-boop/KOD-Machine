@@ -202,9 +202,9 @@ class Ladder:
 
 
 # ---------------------------------------------------------------------------------------------- aggregation
-def _boot_log_se(I: np.ndarray, E: np.ndarray, week: np.ndarray, reps: int, rng) -> float:
+def _boot_log_se(ind: np.ndarray, E: np.ndarray, week: np.ndarray, reps: int, rng) -> float:
     weeks, inv = np.unique(week, return_inverse=True)
-    Iw = np.bincount(inv, weights=I, minlength=len(weeks))
+    Iw = np.bincount(inv, weights=ind, minlength=len(weeks))
     Ew = np.bincount(inv, weights=E, minlength=len(weeks))
     counts = rng.multinomial(len(weeks), np.full(len(weeks), 1.0 / len(weeks)), size=reps)
     num, den = counts @ Iw, counts @ Ew
@@ -243,9 +243,9 @@ def aggregate(
                 if ci not in g:
                     continue
                 sel = g[ci].notna().to_numpy()
-                I, E = g[ci].to_numpy(float)[sel], g[ce].to_numpy(float)[sel]
+                ind, E = g[ci].to_numpy(float)[sel], g[ce].to_numpy(float)[sel]
                 n = int(sel.sum())
-                sI, sE = float(I.sum()), float(E.sum())
+                sI, sE = float(ind.sum()), float(E.sum())
                 lift = sI / sE if sE > 0 else float("nan")
                 seed = (
                     proto["bootstrap"]["seed"]
@@ -253,7 +253,7 @@ def aggregate(
                     % 10**6
                 )
                 se = (
-                    _boot_log_se(I, E, week[sel], reps, np.random.default_rng(seed))
+                    _boot_log_se(ind, E, week[sel], reps, np.random.default_rng(seed))
                     if n and sE > 0
                     else float("inf")
                 )
@@ -266,7 +266,7 @@ def aggregate(
                     yE = E[ys].sum()
                     years[str(int(y))] = {
                         "events": int(ys.sum()),
-                        "lift": float(I[ys].sum() / yE) if yE > 0 else None,
+                        "lift": float(ind[ys].sum() / yE) if yE > 0 else None,
                     }
                 auc = g[f"{f}|auc"].to_numpy(float)
                 out.append(
