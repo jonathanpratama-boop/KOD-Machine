@@ -12,8 +12,8 @@ What is checked, on the first-parent line of the range (the commits that landed 
     introduction: the first commit in the range head's history that adds
     tools/check_merge_notes.py (or the commit given as --since-commit). Every other merge is
     checked, also one made after the check went live on a copy of the branch that predates it.
-  * Exempt: a sync merge, whose merged-in commits were all on the branch already at BASE (for
-    example a paper bot's `git pull` after a rejected push).
+  * Exempt: a sync merge, whose merged-in commits were all on the branch already at BASE, as in
+    the merge a `git pull` makes after a rejected push (the paper bots do not merge today).
   * A note is needed when the merged-in diff (first parent to merge) touches any path outside
     PAPER_LOGS and handoff/merges/.
   * The note is added by the merge's own diff (in the merge commit or on the merged branch), or by
@@ -35,10 +35,12 @@ Exit status: 0 pass; 1 a merge lacks a valid note (each problem is a GitHub ::er
 to add or fix); 2 the range or the introduction cannot be resolved, or invalid arguments.
 
 Not claimed: squash merges, rebase merges, fast-forwards and direct pushes create no merge commit
-and are not seen. The answers are the architect's statements: the check verifies that they are
-given, not that they are true, and it does not check that the merge commit message names the
-architect. A failed run records the problem; it does not undo the push. Standard library only: CI
-runs it before installing requirements.
+and are not seen. A sync merge is taken to bring nothing new, so code written in the merge commit
+itself, or a feature branch that merged the default branch in and was pushed as the default
+branch, passes without a note, as a direct push would. The answers are the architect's
+statements: the check verifies that they are given, not that they are true, and it does not
+check that the merge commit message names the architect. A failed run records the problem; it
+does not undo the push. Standard library only: CI runs it before installing requirements.
 """
 
 from __future__ import annotations

@@ -9,8 +9,9 @@ runs on every push to the default branch and fails the `checks` run when such a 
 The architect: the one agent the owner names to approve and perform merges into the default branch
 (`handoff/AGENTS.md`; a change of architect is a dated record in `handoff/decisions/`). The architect
 writes the note before pushing the merge, names themself in Q4, and names themself in the merge commit
-message. Other agents propose work on their own branches and do not merge into the default branch; the
-daily paper bots push their own log appends directly and never merge.
+message. Other agents propose work on their own branches and do not merge into the default branch. The
+daily paper bots push their own log appends directly and do not merge today; if one ever pulls after a
+rejected push, that pull's merge is a sync merge and is exempt (below).
 
 ## Naming and format
 
@@ -37,9 +38,11 @@ push that lacked it: that run stays as the record.
 
 - **Non-merge commits** are never checked, so the daily paper bots' log appends always pass.
 - **Paper logs and notes only:** a merge whose merged-in diff (first parent to merge) touches only the paper
-  and forecast logs (`PAPER_LOGS` in the tool) and `handoff/merges/`.
-- **Sync merges:** every commit the merge brings in was already on the default branch before the push, for
-  example a paper bot's `git pull` after a rejected push.
+  and forecast logs (`PAPER_LOGS` in the tool) and `handoff/merges/`. Only paths that also differ from the
+  default branch before the push count, so a merge made on a stale copy of the branch is not charged for
+  code that reached it earlier, and cannot reuse an earlier merge's note.
+- **Sync merges:** every commit the merge brings in was already on the default branch before the push, as
+  in the merge a `git pull` makes after a rejected push.
 - **Merges made before the check existed:** a merge that is an ancestor of the commit that added
   `tools/check_merge_notes.py`. Any other merge is checked, also one made after the check went live on a
   clone whose default branch predates it.
@@ -57,5 +60,8 @@ ancestor of the introduction then needs a note.
   merge commits.
 - The answers are the architect's statements; the tool checks that they are given, not that they are true.
 - That the merge commit message names the architect is a convention, not checked.
+- A sync merge is taken to bring nothing new. Code written in the merge commit itself (a hand-edited
+  conflict resolution), and the commits of a feature branch that had the default branch merged into it and
+  was then pushed as the default branch, therefore pass without a note, as a direct push or a rebase would.
 - Branch protection on GitHub is outside the repository; a failed run records the problem, it does not
   undo the push.
