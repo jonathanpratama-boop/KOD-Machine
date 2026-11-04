@@ -26,7 +26,9 @@ What is checked, on the first-parent line of the range (the commits that landed 
     TEMPLATE.md; other files there, such as an image a note links to, are not notes.
   * A note is valid when its name is a calendar date plus a lowercase slug, and each of Q1..Q6 has
     exactly one "Answer:" line (yes, no or n.a.) and one filled "Evidence:" line; Q4 answers yes
-    and has one "Architect:" line. Every note offered for a merge is validated.
+    and has one "Architect:" line. A question starts at a line that begins with its label, as a
+    Markdown heading ("## Q1.") or plain ("Q1."); any other heading ends it. Every note offered
+    for a merge is validated.
 
 Exit status: 0 pass; 1 a merge lacks a valid note (each problem is a GitHub ::error naming the file
 to add or fix); 2 the range or the introduction cannot be resolved, or invalid arguments.
@@ -67,7 +69,7 @@ QUESTIONS = (
     "Does it alert the owner when it breaks?",
 )
 ANSWERS = ("yes", "no", "n.a.")
-QUESTION = re.compile(r"#{1,6}\s+Q(\d+)(?!\w)")
+QUESTION = re.compile(r"(?:#{1,6}\s+)?Q(\d+)(?!\w)")
 FIELD = re.compile(r"(Answer|Architect|Evidence):(.*)")
 PLACEHOLDER = re.compile(r"<.*>")
 
@@ -97,20 +99,21 @@ def note_problems(text: str) -> list[str]:
     problems = []
     current = None
     for line in text.splitlines():
-        if line.startswith("#"):
-            current = None
-            match = QUESTION.match(line)
-            if match is None:
-                continue
-            number = int(match.group(1))
-            if not 1 <= number <= len(QUESTIONS):
-                problems.append(f"Q{number} is not one of Q1..Q6")
-            elif number in sections:
-                problems.append(f"Q{number} appears more than once")
-            else:
-                current = sections[number] = []
-        elif current is not None and line.strip():
-            current.append(line.strip())
+        match = QUESTION.match(line)
+        if match is None:
+            if line.startswith("#"):
+                current = None  # any other heading ends the question
+            elif current is not None and line.strip():
+                current.append(line.strip())
+            continue
+        current = None
+        number = int(match.group(1))
+        if not 1 <= number <= len(QUESTIONS):
+            problems.append(f"Q{number} is not one of Q1..Q6")
+        elif number in sections:
+            problems.append(f"Q{number} appears more than once")
+        else:
+            current = sections[number] = []
     for number, question in enumerate(QUESTIONS, 1):
         if number not in sections:
             problems.append(f"Q{number} is missing ({question})")

@@ -111,6 +111,15 @@ class NoteFormatTests(unittest.TestCase):
         text = filled().replace("## Q6.", "### Q6:") + "\n## Notes\nAnything, any length.\n"
         self.assertEqual(notes.note_problems(text), [])
 
+    def test_plain_q_labels_mark_questions_as_headings_do(self):
+        plain = re.sub(r"(?m)^## (Q\d)", r"\1", filled())
+        self.assertIn("\nQ1. Were the tests written by a different agent", plain)
+        self.assertEqual(notes.note_problems(plain), [])
+        self.assertEqual(
+            notes.note_problems(plain.replace("Answer: n.a.", "Answer: maybe", 1)),
+            ["Q1: Answer: 'maybe' is not one of yes, no, n.a."],
+        )
+
     def test_note_names_carry_a_calendar_date_and_a_lowercase_slug(self):
         self.assertIsNone(
             notes.name_problem("handoff/merges/2026-11-04-claude-hopeful-hypatia-ktzpog.md")

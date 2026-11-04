@@ -21,8 +21,10 @@ daily paper bots push their own log appends directly and never merge.
 
 Copy `TEMPLATE.md` and replace every placeholder. Each of Q1 to Q6 keeps exactly one `Answer:` line (`yes`,
 `no` or `n.a.`) and one `Evidence:` line of one sentence. Q4 also keeps one `Architect:` line and must
-answer `yes`: a merge the architect did not approve does not belong on the default branch. Other lines
-inside a question are rejected; free text may follow under a later heading such as `## Notes`.
+answer `yes`: a merge the architect did not approve does not belong on the default branch. A question
+starts at a line that begins with its label, as a heading (`## Q1.`) or plain (`Q1.`). Other lines inside
+a question are rejected; free text may follow under a later heading such as `## Notes`, where no line may
+begin with a label such as `Q2`.
 
 ## Where the note goes
 
