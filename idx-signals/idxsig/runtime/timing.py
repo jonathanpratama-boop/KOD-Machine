@@ -18,6 +18,7 @@ from uuid import uuid4
 from ..timing_capture import append_attempt, make_attempt, read_attempts, summarize
 from ..timing_capture import verify as verify_attempts
 from .data import parse_time, utc_text
+from .clock import PARSER_VERSION, parse_tracking
 from .storage import atomic_json, digest, immutable_json, locked, read_json
 
 BOARD_SCHEMA = "KOD_TIMING_BOARD_V1"
@@ -44,6 +45,7 @@ def clock_observation(root, *, clock=now, runner=subprocess.run):
             [executable, "-c", "tracking"], capture_output=True, text=True, timeout=2, check=False
         )
         evidence = {
+            "parser_version": PARSER_VERSION,
             "observed_at": clock(),
             "command": "chronyc -c tracking",
             "returncode": process.returncode,
@@ -53,20 +55,14 @@ def clock_observation(root, *, clock=now, runner=subprocess.run):
         identity = "clock_" + digest(evidence)
         with locked(root):
             immutable_json(Path(root) / "timing" / "clocks" / (identity + ".json"), evidence)
-        fields = process.stdout.strip().split(",")
-        # chronyc CSV: reference ID,stratum,reference time,system offset,...,leap.
-        from decimal import Decimal
-
-        offset = Decimal(fields[3]) if len(fields) >= 13 else None
-        if (
-            process.returncode == 0
-            and offset is not None
-            and offset.is_finite()
-            and fields[-1].strip() == "Normal"
-        ):
+        try:
+            measurement = parse_tracking(evidence["stdout"], evidence["returncode"])
+        except ValueError:
+            measurement = None
+        if measurement is not None:
             return {
                 "status": "MEASURED_EXTERNAL",
-                "offset_seconds": str(offset),
+                "offset_seconds": measurement["system_time_offset_seconds"],
                 "observed_at": evidence["observed_at"],
                 "evidence_id": identity,
             }

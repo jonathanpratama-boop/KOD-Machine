@@ -8,6 +8,7 @@ from pathlib import Path
 from .coordinator import run_once, verify, status
 from .demo import demo
 from .collect import PublicDataUnavailable
+from . import component_commands
 
 
 def main(argv=None):
@@ -16,6 +17,7 @@ def main(argv=None):
         "--root", type=Path, default=Path(__file__).resolve().parents[3] / "runtime" / "kod"
     )
     commands = parser.add_subparsers(dest="command", required=True)
+    component_commands.add_parsers(commands)
     for name in ("demo", "verify", "status"):
         commands.add_parser(name)
     capture = commands.add_parser(
@@ -72,7 +74,9 @@ def main(argv=None):
     assess.add_argument("--assessment", type=Path, required=True)
     args = parser.parse_args(argv)
     try:
-        if args.command == "capture":
+        if args.command in component_commands.COMMANDS:
+            result = component_commands.run(args)
+        elif args.command == "capture":
             from .capture import capture
 
             result = capture(
@@ -140,8 +144,15 @@ def main(argv=None):
         else:
             result = (verify if args.command == "verify" else status)(args.root)
         print(json.dumps(result, sort_keys=True, allow_nan=False))
-        return 0
-    except (ValueError, OSError, KeyError, PublicDataUnavailable) as exc:
+        return component_commands.exit_status(result)
+    except (
+        ValueError,
+        OSError,
+        KeyError,
+        TypeError,
+        ArithmeticError,
+        PublicDataUnavailable,
+    ) as exc:
         print(json.dumps({"ok": False, "status": "BLOCKED", "error": str(exc)}), file=sys.stderr)
         return 1
 

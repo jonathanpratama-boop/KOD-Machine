@@ -8,12 +8,12 @@ objects. External legacy identifiers remain declarations with explicit coverage.
 from __future__ import annotations
 
 from collections import Counter
-from decimal import Decimal
 import hashlib
 from pathlib import Path, PurePosixPath
 import re
 
 from .data import parse_time
+from .clock import assess_clock
 from .storage import canonical, digest, read_json
 
 SCHEMA = "KOD_TIMING_LINKED_EVIDENCE_V1"
@@ -50,6 +50,30 @@ def _generated(value, prefix: str) -> bool:
     if not HEX.fullmatch(value[len(prefix) :]):
         raise ValueError("malformed generated evidence identifier")
     return True
+
+
+def assess_retained_clock(root, row: dict) -> dict:
+    """Read one clock's verified original bytes and assess them without writes."""
+    root = Path(root).resolve()
+    clock = row.get("clock", {})
+    clock_id = clock.get("evidence_id")
+    if not _generated(clock_id, "clock_"):
+        return {
+            "status": "UNKNOWN",
+            "original_offset_seconds": clock.get("offset_seconds"),
+            "original_claim_valid": False,
+            "system_time_offset_seconds": None,
+            "conditional_error_bound_seconds": None,
+            "reason": "no locally retained clock measurement",
+        }
+    value = _object(root, f"timing/clocks/{clock_id}.json")
+    if "clock_" + digest(value) != clock_id or value.get("observed_at") != clock.get("observed_at"):
+        raise ValueError("clock hash or observation time mismatch")
+    if parse_time(value["observed_at"]) > parse_time(row["recorded_at"]):
+        raise ValueError("clock observation is after retained attempt")
+    if value.get("command") != "chronyc -c tracking":
+        raise ValueError("unsupported local clock measurement")
+    return {**assess_clock(value, clock), "evidence_id": clock_id}
 
 
 def verify_linked_evidence(root, rows: list[dict]) -> dict:
@@ -158,27 +182,17 @@ def verify_linked_evidence(root, rows: list[dict]) -> dict:
         if isinstance(clock_id, str) and clock_id.startswith("clock_"):
 
             def clock_evidence():
-                _generated(clock_id, "clock_")
-                value = _object(root, f"timing/clocks/{clock_id}.json")
-                if "clock_" + digest(value) != clock_id or value.get("observed_at") != clock.get(
-                    "observed_at"
-                ):
-                    raise ValueError("clock hash or observation time mismatch")
-                if parse_time(value["observed_at"]) > parse_time(row["recorded_at"]):
-                    raise ValueError("clock observation is after retained attempt")
-                if value.get("command") != "chronyc -c tracking":
-                    raise ValueError("unsupported local clock measurement")
-                if clock.get("status") == "MEASURED_EXTERNAL":
-                    fields = value["stdout"].strip().split(",")
-                    if (
-                        value.get("returncode") != 0
-                        or len(fields) < 13
-                        or fields[-1].strip() != "Normal"
-                        or not Decimal(fields[3]).is_finite()
-                        or Decimal(fields[3]) != Decimal(clock["offset_seconds"])
-                    ):
-                        raise ValueError("clock measurement differs from retained raw output")
-                return value
+                assessment = assess_retained_clock(root, row)
+                result(
+                    "clock_measurement",
+                    clock_id,
+                    "VERIFIED" if assessment["original_claim_valid"] else "DECLARED",
+                    assessment["reason"],
+                    attempt_id=identity,
+                    required=False,
+                    assessment=assessment,
+                )
+                return assessment
 
             check("clock", clock_id, clock_evidence, identity)
         elif clock_id is not None:
