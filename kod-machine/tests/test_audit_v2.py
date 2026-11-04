@@ -18,7 +18,6 @@ from datetime import timedelta
 from pathlib import Path
 from unittest import mock
 
-from kod import evidence as ev
 from kod.anchor import GitAnchor
 from kod.cli import open_and_evaluate
 from kod.hashing import fmt_ts, sha256_obj
@@ -27,14 +26,12 @@ from kod.remote import (
     LATE,
     MISMATCH,
     UNVERIFIED,
-    VERIFIED,
     GitHubActionsClient,
     RemoteUnavailable,
     repository_from_git,
 )
-from kod.score import build_report
 from kod.verify import AUTHORITATIVE, calibration_eligibility, verify
-from tests.support import evidence_meta, prospective_card
+from tests.support import evidence_meta
 from tests.test_hardening import OUTCOME, LabTest
 
 KOD_ROOT = Path(__file__).resolve().parents[1]

@@ -8,7 +8,6 @@
 
 import json
 import sqlite3
-import tempfile
 import unittest
 from datetime import timedelta
 from pathlib import Path
@@ -18,8 +17,7 @@ from kod.cli import load_seed, open_and_evaluate
 from kod.hashing import fmt_ts
 from kod.ledger import LedgerError
 from kod.score import build_report
-from kod.timestamp import Stamp
-from tests.support import FakeTimestamper, Lab, prospective_card
+from tests.support import FakeTimestamper
 from tests.test_hardening import SEED, LabTest
 
 

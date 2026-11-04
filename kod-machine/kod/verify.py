@@ -19,7 +19,7 @@ import json
 from . import evidence as ev
 from .anchor import REGISTRY_FILES, GitAnchor, anchor_line
 from .detectors import RULE_VERSION, evaluate
-from .hashing import canonical, parse_ts, sha256_bytes, sha256_obj, sha256_text
+from .hashing import parse_ts, sha256_bytes, sha256_obj, sha256_text
 from .ledger import (
     CARD_HASH_VERSION,
     HORIZONS,
