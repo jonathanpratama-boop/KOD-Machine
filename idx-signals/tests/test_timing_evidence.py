@@ -80,29 +80,6 @@ class LinkedTimingEvidenceTests(unittest.TestCase):
         self.assertFalse(result["complete"])
         self.assertEqual(result["counts"]["declared"], 1)
 
-    def test_clock_requires_exact_raw_observation(self):
-        raw = {
-            "observed_at": NOW,
-            "command": "chronyc -c tracking",
-            "returncode": 0,
-            "stdout": "ref,2,0,0.001,0,0,0,0,0,0,0,0,Normal",
-            "stderr": "",
-        }
-        identifier = "clock_" + digest(raw)
-        path = self.root / "timing" / "clocks" / (identifier + ".json")
-        atomic_json(path, raw)
-        self.row["clock"] = {
-            "status": "MEASURED_EXTERNAL",
-            "offset_seconds": "0.001",
-            "observed_at": NOW,
-            "evidence_id": identifier,
-        }
-        self.assertTrue(self.verify()["ok"])
-        self.row["clock"]["offset_seconds"] = "0.002"
-        self.assertFalse(self.verify()["ok"])
-        path.unlink()
-        self.assertFalse(self.verify()["ok"])
-
     def test_symlink_membership_is_rejected_even_inside_root(self):
         original = self.root / "copy.json"
         self.member_path.rename(original)

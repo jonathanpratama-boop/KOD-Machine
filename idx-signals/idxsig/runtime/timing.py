@@ -17,6 +17,7 @@ from uuid import uuid4
 
 from ..timing_capture import append_attempt, make_attempt, read_attempts, summarize
 from ..timing_capture import verify as verify_attempts
+from .chrony import CHRONY_COMMAND, CHRONY_TRACKING_CSV_V2, read_tracking_v2
 from .data import parse_time, utc_text
 from .storage import atomic_json, digest, immutable_json, locked, read_json
 
@@ -32,7 +33,9 @@ def clock_observation(root, *, clock=now, runner=subprocess.run):
     """Read an installed chrony clock measurement; never start a time service.
 
     Absence of chrony is UNKNOWN, not a zero offset. The raw local observation is
-    retained. Exchange server time is a different clock and is never called NTP.
+    retained with the parser version that reads it (CHRONY_TRACKING_CSV_V2); the
+    attempt keeps the four-field clock shape of the frozen v1 attempt schema.
+    Exchange server time is a different clock and is never called NTP.
     """
     at = clock()
     result = {"status": "UNKNOWN", "offset_seconds": None, "observed_at": at, "evidence_id": None}
@@ -45,7 +48,8 @@ def clock_observation(root, *, clock=now, runner=subprocess.run):
         )
         evidence = {
             "observed_at": clock(),
-            "command": "chronyc -c tracking",
+            "command": CHRONY_COMMAND,
+            "parser_version": CHRONY_TRACKING_CSV_V2,
             "returncode": process.returncode,
             "stdout": process.stdout[:16384],
             "stderr": process.stderr[:16384],
@@ -53,29 +57,17 @@ def clock_observation(root, *, clock=now, runner=subprocess.run):
         identity = "clock_" + digest(evidence)
         with locked(root):
             immutable_json(Path(root) / "timing" / "clocks" / (identity + ".json"), evidence)
-        fields = process.stdout.strip().split(",")
-        # chronyc CSV: reference ID,stratum,reference time,system offset,...,leap.
-        from decimal import Decimal
-
-        offset = Decimal(fields[3]) if len(fields) >= 13 else None
-        if (
-            process.returncode == 0
-            and offset is not None
-            and offset.is_finite()
-            and fields[-1].strip() == "Normal"
-        ):
-            return {
-                "status": "MEASURED_EXTERNAL",
-                "offset_seconds": str(offset),
-                "observed_at": evidence["observed_at"],
-                "evidence_id": identity,
-            }
-        result.update(
-            status="MEASUREMENT_FAILED", observed_at=evidence["observed_at"], evidence_id=identity
-        )
-    except (OSError, subprocess.SubprocessError, ValueError, ArithmeticError):
+    except (OSError, subprocess.SubprocessError, ValueError):
         result.update(status="MEASUREMENT_FAILED", observed_at=clock())
-    return result
+        return result
+    # The retained (bounded) text is parsed, so verification can repeat this exactly.
+    reading = read_tracking_v2(evidence["returncode"], evidence["stdout"])
+    return {
+        "status": reading["status"],
+        "offset_seconds": reading["offset_seconds"],
+        "observed_at": evidence["observed_at"],
+        "evidence_id": identity,
+    }
 
 
 class Attempt:
