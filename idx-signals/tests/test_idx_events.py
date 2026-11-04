@@ -113,7 +113,6 @@ class RunEventsTests(unittest.TestCase):
         self.assertGreater(
             prep.evaluable[:, 0].sum(), 20
         )  # names with 80 sessions of history already
-        ev = self.events([("S030", 85)])
         res = ie.run_events(
             prep,
             pd.DataFrame([{"ticker": "S030", "posted_wib": f"{dates[85]}T16:00:00+07:00"}]),

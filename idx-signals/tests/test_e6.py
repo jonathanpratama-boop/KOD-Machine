@@ -152,7 +152,7 @@ class Causality(unittest.TestCase):
 class Measurement(unittest.TestCase):
     def test_planted_absorption_is_seen_and_the_placebo_does_not_see_it(self):
         rng = np.random.default_rng(3)
-        n, days = 1, 80
+        days = 80
         hours = days * 24
         net_sign = rng.choice([-1.0, 1.0], size=hours)
         size = np.exp(rng.normal(0, 0.3, hours))
