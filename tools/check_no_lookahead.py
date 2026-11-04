@@ -2,7 +2,8 @@
 """Run KOD's look-ahead check on a study and print one JSON verdict.
 
 compare  Two decision CSV files written by a study: one from the full data, one from the
-         same study on data cut at --cutoff. Cells are compared as the text written.
+         same study on data cut at --cutoff. A cell that reads as a decimal number is
+         compared by exact value (3 equals 3.0); any other cell as the text written.
 module   A Python file defining decide(data) -> DataFrame, and its input as CSV: runs the
          truncation and scramble checks of idxsig.lookahead at every --cutoff. Each run
          executes a fresh copy of the file.
@@ -19,6 +20,7 @@ from __future__ import annotations
 
 import argparse
 import contextlib
+from decimal import Decimal
 import hashlib
 import importlib.util
 import json
@@ -32,6 +34,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 EXIT_STATUS = {"PASS": 0, "LEAK": 1, "ERROR": 2}
 BARE_NUMBER = re.compile(r"[+-]?(\d+\.?\d*|\.\d+)")
+DECIMAL = re.compile(BARE_NUMBER.pattern + r"([eE][+-]?\d+)?")  # finite: no nan, no inf
 
 
 class UsageError(ValueError):
@@ -107,10 +110,42 @@ def parse_lag(text: str) -> tuple[str, pd.Timedelta]:
         raise UsageError(f"--lag {text!r} has an unreadable duration") from exc
 
 
+class DecimalCell(Decimal):
+    """A cell written as a decimal number: compared by exact value, shown as written.
+
+    3, 3.0 and 3e0 are equal, so an integer column that pandas wrote as floats in one
+    file (a missing value elsewhere in the column) still agrees. No rounding is applied:
+    9007199254740993 and 9007199254740992, equal as floats, differ.
+    """
+
+    def __new__(cls, text: str):
+        cell = super().__new__(cls, text)
+        cell.text = text
+        return cell
+
+    def __str__(self) -> str:
+        return self.text
+
+
+def read_decisions(path: Path, time_column: str, key_columns: list[str]) -> pd.DataFrame:
+    """Only an empty cell is missing; text such as NA or nan is compared as written.
+
+    Value cells that read as decimal numbers become DecimalCell; the time and key columns
+    stay text, so keys 1 and 1.0 remain different decisions.
+    """
+    table = read_csv(path, dtype=str, keep_default_na=False, na_values=[""])
+    for column in table.columns:
+        if column != time_column and column not in key_columns:
+            table[column] = table[column].map(
+                lambda cell: DecimalCell(cell) if DECIMAL.fullmatch(cell) else cell,
+                na_action="ignore",
+            )
+    return table
+
+
 def run_compare(args: argparse.Namespace, lookahead) -> list:
-    """Only an empty cell is missing; text such as NA or nan is compared as written."""
     reference, candidate = (
-        read_csv(Path(path), dtype=str, keep_default_na=False, na_values=[""])
+        read_decisions(Path(path), args.time_column, args.key_columns)
         for path in (args.reference, args.candidate)
     )
     report = lookahead.compare_decisions(

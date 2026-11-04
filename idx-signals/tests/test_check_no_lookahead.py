@@ -14,6 +14,7 @@ import tempfile
 import unittest
 from unittest import mock
 
+import numpy as np
 import pandas as pd
 
 from idxsig import lookahead
@@ -95,22 +96,49 @@ class CheckNoLookaheadCli(unittest.TestCase):
         )
         self.assertEqual(leak["key"], ["2026-01-24T00:00:00Z", "A"])
 
-    def test_compare_reads_cells_as_the_text_written(self):
+    def test_compare_reads_numbers_by_exact_value_and_other_cells_as_written(self):
         rows = {"time": ["2026-01-20T00:00:00Z"], "asset": ["A"]}
-        reference = self.write("a.csv", pd.DataFrame({**rows, "score": ["1.0"], "note": ["NA"]}))
-        candidate = self.write("b.csv", pd.DataFrame({**rows, "score": ["1"], "note": ["NA"]}))
-        status, verdict, _ = self.run_tool(
-            "compare", reference, candidate, "--cutoff", CUTOFFS[1], *DECISIONS
+
+        def compare(reference: dict, candidate: dict) -> tuple[int, dict, str]:
+            a = self.write("a.csv", pd.DataFrame({**rows, **reference}))
+            b = self.write("b.csv", pd.DataFrame({**rows, **candidate}))
+            return self.run_tool("compare", a, b, "--cutoff", CUTOFFS[1], *DECISIONS)
+
+        status, verdict, _ = compare(
+            {"score": ["1.0"], "size": ["1e3"], "note": ["NA"]},
+            {"score": ["1"], "size": ["1000"], "note": ["NA"]},
         )
-        leak = verdict["checks"][0]["first_leak"]
-        self.assertEqual((status, leak["column"]), (1, "score"))
-        self.assertEqual((leak["reference"], leak["candidate"]), ("1.0", "1"))
+        self.assertEqual((status, verdict["verdict"]), (0, "PASS"))
+        for reference, candidate in (
+            ("9007199254740993", "9007199254740992"),  # equal as floats, not as written
+            ("NA", "nan"),
+            ("1", "one"),
+        ):
+            with self.subTest(reference=reference, candidate=candidate):
+                status, verdict, _ = compare({"score": [reference]}, {"score": [candidate]})
+                leak = verdict["checks"][0]["first_leak"]
+                self.assertEqual((status, leak["column"]), (1, "score"))
+                self.assertEqual((leak["reference"], leak["candidate"]), (reference, candidate))
         keyless = self.write("c.csv", "time,asset,score\n2026-01-20T00:00:00Z,,1\n")
         status, verdict, _ = self.run_tool(
             "compare", keyless, keyless, "--cutoff", CUTOFFS[1], *DECISIONS
         )
         self.assertEqual((status, verdict["error_type"]), (2, "LookaheadCheckError"))
         self.assertIn("key column 'asset' is missing at row 0", verdict["error"])
+
+    def test_compare_passes_an_integer_column_that_pandas_wrote_as_floats_in_one_file(self):
+        times = pd.date_range("2026-01-01", periods=40, freq="D", tz="UTC")
+        full = pd.DataFrame({"time": times, "asset": "A", "trades": np.arange(40.0)})
+        full.loc[full.time == pd.Timestamp("2026-02-01", tz="UTC"), "trades"] = np.nan
+        cut = full[full.time <= pd.Timestamp(CUTOFFS[1])].astype({"trades": int})
+        reference, candidate = self.write("full.csv", full), self.write("cut.csv", cut)
+        self.assertIn(",3.0\n", Path(reference).read_text())  # the later NaN made it float
+        self.assertIn(",3\n", Path(candidate).read_text())
+        status, verdict, _ = self.run_tool(
+            "compare", reference, candidate, "--cutoff", CUTOFFS[1], *DECISIONS
+        )
+        self.assertEqual((status, verdict["verdict"]), (0, "PASS"))
+        self.assertEqual(verdict["checks"][0]["cutoffs"][0]["decisions_compared"], 25)
 
     def test_module_runs_both_checks_on_a_leaky_study_and_its_clean_twin(self):
         for centre, status, expected in ((True, 1, "LEAK"), (False, 0, "PASS")):

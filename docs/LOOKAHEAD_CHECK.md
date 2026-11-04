@@ -77,16 +77,22 @@ defaults. A study whose own loader parses differently should call the library fr
 test. While the study runs, `sys.argv` holds only the study's path and its `print` output
 goes to stderr, so stdout carries the JSON verdict alone. Every run executes a fresh copy
 of the study file, so a statistic cached in its globals on the first call cannot carry the
-full data into a cut run; state kept in modules it imports is shared and is not reset. Compare mode reads every cell as the text written, so both files must come from the
-same code; only an empty cell counts as missing. Scramble options are `--seed` (default 0),
-`--scramble-columns` and `--missing-share` (default 0.25). By default scramble reaches
-every numpy or pandas nullable numeric or bool column except the time column and the
-decision key columns (an integer asset id stays as it is), so the canonical panel's
-`Int64` prices are scrambled; a column holding numbers in any other dtype (pyarrow,
-sparse, complex) is refused rather than skipped. The report lists
-`scrambled_columns` and `unscrambled_columns`, which together name every data column.
-The tool prints one JSON verdict and exits 0 for PASS, 1 for LEAK and 2 when the check
-could not run.
+full data into a cut run; state kept in modules it imports is shared and is not reset.
+
+Compare mode compares a value cell that reads as a decimal number by its exact value, with
+no rounding: an integer column that pandas wrote as `3.0` in the full-data file (because a
+later row is missing) and as `3` in the cut file still agrees. Every other cell, and every
+time and key cell, is compared as the text written, so both files must come from the same
+code; only an empty cell counts as missing.
+
+Scramble options are `--seed` (default 0), `--scramble-columns` and `--missing-share`
+(default 0.25). By default scramble reaches every numpy or pandas nullable numeric or bool
+column except the time column and the decision key columns (an integer asset id stays as
+it is), so the canonical panel's `Int64` prices are scrambled; a column holding numbers in
+any other dtype (pyarrow, sparse, complex) is refused rather than skipped. The report lists
+`scrambled_columns` and `unscrambled_columns`, which together name every data column. The
+tool prints one JSON verdict and exits 0 for PASS, 1 for LEAK and 2 when the check could
+not run.
 
 ## Reading a verdict
 
