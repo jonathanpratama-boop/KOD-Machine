@@ -1342,11 +1342,12 @@ def main(argv=None) -> int:
         import os
         from datetime import datetime, timezone
 
-        from . import paper, paper_account as acct, paper_account_report
+        from . import paper, paper_account as acct, paper_account_report, paper_input_health
 
         trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "")
         if args.cmd == "paper-account-report":
-            path = paper_account_report.write_report()
+            path = paper_account_report.write_report(input_health=paper_input_health.load(
+                sec_contact_configured=paper_input_health.sec_configured(os.environ)))
             print(path.read_text(encoding="utf-8"))
             if args.commit:
                 print(paper.commit_and_push([path], "paper account: report", trailer))
@@ -1369,6 +1370,11 @@ def main(argv=None) -> int:
                 print(f"  {r['arm']} {r['ticker']}: {r['type']} {what}")
         if not recs:
             print("paper account: nothing new; nothing recorded")
+            health = paper_input_health.load(sec_contact_configured=paper_input_health.sec_configured(os.environ))
+            path = paper_account_report.write_report(input_health=health)
+            print(paper_input_health.banner(health))
+            if args.commit:
+                print(paper.commit_and_push([path], "paper account: input health report", trailer))
             return 0
         sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "kod-machine"))
         from kod.timestamp import RFC3161Timestamper
@@ -1378,7 +1384,8 @@ def main(argv=None) -> int:
         except paper.ReceiptPendingError as exc:
             stored = exc.records
             print(f"warning: {exc}")
-        report = paper_account_report.write_report()
+        report = paper_account_report.write_report(input_health=paper_input_health.load(
+            sec_contact_configured=paper_input_health.sec_configured(os.environ)))
         if args.commit:
             tokens = [
                 paper.TOKENS / f"{r['record_hash']}.{a}.tsr"
@@ -1403,11 +1410,12 @@ def main(argv=None) -> int:
         import os
         from datetime import datetime, timezone
 
-        from . import paper, paper_book as book
+        from . import paper, paper_book as book, paper_book_report, paper_input_health
 
         trailer = os.environ.get("IDXSIG_COMMIT_TRAILER", "")
         if args.cmd == "paper-book-report":
-            path = book.write_report()
+            path = paper_book_report.write_report(input_health=paper_input_health.load(
+                sec_contact_configured=paper_input_health.sec_configured(os.environ)))
             print(path.read_text(encoding="utf-8"))
             if args.commit:
                 print(paper.commit_and_push([path], "paper book: report", trailer))
@@ -1436,6 +1444,11 @@ def main(argv=None) -> int:
             print(f"  recorded: {args.decision} {recs[0]['ticker']} ({recs[0]['set_id']})")
         if not recs:
             print("paper book: nothing new; nothing recorded")
+            health = paper_input_health.load(sec_contact_configured=paper_input_health.sec_configured(os.environ))
+            path = paper_book_report.write_report(input_health=health)
+            print(paper_input_health.banner(health))
+            if args.commit:
+                print(paper.commit_and_push([path], "paper book: input health report", trailer))
             return 0
         sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "kod-machine"))
         from kod.timestamp import RFC3161Timestamper
@@ -1445,7 +1458,8 @@ def main(argv=None) -> int:
         except paper.ReceiptPendingError as exc:
             stored = exc.records
             print(f"warning: {exc}")
-        report = book.write_report()
+        report = paper_book_report.write_report(input_health=paper_input_health.load(
+            sec_contact_configured=paper_input_health.sec_configured(os.environ)))
         if args.commit:
             tokens = [
                 paper.TOKENS / f"{r['record_hash']}.{a}.tsr"
@@ -1689,6 +1703,12 @@ def main(argv=None) -> int:
         for n in notes:
             print("  " + n)
         if not recs:
+            if notes:
+                print(
+                    "v2.4 forecast blocked: awaiting US sets could not be processed; "
+                    "see the retained reasons above. No forecast recorded."
+                )
+                return 2
             print(
                 "no US speculation set awaiting a v2.4 forecast before its cutoff; nothing recorded"
             )
@@ -2045,3 +2065,4 @@ def _micro_sidecar(scan_id: str) -> list:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
