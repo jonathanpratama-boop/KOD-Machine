@@ -1,0 +1,431 @@
+{
+  "provenance": {
+    "repository": "jonathanpratama-boop/KOD-Machine",
+    "commit": "4382c6253f1d87d3c7f178d6a27c75962968219d",
+    "call_path": "idx-signals/research/LLM_ARM_v1/calls_US_20261104.jsonl",
+    "register_path": "idx-signals/paper/speculations.jsonl",
+    "captured_at": "2026-11-04T23:57:20.002094Z",
+    "scope": "Exact selected records; independently verifiable full-ledger receipt not claimed.",
+    "call_file_sha256": "281dd7823a68fd24b1547180872b56ee98884d265e35d76a01079b0785f4aad2",
+    "register_file_sha256": "0fd59b87834704eaddffe80b060122c7c448e179d2f8251a378d3738ffd7d075"
+  },
+  "calls": [
+    {
+      "call_id": "LLM1-US-2026-11-04-TREE",
+      "set": "SPEC-SCAN-US-2026-11-04-G2_RET30-TREE",
+      "ticker": "TREE",
+      "market": "US",
+      "signal_session": "2026-11-04",
+      "called_at": "2026-11-04T23:01Z",
+      "call": "ABSTAIN",
+      "p": {
+        "RUN30_5": 0.12,
+        "FADE10_5": 0.3,
+        "BEATS_TWINS_5": 0.5
+      },
+      "prior": {
+        "RUN30_5": 0.1537,
+        "FADE10_5": 0.403,
+        "BEATS_TWINS_5": 0.5
+      },
+      "kod_numeric": "PASS (no buy); v2.4 forecast not sealed (no SEC contact)",
+      "agrees_with_kod": true,
+      "reasons": [
+        "LendingTree reported Q3 on Nov 3: revenue +12%, full-year revenue and AEBITDA guidance raised, first buyback since 1Q22 (GAAP loss from a goodwill charge)",
+        "a fundamental earnings re-rating in a mid-cap: post-earnings drift argues against a fade"
+      ],
+      "sources": [
+        "https://www.sec.gov/Archives/edgar/data/0001434621/000162828026069534/tree-93026xer.htm"
+      ],
+      "note": "little same-day news found; calls lean on public history, company type and the base rate"
+    }
+  ],
+  "register": [
+    {
+      "cone": [
+        {
+          "id": "RUN30_5",
+          "prior": 0.15370018975332067,
+          "prior_source": "E30 precision: research/E1/validation/result.json sha256 388e8111..., research/E2/US/validation/result.json d7f05fcc..., research/E2/CRYPTO/validation/result.json 1b8c3bc4...",
+          "resolves_with": "BASE5",
+          "statement": "a close in s+1..s+5 is >= 1.30 x the signal close"
+        },
+        {
+          "id": "FADE10_5",
+          "prior": 0.403,
+          "prior_source": "share of scored trades with net_return <= -0.10 in results/runs/20261009T050040Z_MOONSHOT_E1_D1_v1.1 (n 251), 20261008T115656Z_MOONSHOT_E2_US_D1_v1 (n 536), 20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1 (n 264)",
+          "resolves_with": "BASE5",
+          "statement": "the BASE5 net return is <= -0.10"
+        },
+        {
+          "id": "GAIN0_5",
+          "prior": 0.425,
+          "prior_source": "share of scored trades with net_return > 0 in the same runs",
+          "resolves_with": "BASE5",
+          "statement": "the BASE5 net return is > 0"
+        },
+        {
+          "id": "BEATS_TWINS_5",
+          "prior": 0.5,
+          "prior_source": "the null",
+          "resolves_with": "BASE5",
+          "statement": "the BASE5 net return exceeds the median BASE5 net return of the twins that traded"
+        },
+        {
+          "id": "RUN30_20",
+          "prior": 0.5,
+          "prior_source": "register running base rate (n 0; 0.5 below 20)",
+          "resolves_with": "PATH20",
+          "statement": "a close in s+1..s+20 is >= 1.30 x the signal close"
+        },
+        {
+          "id": "DOUBLE_20",
+          "prior": 0.5,
+          "prior_source": "register running base rate (n 0; 0.5 below 20)",
+          "resolves_with": "PATH20",
+          "statement": "a close in s+1..s+20 is >= 2.00 x the signal close"
+        },
+        {
+          "id": "DOWN10_1",
+          "prior": 0.3125,
+          "prior_source": "register running base rate (n 32; 0.5 below 20)",
+          "resolves_with": "NEXT1",
+          "statement": "the close of s+1 is <= 0.90 x the signal close"
+        },
+        {
+          "id": "UP10_1",
+          "prior": 0.21875,
+          "prior_source": "register running base rate (n 32; 0.5 below 20)",
+          "resolves_with": "NEXT1",
+          "statement": "the close of s+1 is >= 1.10 x the signal close"
+        },
+        {
+          "id": "BEATS_TWINS_1",
+          "prior": 0.5,
+          "prior_source": "the null",
+          "resolves_with": "NEXT1",
+          "statement": "the s+1 close over the signal close exceeds the median of the twins' (at least 3 twins with a bar at s+1)"
+        }
+      ],
+      "decision": "PASS",
+      "decision_id": "SCAN-US-2026-11-04-G2_RET30-TREE",
+      "decision_record_hash": "d8d61e97f993ac009ae0cb71decba65b603f933a815747b351295caa83b6e98f",
+      "detector": {
+        "benchmarks": [
+          "G5_IGNITION_D",
+          "G1_RET20_CLOSEHIGH"
+        ],
+        "module_sha256": "b050c4d37d9104309b32e70a7e81682ee3029da3a6a0654dae6ac41414abb794",
+        "rule_id": "MOONSHOT_E2_US_D1",
+        "selected": "G2_RET30",
+        "version": "v1"
+      },
+      "entry": {
+        "basis": "open",
+        "session": "2026-11-05",
+        "text": "the next session's opening print"
+      },
+      "entry_cutoff": "2026-11-05T13:30:00Z",
+      "features_file": "paper/scans/SCAN-US-2026-11-04-G2_RET30/features.csv.gz",
+      "features_sha256": "33604e1776aaf8096e3a3a52aac6db198cacac3cf4f977998103cc2b1a78d5c2",
+      "market": "US",
+      "plan": "BASE5",
+      "policy": {
+        "policy_id": "PAPER-POLICY-v4",
+        "sha256": "86ff27d305c6aae11556438b51b2cd0fa6a3fd8c8187181734a34d014cd769fd"
+      },
+      "prev_hash": "3caa5bd1c796067a74f830042477ec2c5444e9939abcad8b7982f31786c85d02",
+      "protocol": {
+        "id": "KOD-SPEC-REGISTER-v1.1",
+        "sha256": "b0e9b6d9b533ac963049367827e3ff640f2315622d8635811e54fad2a5e519ec"
+      },
+      "record_hash": "248ac5e019ba091cc616253dea19d5516faa6d5cf7d8e9cc446b17808be996c3",
+      "register": "spec-register-v1.1",
+      "scan_id": "SCAN-US-2026-11-04-G2_RET30",
+      "scan_record_hash": "b04e8dab625a1383c112eaf063c156c32e752db3f36bcf21db87ca854d27e79d",
+      "sealed_at": "2026-11-04T22:57:18Z",
+      "set_id": "SPEC-SCAN-US-2026-11-04-G2_RET30-TREE",
+      "signal": {
+        "adv20_value": 6700360,
+        "close": 38.35,
+        "cpos": 0.849633,
+        "dd60": 0,
+        "high": 39.58,
+        "low": 31.4,
+        "previous": 28.87,
+        "ret1": 0.328368,
+        "ret20": 0.578839,
+        "ret5": 0.446078,
+        "volr": 5.99974,
+        "volume": 1569230
+      },
+      "signal_session": "2026-11-04",
+      "tag": {
+        "earlier_scans": 20,
+        "flags_today": 11,
+        "hot_day": true,
+        "trailing_median": 10
+      },
+      "ticker": "TREE",
+      "twins": [
+        {
+          "adv20_value": 10031800,
+          "band": 3,
+          "close": 39.67,
+          "dd60": -0.0279344,
+          "drawdown_tercile": 2,
+          "liquidity_quintile": 2,
+          "momentum_tercile": 2,
+          "previous": 36.73,
+          "ret20": 0.0681206,
+          "ticker": "ASTH",
+          "volr": 1.74299
+        },
+        {
+          "adv20_value": 7330230,
+          "band": 3,
+          "close": 48.98,
+          "dd60": -0.000204167,
+          "drawdown_tercile": 2,
+          "liquidity_quintile": 2,
+          "momentum_tercile": 2,
+          "previous": 48.63,
+          "ret20": 0.0698995,
+          "ticker": "CHT",
+          "volr": 1.11777
+        },
+        {
+          "adv20_value": 9539580,
+          "band": 3,
+          "close": 67.21,
+          "dd60": -0.0199767,
+          "drawdown_tercile": 2,
+          "liquidity_quintile": 2,
+          "momentum_tercile": 2,
+          "previous": 62.15,
+          "ret20": 0.20751,
+          "ticker": "DOO",
+          "volr": 2.31947
+        },
+        {
+          "adv20_value": 5701760,
+          "band": 3,
+          "close": 39.25,
+          "dd60": 0,
+          "drawdown_tercile": 2,
+          "liquidity_quintile": 2,
+          "momentum_tercile": 2,
+          "previous": 38.47,
+          "ret20": 0.0960625,
+          "ticker": "CPF",
+          "volr": 1.33462
+        },
+        {
+          "adv20_value": 3971530,
+          "band": 3,
+          "close": 45.27,
+          "dd60": 0,
+          "drawdown_tercile": 2,
+          "liquidity_quintile": 2,
+          "momentum_tercile": 2,
+          "previous": 44.37,
+          "ret20": 0.109015,
+          "ticker": "ORRF",
+          "volr": 1.61394
+        }
+      ],
+      "twins_match_level": "band+liq+mom+dd",
+      "twins_seed": 706448956,
+      "type": "SPECULATION_SET",
+      "windows": [
+        "BASE5",
+        "PATH20",
+        "NEXT1"
+      ]
+    },
+    {
+      "candidate": {
+        "status": "TRADED",
+        "trade": {
+          "cost_in": 0.002,
+          "cost_out": 0.002,
+          "entry_basis": "quote",
+          "entry_lag_sessions": 1,
+          "entry_price": 0.02808,
+          "entry_session": "2026-10-28",
+          "exit_reason": "horizon",
+          "exit_session": "2026-11-02",
+          "gross_return": 0.024216524216524205,
+          "mae": -0.2535612535612536,
+          "mfe": 0.024216524216524205,
+          "net_return": 0.02012783549709707,
+          "sessions_held": 5
+        },
+        "units": {
+          "actions": [],
+          "convention": "UNADJUSTED",
+          "evidence": []
+        }
+      },
+      "cone": [
+        {
+          "brier": 0.03406378091076979,
+          "id": "RUN30_5",
+          "outcome": false,
+          "prior": 0.18456375838926176,
+          "twins_graded": 5,
+          "twins_rate": 0
+        },
+        {
+          "brier": 0.261121,
+          "id": "FADE10_5",
+          "outcome": false,
+          "prior": 0.511,
+          "twins_graded": 5,
+          "twins_rate": 0.2
+        },
+        {
+          "brier": 0.4705959999999999,
+          "id": "GAIN0_5",
+          "outcome": true,
+          "prior": 0.314,
+          "twins_graded": 5,
+          "twins_rate": 0
+        },
+        {
+          "brier": 0.25,
+          "id": "BEATS_TWINS_5",
+          "outcome": true,
+          "prior": 0.5,
+          "twins_graded": 5,
+          "twins_rate": 0.6
+        }
+      ],
+      "data": {
+        "manifest": "binance_recent-20261103T002424Z.jsonl",
+        "manifest_sha256": "bd0e0139cf58b87e7a8b928f86799f9b09ffcb8f11372d27c7232d62c3f3e5ba"
+      },
+      "market": "CRYPTO",
+      "paired": {
+        "candidate_net": 0.02012783549709707,
+        "diff": 0.10648655830739814,
+        "twins_mean_net": -0.08635872281030108,
+        "twins_median_net": -0.08347394985589918,
+        "twins_traded": 5
+      },
+      "preprocessing": "causal-close-v2",
+      "prev_hash": "fb6d9d86d2e0191b61c1e66d32dd2abc1f6bc5d600f0ca6e88db364e4b605fca",
+      "protocol": {
+        "id": "KOD-SPEC-REGISTER-v1",
+        "sha256": "c0ec3bbfa9489c6965344131d5638747aec46a92d12bbfdc6b88e6c7fdb56bc8"
+      },
+      "record_hash": "8b4e0e622d322117ab1d0f271141e4f8a904d5aa6f7ea41054f47ed0366b3658",
+      "register": "spec-register-v1.1",
+      "resolved_at": "2026-11-03T00:27:09Z",
+      "resolver": "spec-resolve-v1.1",
+      "set_id": "SPEC-SCAN-CRYPTO-2026-10-27-G2_RET30-HAEDAL",
+      "signal_session": "2026-10-27",
+      "status": "RESOLVED",
+      "ticker": "HAEDAL",
+      "twins": [
+        {
+          "status": "TRADED",
+          "ticker": "MIRA",
+          "trade": {
+            "cost_in": 0.002,
+            "cost_out": 0.002,
+            "entry_basis": "quote",
+            "entry_lag_sessions": 1,
+            "entry_price": 0.0457,
+            "entry_session": "2026-10-28",
+            "exit_reason": "horizon",
+            "exit_session": "2026-11-02",
+            "gross_return": -0.14814004376367607,
+            "mae": -0.14814004376367607,
+            "mfe": -0.021881838074398252,
+            "net_return": -0.15154068231152562,
+            "sessions_held": 5
+          }
+        },
+        {
+          "status": "TRADED",
+          "ticker": "SOMI",
+          "trade": {
+            "cost_in": 0.002,
+            "cost_out": 0.002,
+            "entry_basis": "quote",
+            "entry_lag_sessions": 1,
+            "entry_price": 0.1822,
+            "entry_session": "2026-10-28",
+            "exit_reason": "horizon",
+            "exit_session": "2026-11-02",
+            "gross_return": -0.09110867178924265,
+            "mae": -0.09110867178924265,
+            "mfe": 0.07244785949506038,
+            "net_return": -0.09473698048469481,
+            "sessions_held": 5
+          }
+        },
+        {
+          "status": "TRADED",
+          "ticker": "SHELL",
+          "trade": {
+            "cost_in": 0.002,
+            "cost_out": 0.002,
+            "entry_basis": "quote",
+            "entry_lag_sessions": 1,
+            "entry_price": 0.02375,
+            "entry_session": "2026-10-28",
+            "exit_reason": "horizon",
+            "exit_session": "2026-11-02",
+            "gross_return": -0.022736842105263055,
+            "mae": -0.027368421052631597,
+            "mfe": 0.1553684210526316,
+            "net_return": -0.026638092236579425,
+            "sessions_held": 5
+          }
+        },
+        {
+          "status": "TRADED",
+          "ticker": "LISTA",
+          "trade": {
+            "cost_in": 0.002,
+            "cost_out": 0.002,
+            "entry_basis": "quote",
+            "entry_lag_sessions": 1,
+            "entry_price": 0.0795,
+            "entry_session": "2026-10-28",
+            "exit_reason": "horizon",
+            "exit_session": "2026-11-02",
+            "gross_return": -0.07169811320754715,
+            "mae": -0.07169811320754715,
+            "mfe": 0.0012578616352201255,
+            "net_return": -0.07540390916280637,
+            "sessions_held": 5
+          }
+        },
+        {
+          "status": "TRADED",
+          "ticker": "NEXO",
+          "trade": {
+            "cost_in": 0.002,
+            "cost_out": 0.002,
+            "entry_basis": "quote",
+            "entry_lag_sessions": 1,
+            "entry_price": 0.802,
+            "entry_session": "2026-10-28",
+            "exit_reason": "horizon",
+            "exit_session": "2026-11-02",
+            "gross_return": -0.07980049875311723,
+            "mae": -0.07980049875311723,
+            "mfe": 0,
+            "net_return": -0.08347394985589918,
+            "sessions_held": 5
+          }
+        }
+      ],
+      "type": "RESOLUTION",
+      "window": "BASE5"
+    }
+  ]
+}
