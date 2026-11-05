@@ -431,6 +431,7 @@ def watch(root, *, clock=now):
             if sha not in old:
                 append(root, "ALERT", {**alert, "alert_sha256": sha}, at)
                 old.add(sha)
+        report["checkpoint"] = checkpoint(root, events(root))
         return report
 
 

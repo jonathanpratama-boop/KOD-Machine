@@ -273,6 +273,8 @@ class LLMWorkbenchTests(unittest.TestCase):
 
         report = watch(self.root, clock=clock)
         size = len(read_receipts(self.root))
+        self.assertEqual(report["checkpoint"]["event_count"], size)
+        self.assertEqual(report["checkpoint"], status(self.root, clock=clock)["checkpoint"])
         watch(self.root, clock=clock)
         self.assertEqual(len(read_receipts(self.root)), size)
         self.assertFalse(report["notifications_delivered"])
