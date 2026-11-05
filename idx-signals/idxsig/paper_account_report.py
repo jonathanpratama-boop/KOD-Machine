@@ -15,7 +15,7 @@ It reads the ledger and writes the report; it never appends a record. Identical 
 
 from __future__ import annotations
 
-from . import paper_account as acct
+from . import paper_account as acct, paper_input_health
 
 REPORT = acct.REPORT
 
@@ -113,7 +113,7 @@ def _decision_rows(recs: list[dict], arm: str) -> list[str]:
     return rows
 
 
-def render(recs: list[dict]) -> str:
+def render(recs: list[dict], *, input_health=None) -> str:
     as_of = max(
         (r.get("made_at") or r.get("recorded_at") or "" for r in recs), default="no records yet"
     )
@@ -185,9 +185,11 @@ def render(recs: list[dict]) -> str:
     ]
     for arm in acct.ARMS:
         out += _decision_rows(recs, arm)
-    return "\n".join(out) + "\n"
+    status = paper_input_health.unassessed() if input_health is None else input_health
+    return paper_input_health.add_banner("\n".join(out) + "\n", status)
 
 
-def write_report():
-    REPORT.write_text(render(acct.lines()), encoding="utf-8")
+def write_report(*, input_health=None):
+    input_health = paper_input_health.load() if input_health is None else input_health
+    REPORT.write_text(render(acct.lines(), input_health=input_health), encoding="utf-8")
     return REPORT

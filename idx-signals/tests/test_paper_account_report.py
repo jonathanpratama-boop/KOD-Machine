@@ -9,6 +9,7 @@ from unittest import mock
 from idxsig import cli, paper
 from idxsig import paper_account as acct
 from idxsig import paper_account_report as report
+from idxsig import paper_input_health
 from idxsig.provenance import PKG_ROOT, sha256_file
 
 
@@ -35,6 +36,11 @@ class Report(unittest.TestCase):
         self.addCleanup(tmp.cleanup)
         self.ledger = Path(tmp.name) / "paper_account.jsonl"
         self.out = Path(tmp.name) / "PAPER_ACCOUNT.md"
+        # Identical explicit health evidence keeps the renderer deterministic;
+        # wall-clock execution assessment is tested separately.
+        health = mock.patch.object(paper_input_health, "load", return_value=paper_input_health.unassessed())
+        health.start()
+        self.addCleanup(health.stop)
         for target, name, value in ((acct, "LEDGER", self.ledger), (acct, "REPORT", self.out),
                                     (report, "REPORT", self.out)):
             p = mock.patch.object(target, name, value)
@@ -113,9 +119,16 @@ class Report(unittest.TestCase):
             cli.main(["paper-account-report"])
         self.assertEqual(self.out.read_text(), report.render(acct.lines()))
         self.assertIn("$1,897.15", self.out.read_text())
-        source = (PKG_ROOT / "idxsig" / "cli.py").read_text()
-        self.assertEqual(source.count("paper_account_report.write_report()"), 2)
-        self.assertNotIn("acct.write_report()", source)
+        before = sha256_file(self.ledger)
+        with mock.patch("sys.stdout"), mock.patch.object(cli, "_recent_manifest", return_value=(Path("unused"), [])), \
+             mock.patch.object(cli, "_sec_verifier", return_value=None), \
+             mock.patch.object(acct, "bars_from_manifest", return_value=({}, "2026-11-04", None)), \
+             mock.patch.object(acct, "sync", return_value=[]), \
+             mock.patch.object(report, "write_report", wraps=report.write_report) as write:
+            self.assertEqual(cli.main(["paper-account-sync"]), 0)
+        write.assert_called_once()
+        self.assertEqual(self.out.read_text(), report.render(acct.lines()))
+        self.assertEqual(sha256_file(self.ledger), before)
 
     def test_drawdown_is_dated_from_recorded_marks(self):
         for session, equity in (("2026-11-03", 10_100.0), ("2026-11-04", 9_595.0), ("2026-11-05", 9_900.0)):
