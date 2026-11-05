@@ -11,6 +11,11 @@ execution and the visual decision inspector, start with the
 [component guide and code map](docs/COMPONENTS.md). The `runtime`, `research` and
 `workstation` commands share one repository entry point: `python tools/kod.py`.
 
+The [LLM_ARM workbench](docs/LLM_ARM.md) adds evidence-backed reasoning packets,
+retained failures and losses, timing alerts, complete cohort memory and a
+read-only audit of the original experiment. Start with
+`python tools/kod.py llm --root /tmp/kod-llm-demo demo` (synthetic, no model call).
+
 Two research tools. Neither grants entry permission.
 
 | Directory | What it is |
