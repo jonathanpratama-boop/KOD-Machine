@@ -17,6 +17,9 @@ ENV = dict(
     os.environ, PYTHONPATH=os.pathsep.join((str(REPO / "idx-signals"), str(REPO / "kod-machine")))
 )
 FOCUSED = (
+    "tests.test_llm_arm",
+    "tests.test_llm_arm_audit",
+    "tests.test_llm_arm_independent",
     "tests.test_component_entrypoints",
     "tests.test_components_strategy",
     "tests.test_components_plan",
@@ -24,6 +27,7 @@ FOCUSED = (
     "tests.test_runtime_validation",
     "tests.test_strategy_checks",
     "tests.test_clock_integrity",
+    "tests.test_clock_real_sample",
     "tests.test_research_workflow",
     "tests.test_runtime_account",
     "tests.test_runtime_data_context",
@@ -36,7 +40,6 @@ FOCUSED = (
     "tests.test_timing_context",
     "tests.test_timing_integration",
     "tests.test_timing_evidence",
-    "tests.test_clock_real_sample",
     "tests.test_time_anchor",
     "tests.test_runtime_timing_paper",
     "tests.test_timing_processing_boundary",
@@ -142,6 +145,13 @@ def main(argv=None):
         if researched["attempts_used"] != 1 or repeated["attempts_used"] != 1:
             raise AssertionError("research retry consumed a duplicate hypothesis")
         run([*research, "status"], capture=True)
+        llm = ["tools/kod.py", "llm", "--root", str(Path(base) / "llm")]
+        first_llm = run([*llm, "demo"], capture=True)
+        second_llm = run([*llm, "demo"], capture=True)
+        if first_llm != second_llm or first_llm["cases"][0]["net_return"] != -0.12:
+            raise AssertionError("LLM demo lost its synthetic loss or duplicated a retry")
+        if first_llm["model_service_running"] or first_llm["entry_permission"]:
+            raise AssertionError("LLM workbench acquired unintended execution authority")
     if args.mode == "full":
         run(["-m", "unittest"], REPO / "idx-signals")
         run(["-m", "unittest"], REPO / "kod-machine")

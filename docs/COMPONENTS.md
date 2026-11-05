@@ -37,6 +37,7 @@ failure and 2 for an inconclusive result.
 | Recorded execution lifecycle | `idx-signals/idxsig/components/execution.py` | Separate simulation profile; no exchange connectivity |
 | Causal and warm-up checks | `idx-signals/idxsig/strategy_checks.py` | Validates observed evaluator behaviour, not profitability |
 | Experiment specification and worker | `idx-signals/idxsig/research_workflow/` | Frozen evaluator, bounded attempts and reserved holdout |
+| LLM reasoning and feedback | `idx-signals/idxsig/llm_arm/` | Frozen packets, first submitted response, complete cohort memory; no model service or promotion |
 | Decision inspection | `kod-machine/kod/workstation/decision_inspector.py` | Read-only verified evidence and explicit missing stages |
 | Optional runtime command wiring | `idx-signals/idxsig/runtime/component_commands.py` | Explicit invocation only |
 
@@ -184,3 +185,5 @@ upstream source files or additional trading engines are vendored by this pass.
 
 See [OPERATING_SYSTEM.md](OPERATING_SYSTEM.md) for the wider system and
 [TIMING_RESEARCH.md](TIMING_RESEARCH.md) for the current scientific questions.
+See [LLM_ARM.md](LLM_ARM.md) for model input/output contracts, loss preservation,
+timing alerts and the separately versioned engineering workbench.
