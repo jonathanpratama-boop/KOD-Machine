@@ -1,5 +1,15 @@
 # KOD paper account (PAPER_ACCOUNT_v1)
 
+## US forecast input health
+
+**STALE_INPUT — 11 eligible US set(s) from the latest scan passed their cutoff without a compatible v2.4 forecast.**
+
+- Assessed 2026-11-05T13:43:45.271679Z; latest US scan session: 2026-11-04.
+- Latest compatible LEARNER v2.4 forecast: 2026-10-30T23:00:28Z (signal session 2026-10-30).
+- Eligible sets awaiting forecasts: 0; historical sets missed before cutoff: 32.
+- Existing plan and account totals below are historical records, not proof that new input is flowing.
+- SEC contact is configured in the checked execution context; successful source access and a sealed forecast still require verification.
+
 As of the latest record (2026-11-04T22:58:31Z). Paper only: no orders, no money. Protocol: `research/PAPER_ACCOUNT_v1/protocol.json`.
 
 ## The three plain answers
