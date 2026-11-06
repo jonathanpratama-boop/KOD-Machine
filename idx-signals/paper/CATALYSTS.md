@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-06T23:03:16Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-06T23:03:34Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -24,7 +24,7 @@ Sets 14 over 1 sessions.
 
 ## DILUTION_8K (counted at each look; direction -1; `KOD-CATALYST-FAMILY-DILUTION_8K-v1`)
 
-Sets 19 over 4 signal sessions; events seen: SEALED 19, SKIP_REPEAT_90D 11, SKIP_NO_TICKER 15, SKIP_NOT_IN_UNIVERSE 14; coverage gaps 1.
+Sets 22 over 5 signal sessions; events seen: SEALED 22, SKIP_REPEAT_90D 19, SKIP_NO_TICKER 21, SKIP_NOT_IN_UNIVERSE 18; coverage gaps 1.
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
 
@@ -102,27 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 63 tags: 12 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP TRAD (APEX Tech Acquisition Inc.) - filed 2026-11-05, sealed 2026-11-06T10:42:45Z, cutoff 2026-11-06T14:15:00Z
-Set `CAT-FORM4_SHARP-0001477932-26-006731`, scan `SCAN-US-2026-11-05-G2_RET30`; signal close 10.1 on 2026-11-05; entry: the entry session's opening print (2026-11-06). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001477932-26-006731` by Liu Shaoren (CEO and CFO), APEX INNOVATION ACQUISITION CORP. (officer); purchases USD 2,089,710; top executive yes; holding up +7.3%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 2; parent CAT-FORM4-0001477932-26-006731.
-Twins (band+liq+mom+dd): PBHC 16.72, AFJK 12.21, GIX 10.01, SOUL 10.53, BRTM 9.76, NBRG 10.15, APT 5.48, DTSQ 11.519, BYFC 11.52, APAC 10.31, LEGO 9.96, NTIC 7.58, OCAC 10, CXII 10.352, GTEN 10.44, NL 7.1, MBBC 14.4, PGAC 10.83, ARCL 10, TLIH 5.7.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP SPXC (SPX Technologies, Inc.) - filed 2026-11-05, sealed 2026-11-06T10:42:45Z, cutoff 2026-11-06T14:15:00Z
-Set `CAT-FORM4_SHARP-0001490816-26-000002`, scan `SCAN-US-2026-11-05-G2_RET30`; signal close 138.54 on 2026-11-05; entry: the entry session's opening print (2026-11-06). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001490816-26-000002` by Deck Brian A (director); purchases USD 493,020; top executive no; holding up +404.3%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001490816-26-000002.
-Twins (band+liq+mom+dd): RMBS 69.68, AMAT 319.25, AMKR 30.49, FFIV 311.74, RKLB 45.99, MTSI 190.35, WOLF 20.36, ARM 166.72, IONQ 26.43, CW 433.87, ASST 20.59, MU 656.39, SANM 130.23, FN 292.97, ASX 29.72, MP 33.74, AMD 404.4, TWLO 200.96, CIEN 230.81, HBM 20.58.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP LBRT (Liberty Energy Inc.) - filed 2026-11-05, sealed 2026-11-06T10:42:45Z, cutoff 2026-11-06T14:15:00Z
-Set `CAT-FORM4_SHARP-0001628280-26-071186`, scan `SCAN-US-2026-11-05-G2_RET30`; signal close 11.35 on 2026-11-05; entry: the entry session's opening print (2026-11-06). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001628280-26-071186` by Gusek Ron (CEO and President); purchases USD 377,335; top executive yes; holding up +2.4%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001628280-26-071186.
-Twins (band+liq+mom+dd): EFXT 18.87, ALM 7.95, EROC 6.64, NN 8.03, UNIT 5.365, BCAX 8.19, MBLY 5.13, MLYS 15.24, AEVA 9.19, UGP 5.56, QUBT 5.63, CSQR 13.72, PPTA 16.75, KURA 6.8, FLNC 5.095, HLIT 9.31, ORIC 8.49, ADEA 14.82, ATEC 7.8, BTU 16.02.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP SYY (SYSCO CORP) - filed 2026-11-05, sealed 2026-11-06T10:42:45Z, cutoff 2026-11-06T14:15:00Z
 Set `CAT-FORM4_SHARP-0001685591-26-000006`, scan `SCAN-US-2026-11-05-G2_RET30`; signal close 75.24 on 2026-11-05; entry: the entry session's opening print (2026-11-06). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +186,25 @@ Filing `0001104659-26-123916` by Mangrove Coast Investment Ltd; cover page max 4
 Coverage **FIRE**; market value USD 1,328.9M from COVER_PAGE; parent CAT-SEC13D-0001104659-26-123916.
 Twins (band+liq+mom+dd): NL 7.13, CLST 17.5, WSBK 13.61, PHAR 12.29, CURX 6.21, SHPH 5.585, KFFB 5.93, BSBK 9.38.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### DILUTION_8K SXTP - event `0001213900-26-116620`, accepted 2026-11-06T08:22:31-05:00, sealed 2026-11-06T23:03:29Z, cutoff 2026-11-09T14:15:00Z
+Set `CAT-DILUTION_8K-0001213900-26-116620`, scan `SCAN-US-2026-11-06-G2_RET30`; signal close 0.5949 on 2026-11-06; entry: the entry session's opening print (2026-11-09). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move -35.05%.
+Twins (band+liq+mom+dd): NCNA 0.9377, CIGL 0.1833, FRSX 0.6, NMTC 0.879, BBLG 0.3334.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### DILUTION_8K BIVI - event `0001520138-26-000460`, accepted 2026-11-06T17:10:57-05:00, sealed 2026-11-06T23:03:29Z, cutoff 2026-11-09T14:15:00Z
+Set `CAT-DILUTION_8K-0001520138-26-000460`, scan `SCAN-US-2026-11-06-G2_RET30`; signal close 1.33 on 2026-11-06; entry: the entry session's opening print (2026-11-09). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move +0.00%.
+Twins (band+liq+mom+dd): ANTX 4, RGP 2.66, IDN 2.04, ALTI 2.34, AVX 4.29.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### DILUTION_8K AUUD - event `0001683168-26-008388`, accepted 2026-11-06T17:16:50-05:00, sealed 2026-11-06T23:03:29Z, cutoff 2026-11-09T14:15:00Z
+Set `CAT-DILUTION_8K-0001683168-26-008388`, scan `SCAN-US-2026-11-06-G2_RET30`; signal close 0.48 on 2026-11-06; entry: the entry session's opening print (2026-11-09). Windows: H20: entry +1, hold 20.
+Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
+Coverage **FIRE**; pre-entry move +0.00%.
+Twins (band+liq+mom+dd): LICN 0.5104, IRIX 0.6574, PRZO 0.4702, BTTC 0.2804, TAOP 0.3178.
+Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
