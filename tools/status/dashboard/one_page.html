@@ -32,7 +32,7 @@ body{font:12px/1.5 ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace}.page{
   <div class="toolbar"><div><h2>Ongoing experiments</h2><p id="scope"></p></div><label class="search"><input id="search" type="search" aria-label="Find an experiment" placeholder="Find an experiment…"></label></div>
   <div class="board"><div class="column-head" aria-hidden="true"><span>Experiment</span><span>Results so far</span><span>What happens next</span><span>Last update</span></div><div id="experiments"></div></div>
   <details class="archive"><summary>Past tests, jobs &amp; sources <span id="archive-counts"></span></summary><div class="archive-content" id="archive"></div></details>
-  <footer><p id="snapshot-note"></p><button class="download" id="download-data">Download source data</button></footer>
+  <footer><p id="snapshot-note"></p></footer>
   <noscript>Turn on JavaScript to view the experiment records.</noscript>
 </main>
 <script>
@@ -357,10 +357,6 @@ document.getElementById('scope').textContent=count(data.experiments.filter(exper
 document.getElementById('archive-counts').textContent=count(historical.length) + ' closed tests and checks · ' + count(data.gaps.length) + ' items missing or untracked';
 document.getElementById('snapshot-note').textContent='Saved ' + date(build.built_at,true) + '. This copy won’t update itself. Open a newer report for the latest results.';
 document.getElementById('search').addEventListener('input',render);
-document.getElementById('download-data').addEventListener('click',()=> {
-  const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));
-  const link=document.createElement('a');link.href=url;link.download='KOD-source-snapshot.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
-});
 render();renderArchive();
 </script>
 </body>
