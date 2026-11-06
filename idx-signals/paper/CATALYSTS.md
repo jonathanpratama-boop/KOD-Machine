@@ -1,10 +1,10 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-10-30T23:03:27Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-06T00:26:27Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
-Sets 5 (FIRE 2, ABSTAIN 3) over 3 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 3, SEALED 5, SKIP_NOT_OPERATING 2; coverage gaps 0.
+Sets 8 (FIRE 3, ABSTAIN 5) over 4 signal sessions; events seen: SKIP_NOT_IN_UNIVERSE 8, SEALED 8, SKIP_NOT_OPERATING 2, SKIP_LATE 2, SKIP_NO_TICKER 2; coverage gaps 1.
 
 | Class | Paired | Sessions | Mean net | Mean diff vs twins | t | p (one-sided) |
 |---|---|---|---|---|---|---|
@@ -103,27 +103,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## Latest sets
 
-### FORM4 BBT (Beacon Financial Corp) - filed 2026-10-29, sealed 2026-10-30T11:01:26Z, cutoff 2026-10-30T13:15:00Z
-Set `CAT-FORM4-0001628280-26-068056`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 30.66 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20.
-Form 4 `0001628280-26-068056` (1 filing(s)) by Callahan Mary Anne (director).
-Coverage **FIRE**; purchases USD 96,672, owners 1, top executive no, lag 1 days.
-Twins (band+liq+mom+dd): EPAC 39.42, ENR 23.15, WKC 37.21, MGY 26.22, DIN 35.16.
-Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
-
-### FORM4 UTMD (UTAH MEDICAL PRODUCTS INC) - filed 2026-10-29, sealed 2026-10-30T11:01:26Z, cutoff 2026-10-30T13:15:00Z
-Set `CAT-FORM4-0001733614-26-000005`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 66.8 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20.
-Form 4 `0001733614-26-000005` (1 filing(s)) by CORNWELL KEVIN L (Chairman, CEO).
-Coverage **FIRE**; purchases USD 66,750, owners 1, top executive yes, lag 0 days.
-Twins (band+liq+mom+dd): PKX 50.91, GLIBK 21.61, CMCL 21.4, XRN 30.52, ATNI 25.88.
-Cone: BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
-
-### FORM4_SHARP BFC (Bank First Corp) - filed 2026-10-29, sealed 2026-10-30T11:02:40Z, cutoff 2026-10-30T13:15:00Z
-Set `CAT-FORM4_SHARP-0001104659-26-120006`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 150.62 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001104659-26-120006` by Sprang Todd A. (director); purchases USD 59,348; top executive no; holding up +19.7%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001104659-26-120006.
-Twins (band+liq+mom+dd): BKTI 72.3, FISI 40.88, AMTB 29.9, EQBK 49.11, SMBK 49.07, RBB 26.04, GABC 49.41, TRST 56.87, AROW 38.665, KRT 54.39, RRBI 102.1, INVA 21.31, KE 27.01, SMP 38.25, HG 34.43, EBF 21.76, LQDT 45.29, FMBH 51.13, BBSI 32.36, TRNS 90.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
 ### FORM4_SHARP DINO (HF Sinclair Corp) - filed 2026-10-29, sealed 2026-10-30T11:02:40Z, cutoff 2026-10-30T13:15:00Z
 Set `CAT-FORM4_SHARP-0001193125-26-438100`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 111.89 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
 Form 4 `0001193125-26-438100` by MYERS FRANKLIN (CEO); purchases USD 1,108,000; top executive yes; holding up +5.1%.
@@ -207,4 +186,25 @@ Direction -1; protocol `KOD-CATALYST-FAMILY-DILUTION_8K-v1`.
 Coverage **FIRE**; pre-entry move +0.00%.
 Twins (band+liq+mom+dd): TSAT 40.09, JBSS 53.9, ASMB 20.13, CYD 22.45, OPY 86.2.
 Cone: LOSES_TO_TWINS_20 p=0.55; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D MSIF (MSC INCOME FUND, INC.) - accepted 2026-11-04T17:15:23-05:00, sealed 2026-11-06T00:26:23Z, cutoff 2026-11-06T14:15:00Z
+Set `CAT-SEC13D-0001396440-26-000153`, scan `SCAN-US-2026-11-05-G2_RET30`; signal close 12.25 on 2026-11-05; entry: the entry session's opening print (2026-11-06). Windows: H20: entry +1, hold 20.
+Filing `0001396440-26-000153` by Main Street Capital CORP; Item 4 intent words: none.
+Coverage **FIRE**; pre-entry move -0.73%, market value USD 555.5M, dilution filings 0.
+Twins (band+liq+mom+dd): FRBT 19.15, DIBS 6.04, FINW 13.67, MOBI 11.28, GLRE 16.38.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D YCBD (cbdMD, Inc.) - accepted 2026-11-04T19:16:08-05:00, sealed 2026-11-06T00:26:23Z, cutoff 2026-11-06T14:15:00Z
+Set `CAT-SEC13D-0001437749-26-035032`, scan `SCAN-US-2026-11-05-G2_RET30`; signal close 0.388 on 2026-11-05; entry: the entry session's opening print (2026-11-06). Windows: H20: entry +1, hold 20.
+Filing `0001437749-26-035032` by Akretive Holdings LLC; Item 4 intent words: nominate, director.
+Coverage **ABSTAIN** (DILUTION_RECENT, MICROCAP); pre-entry move -4.43%, market value USD 4.3M, dilution filings 1.
+Twins (band+liq+mom+dd): VRXA 0.9522, SXTP 0.9164, ALLR 0.9759, PMCB 0.3752, BFRI 0.8078.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D PRSO (Peraso Inc.) - accepted 2026-11-04T19:45:37-05:00, sealed 2026-11-06T00:26:23Z, cutoff 2026-11-06T14:15:00Z
+Set `CAT-SEC13D-0001193125-26-447929`, scan `SCAN-US-2026-11-05-G2_RET30`; signal close 0.3502 on 2026-11-05; entry: the entry session's opening print (2026-11-06). Windows: H20: entry +1, hold 20.
+Filing `0001193125-26-447929` by Nant Capital, LLC; Item 4 intent words: board, director.
+Coverage **ABSTAIN** (DILUTION_RECENT, MICROCAP); pre-entry move -12.45%, market value USD 5.3M, dilution filings 2.
+Twins (band+liq+mom+dd): BLNK 0.4081, VJET 0.569, BLNE 0.607, CRDF 0.7553, QNC 0.8601.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
 
