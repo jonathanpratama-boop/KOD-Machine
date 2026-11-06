@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-06T00:26:27Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-06T00:26:57Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 3 over 2 signal sessions; events seen: SEALED 3; coverage gaps 0.
+Sets 6 over 3 signal sessions; events seen: SEALED 6; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 2, FIRE 1
+- Classes: ABSTAIN 4, FIRE 2
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,27 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 41 tags: 9 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP DINO (HF Sinclair Corp) - filed 2026-10-29, sealed 2026-10-30T11:02:40Z, cutoff 2026-10-30T13:15:00Z
-Set `CAT-FORM4_SHARP-0001193125-26-438100`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 111.89 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001193125-26-438100` by MYERS FRANKLIN (CEO); purchases USD 1,108,000; top executive yes; holding up +5.1%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001193125-26-438100.
-Twins (band+liq+mom+dd): SPCX 143.89, CBRE 128.58, SNA 358.6, DAVE 334.8, FNV 231.6, VST 140.95, WWD 314.92, GNRC 203.36, PH 928.45, NRG 97.54, GRMN 279.94, LVS 37.04, MAA 118.26, GME 24, FCX 66.14, CMCSA 22.27, GWRE 160.07, TT 431.1, RGLD 236.83, DASH 179.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP LRN (Stride, Inc.) - filed 2026-10-29, sealed 2026-10-30T11:02:40Z, cutoff 2026-10-30T13:15:00Z
-Set `CAT-FORM4_SHARP-0001213900-26-113987`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 80.7 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001213900-26-113987` by Haggart Dylan G. (director), Fivespan Partners, LP (officer), Fivespan Partners GP, LLC (officer); purchases USD 62,188; top executive no; holding up +0.0%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 3; parent CAT-FORM4-0001213900-26-113987.
-Twins (band+liq+mom+dd): TRMD 43.045, OPLN 38.76, CNM 44.14, FSV 144.5, MORN 222.54, CON 41.25, ERIE 250.79, SMA 35.76, MAC 24.31, QTWO 65.28, AZTA 41.27, GIB 79.59, FIBK 37.95, ECPG 102.36, TAK 20.01, PRCH 20.89, L 111.69, NIC 172.52, FIGS 21.56, TILE 36.87.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP PNFP (Pinnacle Financial Partners, Inc.) - filed 2026-10-29, sealed 2026-10-30T11:02:40Z, cutoff 2026-10-30T13:15:00Z
-Set `CAT-FORM4_SHARP-0001219004-26-000004`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 101.71 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001219004-26-000004` by INGRAM DAVID B (director); purchases USD 991,600; top executive no; holding up +15.3%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001219004-26-000004.
-Twins (band+liq+mom+dd): PAG 212.34, EVRG 85.41, BDX 198.34, EXPD 198.39, PFE 29.95, CNP 42.21, EW 94.44, STLD 253.53, SOLS 62.56, TSCO 33.65, AEO 20.12, REGN 818.77, NDAQ 105.6, WSM 259.86, GDDY 105.89, ZTS 78.8, EQNR 47.58, SYNA 117.91, SIRI 28.67, GTLB 56.65.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP HBAN (HUNTINGTON BANCSHARES INC /MD/) - filed 2026-10-29, sealed 2026-10-30T11:02:40Z, cutoff 2026-10-30T13:15:00Z
 Set `CAT-FORM4_SHARP-0001225208-26-008552`, scan `SCAN-US-2026-10-29-G2_RET30`; signal close 15.97 on 2026-10-29; entry: the entry session's opening print (2026-10-30). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +186,25 @@ Filing `0001193125-26-447929` by Nant Capital, LLC; Item 4 intent words: board, 
 Coverage **ABSTAIN** (DILUTION_RECENT, MICROCAP); pre-entry move -12.45%, market value USD 5.3M, dilution filings 2.
 Twins (band+liq+mom+dd): BLNK 0.4081, VJET 0.569, BLNE 0.607, CRDF 0.7553, QNC 0.8601.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 MSIF (MSC INCOME FUND, INC.) - accepted 2026-11-04T17:15:23-05:00, sealed 2026-11-06T00:26:53Z, cutoff 2026-11-06T14:15:00Z
+Set `CAT-SEC13D_V2-0001396440-26-000153`, scan `SCAN-US-2026-11-05-G2_RET30`; signal close 12.25 on 2026-11-05; entry: the entry session's opening print (2026-11-06). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001396440-26-000153` by Main Street Capital CORP; cover page max None% of class; strong intent: none; Item 5(c): 0 price(s).
+Coverage **FIRE**; market value USD 555.5M from XBRL; parent CAT-SEC13D-0001396440-26-000153.
+Twins (band+liq+mom+dd): FRBT 19.15, DIBS 6.04, FINW 13.67, MOBI 11.28, GLRE 16.38, PERI 11.41, HYNE 18.67, NODK 15.39, OSG 5.14, SPOK 11.75, PBFS 18.235, SKYH 10, TCX 11.92, LAW 5.62, FGBI 11.78, LYEL 15, BOC 13.98, LCNB 19.53.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### SEC13D_V2 YCBD (cbdMD, Inc.) - accepted 2026-11-04T19:16:08-05:00, sealed 2026-11-06T00:26:53Z, cutoff 2026-11-06T14:15:00Z
+Set `CAT-SEC13D_V2-0001437749-26-035032`, scan `SCAN-US-2026-11-05-G2_RET30`; signal close 0.388 on 2026-11-05; entry: the entry session's opening print (2026-11-06). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001437749-26-035032` by Akretive Holdings LLC; cover page max 15.9% of class; strong intent: nominate; Item 5(c): 0 price(s).
+Coverage **ABSTAIN** (DILUTION_RECENT, MICROCAP); market value USD 4.3M from XBRL; parent CAT-SEC13D-0001437749-26-035032.
+Twins (band+liq+mom+dd): VRXA 0.9522, SXTP 0.9164, ALLR 0.9759, PMCB 0.3752, BFRI 0.8078, SEED 0.7098, VGAS 0.984, INTZ 0.621, MERC 0.2493, RYDE 0.676, HPAI 0.2811, MBIO 0.394, XCUR 0.8901, MRKR 0.8955, ICMB 0.6104, FBDT 0.8599, AGIG 0.831, BLIN 0.6688, AURE 0.9503, APRE 0.4953.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### SEC13D_V2 PRSO (Peraso Inc.) - accepted 2026-11-04T19:45:37-05:00, sealed 2026-11-06T00:26:53Z, cutoff 2026-11-06T14:15:00Z
+Set `CAT-SEC13D_V2-0001193125-26-447929`, scan `SCAN-US-2026-11-05-G2_RET30`; signal close 0.3502 on 2026-11-05; entry: the entry session's opening print (2026-11-06). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001193125-26-447929` by Nant Capital, LLC; cover page max 19.99% of class; strong intent: none; Item 5(c): 0 price(s).
+Coverage **ABSTAIN** (DILUTION_RECENT, MICROCAP); market value USD 5.3M from XBRL; parent CAT-SEC13D-0001193125-26-447929.
+Twins (band+liq+mom+dd): BLNK 0.4081, VJET 0.569, BLNE 0.607, CRDF 0.7553, QNC 0.8601, CNTB 0.7317, FNGR 0.107, NMG 0.805, AIAI 0.9086, ARAY 0.1239, ZENA 0.6532, WHLR 0.4582, CODX 0.2671, UAVS 0.3101, CJMB 0.286, GLDG 0.75, CIRC 0.205, ACH 0.2981, AIIO 0.4004, SKYX 0.681.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
