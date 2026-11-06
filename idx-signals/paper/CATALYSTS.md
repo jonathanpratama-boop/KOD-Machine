@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-06T23:03:34Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-06T23:05:07Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -99,7 +99,7 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 
 ## DILUTION_RECENT tags on Speculation Register sets
 
-63 tags: 12 true, 0 unknown.
+89 tags: 18 true, 0 unknown.
 
 ## Latest sets
 
