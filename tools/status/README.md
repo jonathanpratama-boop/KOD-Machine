@@ -195,3 +195,16 @@ Every file is kept under 190 KB:
 ```
 ruff check --isolated --select E4,E7,E9,F,E501 --line-length 100 tools/status/build_status.py
 ```
+
+## Standalone page (for people who can't open the hosted dashboard)
+
+`tools/status/dashboard/standalone.html` is the dashboard page with its data embedded; open it in any
+browser (it loads d3 from cdnjs). Rebuild it after a status build:
+
+```
+python3 tools/status/dashboard/make_standalone.py --data /path/to/status-out \
+  --out tools/status/dashboard/standalone.html
+```
+
+`tools/status/dashboard/index.html` is the page itself (edit this one; the hosted dashboard uses it
+too). The standalone file is generated, so change the page, not the output.
