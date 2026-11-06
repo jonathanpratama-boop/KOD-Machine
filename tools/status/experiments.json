@@ -99,8 +99,14 @@
    "needed": 60,
    "needed_label": "paired sets (from at least 15 signal sessions) for the first look",
    "stale_after_hours": 78,
-   "next_milestone": "5-day results for the 10 sets of 2026-10-29 land in the run after the 2026-11-06 US close (about 06:00 WIB 2026-11-07). The 15-session rule binds: the 15th US signal session is 2026-11-16, so the look is due about 2026-11-25 WIB if candidates keep coming (estimate).",
+   "next_milestone": "5-day results for the 10 sets of 2026-10-29 land in the run after the 2026-11-06 US close (about 06:00 WIB 2026-11-07). The 60 sets the look needs are already sealed, so the 15-session rule binds: the 15th US signal session is 2026-11-16, so the look is due about 2026-11-25 WIB if candidates keep coming (estimate; also used as projected_date).",
    "next_date": "2026-11-07",
+   "projection": {
+    "basis": "collected",
+    "lag_days": 8,
+    "earliest_look": "2026-11-25",
+    "earliest_look_reason": "the 15-session rule (15th US signal session 2026-11-16, if candidates keep coming; its 5-day results land about 2026-11-25 WIB)"
+   },
    "sources": [
     "KOD:idx-signals/paper/speculations.jsonl",
     "KOD:idx-signals/research/SPECULATION_REGISTER_v1/protocol_v1_1.json"
@@ -129,8 +135,12 @@
    "needed": 60,
    "needed_label": "paired sets (from at least 15 signal sessions) for the first look",
    "stale_after_hours": 78,
-   "next_milestone": "The first IDX 5-day results (the 2 sets of 2026-10-29) are due in the IDX run after the 2026-11-06 close (about 17:30 WIB 2026-11-06). First look around late November to early December 2026 (estimate).",
+   "next_milestone": "The first IDX 5-day results (the 2 sets of 2026-10-29) are due in the IDX run after the 2026-11-06 close (about 17:30 WIB 2026-11-06). First look around late November to early December 2026 (estimate; projected_date gives the sealing pace plus the 8-day wait for 5-day results).",
    "next_date": "2026-11-06",
+   "projection": {
+    "basis": "collected",
+    "lag_days": 8
+   },
    "sources": [
     "KOD:idx-signals/paper/speculations.jsonl",
     "KOD:idx-signals/research/SPECULATION_REGISTER_v1/protocol_v1_1.json"
@@ -159,8 +169,12 @@
    "needed": 60,
    "needed_label": "paired sets (from at least 15 signal days) for the first look",
    "stale_after_hours": 120,
-   "next_milestone": "The 2 sets of 2026-11-05 (SOXSB, UVXYB) resolve NEXT1 about 2026-11-07 WIB and BASE5 about 2026-11-12 WIB. At 0.70 sets per scan the first look is around early February 2027 (estimate).",
+   "next_milestone": "The 2 sets of 2026-11-05 (SOXSB, UVXYB) resolve NEXT1 about 2026-11-07 WIB and BASE5 about 2026-11-12 WIB. The first-look estimate is projected_date: the sealing pace (sets per day so far) plus the 6-day wait for 5-day results.",
    "next_date": "2026-11-12",
+   "projection": {
+    "basis": "collected",
+    "lag_days": 6
+   },
    "sources": [
     "KOD:idx-signals/paper/speculations.jsonl",
     "KOD:idx-signals/research/SPECULATION_REGISTER_v1/protocol_v1_1.json"
@@ -227,8 +241,12 @@
    "needed": 250,
    "needed_label": "resolved outcomes from at least 30 signal sessions for the first look",
    "stale_after_hours": 78,
-   "next_milestone": "The 13 forecasts of 2026-11-05 resolve after the 2026-11-06 US close (about 06:00 WIB 2026-11-07). If a forecast is sealed every US session from now, the 30th session is 2026-12-15 and the look is due about 2026-12-17 WIB (estimate).",
+   "next_milestone": "The 13 forecasts of 2026-11-05 resolve after the 2026-11-06 US close (about 06:00 WIB 2026-11-07). The 30-session rule alone allows a look about 2026-12-17 WIB (30th session 2026-12-15), but only if forecasts are sealed every US session from now at about 8 or more a session; so far 3 of the 6 due sessions got forecasts (32 sets never forecast), so projected_date uses the observed pace instead (estimate).",
    "next_date": "2026-11-07",
+   "projection": {
+    "earliest_look": "2026-12-17",
+    "earliest_look_reason": "the 30-session rule if forecasts are sealed every US session from now"
+   },
    "sources": [
     "KOD:idx-signals/paper/learner_v3.jsonl",
     "KOD:idx-signals/paper/speculations.jsonl",
@@ -381,13 +399,15 @@
    "sources": [
     "KOD:idx-signals/paper/crypto_account.jsonl",
     "KOD:idx-signals/paper/ledger.jsonl",
+    "KOD:idx-signals/research/CRYPTO_ACCOUNT_v1/protocol.json",
+    "KOD:idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json",
     "KOD:idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_4.json"
    ],
    "protocol": {
-    "path": "idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_4.json",
-    "sha256": "d1f0adb9cdfc40942b9c46f17a41f9e464e513f1dfcc626d002c70d560ca08ed"
+    "path": "idx-signals/research/CRYPTO_ACCOUNT_v1/protocol_v1_1.json",
+    "sha256": "b3021091f1f9220e8bd7514b37c0c61a6ddbd423839ec7a77219414152d0776d"
    },
-   "note": "plumbing only: the crypto G2_RET30 entry is retired, so this account only records PASS declines until a policy buys"
+   "note": "plumbing only: the crypto G2_RET30 entry is retired, so this account only records PASS declines until a policy buys; protocols: the 2 recorded decisions (made 2026-10-31T12:26:34Z) were made under protocol.json (frozen 2026-10-31T12:22:25Z); protocol_v1_1.json (frozen 2026-10-31T12:39:11Z, supersedes it) is the latest frozen version and is the one locked here; protocol_v1_2 to v1_4 are local candidates marked 'not published or activated', although the account code (idxsig/crypto_account.py) carries RULES CRYPTO_ACCOUNT_v1.4"
   },
   {
    "id": "PREMOVE_SHADOW_v1",
@@ -465,7 +485,8 @@
     "window": "H20",
     "fire_only": true,
     "look_sessions": 15,
-    "stall_after_missed": 2
+    "stall_after_missed": 2,
+    "gap_from": "SEC13D"
    },
    "collected_label": "sets sealed (FIRE count; ABSTAIN descriptive)",
    "scored_label": "resolved FIRE pairs (H20)",
@@ -706,7 +727,7 @@
    "needed": 196,
    "needed_label": "planned supplement slots",
    "stale_after_hours": 2.5,
-   "next_milestone": "Collection ends 2026-11-09T09:00Z (48 slots a day). Its monitor has no external alert: a stale as-of (UNKNOWN) is the only alarm.",
+   "next_milestone": "Collection ends 2026-11-09T09:00Z (42 supplement slots a day: 48 half-hours minus the 6 original 4-hourly slots). Its monitor has no external alert: a stale as-of (UNKNOWN) is the only alarm.",
    "next_date": "2026-11-09",
    "sources": [
     "BACKUPS:supplement-30m-v1:HEALTH.json",
@@ -723,22 +744,24 @@
    "params": {
     "kind": "collector",
     "branch": "research-r2-20261105T181200Z",
-    "coverage_bar": 0.99,
     "planned_key": "full_capture_expected_closed_total",
     "stale_after_hours": 1,
     "study": "srv:research_r2",
-    "name": "30-day research study (R2)"
+    "name": "30-day research study (R2)",
+    "coverage_reported": "a reported quality figure, not a pass/fail gate for R2: 99% was the capacity trial's target, which the start-now addendum replaced; low coverage limits the usable comparisons",
+    "outcome_hours": 24
    },
    "collected_label": "on-time 1-minute bars captured (130 assets)",
-   "scored_label": "market events admitted",
+   "scored_label": "admitted events with a matured 24 h primary outcome",
    "needed": null,
-   "needed_label": "no fixed count: time-boxed 30-day admission (needs at least 99% on-time coverage)",
+   "needed_label": "no fixed count: time-boxed 30-day admission (on-time coverage is reported, not a gate)",
    "stale_after_hours": 1,
    "next_milestone": "24 h collector checkpoint 2026-11-06T18:13Z; Day-7 report 2026-11-12T18:12Z; admission ends 2026-12-05T18:12Z.",
    "next_date": "2026-11-06",
    "sources": [
     "BACKUPS:research-r2-20261105T181200Z:HEALTH.json"
-   ]
+   ],
+   "note": "the collector stopped about 2026-11-05T22:49:50Z (memory.peak 4096 bytes over memory.max) and was resumed about 00:02-00:06Z on 2026-11-06 with the gap kept (R2 operations addendum of 2026-11-06); pre-halt on-time coverage was reported as 93.9%"
   },
   {
    "id": "srv:capacity_r2_a",
@@ -761,9 +784,9 @@
     "name": "Capacity trial A (closed)"
    },
    "collected_label": "on-time minute bars",
-   "scored_label": "minutes settled",
-   "needed": 374400,
-   "needed_label": "on-time bars for a 48 h pass (130 x 60 x 48)",
+   "scored_label": "minutes settled (as backed up)",
+   "needed": 2880,
+   "needed_label": "minutes in the 48 h run (a pass also needed at least 99% of bars on time overall and per primary asset; 374,400 bars were due in 48 h)",
    "stale_after_hours": 8760,
    "next_milestone": "None: closed.",
    "next_date": null,
@@ -786,26 +809,26 @@
     "closed_by": "r2_closure",
     "closure_branch": "research-r2-20261105T181200Z",
     "planned_key": "full_48h_expected_closed_total",
-    "scored_key": "expected_closed_total",
+    "scored_key": "settled_minutes",
     "stale_after_hours": 8760,
     "study": "srv:capacity_r2_b",
     "name": "Capacity trial B (closed)"
    },
    "collected_label": "on-time minute bars",
-   "scored_label": "bars due when closed",
-   "needed": 374400,
-   "needed_label": "on-time bars for a 48 h pass",
+   "scored_label": "minutes settled by the last backup (17:51Z)",
+   "needed": 2880,
+   "needed_label": "minutes in the 48 h run (a pass also needed at least 99% of bars on time overall and per primary asset; 374,400 bars were due in 48 h)",
    "stale_after_hours": 8760,
    "next_milestone": "None: closed.",
    "next_date": null,
    "closed_on": "2026-11-05",
-   "verdict": "Closed early, not passed (CLOSED_EARLY_NOT_PASSED under the owner's start-now amendment): ran 9.4 of 48 hours with on-time coverage 0.940, including a 16:01-16:32Z halt.",
+   "verdict": "Closed early, not passed (CLOSED_EARLY_NOT_PASSED under the owner's start-now amendment): ran about 9.7 of 48 hours (08:27Z to the 18:07Z closure; the last backup, at 17:51Z, covers 9.4 h) with on-time coverage 0.940 up to that backup, including a 16:01-16:32Z halt.",
    "record": "kod-timing-backups:research-r2-20261105T181200Z:HEALTH.json#predecessor_capacity",
    "sources": [
     "BACKUPS:capacity-r2-20261105T082700Z:HEALTH.json",
     "BACKUPS:research-r2-20261105T181200Z:HEALTH.json"
    ],
-   "note": "the branch head still reads status OK / phase RUNNING; only the closure record says CLOSED"
+   "note": "the branch head still reads status OK / phase RUNNING; only the closure record says CLOSED; on-time bars 68,770 of 73,190 due by the last backup (17:51Z)"
   },
   {
    "id": "EARLY_ENTRY_RESEARCH",
@@ -1273,7 +1296,7 @@
    "next_milestone": "None: closed.",
    "next_date": null,
    "closed_on": "2026-11-01",
-   "verdict": "NOT_CONFIRMED: the market fell in 2025-26 and buying deletions lost money (about -2.9% a trade without outliers).",
+   "verdict": "NOT_CONFIRMED: buying deletions lost -4.2% a trade net (46 trades, 28% winners; account IDR 160m to 129.5m, -19%), still -2.9% a trade without the two outliers. It beat matched controls (+4.5%, 95% -3.6% to +10.6%) only because the market fell.",
    "record": "idx-signals/research/MSCI_DELETION_OOT_v1/REPORT.md",
    "sources": [
     "KOD:idx-signals/research/MSCI_DELETION_OOT_v1/REPORT.md",

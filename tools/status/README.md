@@ -31,6 +31,11 @@ is the number of outcomes that can be evaluated under the frozen protocol. **Nee
 the protocol needs before its first look. `fraction` is always scored / needed, never
 collected / needed. No win rate, return or P&L is written before a study reaches its look.
 
+For server collector studies, `scored` is never "bars due": the capacity trials count settled
+minutes against the 48 h run, and R2 counts admitted events whose 24 h primary outcome has
+matured (0 while no event can be 24 h old; null when HEALTH.json cannot tell). R2's on-time
+coverage is reported in the note, not judged against the capacity trial's 99% target.
+
 ## Adding an experiment: one registry entry
 
 Add one object to `experiments` in `tools/status/experiments.json`:
@@ -66,9 +71,13 @@ Add one object to `experiments` in `tools/status/experiments.json`:
 ## How freshness works
 
 * `as_of` is the time of the newest **record** a reader used (a `made_at`, `sealed_at`,
-  `resolved_at` or `called_at`), never a commit or push time. Two exceptions: closed rows use
-  the commit time of their verdict record, which has no stamp of its own, and the pooled
-  catalyst test uses its stalest feeding family.
+  `resolved_at` or `called_at`), never a commit or push time. One exception: closed rows use
+  the commit time of their verdict record, which has no stamp of its own. The pooled catalyst
+  test uses its newest pooled record; a stopped feeding family turns the row STALLED and its own
+  last batch is named first in the note. The crypto account uses the newest record it checked
+  (its own writes or the crypto policy rows); the note gives its last write and, when STALLED,
+  the stall start (oldest unrecorded decision plus the grace), so `as_of` never reads as the
+  start of a stall.
 * When the build runs, a live row whose `as_of` is older than `stale_after_hours` is written as
   **UNKNOWN**, never RUNNING. STALLED (positive evidence of a stop, e.g. no catalyst batch for 2
   or more due sessions) and HALTED are kept, because they already say something is wrong.
@@ -81,13 +90,33 @@ Add one object to `experiments` in `tools/status/experiments.json`:
   `calendars` are used for `run_days`. IDX holidays are not modelled yet, so an IDX holiday
   will show as `missed` until it is added to `calendars.IDX.holidays`.
 * `run_days` statuses come from the records each job writes, judged against the job's own
-  deadline: `ok` on time, `partial` late but before the decision cutoff (or written with a
-  feed coverage gap), `missed` absent after the cutoff. Days whose deadline has not passed yet
-  are left out, because the schema has no "pending" status.
-* `projected_date` = today + (needed - scored) / (scored in the last 14 days / 14), using
-  history.json. It is null when nothing was scored in the last 14 days. The note gives a rough
-  80% band. Fixed-calendar studies (`fixed_end`, the pre-move trial's protocol end) use that
-  date instead, and the note shows what the rate-based estimate would have been.
+  deadline: `ok` on time, `partial` not clean but not missing, `missed` absent after the
+  cutoff. What `partial` means depends on the job, and the matching incident in `events.json`
+  says it in words: for a **scan** it means **late** (complete, written after its usual time but
+  before the decision cutoff; the incident gives the actual time); for a **catalyst batch** it
+  means written with a feed coverage gap; for **LLM calls** and the **crypto account** it means
+  some but not all of the day's sets or decisions were covered. Days whose deadline has not
+  passed yet are left out, because the schema has no "pending" status.
+* LLM call files that exist only on another, unmerged branch of the KOD repo are never counted
+  (the data ref is the record), but a set they cover is not described as "never called": the
+  note, an incident and a `NOT_ON_DASHBOARD` gap name the branch and commit until it is merged.
+* Catalyst rows list every US session that never got a batch since the family started and every
+  batch with a feed coverage gap, even after a later batch arrives. STALLED still means the
+  feed has stopped now (2 or more due sessions since the last batch).
+* Server status changes in `events.json` carry the time of the backup that first showed them;
+  the detail names the previous backup, so the change happened between the two.
+* `projected_date` is a pace estimate from history.json: today + (needed - count) / (pace),
+  where the pace is the count gained over the last 14 days, or over the days since the first
+  record when that is shorter (never fewer than 7), so a window that starts before anything was
+  scored does not dilute the rate. The count is `scored` by default. An entry's optional
+  `projection` object can set `"basis": "collected"` with `lag_days` (sealed record to its
+  scored outcome), for studies whose scored count lags a steady sealing rate, and
+  `earliest_look` + `earliest_look_reason` for a protocol floor such as a minimum number of
+  sessions: the later of the two dates is used and the note says which one set it, so
+  `projected_date` and `next_milestone` give the same date. It is null when nothing was counted
+  in the window. The note gives a rough 80% band. Fixed-calendar studies (`fixed_end`, the
+  pre-move trial's protocol end) use that date instead, and the note shows what the pace-based
+  estimate would have been.
 
 ## Size limits and trimming
 

@@ -52,7 +52,8 @@ SERVER_FULL_HOURS = 48  # ... every heartbeat for the last 48 h, older ones thin
 SERVER_THIN_HOURS = 6  # ... to one per study per 6 h (status changes are always kept)
 EVENT_DAYS = 31  # events.json keeps the last 31 days
 RUN_DAYS = 30  # run_days.json: last 30 session dates per job
-PROJECTION_WINDOW = 14  # days of history behind projected_date
+PROJECTION_WINDOW = 14  # days of history behind projected_date ...
+PROJECTION_MIN_DAYS = 7  # ... or the days since the first record, but never fewer than this
 LIVE_STATES = ("RUNNING", "WAITING")
 
 
@@ -234,6 +235,7 @@ def reading(**values) -> dict:
         "server_history": [],
         "needed": "registry",
         "projected_fixed": None,
+        "gaps": [],
     }
     base.update(values)
     return base
@@ -317,6 +319,55 @@ def norm_minute(text: str) -> str:
 
 # ============================================================================== readers: forecasts
 LLM_STATEMENTS = ("RUN30_5", "FADE10_5", "BEATS_TWINS_5")
+CALLS_FILE = re.compile(r"/calls[^/]*\.jsonl$")
+
+
+def unmerged_calls(ctx: Ctx, calls_dir: str) -> list[dict]:
+    """Call rows in calls*.jsonl files that exist on another remote branch of the KOD repo but not
+    on the data ref. They are never counted (the data ref is the record), only reported, so a call
+    that was made in time but not merged is not described as 'never called'. Each row gets
+    `_branch`, `_path` and `_commit` (the commit that added the file on that branch)."""
+    if not hasattr(ctx, "_unmerged_calls"):
+        ctx._unmerged_calls = {}
+    if calls_dir in ctx._unmerged_calls:
+        return ctx._unmerged_calls[calls_dir]
+    on_ref = {f for f in ctx.kod.ls(calls_dir) if CALLS_FILE.search(f)}
+    seen, out = set(), []
+    for branch in sorted(ctx.kod.remote_branches()):
+        ref = "origin/" + branch
+        if ref == ctx.kod.ref:
+            continue
+        for path in ctx.kod.ls(calls_dir, ref):
+            if not CALLS_FILE.search(path) or path in on_ref or path in seen:
+                continue
+            seen.add(path)
+            commit = (
+                ctx.kod.git("log", "--diff-filter=A", "-1", "--format=%h %cI", ref, "--", path)
+                or ""
+            ).split()
+            for line in ctx.kod.text(path, ref).splitlines():
+                if not line.strip():
+                    continue
+                row = json.loads(line)
+                if isinstance(row, dict):
+                    row.update(
+                        _branch=branch,
+                        _path=path,
+                        _commit=" ".join(commit[:1]) or "?",
+                    )
+                    out.append(row)
+    ctx._unmerged_calls[calls_dir] = out
+    return out
+
+
+def call_links(call: dict, the_set: dict) -> bool:
+    """audit-v1 linkage of one call to its sealed set (not the uniqueness rules)."""
+    if any(call.get(k) != the_set.get(k) for k in ("ticker", "market", "signal_session")):
+        return False
+    called = norm_minute(call.get("called_at", ""))
+    if not the_set["sealed_at"] <= called < the_set["entry_cutoff"]:
+        return False
+    return call.get("call") in ("BACK", "AVOID", "ABSTAIN")
 
 
 def read_llm_arm(ctx: Ctx, p: dict) -> dict:
@@ -348,11 +399,7 @@ def read_llm_arm(ctx: Ctx, p: dict) -> dict:
             continue
         the_set = set_rows[call["set"]][0]
         called = norm_minute(call["called_at"])
-        if any(call.get(k) != the_set.get(k) for k in ("ticker", "market", "signal_session")):
-            continue
-        if not the_set["sealed_at"] <= called < the_set["entry_cutoff"]:
-            continue
-        if call.get("call") not in ("BACK", "AVOID", "ABSTAIN"):
+        if not call_links(call, the_set):
             continue
         counted.append((call, the_set))
         resolutions = base5.get(call["set"], [])
@@ -369,17 +416,39 @@ def read_llm_arm(ctx: Ctx, p: dict) -> dict:
         and (s["entry_cutoff"] <= ctx.now_iso or s["set_id"] in called_sets)
     ]
     missed = [s for s in due if s["set_id"] not in called_sets]
+    elsewhere = {}  # set_id -> an in-time call found only on an unmerged branch
+    for call in unmerged_calls(ctx, p["calls_dir"]):
+        rows = set_rows.get(call.get("set"), [])
+        if len(rows) == 1 and call["set"] not in called_sets and call_links(call, rows[0]):
+            elsewhere.setdefault(call["set"], call)
+    unmerged = [s for s in missed if s["set_id"] in elsewhere]
+    missed = [s for s in missed if s["set_id"] not in elsewhere]
     actions = Counter(c["call"] for c, _ in counted)
     disagree = sum(1 for c, _ in counted if c.get("agrees_with_kod") is False)
+    coverage = (
+        f"coverage: {len(due) - len(missed) - len(unmerged)} of {len(due)} sealed sets have a "
+        "call on the data branch made before their cutoff"
+    )
+    if unmerged:
+        branches = sorted(
+            {
+                f"{elsewhere[s['set_id']]['_branch']} (commit {elsewhere[s['set_id']]['_commit']})"
+                for s in unmerged
+            }
+        )
+        coverage += (
+            f"; {len(unmerged)} more call(s) were made before their cutoff but exist only on "
+            f"branch {', '.join(branches)}, not merged into the data branch, so they are not "
+            "counted in 'calls made' until merged"
+        )
+    coverage += f"; {len(missed)} set(s) got no call anywhere (these can never be called)"
     notes = [
-        f"coverage: {len(due) - len(missed)} of {len(due)} sealed sets got a call before "
-        "their cutoff "
-        f"(missed calls can never be added)",
+        coverage,
         "calls: "
         + ", ".join(f"{a} {actions.get(a, 0)}" for a in ("BACK", "AVOID", "ABSTAIN"))
         + f"; disagreements with KOD {disagree}",
     ]
-    events = []
+    events, gaps = [], []
     by_session = defaultdict(list)
     for s in missed:
         by_session[(s["market"], s["signal_session"])].append(s)
@@ -391,10 +460,39 @@ def read_llm_arm(ctx: Ctx, p: dict) -> dict:
                 cutoff,
                 "incident",
                 f"LLM arm: {len(rows)} {market} set(s) of {session} got no call",
-                f"Entry cutoff passed with no call for {tickers}; these can never be called.",
+                f"Entry cutoff passed with no call for {tickers} on the data branch or any other "
+                "branch; these can never be called.",
                 f"KOD:{p['register']} (SPECULATION_SET entry_cutoff) vs "
                 f"KOD:{p['calls_dir']}/calls*.jsonl",
             )
+        )
+    by_file = defaultdict(list)
+    for s in unmerged:
+        call = elsewhere[s["set_id"]]
+        by_file[(call["_branch"], call["_path"], call["_commit"])].append((s, call))
+    for (branch, path, commit), pairs in sorted(by_file.items()):
+        made = max(norm_minute(c["called_at"]) for _, c in pairs)
+        sessions = sorted({f"{s['market']} {s['signal_session']}" for s, _ in pairs})
+        tickers = ", ".join(sorted(s["ticker"] for s, _ in pairs))
+        events.append(
+            event(
+                made,
+                "incident",
+                f"LLM arm: {len(pairs)} call(s) for {', '.join(sessions)} not merged into the "
+                "data branch",
+                f"Calls for {tickers} were made at {made}, before their entry cutoffs, but "
+                f"{path} exists only on branch {branch} (commit {commit}). They are not counted "
+                "until merged into the data branch.",
+                f"KOD:origin/{branch}:{path}",
+            )
+        )
+        gaps.append(
+            {
+                "kind": "NOT_ON_DASHBOARD",
+                "path": f"KOD:origin/{branch}:{path}",
+                "detail": f"LLM_ARM_v1: {len(pairs)} in-time call(s) ({tickers}) on a branch not "
+                "merged into the data ref; merge them so they count",
+            }
         )
     return reading(
         collected=len(counted),
@@ -404,6 +502,7 @@ def read_llm_arm(ctx: Ctx, p: dict) -> dict:
         scored_times=[r["resolved_at"] for r in scored],
         note=notes,
         events=events,
+        gaps=gaps,
     )
 
 
@@ -788,17 +887,40 @@ def read_crypto_account(ctx: Ctx, p: dict) -> dict:
     ]
     backlog = [r for r in policy if r["decision_id"] not in decided]
     stamps = [r.get("made_at") or r.get("observed_at") or r.get("recorded_at") for r in rows]
+    # as_of = the newest record this check read: the account's own writes AND the crypto policy
+    # rows it was checked against (no decision due means the account is correctly idle).
+    checked = [norm_iso(r["decided_at"]) for r in policy] + [
+        norm_iso(r["discovered_at"])
+        for r in ctx.kod.jsonl(p["policy_ledger"])
+        if r.get("type") == "SCAN"
+        and scan_market(r) == "CRYPTO"
+        and r.get("session", "") >= p["first_signal"]
+    ]
     state, notes, events = None, [], []
+    last_write = newest(stamps)
+    grace = timedelta(hours=p.get("backlog_grace_hours", 6))
     if backlog:
         oldest = min(norm_iso(r["decided_at"]) for r in backlog)
-        notes.append(
-            f"{len(backlog)} crypto policy decision(s) not recorded by the account since {oldest}"
-        )
-        account_age = ctx.now - parse_ts(newest(stamps)) if newest(stamps) else None
-        late = ctx.now - parse_ts(oldest) > timedelta(hours=p.get("backlog_grace_hours", 6))
+        account_age = ctx.now - parse_ts(last_write) if last_write else None
+        late = ctx.now - parse_ts(oldest) > grace
         idle = account_age is None or account_age > timedelta(hours=p["account_stale_hours"])
         if late or idle:
             state = "STALLED"
+            since = (
+                iso(parse_ts(oldest) + grace)
+                if late or not last_write
+                else iso(parse_ts(last_write) + timedelta(hours=p["account_stale_hours"]))
+            )
+            notes.append(
+                f"STALLED since {since}: {len(backlog)} crypto policy decision(s) decided "
+                f"{oldest} not recorded by the account after the "
+                f"{p.get('backlog_grace_hours', 6)} h grace"
+            )
+        else:
+            notes.append(
+                f"{len(backlog)} crypto policy decision(s) decided {oldest} not recorded yet "
+                f"(within the {p.get('backlog_grace_hours', 6)} h grace)"
+            )
         events.append(
             event(
                 oldest,
@@ -808,10 +930,18 @@ def read_crypto_account(ctx: Ctx, p: dict) -> dict:
                 f"KOD:{p['policy_ledger']} DECISION vs KOD:{p['ledger']}",
             )
         )
+    recorded_until = max(
+        (norm_iso(r["decided_at"]) for r in policy if r["decision_id"] in decided), default=None
+    )
+    notes.append(
+        f"last account write {last_write}; as_of is the newest record checked (account or crypto "
+        "policy ledger)"
+        + (f"; newest recorded decision was decided {recorded_until}" if recorded_until else "")
+    )
     return reading(
         collected=len(decided),
         scored=len(exits),
-        as_of=newest(stamps),
+        as_of=newest(stamps + checked),
         state=state,
         collected_times=[r["made_at"] for r in decided.values()],
         scored_times=[r.get("recorded_at") or r.get("made_at") for r in exits],
@@ -888,6 +1018,24 @@ def missed_batch_sessions(ctx: Ctx, batches: list[dict], calendar: str, due_hhmm
     return out
 
 
+def never_batched_sessions(
+    ctx: Ctx, batches: list[dict], calendar: str, due_hhmm: str
+) -> list[str]:
+    """US sessions between the family's first and last batch that never got a batch (a later batch
+    does not backfill them)."""
+    if not batches:
+        return []
+    have = {b["signal_session"] for b in batches}
+    first = date.fromisoformat(min(have))
+    last = max(have)
+    out, day = [], ctx.next_trading_day(calendar, first)
+    while day.isoformat() < last:
+        if day.isoformat() not in have and at_utc(day, due_hhmm, 1) < ctx.now:
+            out.append(day.isoformat())
+        day = ctx.next_trading_day(calendar, day)
+    return out
+
+
 def coverage_gap(batch: dict) -> bool:
     return (
         batch.get("coverage_gap") is True or (batch.get("feed") or {}).get("coverage_gap") is True
@@ -928,6 +1076,39 @@ def read_catalyst(ctx: Ctx, p: dict) -> dict:
         notes.append(f"no batch for US session(s) {', '.join(missed)} since the last one")
         if len(missed) >= p.get("stall_after_missed", 2):
             state = "STALLED"
+    holes = never_batched_sessions(
+        ctx, batches, p.get("calendar", "NYSE"), p.get("batch_due_utc", "14:00")
+    )
+    if holes:
+        notes.append(
+            f"US session(s) never batched since the family started: {', '.join(holes)} "
+            "(permanent: a later batch does not backfill them)"
+        )
+    own_sessions = {b["signal_session"] for b in batches}
+    feed = catalyst_batches(rows, p["gap_from"]) if p.get("gap_from") else batches
+    gap_notes = []
+    for b in sorted(feed, key=lambda x: x["sealed_at"]):
+        if b["signal_session"] not in own_sessions or not coverage_gap(b):
+            continue
+        later = [
+            x["sealed_at"]
+            for x in feed
+            if x["signal_session"] == b["signal_session"]
+            and x["sealed_at"] > b["sealed_at"]
+            and not coverage_gap(x)
+        ]
+        gap_notes.append(
+            f"signal {b['signal_session']} (batch sealed {b['sealed_at']}"
+            + (f"; a later batch sealed {min(later)} reports no gap" if later else "")
+            + ")"
+        )
+    if gap_notes:
+        notes.append(
+            "batch(es) with a feed coverage gap"
+            + (f" in the source feed {p['gap_from']}" if p.get("gap_from") else "")
+            + ": "
+            + ", ".join(gap_notes)
+        )
     events = [
         event(
             b["sealed_at"],
@@ -959,8 +1140,9 @@ def read_catalyst(ctx: Ctx, p: dict) -> dict:
 
 
 def read_catalyst_pooled(ctx: Ctx, p: dict) -> dict:
-    """Pooled document-class test: FIRE parent sets of several families. Its as_of is the STALEST
-    feeding family's last batch, so one stopped feed cannot look green."""
+    """Pooled document-class test: FIRE parent sets of several families. Its as_of is the newest
+    pooled record; a stopped feeding family is caught by the stall rule (STALLED) and named in the
+    note with its own last batch, so one stopped feed cannot look green."""
     rows = ctx.kod.jsonl(p["ledger"])
     families = p["families"]
     sets = {}
@@ -995,12 +1177,21 @@ def read_catalyst_pooled(ctx: Ctx, p: dict) -> dict:
         "last batch by family: " + ", ".join(f"{f} {last_batch[f]}" for f in families),
     ]
     if stalled:
-        notes.append("stalled feeding families: " + ", ".join(stalled))
-    known = [v for v in last_batch.values() if v]
+        notes.insert(
+            0,
+            "STALLED feeding famil(ies): "
+            + ", ".join(f"{f} (last batch {last_batch[f]})" for f in stalled)
+            + "; as_of is the newest pooled record, the other families are still feeding",
+        )
+    stamps = [
+        r.get("sealed_at") or r.get("resolved_at")
+        for r in rows
+        if r.get("family") in families and r.get("type") in ("BATCH", "CATALYST_SET", "RESOLUTION")
+    ]
     return reading(
         collected=len(fire),
         scored=len(scored),
-        as_of=min(known) if known else None,
+        as_of=newest(stamps),
         state="STALLED" if stalled else None,
         collected_times=[s["sealed_at"] for s in fire.values()],
         scored_times=[r["resolved_at"] for r in scored],
@@ -1181,6 +1372,23 @@ def summarize_collector(ctx: Ctx, p: dict, ref: str) -> dict:
             health.get("status"), "UNKNOWN"
         )
     pooled = coverage.get("pooled_on_time_coverage")
+    engine = health.get("research_engine") or {}
+    events = engine.get("event_count")
+    matured = None
+    if p.get("scored_key"):
+        scored = coverage.get(p["scored_key"])
+    else:
+        # scored = admitted events whose primary outcome (event + outcome_hours) has matured. HEALTH
+        # carries no event times, so this is only known for certain while no event can be old
+        # enough: every event is admitted at or after t0.
+        hours = p.get("outcome_hours", 24)
+        if events == 0:
+            matured = 0
+        elif events and engine.get("t0") and engine.get("as_of"):
+            first_possible = parse_ts(engine["t0"]) + timedelta(hours=hours)
+            if parse_ts(engine["as_of"]) < first_possible:
+                matured = 0
+        scored = matured
     return {
         "as_of": exact_iso(health.get("emitted_at") or collector.get("as_of")),
         "status": status,
@@ -1188,9 +1396,8 @@ def summarize_collector(ctx: Ctx, p: dict, ref: str) -> dict:
         "coverage": round(pooled, 4) if pooled is not None else None,
         "captured": coverage.get("on_time_closed_total"),
         "planned": coverage.get(p.get("planned_key", "full_capture_expected_closed_total")),
-        "scored": coverage.get(p["scored_key"])
-        if p.get("scored_key")
-        else (health.get("research_engine") or {}).get("event_count"),
+        "scored": scored,
+        "events": events,
         "issues": list(health.get("issues") or []),
         "ends_at": norm_iso(health.get("end_at")),
         "raw": health,
@@ -1235,6 +1442,26 @@ def read_server_study(ctx: Ctx, p: dict) -> dict:
     ):
         issues.append(
             f"on-time coverage {now_summary['coverage']} below the protocol bar {p['coverage_bar']}"
+        )
+        notes.append(issues[-1])
+    if p.get("coverage_reported") and now_summary["coverage"] is not None:
+        text = f"on-time coverage {now_summary['coverage']} so far ({p['coverage_reported']})"
+        issues.append(text)
+        notes.append(text)
+    if now_summary.get("events") is not None and not p.get("scored_key"):
+        raw_engine = (now_summary.get("raw") or {}).get("research_engine") or {}
+        hours = p.get("outcome_hours", 24)
+        t0 = raw_engine.get("t0")
+        earliest = iso(parse_ts(t0) + timedelta(hours=hours)) if t0 else "?"
+        matured = now_summary["scored"]
+        notes.append(
+            f"{now_summary['events']} market event(s) admitted; "
+            + (
+                f"{matured} with a matured {hours} h primary outcome"
+                if matured is not None
+                else f"matured {hours} h outcomes not countable from HEALTH.json (no event times)"
+            )
+            + f"; the first outcome can mature at {earliest} at the earliest"
         )
     if p.get("closed_by") == "r2_closure":
         closure = r2_capacity_closure(ctx, p)
@@ -1295,12 +1522,23 @@ def read_server_study(ctx: Ctx, p: dict) -> dict:
 def server_transition_events(p: dict, history: list[dict]) -> list[dict]:
     """Status changes along a branch's heartbeats: going bad is an incident, coming back a
     milestone."""
-    out, previous = [], None
+    out, previous, before = [], None, None
     for row in history:
         bad = row["status"] in ("HALTED", "STALLED", "UNKNOWN")
         if previous is not None and row["status"] != previous:
-            title = f"{p['name']}: {previous} -> {row['status']}"
-            detail = f"coverage {row['coverage']}, captured {row['captured']}"
+            title = f"{p['name']}: {previous} -> {row['status']} (seen at backup)"
+            detail = (
+                f"First seen in the backup at {row['at']}; the previous backup at {before['at']} "
+                f"still read {previous}, so the change happened between the two (the time shown is "
+                f"the backup, not the change). Coverage {row['coverage']}, captured "
+                f"{row['captured']}"
+                + (
+                    " (unchanged since the previous backup)"
+                    if row["captured"] == before["captured"]
+                    else ""
+                )
+                + "."
+            )
             out.append(
                 event(
                     row["at"],
@@ -1320,7 +1558,7 @@ def server_transition_events(p: dict, history: list[dict]) -> list[dict]:
                     f"BACKUPS:{p['branch']}@{row['commit']}:HEALTH.json",
                 )
             )
-        previous = row["status"]
+        previous, before = row["status"], row
     return out
 
 
@@ -1372,8 +1610,16 @@ def job_scan(ctx: Ctx, p: dict):
             hours=p["ok_within_hours"]
         )
         deadline = at_utc(ctx.next_trading_day(p["calendar"], day), p["deadline_utc"])
-        return judge_day(first.get(day), due, deadline, ctx.now)
+        value = judge_day(first.get(day), due, deadline, ctx.now)
+        if value == "partial":
+            status.details[day.isoformat()] = (
+                f"late, not incomplete: session {day} scan written {iso(first[day])}, "
+                f"due by {iso(due)}"
+            )
+        return value
 
+    status.details = {}
+    status.partial_means = "late"
     return last, label, status
 
 
@@ -1411,6 +1657,10 @@ def job_llm_calls(ctx: Ctx, p: dict):
     last = max((c for c in calls.values()), default=(None, None))
     label = f"call on a {last[1]} {p['market']} spike" if last[0] else None
     start = date.fromisoformat(p["start"])
+    elsewhere = {}
+    for row in unmerged_calls(ctx, p["calls_dir"]):
+        if row.get("market") == p["market"] and row.get("set") not in calls:
+            elsewhere[row["set"]] = row
 
     def status(day: date) -> str:
         sets = roster.get(day, {})
@@ -1421,8 +1671,20 @@ def job_llm_calls(ctx: Ctx, p: dict):
             return "ok"
         if ctx.now <= min(sets.values()):
             return "pending"
+        found = [
+            elsewhere[s]
+            for s, cutoff in sets.items()
+            if s in elsewhere and parse_ts(norm_minute(elsewhere[s]["called_at"])) <= cutoff
+        ]
+        if found:
+            where = sorted({f"{r['_branch']} (commit {r['_commit']})" for r in found})
+            status.details[day.isoformat()] = (
+                f"judged from the data branch: {len(found)} in-time call(s) for this session "
+                f"exist only on unmerged branch {', '.join(where)}"
+            )
         return "partial" if on_time else "missed"
 
+    status.details = {}
     return last[0], label, status
 
 
@@ -1580,12 +1842,22 @@ def build_jobs(ctx: Ctx, gaps: list) -> tuple[list, list, list]:
                 continue  # the deadline has not passed yet; not written (schema has 4 statuses)
             job_days.append({"date": day.isoformat(), "job": job["job"], "status": value})
         days += job_days
-        events += run_day_incidents(job, job_days)
+        events += run_day_incidents(
+            job,
+            job_days,
+            getattr(status, "details", {}),
+            getattr(status, "partial_means", None),
+        )
     return runs, days, events
 
 
-def run_day_incidents(job: dict, job_days: list[dict]) -> list[dict]:
-    """One incident per run of consecutive bad expected days (missed/partial), not one per day."""
+def run_day_incidents(
+    job: dict, job_days: list[dict], details: dict | None = None, partial_means: str | None = None
+) -> list[dict]:
+    """One incident per run of consecutive bad expected days (missed/partial), not one per day.
+    `details` (date -> text) adds what the record shows for a day; `partial_means` names what
+    'partial' means for this job (e.g. 'late' for a scan) so the title does not say 'partial'."""
+    details = details or {}
     out, streak = [], []
     expected = [d for d in job_days if d["status"] != "not_expected"] + [{"status": "ok"}]
     for row in expected:
@@ -1596,13 +1868,20 @@ def run_day_incidents(job: dict, job_days: list[dict]) -> list[dict]:
             first, last = streak[0]["date"], streak[-1]["date"]
             span = first if first == last else f"{first} to {last}"
             kinds = sorted({d["status"] for d in streak})
+            if partial_means:
+                kinds = [
+                    f"{partial_means} (run_days status 'partial')" if k == "partial" else k
+                    for k in kinds
+                ]
+            extra = "; ".join(details[d["date"]] for d in streak if d["date"] in details)
             out.append(
                 event(
                     f"{last}T23:59:59Z",
                     "incident",
                     f"{job['name']}: {'/'.join(kinds)} for {span} ({len(streak)} expected day(s))",
                     "Judged from the records the job writes (no run log exists); dates are session "
-                    "dates and the time is the end of the last one.",
+                    "dates and the time is the end of the last one."
+                    + (f" {extra}." if extra else ""),
                     job["source"],
                 )
             )
@@ -1674,40 +1953,77 @@ def history_rows(entry: dict, result: dict, today: str) -> list[dict]:
     return out
 
 
-def projection(history: list[dict], scored: int | None, needed: int | None, today: str):
-    """(projected_date, note) at the scoring rate of the last 14 days of history; (None, why)
-    without one."""
+def projection(
+    history: list[dict],
+    scored: int | None,
+    needed: int | None,
+    today: str,
+    opts: dict | None = None,
+):
+    """(projected_date, note). The pace is the gain of the basis count (registry
+    `projection.basis`: "scored", the default, or "collected" plus `lag_days` from a sealed
+    record to its scored outcome) over the last PROJECTION_WINDOW days, or over the days since
+    the first record when that is shorter (at least PROJECTION_MIN_DAYS), so a window that starts
+    before anything was scored does not dilute the rate. A registry `projection.earliest_look` (a
+    protocol floor such as a minimum number of sessions) is used when it is later than the pace,
+    and the note says which one set the date. (None, why) without an estimate."""
+    opts = opts or {}
     if scored is None or not needed:
         return None, None
     if scored >= needed:
         return today, "needed count reached"
-    by_day = {h["date"]: h["scored"] for h in history if h["scored"] is not None}
+    basis = opts.get("basis", "scored")
+    lag = int(opts.get("lag_days", 0))
+    by_day = {h["date"]: h[basis] for h in history if h.get(basis) is not None}
     if not by_day:
-        return None, "no estimate: no scoring history"
-    back = (date.fromisoformat(today) - timedelta(days=PROJECTION_WINDOW)).isoformat()
+        return None, f"no estimate: no {basis} history"
+    current = by_day[max(by_day)]
+    started = [d for d, v in by_day.items() if v]
+    if not started:
+        return None, f"no estimate: nothing {basis} yet"
+    since_first = (date.fromisoformat(today) - date.fromisoformat(min(started))).days + 1
+    window = max(PROJECTION_MIN_DAYS, min(PROJECTION_WINDOW, since_first))
+    back = (date.fromisoformat(today) - timedelta(days=window)).isoformat()
     base = by_day.get(back, 0 if back < min(by_day) else None)
     if base is None:
         return None, "no estimate: history incomplete"
-    recent = scored - base
+    recent = current - base
     if recent <= 0:
-        return None, f"no estimate: nothing scored in the last {PROJECTION_WINDOW} days"
-    days_left = (needed - scored) / (recent / PROJECTION_WINDOW)
-    projected = date.fromisoformat(today) + timedelta(days=math.ceil(days_left))
-    low = recent - 1.28 * math.sqrt(recent)
-    high = recent + 1.28 * math.sqrt(recent)
-    early = date.fromisoformat(today) + timedelta(
-        days=math.ceil((needed - scored) / (high / PROJECTION_WINDOW))
-    )
-    late = (
-        date.fromisoformat(today)
-        + timedelta(days=math.ceil((needed - scored) / (low / PROJECTION_WINDOW)))
-        if low > 0
-        else None
-    )
-    band = f"likely {early} to {late}" if late else f"no earlier than about {early}; upper end open"
-    return projected.isoformat(), (
-        f"at the last {PROJECTION_WINDOW} days' pace ({recent} scored): about {projected}, {band}"
-    )
+        return None, f"no estimate: nothing {basis} in the last {window} days"
+    day0 = date.fromisoformat(today)
+    if basis == "collected" and current >= needed:
+        reached = min(d for d, v in by_day.items() if v >= needed)
+        pace = max(day0, date.fromisoformat(reached) + timedelta(days=lag))
+        pace_note = (
+            f"the {needed}th record was collected {reached}; plus the {lag}-day lag to its "
+            f"outcome: about {pace}"
+        )
+    else:
+        left = needed - current
+        rate = recent / window
+        pace = day0 + timedelta(days=math.ceil(left / rate) + lag)
+        low = recent - 1.28 * math.sqrt(recent)
+        high = recent + 1.28 * math.sqrt(recent)
+        early = day0 + timedelta(days=math.ceil(left / (high / window)) + lag)
+        late = day0 + timedelta(days=math.ceil(left / (low / window)) + lag) if low > 0 else None
+        band = (
+            f"likely {early} to {late}"
+            if late
+            else f"no earlier than about {early}; upper end open"
+        )
+        what = "scored" if basis == "scored" else f"{basis}, plus {lag} days to the outcome"
+        pace_note = f"at the last {window} days' pace ({recent} {what}): about {pace}, {band}"
+    floor = opts.get("earliest_look")
+    reason = opts.get("earliest_look_reason", "the protocol's earliest look")
+    if floor and floor > pace.isoformat():
+        return floor, (
+            f"projected_date {floor} is set by {reason} (the same date as next_milestone); "
+            f"the pace alone would give: {pace_note}"
+        )
+    note = f"projected_date from pace: {pace_note}"
+    if floor:
+        note += f"; {reason} ({floor}) does not bind"
+    return pace.isoformat(), note
 
 
 def freshness(state: str, as_of: str | None, stale_hours, now: datetime) -> tuple[str, str | None]:
@@ -1776,6 +2092,7 @@ def build_experiment(ctx: Ctx, entry: dict, gaps: list) -> dict:
         result = reading(state="UNKNOWN")
         first_source = (entry.get("sources") or [entry["id"]])[0]
         gaps.append(gap_for(exc, first_source, f"{entry['id']} reader {entry['reader']}"))
+    gaps += result.get("gaps") or []
     for key in ("collected", "scored"):
         if result[key] == "registry":
             result[key] = entry.get(key)
@@ -1816,12 +2133,14 @@ def build_experiment(ctx: Ctx, entry: dict, gaps: list) -> dict:
     history = history_rows(entry, result, ctx.today_wib) if error is None else []
     projected, projection_note = (None, None)
     if entry["group"] != "closed" and error is None:
-        projected, projection_note = projection(history, result["scored"], needed, ctx.today_wib)
+        projected, projection_note = projection(
+            history, result["scored"], needed, ctx.today_wib, entry.get("projection")
+        )
         fixed_end = result["projected_fixed"] or entry.get("fixed_end")
         if fixed_end:
             projection_note = (
                 f"fixed-calendar study: ends {fixed_end} by schedule (used as projected_date); "
-                f"the 14-day-rate estimate would be {projected or 'none'}"
+                f"the pace-based estimate would be {projected or 'none'}"
             )
             projected = fixed_end
     if projection_note:
