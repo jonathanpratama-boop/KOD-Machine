@@ -1,6 +1,6 @@
 # Catalyst Register
 
-Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-06T23:02:46Z). Nothing here is a result until a look is reached.
+Protocol `KOD-CATALYST-REGISTER-v1` (sha256 `fd027bbdd1a5`), `research/CATALYST_REGISTER_v1/PROTOCOL.md`. Paper only; derived from `paper/catalysts.jsonl` (generated 2026-11-06T23:03:16Z). Nothing here is a result until a look is reached.
 
 ## SEC13D (counted at each look)
 
@@ -47,11 +47,11 @@ Decision sample: FIRE sets, window H60, 0 distinct entry week(s).
 
 ## SEC13D_V2 (counted at each look; direction +1; `KOD-CATALYST-FAMILY-SEC13D_V2-v1`)
 
-Sets 6 over 3 signal sessions; events seen: SEALED 6; coverage gaps 0.
+Sets 10 over 4 signal sessions; events seen: SEALED 10; coverage gaps 0.
 Decision sample: FIRE sets, window H20, 0 distinct entry week(s).
 - MEAN (signed edge over the twins) n/a over 0 pairs: **accumulating (no look reached)**
 - WIN_RATE 0 of 0 (n/a): **accumulating (no look reached)**
-- Classes: ABSTAIN 4, FIRE 2
+- Classes: ABSTAIN 5, FIRE 5
 - Descriptive H20_ABSTAIN: n/a over 0 pairs
 - Descriptive H60_FIRE: n/a over 0 pairs
 - Descriptive H60_ABSTAIN: n/a over 0 pairs
@@ -102,34 +102,6 @@ Families SEC13D, DILUTION_8K, FORM4, parents only, one record per set; the paire
 63 tags: 12 true, 0 unknown.
 
 ## Latest sets
-
-### FORM4_SHARP MTUS (Metallus Inc.) - filed 2026-11-05, sealed 2026-11-06T10:42:45Z, cutoff 2026-11-06T14:15:00Z
-Set `CAT-FORM4_SHARP-0001193125-26-450443`, scan `SCAN-US-2026-11-05-G2_RET30`; signal close 15.76 on 2026-11-05; entry: the entry session's opening print (2026-11-06). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001193125-26-450443` by RICE RONALD A (director); purchases USD 166,100; top executive no; holding up +6.6%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001193125-26-450443.
-Twins (band+liq+mom+dd): AVNW 16.97, EROK 18.56, KELYA 14.05, NEWP 5.32, NVGS 19.58, MNRO 11.31, XXI 5.34, ELPC 10.52, CRESY 9.03, NTGR 19.03, SCZM 7.315, HSHP 14.94, KODK 7.4, MH 11.23, SB 7.06, ARCO 6.99, ENTA 10.08, TK 12.48, WNC 11.11, TOP 11.83.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP CLX (CLOROX CO /DE/) - filed 2026-11-05, sealed 2026-11-06T10:42:45Z, cutoff 2026-11-06T14:15:00Z
-Set `CAT-FORM4_SHARP-0001225208-26-008735`, scan `SCAN-US-2026-11-05-G2_RET30`; signal close 99.7 on 2026-11-05; entry: the entry session's opening print (2026-11-06). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001225208-26-008735` by Breber Pierre R (director); purchases USD 400,251; top executive no; holding up +22.2%.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001225208-26-008735.
-Twins (band+liq+mom+dd): BYD 77.07, NXPI 244.43, RGA 261.96, GDDY 120.12, CMS 70.68, PNFP 101.49, WRB 76.98, HDB 24.7, BNS 91.77, WCN 191.66, GMED 81.44, CMG 35.4, BCE 22.03, EVR 290.13, KIM 25.63, CSGP 32.05, AS 31.32, AXS 107.93, PAYC 250.02, ACN 265.16.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP BKR (Baker Hughes Co) - filed 2026-11-05, sealed 2026-11-06T10:42:45Z, cutoff 2026-11-06T14:15:00Z
-Set `CAT-FORM4_SHARP-0001232377-26-000016`, scan `SCAN-US-2026-11-05-G2_RET30`; signal close 46.2 on 2026-11-05; entry: the entry session's opening print (2026-11-06). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001232377-26-000016` by RICE JOHN G (director); purchases USD 531,000; top executive no; holding up +14.9%.
-Coverage **ABSTAIN** (NOT_SHARP); dilution filings 0; routine owners 0 of 1; parent CAT-FORM4-0001232377-26-000016.
-Twins (band+liq+mom+dd): CMI 448.58, DHT 20.48, FROG 74.62, META 605.08, ANET 159.16, INSW 94.47, SM 29.63, ESI 30.76, ETN 327.02, ADM 70.47, MDGL 400.1, JCI 131.46, MCHP 64.85, DAVE 275.34, MSTR 129.3, Q 110.04, SNX 215.37, PWR 509.06, GEV 770.51, MPC 377.32.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
-
-### FORM4_SHARP GLXY (Galaxy Digital Inc.) - filed 2026-11-05, sealed 2026-11-06T10:42:45Z, cutoff 2026-11-06T14:15:00Z
-Set `CAT-FORM4_SHARP-0001380615-26-000013`, scan `SCAN-US-2026-11-05-G2_RET30`; signal close 12.98 on 2026-11-05; entry: the entry session's opening print (2026-11-06). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
-Form 4 `0001380615-26-000013` by Novogratz Michael (Chief Executive Officer), Galaxy Group Investments LLC (officer); purchases USD 9,864,346; top executive yes; holding up n/a.
-Coverage **FIRE**; dilution filings 0; routine owners 0 of 2; parent CAT-FORM4-0001380615-26-000013.
-Twins (band+liq+mom+dd): FPS 18.21, CLSK 5.68, BMNR 19, BTDR 5.31, XP 14.78, IREN 18.03, RGTI 9.85, QBTS 9.05, WULF 10.08, APLD 14.17, PURR 8.76, INIO 13.33, FSLY 15.38, CIFR 5.55, MARA 5.875, FIG 18.44, IOVA 7.74, GTX 19.36, UMC 13.38, CDE 14.63.
-Cone: BEATS_TWINS_60 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_20 p=0.50; GAIN0_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; MECH_SECOND_BUY_20 p=0.50.
 
 ### FORM4_SHARP TRAD (APEX Tech Acquisition Inc.) - filed 2026-11-05, sealed 2026-11-06T10:42:45Z, cutoff 2026-11-06T14:15:00Z
 Set `CAT-FORM4_SHARP-0001477932-26-006731`, scan `SCAN-US-2026-11-05-G2_RET30`; signal close 10.1 on 2026-11-05; entry: the entry session's opening print (2026-11-06). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M20: 20 sessions.
@@ -207,4 +179,32 @@ Filing `0001104659-26-123916` by Mangrove Coast Investment Ltd; Item 4 intent wo
 Coverage **ABSTAIN** (MV_UNKNOWN); pre-entry move +0.00%, market value n/a, dilution filings 0.
 Twins (band+liq+mom+dd): NL 7.13, CLST 17.5, WSBK 13.61, PHAR 12.29, CURX 6.21.
 Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50.
+
+### SEC13D_V2 NIPG (NIP Group Inc.) - accepted 2026-11-06T06:36:23-05:00, sealed 2026-11-06T23:03:10Z, cutoff 2026-11-09T14:15:00Z
+Set `CAT-SEC13D_V2-0001493152-26-050350`, scan `SCAN-US-2026-11-06-G2_RET30`; signal close 3.72 on 2026-11-06; entry: the entry session's opening print (2026-11-09). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001493152-26-050350` by Tang Heng; cover page max 9.4% of class; strong intent: none; Item 5(c): 0 price(s).
+Coverage **FIRE**; market value USD 421.8M from XBRL; parent CAT-SEC13D-0001493152-26-050350.
+Twins (band+liq+mom+dd): HCAI 2.79, ARTL 1.91, SNAL 1.95, CLRB 1.25, MDBH 1.55, ITOC 1.7201, BTOC 1.83, LFT 4.12, DCX 1.095, PLSM 1.5101, SEAT 2.09, EZGO 1.715, FOXX 1.6, NEXM 1.27, BJDX 2.35, GLE 2.63, EDSA 2.14, BCHT 1.15, DCM 2.98, HCTI 3.7.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### SEC13D_V2 AIFU (AIFU Inc.) - accepted 2026-11-06T08:30:01-05:00, sealed 2026-11-06T23:03:10Z, cutoff 2026-11-09T14:15:00Z
+Set `CAT-SEC13D_V2-0001213900-26-116624`, scan `SCAN-US-2026-11-06-G2_RET30`; signal close 7.681 on 2026-11-06; entry: the entry session's opening print (2026-11-09). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001213900-26-116624` by Zhang Zack; cover page max 56.12% of class; strong intent: none; Item 5(c): 3 price(s).
+Coverage **FIRE**; market value USD 8,712.1M from XBRL; parent CAT-SEC13D-0001213900-26-116624.
+Twins (band+liq+mom+dd): VEEE 8.27, FEDU 7.9, AIOS 8.6465, AUC 6.56, GRNQ 7.1, VRM 6.53, VHC 9.71, MFI 5.1, PXLW 5.06, TRIB 5.7, ZOOZ 5.28, CMND 5.5838, ELTK 5.9812, ROMA 6.05, NTRB 5.55, AERT 5.43, BRBI 7.31, BKHA 5.63, PTN 6.27, BBGI 5.9.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### SEC13D_V2 SVIA (Silvia, Inc.) - accepted 2026-11-06T16:29:39-05:00, sealed 2026-11-06T23:03:10Z, cutoff 2026-11-09T14:15:00Z
+Set `CAT-SEC13D_V2-0001493152-26-050478`, scan `SCAN-US-2026-11-06-G2_RET30`; signal close 3.005 on 2026-11-06; entry: the entry session's opening print (2026-11-09). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001493152-26-050478` by Noor Shain; cover page max 5.6% of class; strong intent: none; Item 5(c): 0 price(s).
+Coverage **ABSTAIN** (DILUTION_RECENT); market value USD 265.6M from XBRL; parent CAT-SEC13D-0001493152-26-050478.
+Twins (band+liq+mom+dd): SION 3.28, NRXP 2.38, TMQ 2.15, ACDC 3.005, TNXP 4.74, STTK 4.62, TWI 4.93, GLAS 2.08, ANGX 3.39, AREC 1.09, ALLO 1.04, STLN 3.62, ARTV 4.15, TROX 2.51, FATE 1.835, AMPY 3.33, IMSR 2.84, OEC 3.96, RXT 2.53, KYTX 4.88.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
+
+### SEC13D_V2 XYF (X Financial) - accepted 2026-11-06T16:35:32-05:00, sealed 2026-11-06T23:03:10Z, cutoff 2026-11-09T14:15:00Z
+Set `CAT-SEC13D_V2-0001104659-26-123916`, scan `SCAN-US-2026-11-06-G2_RET30`; signal close 5.75 on 2026-11-06; entry: the entry session's opening print (2026-11-09). Windows: H20: entry +1, hold 20; H60: entry +1, hold 60; M60: 60 calendar days.
+Filing `0001104659-26-123916` by Mangrove Coast Investment Ltd; cover page max 47.97% of class; strong intent: none; Item 5(c): 0 price(s).
+Coverage **FIRE**; market value USD 1,328.9M from COVER_PAGE; parent CAT-SEC13D-0001104659-26-123916.
+Twins (band+liq+mom+dd): NL 7.13, CLST 17.5, WSBK 13.61, PHAR 12.29, CURX 6.21, SHPH 5.585, KFFB 5.93, BSBK 9.38.
+Cone: GAIN0_20 p=0.55; BEATS_TWINS_20 p=0.50; FADE10_20 p=0.50; RUN30_20 p=0.50; GAIN0_60 p=0.50; BEATS_TWINS_60 p=0.50; MECH_13DA_UP_60 p=0.50.
 
