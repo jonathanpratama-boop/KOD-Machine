@@ -17,7 +17,9 @@ It needs only Python 3.12+ and git, and finishes in about 3 seconds.
 
 | file | one row per |
 |---|---|
-| `experiments.json` | registry entry: state, **collected / scored / needed**, fraction, as_of, next milestone, projected date, verdict, sources, note |
+| `experiments.json` | registry entry: state, **collected / scored / needed**, fraction, as_of, next milestone, projected date, verdict, sources, note; plus the owner's view: `program`, `short`, `ceo_line`, `unit`, `outcome`, `lesson` (registry text), `issue`, `verdict_date`, `verdict_basis`, `plumbing` |
+| `programs.json` | registry program (a group of live tests asking one question): member count, lead test, status, first issue, the lead's progress and 7-day gains, the lead's verdict date, the next verdict any member is due to reach, start date, freshness |
+| `summary.json` | build (exactly one row): headline counts for the owner (tests running, ideas tested and how they came out, next verdict, programs with an issue) |
 | `history.json` | experiment per WIB day: cumulative collected and scored |
 | `runs.json` | job: last success, what it last wrote, expected period, grace |
 | `run_days.json` | job per date for the last 30 days: `ok`, `missed`, `partial`, `not_expected` |
@@ -30,6 +32,50 @@ The three counts always stay separate. **Collected** is the number of records ma
 is the number of outcomes that can be evaluated under the frozen protocol. **Needed** is what
 the protocol needs before its first look. `fraction` is always scored / needed, never
 collected / needed. No win rate, return or P&L is written before a study reaches its look.
+
+### The owner's view (`issue`, `verdict_date`, programs, summary)
+
+These fields are for the owner, who is not a trader or engineer. Text in them is plain words.
+
+* `issue` (experiments.json): at most 10 plain words when `state` is HALTED, STALLED or UNKNOWN,
+  else null. It comes from what the reader already knows, e.g. "2 crypto decisions from Nov 6
+  not recorded" (crypto account backlog), "No new insider filings batch for 7 days" (a stopped
+  filing feed; days since its last batch), "1 scheduled capture missed" or "Server data
+  collector has stopped" (server studies), "No update since Nov 4" (a row aged to UNKNOWN; the
+  day of its `as_of`), "Its locked test rules were edited" (frozen rules changed), "Its records
+  could not be read" / "A record file it needs is missing" (reader failure). Days are WIB days,
+  like history.json.
+* `verdict_date` / `verdict_basis`: the date the first pre-set verdict (look) is expected.
+  `scheduled` for a fixed-calendar end (`fixed_end`, the pre-move trial's final due date, or a
+  server study's `ends_at` as a WIB day); otherwise `estimate` from `projected_date`; null when
+  neither exists, the row is CLOSED, or the entry is plumbing.
+* `plumbing` (experiments.json): true when the registry entry sets `"plumbing": true` (a
+  data-collection check that answers no question, e.g. the timing-capture snapshots), else
+  false. A plumbing row's `verdict_date` / `verdict_basis` are null even though it has a fixed
+  end or `projected_date`, so it never becomes a program's lead by date or its next verdict.
+* `programs.json`: one row per registry program, from its live/server members (closed rows
+  never count). `lead` is the registry `lead` if set, else the member with the earliest
+  `verdict_date`, else the highest `fraction`, else the first member (registry order breaks
+  ties); `scored`, `needed`, `progress` (= the lead's `fraction`), `unit`, `collected`,
+  `verdict_date` and `verdict_basis` are the lead's. `next_verdict_date` / `next_verdict_basis`
+  / `next_verdict_what` are the earliest member `verdict_date` on or after the build's WIB day,
+  that member's basis and its `short` (registry order breaks ties; null when no member has
+  one), so they can name a member other than the lead and skip dates already passed.
+  `scored_7d` / `collected_7d` are what the lead's history.json counts gained over the last 7
+  WIB days (null without history). `status` is `issue` if any member is HALTED, STALLED or
+  UNKNOWN (`issue` is then the first such member's text), `waiting` if every member is WAITING,
+  else `running`. `started` is the first
+  history.json date of any member. `as_of` and `stale_after_hours` come from the member whose
+  `as_of + stale_after_hours` is soonest (no `as_of` counts as already stale; CLOSED members are
+  skipped), so the page's usual stale check on them is true exactly when any member is stale.
+* `summary.json` (one row): `proven_live` (live/server rows with `outcome` "worked"),
+  `live_tests`, `programs`, `ideas_tested` (closed rows whose `outcome` is not `not_an_idea`;
+  closed rows with no outcome yet still count), `worked`, `didnt_work`, `no_answer`, `checks`
+  (closed rows with `not_an_idea`), `next_verdict_date` / `_program` / `_what` / `_basis` (from
+  the program with the earliest `next_verdict_date` on or after the build's WIB day: its name
+  and its `next_verdict_date` / `_what` / `_basis`, not its lead's `verdict_date`),
+  `issues` (programs with status `issue`), `first_record_date` (earliest history.json date),
+  `built_at`.
 
 For server collector studies, `scored` is never "bars due": the capacity trials count settled
 minutes against the 48 h run, and R2 counts admitted events whose 24 h primary outcome has
@@ -63,7 +109,22 @@ Add one object to `experiments` in `tools/status/experiments.json`:
   UNKNOWN and a gap is written.
 * Optional keys: `optional_sources` (may be absent, e.g. a file written only at a look),
   `covers` (other ids this entry accounts for, e.g. catalog ids), `fixed_end` (a
-  fixed-calendar study's end date), `start`, `note`.
+  fixed-calendar study's end date), `start`, `note`, `plumbing` (`true` for a data-collection
+  check that answers no question: it keeps its end date but gets no verdict date).
+* Owner's view keys (plain words, no jargon; missing ones are null in the output, so the build
+  runs without them and prints a `registry:` warning listing what is missing or over its word
+  limit):
+  * live and server entries: `program` (a program id), `short` (at most 4 words), `ceo_line`
+    (at most 14 words: what the test will tell us), `unit` (at most 3 words for the scored
+    count, e.g. "calls judged", "trades closed");
+  * closed entries: `short` (at most 5 words), `outcome` (`worked`, `didnt_work`, `no_answer`
+    or `not_an_idea`), `lesson` (at most 18 words: what we learned).
+* Programs are a top-level list: `"programs": [{"id", "name", "question", "order", "lead"}]`.
+  `lead` is optional (an experiment id in that program that overrides the automatic lead). An
+  unknown `program` id, a `lead` outside its program, a duplicate program id or an `outcome`
+  outside the four values stops the build, like a duplicate experiment id does.
+* A catalyst entry may set `params.feed_plain` (e.g. "insider filings") for its stopped-feed
+  `issue` text; the known families have defaults in `FEED_PLAIN`.
 * A job (for `runs.json` / `run_days.json`) is one object in `jobs` with a `JOB_READERS` reader.
 * Things that are deliberately not shown go in `reference_only` with a reason, so the gap
   detector stops listing them.

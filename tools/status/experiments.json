@@ -54,11 +54,57 @@
   "handoff/ace-integration-",
   "idx-signals/research/LLM_ARM_v1/"
  ],
+ "programs": [
+  {
+   "id": "paper_trading",
+   "name": "Paper trading",
+   "order": 1,
+   "lead": "PAPER_BOOK_v1",
+   "question": "Would following KOD's rules make money?"
+  },
+  {
+   "id": "forecaster",
+   "name": "Forecasting engine",
+   "order": 2,
+   "lead": "LEARNER_v2_4",
+   "question": "Are KOD's odds on each spike better than simple guesses?"
+  },
+  {
+   "id": "ai_judge",
+   "name": "AI second opinion",
+   "order": 3,
+   "question": "Can an AI call spikes better than KOD's math?"
+  },
+  {
+   "id": "insider_signals",
+   "name": "Insider & filing signals",
+   "order": 4,
+   "lead": "CATALYST_DOCUMENT_CLASS",
+   "question": "Do insider buys and company filings predict moves?"
+  },
+  {
+   "id": "timing_lab",
+   "name": "Entry-timing lab",
+   "order": 5,
+   "lead": "srv:research_r2",
+   "question": "Does acting within minutes of a spike, not hours later, change results?"
+  },
+  {
+   "id": "early_warning",
+   "name": "Early-warning radar",
+   "order": 6,
+   "question": "Does KOD's newer crypto model spot coming jumps better than its current one?"
+  }
+ ],
  "experiments": [
   {
    "id": "LLM_ARM_v1",
    "name": "LLM reasoning arm v1",
    "plain": "Does a Claude call on each flagged spike, made before the market opens, predict whether it runs or fades better than KOD's own numbers?",
+   "program": "ai_judge",
+   "short": "AI vs KOD's math",
+   "ceo_line": "Whether an AI's buy-or-skip calls on spikes beat KOD's own odds, after costs.",
+   "unit": "graded AI calls",
    "group": "live",
    "reader": "llm_arm",
    "params": {
@@ -87,6 +133,10 @@
    "id": "SPEC_REGISTER_US",
    "name": "Speculation Register: US",
    "plain": "Does KOD's frozen 5-day plan on US +30% spikes beat five look-alike 'twin' stocks picked the same day, measured only on the future?",
+   "program": "paper_trading",
+   "short": "US spikes vs look-alikes",
+   "ceo_line": "Whether buying US stocks after a 30%+ day beats look-alikes. Past data says no.",
+   "unit": "graded spikes",
    "group": "live",
    "reader": "spec_register",
    "params": {
@@ -123,6 +173,10 @@
    "id": "SPEC_REGISTER_IDX",
    "name": "Speculation Register: IDX",
    "plain": "Does KOD's frozen 5-day plan on Indonesian limit-up (ARA) spikes beat five look-alike twin stocks picked the same day, measured only on the future?",
+   "program": "paper_trading",
+   "short": "Indonesia spikes vs look-alikes",
+   "ceo_line": "Whether buying Indonesian stocks at their daily limit beats look-alikes. Past data says no.",
+   "unit": "graded spikes",
    "group": "live",
    "reader": "spec_register",
    "params": {
@@ -157,6 +211,10 @@
    "id": "SPEC_REGISTER_CRYPTO",
    "name": "Speculation Register: crypto",
    "plain": "Does KOD's frozen 5-day plan on crypto +30% spikes beat five look-alike twin coins picked the same day, measured only on the future?",
+   "program": "paper_trading",
+   "short": "Crypto spikes vs look-alikes",
+   "ceo_line": "Whether buying coins after a 30%+ day beats look-alike coins. Past data says no.",
+   "unit": "graded spikes",
    "group": "live",
    "reader": "spec_register",
    "params": {
@@ -191,6 +249,10 @@
    "id": "LEARNER_v2_2",
    "name": "LEARNER v2.2",
    "plain": "Can the self-learning model tell which spikes and filings will beat their twins, or make their own pump or dump, better than plain base rates?",
+   "program": "forecaster",
+   "short": "KOD's learning model",
+   "ceo_line": "Whether KOD's self-learning odds beat plain averages, week after week. Earliest answer December 2027.",
+   "unit": "finished 4-week blocks",
    "group": "live",
    "reader": "learner_v22",
    "params": {
@@ -225,6 +287,10 @@
    "id": "LEARNER_v2_4",
    "name": "LEARNER v2.4 (next-day dump challenger)",
    "plain": "For a US stock that just jumped 30% or more, can the model tell which ones will drop at least 10% the very next day while their twins do not?",
+   "program": "forecaster",
+   "short": "Next-day crash spotter",
+   "ceo_line": "Whether KOD can tell which US spikes will drop 10%+ the next day.",
+   "unit": "graded forecasts",
    "group": "live",
    "reader": "learner_v24",
    "params": {
@@ -265,6 +331,10 @@
    "id": "CALL_CERT",
    "name": "Certified dump calls (shadow)",
    "plain": "When the model is confident enough to say 'this spike dumps tomorrow', is it right at least half the time?",
+   "program": "forecaster",
+   "short": "Confident crash calls",
+   "ceo_line": "Whether KOD's surest 'drops 10% tomorrow' calls are right at least half the time.",
+   "unit": "graded calls",
    "group": "live",
    "reader": "call_cert_report",
    "params": {
@@ -291,6 +361,10 @@
    "id": "PAPER_BOOK_v1",
    "name": "KOD paper book (US +30% spikes)",
    "plain": "If KOD buys every US stock that just jumped 30%+ unless it predicts a dump tomorrow, do the skipped spikes do worse, and does the bought list make money?",
+   "program": "paper_trading",
+   "short": "KOD's paper spike book",
+   "ceo_line": "Whether KOD's spike buys make money and its skips do worse. Profit isn't expected.",
+   "unit": "graded spikes",
    "group": "live",
    "reader": "paper_book",
    "params": {
@@ -320,6 +394,10 @@
    "id": "PAPER_ACCOUNT_v1_BASE",
    "name": "Paper account, BASE arm (stop at spike-day low)",
    "plain": "If KOD's BUY_OK spikes are traded in a $10,000 paper account with real risk limits and the stop at the spike day's low, what actually gets filled, rejected and earned?",
+   "program": "paper_trading",
+   "short": "$10k account, spike-low exit",
+   "ceo_line": "$10k practice account, safety exit at the spike day's low, so it seldom trades.",
+   "unit": "closed trades",
    "group": "live",
    "reader": "paper_account",
    "params": {
@@ -350,6 +428,10 @@
    "id": "PAPER_ACCOUNT_v1_FIXED5",
    "name": "Paper account, FIXED5 arm (stop 5% below fill)",
    "plain": "Same $10,000 paper account and same spikes as BASE, but with the stop 5% below the fill: what gets filled, stopped and earned?",
+   "program": "paper_trading",
+   "short": "$10k account, 5% exit",
+   "ceo_line": "Separate $10k practice account, safety exit 5% below cost, so it trades more.",
+   "unit": "closed trades",
    "group": "live",
    "reader": "paper_account",
    "params": {
@@ -380,6 +462,10 @@
    "id": "CRYPTO_ACCOUNT_v1",
    "name": "Crypto spot paper account",
    "plain": "Does a separate 10,000 USDT crypto paper account honestly record what the frozen crypto policy decides (buys filled only at recorded quotes, passes recorded as declines)?",
+   "program": "paper_trading",
+   "short": "Crypto paper account",
+   "ceo_line": "Records every crypto decision in a $10k practice account; currently all are 'don't buy'.",
+   "unit": "closed trades",
    "group": "live",
    "reader": "crypto_account",
    "params": {
@@ -413,6 +499,10 @@
    "id": "PREMOVE_SHADOW_v1",
    "name": "Pre-move shadow trial (12 months)",
    "plain": "Over 12 months, does the 'sequence' model pick crypto coins that are about to jump better than the simpler 'summary' model, and better than a shuffled control?",
+   "program": "early_warning",
+   "short": "Crypto jump radar",
+   "ceo_line": "Whether KOD's newer model spots coin jumps better. Year-long test; may end unclear.",
+   "unit": "graded days",
    "group": "live",
    "reader": "premove_shadow",
    "params": {
@@ -442,6 +532,10 @@
    "id": "CATALYST_SEC13D",
    "name": "Catalyst register: SEC 13D filings",
    "plain": "After an investor files a Schedule 13D (a 5%+ stake) on a US stock, does buying it at the next open beat its look-alike twins over 20 trading days?",
+   "program": "insider_signals",
+   "short": "Big new investor stakes",
+   "ceo_line": "Whether stocks with a new 5%+ investor stake beat look-alikes over the next month.",
+   "unit": "graded filings",
    "group": "live",
    "reader": "catalyst",
    "params": {
@@ -476,7 +570,11 @@
   {
    "id": "CATALYST_SEC13D_V2",
    "name": "Catalyst register: SEC 13D, strict version",
-   "plain": "Same as the 13D test, but only for filings that pass stricter filters (no recent dilution, not already moved, not a microcap): do they beat their twins over 20 days?",
+   "plain": "Same filings as the 13D test, read more fully: it also keeps cases the 13D test drops only because the company's size was unknown (taken from the filing's cover page), and compares each stock with 20 look-alikes instead of 5. Does it beat them over 20 trading days?",
+   "program": "insider_signals",
+   "short": "Investor stakes, 20 look-alikes",
+   "ceo_line": "Same stake question, keeping more cases and judging each against 20 look-alikes, not 5.",
+   "unit": "graded filings",
    "group": "live",
    "reader": "catalyst",
    "params": {
@@ -513,6 +611,10 @@
    "id": "CATALYST_DILUTION_8K",
    "name": "Catalyst register: share-sale 8-Ks (dilution)",
    "plain": "After a US company files an 8-K saying it sold new shares (Item 3.02), does its stock do worse than its twins over 20 trading days?",
+   "program": "insider_signals",
+   "short": "Companies selling new stock",
+   "ceo_line": "Whether companies selling new shares lag look-alikes over a month; if so, avoid them.",
+   "unit": "graded filings",
    "group": "live",
    "reader": "catalyst",
    "params": {
@@ -548,6 +650,10 @@
    "id": "CATALYST_FORM4",
    "name": "Catalyst register: insider buys (Form 4)",
    "plain": "After company insiders buy their own shares on the open market (a Form 4 filing), does the stock beat its twins over 20 trading days?",
+   "program": "insider_signals",
+   "short": "Insiders buying own stock",
+   "ceo_line": "Whether stocks whose insiders buy $50k+ of shares beat look-alikes over the next month.",
+   "unit": "graded filings",
    "group": "live",
    "reader": "catalyst",
    "params": {
@@ -583,6 +689,10 @@
    "id": "CATALYST_FORM4_SHARP",
    "name": "Catalyst register: sharp insider buys",
    "plain": "For the sharpest insider buys (a top executive, or a $100k-$500k purchase, not routine, no recent dilution), does the stock beat its twins over 60 trading days?",
+   "program": "insider_signals",
+   "short": "Insider buys, tight filter",
+   "ceo_line": "Whether insider buys that looked best on past data beat look-alikes over three months.",
+   "unit": "graded filings",
    "group": "live",
    "reader": "catalyst",
    "params": {
@@ -618,6 +728,10 @@
    "id": "CATALYST_DOCUMENT_CLASS",
    "name": "Catalyst register: pooled filing-type test",
    "plain": "Pooling 13D, dilution 8-K and Form 4 filings, does the filing type predict which way a stock moves against its twins over 20 days?",
+   "program": "insider_signals",
+   "short": "All filing signals combined",
+   "ceo_line": "Whether the filing signals together predict which way stocks go. Likely 5-11 months.",
+   "unit": "graded filings",
    "group": "live",
    "reader": "catalyst_pooled",
    "params": {
@@ -650,6 +764,10 @@
    "id": "trend_core_paper",
    "name": "TREND_CORE paper log (BTC/ETH)",
    "plain": "Does the frozen BTC/ETH trend rule (SMA10 vs SMA40, volatility-targeted) run cleanly every day as a 90-day paper log?",
+   "program": "paper_trading",
+   "short": "Bitcoin/Ether trend rule",
+   "ceo_line": "Holds Bitcoin/Ether in uptrends. Passing day 90 lets KOD propose a small real-money trial.",
+   "unit": "days logged",
    "group": "live",
    "reader": "trend_core",
    "params": {
@@ -684,6 +802,10 @@
    "id": "srv:timing_capture_30",
    "name": "30-slot timing capture cohort",
    "plain": "Does the cloud server capture 30 scheduled 4-hourly Binance snapshots (4-9 Nov) on time, with clean clocks and intact evidence?",
+   "program": "timing_lab",
+   "short": "4-hourly price snapshots",
+   "ceo_line": "Whether the cloud server grabs crypto prices reliably and on time. Plumbing, not profit.",
+   "unit": "4-hour slots done",
    "group": "server",
    "reader": "server_study",
    "params": {
@@ -707,12 +829,17 @@
    "fixed_end": "2026-11-09",
    "covers": [
     "TIMING_CAPTURE_v1"
-   ]
+   ],
+   "plumbing": true
   },
   {
    "id": "srv:supplement_30m",
    "name": "30-minute supplement collector",
    "plain": "Does a separate 30-minute collector fill in the gaps between the 4-hourly slots (4-9 Nov) without touching the original cohort?",
+   "program": "timing_lab",
+   "short": "Half-hour price snapshots",
+   "ceo_line": "Whether half-hourly price snapshots arrive on time. Plumbing; no alarm if it stops.",
+   "unit": "half-hour slots due",
    "group": "server",
    "reader": "server_study",
    "params": {
@@ -733,12 +860,17 @@
     "BACKUPS:supplement-30m-v1:HEALTH.json",
     "BACKUPS:supplement-30m-v1:INDEX.json"
    ],
-   "fixed_end": "2026-11-09"
+   "fixed_end": "2026-11-09",
+   "plumbing": true
   },
   {
    "id": "srv:research_r2",
    "name": "30-day research study (R2)",
    "plain": "Over 30 days of live Binance data, how reliable is the feed, how late does KOD actually see big hourly moves, and how much of each move is left by then?",
+   "program": "timing_lab",
+   "short": "30-day live timing study",
+   "ceo_line": "How much reacting in minutes, not hours, matters on crypto jumps after costs.",
+   "unit": "graded big moves",
    "group": "server",
    "reader": "server_study",
    "params": {
@@ -767,6 +899,9 @@
    "id": "srv:capacity_r2_a",
    "name": "Capacity trial A (closed)",
    "plain": "First 48-hour test of whether the new collector fits on the server.",
+   "short": "Server fit test, first try",
+   "outcome": "not_an_idea",
+   "lesson": "Failed its disk-space check at launch and never ran; a second try replaced it 21 minutes later.",
    "group": "closed",
    "reader": "server_study",
    "params": {
@@ -801,6 +936,9 @@
    "id": "srv:capacity_r2_b",
    "name": "Capacity trial B (closed)",
    "plain": "Second 48-hour test: can the new collector capture at least 99% of minute bars on time within 192 MiB and 10% CPU?",
+   "short": "Server fit test, second try",
+   "outcome": "not_an_idea",
+   "lesson": "Stopped early to start the main study; 94% of data arrived on time versus 99% needed.",
    "group": "closed",
    "reader": "server_study",
    "params": {
@@ -834,6 +972,9 @@
    "id": "EARLY_ENTRY_RESEARCH",
    "name": "Early-entry research (the whole lane)",
    "plain": "Can KOD buy a mover before, or fast enough after, it moves and still make money after costs?",
+   "short": "All 'buy movers early' research",
+   "outcome": "not_an_idea",
+   "lesson": "Trading by hand, the jump is over before you can buy; only split-second computer buying ever passed.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -857,6 +998,9 @@
    "id": "INFO_MAGNET_v0",
    "name": "INFO_MAGNET (Upbit listing notices)",
    "plain": "Does buying a coin at the first full hour after an Upbit listing notice beat random coins after a 2% round trip?",
+   "short": "Buying coins after listing news",
+   "outcome": "didnt_work",
+   "lesson": "Coins jump within an hour of the notice; buying the next hour lost about 10% a trade.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -887,6 +1031,9 @@
    "id": "ATTENTION_LEAD_v1",
    "name": "Wikipedia attention lead",
    "plain": "Do Wikipedia attention surges on US stocks that have not moved yet come before big up moves that a buyer could use?",
+   "short": "Wikipedia page-view spikes",
+   "outcome": "didnt_work",
+   "lesson": "Page-view spikes hinted a big move was coming, but crashes as often as jumps; no extra return.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -915,6 +1062,9 @@
    "id": "HERMES_NOV3_REPRO_v1",
    "name": "Reproduction of Hermes's 3 November studies",
    "plain": "Do Hermes's 3 November entry, exit and bear-market conclusions hold when rebuilt from scratch on fresh Binance data?",
+   "short": "Recheck of another AI's studies",
+   "outcome": "not_an_idea",
+   "lesson": "Rebuilt another AI's studies from scratch: nearly all held, but 'winners show by day 3' was wrong.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -944,6 +1094,9 @@
    "id": "RESEARCH_CORRECTIONS_20261104",
    "name": "Look-ahead corrections to NEIGHBOURS and PRESSURE",
    "plain": "After removing a look-ahead bug, do the NEIGHBOURS and PRESSURE null results still stand?",
+   "short": "Bug-fix recheck of two studies",
+   "outcome": "not_an_idea",
+   "lesson": "Fixed a bug that quietly used future information; both earlier 'no' answers still stood.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -966,6 +1119,9 @@
    "id": "NEIGHBOURS_v1",
    "name": "Peer coins and 'next stop'",
    "plain": "Does knowing what a coin's peers did improve KOD's ranking of which coins rise next?",
+   "short": "Following what similar coins do",
+   "outcome": "didnt_work",
+   "lesson": "Knowing what similar coins did made picks slightly worse; nothing made money at your eToro costs.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -988,6 +1144,9 @@
    "id": "PRESSURE_v1",
    "name": "Taker-buy pressure",
    "plain": "Does aggressive buying (taker-buy share) on Binance tell KOD which coins rise next?",
+   "short": "Following aggressive crypto buying",
+   "outcome": "didnt_work",
+   "lesson": "A day of heavy buying pointed slightly the wrong way; crowds arriving usually fade.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1016,6 +1175,9 @@
    "id": "SEESAW_v1",
    "name": "Stablecoin tide / alt seesaw",
    "plain": "Does stablecoin supply or the alts-versus-BTC seesaw at the start of a month predict next month's moonshots?",
+   "short": "Crypto money-flow timing",
+   "outcome": "didnt_work",
+   "lesson": "Money flow describes the crypto market but doesn't predict it; months it flagged as good were worse.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1044,6 +1206,9 @@
    "id": "GROUP_FLOW_v1",
    "name": "Group-backed US jumps",
    "plain": "Do US +30% jumps that happen together with their sector peers hold up better than lone jumps?",
+   "short": "Jumps backed by similar stocks",
+   "outcome": "worked",
+   "lesson": "Passed on past data: backed jumps crashed half as often as lone ones, but still lost money.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1072,6 +1237,9 @@
    "id": "ENTRY_TIMING_v1",
    "name": "When to buy a US +30% spike",
    "plain": "Is there any day after a US +30% spike when buying makes money after costs?",
+   "short": "When to buy US spikes",
+   "outcome": "didnt_work",
+   "lesson": "None of 120 buy-timing rules was reliable; the best one lost money on a second period.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1095,6 +1263,9 @@
    "id": "HERMES_COMBO_HOLDOUT_v1",
    "name": "Hermes ignition combo holdout",
    "plain": "Do Hermes's two frozen crypto 'ignition' combo rules make money on 2023-2026 data?",
+   "short": "Another AI's crypto breakout combo",
+   "outcome": "didnt_work",
+   "lesson": "2020-21 gains were the bull market. Since 2023 most trades lost; big winners kept the average near flat.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1123,6 +1294,9 @@
    "id": "BINANCE_ANN_1M",
    "name": "Binance futures-launch announcements (1-minute)",
    "plain": "Can a buyer enter after a Binance futures-launch announcement and still catch the move?",
+   "short": "Buying on exchange announcements",
+   "outcome": "didnt_work",
+   "lesson": "The price moves inside the announcement minute; by the time you can buy, it's gone.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1150,6 +1324,9 @@
    "id": "BINANCE_ANN_1S_HOLDOUT",
    "name": "Binance announcements, seconds-scale holdout",
    "plain": "Does the seconds-scale announcement entry that passed in 2020-2023 also work on 2024-2026?",
+   "short": "Split-second announcement trade, recent years",
+   "outcome": "no_answer",
+   "lesson": "A 2-second computer trade passed on 2020-23 data; the recheck never ran, too few cases since 2024.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1179,6 +1356,9 @@
    "id": "US_PLUS30_ENTRY_LINE",
    "name": "US 'buy after a +30% day' line",
    "plain": "Should KOD keep testing buying US stocks the day after a +30% day?",
+   "short": "Buying US stocks after +30%",
+   "outcome": "didnt_work",
+   "lesson": "Retired: every test of buying US stocks the day after a 30% jump lost money.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1201,6 +1381,9 @@
    "id": "G2_RET30_CRYPTO_ENTRY",
    "name": "Crypto 'buy the day after a +30% day'",
    "plain": "Should KOD keep testing buying a coin the day after a +30% day?",
+   "short": "Buying coins after +30% days",
+   "outcome": "didnt_work",
+   "lesson": "Retired: about 3% worse per 5-day trade than random coins; better exits didn't fix it.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1223,6 +1406,9 @@
    "id": "LIQ_REBOUND_v1",
    "name": "Crypto liquidation rebound",
    "plain": "Does buying BTC/ETH after a forced-deleveraging crash and holding 72 hours make money?",
+   "short": "Buying Bitcoin/Ether after forced-selling crashes",
+   "outcome": "didnt_work",
+   "lesson": "After forced-selling crashes, prices kept falling instead of bouncing; the test account lost about 24%.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1251,6 +1437,9 @@
    "id": "MSCI_DELETION_v1",
    "name": "MSCI Indonesia deletions (development)",
    "plain": "Does buying IDX stocks deleted from MSCI indexes at the closing auction make money over 20 sessions (2019-2022)?",
+   "short": "Index-dropped stocks, early test",
+   "outcome": "didnt_work",
+   "lesson": "Looked great on 2019-22 data, about +14% a trade, then lost money on newer years.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1279,6 +1468,9 @@
    "id": "MSCI_DELETION_OOT_v1",
    "name": "MSCI Indonesia deletions (out of time)",
    "plain": "Does the same frozen MSCI-deletion rule work on the 2025-2026 reviews?",
+   "short": "Index-dropped stocks, newer years",
+   "outcome": "didnt_work",
+   "lesson": "On 2025-26 data it had never seen, buying them lost 4.2% a trade; the test account fell 19%.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1307,6 +1499,9 @@
    "id": "MSCI_DELETION_OPT_v1",
    "name": "MSCI deletions, holding-period optimisation",
    "plain": "Does choosing the holding period by walk-forward rescue the MSCI-deletion rule?",
+   "short": "Index-dropped stocks, holding time",
+   "outcome": "didnt_work",
+   "lesson": "Choosing a better holding time didn't rescue it; returns after costs still failed the bar.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1335,6 +1530,9 @@
    "id": "VIX_BASIS_v1",
    "name": "VIX futures contango premium",
    "plain": "Does selling VIX futures only in contango earn the volatility premium after costs on unseen years?",
+   "short": "Selling 'fear index' futures",
+   "outcome": "didnt_work",
+   "lesson": "Strong in the years its research paper studied; far weaker after, and lost money when costs doubled.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1363,6 +1561,9 @@
    "id": "AVOID_TILT_v1",
    "name": "Avoid recent +30% names (US)",
    "plain": "Does a US portfolio that skips stocks with a recent +30% day beat the same portfolio without the skip?",
+   "short": "Skip stocks after +30% jumps",
+   "outcome": "worked",
+   "lesson": "Passed on 2024-26 data: skipping 30% jumpers added about 2% a year, but still trailed an index fund.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1385,6 +1586,9 @@
    "id": "ADMISSION_HOLDOUT_v1",
    "name": "Fresh 10-15% admission rule, holdout",
    "plain": "Does admitting only fresh alerts in the 10-15% band improve the crypto account on 2024-2026?",
+   "short": "Pickier crypto entry rule",
+   "outcome": "didnt_work",
+   "lesson": "Failed its main check on 2024-26 data: both versions lost about 20%. Only the side checks looked better.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1407,6 +1611,9 @@
    "id": "FILTER_BUY_v1",
    "name": "Buy filter on KOD's kept spikes",
    "plain": "Does KOD's filter pick US spikes that are better to buy than all spikes?",
+   "short": "KOD's filter for buying spikes",
+   "outcome": "didnt_work",
+   "lesson": "Didn't improve same-day buys. Skipping flagged spikes looked helpful over 5 days, but that wasn't the main test.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1429,6 +1636,9 @@
    "id": "PROFIT_REPLAY_v1",
    "name": "Profit replay of the short calls",
    "plain": "Would shorting KOD's flagged US spikes for one day have been reliably profitable after costs?",
+   "short": "Betting against flagged US spikes",
+   "outcome": "didnt_work",
+   "lesson": "The drop happens overnight before you can bet against it; a few sudden rebounds wiped out gains.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1451,6 +1661,9 @@
    "id": "US_INSIDER_OFFICER_v1",
    "name": "US officer insider buys",
    "plain": "Do US stocks bought by their own officers beat the market enough to trade?",
+   "short": "Following executives buying own stock",
+   "outcome": "didnt_work",
+   "lesson": "Executives' purchases did a bit better, but too few cases to tell it apart from luck.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1473,6 +1686,9 @@
    "id": "LEAD_LADDER_INTL_v1",
    "name": "Lead ladder, international",
    "plain": "Do the pre-move features found in IDX replicate on other exchanges?",
+   "short": "Early-warning signs, other countries",
+   "outcome": "didnt_work",
+   "lesson": "Earlier warning signs didn't repeat in nine other markets; they predict big moves, not direction.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1495,6 +1711,9 @@
    "id": "FLOW_IDX_v1",
    "name": "IDX foreign/broker flow lead",
    "plain": "Does money flow in IDX stocks show up before their big up moves?",
+   "short": "Big-money buying in Indonesian stocks",
+   "outcome": "didnt_work",
+   "lesson": "Foreign and big-buyer activity didn't show up before big rises; 0 of 256 checks passed.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1517,6 +1736,9 @@
    "id": "E1",
    "name": "E1: IDX moonshot detector (D1)",
    "plain": "Can a detector spot IDX stocks starting a big repricing, and does buying them make money?",
+   "short": "Spotting Indonesian stock jumps",
+   "outcome": "didnt_work",
+   "lesson": "Spotted jumps under way, but caught only 1 in 10 in time; buying lost 4% a trade.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1540,6 +1762,9 @@
    "id": "E2",
    "name": "E2: US and crypto big-up-day detectors",
    "plain": "Does buying US stocks or coins the day after a detector's big-up-day flag make money?",
+   "short": "Big-mover detector, stocks and crypto",
+   "outcome": "didnt_work",
+   "lesson": "Flagged movers only after they'd moved; buying next day lost 3.7% a trade in stocks, 1.9% in crypto.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1562,6 +1787,9 @@
    "id": "E3",
    "name": "E3: IDX execution plans",
    "plain": "Is there an execution plan (entry/exit) that makes the IDX ARA detectors tradable?",
+   "short": "Buy/sell plans for Indonesian jumps",
+   "outcome": "didnt_work",
+   "lesson": "None of 108 buy-and-sell plans qualified; every one lost money in 2022.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1584,6 +1812,9 @@
    "id": "IGNITION_SCAN_v0",
    "name": "Hermes ignition scan (crypto, hourly)",
    "plain": "Can KOD catch crypto moves in their first hours, and does buying every ignition make money?",
+   "short": "Catching crypto moves within hours",
+   "outcome": "didnt_work",
+   "lesson": "Caught moves within hours, but typical coins were already up 14%; buying all lost 4% a trade.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1606,6 +1837,9 @@
    "id": "CALL_CERT_v1",
    "name": "Call certificate history check (closed)",
    "plain": "On past data, could the machine certify a calling bar that keeps its 'dumps tomorrow' calls right at least half the time?",
+   "short": "Certifying 'falls tomorrow' calls",
+   "outcome": "worked",
+   "lesson": "In 2023, 'falls 10% tomorrow' calls were right 70% vs 35% by chance; betting on them didn't pay.",
    "group": "closed",
    "reader": "closed_record",
    "params": {
@@ -1648,6 +1882,9 @@
    "id": "LEARNER_v1",
    "name": "LEARNER v1 (withdrawn)",
    "plain": "The first self-learning forecaster; its claim was withdrawn before any outcome existed and LEARNER v2 replaced it.",
+   "short": "First self-learning forecaster",
+   "outcome": "no_answer",
+   "lesson": "Pulled before any results: its scoring could pass it without real skill. A fixed version replaced it.",
    "group": "closed",
    "reader": "closed_record",
    "params": {

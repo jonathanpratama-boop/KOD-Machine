@@ -12,8 +12,10 @@ What it does
     Every entry names a reader function below. The reader returns counts, an as-of time and
     the record times behind its counts. A reader that throws gives an UNKNOWN row plus a
     gaps.json READ_ERROR row; the build never stops because of one experiment.
-  * Writes experiments.json, history.json, runs.json, run_days.json, server.json,
-    server_history.json, events.json, gaps.json and build.json into --out.
+  * Writes experiments.json, programs.json, summary.json, history.json, runs.json,
+    run_days.json, server.json, server_history.json, events.json, gaps.json and build.json
+    into --out. programs.json and summary.json are the owner's view: registry programs (groups
+    of live tests) and one row of headline numbers.
 
 Rules it enforces
   * EVIDENCE COLLECTED (records made), SCORED (outcomes that can be evaluated) and NEEDED (what
@@ -55,6 +57,23 @@ RUN_DAYS = 30  # run_days.json: last 30 session dates per job
 PROJECTION_WINDOW = 14  # days of history behind projected_date ...
 PROJECTION_MIN_DAYS = 7  # ... or the days since the first record, but never fewer than this
 LIVE_STATES = ("RUNNING", "WAITING")
+BAD_STATES = ("HALTED", "STALLED", "UNKNOWN")  # a row in one of these carries a plain `issue`
+GAIN_DAYS = 7  # programs.json: scored_7d / collected_7d look back this many WIB days
+OUTCOMES = ("worked", "didnt_work", "no_answer", "not_an_idea")  # registry `outcome` values
+# Plain names for the catalyst filing feeds, used in a stalled feed's `issue` text. A registry
+# entry's params.feed_plain overrides this.
+FEED_PLAIN = {
+    "SEC13D": "investor-stake filings",
+    "SEC13D_V2": "investor-stake filings",
+    "DILUTION_8K": "share-offering filings",
+    "FORM4": "insider filings",
+    "FORM4_SHARP": "insider filings",
+}
+# Word limits for the owner-facing registry text (over the limit: a build warning, not an error).
+WORD_LIMITS = {
+    "live": {"short": 4, "ceo_line": 14, "unit": 3},
+    "closed": {"short": 5, "lesson": 18},
+}
 
 
 # ===================================================================================== time helpers
@@ -107,6 +126,22 @@ def at_utc(day: date, hhmm: str, plus_days: int = 0) -> datetime:
 def newest(stamps) -> str | None:
     values = [norm_iso(s) for s in stamps if s]
     return max(values) if values else None
+
+
+def plain_day(day: str, today: str) -> str:
+    """'2026-11-04' -> 'Nov 4' (with the year when it is not `today`'s year)."""
+    value = date.fromisoformat(day)
+    text = f"{value:%b} {value.day}"
+    return text if day[:4] == today[:4] else f"{text}, {value.year}"
+
+
+def plural(count: int, word: str) -> str:
+    return f"{count} {word}" + ("" if count == 1 else "s")
+
+
+def days_since(stamp: str, now: datetime) -> int:
+    """Whole days from a record time to the build time (at least 1)."""
+    return max(1, int((now - parse_ts(stamp)).total_seconds() // 86400))
 
 
 # ===================================================================================== git access
@@ -236,6 +271,7 @@ def reading(**values) -> dict:
         "needed": "registry",
         "projected_fixed": None,
         "gaps": [],
+        "issue": None,  # plain words (<= 10) when the reader sets STALLED or HALTED
     }
     base.update(values)
     return base
@@ -896,7 +932,7 @@ def read_crypto_account(ctx: Ctx, p: dict) -> dict:
         and scan_market(r) == "CRYPTO"
         and r.get("session", "") >= p["first_signal"]
     ]
-    state, notes, events = None, [], []
+    state, notes, events, issue = None, [], [], None
     last_write = newest(stamps)
     grace = timedelta(hours=p.get("backlog_grace_hours", 6))
     if backlog:
@@ -906,6 +942,12 @@ def read_crypto_account(ctx: Ctx, p: dict) -> dict:
         idle = account_age is None or account_age > timedelta(hours=p["account_stale_hours"])
         if late or idle:
             state = "STALLED"
+            days = sorted({wib_day(r["decided_at"]) for r in backlog})
+            issue = (
+                f"{plural(len(backlog), 'crypto decision')} "
+                f"{'from' if len(days) == 1 else 'since'} {plain_day(days[0], ctx.today_wib)} "
+                "not recorded"
+            )
             since = (
                 iso(parse_ts(oldest) + grace)
                 if late or not last_write
@@ -943,6 +985,7 @@ def read_crypto_account(ctx: Ctx, p: dict) -> dict:
         scored=len(exits),
         as_of=newest(stamps + checked),
         state=state,
+        issue=issue,
         collected_times=[r["made_at"] for r in decided.values()],
         scored_times=[r.get("recorded_at") or r.get("made_at") for r in exits],
         note=notes,
@@ -1036,6 +1079,12 @@ def never_batched_sessions(
     return out
 
 
+def stalled_feed_issue(ctx: Ctx, p: dict, family: str, last_batch: str) -> str:
+    """Plain `issue` for a stopped catalyst feed, e.g. 'No new insider filings batch for 7 days'."""
+    feed = p.get("feed_plain") or FEED_PLAIN.get(family, "filings")
+    return f"No new {feed} batch for {plural(days_since(last_batch, ctx.now), 'day')}"
+
+
 def coverage_gap(batch: dict) -> bool:
     return (
         batch.get("coverage_gap") is True or (batch.get("feed") or {}).get("coverage_gap") is True
@@ -1071,11 +1120,12 @@ def read_catalyst(ctx: Ctx, p: dict) -> dict:
         "sessions "
         f"{len({r['signal_session'] for r in scored})} of {p.get('look_sessions', 15)} needed"
     ]
-    state = None
+    state, issue = None, None
     if missed:
         notes.append(f"no batch for US session(s) {', '.join(missed)} since the last one")
         if len(missed) >= p.get("stall_after_missed", 2):
             state = "STALLED"
+            issue = stalled_feed_issue(ctx, p, family, max(b["sealed_at"] for b in batches))
     holes = never_batched_sessions(
         ctx, batches, p.get("calendar", "NYSE"), p.get("batch_due_utc", "14:00")
     )
@@ -1132,6 +1182,7 @@ def read_catalyst(ctx: Ctx, p: dict) -> dict:
         scored=len(scored),
         as_of=newest(stamps),
         state=state,
+        issue=issue,
         collected_times=[s["sealed_at"] for s in sets.values()],
         scored_times=[r["resolved_at"] for r in scored],
         note=notes,
@@ -1176,6 +1227,7 @@ def read_catalyst_pooled(ctx: Ctx, p: dict) -> dict:
         "FIRE parents by family: " + ", ".join(f"{f} {by_family.get(f, 0)}" for f in families),
         "last batch by family: " + ", ".join(f"{f} {last_batch[f]}" for f in families),
     ]
+    issue = None
     if stalled:
         notes.insert(
             0,
@@ -1183,6 +1235,14 @@ def read_catalyst_pooled(ctx: Ctx, p: dict) -> dict:
             + ", ".join(f"{f} (last batch {last_batch[f]})" for f in stalled)
             + "; as_of is the newest pooled record, the other families are still feeding",
         )
+        longest = min(stalled, key=lambda f: last_batch[f])
+        if len(stalled) == 1:
+            issue = stalled_feed_issue(ctx, {}, longest, last_batch[longest])
+        else:
+            issue = (
+                f"{len(stalled)} filing feeds stopped; longest "
+                f"{plural(days_since(last_batch[longest], ctx.now), 'day')}"
+            )
     stamps = [
         r.get("sealed_at") or r.get("resolved_at")
         for r in rows
@@ -1193,6 +1253,7 @@ def read_catalyst_pooled(ctx: Ctx, p: dict) -> dict:
         scored=len(scored),
         as_of=newest(stamps),
         state="STALLED" if stalled else None,
+        issue=issue,
         collected_times=[s["sealed_at"] for s in fire.values()],
         scored_times=[r["resolved_at"] for r in scored],
         note=notes,
@@ -1315,7 +1376,8 @@ def summarize_cohort(ctx: Ctx, p: dict, ref: str) -> dict:
     as_of = parse_ts(health["as_of"])
     due = [s for s in health["slots"] if parse_ts(s["scheduled_at"]) <= as_of]
     issues = list(health.get("issues") or [])
-    issues += [f"slot {s} not captured" for s in report.get("noncaptured_terminal_slots", [])]
+    missed = list(report.get("noncaptured_terminal_slots", []))
+    issues += [f"slot {s} not captured" for s in missed]
     if health.get("evidence_integrity_ok") is False:
         issues.append("evidence_integrity_ok false")
     status = (
@@ -1333,6 +1395,8 @@ def summarize_cohort(ctx: Ctx, p: dict, ref: str) -> dict:
         "planned": report.get("planned_slots", len(health["slots"])),
         "scored": report.get("terminal_slots"),
         "issues": issues,
+        "missed": len(missed),
+        "integrity_bad": health.get("evidence_integrity_ok") is False,
         "ends_at": norm_iso(report.get("last_scheduled_at")),
     }
 
@@ -1356,6 +1420,7 @@ def summarize_supplement(ctx: Ctx, p: dict, ref: str) -> dict:
         "planned": len(own),
         "scored": len(due),
         "issues": issues,
+        "missed": len(bad),
         "ends_at": norm_iso(view.get("end_at")),
     }
 
@@ -1409,6 +1474,22 @@ SERVER_SUMMARIES = {
     "supplement": summarize_supplement,
     "collector": summarize_collector,
 }
+
+
+def server_issue(status: str, summary: dict) -> str | None:
+    """Plain `issue` for a server study that is HALTED, STALLED or UNKNOWN (else None)."""
+    if status == "HALTED":
+        paused = summary.get("phase") == "PAUSED" or "COLLECTOR_PAUSED" in summary["issues"]
+        return "Server data collector is paused" if paused else "Server data collector has stopped"
+    if status == "STALLED":
+        if summary.get("missed"):
+            return f"{plural(summary['missed'], 'scheduled capture')} missed"
+        if summary.get("integrity_bad"):
+            return "Saved server data failed its integrity check"
+        return "Server reported a problem"
+    if status == "UNKNOWN":
+        return "Server status could not be read"
+    return None
 
 
 def r2_capacity_closure(ctx: Ctx, p: dict) -> dict | None:
@@ -1511,6 +1592,7 @@ def read_server_study(ctx: Ctx, p: dict) -> dict:
         scored=now_summary["scored"],
         as_of=now_summary["as_of"],
         state=status,
+        issue=server_issue(status, now_summary),
         server=server,
         server_history=history,
         note=notes,
@@ -2099,8 +2181,20 @@ def build_experiment(ctx: Ctx, entry: dict, gaps: list) -> dict:
     notes = list(result["note"])
     events = list(result["events"])
     state = result["state"] or "RUNNING"
+    closed = entry["group"] == "closed"
+    issue = result.get("issue")
     if error is not None:
         notes.insert(0, f"reader failed: {type(error).__name__}")
+        if isinstance(error, SourceMissing):
+            issue = (
+                "Its written result is missing" if closed else "A record file it needs is missing"
+            )
+        else:
+            issue = (
+                "Its written result no longer matches"
+                if closed
+                else "Its records could not be read"
+            )
     if error is None:
         try:
             unchanged, protocol_note = check_protocol(ctx, entry)
@@ -2110,6 +2204,11 @@ def build_experiment(ctx: Ctx, entry: dict, gaps: list) -> dict:
             notes.append(protocol_note)
         if not unchanged:
             state = "UNKNOWN"
+            issue = (
+                "Its locked test rules file is missing"
+                if protocol_note.startswith("protocol file missing")
+                else "Its locked test rules were edited"
+            )
             gaps.append(
                 {
                     "kind": "READ_ERROR",
@@ -2129,13 +2228,32 @@ def build_experiment(ctx: Ctx, entry: dict, gaps: list) -> dict:
     state, stale_note = freshness(state, result["as_of"], entry.get("stale_after_hours"), ctx.now)
     if stale_note:
         notes.insert(0, "UNKNOWN: " + stale_note)
+        issue = (
+            f"No update since {plain_day(wib_day(result['as_of']), ctx.today_wib)}"
+            if result["as_of"]
+            else "No records yet"
+        )
+    if state not in BAD_STATES:
+        issue = None
+    elif not issue:
+        issue = {
+            "HALTED": "Paused",
+            "STALLED": "Stopped making new records",
+            "UNKNOWN": "Status could not be confirmed",
+        }[state]
     needed = entry.get("needed") if result["needed"] == "registry" else result["needed"]
     history = history_rows(entry, result, ctx.today_wib) if error is None else []
     projected, projection_note = (None, None)
-    if entry["group"] != "closed" and error is None:
+    verdict_date, verdict_basis = None, None
+    if not closed and error is None:
         projected, projection_note = projection(
             history, result["scored"], needed, ctx.today_wib, entry.get("projection")
         )
+        if projected:
+            verdict_date, verdict_basis = projected, "estimate"
+        server_end = (result["server"] or {}).get("ends_at")
+        if entry["group"] == "server" and server_end:
+            verdict_date, verdict_basis = wib_day(server_end), "scheduled"
         fixed_end = result["projected_fixed"] or entry.get("fixed_end")
         if fixed_end:
             projection_note = (
@@ -2143,6 +2261,10 @@ def build_experiment(ctx: Ctx, entry: dict, gaps: list) -> dict:
                 f"the pace-based estimate would be {projected or 'none'}"
             )
             projected = fixed_end
+            verdict_date, verdict_basis = fixed_end, "scheduled"
+    if state == "CLOSED" or entry.get("plumbing"):
+        # a plumbing check (data collection that answers no question) has an end, not a verdict
+        verdict_date, verdict_basis = None, None
     if projection_note:
         notes.append(projection_note)
     if entry.get("next_date") and entry["next_date"] < ctx.today_wib and entry["group"] != "closed":
@@ -2176,6 +2298,17 @@ def build_experiment(ctx: Ctx, entry: dict, gaps: list) -> dict:
         "verdict": entry.get("verdict") if state == "CLOSED" else None,
         "source": "; ".join(entry.get("sources", [])),
         "note": "; ".join(notes),
+        # owner-facing view (registry text; null until the registry carries it)
+        "program": entry.get("program"),
+        "short": entry.get("short"),
+        "ceo_line": entry.get("ceo_line"),
+        "unit": entry.get("unit"),
+        "outcome": entry.get("outcome"),
+        "lesson": entry.get("lesson"),
+        "issue": issue,
+        "verdict_date": verdict_date,
+        "verdict_basis": verdict_basis,
+        "plumbing": bool(entry.get("plumbing")),
     }
     return {
         "row": row,
@@ -2348,6 +2481,140 @@ def gap_detector(ctx: Ctx) -> list[dict]:
     return gaps
 
 
+# ============================================================================ owner view: programs
+def gain(points: list[dict], key: str, today: str, days: int = GAIN_DAYS) -> int | None:
+    """How much a cumulative history count grew over the last `days` WIB days (None without
+    history). The value on a day is the latest row on or before it, 0 before the first row."""
+    series = sorted((h["date"], h[key]) for h in points if h.get(key) is not None)
+    if not series:
+        return None
+    back = (date.fromisoformat(today) - timedelta(days=days)).isoformat()
+
+    def value_on(day: str) -> int:
+        return next((v for d, v in reversed(series) if d <= day), 0)
+
+    return value_on(today) - value_on(back)
+
+
+def program_lead(program: dict, members: list[dict]) -> dict | None:
+    """Registry `lead` if set; else the member with the earliest verdict_date; else the highest
+    fraction; else the first member (registry order breaks every tie)."""
+    if not members:
+        return None
+    by_id = {m["id"]: m for m in members}
+    if program.get("lead") in by_id:
+        return by_id[program["lead"]]
+    dated = [m for m in members if m["verdict_date"]]
+    if dated:
+        return min(dated, key=lambda m: m["verdict_date"])
+    with_fraction = [m for m in members if m["fraction"] is not None]
+    if with_fraction:
+        return max(with_fraction, key=lambda m: m["fraction"])  # max keeps the first of a tie
+    return members[0]
+
+
+def soonest_stale(members: list[dict]) -> dict | None:
+    """The member whose as_of + stale_after_hours comes first (no as_of: already stale; no limit:
+    never), so the program is stale on the viewer's clock exactly when any member is. CLOSED
+    members are never aged, so they only count when nothing else is left."""
+    pool = [m for m in members if m["state"] != "CLOSED"] or members
+    if not pool:
+        return None
+
+    def deadline(m: dict) -> datetime:
+        if m["as_of"] is None:
+            return datetime.min.replace(tzinfo=UTC)
+        if m["stale_after_hours"] is None:
+            return datetime.max.replace(tzinfo=UTC)
+        return parse_ts(m["as_of"]) + timedelta(hours=m["stale_after_hours"])
+
+    return min(pool, key=deadline)
+
+
+def build_programs(registry: dict, rows: list[dict], history: list[dict], today: str) -> list[dict]:
+    """programs.json: one row per registry program, summarised from its live/server members."""
+    by_exp = defaultdict(list)
+    for h in history:
+        by_exp[h["experiment"]].append(h)
+    out = []
+    programs = registry.get("programs") or []
+    for position, program in sorted(
+        enumerate(programs), key=lambda item: (item[1].get("order", item[0]), item[0])
+    ):
+        members = [r for r in rows if r["program"] == program["id"] and r["group"] != "closed"]
+        lead = program_lead(program, members)
+        bad = [m for m in members if m["state"] in BAD_STATES]
+        if bad:
+            status = "issue"
+        elif all(m["state"] == "WAITING" for m in members):
+            status = "waiting"
+        else:
+            status = "running"
+        lead_history = by_exp.get(lead["id"], []) if lead else []
+        started = [h["date"] for m in members for h in by_exp.get(m["id"], [])]
+        fresh = soonest_stale(members)
+        upcoming = [m for m in members if m["verdict_date"] and m["verdict_date"] >= today]
+        nxt = min(upcoming, key=lambda m: m["verdict_date"]) if upcoming else None
+        out.append(
+            {
+                "id": program["id"],
+                "name": program["name"],
+                "question": program.get("question"),
+                "order": program.get("order", position),
+                "tests": len(members),
+                "lead": lead["id"] if lead else None,
+                "lead_short": lead["short"] if lead else None,
+                "status": status,
+                "issue": bad[0]["issue"] if bad else None,
+                "scored": lead["scored"] if lead else None,
+                "needed": lead["needed"] if lead else None,
+                "progress": lead["fraction"] if lead else None,
+                "unit": lead["unit"] if lead else None,
+                "scored_7d": gain(lead_history, "scored", today) if lead else None,
+                "collected": lead["collected"] if lead else None,
+                "collected_7d": gain(lead_history, "collected", today) if lead else None,
+                "verdict_date": lead["verdict_date"] if lead else None,
+                "verdict_basis": lead["verdict_basis"] if lead else None,
+                # the earliest verdict any member is due to reach (registry order breaks ties)
+                "next_verdict_date": nxt["verdict_date"] if nxt else None,
+                "next_verdict_basis": nxt["verdict_basis"] if nxt else None,
+                "next_verdict_what": nxt["short"] if nxt else None,
+                "started": min(started) if started else None,
+                "as_of": fresh["as_of"] if fresh else None,
+                "stale_after_hours": fresh["stale_after_hours"] if fresh else None,
+            }
+        )
+    return out
+
+
+def build_summary(
+    rows: list[dict], programs: list[dict], history: list[dict], today: str, built_at: str
+) -> dict:
+    """summary.json's single row: the owner's headline numbers."""
+    live = [r for r in rows if r["group"] in ("live", "server")]
+    closed = [r for r in rows if r["group"] == "closed"]
+    outcomes = Counter(r["outcome"] for r in closed)
+    upcoming = [p for p in programs if p["next_verdict_date"] and p["next_verdict_date"] >= today]
+    first = min(upcoming, key=lambda p: p["next_verdict_date"]) if upcoming else None
+    return {
+        "proven_live": sum(r["outcome"] == "worked" for r in live),
+        "live_tests": len(live),
+        "programs": len(programs),
+        "ideas_tested": sum(r["outcome"] != "not_an_idea" for r in closed),
+        "worked": outcomes["worked"],
+        "didnt_work": outcomes["didnt_work"],
+        "no_answer": outcomes["no_answer"],
+        "checks": outcomes["not_an_idea"],
+        "next_verdict_date": first["next_verdict_date"] if first else None,
+        "next_verdict_program": first["name"] if first else None,
+        "next_verdict_what": first["next_verdict_what"] if first else None,
+        "next_verdict_basis": first["next_verdict_basis"] if first else None,
+        "issues": sum(p["status"] == "issue" for p in programs),
+        "first_record_date": min((h["date"] for h in history), default=None),
+        "built_at": built_at,
+    }
+
+
 # ================================================================================= output trimming
 def thin_server_history(rows: list[dict], now: datetime) -> list[dict]:
     """Keep 30 days; every heartbeat in the last 48 h, older ones one per study per 6 h; status
@@ -2396,7 +2663,47 @@ def load_registry(path: Path) -> dict:
     unknown = [e["id"] for e in registry["experiments"] if e["reader"] not in READERS]
     if unknown:
         raise SystemExit(f"registry entries name unknown readers: {unknown}")
+    programs = registry.get("programs") or []
+    program_ids = Counter(p["id"] for p in programs)
+    duplicates = [k for k, n in program_ids.items() if n > 1]
+    if duplicates:
+        raise SystemExit(f"registry has duplicate program ids: {duplicates}")
+    members = defaultdict(set)
+    for e in registry["experiments"]:
+        if e.get("program") is not None:
+            if e["program"] not in program_ids:
+                raise SystemExit(f"registry entry {e['id']} names unknown program {e['program']}")
+            members[e["program"]].add(e["id"])
+        if e.get("outcome") is not None and e["outcome"] not in OUTCOMES:
+            raise SystemExit(
+                f"registry entry {e['id']} has outcome {e['outcome']!r}; use one of {OUTCOMES}"
+            )
+    for p in programs:
+        if p.get("lead") is not None and p["lead"] not in members[p["id"]]:
+            raise SystemExit(f"program {p['id']} lead {p['lead']} is not one of its entries")
     return registry
+
+
+def registry_warnings(registry: dict) -> list[str]:
+    """Owner-view text that is missing or over its word limit (the build still runs)."""
+    out, unassigned, no_outcome = [], [], []
+    for e in registry["experiments"]:
+        kind = "closed" if e["group"] == "closed" else "live"
+        if kind == "live" and e.get("program") is None:
+            unassigned.append(e["id"])
+        if kind == "closed" and e.get("outcome") is None:
+            no_outcome.append(e["id"])
+        for key, limit in WORD_LIMITS[kind].items():
+            words = len(str(e.get(key) or "").split())
+            if words > limit:
+                out.append(f"{e['id']}.{key} has {words} words (limit {limit})")
+    if unassigned:
+        out.append(
+            f"{len(unassigned)} live/server entries have no program: {', '.join(unassigned)}"
+        )
+    if no_outcome:
+        out.append(f"{len(no_outcome)} closed entries have no outcome: {', '.join(no_outcome)}")
+    return out
 
 
 def build(args) -> dict:
@@ -2471,10 +2778,14 @@ def build(args) -> dict:
         }
     ]
     server_history = thin_server_history(server_history, now)
+    programs = build_programs(registry, experiments, history, ctx.today_wib)
+    summary = build_summary(experiments, programs, history, ctx.today_wib, iso(now))
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     datasets = {
         "experiments.json": (experiments, None),
+        "programs.json": (programs, None),
+        "summary.json": ([summary], None),
         "history.json": (history, "date"),
         "runs.json": (runs, None),
         "run_days.json": (run_days, "date"),
@@ -2491,6 +2802,9 @@ def build(args) -> dict:
         sizes[name] = (len(rows), write_json(out, name, rows))
     return {
         "experiments": experiments,
+        "programs": programs,
+        "summary": summary,
+        "warnings": registry_warnings(registry),
         "gaps": gaps,
         "events": events,
         "runs": runs,
@@ -2514,6 +2828,7 @@ def print_summary(result: dict, out: str) -> None:
             print(
                 f"  {row['id']:26s} {row['state']:8s} collected {row['collected']!s:>6} "
                 f"scored {row['scored']!s:>5} needed {row['needed']!s:>5} as_of {row['as_of']}"
+                + (f" issue: {row['issue']}" if row["issue"] else "")
             )
     closed = [r for r in result["experiments"] if r["group"] == "closed"]
     print(
@@ -2525,6 +2840,22 @@ def print_summary(result: dict, out: str) -> None:
             f"  server {server['study']:22s} {server['status']:8s} coverage {server['coverage']} "
             f"captured {server['captured']} as_of {server['as_of']}"
         )
+    for program in result["programs"]:
+        print(
+            f"  program {program['id']:20s} {program['status']:7s} tests {program['tests']} "
+            f"lead {program['lead']} verdict {program['verdict_date']} ({program['verdict_basis']}) "
+            f"next {program['next_verdict_date']} {program['next_verdict_what']}"
+            + (f" issue: {program['issue']}" if program["issue"] else "")
+        )
+    summary = result["summary"]
+    print(
+        f"summary: {summary['live_tests']} live tests in {summary['programs']} programs, "
+        f"{summary['ideas_tested']} ideas tested ({summary['worked']} worked, "
+        f"{summary['didnt_work']} did not, {summary['no_answer']} no answer), "
+        f"next verdict {summary['next_verdict_date']} ({summary['next_verdict_what']})"
+    )
+    for warning in result["warnings"]:
+        print(f"  registry: {warning}")
     day_states = Counter(d["status"] for d in result["run_days"])
     print("run_days: " + ", ".join(f"{k} {v}" for k, v in sorted(day_states.items())))
     print(

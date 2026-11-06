@@ -1,0 +1,1067 @@
+<meta name="dash-one-writer">
+<style>
+  .ks { display: grid; gap: var(--cds-gap-xl); font-family: var(--font-anthropic-sans); font-variant-numeric: tabular-nums; }
+  .ks h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; }
+  .ks h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; text-wrap: balance; }
+  .ks h3 { font-size: var(--cds-font-size-body); font-weight: var(--cds-font-weight-medium); margin: 0; }
+  .ks p { margin: 0; }
+  .ks [hidden] { display: none !important; }
+  .ks > *, .ks-card > *, .kx-tab > * { min-width: 0; }
+  .ks b { font-weight: var(--cds-font-weight-medium); }
+
+  /* app bar + tabs */
+  .kx-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--cds-gap-sm) var(--cds-gap-md); }
+  .kx-brand { display: flex; align-items: baseline; gap: var(--cds-gap-sm); }
+  .kx-brand span { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .kx-status { display: flex; align-items: center; gap: var(--cds-gap-sm); flex-wrap: wrap; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .kx-health { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.2rem 0.65rem; border-radius: 999px; border: 1px solid var(--color-border-line); background: var(--color-panel); color: var(--color-fg); }
+  .kx-dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; display: inline-block; flex: none; background: var(--cds-chart-muted); }
+  .kx-dot.is-ok { background: var(--color-ok); }
+  .kx-dot.is-warn { background: var(--color-warn); }
+  .kx-dot.is-bad { background: var(--color-bad); }
+  .kx-tabs { display: flex; gap: var(--cds-gap-xs); border-bottom: 1px solid var(--color-border-line); overflow-x: auto; scrollbar-width: none; }
+  .kx-tabs button { appearance: none; background: none; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; padding: var(--cds-pad-sm) var(--cds-pad-md); font: inherit; font-size: var(--cds-font-size-body); color: var(--color-fg-muted); cursor: pointer; white-space: nowrap; }
+  .kx-tabs button[aria-selected="true"] { color: var(--color-fg); border-bottom-color: currentColor; font-weight: var(--cds-font-weight-medium); }
+  .kx-tab { display: grid; gap: var(--cds-gap-lg); }
+
+  /* cards */
+  .ks-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: grid; gap: var(--cds-gap-sm); align-content: start; min-width: 0; }
+  .kx-card-head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--cds-gap-sm); flex-wrap: wrap; }
+  .kx-muted, .ks-small, .ks-note, .ks-meta { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .ks-small, .ks-plain, .ks-table td, .ks-foot span, .kx-attn li { overflow-wrap: anywhere; }
+
+  /* hero */
+  .kx-hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--cds-gap-lg); align-items: center; padding: var(--cds-pad-xl, var(--cds-pad-lg)); }
+  .kx-answer { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); line-height: 1.2; text-wrap: balance; }
+  .kx-sub { font-size: var(--cds-font-size-body); color: var(--color-fg-muted); margin-top: var(--cds-gap-sm); max-width: 60ch; }
+  .kx-sub b { color: var(--color-fg); }
+  .kx-count { text-align: center; padding-left: var(--cds-pad-lg); border-left: 1px solid var(--color-border-line); min-width: 9rem; }
+  .kx-count .kx-big { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: calc(var(--cds-font-size-title) * 2.2); line-height: 1; display: block; }
+  .ks .kx-count b.kx-big { font-weight: 400; }
+
+  /* KPI tiles */
+  .kx-tiles { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); }
+  .kx-tile { gap: var(--cds-gap-xs); }
+  .kx-tile .kx-label { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .kx-tile .kx-val { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: calc(var(--cds-font-size-title) * 1.35); line-height: 1.1; min-height: 1.1em; }
+  .ks .kx-tile b.kx-val { font-weight: 400; }
+  .kx-stack { display: flex; height: 0.5rem; border-radius: var(--cds-radius); overflow: hidden; background: var(--cds-chart-grid); gap: 2px; }
+  .kx-stack i { display: block; height: 100%; }
+
+  .kx-two { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); align-items: start; }
+  .kx-two > .kx-wide { grid-column: span 2; }
+  @media (max-width: 52rem) { .kx-two > .kx-wide { grid-column: auto; } }
+
+  /* attention */
+  .kx-attn ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--cds-gap-sm); }
+  .kx-attn li { display: grid; grid-template-columns: auto 1fr; gap: var(--cds-gap-sm); align-items: baseline; }
+  .kx-attn li .kx-dot { transform: translateY(-0.1rem); }
+  .kx-clear { display: flex; align-items: center; gap: var(--cds-gap-sm); }
+
+  /* timeline */
+  .kx-timeline { position: relative; min-height: 12rem; }
+
+  /* bets */
+  .ks-grid { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); min-height: 8rem; }
+  .kx-bet { gap: var(--cds-gap-sm); }
+  .kx-bet .kx-q { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); min-height: 2.6em; }
+  .kx-prog { display: flex; align-items: baseline; gap: 0.35rem; flex-wrap: wrap; }
+  .kx-prog b { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: calc(var(--cds-font-size-title) * 1.2); line-height: 1; }
+  .ks .kx-prog b { font-weight: 400; }
+  .kx-prog span { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .ks-bar { height: 0.5rem; border-radius: var(--cds-radius); background: var(--cds-chart-grid); position: relative; overflow: hidden; }
+  .ks-bar i { position: absolute; inset: 0 auto 0 0; border-radius: var(--cds-radius); }
+  .kx-row { display: flex; justify-content: space-between; gap: var(--cds-gap-sm); flex-wrap: wrap; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .kx-up { color: var(--color-ok); }
+  .kx-inside summary { cursor: pointer; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .kx-inside table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); margin-top: var(--cds-gap-xs); }
+  .kx-inside td { padding: 0.3rem 0; border-top: 1px solid var(--color-border-line); vertical-align: top; }
+  .kx-inside td:last-child { text-align: right; white-space: nowrap; padding-left: var(--cds-gap-sm); }
+  .ks-spark { height: 2.5rem; }
+
+  /* track record */
+  .kx-chips { display: flex; gap: var(--cds-gap-xs); flex-wrap: wrap; }
+  .kx-chips button { appearance: none; font: inherit; font-size: var(--cds-font-size-caption); padding: 0.25rem 0.75rem; border-radius: 999px; border: 1px solid var(--color-border-line); background: var(--color-panel); color: var(--color-fg-muted); cursor: pointer; }
+  .kx-chips button[aria-pressed="true"] { color: var(--color-fg); border-color: currentColor; }
+  .kx-res { display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap; }
+  .kx-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .kx-legend span { display: inline-flex; align-items: center; gap: 0.35rem; }
+  .kx-legend i { width: 0.65rem; height: 0.65rem; border-radius: 2px; display: inline-block; }
+
+  /* under the hood (v1 parts) */
+  .ks-sec { display: grid; gap: var(--cds-gap-md); }
+  .ks-sec-head { display: grid; gap: var(--cds-gap-xs); }
+  .ks-card-top { display: flex; gap: var(--cds-gap-sm); align-items: baseline; justify-content: space-between; flex-wrap: wrap; }
+  .ks-plain { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .ks-pill { font-size: var(--cds-font-size-caption); padding: 0.1rem 0.5rem; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; letter-spacing: 0.02em; }
+  .ks-pill.is-ok { color: var(--color-ok); }
+  .ks-pill.is-warn { color: var(--color-warn); }
+  .ks-pill.is-bad { color: var(--color-bad); }
+  .ks-pill.is-quiet { color: var(--color-fg-muted); }
+  .ks-pill.is-unknown { color: var(--color-fg-muted); border-style: dashed; }
+  .ks-nums { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--cds-gap-sm); }
+  .ks-num { display: grid; gap: 0.1rem; min-width: 0; }
+  .ks-num b { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); line-height: 1.1; }
+  .ks .ks-num b { font-weight: 400; }
+  .ks-num span { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); overflow-wrap: anywhere; }
+  .ks-foot { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs) var(--cds-gap-md); color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .ks-foot .is-stale { color: var(--color-warn); }
+  .ks-more summary { cursor: pointer; }
+  .ks-chart { position: relative; min-height: 15rem; }
+  .ks-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); white-space: nowrap; z-index: 2; }
+  .ks-tip .k { color: var(--cds-text-secondary); }
+  .ks-runs { display: grid; gap: var(--cds-gap-sm); min-height: 6rem; }
+  .ks-run { display: grid; grid-template-columns: minmax(8rem, 12rem) 1fr; gap: var(--cds-gap-sm); align-items: center; }
+  .ks-run-name { display: grid; gap: 0.1rem; min-width: 0; }
+  .ks-days { display: grid; grid-template-columns: repeat(30, minmax(0, 1fr)); gap: 2px; }
+  .ks-day { height: 1.25rem; border-radius: 2px; background: var(--cds-chart-grid); }
+  .ks-day.is-ok { background: var(--color-ok); }
+  .ks-day.is-missed { background: var(--color-bad); }
+  .ks-day.is-partial { background: var(--color-warn); }
+  .ks-day.is-not_expected { background: transparent; border: 1px solid var(--color-border-line); }
+  .ks-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .ks-legend span { display: inline-flex; align-items: center; gap: 0.35rem; }
+  .ks-legend i { width: 0.75rem; height: 0.75rem; border-radius: 2px; display: inline-block; }
+  .ks-table-box { overflow-x: auto; max-height: 30rem; overflow-y: auto; border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); background: var(--color-panel); }
+  .ks-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); }
+  .ks-table th { position: sticky; top: 0; background: var(--color-panel); text-align: left; font-weight: var(--cds-font-weight-medium); padding: var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); white-space: nowrap; z-index: 1; }
+  .ks-table td { padding: var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); vertical-align: top; }
+  .ks-table td.wrap { min-width: 14rem; }
+  .ks-attn ul { margin: 0; padding-left: 1.1rem; display: grid; gap: var(--cds-gap-xs); }
+  .kx-hood { display: grid; gap: var(--cds-gap-xl); }
+  [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+  @media (max-width: 40rem) {
+    .kx-hero { grid-template-columns: 1fr; }
+    .kx-count { border-left: 0; border-top: 1px solid var(--color-border-line); padding: var(--cds-pad-md) 0 0; text-align: left; }
+    .ks-run { grid-template-columns: 1fr; }
+    .kx-tabs { gap: 0; }
+    .kx-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--cds-gap-sm); }
+    .kx-tile .kx-val { font-size: var(--cds-font-size-title); }
+    .kx-tabs button { padding: var(--cds-pad-sm) var(--cds-pad-xs); margin-right: var(--cds-gap-sm); }
+  }
+</style>
+
+<div class="ks">
+  <header class="kx-bar" id="top">
+    <div class="kx-brand"><h1>KOD</h1><span>Paper trading research</span></div>
+    <div class="kx-status">
+      <span class="kx-health"><i class="kx-dot" data-draw="health-dot" data-source="programs"></i><span data-draw="health" data-source="programs">—</span></span>
+      <span>Updated <span data-draw="built" data-source="build">—</span></span>
+    </div>
+  </header>
+
+  <nav class="kx-tabs" role="tablist" aria-label="Sections">
+    <button role="tab" aria-selected="true" aria-controls="overview" data-tab="overview">Overview</button>
+    <button role="tab" aria-selected="false" aria-controls="bets" data-tab="bets">Bets</button>
+    <button role="tab" aria-selected="false" aria-controls="record" data-tab="record">Track record</button>
+    <button role="tab" aria-selected="false" aria-controls="hood" data-tab="hood">Under the hood</button>
+  </nav>
+
+  <!-- OVERVIEW -->
+  <section class="kx-tab" id="overview" role="tabpanel">
+    <div class="ks-card kx-hero">
+      <div>
+        <p class="kx-answer kx-when-none">No strategy has passed a live test yet.</p>
+        <p class="kx-answer kx-when-some" hidden><span data-draw="proven" data-source="summary" data-field="proven_live">—</span> strategy passed its live test.</p>
+        <p class="kx-sub kx-when-date"><b data-draw="live-tests" data-source="summary" data-field="live_tests">—</b> tests are running across <b data-draw="programs-n" data-source="summary" data-field="programs">—</b> bets. First verdict: <b data-draw="next-what" data-source="summary" data-field="next_verdict_what">—</b> (<span data-draw="next-name" data-source="summary" data-field="next_verdict_program">—</span>), around <b data-draw="next-date" data-source="summary" data-field="next_verdict_date">—</b>.</p>
+        <p class="kx-sub kx-when-nodate" hidden>Tests are still collecting. There isn't enough data yet to estimate when the first verdict lands.</p>
+        <p class="kx-sub">Wins and losses stay hidden until a test finishes, so nobody is tempted to stop one early.</p>
+      </div>
+      <div class="kx-count">
+        <b class="kx-big" data-draw="days" data-source="summary">—</b>
+        <span class="kx-muted" data-draw="days-label" data-source="summary">—</span>
+      </div>
+    </div>
+
+    <div class="kx-tiles">
+      <div class="ks-card kx-tile">
+        <span class="kx-label">Passed a live test</span>
+        <b class="kx-val" data-draw="t-proven" data-source="summary" data-field="proven_live">—</b>
+        <span class="kx-muted">of <span data-draw="t-live" data-source="summary" data-field="live_tests">—</span> tests running</span>
+      </div>
+      <div class="ks-card kx-tile">
+        <span class="kx-label">Ideas tested so far</span>
+        <b class="kx-val" data-draw="t-ideas" data-source="summary" data-field="ideas_tested">—</b>
+        <div class="kx-stack" data-draw="t-stack" data-source="summary"></div>
+        <span class="kx-muted"><span data-draw="t-worked" data-source="summary" data-field="worked">—</span> worked · <span data-draw="t-failed" data-source="summary" data-field="didnt_work">—</span> didn't · <span data-draw="t-noans" data-source="summary" data-field="no_answer">—</span> no answer</span>
+      </div>
+      <div class="ks-card kx-tile">
+        <span class="kx-label">Systems</span>
+        <b class="kx-val" data-draw="t-health" data-source="programs">—</b>
+        <span class="kx-muted" data-draw="t-health-sub" data-source="programs">—</span>
+      </div>
+      <div class="ks-card kx-tile">
+        <span class="kx-label">Real money at risk</span>
+        <b class="kx-val">None</b>
+        <span class="kx-muted">Every account is paper money</span>
+      </div>
+    </div>
+
+    <div class="kx-two">
+      <div class="ks-card kx-wide" id="road">
+        <div class="kx-card-head"><h2>Road to the verdicts</h2><span class="kx-muted">From the first record to each bet's next verdict</span></div>
+        <div class="kx-timeline" data-draw="timeline" data-source="programs"></div>
+      </div>
+      <div class="ks-card kx-attn" id="attention">
+        <div class="kx-card-head"><h2>Needs attention</h2></div>
+        <div data-draw="attn" data-source="programs server"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BETS -->
+  <section class="kx-tab" id="bets" role="tabpanel" hidden>
+    <div class="kx-card-head"><h2>What we're betting on</h2><span class="kx-muted">Progress counts results we can judge, not records collected</span></div>
+    <div class="ks-grid" data-draw="bets" data-source="programs history experiments"></div>
+  </section>
+
+  <!-- TRACK RECORD -->
+  <section class="kx-tab" id="record" role="tabpanel" hidden>
+    <div class="ks-card">
+      <div class="kx-card-head"><h2>Every idea we've tested</h2><span class="kx-muted">Each one had its pass mark set before we looked</span></div>
+      <div class="kx-stack" style="height: 0.85rem" data-draw="r-stack" data-source="summary"></div>
+      <div class="kx-legend" data-draw="r-legend" data-source="summary"></div>
+      <p class="kx-muted">Audits, re-checks and server trials aren't counted as ideas: <span data-draw="r-checks" data-source="summary" data-field="checks">—</span> of those.</p>
+    </div>
+    <div class="kx-chips" role="group" aria-label="Filter results">
+      <button type="button" data-filter="" aria-pressed="true">All ideas</button>
+      <button type="button" data-filter="worked" aria-pressed="false">Worked</button>
+      <button type="button" data-filter="didnt_work" aria-pressed="false">Didn't work</button>
+      <button type="button" data-filter="no_answer" aria-pressed="false">No answer</button>
+      <button type="button" data-filter="not_an_idea" aria-pressed="false">Audits &amp; trials</button>
+    </div>
+    <div class="ks-table-box" style="max-height: none">
+      <table class="ks-table" data-source="experiments" data-row-key="id">
+        <thead><tr><th data-field="short">Idea</th><th data-field="outcome">Result</th><th data-field="lesson">What we learned</th><th data-field="as_of">Closed</th></tr></thead>
+        <tbody data-draw="record-rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- UNDER THE HOOD -->
+  <section class="kx-tab kx-hood" id="hood" role="tabpanel" hidden>
+    <p class="ks-note">The full technical view: every test, every nightly job and the cloud server, straight from the records.</p>
+
+    <section class="ks-sec" aria-labelledby="alerts-h">
+      <h2 id="alerts-h">All alerts</h2>
+      <div class="ks-attn ks-card" data-draw="attention" data-source="experiments server runs gaps">—</div>
+    </section>
+
+    <section class="ks-sec" id="live" aria-labelledby="live-h">
+      <div class="ks-sec-head">
+        <h2 id="live-h">Every live test</h2>
+        <p class="ks-note">Collected is how many records exist. Scored is how many outcomes can be judged so far. Needed is what the locked plan requires before anyone reads a verdict.</p>
+      </div>
+      <div class="ks-grid" data-draw="live" data-source="experiments"></div>
+    </section>
+
+    <section class="ks-sec" id="trend" aria-labelledby="trend-h">
+      <div class="ks-sec-head">
+        <h2 id="trend-h">Evidence over time</h2>
+        <p class="ks-note">Running totals by day. A dashed line marks what a verdict needs.</p>
+      </div>
+      <select class="dash-select" id="trend-pick" aria-label="Experiment" data-draw="pick" data-source="experiments"></select>
+      <div class="ks-card"><div class="ks-chart" id="trend-chart" data-draw="trend" data-source="history experiments"></div></div>
+    </section>
+
+    <section class="ks-sec" id="runs" aria-labelledby="runs-h">
+      <div class="ks-sec-head">
+        <h2 id="runs-h">Nightly jobs</h2>
+        <p class="ks-note">One square per day, oldest on the left.</p>
+      </div>
+      <div class="ks-card">
+        <div class="ks-runs" data-draw="runs" data-source="runs run_days"></div>
+        <div class="ks-legend">
+          <span><i class="ks-day is-ok"></i>Ran</span>
+          <span><i class="ks-day is-partial"></i>Late or partly ran</span>
+          <span><i class="ks-day is-missed"></i>Missed</span>
+          <span><i class="ks-day is-not_expected"></i>Market closed</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="ks-sec" id="server" aria-labelledby="server-h">
+      <div class="ks-sec-head">
+        <h2 id="server-h">Cloud server</h2>
+        <p class="ks-note">Read from the reports the server pushes to its private backup repository, so no computer or SSH is needed.</p>
+      </div>
+      <div class="ks-grid" data-draw="server" data-source="server server_history"></div>
+    </section>
+
+    <section class="ks-sec" id="events" aria-labelledby="events-h">
+      <h2 id="events-h">Activity log</h2>
+      <div class="ks-table-box">
+        <table class="ks-table" data-source="events" data-row-key="at,title">
+          <thead><tr><th data-field="at">When (WIB)</th><th data-field="kind">Kind</th><th data-field="title">What</th><th data-field="detail">Detail</th></tr></thead>
+          <tbody data-draw="events-rows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="ks-sec" id="gaps" aria-labelledby="gaps-h">
+      <div class="ks-sec-head">
+        <h2 id="gaps-h">Not tracked here</h2>
+        <p class="ks-note">Things found in the repos that this page doesn't track, or sources it couldn't read.</p>
+      </div>
+      <div class="ks-table-box">
+        <table class="ks-table" data-source="gaps" data-row-key="kind,path">
+          <thead><tr><th data-field="kind">Problem</th><th data-field="path">Where</th><th data-field="detail">Detail</th></tr></thead>
+          <tbody data-draw="gaps-rows"></tbody>
+        </table>
+      </div>
+    </section>
+  </section>
+</div>
+
+<script>
+  window.KS = (() => {
+    const STATE = {
+      RUNNING: ['Running', 'is-ok'], WAITING: ['Waiting', 'is-quiet'], HALTED: ['Halted', 'is-bad'],
+      STALLED: ['Stalled', 'is-warn'], CLOSED: ['Closed', 'is-quiet'], UNKNOWN: ['Unknown', 'is-unknown'],
+    };
+    const hours = (iso) => (Date.now() - Date.parse(iso)) / 3.6e6;
+    const ago = (iso) => {
+      if (!iso || Number.isNaN(Date.parse(iso))) return 'never';
+      const h = hours(iso);
+      if (h < 0) return 'just now';
+      if (h < 1) return Math.max(1, Math.round(h * 60)) + ' min ago';
+      if (h < 48) return Math.round(h) + ' h ago';
+      return Math.round(h / 24) + ' days ago';
+    };
+    const BUILD_SLACK_H = 15; // the dashboard rebuilds about every 10-14 h
+    const builtAt = () => { const b = dash.data('build'); return b.status === 'ok' && b.data && b.data[0] ? b.data[0].built_at : null; };
+    // Stale when the record was already older than its limit when the data was built,
+    // or is older than its limit plus one rebuild gap now (catches a stopped rebuild).
+    const stale = (iso, limitH) => {
+      if (!iso || Number.isNaN(Date.parse(iso))) return true;
+      if (limitH == null) return false;
+      const b = builtAt();
+      const atBuild = b ? (Date.parse(b) - Date.parse(iso)) / 3.6e6 > limitH : false;
+      return atBuild || hours(iso) > limitH + BUILD_SLACK_H;
+    };
+    const shown = (row) => {
+      if (row.state === 'CLOSED') return 'CLOSED';
+      if (stale(row.as_of, row.stale_after_hours)) return 'UNKNOWN';
+      return STATE[row.state] ? row.state : 'UNKNOWN';
+    };
+    const wib = (iso) => {
+      const d = new Date(Date.parse(iso) + 7 * 3.6e6);
+      return Number.isNaN(d.getTime()) ? '' : d3.utcFormat('%b %-d, %H:%M')(d);
+    };
+    const day = (s) => (s ? d3.utcFormat('%b %-d')(new Date(s + 'T00:00:00Z')) : '');
+    const fmt = d3.format(',');
+    const pill = (el, key) => {
+      const [label, cls] = STATE[key] || STATE.UNKNOWN;
+      el.className = 'ks-pill ' + cls;
+      el.textContent = label;
+    };
+    const rows = (id) => {
+      const d = dash.data(id);
+      return d.status === 'ok' && Array.isArray(d.data) ? d.data : null;
+    };
+    const first = (t) => String(t || '').split(/; /)[0].replace(/\.$/, '');
+    return { STATE, hours, ago, stale, shown, wib, day, fmt, pill, rows, first, builtAt };
+  })();
+</script>
+
+<script>
+  // App shell: tabs and the sentence choices in the hero.
+  (() => {
+    const tabs = () => document.querySelectorAll('[data-tab]');
+    const panels = () => document.querySelectorAll('.kx-tab');
+    const show = (id) => {
+      if (![...panels()].some((p) => p.id === id)) return false;
+      tabs().forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === id)));
+      panels().forEach((p) => { p.hidden = p.id !== id; });
+      return true;
+    };
+    tabs().forEach((b) => b.addEventListener('click', () => { if (show(b.dataset.tab)) dash.setLink(b.dataset.tab); }));
+    window.KX_SHOW = show;
+    const name = location.hash.slice(1);
+    if (name && !show(name)) {
+      const el = document.getElementById(name);
+      const panel = el && el.closest('.kx-tab');
+      if (panel && show(panel.id)) setTimeout(() => el.scrollIntoView(), 300);
+    }
+    document.querySelectorAll('[data-filter]').forEach((b) => b.addEventListener('click', () => dash.setParams({ tr: b.dataset.filter || null })));
+    dash.onData(() => {
+      const s = KS.rows('summary');
+      const r = s && s[0];
+      const some = !!(r && r.proven_live > 0);
+      document.querySelectorAll('.kx-when-none').forEach((e) => { e.hidden = some; });
+      document.querySelectorAll('.kx-when-some').forEach((e) => { e.hidden = !some; });
+      document.querySelectorAll('.kx-when-date').forEach((e) => { e.hidden = !(r && r.next_verdict_date); });
+      document.querySelectorAll('.kx-when-nodate').forEach((e) => { e.hidden = !r || !!r.next_verdict_date; });
+      const tr = dash.params().tr || '';
+      document.querySelectorAll('[data-filter]').forEach((b) => b.setAttribute('aria-pressed', String((b.dataset.filter || '') === tr)));
+    });
+  })();
+</script>
+
+<script>
+  // Plain-language helpers for the CEO view.
+  window.KX = (() => {
+    const one = (id) => { const r = KS.rows(id); return r && r[0] ? r[0] : null; };
+    const todayWib = () => d3.utcFormat('%Y-%m-%d')(new Date(Date.now() + 7 * 3.6e6));
+    const daysTo = (d) => (d ? Math.round((Date.parse(d + 'T00:00:00Z') - Date.parse(todayWib() + 'T00:00:00Z')) / 864e5) : null);
+    // A bet's state as a reader sees it now.
+    const betState = (p) => {
+      if (KS.stale(p.as_of, p.stale_after_hours)) return { key: 'warn', label: 'No update since ' + KS.day(String(p.as_of).slice(0, 10)), short: 'No update' };
+      if (p.status === 'issue') return { key: 'warn', label: p.issue || 'Needs a look', short: 'Needs a look' };
+      if (p.status === 'waiting') return { key: 'quiet', label: 'Waiting for data', short: 'Waiting' };
+      return { key: 'ok', label: 'On track', short: 'On track' };
+    };
+    const troubled = (ps) => ps.filter((p) => betState(p).key === 'warn');
+    const dot = (key) => { const i = document.createElement('i'); i.className = 'kx-dot' + (key === 'ok' ? ' is-ok' : key === 'warn' ? ' is-warn' : key === 'bad' ? ' is-bad' : ''); return i; };
+    const OUT = {
+      worked: ['Worked', 'var(--color-ok)'],
+      didnt_work: ["Didn't work", 'var(--cds-chart-muted)'],
+      no_answer: ['No answer', 'var(--cds-chart-grid)'],
+      not_an_idea: ['Audit or trial', 'transparent'],
+    };
+    const memberWord = { RUNNING: 'Running', WAITING: 'Waiting', HALTED: 'Stopped', STALLED: 'Stuck', UNKNOWN: 'No update', CLOSED: 'Closed' };
+    const stack = (el, r) => {
+      el.replaceChildren();
+      if (!r) return;
+      const total = (r.worked || 0) + (r.didnt_work || 0) + (r.no_answer || 0);
+      if (!total) return;
+      [['worked', r.worked], ['didnt_work', r.didnt_work], ['no_answer', r.no_answer]].forEach(([k, n]) => {
+        if (!n) return;
+        const i = document.createElement('i');
+        i.style.flex = String(n);
+        i.style.background = OUT[k][1];
+        i.title = OUT[k][0] + ': ' + n;
+        el.append(i);
+      });
+    };
+    const DATA_OLD_H = 30; // the dashboard rebuilds twice a day
+    const oldData = () => { const b = KS.builtAt(); return !b || KS.hours(b) > DATA_OLD_H; };
+    const nv = (p) => ({ date: p.next_verdict_date, basis: p.next_verdict_basis, what: p.next_verdict_what });
+    // a date with its year when it is not this year (WIB)
+    const dayY = (d) => (d ? KS.day(d) + (String(d).slice(0, 4) !== todayWib().slice(0, 4) ? ', ' + String(d).slice(0, 4) : '') : '');
+    const big = (n) => (n >= 10000 ? new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 }).format(n) : KS.fmt(n));
+    const VIEW_DAYS = 100; // the timeline shows about three months ahead; later verdicts run off the edge
+    return { one, todayWib, daysTo, betState, troubled, dot, OUT, memberWord, stack, oldData, nv, dayY, big, VIEW_DAYS };
+  })();
+</script>
+
+<script>
+  // ---- header ----
+  dash.draw('health', (el) => {
+    const ps = KS.rows('programs');
+    if (!ps) { el.textContent = '—'; return; }
+    if (KX.oldData()) { el.textContent = 'Data last updated ' + KS.ago(KS.builtAt()); return; }
+    const n = KX.troubled(ps).length;
+    el.textContent = n ? n + (n === 1 ? ' bet needs a look' : ' bets need a look') : 'All systems running';
+  });
+  dash.draw('health-dot', (el) => {
+    const ps = KS.rows('programs');
+    el.className = 'kx-dot' + (!ps ? '' : KX.oldData() || KX.troubled(ps).length ? ' is-warn' : ' is-ok');
+  });
+
+  // ---- hero ----
+  dash.draw('proven', (el) => { const r = KX.one('summary'); el.textContent = r ? KS.fmt(r.proven_live) : '—'; });
+  dash.draw('live-tests', (el) => { const r = KX.one('summary'); el.textContent = r ? KS.fmt(r.live_tests) : '—'; });
+  dash.draw('programs-n', (el) => { const r = KX.one('summary'); el.textContent = r ? KS.fmt(r.programs) : '—'; });
+  dash.draw('next-what', (el) => { const r = KX.one('summary'); el.textContent = r && r.next_verdict_what ? r.next_verdict_what : '—'; });
+  dash.draw('next-name', (el) => { const r = KX.one('summary'); el.textContent = r && r.next_verdict_program ? r.next_verdict_program : '—'; });
+  dash.draw('next-date', (el) => {
+    const r = KX.one('summary');
+    el.textContent = r && r.next_verdict_date ? KX.dayY(r.next_verdict_date) : '—';
+  });
+  dash.draw('days', (el) => {
+    const r = KX.one('summary');
+    const d = r ? KX.daysTo(r.next_verdict_date) : null;
+    el.textContent = d == null ? '—' : d > 0 ? String(d) : d === 0 ? 'Today' : 'Due';
+  });
+  dash.draw('days-label', (el) => {
+    const r = KX.one('summary');
+    const d = r ? KX.daysTo(r.next_verdict_date) : null;
+    if (d == null) { el.textContent = 'No verdict date yet'; return; }
+    const est = r.next_verdict_basis === 'estimate' ? ' (estimate)' : '';
+    el.textContent = d > 0 ? (d === 1 ? 'day' : 'days') + ' to the first verdict' + est : d === 0 ? 'First verdict due' : 'Verdict was due ' + KS.day(r.next_verdict_date);
+  });
+
+  // ---- tiles ----
+  dash.draw('t-proven', (el) => { const r = KX.one('summary'); el.textContent = r ? KS.fmt(r.proven_live) : '—'; });
+  dash.draw('t-live', (el) => { const r = KX.one('summary'); el.textContent = r ? KS.fmt(r.live_tests) : '—'; });
+  dash.draw('t-ideas', (el) => { const r = KX.one('summary'); el.textContent = r ? KS.fmt(r.ideas_tested) : '—'; });
+  dash.draw('t-worked', (el) => { const r = KX.one('summary'); el.textContent = r ? KS.fmt(r.worked) : '—'; });
+  dash.draw('t-failed', (el) => { const r = KX.one('summary'); el.textContent = r ? KS.fmt(r.didnt_work) : '—'; });
+  dash.draw('t-noans', (el) => { const r = KX.one('summary'); el.textContent = r ? KS.fmt(r.no_answer) : '—'; });
+  dash.draw('t-stack', (el) => KX.stack(el, KX.one('summary')));
+  dash.draw('t-health', (el) => {
+    const ps = KS.rows('programs');
+    if (!ps) { el.textContent = '—'; return; }
+    const n = KX.troubled(ps).length;
+    el.textContent = n ? n + ' to check' : 'All good';
+  });
+  dash.draw('t-health-sub', (el) => {
+    const ps = KS.rows('programs');
+    if (!ps) { el.textContent = '—'; return; }
+    const bad = KX.troubled(ps);
+    el.textContent = bad.length ? bad.map((p) => p.name).join(', ') : ps.length + ' bets reporting on time';
+  });
+
+  // ---- road to the verdicts ----
+  dash.draw('timeline', (el) => {
+    const ps = KS.rows('programs');
+    el.replaceChildren();
+    if (!ps || !ps.length) return;
+    const rows = ps.slice().sort((a, b) => (a.next_verdict_date ? 0 : 1) - (b.next_verdict_date ? 0 : 1) || String(a.next_verdict_date).localeCompare(String(b.next_verdict_date)) || a.order - b.order);
+    const P = (s) => new Date(String(s).slice(0, 10) + 'T00:00:00Z');
+    const today = P(KX.todayWib());
+    const starts = rows.map((p) => (p.started ? P(p.started) : today));
+    const ends = rows.filter((p) => p.next_verdict_date).map((p) => P(p.next_verdict_date));
+    const x0 = d3.min(starts);
+    const x1 = d3.max([d3.min([d3.max(ends) || today, d3.utcDay.offset(today, KX.VIEW_DAYS)]), d3.utcDay.offset(today, 21)]);
+    const W = Math.max(280, el.clientWidth || 600);
+    const rowH = 50, top = 22, H = top + rows.length * rowH + 22;
+    const x = d3.scaleUtc([x0, x1], [0, W - 8]);
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'Timeline from each bet’s first record to its expected verdict');
+    const ticks = x.ticks(Math.max(2, Math.floor(W / 110)));
+    svg.append('g').selectAll('line').data(ticks).join('line').attr('x1', (d) => x(d)).attr('x2', (d) => x(d)).attr('y1', top).attr('y2', H - 20).attr('stroke', 'var(--cds-chart-grid)');
+    svg.append('g').selectAll('text').data(ticks).join('text').attr('x', (d) => Math.min(W - 24, Math.max(24, x(d)))).attr('y', H - 4).attr('text-anchor', 'middle').attr('font-size', 12).attr('fill', 'var(--color-fg-muted)').text((d) => d3.utcFormat('%b %-d')(d));
+    const tx = x(today);
+    svg.append('line').attr('x1', tx).attr('x2', tx).attr('y1', top - 4).attr('y2', H - 20).attr('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '4 4');
+    svg.append('text').attr('x', Math.min(W - 20, Math.max(20, tx))).attr('y', 12).attr('text-anchor', 'middle').attr('font-size', 12).attr('fill', 'var(--color-fg-muted)').text('Today');
+    rows.forEach((p, i) => {
+      const y = top + i * rowH + 18;
+      const st = KX.betState(p);
+      const col = st.key === 'warn' ? 'var(--color-warn)' : dash.colors[0];
+      const s = p.started ? P(p.started) : today;
+      const g = svg.append('g');
+      const v = KX.nv(p);
+      g.append('title').text(p.name + (v.date ? ' — next verdict: ' + v.what + ', ' + (v.basis === 'estimate' ? 'around ' : 'on ') + KX.dayY(v.date) : ' — no verdict date yet'));
+      g.append('text').attr('x', 0).attr('y', y).attr('font-size', 13).attr('fill', 'var(--color-fg)').text(p.name);
+      const right = v.date ? (v.basis === 'estimate' ? '~' : '') + KX.dayY(v.date) : 'Date unknown';
+      const rt = g.append('text').attr('x', W - 8).attr('y', y).attr('text-anchor', 'end').attr('font-size', 12).attr('fill', 'var(--color-fg-muted)').text(right);
+      const by = y + 8;
+      if (v.date && P(v.date) > x1) {
+        g.append('rect').attr('x', x(s)).attr('y', by).attr('width', Math.max(2, tx - x(s))).attr('height', 10).attr('rx', 3).attr('fill', col);
+        g.append('rect').attr('x', tx).attr('y', by).attr('width', Math.max(2, W - 8 - tx)).attr('height', 10).attr('rx', 3).attr('fill', 'var(--cds-chart-muted)').attr('opacity', 0.3);
+        g.append('path').attr('d', `M${W - 14},${by - 2} L${W - 6},${by + 5} L${W - 14},${by + 12}`).attr('fill', 'none').attr('stroke', 'var(--cds-chart-muted)').attr('stroke-width', 2).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round');
+      } else if (v.date) {
+        const e = P(v.date);
+        g.append('rect').attr('x', x(s)).attr('y', by).attr('width', Math.max(2, x(e) - x(s))).attr('height', 10).attr('rx', 3).attr('fill', 'var(--cds-chart-muted)').attr('opacity', 0.3);
+        g.append('rect').attr('x', x(s)).attr('y', by).attr('width', Math.max(2, Math.min(x(e), tx) - x(s))).attr('height', 10).attr('rx', 3).attr('fill', col);
+        g.append('circle').attr('cx', x(e)).attr('cy', by + 5).attr('r', 5).attr('fill', 'var(--color-panel)').attr('stroke', col).attr('stroke-width', 2);
+      } else {
+        g.append('rect').attr('x', x(s)).attr('y', by).attr('width', Math.max(2, tx - x(s))).attr('height', 10).attr('rx', 3).attr('fill', col);
+        g.append('line').attr('x1', tx + 4).attr('x2', W - 8).attr('y1', by + 5).attr('y2', by + 5).attr('stroke', 'var(--cds-chart-muted)').attr('stroke-dasharray', '3 4');
+      }
+      // keep the name and the date apart on narrow screens
+      const nameW = g.select('text').node().getComputedTextLength();
+      if (nameW + rt.node().getComputedTextLength() + 12 > W) rt.attr('y', y - 14);
+    });
+  });
+
+  // ---- needs attention ----
+  dash.draw('attn', (el) => {
+    const ps = KS.rows('programs');
+    const sv = KS.rows('server');
+    el.replaceChildren();
+    if (!ps) return;
+    const items = KX.troubled(ps).map((p) => [p.name, KX.betState(p).label]);
+    (sv || []).forEach((r) => {
+      if (/HALT|FAIL/i.test(r.status || '') && r.status !== 'CLOSED') items.push([r.name, 'Stopped on the cloud server']);
+    });
+    if (!items.length) {
+      const d = document.createElement('div');
+      d.className = 'kx-clear';
+      d.append(KX.dot('ok'));
+      const t = document.createElement('span');
+      t.textContent = 'All clear. Every bet reported on time.';
+      d.append(t);
+      el.append(d);
+      return;
+    }
+    const ul = document.createElement('ul');
+    items.forEach(([who, what]) => {
+      const li = document.createElement('li');
+      li.append(KX.dot('warn'));
+      const t = document.createElement('div');
+      const b = document.createElement('b');
+      b.textContent = who;
+      const s = document.createElement('div');
+      s.className = 'kx-muted';
+      s.textContent = what;
+      t.append(b, s);
+      li.append(t);
+      ul.append(li);
+    });
+    const more = document.createElement('p');
+    more.className = 'kx-muted';
+    more.style.marginTop = 'var(--cds-gap-sm)';
+    more.textContent = 'Details in Under the hood.';
+    el.append(ul, more);
+  });
+
+  // ---- bets ----
+  dash.draw('bets', (el) => {
+    const ps = KS.rows('programs');
+    const hs = KS.rows('history') || [];
+    const ex = KS.rows('experiments') || [];
+    el.replaceChildren();
+    if (!ps) return;
+    ps.slice().sort((a, b) => a.order - b.order).forEach((p) => {
+      const st = KX.betState(p);
+      const card = document.createElement('article');
+      card.className = 'ks-card kx-bet';
+      card.id = 'bet-' + p.id;
+      const head = document.createElement('div');
+      head.className = 'kx-row';
+      const sl = document.createElement('span');
+      sl.className = 'kx-res';
+      sl.append(KX.dot(st.key));
+      sl.append(document.createTextNode(st.short));
+      const cnt = document.createElement('span');
+      cnt.textContent = p.tests + (p.tests === 1 ? ' test' : ' tests');
+      head.append(sl, cnt);
+      const h = document.createElement('h2');
+      h.textContent = p.name;
+      const q = document.createElement('p');
+      q.className = 'kx-q';
+      q.textContent = p.question || '';
+      card.append(head, h, q);
+      const prog = document.createElement('div');
+      prog.className = 'kx-prog';
+      const b = document.createElement('b');
+      b.textContent = p.scored == null ? '—' : KS.fmt(p.scored);
+      const u = document.createElement('span');
+      u.textContent = p.needed ? 'of ' + KS.fmt(p.needed) + ' ' + (p.unit || 'results') : (p.unit || 'results') + ' so far';
+      prog.append(b, u);
+      card.append(prog);
+      if (p.needed) {
+        const bar = document.createElement('div');
+        bar.className = 'ks-bar';
+        bar.setAttribute('role', 'img');
+        const f = Math.max(0, Math.min(1, p.progress ?? (p.scored || 0) / p.needed));
+        bar.setAttribute('aria-label', Math.round(f * 100) + '% of what the verdict needs');
+        const i = document.createElement('i');
+        i.style.width = Math.max(f * 100, f > 0 ? 1.5 : 0) + '%';
+        i.style.background = st.key === 'warn' ? 'var(--color-warn)' : dash.colors[0];
+        bar.append(i);
+        card.append(bar);
+      }
+      const meta = document.createElement('div');
+      meta.className = 'kx-row';
+      const wk = document.createElement('span');
+      if (p.scored_7d) { wk.className = 'kx-up'; wk.textContent = '+' + KS.fmt(p.scored_7d) + ' this week'; }
+      else if (p.collected_7d) wk.textContent = 'No judged results yet this week · ' + KX.big(p.collected_7d) + ' new records';
+      else wk.textContent = 'Nothing new this week';
+      meta.append(wk);
+      card.append(meta);
+      const v = KX.nv(p);
+      const vd = document.createElement('p');
+      vd.className = 'kx-muted';
+      if (v.date) {
+        const bb = document.createElement('b');
+        bb.textContent = 'Next verdict ' + (v.basis === 'estimate' ? '~' : '') + KX.dayY(v.date);
+        vd.append(bb, document.createTextNode(': ' + (v.what || '')));
+      } else vd.textContent = 'No verdict date yet: not enough results to estimate one';
+      card.append(vd);
+      const pts = hs.filter((r) => r.experiment === p.lead).map((r) => ({ d: new Date(r.date + 'T00:00:00Z'), c: +r.collected, s: +r.scored })).sort((a, z) => a.d - z.d);
+      if (pts.length > 1) {
+        const box = document.createElement('div');
+        box.className = 'ks-spark';
+        card.append(box);
+        const W = 300, H = 40;
+        const xs = d3.scaleUtc(d3.extent(pts, (r) => r.d), [2, W - 2]);
+        const ys = d3.scaleLinear([0, Math.max(1, d3.max(pts, (r) => Math.max(r.c, r.s)), p.needed || 0)], [H - 3, 3]);
+        const svg = d3.select(box).append('svg').attr('width', '100%').attr('height', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('preserveAspectRatio', 'none').attr('role', 'img').attr('aria-label', 'Records and judged results over time');
+        svg.append('path').datum(pts).attr('fill', 'none').attr('stroke', 'var(--cds-chart-muted)').attr('stroke-width', 1.5).attr('vector-effect', 'non-scaling-stroke').attr('d', d3.line().x((r) => xs(r.d)).y((r) => ys(r.c)));
+        svg.append('path').datum(pts).attr('fill', 'none').attr('stroke', dash.colors[0]).attr('stroke-width', 2).attr('vector-effect', 'non-scaling-stroke').attr('d', d3.line().x((r) => xs(r.d)).y((r) => ys(r.s)));
+        const cap = document.createElement('p');
+        cap.className = 'kx-muted';
+        cap.textContent = 'Blue: results judged. Grey: records collected.';
+        card.append(cap);
+      }
+      const members = ex.filter((r) => r.program === p.id && r.group !== 'closed');
+      if (members.length) {
+        const d = document.createElement('details');
+        d.className = 'kx-inside';
+        const sm = document.createElement('summary');
+        sm.textContent = "What's inside";
+        const t = document.createElement('table');
+        members.forEach((r) => {
+          const tr = document.createElement('tr');
+          const a = document.createElement('td');
+          const nm = document.createElement('div');
+          nm.textContent = r.short || r.name;
+          const ln = document.createElement('div');
+          ln.className = 'kx-muted';
+          ln.textContent = r.issue || r.ceo_line || '';
+          a.append(nm, ln);
+          const c = document.createElement('td');
+          const shown = KS.shown(r);
+          c.textContent = (KX.memberWord[shown] || shown) + (r.plumbing ? ' · data feed' : r.needed ? ' · ' + KS.fmt(r.scored || 0) + '/' + KS.fmt(r.needed) : '');
+          tr.append(a, c);
+          t.append(tr);
+        });
+        d.append(sm, t);
+        card.append(d);
+      }
+      el.append(card);
+    });
+  });
+
+  // ---- track record ----
+  dash.draw('r-stack', (el) => KX.stack(el, KX.one('summary')));
+  dash.draw('r-legend', (el) => {
+    const r = KX.one('summary');
+    el.replaceChildren();
+    if (!r) return;
+    [['worked', r.worked], ['didnt_work', r.didnt_work], ['no_answer', r.no_answer]].forEach(([k, n]) => {
+      const s = document.createElement('span');
+      const i = document.createElement('i');
+      i.style.background = KX.OUT[k][1];
+      if (k === 'no_answer') i.style.border = '1px solid var(--color-border-line)';
+      s.append(i, document.createTextNode(KS.fmt(n || 0) + ' ' + KX.OUT[k][0].toLowerCase()));
+      el.append(s);
+    });
+  });
+  dash.draw('r-checks', (el) => { const r = KX.one('summary'); el.textContent = r ? KS.fmt(r.checks) : '—'; });
+  dash.draw('record-rows', (tb) => {
+    const ex = KS.rows('experiments');
+    tb.replaceChildren();
+    if (!ex) return;
+    const want = dash.params().tr || '';
+    ex.filter((r) => r.group === 'closed' && (want ? r.outcome === want : r.outcome !== 'not_an_idea'))
+      .sort((a, b) => String(b.as_of).localeCompare(String(a.as_of)))
+      .forEach((r) => {
+        const tr = document.createElement('tr');
+        tr.dataset.key = r.id;
+        const a = document.createElement('td');
+        a.textContent = r.short || r.name;
+        const o = document.createElement('td');
+        const sp = document.createElement('span');
+        sp.className = 'kx-res';
+        const k = r.outcome || 'no_answer';
+        const dt = document.createElement('i');
+        dt.className = 'kx-dot';
+        dt.style.background = KX.OUT[k] ? KX.OUT[k][1] : 'var(--cds-chart-grid)';
+        if (k === 'not_an_idea' || k === 'no_answer') dt.style.border = '1px solid var(--color-border-line)';
+        sp.append(dt, document.createTextNode(KX.OUT[k] ? KX.OUT[k][0] : k));
+        o.append(sp);
+        const l = document.createElement('td');
+        l.className = 'wrap';
+        l.textContent = r.lesson || r.verdict || '';
+        const d = document.createElement('td');
+        d.style.whiteSpace = 'nowrap';
+        d.textContent = r.as_of ? d3.utcFormat('%b %-d')(new Date(String(r.as_of).slice(0, 10) + 'T00:00:00Z')) : '';
+        tr.append(a, o, l, d);
+        tb.append(tr);
+      });
+  });
+</script>
+
+<script>
+  dash.draw('built', (el) => {
+    const b = KS.rows('build');
+    el.textContent = b && b[0] ? KS.ago(b[0].built_at) : '—';
+  });
+</script>
+
+<script>
+  // ---- under the hood (technical view) ----
+  dash.draw('attention', (el) => {
+    const ex = KS.rows('experiments');
+    const sv = KS.rows('server');
+    const rn = KS.rows('runs');
+    const gp = KS.rows('gaps');
+    if (!ex || !sv || !rn || !gp) { el.textContent = '—'; return; }
+    const items = [];
+    ex.filter((r) => r.group !== 'closed').forEach((r) => {
+      const st = KS.shown(r);
+      if (st === 'UNKNOWN') items.push(r.name + ': no new record for ' + KS.ago(r.as_of).replace(' ago', '') + ', past its ' + r.stale_after_hours + ' h limit.');
+      else if (st === 'HALTED' || st === 'STALLED') items.push(r.name + ': ' + (r.note ? KS.first(r.note) : KS.STATE[st][0].toLowerCase()) + '.');
+    });
+    sv.forEach((r) => {
+      if (KS.stale(r.as_of, r.stale_after_hours)) items.push(r.name + ': the server has not reported for ' + KS.ago(r.as_of).replace(' ago', '') + '.');
+      else if (/HALT|FAIL/i.test(r.status || '')) items.push(r.name + ': ' + r.status.toLowerCase() + (r.issues ? ' (' + r.issues + ')' : '') + '.');
+    });
+    rn.forEach((r) => {
+      if (KS.stale(r.last_success_at, (r.expected_every_hours || 24) + (r.grace_hours || 0))) items.push(r.job + ': last success ' + KS.ago(r.last_success_at) + ', later than expected.');
+    });
+    if (gp.length) items.push(gp.length + (gp.length === 1 ? ' thing is' : ' things are') + ' not tracked or could not be read (see the bottom of the page).');
+    el.replaceChildren();
+    if (!items.length) {
+      const p = document.createElement('p');
+      p.className = 'ks-small';
+      p.textContent = 'Nothing right now. Every tracked feed reported within its limit.';
+      el.append(p);
+      return;
+    }
+    const ul = document.createElement('ul');
+    items.forEach((t) => { const li = document.createElement('li'); li.textContent = t; ul.append(li); });
+    el.append(ul);
+  });
+
+  dash.draw('live', (el) => {
+    const ex = KS.rows('experiments');
+    if (!ex) { el.replaceChildren(); return; }
+    const live = ex.filter((r) => r.group === 'live');
+    const order = { HALTED: 0, UNKNOWN: 1, STALLED: 2, RUNNING: 3, WAITING: 4 };
+    live.sort((a, b) => (order[KS.shown(a)] ?? 9) - (order[KS.shown(b)] ?? 9) || (b.fraction ?? -1) - (a.fraction ?? -1));
+    el.replaceChildren(...live.map((r) => {
+      const card = document.createElement('article');
+      card.className = 'ks-card';
+      card.id = 'exp-' + r.id;
+      const top = document.createElement('div');
+      top.className = 'ks-card-top';
+      const h = document.createElement('h3');
+      h.textContent = r.name;
+      const p = document.createElement('span');
+      KS.pill(p, KS.shown(r));
+      top.append(h, p);
+      const plain = document.createElement('p');
+      plain.className = 'ks-plain';
+      plain.textContent = r.plain || '';
+      const nums = document.createElement('div');
+      nums.className = 'ks-nums';
+      [[r.collected, r.collected_label || 'collected'], [r.scored, r.scored_label || 'scored'], [r.needed, r.needed_label || 'needed']].forEach(([v, lab]) => {
+        const n = document.createElement('div');
+        n.className = 'ks-num';
+        const b = document.createElement('b');
+        b.textContent = v == null ? '—' : KS.fmt(v);
+        const s = document.createElement('span');
+        s.textContent = lab;
+        n.append(b, s);
+        nums.append(n);
+      });
+      const parts = [card, top, plain, nums];
+      if (r.needed) {
+        const bar = document.createElement('div');
+        bar.className = 'ks-bar';
+        bar.setAttribute('role', 'img');
+        const f = Math.max(0, Math.min(1, r.fraction ?? (r.scored || 0) / r.needed));
+        const c = Math.max(0, Math.min(1, (r.collected || 0) / r.needed));
+        bar.setAttribute('aria-label', Math.round(f * 100) + '% of the needed outcomes are scored');
+        const ci = document.createElement('i');
+        ci.style.width = (c * 100) + '%';
+        ci.style.background = 'var(--cds-chart-muted)';
+        ci.style.opacity = '0.45';
+        const si = document.createElement('i');
+        si.style.width = (f * 100) + '%';
+        si.style.background = dash.colors[0];
+        bar.append(ci, si);
+        card.append(top, plain, nums, bar);
+      } else {
+        card.append(top, plain, nums);
+      }
+      const foot = document.createElement('div');
+      foot.className = 'ks-foot';
+      const chk = document.createElement('span');
+      chk.textContent = 'Checked ' + KS.ago(r.as_of);
+      if (KS.shown(r) === 'UNKNOWN') chk.className = 'is-stale';
+      foot.append(chk);
+      if (r.next_milestone) { const s = document.createElement('span'); s.textContent = 'Next: ' + r.next_milestone + (r.next_date ? ', ' + KS.day(r.next_date) : ''); foot.append(s); }
+      if (r.projected_date) { const s = document.createElement('span'); s.textContent = 'Estimated verdict date ' + KS.day(r.projected_date); foot.append(s); }
+      card.append(foot);
+      if (r.note) {
+        const d = document.createElement('details'); d.className = 'ks-more ks-small';
+        const sm = document.createElement('summary'); sm.textContent = KS.first(r.note);
+        const full = document.createElement('p'); full.textContent = r.note;
+        d.append(sm, full); d.addEventListener('click', (e) => e.stopPropagation()); card.append(d);
+      }
+      card.addEventListener('click', () => { dash.setParams({ exp: r.id }); const t = document.getElementById('trend'); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+      card.style.cursor = 'pointer';
+      return card;
+    }));
+  });
+
+  dash.draw('pick', (sel) => {
+    const ex = KS.rows('experiments');
+    if (!ex) { sel.replaceChildren(); return; }
+    const opts = ex.filter((r) => r.group === 'live');
+    sel.replaceChildren(...opts.map((r) => new Option(r.name, r.id)));
+    const cur = dash.params().exp;
+    sel.value = opts.some((r) => r.id === cur) ? cur : (opts[0] ? opts[0].id : '');
+    sel.onchange = () => dash.setParams({ exp: sel.value });
+  });
+
+  dash.draw('trend', (el) => {
+    const hs = KS.rows('history');
+    const ex = KS.rows('experiments');
+    el.replaceChildren();
+    if (!hs || !ex) return;
+    const live = ex.filter((r) => r.group === 'live');
+    const cur = dash.params().exp;
+    const exp = live.find((r) => r.id === cur) || live[0];
+    if (!exp) return;
+    const pts = hs.filter((r) => r.experiment === exp.id).map((r) => ({ d: new Date(r.date + 'T00:00:00Z'), c: +r.collected, s: +r.scored })).sort((a, b) => a.d - b.d);
+    if (!pts.length) { const p = document.createElement('p'); p.className = 'ks-small'; p.textContent = 'No daily history recorded for this one yet.'; el.append(p); return; }
+    const W = el.clientWidth || 600, H = 240;
+    const yMax = Math.max(d3.max(pts, (p) => Math.max(p.c, p.s)) || 1, exp.needed || 0);
+    const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', exp.name + ': collected and scored over time');
+    const y = d3.scaleLinear([0, yMax * 1.08], [H - 28, 12]).nice();
+    const probe = svg.append('text').attr('font-size', 12).text(KS.fmt(y.domain()[1]));
+    const ml = Math.ceil(probe.node().getComputedTextLength()) + 10;
+    probe.remove();
+    const endW = 90;
+    const x = d3.scaleUtc(d3.extent(pts, (p) => p.d), [ml, W - endW]);
+    if (pts.length === 1) x.domain([d3.utcDay.offset(pts[0].d, -1), d3.utcDay.offset(pts[0].d, 1)]);
+    svg.append('g').selectAll('line').data(y.ticks(4)).join('line').attr('x1', ml).attr('x2', W - endW).attr('y1', (d) => y(d)).attr('y2', (d) => y(d)).attr('stroke', 'var(--cds-chart-grid)');
+    svg.append('g').attr('transform', `translate(${ml - 6},0)`).selectAll('text').data(y.ticks(4)).join('text').attr('y', (d) => y(d)).attr('dy', '0.32em').attr('text-anchor', 'end').attr('font-size', 12).attr('fill', 'var(--color-fg-muted)').text((d) => KS.fmt(d));
+    const xt = x.ticks(Math.max(2, Math.floor((W - ml - endW) / 90)));
+    svg.append('g').selectAll('text').data(xt).join('text').attr('x', (d) => x(d)).attr('y', H - 8).attr('text-anchor', 'middle').attr('font-size', 12).attr('fill', 'var(--color-fg-muted)').text((d) => d3.utcFormat('%b %-d')(d));
+    if (exp.needed) {
+      svg.append('line').attr('x1', ml).attr('x2', W - endW).attr('y1', y(exp.needed)).attr('y2', y(exp.needed)).attr('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '4 4');
+      svg.append('text').attr('x', W - endW + 6).attr('y', y(exp.needed)).attr('dy', '0.32em').attr('font-size', 12).attr('fill', 'var(--color-fg-muted)').text('needed ' + KS.fmt(exp.needed));
+    }
+    const series = [['c', exp.collected_label || 'collected', 'var(--cds-chart-muted)'], ['s', exp.scored_label || 'scored', dash.colors[0]]];
+    series.forEach(([k, lab, col]) => {
+      svg.append('path').datum(pts).attr('fill', 'none').attr('stroke', col).attr('stroke-width', 2).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round').attr('d', d3.line().x((p) => x(p.d)).y((p) => y(p[k])));
+    });
+    const last = pts[pts.length - 1];
+    const ends = series.map(([k, lab, col]) => ({ y: y(last[k]), t: KS.fmt(last[k]) + ' ' + lab.split(' ')[0], col }));
+    if (Math.abs(ends[0].y - ends[1].y) < 14) { const mid = (ends[0].y + ends[1].y) / 2; ends[0].y = mid - 8; ends[1].y = mid + 8; }
+    ends.forEach((e) => svg.append('text').attr('x', x(last.d) + 6).attr('y', e.y).attr('dy', '0.32em').attr('font-size', 12).attr('fill', 'var(--color-fg)').text(e.t));
+    const tip = document.createElement('div');
+    tip.className = 'ks-tip';
+    tip.hidden = true;
+    el.append(tip);
+    const dot = svg.append('g').attr('pointer-events', 'none');
+    svg.append('rect').attr('x', ml).attr('y', 0).attr('width', Math.max(1, W - endW - ml)).attr('height', H).attr('fill', 'transparent')
+      .on('pointermove', (ev) => {
+        const [mx] = d3.pointer(ev);
+        const i = d3.bisectCenter(pts.map((p) => +p.d), +x.invert(mx));
+        const p = pts[Math.max(0, Math.min(pts.length - 1, i))];
+        dot.selectAll('*').remove();
+        series.forEach(([k, , col]) => dot.append('circle').attr('cx', x(p.d)).attr('cy', y(p[k])).attr('r', 4).attr('fill', col));
+        tip.replaceChildren();
+        const k = document.createElement('div'); k.className = 'k'; k.textContent = d3.utcFormat('%b %-d')(p.d);
+        const a = document.createElement('div'); a.textContent = (exp.collected_label || 'collected') + ': ' + KS.fmt(p.c);
+        const b = document.createElement('div'); b.textContent = (exp.scored_label || 'scored') + ': ' + KS.fmt(p.s);
+        tip.append(k, a, b);
+        tip.hidden = false;
+        const px = x(p.d) / W * el.clientWidth;
+        tip.style.left = Math.min(Math.max(0, px + 10), el.clientWidth - tip.offsetWidth) + 'px';
+        tip.style.top = '8px';
+      })
+      .on('pointerleave', () => { tip.hidden = true; dot.selectAll('*').remove(); });
+  });
+
+  dash.draw('runs', (el) => {
+    const rn = KS.rows('runs');
+    const rd = KS.rows('run_days');
+    el.replaceChildren();
+    if (!rn || !rd) return;
+    rn.forEach((r) => {
+      const row = document.createElement('div');
+      row.className = 'ks-run';
+      const name = document.createElement('div');
+      name.className = 'ks-run-name';
+      const h = document.createElement('h3');
+      h.textContent = r.job;
+      const s = document.createElement('span');
+      const late = KS.stale(r.last_success_at, (r.expected_every_hours || 24) + (r.grace_hours || 0));
+      s.className = 'ks-small' + (late ? ' is-stale' : '');
+      s.textContent = 'Last ran ' + KS.ago(r.last_success_at) + (late ? ', late' : '');
+      if (late) s.style.color = 'var(--color-warn)';
+      name.append(h, s);
+      const days = document.createElement('div');
+      days.className = 'ks-days';
+      const mine = rd.filter((d) => d.job === r.job).sort((a, b) => a.date.localeCompare(b.date)).slice(-30);
+      const pad = 30 - mine.length;
+      for (let i = 0; i < pad; i += 1) { const e = document.createElement('i'); e.className = 'ks-day'; days.append(e); }
+      mine.forEach((d) => {
+        const e = document.createElement('i');
+        e.className = 'ks-day is-' + d.status;
+        e.title = KS.day(d.date) + ': ' + ({ ok: 'ran', missed: 'missed', partial: 'partly ran or late', not_expected: 'market closed' }[d.status] || d.status);
+        days.append(e);
+      });
+      row.append(name, days);
+      el.append(row);
+    });
+  });
+
+  dash.draw('server', (el) => {
+    const sv = KS.rows('server');
+    const sh = KS.rows('server_history');
+    el.replaceChildren();
+    if (!sv || !sh) return;
+    sv.forEach((r) => {
+      const card = document.createElement('article');
+      card.className = 'ks-card';
+      card.id = 'srv-' + r.study;
+      const top = document.createElement('div');
+      top.className = 'ks-card-top';
+      const h = document.createElement('h3');
+      h.textContent = r.name;
+      const p = document.createElement('span');
+      const stale = KS.stale(r.as_of, r.stale_after_hours);
+      const st = (r.status || '').toUpperCase();
+      const key = stale ? 'UNKNOWN' : /HALT|FAIL|ERROR/.test(st) ? 'HALTED' : /CLOSED|COMPLETE|DONE/.test(st) ? 'CLOSED' : /OK|RUN|ADMIT|PROGRESS/.test(st) ? 'RUNNING' : 'WAITING';
+      KS.pill(p, key);
+      top.append(h, p);
+      const nums = document.createElement('div');
+      nums.className = 'ks-nums';
+      [[r.coverage == null ? '—' : d3.format('.1%')(r.coverage), 'data coverage'], [r.captured == null ? '—' : KS.fmt(r.captured), 'captured'], [r.planned == null ? '—' : KS.fmt(r.planned), 'planned']].forEach(([v, lab]) => {
+        const n = document.createElement('div'); n.className = 'ks-num';
+        const b = document.createElement('b'); b.textContent = v;
+        const s = document.createElement('span'); s.textContent = lab;
+        n.append(b, s); nums.append(n);
+      });
+      card.append(top, nums);
+      const pts = sh.filter((x) => x.study === r.study && x.coverage != null).map((x) => ({ t: new Date(x.at), v: +x.coverage })).sort((a, b) => a.t - b.t);
+      if (pts.length > 1) {
+        const box = document.createElement('div');
+        box.className = 'ks-spark';
+        card.append(box);
+        const W = 300, H = 40;
+        const xs = d3.scaleUtc(d3.extent(pts, (q) => q.t), [2, W - 2]);
+        const ys = d3.scaleLinear([Math.min(0.5, d3.min(pts, (q) => q.v)), 1], [H - 3, 3]);
+        const svg = d3.select(box).append('svg').attr('width', '100%').attr('height', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('preserveAspectRatio', 'none').attr('role', 'img').attr('aria-label', 'Data coverage over time');
+        const gated = /capacity/.test(r.study);
+        if (gated) svg.append('line').attr('x1', 2).attr('x2', W - 2).attr('y1', ys(0.99)).attr('y2', ys(0.99)).attr('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '3 3').attr('vector-effect', 'non-scaling-stroke');
+        svg.append('path').datum(pts).attr('fill', 'none').attr('stroke', dash.colors[0]).attr('stroke-width', 2).attr('vector-effect', 'non-scaling-stroke').attr('d', d3.line().x((q) => xs(q.t)).y((q) => ys(q.v)));
+        const cap = document.createElement('p'); cap.className = 'ks-small'; cap.textContent = gated ? 'Coverage since start; the dashed line is the 99% pass bar this trial had.' : 'Coverage since start, as the server reports it.'; card.append(cap);
+      }
+      const foot = document.createElement('div');
+      foot.className = 'ks-foot';
+      const a = document.createElement('span'); a.textContent = 'Checked ' + KS.ago(r.as_of); if (stale) a.className = 'is-stale';
+      foot.append(a);
+      if (r.ends_at) { const e = document.createElement('span'); e.textContent = 'Ends ' + KS.wib(r.ends_at) + ' WIB'; foot.append(e); }
+      if (r.phase) { const e = document.createElement('span'); e.textContent = 'Phase: ' + r.phase.toLowerCase(); foot.append(e); }
+      card.append(foot);
+      if (r.issues) { const n = document.createElement('p'); n.className = 'ks-small'; n.textContent = 'Issues: ' + r.issues; card.append(n); }
+      el.append(card);
+    });
+  });
+
+  const cell = (tr, text, cls) => { const td = document.createElement('td'); td.textContent = text == null ? '' : String(text); if (cls) td.className = cls; tr.append(td); };
+
+  dash.draw('events-rows', (tb) => {
+    const ev = KS.rows('events');
+    tb.replaceChildren();
+    if (!ev) return;
+    ev.slice().sort((a, b) => String(b.at).localeCompare(String(a.at))).forEach((r) => {
+      const tr = document.createElement('tr');
+      tr.dataset.key = encodeURIComponent(r.at) + ',' + encodeURIComponent(r.title);
+      cell(tr, r.at);
+      cell(tr, r.kind);
+      cell(tr, r.title, 'wrap');
+      cell(tr, r.detail, 'wrap');
+      tr.firstChild.textContent = KS.wib(r.at);
+      tb.append(tr);
+    });
+  });
+
+  dash.draw('gaps-rows', (tb) => {
+    const gp = KS.rows('gaps');
+    tb.replaceChildren();
+    if (!gp) return;
+    const label = { NOT_ON_DASHBOARD: 'Not tracked yet', SOURCE_MISSING: 'Source missing', READ_ERROR: 'Could not read' };
+    gp.forEach((r) => {
+      const tr = document.createElement('tr');
+      tr.dataset.key = encodeURIComponent(r.kind) + ',' + encodeURIComponent(r.path);
+      cell(tr, label[r.kind] || r.kind);
+      cell(tr, r.path, 'wrap');
+      cell(tr, r.detail, 'wrap');
+      tb.append(tr);
+    });
+  });
+
+</script>
