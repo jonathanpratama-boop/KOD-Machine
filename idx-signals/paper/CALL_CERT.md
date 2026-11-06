@@ -1,12 +1,12 @@
 # Certified dump calls (shadow, beside LEARNER v2.4)
 
-Generated 2026-11-06T00:24:24Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
+Generated 2026-11-06T22:59:24Z from paper/learner_v3.jsonl and the registers. Method and history check: `research/CALL_CERT_v1` (the certificate held on 2023: 44 calls, right 70.5%). This report changes nothing in v2.4.
 
 ## The three plain answers
 
 - **What is predicted:** for a US stock that just closed +30% or more, that it closes at least 10% lower at the next session while most of its twins do not. A call is made only when the shadow score clears a bar certified by Learn then Test.
 - **What counts as success:** the calls are wrong at most half the time (certified level 50%, confidence 95%); the realised losing rate stays at or under it.
-- **Evidence so far:** 34 live forecasts, 7 calls, 2 wrong of 4 (50.0%); p that the true rate exceeds 50%: 0.688.
+- **Evidence so far:** 60 live forecasts, 7 calls, 2 wrong of 6 (33.3%); p that the true rate exceeds 50%: 0.891.
 
 ## The bar
 
@@ -18,19 +18,45 @@ Generated 2026-11-06T00:24:24Z from paper/learner_v3.jsonl and the registers. Me
 
 | Signal session | Ticker | Shadow score | Bar | Call | v2.4 raw | Outcome |
 |---|---|---|---|---|---|---|
-| 2026-11-05 | ZNB | 0.505 | 0.557 | - | 0.221 | pending |
-| 2026-11-05 | XXII | 0.675 | 0.557 | **DUMP** | 0.355 | pending |
-| 2026-11-05 | VXX | 0.329 | 0.557 | - | 0.112 | pending |
+| 2026-11-06 | VSA | 0.349 | 0.557 | - | 0.168 | pending |
+| 2026-11-06 | VIVK | 0.438 | 0.557 | - | 0.290 | pending |
+| 2026-11-06 | VAI | 0.291 | 0.557 | - | 0.145 | pending |
+| 2026-11-06 | STAK | 0.383 | 0.557 | - | 0.202 | pending |
+| 2026-11-06 | SNT | 0.326 | 0.557 | - | 0.158 | pending |
+| 2026-11-06 | SMX | 0.395 | 0.557 | - | 0.228 | pending |
+| 2026-11-06 | SKIN | 0.306 | 0.557 | - | 0.150 | pending |
+| 2026-11-06 | SERV | 0.192 | 0.557 | - | 0.102 | pending |
+| 2026-11-06 | SDA | 0.415 | 0.557 | - | 0.201 | pending |
+| 2026-11-06 | RDGT | 0.318 | 0.557 | - | 0.142 | pending |
+| 2026-11-06 | RCT | 0.448 | 0.557 | - | 0.253 | pending |
+| 2026-11-06 | POM | 0.395 | 0.557 | - | 0.218 | pending |
+| 2026-11-06 | OPTU | 0.266 | 0.557 | - | 0.144 | pending |
+| 2026-11-06 | OBX | 0.292 | 0.557 | - | 0.164 | pending |
+| 2026-11-06 | MTVA | 0.285 | 0.557 | - | 0.137 | pending |
+| 2026-11-06 | KRMN | 0.162 | 0.557 | - | 0.095 | pending |
+| 2026-11-06 | KDK | 0.234 | 0.557 | - | 0.139 | pending |
+| 2026-11-06 | INDI | 0.184 | 0.557 | - | 0.108 | pending |
+| 2026-11-06 | HTCO | 0.362 | 0.557 | - | 0.188 | pending |
+| 2026-11-06 | HPAI | 0.459 | 0.557 | - | 0.228 | pending |
+| 2026-11-06 | GOGO | 0.348 | 0.557 | - | 0.176 | pending |
+| 2026-11-06 | GIBO | 0.265 | 0.557 | - | 0.139 | pending |
+| 2026-11-06 | FROG | 0.150 | 0.557 | - | 0.083 | pending |
+| 2026-11-06 | FLY | 0.269 | 0.557 | - | 0.144 | pending |
+| 2026-11-06 | CIIT | 0.349 | 0.557 | - | 0.164 | pending |
+| 2026-11-06 | CABR | 0.407 | 0.557 | - | 0.196 | pending |
+| 2026-11-05 | ZNB | 0.505 | 0.557 | - | 0.221 | did not dump |
+| 2026-11-05 | XXII | 0.675 | 0.557 | **DUMP** | 0.355 | dumped |
+| 2026-11-05 | VXX | 0.329 | 0.557 | - | 0.112 | did not dump |
 | 2026-11-05 | PLCE | 0.361 | 0.557 | - | 0.142 | pending |
 | 2026-11-05 | LABT | 0.640 | 0.557 | **DUMP** | 0.333 | pending |
-| 2026-11-05 | JDZG | 0.388 | 0.557 | - | 0.151 | pending |
-| 2026-11-05 | HTCR | 0.372 | 0.557 | - | 0.126 | pending |
-| 2026-11-05 | FLYE | 0.339 | 0.557 | - | 0.148 | pending |
-| 2026-11-05 | DNUT | 0.363 | 0.557 | - | 0.130 | pending |
+| 2026-11-05 | JDZG | 0.388 | 0.557 | - | 0.151 | dumped |
+| 2026-11-05 | HTCR | 0.372 | 0.557 | - | 0.126 | dumped |
+| 2026-11-05 | FLYE | 0.339 | 0.557 | - | 0.148 | did not dump |
+| 2026-11-05 | DNUT | 0.363 | 0.557 | - | 0.130 | did not dump |
 | 2026-11-05 | BDMD | 0.420 | 0.557 | - | 0.154 | pending |
-| 2026-11-05 | APP | 0.256 | 0.557 | - | 0.087 | pending |
-| 2026-11-05 | AMTX | 0.327 | 0.557 | - | 0.131 | pending |
-| 2026-11-05 | AEHL | 0.655 | 0.557 | **DUMP** | 0.303 | pending |
+| 2026-11-05 | APP | 0.256 | 0.557 | - | 0.087 | did not dump |
+| 2026-11-05 | AMTX | 0.327 | 0.557 | - | 0.131 | did not dump |
+| 2026-11-05 | AEHL | 0.655 | 0.557 | **DUMP** | 0.303 | dumped |
 | 2026-10-30 | WHLR | 0.601 | 0.555 | **DUMP** | 0.623 | dumped |
 | 2026-10-30 | SLGB | 0.378 | 0.555 | - | 0.519 | did not dump |
 | 2026-10-30 | SGRX | 0.446 | 0.555 | - | 0.581 | did not dump |
