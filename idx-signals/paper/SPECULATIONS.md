@@ -1,6 +1,6 @@
 # Speculation Register (KOD-SPEC-REGISTER-v1.1, protocol sha256 b0e9b6d9b533)
 
-Generated 2026-11-06T00:24:20Z from `paper/speculations.jsonl`: 114 sets sealed, 94 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
+Generated 2026-11-06T00:34:31Z from `paper/speculations.jsonl`: 116 sets sealed, 94 resolutions. Paper only; no orders. The register never changes a decision and runs no variant of a retired entry.
 
 Windows: **BASE5**: the frozen plan: the validated harness plan, prospectively, beside twins; **PATH20**: the 20-session price path of the candidate and its twins; no plan; **NEXT1**: the next session's close of the candidate and its twins; no plan.
 
@@ -56,7 +56,7 @@ PATH20 windows resolved: 0; NEXT1: 50.
 | UP10_1 | 50 | 0.160 | 0.037 | 0.382 | 0.1879 | 0.2500 | 0.2022 |
 | BEATS_TWINS_1 | 50 | 0.420 | 0.522 | 0.500 | 0.2500 | 0.2500 | 0.2491 |
 
-## CRYPTO: 5 sets over 4 signal sessions (2026-10-27 .. 2026-10-30, 0.56 sets per scan)
+## CRYPTO: 7 sets over 5 signal sessions (2026-10-27 .. 2026-11-05, 0.70 sets per scan)
 
 | Plan | Resolved | Traded | Paired | Sessions | Mean net | Median net | Twins net | Diff | t | p | Look | Verdict |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|
@@ -66,7 +66,7 @@ Projection (labelled): sessions of resolved sets needed for t >= 3 if the true p
 
 | sd per session (source) | 2pt | 5pt | 10pt | to next look |
 |---|---:|---:|---:|---:|
-| 0.441 (validation trade sd 0.3486 (run 20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1), paired, / sqrt(sets per session)) | 4375 | 700 | 175 | 103 |
+| 0.417 (validation trade sd 0.3486 (run 20261008T005732Z_MOONSHOT_E2_CRYPTO_D1_v1), paired, / sqrt(sets per session)) | 3907 | 625 | 157 | 82 |
 
 PATH20 windows resolved: 0; NEXT1: 3.
 
@@ -344,11 +344,11 @@ Twins (band+liq+mom+dd): NXGL 4.1175, NTHI 3.2, IPSC 1.51, EMAT 1.91, TRON 1.35.
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### CRYPTO SOPH (2026-10-30) - sealed 2026-10-31T00:28:50Z, cutoff 2026-10-31T02:00:00Z
-Decision `SCAN-CRYPTO-2026-10-30-G2_RET30-SOPH` (PASS), bound to ledger record `c6f3f7e68e72`; set `77c11b1d0eb4`.
-Signal close 0.0022 (reference 0.00141); entry: the Binance spot quote taken at sealing time (the harness used the next day's open); quote 0.00223 at 2026-10-31T00:28:59Z.
-Tag: 2 flags today vs trailing median 1.0 -> hot_day = True.
-Twins (band+liq+mom+dd): ROBO 0.00528, GUN 0.002009, NOM 0.00159, FOGO 0.00288, BB 0.00729.
+### CRYPTO UVXYB (2026-11-05) - sealed 2026-11-06T00:34:20Z, cutoff 2026-11-06T02:00:00Z
+Decision `SCAN-CRYPTO-2026-11-05-G2_RET30-UVXYB` (PASS), bound to ledger record `4169f9ba287c`; set `6b23fa6701cb`.
+Signal close 23.73 (reference 16.39); entry: the Binance spot quote taken at sealing time (the harness used the next day's open); quote 22.92 at 2026-11-06T00:34:27Z.
+Tag: 2 flags today vs trailing median 0.0 -> hot_day = True.
+Twins (band+liq+mom+dd): ZMB 88.31, BBB 8.21, WENB 7.81, SQQQB 50.23, PYPLB 58.31.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
@@ -364,11 +364,11 @@ Twins (band+liq+mom+dd): ROBO 0.00528, GUN 0.002009, NOM 0.00159, FOGO 0.00288, 
 
 Plan: BASE5 (the frozen plan: the validated harness plan, prospectively, beside twins); windows BASE5, PATH20, NEXT1.
 
-### CRYPTO BEAMX (2026-10-30) - sealed 2026-10-31T00:28:50Z, cutoff 2026-10-31T02:00:00Z
-Decision `SCAN-CRYPTO-2026-10-30-G2_RET30-BEAMX` (PASS), bound to ledger record `d1fcbd0a0c41`; set `14f6ca1a2f0e`.
-Signal close 0.004652 (reference 0.003338); entry: the Binance spot quote taken at sealing time (the harness used the next day's open); quote 0.004678 at 2026-10-31T00:28:52Z.
-Tag: 2 flags today vs trailing median 1.0 -> hot_day = True.
-Twins (band+liq+mom): KAT 0.00415, FLOKI 2.435e-05, SOLV 0.005082, RSR 0.001445, AMP 0.000655.
+### CRYPTO SOXSB (2026-11-05) - sealed 2026-11-06T00:34:20Z, cutoff 2026-11-06T02:00:00Z
+Decision `SCAN-CRYPTO-2026-11-05-G2_RET30-SOXSB` (PASS), bound to ledger record `41d649207d6b`; set `582e14658281`.
+Signal close 81.7 (reference 59.84); entry: the Binance spot quote taken at sealing time (the harness used the next day's open); quote 75.01 at 2026-11-06T00:34:25Z.
+Tag: 2 flags today vs trailing median 0.0 -> hot_day = True.
+Twins (band+liq+mom+dd): XRP 1.2072, HYPE 76.64, INJ 8.148, U 1.0003, RLUSD 1.0015.
 
 | Statement | Prior | Resolves with |
 |---|---:|---|
