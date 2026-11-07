@@ -15,6 +15,7 @@ import math
 from pathlib import Path
 import sqlite3
 import statistics
+import zlib
 
 UTC = dt.timezone.utc
 ARMS = (1, 5, 30, 240)
@@ -71,12 +72,143 @@ def comparison_readiness(db, symbols, watermark):
             "eligible_symbols": eligible, "total_symbols": len(symbols)}
 
 
+def ledger_payload(raw):
+    """Read the frozen engine's compressed payload or a plain-text fixture."""
+    if isinstance(raw, bytes):
+        raw = zlib.decompress(raw).decode("utf-8")
+    value = json.loads(raw)
+    if not isinstance(value, dict):
+        raise ValueError("ledger payload must be an object")
+    return value
+
+
+def prospective_check(db, registration, events, positions, endpoints, watermark):
+    """Score only new signals against their original pre-outcome control set."""
+    if registration is None:
+        return {"enabled": False}
+    if (registration.get("schema") != "KOD_PROSPECTIVE_CHECK_V1"
+            or registration.get("timing_arm_minutes") != 1
+            or registration.get("horizon_hours") != 24):
+        raise ValueError("unsupported prospective comparison registration")
+    started = stamp(registration["started_at"])
+    if not math.isfinite(started):
+        raise ValueError("finite prospective start required")
+    result = {"enabled": True, "started_at": iso(started), "arm_minutes": 1,
+              "horizon_hours": 24, "total_signals": 0, "completed_pairs": 0,
+              "pending_pairs": 0, "unavailable_pairs": 0, "beat_controls": 0,
+              "tied_controls": 0, "behind_controls": 0, "distinct_signal_dates": 0,
+              "mean_excess": None, "median_excess": None,
+              "status": "WAITING_FOR_SIGNALS", "events": []}
+    qualifying = [event for event in events if event["reference"] >= started]
+    if not qualifying:
+        return result
+    by_key = {(p["event_id"], p["role"], p["symbol"]): p for p in positions if p["arm"] == 1}
+    outcome_sequences = {}
+    for row in db.execute("SELECT seq,id,payload FROM ledger WHERE kind='OUTCOME'"):
+        if row["id"].startswith("outcome:"):
+            pid = row["id"][len("outcome:"):].rsplit(":", 1)[0]
+            outcome_sequences[pid] = min(outcome_sequences.get(pid, row["seq"]), row["seq"])
+            continue
+        try:
+            payload = ledger_payload(row["payload"])
+        except (ValueError, TypeError, zlib.error, UnicodeError):
+            continue
+        pid = payload.get("position_id")
+        if pid:
+            outcome_sequences[pid] = min(outcome_sequences.get(pid, row["seq"]), row["seq"])
+    differences = []
+    for event in qualifying:
+        payload = json.loads(event["payload"])
+        controls = payload.get("controls", [])
+        symbols = [row.get("symbol") for row in controls]
+        item = {"event_id": event["id"], "symbol": event["symbol"], "selected_at": None,
+                "controls": symbols, "selection_verified": False, "status": "UNAVAILABLE",
+                "net_return": None, "control_mean_net_return": None, "excess": None,
+                "reason": None}
+        result["events"].append(item)
+        if (payload.get("controls_status") != "AVAILABLE" or not symbols
+                or len(symbols) > 5 or any(not isinstance(s, str) or not s for s in symbols)
+                or len(set(symbols)) != len(symbols) or event["symbol"] in symbols):
+            item["reason"] = "No valid comparison basket was recorded at signal time."
+            continue
+        selection = db.execute("SELECT seq,at,payload FROM ledger WHERE id=? AND kind='EVENT'",
+                               ("event:" + event["id"],)).fetchone()
+        if selection is None:
+            item["reason"] = "The original comparison-selection record is unavailable."
+            continue
+        try:
+            recorded = ledger_payload(selection["payload"])
+            selected_at = number(selection["at"])
+            reference = stamp(recorded.get("reference_at", event["reference"]))
+            valid = (recorded == payload and recorded.get("event_id") == event["id"]
+                     and selected_at is not None and selected_at <= event["reference"]
+                     and abs(reference - event["reference"]) <= 1e-6)
+        except (ValueError, TypeError, zlib.error, UnicodeError):
+            valid = False
+        if not valid:
+            item["reason"] = "The comparison basket differs from its original signal-time record."
+            continue
+        selected_positions = [by_key.get((event["id"], "EVENT", event["symbol"]))]
+        selected_positions += [by_key.get((event["id"], "CONTROL", symbol)) for symbol in symbols]
+        if any(p and outcome_sequences.get(p["id"], float("inf")) <= selection["seq"]
+               for p in selected_positions):
+            item["reason"] = "Comparison selection was recorded after an outcome."
+            continue
+        item.update(selection_verified=True, selected_at=iso(selected_at))
+        deadline = event["reference"] + 24 * 3600
+        selected_endpoints = [endpoints.get(p["id"]) if p else None for p in selected_positions]
+        if any(e and abs(e["deadline"] - deadline) > 1e-6 for e in selected_endpoints):
+            item["reason"] = "An outcome uses a different exit deadline from the fixed comparison."
+            continue
+        missing = any(p is None or p["status"] == "NOT_ENTERED" for p in selected_positions)
+        censored = any(e and e["status"] == "CENSORED" for e in selected_endpoints)
+        if any(p and p["status"] == "NOT_ENTERED" for p in selected_positions) or censored:
+            item["reason"] = "An entry or outcome in the fixed comparison set is unavailable."
+            continue
+        complete = not missing and all(e and e["status"] == "COMPLETE" for e in selected_endpoints)
+        if not complete:
+            if watermark > deadline + 120:
+                item["reason"] = "The fixed comparison set is incomplete after its exit window."
+            else:
+                item.update(status="PENDING", reason="Waiting for the complete 24-hour comparison.")
+            continue
+        values = []
+        for endpoint in selected_endpoints:
+            try:
+                value = number(json.loads(endpoint["payload"])["returns"]["modeled_net_token_return"])
+            except (ValueError, TypeError, KeyError):
+                value = None
+            values.append(value)
+        if any(value is None for value in values):
+            item["reason"] = "A recorded return in the fixed comparison set is unavailable."
+            continue
+        control_mean = statistics.mean(values[1:])
+        excess = values[0] - control_mean
+        item.update(status="COMPLETE", net_return=values[0], control_mean_net_return=control_mean,
+                    excess=excess, reason=None)
+        differences.append(excess)
+    result["total_signals"] = len(qualifying)
+    result["distinct_signal_dates"] = len({iso(e["reference"])[:10] for e in qualifying})
+    for name, status in (("completed_pairs", "COMPLETE"), ("pending_pairs", "PENDING"),
+                         ("unavailable_pairs", "UNAVAILABLE")):
+        result[name] = sum(item["status"] == status for item in result["events"])
+    result.update(beat_controls=sum(x > 1e-12 for x in differences),
+                  tied_controls=sum(abs(x) <= 1e-12 for x in differences),
+                  behind_controls=sum(x < -1e-12 for x in differences),
+                  mean_excess=mean(differences),
+                  median_excess=statistics.median(differences) if differences else None)
+    result["status"] = ("RECORDING_COMPARISONS" if differences else "WAITING_FOR_RESULTS"
+                        if result["pending_pairs"] else "COMPARISONS_UNAVAILABLE")
+    return result
+
+
 def export_results(state):
     state = Path(state)
     config = read_json(state / "research.json")
     heartbeat = read_json(state / "RESEARCH_ENGINE_HEALTH.json", {})
     capture = read_json(state / "RESEARCH_CAPTURE_HEARTBEAT.json", {})
     collector = read_json(state / "HEALTH.json", {}).get("collector", {})
+    registration = read_json(state / "comparison-inputs/PROSPECTIVE_CHECK.json")
     db_path = state / "engine" / "research.sqlite"
     db = sqlite3.connect(db_path.resolve().as_uri() + "?mode=ro", uri=True, isolation_level=None)
     db.row_factory = sqlite3.Row
@@ -90,6 +222,7 @@ def export_results(state):
         positions = [dict(r) for r in db.execute("SELECT * FROM positions ORDER BY event_id,arm,role,symbol")]
         endpoints = {r["position_id"]: dict(r) for r in db.execute("SELECT * FROM endpoints WHERE horizon=24")}
         readiness = comparison_readiness(db, [r["symbol"] for r in config["primary"]], watermark)
+        prospective = prospective_check(db, registration, events, positions, endpoints, watermark)
     finally:
         db.close()
 
@@ -180,7 +313,7 @@ def export_results(state):
         "events_without_controls": unavailable_controls, "comparison_inputs": readiness,
         "coverage": {"on_time_fraction": number(collector.get("coverage", {}).get("pooled_on_time_coverage"))},
         "next_primary_due_at": iso(min(due)) if due else None,
-        "arms": output_arms, "events": output_events}
+        "arms": output_arms, "events": output_events, "prospective_check": prospective}
 
 
 def main():
