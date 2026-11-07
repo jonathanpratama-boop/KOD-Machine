@@ -1453,6 +1453,17 @@ def summarize_collector(ctx: Ctx, p: dict, ref: str) -> dict:
             first_possible = parse_ts(engine["t0"]) + timedelta(hours=hours)
             if parse_ts(engine["as_of"]) < first_possible:
                 matured = 0
+        if matured is None and events:
+            # Past the first possible maturity, count events from the engine's own OUTCOME records:
+            # one per timing arm, so OUTCOME // arms-per-event. Later windows (72 h, 120 h) also
+            # write OUTCOME records, so the count is only unambiguous while it cannot exceed one
+            # primary outcome per arm per event; beyond that it stays unknown rather than guessed.
+            counts = engine.get("ledger_counts") or {}
+            outcomes, arms = counts.get("OUTCOME"), counts.get("ARM_DECISION")
+            if outcomes is not None and arms and arms % events == 0:
+                per_event = arms // events
+                if outcomes <= arms and outcomes % per_event == 0:
+                    matured = outcomes // per_event
         scored = matured
     return {
         "as_of": exact_iso(health.get("emitted_at") or collector.get("as_of")),
