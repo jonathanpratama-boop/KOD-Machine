@@ -127,7 +127,7 @@
     "path": "idx-signals/research/LLM_ARM_v1/PROTOCOL.md",
     "sha256": "310f5c4799edb1a33934fb1d4da78c49c26131b01df4042ad8c13d0863e5aaaf"
    },
-   "note": "0 BACK calls so far, so the protocol's 'BACK beats AVOID' half of the keep rule cannot be evaluated yet; no counted-trial registration under research/QUANT_GRADE/trials/"
+   "note": "the keep rule compares BACK and AVOID calls once their outcomes have been scored; no counted-trial registration under research/QUANT_GRADE/trials/"
   },
   {
    "id": "SPEC_REGISTER_US",
@@ -2192,3 +2192,4 @@
   }
  ]
 }
+

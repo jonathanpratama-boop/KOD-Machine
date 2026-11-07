@@ -18,10 +18,11 @@
 /* Compact terminal theme. Layout and evidence stay in one continuous page. */
 :root{color-scheme:dark;--paper:#080a0c;--white:#0b0e11;--ink:#e0e5e9;--muted:#a0acb6;--line:#303943;--green:#ff9e24;--pale:#12271e;--amber:#ffd35b;--amber-bg:#302610;--red:#ff7e76}
 body{font:14px/1.55 ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace}.page{max-width:1800px;padding:12px 18px 32px}.masthead{gap:15px;padding:8px 12px;background:#151a20;border:1px solid var(--line);border-top:3px solid #ff9824}.brand{gap:12px}.brand b{font-size:26px;letter-spacing:1px;color:#ffab3b}.brand span{font-size:13px;color:#c0c9d0;text-transform:uppercase;letter-spacing:1px}.snapshot{font-size:12px}.snapshot strong{font-size:13px;color:#e4e9ed}.snapshot .old{color:#ffd35b}.hero{grid-template-columns:1.6fr 1fr;gap:24px;padding:20px 12px 18px}.eyebrow{font-size:12px;letter-spacing:1px;color:#ffab3b}h1{font-size:28px;letter-spacing:-.6px;font-weight:600;line-height:1.2;margin-bottom:8px}.intro{font-size:13px;max-width:640px}.stats{border:1px solid var(--line);background:#10151a}.stat{padding:10px 12px;border-right:1px solid var(--line)}.stat:last-child{border:0}.stat b{font-size:30px;line-height:1.1;color:var(--ink);font-weight:500;letter-spacing:-1px}.stat span{font-size:12px;max-width:130px;margin-top:5px}.brief{margin-bottom:18px;border-radius:0;background:var(--line)}.brief>div{background:#101820;padding:10px 12px}.brief>div:last-child{background:#201b10}.brief small{color:var(--muted);font-size:12px;margin-bottom:3px}.brief strong{font-size:14px}.brief p{font-size:12px;line-height:1.5;margin-top:4px}.toolbar{margin-bottom:8px;align-items:center;gap:12px}.toolbar h2{font-size:15px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;color:var(--ink)}.toolbar p{font-size:12px;margin-top:2px}.search input{width:275px;border-radius:0;background:#111a22;border-color:#3b4e60;padding:7px 10px;color:#80d2ff;font-size:13px}.search input::placeholder{color:#a0acb6}.board{border-radius:0}.column-head{padding:8px 12px;background:#202a33;color:var(--muted);font-size:12px;letter-spacing:.4px}.column-head,.experiment{grid-template-columns:minmax(230px,1.45fr) minmax(200px,1fr) minmax(200px,1fr) 165px;gap:20px}.experiment{padding:14px 12px;row-gap:10px;border-color:#28323c}.experiment:nth-child(even){background:#0f141a}.experiment:hover{background:#14202c}.experiment[data-cloud="true"]{background:#0f141a}.category{font-size:12px;letter-spacing:.6px;color:#8d9dac;margin-bottom:4px}.experiment h3{font-size:15px;color:var(--ink);line-height:1.4;margin-bottom:5px}.question{font-size:13px;color:#b0bbc4;line-height:1.5}.evidence strong{font-size:26px;color:var(--ink);font-weight:500;letter-spacing:-.5px}.evidence .denominator{font-size:15px;color:#8998a6}.metric-label{font-size:12px;margin:4px 0 5px;color:#d0d8df}.capture{font-size:12px;color:#9db4c5;margin:5px 0}.bar{height:3px;background:#29333d;margin-top:7px;border-radius:0}.bar span{background:#4f9bd1}.requirement{font-size:12px;margin-top:6px;color:#a7b1ba}.date{color:var(--ink);font-size:14px}.date-kind{font-size:12px;color:#8c9ba7;letter-spacing:.4px;margin:3px 0 6px}.next-note{font-size:12px;line-height:1.5}.tag{font-size:12px;padding:3px 6px;border-radius:0;color:#6fdf9a;background:#14271e;border:1px solid #294b38;font-weight:500}.tag.warn{color:#ffd35b;background:#2d250f;border-color:#66521c}.tag.bad{color:#ff8e85;background:#321815;border-color:#6d352f}.checked,.check-state{font-size:12px;line-height:1.6;margin-top:6px}.detail{margin-top:0;font-size:12px}.detail summary{font-size:12px;color:#7bcaff;padding:3px 0}.detail-content{gap:12px}.detail-content b{color:var(--ink);font-size:12px}.detail-content p{font-size:12px;line-height:1.6}.detail-content .source-path{font-size:12px;color:#7bcaff}.archive{background:#11161c;border-radius:0;padding:10px 12px;margin-top:14px}.archive>summary{font-size:14px;color:var(--ink)}.archive>summary span{font-size:12px;color:#a0acb6}.archive-content h3{font-size:14px;color:var(--ink)}.archive-content p,.archive-content li{font-size:12px}.record{padding:10px 0}.record b{font-size:13px}.record small{font-size:12px;color:#93bfdc}.job{font-size:12px}.download{color:#7bcaff;font-size:12px}footer{padding-top:14px;font-size:12px}a{color:#7bcaff}button:focus-visible,summary:focus-visible,a:focus-visible,input:focus-visible{outline-color:#75d0ff}
+.column-head,.experiment{grid-template-columns:minmax(250px,1.4fr) minmax(230px,1fr) minmax(220px,1fr) 170px}
 @media(max-width:1050px){.column-head,.experiment{grid-template-columns:1.2fr 1fr 1fr;gap:15px}.column-head span:last-child{display:none}.health{grid-column:1/-1;display:flex;gap:10px;align-items:center}.checked,.check-state{margin:0}.hero{gap:18px}.stat{padding:9px}.stat b{font-size:27px}}
 @media(max-width:650px){.page{padding:8px 10px 24px}.masthead{padding:8px}.brand span{font-size:12px;padding:0;border:0;letter-spacing:.4px}.brand b{font-size:25px}.snapshot{font-size:12px;max-width:190px}.snapshot strong{font-size:12px}.hero{display:block;padding:18px 4px 16px}h1{font-size:26px;letter-spacing:-.6px}.intro{font-size:12px}.stats{margin-top:14px;padding:0;border:1px solid var(--line)}.stat{padding:9px}.stat b{font-size:28px}.stat span{font-size:12px}.brief{margin-bottom:16px}.brief>div{padding:10px}.brief strong{font-size:13px}.brief p{font-size:12px}.toolbar{align-items:stretch;gap:9px}.toolbar h2{font-size:14px}.toolbar p{font-size:12px}.search input{width:100%;font-size:13px}.experiment{grid-template-columns:1fr 1fr;padding:14px 10px;gap:14px}.experiment[data-cloud="true"]{padding-left:7px}.experiment>div:first-child{grid-column:1/-1}.experiment h3{font-size:15px}.question{font-size:13px}.evidence strong{font-size:26px}.health{gap:8px}.checked,.check-state{font-size:12px}.archive{padding:11px}.archive>summary span{margin-top:4px}footer{font-size:12px}}
 
-.experiment.attn-warn{border-left:3px solid var(--amber);padding-left:9px;background:#17140a}.experiment.attn-bad{border-left:3px solid var(--red);padding-left:9px;background:#1a0f0e}.change{font-size:13px;margin:7px 0 0;color:var(--muted)}.change.up{color:#6fdf9a}.brief>div.alert{background:#2a2110}.brief>div.alert small{color:var(--amber)}.column-head,.experiment{grid-template-columns:minmax(250px,1.4fr) minmax(230px,1fr) minmax(220px,1fr) 170px}
+.experiment.attn-warn{border-left:3px solid var(--amber);padding-left:9px;background:#17140a}.experiment.attn-bad{border-left:3px solid var(--red);padding-left:9px;background:#1a0f0e}.change{font-size:13px;margin:7px 0 0;color:var(--muted)}.change.up{color:#6fdf9a}.brief>div.alert{background:#2a2110}.brief>div.alert small{color:var(--amber)}
 @media print{body{background:white;color:black}.page{padding:0}.archive{display:none}.experiment,.experiment:nth-child(even),.experiment[data-cloud="true"]{background:white;break-inside:avoid}.search,.download{display:none}}
 </style>
 </head>
@@ -170,34 +171,11 @@ const copy = {
     requirement: 'planned collection slots',
   },
   'srv:research_r2': {
-    question: 'How much opportunity remains when KOD reacts to a crypto jump after 1, 5, 30 or 240 minutes?',
+    question: 'How much opportunity remains when KOD checks for crypto jumps every 1, 5, 30 or 240 minutes?',
     scored: 'events with a full 24-hour result',
   },
 };
 const wording = (experiment, field, fallback) => copy[experiment.id]?.[field] || fallback;
-const nextCopy = {
-  LLM_ARM_v1: 'First five-day results are due on 10 Nov for IDX calls and 11 Nov for US calls, in WIB.',
-  SPEC_REGISTER_US: 'The next five-day results are due on 7 Nov WIB. The review date assumes new qualifying cases keep coming.',
-  SPEC_REGISTER_IDX: 'More five-day results will arrive as the recorded plans finish. The review date is an estimate.',
-  SPEC_REGISTER_CRYPTO: 'The review date depends on how often new qualifying crypto spikes appear.',
-  LEARNER_v2_2: 'The first four-week block ends on 30 Nov. The full review can happen no earlier than 27 Dec 2027.',
-  LEARNER_v2_4: 'The next batch of next-day results is due on 7 Nov WIB. The review estimate uses the pace so far.',
-  CALL_CERT: 'Three open calls are due for results after the US close, on 7 Nov WIB.',
-  PAPER_BOOK_v1: 'The first paper trades close on 9 Nov in the US. Their results are due on 10 Nov WIB.',
-  PAPER_ACCOUNT_v1_BASE: 'Three pending orders will be filled or rejected at the 6 Nov US open.',
-  PAPER_ACCOUNT_v1_FIXED5: 'Two orders are pending at the 6 Nov US open. FMC is due to close on 9 Nov in the US.',
-  CRYPTO_ACCOUNT_v1: 'Run the account sync to record the two missing decisions.',
-  PREMOVE_SHADOW_v1: 'The next five-day results are due on 7 Nov WIB. Final results are due on 5 Nov 2027.',
-  CATALYST_SEC13D: 'The first qualifying case completes its 20 trading days at the 27 Nov US close.',
-  CATALYST_SEC13D_V2: 'The first qualifying case completes its 20 trading days at the 1 Dec US close.',
-  CATALYST_DILUTION_8K: 'The first case completes its 20 trading days at the 27 Nov US close.',
-  CATALYST_FORM4: 'The first cases are due to finish at the 30 Nov US close. An older job-status note conflicts with a newer update.',
-  CATALYST_FORM4_SHARP: 'The first qualifying cases are due to finish at the 28 Jan 2027 US close. An older job-status note needs checking.',
-  CATALYST_DOCUMENT_CLASS: 'The first combined results are due at the 27 Nov US close.',
-  trend_core_paper: 'The 90th signal day is 28 Jan 2027, assuming the daily log stays complete.',
-  'srv:timing_capture_30': 'The final slot is on 9 Nov at 16:00 WIB. Review can begin at 16:15 WIB.',
-  'srv:supplement_30m': 'Collection ends on 9 Nov at 16:00 WIB. A separate failure alert still needs to be set up.',
-};
 function date(value, time = false) {
   if (!value) return 'Awaiting enough evidence';
   const parsed = new Date(value.length === 10 ? value + 'T00:00:00+07:00' : value);
@@ -252,7 +230,8 @@ function evidence(experiment) {
     const match = text(experiment.note).match(/(\d+) market event\(s\) admitted/);
     if (match) box.append(element('p','capture',match[1] + (Number(match[1]) === 1 ? ' qualifying move recorded' : ' qualifying moves recorded')));
     const study = server.get(experiment.id);
-    box.append(element('p','capture',count(experiment.collected) + ' one-minute prices · ' + ((study.coverage || 0) * 100).toFixed(2) + '% received on time'));
+    const coverage = study?.coverage == null ? 'Coverage unavailable' : (study.coverage * 100).toFixed(2) + '% received on time';
+    box.append(element('p','capture',count(experiment.collected) + ' one-minute prices · ' + coverage));
     box.append(element('p','requirement','This report doesn’t show how many checks had enough data.'));
     box.append(changeLine(experiment));
     return box;
@@ -286,10 +265,22 @@ function review(experiment) {
   if (r2) {value='2026-11-13T01:12:00+07:00';kind='First-week check';description='Check how many moves we caught and how many can be compared. Data collection ends 11 Dec, 01:14 WIB.';}
   else if (experiment.plumbing) kind='Scheduled collection end';
   else if (!value) {value=experiment.next_date;kind=value ? 'Next update' : 'Waiting for more results';}
+  const milestonePassed = !r2 && experiment.next_date && experiment.next_date < WIB_DAY(Date.parse(build.built_at));
+  if (milestonePassed && kind === 'Next update') { value = null; kind = 'Milestone needs an update'; }
   box.append(element('div','date',value ? date(value) : 'No date yet'),element('div','date-kind',kind));
   const firstSentence = text(description).match(/^.*?[.!?](?:\s|$)/);
-  const displayed = nextCopy[experiment.id] || (r2 ? description : firstSentence ? firstSentence[0].trim() : description);
-  box.append(element('p','next-note',displayed));
+  const displayed = (r2 ? description : firstSentence ? firstSentence[0].trim() : description)
+    .replace(/\bBASE5\b/g, 'five-day')
+    .replace(/\bNEXT1\b/g, 'next-day')
+    .replace(/\bH20\b/g, '20-day')
+    .replace(/\bH60\b/g, '60-day');
+  let nextText = displayed;
+  if (/^Unblock: no .*batch/.test(text(description))) nextText = 'This milestone note is older than the latest update. See the source notes.';
+  if (experiment.id === 'CALL_CERT') {
+    const open = text(experiment.note).match(/(\d+) calls? open/);
+    if (open) nextText = open[1] + (Number(open[1]) === 1 ? ' call remains open in the source record.' : ' calls remain open in the source record.');
+  }
+  box.append(element('p','next-note',milestonePassed ? 'The last listed milestone was ' + date(experiment.next_date) + '. See the latest source notes for current results.' : nextText));
   return box;
 }
 function rowStatus(experiment) {
@@ -385,7 +376,7 @@ document.getElementById('theme-count').textContent=count(data.programs.length);
 document.getElementById('passed-count').textContent=count(summary.proven_live);
 if (summary.proven_live > 0) document.getElementById('headline').textContent=count(summary.proven_live) + ' live tests passed.';
 document.getElementById('next-look').textContent=summary.next_verdict_what + ' · ' + date(summary.next_verdict_date);
-const issues=data.programs.filter(program=>program.issue).map(program=>program.issue);
+const issues=ongoing.filter(experiment=>['STALLED','HALTED','FAILED','UNKNOWN'].includes(experiment.state)).map(experiment=>wording(experiment,'name',experiment.short || experiment.name) + ' · ' + (experiment.issue || experiment.state.toLowerCase()));
 document.getElementById('attention').textContent=issues.join(' · ') || 'No issues reported';
 document.querySelector('.brief>div:last-child').classList.toggle('alert',issues.length>0);
 document.getElementById('attention-note').textContent='Cloud status expires after an hour. Check the time of the last update before relying on it.';
@@ -397,3 +388,4 @@ render();renderArchive();
 </script>
 </body>
 </html>
+
